@@ -45,7 +45,6 @@ class TransactionsList extends React.Component {
     // All, incoming, outgoing are filter values. To be more consistance with other possible tabs
     // We can refer to props.filter as tabObj
     const tabObj = this.props.filter;
-
     const fixIncomingFilter = (transaction) => {
       const isTypeNonSend = transaction.type !== txTypes.send;
       const isFilterIncoming = tabObj && tabObj.value === txFilters.incoming;
@@ -74,7 +73,9 @@ class TransactionsList extends React.Component {
       return <DelegateStatistics
         delegate={this.props.delegate}
         votes={this.props.votes}
-        voters={this.props.voters} />;
+        voters={this.props.voters}
+        votersSize={this.props.votersSize}
+        searchMoreVoters={this.props.searchMoreVoters} />;
     }
 
     const isAccountInfo = tabObj && (tabObj.value === txFilters.accountInfo);
@@ -83,7 +84,9 @@ class TransactionsList extends React.Component {
       return <UserVotes
         delegate={this.props.delegate}
         votes={this.props.votes}
-        voters={this.props.voters} />;
+        voters={this.props.voters}
+        votersSize={this.props.votersSize}
+        searchMoreVoters={this.props.searchMoreVoters} />;
     }
 
     return <div className={`${styles.results} transaction-results`}>

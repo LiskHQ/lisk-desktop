@@ -59,7 +59,7 @@ export const DateFromTimestamp = translate()((props) => {
 export const TimeFromTimestamp = translate()((props) => {
   moment.locale(i18n.language);
   const day = moment(_convertTimeFromFirstBlock(props.time));
-  return (<span>{day.format('LTS')}</span>);
+  return (<span className={'time'}>{day.format('LTS')}</span>);
 });
 
 export const TooltipTime = translate()((props) => {

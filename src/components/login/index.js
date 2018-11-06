@@ -6,6 +6,7 @@ import Login from './login';
 import { errorToastDisplayed } from '../../actions/toaster';
 import { activePeerSet } from '../../actions/peers';
 import { settingsUpdated } from '../../actions/settings';
+import { loadingStarted, loadingFinished } from '../../actions/loading';
 
 setDefaults({
   wait: true,
@@ -23,6 +24,7 @@ const mapStateToProps = state => ({
   account: state.account,
   peers: state.peers,
   settings: state.settings,
+  activePeer: state.peers && state.peers.data,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -30,6 +32,8 @@ const mapDispatchToProps = dispatch => ({
   setActiveDialog: data => dispatch(dialogDisplayed(data)),
   settingsUpdated: data => dispatch(settingsUpdated(data)),
   errorToastDisplayed: data => dispatch(errorToastDisplayed(data)),
+  loadingFinished: data => dispatch(loadingFinished(data)),
+  loadingStarted: data => dispatch(loadingStarted(data)),
 });
 
 export default connect(

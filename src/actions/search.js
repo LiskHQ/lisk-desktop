@@ -32,17 +32,38 @@ const searchVotes = ({ address }) =>
       }));
   };
 
-const searchVoters = ({ address, publicKey }) =>
+const searchVoters = ({
+  address, publicKey, offset, limit, append,
+}) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
-    getVoters(activePeer, publicKey).then(response =>
+    getVoters(activePeer, {
+      publicKey, offset, limit,
+    }).then(response =>
       dispatch({
         type: actionTypes.searchVoters,
         data: {
+          append: append || false,
           voters: response.data.voters,
+          votersSize: response.data.votes,
           address,
         },
       }));
+  };
+
+export const searchMoreVoters = ({ address, offset = 0, limit = 100 }) =>
+  (dispatch, getState) => {
+    const activePeer = getState().peers.data;
+    getAccount(activePeer, address).then((response) => {
+      const accountData = {
+        ...response,
+      };
+      if (accountData.publicKey) {
+        dispatch(searchVoters({
+          address, publicKey: accountData.publicKey, offset, limit, append: true,
+        }));
+      }
+    });
   };
 
 export const searchAccount = ({ address }) =>

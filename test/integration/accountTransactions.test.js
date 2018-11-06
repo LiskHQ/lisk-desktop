@@ -61,21 +61,24 @@ describe('@integration: Account Transactions', () => {
 
   class Helper extends GenericStepDefinition {
     checkSelectedFilter(filter) {
-      const expectedClass = '_active';
+      const expectedClass = 'active';
       const activeFilter = this.wrapper.find('.transaction-filter-item').filterWhere((item) => {
         const className = item.prop('className');
         return className.includes(expectedClass);
       });
       expect(activeFilter.text().toLowerCase()).to.equal(filter);
     }
+
     checkDelegateDetails() {
       expect(this.wrapper.find('.approval').first()).to.have.text(`Approval${delegateProductivity.approval}%`);
       expect(this.wrapper.find('.rank').first()).to.have.text(`Rank / Status${delegateProductivity.rank} / Active`);
       expect(this.wrapper.find('.productivity').first()).to.have.text(`Uptime${delegateProductivity.productivity}%`);
     }
+
     countLinks(expectedNumber) {
-      expect(this.wrapper.find('.voters Link')).to.have.length(expectedNumber);
+      expect(this.wrapper.find('.votes Link')).to.have.length(expectedNumber);
     }
+
     // eslint-disable-next-line class-methods-use-this
     checkRedirectionToDetails(address, transactionId) {
       expect(explorerTransactionsProps.history.push).to.have.been.calledWith(`${routes.accounts.pathPrefix}${routes.accounts.path}/${address}?id=${transactionId}`);
@@ -123,7 +126,7 @@ describe('@integration: Account Transactions', () => {
     accountAPIStub = stub(accountAPI, 'getAccount');
     transactionAPIStub = stub(accountAPI, 'transaction');
     delegateAPIStub = stub(delegateAPI, 'getDelegate');
-    votesAPIStub = stub(delegateAPI, 'getVotes');
+    votesAPIStub = stub(delegateAPI, 'getAllVotes');
     votersAPIStub = stub(delegateAPI, 'getVoters');
 
     const transactionExample = {
@@ -280,8 +283,8 @@ describe('@integration: Account Transactions', () => {
     }));
     step('When I click on the "delegate-statistics" filter', () => helper.clickOnElement('.delegate-statistics'));
     step('Then I should see the delegate statistics details rendered', () => helper.checkDelegateDetails());
-    step('Then I should see 2 voters', () => helper.countLinks(2));
-    step('When I fill voters filter input', () => helper.fillInputField('123', 'voters'));
-    step('Then I should see 1 voter', () => helper.countLinks(1));
+    step('Then I should see 2 votes', () => helper.countLinks(2));
+    step('When I fill votes filter input', () => helper.fillInputField('123', 'votes'));
+    step('Then I should see 1 vote', () => helper.countLinks(1));
   });
 });

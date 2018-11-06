@@ -1,25 +1,38 @@
 import React from 'react';
 import { expect } from 'chai';
+import { useFakeTimers } from 'sinon';
 import { mount } from 'enzyme';
-import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import SendWritable from './send';
 
-const fakeStore = configureStore();
-
 describe('Send Writable Component', () => {
   let wrapper;
   let props;
+  let clock;
 
   beforeEach(() => {
     const account = accounts.delegate;
 
-    const store = fakeStore({
+    clock = useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
+    });
+
+    const priceTicker = {
+      success: true,
+      LSK: {
+        USD: 1,
+      },
+    };
+
+    const store = configureMockStore([thunk])({
       account,
       settings: {},
       settingsUpdated: () => {},
+      liskService: { priceTicker },
     });
 
     props = {
@@ -38,6 +51,10 @@ describe('Send Writable Component', () => {
         i18n: PropTypes.object.isRequired,
       },
     });
+  });
+
+  afterEach(() => {
+    clock.restore();
   });
 
   it('renders three Input components', () => {
@@ -93,7 +110,7 @@ describe('Send Writable Component', () => {
     const account = accounts.delegate;
     const followedAccounts = { accounts: [{ address: '123L', title: '123' }] };
 
-    const store = fakeStore({
+    const store = configureMockStore([thunk])({
       account,
       settings: {},
       settingsUpdated: () => {},
@@ -109,5 +126,22 @@ describe('Send Writable Component', () => {
     });
 
     expect(wrapper.find('Bookmark')).to.have.length(1);
+  });
+
+  it('Shows the Set max. amount link on amount focus', () => {
+    wrapper.find('.amount input').simulate('focus');
+    expect(wrapper.state('showSetMaxAmount')).to.equal(true);
+  });
+
+  it('Puts max amount into input field', () => {
+    wrapper.find('.amount input').simulate('focus');
+    wrapper.find('.set-max-amount').simulate('click');
+    expect(wrapper.state('amount').value).to.equal('999.9');
+  });
+
+  it('Hides the Set max. amount link on amount blur', () => {
+    wrapper.find('.amount input').simulate('blur');
+    clock.tick(1200);
+    expect(wrapper.state('showSetMaxAmount')).to.equal(false);
   });
 });

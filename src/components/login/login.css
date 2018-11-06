@@ -17,6 +17,11 @@
   height: var(--main-box-height);
 }
 
+.hardwareWalletLink {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .login {
   height: 100%;
   width: 42%;

@@ -6,15 +6,24 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
 import i18n from '../../i18n';
 import NewsFeed from './index';
 import * as settingsActions from '../../actions/settings';
 
 describe('NewsFeedHOC', () => {
   let wrapper;
-  const settings = {};
-  const store = configureMockStore([])({
-    settings,
+  const store = configureMockStore([thunk])({
+    settings: {
+      channels: {},
+    },
+    liskService: {
+      newsFeed: [],
+      showNewsFeedEmptyState: false,
+    },
+    getNewsFeed: sinon.spy(),
+    settingsUpdated: sinon.spy(),
   });
 
   beforeEach(() => {

@@ -83,8 +83,8 @@ pipeline {
 					"jest": {
 						ansiColor('xterm') {
 							sh 'ON_JENKINS=true npm run --silent test-jest'
-							
-							// TODO: uncomment sending coverage to coveralls when 
+
+							// TODO: uncomment sending coverage to coveralls when
 							// all tests are migrated from mocha to jest
 							// withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
 								//	sh 'cat coverage/HeadlessChrome*/lcov.info |coveralls -v'
@@ -92,10 +92,13 @@ pipeline {
 						}
 					},
 					"cypress": {
+						githubNotify context: 'Jenkins e2e tests',
+							     description: 'e2e tests in progress...',
+							     status: 'PENDING'
 						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
 							ansiColor('xterm') {
-								wrap([$class: 'Xvfb', parallelBuild: true]) {
-									sh '''
+								wrap([$class: 'Xvfb', parallelBuild: true, autoDisplayName: true]) {
+									sh '''#!/bin/bash -xe
 									export N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
 
 									wget -nv -c https://github.com/LiskHQ/lisk-docker/archive/2.2.0.tar.gz
@@ -105,13 +108,27 @@ pipeline {
 									cp $WORKSPACE/test/blockchain.db.gz $WORKSPACE/$BRANCH_NAME/dev_blockchain.db.gz
 									cd $WORKSPACE/$BRANCH_NAME
 									cp .env.development .env
+
+									# random port assignment
+									yq --yaml-output '.services.lisk.ports[0]="${ENV_LISK_HTTP_PORT}"|.services.lisk.ports[1]="${ENV_LISK_WS_PORT}"' docker-compose.yml |sponge docker-compose.yml
+
 									LISK_VERSION=1.1.0-alpha.8 make coldstart
 									export CYPRESS_baseUrl=http://127.0.0.1:300$N/#/
 									export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
 									cd -
 
 									npm run serve -- $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
-									npm run cypress:run -- --record
+									set +e
+									set -o pipefail
+
+									githubNotify context: 'Jenkins e2e tests',
+										     description: 'e2e tests are running',
+										     status: 'PENDING'
+									npm run cypress:run -- --record |tee cypress.log
+									ret=$?
+									grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress_url
+									echo $ret >.cypress_status
+									exit $ret
 									'''
 								}
 							}
@@ -139,6 +156,21 @@ pipeline {
 				  onlyStable: false,
 				  sourceEncoding: 'ASCII'
 			junit 'reports/junit_report.xml'
+			script {
+				catchError {
+					if(readFile(".cypress_status").trim() == '0'){
+					    status = 'SUCCESS'
+					    adjective = 'passed'
+					} else {
+					    status = 'FAILURE'
+					    adjective = 'failed'
+					}
+					githubNotify context: 'Jenkins e2e tests',
+						     description: 'All e2e tests ' + adjective,
+						     status: status,
+						     targetUrl: readFile(".cypress_url").trim()
+				}
+			}
 		}
 		success {
 			script {

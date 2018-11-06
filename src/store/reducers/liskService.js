@@ -14,7 +14,7 @@ const getPricesForGraph = ({ prices = [], step }) => ({
     })),
 });
 
-const liskService = (state = [], action) => {
+const liskService = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.clearDataOfCurrencyGraph:
       return {
@@ -32,10 +32,25 @@ const liskService = (state = [], action) => {
         step: action.data.step,
         graphError: undefined,
       };
+    case actionTypes.getNewsFeed:
+      return {
+        ...state,
+        newsFeed: action.data,
+      };
+    case actionTypes.showEmptyNewsFeed:
+      return {
+        ...state,
+        showNewsFeedEmptyState: action.data.showNewsFeedEmptyState,
+      };
     case actionTypes.addErrorToCurrencyGraph:
       return {
         ...state,
         graphError: action.data,
+      };
+    case actionTypes.addPriceTicker:
+      return {
+        ...state,
+        priceTicker: action.data,
       };
     default:
       return state;

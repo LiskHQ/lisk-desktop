@@ -200,7 +200,7 @@ describe('@integration: Wallet', () => {
         match.defined,
         match.defined,
         null,
-        undefined,
+        'Account initialization',
       ).returnsPromise().resolves({ data: [] });
     });
 

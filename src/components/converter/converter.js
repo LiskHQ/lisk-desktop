@@ -1,8 +1,6 @@
 import React from 'react';
-import liskServiceApi from '../../utils/api/liskService';
 import Input from '../toolbox/inputs/input';
 import { fromRawLsk } from '../../utils/lsk';
-
 import fees from './../../constants/fees';
 import converter from './../../constants/converter';
 
@@ -19,19 +17,11 @@ class Converter extends React.Component {
     };
     this.fee = fees.send;
 
-    this.updateData();
-  }
-
-  updateData() {
-    liskServiceApi.getPriceTicker().then((response) => {
-      this.setState({ ...response });
-    }).catch((error) => {
-      this.setState({ error });
-    });
+    this.props.getPriceTicker();
   }
 
   render() {
-    const { LSK } = this.state;
+    const { LSK } = this.props.priceTicker;
     const currency = this.props.settings.currency || 'USD';
 
     let price = !!this.props.error && Number.isNaN(this.props.value) ?
@@ -44,9 +34,11 @@ class Converter extends React.Component {
         error={this.props.error}
         value={this.props.value}
         theme={styles}
-        onChange={this.props.onChange} >
+        onFocus={this.props.onFocus}
+        onBlur={this.props.onBlur}
+        onChange={this.props.onChange}>
         <div className={styles.convertorWrapper}>
-          {this.props.value !== '' && this.state.LSK[currency] ?
+          {this.props.value !== '' && this.props.priceTicker.LSK[currency] ?
             <div className={this.props.error ? `${styles.convertorErr} convertorErr` : `${styles.convertor} convertor`}>
               <div className={`${styles.convertElem}`}>
                 {this.props.t('ca.')}
