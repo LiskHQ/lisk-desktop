@@ -23,10 +23,13 @@ module.exports = merge(baseConfig, reactConfig, {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
+    /*
+     * TODO re-enable when #1439 is fixed
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
       mangle: false,
     }),
+    */
     new NamedModulesPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
