@@ -1,13 +1,13 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { fromRawLsk, toRawLsk } from '../../utils/lsk';
-import AccountVisual from '../accountVisual';
-import { Button, PrimaryButton } from './../toolbox/buttons/button';
-import Input from '../toolbox/inputs/input';
-import fees from './../../constants/fees';
-import styles from './sendReadable.css';
+import { fromRawLsk, toRawLsk } from '../../../../utils/lsk';
+import AccountVisual from '../../../accountVisual';
+import { Button, PrimaryButton } from '../../../toolbox/buttons/button';
+import Input from '../../../toolbox/inputs/input';
+import fees from '../../../../constants/fees';
+import styles from './confirm.css';
 
-class SendReadable extends React.Component {
+class Confirm extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -181,4 +181,4 @@ class SendReadable extends React.Component {
   }
 }
 
-export default SendReadable;
+export default Confirm;
