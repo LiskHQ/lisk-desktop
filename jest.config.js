@@ -82,7 +82,7 @@ module.exports = {
     // '<rootDir>/src/components/confirmVotes/index.test.js',
     // '<rootDir>/src/components/passphraseInput/index.test.js',
     // '<rootDir>/src/components/search/keyAction.test.js',
-    // '<rootDir>/src/components/search/searchResult.test.js',
+    // '<rootDir>/src/components/search/index.test.js',
     // '<rootDir>/src/components/dialog/options.test.js',
     // '<rootDir>/src/components/dialog/alert.test.js',
     // '<rootDir>/src/components/dialog/dialog.test.js',

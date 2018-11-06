@@ -2,7 +2,7 @@ import { translate } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { FontIcon } from '../fontIcon';
-import Input from '../toolbox/inputs/input';
+import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import { isValidPassphrase, getPassphraseValidationErrors } from '../../utils/passphrase';
 import styles from './passphraseInput.css';
 import keyCodes from './../../constants/keyCodes';
@@ -105,7 +105,7 @@ class PassphraseInput extends React.Component {
             <div className={grid.row}>
               {[...Array(12)].map((x, i) =>
                 <div className={`${grid[xs]} ${grid[sm]} ${grid[md]}`} key={i}>
-                  <Input
+                  <ToolBoxInput
                     shouldfocus={this.state.focus === i ? 1 : 0}
                     placeholder={i === 0 ? this.props.t('Start here') : ''}
                     className={`${this.props.className} ${styles.partial} ${this.state.partialPassphraseError[i] ? styles.error : ''}`}
@@ -134,7 +134,7 @@ class PassphraseInput extends React.Component {
             <div className={styles.errorMessage}>{this.props.error}</div>
           </div>
           :
-          <Input label={this.props.label}
+          <ToolBoxInput label={this.props.label}
             className={`${this.props.className} ${styles.inputWrapper}`}
             type={this.state.inputType}
             onChange={this.focusAndPaste.bind(this)}

@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountVisual from '../accountVisual/index';
-import Input from '../toolbox/inputs/input';
+import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import keyCodes from './../../constants/keyCodes';
 import regex from './../../utils/regex';
 
@@ -131,7 +131,7 @@ class Bookmark extends React.Component {
             size={50}
           /> : null}
           <div className={styles.children}>{this.state.title}</div>
-          <Input
+          <ToolBoxInput
             type='text'
             id='bookmark-input'
             className={`${className}
@@ -163,7 +163,7 @@ class Bookmark extends React.Component {
               handleChange(val);
             }}
             >
-          </Input>
+          </ToolBoxInput>
           { this.state.show && filteredFollowedAccounts.length !== 0 ?
             <ul className={`${filteredFollowedAccounts.length > 0 ? styles.resultList : ''}
               ${this.state.show ? styles.show : ''}

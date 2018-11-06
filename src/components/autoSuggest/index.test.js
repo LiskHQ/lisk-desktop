@@ -156,7 +156,7 @@ describe('AutoSuggest', () => {
     });
     expect(saveSearchSpy).not.to.have.been.calledWith();
     expect(props.history.push).to.have.been
-      .calledWith(`${routes.searchResult.pathPrefix}${routes.searchResult.path}/notExistingDelegate`);
+      .calledWith(`${routes.search.pathPrefix}${routes.search.path}/notExistingDelegate`);
   });
 
   it('should redirect to entity result page when not yet suggestions and pattern matching', () => {

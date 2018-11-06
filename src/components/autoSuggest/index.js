@@ -90,7 +90,7 @@ class AutoSuggest extends React.Component {
     }
 
     if (!searchType) {
-      this.props.history.push(`${routes.searchResult.pathPrefix}${routes.searchResult.path}/${encodeURIComponent(this.state.value)}`);
+      this.props.history.push(`${routes.search.pathPrefix}${routes.search.path}/${encodeURIComponent(this.state.value)}`);
       return;
     }
     this.onResultClick(this.state.value, searchType, this.state.value);
