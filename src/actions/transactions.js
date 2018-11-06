@@ -31,6 +31,7 @@ export const transactionsFilterSet = ({
         confirmed: response.data,
         count: parseInt(response.meta.count, 10),
         filter,
+        address,
       },
       type: actionTypes.transactionsFiltered,
     });
@@ -84,6 +85,7 @@ export const loadTransactions = ({ publicKey, address }) =>
           data: {
             count: parseInt(transactionsResponse.meta.count, 10),
             confirmed: transactionsResponse.data,
+            address,
           },
           type: actionTypes.transactionsLoaded,
         });
@@ -194,6 +196,7 @@ export const transactionsUpdated = ({
           data: {
             confirmed: response.data,
             count: parseInt(response.meta.count, 10),
+            address,
           },
           type: actionTypes.transactionsUpdated,
         });

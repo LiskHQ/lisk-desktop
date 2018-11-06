@@ -12,7 +12,13 @@ class ExplorerTransactions extends React.Component {
     this.props.searchAccount({
       address: this.props.address,
     });
-    this.props.searchTransactions({
+    // this.props.searchTransactions({
+    //   address: this.props.address,
+    //   limit: 25,
+    //   filter: txFilters.all,
+    // });
+
+    this.props.transactionsFilterSet({
       address: this.props.address,
       limit: 25,
       filter: txFilters.all,
@@ -30,6 +36,7 @@ class ExplorerTransactions extends React.Component {
       offset,
     });
   }
+
 
   onLoadMore() {
     this.props.searchMoreTransactions({
@@ -68,6 +75,8 @@ class ExplorerTransactions extends React.Component {
   }
 
   render() {
+    console.log('PROPS', this.props);
+
     const overviewProps = {
       ...this.props,
       onInit: this.onInit.bind(this),
