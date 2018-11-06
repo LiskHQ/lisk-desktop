@@ -4,10 +4,11 @@ import localJSONStorage from './localJSONStorage';
 export const updateDelegateCache = (delegates, activePeer) => {
   const network = activePeer.currentNode;
   const savedDelegates = localJSONStorage.get(`delegateCache-${network}`, {});
-  const formatedDelegates = delegates.reduce((delegate, { address, publicKey, username }) => {
-    delegate[address] = { publicKey, username };
-    return delegate;
-  }, {});
+  const formatedDelegates = delegates
+    .reduce((newDelegates, { account, publicKey, username }) => {
+      const delegate = { [account.address]: { publicKey, username } };
+      return Object.assign(newDelegates, delegate);
+    }, {});
   const updatedDelegates = { ...formatedDelegates, ...savedDelegates };
 
   localJSONStorage.set(`delegateCache-${network}`, updatedDelegates);
