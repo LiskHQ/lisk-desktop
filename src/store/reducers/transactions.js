@@ -20,7 +20,7 @@ const transactions = (state = initialState, action) => {
       });
     case actionTypes.transactionFailedClear:
       return Object.assign({}, state, {
-        failed: {},
+        failed: undefined,
       });
     case actionTypes.transactionsFailed:
       return Object.assign({}, state, {
