@@ -2,7 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './votingListView.css';
 
-class VotingRow extends React.Component {
+class VoteRow extends React.Component {
   shouldComponentUpdate({ data }) {
     const oldData = this.props.data;
     return (!oldData && !!data) ||
@@ -25,4 +25,4 @@ class VotingRow extends React.Component {
   }
 }
 
-export default VotingRow;
+export default VoteRow;

@@ -4,12 +4,12 @@ import Box from '../box';
 import EmptyState from '../emptyState';
 import styles from './search.css';
 
-const Search = ({ t }) => (
+const SearchResult = ({ t }) => (
   <Box className={styles.resultWrapper}>
     <EmptyState title={t('No results')}
       message={t('Search for Lisk ID or Transaction ID')} />
   </Box>
 );
 
-export default translate()(Search);
+export default translate()(SearchResult);
 

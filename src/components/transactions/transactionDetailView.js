@@ -17,7 +17,7 @@ import transactions from './../../constants/transactionTypes';
 import TransactionDetailViewField from './transactionDetailViewField';
 import TransactionDetailViewRow from './transactionDetailViewRow';
 
-class TransactionsDetailView extends React.Component {
+class TransactionDetailView extends React.Component {
   constructor(props) {
     super(props);
 
@@ -237,5 +237,5 @@ const mapDispatchToProps = dispatch => ({
   loadTransaction: data => dispatch(loadTransaction(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(TransactionsDetailView));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(TransactionDetailView));
 

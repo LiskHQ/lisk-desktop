@@ -8,7 +8,7 @@ import routes from './../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
 import localJSONStorage from './../../utils/localJSONStorage';
 import regex from './../../utils/regex';
-import { saveSearch } from './../search/keyAction';
+import { saveSearch } from './../searchResult/keyAction';
 import { searchEntities } from './../../constants/search';
 
 class AutoSuggest extends React.Component {

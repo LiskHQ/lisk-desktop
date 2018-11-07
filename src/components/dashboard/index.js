@@ -6,7 +6,7 @@ import React from 'react';
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import { loadTransactions } from '../../actions/transactions';
-import TransactionList from './../transactions/transactionList';
+import TransactionsList from '../transactions/transactionsList';
 import CurrencyGraph from './currencyGraph';
 import routes from '../../constants/routes';
 import FollowedAccounts from '../followedAccounts/index';
@@ -48,7 +48,7 @@ class Dashboard extends React.Component {
               </Link>
             </h2>
           </header>
-          <TransactionList {...{
+          <TransactionsList {...{
             transactions,
             t,
             address: account.address,

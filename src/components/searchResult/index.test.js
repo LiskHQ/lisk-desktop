@@ -2,11 +2,11 @@ import React from 'react';
 import { expect } from 'chai';
 
 import { mountWithContext } from '../../../test/utils/mountHelpers';
-import Search from './index';
+import SearchResult from './index';
 
-describe('Search', () => {
+describe('SearchResult', () => {
   it('should render noResults compoennt" ', () => {
-    const wrapper = mountWithContext(<Search />, {});
+    const wrapper = mountWithContext(<SearchResult />, {});
     expect(wrapper.find('EmptyState')).to.be.present();
     expect(wrapper.find('EmptyState')).to.have.prop('title', 'No results');
   });

@@ -59,11 +59,11 @@ describe('VotingListView', () => {
   });
 
   it('should render VotingHeader', () => {
-    expect(wrapper.find('VotingHeaderRaw')).to.have.lengthOf(1);
+    expect(wrapper.find('VotingHeader')).to.have.lengthOf(1);
   });
 
-  it('should render VotingRow', () => {
-    expect(wrapper.find('VotingRow')).to.have.lengthOf(delegates.length);
+  it('should render VoteRow', () => {
+    expect(wrapper.find('VoteRow')).to.have.lengthOf(0);
   });
 
   it('should render delegate-list section', () => {

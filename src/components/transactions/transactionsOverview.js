@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Waypoint from 'react-waypoint';
 import EmptyState from '../emptyState';
-import TransactionList from './transactionList';
+import TransactionsList from './transactionsList';
 import styles from './transactions.css';
-import txFilters from './../../constants/transactionFilters';
-import { getIndexOfFollowedAccount } from './../../utils/followedAccounts';
+import txFilters from '../../constants/transactionFilters';
+import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
 
 class TransactionsOverview extends React.Component {
   constructor(props) {
@@ -115,7 +115,7 @@ class TransactionsOverview extends React.Component {
           </ul>
         }
         {
-          <TransactionList
+          <TransactionsList
             filter={filters[this.props.activeFilter]}
             delegate={this.props.delegate}
             votes={this.props.votes}

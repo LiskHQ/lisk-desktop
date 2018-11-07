@@ -1,7 +1,7 @@
 import React from 'react';
 import MultiStep from './../multiStep';
 import styles from './transactions.css';
-import TransactionOverview from './transactionOverview';
+import TransactionsOverview from './transactionsOverview';
 import TransactionDetailView from './transactionDetailView';
 import Box from '../box';
 
@@ -10,7 +10,7 @@ class Transactions extends React.Component {
     return (
       <Box>
         <MultiStep className={styles.transactions}>
-          <TransactionOverview {...this.props} />
+          <TransactionsOverview {...this.props} />
           <TransactionDetailView {...this.props} />
         </MultiStep>
       </Box>
