@@ -54,6 +54,7 @@ export const transactionsUpdateUnconfirmed = ({ address, pendingTransactions }) 
       data: {
         failed: pendingTransactions.filter(tx =>
           response.data.filter(unconfirmedTx => tx.id === unconfirmedTx.id).length === 0),
+        address,
       },
       type: actionTypes.transactionsFailed,
     }));
@@ -238,6 +239,7 @@ export const sent = ({
             asset: {
               data,
             },
+            address: account.address,
           },
           type: actionTypes.transactionAdded,
         });

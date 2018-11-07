@@ -27,26 +27,31 @@ const transactions = (state = initialState, action) => {
       });
     case actionTypes.transactionsLoaded:
       return Object.assign({}, state, {
-        confirmed: [
-          ...state.confirmed,
-          ...action.data.confirmed,
-        ],
-        count: action.data.count,
+        [action.data.address]: {
+          confirmed: [
+            ...state[action.data.address].confirmed,
+            ...action.data.confirmed,
+          ],
+          count: action.data.count,
+        },
       });
     case actionTypes.transactionsUpdated:
       return Object.assign({}, state, {
-        // Filter any newly confirmed transaction from pending
-        pending: state.pending.filter(pendingTransaction =>
-          action.data.confirmed.filter(transaction =>
-            transaction.id === pendingTransaction.id).length === 0),
-        // Add any newly confirmed transaction to confirmed
-        confirmed: [
-          ...action.data.confirmed,
-          ...state.confirmed.filter(confirmedTransaction =>
-            action.data.confirmed.filter(transaction =>
-              transaction.id === confirmedTransaction.id).length === 0),
-        ],
-        count: action.data.count,
+        [action.data.address]: {
+          // Filter any newly confirmed transaction from pending
+          pending: state[action.data.address].pending ?
+            state[action.data.address].pending.filter(pendingTransaction =>
+              action.data.confirmed.filter(transaction =>
+                transaction.id === pendingTransaction.id).length === 0) : [],
+          // Add any newly confirmed transaction to confirmed
+          confirmed: [
+            ...action.data.confirmed,
+            ...state[action.data.address].confirmed.filter(confirmedTransaction =>
+              action.data.confirmed.filter(transaction =>
+                transaction.id === confirmedTransaction.id).length === 0),
+          ],
+          count: action.data.count,
+        },
       });
     case actionTypes.transactionsFiltered:
       return Object.assign({}, state, {
