@@ -211,9 +211,9 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
       txs.pending.length !== 0
     );
 
-    if (windowFocus || hasRecentTransactions(transactions)) {
-      const { filter } = transactions;
-      const address = transactions.account ? transactions.account.address : account.address;
+    if (windowFocus || hasRecentTransactions(transactions[account.address])) {
+      const { filter } = transactions[account.address];
+      const address = transactions[account.address].account ? transactions[account.address].account.address : account.address;
 
       dispatch(transactionsUpdated({
         pendingTransactions: transactions[account.address].pending || [],

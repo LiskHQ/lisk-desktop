@@ -383,7 +383,9 @@ describe('actions: account', () => {
 
     it('should update transactions when window is in focus', () => {
       const data = {
-        transactions: { confirmed: [{ confirmations: 10 }], pending: [] },
+        transactions: {
+          [accounts.genesis.address]: { confirmed: [{ confirmations: 10 }], pending: [] },
+        },
         account: { address: accounts.genesis.address },
       };
 
@@ -393,7 +395,9 @@ describe('actions: account', () => {
 
     it('should update transactions when there are no recent transactions', () => {
       const data = {
-        transactions: { confirmed: [{ confirmations: 10000 }], pending: [{ id: '123' }] },
+        transactions: {
+          [accounts.genesis.address]: { confirmed: [{ confirmations: 10000 }], pending: [{ id: '123' }] },
+        },
         account: { address: accounts.genesis.address },
       };
 

@@ -12,6 +12,7 @@ import accountReducer from '../../store/reducers/account';
 import searchReducer from '../../store/reducers/search';
 import loadingReducer from '../../store/reducers/loading';
 import filtersReducer from '../../store/reducers/filters';
+import transactionsReducer from '../../store/reducers/transactions';
 import followedAccountsReducer from '../../store/reducers/followedAccounts';
 
 import { activePeerSet } from './../../../src/actions/peers';
@@ -35,6 +36,7 @@ describe('AccountTransaction Component', () => {
     search: searchReducer,
     loading: loadingReducer,
     filters: filtersReducer,
+    transactions: transactionsReducer,
   }, [thunk]);
 
   beforeEach(() => {
