@@ -176,18 +176,6 @@ class confirmSecond extends React.Component {
             onClick={() => history.push(`${routes.dashboard.path}`) }
           />
         </TransitionWrapper>
-        {/*
-        <TransitionWrapper current={this.state.step} step='second-passphrase-register-failure'>
-          <form onSubmit={this.redirectToFirstStep.bind(this)}>
-            <PrimaryButton
-              disabled={false}
-              label={t('Try again')}
-              className={'second-passphrase-register-failure'}
-              onClick={this.redirectToFirstStep.bind(this)}
-            />
-          </form>
-        </TransitionWrapper>
-        */ }
       </div>
     </section>);
   }
