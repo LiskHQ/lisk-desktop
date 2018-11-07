@@ -1,8 +1,8 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import i18next from 'i18next';
-import Dropdown from '../toolbox/dropdown/dropdown';
-import Input from '../toolbox/inputs/input';
+import ToolBoxDropdown from '../toolbox/dropdown/toolBoxDropdown';
+import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import { PrimaryButton } from '../toolbox/buttons/button';
 import { extractAddress } from '../../utils/account';
 // eslint-disable-next-line import/no-named-as-default
@@ -229,7 +229,7 @@ class Login extends React.Component {
             <header>
               {this.showNetworkOptions()
                 ? <div>
-                    <Dropdown
+                    <ToolBoxDropdown
                       auto={false}
                       source={networkList}
                       onChange={this.changeHandler.bind(this, 'network')}
@@ -239,7 +239,7 @@ class Login extends React.Component {
                     />
                     {
                       this.state.network === networks.customNode.code &&
-                      <Input type='text'
+                      <ToolBoxInput type='text'
                              label={this.props.t('Enter IP or domain address of the node')}
                              name='address'
                              className={`address ${styles.outTaken}`}

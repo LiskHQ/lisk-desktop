@@ -10,7 +10,7 @@ import Fees from './../../constants/fees';
 import routes from './../../constants/routes';
 
 
-export class VotingHeaderRaw extends React.Component {
+class VotingHeader extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -122,4 +122,4 @@ export class VotingHeaderRaw extends React.Component {
     );
   }
 }
-export default translate()(VotingHeaderRaw);
+export default translate()(VotingHeader);

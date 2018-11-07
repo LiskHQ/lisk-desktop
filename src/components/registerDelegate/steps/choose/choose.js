@@ -3,7 +3,7 @@ import TransitionWrapper from '../../../toolbox/transitionWrapper';
 import Fees from '../../../../constants/fees';
 import { fromRawLsk } from '../../../../utils/lsk';
 import { PrimaryButton } from '../../../toolbox/buttons/button';
-import Input from '../../../toolbox/inputs/input';
+import ToolBoxInput from '../../../toolbox/inputs/toolBoxInput';
 import { FontIcon } from '../../../fontIcon';
 
 import stepStyles from '../steps.css';
@@ -134,7 +134,7 @@ class Choose extends React.Component {
             <div className={`${stepStyles.secondContainer} ${stepStyles.containerWithBg}`}>
               <form className={`${stepStyles.form}`}
                 onSubmit={this.validateDelegateName.bind(this, 'delegateName')}>
-                <Input
+                <ToolBoxInput
                   placeholder={this.props.t('Write to check availability')}
                   required={true}
                   shouldfocus="true"

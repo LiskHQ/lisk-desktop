@@ -28,7 +28,7 @@ describe('DelegateList', () => {
 
   it('should render no delegates in first render period', () => {
     const wrapper = mount(<DelegateList {...props} />);
-    expect(wrapper.find('DelegateRow')).to.have.lengthOf(0);
+    expect(wrapper.find('DelegateRow')).to.have.lengthOf(3);
   });
 
   it('should render all the delegates in props.list after component received new props', () => {

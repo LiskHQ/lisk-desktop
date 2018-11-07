@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { spy } from 'sinon';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
-import TransactionsList from './transactionList';
+import TransactionsList from './transactionsList';
 
 import { prepareStore } from '../../../test/utils/applicationInit';
 import peersReducer from '../../store/reducers/peers';

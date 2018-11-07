@@ -2,7 +2,7 @@ import React from 'react';
 import Lisk from 'lisk-elements';
 import styles from './confirmMessage.css';
 import { Button } from '../toolbox/buttons/button';
-import Input from '../toolbox/inputs/input';
+import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import { passphraseIsValid } from '../../utils/form';
 import { extractPublicKey } from '../../utils/account';
 // eslint-disable-next-line import/no-named-as-default
@@ -90,7 +90,7 @@ class ConfirmMessage extends React.Component {
         <section className={`${styles.table} ${styles.verify} ${this.state.step === 'verify' ? styles.content : ''}`}>
           <TransitionWrapper current={this.state.step} step='done'>
             <div className={styles.resultWrapper}>
-              <Input className={`${styles.result} result`} multiline readOnly value={this.state.result} />
+              <ToolBoxInput className={`${styles.result} result`} multiline readOnly value={this.state.result} />
             </div>
           </TransitionWrapper>
 
