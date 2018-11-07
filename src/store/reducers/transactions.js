@@ -10,12 +10,14 @@ const transactions = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.cleanTransactions:
       return initialState;
-    case actionTypes.transactionAdded:
+    case actionTypes.transactionAdded: {
       return Object.assign({}, state, {
         [action.data.address]: {
-          pending: [action.data, ...state.pending],
+          pending: [action.data, ...state[action.data.address] ?
+            state[action.data.address].pending || [] : []],
         },
       });
+    }
     case actionTypes.transactionFailed:
       return Object.assign({}, state, {
         failed: { errorMessage: action.data.errorMessage },
@@ -24,9 +26,10 @@ const transactions = (state = initialState, action) => {
       return Object.assign({}, state, {
         [action.data.address]: {
           // Filter any failed transaction from pending
-          pending: state.pending.filter(pendingTransaction =>
-            action.data.failed.filter(transaction =>
-              transaction.id === pendingTransaction.id).length === 0),
+          pending: state[action.data.address] ?
+            [ ...state[action.data.address].pending || [] ].filter(pendingTransaction =>
+              action.data.failed.filter(transaction =>
+                transaction.id === pendingTransaction.id).length === 0),
         },
       });
     case actionTypes.transactionsLoaded:

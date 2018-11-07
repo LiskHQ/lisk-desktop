@@ -183,7 +183,7 @@ module.exports = {
     // '<rootDir>/src/store/reducers/account.test.js',
     // '<rootDir>/src/store/reducers/loding.test.js',
     // '<rootDir>/src/store/reducers/followedAccounts.test.js',
-    // '<rootDir>/src/store/reducers/transactions.test.js',
+    '<rootDir>/src/store/reducers/transactions.test.js',
     // '<rootDir>/src/store/reducers/peers.test.js',
     // '<rootDir>/src/store/reducers/toater.test.js',
     // '<rootDir>/src/store/reducers/settings.test.js',

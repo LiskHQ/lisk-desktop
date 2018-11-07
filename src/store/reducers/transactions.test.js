@@ -3,36 +3,38 @@ import transactions from './transactions';
 import actionTypes from '../../constants/actions';
 import txFilter from '../../constants/transactionFilters';
 
-describe('Reducer: transactions(state, action)', () => {
-  const defaultState = {
-    pending: [],
-    confirmed: [],
-  };
+describe.only('Reducer: transactions(state, action)', () => {
+  const defaultState = { };
   const mockTransactions = [{
     amount: 100000000000,
     id: '16295820046284152875',
     timestamp: 33505748,
+    address: 'my-address',
   }, {
     amount: 200000000000,
     id: '8504241460062789191',
     timestamp: 33505746,
+    address: 'my-address',
   }, {
     amount: 300000000000,
     id: '18310904473760006068',
     timestamp: 33505743,
+    address: 'my-address',
   }];
 
   it('should prepend action.data to state.pending if action.type = actionTypes.transactionAdded', () => {
     const state = {
       ...defaultState,
-      pending: [mockTransactions[1]],
+      'my-address': {
+        pending: [mockTransactions[1]],
+      }
     };
     const action = {
       type: actionTypes.transactionAdded,
       data: mockTransactions[0],
     };
     const changedState = transactions(state, action);
-    expect(changedState).to.deep.equal({ ...state, pending: [action.data, ...state.pending] });
+    expect(changedState).to.deep.equal({ ...state, 'my-address': { pending: [action.data, ...state['my-address'].pending] } });
   });
 
   it('should add property `failed` with error message if action.type = actionTypes.transactionFailed', () => {

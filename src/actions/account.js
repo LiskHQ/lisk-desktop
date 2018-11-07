@@ -108,6 +108,7 @@ export const secondPassphraseRegistered = ({ secondPassphrase, account, passphra
             amount: 0,
             fee: Fees.setSecondPassphrase,
             type: transactionTypes.setSecondPassphrase,
+            address: account.address,
           },
           type: actionTypes.transactionAdded,
         });
@@ -151,6 +152,7 @@ export const delegateRegistered = ({
             amount: 0,
             fee: Fees.registerDelegate,
             type: transactionTypes.registerDelegate,
+            address: account.address,
           },
           type: actionTypes.transactionAdded,
         });
@@ -213,7 +215,8 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
 
     if (windowFocus || hasRecentTransactions(transactions[account.address])) {
       const { filter } = transactions[account.address];
-      const address = transactions[account.address].account ? transactions[account.address].account.address : account.address;
+      const address = transactions[account.address].account ?
+        transactions[account.address].account.address : account.address;
 
       dispatch(transactionsUpdated({
         pendingTransactions: transactions[account.address].pending || [],
