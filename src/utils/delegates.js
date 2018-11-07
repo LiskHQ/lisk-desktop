@@ -1,22 +1,17 @@
 
 import localJSONStorage from './localJSONStorage';
 
-export const updateDelegateCache = (delegates, activePeer) => {
-  const network = activePeer.currentNode;
-  const savedDelegates = localJSONStorage.get(`delegateCache-${network}`, {});
+export const updateDelegateCache = (delegates, networkCode) => {
+  const savedDelegates = localJSONStorage.get(`delegateCache-${networkCode}`, {});
   const formatedDelegates = delegates
-    .reduce((newDelegates, { account, publicKey, username }) => {
-      const delegate = { [account.address]: { publicKey, username } };
-      return Object.assign(newDelegates, delegate);
+    .reduce((newDelegates, delegate) => {
+      const delegateObj = { [delegate.username]: delegate.account };
+      return Object.assign(newDelegates, delegateObj);
     }, {});
   const updatedDelegates = { ...formatedDelegates, ...savedDelegates };
 
-  localJSONStorage.set(`delegateCache-${network}`, updatedDelegates);
+  localJSONStorage.set(`delegateCache-${networkCode}`, updatedDelegates);
 };
 
-export const loadDelegateCache = (activePeer) => {
-  // TODO network just based on currentNode will not work well on Mainnet
-  // because there are multiplercurrentNode options for Mainnet
-  const network = activePeer.currentNode;
-  return localJSONStorage.get(`delegateCache-${network}`, {});
-};
+export const loadDelegateCache = networkCode =>
+  localJSONStorage.get(`delegateCache-${networkCode}`, {});
