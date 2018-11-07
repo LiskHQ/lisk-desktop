@@ -8,30 +8,25 @@ import ExplorerTransactions from './explorerTransactions';
 import txFilters from './../../../constants/transactionFilters';
 
 /* istanbul ignore next */
-const mapStateToProps = (state, ownProps) => {
-  console.log('ExplorerTransactionsA', state.search.searchResults);
-  console.log('ExplorerTransactionsB', state.search.transactions);
-  console.log('ExplorerTransactionsC', state.search.transactions[ownProps.address]);
-  console.log('ExplorerTransactionsD', state.transactions[ownProps.address]);
-  return {
-    delegate: state.search.delegates[state.search.lastSearch],
-    transaction: state.transaction,
-    // transactions: [...state.transactions.pending, ...state.transactions.confirmed],
-    transactions: [],
-    // transactions: state.search.searchResults,
-    votes: state.search.votes[state.search.lastSearch],
-    voters: state.search.voters[state.search.lastSearch],
-    votersSize: state.search.votersSize &&
-      state.search.votersSize[state.search.lastSearch] ?
-      state.search.votersSize[state.search.lastSearch] : 0,
-    count: state.search.transactions[state.search.lastSearch] &&
-      (state.search.transactions[state.search.lastSearch].count || null),
-    offset: state.search.searchResults.length,
-    activeFilter: state.filters.transactions || txFilters.all,
-    isSearchInStore: state.search.transactions[ownProps.address] !== undefined,
-    loading: state.loading,
-  };
-};
+const mapStateToProps = (state, ownProps) => ({
+  delegate: state.search.delegates[state.search.lastSearch],
+  transaction: state.transaction,
+  transactions: state.transactions[ownProps.address] ?
+    [
+      ...state.transactions[ownProps.address].pending || [],
+      ...state.transactions[ownProps.address].confirmed,
+    ] : [],
+  votes: state.search.votes[state.search.lastSearch],
+  voters: state.search.voters[state.search.lastSearch],
+  votersSize: state.search.votersSize &&
+    state.search.votersSize[state.search.lastSearch] ?
+    state.search.votersSize[state.search.lastSearch] : 0,
+  count: state.transactions[ownProps.address] ?
+    state.transactions[ownProps.address].count : 0,
+  activeFilter: state.filters.wallet || txFilters.all,
+  isSearchInStore: state.search.transactions[ownProps.address] !== undefined,
+  loading: state.loading,
+});
 
 /* istanbul ignore next */
 const mapDispatchToProps = dispatch => ({

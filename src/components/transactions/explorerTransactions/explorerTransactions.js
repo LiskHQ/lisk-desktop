@@ -12,11 +12,11 @@ class ExplorerTransactions extends React.Component {
     this.props.searchAccount({
       address: this.props.address,
     });
-    // this.props.searchTransactions({
-    //   address: this.props.address,
-    //   limit: 25,
-    //   filter: txFilters.all,
-    // });
+    this.props.searchTransactions({
+      address: this.props.address,
+      limit: 25,
+      filter: txFilters.all,
+    });
 
     this.props.transactionsFilterSet({
       address: this.props.address,
@@ -25,7 +25,7 @@ class ExplorerTransactions extends React.Component {
     });
 
     this.props.addFilter({
-      filterName: 'transactions',
+      filterName: 'wallet',
       value: txFilters.all,
     });
   }
@@ -39,10 +39,10 @@ class ExplorerTransactions extends React.Component {
 
 
   onLoadMore() {
-    this.props.searchMoreTransactions({
+    this.props.transactionsRequested({
       address: this.props.address,
       limit: 25,
-      offset: this.props.offset,
+      offset: this.props.transactions.length,
       filter: this.props.activeFilter,
     });
   }
@@ -53,15 +53,15 @@ class ExplorerTransactions extends React.Component {
   */
   onFilterSet(filter) {
     if (filter <= 2) {
-      this.props.searchTransactions({
+      this.props.transactionsFilterSet({
         address: this.props.address,
         limit: 25,
         filter,
-        showLoading: false,
+        // showLoading: false,
       });
     } else {
       this.props.addFilter({
-        filterName: 'transactions',
+        filterName: 'wallet',
         value: filter,
       });
     }
@@ -75,8 +75,6 @@ class ExplorerTransactions extends React.Component {
   }
 
   render() {
-    console.log('PROPS', this.props);
-
     const overviewProps = {
       ...this.props,
       onInit: this.onInit.bind(this),
