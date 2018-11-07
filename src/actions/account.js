@@ -216,7 +216,7 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
       const address = transactions.account ? transactions.account.address : account.address;
 
       dispatch(transactionsUpdated({
-        pendingTransactions: transactions.pending,
+        pendingTransactions: transactions[account.address].pending || [],
         address,
         limit: 25,
         filter,
