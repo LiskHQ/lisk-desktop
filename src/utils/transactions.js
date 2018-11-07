@@ -1,6 +1,6 @@
 
 export default (pendingTransactions, confirmedTransactions) =>
-  [...pendingTransactions, ...confirmedTransactions].filter((thing, index, self) =>
-    index === self.findIndex(t => (
-      t.id === thing.id
+  [...pendingTransactions, ...confirmedTransactions].filter((transactionA, index, self) =>
+    index === self.findIndex(transactionB => (
+      transactionB.id === transactionA.id
     )));
