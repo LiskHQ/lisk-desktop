@@ -1,11 +1,11 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { fromRawLsk, toRawLsk } from '../../utils/lsk';
-import AccountVisual from '../accountVisual';
-import { Button, PrimaryButton } from './../toolbox/buttons/button';
-import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
-import fees from './../../constants/fees';
-import styles from './sendReadable.css';
+import { fromRawLsk, toRawLsk } from '../../../../utils/lsk';
+import AccountVisual from '../../../accountVisual';
+import { Button, PrimaryButton } from './../../../toolbox/buttons/button';
+import ToolBoxInput from '../../../toolbox/inputs/toolBoxInput';
+import fees from './../../../../constants/fees';
+import styles from './confirm.css';
 
 class Confirm extends React.Component {
   constructor() {
