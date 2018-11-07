@@ -5,7 +5,7 @@ import txFilter from '../../constants/transactionFilters';
  * @param {Array} state
  * @param {Object} action
  */
-const initialState = { pending: [], confirmed: [], count: null };
+const initialState = { };
 const transactions = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.cleanTransactions:
@@ -48,12 +48,12 @@ const transactions = (state = initialState, action) => {
               action.data.confirmed.filter(transaction =>
                 transaction.id === pendingTransaction.id).length === 0) : [],
           // Add any newly confirmed transaction to confirmed
-          confirmed: [
+          confirmed: state[action.data.address].confirmed ? [
             ...action.data.confirmed,
             ...state[action.data.address].confirmed.filter(confirmedTransaction =>
               action.data.confirmed.filter(transaction =>
                 transaction.id === confirmedTransaction.id).length === 0),
-          ],
+          ] : [],
           count: action.data.count,
         },
       });
