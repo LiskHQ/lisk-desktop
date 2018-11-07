@@ -135,6 +135,11 @@ describe('Login', () => {
       spyFn.restore();
       localStorage.removeItem('address');
     });
+
+    it('calls this.props.history.replace on signButton click', () => {
+      wrapper.find('.new-account-button').simulate('click');
+      expect(props.history.replace).to.have.been.calledWith(`${routes.register.path}`);
+    });
   });
 
   describe('After submission', () => {
