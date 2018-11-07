@@ -12,6 +12,7 @@ import routes from '../../constants/routes';
 import FollowedAccounts from '../followedAccounts/index';
 import QuickTips from '../quickTips';
 import NewsFeed from '../newsFeed';
+import removeDuplicateTransactions from '../../utils/transactions';
 
 import styles from './dashboard.css';
 
@@ -80,7 +81,10 @@ class Dashboard extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  transactions: [...state.transactions.pending, ...state.transactions.confirmed].slice(0, 5),
+  transactions: removeDuplicateTransactions(
+    state.transactions.pending,
+    state.transactions.confirmed,
+  ).slice(0, 5),
   pendingTransactions: state.transactions.pending,
   account: state.account,
   loading: state.loading.length > 0,
