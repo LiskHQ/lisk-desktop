@@ -12,7 +12,9 @@ const transactions = (state = initialState, action) => {
       return initialState;
     case actionTypes.transactionAdded:
       return Object.assign({}, state, {
-        pending: [action.data, ...state.pending],
+        [action.data.address]: {
+          pending: [action.data, ...state.pending],
+        },
       });
     case actionTypes.transactionFailed:
       return Object.assign({}, state, {
@@ -20,10 +22,12 @@ const transactions = (state = initialState, action) => {
       });
     case actionTypes.transactionsFailed:
       return Object.assign({}, state, {
-        // Filter any failed transaction from pending
-        pending: state.pending.filter(pendingTransaction =>
-          action.data.failed.filter(transaction =>
-            transaction.id === pendingTransaction.id).length === 0),
+        [action.data.address]: {
+          // Filter any failed transaction from pending
+          pending: state.pending.filter(pendingTransaction =>
+            action.data.failed.filter(transaction =>
+              transaction.id === pendingTransaction.id).length === 0),
+        },
       });
     case actionTypes.transactionsLoaded:
       return Object.assign({}, state, {
@@ -63,14 +67,16 @@ const transactions = (state = initialState, action) => {
       });
     case actionTypes.transactionsLoadFinish:
       return Object.assign({}, state, {
-        confirmed: action.data.confirmed,
-        count: action.data.count,
-        account: {
-          address: action.data.address,
-          balance: action.data.balance,
-          delegate: action.data.delegate,
+        [action.data.address]: {
+          confirmed: action.data.confirmed,
+          count: action.data.count,
+          account: {
+            address: action.data.address,
+            balance: action.data.balance,
+            delegate: action.data.delegate,
+          },
+          filter: txFilter.all,
         },
-        filter: txFilter.all,
       });
     case (actionTypes.accountSwitched):
       return { pending: [], confirmed: [], count: 0 };
