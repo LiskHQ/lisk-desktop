@@ -41,6 +41,7 @@ describe('actions: transactions', () => {
       const expectedAction = {
         count: 0,
         confirmed: [],
+        address: '15626650747375562521',
       };
 
       actionFunction(dispatch, getState);
@@ -219,6 +220,7 @@ describe('actions: transactions', () => {
         amount: toRawLsk(data.amount),
         fee: Fees.send,
         type: transactionTypes.send,
+        address: 'test_address',
       };
 
       actionFunction(dispatch, getState);

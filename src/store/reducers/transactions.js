@@ -33,7 +33,7 @@ const transactions = (state = initialState, action) => {
       return Object.assign({}, state, {
         [action.data.address]: {
           confirmed: [
-            ...state[action.data.address].confirmed,
+            ...state[action.data.address] ? state[action.data.address].confirmed : [],
             ...action.data.confirmed,
           ],
           count: action.data.count,
