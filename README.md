@@ -28,8 +28,8 @@ http://localhost:8080/#/?showNetwork=true
 If you are actively developing in a specific route, and want to be autologged in everytime you reload the page, please add the following to localStorage:
 
 ```
-localStorage.setItem('autologinUrl', 'http://localhost:4000') // desired node to log in into
-localStorage.setItem('autologinKey', 'wagon stock borrow episode laundry kitten salute link globe zero feed marble') // desired account passphrase
+localStorage.setItem('liskCoreUrl', 'http://localhost:4000') // desired node to log in into
+localStorage.setItem('loginKey', 'wagon stock borrow episode laundry kitten salute link globe zero feed marble') // desired account passphrase
 ```
 
 #### Build

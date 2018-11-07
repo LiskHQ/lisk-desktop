@@ -44,7 +44,7 @@ describe('Tx details', () => {
     cy.get(ss.txAmount).should('have.text', '-5');
     cy.get(ss.txFee).should('have.text', '0.1');
     cy.get(ss.txConfirmations).should('have.text', '');
-    cy.get(ss.txId).contains(/^\d{19}/);
+    cy.get(ss.txId).contains(/^\d{1,20}/);
     cy.get(ss.txReference).should('have.text', 'test-details');
     // After confirmation
     cy.get(ss.txDate, { timeout: txConfirmationTimeout }).contains(new Date().getFullYear());
@@ -62,7 +62,7 @@ describe('Tx details', () => {
     cy.get(ss.txRemovedVotes).should('not.exist');
     cy.get(ss.txFee).should('have.text', '1');
     cy.get(ss.txConfirmations).contains(/^\d/);
-    cy.get(ss.txId).contains(/^\d{19}/);
+    cy.get(ss.txId).contains(/^\d{1,20}/);
     cy.get(ss.txReference).should('have.text', '-');
   });
 
@@ -80,7 +80,7 @@ describe('Tx details', () => {
     cy.get(ss.txRemovedVotes).should('not.exist');
     // cy.get(ss.txFee).should('have.text', '25');
     cy.get(ss.txConfirmations).contains(/^\d/);
-    cy.get(ss.txId).contains(/^\d{19}/);
+    cy.get(ss.txId).contains(/^\d{1,20}/);
     cy.get(ss.txReference).should('have.text', '-');
   });
 
@@ -95,7 +95,7 @@ describe('Tx details', () => {
     cy.get(ss.txRemovedVotes).should('not.exist');
     cy.get(ss.txFee).should('have.text', '5');
     cy.get(ss.txConfirmations).contains(/^\d/);
-    cy.get(ss.txId).contains(/^\d{19}/);
+    cy.get(ss.txId).contains(/^\d{1,20}/);
     cy.get(ss.txReference).should('have.text', '-');
   });
 });
