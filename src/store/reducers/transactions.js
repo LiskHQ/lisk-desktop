@@ -20,7 +20,9 @@ const transactions = (state = initialState, action) => {
     }
     case actionTypes.transactionFailed:
       return Object.assign({}, state, {
-        failed: { errorMessage: action.data.errorMessage },
+        [action.data.address]: {
+          failed: { errorMessage: action.data.errorMessage },
+        },
       });
     case actionTypes.transactionsFailed:
       return Object.assign({}, state, {

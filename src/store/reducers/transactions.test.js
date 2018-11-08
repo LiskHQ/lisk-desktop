@@ -45,11 +45,24 @@ describe('Reducer: transactions(state, action)', () => {
     const errorMessage = 'transaction failed';
 
     const action = {
-      data: { errorMessage },
+      data: {
+        errorMessage,
+        address: 'my-address',
+      },
       type: actionTypes.transactionFailed,
     };
+
+    const expectedState = {
+      ...state,
+      'my-address': {
+        failed: {
+          errorMessage,
+        },
+      },
+    };
+    
     const changedState = transactions(state, action);
-    expect(changedState).to.deep.equal({ ...state, failed: { errorMessage } });
+    expect(changedState).to.deep.equal(expectedState);
   });
 
   it('should filter out failed transactions from pending', () => {

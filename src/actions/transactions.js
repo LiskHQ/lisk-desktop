@@ -246,7 +246,7 @@ export const sent = ({
       })
       .catch((error) => {
         const errorMessage = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
-        dispatch({ data: { errorMessage }, type: actionTypes.transactionFailed });
+        dispatch({ data: { errorMessage, address: account.address }, type: actionTypes.transactionFailed });
       });
     dispatch(passphraseUsed(passphrase));
   };
