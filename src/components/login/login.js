@@ -220,7 +220,7 @@ class Login extends React.Component {
         isLedgerLogin={this.state.isLedgerLogin} />;
     }
 
-    const networkList = [{ label: this.props.t('Choose Network'), disabled: true }, ...this.networks];
+    const networkList = [{ label: this.props.t('Choose Network') }, ...this.networks];
     return (this.props.account.loading ?
       <div className={styles.loadingWrapper}></div> :
       <Box className={styles.wrapper}>
@@ -235,7 +235,7 @@ class Login extends React.Component {
                       onChange={this.changeHandler.bind(this, 'network')}
                       label={this.props.t('Network to connect to')}
                       value={this.state.network}
-                      className='network'
+                      className={`network ${styles.network}`}
                     />
                     {
                       this.state.network === networks.customNode.code &&
