@@ -29,7 +29,7 @@ describe('PricedButton', () => {
     });
 
     it('renders a span saying "Fee: 5 LSK"', () => {
-      expect(wrapper.find(`.${styles.fee}`).text()).to.be.equal(i18n.t('Fee: {{fee}} LSK', { fee: 5 }));
+      expect(wrapper.find(`.${styles.fee}`).text()).to.be.equal(i18n.t('Fee: {{amount}} LSK', { amount: 5 }));
     });
 
     it('allows to click on Button', () => {
@@ -44,7 +44,7 @@ describe('PricedButton', () => {
     });
 
     it('renders a span saying "Insufficient funds for 5 LSK fee"', () => {
-      expect(wrapper.find(`.${styles.fee}`).text()).to.be.equal('Insufficient funds for 5 LSK fee');
+      expect(wrapper.find(`.${styles.fee}`).text()).to.be.equal(i18n.t('Insufficient funds for {{amount}} LSK fee', { amount: 5 }));
     });
 
     it('sets the disabled attribute of the button', () => {
