@@ -43,14 +43,20 @@ class Confirm extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.state.loading &&
-      (this.props.pendingTransactions.length > 0 || this.props.failedTransactions)) {
+    // Hardware wallet code preventing by going on last step when there is pending transaction
+    const pending = this.props.pendingTransactions.find(transaction => (
+      transaction.senderId === this.props.account.address &&
+      transaction.recipientId === this.state.recipient.value &&
+      fromRawLsk(transaction.amount) === this.props.amount
+    ));
+
+    if (this.state.loading && (pending || this.props.failedTransactions)) {
       const data = this.getTransactionState();
       this.props.nextStep({
         ...data,
         amount: this.props.amount,
         account: this.props.account,
-        reciepientId: this.state.recipient.value,
+        recipientId: this.state.recipient.value,
       });
       this.setState({ loading: false });
     }

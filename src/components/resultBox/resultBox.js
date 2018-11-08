@@ -47,6 +47,7 @@ class ResultBox extends React.Component {
         <footer>
           <Button className={`okay-button ${styles.okButton}`}
             onClick={() => {
+              this.props.transactionFailedClear();
               // istanbul ignore else
               if (typeof this.props.finalCallback === 'function') {
                 this.props.finalCallback();
