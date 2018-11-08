@@ -46,12 +46,12 @@ const transactions = (state = initialState, action) => {
       return Object.assign({}, state, {
         [action.data.address]: {
           // Filter any newly confirmed transaction from pending
-          pending: state[action.data.address].pending ?
-            state[action.data.address].pending.filter(pendingTransaction =>
+          pending: state[action.data.address] ?
+            [...state[action.data.address].pending || []].filter(pendingTransaction =>
               action.data.confirmed.filter(transaction =>
                 transaction.id === pendingTransaction.id).length === 0) : [],
           // Add any newly confirmed transaction to confirmed
-          confirmed: state[action.data.address].confirmed ? [
+          confirmed: state[action.data.address] ? [
             ...action.data.confirmed,
             ...state[action.data.address].confirmed.filter(confirmedTransaction =>
               action.data.confirmed.filter(transaction =>
@@ -81,8 +81,6 @@ const transactions = (state = initialState, action) => {
           filter: txFilter.all,
         },
       });
-    case (actionTypes.accountSwitched):
-      return { pending: [], confirmed: [], count: 0 };
     default:
       return state;
   }

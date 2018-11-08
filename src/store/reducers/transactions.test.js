@@ -3,7 +3,7 @@ import transactions from './transactions';
 import actionTypes from '../../constants/actions';
 import txFilter from '../../constants/transactionFilters';
 
-describe.only('Reducer: transactions(state, action)', () => {
+describe('Reducer: transactions(state, action)', () => {
   const defaultState = { };
   const mockTransactions = [{
     amount: 100000000000,
@@ -27,7 +27,7 @@ describe.only('Reducer: transactions(state, action)', () => {
       ...defaultState,
       'my-address': {
         pending: [mockTransactions[1]],
-      }
+      },
     };
     const action = {
       type: actionTypes.transactionAdded,
@@ -55,17 +55,22 @@ describe.only('Reducer: transactions(state, action)', () => {
   it('should filter out failed transactions from pending', () => {
     const state = {
       ...defaultState,
-      pending: [mockTransactions[1]],
     };
     const data = {
       failed: [mockTransactions[1]],
+      address: 'my-address',
     };
     const action = {
       data,
       type: actionTypes.transactionsFailed,
     };
     const pendingTransactionsFiltered = transactions(state, action);
-    const stateWithNoPendingTransactions = { ...defaultState };
+    const stateWithNoPendingTransactions = { 
+      ...defaultState,
+      'my-address': {
+        pending: [],
+      },
+    };
     expect(pendingTransactionsFiltered).to.deep.equal(stateWithNoPendingTransactions);
   });
 
@@ -76,12 +81,15 @@ describe.only('Reducer: transactions(state, action)', () => {
       data: {
         confirmed: mockTransactions,
         count: mockTransactions.length,
+        address: 'my-address',
       },
     };
     const expectedState = {
       ...defaultState,
-      confirmed: action.data.confirmed,
-      count: action.data.count,
+      'my-address': {
+        confirmed: action.data.confirmed,
+        count: action.data.count,
+      },
     };
     const changedState = transactions(state, action);
     expect(changedState).to.deep.equal(expectedState);
@@ -90,60 +98,58 @@ describe.only('Reducer: transactions(state, action)', () => {
   it('should prepend newer transactions from action.data to state.confirmed and remove from state.pending if action.type = actionTypes.transactionsUpdated', () => {
     const state = {
       ...defaultState,
-      pending: [mockTransactions[0]],
-      confirmed: [mockTransactions[1], mockTransactions[2]],
-      count: mockTransactions[1].length + mockTransactions[2].length,
-    };
-    const action = {
-      type: actionTypes.transactionsUpdated,
-      data: {
-        confirmed: mockTransactions,
-        count: mockTransactions.length,
+      'my-address': {
+        pending: [mockTransactions[0]],
+        confirmed: [mockTransactions[1], mockTransactions[2]],
+        count: mockTransactions[1].length + mockTransactions[2].length,
       },
-    };
-    const changedState = transactions(state, action);
-    expect(changedState).to.deep.equal({
-      ...defaultState,
-      confirmed: mockTransactions,
-      count: mockTransactions.length,
-    });
-  });
-
-  it('should action.data to state.confirmed if state.confirmed is empty and action.type = actionTypes.transactionsUpdated', () => {
-    const state = {
-      ...defaultState,
     };
     const action = {
       type: actionTypes.transactionsUpdated,
       data: {
         confirmed: mockTransactions,
         count: 3,
+        address: 'my-address',
+      },
+    };
+    const expectedState = {
+      ...defaultState,
+      'my-address': {
+        pending: [],
+        confirmed: mockTransactions,
+        count: mockTransactions.length,
       },
     };
     const changedState = transactions(state, action);
-    expect(changedState).to.deep.equal({
-      ...defaultState,
-      confirmed: mockTransactions,
-      count: mockTransactions.length,
-    });
+    expect(changedState).to.deep.equal(expectedState);
   });
 
-  it('should reset all data if action.type = actionTypes.accountSwitched', () => {
+  it('should action.data to state.confirmed if state.confirmed is empty and action.type = actionTypes.transactionsUpdated', () => {
     const state = {
       ...defaultState,
-      pending: [{
-        amount: 110000000000,
-        id: '16295820046284152275',
-        timestamp: 33506748,
-      }],
-      confirmed: mockTransactions,
+      'my-address': {
+        confirmed: [],
+        pending: [],
+      },
     };
-    const action = { type: actionTypes.accountSwitched };
-    const changedState = transactions(state, action);
-    expect(changedState).to.deep.equal({
+    const action = {
+      type: actionTypes.transactionsUpdated,
+      data: {
+        confirmed: mockTransactions,
+        count: 3,
+        address: 'my-address',
+      },
+    };
+    const expectedState = {
       ...defaultState,
-      count: 0,
-    });
+      'my-address': {
+        pending: [],
+        confirmed: mockTransactions,
+        count: mockTransactions.length,
+      },
+    };
+    const changedState = transactions(state, action);
+    expect(changedState).to.deep.equal(expectedState);
   });
 
   it('should reduce transactions and account when loading Transactions', () => {
@@ -154,22 +160,28 @@ describe.only('Reducer: transactions(state, action)', () => {
       confirmed: mockTransactions,
       count: mockTransactions.length,
       balance: 100,
-      address: '123L',
+      address: 'my-address',
       delegate: { username: 'test1' },
     };
+
     const action = { type: actionTypes.transactionsLoadFinish, data };
+
+    const expectedState = {
+      ...defaultState,
+      [data.address]: {
+        confirmed: data.confirmed,
+        count: data.count,
+        account: {
+          address: data.address,
+          balance: data.balance,
+          delegate: data.delegate,
+        },
+        filter: txFilter.all,
+      },
+    };
+
     const changedState = transactions(state, action);
 
-    expect(changedState).to.deep.equal({
-      ...defaultState,
-      confirmed: data.confirmed,
-      count: data.count,
-      account: {
-        address: data.address,
-        balance: data.balance,
-        delegate: data.delegate,
-      },
-      filter: txFilter.all,
-    });
+    expect(changedState).to.deep.equal(expectedState);
   });
 });
