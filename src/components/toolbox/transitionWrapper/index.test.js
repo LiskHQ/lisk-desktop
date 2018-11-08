@@ -13,9 +13,15 @@ describe('TransitionWrapper', () => {
     clock = useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date'],
     });
-    wrapper = mount(<TransitionWrapper animationDuration={200} current={step} step='target-step-name'>
-      <h1>Child</h1>
-    </TransitionWrapper>);
+    const props = {
+      current: step,
+      step: 'target-step-name',
+      animationName: 'slide',
+      animationDuration: 200,
+    };
+    wrapper = mount(<TransitionWrapper {...props}>
+        <h1>Child</h1>
+      </TransitionWrapper>);
   });
 
   afterEach(() => {
@@ -70,7 +76,7 @@ describe('TransitionWrapper', () => {
     customizedWrapper.update();
 
     const className = customizedWrapper.find('h1').props().className;
-    expect(className).to.include('transitionWrapper__fadeIn');
+    expect(className).to.include('fadeIn');
     clock.restore();
   });
 });
