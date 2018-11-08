@@ -6,7 +6,8 @@ import Send from './send';
 
 const mapStateToProps = state => ({
   account: state.account,
-  pendingTransactions: state.transactions.pending,
+  pendingTransactions: state.transactions[state.account.address] ?
+    state.transactions[state.account.address].pending : [],
   failedTransactions: state.transactions.failed,
   followedAccounts: state.followedAccounts ? state.followedAccounts.accounts : [],
 });

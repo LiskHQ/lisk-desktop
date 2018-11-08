@@ -14,8 +14,10 @@ const mapStateToProps = state => ({
   transaction: state.transaction,
   transactions: state.transactions[state.account.address] ?
     [
-      ...state.transactions[state.account.address].pending || [],
-      ...state.transactions[state.account.address].confirmed,
+      ...state.transactions[state.account.address].pending ?
+        state.transactions[state.account.address].pending : [],
+      ...state.transactions[state.account.address].confirmed ?
+        state.transactions[state.account.address].confirmed : [],
     ] : [],
   votes: state.account.votes ?
     state.account.votes :

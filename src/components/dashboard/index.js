@@ -85,7 +85,8 @@ const mapStateToProps = state => ({
       ...state.transactions[state.account.address].pending || [],
       ...state.transactions[state.account.address].confirmed,
     ].slice(0, 5) : [],
-  pendingTransactions: state.transactions.pending,
+  pendingTransactions: state.transactions[state.account.address] ?
+    state.transactions[state.account.address].pending : [],
   account: state.account,
   loading: state.loading.length > 0,
   settings: state.settings,

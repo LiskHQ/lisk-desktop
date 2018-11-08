@@ -11,10 +11,12 @@ import txFilters from './../../../constants/transactionFilters';
 const mapStateToProps = (state, ownProps) => ({
   delegate: state.search.delegates[state.search.lastSearch],
   transaction: state.transaction,
-  transactions: state.transactions[ownProps.address] ?
+  transactions: state.transactions[state.account.address] ?
     [
-      ...state.transactions[ownProps.address].pending || [],
-      ...state.transactions[ownProps.address].confirmed,
+      ...state.transactions[state.account.address].pending ?
+        state.transactions[state.account.address].pending : [],
+      ...state.transactions[state.account.address].confirmed ?
+        state.transactions[state.account.address].confirmed : [],
     ] : [],
   votes: state.search.votes[state.search.lastSearch],
   voters: state.search.voters[state.search.lastSearch],

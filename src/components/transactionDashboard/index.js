@@ -25,7 +25,8 @@ const mapStateToProps = state => ({
   balance: state.account.balance,
   account: state.account,
   settings: state.settings,
-  pendingTransactions: state.transactions.pending,
+  pendingTransactions: state.transactions[state.account.address] ?
+    state.transactions[state.account.address].pending : [],
 });
 
 export default connect(mapStateToProps)(TransactionsDashboard);

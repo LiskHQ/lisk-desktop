@@ -234,6 +234,7 @@ describe('actions: transactions', () => {
       actionFunction(dispatch, getState);
       const expectedAction = {
         data: {
+          address: 'test_address',
           errorMessage: 'sample message.',
         },
         type: actionTypes.transactionFailed,
@@ -247,6 +248,7 @@ describe('actions: transactions', () => {
       actionFunction(dispatch, getState);
       const expectedAction = {
         data: {
+          address: 'test_address',
           errorMessage: 'An error occurred while creating the transaction.',
         },
         type: actionTypes.transactionFailed,

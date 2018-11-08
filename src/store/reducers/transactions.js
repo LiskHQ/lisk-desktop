@@ -55,9 +55,10 @@ const transactions = (state = initialState, action) => {
           // Add any newly confirmed transaction to confirmed
           confirmed: state[action.data.address] ? [
             ...action.data.confirmed,
-            ...state[action.data.address].confirmed.filter(confirmedTransaction =>
-              action.data.confirmed.filter(transaction =>
-                transaction.id === confirmedTransaction.id).length === 0),
+            ...(state[action.data.address] && state[action.data.address].confirmed) ?
+              state[action.data.address].confirmed.filter(confirmedTransaction =>
+                action.data.confirmed.filter(transaction =>
+                  transaction.id === confirmedTransaction.id).length === 0) : [],
           ] : [],
           count: action.data.count,
         },
