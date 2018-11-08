@@ -65,7 +65,7 @@ describe('Reducer: transactions(state, action)', () => {
       type: actionTypes.transactionsFailed,
     };
     const pendingTransactionsFiltered = transactions(state, action);
-    const stateWithNoPendingTransactions = { 
+    const stateWithNoPendingTransactions = {
       ...defaultState,
       'my-address': {
         pending: [],
