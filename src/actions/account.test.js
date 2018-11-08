@@ -94,6 +94,7 @@ describe('actions: account', () => {
         amount: 0,
         fee: Fees.setSecondPassphrase,
         type: transactionTypes.setSecondPassphrase,
+        address: accounts['second passphrase account'].address,
       };
 
       actionFunction(dispatch, getState);
@@ -160,6 +161,7 @@ describe('actions: account', () => {
         amount: 0,
         fee: Fees.registerDelegate,
         type: transactionTypes.registerDelegate,
+        address: accounts['second passphrase account'].address,
       };
 
       actionFunction(dispatch, getState);

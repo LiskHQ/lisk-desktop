@@ -12,11 +12,11 @@ class ExplorerTransactions extends React.Component {
     this.props.searchAccount({
       address: this.props.address,
     });
-    this.props.searchTransactions({
-      address: this.props.address,
-      limit: 25,
-      filter: txFilters.all,
-    });
+    // this.props.searchTransactions({
+    //   address: this.props.address,
+    //   limit: 25,
+    //   filter: txFilters.all,
+    // });
 
     this.props.transactionsFilterSet({
       address: this.props.address,

@@ -27,9 +27,9 @@ const transactions = (state = initialState, action) => {
         [action.data.address]: {
           // Filter any failed transaction from pending
           pending: state[action.data.address] ?
-            [ ...state[action.data.address].pending || [] ].filter(pendingTransaction =>
+            [...state[action.data.address].pending || []].filter(pendingTransaction =>
               action.data.failed.filter(transaction =>
-                transaction.id === pendingTransaction.id).length === 0),
+                transaction.id === pendingTransaction.id).length === 0) : [],
         },
       });
     case actionTypes.transactionsLoaded:
