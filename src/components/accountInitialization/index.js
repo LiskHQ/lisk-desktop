@@ -15,7 +15,8 @@ class AccountInitialization extends React.Component {
 
   componentDidMount() {
     const { account, transactions, address } = this.props;
-    const pendingTransactions = transactions && transactions.pending ? transactions.pending || [] : [];
+    const pendingTransactions = transactions && transactions.pending ?
+      transactions.pending || [] : [];
     const needsNoAccountInit = account.serverPublicKey
       || account.balance === 0
       || pendingTransactions.length > 0;

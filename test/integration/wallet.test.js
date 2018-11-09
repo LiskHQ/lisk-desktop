@@ -35,7 +35,7 @@ let walletTransactionsProps;
 
 class Helper extends GenericStepDefinition {
   checkSelectedFilter(filter) {
-    const expectedClass = '_active';
+    const expectedClass = 'active';
 
     const activeFilter = this.wrapper.find('.transaction-filter-item').filterWhere((item) => {
       const className = item.prop('className');
