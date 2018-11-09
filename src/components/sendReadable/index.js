@@ -11,7 +11,8 @@ const mapStateToProps = state => ({
       ...state.transactions[state.account.address].pending ?
         state.transactions[state.account.address].pending : [],
     ] : [],
-  failedTransactions: state.transactions.failed,
+  failedTransactions: state.transactions[state.account.address] ?
+    state.transactions[state.account.address].failed : {},
   followedAccounts: state.followedAccounts ? state.followedAccounts.accounts : [],
 });
 
