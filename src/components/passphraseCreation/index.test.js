@@ -55,7 +55,7 @@ describe('Passphrase Creation', () => {
       }
 
       wrapper.update();
-      expect(wrapper.find(CreateFirst)).to.have.prop('percentage').greaterThan(100);
+      expect(wrapper.find(CreateFirst)).to.have.prop('percentage').at.least(100);
       expect(wrapper.find(CreateFirst)).to.have.prop('hintTitle', 'by moving your mouse.');
       expect(wrapper.find(CreateFirst)).to.have.prop('address');
       expect(wrapper.find(CreateFirst)).to.have.prop('step', 'info');
