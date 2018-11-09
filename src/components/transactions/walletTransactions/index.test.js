@@ -62,7 +62,7 @@ describe('WalletTransactions Component', () => {
       address: accounts.genesis.address,
       limit: 25,
       filter: txFilters.all,
-    }).returnsPromise().resolves({ data: [{ id: 'Some ID' }], meta: { count: 1000 } });
+    }).returnsPromise().resolves({ data: [{ id: 'Some ID', confirmations: 1 }], meta: { count: 1000 } });
 
 
     transactionsActionsStub.withArgs({
@@ -70,7 +70,7 @@ describe('WalletTransactions Component', () => {
       address: match.any,
       limit: 25,
       filter: txFilters.statistics,
-    }).returnsPromise().resolves({ data: [{ id: 'Some ID' }], meta: { count: 1000 } });
+    }).returnsPromise().resolves({ data: [{ id: 'Some ID', confirmations: 1 }], meta: { count: 1000 } });
 
     store.dispatch(accountLoggedIn({
       ...accounts.genesis,
