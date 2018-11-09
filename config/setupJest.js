@@ -9,7 +9,7 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import i18next from 'i18next';
 // TODO remove next line after upgrading node version to at least 7
-import 'babel-polyfill';
+import 'es7-object-polyfill';
 
 require('jest-localstorage-mock');
 
@@ -21,7 +21,12 @@ chai.use(chaiAsPromised);
 sinonStubPromise(sinon);
 // eslint-disable-next-line no-undef
 jest.useFakeTimers();
-i18next.t = key => key;
+i18next.t = function (key, o) {
+  return key.replace(/{{([^{}]*)}}/g, (a, b) => {
+    const r = o[b];
+    return typeof r === 'string' || typeof r === 'number' ? r : a;
+  });
+};
 
 
 // https://github.com/nkbt/react-copy-to-clipboard/issues/20#issuecomment-414065452
