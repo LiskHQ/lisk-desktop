@@ -8,6 +8,8 @@ import sinonStubPromise from 'sinon-stub-promise';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import i18next from 'i18next';
+// TODO remove next line after upgrading node version to at least 7
+import 'babel-polyfill';
 
 require('jest-localstorage-mock');
 

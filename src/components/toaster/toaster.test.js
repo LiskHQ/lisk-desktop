@@ -33,9 +33,7 @@ describe('Toaster', () => {
     let toastElement = document.getElementsByClassName('toast');
 
     // check if the toast is activated
-    expect(toastElement.length > 0 &&
-      toastElement[0].className.indexOf('active') > 0)
-      .to.equal(true);
+    expect(toastElement.length > 0 && toastElement[0].className.indexOf('success') > 0).to.equal(true);
 
     clock.tick(4510);
 
