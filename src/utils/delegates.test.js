@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { updateDelegateCache, loadDelegateCache } from './delegates';
 import accounts from '../../test/constants/accounts';
+import networks from '../constants/networks';
 
 describe('Delegates Utils', () => {
   const storage = {};
@@ -10,17 +11,15 @@ describe('Delegates Utils', () => {
     window.localStorage.setItem = (key, item) => { storage[key] = item; };
   });
 
-  const item = [{ ...accounts.genesis, username: 'test' }];
+  const item = [{ account: { ...accounts.genesis }, username: 'test' }];
   const itemExpected = {
-    [accounts.genesis.address]: {
-      publicKey: accounts.genesis.publicKey,
-      username: 'test',
+    test: {
+      ...accounts.genesis,
     },
   };
 
   it('sets and gets the item', () => {
-    const activePeer = { options: { address: 'item' } };
-    updateDelegateCache(item, activePeer);
-    expect(loadDelegateCache(activePeer)).to.eql(itemExpected);
+    updateDelegateCache(item, networks.mainnet.code);
+    expect(loadDelegateCache(networks.mainnet.code)).to.eql(itemExpected);
   });
 });

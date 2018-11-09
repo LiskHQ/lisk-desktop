@@ -13,7 +13,8 @@ const lookupDelegate = (store, username) => {
   const state = store.getState();
   const activePeer = state.peers.data;
   const localStorageDelegates = loadDelegateCache(state.peers.options.code);
-  const delegate = localStorageDelegates[username];
+  const delegate = localStorageDelegates[username] ||
+    state.voting.delegates.find(d => d.username === username);
   if (delegate) {
     return new Promise((resolve) => {
       resolve({ data: [delegate] });
