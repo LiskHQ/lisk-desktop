@@ -45,6 +45,7 @@ describe('Login', () => {
         pathname: '',
         search: '',
       },
+      push: spy(),
       replace: spy(),
     };
     props = {
