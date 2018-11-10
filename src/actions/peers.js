@@ -32,19 +32,15 @@ const login = (dispatch, getState, data, config) => {
     const activePeer = store.peers.data ||
       new Lisk.APIClient(config.nodes, { nethash: config.nethash });
     const address = extractAddress(publicKey);
-    let accountBasics = {
+    const accountBasics = {
       passphrase,
       publicKey,
       address,
       network: code || 0,
-      loginType: 0,
+      loginType: data.hwInfo ? 1 : 0,
       peerAddress: data.network.nodes[0],
+      hwInfo: data.hwInfo ? data.hwInfo : {},
     };
-
-    accountBasics = data.hwInfo ? Object.assign({}, accountBasics, {
-      hwInfo: data.hwInfo,
-      loginType: 1,
-    }) : accountBasics;
 
     dispatch(accountLoading());
 
