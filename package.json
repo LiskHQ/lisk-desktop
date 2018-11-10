@@ -1,6 +1,6 @@
 {
   "name": "lisk-hub",
-  "version": "1.5.0-beta.1",
+  "version": "1.6.0-beta.1",
   "description": "Lisk Hub",
   "homepage": "https://github.com/LiskHQ/lisk-hub",
   "bugs": "https://github.com/LiskHQ/lisk-hub/issues",
@@ -33,7 +33,9 @@
     "pack:win": "cmd /c npm install && npm run clean-build && npm run copy-files && npm run build-prod && npm run build-electron && npm run clean-dist && npm run dist:win",
     "storybook": "start-storybook -p 6006 -s ./src/",
     "build-storybook": "build-storybook",
-    "serve": "http-server"
+    "serve": "http-server",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
@@ -79,7 +81,7 @@
     "react-copy-to-clipboard": "5.0.1",
     "react-countdown-now": "1.2.0",
     "react-css-themr": "=2.1.2",
-    "react-dom": "=16.2.0",
+    "react-dom": "=16.2.1",
     "react-i18next": "=6.0.6",
     "react-joyride": "1.11.4",
     "react-redux": "5.0.6",
@@ -91,7 +93,8 @@
     "redux": "3.7.2",
     "redux-thunk": "=2.2.0",
     "socket.io-client": "=2.0.3",
-    "webpack-merge": "=4.1.0"
+    "webpack-merge": "=4.1.0",
+    "snyk": "^1.108.0"
   },
   "devDependencies": {
     "@storybook/addon-actions": "3.2.12",
@@ -126,6 +129,7 @@
     "electron-updater": "2.16.1",
     "enzyme": "=3.1.0",
     "enzyme-adapter-react-16": "=1.0.2",
+    "es7-object-polyfill": "0.0.7",
     "eslint": "4.9.0",
     "eslint-config-airbnb": "15.1.0",
     "eslint-config-airbnb-base": "12.1.0",
@@ -222,7 +226,7 @@
   "bundlesize": [
     {
       "path": "./app/build/bundle.app.*.js",
-      "maxSize": "965 kB"
+      "maxSize": "1.50 MB"
     },
     {
       "path": "./app/build/bundle.vendor.*.js",
@@ -237,5 +241,6 @@
     "ignore": [
       "postcss-cssnext"
     ]
-  }
+  },
+  "snyk": true
 }

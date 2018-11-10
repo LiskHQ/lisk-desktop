@@ -1,17 +1,17 @@
 import React from 'react';
-import TransferTabs from './../transferTabs';
-import { fromRawLsk } from '../../utils/lsk';
-import { Button } from './../toolbox/buttons/button';
-import { authStatePrefill } from '../../utils/form';
-import Converter from '../converter';
-import fees from './../../constants/fees';
-import styles from './sendWritable.css';
-import regex from './../../utils/regex';
-import AddressInput from './../addressInput';
-import ReferenceInput from './../referenceInput';
-import Bookmark from './../bookmark';
+import TransferTabs from '../../../transferTabs';
+import { fromRawLsk } from '../../../../utils/lsk';
+import { Button } from '../../../toolbox/buttons/button';
+import { authStatePrefill } from '../../../../utils/form';
+import Converter from '../../../converter';
+import fees from '../../../../constants/fees';
+import styles from './form.css';
+import regex from '../../../../utils/regex';
+import AddressInput from '../../../addressInput';
+import ReferenceInput from '../../../referenceInput';
+import Bookmark from '../../../bookmark';
 
-class SendWritable extends React.Component {
+class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -144,4 +144,4 @@ class SendWritable extends React.Component {
   }
 }
 
-export default SendWritable;
+export default Form;

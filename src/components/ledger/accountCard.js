@@ -1,7 +1,7 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import { fromRawLsk } from '../../utils/lsk';
-import Input from '../toolbox/inputs/input';
+import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import AccountVisual from '../accountVisual';
 import CopyToClipboard from '../copyToClipboard';
 
@@ -25,11 +25,11 @@ const AccountCard = ({
     </div>
     {isEditMode ?
       <div className={styles.edit}>
-        <Input
+        <ToolBoxInput
           placeholder={'Account Name'}
           onChange={value => changeInput(value, account.address)}
           theme={styles}
-          value={hardwareAccountName}></Input>
+          value={hardwareAccountName}></ToolBoxInput>
       </div> :
       null}
       {hardwareAccountName && !isEditMode ?

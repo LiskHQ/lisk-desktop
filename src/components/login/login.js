@@ -1,8 +1,8 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import i18next from 'i18next';
-import Dropdown from '../toolbox/dropdown/dropdown';
-import Input from '../toolbox/inputs/input';
+import ToolBoxDropdown from '../toolbox/dropdown/toolBoxDropdown';
+import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import { PrimaryButton } from '../toolbox/buttons/button';
 import { extractAddress } from '../../utils/account';
 // eslint-disable-next-line import/no-named-as-default
@@ -17,7 +17,7 @@ import { parseSearchParams } from './../../utils/searchParams';
 import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
 import SignUp from './signUp';
-import { validateUrl, addHttp } from '../../utils/login';
+import { validateUrl, addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import { FontIcon } from '../fontIcon';
 
 import Ledger from '../ledger';
@@ -30,10 +30,23 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
 
+    const { liskCoreUrl } = getAutoLogInData();
+
+    let loginNetwork = findMatchingLoginNetwork();
+
+    let address = '';
+
+    if (loginNetwork) {
+      loginNetwork = loginNetwork.slice(-1).shift();
+    } else if (!loginNetwork) {
+      loginNetwork = liskCoreUrl ? networks.customNode : networks.default;
+      address = liskCoreUrl;
+    }
+
     this.state = {
       passphrase: '',
-      address: '',
-      network: networks.default.code,
+      address,
+      network: loginNetwork.code,
       isLedgerLogin: false,
       isLedgerFirstLogin: false,
     };
@@ -207,7 +220,7 @@ class Login extends React.Component {
         isLedgerLogin={this.state.isLedgerLogin} />;
     }
 
-    const networkList = [{ label: this.props.t('Choose Network'), disabled: true }, ...this.networks];
+    const networkList = [{ label: this.props.t('Choose Network') }, ...this.networks];
     return (this.props.account.loading ?
       <div className={styles.loadingWrapper}></div> :
       <Box className={styles.wrapper}>
@@ -216,17 +229,17 @@ class Login extends React.Component {
             <header>
               {this.showNetworkOptions()
                 ? <div>
-                    <Dropdown
+                    <ToolBoxDropdown
                       auto={false}
                       source={networkList}
                       onChange={this.changeHandler.bind(this, 'network')}
                       label={this.props.t('Network to connect to')}
                       value={this.state.network}
-                      className='network'
+                      className={`network ${styles.network}`}
                     />
                     {
                       this.state.network === networks.customNode.code &&
-                      <Input type='text'
+                      <ToolBoxInput type='text'
                              label={this.props.t('Enter IP or domain address of the node')}
                              name='address'
                              className={`address ${styles.outTaken}`}

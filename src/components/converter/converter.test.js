@@ -28,4 +28,3 @@ describe('Converter', () => {
     expect(wrapper.find('Converter')).to.have.present();
   });
 });
-

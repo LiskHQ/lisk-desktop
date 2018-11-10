@@ -9,6 +9,7 @@ import { getAccount } from '../utils/api/account';
 import { extractAddress, extractPublicKey } from '../utils/account';
 import { accountLoggedIn, accountLoading, accountLoggedOut } from './account';
 import accountConfig from '../constants/account';
+import settings from '../constants/settings';
 
 const peerSet = (data, config) => ({
   data: Object.assign({
@@ -56,6 +57,10 @@ const login = (dispatch, getState, data, config) => {
         ...accountBasics,
         expireTime: duration,
       };
+      /* Save selected network to localStorage */
+      const networkAddress = data.network.address ? data.network.address : data.network.nodes[0];
+      window.localStorage.setItem(settings.keys.liskCoreUrl, networkAddress);
+
       dispatch(accountLoggedIn(accountUpdated));
     }).catch((error) => {
       if (error && error.message) {

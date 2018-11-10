@@ -82,6 +82,15 @@
       font-size: var(--header-focused-font-size);
     }
   }
+
+  & .network {
+    & li:first-child {
+      cursor: default;
+      pointer-events: none;
+      font-size: 12px;
+      font-weight: bold;
+    }
+  }
 }
 
 @media (--xLarge-viewport) {

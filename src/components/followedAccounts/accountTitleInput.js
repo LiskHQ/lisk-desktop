@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import Input from '../toolbox/inputs/input';
+import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import styles from './followedAccounts.css';
 
 const AccountTitleInput = ({
@@ -8,7 +8,7 @@ const AccountTitleInput = ({
 }) => {
   const validateInput = value => (value.length > 20 ? t('Title too long') : undefined);
 
-  return <Input
+  return <ToolBoxInput
     label={hideLabel ? null : t('Title')}
     className={`${styles.titleInput} ${className} account-title `}
     error={title.error}

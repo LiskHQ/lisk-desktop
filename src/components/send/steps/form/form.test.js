@@ -4,11 +4,11 @@ import { mount } from 'enzyme';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
-import accounts from '../../../test/constants/accounts';
-import i18n from '../../i18n';
-import SendWritable from './send';
+import accounts from '../../../../../test/constants/accounts';
+import i18n from '../../../../i18n';
+import Form from './form';
 
-describe('Send Writable Component', () => {
+describe('Form Component', () => {
   let wrapper;
   let props;
 
@@ -38,7 +38,7 @@ describe('Send Writable Component', () => {
       history: { location: { search: '' } },
       followedAccounts: { accounts: [{ address: '123L', title: 'test' }] },
     };
-    wrapper = mount(<SendWritable {...props} />, {
+    wrapper = mount(<Form {...props} />, {
       context: { store, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,
@@ -107,7 +107,7 @@ describe('Send Writable Component', () => {
       followedAccounts,
     });
     props.followedAccounts = followedAccounts.accounts;
-    wrapper = mount(<SendWritable {...props} />, {
+    wrapper = mount(<Form {...props} />, {
       context: { store, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,

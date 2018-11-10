@@ -4,14 +4,14 @@ import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import { MemoryRouter, Route } from 'react-router';
-import { CustomRouteRender } from './index';
+import CustomRoute from './customRoute';
 import history from '../../history';
 import i18n from '../../i18n';
 
 const Public = () => <h1>Public</h1>;
 const Private = () => <h1>Private</h1>;
 
-describe('CustomRouteRender', () => {
+describe('CustomRoute', () => {
   const store = configureMockStore([])({});
   const props = {
     t: key => key,
@@ -33,7 +33,7 @@ describe('CustomRouteRender', () => {
       <MemoryRouter initialEntries={['/private/test']}>
         <div>
           <Route path='/' component={Public} />
-          <CustomRouteRender
+          <CustomRoute
             { ...props }
             isAuthenticated={isAuthenticated}
             isPrivate={isPrivate} />

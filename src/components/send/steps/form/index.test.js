@@ -3,10 +3,10 @@ import { MemoryRouter as Router } from 'react-router-dom';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
-import i18n from '../../i18n';
-import SendHOC from './index';
+import i18n from '../../../../i18n';
+import FormHOC from './index';
 
-describe('SendWritableHOC', () => {
+describe('FormHOC', () => {
   let wrapper;
   const store = {};
   const peers = {
@@ -36,12 +36,12 @@ describe('SendWritableHOC', () => {
     store.dispatch = () => {};
     wrapper = mount(<Router>
       <Provider store={store}>
-        <SendHOC i18n={i18n} />
+        <FormHOC i18n={i18n} />
       </Provider>
     </Router>);
   });
 
   it('should render Send', () => {
-    expect(wrapper.find('SendWritable')).to.have.lengthOf(1);
+    expect(wrapper.find('Form')).to.have.lengthOf(1);
   });
 });

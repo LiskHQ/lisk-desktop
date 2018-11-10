@@ -8,7 +8,7 @@ import { HashRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import i18n from '../../i18n';
-import Search from './index';
+import SearchBar from './index';
 
 describe('SearchBar', () => {
   let wrapper;
@@ -64,7 +64,7 @@ describe('SearchBar', () => {
     wrapper = mount(
       <Provider store={store}>
         <Router>
-          <Search {...props} />
+          <SearchBar {...props} />
         </Router>
       </Provider>, options,
     );

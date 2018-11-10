@@ -1,14 +1,14 @@
 import React from 'react';
-import Input from '../toolbox/inputs/input';
+import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import AccountVisual from '../accountVisual';
 import styles from './addressInput.css';
 
-const AddAccountID = ({
+const AddressInput = ({
   handleChange, className, address, label,
 }) => {
   const showAccountVisual = address.value.length && !address.error;
 
-  return <Input
+  return <ToolBoxInput
     className={className}
     label={label}
     error={address.error}
@@ -23,7 +23,7 @@ const AddAccountID = ({
       </figure>
       : null
     }
-  </Input>;
+  </ToolBoxInput>;
 };
 
-export default AddAccountID;
+export default AddressInput;

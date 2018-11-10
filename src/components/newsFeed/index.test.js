@@ -40,7 +40,7 @@ describe('NewsFeedHOC', () => {
     expect(wrapper).to.have.descendants('NewsFeed');
   });
 
-  it('should bind settingsUpdated action to SendWritable props.settingsUpdated', () => {
+  it('should bind settingsUpdated action to Form props.settingsUpdated', () => {
     const actionsSpy = sinon.spy(settingsActions, 'settingsUpdated');
     wrapper.find('NewsFeed').props().settingsUpdated({ });
     expect(actionsSpy).to.be.calledWith({ });

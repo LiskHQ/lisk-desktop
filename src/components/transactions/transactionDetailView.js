@@ -17,7 +17,7 @@ import transactions from './../../constants/transactionTypes';
 import TransactionDetailViewField from './transactionDetailViewField';
 import TransactionDetailViewRow from './transactionDetailViewRow';
 
-class TransactionsDetailView extends React.Component {
+class TransactionDetailView extends React.Component {
   constructor(props) {
     super(props);
 
@@ -69,7 +69,7 @@ class TransactionsDetailView extends React.Component {
 
   getDateField() {
     return (
-      <TransactionDetailViewField
+      <TransactionDetailViewField className={'tx-date'}
         label={this.props.t('Date')}
         value={ this.props.transaction.timestamp ?
           <span>
@@ -100,7 +100,7 @@ class TransactionsDetailView extends React.Component {
         <TransactionDetailViewField
           label={this.props.t('Sender')}
           value={
-            <Link className={`${styles.addressLink} ${styles.clickable}`} id='sender-address'
+            <Link className={`${styles.addressLink} ${styles.clickable} sender-address`}
               to={`${routes.explorer.path}${routes.accounts.path}/${transaction.senderId}`}>
               {transaction.senderId}
             </Link>
@@ -118,7 +118,7 @@ class TransactionsDetailView extends React.Component {
             label={this.props.t('Recipient')}
             style={styles.sender}
             value={
-              <Link className={`${styles.addressLink} ${styles.clickable}`} id='receiver-address'
+              <Link className={`${styles.addressLink} ${styles.clickable} receiver-address`}
                 to={`${routes.explorer.path}${routes.accounts.path}/${transaction.recipientId}`}>
                 {transaction.recipientId}
               </Link>
@@ -161,7 +161,7 @@ class TransactionsDetailView extends React.Component {
           <TransactionDetailViewRow shouldShow={!this.props.match.params.id}>
             <div className={`${grid['col-xs-12']} ${grid['col-sm-7']} ${grid['col-md-7']} ${styles.columnNarrow}`}>
               <header>
-                <h2 className={styles.title}>
+                <h2 className={`${styles.title} tx-header`}>
                   <TransactionType
                     {...transaction}
                     address={transaction.senderId}
@@ -175,7 +175,7 @@ class TransactionsDetailView extends React.Component {
 
           <TransactionDetailViewRow shouldShow={transaction.type === 0}>
             {this.getDateField()}
-            <TransactionDetailViewField
+            <TransactionDetailViewField className={'tx-amount'}
               label={this.props.t('Amount (LSK)')}
               value={
                 <Amount
@@ -187,26 +187,26 @@ class TransactionsDetailView extends React.Component {
           </TransactionDetailViewRow>
 
           <TransactionDetailViewRow shouldShow={transaction.type === transactions.vote}>
-            <TransactionDetailViewField
+            <TransactionDetailViewField className={'tx-added-votes'}
               label={this.props.t('Added votes')}
               value={this.getVoters('added')} />
-            <TransactionDetailViewField
+            <TransactionDetailViewField className={'tx-removed-votes'}
               label={this.props.t('Removed votes')}
               value={this.getVoters('deleted')} />
           </TransactionDetailViewRow>
 
           <TransactionDetailViewRow>
-            <TransactionDetailViewField
+            <TransactionDetailViewField className={'tx-fee'}
               label={this.props.t('Additional fee')}
               value={<LiskAmount val={transaction.fee} />} />
-            <TransactionDetailViewField
+            <TransactionDetailViewField className={'tx-confirmation'}
               label={this.props.t('Confirmations')}
-              value={<span>{transaction.confirmations}</span>} />
+              value={transaction.confirmations} />
           </TransactionDetailViewRow>
 
           <TransactionDetailViewRow>
             {this.props.prevStep &&
-              <TransactionDetailViewField
+              <TransactionDetailViewField className={'tx-id'}
                 label={this.props.t('Transaction ID')}
                 value={
                   <CopyToClipboard
@@ -215,7 +215,7 @@ class TransactionsDetailView extends React.Component {
                     copyClassName={`${styles.copy}`} />
                 } />
             }
-            <TransactionDetailViewField
+            <TransactionDetailViewField className={'tx-reference'}
               style={styles.referenceField}
               shouldShow={transaction.asset && transaction.asset.data}
               label={this.props.t('Reference')}
@@ -237,5 +237,5 @@ const mapDispatchToProps = dispatch => ({
   loadTransaction: data => dispatch(loadTransaction(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(TransactionsDetailView));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(TransactionDetailView));
 

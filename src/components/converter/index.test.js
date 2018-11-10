@@ -37,7 +37,7 @@ describe('ConverterHOC', () => {
     expect(wrapper.find('Converter')).to.have.lengthOf(1);
   });
 
-  it('should bind settingsUpdated action to SendWritable props.settingsUpdated', () => {
+  it('should bind settingsUpdated action to Form props.settingsUpdated', () => {
     const actionsSpy = spy(settingsActions, 'settingsUpdated');
     wrapper.find('Converter').props().settingsUpdated({ currency: 'EUR' });
     expect(actionsSpy).to.be.calledWith({ currency: 'EUR' });

@@ -1,4 +1,4 @@
-@import '../app/variables.css';
+@import '../../../app/variables.css';
 
 :root {
   --tab-inactive-color: var(--color-grayscale-dark);
