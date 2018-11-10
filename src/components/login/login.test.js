@@ -136,9 +136,9 @@ describe('Login', () => {
       localStorage.removeItem('address');
     });
 
-    it('calls this.props.history.replace on signButton click', () => {
+    it('calls this.props.history.push on signButton click', () => {
       wrapper.find('.new-account-button').simulate('click');
-      expect(props.history.replace).to.have.been.calledWith(`${routes.register.path}`);
+      expect(props.history.push).to.have.been.calledWith(`${routes.register.path}`);
     });
   });
 

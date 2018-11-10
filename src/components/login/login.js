@@ -172,9 +172,6 @@ class Login extends React.Component {
 
     if (name === 'network') {
       this.props.settingsUpdated({ network: value });
-      this.props.activePeerSet({
-        network: this.getNetwork(value),
-      });
     }
   }
 
@@ -201,7 +198,8 @@ class Login extends React.Component {
   validateCorrectNode() {
     const { address } = this.state;
     const nodeURL = address !== '' ? addHttp(address) : address;
-    if (this.props.peers.options.code === networks.customNode.code) {
+
+    if (this.state.network === networks.customNode.code) {
       const liskAPIClient = new Lisk.APIClient([nodeURL], {});
       liskAPIClient.node.getConstants()
         .then((res) => {
@@ -209,13 +207,15 @@ class Login extends React.Component {
             this.props.activePeerSet({
               network: this.getNetwork(this.state.network),
             });
-            this.props.history.replace(routes.register.path);
+            this.props.history.push(routes.register.path);
           }
         }).catch(() => {
           this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
         });
     } else {
-      this.props.history.replace(routes.register.path);
+      const network = this.getNetwork(this.state.network);
+      this.props.activePeerSet({ network });
+      this.props.history.push(routes.register.path);
     }
   }
 
