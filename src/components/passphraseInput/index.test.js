@@ -15,18 +15,18 @@ describe('PassphraseInput', () => {
   let onChangeSpy;
 
   describe('with HOC', () => {
-    beforeEach('', () => {
+    beforeEach(() => {
       props = {
         error: '',
         value: '',
-        onChange: () => {},
+        onChange: key => key,
         i18n,
       };
       onChangeSpy = spy(props, 'onChange');
       wrapper = mount(<PassphraseInputHOC {...props} />);
     });
 
-    afterEach('', () => {
+    afterEach(() => {
       onChangeSpy.restore();
     });
 
@@ -69,7 +69,7 @@ describe('PassphraseInput', () => {
 
 
   describe('without HOC', () => {
-    beforeEach('', () => {
+    beforeEach(() => {
       props = {
         error: '',
         value: '',
@@ -90,7 +90,7 @@ describe('PassphraseInput', () => {
       wrapper = mount(<PassphraseInput {...props} />, options);
     });
 
-    afterEach('', () => {
+    afterEach(() => {
       onChangeSpy.restore();
     });
 
