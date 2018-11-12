@@ -19,7 +19,7 @@ describe('Sidechains', () => {
 
   it('should render "Coming soon" in h2', () => {
     const props = {
-      t: () => {},
+      t: key => key,
     };
     const wrapper = mount(<Sidechains {...props} />, options);
     expect(wrapper.find('h2')).to.have.text('Coming soon.');

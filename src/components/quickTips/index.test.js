@@ -11,7 +11,7 @@ describe('QuickTip', () => {
 
   beforeEach(() => {
     props = {
-      t: spy(),
+      t: key => key,
       i18n,
     };
     wrapper = mount(<QuickTip {...props} />);

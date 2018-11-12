@@ -28,6 +28,23 @@ i18next.t = function (key, o) {
   });
 };
 
+const localStorageMock = (() => {
+  let store = {};
+
+  return {
+    getItem: key => store[key] || null,
+    setItem: (key, value) => {
+      store[key] = value.toString();
+    },
+    clear: () => {
+      store = {};
+    },
+  };
+})();
+
+Object.defineProperty(window, 'localStorage', {
+  value: localStorageMock,
+});
 
 // https://github.com/nkbt/react-copy-to-clipboard/issues/20#issuecomment-414065452
 // Polyfill window prompts to always confirm.  Needed for react-copy-to-clipboard to work.
