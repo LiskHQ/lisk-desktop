@@ -1,5 +1,5 @@
 export default {
-  address: /^\d{1,21}[L]$/,
-  transactionId: /^[0-9]+$/,
+  address: /^[1-9]\d{0,19}L$/,
+  transactionId: /^[1-9]\d{0,19}$/,
   amount: /^\d+(\.\d{1,8})?$/,
 };

@@ -25,7 +25,7 @@ describe('Help', () => {
   it('opens by sidebar button', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit('/');
-    cy.get(ss.sidebarMenuHelpBtn).click();
+    cy.get(ss.sidebarMenuHelpBtn).should('have.css', 'opacity', '1').click();
     cy.url().should('contain', 'help');
     checkHelpPageLoaded();
   });

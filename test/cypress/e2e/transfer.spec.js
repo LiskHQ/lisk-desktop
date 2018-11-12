@@ -64,8 +64,7 @@ describe('Transfer', () => {
   it('Wallet page opens by sidebar button', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
-    cy.wait(100);
-    cy.get(ss.sidebarMenuWalletBtn).click();
+    cy.get(ss.sidebarMenuWalletBtn).should('have.css', 'opacity', '1').click();
     cy.url().should('contain', 'wallet');
     checkWalletPageLoaded();
   });
