@@ -229,10 +229,9 @@ describe('actions: voting', () => {
       const dispatch = sinon.spy();
       getState = () => ({
         peers: {
-          data: {
-            options: {
-              name: networks.mainnet.name,
-            },
+          options: {
+            name: networks.mainnet.name,
+            code: networks.mainnet.code,
           },
         },
       });
