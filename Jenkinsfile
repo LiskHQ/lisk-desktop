@@ -62,7 +62,10 @@ pipeline {
 			agent { node { label 'master-01' } }
 			steps {
 					unstash 'build'
-					sh 'rsync -axl --delete $WORKSPACE/app/build/ /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/'
+					sh '''
+					rsync -axl --delete $WORKSPACE/app/build/ /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
+					rm -rf $WORKSPACE/app/build
+					'''
 					githubNotify context: 'Jenkins test deployment',
 					             description: 'Commit was deployed to test',
 						     status: 'SUCCESS',
