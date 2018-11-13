@@ -3,9 +3,9 @@ import { withRouter } from 'react-router';
 import { setDefaults, translate } from 'react-i18next';
 import { dialogDisplayed } from '../../actions/dialog';
 import Login from './login';
+import { errorToastDisplayed } from '../../actions/toaster';
 import { activePeerSet } from '../../actions/peers';
 import { settingsUpdated } from '../../actions/settings';
-import { errorToastDisplayed } from '../../actions/toaster';
 import { loadingStarted, loadingFinished } from '../../actions/loading';
 
 setDefaults({
