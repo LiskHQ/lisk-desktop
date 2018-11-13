@@ -11,7 +11,7 @@ describe('Delegates Utils', () => {
     window.localStorage.setItem = (key, item) => { storage[key] = item; };
   });
 
-  const item = [{ account: { ...accounts.genesis }, username: 'test' }];
+  const delegateItem = [{ account: { ...accounts.genesis }, username: 'test' }];
   const itemExpected = {
     test: {
       account: { ...accounts.genesis },
@@ -19,8 +19,18 @@ describe('Delegates Utils', () => {
     },
   };
 
-  it('sets and gets the item', () => {
-    updateDelegateCache(item, networks.mainnet.code);
-    expect(loadDelegateCache(networks.mainnet.code)).to.eql(itemExpected);
+  it('sets and gets the delegate item with mainnet', () => {
+    const activePeer = { options: networks.mainnet };
+    updateDelegateCache(delegateItem, activePeer);
+    expect(loadDelegateCache(activePeer)).to.eql(itemExpected);
+  });
+
+  it('sets and gets the delegate item with customNode', () => {
+    const activePeer = {
+      options: networks.customNode,
+      currentNode: 'http://localhost:4000',
+    };
+    updateDelegateCache(delegateItem, activePeer);
+    expect(loadDelegateCache(activePeer)).to.eql(itemExpected);
   });
 });

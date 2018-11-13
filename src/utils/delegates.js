@@ -1,8 +1,17 @@
 
 import localJSONStorage from './localJSONStorage';
+import networks from '../constants/networks';
 
-export const updateDelegateCache = (delegates, networkCode) => {
-  const savedDelegates = localJSONStorage.get(`delegateCache-${networkCode}`, {});
+const getNetworkKey = activePeer => (
+  `delegateCache-${
+    activePeer.options.code === networks.customNode.code ?
+      activePeer.currentNode :
+      activePeer.options.code
+  }`
+);
+
+export const updateDelegateCache = (delegates, activePeer) => {
+  const savedDelegates = localJSONStorage.get(getNetworkKey(activePeer), {});
   const formatedDelegates = delegates
     .reduce((newDelegates, delegate) => {
       const delegateObj = { [delegate.username]: delegate };
@@ -10,8 +19,8 @@ export const updateDelegateCache = (delegates, networkCode) => {
     }, {});
   const updatedDelegates = { ...formatedDelegates, ...savedDelegates };
 
-  localJSONStorage.set(`delegateCache-${networkCode}`, updatedDelegates);
+  localJSONStorage.set(getNetworkKey(activePeer), updatedDelegates);
 };
 
-export const loadDelegateCache = networkCode =>
-  localJSONStorage.get(`delegateCache-${networkCode}`, {});
+export const loadDelegateCache = activePeer =>
+  localJSONStorage.get(getNetworkKey(activePeer), {});

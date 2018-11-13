@@ -132,7 +132,7 @@ export const loadTransaction = ({ id }) =>
           deleted = response.data[0].asset.votes.filter(item => item.startsWith('-')).map(item => item.replace('-', ''));
         }
 
-        const localStorageDelegates = loadDelegateCache(getState().peers.options.code);
+        const localStorageDelegates = loadDelegateCache(getState().peers);
         deleted.forEach((publicKey) => {
           const address = extractAddress(publicKey);
           const storedDelegate = localStorageDelegates[address];

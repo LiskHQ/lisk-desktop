@@ -12,7 +12,7 @@ const updateLookupStatus = (store, list, username) => {
 const lookupDelegate = (store, username) => {
   const state = store.getState();
   const activePeer = state.peers.data;
-  const localStorageDelegates = loadDelegateCache(state.peers.options.code);
+  const localStorageDelegates = loadDelegateCache(state.peers);
   const delegate = localStorageDelegates[username] ||
     state.voting.delegates.find(d => d.username === username);
   if (delegate) {
