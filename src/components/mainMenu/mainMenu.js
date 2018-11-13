@@ -156,23 +156,18 @@ class MainMenu extends React.Component {
                 />)}
             </ToolboxTabs>
             <div className={`${styles.tabs} ${styles.bottomTabs} main-tabs`}>
-              <ToolboxTabs index={getIndex(history, bottomMenuTabs)}
-                theme={styles}
-                onChange={this.navigate.bind(this, history, bottomMenuTabs)}
-                disableAnimatedBottomBorder={true}>
-                {bottomMenuTabs.map(({
-                     label, image, id, enabledWhenNotLoggedIn,
-                    }, index) =>
-                  <Tab
-                    key={index}
-                    label={<TabTemplate label={label} img={image} isFontIcon />}
-                    className={styles.bottomTab}
+              {bottomMenuTabs.map(({
+                   label, image, id, route,
+                  }, index) => (
+                <Link to={route}
                     id={id}
-                    disabled={!account.address && !enabledWhenNotLoggedIn}
-                  />)}
-              </ToolboxTabs>
+                    key={index}
+                    className={`${styles.bottomTab} ${styles.label}`} >
+                  <TabTemplate label={label} img={image} isFontIcon />
+                </Link>
+              ))}
               <a target='_blank' href={feedbackLinks.general}
-                  className={`${styles.bottomTab} ${styles.label} ${styles.feedbackLink}`}
+                  className={`${styles.bottomTab} ${styles.label}`}
                   rel='noopener noreferrer'>
                 <TabTemplate label={this.props.t('Feedback')} img='conversation' isFontIcon />
               </a>

@@ -249,14 +249,11 @@
       height: 25px;
       margin-right: 10px;
     }
-
-    &.feedbackLink {
-      text-decoration: none;
-      font-weight: var(--font-weight-normal);
-    }
   }
 
   & .bottomTab {
+    text-decoration: none;
+    font-weight: var(--font-weight-bold);
     background: var(--menu-background-color);
     box-shadow: none;
     width: 100%;
