@@ -14,7 +14,8 @@ describe('Delegates Utils', () => {
   const item = [{ account: { ...accounts.genesis }, username: 'test' }];
   const itemExpected = {
     test: {
-      ...accounts.genesis,
+      account: { ...accounts.genesis },
+      username: 'test',
     },
   };
 

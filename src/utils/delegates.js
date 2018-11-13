@@ -5,7 +5,7 @@ export const updateDelegateCache = (delegates, networkCode) => {
   const savedDelegates = localJSONStorage.get(`delegateCache-${networkCode}`, {});
   const formatedDelegates = delegates
     .reduce((newDelegates, delegate) => {
-      const delegateObj = { [delegate.username]: delegate.account };
+      const delegateObj = { [delegate.username]: delegate };
       return Object.assign(newDelegates, delegateObj);
     }, {});
   const updatedDelegates = { ...formatedDelegates, ...savedDelegates };
