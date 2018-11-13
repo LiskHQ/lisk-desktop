@@ -87,6 +87,10 @@
       }
     }
   }
+
+  .link {
+    cursor: pointer;
+  }
 }
 
 @media (--xLarge-viewport) {
