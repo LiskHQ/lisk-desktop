@@ -208,6 +208,8 @@ class Login extends React.Component {
               network: this.getNetwork(this.state.network),
             });
             this.props.history.push(routes.register.path);
+          } else {
+            throw new Error();
           }
         }).catch(() => {
           this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
