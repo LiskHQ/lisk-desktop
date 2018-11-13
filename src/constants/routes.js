@@ -7,7 +7,7 @@ import Register from '../components/register';
 import RegisterDelegate from '../components/registerDelegate';
 import SecondPassphrase from '../components/secondPassphrase';
 import SignMessage from '../components/signMessage';
-import SearchResult from '../components/search/searchResult';
+import SearchResult from '../components/searchResult';
 import TransactionDashboard from '../components/transactionDashboard';
 import AccountTransactions from '../components/accountTransactions';
 import Voting from '../components/voting';
@@ -91,8 +91,8 @@ export default {
   //   component: NotFound,
   //   isPrivate: false,
   // },
-  searchResult: {
-    name: 'searchResult',
+  search: {
+    name: 'search',
     pathPrefix: '/explorer',
     path: '/result',
     pathSuffix: '/:query?',

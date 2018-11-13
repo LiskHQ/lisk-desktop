@@ -16,7 +16,7 @@ const setRowClass = (voteStatus) => {
   return confirmed ? styles.votedRow : '';
 };
 
-class VotingRow extends React.Component {
+class DelegateRow extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   shouldComponentUpdate({ voteStatus }) {
     const oldStatus = this.props.voteStatus;
@@ -49,4 +49,4 @@ class VotingRow extends React.Component {
   }
 }
 
-export default VotingRow;
+export default DelegateRow;

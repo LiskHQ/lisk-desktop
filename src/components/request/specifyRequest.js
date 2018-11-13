@@ -4,7 +4,7 @@ import { Button, PrimaryButton } from './../toolbox/buttons/button';
 import AccountVisual from '../accountVisual';
 import Converter from '../converter';
 import ReferenceInput from '../referenceInput';
-import Input from '../toolbox/inputs/input';
+import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import fees from './../../constants/fees';
 import regex from './../../utils/regex';
 import styles from './request.css';
@@ -58,7 +58,7 @@ class SpecifyRequest extends React.Component {
           </header>
         </div>
         <div>
-          <Input label={this.props.t('Receiver')}
+          <ToolBoxInput label={this.props.t('Receiver')}
             className={`recipient ${styles.disabledInput}`}
             value={this.state.recipient.value}
             theme={inputTheme}
@@ -66,7 +66,7 @@ class SpecifyRequest extends React.Component {
             <figure className={styles.accountVisual}>
               <AccountVisual address={this.state.recipient.value} size={50} />
             </figure>
-          </Input>
+          </ToolBoxInput>
 
           <ReferenceInput
             className='reference'

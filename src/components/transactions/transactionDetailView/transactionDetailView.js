@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { TimeFromTimestamp, DateFromTimestamp } from './../../timestamp/index';
 import CopyToClipboard from '../../copyToClipboard';
 import AccountVisual from '../../accountVisual';
 import styles from './transactionDetailView.css';
@@ -15,7 +14,7 @@ import TransactionDetailViewField from './transactionDetailViewField';
 import TransactionDetailViewRow from './transactionDetailViewRow';
 import DateField from './transactionDetailDateField';
 
-class TransactionsDetailView extends React.Component {
+class TransactionDetailView extends React.Component {
   constructor(props) {
     super(props);
 
@@ -221,4 +220,4 @@ class TransactionsDetailView extends React.Component {
   }
 }
 
-export default TransactionsDetailView;
+export default TransactionDetailView;

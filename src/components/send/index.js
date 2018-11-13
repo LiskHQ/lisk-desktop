@@ -5,8 +5,8 @@ import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import MultiStep from './../multiStep';
 import ResultBox from '../resultBox';
-import SendWritable from './../sendWritable';
-import SendReadable from './../sendReadable';
+import Form from './steps/form';
+import Confirm from './steps/confirm';
 import Request from '../request';
 import FollowAccount from '../sendTo/followAccount';
 import SpecifyRequest from '../request/specifyRequest';
@@ -73,7 +73,7 @@ class Send extends React.Component {
               finalCallback={this.setActiveOnMobile.bind(this, { isActiveOnMobile: false })}
               className={styles.wrapper}>
               <AccountInitialization address={recipient}/>
-              <SendWritable
+              <Form
                 autoFocus={this.state.isActiveOnMobile || window.innerWidth > breakpoints.m}
                 address={recipient}
                 amount={amount}
@@ -83,7 +83,7 @@ class Send extends React.Component {
                 settings={this.props.settings}
               />
               <PassphraseSteps/>
-              <SendReadable/>
+              <Confirm/>
               <ResultBox history={this.props.history}/>
               <FollowAccount showConfirmationStep={true}/>
               <ResultBox history={this.props.history}/>

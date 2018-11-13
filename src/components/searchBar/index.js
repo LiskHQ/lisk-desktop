@@ -7,7 +7,7 @@ import actionTypes from './../../constants/actions';
 import AutoSuggest from './../autoSuggest';
 import styles from './searchBar.css';
 
-class Search extends React.Component {
+class SearchBar extends React.Component {
   shouldShowSearchBarOnMobile() {
     const { pathname } = this.props.location;
     return pathname.includes('explorer');
@@ -41,4 +41,4 @@ const mapDispatchToProps = dispatch => ({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(translate()(Search)));
+)(translate()(SearchBar)));

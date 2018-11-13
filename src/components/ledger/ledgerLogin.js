@@ -14,7 +14,7 @@ import { FontIcon } from '../fontIcon';
 import cubeImage from '../../assets/images/dark-blue-cube.svg';
 import styles from './ledgerLogin.css';
 
-class LoginLedger extends React.Component {
+class LedgerLogin extends React.Component {
   constructor(props) {
     super(props);
 
@@ -205,4 +205,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(translate()(LoginLedger));
+)(translate()(LedgerLogin));

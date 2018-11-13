@@ -5,7 +5,7 @@ import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import sinon from 'sinon';
 import i18n from '../../i18n';
-import { ActionBarRaw as ActionBar } from './index';
+import ActionBar from './actionBar';
 // import * as accountApi from '../../utils/api/account';
 
 const fakeStore = configureStore();

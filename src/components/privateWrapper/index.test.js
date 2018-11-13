@@ -1,15 +1,15 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import { PrivateWrapperComponent } from '.';
+import PrivateWrapper from './privateWrapper';
 
 const Private = () => <h1>Private</h1>;
 
-describe('PrivateWrapperComponent', () => {
+describe('PrivateWrapper', () => {
   const isAuth = isAuthenticated => (
-    shallow(<PrivateWrapperComponent isAuthenticated={isAuthenticated}>
+    shallow(<PrivateWrapper isAuthenticated={isAuthenticated}>
         <Private/ >
-      </PrivateWrapperComponent>)
+      </PrivateWrapper>)
   );
   it('should render children components if user is authenticated', () => {
     const wrapper = isAuth(true);

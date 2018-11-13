@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { MemoryRouter as Router } from 'react-router-dom';
 import { spy, match } from 'sinon';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
@@ -54,9 +54,9 @@ describe('Register', () => {
     expect(wrapper.find('Create')).to.have.length(1);
   });
 
-  it.skip('should return to Login page if Cancel clicked in first step', () => {
-    expect(wrapper.find('Register').props().history.location.pathname).to.not.be.equal('/');
-    wrapper.find('button.cancel-button').simulate('click');
+  it('should return to Login page if Back clicked in first step', () => {
+    wrapper.find('.multistep-back').simulate('click');
+    wrapper.update();
     expect(wrapper.find('Register').props().history.location.pathname).to.be.equal('/');
   });
 
@@ -69,8 +69,8 @@ describe('Register', () => {
   });
 
   it('should return to Login page when prevPage in MultiStep is executed', () => {
-    expect(wrapper.find('Register').props().history.location.pathname).to.not.be.equal('/');
     wrapper.find('MultiStep').props().prevPage();
+    wrapper.update();
     expect(wrapper.find('Register').props().history.location.pathname).to.be.equal('/');
   });
 

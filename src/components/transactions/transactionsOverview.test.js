@@ -1,12 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { mountWithContext } from './../../../test/utils/mountHelpers';
-import TransactionOverview from './transactionOverview';
+import { mountWithContext } from '../../../test/utils/mountHelpers';
+import TransactionsOverview from './transactionsOverview';
 import store from '../../store';
-import accounts from './../../../test/constants/accounts';
+import accounts from '../../../test/constants/accounts';
 
-describe('TransactionOverview', () => {
+describe('TransactionsOverview', () => {
   let wrapper;
   let props;
   let onInitSpy;
@@ -43,7 +43,7 @@ describe('TransactionOverview', () => {
     onLoadMoreSpy = spy(props, 'onLoadMore');
     onFilterSetSpy = spy(props, 'onFilterSet');
     wrapper = mountWithContext(
-      <TransactionOverview {...props} store={store} />,
+      <TransactionsOverview {...props} store={store} />,
       { storeState: store },
     );
   });

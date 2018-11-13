@@ -1,20 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Parallax from '../parallax';
 import { FontIcon } from '../fontIcon';
 // eslint-disable-next-line import/no-unresolved
 import * as shapes from '../../assets/images/*.svg';
 import styles from './signUp.css';
-import routes from '../../constants/routes';
 
-const SignUp = ({ t, passInputState }) =>
+const SignUp = ({ t, passInputState, validateCorrectNode }) =>
   (<section className={`${styles.signUp} ${styles[passInputState]}`}>
     <section className={styles.table}>
       <div className='text-left'>
         <h2>
-          <Link className='new-account-button' to={routes.register.path}>
+          <div
+            className='new-account-button'
+            onClick={() => { validateCorrectNode(); }} >
             {t('Create Lisk ID')}
-          </Link>
+          </div>
           <FontIcon className={styles.singUpArrow} value='arrow-right' />
         </h2>
 

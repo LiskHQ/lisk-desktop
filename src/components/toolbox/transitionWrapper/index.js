@@ -12,8 +12,8 @@ class TransitionWrapper extends React.Component {
     };
 
     this.cssStyleRules = {
-      in: styles.slideIn,
-      out: styles.slideOut,
+      slideIn: styles.slideIn,
+      slideOut: styles.slideOut,
       duration: 400,
     };
   }
@@ -22,8 +22,8 @@ class TransitionWrapper extends React.Component {
     this.validateChildren();
 
     if (styles[`${this.props.animationName}In`]) {
-      this.cssStyleRules.in = styles[`${this.props.animationName}In`];
-      this.cssStyleRules.out = styles[`${this.props.animationName}Out`];
+      this.cssStyleRules.slideIn = styles[`${this.props.animationName}In`];
+      this.cssStyleRules.slideOut = styles[`${this.props.animationName}Out`];
     }
 
     if (this.props.current === this.props.step) {
@@ -48,7 +48,7 @@ class TransitionWrapper extends React.Component {
 
   transitionIn(AddWillTransition) {
     this.timeout = setTimeout(() => {
-      const className = `${this.props.children.props.className} ${AddWillTransition ? styles.willTransition : ''} ${this.cssStyleRules.in}`;
+      const className = `${this.props.children.props.className} ${AddWillTransition ? styles.willTransition : ''} ${this.cssStyleRules.slideIn}`;
       const extraProps = Object.assign({}, this.state.extraProps);
       extraProps.className = className;
       this.setState({ extraProps });
@@ -57,9 +57,9 @@ class TransitionWrapper extends React.Component {
 
   transitionOut() {
     const extraProps = Object.assign({}, this.state.extraProps);
-    let className = extraProps.className.replace(this.cssStyleRules.in, '').trim();
+    let className = extraProps.className.replace(this.cssStyleRules.slideIn, '').trim();
 
-    className = `${className} ${this.cssStyleRules.out}`;
+    className = `${className} ${this.cssStyleRules.slideOut}`;
 
     extraProps.className = className;
     this.setState({ extraProps });
@@ -71,7 +71,7 @@ class TransitionWrapper extends React.Component {
     this.timeout = setTimeout(() => {
       const extraProps = Object.assign({}, this.state.extraProps);
       extraProps.className = extraProps.className
-        .replace(this.cssStyleRules.in, '').replace(this.cssStyleRules.out, '').trim();
+        .replace(this.cssStyleRules.slideIn, '').replace(this.cssStyleRules.slideOut, '').trim();
       this.setState({ extraProps });
     }, this.cssStyleRules.duration);
   }
