@@ -1,6 +1,8 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import i18next from 'i18next';
+import Lisk from 'lisk-elements';
+
 import ToolBoxDropdown from '../toolbox/dropdown/toolBoxDropdown';
 import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import { PrimaryButton } from '../toolbox/buttons/button';
@@ -139,16 +141,16 @@ class Login extends React.Component {
       this.props.peers.options.address === network.address;
   }
 
-  getNetwork() {
-    const network = Object.assign({}, getNetwork(this.state.network));
-    if (this.state.network === networks.customNode.code) {
+  getNetwork(chosenNetwork) {
+    const network = Object.assign({}, getNetwork(chosenNetwork));
+    if (chosenNetwork === networks.customNode.code) {
       network.address = addHttp(this.state.address);
     }
     return network;
   }
 
   onLoginSubmission(passphrase) {
-    const network = this.getNetwork();
+    const network = this.getNetwork(this.state.network);
     this.secondIteration = true;
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
       this.redirectToReferrer();
@@ -204,6 +206,32 @@ class Login extends React.Component {
     const showNetworkParam = params.showNetwork || params.shownetwork;
 
     return showNetworkParam === 'true' || (showNetwork && showNetworkParam !== 'false');
+  }
+
+  validateCorrectNode() {
+    const { address } = this.state;
+    const nodeURL = address !== '' ? addHttp(address) : address;
+
+    if (this.state.network === networks.customNode.code) {
+      const liskAPIClient = new Lisk.APIClient([nodeURL], {});
+      liskAPIClient.node.getConstants()
+        .then((res) => {
+          if (res.data) {
+            this.props.activePeerSet({
+              network: this.getNetwork(this.state.network),
+            });
+            this.props.history.push(routes.register.path);
+          } else {
+            throw new Error();
+          }
+        }).catch(() => {
+          this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
+        });
+    } else {
+      const network = this.getNetwork(this.state.network);
+      this.props.activePeerSet({ network });
+      this.props.history.push(routes.register.path);
+    }
   }
 
   cancelLedgerLogin() {
@@ -282,7 +310,10 @@ class Login extends React.Component {
             </div>
           </section>
         </section>
-        <SignUp t={this.props.t} passInputState={this.state.passInputState} />
+        <SignUp
+          t={this.props.t}
+          passInputState={this.state.passInputState}
+          validateCorrectNode={this.validateCorrectNode.bind(this)}/>
       </Box>
     );
   }
