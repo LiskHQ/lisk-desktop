@@ -45,7 +45,14 @@
       }
     ],
     "linebreak-style": 0,
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "complexity": ["error", 10],
+    "max-depth": ["error", 2],
+    "max-nested-callbacks": ["error", 2],
+    "max-statements": ["error", 2],
+    "max-lines": ["error", 250],
+    "max-statements-per-line": ["error", 2],
+    "max-lines-per-function": ["error", { "max": 50, "complexity": 5 }]
   },
   "settings": {
     "mocha/additionalTestFunctions": [
