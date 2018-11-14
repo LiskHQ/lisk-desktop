@@ -86,18 +86,18 @@ describe('MainMenu', () => {
     expect(wrapper.find(ToolboxTabs).exists()).to.equal(true);
   });
 
-  it('should render 6 Button components if props.showDelegate', () => {
+  it('should render 4 Button components if props.showDelegate', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu {...props} showDelegate={true}/>
     </MemoryRouter>, options);
-    expect(wrapper.find(Tab)).to.have.lengthOf(6);
+    expect(wrapper.find(Tab)).to.have.lengthOf(4);
   });
 
-  it('should render 5 menu item components if !props.isDelegate', () => {
+  it('should render 3 menu item components if !props.isDelegate', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu {...props} />
     </MemoryRouter>, options);
-    expect(wrapper.find(Tab)).to.have.lengthOf(5);
+    expect(wrapper.find(Tab)).to.have.lengthOf(3);
   });
 
   it('should all Tab be disabled except Settings, Dashboard and Help if !props.account.address', () => {
