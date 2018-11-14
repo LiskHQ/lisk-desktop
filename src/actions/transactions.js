@@ -227,18 +227,18 @@ export const sent = ({ // eslint-disable-line
   async (dispatch, getState) => {
     // account.loginType = 1;
     let error;
-    let callReslut;
+    let callResult;
     let errorMessage;
     const activePeer = getState().peers.data;
     const timeOffset = getTimeOffset(getState());
     switch (account.loginType) {
       case 0:
         // eslint-disable-next-line
-        [error, callReslut] = await to(send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase, data, timeOffset));
+        [error, callResult] = await to(send(activePeer, recipientId, toRawLsk(amount), passphrase, secondPassphrase, data, timeOffset));
         break;
       case 1:
         // eslint-disable-next-line
-        [error, callReslut] = await to(sendWithLedger(activePeer, account, recipientId, toRawLsk(amount), secondPassphrase, data, timeOffset));
+        [error, callResult] = await to(sendWithLedger(activePeer, account, recipientId, toRawLsk(amount), secondPassphrase, data, timeOffset));
         break;
       case 2:
         errorMessage = i18next.t('Not Yet Implemented. Sorry.');
@@ -267,7 +267,7 @@ export const sent = ({ // eslint-disable-line
       });
     } else {
       dispatch(transactionAdded({
-        id: callReslut.id,
+        id: callResult.id,
         senderPublicKey: account.publicKey,
         senderId: account.address,
         recipientId,

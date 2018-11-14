@@ -44,11 +44,12 @@ class Confirm extends React.Component {
 
   componentDidUpdate() {
     // Hardware wallet code preventing by going on last step when there is pending transaction
-    const pending = this.props.pendingTransactions.find(transaction => (
-      transaction.senderId === this.props.account.address &&
+    const pending = this.props.account.hwInfo && this.props.account.hwInfo.deviceId
+      ? this.props.pendingTransactions.find(transaction => (
+        transaction.senderId === this.props.account.address &&
       transaction.recipientId === this.state.recipient.value &&
       fromRawLsk(transaction.amount) === this.props.amount
-    ));
+      )) : this.props.pendingTransactions.length;
 
     if (this.state.loading && (pending || this.props.failedTransactions)) {
       const data = this.getTransactionState();
@@ -108,7 +109,7 @@ class Confirm extends React.Component {
     // eslint-disable-next-line
     const title = this.props.accountInit ?
       this.props.t('Initialize Lisk ID') :
-      (this.props.account.hwInfo ? this.props.t('Confirm transaction on Ledger Nano S') : this.props.t('Confirm transfer'));
+      (this.props.account.hwInfo && this.props.account.hwInfo.deviceId ? this.props.t('Confirm transaction on Ledger Nano S') : this.props.t('Confirm transfer'));
     const followedAccount = this.props.followedAccounts
       .find(account => account.address === this.state.recipient.value);
     return (
