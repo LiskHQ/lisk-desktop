@@ -32,7 +32,7 @@ class PassphraseSteps extends React.Component {
       });
     }
 
-    if (this.props.account.hwInfo ||
+    if ((this.props.account.hwInfo && this.props.account.hwInfo.deviceId) ||
       (this.props.account.passphrase &&
       !this.props.account.secondPublicKey)) {
       this.props.nextStep({

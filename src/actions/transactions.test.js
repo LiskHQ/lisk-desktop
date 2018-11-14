@@ -6,7 +6,6 @@ import { sent, transactionsRequested, loadTransaction, transactionsUpdated } fro
 import * as transactionsApi from '../utils/api/transactions';
 import * as delegateApi from '../utils/api/delegate';
 import accounts from '../../test/constants/accounts';
-import transactionTypes from '../constants/transactionTypes';
 import Fees from '../constants/fees';
 import networks from '../constants/networks';
 import { toRawLsk } from '../utils/lsk';
@@ -187,6 +186,7 @@ describe('actions: transactions', () => {
       account: {
         publicKey: 'test_public-key',
         address: 'test_address',
+        loginType: 0,
       },
     };
     const actionFunction = sent(data);
@@ -208,28 +208,26 @@ describe('actions: transactions', () => {
       expect(typeof actionFunction).to.be.deep.equal('function');
     });
 
-    it('should dispatch transactionAdded action if resolved', () => {
+    it('should dispatch transactionAdded action if resolved', async () => {
       transactionsApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
         senderPublicKey: 'test_public-key',
         senderId: 'test_address',
         recipientId: data.recipientId,
-        asset: { data: undefined },
         amount: toRawLsk(data.amount),
         fee: Fees.send,
-        type: transactionTypes.send,
       };
 
-      actionFunction(dispatch, getState);
+      await actionFunction(dispatch, getState);
       expect(dispatch).to.have.been
         .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
     });
 
-    it('should dispatch transactionFailed action if caught', () => {
+    it('should dispatch transactionFailed action if caught', async () => {
       transactionsApiMock.returnsPromise().rejects({ message: 'sample message' });
 
-      actionFunction(dispatch, getState);
+      await actionFunction(dispatch, getState);
       const expectedAction = {
         data: {
           errorMessage: 'sample message.',
@@ -239,13 +237,15 @@ describe('actions: transactions', () => {
       expect(dispatch).to.have.been.calledWith(expectedAction);
     });
 
-    it('should dispatch transactionFailed action if caught but no message returned', () => {
-      transactionsApiMock.returnsPromise().rejects({});
+    it('should dispatch transactionFailed action if caught but no message returned', async () => {
+      const errorMessage = 'An error occurred while creating the transaction';
+      transactionsApiMock.returnsPromise().rejects({ message: errorMessage });
 
-      actionFunction(dispatch, getState);
+      await actionFunction(dispatch, getState);
+      const expectedErrorMessage = errorMessage + '.'; // eslint-disable-line
       const expectedAction = {
         data: {
-          errorMessage: 'An error occurred while creating the transaction.',
+          errorMessage: expectedErrorMessage,
         },
         type: actionTypes.transactionFailed,
       };

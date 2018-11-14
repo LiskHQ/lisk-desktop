@@ -108,6 +108,8 @@ describe('@integration: Wallet', () => {
       u_multisignatures: [],
       unconfirmedBalance: '0',
       passphrase,
+      loginType: 0,
+      hwInfo: {},
     };
 
     if (!options.withPublicKey) {
@@ -242,38 +244,12 @@ describe('@integration: Wallet', () => {
       step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
     });
 
-    describe('Scenario: should allow to send LSK from locked account', () => {
-      const { passphrase } = accounts.genesis;
-      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis', { isLocked: true, withPublicKey: true }));
-      step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
-      step('And I fill in "537318935439898807L" to "recipient" field', () => { helper.fillInputField('537318935439898807L', 'recipient'); });
-      step('And I click "send next button"', () => helper.clickOnElement('button.send-next-button'));
-      step('And I fill in passphrase of "genesis" to "passphrase" field', () => { helper.fillInputField(passphrase, 'passphrase'); });
-      step('When I click "next button"', () => helper.clickOnElement('.first-passphrase-next button'));
-      step('When I click "send button"', () => helper.clickOnElement('.send-button button'));
-      step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
-    });
-
     describe('Scenario: should allow to send LSK from unlocked account with second passphrase', () => {
       const { secondPassphrase } = accounts['second passphrase account'];
       step('Given I\'m on "wallet" as "second passphrase account"', () => setupStep('second passphrase account'));
       step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
       step('And I fill in "537318935439898807L" to "recipient" field', () => { helper.fillInputField('537318935439898807L', 'recipient'); });
       step('And I click "send next button"', () => helper.clickOnElement('button.send-next-button'));
-      step('And I fill in second passphrase of "second passphrase account" to "second passphrase" field', () => { helper.fillInputField(secondPassphrase, 'second-passphrase'); });
-      step('When I click "next button"', () => helper.clickOnElement('.second-passphrase-next button'));
-      step('When I click "send button"', () => helper.clickOnElement('.send-button button'));
-      step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
-    });
-
-    describe('Scenario: should allow to send LSK from locked account with second passphrase', () => {
-      const { secondPassphrase, passphrase } = accounts['second passphrase account'];
-      step('Given I\'m on "wallet" as "second passphrase account"', () => setupStep('second passphrase account', { isLocked: true, withPublicKey: true }));
-      step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
-      step('And I fill in "537318935439898807L" to "recipient" field', () => { helper.fillInputField('537318935439898807L', 'recipient'); });
-      step('And I click "send next button"', () => helper.clickOnElement('button.send-next-button'));
-      step('And I fill in passphrase of "second passphrase account" to "passphrase" field', () => { helper.fillInputField(passphrase, 'passphrase'); });
-      step('When I click "next button"', () => helper.clickOnElement('.first-passphrase-next button'));
       step('And I fill in second passphrase of "second passphrase account" to "second passphrase" field', () => { helper.fillInputField(secondPassphrase, 'second-passphrase'); });
       step('When I click "next button"', () => helper.clickOnElement('.second-passphrase-next button'));
       step('When I click "send button"', () => helper.clickOnElement('.send-button button'));
