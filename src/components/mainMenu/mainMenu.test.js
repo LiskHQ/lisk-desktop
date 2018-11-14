@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import { Tab, Tabs as ToolboxTabs } from 'react-toolbox';
 import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
@@ -66,7 +66,7 @@ describe('MainMenu', () => {
     account,
     store,
     history,
-    showFeedback: sinon.spy(),
+    feedbackDialogDisplayed: sinon.spy(),
   };
 
   beforeEach(() => {
@@ -100,15 +100,13 @@ describe('MainMenu', () => {
     expect(wrapper.find(Tab)).to.have.lengthOf(3);
   });
 
-  it('should all Tab be disabled except Settings, Dashboard and Help if !props.account.address', () => {
+  it('should all Tab be disabled except Dashboard and if !props.account.address', () => {
     const wrapper = mount(<MemoryRouter>
       <MainMenu {...props} account={{}} />
     </MemoryRouter>, options);
     expect(wrapper.find(Tab).at(0).props().disabled).not.to.be.equal(true);
     expect(wrapper.find(Tab).at(1).props().disabled).to.be.equal(true);
     expect(wrapper.find(Tab).at(2).props().disabled).to.be.equal(true);
-    expect(wrapper.find(Tab).at(3).props().disabled).not.to.be.equal(true);
-    expect(wrapper.find(Tab).at(4).props().disabled).not.to.be.equal(true);
   });
 
   it('should allow to change active menu item', () => {
@@ -129,21 +127,5 @@ describe('MainMenu', () => {
     clock.tick(100);
     wrapper.update();
     expect(wrapper.find('Drawer').props().active).to.be.equal(true);
-  });
-
-  it('should show feedback when param in url', () => {
-    const wrapper = shallow(<MainMenu {...props} />, options);
-    wrapper.setProps({
-      history: {
-        push: sinon.spy(),
-        location: { pathname: `${routes.wallet.path}`, search: '?showFeedback=true' },
-      },
-    });
-    wrapper.update();
-
-    const feedbackBtn = wrapper.find('#feedback').first();
-    expect(feedbackBtn.props().disabled).to.be.equal(false);
-    wrapper.find(ToolboxTabs).at(1).props().onChange(1);
-    expect(props.showFeedback).to.have.been.calledWith();
   });
 });
