@@ -11,7 +11,7 @@ import transactionTypes from '../../constants/transactionTypes';
 
 import { extractAddress, extractPublicKey } from '../../utils/account';
 import { getAutoLogInData, shouldAutoLogIn } from '../../utils/login';
-import { liskAPIClientSet, activePeerUpdate } from '../../actions/peers';
+import { liskAPIClientSet, liskAPIClientUpdate } from '../../actions/peers';
 import networks from '../../constants/networks';
 import settings from '../../constants/settings';
 import txFilters from '../../constants/transactionFilters';
@@ -130,7 +130,7 @@ const autoLogInIfNecessary = (store) => {
         address: autologinData[settings.keys.liskCoreUrl],
       },
     }));
-    store.dispatch(activePeerUpdate({
+    store.dispatch(liskAPIClientUpdate({
       online: true,
     }));
   }

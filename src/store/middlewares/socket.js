@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import actionTypes from '../../constants/actions';
-import { activePeerUpdate } from '../../actions/peers';
+import { liskAPIClientUpdate } from '../../actions/peers';
 
 let connection;
 let forcedClosing = false;
@@ -30,11 +30,11 @@ const socketSetup = (store) => {
   });
   connection.on('disconnect', () => {
     if (!forcedClosing) {
-      store.dispatch(activePeerUpdate({ online: false }));
+      store.dispatch(liskAPIClientUpdate({ online: false }));
     }
   });
   connection.on('reconnect', () => {
-    store.dispatch(activePeerUpdate({ online: true }));
+    store.dispatch(liskAPIClientUpdate({ online: true }));
   });
 };
 

@@ -20,7 +20,7 @@ const getErrorMessage = (errorCode, address) => {
 const offlineMiddleware = store => next => (action) => {
   const state = store.getState();
   switch (action.type) {
-    case actionsType.activePeerUpdate:
+    case actionsType.liskAPIClientUpdate:
       if (action.data.online === false && state.peers.status.online === true) {
         const address = `${state.peers.liskAPIClient.currentPeer}:${state.peers.liskAPIClient.port}`;
         const label = getErrorMessage(action.data.code, address);

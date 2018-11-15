@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import Lisk from 'lisk-elements';
 import { spy, stub, match } from 'sinon';
 import actionTypes from '../constants/actions';
-import { liskAPIClientSet, activePeerUpdate } from './peers';
+import { liskAPIClientSet, liskAPIClientUpdate } from './peers';
 import accounts from '../../test/constants/accounts';
 import networks from '../constants/networks';
 
@@ -12,7 +12,7 @@ describe('actions: peers', () => {
   const { passphrase } = accounts.genesis;
   const nethash = '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d';
 
-  describe('activePeerUpdate', () => {
+  describe('liskAPIClientUpdate', () => {
     it('should create an action to update the active peer', () => {
       const data = {
         online: true,
@@ -20,9 +20,9 @@ describe('actions: peers', () => {
 
       const expectedAction = {
         data,
-        type: actionTypes.activePeerUpdate,
+        type: actionTypes.liskAPIClientUpdate,
       };
-      expect(activePeerUpdate(data)).to.be.deep.equal(expectedAction);
+      expect(liskAPIClientUpdate(data)).to.be.deep.equal(expectedAction);
     });
   });
 

@@ -16,7 +16,7 @@ const peers = (state = { status: {}, options: {} }, action) => {
         // options are duplicated here because lisk-js later on removes it from the 'data' object
         options: action.data.options,
       });
-    case actionTypes.activePeerUpdate:
+    case actionTypes.liskAPIClientUpdate:
       return Object.assign({}, state, { status: action.data });
     default:
       return state;

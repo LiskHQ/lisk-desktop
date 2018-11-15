@@ -22,10 +22,10 @@ describe('Reducer: peers(state, action)', () => {
     expect(changedState).to.deep.equal(newState);
   });
 
-  it('should return state object with updated status of active peer if action is activePeerUpdate', () => {
+  it('should return state object with updated status of active peer if action is liskAPIClientUpdate', () => {
     const state = {};
     const action = {
-      type: actionTypes.activePeerUpdate,
+      type: actionTypes.liskAPIClientUpdate,
       data: { online: true },
     };
 

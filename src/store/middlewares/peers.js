@@ -1,4 +1,4 @@
-import { liskAPIClientSet, activePeerUpdate } from '../../actions/peers';
+import { liskAPIClientSet, liskAPIClientUpdate } from '../../actions/peers';
 import actionTypes from '../../constants/actions';
 import networks from './../../constants/networks';
 import getNetwork from './../../utils/getNetwork';
@@ -31,7 +31,7 @@ const peersMiddleware = store => next => (action) => {
       if (!shouldAutoLogIn(autologinData)) {
         store.dispatch(liskAPIClientSet({ network }));
       }
-      store.dispatch(activePeerUpdate({ online: true }));
+      store.dispatch(liskAPIClientUpdate({ online: true }));
       break;
     default: break;
   }

@@ -19,7 +19,7 @@ import { prepareStore, renderWithRouter } from '../utils/applicationInit';
 describe('@integration: Register', () => {
   let helper;
   let localStorageStub;
-  let activePeerSetSpy;
+  let liskAPIClientSetSpy;
   let clock;
   let passphrase;
   let accountAPIStub;
@@ -39,7 +39,7 @@ describe('@integration: Register', () => {
 
   const restoreStubs = () => {
     localStorageStub.restore();
-    activePeerSetSpy.restore();
+    liskAPIClientSetSpy.restore();
     accountAPIStub.restore();
     delegateAPIStub.restore();
     clock.restore();
@@ -47,7 +47,7 @@ describe('@integration: Register', () => {
 
   const stubApis = () => {
     localStorageStub = stub(localStorage, 'getItem');
-    activePeerSetSpy = spy(peersActions, 'liskAPIClientSet');
+    liskAPIClientSetSpy = spy(peersActions, 'liskAPIClientSet');
     accountAPIStub = stub(accountAPI, 'getAccount');
     accountAPIStub.returnsPromise().resolves({
       success: false,
@@ -73,7 +73,7 @@ describe('@integration: Register', () => {
 
     // eslint-disable-next-line class-methods-use-this
     checkIfRegistrationConfirmed() {
-      expect(activePeerSetSpy).to.have.been.calledWith(match({
+      expect(liskAPIClientSetSpy).to.have.been.calledWith(match({
         passphrase,
       }));
       restoreStubs();

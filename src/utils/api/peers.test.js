@@ -5,7 +5,7 @@ import { requestToActivePeer } from './peers';
 
 describe('Utils: Peers', () => {
   describe('requestToActivePeer', () => {
-    let activePeerMock;
+    let liskAPIClientMock;
     const path = '/test/';
     const urlParams = {};
     const liskAPIClient = {
@@ -13,11 +13,11 @@ describe('Utils: Peers', () => {
     };
 
     beforeEach(() => {
-      activePeerMock = mock(liskAPIClient);
+      liskAPIClientMock = mock(liskAPIClient);
     });
 
     afterEach(() => {
-      activePeerMock.restore();
+      liskAPIClientMock.restore();
     });
 
     it('should return a promise that is resolved when liskAPIClient.sendRequest() calls its callback with data.success == true', () => {
@@ -25,7 +25,7 @@ describe('Utils: Peers', () => {
         success: true,
         data: [],
       };
-      activePeerMock.expects('sendRequest').withArgs(path, urlParams).callsArgWith(2, response);
+      liskAPIClientMock.expects('sendRequest').withArgs(path, urlParams).callsArgWith(2, response);
       const requestPromise = requestToActivePeer(liskAPIClient, path, urlParams);
       expect(requestPromise).to.eventually.deep.equal(response);
     });
@@ -35,7 +35,7 @@ describe('Utils: Peers', () => {
         success: false,
         message: 'some error message',
       };
-      activePeerMock.expects('sendRequest').withArgs(path, urlParams).callsArgWith(2, response);
+      liskAPIClientMock.expects('sendRequest').withArgs(path, urlParams).callsArgWith(2, response);
       const requestPromise = requestToActivePeer(liskAPIClient, path, urlParams);
       expect(requestPromise).to.be.rejectedWith(response);
     });

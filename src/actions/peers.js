@@ -119,7 +119,7 @@ export const liskAPIClientSet = data =>
  * @param {Object} data - Active peer data
  * @returns {Object} Action object
  */
-export const activePeerUpdate = data => ({
+export const liskAPIClientUpdate = data => ({
   data,
-  type: actionTypes.activePeerUpdate,
+  type: actionTypes.liskAPIClientUpdate,
 });

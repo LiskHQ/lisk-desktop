@@ -24,9 +24,9 @@ describe('Account middleware', () => {
   let stubTransactions;
   let transactionsActionsStub;
   let getAutoLogInDataMock;
-  let activePeerSetMock;
+  let liskAPIClientSetMock;
   let accountDataUpdatedSpy;
-  const activePeerMock = 'DUMMY_ACTIVE_PEER';
+  const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
   const storeCreatedAction = {
     type: actionTypes.storeCreated,
   };
@@ -85,7 +85,7 @@ describe('Account middleware', () => {
     stubTransactions = stub(transactionsApi, 'getTransactions').returnsPromise().resolves(true);
     getAutoLogInDataMock = stub(accountUtils, 'getAutoLogInData');
     getAutoLogInDataMock.withArgs().returns({ });
-    activePeerSetMock = stub(peersActions, 'liskAPIClientSet').returns(activePeerMock);
+    liskAPIClientSetMock = stub(peersActions, 'liskAPIClientSet').returns(liskAPIClientMock);
     accountDataUpdatedSpy = spy(accountActions, 'accountDataUpdated');
   });
 
@@ -97,7 +97,7 @@ describe('Account middleware', () => {
     stubTransactions.restore();
     clock.restore();
     getAutoLogInDataMock.restore();
-    activePeerSetMock.restore();
+    liskAPIClientSetMock.restore();
     accountDataUpdatedSpy.restore();
   });
 
@@ -213,11 +213,11 @@ describe('Account middleware', () => {
       [settings.keys.liskCoreUrl]: networks.testnet.nodes[0],
     });
     middleware(store)(next)(storeCreatedAction);
-    expect(store.dispatch).to.have.been.calledWith(activePeerMock);
+    expect(store.dispatch).to.have.been.calledWith(liskAPIClientMock);
   });
 
   it(`should do nothing on ${actionTypes.storeCreated} if autologin data NOT found in localStorage`, () => {
     middleware(store)(next)(storeCreatedAction);
-    expect(store.dispatch).to.not.have.been.calledWith(activePeerMock);
+    expect(store.dispatch).to.not.have.been.calledWith(liskAPIClientMock);
   });
 });

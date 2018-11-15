@@ -5,7 +5,7 @@ import { registerDelegate, getDelegate, getAllVotes, getVoters } from '../utils/
 import { loadTransactionsFinish, transactionsUpdated } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { errorAlertDialogDisplayed } from './dialog';
-import { activePeerUpdate } from './peers';
+import { liskAPIClientUpdate } from './peers';
 import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
@@ -240,8 +240,8 @@ export const accountDataUpdated = ({
         ));
       }
       dispatch(accountUpdated(result));
-      dispatch(activePeerUpdate({ online: true }));
+      dispatch(liskAPIClientUpdate({ online: true }));
     }).catch((res) => {
-      dispatch(activePeerUpdate({ online: false, code: res.error.code }));
+      dispatch(liskAPIClientUpdate({ online: false, code: res.error.code }));
     });
   };

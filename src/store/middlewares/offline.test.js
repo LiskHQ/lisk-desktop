@@ -19,7 +19,7 @@ describe('Offline middleware', () => {
     store.dispatch = spy();
     next = spy();
     action = {
-      type: actionType.activePeerUpdate,
+      type: actionType.liskAPIClientUpdate,
       data: {},
     };
     peers = {
@@ -41,7 +41,7 @@ describe('Offline middleware', () => {
     expect(next).to.have.been.calledWith(randomAction);
   });
 
-  it(`should dispatch errorToastDisplayed on ${actionType.activePeerUpdate} action if !action.data.online and state.peer.status.online and action.data.code`, () => {
+  it(`should dispatch errorToastDisplayed on ${actionType.liskAPIClientUpdate} action if !action.data.online and state.peer.status.online and action.data.code`, () => {
     peers.status.online = true;
     action.data = {
       online: false,
@@ -54,7 +54,7 @@ describe('Offline middleware', () => {
     }));
   });
 
-  it(`should dispatch errorToastDisplayed on ${actionType.activePeerUpdate} action if !action.data.online and state.peer.status.online and action.data.code = "EUNAVAILABLE"`, () => {
+  it(`should dispatch errorToastDisplayed on ${actionType.liskAPIClientUpdate} action if !action.data.online and state.peer.status.online and action.data.code = "EUNAVAILABLE"`, () => {
     peers.status.online = true;
     action.data = {
       online: false,
@@ -67,7 +67,7 @@ describe('Offline middleware', () => {
     }));
   });
 
-  it(`should dispatch errorToastDisplayed on ${actionType.activePeerUpdate} action if !action.data.online and state.peer.status.online and action.data.code = "EPARSE"`, () => {
+  it(`should dispatch errorToastDisplayed on ${actionType.liskAPIClientUpdate} action if !action.data.online and state.peer.status.online and action.data.code = "EPARSE"`, () => {
     peers.status.online = true;
     action.data = {
       online: false,
@@ -81,7 +81,7 @@ describe('Offline middleware', () => {
     }));
   });
 
-  it(`should dispatch successToastDisplayed on ${actionType.activePeerUpdate} action if action.data.online and !state.peer.status.online`, () => {
+  it(`should dispatch successToastDisplayed on ${actionType.liskAPIClientUpdate} action if action.data.online and !state.peer.status.online`, () => {
     peers.status.online = false;
     action.data.online = true;
 
@@ -91,7 +91,7 @@ describe('Offline middleware', () => {
     }));
   });
 
-  it(`should not call next() on ${actionType.activePeerUpdate} action if action.data.online === state.peer.status.online`, () => {
+  it(`should not call next() on ${actionType.liskAPIClientUpdate} action if action.data.online === state.peer.status.online`, () => {
     peers.status.online = false;
     action.data.online = false;
 
@@ -99,7 +99,7 @@ describe('Offline middleware', () => {
     expect(next).not.to.have.been.calledWith();
   });
 
-  it(`should call next() on ${actionType.activePeerUpdate} action if action.data.online !== state.peer.status.online`, () => {
+  it(`should call next() on ${actionType.liskAPIClientUpdate} action if action.data.online !== state.peer.status.online`, () => {
     peers.status.online = true;
     action.data.online = false;
 
