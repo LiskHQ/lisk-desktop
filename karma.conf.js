@@ -75,8 +75,7 @@ module.exports = function (config) {
             'src/utils/rawTransactionWrapper.js',
             'src/utils/to.js',
             'src/components/newsFeed/index.js', // This component doesn't meet the setted tresholds for mocha but in jest
-            'src/components/dashboard/currencyGraph.js', // This component should be fixed later, right now the test is being skip (canvas issue)
-            'test/integration/wallet.js', // integration wallet throw random error that should be check it
+            'src/components/dashboard/currencyGraph.js', // This should be unskipped in issue #1499
             'src/components/passphraseCreation/index.js',
           ],
           overrides: {
