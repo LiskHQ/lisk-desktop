@@ -48,7 +48,7 @@ const followedAccountsMiddleware = (store) => {
           account: action.data,
         }));
         break;
-      case actionTypes.activePeerSet:
+      case actionTypes.liskAPIClientSet:
         updateFollowedAccounts(followedAccounts.accounts);
         break;
       default:

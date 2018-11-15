@@ -28,7 +28,8 @@ class Register extends React.Component {
   }
 
   onRegister(passphrase) {
-    this.props.activePeerSet({
+    // set active peer
+    this.props.liskAPIClientSet({
       passphrase,
       network: this.props.network,
     });

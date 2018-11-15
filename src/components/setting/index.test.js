@@ -21,7 +21,7 @@ describe('SettingHOC', () => {
   };
   const store = configureMockStore([])({
     account,
-    activePeerSet: () => {},
+    liskAPIClientSet: () => {},
     settings: {
       autoLog: true,
       advancedMode: true,

@@ -11,7 +11,7 @@ describe('TransactionDetailView', () => {
     const context = {
       storeState: {
         peers: {
-          data: {},
+          liskAPIClient: {},
           options: {},
         },
         transaction: {
@@ -50,7 +50,7 @@ describe('TransactionDetailView', () => {
     const context = {
       storeState: {
         peers: {
-          data: {},
+          liskAPIClient: {},
           options: {},
         },
         transaction: {
@@ -99,7 +99,7 @@ describe('TransactionDetailView', () => {
     const context = {
       storeState: {
         peers: {
-          data: {},
+          liskAPIClient: {},
           options: {},
         },
         transaction: {

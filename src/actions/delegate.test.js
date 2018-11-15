@@ -21,7 +21,7 @@ describe('actions: delegate', () => {
       getDelegateStub = sinon.stub(delegateApi, 'getDelegate');
       dispatch = sinon.spy();
       getState = () => ({
-        peers: { data: {} },
+        peers: { liskAPIClient: {} },
       });
     });
 

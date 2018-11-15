@@ -3,8 +3,8 @@ import { withRouter } from 'react-router';
 import { setDefaults, translate } from 'react-i18next';
 import { dialogDisplayed } from '../../actions/dialog';
 import Login from './login';
+import { liskAPIClientSet } from '../../actions/peers';
 import { errorToastDisplayed } from '../../actions/toaster';
-import { activePeerSet } from '../../actions/peers';
 import { settingsUpdated } from '../../actions/settings';
 import { loadingStarted, loadingFinished } from '../../actions/loading';
 
@@ -24,11 +24,11 @@ const mapStateToProps = state => ({
   account: state.account,
   peers: state.peers,
   settings: state.settings,
-  activePeer: state.peers && state.peers.data,
+  liskAPIClient: state.peers && state.peers.liskAPIClient,
 });
 
 const mapDispatchToProps = dispatch => ({
-  activePeerSet: data => dispatch(activePeerSet(data)),
+  liskAPIClientSet: data => dispatch(liskAPIClientSet(data)),
   setActiveDialog: data => dispatch(dialogDisplayed(data)),
   settingsUpdated: data => dispatch(settingsUpdated(data)),
   errorToastDisplayed: data => dispatch(errorToastDisplayed(data)),

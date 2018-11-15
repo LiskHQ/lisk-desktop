@@ -24,7 +24,7 @@ const delegateList = [
 
 describe('actions: voting', () => {
   let getState = () => ({
-    peers: { data: {} },
+    peers: { liskAPIClient: {} },
   });
 
   describe('voteToggled', () => {
@@ -112,7 +112,7 @@ describe('actions: voting', () => {
         account, votes, secondSecret, goToNextStep,
       });
       getState = () => ({
-        peers: { data: {} },
+        peers: { liskAPIClient: {} },
       });
     });
 
@@ -166,7 +166,7 @@ describe('actions: voting', () => {
     beforeEach(() => {
       delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates').returnsPromise();
       getState = () => ({
-        peers: { data: {} },
+        peers: { liskAPIClient: {} },
       });
     });
 
@@ -212,7 +212,7 @@ describe('actions: voting', () => {
 
     getState = () => ({
       peers: {
-        data: {
+        liskAPIClient: {
           options: {
             name: networks.mainnet.name,
           },
@@ -229,6 +229,11 @@ describe('actions: voting', () => {
       const dispatch = sinon.spy();
       getState = () => ({
         peers: {
+          liskAPIClient: {
+            options: {
+              name: networks.mainnet.name,
+            },
+          },
           options: {
             name: networks.mainnet.name,
             code: networks.mainnet.code,
@@ -260,13 +265,13 @@ describe('actions: voting', () => {
     };
 
     getState = () => ({
-      peers: { data: {} },
+      peers: { liskAPIClient: {} },
     });
 
     beforeEach(() => {
       delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates').returnsPromise();
       getState = () => ({
-        peers: { data: {} },
+        peers: { liskAPIClient: {} },
       });
     });
 

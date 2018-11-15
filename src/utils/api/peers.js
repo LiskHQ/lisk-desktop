@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/prefer-default-export
-export const requestToActivePeer = (activePeer, path, urlParams) =>
+export const requestToActivePeer = (liskAPIClient, path, urlParams) =>
   new Promise((resolve, reject) => {
-    activePeer.sendRequest(path, urlParams, (data) => {
+    liskAPIClient.sendRequest(path, urlParams, (data) => {
       if (data.success) {
         resolve(data);
       } else {

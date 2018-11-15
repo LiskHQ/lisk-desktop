@@ -76,7 +76,7 @@ describe('voting middleware', () => {
         },
       },
       peers: {
-        data: {},
+        liskAPIClient: {},
         options: {
           code: networks.mainnet.code,
         },
