@@ -19,7 +19,7 @@ const peerSet = (data, config) => ({
     options: config,
     loginType: data.loginType,
   }),
-  type: actionTypes.activePeerSet,
+  type: actionTypes.liskAPIClientSet,
 });
 
 const login = (dispatch, getState, data, config) => {
@@ -75,7 +75,7 @@ const login = (dispatch, getState, data, config) => {
  * @param {Object} data - Active peer data and the passphrase of account
  * @returns {Object} Action object
  */
-export const activePeerSet = data =>
+export const liskAPIClientSet = data =>
   (dispatch, getState) => {
     const config = data.network || {};
 

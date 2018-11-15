@@ -32,7 +32,7 @@ class Register extends React.Component {
     const network = Object.assign({}, getNetwork(this.props.network));
 
     // set active peer
-    this.props.activePeerSet({
+    this.props.liskAPIClientSet({
       passphrase,
       network,
     });

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
 import { getLedgerAccountInfo } from '../../utils/api/ledger';
-import { activePeerSet } from '../../actions/peers';
+import { liskAPIClientSet } from '../../actions/peers';
 import { settingsUpdated } from '../../actions/settings';
 import { errorToastDisplayed } from '../../actions/toaster';
 
@@ -99,7 +99,7 @@ class LedgerLogin extends React.Component {
 
   selectAccount(ledgerAccount) {
     // set active peer
-    this.props.activePeerSet({
+    this.props.liskAPIClientSet({
       publicKey: ledgerAccount.publicKey,
       network: this.props.network,
       hwInfo: { // Use pubKey[0] first 10 char as device id
@@ -197,7 +197,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  activePeerSet: data => dispatch(activePeerSet(data)),
+  liskAPIClientSet: data => dispatch(liskAPIClientSet(data)),
   settingsUpdated: data => dispatch(settingsUpdated(data)),
   errorToastDisplayed: data => dispatch(errorToastDisplayed(data)),
 });

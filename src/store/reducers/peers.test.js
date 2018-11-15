@@ -4,10 +4,10 @@ import actionTypes from '../../constants/actions';
 
 
 describe('Reducer: peers(state, action)', () => {
-  it('should return state object with data of active peer in state.data if action is activePeerSet', () => {
+  it('should return state object with data of active peer in state.data if action is liskAPIClientSet', () => {
     const state = {};
     const action = {
-      type: actionTypes.activePeerSet,
+      type: actionTypes.liskAPIClientSet,
       data: {
         currentPeer: 'localhost',
         port: 4000,

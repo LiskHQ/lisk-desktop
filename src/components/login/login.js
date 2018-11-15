@@ -92,7 +92,7 @@ class Login extends React.Component {
       }
 
       // set active peer
-      this.props.activePeerSet({
+      this.props.liskAPIClientSet({
         publicKey: ledgerAccount.publicKey,
         loginType: 1,
         network,
@@ -153,7 +153,7 @@ class Login extends React.Component {
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
       this.redirectToReferrer();
     } else {
-      this.props.activePeerSet({
+      this.props.liskAPIClientSet({
         passphrase,
         network,
       });

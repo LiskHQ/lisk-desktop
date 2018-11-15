@@ -7,7 +7,7 @@ const actionTypes = {
   accountLoading: 'ACCOUNT_LOADING',
   accountAddVotes: 'ACCOUNT_ADD_VOTES',
   accountAddVoters: 'ACCOUNT_ADD_VOTERS',
-  activePeerSet: 'ACTIVE_PEER_SET',
+  liskAPIClientSet: 'ACTIVE_PEER_SET',
   activePeerUpdate: 'ACTIVE_PEER_UPDATE',
   activePeerReset: 'ACTIVE_PEER_RESET',
   dialogDisplayed: 'DIALOG_DISPLAYED',

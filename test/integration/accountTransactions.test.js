@@ -18,7 +18,7 @@ import filtersReducer from '../../src/store/reducers/filters';
 import followedAccountsReducer from '../../src/store/reducers/followedAccounts';
 import accountMiddleware from '../../src/store/middlewares/account';
 import votingMiddleware from '../../src/store/middlewares/voting';
-import { activePeerSet } from '../../src/actions/peers';
+import { liskAPIClientSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
 import txTypes from './../../src/constants/transactionTypes';
 import getNetwork from './../../src/utils/getNetwork';
@@ -234,7 +234,7 @@ describe('@integration: Account Transactions', () => {
     accountAPIStub.withArgs(match.any)
       .returnsPromise().resolves({ ...account });
 
-    store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
+    store.dispatch(liskAPIClientSet({ network: getNetwork(networks.mainnet.code) }));
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(
       AccountTransactions, store,

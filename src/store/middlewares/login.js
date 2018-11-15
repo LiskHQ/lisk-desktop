@@ -8,11 +8,11 @@ import { errorToastDisplayed } from '../../actions/toaster';
 
 const { lockDuration } = accountConfig;
 const loginMiddleware = store => next => (action) => {
-  if (action.type !== actionTypes.activePeerSet ||
+  if (action.type !== actionTypes.liskAPIClientSet ||
       (!action.data.publicKey && !action.data.passphrase)) {
     return next(action);
   }
-  if (action.type === actionTypes.activePeerSet && action.data.loginType === 1) {
+  if (action.type === actionTypes.liskAPIClientSet && action.data.loginType === 1) {
     return next(action);
   }
   next(action);

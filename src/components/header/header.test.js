@@ -16,7 +16,7 @@ describe('Header', () => {
   const storeObject = {
     peers: { liskAPIClient: {}, options: {} },
     account: {},
-    activePeerSet: () => {},
+    liskAPIClientSet: () => {},
     search: {
       suggestions: {
         delegates: [],

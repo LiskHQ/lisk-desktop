@@ -21,7 +21,7 @@ describe('Register', () => {
   const store = configureMockStore([])({
     peers,
     account,
-    activePeerSet: () => {},
+    liskAPIClientSet: () => {},
   });
   const options = {
     context: { store, i18n },
@@ -34,7 +34,7 @@ describe('Register', () => {
     account,
     peers,
     network: networks.mainnet.code,
-    activePeerSet: spy(),
+    liskAPIClientSet: spy(),
     t: key => key,
   };
 
@@ -60,9 +60,9 @@ describe('Register', () => {
     expect(wrapper.find('Register').props().history.location.pathname).to.be.equal('/');
   });
 
-  it('should call activePeerSet with network and passphrase', () => {
+  it('should call liskAPIClientSet with network and passphrase', () => {
     wrapper.find('MultiStep').props().finalCallback(passphrase);
-    expect(prop.activePeerSet).to.have.been.calledWith(match({
+    expect(prop.liskAPIClientSet).to.have.been.calledWith(match({
       network: networks.mainnet,
       passphrase,
     }));

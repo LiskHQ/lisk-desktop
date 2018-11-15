@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import Lisk from 'lisk-elements';
 import { spy, stub, match } from 'sinon';
 import actionTypes from '../constants/actions';
-import { activePeerSet, activePeerUpdate } from './peers';
+import { liskAPIClientSet, activePeerUpdate } from './peers';
 import accounts from '../../test/constants/accounts';
 import networks from '../constants/networks';
 
@@ -26,7 +26,7 @@ describe('actions: peers', () => {
     });
   });
 
-  describe('activePeerSet', () => {
+  describe('liskAPIClientSet', () => {
     let dispatch;
     let APIClientBackup;
     let getConstantsMock;
@@ -72,22 +72,22 @@ describe('actions: peers', () => {
           nethash,
         },
       };
-      activePeerSet(data)(dispatch, getState);
+      liskAPIClientSet(data)(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.address', 'localhost:8000'));
     });
 
-    it('dispatch activePeerSet action also when address http missing', () => {
+    it('dispatch liskAPIClientSet action also when address http missing', () => {
       const network = { address: 'localhost:8000' };
 
-      activePeerSet({ passphrase, network })(dispatch, getState);
+      liskAPIClientSet({ passphrase, network })(dispatch, getState);
 
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.address', 'localhost:8000'));
     });
 
-    it('dispatch activePeerSet action with nodeXX.lisk.io node if mainnet', () => {
+    it('dispatch liskAPIClientSet action with nodeXX.lisk.io node if mainnet', () => {
       const network = networks.mainnet;
 
-      activePeerSet({ passphrase, network })(dispatch, getState);
+      liskAPIClientSet({ passphrase, network })(dispatch, getState);
 
       expect(dispatch).to.have.been.calledWith(match.hasNested(
         'data.options.nodes',
@@ -95,22 +95,22 @@ describe('actions: peers', () => {
       ));
     });
 
-    it('dispatch activePeerSet action with testnet nodes if testnet option is set', () => {
+    it('dispatch liskAPIClientSet action with testnet nodes if testnet option is set', () => {
       const network = {
         testnet: true,
       };
 
-      activePeerSet({ passphrase, network })(dispatch, getState);
+      liskAPIClientSet({ passphrase, network })(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes', networks.testnet.nodes));
     });
 
-    it('dispatch activePeerSet with custom node', () => {
+    it('dispatch liskAPIClientSet with custom node', () => {
       const network = {
         address: 'http://localhost:4000',
         custom: true,
       };
 
-      activePeerSet({ passphrase, network })(dispatch, getState);
+      liskAPIClientSet({ passphrase, network })(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes[0]', 'http://localhost:4000'));
     });
 
@@ -120,21 +120,21 @@ describe('actions: peers', () => {
         address: 'http://localhost:4000',
         custom: true,
       };
-      activePeerSet({ passphrase, network })(dispatch, getState);
+      liskAPIClientSet({ passphrase, network })(dispatch, getState);
       expect(dispatch).to.have.been.calledWith({
         data: { label: 'Unable to connect to the node, no response from the server.', type: 'error' },
         type: actionTypes.toastDisplayed,
       });
     });
 
-    it('dispatch activePeerSet action even if network is undefined', () => {
-      activePeerSet({ passphrase, network: {} })(dispatch, getState);
+    it('dispatch liskAPIClientSet action even if network is undefined', () => {
+      liskAPIClientSet({ passphrase, network: {} })(dispatch, getState);
 
       expect(dispatch).to.have.been.calledWith();
     });
 
-    it('dispatch activePeerSet action even if network.address is undefined', () => {
-      activePeerSet({ passphrase, network: {} })(dispatch, getState);
+    it('dispatch liskAPIClientSet action even if network.address is undefined', () => {
+      liskAPIClientSet({ passphrase, network: {} })(dispatch, getState);
 
       expect(dispatch).to.have.been.calledWith();
     });
@@ -143,11 +143,11 @@ describe('actions: peers', () => {
       const network7000 = { address: 'http://127.0.0.1:7000', nethash };
       const network4000 = { address: 'http://127.0.0.1:4000', nethash };
 
-      activePeerSet({ passphrase, network: network7000 })(dispatch, getState);
+      liskAPIClientSet({ passphrase, network: network7000 })(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes[0]', network7000.address));
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nethash', nethash));
 
-      activePeerSet({ passphrase, network: network4000 })(dispatch, getState);
+      liskAPIClientSet({ passphrase, network: network4000 })(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes[0]', network4000.address));
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nethash', nethash));
     });

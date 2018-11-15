@@ -10,7 +10,7 @@ import actionTypes from '../../constants/actions';
  */
 const peers = (state = { status: {}, options: {} }, action) => {
   switch (action.type) {
-    case actionTypes.activePeerSet:
+    case actionTypes.liskAPIClientSet:
       return Object.assign({}, state, {
         liskAPIClient: action.data.liskAPIClient ? action.data.liskAPIClient : action.data,
         // options are duplicated here because lisk-js later on removes it from the 'data' object

@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { activePeerSet } from '../../actions/peers';
+import { liskAPIClientSet } from '../../actions/peers';
 import Register from './register';
 
 const mapDispatchToProps = dispatch => ({
-  activePeerSet: data => dispatch(activePeerSet(data)),
+  liskAPIClientSet: data => dispatch(liskAPIClientSet(data)),
 });
 
 const mapStateToProps = state => ({

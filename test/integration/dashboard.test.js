@@ -21,7 +21,7 @@ import accountMiddleware from '../../src/store/middlewares/account';
 import followedAccountsMiddleware from '../../src/store/middlewares/followedAccounts';
 import peerMiddleware from '../../src/store/middlewares/peers';
 import { accountLoggedIn } from '../../src/actions/account';
-import { activePeerSet } from '../../src/actions/peers';
+import { liskAPIClientSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
 import txTypes from './../../src/constants/transactionTypes';
 import routes from '../../src/constants/routes';
@@ -128,7 +128,7 @@ describe('@integration: Dashboard', () => {
       passphrase,
     };
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ data: [...account] });
-    store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
+    store.dispatch(liskAPIClientSet({ network: getNetwork(networks.mainnet.code) }));
     delegateAPIStub.withArgs(match.any).returnsPromise()
       .resolves({ delegate: { ...accounts['delegate candidate'] } });
 

@@ -1,4 +1,4 @@
-import { activePeerSet, activePeerUpdate } from '../../actions/peers';
+import { liskAPIClientSet, activePeerUpdate } from '../../actions/peers';
 import actionTypes from '../../constants/actions';
 import networks from './../../constants/networks';
 import getNetwork from './../../utils/getNetwork';
@@ -29,7 +29,7 @@ const peersMiddleware = store => next => (action) => {
       // https://github.com/LiskHQ/lisk-hub/issues/1339
       /* istanbul ignore else */
       if (!shouldAutoLogIn(autologinData)) {
-        store.dispatch(activePeerSet({ network }));
+        store.dispatch(liskAPIClientSet({ network }));
       }
       store.dispatch(activePeerUpdate({ online: true }));
       break;

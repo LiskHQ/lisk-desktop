@@ -85,7 +85,7 @@ describe('Account middleware', () => {
     stubTransactions = stub(transactionsApi, 'getTransactions').returnsPromise().resolves(true);
     getAutoLogInDataMock = stub(accountUtils, 'getAutoLogInData');
     getAutoLogInDataMock.withArgs().returns({ });
-    activePeerSetMock = stub(peersActions, 'activePeerSet').returns(activePeerMock);
+    activePeerSetMock = stub(peersActions, 'liskAPIClientSet').returns(activePeerMock);
     accountDataUpdatedSpy = spy(accountActions, 'accountDataUpdated');
   });
 
@@ -207,7 +207,7 @@ describe('Account middleware', () => {
     accountUpdatedSpy.restore();
   });
 
-  it(`should dispatch ${actionTypes.activePeerSet} action on ${actionTypes.storeCreated} if autologin data found in localStorage`, () => {
+  it(`should dispatch ${actionTypes.liskAPIClientSet} action on ${actionTypes.storeCreated} if autologin data found in localStorage`, () => {
     getAutoLogInDataMock.withArgs().returns({
       [settings.keys.loginKey]: passphrase,
       [settings.keys.liskCoreUrl]: networks.testnet.nodes[0],

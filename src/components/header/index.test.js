@@ -18,7 +18,7 @@ describe('HeaderHOC', () => {
   const store = configureMockStore([])({
     peers: { liskAPIClient: {}, options: {} },
     account: {},
-    activePeerSet: () => {},
+    liskAPIClientSet: () => {},
     settings: {
       autoLog: true,
       advancedMode: true,

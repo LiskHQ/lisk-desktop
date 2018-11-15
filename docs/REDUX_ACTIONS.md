@@ -42,7 +42,7 @@ When entering actions execution order:
 ![alt text](assets/login_screen.png "Login Screen")
 
 After clicking `Log in` it executes:
-- [`activePeerSet`](https://github.com/LiskHQ/lisk-hub/blob/86ab1874d89519a37d817c326c37d594f29b94eb/src/components/login/index.js#L28) with passphrase<br/>
+- [`liskAPIClientSet`](https://github.com/LiskHQ/lisk-hub/blob/86ab1874d89519a37d817c326c37d594f29b94eb/src/components/login/index.js#L28) with passphrase<br/>
   ↪️ Login Middleware<br/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`getAccount`](https://github.com/LiskHQ/lisk-hub/blob/ea41bf3a898b2955de2d39e3a2bdd79ad150842e/src/store/middlewares/login.js#L31)<br/>
   &nbsp;&nbsp;&nbsp;&nbsp;

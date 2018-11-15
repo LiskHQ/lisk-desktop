@@ -47,7 +47,7 @@ describe('@integration: Register', () => {
 
   const stubApis = () => {
     localStorageStub = stub(localStorage, 'getItem');
-    activePeerSetSpy = spy(peersActions, 'activePeerSet');
+    activePeerSetSpy = spy(peersActions, 'liskAPIClientSet');
     accountAPIStub = stub(accountAPI, 'getAccount');
     accountAPIStub.returnsPromise().resolves({
       success: false,
@@ -107,7 +107,7 @@ describe('@integration: Register', () => {
     window.addEventListener = (name, event) => {
       events[name] = event;
     };
-    const wrapper = mount(renderWithRouter(Register, store, { location: { search: '' } }), { activePeerSet: peersActions.activePeerSet });
+    const wrapper = mount(renderWithRouter(Register, store, { location: { search: '' } }), { liskAPIClientSet: peersActions.liskAPIClientSet });
     helper = new Helper(wrapper, store);
   };
 
