@@ -23,7 +23,7 @@ describe('Offline middleware', () => {
       data: {},
     };
     peers = {
-      data: {
+      liskAPIClient: {
         port: 4000,
         currentPeer: 'localhost',
       },

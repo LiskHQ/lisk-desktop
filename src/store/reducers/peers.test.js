@@ -17,7 +17,7 @@ describe('Reducer: peers(state, action)', () => {
       },
     };
 
-    const newState = { data: action.data, options: action.data.options };
+    const newState = { liskAPIClient: action.data, options: action.data.options };
     const changedState = peers(state, action);
     expect(changedState).to.deep.equal(newState);
   });
