@@ -15,7 +15,7 @@ const peerSet = (data, config) => ({
   data: Object.assign({
     passphrase: data.passphrase,
     publicKey: data.publicKey,
-    activePeer: new Lisk.APIClient(config.nodes, { nethash: config.nethash }),
+    liskAPIClient: new Lisk.APIClient(config.nodes, { nethash: config.nethash }),
     options: config,
     loginType: data.loginType,
   }),
@@ -29,7 +29,7 @@ const login = (dispatch, getState, data, config) => {
     const { passphrase } = data;
     const { code } = data.network;
     const publicKey = passphrase ? extractPublicKey(passphrase) : data.publicKey;
-    const activePeer = store.peers.liskAPIClient ||
+    const liskAPIClient = store.peers.liskAPIClient ||
       new Lisk.APIClient(config.nodes, { nethash: config.nethash });
     const address = extractAddress(publicKey);
     const accountBasics = {
@@ -43,7 +43,7 @@ const login = (dispatch, getState, data, config) => {
     dispatch(accountLoading());
 
     // redirect to main/transactions
-    getAccount(activePeer, address).then((accountData) => {
+    getAccount(liskAPIClient, address).then((accountData) => {
       const duration = (passphrase && store.settings.autoLog) ?
         Date.now() + lockDuration : 0;
       const accountUpdated = {

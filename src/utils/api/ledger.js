@@ -19,7 +19,7 @@ import { getAccount } from './account';
  */
 /* eslint-disable prefer-const */
 export const sendWithLedger =
-  (activePeer, account, recipientId, amount, pin = null, data = null) =>
+  (liskAPIClient, account, recipientId, amount, pin = null, data = null) =>
     new Promise(async (resolve, reject) => {
       const rawTx = createSendTX(account.publicKey, recipientId, amount, data);
       let error;
@@ -28,7 +28,7 @@ export const sendWithLedger =
       if (error) {
         reject(error);
       } else {
-        activePeer.transactions.broadcast(signedTx).then(() => {
+        liskAPIClient.transactions.broadcast(signedTx).then(() => {
           resolve(signedTx);
         }).catch(reject);
       }
@@ -39,7 +39,7 @@ export const sendWithLedger =
  * NOTE: secondPassphrase for ledger is a PIN (numeric)
  * @returns Promise - Action RegisterDelegate with Ledger
  */
-export const registerDelegateWithLedger = (activePeer, account, username, pin = null) =>
+export const registerDelegateWithLedger = (liskAPIClient, account, username, pin = null) =>
   new Promise(async (resolve, reject) => {
     const rawTx = createDelegateTX(account.publicKey, username);
     let error;
@@ -48,7 +48,7 @@ export const registerDelegateWithLedger = (activePeer, account, username, pin = 
     if (error) {
       reject(error);
     } else {
-      activePeer.transactions.broadcast(signedTx).then(() => {
+      liskAPIClient.transactions.broadcast(signedTx).then(() => {
         resolve(signedTx);
       }).catch(reject);
     }
@@ -58,7 +58,7 @@ export const registerDelegateWithLedger = (activePeer, account, username, pin = 
  * NOTE: secondPassphrase for ledger is a PIN (numeric)
  * @returns Promise - Action Vote with Ledger
  */
-export const voteWithLedger = (activePeer, account, votedList, unvotedList, pin = null) =>
+export const voteWithLedger = (liskAPIClient, account, votedList, unvotedList, pin = null) =>
   new Promise(async (resolve, reject) => {
     const rawTx = createRawVoteTX(account.publicKey, account.address, votedList, unvotedList);
     let error;
@@ -67,7 +67,7 @@ export const voteWithLedger = (activePeer, account, votedList, unvotedList, pin 
     if (error) {
       reject(error);
     } else {
-      activePeer.transactions.broadcast(signedTx).then(() => {
+      liskAPIClient.transactions.broadcast(signedTx).then(() => {
         resolve(signedTx);
       }).catch(reject);
     }
@@ -77,7 +77,7 @@ export const voteWithLedger = (activePeer, account, votedList, unvotedList, pin 
  * NOTE: secondPassphrase for ledger is a PIN (numeric)
  * @returns Promise - Action SetSecondPassphrase with Ledger
  */
-export const setSecondPassphraseWithLedger = (activePeer, account, pin) =>
+export const setSecondPassphraseWithLedger = (liskAPIClient, account, pin) =>
   new Promise(async (resolve, reject) => {
     let error;
     let signedTx;
@@ -94,28 +94,28 @@ export const setSecondPassphraseWithLedger = (activePeer, account, pin) =>
     if (error) {
       reject(error);
     } else {
-      activePeer.transactions.broadcast(signedTx).then(() => {
+      liskAPIClient.transactions.broadcast(signedTx).then(() => {
         resolve(signedTx);
       }).catch(reject);
     }
   });
-export const getLedgerAccountInfo = async (activePeer, accountIndex) => {
+export const getLedgerAccountInfo = async (liskAPIClient, accountIndex) => {
   let error;
   let liskAccount;
   [error, liskAccount] = await to(getAccountFromLedgerIndex(accountIndex));
   if (error) {
     throw error;
   }
-  let resAccount = await getAccount(activePeer, liskAccount.address);
+  let resAccount = await getAccount(liskAPIClient, liskAccount.address);
   const isInitialized = !!resAccount.unconfirmedBalance;
   Object.assign(resAccount, { isInitialized });
   // Set PublicKey from Ledger Info
   // so we can switch on this account even if publicKey is not revealed to the network
   Object.assign(resAccount, { publicKey: liskAccount.publicKey });
   //  if (isInitialized) {
-  //   const txAccount = await getTransactions(activePeer, liskAccount.address);
+  //   const txAccount = await getTransactions(liskAPIClient, liskAccount.address);
   //   Object.assign(resAccount, { txCount: txAccount.meta.count });
-  //    const votesAccount = await getVotes(activePeer, liskAccount.address);
+  //    const votesAccount = await getVotes(liskAPIClient, liskAccount.address);
   //   Object.assign(resAccount, { votesCount: votesAccount.data.votesUsed });
   // }
   return resAccount;

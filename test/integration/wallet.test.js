@@ -159,7 +159,7 @@ describe('@integration: Wallet', () => {
 
       // transactionsFilterSet do pass filter
       getTransactionsStub.withArgs({
-        activePeer: match.defined,
+        liskAPIClient: match.defined,
         address: match.defined,
         limit: 25,
         filter: txFilters.all,
@@ -167,7 +167,7 @@ describe('@integration: Wallet', () => {
 
       // loadTransactions does not pass filter
       getTransactionsStub.withArgs({
-        activePeer: match.defined,
+        liskAPIClient: match.defined,
         address: match.defined,
         limit: 25,
       }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
@@ -333,7 +333,7 @@ describe('@integration: Wallet', () => {
 
       // transactionsFilterSet do pass filter
       getTransactionsStub.withArgs({
-        activePeer: match.defined,
+        liskAPIClient: match.defined,
         address: match.defined,
         limit: 25,
         filter: txFilters.all,
@@ -341,14 +341,14 @@ describe('@integration: Wallet', () => {
 
       // loadTransactions does not pass filter
       getTransactionsStub.withArgs({
-        activePeer: match.defined,
+        liskAPIClient: match.defined,
         address: match.defined,
         limit: 25,
       }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 50 } });
 
       // transactionsRequested does pass filter, offset
       getTransactionsStub.withArgs({
-        activePeer: match.defined,
+        liskAPIClient: match.defined,
         address: match.defined,
         limit: 25,
         offset: match.defined,
@@ -358,14 +358,14 @@ describe('@integration: Wallet', () => {
 
       // // NOTE: transactionsFilterSet does not use offset
       getTransactionsStub.withArgs({
-        activePeer: match.defined,
+        liskAPIClient: match.defined,
         address: match.defined,
         limit: 25,
         filter: txFilters.outgoing,
       }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 25 } });
 
       getTransactionsStub.withArgs({
-        activePeer: match.defined,
+        liskAPIClient: match.defined,
         address: match.defined,
         limit: 25,
         filter: txFilters.incoming,

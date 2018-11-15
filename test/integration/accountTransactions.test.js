@@ -148,28 +148,28 @@ describe('@integration: Account Transactions', () => {
 
     // transactionsFilterSet do pass filter
     getTransactionsStub.withArgs({
-      activePeer: match.defined,
+      liskAPIClient: match.defined,
       address: match.defined,
       limit: 25,
       filter: txFilters.all,
     }).returnsPromise().resolves({ data: transactions, meta: { count: 40 } });
 
     getTransactionsStub.withArgs({
-      activePeer: match.defined,
+      liskAPIClient: match.defined,
       address: match.defined,
       limit: 25,
       filter: txFilters.outgoing,
     }).returnsPromise().resolves({ data: [...transactions].slice(0, 5), meta: { count: 5 } });
 
     getTransactionsStub.withArgs({
-      activePeer: match.defined,
+      liskAPIClient: match.defined,
       address: match.defined,
       limit: 25,
       filter: txFilters.incoming,
     }).returnsPromise().resolves({ data: [...transactions].slice(0, 15), meta: { count: 15 } });
 
     getTransactionsStub.withArgs({
-      activePeer: match.defined,
+      liskAPIClient: match.defined,
       address: match.defined,
       limit: 25,
       filter: txFilters.all,

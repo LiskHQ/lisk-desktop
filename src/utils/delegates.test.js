@@ -19,8 +19,8 @@ describe('Delegates Utils', () => {
   };
 
   it('sets and gets the item', () => {
-    const activePeer = { options: { address: 'item' } };
-    updateDelegateCache(item, activePeer);
-    expect(loadDelegateCache(activePeer)).to.eql(itemExpected);
+    const liskAPIClient = { options: { address: 'item' } };
+    updateDelegateCache(item, liskAPIClient);
+    expect(loadDelegateCache(liskAPIClient)).to.eql(itemExpected);
   });
 });

@@ -32,7 +32,7 @@ describe('actions: search', () => {
   });
 
   it('should clear suggestions and search for {delegates,addresses,transactions}', () => {
-    const data = { activePeer: {}, searchTerm: '' };
+    const data = { liskAPIClient: {}, searchTerm: '' };
     const action = searchSuggestions(data);
     action(dispatch, getState);
     expect(dispatch).to.have.been.calledWith({

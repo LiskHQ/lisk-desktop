@@ -68,7 +68,7 @@ After clicking `Logout` it executes:
 
 
 After clicking `Send` it executes:
-- Calls [`activePeer.transactions.broadcast(transaction)`](https://github.com/LiskHQ/lisk-hub/blob/e71527bd273af2f16d6980fe3b0c1a379694c45b/src/utils/api/transactions.js#L17) and then dispatches [`TRANSACTION_ADDED`](https://github.com/LiskHQ/lisk-hub/blob/2811c2be14fe5ab4ead3e4a375b20b67348fc191/src/store/reducers/transactions.js#L10)
+- Calls [`liskAPIClient.transactions.broadcast(transaction)`](https://github.com/LiskHQ/lisk-hub/blob/e71527bd273af2f16d6980fe3b0c1a379694c45b/src/utils/api/transactions.js#L17) and then dispatches [`TRANSACTION_ADDED`](https://github.com/LiskHQ/lisk-hub/blob/2811c2be14fe5ab4ead3e4a375b20b67348fc191/src/store/reducers/transactions.js#L10)
 
 
 ### Delegates voting
@@ -76,7 +76,7 @@ After clicking `Send` it executes:
 
 
 After clicking `Confirm` it executes:
-- Calls [`activePeer.transactions.broadcast(transaction)`](https://github.com/LiskHQ/lisk-hub/blob/e71527bd273af2f16d6980fe3b0c1a379694c45b/src/utils/api/delegate.js#L34) and then dispatches [`TRANSACTION_ADDED`](https://github.com/LiskHQ/lisk-hub/blob/2811c2be14fe5ab4ead3e4a375b20b67348fc191/src/store/reducers/transactions.js#L10)
+- Calls [`liskAPIClient.transactions.broadcast(transaction)`](https://github.com/LiskHQ/lisk-hub/blob/e71527bd273af2f16d6980fe3b0c1a379694c45b/src/utils/api/delegate.js#L34) and then dispatches [`TRANSACTION_ADDED`](https://github.com/LiskHQ/lisk-hub/blob/2811c2be14fe5ab4ead3e4a375b20b67348fc191/src/store/reducers/transactions.js#L10)
 
 On delegate select/uselect it executes:
 - On Select -- [`voteToggled`](https://github.com/LiskHQ/lisk-hub/blob/d27796d57eb9246fae5876f02b242e6bb8343775/src/store/reducers/voting.js#L76) it adds to `voting.votes` redux new voted delegate object
@@ -87,7 +87,7 @@ On delegate select/uselect it executes:
 
 
 After going thru whole process and clicking `Confirm` it executes:
-- Calls [`activePeer.transactions.broadcast(transaction)`](https://github.com/LiskHQ/lisk-hub/blob/e71527bd273af2f16d6980fe3b0c1a379694c45b/src/utils/api/transactions.js#L17) and then dispatches [`TRANSACTION_ADDED`](https://github.com/LiskHQ/lisk-hub/blob/2811c2be14fe5ab4ead3e4a375b20b67348fc191/src/store/reducers/transactions.js#L10)
+- Calls [`liskAPIClient.transactions.broadcast(transaction)`](https://github.com/LiskHQ/lisk-hub/blob/e71527bd273af2f16d6980fe3b0c1a379694c45b/src/utils/api/transactions.js#L17) and then dispatches [`TRANSACTION_ADDED`](https://github.com/LiskHQ/lisk-hub/blob/2811c2be14fe5ab4ead3e4a375b20b67348fc191/src/store/reducers/transactions.js#L10)
 
 
 ## Socket

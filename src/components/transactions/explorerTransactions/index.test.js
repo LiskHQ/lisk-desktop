@@ -73,14 +73,14 @@ describe('ExplorerTransactions Component', () => {
     };
 
     transactionsActionStub.withArgs({
-      activePeer: match.any,
+      liskAPIClient: match.any,
       address: accounts.genesis.address,
       limit: 25,
       filter: undefined,
     }).returnsPromise().resolves({ data: [{ id: 'Some ID', type: txTypes.vote }], meta: { count: 1000 } });
 
     transactionsActionStub.withArgs({
-      activePeer: match.any,
+      liskAPIClient: match.any,
       address: accounts.genesis.address,
       limit: 25,
       filter: txFilters.all,

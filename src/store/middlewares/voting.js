@@ -10,14 +10,14 @@ const updateLookupStatus = (store, list, username) => {
 
 const lookupDelegate = (store, username) => {
   const state = store.getState();
-  const activePeer = state.peers.liskAPIClient;
+  const liskAPIClient = state.peers.liskAPIClient;
   const delegate = state.voting.delegates.filter(d => d.username === username)[0];
   if (delegate) {
     return new Promise((resolve) => {
       resolve({ delegate });
     });
   }
-  return getDelegate(activePeer, { username });
+  return getDelegate(liskAPIClient, { username });
 };
 
 const processVote = (store, options, username) => {

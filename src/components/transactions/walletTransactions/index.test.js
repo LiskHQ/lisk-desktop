@@ -58,7 +58,7 @@ describe('WalletTransactions Component', () => {
     };
 
     transactionsActionsStub.withArgs({
-      activePeer: match.any,
+      liskAPIClient: match.any,
       address: accounts.genesis.address,
       limit: 25,
       filter: txFilters.all,
@@ -66,7 +66,7 @@ describe('WalletTransactions Component', () => {
 
 
     transactionsActionsStub.withArgs({
-      activePeer: match.any,
+      liskAPIClient: match.any,
       address: match.any,
       limit: 25,
       filter: txFilters.statistics,

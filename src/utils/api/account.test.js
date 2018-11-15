@@ -7,14 +7,14 @@ describe('Utils: Account API', () => {
 
   describe('getAccount', () => {
     let activePeerMock;
-    const activePeer = {
+    const liskAPIClient = {
       accounts: {
         get: () => {},
       },
     };
 
     beforeEach(() => {
-      activePeerMock = mock(activePeer.accounts);
+      activePeerMock = mock(liskAPIClient.accounts);
     });
 
     afterEach(() => {
@@ -22,20 +22,20 @@ describe('Utils: Account API', () => {
       activePeerMock.restore();
     });
 
-    it('should return a promise that is resolved when activePeer.getAccount() calls its callback with data.success == true', () => {
+    it('should return a promise that is resolved when liskAPIClient.getAccount() calls its callback with data.success == true', () => {
       const account = { address, balance: 0, publicKey: 'sample_key' };
       const response = { data: [{ ...account }] };
 
       activePeerMock.expects('get').withArgs({ address }).returnsPromise().resolves(response);
-      const requestPromise = getAccount(activePeer, address);
+      const requestPromise = getAccount(liskAPIClient, address);
       return expect(requestPromise).to.eventually.eql({ ...account, serverPublicKey: 'sample_key' });
     });
 
-    it('should return a promise that is resolved even when activePeer.getAccount() calls its callback with data.success == false and "Account not found"', () => {
+    it('should return a promise that is resolved even when liskAPIClient.getAccount() calls its callback with data.success == false and "Account not found"', () => {
       const account = { address, balance: 0 };
 
       activePeerMock.expects('get').withArgs({ address }).returnsPromise().resolves({ data: [] });
-      const requestPromise = getAccount(activePeer, address);
+      const requestPromise = getAccount(liskAPIClient, address);
       return expect(requestPromise).to.eventually.eql(account);
     });
 
@@ -43,7 +43,7 @@ describe('Utils: Account API', () => {
       const response = { success: false };
 
       activePeerMock.expects('get').withArgs({ address }).returnsPromise().rejects(response);
-      const requestPromise = getAccount(activePeer, address);
+      const requestPromise = getAccount(liskAPIClient, address);
       return expect(requestPromise).to.eventually.be.rejectedWith(response);
     });
   });

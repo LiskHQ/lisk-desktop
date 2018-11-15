@@ -31,7 +31,7 @@ class LedgerLogin extends React.Component {
   // async componentDidUpdate(prevProps) {
   // if (this.props.settings.ledgerAccountAmount !== prevProps.settings.ledgerAccountAmount) {
   //   const accountInfo = await getLedgerAccountInfo
-  // (this.props.activePeer, this.state.hwAccounts.length);  // eslint-disable-line
+  // (this.props.liskAPIClient, this.state.hwAccounts.length);  // eslint-disable-line
 
   //   this.setState({ hwAccounts: this.state.hwAccounts.concat([accountInfo]) });
   // }
@@ -54,7 +54,7 @@ class LedgerLogin extends React.Component {
       try {
         switch (this.props.loginType) {   // eslint-disable-line
           case 0:
-            accountInfo = await getLedgerAccountInfo(this.props.activePeer, index);
+            accountInfo = await getLedgerAccountInfo(this.props.liskAPIClient, index);
             break;
           // case loginTypes.trezor:
           //   this.props.errorToastDisplayed({
@@ -192,7 +192,7 @@ class LedgerLogin extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  activePeer: state.peers && state.peers.liskAPIClient,
+  liskAPIClient: state.peers && state.peers.liskAPIClient,
   settings: state.settings,
 });
 
