@@ -24,7 +24,7 @@ const mapStateToProps = state => ({
   account: state.account,
   peers: state.peers,
   settings: state.settings,
-  activePeer: state.peers && state.peers.data,
+  activePeer: state.peers && state.peers.liskAPIClient,
 });
 
 const mapDispatchToProps = dispatch => ({

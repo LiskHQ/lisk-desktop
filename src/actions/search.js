@@ -7,7 +7,7 @@ import searchAll from '../utils/api/search';
 
 const searchDelegate = ({ publicKey, address }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const activePeer = getState().peers.liskAPIClient;
     getDelegate(activePeer, { publicKey }).then((response) => {
       dispatch({
         data: {
@@ -21,7 +21,7 @@ const searchDelegate = ({ publicKey, address }) =>
 
 const searchVotes = ({ address }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const activePeer = getState().peers.liskAPIClient;
     getAllVotes(activePeer, address).then(response =>
       dispatch({
         type: actionTypes.searchVotes,
@@ -36,7 +36,7 @@ const searchVoters = ({
   address, publicKey, offset, limit, append,
 }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const activePeer = getState().peers.liskAPIClient;
     getVoters(activePeer, {
       publicKey, offset, limit,
     }).then(response =>
@@ -53,7 +53,7 @@ const searchVoters = ({
 
 export const searchMoreVoters = ({ address, offset = 0, limit = 100 }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const activePeer = getState().peers.liskAPIClient;
     getAccount(activePeer, address).then((response) => {
       const accountData = {
         ...response,
@@ -68,7 +68,7 @@ export const searchMoreVoters = ({ address, offset = 0, limit = 100 }) =>
 
 export const searchAccount = ({ address }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const activePeer = getState().peers.liskAPIClient;
     dispatch(searchVotes({ address }));
     getAccount(activePeer, address).then((response) => {
       const accountData = {
@@ -86,7 +86,7 @@ export const searchTransactions = ({
   address, limit, filter, showLoading = true,
 }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const activePeer = getState().peers.liskAPIClient;
     if (showLoading) dispatch(loadingStarted(actionTypes.searchTransactions));
     getTransactions({
       activePeer, address, limit, filter,
@@ -118,7 +118,7 @@ export const searchMoreTransactions = ({
   address, limit, offset, filter,
 }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const activePeer = getState().peers.liskAPIClient;
     getTransactions({
       activePeer, address, limit, offset, filter,
     })
@@ -137,7 +137,7 @@ export const searchMoreTransactions = ({
 
 export const searchSuggestions = ({ searchTerm }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const activePeer = getState().peers.liskAPIClient;
     dispatch({
       data: {},
       type: actionTypes.searchClearSuggestions,

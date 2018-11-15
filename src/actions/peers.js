@@ -29,7 +29,7 @@ const login = (dispatch, getState, data, config) => {
     const { passphrase } = data;
     const { code } = data.network;
     const publicKey = passphrase ? extractPublicKey(passphrase) : data.publicKey;
-    const activePeer = store.peers.data ||
+    const activePeer = store.peers.liskAPIClient ||
       new Lisk.APIClient(config.nodes, { nethash: config.nethash });
     const address = extractAddress(publicKey);
     const accountBasics = {

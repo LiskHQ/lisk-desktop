@@ -23,7 +23,7 @@ export const followedAccountsRetrieved = accounts => ({
 
 export const followedAccountFetchedAndUpdated = ({ account }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const activePeer = getState().peers.liskAPIClient;
     getAccount(activePeer, account.address).then((result) => {
       if (result.balance !== account.balance) {
         account.balance = result.balance;

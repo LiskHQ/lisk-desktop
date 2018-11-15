@@ -21,7 +21,7 @@ const socketSetup = (store) => {
     ipc.on('focus', () => { windowIsFocused = true; });
   }
 
-  connection = io.connect(store.getState().peers.data.currentNode);
+  connection = io.connect(store.getState().peers.liskAPIClient.currentNode);
   connection.on('blocks/change', (block) => {
     store.dispatch({
       type: actionTypes.newBlockCreated,

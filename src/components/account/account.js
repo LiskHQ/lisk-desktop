@@ -27,7 +27,7 @@ const Account = ({ peers, t, showNetworkIndicator }) => {
     <FontIcon className={`${styles.network} online`} value={iconMap[iconCode]} /> :
     <FontIcon className='offline' value='error' />;
 
-  const shouldShowNetworkIndicator = (peers.data &&
+  const shouldShowNetworkIndicator = (peers.liskAPIClient &&
       (showNetworkIndicator || peers.options.code !== networks.mainnet.code));
 
   return (shouldShowNetworkIndicator ?
@@ -38,7 +38,7 @@ const Account = ({ peers, t, showNetworkIndicator }) => {
           {t('Connected to ')}{translations[iconCode]}
         </span>
         <span className={`${styles.current} inner secondary peer`}>
-          {peers.data.currentNode}
+          {peers.liskAPIClient.currentNode}
         </span>
       </div>
     </section> :

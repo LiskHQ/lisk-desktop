@@ -24,7 +24,7 @@ export const delegateRetrieving = data => ({
  */
 export const delegatesFetched = ({ username }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const activePeer = getState().peers.liskAPIClient;
     dispatch(delegateRetrieving());
     getDelegate(activePeer, { username })
       .then((response) => {

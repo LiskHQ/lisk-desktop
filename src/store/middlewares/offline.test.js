@@ -63,7 +63,7 @@ describe('Offline middleware', () => {
 
     middleware(store)(next)(action);
     expect(store.dispatch).to.have.been.calledWith(errorToastDisplayed({
-      label: i18next.t('Failed to connect: Node {{address}} is not active', { address: `${peers.data.currentPeer}:${peers.data.port}` }),
+      label: i18next.t('Failed to connect: Node {{address}} is not active', { address: `${peers.liskAPIClient.currentPeer}:${peers.liskAPIClient.port}` }),
     }));
   });
 

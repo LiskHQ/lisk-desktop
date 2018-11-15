@@ -12,7 +12,7 @@ import styles from './singleTransaction.css';
 class SingleTransaction extends React.Component {
   constructor(props) {
     super(props);
-    if (props.peers.data) {
+    if (props.peers.liskAPIClient) {
       this.props.loadTransaction({
         id: this.props.match.params.id,
       });
@@ -20,7 +20,7 @@ class SingleTransaction extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.peers.data !== this.props.peers.data
+    if (nextProps.peers.liskAPIClient !== this.props.peers.liskAPIClient
       || nextProps.match.params.id !== this.props.match.params.id) {
       this.props.loadTransaction({
         id: nextProps.match.params.id,

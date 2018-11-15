@@ -79,7 +79,7 @@ export const votePlaced = ({
   votes, secondSecret, goToNextStep,
 }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const activePeer = getState().peers.liskAPIClient;
     const votedList = [];
     const unvotedList = [];
     const timeOffset = getTimeOffset(getState());
@@ -131,7 +131,7 @@ export const votePlaced = ({
  */
 export const votesFetched = ({ address, type }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const activePeer = getState().peers.liskAPIClient;
     listAccountDelegates(activePeer, address).then((response) => {
       if (type === 'update') {
         dispatch(votesUpdated({ list: response.data.votes }));
@@ -148,7 +148,7 @@ export const delegatesFetched = ({
   offset, refresh, q,
 }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const activePeer = getState().peers.liskAPIClient;
     let params = {
       offset,
       limit: '100',
@@ -173,7 +173,7 @@ export const urlVotesFound = ({
   upvotes, unvotes, address,
 }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const activePeer = getState().peers.liskAPIClient;
     const processUrlVotes = (votes) => {
       dispatch(votesAdded({ list: votes, upvotes, unvotes }));
     };

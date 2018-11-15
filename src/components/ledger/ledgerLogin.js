@@ -192,7 +192,7 @@ class LedgerLogin extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  activePeer: state.peers && state.peers.data,
+  activePeer: state.peers && state.peers.liskAPIClient,
   settings: state.settings,
 });
 
