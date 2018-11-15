@@ -21,7 +21,7 @@ describe('Peer middleware', () => {
 
     store.getState = () => ({
       peers: {
-        data: {},
+        liskAPIClient: {},
       },
       account: {},
     });

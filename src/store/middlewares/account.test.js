@@ -61,7 +61,7 @@ describe('Account middleware', () => {
     store.dispatch = spy();
     state = {
       peers: {
-        data: {},
+        liskAPIClient: {},
       },
       account: {
         address: 'sample_address',
@@ -145,7 +145,7 @@ describe('Account middleware', () => {
         }],
         confirmed: [{ confirmations: 10, address: 'sample_address' }],
       },
-      peers: { data: {} },
+      peers: { liskAPIClient: {} },
     });
 
     middleware(store)(next)(newBlockCreated);

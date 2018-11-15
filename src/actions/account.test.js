@@ -70,7 +70,7 @@ describe('actions: account', () => {
       accountApiMock = stub(accountApi, 'setSecondPassphrase');
       dispatch = spy();
       getState = () => ({
-        peers: { data: {} },
+        peers: { liskAPIClient: {} },
       });
       i18nextMock = stub(i18next, 't');
       i18next.t = key => key;
@@ -137,7 +137,7 @@ describe('actions: account', () => {
       delegateApiMock = stub(delegateApi, 'registerDelegate');
       dispatch = spy();
       getState = () => ({
-        peers: { data: {} },
+        peers: { liskAPIClient: {} },
         blocks: { latestBlocks: [] },
       });
     });
@@ -198,7 +198,7 @@ describe('actions: account', () => {
       delegateApiMock = stub(delegateApi, 'getDelegate');
       dispatch = spy();
       getState = () => ({
-        peers: { data: {} },
+        peers: { liskAPIClient: {} },
       });
     });
 
@@ -247,7 +247,7 @@ describe('actions: account', () => {
       getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
       transactionsActionsStub = spy(transactionsActions, 'loadTransactionsFinish');
       getState = () => ({
-        peers: { data: {} },
+        peers: { liskAPIClient: {} },
       });
     });
 
@@ -316,7 +316,7 @@ describe('actions: account', () => {
       getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
       transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
       getState = () => ({
-        peers: { data: {} },
+        peers: { liskAPIClient: {} },
       });
     });
 
@@ -373,7 +373,7 @@ describe('actions: account', () => {
     beforeEach(() => {
       transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
       getState = () => ({
-        peers: { data: {} },
+        peers: { liskAPIClient: {} },
       });
     });
 
@@ -409,7 +409,7 @@ describe('actions: account', () => {
     beforeEach(() => {
       stub(delegateApi, 'getDelegate').returnsPromise();
       getState = () => ({
-        peers: { data: {} },
+        peers: { liskAPIClient: {} },
       });
     });
 

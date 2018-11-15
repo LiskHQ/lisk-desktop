@@ -19,7 +19,7 @@ describe('actions: search', () => {
     dispatch = spy();
     getState = stub().withArgs(match.any).returns({
       peers: {
-        data: {},
+        liskAPIClient: {},
       },
     });
 

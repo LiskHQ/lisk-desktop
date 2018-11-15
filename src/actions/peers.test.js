@@ -38,7 +38,7 @@ describe('actions: peers', () => {
 
       getState = () => ({
         peers: {
-          data: {},
+          liskAPIClient: {},
         },
         account: {},
         settings: { autoLog: true },

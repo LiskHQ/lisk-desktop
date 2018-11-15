@@ -32,7 +32,7 @@ describe('Socket middleware', () => {
 
     store = {
       getState: () => ({
-        peers: { data: { options: { address: 'localhost:4000' } } },
+        peers: { liskAPIClient: { options: { address: 'localhost:4000' } } },
         account: { address: '1234' },
       }),
       dispatch: spy(),
@@ -78,7 +78,7 @@ describe('Socket middleware', () => {
   it(`should dispatch ${actionTypes.accountLoggedIn} with https protocol`, () => {
     store.getState = () => ({
       ...store,
-      peers: { data: { options: { ssl: true, address: 'localhost:4000' } } },
+      peers: { liskAPIClient: { options: { ssl: true, address: 'localhost:4000' } } },
     });
     middleware(store)(next)({ type: actionTypes.accountLoggedIn });
     expect(store.dispatch).to.not.have.been.calledWith(activePeerUpdate({ online: true }));

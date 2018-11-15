@@ -75,7 +75,7 @@ describe('voting middleware', () => {
         },
       },
       peers: {
-        data: {},
+        liskAPIClient: {},
       },
     };
     let getDelegateMock;

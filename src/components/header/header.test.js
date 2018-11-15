@@ -14,7 +14,7 @@ describe('Header', () => {
   let wrapper;
   const mountWithRouter = (node, options) => mount(<Router>{node}</Router>, options);
   const storeObject = {
-    peers: { data: {}, options: {} },
+    peers: { liskAPIClient: {}, options: {} },
     account: {},
     activePeerSet: () => {},
     search: {

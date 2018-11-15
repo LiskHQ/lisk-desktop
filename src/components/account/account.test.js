@@ -20,7 +20,7 @@ describe('Account', () => {
         status: {
           online: false,
         },
-        data: {
+        liskAPIClient: {
           currentPeer: 'localhost',
           port: 4000,
         },

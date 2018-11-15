@@ -16,7 +16,7 @@ import HeaderHOC from './index';
 describe('HeaderHOC', () => {
   let wrapper;
   const store = configureMockStore([])({
-    peers: { data: {}, options: {} },
+    peers: { liskAPIClient: {}, options: {} },
     account: {},
     activePeerSet: () => {},
     settings: {
