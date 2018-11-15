@@ -156,7 +156,7 @@ export const delegatesFetched = ({
     };
     params = q ? { ...params, search: q } : params;
     listDelegates(liskAPIClient, params).then((response) => {
-      updateDelegateCache(response.data, liskAPIClient);
+      updateDelegateCache(response.data, getState().peers);
       dispatch(delegatesAdded({
         list: response.data,
         totalDelegates: response.data.length,

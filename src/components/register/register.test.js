@@ -33,7 +33,7 @@ describe('Register', () => {
   const prop = {
     account,
     peers,
-    network: networks.mainnet.code,
+    network: networks.mainnet,
     liskAPIClientSet: spy(),
     t: key => key,
   };
@@ -63,8 +63,8 @@ describe('Register', () => {
   it('should call liskAPIClientSet with network and passphrase', () => {
     wrapper.find('MultiStep').props().finalCallback(passphrase);
     expect(prop.liskAPIClientSet).to.have.been.calledWith(match({
-      network: networks.mainnet,
       passphrase,
+      network: networks.mainnet,
     }));
   });
 

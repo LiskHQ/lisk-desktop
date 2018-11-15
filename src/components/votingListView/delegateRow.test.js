@@ -52,7 +52,7 @@ options,
 <DelegateRow {...props} voteStatus={unvoteStatus}></DelegateRow>,
 options,
       );
-      const expectedClass = '_downVoteRow';
+      const expectedClass = 'downVoteRow';
       const className = wrapper.find('ul').prop('className');
       expect(className).to.contain(expectedClass);
     });
@@ -63,7 +63,7 @@ options,
 <DelegateRow {...props} voteStatus={voteStatus}></DelegateRow>,
 options,
       );
-      const expectedClass = '_upVoteRow';
+      const expectedClass = 'upVoteRow';
       const className = wrapper.find('ul').prop('className');
       expect(className).to.contain(expectedClass);
     });

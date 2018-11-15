@@ -55,11 +55,17 @@ describe('@integration: Dashboard', () => {
   }
 
   const generateTransactions = (n) => {
-    const transactionExample = {
-      id: 10385202636, senderId: 'sample_address', receiverId: 'some_address', type: txTypes.send,
-    };
-    const transactions = new Array(n);
-    transactions.fill(transactionExample);
+    const transactions = [];
+    for (let i = 0; i <= n; i++) {
+      const transactionExample = {
+        id: 10385202636 + i,
+        senderId: 'sample_address',
+        receiverId: 'some_address',
+        type: txTypes.send,
+        confirmations: 1,
+      };
+      transactions.push(transactionExample);
+    }
     return transactions;
   };
 

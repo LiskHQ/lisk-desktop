@@ -26,7 +26,7 @@ describe('Settings', () => {
 
   it('opens by sidebar button', () => {
     cy.visit('/');
-    cy.get(ss.sidebarMenuSettingsBtn).click();
+    cy.get(ss.sidebarMenuSettingsBtn).should('have.css', 'opacity', '1').click();
     cy.url().should('contain', 'setting');
     checkSettingsPageLoaded();
   });

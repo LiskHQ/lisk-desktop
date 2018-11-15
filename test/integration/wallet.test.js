@@ -74,12 +74,18 @@ describe('@integration: Wallet', () => {
   const successMessage = 'Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.';
   const errorMessage = 'An error occurred while creating the transaction.';
 
-  const generateTransactions = (n) => {
-    const transactionExample = {
-      senderId: 'sample_address', receiverId: 'some_address', type: txTypes.send, id: '123456',
-    };
-    const transactions = new Array(n);
-    transactions.fill(transactionExample);
+  const generateTransactions = (n, firstRun = false) => {
+    const transactions = [];
+    for (let i = 0; i < n; i++) {
+      const transactionExample = {
+        id: (i === 0 && firstRun) ? 123456 : Math.random() * i,
+        senderId: 'sample_address',
+        receiverId: 'some_address',
+        type: txTypes.send,
+        confirmations: 1,
+      };
+      transactions.push(transactionExample);
+    }
     return transactions;
   };
 
@@ -337,7 +343,7 @@ describe('@integration: Wallet', () => {
         address: match.defined,
         limit: 25,
         filter: txFilters.all,
-      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 50 } });
+      }).returnsPromise().resolves({ data: generateTransactions(25, true), meta: { count: 50 } });
 
       // loadTransactions does not pass filter
       getTransactionsStub.withArgs({

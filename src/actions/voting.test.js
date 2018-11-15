@@ -234,6 +234,10 @@ describe('actions: voting', () => {
               name: networks.mainnet.name,
             },
           },
+          options: {
+            name: networks.mainnet.name,
+            code: networks.mainnet.code,
+          },
         },
       });
 

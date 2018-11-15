@@ -4,8 +4,8 @@ import { setDefaults, translate } from 'react-i18next';
 import { dialogDisplayed } from '../../actions/dialog';
 import Login from './login';
 import { liskAPIClientSet } from '../../actions/peers';
-import { settingsUpdated } from '../../actions/settings';
 import { errorToastDisplayed } from '../../actions/toaster';
+import { settingsUpdated } from '../../actions/settings';
 import { loadingStarted, loadingFinished } from '../../actions/loading';
 
 setDefaults({
