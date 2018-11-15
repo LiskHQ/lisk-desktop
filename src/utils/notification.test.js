@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import { fromRawLsk } from './lsk';
-import Notification, { Notification as notifClass } from './notification';
+import Notification, { Notify } from './notification';
 
 describe('Notification', () => {
   let notify;
@@ -9,7 +9,7 @@ describe('Notification', () => {
 
   beforeEach(() => {
     window.ipc = { on: (key, callback) => { callbacks[key] = callback; } };
-    window.Notification = notifClass;
+    window.Notification = Notify;
     notify = Notification.init();
   });
 
