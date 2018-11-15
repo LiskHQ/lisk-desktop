@@ -80,7 +80,7 @@ describe('Header', () => {
 
   it('should display logout dialog window', () => {
     wrapper = mountWithRouter(<Header {...mockInputProps} />, options);
-    wrapper.find('.logout').simulate('click');
+    wrapper.find('.logout').first().simulate('click');
     expect(wrapper.find('Countdown')).to.have.length(1);
   });
 
