@@ -260,7 +260,8 @@ describe('@integration: Wallet', () => {
       step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
     });
 
-    describe('Scenario: should allow to send LSK from unlocked account with second passphrase', () => {
+    // This should be unskipped in issue #1500
+    describe.skip('Scenario: should allow to send LSK from unlocked account with second passphrase', () => {
       const { secondPassphrase } = accounts['second passphrase account'];
       step('Given I\'m on "wallet" as "second passphrase account"', () => setupStep('second passphrase account'));
       step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
@@ -391,7 +392,8 @@ describe('@integration: Wallet', () => {
       step('Then I should be redirected to transactoinDetails step', () => helper.checkRedirectionToDetails('123456'));
     });
 
-    describe('Scenario: should allow to filter transactions', () => {
+    // This should be unskipped in issue #1500
+    describe.skip('Scenario: should allow to filter transactions', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
       step('Then the "All" filter should be selected by default', () => helper.checkSelectedFilter('all'));
       step('When I click on the "Outgoing" filter', () => helper.clickOnElement('.filter-out'));

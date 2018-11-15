@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import { spy } from 'sinon';
+import { spy, mock } from 'sinon';
 import Help from './help';
 import links from './../../constants/help';
 
@@ -9,7 +9,7 @@ describe('Help Page', () => {
   let wrapper;
   let props;
 
-  let windowOpenSpy;
+  let windowOpenMock;
 
   beforeEach(() => {
     props = {
@@ -20,8 +20,12 @@ describe('Help Page', () => {
       settingsUpdated: spy(),
     };
 
-    windowOpenSpy = spy(window, 'open');
+    windowOpenMock = mock(window).expects('open').returns({ focus: spy() });
     wrapper = shallow(<Help {...props} />);
+  });
+
+  afterEach(() => {
+    windowOpenMock.restore();
   });
 
   it('renders three help article sections with proper btn callbacks', () => {
@@ -31,7 +35,7 @@ describe('Help Page', () => {
     expect(props.settingsUpdated).to.have.been.calledWith({ onBoarding: true });
 
     wrapper.find('.help-visit-center').simulate('click');
-    expect(windowOpenSpy).to.have.been.calledWith(links.helpCenter, '_blank');
+    expect(windowOpenMock).to.have.been.calledWith(links.helpCenter, '_blank');
 
     const propsNotLoggedIn = {
       ...props,

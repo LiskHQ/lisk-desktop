@@ -59,6 +59,19 @@ describe('ipcLocale', () => {
         ipcLocale.init(i18n);
         expect(i18n.changeLanguage).to.have.been.calledWith('en');
       });
+
+      it('Saves locale in browser when language has changed', () => {
+        localStorage.setItem = spy();
+        // window.ipc = undefined;
+        ipcLocale.init({
+          changeLanguage: spy(),
+          language: 'en',
+          on: (event, callback) => { callbacks[event] = callback; },
+        });
+
+        callbacks.languageChanged('de');
+        expect(localStorage.setItem).to.have.been.calledWith('lang', 'de');
+      });
     });
 
     describe('With ipc on window', () => {
@@ -95,18 +108,6 @@ describe('ipcLocale', () => {
         callbacks.languageChanged('es');
         expect(window.ipc.send).to.have.been.calledWith();
       });
-    });
-
-    it('Saves locale in browser when language has changed', () => {
-      localStorage.setItem = spy();
-      ipcLocale.init({
-        changeLanguage: spy(),
-        language: 'en',
-        on: (event, callback) => { callbacks[event] = callback; },
-      });
-
-      callbacks.languageChanged('de');
-      expect(localStorage.setItem).to.have.been.calledWith('lang', 'de');
     });
   });
 });
