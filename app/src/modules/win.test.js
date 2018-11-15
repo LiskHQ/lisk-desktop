@@ -1,6 +1,7 @@
 import { expect } from 'chai'; // eslint-disable-line import/no-extraneous-dependencies
-import { spy } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
+import { spy, mock } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
 import win from './win';
+import process from './process';
 
 describe('Electron Browser Window Wrapper', () => {
   const callbacks = {};
@@ -41,12 +42,20 @@ describe('Electron Browser Window Wrapper', () => {
     app: { getName: () => ('Lisk Hub'), getVersion: () => ('some version') },
   };
 
+  let processMock;
+
+  beforeEach(() => {
+    process.argv = [];
+    processMock = mock(process);
+  });
+
 
   afterEach(() => {
     win.browser = null;
     win.isUILoaded = false;
     win.eventStack.length = 0;
     events.length = 0;
+    processMock.restore();
   });
 
   describe('Init', () => {
@@ -108,7 +117,8 @@ describe('Electron Browser Window Wrapper', () => {
     });
 
     it('Creates the window with menu when platform is "darwin"', () => {
-      process.platform = 'darwin';
+      processMock.expects('isPlatform').atLeast(2).withArgs('linux').returns(false);
+      processMock.expects('isPlatform').atLeast(2).withArgs('darwin').returns(true);
 
       expect(win.browser).to.equal(null);
       win.create({
@@ -143,7 +153,8 @@ describe('Electron Browser Window Wrapper', () => {
     });
 
     it('Creates the window with menu when platform is not "darwin"', () => {
-      process.platform = 'not darwin';
+      processMock.expects('isPlatform').atLeast(2).withArgs('darwin').returns(false);
+      processMock.expects('isPlatform').atLeast(2).withArgs('linux').returns(true);
 
       expect(win.browser).to.equal(null);
       win.create({

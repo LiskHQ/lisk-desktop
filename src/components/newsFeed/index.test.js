@@ -12,7 +12,7 @@ import i18n from '../../i18n';
 import NewsFeed from './index';
 import * as settingsActions from '../../actions/settings';
 
-describe('NewsFeedHOC', () => {
+describe.skip('NewsFeedHOC', () => {
   let wrapper;
   const store = configureMockStore([thunk])({
     settings: {

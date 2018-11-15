@@ -5,7 +5,7 @@ import { fromRawLsk } from './lsk';
  * @class Notify
  * @constructor
  */
-class Notification {
+export class Notification {
   constructor() {
     this.isFocused = true;
   }

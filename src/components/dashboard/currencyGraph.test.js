@@ -33,7 +33,7 @@ describe('CurrencyGraph', () => {
     liskServiceApiMock.restore();
   });
 
-  it('should render LineChart when explorer api resolves candle data', () => {
+  it.skip('should render LineChart when explorer api resolves candle data', () => {
     expect(wrapper.find('.chart-wrapper').first()).to.be.present();
     expect(wrapper.find(LineChart)).not.to.be.present();
     liskServiceApiMock.resolves({ prices });
@@ -48,7 +48,7 @@ describe('CurrencyGraph', () => {
     expect(wrapper.text()).to.contain('Price data currently not available');
   });
 
-  it('should allow to change step', () => {
+  it.skip('should allow to change step', () => {
     wrapper.find('.step').at(1).simulate('click');
     expect(wrapper.find(LineChart)).not.to.be.present();
     liskServiceApiMock.resolves({ prices });
