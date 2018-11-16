@@ -13,7 +13,7 @@ import { toRawLsk } from '../utils/lsk';
 
 describe('actions: transactions', () => {
   let getState = () => ({
-    peers: { data: {} },
+    peers: { liskAPIClient: {} },
   });
 
   describe('transactionsUpdated', () => {
@@ -93,7 +93,7 @@ describe('actions: transactions', () => {
   describe('loadTransaction', () => {
     getState = () => ({
       peers: {
-        data: {
+        liskAPIClient: {
           options: {
             name: networks.mainnet.name,
           },
@@ -117,7 +117,7 @@ describe('actions: transactions', () => {
       dispatch = sinon.spy();
       getState = () => ({
         peers: {
-          data: {
+          liskAPIClient: {
             options: {
               name: 'Mainnet',
             },
@@ -176,7 +176,7 @@ describe('actions: transactions', () => {
 
   describe('sent', () => {
     getState = () => ({
-      peers: { data: {} },
+      peers: { liskAPIClient: {} },
     });
     let transactionsApiMock;
     const data = {
@@ -196,7 +196,7 @@ describe('actions: transactions', () => {
       transactionsApiMock = sinon.stub(transactionsApi, 'send');
       dispatch = sinon.spy();
       getState = () => ({
-        peers: { data: {} },
+        peers: { liskAPIClient: {} },
       });
     });
 

@@ -20,7 +20,7 @@ class TransactionDetailView extends React.Component {
 
     const transactionId = this.getTransactionIdFromURL();
 
-    if (props.peers.data && transactionId) {
+    if (props.peers.liskAPIClient && transactionId) {
       this.props.loadTransaction({
         id: transactionId,
       });
@@ -35,7 +35,7 @@ class TransactionDetailView extends React.Component {
       nextProps.pendingTransactions.length === 0 && typeof nextProps.transaction === 'string') {
       const transactionId = this.getTransactionIdFromURL();
 
-      if (this.props.peers.data && transactionId) {
+      if (this.props.peers.liskAPIClient && transactionId) {
         this.props.loadTransaction({
           id: transactionId,
         });

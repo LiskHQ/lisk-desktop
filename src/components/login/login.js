@@ -94,7 +94,7 @@ class Login extends React.Component {
       }
 
       // set active peer
-      this.props.activePeerSet({
+      this.props.liskAPIClientSet({
         publicKey: ledgerAccount.publicKey,
         loginType: 1,
         network,
@@ -155,7 +155,7 @@ class Login extends React.Component {
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
       this.redirectToReferrer();
     } else {
-      this.props.activePeerSet({
+      this.props.liskAPIClientSet({
         passphrase,
         network,
       });
@@ -217,7 +217,7 @@ class Login extends React.Component {
       liskAPIClient.node.getConstants()
         .then((res) => {
           if (res.data) {
-            this.props.activePeerSet({
+            this.props.liskAPIClientSet({
               network: this.getNetwork(this.state.network),
             });
             this.props.history.push(routes.register.path);
@@ -229,7 +229,7 @@ class Login extends React.Component {
         });
     } else {
       const network = this.getNetwork(this.state.network);
-      this.props.activePeerSet({ network });
+      this.props.liskAPIClientSet({ network });
       this.props.history.push(routes.register.path);
     }
   }

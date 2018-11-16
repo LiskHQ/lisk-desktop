@@ -29,7 +29,7 @@ describe('Account HOC', () => {
   const store = configureMockStore([])({
     peers,
     account,
-    activePeerSet: () => {},
+    liskAPIClientSet: () => {},
   });
   const options = {
     context: { i18n, store },

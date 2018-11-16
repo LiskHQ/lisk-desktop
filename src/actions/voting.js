@@ -79,7 +79,7 @@ export const votePlaced = ({
   votes, secondSecret, goToNextStep,
 }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const liskAPIClient = getState().peers.liskAPIClient;
     const votedList = [];
     const unvotedList = [];
     const timeOffset = getTimeOffset(getState());
@@ -93,7 +93,7 @@ export const votePlaced = ({
     });
 
     vote(
-      activePeer,
+      liskAPIClient,
       passphrase,
       account.publicKey,
       votedList,
@@ -131,8 +131,8 @@ export const votePlaced = ({
  */
 export const votesFetched = ({ address, type }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
-    listAccountDelegates(activePeer, address).then((response) => {
+    const liskAPIClient = getState().peers.liskAPIClient;
+    listAccountDelegates(liskAPIClient, address).then((response) => {
       if (type === 'update') {
         dispatch(votesUpdated({ list: response.data.votes }));
       } else {
@@ -148,14 +148,14 @@ export const delegatesFetched = ({
   offset, refresh, q,
 }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const liskAPIClient = getState().peers.liskAPIClient;
     let params = {
       offset,
       limit: '100',
       sort: 'rank:asc',
     };
     params = q ? { ...params, search: q } : params;
-    listDelegates(activePeer, params).then((response) => {
+    listDelegates(liskAPIClient, params).then((response) => {
       updateDelegateCache(response.data, getState().peers);
       dispatch(delegatesAdded({
         list: response.data,
@@ -173,11 +173,11 @@ export const urlVotesFound = ({
   upvotes, unvotes, address,
 }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const liskAPIClient = getState().peers.liskAPIClient;
     const processUrlVotes = (votes) => {
       dispatch(votesAdded({ list: votes, upvotes, unvotes }));
     };
-    listAccountDelegates(activePeer, address)
+    listAccountDelegates(liskAPIClient, address)
       .then((response) => { processUrlVotes(response.data.votes); })
       .catch(() => { processUrlVotes([]); });
   };

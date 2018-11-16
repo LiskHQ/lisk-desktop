@@ -2,8 +2,6 @@
 
 .input {
   & input {
-    line-height: var(--search-box-line-height);
-    font-size: var(--search-box-font-size);
     border-bottom: 1px solid var(--color-grayscale-dark);
     color: var(--color-grayscale-dark);
   }

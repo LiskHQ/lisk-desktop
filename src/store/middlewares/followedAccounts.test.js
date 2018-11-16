@@ -55,9 +55,9 @@ describe('FollowedAccounts middleware', () => {
   });
 
 
-  it(`should update the following accounts on ${actionTypes.activePeerSet} action`, () => {
+  it(`should update the following accounts on ${actionTypes.liskAPIClientSet} action`, () => {
     middleware(store)(next)({
-      type: actionTypes.activePeerSet,
+      type: actionTypes.liskAPIClientSet,
       data: {},
     });
 

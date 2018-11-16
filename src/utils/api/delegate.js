@@ -1,23 +1,23 @@
 import Lisk from 'lisk-elements';
 
-export const listAccountDelegates = (activePeer, address) =>
-  activePeer.votes.get({ address, limit: '101' });
+export const listAccountDelegates = (liskAPIClient, address) =>
+  liskAPIClient.votes.get({ address, limit: '101' });
 
-export const listDelegates = (activePeer, options) => new Promise((resolve, reject) => {
-  if (!activePeer) {
+export const listDelegates = (liskAPIClient, options) => new Promise((resolve, reject) => {
+  if (!liskAPIClient) {
     reject();
   } else {
-    activePeer.delegates.get(options)
+    liskAPIClient.delegates.get(options)
       .then(response => resolve(response))
       .catch(error => reject(error));
   }
 });
 
-export const getDelegate = (activePeer, options) =>
-  activePeer.delegates.get(options);
+export const getDelegate = (liskAPIClient, options) =>
+  liskAPIClient.delegates.get(options);
 
 export const vote = (
-  activePeer,
+  liskAPIClient,
   passphrase,
   publicKey,
   votes,
@@ -33,31 +33,32 @@ export const vote = (
     timeOffset,
   });
   return new Promise((resolve, reject) => {
-    activePeer.transactions.broadcast(transaction).then(() => resolve(transaction)).catch(reject);
+    liskAPIClient.transactions.broadcast(transaction)
+      .then(() => resolve(transaction)).catch(reject);
   });
 };
 
-export const getVotes = (activePeer, { address, offset, limit }) =>
-  activePeer.votes.get({ address, limit, offset });
+export const getVotes = (liskAPIClient, { address, offset, limit }) =>
+  liskAPIClient.votes.get({ address, limit, offset });
 
-export const getAllVotes = (activePeer, address) =>
+export const getAllVotes = (liskAPIClient, address) =>
   new Promise((resolve, reject) => {
-    getVotes(activePeer, { address, offset: 0, limit: 100 }).then((votesEarlyBatch) => {
+    getVotes(liskAPIClient, { address, offset: 0, limit: 100 }).then((votesEarlyBatch) => {
       if (votesEarlyBatch.data.votes && votesEarlyBatch.data.votesUsed < 101) {
         return resolve(votesEarlyBatch);
       }
-      return getVotes(activePeer, { address, offset: 100, limit: 1 }).then((votesLasteBatch) => {
+      return getVotes(liskAPIClient, { address, offset: 100, limit: 1 }).then((votesLasteBatch) => {
         votesEarlyBatch.data.votes = [...votesEarlyBatch.data.votes, ...votesLasteBatch.data.votes];
         return resolve(votesEarlyBatch);
       }).catch(reject);
     }).catch(reject);
   });
 
-export const getVoters = (activePeer, { publicKey, offset = 0, limit = 100 }) =>
-  activePeer.voters.get({ publicKey, offset, limit });
+export const getVoters = (liskAPIClient, { publicKey, offset = 0, limit = 100 }) =>
+  liskAPIClient.voters.get({ publicKey, offset, limit });
 
 export const registerDelegate = (
-  activePeer,
+  liskAPIClient,
   username,
   passphrase,
   secondPassphrase = null,
@@ -69,7 +70,7 @@ export const registerDelegate = (
   }
   return new Promise((resolve, reject) => {
     const transaction = Lisk.transaction.registerDelegate({ ...data });
-    activePeer.transactions
+    liskAPIClient.transactions
       .broadcast(transaction)
       .then(() => {
         resolve(transaction);

@@ -10,11 +10,11 @@ const SignUp = ({ t, passInputState, validateCorrectNode }) =>
     <section className={styles.table}>
       <div className='text-left'>
         <h2>
-          <div
-            className='new-account-button'
+          <span
+            className={`new-account-button ${styles.link}`}
             onClick={() => { validateCorrectNode(); }} >
             {t('Create Lisk ID')}
-          </div>
+          </span>
           <FontIcon className={styles.singUpArrow} value='arrow-right' />
         </h2>
 

@@ -1,12 +1,12 @@
 // import { requestToActivePeer } from './peers';
 import Lisk from 'lisk-elements';
 
-export const getAccount = (activePeer, address) =>
+export const getAccount = (liskAPIClient, address) =>
   new Promise((resolve, reject) => {
-    if (!activePeer) {
+    if (!liskAPIClient) {
       reject();
     }
-    activePeer.accounts.get({ address }).then((res) => {
+    liskAPIClient.accounts.get({ address }).then((res) => {
       if (res.data.length > 0) {
         resolve({
           ...res.data[0],
@@ -23,11 +23,11 @@ export const getAccount = (activePeer, address) =>
     }).catch(reject);
   });
 
-// export const setSecondPassphrase = (activePeer, secondSecret, publicKey, secret) =>
-//   requestToActivePeer(activePeer, 'signatures', { secondSecret, publicKey, secret });
+// export const setSecondPassphrase = (liskAPIClient, secondSecret, publicKey, secret) =>
+//   requestToActivePeer(liskAPIClient, 'signatures', { secondSecret, publicKey, secret });
 
 export const setSecondPassphrase = (
-  activePeer,
+  liskAPIClient,
   secondPassphrase,
   publicKey,
   passphrase,
@@ -36,7 +36,7 @@ export const setSecondPassphrase = (
   new Promise((resolve, reject) => {
     const transaction = Lisk.transaction
       .registerSecondPassphrase({ passphrase, secondPassphrase, timeOffset });
-    activePeer.transactions.broadcast(transaction).then(() => {
+    liskAPIClient.transactions.broadcast(transaction).then(() => {
       resolve(transaction);
     }).catch(reject);
   });

@@ -19,7 +19,7 @@ describe('TransactionsOverview', () => {
       t: () => {},
       loading: [],
       peers: {
-        data: {},
+        liskAPIClient: {},
       },
       transactions: [{ id: '13395546734664987127' }],
       count: 1000,
@@ -30,7 +30,7 @@ describe('TransactionsOverview', () => {
     };
     store.getState = () => ({
       followedAccounts: { accounts: [] },
-      peers: { status: {}, options: {}, data: {} },
+      peers: { status: {}, options: {}, liskAPIClient: {} },
       transactions: {
         confirmed: [],
       },

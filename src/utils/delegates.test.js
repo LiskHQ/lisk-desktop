@@ -20,17 +20,17 @@ describe('Delegates Utils', () => {
   };
 
   it('sets and gets the delegate item with mainnet', () => {
-    const activePeer = { options: networks.mainnet };
-    updateDelegateCache(delegateItem, activePeer);
-    expect(loadDelegateCache(activePeer)).to.eql(itemExpected);
+    const liskAPIClient = { options: networks.mainnet };
+    updateDelegateCache(delegateItem, liskAPIClient);
+    expect(loadDelegateCache(liskAPIClient)).to.eql(itemExpected);
   });
 
   it('sets and gets the delegate item with customNode', () => {
-    const activePeer = {
+    const liskAPIClient = {
       options: networks.customNode,
       currentNode: 'http://localhost:4000',
     };
-    updateDelegateCache(delegateItem, activePeer);
-    expect(loadDelegateCache(activePeer)).to.eql(itemExpected);
+    updateDelegateCache(delegateItem, liskAPIClient);
+    expect(loadDelegateCache(liskAPIClient)).to.eql(itemExpected);
   });
 });

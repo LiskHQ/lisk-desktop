@@ -32,7 +32,7 @@ describe('RegisterDelegate', () => {
     peers,
     account,
     delegate,
-    activePeerSet: () => {},
+    liskAPIClientSet: () => {},
   });
 
   const props = {
