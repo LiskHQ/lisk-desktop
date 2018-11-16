@@ -8,7 +8,7 @@ describe('Utils: Transactions API', () => {
   const id = '124701289470';
   const amount = '100000';
   const recipientId = '123L';
-  const activePeer = {
+  const liskAPIClient = {
     transactions: {
       get: stub().returnsPromise(),
       broadcast: stub().returnsPromise().resolves({ recipientId, amount, id }),
@@ -21,30 +21,30 @@ describe('Utils: Transactions API', () => {
   // TODO: fix these tests for assert more than just a promise is returned
   describe('send', () => {
     it('should broadcast a transaction and return a promise', () => {
-      const promise = send(activePeer, recipientId, amount, accounts.genesis.passphrase);
-      expect(activePeer.transactions.broadcast).to.have.been.calledWith();
+      const promise = send(liskAPIClient, recipientId, amount, accounts.genesis.passphrase);
+      expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith();
       expect(typeof promise.then).to.be.equal('function');
     });
   });
 
   describe('transactions', () => {
     it('should return a promise', () => {
-      const promise = getTransactions({ activePeer });
+      const promise = getTransactions({ liskAPIClient });
       expect(typeof promise.then).to.be.equal('function');
     });
 
     it('should call transactions.get for incoming promise', () => {
-      getTransactions({ activePeer, address: '123L', filter: txFilters.incoming });
+      getTransactions({ liskAPIClient, address: '123L', filter: txFilters.incoming });
 
-      expect(activePeer.transactions.get).to.have.been.calledWith({
+      expect(liskAPIClient.transactions.get).to.have.been.calledWith({
         limit: 20, offset: 0, recipientId: '123L', sort: 'timestamp:desc',
       });
     });
 
     it('should call transactions.get for outgoing promise', () => {
-      getTransactions({ activePeer, address: '123L', filter: txFilters.outgoing });
+      getTransactions({ liskAPIClient, address: '123L', filter: txFilters.outgoing });
 
-      expect(activePeer.transactions.get).to.have.been.calledWith({
+      expect(liskAPIClient.transactions.get).to.have.been.calledWith({
         limit: 20, offset: 0, senderId: '123L', sort: 'timestamp:desc',
       });
     });
@@ -52,15 +52,15 @@ describe('Utils: Transactions API', () => {
 
   describe('unconfirmedTransactions', () => {
     it('should return a promise', () => {
-      const promise = unconfirmedTransactions(activePeer);
+      const promise = unconfirmedTransactions(liskAPIClient);
       expect(typeof promise.then).to.be.equal('function');
     });
   });
 
   describe('getSingleTransaction', () => {
-    it('should activePeer.transactions.get and return a promise', () => {
-      const promise = getSingleTransaction({ activePeer, id });
-      expect(activePeer.transactions.get).to.have.been.calledWith({ id });
+    it('should liskAPIClient.transactions.get and return a promise', () => {
+      const promise = getSingleTransaction({ liskAPIClient, id });
+      expect(liskAPIClient.transactions.get).to.have.been.calledWith({ id });
       expect(typeof promise.then).to.be.equal('function');
     });
   });

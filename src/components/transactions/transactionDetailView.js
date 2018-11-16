@@ -17,13 +17,13 @@ import transactions from './../../constants/transactionTypes';
 import TransactionDetailViewField from './transactionDetailViewField';
 import TransactionDetailViewRow from './transactionDetailViewRow';
 
-class TransactionsDetailView extends React.Component {
+class TransactionDetailView extends React.Component {
   constructor(props) {
     super(props);
 
     const transactionId = this.getTransactionIdFromURL();
 
-    if (props.peers.data && transactionId) {
+    if (props.peers.liskAPIClient && transactionId) {
       this.props.loadTransaction({
         id: transactionId,
       });
@@ -38,7 +38,7 @@ class TransactionsDetailView extends React.Component {
       nextProps.pendingTransactions.length === 0 && typeof nextProps.transaction === 'string') {
       const transactionId = this.getTransactionIdFromURL();
 
-      if (this.props.peers.data && transactionId) {
+      if (this.props.peers.liskAPIClient && transactionId) {
         this.props.loadTransaction({
           id: transactionId,
         });
@@ -237,5 +237,5 @@ const mapDispatchToProps = dispatch => ({
   loadTransaction: data => dispatch(loadTransaction(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(TransactionsDetailView));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(TransactionDetailView));
 

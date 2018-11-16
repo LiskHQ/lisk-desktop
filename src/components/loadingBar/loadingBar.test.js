@@ -55,7 +55,7 @@ describe('LoadingBar Container', () => {
   it('should call markAsLoaded after peer is set', () => {
     const wrapper = mount(<LoadingBar {...props} />);
     expect(props.markAsLoaded).to.not.have.been.calledWith();
-    wrapper.setProps({ peers: { data: {} } });
+    wrapper.setProps({ peers: { liskAPIClient: {} } });
     expect(props.markAsLoaded).to.have.been.calledWith();
   });
 });

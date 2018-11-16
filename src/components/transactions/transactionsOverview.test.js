@@ -1,12 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { mountWithContext } from './../../../test/utils/mountHelpers';
-import TransactionOverview from './transactionOverview';
+import { mountWithContext } from '../../../test/utils/mountHelpers';
+import TransactionsOverview from './transactionsOverview';
 import store from '../../store';
-import accounts from './../../../test/constants/accounts';
+import accounts from '../../../test/constants/accounts';
 
-describe('TransactionOverview', () => {
+describe('TransactionsOverview', () => {
   let wrapper;
   let props;
   let onInitSpy;
@@ -19,7 +19,7 @@ describe('TransactionOverview', () => {
       t: () => {},
       loading: [],
       peers: {
-        data: {},
+        liskAPIClient: {},
       },
       transactions: [{ id: '13395546734664987127' }],
       count: 1000,
@@ -30,7 +30,7 @@ describe('TransactionOverview', () => {
     };
     store.getState = () => ({
       followedAccounts: { accounts: [] },
-      peers: { status: {}, options: {}, data: {} },
+      peers: { status: {}, options: {}, liskAPIClient: {} },
       transactions: {
         confirmed: [],
       },
@@ -43,7 +43,7 @@ describe('TransactionOverview', () => {
     onLoadMoreSpy = spy(props, 'onLoadMore');
     onFilterSetSpy = spy(props, 'onFilterSet');
     wrapper = mountWithContext(
-      <TransactionOverview {...props} store={store} />,
+      <TransactionsOverview {...props} store={store} />,
       { storeState: store },
     );
   });

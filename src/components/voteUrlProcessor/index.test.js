@@ -17,7 +17,7 @@ describe('VoteUrlProcessorHOC', () => {
     dummy: 'dummy',
   };
   const state = {
-    peers: { data: {} },
+    peers: { liskAPIClient: {} },
     account: {},
     voting: {
       voteLookupStatus: {

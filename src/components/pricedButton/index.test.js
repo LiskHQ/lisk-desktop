@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import { PrimaryButton } from '../toolbox/buttons/button';
-import { PricedButtonComponent } from './index';
+import PricedButton from './pricedButton';
 import i18n from '../../i18n';
 import styles from './pricedButton.css';
 
@@ -19,17 +19,17 @@ describe('PricedButton', () => {
   const sufficientBalance = 6e8;
 
   it('renders <Button /> component from react-toolbox', () => {
-    wrapper = shallow(<PricedButtonComponent {...props} balance={sufficientBalance} />);
+    wrapper = shallow(<PricedButton {...props} balance={sufficientBalance} />);
     expect(wrapper.find(PrimaryButton)).to.have.length(1);
   });
 
   describe('Sufficient funds', () => {
     beforeEach(() => {
-      wrapper = shallow(<PricedButtonComponent {...props} balance={sufficientBalance} />);
+      wrapper = shallow(<PricedButton {...props} balance={sufficientBalance} />);
     });
 
     it('renders a span saying "Fee: 5 LSK"', () => {
-      expect(wrapper.find(`.${styles.fee}`).text()).to.be.equal(i18n.t('Fee: {{fee}} LSK', { fee: 5 }));
+      expect(wrapper.find(`.${styles.fee}`).text()).to.be.equal(i18n.t('Fee: {{amount}} LSK', { amount: 5 }));
     });
 
     it('allows to click on Button', () => {
@@ -40,11 +40,11 @@ describe('PricedButton', () => {
 
   describe('Insufficient funds', () => {
     beforeEach(() => {
-      wrapper = shallow(<PricedButtonComponent {...props} balance={insufficientBalance} />);
+      wrapper = shallow(<PricedButton {...props} balance={insufficientBalance} />);
     });
 
     it('renders a span saying "Insufficient funds for 5 LSK fee"', () => {
-      expect(wrapper.find(`.${styles.fee}`).text()).to.be.equal('Insufficient funds for 5 LSK fee');
+      expect(wrapper.find(`.${styles.fee}`).text()).to.be.equal(i18n.t('Insufficient funds for {{amount}} LSK fee', { amount: 5 }));
     });
 
     it('sets the disabled attribute of the button', () => {

@@ -17,7 +17,7 @@ import Voting from '../../src/components/voting';
 import peersReducer from '../../src/store/reducers/peers';
 import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
-import { activePeerSet } from '../../src/actions/peers';
+import { liskAPIClientSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
 import getNetwork from './../../src/utils/getNetwork';
 
@@ -120,7 +120,7 @@ const loginProcess = (votes = []) => {
   ]);
 
   accountAPIStub.withArgs(match.any).returnsPromise().resolves({ data: [account] });
-  store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
+  store.dispatch(liskAPIClientSet({ network: getNetwork(networks.mainnet.code) }));
   accountAPIStub.withArgs(match.any).returnsPromise().resolves({ data: [account] });
   store.dispatch(accountLoggedIn(account));
 

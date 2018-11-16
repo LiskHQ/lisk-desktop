@@ -1,4 +1,5 @@
 import i18n from './i18n';
+import process from './modules/process';
 
 const addAboutMenuForMac = ({ template, name }) => {
   template.unshift({
@@ -43,10 +44,10 @@ const addCheckForUpdates = ({ template, checkForUpdates }) => {
 const menu = {
   build: (electron, checkForUpdates) => {
     const template = menu.buildTemplate(electron);
-    if (process.platform !== 'linux') {
+    if (!process.isPlatform('linux')) {
       addCheckForUpdates({ template, checkForUpdates });
     }
-    if (process.platform === 'darwin') {
+    if (process.isPlatform('darwin')) {
       addAboutMenuForMac({ template, name: electron.app.getName() });
     } else {
       addAboutMenuForNonMac({ template, electron });

@@ -45,6 +45,7 @@ describe('Login', () => {
         pathname: '',
         search: '',
       },
+      push: spy(),
       replace: spy(),
     };
     props = {
@@ -55,7 +56,7 @@ describe('Login', () => {
       t: data => data,
       onAccountUpdated: () => {},
       setActiveDialog: spy(),
-      activePeerSet: spy(),
+      liskAPIClientSet: spy(),
     };
     options = {
       context: {
@@ -135,14 +136,19 @@ describe('Login', () => {
       spyFn.restore();
       localStorage.removeItem('address');
     });
+
+    it('calls this.props.history.push on signButton click', () => {
+      wrapper.find('.new-account-button').simulate('click');
+      expect(props.history.push).to.have.been.calledWith(`${routes.register.path}`);
+    });
   });
 
   describe('After submission', () => {
-    it('it should call activePeerSet if not already logged with given passphrase', () => {
+    it('it should call liskAPIClientSet if not already logged with given passphrase', () => {
       wrapper.find('Input.passphrase input').simulate('change', { target: { value: passphrase } });
       wrapper.update();
       wrapper.find('form').simulate('submit');
-      expect(props.activePeerSet).to.have.been.calledWith();
+      expect(props.liskAPIClientSet).to.have.been.calledWith();
     });
 
     // @integration

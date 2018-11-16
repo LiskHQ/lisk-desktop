@@ -1,17 +1,17 @@
 import React from 'react';
-import TransferTabs from './../transferTabs';
-import { fromRawLsk } from '../../utils/lsk';
-import { Button } from './../toolbox/buttons/button';
-import { authStatePrefill } from '../../utils/form';
-import Converter from '../converter';
-import fees from './../../constants/fees';
-import styles from './sendWritable.css';
-import regex from './../../utils/regex';
-import AddressInput from './../addressInput';
-import ReferenceInput from './../referenceInput';
-import Bookmark from './../bookmark';
+import TransferTabs from '../../../transferTabs';
+import { fromRawLsk } from '../../../../utils/lsk';
+import { Button } from '../../../toolbox/buttons/button';
+import { authStatePrefill } from '../../../../utils/form';
+import Converter from '../../../converter';
+import fees from '../../../../constants/fees';
+import styles from './form.css';
+import regex from '../../../../utils/regex';
+import AddressInput from '../../../addressInput';
+import ReferenceInput from '../../../referenceInput';
+import Bookmark from '../../../bookmark';
 
-class SendWritable extends React.Component {
+class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -79,33 +79,8 @@ class SendWritable extends React.Component {
     return fromRawLsk(Math.max(0, this.props.account.balance - this.fee));
   }
 
-  handleSetMaxAmount() {
-    const amount = parseFloat(this.getMaxAmount());
-    this.setState({
-      amount: {
-        value: amount.toString(),
-      },
-    });
-  }
-
   focusReference() {
     this.referenceInput.focus();
-  }
-
-  handleFocus() {
-    this.setState({
-      showSetMaxAmount: true,
-    });
-  }
-
-  handleBlur() {
-    /* when click on set max amount link we need a small delay */
-    /* to process the click event before hiding */
-    setTimeout(() => {
-      this.setState({
-        showSetMaxAmount: false,
-      });
-    }, 200);
   }
 
   render() {
@@ -139,26 +114,15 @@ class SendWritable extends React.Component {
             reference={this.state.reference}
             handleChange={this.handleChange.bind(this, 'reference', false)}
           />
-          <div className={`amount-wrapper ${styles.amountWrapper}`}>
-            <Converter
-              label={this.props.t('Amount (LSK)')}
-              className='amount'
-              theme={styles}
-              error={this.state.amount.error}
-              value={this.state.amount.value}
-              onChange={this.handleChange.bind(this, 'amount', true)}
-              onFocus={this.handleFocus.bind(this)}
-              onBlur={this.handleBlur.bind(this)}
-              t={this.props.t}
-            />
-            {
-              this.state.showSetMaxAmount &&
-              !this.state.amount.value &&
-              this.getMaxAmount() > 0 ?
-                <a onClick={this.handleSetMaxAmount.bind(this)} className={`set-max-amount ${styles.setMaxAmount}`}>{ this.props.t('Set max. amount') }</a>
-              : <div></div>
-            }
-          </div>
+          <Converter
+            label={this.props.t('Amount (LSK)')}
+            className='amount'
+            theme={styles}
+            error={this.state.amount.error}
+            value={this.state.amount.value}
+            onChange={this.handleChange.bind(this, 'amount', true)}
+            t={this.props.t}
+          />
         </form>
         <footer>
           <Button onClick={() => this.props.nextStep({
@@ -180,4 +144,4 @@ class SendWritable extends React.Component {
   }
 }
 
-export default SendWritable;
+export default Form;

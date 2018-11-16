@@ -15,7 +15,7 @@ import peersReducer from '../../src/store/reducers/peers';
 import settingsReducer from '../../src/store/reducers/settings';
 import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
-import { activePeerSet } from '../../src/actions/peers';
+import { liskAPIClientSet } from '../../src/actions/peers';
 import * as toasterActions from '../../src/actions/toaster';
 import { settingsUpdated } from '../../src/actions/settings';
 import Login from './../../src/components/login';
@@ -129,7 +129,7 @@ describe('@integration: Login', () => {
     const store = createStore();
     stubApis();
     store.dispatch(settingsUpdated({ showNetwork: true }));
-    wrapper = mount(renderWithRouter(Login, store, { location: { search: '' } }), { activePeerSet });
+    wrapper = mount(renderWithRouter(Login, store, { location: { search: '' } }), { liskAPIClientSet });
     helper = new Helper(wrapper, store);
   };
 

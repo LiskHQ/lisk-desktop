@@ -17,7 +17,7 @@ import transactionsReducer from '../../../store/reducers/transactions';
 import searchReducer from '../../../store/reducers/search';
 import loadingReducer from '../../../store/reducers/loading';
 import filtersReducer from '../../../store/reducers/filters';
-import { activePeerSet } from '../../../../src/actions/peers';
+import { liskAPIClientSet } from '../../../../src/actions/peers';
 import networks from './../../../../src/constants/networks';
 import getNetwork from './../../../../src/utils/getNetwork';
 
@@ -73,20 +73,20 @@ describe('ExplorerTransactions Component', () => {
     };
 
     transactionsActionStub.withArgs({
-      activePeer: match.any,
+      liskAPIClient: match.any,
       address: accounts.genesis.address,
       limit: 25,
       filter: undefined,
     }).returnsPromise().resolves({ data: [{ id: 'Some ID', type: txTypes.vote }], meta: { count: 1000 } });
 
     transactionsActionStub.withArgs({
-      activePeer: match.any,
+      liskAPIClient: match.any,
       address: accounts.genesis.address,
       limit: 25,
       filter: txFilters.all,
     }).returnsPromise().resolves({ data: [{ id: 'Some ID', type: txTypes.vote }], meta: { count: 1000 } });
 
-    store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
+    store.dispatch(liskAPIClientSet({ network: getNetwork(networks.mainnet.code) }));
 
     wrapper = mount(<Provider store={store}>
       <Router>

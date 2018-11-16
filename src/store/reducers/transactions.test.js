@@ -60,7 +60,7 @@ describe('Reducer: transactions(state, action)', () => {
         },
       },
     };
-    
+
     const changedState = transactions(state, action);
     expect(changedState).to.deep.equal(expectedState);
   });

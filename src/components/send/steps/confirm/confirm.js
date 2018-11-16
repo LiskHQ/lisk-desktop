@@ -1,13 +1,13 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { fromRawLsk, toRawLsk } from '../../utils/lsk';
-import AccountVisual from '../accountVisual';
-import { Button, PrimaryButton } from './../toolbox/buttons/button';
-import Input from '../toolbox/inputs/input';
-import fees from './../../constants/fees';
-import styles from './sendReadable.css';
+import { fromRawLsk, toRawLsk } from '../../../../utils/lsk';
+import AccountVisual from '../../../accountVisual';
+import { Button, PrimaryButton } from './../../../toolbox/buttons/button';
+import ToolBoxInput from '../../../toolbox/inputs/toolBoxInput';
+import fees from './../../../../constants/fees';
+import styles from './confirm.css';
 
-class SendReadable extends React.Component {
+class Confirm extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -109,7 +109,7 @@ class SendReadable extends React.Component {
             <p>{this.props.t('You only need to do this once for each Lisk ID.')}</p>
           </div>
           : <form>
-            <Input
+            <ToolBoxInput
               label={this.props.t('Send to Address')}
               className={`recipient ${styles.disabledInput}`}
               // value={this.state.recipient.value}
@@ -129,9 +129,9 @@ class SendReadable extends React.Component {
                   </div>
                 </div>
               </div>
-            </Input>
+            </ToolBoxInput>
             {this.state.reference.value ?
-              <Input label={this.props.t('Reference')}
+              <ToolBoxInput label={this.props.t('Reference')}
                 className={`reference ${styles.disabledInput}`}
                 error={this.state.reference.error}
                 value={this.state.reference.value}
@@ -140,7 +140,7 @@ class SendReadable extends React.Component {
                 theme={styles}
               /> : null
             }
-            <Input label={this.props.t('Total incl. {{fee}} LSK Fee', { fee: fromRawLsk(fees.send) })}
+            <ToolBoxInput label={this.props.t('Total incl. {{fee}} LSK Fee', { fee: fromRawLsk(fees.send) })}
               className={`amount ${styles.disabledInput}`}
               error={this.state.amount.error}
               value={this.addAmountAndFee()}
@@ -181,4 +181,4 @@ class SendReadable extends React.Component {
   }
 }
 
-export default SendReadable;
+export default Confirm;

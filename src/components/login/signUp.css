@@ -33,6 +33,8 @@
     margin-top: 32vh; /* stylelint-disable-line */
     margin-bottom: 24px;
     white-space: nowrap;
+    display: flex;
+    cursor: pointer;
   }
 
   & .subTitle,
@@ -85,6 +87,10 @@
       }
     }
   }
+
+  .link {
+    cursor: pointer;
+  }
 }
 
 @media (--xLarge-viewport) {
@@ -121,6 +127,7 @@
 
     & h2 {
       font-size: 50px;
+      display: flex;
     }
   }
 }

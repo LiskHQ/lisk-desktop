@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 
 import { mountWithContext } from '../../../test/utils/mountHelpers';
-import SearchResult from './searchResult';
+import SearchResult from './index';
 
 describe('SearchResult', () => {
   it('should render noResults compoennt" ', () => {

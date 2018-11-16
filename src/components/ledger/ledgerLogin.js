@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
 import { getLedgerAccountInfo } from '../../utils/api/ledger';
-import { activePeerSet } from '../../actions/peers';
+import { liskAPIClientSet } from '../../actions/peers';
 import { settingsUpdated } from '../../actions/settings';
 import { errorToastDisplayed } from '../../actions/toaster';
 
@@ -14,7 +14,7 @@ import { FontIcon } from '../fontIcon';
 import cubeImage from '../../assets/images/dark-blue-cube.svg';
 import styles from './ledgerLogin.css';
 
-class LoginLedger extends React.Component {
+class LedgerLogin extends React.Component {
   constructor(props) {
     super(props);
 
@@ -31,7 +31,7 @@ class LoginLedger extends React.Component {
   // async componentDidUpdate(prevProps) {
   // if (this.props.settings.ledgerAccountAmount !== prevProps.settings.ledgerAccountAmount) {
   //   const accountInfo = await getLedgerAccountInfo
-  // (this.props.activePeer, this.state.hwAccounts.length);  // eslint-disable-line
+  // (this.props.liskAPIClient, this.state.hwAccounts.length);  // eslint-disable-line
 
   //   this.setState({ hwAccounts: this.state.hwAccounts.concat([accountInfo]) });
   // }
@@ -54,7 +54,7 @@ class LoginLedger extends React.Component {
       try {
         switch (this.props.loginType) {   // eslint-disable-line
           case 0:
-            accountInfo = await getLedgerAccountInfo(this.props.activePeer, index);
+            accountInfo = await getLedgerAccountInfo(this.props.liskAPIClient, index);
             break;
           // case loginTypes.trezor:
           //   this.props.errorToastDisplayed({
@@ -99,7 +99,7 @@ class LoginLedger extends React.Component {
 
   selectAccount(ledgerAccount) {
     // set active peer
-    this.props.activePeerSet({
+    this.props.liskAPIClientSet({
       publicKey: ledgerAccount.publicKey,
       network: this.props.network,
       hwInfo: { // Use pubKey[0] first 10 char as device id
@@ -192,12 +192,12 @@ class LoginLedger extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  activePeer: state.peers && state.peers.data,
+  liskAPIClient: state.peers && state.peers.liskAPIClient,
   settings: state.settings,
 });
 
 const mapDispatchToProps = dispatch => ({
-  activePeerSet: data => dispatch(activePeerSet(data)),
+  liskAPIClientSet: data => dispatch(liskAPIClientSet(data)),
   settingsUpdated: data => dispatch(settingsUpdated(data)),
   errorToastDisplayed: data => dispatch(errorToastDisplayed(data)),
 });
@@ -205,4 +205,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(translate()(LoginLedger));
+)(translate()(LedgerLogin));

@@ -17,7 +17,7 @@ import loadingReducer from '../../../store/reducers/loading';
 import filtersReducer from '../../../store/reducers/filters';
 
 import { accountLoggedIn } from '../../../../src/actions/account';
-import { activePeerSet } from '../../../../src/actions/peers';
+import { liskAPIClientSet } from '../../../../src/actions/peers';
 import networks from './../../../../src/constants/networks';
 import getNetwork from './../../../../src/utils/getNetwork';
 
@@ -58,7 +58,7 @@ describe('WalletTransactions Component', () => {
     };
 
     transactionsActionsStub.withArgs({
-      activePeer: match.any,
+      liskAPIClient: match.any,
       address: accounts.genesis.address,
       limit: 25,
       filter: txFilters.all,
@@ -66,7 +66,7 @@ describe('WalletTransactions Component', () => {
 
 
     transactionsActionsStub.withArgs({
-      activePeer: match.any,
+      liskAPIClient: match.any,
       address: match.any,
       limit: 25,
       filter: txFilters.statistics,
@@ -78,7 +78,7 @@ describe('WalletTransactions Component', () => {
       delegate: { ...accounts['delegate candidate'] },
     }));
 
-    store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
+    store.dispatch(liskAPIClientSet({ network: getNetwork(networks.mainnet.code) }));
 
     wrapper = mount(<Provider store={store}>
       <Router>

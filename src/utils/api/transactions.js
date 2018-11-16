@@ -2,7 +2,7 @@ import Lisk from 'lisk-elements';
 import txFilters from './../../constants/transactionFilters';
 
 export const send = (
-  activePeer,
+  liskAPIClient,
   recipientId,
   amount,
   passphrase,
@@ -14,13 +14,13 @@ export const send = (
     const transaction = Lisk.transaction.transfer({
       recipientId, amount, passphrase, secondPassphrase, data, timeOffset,
     });
-    activePeer.transactions.broadcast(transaction).then(() => {
+    liskAPIClient.transactions.broadcast(transaction).then(() => {
       resolve(transaction);
     }).catch(reject);
   });
 
 export const getTransactions = ({
-  activePeer, address, limit = 20, offset = 0,
+  liskAPIClient, address, limit = 20, offset = 0,
   sort = 'timestamp:desc', filter = txFilters.all,
 }) => {
   const params = {
@@ -32,19 +32,19 @@ export const getTransactions = ({
   if (filter === txFilters.incoming) params.recipientId = address;
   if (filter === txFilters.outgoing) params.senderId = address;
   if (filter === txFilters.all) params.senderIdOrRecipientId = address;
-  return activePeer.transactions.get(params);
+  return liskAPIClient.transactions.get(params);
 };
 
-export const getSingleTransaction = ({ activePeer, id }) => new Promise((resolve, reject) => {
-  if (!activePeer) {
+export const getSingleTransaction = ({ liskAPIClient, id }) => new Promise((resolve, reject) => {
+  if (!liskAPIClient) {
     reject();
   } else {
-    activePeer.transactions.get({ id }).then(response => resolve(response));
+    liskAPIClient.transactions.get({ id }).then(response => resolve(response));
   }
 });
 
-export const unconfirmedTransactions = (activePeer, address, limit = 20, offset = 0, sort = 'timestamp:desc') =>
-  activePeer.node.getTransactions('unconfirmed', {
+export const unconfirmedTransactions = (liskAPIClient, address, limit = 20, offset = 0, sort = 'timestamp:desc') =>
+  liskAPIClient.node.getTransactions('unconfirmed', {
     senderId: address,
     limit,
     offset,

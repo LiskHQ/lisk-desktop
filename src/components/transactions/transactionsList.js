@@ -4,10 +4,10 @@ import tableStyle from 'react-toolbox/lib/table/theme.css';
 import TransactionRow from './transactionRow';
 import TransactionsHeader from './transactionsHeader';
 
-import txFilters from './../../constants/transactionFilters';
-import txTypes from './../../constants/transactionTypes';
-import styles from './transactionList.css';
-import { parseSearchParams } from './../../utils/searchParams';
+import txFilters from '../../constants/transactionFilters';
+import txTypes from '../../constants/transactionTypes';
+import styles from './transactionsList.css';
+import { parseSearchParams } from '../../utils/searchParams';
 import DelegateStatistics from './delegateStatistics';
 import UserVotes from './userVotes';
 

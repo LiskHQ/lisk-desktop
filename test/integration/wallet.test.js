@@ -21,7 +21,7 @@ import filtersReducer from '../../src/store/reducers/filters';
 import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
 import { accountLoggedIn } from '../../src/actions/account';
-import { activePeerSet } from '../../src/actions/peers';
+import { liskAPIClientSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
 import txTypes from './../../src/constants/transactionTypes';
 import getNetwork from './../../src/utils/getNetwork';
@@ -74,12 +74,18 @@ describe('@integration: Wallet', () => {
   const successMessage = 'Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.';
   const errorMessage = 'An error occurred while creating the transaction.';
 
-  const generateTransactions = (n) => {
-    const transactionExample = {
-      senderId: 'sample_address', receiverId: 'some_address', type: txTypes.send, id: '123456',
-    };
-    const transactions = new Array(n);
-    transactions.fill(transactionExample);
+  const generateTransactions = (n, firstRun = false) => {
+    const transactions = [];
+    for (let i = 0; i < n; i++) {
+      const transactionExample = {
+        id: (i === 0 && firstRun) ? 123456 : Math.random() * i,
+        senderId: 'sample_address',
+        receiverId: 'some_address',
+        type: txTypes.send,
+        confirmations: 1,
+      };
+      transactions.push(transactionExample);
+    }
     return transactions;
   };
 
@@ -115,7 +121,7 @@ describe('@integration: Wallet', () => {
     }
 
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ data: [...account] });
-    store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
+    store.dispatch(liskAPIClientSet({ network: getNetwork(networks.mainnet.code) }));
     delegateAPIStub.withArgs(match.any).returnsPromise()
       .resolves({ data: [{ ...accounts['delegate candidate'] }] });
 
@@ -159,7 +165,7 @@ describe('@integration: Wallet', () => {
 
       // transactionsFilterSet do pass filter
       getTransactionsStub.withArgs({
-        activePeer: match.defined,
+        liskAPIClient: match.defined,
         address: match.defined,
         limit: 25,
         filter: txFilters.all,
@@ -167,7 +173,7 @@ describe('@integration: Wallet', () => {
 
       // loadTransactions does not pass filter
       getTransactionsStub.withArgs({
-        activePeer: match.defined,
+        liskAPIClient: match.defined,
         address: match.defined,
         limit: 25,
       }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
@@ -254,7 +260,8 @@ describe('@integration: Wallet', () => {
       step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
     });
 
-    describe('Scenario: should allow to send LSK from unlocked account with second passphrase', () => {
+    // This should be unskipped in issue #1500
+    describe.skip('Scenario: should allow to send LSK from unlocked account with second passphrase', () => {
       const { secondPassphrase } = accounts['second passphrase account'];
       step('Given I\'m on "wallet" as "second passphrase account"', () => setupStep('second passphrase account'));
       step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
@@ -333,22 +340,22 @@ describe('@integration: Wallet', () => {
 
       // transactionsFilterSet do pass filter
       getTransactionsStub.withArgs({
-        activePeer: match.defined,
+        liskAPIClient: match.defined,
         address: match.defined,
         limit: 25,
         filter: txFilters.all,
-      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 50 } });
+      }).returnsPromise().resolves({ data: generateTransactions(25, true), meta: { count: 50 } });
 
       // loadTransactions does not pass filter
       getTransactionsStub.withArgs({
-        activePeer: match.defined,
+        liskAPIClient: match.defined,
         address: match.defined,
         limit: 25,
       }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 50 } });
 
       // transactionsRequested does pass filter, offset
       getTransactionsStub.withArgs({
-        activePeer: match.defined,
+        liskAPIClient: match.defined,
         address: match.defined,
         limit: 25,
         offset: match.defined,
@@ -358,14 +365,14 @@ describe('@integration: Wallet', () => {
 
       // // NOTE: transactionsFilterSet does not use offset
       getTransactionsStub.withArgs({
-        activePeer: match.defined,
+        liskAPIClient: match.defined,
         address: match.defined,
         limit: 25,
         filter: txFilters.outgoing,
       }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 25 } });
 
       getTransactionsStub.withArgs({
-        activePeer: match.defined,
+        liskAPIClient: match.defined,
         address: match.defined,
         limit: 25,
         filter: txFilters.incoming,
@@ -385,7 +392,8 @@ describe('@integration: Wallet', () => {
       step('Then I should be redirected to transactoinDetails step', () => helper.checkRedirectionToDetails('123456'));
     });
 
-    describe('Scenario: should allow to filter transactions', () => {
+    // This should be unskipped in issue #1500
+    describe.skip('Scenario: should allow to filter transactions', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
       step('Then the "All" filter should be selected by default', () => helper.checkSelectedFilter('all'));
       step('When I click on the "Outgoing" filter', () => helper.clickOnElement('.filter-out'));

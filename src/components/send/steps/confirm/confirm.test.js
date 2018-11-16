@@ -5,13 +5,13 @@ import sinon from 'sinon';
 import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 
-import accounts from '../../../test/constants/accounts';
-import i18n from '../../i18n';
-import SendReadable from './send';
+import accounts from '../../../../../test/constants/accounts';
+import i18n from '../../../../i18n';
+import Confirm from './confirm';
 
 const fakeStore = configureStore();
 
-describe('Send Readable Component', () => {
+describe('Confirm Component', () => {
   let wrapper;
   const account = accounts.delegate;
   const props = {
@@ -31,7 +31,7 @@ describe('Send Readable Component', () => {
       account.serverPublicKey = 'public_key';
       const store = fakeStore({ account });
 
-      wrapper = mount(<SendReadable {...props} />, {
+      wrapper = mount(<Confirm {...props} />, {
         context: { store, i18n },
         childContextTypes: {
           store: PropTypes.object.isRequired,
@@ -70,7 +70,7 @@ describe('Send Readable Component', () => {
       props.accountInit = true;
       const store = fakeStore({ account });
 
-      wrapper = mount(<SendReadable {...props} />, {
+      wrapper = mount(<Confirm {...props} />, {
         context: { store, i18n },
         childContextTypes: {
           store: PropTypes.object.isRequired,

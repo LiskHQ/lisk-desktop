@@ -7,18 +7,18 @@ import { searchAccount } from '../../../actions/search';
 import WalletTransactions from './walletTransactions';
 import actionTypes from '../../../constants/actions';
 import txFilters from './../../../constants/transactionFilters';
+import removeDuplicateTransactions from '../../../utils/transactions';
 
 /* istanbul ignore next */
 const mapStateToProps = state => ({
   account: state.account,
   transaction: state.transaction,
   transactions: state.transactions[state.account.address] ?
-    [
-      ...state.transactions[state.account.address].pending ?
-        state.transactions[state.account.address].pending : [],
-      ...state.transactions[state.account.address].confirmed ?
-        state.transactions[state.account.address].confirmed : [],
-    ] : [],
+    removeDuplicateTransactions(
+      state.transactions[state.account.address].pending || [],
+      state.transactions[state.account.address].confirmed || [],
+    ) :
+    [],
   votes: state.account.votes ?
     state.account.votes :
     state.search.votes[state.account.addres],

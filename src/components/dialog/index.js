@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import Dialog from './dialog';
+import Dialog from './dialogElement';
 
 const mapStateToProps = state => ({
   dialog: state.dialog,

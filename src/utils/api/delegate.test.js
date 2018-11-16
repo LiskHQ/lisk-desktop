@@ -13,15 +13,15 @@ import {
 import accounts from '../../../test/constants/accounts';
 
 describe('Utils: Delegate', () => {
-  let activePeerMockDelegates;
-  let activePeerMockVotes;
-  let activePeerMockVoters;
-  let activePeerMockTransations;
+  let liskAPIClientMockDelegates;
+  let liskAPIClientMockVotes;
+  let liskAPIClientMockVoters;
+  let liskAPIClientMockTransations;
   let liskTransactionsCastVotesStub;
   let liskTransactionsRegisterDelegateStub;
   const timeOffset = 0;
 
-  const activePeer = {
+  const liskAPIClient = {
     delegates: {
       get: () => { },
     },
@@ -39,23 +39,23 @@ describe('Utils: Delegate', () => {
   beforeEach(() => {
     liskTransactionsCastVotesStub = sinon.stub(Lisk.transaction, 'castVotes');
     liskTransactionsRegisterDelegateStub = sinon.stub(Lisk.transaction, 'registerDelegate');
-    activePeerMockDelegates = sinon.mock(activePeer.delegates);
-    activePeerMockVotes = sinon.mock(activePeer.votes);
-    activePeerMockVoters = sinon.mock(activePeer.voters);
-    activePeerMockTransations = sinon.stub(activePeer.transactions, 'broadcast').returnsPromise().resolves({ id: '1234' });
+    liskAPIClientMockDelegates = sinon.mock(liskAPIClient.delegates);
+    liskAPIClientMockVotes = sinon.mock(liskAPIClient.votes);
+    liskAPIClientMockVoters = sinon.mock(liskAPIClient.voters);
+    liskAPIClientMockTransations = sinon.stub(liskAPIClient.transactions, 'broadcast').returnsPromise().resolves({ id: '1234' });
   });
 
   afterEach(() => {
-    activePeerMockDelegates.verify();
-    activePeerMockDelegates.restore();
+    liskAPIClientMockDelegates.verify();
+    liskAPIClientMockDelegates.restore();
 
-    activePeerMockVotes.verify();
-    activePeerMockVotes.restore();
+    liskAPIClientMockVotes.verify();
+    liskAPIClientMockVotes.restore();
 
-    activePeerMockVoters.verify();
-    activePeerMockVoters.restore();
+    liskAPIClientMockVoters.verify();
+    liskAPIClientMockVoters.restore();
 
-    activePeerMockTransations.restore();
+    liskAPIClientMockTransations.restore();
 
     liskTransactionsCastVotesStub.restore();
     liskTransactionsRegisterDelegateStub.restore();
@@ -64,38 +64,38 @@ describe('Utils: Delegate', () => {
   describe('listAccountDelegates', () => {
     it('should get votes for an address with 101 limit', () => {
       const address = '123L';
-      activePeerMockVotes.expects('get').withArgs({ address, limit: '101' }).once();
-      listAccountDelegates(activePeer, address);
+      liskAPIClientMockVotes.expects('get').withArgs({ address, limit: '101' }).once();
+      listAccountDelegates(liskAPIClient, address);
     });
   });
 
   describe('listDelegates', () => {
-    it('should return getDelegate(activePeer, options) if options = {}', () => {
+    it('should return getDelegate(liskAPIClient, options) if options = {}', () => {
       const options = {};
       const response = { data: [] };
-      activePeerMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
+      liskAPIClientMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
 
-      const returnedPromise = listDelegates(activePeer, options);
+      const returnedPromise = listDelegates(liskAPIClient, options);
       expect(returnedPromise).to.eventually.equal(response);
     });
 
-    it('should return getDelegate(activePeer, options) if options.q is set', () => {
+    it('should return getDelegate(liskAPIClient, options) if options.q is set', () => {
       const options = { q: 'genesis_1' };
       const response = { data: [] };
-      activePeerMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
+      liskAPIClientMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
 
-      const returnedPromise = listDelegates(activePeer, options);
+      const returnedPromise = listDelegates(liskAPIClient, options);
       return expect(returnedPromise).to.eventually.equal(response);
     });
   });
 
   describe('getDelegate', () => {
-    it('should return getDelegate(activePeer, options)', () => {
+    it('should return getDelegate(liskAPIClient, options)', () => {
       const options = { publicKey: `"${accounts.delegate.publicKey}"` };
       const response = { data: [] };
-      activePeerMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
+      liskAPIClientMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
 
-      const returnedPromise = getDelegate(activePeer, options);
+      const returnedPromise = getDelegate(liskAPIClient, options);
       return expect(returnedPromise).to.eventually.equal(response);
     });
   });
@@ -121,7 +121,7 @@ describe('Utils: Delegate', () => {
       }).returns(transaction);
 
       vote(
-        activePeer,
+        liskAPIClient,
         accounts.genesis.passphrase,
         accounts.genesis.publicKey,
         votes,
@@ -129,7 +129,7 @@ describe('Utils: Delegate', () => {
         secondPassphrase,
         timeOffset,
       );
-      expect(activePeer.transactions.broadcast).to.have.been.calledWith(transaction);
+      expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
     });
   });
 
@@ -138,49 +138,49 @@ describe('Utils: Delegate', () => {
       const address = '123L';
       const offset = 0;
       const limit = 100;
-      activePeerMockVotes.expects('get').withArgs({ address, offset, limit }).once();
-      getVotes(activePeer, { address, offset, limit });
+      liskAPIClientMockVotes.expects('get').withArgs({ address, offset, limit }).once();
+      getVotes(liskAPIClient, { address, offset, limit });
     });
   });
 
   describe('getAllVotes', () => {
     it('should get all votes for an address with no parameters > 100', () => {
       const address = '123L';
-      activePeerMockVotes.expects('get').withArgs({ address, offset: 0, limit: 100 })
+      liskAPIClientMockVotes.expects('get').withArgs({ address, offset: 0, limit: 100 })
         .returnsPromise().resolves({ data: { votes: [1, 2, 3], votesUsed: 101 } });
-      activePeerMockVotes.expects('get').withArgs({ address, offset: 100, limit: 1 })
+      liskAPIClientMockVotes.expects('get').withArgs({ address, offset: 100, limit: 1 })
         .returnsPromise().resolves({ data: { votes: [4], votesUsed: 101 } });
-      const returnedPromise = getAllVotes(activePeer, address);
+      const returnedPromise = getAllVotes(liskAPIClient, address);
       expect(returnedPromise).to.eventually.equal([1, 2, 3, 4]);
     });
 
     it('should get all votes for an address with no parameters < 100', () => {
       const address = '123L';
-      activePeerMockVotes.expects('get').withArgs({ address, offset: 0, limit: 100 })
+      liskAPIClientMockVotes.expects('get').withArgs({ address, offset: 0, limit: 100 })
         .returnsPromise().resolves({ data: { votes: [1], votesUsed: 1 } });
-      const returnedPromise = getAllVotes(activePeer, address);
+      const returnedPromise = getAllVotes(liskAPIClient, address);
       expect(returnedPromise).to.eventually.equal([1]);
     });
   });
 
   describe('getVoters', () => {
-    it('should return getVoters(activePeer, { publicKey, offset: 0, limit: 100 })', () => {
+    it('should return getVoters(liskAPIClient, { publicKey, offset: 0, limit: 100 })', () => {
       const publicKey = '';
-      activePeerMockVoters.expects('get').withArgs({ publicKey, offset: 0, limit: 100 })
+      liskAPIClientMockVoters.expects('get').withArgs({ publicKey, offset: 0, limit: 100 })
         .returnsPromise().resolves('resolved promise');
 
-      const returnedPromise = getVoters(activePeer, { publicKey, offset: 0, limit: 100 });
+      const returnedPromise = getVoters(liskAPIClient, { publicKey, offset: 0, limit: 100 });
       expect(returnedPromise).to.eventually.equal('resolved promise');
     });
   });
 
   describe('getVoters', () => {
-    it('should return getVoters(activePeer, { publicKey })', () => {
+    it('should return getVoters(liskAPIClient, { publicKey })', () => {
       const publicKey = '';
-      activePeerMockVoters.expects('get').withArgs({ publicKey, offset: 0, limit: 100 })
+      liskAPIClientMockVoters.expects('get').withArgs({ publicKey, offset: 0, limit: 100 })
         .returnsPromise().resolves('resolved promise');
 
-      const returnedPromise = getVoters(activePeer, { publicKey });
+      const returnedPromise = getVoters(liskAPIClient, { publicKey });
       expect(returnedPromise).to.eventually.equal('resolved promise');
     });
   });
@@ -198,8 +198,8 @@ describe('Utils: Delegate', () => {
         timeOffset,
       }).returns(transaction);
 
-      registerDelegate(activePeer, username, passphrase, secondPassphrase, timeOffset);
-      expect(activePeer.transactions.broadcast).to.have.been.calledWith(transaction);
+      registerDelegate(liskAPIClient, username, passphrase, secondPassphrase, timeOffset);
+      expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
     });
 
     it('should broadcast a registerDelegate transaction with second passphrase', () => {
@@ -215,8 +215,8 @@ describe('Utils: Delegate', () => {
         timeOffset,
       }).returns(transaction);
 
-      registerDelegate(activePeer, username, passphrase, secondPassphrase, timeOffset);
-      expect(activePeer.transactions.broadcast).to.have.been.calledWith(transaction);
+      registerDelegate(liskAPIClient, username, passphrase, secondPassphrase, timeOffset);
+      expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
     });
   });
 });

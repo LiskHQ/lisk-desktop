@@ -1,5 +1,5 @@
 import React from 'react';
-import Input from '../toolbox/inputs/input';
+import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import { fromRawLsk } from '../../utils/lsk';
 import fees from './../../constants/fees';
 import converter from './../../constants/converter';
@@ -28,7 +28,7 @@ class Converter extends React.Component {
       (0).toFixed(2) : (this.props.value * LSK[currency]).toFixed(2);
     price = price > converter.maxLSKSupply || price === 'NaN' || price < 0 ? (0).toFixed(2) : price;
     return (
-      <Input
+      <ToolBoxInput
         label={this.props.label}
         className='amount'
         error={this.props.error}
@@ -54,7 +54,7 @@ class Converter extends React.Component {
             currency,
             price: (fromRawLsk(this.fee) * LSK[currency]).toFixed(2),
           })}`}</div> }
-      </Input>
+      </ToolBoxInput>
     );
   }
 }
