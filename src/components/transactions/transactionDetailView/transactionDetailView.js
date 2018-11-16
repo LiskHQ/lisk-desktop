@@ -108,7 +108,7 @@ class TransactionDetailView extends React.Component {
             </figure> : null}
         </TransactionDetailViewField>
 
-        {!isSendTransaction ? <DateField {...this.props} /> :
+        {!isSendTransaction ? <DateField transaction={transaction} t={this.props.t} /> :
           <TransactionDetailViewField
             shouldShow={transaction.recipientId}
             label={this.props.t('Recipient')}
@@ -165,7 +165,7 @@ class TransactionDetailView extends React.Component {
           {this.getFirstRow()}
 
           <TransactionDetailViewRow shouldShow={transaction.type === 0}>
-            <DateField {...this.props} />
+            <DateField transaction={transaction} t={this.props.t} />
             <TransactionDetailViewField className={'tx-amount'}
               label={this.props.t('Amount (LSK)')}
               value={
