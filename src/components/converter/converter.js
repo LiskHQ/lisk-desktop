@@ -60,4 +60,3 @@ class Converter extends React.Component {
 }
 
 export default Converter;
-
