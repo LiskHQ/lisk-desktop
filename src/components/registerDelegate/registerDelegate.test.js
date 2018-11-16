@@ -18,7 +18,7 @@ const account = {
 const delegate = {};
 const browserHistory = {
   location: {
-    pathname: '/regiser-delegate',
+    pathname: '/register-delegate',
   },
   listen: () => {},
   goBack: spy(),
