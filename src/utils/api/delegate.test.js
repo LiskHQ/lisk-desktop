@@ -9,7 +9,8 @@ import {
   getVotes,
   getVoters,
   getAllVotes,
-  registerDelegate } from './delegate';
+  registerDelegate,
+} from './delegate';
 import accounts from '../../../test/constants/accounts';
 
 describe('Utils: Delegate', () => {

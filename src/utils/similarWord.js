@@ -65,7 +65,7 @@ const matchPartOfString = (word, begin, end) =>
  * @param {string} invalidWord
  * @returns {string} Similar word
  */
-export const findSimilarWord = (invalidWord) => {
+export const findSimilarWord = (invalidWord) => { // eslint-disable-line max-statements
   let similarWorld;
   let prevDistance = 100;
   const n = Math.floor((invalidWord.length - 1) / 2);

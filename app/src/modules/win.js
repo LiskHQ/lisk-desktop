@@ -31,7 +31,7 @@ const win = {
   },
 
 
-  create: ({
+  create: ({ // eslint-disable-line max-statements
     electron, path, electronLocalshortcut, storage, checkForUpdates,
   }) => {
     const { Menu } = electron;

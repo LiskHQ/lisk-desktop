@@ -7,7 +7,7 @@ import accountConfig from '../../constants/account';
 import { errorToastDisplayed } from '../../actions/toaster';
 
 const { lockDuration } = accountConfig;
-const loginMiddleware = store => next => (action) => {
+const loginMiddleware = store => next => (action) => { // eslint-disable-line max-statements
   if (action.type !== actionTypes.activePeerSet ||
       (!action.data.publicKey && !action.data.passphrase)) {
     return next(action);

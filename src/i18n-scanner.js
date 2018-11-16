@@ -2,7 +2,7 @@ const fs = require('fs');
 const glob = require('glob');
 const Parser = require('i18next-scanner').Parser;
 
-function i18nScanner(params) {
+function i18nScanner(params) { // eslint-disable-line
   const parser = new Parser({
     keySeparator: '>',
     nsSeparator: '|',

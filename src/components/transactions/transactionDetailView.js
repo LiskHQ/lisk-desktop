@@ -82,7 +82,7 @@ class TransactionDetailView extends React.Component {
     );
   }
 
-  getFirstRow() {
+  getFirstRow() { // eslint-disable-line complexity
     const transactionId = this.getTransactionIdFromURL();
     const isPendingTransaction = this.props.pendingTransactions &&
       this.props.pendingTransactions.find(tx => tx.id === transactionId);
@@ -135,7 +135,7 @@ class TransactionDetailView extends React.Component {
     );
   }
 
-  render() {
+  render() { // eslint-disable-line complexity
     const transactionId = this.getTransactionIdFromURL();
     const isPendingTransaction = this.props.pendingTransactions &&
       this.props.pendingTransactions.find(tx => tx.id === transactionId);

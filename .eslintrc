@@ -47,12 +47,25 @@
     "linebreak-style": 0,
     "no-param-reassign": "off",
     "complexity": ["error", 10],
-    "max-depth": ["error", 2],
-    "max-nested-callbacks": ["error", 2],
-    "max-statements": ["error", 2],
-    "max-lines": ["error", 250],
-    "max-lines-per-function": ["error", { "max": 50, "complexity": 5 }]
+    "max-depth": ["error", 3],
+    "max-nested-callbacks": ["error", 3],
+    "max-statements": ["error", 10],
+    "max-lines": ["error", 300]
   },
+  "overrides": [
+    {
+      "files": [ 
+        "*.test.js",
+        "*.spec.js"
+      ],
+      "rules": {
+        "max-depth": ["error", 2],
+        "max-nested-callbacks": ["error", 4],
+        "max-statements": ["error", 30],
+        "max-lines": ["error", 500]
+      }
+    }
+  ],
   "settings": {
     "mocha/additionalTestFunctions": [
       "describeModule"

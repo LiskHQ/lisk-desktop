@@ -116,7 +116,7 @@ export const loadTransaction = ({ id }) =>
     const activePeer = getState().peers.data;
     dispatch({ type: actionTypes.transactionCleared });
     getSingleTransaction({ activePeer, id })
-      .then((response) => {
+      .then((response) => { // eslint-disable-line max-statements
         let added = [];
         let deleted = [];
 

@@ -5,7 +5,7 @@ import actionTypes from '../../constants/actions';
  * @param {Array} state
  * @param {Object} action
  */
-const search = (state = {
+const search = (state = { // eslint-disable-line complexity
   transactions: {},
   accounts: {},
   delegates: {},

@@ -73,7 +73,7 @@ class Bookmark extends React.Component {
         this.handleArrowUp();
         event.preventDefault();
         break;
-      case keyCodes.enter: // eslint-disable-line no-case-declarations
+      case keyCodes.enter: // eslint-disable-next-line no-case-declarations
         const filteredFollowedAccounts = this.getFilteredFollowedAccounts();
 
         if (filteredFollowedAccounts[this.state.selectedIdx]) {
@@ -98,7 +98,7 @@ class Bookmark extends React.Component {
     this.setState({ showFollowedList: false });
   }
 
-  render() {
+  render() { // eslint-disable-line complexity
     const {
       followedAccounts, handleChange, className, label, address,
     } = this.props;

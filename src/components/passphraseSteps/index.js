@@ -101,7 +101,7 @@ class PassphraseSteps extends React.Component {
     return 'passphrase';
   }
 
-  render() {
+  render() { // eslint-disable-line max-statements
     const values = {
       columns: { xs: 6, sm: 4, md: 6 },
       passphrase: {

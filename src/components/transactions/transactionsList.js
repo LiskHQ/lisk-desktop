@@ -33,7 +33,7 @@ class TransactionsList extends React.Component {
     return window.innerWidth > 768;
   }
 
-  render() {
+  render() { // eslint-disable-line
     const {
       transactions,
       dashboard,
