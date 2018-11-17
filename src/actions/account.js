@@ -97,7 +97,7 @@ export const accountVotersFetched = ({ publicKey }) =>
 export const secondPassphraseRegistered = ({ secondPassphrase, account, passphrase }) =>
   (dispatch, getState) => {
     const activePeer = getState().peers.data;
-    const timeOffset = getTimeOffset(getState());
+    const timeOffset = getTimeOffset(getState()) + 10000000;
     setSecondPassphrase(activePeer, secondPassphrase, account.publicKey, passphrase, timeOffset)
       .then((data) => {
         dispatch({

@@ -138,3 +138,7 @@
 .iconError {
   transform: rotate(45deg);
 }
+
+.tryButton {
+  margin-top: 20px;
+}

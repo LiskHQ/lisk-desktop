@@ -20,6 +20,7 @@ class confirmSecond extends React.Component {
         value: '',
         error: '',
       },
+      error: false,
     };
   }
   onChange(name, value, error) {
@@ -48,11 +49,12 @@ class confirmSecond extends React.Component {
     this.props.secondPassphraseRegisteredFailureReset();
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.account.secondPublicKey && !nextProps.secondPassphraseStep) {
+    if (nextProps.account.secondPublicKey && !nextProps.error) {
       this.setState({ step: 'done' });
-    } else if (nextProps.secondPassphraseStep) {
+    } else if (nextProps.step) {
       this.setState({
-        step: nextProps.secondPassphraseStep,
+        step: nextProps.step,
+        error: nextProps.error,
       });
     }
   }
@@ -102,26 +104,25 @@ class confirmSecond extends React.Component {
         </TransitionWrapper>
         <TransitionWrapper current={this.state.step} step='second-passphrase-register-failure'>
           <article className={`${styles.resultContainer} failContainer`}>
-            <div>
               <FontIcon className={`${styles.headerIcon} ${styles.iconError}`} value='add'></FontIcon>
-              <h2>
-                {t('Connecting to network')}
+              <h2 className={styles.resultHeader}>
+                {t('Transaction failed')}
               </h2>
-              <p>
-                {t('Could not reach the network. Please try again.')}
-              </p>
+              <div className='subTitle'>
+                {this.state.error}
+              </div>
               <form onSubmit={this.redirectToFirstStep.bind(this)}>
                 <PrimaryButton
                   disabled={false}
                   label={t('Try again')}
-                  className={'try-again'}
+                  className={`${styles.tryButton} try-again`}
                   onClick={this.redirectToFirstStep.bind(this)}
                 />
               </form>
-            </div>
           </article>
         </TransitionWrapper>
       </header>
+      {this.state.error ? null :
       <div className={`${styles.content} ${doneClass}`}>
         <TransitionWrapper current={this.state.step} step='login'>
           <div className={styles.innerContent}>
@@ -176,7 +177,7 @@ class confirmSecond extends React.Component {
             onClick={() => history.push(`${routes.dashboard.path}`) }
           />
         </TransitionWrapper>
-      </div>
+      </div>}
     </section>);
   }
 }

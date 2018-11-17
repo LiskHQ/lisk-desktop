@@ -7,7 +7,8 @@ import { secondPassphraseRegisteredFailureReset } from '../../../actions/secondP
 
 const mapStateToProps = state => ({
   account: state.account,
-  secondPassphraseStep: state.secondPassphrase.secondPassphraseStep,
+  step: state.secondPassphrase.step,
+  error: state.secondPassphrase.error,
 });
 
 /* istanbul ignore next */

@@ -5,12 +5,14 @@ const secondPassphrase = (state = {}, action) => {
     case actionTypes.secondPassphraseRegisteredFailure:
       return {
         ...state,
-        secondPassphraseStep: 'second-passphrase-register-failure',
+        error: action.text,
+        step: 'second-passphrase-register-failure',
       };
     case actionTypes.secondPassphraseRegisteredFailureReset:
       return {
         ...state,
-        secondPassphraseStep: false,
+        error: false,
+        step: false,
       };
     default:
       return state;
