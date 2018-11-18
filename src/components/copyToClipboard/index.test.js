@@ -8,7 +8,7 @@ import CopyToClipboard from './index';
 
 describe('CopyToClipboard', () => {
   let wrapper;
-
+  let clock;
   const props = {
     text: 'test',
     className: 'className',
@@ -22,24 +22,31 @@ describe('CopyToClipboard', () => {
       i18n: PropTypes.object.isRequired,
     },
   };
+  const copiedText = ' Copied!';
 
   beforeEach(() => {
     wrapper = mount(<CopyToClipboard {...props} />, options);
-  });
-
-  it('should click on span.default render "Copied!"', () => {
-    const expectValue = ' Copied!';
-    wrapper.find('span.default').simulate('click');
-    expect(wrapper.find('span.copied').text()).to.be.equal(expectValue);
-  });
-
-  it('should span.copied be gone after 3000ms', () => {
-    const clock = sinon.useFakeTimers({
+    clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
     });
-    wrapper.find('span.default').simulate('click');
-    clock.tick(3010);
-    expect(wrapper.find('span.copied')).to.have.lengthOf(1);
+  });
+
+  afterEach(() => {
     clock.restore();
+  });
+
+  it('should show "Copied!" on click', () => {
+    wrapper.find('.default').simulate('click');
+    expect(wrapper.find('.copied')).to.have.text(copiedText);
+  });
+
+  it('should hide "Copied!" after 3000ms', () => {
+    wrapper.find('.default').simulate('click');
+    clock.tick(2900);
+    expect(wrapper.find('.copied')).to.have.text(copiedText);
+    clock.tick(2000);
+    wrapper.update();
+    expect(wrapper.find('.copied')).to.have.length(0);
+    expect(wrapper.find('.default')).to.have.text(props.text);
   });
 });

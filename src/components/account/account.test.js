@@ -20,7 +20,7 @@ describe('Account', () => {
         status: {
           online: false,
         },
-        data: {
+        liskAPIClient: {
           currentPeer: 'localhost',
           port: 4000,
         },
@@ -63,7 +63,7 @@ describe('Account', () => {
     props.peers.status.online = true;
     props.peers.options.nethash = Lisk.constants.TESTNET_NETHASH;
     props.peers.options.code = networks.customNode.code;
-    props.peers.data.currentNode = 'http://localhost:4000';
+    props.peers.liskAPIClient.currentNode = 'http://localhost:4000';
     const wrapper = shallow(<Account {...props} />);
     wrapper.update();
     expect(wrapper).to.have.exactly(1).descendants('.online');

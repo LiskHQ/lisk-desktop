@@ -19,7 +19,7 @@ const Amount = (props) => {
     params.className = 'greyLabel';
   }
   const amount = props.value.type !== transactionTypes.send ? '-' : <LiskAmount val={props.value.amount} />;
-  return <span id='transactionAmount' className={styles[params.className]}>
+  return <span className={`${styles[params.className]} transactionAmount`}>
     { params.pre }{amount}
   </span>;
 };

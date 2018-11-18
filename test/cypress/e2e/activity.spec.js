@@ -22,7 +22,7 @@ const ss = {
 /**
  * To remove the effect of activating the All tab back after full load
  */
-const waitBeforeChangeTabAfterLoading = () => cy.wait(1500); // TODO Update when #1400 is done
+const waitBeforeChangeTabAfterLoading = () => cy.wait(2000); // TODO Update when #1400 is done
 
 describe('Dashboard Activity', () => {
   describe('Latest activity', () => {

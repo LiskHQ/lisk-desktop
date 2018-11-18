@@ -5,7 +5,7 @@ import styles from './safekeeping.css';
 import SliderCheckbox from '../../toolbox/sliderCheckbox';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
 
-class SafeKeeping extends React.Component {
+class Safekeeping extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -124,4 +124,4 @@ class SafeKeeping extends React.Component {
 }
 
 
-export default SafeKeeping;
+export default Safekeeping;

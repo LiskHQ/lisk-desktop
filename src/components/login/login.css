@@ -17,6 +17,11 @@
   height: var(--main-box-height);
 }
 
+.hardwareWalletLink {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .login {
   height: 100%;
   width: 42%;
@@ -75,6 +80,15 @@
 
     & h2 {
       font-size: var(--header-focused-font-size);
+    }
+  }
+
+  & .network {
+    & li:first-child {
+      cursor: default;
+      pointer-events: none;
+      font-size: 12px;
+      font-weight: bold;
     }
   }
 }

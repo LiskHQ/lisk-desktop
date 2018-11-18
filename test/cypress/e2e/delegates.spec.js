@@ -39,7 +39,7 @@ describe('Delegates', () => {
     cy.addLocalStorage('settings', 'advancedMode', true);
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
-    cy.get(ss.sidebarMenuDelegatesBtn).click();
+    cy.get(ss.sidebarMenuDelegatesBtn).should('have.css', 'opacity', '1').click();
     cy.url().should('contain', urls.delegates);
     cy.get(ss.confirmVotesSidebar).find(ss.nextButton);
   });

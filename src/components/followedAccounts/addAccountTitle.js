@@ -7,7 +7,7 @@ import { followedAccountAdded } from '../../actions/followedAccounts';
 import styles from './followedAccounts.css';
 import TitleInput from './accountTitleInput';
 
-class AddAccountID extends React.Component {
+class AddAccountTitle extends React.Component {
   constructor() {
     super();
     this.state = { title: { value: '' } };
@@ -63,4 +63,4 @@ const mapDispatchToProps = dispatch => ({
   addAccount: data => dispatch(followedAccountAdded(data)),
 });
 
-export default connect(null, mapDispatchToProps)(translate()(AddAccountID));
+export default connect(null, mapDispatchToProps)(translate()(AddAccountTitle));

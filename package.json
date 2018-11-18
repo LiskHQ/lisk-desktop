@@ -1,16 +1,17 @@
 {
   "name": "lisk-hub",
-  "version": "1.5.0-beta.1",
+  "version": "1.6.0",
   "description": "Lisk Hub",
   "homepage": "https://github.com/LiskHQ/lisk-hub",
   "bugs": "https://github.com/LiskHQ/lisk-hub/issues",
   "main": "main.js",
   "scripts": {
+    "postinstall": "node ./config/checkNodeVersion.js",
     "build": "npm run clean-build && npm run copy-files && npm run build-prod && npm run build-electron",
     "build:testnet": "npm run build:testnet:pre",
     "build:testnet:pre": "cpx \"./app/build/**\" ./app/build-testnet && npm run build:testnet:post",
     "build:testnet:post": "replace '\"mainnet\";//defaultNetwork' '\"testnet\";//defaultNetwork' ./app/build-testnet/index.html ",
-    "dev": "webpack-dev-server --config ./config/webpack.config.dev --env.dev --hot",
+    "dev": "webpack-dev-server --config ./config/webpack.config.dev --env.dev --hot --https",
     "build-prod": "webpack --config ./config/webpack.config.prod --env.prod",
     "build-electron": "webpack --config ./config/webpack.config.electron",
     "cypress:open": "cypress open --project test/cypress",
@@ -33,7 +34,9 @@
     "pack:win": "cmd /c npm install && npm run clean-build && npm run copy-files && npm run build-prod && npm run build-electron && npm run clean-dist && npm run dist:win",
     "storybook": "start-storybook -p 6006 -s ./src/",
     "build-storybook": "build-storybook",
-    "serve": "http-server"
+    "serve": "http-server",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
@@ -42,10 +45,14 @@
     "url": "https://github.com/LiskHQ/lisk-hub"
   },
   "dependencies": {
+    "@ledgerhq/hw-transport-node-hid": "4.24.0",
+    "@ledgerhq/hw-transport-u2f": "4.21.0",
     "bignumber.js": "4.0.4",
     "bitcore-mnemonic": "1.5.0",
+    "browser-or-node": "1.1.0",
     "chart.js": "2.7.2",
     "cheerio": "1.0.0-rc.2",
+    "dpos-ledger-api": "1.1.0",
     "electron-localshortcut": "=2.0.2",
     "flexboxgrid": "=6.3.1",
     "hard-source-webpack-plugin": "0.4.11",
@@ -53,6 +60,7 @@
     "i18next": "=10.0.3",
     "i18next-localstorage-cache": "=1.1.1",
     "i18next-xhr-backend": "=1.4.2",
+    "is-electron": "2.1.0",
     "js-sha256": "0.9.0",
     "lisk-elements": "1.0.0-rc.1",
     "lodash.throttle": "4.1.1",
@@ -74,7 +82,7 @@
     "react-copy-to-clipboard": "5.0.1",
     "react-countdown-now": "1.2.0",
     "react-css-themr": "=2.1.2",
-    "react-dom": "=16.2.0",
+    "react-dom": "=16.2.1",
     "react-i18next": "=6.0.6",
     "react-joyride": "1.11.4",
     "react-redux": "5.0.6",
@@ -85,6 +93,8 @@
     "react-waypoint": "7.1.0",
     "redux": "3.7.2",
     "redux-thunk": "=2.2.0",
+    "semver": "5.6.0",
+    "snyk": "^1.108.0",
     "socket.io-client": "=2.0.3",
     "webpack-merge": "=4.1.0"
   },
@@ -99,6 +109,7 @@
     "babel-plugin-istanbul": "4.1.5",
     "babel-plugin-syntax-trailing-function-commas": "=6.22.0",
     "babel-plugin-transform-decorators-legacy": "=1.3.4",
+    "babel-plugin-transform-runtime": "6.23.0",
     "babel-polyfill": "6.26.0",
     "babel-preset-env": "1.6.1",
     "babel-preset-react": "6.24.1",
@@ -111,7 +122,7 @@
     "cpx": "=1.5.0",
     "css-hot-loader": "=1.3.1",
     "css-loader": "0.28.7",
-    "cypress": "3.1.0",
+    "cypress": "3.1.1",
     "del-cli": "1.1.0",
     "electron": "1.8.8",
     "electron-builder": "19.32.2",
@@ -120,6 +131,7 @@
     "electron-updater": "2.16.1",
     "enzyme": "=3.1.0",
     "enzyme-adapter-react-16": "=1.0.2",
+    "es7-object-polyfill": "0.0.7",
     "eslint": "4.9.0",
     "eslint-config-airbnb": "15.1.0",
     "eslint-config-airbnb-base": "12.1.0",
@@ -216,7 +228,7 @@
   "bundlesize": [
     {
       "path": "./app/build/bundle.app.*.js",
-      "maxSize": "965 kB"
+      "maxSize": "1.50 MB"
     },
     {
       "path": "./app/build/bundle.vendor.*.js",
@@ -231,5 +243,9 @@
     "ignore": [
       "postcss-cssnext"
     ]
+  },
+  "snyk": true,
+  "engines": {
+    "node": ">=v6.10.0 <=v6.14.4"
   }
 }

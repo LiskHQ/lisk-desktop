@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import { Dialog as ReactToolboxDialog } from 'react-toolbox/lib/dialog';
-import Dialog from './dialog';
+import Dialog from './dialogElement';
 import EmptyState from '../emptyState';
 import routes from '../../constants/routes';
 
@@ -16,7 +16,7 @@ describe('Dialog', () => {
   beforeEach(() => {
     history = {
       location: {
-        pathname: `${routes.explorer.path}${routes.searchResult.path}saved-accounts`,
+        pathname: `${routes.explorer.path}${routes.search.path}saved-accounts`,
         search: '',
       },
       goBack: sinon.spy(),

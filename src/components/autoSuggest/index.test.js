@@ -5,7 +5,7 @@ import { spy, stub, useFakeTimers } from 'sinon';
 import { mountWithContext } from '../../../test/utils/mountHelpers';
 import AutoSuggest from './index';
 import styles from './autoSuggest.css';
-import * as searchActions from './../search/keyAction';
+import * as searchActions from './../searchResult/keyAction';
 import localJSONStorageUtil from './../../utils/localJSONStorage';
 import routes from '../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
@@ -156,7 +156,7 @@ describe('AutoSuggest', () => {
     });
     expect(saveSearchSpy).not.to.have.been.calledWith();
     expect(props.history.push).to.have.been
-      .calledWith(`${routes.searchResult.pathPrefix}${routes.searchResult.path}/notExistingDelegate`);
+      .calledWith(`${routes.search.pathPrefix}${routes.search.path}/notExistingDelegate`);
   });
 
   it('should redirect to entity result page when not yet suggestions and pattern matching', () => {

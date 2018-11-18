@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './signMessageInput.css';
 // eslint-disable-next-line import/no-named-as-default
-import Input from '../toolbox/inputs/input';
+import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import { PrimaryButton } from '../toolbox/buttons/button';
 import { parseSearchParams } from './../../utils/searchParams';
 import TransitionWrapper from '../toolbox/transitionWrapper';
@@ -56,7 +56,7 @@ class SignMessageInput extends React.Component {
         </header>
         <section className={`${styles.table} ${styles.verify} ${styles.content}`}>
           <TransitionWrapper current={this.state.step} step='introduction-step' animationName='fade'>
-            <Input
+            <ToolBoxInput
               multiline
               label={this.props.t('Write a message')}
               className={`${styles.message} message`}

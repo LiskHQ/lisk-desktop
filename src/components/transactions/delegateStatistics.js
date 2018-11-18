@@ -3,6 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
 import UserVotes from './userVotes';
 import VotedDelegates from './votedDelegates';
+import LiskAmount from '../liskAmount';
 import voting from '../../constants/voting';
 import styles from './delegateStatistics.css';
 
@@ -36,7 +37,7 @@ class DelegateStatistics extends React.Component {
         <div className={`transactions-detail-view ${grid.row} ${grid['between-md']} ${grid['between-sm']} ${styles.row} vote`}>
           <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']}`}>
             <div className={styles.label}>{this.props.t('Vote weight')}</div>
-            <div className={styles.value}>{delegate && delegate.vote}</div>
+            <div className={styles.value}>{delegate && <LiskAmount val={delegate.vote}/>}</div>
           </div>
           <div className={`${grid['col-xs-12']} ${grid['col-sm-8']} ${grid['col-md-8']} blocks`}>
             <div className={styles.label}>{this.props.t('Blocks')}</div>

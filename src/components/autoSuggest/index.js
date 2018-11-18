@@ -8,7 +8,7 @@ import routes from './../../constants/routes';
 import keyCodes from './../../constants/keyCodes';
 import localJSONStorage from './../../utils/localJSONStorage';
 import regex from './../../utils/regex';
-import { saveSearch } from './../search/keyAction';
+import { saveSearch } from './../searchResult/keyAction';
 import { searchEntities } from './../../constants/search';
 
 class AutoSuggest extends React.Component {
@@ -90,7 +90,7 @@ class AutoSuggest extends React.Component {
     }
 
     if (!searchType) {
-      this.props.history.push(`${routes.searchResult.pathPrefix}${routes.searchResult.path}/${encodeURIComponent(this.state.value)}`);
+      this.props.history.push(`${routes.search.pathPrefix}${routes.search.path}/${encodeURIComponent(this.state.value)}`);
       return;
     }
     this.onResultClick(this.state.value, searchType, this.state.value);

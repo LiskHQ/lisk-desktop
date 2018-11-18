@@ -13,7 +13,7 @@ import peersReducer from '../../src/store/reducers/peers';
 import votingReducer from '../../src/store/reducers/voting';
 import accountMiddleware from '../../src/store/middlewares/account';
 import votingMiddleware from '../../src/store/middlewares/voting';
-import { activePeerSet } from '../../src/actions/peers';
+import { liskAPIClientSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
 import getNetwork from './../../src/utils/getNetwork';
 import { accountLoggedIn } from '../../src/actions/account';
@@ -25,8 +25,8 @@ class Helper extends GenericStepDefinition {
   checkTxDetails() {
     expect(this.wrapper).to.have.descendants('.transaction-id');
     expect(this.wrapper.find('.transaction-id').first()).to.include.text('123456789');
-    expect(this.wrapper).to.have.descendants('#sender-address');
-    expect(this.wrapper.find('#sender-address').first()).to.include.text('123l');
+    expect(this.wrapper).to.have.descendants('.sender-address');
+    expect(this.wrapper.find('.sender-address').first()).to.include.text('123l');
   }
 }
 
@@ -99,7 +99,7 @@ describe('@integration: Single Transaction', () => {
     };
 
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
-    store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
+    store.dispatch(liskAPIClientSet({ network: getNetwork(networks.mainnet.code) }));
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(

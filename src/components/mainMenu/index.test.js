@@ -30,7 +30,7 @@ describe('MainMenuHOC', () => {
   const store = configureMockStore([])({
     peers,
     account,
-    activePeerSet: () => {},
+    liskAPIClientSet: () => {},
     settings: {
       autoLog: true,
       advancedMode: true,

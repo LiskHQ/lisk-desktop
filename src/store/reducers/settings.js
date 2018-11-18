@@ -15,6 +15,7 @@ const initialState = JSON.parse(localStorage.getItem('settings')) || {
   onBoarding: localStorage.getItem('onboarding') !== 'false',
   showNetwork: false,
   channels,
+  hardwareAccounts: {},
 };
 
 /**

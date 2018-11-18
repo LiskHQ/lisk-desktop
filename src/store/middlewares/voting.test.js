@@ -6,6 +6,7 @@ import * as delegateApi from '../../utils/api/delegate';
 import actionTypes from '../../constants/actions';
 import middleware from './voting';
 import votingConst from '../../constants/voting';
+import networks from '../../constants/networks';
 
 describe('voting middleware', () => {
   let store;
@@ -75,7 +76,10 @@ describe('voting middleware', () => {
         },
       },
       peers: {
-        data: {},
+        liskAPIClient: {},
+        options: {
+          code: networks.mainnet.code,
+        },
       },
     };
     let getDelegateMock;

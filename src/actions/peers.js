@@ -9,25 +9,27 @@ import { getAccount } from '../utils/api/account';
 import { extractAddress, extractPublicKey } from '../utils/account';
 import { accountLoggedIn, accountLoading, accountLoggedOut } from './account';
 import accountConfig from '../constants/account';
+import settings from '../constants/settings';
 
 const peerSet = (data, config) => ({
   data: Object.assign({
     passphrase: data.passphrase,
     publicKey: data.publicKey,
-    activePeer: new Lisk.APIClient(config.nodes, { nethash: config.nethash }),
+    liskAPIClient: new Lisk.APIClient(config.nodes, { nethash: config.nethash }),
     options: config,
+    loginType: data.loginType,
   }),
-  type: actionTypes.activePeerSet,
+  type: actionTypes.liskAPIClientSet,
 });
 
 const login = (dispatch, getState, data, config) => {
-  if (data.passphrase) {
+  if (data.passphrase || data.hwInfo) {
     const store = getState();
     const { lockDuration } = accountConfig;
     const { passphrase } = data;
     const { code } = data.network;
     const publicKey = passphrase ? extractPublicKey(passphrase) : data.publicKey;
-    const activePeer = store.peers.data ||
+    const liskAPIClient = store.peers.liskAPIClient ||
       new Lisk.APIClient(config.nodes, { nethash: config.nethash });
     const address = extractAddress(publicKey);
     const accountBasics = {
@@ -41,7 +43,7 @@ const login = (dispatch, getState, data, config) => {
     dispatch(accountLoading());
 
     // redirect to main/transactions
-    getAccount(activePeer, address).then((accountData) => {
+    getAccount(liskAPIClient, address).then((accountData) => {
       const duration = (passphrase && store.settings.autoLog) ?
         Date.now() + lockDuration : 0;
       const accountUpdated = {
@@ -49,6 +51,10 @@ const login = (dispatch, getState, data, config) => {
         ...accountBasics,
         expireTime: duration,
       };
+      /* Save selected network to localStorage */
+      const networkAddress = data.network.address ? data.network.address : data.network.nodes[0];
+      window.localStorage.setItem(settings.keys.liskCoreUrl, networkAddress);
+
       dispatch(accountLoggedIn(accountUpdated));
     }).catch((error) => {
       if (error && error.message) {
@@ -69,7 +75,7 @@ const login = (dispatch, getState, data, config) => {
  * @param {Object} data - Active peer data and the passphrase of account
  * @returns {Object} Action object
  */
-export const activePeerSet = data =>
+export const liskAPIClientSet = data =>
   (dispatch, getState) => {
     const config = data.network || {};
 
@@ -113,7 +119,7 @@ export const activePeerSet = data =>
  * @param {Object} data - Active peer data
  * @returns {Object} Action object
  */
-export const activePeerUpdate = data => ({
+export const liskAPIClientUpdate = data => ({
   data,
-  type: actionTypes.activePeerUpdate,
+  type: actionTypes.liskAPIClientUpdate,
 });

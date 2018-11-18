@@ -11,7 +11,7 @@ import SliderCheckbox from '../../toolbox/sliderCheckbox';
 import PassphraseInput from '../../passphraseInput';
 import routes from '../../../constants/routes';
 
-class confirmSecond extends React.Component {
+class ConfirmSecond extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -181,4 +181,4 @@ class confirmSecond extends React.Component {
     </section>);
   }
 }
-export default confirmSecond;
+export default ConfirmSecond;

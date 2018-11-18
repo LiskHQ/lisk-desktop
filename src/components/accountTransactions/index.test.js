@@ -14,7 +14,7 @@ import loadingReducer from '../../store/reducers/loading';
 import filtersReducer from '../../store/reducers/filters';
 import followedAccountsReducer from '../../store/reducers/followedAccounts';
 
-import { activePeerSet } from './../../../src/actions/peers';
+import { liskAPIClientSet } from './../../../src/actions/peers';
 import networks from './../../../src/constants/networks';
 import getNetwork from './../../../src/utils/getNetwork';
 
@@ -47,7 +47,7 @@ describe('AccountTransaction Component', () => {
       t: key => key,
     };
 
-    store.dispatch(activePeerSet({ network: getNetwork(networks.testnet.code) }));
+    store.dispatch(liskAPIClientSet({ network: getNetwork(networks.testnet.code) }));
 
     wrapper = mount(<Provider store={store}>
       <Router>

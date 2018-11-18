@@ -1,8 +1,10 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import i18next from 'i18next';
-import Dropdown from '../toolbox/dropdown/dropdown';
-import Input from '../toolbox/inputs/input';
+import Lisk from 'lisk-elements';
+
+import ToolBoxDropdown from '../toolbox/dropdown/toolBoxDropdown';
+import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import { PrimaryButton } from '../toolbox/buttons/button';
 import { extractAddress } from '../../utils/account';
 // eslint-disable-next-line import/no-named-as-default
@@ -11,11 +13,16 @@ import styles from './login.css';
 import networks from '../../constants/networks';
 import routes from '../../constants/routes';
 import getNetwork from '../../utils/getNetwork';
+import { getAccountFromLedgerIndex } from '../../utils/ledger';
+import to from '../../utils/to';
 import { parseSearchParams } from './../../utils/searchParams';
 import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
 import SignUp from './signUp';
-import { validateUrl, addHttp } from '../../utils/login';
+import { validateUrl, addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
+import { FontIcon } from '../fontIcon';
+
+import Ledger from '../ledger';
 
 /**
  * The container component containing login
@@ -25,10 +32,25 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
 
+    const { liskCoreUrl } = getAutoLogInData();
+
+    let loginNetwork = findMatchingLoginNetwork();
+
+    let address = '';
+
+    if (loginNetwork) {
+      loginNetwork = loginNetwork.slice(-1).shift();
+    } else if (!loginNetwork) {
+      loginNetwork = liskCoreUrl ? networks.customNode : networks.default;
+      address = liskCoreUrl;
+    }
+
     this.state = {
       passphrase: '',
-      address: '',
-      network: networks.default.code,
+      address,
+      network: loginNetwork.code,
+      isLedgerLogin: false,
+      isLedgerFirstLogin: false,
     };
 
     this.secondIteration = false;
@@ -43,6 +65,45 @@ class Login extends React.Component {
     i18next.on('languageChanged', () => {
       this.getNetworksList();
     });
+  }
+
+  async ledgerLogin() {
+    this.props.loadingStarted('ledgerLogin');
+
+    setTimeout(() => {
+      this.setState({ isLedgerFirstLogin: true });
+      this.props.loadingFinished('ledgerLogin');
+    }, 3000);
+    let error;
+    let ledgerAccount;
+    // eslint-disable-next-line prefer-const
+    [error, ledgerAccount] = await to(getAccountFromLedgerIndex()); // by default index 0
+
+    if (error) {
+      // const text = error && error.message ?
+      // `${error.message}.` : i18next.t('Error during login with Ledger.');
+      // this.props.errorToastDisplayed({ label: error.message });
+    } else {
+      const network = Object.assign({}, getNetwork(this.state.network));
+      if (this.state.network === networks.customNode.code) {
+        network.address = this.state.address;
+      }
+
+      if (ledgerAccount.publicKey) {
+        this.setState({ isLedgerLogin: true, isLedgerFirstLogin: true });
+      }
+
+      // set active peer
+      this.props.liskAPIClientSet({
+        publicKey: ledgerAccount.publicKey,
+        loginType: 1,
+        network,
+        // hwInfo: { // Use pubKey[0] first 10 char as device id
+        //   deviceId: ledgerAccount.publicKey.substring(0, 10),
+        //   derivationIndex: 0,
+        // },
+      });
+    }
   }
 
   getNetworksList() {
@@ -80,21 +141,21 @@ class Login extends React.Component {
       this.props.peers.options.address === network.address;
   }
 
-  getNetwork() {
-    const network = Object.assign({}, getNetwork(this.state.network));
-    if (this.state.network === networks.customNode.code) {
+  getNetwork(chosenNetwork) {
+    const network = Object.assign({}, getNetwork(chosenNetwork));
+    if (chosenNetwork === networks.customNode.code) {
       network.address = addHttp(this.state.address);
     }
     return network;
   }
 
   onLoginSubmission(passphrase) {
-    const network = this.getNetwork();
+    const network = this.getNetwork(this.state.network);
     this.secondIteration = true;
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
       this.redirectToReferrer();
     } else {
-      this.props.activePeerSet({
+      this.props.liskAPIClientSet({
         passphrase,
         network,
       });
@@ -147,8 +208,47 @@ class Login extends React.Component {
     return showNetworkParam === 'true' || (showNetwork && showNetworkParam !== 'false');
   }
 
+  validateCorrectNode() {
+    const { address } = this.state;
+    const nodeURL = address !== '' ? addHttp(address) : address;
+
+    if (this.state.network === networks.customNode.code) {
+      const liskAPIClient = new Lisk.APIClient([nodeURL], {});
+      liskAPIClient.node.getConstants()
+        .then((res) => {
+          if (res.data) {
+            this.props.liskAPIClientSet({
+              network: this.getNetwork(this.state.network),
+            });
+            this.props.history.push(routes.register.path);
+          } else {
+            throw new Error();
+          }
+        }).catch(() => {
+          this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
+        });
+    } else {
+      const network = this.getNetwork(this.state.network);
+      this.props.liskAPIClientSet({ network });
+      this.props.history.push(routes.register.path);
+    }
+  }
+
+  cancelLedgerLogin() {
+    this.setState({ isLedgerLogin: false, isLedgerFirstLogin: false });
+  }
+
   render() {
-    const networkList = [{ label: this.props.t('Choose Network'), disabled: true }, ...this.networks];
+    const network = this.getNetwork();
+    if (this.state.isLedgerFirstLogin) {
+      return <Ledger
+        network={network}
+        cancelLedgerLogin={this.cancelLedgerLogin.bind(this)}
+        ledgerLogin={this.ledgerLogin.bind(this)}
+        isLedgerLogin={this.state.isLedgerLogin} />;
+    }
+
+    const networkList = [{ label: this.props.t('Choose Network') }, ...this.networks];
     return (this.props.account.loading ?
       <div className={styles.loadingWrapper}></div> :
       <Box className={styles.wrapper}>
@@ -157,17 +257,17 @@ class Login extends React.Component {
             <header>
               {this.showNetworkOptions()
                 ? <div>
-                    <Dropdown
+                    <ToolBoxDropdown
                       auto={false}
                       source={networkList}
                       onChange={this.changeHandler.bind(this, 'network')}
                       label={this.props.t('Network to connect to')}
                       value={this.state.network}
-                      className='network'
+                      className={`network ${styles.network}`}
                     />
                     {
                       this.state.network === networks.customNode.code &&
-                      <Input type='text'
+                      <ToolBoxInput type='text'
                              label={this.props.t('Enter IP or domain address of the node')}
                              name='address'
                              className={`address ${styles.outTaken}`}
@@ -190,6 +290,11 @@ class Login extends React.Component {
                   error={this.state.passphraseValidity}
                   value={this.state.passphrase}
                   onChange={this.changeHandler.bind(this, 'passphrase')} />
+                {localStorage.getItem('ledger') ?
+                  <div className={`${styles.hardwareWalletLink} hardwareWalletLink`} onClick={() => { this.ledgerLogin(); }}>
+                    Ledger Nano S
+                    <FontIcon className={styles.singUpArrow} value='arrow-right' />
+                  </div> : null }
                 <footer className={ `${grid.row} ${grid['center-xs']}` }>
                   <div className={grid['col-xs-12']}>
                     <PrimaryButton label={this.props.t('Log in')}
@@ -200,10 +305,15 @@ class Login extends React.Component {
                   </div>
                 </footer>
               </form>
+              {/* <PrimaryButton label={this.props.t('Log in with Ledger')}
+                onClick={() => { this.ledgerLogin(); }}/> */}
             </div>
           </section>
         </section>
-        <SignUp t={this.props.t} passInputState={this.state.passInputState} />
+        <SignUp
+          t={this.props.t}
+          passInputState={this.state.passInputState}
+          validateCorrectNode={this.validateCorrectNode.bind(this)}/>
       </Box>
     );
   }

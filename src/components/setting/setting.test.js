@@ -32,7 +32,7 @@ describe('Setting', () => {
   };
   const store = configureMockStore([])({
     account,
-    activePeerSet: () => {},
+    liskAPIClientSet: () => {},
     settings,
   });
 

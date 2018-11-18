@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styles from './questionare.css';
-import Input from '../toolbox/inputs/input';
+import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import { Button, PrimaryButton } from '../toolbox/buttons/button';
 import RadioSelector from './radioSelector';
 import { getDeviceMetadata } from '../../utils/app';
@@ -62,20 +62,20 @@ class Questionare extends React.Component {
           {`${this.props.t('How do you like the hub?')}*`}
           <RadioSelector {...this.ratingProps} />
         </label>
-        <Input
+        <ToolBoxInput
           multiline
           label={'Is there something different from what you expected?'}
           className={styles.textInput}
           value={this.state.expected}
           onChange={val => this.setFeedbackValue(val, 'expected')} >
-        </Input>
-        <Input
+        </ToolBoxInput>
+        <ToolBoxInput
           multiline
           label={'Do you have other input for us?'}
           className={styles.textInput}
           value={this.state.otherInput}
           onChange={val => this.setFeedbackValue(val, 'otherInput')} >
-        </Input>
+        </ToolBoxInput>
         <label className={styles.label} htmlFor='metadata'>
           {`${this.props.t('Include your operating system and screen resolution in your report')}`}
           <RadioSelector {...this.metadataProps} />

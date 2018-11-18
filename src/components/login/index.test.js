@@ -36,7 +36,7 @@ describe('LoginHOC', () => {
   const store = configureMockStore([])({
     peers,
     account,
-    activePeerSet: () => {},
+    liskAPIClientSet: () => {},
     settings: {
       autoLog: true,
       advancedMode: true,
@@ -66,6 +66,7 @@ options,
     const props = wrapper.find('Login').props();
     expect(props.peers).to.be.equal(peers);
     expect(props.account).to.be.equal(account);
-    expect(typeof props.activePeerSet).to.be.equal('function');
+    expect(typeof props.liskAPIClientSet).to.be.equal('function');
+    expect(typeof props.setActiveDialog).to.be.equal('function');
   });
 });
