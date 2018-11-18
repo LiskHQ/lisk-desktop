@@ -19,7 +19,7 @@ describe('actions: followedAccount', () => {
     title: accounts.genesis.address,
   };
   const getState = () => ({
-    peers: { data: {} },
+    peers: { liskAPIClient: {} },
   });
 
   it('should create an action to retrieve the followed accounts list', () => {

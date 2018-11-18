@@ -5,7 +5,7 @@ import { registerDelegate, getDelegate, getAllVotes, getVoters } from '../utils/
 import { loadTransactionsFinish, transactionsUpdated } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { errorAlertDialogDisplayed } from './dialog';
-import { activePeerUpdate } from './peers';
+import { liskAPIClientUpdate } from './peers';
 import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
@@ -69,8 +69,8 @@ export const passphraseUsed = data => ({
  */
 export const accountVotesFetched = ({ address }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
-    return getAllVotes(activePeer, address).then(({ data }) => {
+    const liskAPIClient = getState().peers.liskAPIClient;
+    return getAllVotes(liskAPIClient, address).then(({ data }) => {
       dispatch({
         type: actionTypes.accountAddVotes,
         votes: data.votes,
@@ -83,8 +83,8 @@ export const accountVotesFetched = ({ address }) =>
  */
 export const accountVotersFetched = ({ publicKey }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
-    return getVoters(activePeer, { publicKey }).then(({ data }) => {
+    const liskAPIClient = getState().peers.liskAPIClient;
+    return getVoters(liskAPIClient, { publicKey }).then(({ data }) => {
       dispatch({
         type: actionTypes.accountAddVoters,
         voters: data,
@@ -96,9 +96,9 @@ export const accountVotersFetched = ({ publicKey }) =>
  */
 export const secondPassphraseRegistered = ({ secondPassphrase, account, passphrase }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const liskAPIClient = getState().peers.liskAPIClient;
     const timeOffset = getTimeOffset(getState());
-    setSecondPassphrase(activePeer, secondPassphrase, account.publicKey, passphrase, timeOffset)
+    setSecondPassphrase(liskAPIClient, secondPassphrase, account.publicKey, passphrase, timeOffset)
       .then((data) => {
         dispatch({
           data: {
@@ -120,8 +120,8 @@ export const secondPassphraseRegistered = ({ secondPassphrase, account, passphra
 
 export const updateDelegateAccount = ({ publicKey }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
-    return getDelegate(activePeer, { publicKey })
+    const liskAPIClient = getState().peers.liskAPIClient;
+    return getDelegate(liskAPIClient, { publicKey })
       .then((response) => {
         dispatch(accountUpdated(Object.assign(
           {},
@@ -138,8 +138,8 @@ export const delegateRegistered = ({
 }) =>
   (dispatch, getState) => {
     const timeOffset = getTimeOffset(getState());
-    const activePeer = getState().peers.data;
-    registerDelegate(activePeer, username, passphrase, secondPassphrase, timeOffset)
+    const liskAPIClient = getState().peers.liskAPIClient;
+    registerDelegate(liskAPIClient, username, passphrase, secondPassphrase, timeOffset)
       .then((data) => {
         // dispatch to add to pending transaction
         dispatch({
@@ -163,8 +163,8 @@ export const delegateRegistered = ({
 
 export const loadDelegate = ({ publicKey }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
-    getDelegate(activePeer, { publicKey }).then((response) => {
+    const liskAPIClient = getState().peers.liskAPIClient;
+    getDelegate(liskAPIClient, { publicKey }).then((response) => {
       dispatch({
         data: {
           delegate: response.delegate,
@@ -180,8 +180,8 @@ export const loadAccount = ({
   isSameAccount,
 }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
-    getAccount(activePeer, address)
+    const liskAPIClient = getState().peers.liskAPIClient;
+    getAccount(liskAPIClient, address)
       .then((response) => {
         let accountDataUpdated = {
           confirmed: transactionsResponse.data,
@@ -228,8 +228,8 @@ export const accountDataUpdated = ({
   account, windowIsFocused, transactions,
 }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
-    getAccount(activePeer, account.address).then((result) => {
+    const liskAPIClient = getState().peers.liskAPIClient;
+    getAccount(liskAPIClient, account.address).then((result) => {
       if (result.balance !== account.balance) {
         dispatch(updateTransactionsIfNeeded(
           {
@@ -240,8 +240,8 @@ export const accountDataUpdated = ({
         ));
       }
       dispatch(accountUpdated(result));
-      dispatch(activePeerUpdate({ online: true }));
+      dispatch(liskAPIClientUpdate({ online: true }));
     }).catch((res) => {
-      dispatch(activePeerUpdate({ online: false, code: res.error.code }));
+      dispatch(liskAPIClientUpdate({ online: false, code: res.error.code }));
     });
   };

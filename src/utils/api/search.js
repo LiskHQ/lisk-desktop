@@ -15,13 +15,13 @@ const filterAndOrderByMatch = (searchTerm, delegates) =>
   });
 
 /* eslint-disable prefer-promise-reject-errors */
-const searchAddresses = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>
-  getAccount(activePeer, searchTerm)
+const searchAddresses = ({ liskAPIClient, searchTerm }) => new Promise((resolve, reject) =>
+  getAccount(liskAPIClient, searchTerm)
     .then(response => resolve({ addresses: [response] }))
     .catch(() => reject({ addresses: [] })));
 
-const searchDelegates = ({ activePeer, searchTerm }) => new Promise(resolve =>
-  listDelegates(activePeer, {
+const searchDelegates = ({ liskAPIClient, searchTerm }) => new Promise(resolve =>
+  listDelegates(liskAPIClient, {
     search: searchTerm,
     sort: 'username:asc',
   }).then((response) => {
@@ -33,9 +33,9 @@ const searchDelegates = ({ activePeer, searchTerm }) => new Promise(resolve =>
   })
     .catch(() => resolve({ delegates: [] })));
 
-const searchTransactions = ({ activePeer, searchTerm }) => new Promise((resolve, reject) =>
+const searchTransactions = ({ liskAPIClient, searchTerm }) => new Promise((resolve, reject) =>
   getSingleTransaction({
-    activePeer,
+    liskAPIClient,
     id: searchTerm,
   }).then(response => resolve({ transactions: response.data }))
     .catch(() => reject({ transactions: [] })));
@@ -48,9 +48,9 @@ const getSearches = search => ([
   searchDelegates, // allways add delegates promise as they share format (address, tx)
 ]);
 
-const resolveAll = (activePeer, apiCalls, searchTerm) => {
+const resolveAll = (liskAPIClient, apiCalls, searchTerm) => {
   const promises = apiCalls.map(apiCall =>
-    apiCall({ activePeer, searchTerm })
+    apiCall({ liskAPIClient, searchTerm })
       .catch(err => err));
 
   return new Promise((resolve, reject) => {
@@ -61,9 +61,9 @@ const resolveAll = (activePeer, apiCalls, searchTerm) => {
 };
 /* eslint-enable prefer-promise-reject-errors */
 
-const searchAll = ({ activePeer, searchTerm }) => {
+const searchAll = ({ liskAPIClient, searchTerm }) => {
   const apiCalls = getSearches(searchTerm);
-  return resolveAll(activePeer, apiCalls, searchTerm);
+  return resolveAll(liskAPIClient, apiCalls, searchTerm);
 };
 
 export default searchAll;

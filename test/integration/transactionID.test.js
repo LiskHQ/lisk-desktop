@@ -13,7 +13,7 @@ import peersReducer from '../../src/store/reducers/peers';
 import votingReducer from '../../src/store/reducers/voting';
 import accountMiddleware from '../../src/store/middlewares/account';
 import votingMiddleware from '../../src/store/middlewares/voting';
-import { activePeerSet } from '../../src/actions/peers';
+import { liskAPIClientSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
 import getNetwork from './../../src/utils/getNetwork';
 import { accountLoggedIn } from '../../src/actions/account';
@@ -99,7 +99,7 @@ describe('@integration: Single Transaction', () => {
     };
 
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
-    store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
+    store.dispatch(liskAPIClientSet({ network: getNetwork(networks.mainnet.code) }));
     accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(

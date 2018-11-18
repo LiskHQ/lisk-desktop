@@ -18,7 +18,7 @@ import filtersReducer from '../../src/store/reducers/filters';
 import followedAccountsReducer from '../../src/store/reducers/followedAccounts';
 import accountMiddleware from '../../src/store/middlewares/account';
 import votingMiddleware from '../../src/store/middlewares/voting';
-import { activePeerSet } from '../../src/actions/peers';
+import { liskAPIClientSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
 import txTypes from './../../src/constants/transactionTypes';
 import getNetwork from './../../src/utils/getNetwork';
@@ -148,28 +148,28 @@ describe('@integration: Account Transactions', () => {
 
     // transactionsFilterSet do pass filter
     getTransactionsStub.withArgs({
-      activePeer: match.defined,
+      liskAPIClient: match.defined,
       address: match.defined,
       limit: 25,
       filter: txFilters.all,
     }).returnsPromise().resolves({ data: transactions, meta: { count: 40 } });
 
     getTransactionsStub.withArgs({
-      activePeer: match.defined,
+      liskAPIClient: match.defined,
       address: match.defined,
       limit: 25,
       filter: txFilters.outgoing,
     }).returnsPromise().resolves({ data: [...transactions].slice(0, 5), meta: { count: 5 } });
 
     getTransactionsStub.withArgs({
-      activePeer: match.defined,
+      liskAPIClient: match.defined,
       address: match.defined,
       limit: 25,
       filter: txFilters.incoming,
     }).returnsPromise().resolves({ data: [...transactions].slice(0, 15), meta: { count: 15 } });
 
     getTransactionsStub.withArgs({
-      activePeer: match.defined,
+      liskAPIClient: match.defined,
       address: match.defined,
       limit: 25,
       filter: txFilters.all,
@@ -234,7 +234,7 @@ describe('@integration: Account Transactions', () => {
     accountAPIStub.withArgs(match.any)
       .returnsPromise().resolves({ ...account });
 
-    store.dispatch(activePeerSet({ network: getNetwork(networks.mainnet.code) }));
+    store.dispatch(liskAPIClientSet({ network: getNetwork(networks.mainnet.code) }));
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(
       AccountTransactions, store,

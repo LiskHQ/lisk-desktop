@@ -95,6 +95,7 @@
   text-align: left;
   width: auto;
   height: 56px;
+  margin-bottom: 20px;
 }
 
 @media (--medium-viewport) {

@@ -19,7 +19,7 @@ describe('SignMessage', () => {
   });
   const history = {
     location: {
-      pathname: '/regiser-delegate',
+      pathname: '/register-delegate',
     },
     listen: () => {},
     goBack: spy(),

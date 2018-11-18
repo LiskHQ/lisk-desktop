@@ -38,7 +38,7 @@ describe('App', () => {
     const store = fakeStore({
       account: {},
       dialog: {},
-      peers: { data: { options: {} }, options: {} },
+      peers: { liskAPIClient: { options: {} }, options: {} },
       settings: {
         autoLog: true,
         advancedMode: true,
@@ -84,7 +84,7 @@ describe('App', () => {
         status: {
           online: true,
         },
-        data: {
+        liskAPIClient: {
           options: {
             name: 'Test',
           },

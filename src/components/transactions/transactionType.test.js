@@ -10,7 +10,7 @@ import i18n from '../../i18n';
 
 const store = configureMockStore([])({
   peers: {
-    data: {},
+    liskAPIClient: {},
   },
   account: {},
 });

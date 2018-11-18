@@ -14,9 +14,9 @@ describe('Header', () => {
   let wrapper;
   const mountWithRouter = (node, options) => mount(<Router>{node}</Router>, options);
   const storeObject = {
-    peers: { data: {}, options: {} },
+    peers: { liskAPIClient: {}, options: {} },
     account: {},
-    activePeerSet: () => {},
+    liskAPIClientSet: () => {},
     search: {
       suggestions: {
         delegates: [],
@@ -80,7 +80,7 @@ describe('Header', () => {
 
   it('should display logout dialog window', () => {
     wrapper = mountWithRouter(<Header {...mockInputProps} />, options);
-    wrapper.find('.logout').simulate('click');
+    wrapper.find('.logout').first().simulate('click');
     expect(wrapper.find('Countdown')).to.have.length(1);
   });
 

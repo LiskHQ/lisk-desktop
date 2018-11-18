@@ -62,7 +62,10 @@ pipeline {
 			agent { node { label 'master-01' } }
 			steps {
 					unstash 'build'
-					sh 'rsync -axl --delete $WORKSPACE/app/build/ /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/'
+					sh '''
+					rsync -axl --delete $WORKSPACE/app/build/ /var/www/test/${JOB_NAME%/*}/$BRANCH_NAME/
+					rm -rf $WORKSPACE/app/build
+					'''
 					githubNotify context: 'Jenkins test deployment',
 					             description: 'Commit was deployed to test',
 						     status: 'SUCCESS',
@@ -74,7 +77,6 @@ pipeline {
 			steps {
 				parallel (
 					"mocha": {
-						sh 'ON_JENKINS=true npm run --silent test'
 						sh 'ON_JENKINS=true npm run --silent test'
 						withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
 							sh 'cat coverage/HeadlessChrome*/lcov.info |coveralls -v'
