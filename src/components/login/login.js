@@ -1,3 +1,4 @@
+// eslint-disable-line
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import i18next from 'i18next';
@@ -29,7 +30,7 @@ import Ledger from '../ledger';
  * and create account functionality
  */
 class Login extends React.Component {
-  constructor(props) {
+  constructor(props) { // eslint-disable-line max-statements
     super(props);
 
     const { liskCoreUrl } = getAutoLogInData();
@@ -67,7 +68,7 @@ class Login extends React.Component {
     });
   }
 
-  async ledgerLogin() {
+  async ledgerLogin() { // eslint-disable-line max-statements
     this.props.loadingStarted('ledgerLogin');
 
     setTimeout(() => {

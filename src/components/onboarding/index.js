@@ -63,7 +63,7 @@ class Onboarding extends React.Component {
     this.props.settingsUpdated({ onBoarding: false });
   }
 
-  onboardingCallback(data) {
+  onboardingCallback(data) { // eslint-disable-line max-statements
     // index 0 is the step you will see when you skip the onboarding
     const onboardingNotStarted = data.index === 0 && !this.onboardingStarted;
     const onboardingStarted = data.index === 1;

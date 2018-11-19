@@ -1,4 +1,4 @@
-// eslint-disable
+/* eslint-disable */
 import React from 'react';
 
 const gradSpecs = [

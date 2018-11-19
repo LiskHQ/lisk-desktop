@@ -98,7 +98,7 @@ class Bookmark extends React.Component {
     this.setState({ showFollowedList: false });
   }
 
-  render() {
+  render() { // eslint-disable-line complexity
     const {
       followedAccounts, handleChange, className, label, address,
     } = this.props;

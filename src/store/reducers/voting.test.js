@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import actionTypes from '../../constants/actions';
 import voting from './voting';
 
-describe('Reducer: voting(state, action)', () => {
+describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-statements
   const initialState = { votes: {}, delegates: [], refresh: true };
   const delegate1 = {
     publicKey: 'sample_key_1', address: '100001L', rank: 1, productivity: 99,

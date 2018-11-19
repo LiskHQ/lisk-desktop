@@ -1,7 +1,7 @@
 import i18n from './../i18n';
 import updateModal from './updateModal';
 
-export default ({
+export default ({ // eslint-disable-line max-statements
   autoUpdater, dialog, win, process, electron,
 }) => {
   const updater = {

@@ -44,7 +44,7 @@ class LedgerLogin extends React.Component {
     }, 2000);
   }
   /* eslint-disable no-await-in-loop */
-  async displayAccounts(unInitializedAdded = false) {
+  async displayAccounts(unInitializedAdded = false) { // eslint-disable-line
     let index = unInitializedAdded ? this.state.hwAccounts.length : 0;
     let accountInfo;
     if (!unInitializedAdded) {

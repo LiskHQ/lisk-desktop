@@ -36,7 +36,7 @@ class Choose extends React.Component {
     this.setState({ step: 'choose' });
   }
 
-  validateDelegateName(name, value) {
+  validateDelegateName(name, value) { // eslint-disable-line max-statements
     let error;
 
     const charsNotAllowedInName = value.replace(this.delegateNameRegEx, '');
@@ -67,7 +67,7 @@ class Choose extends React.Component {
     }, 250);
   }
 
-  render() {
+  render() { // eslint-disable-line
     const { t, account } = this.props;
     const hasEnoughLSK = this.hasEnoughLSK();
     const isDelegate = account.isDelegate;
