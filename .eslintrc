@@ -7,7 +7,7 @@
   "plugins": [
     "import",
     "babel",
-    "mocha"
+    "jest"
   ],
   "globals": {
     "describe": true,
@@ -23,7 +23,7 @@
     "node": true
   },
   "rules": {
-    "mocha/no-exclusive-tests": "error",
+    "jest/no-focused-tests": "error",
     "prefer-destructuring": "off",
     "func-names": "off",
     "global-require": "off",
@@ -65,10 +65,5 @@
         "max-lines": ["error", 500]
       }
     }
-  ],
-  "settings": {
-    "mocha/additionalTestFunctions": [
-      "describeModule"
-    ]
-  }
+  ]
 }
