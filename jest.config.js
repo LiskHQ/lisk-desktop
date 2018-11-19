@@ -112,4 +112,13 @@ module.exports = {
     PRODUCTION: true,
     TEST: true,
   },
+  coverageReporters: [
+    'text',
+    'html',
+    'cobertura',
+  ],
+  reporters: [
+    'default',
+    ['jest-junit', { suiteName: 'jest tests', outputDirectory: '<rootDir>/coverage/jest' }],
+  ],
 };
