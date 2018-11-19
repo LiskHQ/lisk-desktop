@@ -2,7 +2,7 @@ import React from 'react';
 import { translate } from 'react-i18next';
 import styles from './transactions.css';
 
-const TransactionType = (props) => {
+const TransactionType = (props) => { // eslint-disable-line complexity
   const { t } = props;
   let type;
   switch (props.type) {

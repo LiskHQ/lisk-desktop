@@ -1,3 +1,4 @@
+// eslint-disable-line max-lines
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import styles from './autoSuggest.css';

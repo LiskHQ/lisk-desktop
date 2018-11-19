@@ -32,7 +32,7 @@ class VotesPreview extends React.Component {
     this.props.nextStepGotCalled();
   }
 
-  render() {
+  render() { // eslint-disable-line
     const { votes, t, updateList } = this.props;
     const { maxCountOfVotes, maxCountOfVotesInOneTurn } = votingConst;
     const voteList = getVoteList(votes);

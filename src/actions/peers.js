@@ -22,7 +22,7 @@ const peerSet = (data, config) => ({
   type: actionTypes.liskAPIClientSet,
 });
 
-const login = (dispatch, getState, data, config) => {
+const login = (dispatch, getState, data, config) => { // eslint-disable-line max-statements
   if (data.passphrase || data.hwInfo) {
     const store = getState();
     const { lockDuration } = accountConfig;
@@ -76,7 +76,7 @@ const login = (dispatch, getState, data, config) => {
  * @returns {Object} Action object
  */
 export const liskAPIClientSet = data =>
-  (dispatch, getState) => {
+  (dispatch, getState) => { // eslint-disable-line max-statements
     const config = data.network || {};
 
     if (config.address) {

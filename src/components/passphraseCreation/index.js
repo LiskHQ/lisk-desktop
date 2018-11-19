@@ -31,7 +31,7 @@ class PassphraseCreation extends React.Component {
     window.removeEventListener(eventName, this.eventNormalizer, true);
   }
 
-  _eventNormalizer(e) {
+  _eventNormalizer(e) { // eslint-disable-line max-statements
     let x = 0;
     let y = 0;
     if (this.isTouchDevice) {

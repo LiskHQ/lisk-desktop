@@ -20,7 +20,7 @@ class AccountVisualDemo extends React.Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  loadMore(acc) {
+  loadMore(acc) { // eslint-disable-line max-statements
     const offset = acc.length;
     const bytes = [];
     for (let j = 1 + offset; j <= 152 + offset; j += 1) {

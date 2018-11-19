@@ -14,14 +14,14 @@ const mergeVotes = (newList, oldDict) => {
     return tempDict;
   }, {});
 
-  Object.keys(oldDict).forEach((username) => {
+  Object.keys(oldDict).forEach((username) => { // eslint-disable-line complexity
     // By pendingVotesAdded, we set confirmed equal to unconfirmed,
     // to recognize pending-not-voted items from pending-voted
     // so here we just check unconfirmed flag.
     const { confirmed, unconfirmed, pending } = oldDict[username];
     if (// we've voted but it's not in the new list
       (pending && unconfirmed && newDict[username] === undefined) ||
-    // we've un-voted but it still exists in the new list
+      // we've un-voted but it still exists in the new list
       (pending && !unconfirmed && newDict[username] !== undefined) ||
       // dirty, not voted for and not updated in other client
       (!pending && unconfirmed !== confirmed &&
@@ -40,7 +40,7 @@ const mergeVotes = (newList, oldDict) => {
  * @param {Object} state
  * @param {Object} action
  */
-const voting = (state = {
+const voting = (state = { // eslint-disable-line
   votes: {},
   delegates: [],
   totalDelegates: 0,

@@ -59,7 +59,7 @@ class Form extends React.Component {
     });
   }
 
-  validateInput(name, value, required) {
+  validateInput(name, value, required) { // eslint-disable-line
     const byteCount = encodeURI(value).split(/%..|./).length - 1;
     if (!value && required) {
       return this.props.t('Required');
