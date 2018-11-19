@@ -55,9 +55,6 @@ One unit ([component](/LiskHQ/lisk-hub/blob/development/src/components),
 ### How are they organized?
 Each unit test live in the same folder as the unit that it tests. E.g. tests for [/src/components/login/login.js](/LiskHQ/lisk-hub/blob/development/src/components/login/login.js) are in [/src/components/login/login.test.js](/LiskHQ/lisk-hub/blob/development/src/components/login/login.test.js).
 
-#### Mocha
-Configuration is in [karma.conf.js](/LiskHQ/lisk-hub/blob/development/karma.conf.js) and [config/webpack.config.test.js](/LiskHQ/lisk-hub/blob/development/config/webpack.config.test.js).
-
 #### Jest
 Configuration is in [jest.config.js](/LiskHQ/lisk-hub/blob/development/jest.config.js) and [config/setupJest.js](/LiskHQ/lisk-hub/blob/development/config/setupJest.js).
 
@@ -67,7 +64,7 @@ Configuration is in [jest.config.js](/LiskHQ/lisk-hub/blob/development/jest.conf
 
 Run Jest suites with:
 ```
-npm run test-jest
+npm run test
 ```
 Enable suites by uncommenting lines in [jest.config.js](/LiskHQ/lisk-hub/blob/development/jest.config.js)
 
