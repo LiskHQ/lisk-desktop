@@ -63,6 +63,23 @@ class Bookmark extends React.Component {
     }
   }
 
+  onKeyCodeEnter() {
+    const { selectedIdx } = this.state;
+    const { handleChange, focusReference } = this.props;
+    const filteredFollowedAccounts = this.getFilteredFollowedAccounts();
+
+    if (filteredFollowedAccounts[selectedIdx]) {
+      const { title, address } = filteredFollowedAccounts[selectedIdx];
+
+      handleChange(address);
+      if (keyCodes.enter) {
+        focusReference();
+      }
+
+      this.setState({ selectedIdx: 0, placeholder: '', title });
+    }
+  }
+
   handleKey(event) {
     switch (event.keyCode) {
       case keyCodes.arrowDown:
@@ -73,19 +90,9 @@ class Bookmark extends React.Component {
         this.handleArrowUp();
         event.preventDefault();
         break;
-      case keyCodes.enter: // eslint-disable-next-line no-case-declarations
-        const filteredFollowedAccounts = this.getFilteredFollowedAccounts();
-
-        if (filteredFollowedAccounts[this.state.selectedIdx]) {
-          const { title, address } = filteredFollowedAccounts[this.state.selectedIdx];
-
-          this.props.handleChange(address);
-          if (keyCodes.enter) {
-            this.props.focusReference();
-          }
-          this.setState({ selectedIdx: 0, placeholder: '', title });
-        }
-
+      case keyCodes.enter:
+        this.onKeyCodeEnter();
+        event.preventDefault();
         break;
       /* istanbul ignore next */
       default:
