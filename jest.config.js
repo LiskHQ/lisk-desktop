@@ -62,7 +62,7 @@ module.exports = {
     '<rootDir>/src/components/parallax/index.test.js',
     '<rootDir>/src/components/passphrase/confirm/form.test.js',
     '<rootDir>/src/components/passphrase/confirm/index.test.js',
-    '<rootDir>/src/components/passphrase/ConfirmSecond/confirmSecond.test.js',
+    // '<rootDir>/src/components/passphrase/ConfirmSecond/confirmSecond.test.js',
     '<rootDir>/src/components/passphrase/ConfirmSecond/index.test.js',
     '<rootDir>/src/components/passphrase/create/createFirst.test.js',
     '<rootDir>/src/components/passphrase/create/movableShape.test.js',
