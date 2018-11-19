@@ -144,19 +144,11 @@ class LedgerLogin extends React.Component {
 
   render() {
     const loadingAnimation = (<div className={styles.cubeRow}>
-        <div className={`${styles.cube} ${styles['cube-1']}`}>
+      {[1, 2, 3, 4].map(number =>
+        <div key={`cube-${number}`} className={`${styles.cube} ${styles[`cube-${number}`]}`}>
           <img src={cubeImage} />
-        </div>
-        <div className={`${styles.cube} ${styles['cube-2']}`}>
-          <img src={cubeImage} />
-        </div>
-        <div className={`${styles.cube} ${styles['cube-3']}`}>
-          <img src={cubeImage} />
-        </div>
-        <div className={`${styles.cube} ${styles['cube-4']}`}>
-          <img src={cubeImage} />
-        </div>
-      </div>);
+        </div>)}
+    </div>);
 
     return <div>
       {this.state.isLoading ? <h1 className={styles.title}>{this.state.isLoading && this.props.t('Loading accounts')}</h1> : null}

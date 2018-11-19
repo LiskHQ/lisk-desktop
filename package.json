@@ -47,6 +47,7 @@
   "dependencies": {
     "@ledgerhq/hw-transport-node-hid": "4.24.0",
     "@ledgerhq/hw-transport-u2f": "4.21.0",
+    "await-to-js": "2.0.1",
     "bignumber.js": "4.0.4",
     "bitcore-mnemonic": "1.5.0",
     "browser-or-node": "1.1.0",

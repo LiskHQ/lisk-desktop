@@ -3,6 +3,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import i18next from 'i18next';
 import Lisk from 'lisk-elements';
+import to from 'await-to-js';
 
 import ToolBoxDropdown from '../toolbox/dropdown/toolBoxDropdown';
 import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
@@ -15,7 +16,6 @@ import networks from '../../constants/networks';
 import routes from '../../constants/routes';
 import getNetwork from '../../utils/getNetwork';
 import { getAccountFromLedgerIndex } from '../../utils/ledger';
-import to from '../../utils/to';
 import { parseSearchParams } from './../../utils/searchParams';
 import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
