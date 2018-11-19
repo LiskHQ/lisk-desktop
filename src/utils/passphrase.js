@@ -76,12 +76,12 @@ export const generateSeed = ({
   };
 };
 
-  /**
-   * Generates a passphrase from a given seed array using mnemonic
-   *
-   * @param {string[]} seed - An array of 16 hex numbers in string format
-   * @returns {string} The generated passphrase
-   */
+/**
+ * Generates a passphrase from a given seed array using mnemonic
+ *
+ * @param {string[]} seed - An array of 16 hex numbers in string format
+ * @returns {string} The generated passphrase
+ */
 // eslint-disable-next-line no-buffer-constructor
 export const generatePassphrase = ({ seed }) => (new mnemonic(new Buffer(seed.join(''), 'hex'))).toString();
 

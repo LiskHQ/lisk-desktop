@@ -5,7 +5,6 @@ import { registerDelegate, getDelegate, getAllVotes, getVoters } from '../utils/
 import { loadTransactionsFinish, transactionsUpdated } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { secondPassphraseRegisteredFailure } from './secondPassphrase';
-import { errorAlertDialogDisplayed } from './dialog';
 import { liskAPIClientUpdate } from './peers';
 import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';

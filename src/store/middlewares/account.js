@@ -2,7 +2,7 @@ import { accountUpdated,
   accountDataUpdated,
   updateTransactionsIfNeeded,
   updateDelegateAccount,
-} from '../../actions/account';
+} from '../../actions/account'; // eslint-disable-line
 import { votesFetched } from '../../actions/voting';
 import { transactionsFilterSet, cleanTransactions } from '../../actions/transactions';
 import actionTypes from '../../constants/actions';

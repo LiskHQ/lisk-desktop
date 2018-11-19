@@ -50,7 +50,7 @@ class TransactionsOverview extends React.Component {
     this.props.onFilterSet(filter);
   }
 
-  render() {
+  render() { // eslint-disable-line complexity
     const filters = [
       {
         name: this.props.t('All'),

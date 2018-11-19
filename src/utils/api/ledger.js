@@ -78,7 +78,7 @@ export const voteWithLedger = (liskAPIClient, account, votedList, unvotedList, p
  * @returns Promise - Action SetSecondPassphrase with Ledger
  */
 export const setSecondPassphraseWithLedger = (liskAPIClient, account, pin) =>
-  new Promise(async (resolve, reject) => {
+  new Promise(async (resolve, reject) => { // eslint-disable-line max-statements
     let error;
     let signedTx;
     let secondAccount;
