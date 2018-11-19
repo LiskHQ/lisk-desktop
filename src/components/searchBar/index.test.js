@@ -36,6 +36,10 @@ describe('SearchBar', () => {
       t: () => {},
       searchSuggestions: () => {},
       searchClearSuggestions: () => {},
+      location: {
+        pathname: 'explorer',
+        search: '',
+      },
     };
     options = {
       context: {
