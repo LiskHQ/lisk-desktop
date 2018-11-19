@@ -18,6 +18,7 @@
     "cypress:run": "cypress run --project test/cypress",
     "test": "karma start",
     "test-jest": "jest --config ./jest.config.js",
+    "test-jest-live": "jest --config --watch ./jest.config.js",
     "bundlesize": "bundlesize",
     "analyze-bundles": "webpack  --config ./config/webpack.config.analyze",
     "test-live": "npm test -- --auto-watch --no-single-run",
