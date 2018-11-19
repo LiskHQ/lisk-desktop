@@ -7,9 +7,13 @@ describe('Reducer: secondPassphrase(state, action)', () => {
     const state = { };
     const action = {
       type: actionTypes.secondPassphraseRegisteredFailure,
+      text: 'error',
     };
     const changedState = secondPassphrase(state, action);
-    expect(changedState).to.deep.equal({ secondPassphraseStep: 'second-passphrase-register-failure' });
+    expect(changedState).to.deep.equal({
+      step: 'second-passphrase-register-failure',
+      error: 'error',
+    });
   });
 
   it(`should return secondPassphraseStep(false) if action.type is ${actionTypes.secondPassphraseRegisteredFailureReset}`, () => {
@@ -18,7 +22,10 @@ describe('Reducer: secondPassphrase(state, action)', () => {
       type: actionTypes.secondPassphraseRegisteredFailureReset,
     };
     const changedState = secondPassphrase(state, action);
-    expect(changedState).to.deep.equal({ secondPassphraseStep: false });
+    expect(changedState).to.deep.equal({
+      error: false,
+      step: false,
+    });
   });
 });
 

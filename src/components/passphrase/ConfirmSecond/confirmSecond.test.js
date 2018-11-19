@@ -119,7 +119,7 @@ describe('SecondPassphrase: Confirmation', () => {
     wrapper.update();
     expect(props.finalCallback).to.have.been.calledWith();
     wrapper.setProps({
-      secondPassphraseStep: 'second-passphrase-register-failure',
+      step: 'second-passphrase-register-failure',
       secondPassphraseRegisteredFailureReset: spy(),
     });
     clock.tick(501);
@@ -136,7 +136,7 @@ describe('SecondPassphrase: Confirmation', () => {
     wrapper.update();
     expect(props.finalCallback).to.have.been.calledWith();
     wrapper.setProps({
-      secondPassphraseStep: 'second-passphrase-register-failure',
+      step: 'second-passphrase-register-failure',
       secondPassphraseRegisteredFailureReset: spy(),
       history: {
         goBack: spy(),
