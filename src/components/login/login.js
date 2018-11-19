@@ -23,6 +23,7 @@ import SignUp from './signUp';
 import { validateUrl, addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import { FontIcon } from '../fontIcon';
 
+import { loginType } from '../../constants/hwConstants';
 import HwWallet from '../hwWallet';
 
 /**
@@ -97,7 +98,7 @@ class Login extends React.Component {
       // set active peer
       this.props.liskAPIClientSet({
         publicKey: ledgerAccount.publicKey,
-        loginType: 1,
+        loginType: loginType.ledger,
         network,
         // hwInfo: { // Use pubKey[0] first 10 char as device id
         //   deviceId: ledgerAccount.publicKey.substring(0, 10),

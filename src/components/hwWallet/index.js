@@ -3,6 +3,8 @@ import Box from '../box';
 import UnlockWallet from './unlockWallet';
 import LedgerLogin from './ledgerLogin';
 
+import { loginType } from '../../constants/hwConstants';
+
 import styles from './unlockWallet.css';
 
 class HwWallet extends React.Component {
@@ -15,7 +17,7 @@ class HwWallet extends React.Component {
       return (
           <Box>
             <LedgerLogin
-              loginType={0}
+              loginType={loginType.normal}
               network={this.props.network}
               cancelLedgerLogin={this.props.cancelLedgerLogin} />
           </Box>);
