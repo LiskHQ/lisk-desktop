@@ -5,7 +5,7 @@ import LedgerLogin from './ledgerLogin';
 
 import styles from './unlockWallet.css';
 
-class Ledger extends React.Component {
+class HwWallet extends React.Component {
   handleOnClick() {
     this.props.ledgerLogin();
   }
@@ -30,4 +30,4 @@ class Ledger extends React.Component {
   }
 }
 
-export default Ledger;
+export default HwWallet;

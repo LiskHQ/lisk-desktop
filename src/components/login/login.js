@@ -23,7 +23,7 @@ import SignUp from './signUp';
 import { validateUrl, addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import { FontIcon } from '../fontIcon';
 
-import Ledger from '../ledger';
+import HwWallet from '../hwWallet';
 
 /**
  * The container component containing login
@@ -242,7 +242,7 @@ class Login extends React.Component {
   render() {
     const network = this.getNetwork();
     if (this.state.isLedgerFirstLogin) {
-      return <Ledger
+      return <HwWallet
         network={network}
         cancelLedgerLogin={this.cancelLedgerLogin.bind(this)}
         ledgerLogin={this.ledgerLogin.bind(this)}
