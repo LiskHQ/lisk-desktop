@@ -71,6 +71,22 @@ describe('NewsFeed', () => {
     expect(wrapper.find(SettingsNewsFeed).exists()).to.equal(true);
   });
 
+  it('should render No feeds chosen', () => {
+    const newProps = {
+      channels: { test: true },
+      t,
+      getNewsFeed: () => {},
+      newsFeed: [],
+      showNewsFeedEmptyState: true,
+    };
+
+    const wrapper = mount(<MemoryRouter>
+      <NewsFeed {...newProps} />
+    </MemoryRouter>, options);
+    wrapper.find('.settingsButton').simulate('click');
+    expect(wrapper.find(SettingsNewsFeed).exists()).to.equal(true);
+  });
+
   it('should render not SettingsNewsFeed', () => {
     const wrapper = mount(<MemoryRouter>
       <NewsFeed {...props} />
