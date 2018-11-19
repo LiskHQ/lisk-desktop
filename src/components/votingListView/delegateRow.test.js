@@ -41,7 +41,7 @@ describe('DelegateRow', () => {
       <DelegateRow {...props} voteStatus={votedStatus}></DelegateRow>,
       options,
     );
-    const expectedClass = '_votedRow';
+    const expectedClass = 'votedRow';
     const className = wrapper.find('ul').prop('className');
     expect(className).to.contain(expectedClass);
   });
@@ -52,7 +52,7 @@ describe('DelegateRow', () => {
       <DelegateRow {...props} voteStatus={unvoteStatus}></DelegateRow>,
       options,
     );
-    const expectedClass = '_downVoteRow';
+    const expectedClass = 'downVoteRow';
     const className = wrapper.find('ul').prop('className');
     expect(className).to.contain(expectedClass);
   });
