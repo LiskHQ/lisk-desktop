@@ -124,8 +124,7 @@ describe('SecondPassphrase: Confirmation', () => {
     });
     clock.tick(501);
     wrapper.update();
-    const className = wrapper.find('.failContainer').props().className;
-    expect(className).to.include('slideIn');
+    expect(wrapper.find('.failContainer .resultHeader')).to.have.text('Transaction failed');
   });
 
   it('should be able to re-try on secondPassphraseStep fail', () => {
@@ -134,21 +133,25 @@ describe('SecondPassphrase: Confirmation', () => {
       .simulate('change', { target: { checked: true } });
     clock.tick(501);
     wrapper.update();
-    expect(props.finalCallback).to.have.been.calledWith();
+
+    const secondPassphraseRegisteredFailureReset = spy();
+    const history = {
+      goBack: spy(),
+    };
     wrapper.setProps({
       step: 'second-passphrase-register-failure',
-      secondPassphraseRegisteredFailureReset: spy(),
-      history: {
-        goBack: spy(),
-      },
+      secondPassphraseRegisteredFailureReset,
+      history,
     });
     clock.tick(501);
     wrapper.update();
-    const className = wrapper.find('.failContainer').props().className;
-    expect(className).to.include('slideIn');
+
     expect(wrapper.find('button.try-again')).to.not.be.disabled();
     wrapper.find('button.try-again').simulate('click');
+
     clock.tick(501);
     wrapper.update();
+    expect(history.goBack).to.have.been.calledWith();
+    expect(secondPassphraseRegisteredFailureReset).to.have.been.calledWith();
   });
 });
