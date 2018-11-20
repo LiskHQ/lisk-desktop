@@ -104,7 +104,7 @@ export const getAccountFromLedgerIndex = (index = 0) => {
 };
 
 /* eslint-disable no-await-in-loop */
-export const displayAccounts = async (liskAPIClient, loginType, hwAccounts, t, unInitializedAdded = false) => { // eslint-disable-line
+export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t, unInitializedAdded = false, }) => { // eslint-disable-line
   let index = unInitializedAdded ? hwAccounts.length : 0;
   let accountInfo;
 

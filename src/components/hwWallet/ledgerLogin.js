@@ -59,13 +59,13 @@ class LedgerLogin extends React.Component {
 
   async addAccount() {
     if (this.state.hwAccounts[this.state.hwAccounts.length - 1].isInitialized) {
-      const output = await displayAccounts(
-        this.props.liskAPIClient,
-        this.props.loginType,
-        this.state.hwAccounts,
-        this.props.t,
-        true,
-      );
+      const output = await displayAccounts({
+        liskAPIClient: this.props.liskAPIClient,
+        loginType: this.props.loginType,
+        hwAccounts: this.state.hwAccounts,
+        t: this.props.t,
+        unInitializedAdded: true,
+      });
       const hwAccounts = this.state.hwAccounts.concat([output.hwAccounts[0]]);
       this.setState({ hwAccounts });
     } else {
