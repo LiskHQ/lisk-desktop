@@ -76,21 +76,12 @@ pipeline {
 		stage('Run tests') {
 			steps {
 				parallel (
-					"mocha": {
-						sh 'ON_JENKINS=true npm run --silent test'
-						withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
-							sh 'cat coverage/HeadlessChrome*/lcov.info |coveralls -v'
-						}
-					},
 					"jest": {
 						ansiColor('xterm') {
-							sh 'ON_JENKINS=true npm run --silent test-jest'
-
-							// TODO: uncomment sending coverage to coveralls when
-							// all tests are migrated from mocha to jest
-							// withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
-								//	sh 'cat coverage/HeadlessChrome*/lcov.info |coveralls -v'
-							// }
+							sh 'ON_JENKINS=true npm run --silent test'
+							withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
+									sh 'cat coverage/jest/lcov.info |coveralls -v'
+							}
 						}
 					},
 					"cypress": {
@@ -147,7 +138,7 @@ pipeline {
 			}
 			cobertura autoUpdateHealth: false,
 				  autoUpdateStability: false,
-				  coberturaReportFile: 'coverage/*/cobertura-coverage.xml',
+				  coberturaReportFile: 'coverage/jest/cobertura-coverage.xml',
 				  conditionalCoverageTargets: '70, 0, 0',
 				  failUnhealthy: false,
 				  failUnstable: false,
@@ -157,7 +148,7 @@ pipeline {
 				  methodCoverageTargets: '80, 0, 0',
 				  onlyStable: false,
 				  sourceEncoding: 'ASCII'
-			junit 'reports/junit_report.xml'
+			junit 'coverage/jest/junit.xml'
 			script {
 				catchError {
 					if(readFile(".cypress_status").trim() == '0'){

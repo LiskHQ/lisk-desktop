@@ -35,8 +35,7 @@ describe('DelegateRow', () => {
     expect(className).to.contain(expectedClass);
   });
 
-  it.skip(`should have a list item with class name of "votedRow" when voteStatus.unconfirmed and
-    confirmed are true`, () => {
+  it.skip('should have a list item with class name of "votedRow" when voteStatus.unconfirmed and confirmed are true', () => {
     const wrapper = mount(
       <DelegateRow {...props} voteStatus={votedStatus}></DelegateRow>,
       options,
@@ -46,8 +45,7 @@ describe('DelegateRow', () => {
     expect(className).to.contain(expectedClass);
   });
 
-  it(`should have a list item with class name of "downVoteRow" when voteStatus.unconfirmed is false
-    but confirmed is true`, () => {
+  it('should have a list item with class name of "downVoteRow" when voteStatus.unconfirmed is false but confirmed is true', () => {
     const wrapper = mount(
       <DelegateRow {...props} voteStatus={unvoteStatus}></DelegateRow>,
       options,
@@ -57,8 +55,7 @@ describe('DelegateRow', () => {
     expect(className).to.contain(expectedClass);
   });
 
-  it(`should have a list item with class name of "upVoteRow" when voteStatus.unconfirmed is false
-    but confirmed is true`, () => {
+  it('should have a list item with class name of "upVoteRow" when voteStatus.unconfirmed is false but confirmed is true', () => {
     const wrapper = mount(
       <DelegateRow {...props} voteStatus={voteStatus}></DelegateRow>,
       options,
