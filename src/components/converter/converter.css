@@ -65,7 +65,7 @@
   & .convertorErr {
     display: flex;
     justify-content: space-between;
-    margin-top: -57px;
+    margin-top: -47px;
     cursor: pointer;
 
     & div {
