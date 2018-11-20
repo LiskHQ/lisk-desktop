@@ -5,7 +5,7 @@ pipeline {
 	agent { node { label 'lisk-hub' } }
 	options {
 		skipDefaultCheckout true
-		buildDiscarder(logRotator(numToKeepStr: '15'))
+		buildDiscarder(logRotator(numToKeepStr: '168', artifactNumToKeepStr: '5'))
 	}
 	stages {
 		stage('Clean workspace and checkout SCM') {
