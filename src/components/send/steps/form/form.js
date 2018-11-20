@@ -59,7 +59,7 @@ class Form extends React.Component {
     });
   }
 
-  validateInput(name, value, required) {
+  validateInput(name, value, required) { // eslint-disable-line
     const byteCount = encodeURI(value).split(/%..|./).length - 1;
     if (!value && required) {
       return this.props.t('Required');
@@ -79,8 +79,33 @@ class Form extends React.Component {
     return fromRawLsk(Math.max(0, this.props.account.balance - this.fee));
   }
 
+  handleSetMaxAmount() {
+    const amount = parseFloat(this.getMaxAmount());
+    this.setState({
+      amount: {
+        value: amount.toString(),
+      },
+    });
+  }
+
   focusReference() {
     this.referenceInput.focus();
+  }
+
+  handleFocus() {
+    this.setState({
+      showSetMaxAmount: true,
+    });
+  }
+
+  handleBlur() {
+    /* when click on set max amount link we need a small delay */
+    /* to process the click event before hiding */
+    setTimeout(() => {
+      this.setState({
+        showSetMaxAmount: false,
+      });
+    }, 200);
   }
 
   render() {
@@ -114,15 +139,26 @@ class Form extends React.Component {
             reference={this.state.reference}
             handleChange={this.handleChange.bind(this, 'reference', false)}
           />
-          <Converter
-            label={this.props.t('Amount (LSK)')}
-            className='amount'
-            theme={styles}
-            error={this.state.amount.error}
-            value={this.state.amount.value}
-            onChange={this.handleChange.bind(this, 'amount', true)}
-            t={this.props.t}
-          />
+          <div className={`amount-wrapper ${styles.amountWrapper}`}>
+            <Converter
+              label={this.props.t('Amount (LSK)')}
+              className='amount'
+              theme={styles}
+              error={this.state.amount.error}
+              value={this.state.amount.value}
+              onChange={this.handleChange.bind(this, 'amount', true)}
+              onFocus={this.handleFocus.bind(this)}
+              onBlur={this.handleBlur.bind(this)}
+              t={this.props.t}
+            />
+            {
+              this.state.showSetMaxAmount &&
+              !this.state.amount.value &&
+              this.getMaxAmount() > 0 ?
+                <a onClick={this.handleSetMaxAmount.bind(this)} className={`set-max-amount ${styles.setMaxAmount}`}>{ this.props.t('Set max. amount') }</a>
+              : <div></div>
+            }
+          </div>
         </form>
         <footer>
           <Button onClick={() => this.props.nextStep({

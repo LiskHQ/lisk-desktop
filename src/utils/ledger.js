@@ -54,7 +54,7 @@ const sendIpcCommand = command =>
     ipc.send('ledgerCommand.request', command);
   });
 
-const ledgerPlatformHendler = async (command) => {
+const ledgerPlatformHendler = async (command) => { // eslint-disable-line max-statements
   if (isElectron()) {
     return sendIpcCommand(command);
   }

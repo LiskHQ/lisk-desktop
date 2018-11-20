@@ -1,5 +1,6 @@
 import localeHandler from './localeHandler';
 import menu from './../menu';
+import process from './process';
 
 const win = {
   browser: null,
@@ -31,7 +32,7 @@ const win = {
   },
 
 
-  create: ({
+  create: ({ // eslint-disable-line max-statements
     electron, path, electronLocalshortcut, storage, checkForUpdates,
   }) => {
     const { Menu } = electron;
@@ -42,7 +43,7 @@ const win = {
     win.browser.on('blur', () => win.browser.webContents.send('blur'));
     win.browser.on('focus', () => win.browser.webContents.send('focus'));
 
-    if (process.platform !== 'darwin') {
+    if (!process.isPlatform('darwin')) {
       win.send({ event: 'openUrl', value: process.argv[1] || '/' });
     }
 

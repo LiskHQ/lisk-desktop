@@ -7,8 +7,8 @@ import searchAll from '../utils/api/search';
 
 const searchDelegate = ({ publicKey, address }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
-    getDelegate(activePeer, { publicKey }).then((response) => {
+    const liskAPIClient = getState().peers.liskAPIClient;
+    getDelegate(liskAPIClient, { publicKey }).then((response) => {
       dispatch({
         data: {
           delegate: response.data[0],
@@ -21,8 +21,8 @@ const searchDelegate = ({ publicKey, address }) =>
 
 const searchVotes = ({ address }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
-    getAllVotes(activePeer, address).then(response =>
+    const liskAPIClient = getState().peers.liskAPIClient;
+    getAllVotes(liskAPIClient, address).then(response =>
       dispatch({
         type: actionTypes.searchVotes,
         data: {
@@ -36,8 +36,8 @@ const searchVoters = ({
   address, publicKey, offset, limit, append,
 }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
-    getVoters(activePeer, {
+    const liskAPIClient = getState().peers.liskAPIClient;
+    getVoters(liskAPIClient, {
       publicKey, offset, limit,
     }).then(response =>
       dispatch({
@@ -53,8 +53,8 @@ const searchVoters = ({
 
 export const searchMoreVoters = ({ address, offset = 0, limit = 100 }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
-    getAccount(activePeer, address).then((response) => {
+    const liskAPIClient = getState().peers.liskAPIClient;
+    getAccount(liskAPIClient, address).then((response) => {
       const accountData = {
         ...response,
       };
@@ -68,9 +68,9 @@ export const searchMoreVoters = ({ address, offset = 0, limit = 100 }) =>
 
 export const searchAccount = ({ address }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const liskAPIClient = getState().peers.liskAPIClient;
     dispatch(searchVotes({ address }));
-    getAccount(activePeer, address).then((response) => {
+    getAccount(liskAPIClient, address).then((response) => {
       const accountData = {
         ...response,
       };
@@ -86,10 +86,10 @@ export const searchTransactions = ({
   address, limit, filter, showLoading = true,
 }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const liskAPIClient = getState().peers.liskAPIClient;
     if (showLoading) dispatch(loadingStarted(actionTypes.searchTransactions));
     getTransactions({
-      activePeer, address, limit, filter,
+      liskAPIClient, address, limit, filter,
     })
       .then((transactionsResponse) => {
         dispatch({
@@ -118,9 +118,9 @@ export const searchMoreTransactions = ({
   address, limit, offset, filter,
 }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const liskAPIClient = getState().peers.liskAPIClient;
     getTransactions({
-      activePeer, address, limit, offset, filter,
+      liskAPIClient, address, limit, offset, filter,
     })
       .then((transactionsResponse) => {
         dispatch({
@@ -137,12 +137,12 @@ export const searchMoreTransactions = ({
 
 export const searchSuggestions = ({ searchTerm }) =>
   (dispatch, getState) => {
-    const activePeer = getState().peers.data;
+    const liskAPIClient = getState().peers.liskAPIClient;
     dispatch({
       data: {},
       type: actionTypes.searchClearSuggestions,
     });
-    searchAll({ activePeer, searchTerm }).then(response => dispatch({
+    searchAll({ liskAPIClient, searchTerm }).then(response => dispatch({
       data: response,
       type: actionTypes.searchSuggestions,
     }));

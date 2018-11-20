@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { spy, stub } from 'sinon';
 import middleware from './peers';
 import actionTypes from '../../constants/actions';
-import { activePeerSet } from '../../actions/peers';
+import { liskAPIClientSet } from '../../actions/peers';
 import * as loginUtils from './../../utils/login';
 
 describe('Peer middleware', () => {
@@ -21,7 +21,7 @@ describe('Peer middleware', () => {
 
     store.getState = () => ({
       peers: {
-        data: {},
+        liskAPIClient: {},
       },
       account: {},
     });
@@ -69,7 +69,7 @@ describe('Peer middleware', () => {
     expect(store.dispatch).to.have.been.calledWith();
   });
 
-  it('should dispatch activePeerSet if there are no saved accounts', () => {
+  it('should dispatch liskAPIClientSet if there are no saved accounts', () => {
     const storeCreated = { type: actionTypes.storeCreated };
     localStorageStub.returns(JSON.stringify([]));
     getAutoLogInDataStub.returns({
@@ -79,14 +79,14 @@ describe('Peer middleware', () => {
     expect(store.dispatch).to.have.been.calledWith();
   });
 
-  it('should not dispatch activePeerSet if there are saved accounts', () => {
+  it('should not dispatch liskAPIClientSet if there are saved accounts', () => {
     const storeCreated = { type: actionTypes.storeCreated };
     localStorageStub.returns(JSON.stringify([{}, {}]));
     getAutoLogInDataStub.returns({
       liskCoreUrl: 'https://testnet.lisk.io',
     });
     middleware(store)(next)(storeCreated);
-    expect(store.dispatch).to.not.have.been.calledWith(activePeerSet());
+    expect(store.dispatch).to.not.have.been.calledWith(liskAPIClientSet());
   });
 });
 

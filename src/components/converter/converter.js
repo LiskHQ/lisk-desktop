@@ -20,7 +20,7 @@ class Converter extends React.Component {
     this.props.getPriceTicker();
   }
 
-  render() {
+  render() { // eslint-disable-line complexity
     const { LSK } = this.props.priceTicker;
     const currency = this.props.settings.currency || 'USD';
 
@@ -60,4 +60,3 @@ class Converter extends React.Component {
 }
 
 export default Converter;
-

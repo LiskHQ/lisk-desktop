@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import React from 'react';
 import configureMockStore from 'redux-mock-store';
-
 import thunk from 'redux-thunk';
 
 import { mountWithContext } from '../../../test/utils/mountHelpers';

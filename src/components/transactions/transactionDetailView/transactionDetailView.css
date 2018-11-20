@@ -1,4 +1,4 @@
-@import '../app/variables.css';
+@import '../../app/variables.css';
 
 :root {
   --detail-label-font-weight: var(--font-weight-very-bold);

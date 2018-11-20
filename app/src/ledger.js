@@ -94,7 +94,7 @@ const createCommand = (k, fn) => {
 createCommand('ledgerCommand', (command) => {
   if (ledgerPath) {
     return TransportNodeHid.open(ledgerPath)
-      .then(async (transport) => {
+      .then(async (transport) => { // eslint-disable-line max-statements
         busy = true;
         try {
           const liskLedger = new DposLedger(transport);

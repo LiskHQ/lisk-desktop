@@ -22,7 +22,7 @@ class PassphraseInput extends React.Component {
     this.setState({ focus: field });
   }
 
-  handleValueChange(index, value) {
+  handleValueChange(index, value) { // eslint-disable-line max-statements
     let insertedValue = value.trim().replace(/\W+/g, ' ');
     const insertedValueAsArray = insertedValue.split(' ');
     let passphrase = this.props.value.split(' ');

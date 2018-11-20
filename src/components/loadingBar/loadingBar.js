@@ -15,7 +15,7 @@ class LoadingBar extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.markedAsLoaded && nextProps.peers.data) this.markLoaded();
+    if (!this.markedAsLoaded && nextProps.peers.liskAPIClient) this.markLoaded();
 
     if (nextProps.loading && nextProps.loading.length > 0 && this.props.loading.length === 0) {
       this.startTime = new Date();
@@ -31,7 +31,7 @@ class LoadingBar extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.peers.data) this.markLoaded();
+    if (this.props.peers.liskAPIClient) this.markLoaded();
   }
 
   componentWillUnmount() {

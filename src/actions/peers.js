@@ -15,21 +15,21 @@ const peerSet = (data, config) => ({
   data: Object.assign({
     passphrase: data.passphrase,
     publicKey: data.publicKey,
-    activePeer: new Lisk.APIClient(config.nodes, { nethash: config.nethash }),
+    liskAPIClient: new Lisk.APIClient(config.nodes, { nethash: config.nethash }),
     options: config,
     loginType: data.loginType,
   }),
-  type: actionTypes.activePeerSet,
+  type: actionTypes.liskAPIClientSet,
 });
 
-const login = (dispatch, getState, data, config) => {
+const login = (dispatch, getState, data, config) => { // eslint-disable-line max-statements
   if (data.passphrase || data.hwInfo) {
     const store = getState();
     const { lockDuration } = accountConfig;
     const { passphrase } = data;
     const { code } = data.network;
     const publicKey = passphrase ? extractPublicKey(passphrase) : data.publicKey;
-    const activePeer = store.peers.data ||
+    const liskAPIClient = store.peers.liskAPIClient ||
       new Lisk.APIClient(config.nodes, { nethash: config.nethash });
     const address = extractAddress(publicKey);
     const accountBasics = {
@@ -45,7 +45,7 @@ const login = (dispatch, getState, data, config) => {
     dispatch(accountLoading());
 
     // redirect to main/transactions
-    getAccount(activePeer, address).then((accountData) => {
+    getAccount(liskAPIClient, address).then((accountData) => {
       const duration = (passphrase && store.settings.autoLog) ?
         Date.now() + lockDuration : 0;
       const accountUpdated = {
@@ -77,8 +77,8 @@ const login = (dispatch, getState, data, config) => {
  * @param {Object} data - Active peer data and the passphrase of account
  * @returns {Object} Action object
  */
-export const activePeerSet = data =>
-  (dispatch, getState) => {
+export const liskAPIClientSet = data =>
+  (dispatch, getState) => { // eslint-disable-line max-statements
     const config = data.network || {};
 
     if (config.address) {
@@ -121,7 +121,7 @@ export const activePeerSet = data =>
  * @param {Object} data - Active peer data
  * @returns {Object} Action object
  */
-export const activePeerUpdate = data => ({
+export const liskAPIClientUpdate = data => ({
   data,
-  type: actionTypes.activePeerUpdate,
+  type: actionTypes.liskAPIClientUpdate,
 });

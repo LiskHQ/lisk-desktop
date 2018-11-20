@@ -2,16 +2,16 @@ import React from 'react';
 import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { mountWithContext } from '../../../test/utils/mountHelpers';
-import TransactionDetailView from './transactionDetailView';
-import txTypes from '../../constants/transactionTypes';
+import { mountWithContext } from '../../../../test/utils/mountHelpers';
+import TransactionDetailView from './index';
+import txTypes from '../../../constants/transactionTypes';
 
 describe('TransactionDetailView', () => {
   it('should render 5 rows', () => {
     const context = {
       storeState: {
         peers: {
-          data: {},
+          liskAPIClient: {},
           options: {},
         },
         transaction: {
@@ -50,7 +50,7 @@ describe('TransactionDetailView', () => {
     const context = {
       storeState: {
         peers: {
-          data: {},
+          liskAPIClient: {},
           options: {},
         },
         transaction: {
@@ -99,7 +99,7 @@ describe('TransactionDetailView', () => {
     const context = {
       storeState: {
         peers: {
-          data: {},
+          liskAPIClient: {},
           options: {},
         },
         transaction: {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
 import { getLedgerAccountInfo } from '../../utils/api/ledger';
-import { activePeerSet } from '../../actions/peers';
+import { liskAPIClientSet } from '../../actions/peers';
 import { settingsUpdated } from '../../actions/settings';
 import { errorToastDisplayed } from '../../actions/toaster';
 
@@ -31,7 +31,7 @@ class LedgerLogin extends React.Component {
   // async componentDidUpdate(prevProps) {
   // if (this.props.settings.ledgerAccountAmount !== prevProps.settings.ledgerAccountAmount) {
   //   const accountInfo = await getLedgerAccountInfo
-  // (this.props.activePeer, this.state.hwAccounts.length);  // eslint-disable-line
+  // (this.props.liskAPIClient, this.state.hwAccounts.length);  // eslint-disable-line
 
   //   this.setState({ hwAccounts: this.state.hwAccounts.concat([accountInfo]) });
   // }
@@ -44,7 +44,7 @@ class LedgerLogin extends React.Component {
     }, 2000);
   }
   /* eslint-disable no-await-in-loop */
-  async displayAccounts(unInitializedAdded = false) {
+  async displayAccounts(unInitializedAdded = false) { // eslint-disable-line
     let index = unInitializedAdded ? this.state.hwAccounts.length : 0;
     let accountInfo;
     if (!unInitializedAdded) {
@@ -54,7 +54,7 @@ class LedgerLogin extends React.Component {
       try {
         switch (this.props.loginType) {   // eslint-disable-line
           case 1:
-            accountInfo = await getLedgerAccountInfo(this.props.activePeer, index);
+            accountInfo = await getLedgerAccountInfo(this.props.liskAPIClient, index);
             break;
           // case loginTypes.trezor:
           //   this.props.errorToastDisplayed({
@@ -99,7 +99,7 @@ class LedgerLogin extends React.Component {
 
   selectAccount(ledgerAccount, index) {
     // set active peer
-    this.props.activePeerSet({
+    this.props.liskAPIClientSet({
       publicKey: ledgerAccount.publicKey,
       network: this.props.network,
       hwInfo: { // Use pubKey[0] first 10 char as device id
@@ -189,13 +189,13 @@ class LedgerLogin extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  activePeer: state.peers && state.peers.data,
+  liskAPIClient: state.peers && state.peers.liskAPIClient,
   settings: state.settings,
   loginType: state.account.loginType || 1,
 });
 
 const mapDispatchToProps = dispatch => ({
-  activePeerSet: data => dispatch(activePeerSet(data)),
+  liskAPIClientSet: data => dispatch(liskAPIClientSet(data)),
   settingsUpdated: data => dispatch(settingsUpdated(data)),
   errorToastDisplayed: data => dispatch(errorToastDisplayed(data)),
 });

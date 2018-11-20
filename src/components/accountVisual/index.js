@@ -197,7 +197,7 @@ class AccountVisual extends React.Component {
     window.removeEventListener('resize', this.resizeWindow.bind(this));
   }
 
-  render() {
+  render() { // eslint-disable-line max-statements
     const {
       address, size, sizeS, className,
     } = this.props;

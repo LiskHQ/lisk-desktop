@@ -1,21 +1,26 @@
 
 import localJSONStorage from './localJSONStorage';
+import networks from '../constants/networks';
 
-export const updateDelegateCache = (delegates, activePeer) => {
-  const network = activePeer.currentNode;
-  const savedDelegates = localJSONStorage.get(`delegateCache-${network}`, {});
-  const formatedDelegates = delegates.reduce((delegate, { address, publicKey, username }) => {
-    delegate[address] = { publicKey, username };
-    return delegate;
-  }, {});
+const getNetworkKey = liskAPIClient => (
+  `delegateCache-${
+    liskAPIClient.options.code === networks.customNode.code ?
+      liskAPIClient.currentNode :
+      liskAPIClient.options.code
+  }`
+);
+
+export const updateDelegateCache = (delegates, liskAPIClient) => {
+  const savedDelegates = localJSONStorage.get(getNetworkKey(liskAPIClient), {});
+  const formatedDelegates = delegates
+    .reduce((newDelegates, delegate) => {
+      const delegateObj = { [delegate.username]: delegate };
+      return Object.assign(newDelegates, delegateObj);
+    }, {});
   const updatedDelegates = { ...formatedDelegates, ...savedDelegates };
 
-  localJSONStorage.set(`delegateCache-${network}`, updatedDelegates);
+  localJSONStorage.set(getNetworkKey(liskAPIClient), updatedDelegates);
 };
 
-export const loadDelegateCache = (activePeer) => {
-  // TODO network just based on currentNode will not work well on Mainnet
-  // because there are multiplercurrentNode options for Mainnet
-  const network = activePeer.currentNode;
-  return localJSONStorage.get(`delegateCache-${network}`, {});
-};
+export const loadDelegateCache = liskAPIClient =>
+  localJSONStorage.get(getNetworkKey(liskAPIClient), {});

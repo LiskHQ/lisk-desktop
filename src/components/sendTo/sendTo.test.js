@@ -29,7 +29,7 @@ describe('SendTo Component', () => {
         followedAccounts: { accounts: [] },
         account,
         search: {},
-        activePeerSet: () => {},
+        liskAPIClientSet: () => {},
       });
 
       wrapper = mountWithContext(<SendTo {...props} store={store} />, { storeState: store });
@@ -61,7 +61,7 @@ describe('SendTo Component', () => {
         followedAccounts: { accounts: [] },
         account,
         search: {},
-        activePeerSet: () => {},
+        liskAPIClientSet: () => {},
       });
 
       wrapper = mountWithContext(<SendTo {...props} store={store} />, { storeState: store });
@@ -82,7 +82,7 @@ describe('SendTo Component', () => {
         followedAccounts: { accounts: [account] },
         account,
         search: {},
-        activePeerSet: () => {},
+        liskAPIClientSet: () => {},
       });
 
       wrapper = mountWithContext(<SendTo {...props} store={store} />, { storeState: store });

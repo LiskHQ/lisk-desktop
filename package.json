@@ -1,11 +1,12 @@
 {
   "name": "lisk-hub",
-  "version": "1.6.0-beta.1",
+  "version": "1.6.0",
   "description": "Lisk Hub",
   "homepage": "https://github.com/LiskHQ/lisk-hub",
   "bugs": "https://github.com/LiskHQ/lisk-hub/issues",
   "main": "main.js",
   "scripts": {
+    "postinstall": "node ./config/checkNodeVersion.js",
     "build": "npm run clean-build && npm run copy-files && npm run build-prod && npm run build-electron",
     "build:testnet": "npm run build:testnet:pre",
     "build:testnet:pre": "cpx \"./app/build/**\" ./app/build-testnet && npm run build:testnet:post",
@@ -15,11 +16,10 @@
     "build-electron": "webpack --config ./config/webpack.config.electron",
     "cypress:open": "cypress open --project test/cypress",
     "cypress:run": "cypress run --project test/cypress",
-    "test": "karma start",
-    "test-jest": "jest --config ./jest.config.js",
+    "test": "jest --config ./jest.config.js",
     "bundlesize": "bundlesize",
     "analyze-bundles": "webpack  --config ./config/webpack.config.analyze",
-    "test-live": "npm test -- --auto-watch --no-single-run",
+    "test-live": "npm test -- --watch",
     "start": "electron ./app/",
     "dist": "build --ia32 --x64 --publish onTag",
     "dist:win": "build --win --ia32 --x64 --publish onTag",
@@ -92,9 +92,10 @@
     "react-waypoint": "7.1.0",
     "redux": "3.7.2",
     "redux-thunk": "=2.2.0",
+    "semver": "5.6.0",
+    "snyk": "^1.108.0",
     "socket.io-client": "=2.0.3",
-    "webpack-merge": "=4.1.0",
-    "snyk": "^1.108.0"
+    "webpack-merge": "=4.1.0"
   },
   "devDependencies": {
     "@storybook/addon-actions": "3.2.12",
@@ -120,7 +121,7 @@
     "cpx": "=1.5.0",
     "css-hot-loader": "=1.3.1",
     "css-loader": "0.28.7",
-    "cypress": "3.1.0",
+    "cypress": "3.1.1",
     "del-cli": "1.1.0",
     "electron": "1.8.8",
     "electron-builder": "19.32.2",
@@ -130,7 +131,7 @@
     "enzyme": "=3.1.0",
     "enzyme-adapter-react-16": "=1.0.2",
     "es7-object-polyfill": "0.0.7",
-    "eslint": "4.9.0",
+    "eslint": "5.9.0",
     "eslint-config-airbnb": "15.1.0",
     "eslint-config-airbnb-base": "12.1.0",
     "eslint-config-google": "0.9.1",
@@ -138,8 +139,8 @@
     "eslint-plugin-babel": "4.1.2",
     "eslint-plugin-cypress": "2.0.1",
     "eslint-plugin-html": "3.2.2",
-    "eslint-plugin-import": "2.7.0",
-    "eslint-plugin-mocha": "4.11.0",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-jest": "22.0.0",
     "eslint-plugin-react": "7.4.0",
     "exports-loader": "0.6.4",
     "extract-text-webpack-plugin": "3.0.0",
@@ -152,21 +153,10 @@
     "identity-obj-proxy": "3.0.0",
     "imports-loader": "0.7.1",
     "jest": "23.4.2",
+    "jest-junit": "5.2.0",
     "jest-localstorage-mock": "2.2.0",
     "jsdom": "11.11.0",
     "json-loader": "0.5.7",
-    "karma": "1.7.1",
-    "karma-chai": "=0.1.0",
-    "karma-chrome-launcher": "=2.2.0",
-    "karma-coverage": "1.1.2",
-    "karma-jenkins-reporter": "0.0.2",
-    "karma-junit-reporter": "1.2.0",
-    "karma-mocha": "=1.3.0",
-    "karma-mocha-reporter": "2.2.4",
-    "karma-sourcemap-loader": "=0.3.7",
-    "karma-verbose-reporter": "=0.0.6",
-    "karma-webpack": "2.0.4",
-    "mocha": "5.2.0",
     "mocha-steps": "1.1.0",
     "postcss-for": "=2.1.1",
     "postcss-functions": "3.0.0",
@@ -242,5 +232,8 @@
       "postcss-cssnext"
     ]
   },
-  "snyk": true
+  "snyk": true,
+  "engines": {
+    "node": ">=v6.10.0 <=v6.14.4"
+  }
 }
