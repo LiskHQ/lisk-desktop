@@ -138,7 +138,7 @@ pipeline {
 			}
 			cobertura autoUpdateHealth: false,
 				  autoUpdateStability: false,
-				  coberturaReportFile: 'coverage/*/cobertura-coverage.xml',
+				  coberturaReportFile: 'coverage/jest/cobertura-coverage.xml',
 				  conditionalCoverageTargets: '70, 0, 0',
 				  failUnhealthy: false,
 				  failUnstable: false,
@@ -148,7 +148,7 @@ pipeline {
 				  methodCoverageTargets: '80, 0, 0',
 				  onlyStable: false,
 				  sourceEncoding: 'ASCII'
-			junit 'reports/junit_report.xml'
+			junit 'coverage/jest/junit.xml'
 			script {
 				catchError {
 					if(readFile(".cypress_status").trim() == '0'){

@@ -115,6 +115,7 @@ module.exports = {
   coverageReporters: [
     'text',
     'html',
+    'lcov',
     'cobertura',
   ],
   reporters: [
