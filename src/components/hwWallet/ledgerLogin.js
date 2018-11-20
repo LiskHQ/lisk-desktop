@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+import { withRouter } from 'react-router';
 
 import { getLedgerAccountInfo } from '../../utils/api/ledger';
 import { liskAPIClientSet } from '../../actions/peers';
@@ -10,6 +11,7 @@ import { errorToastDisplayed } from '../../actions/toaster';
 import AccountCard from './accountCard';
 import AddAccountCard from './addAccountCard';
 import { FontIcon } from '../fontIcon';
+import routes from '../../constants/routes';
 
 import cubeImage from '../../assets/images/dark-blue-cube.svg';
 import styles from './ledgerLogin.css';
@@ -50,6 +52,7 @@ class LedgerLogin extends React.Component {
     if (!unInitializedAdded) {
       this.setState({ isLoading: true });
     }
+
     do {
       try {
         switch (this.props.loginType) {   // eslint-disable-line
@@ -69,7 +72,6 @@ class LedgerLogin extends React.Component {
       } catch (error) {
         const text = error && error.message ? `${error.message}.` : this.props.t('Error while retrievieng addresses information.');
         this.props.errorToastDisplayed({ label: text });
-
         return;
       }
       if ((!unInitializedAdded && (index === 0 || accountInfo.isInitialized)) ||
@@ -107,6 +109,7 @@ class LedgerLogin extends React.Component {
         derivationIndex: 0,
       },
     });
+    this.props.history.replace(routes.dashboard.path);
   }
 
   async addAccount() {
@@ -197,4 +200,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(translate()(LedgerLogin));
+)(withRouter(translate()(LedgerLogin)));
