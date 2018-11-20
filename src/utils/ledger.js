@@ -107,13 +107,11 @@ export const getAccountFromLedgerIndex = (index = 0) => {
 export const displayAccounts = async (liskAPIClient, loginType, hwAccounts, t, unInitializedAdded = false) => { // eslint-disable-line
   let index = unInitializedAdded ? hwAccounts.length : 0;
   let accountInfo;
-  // if (!unInitializedAdded) {
-  //   this.setState({ isLoading: true });
-  // }
+
   const accounts = [];
   do {
     try {
-      switch (loginType) {   // eslint-disable-line
+      switch (loginType) { // eslint-disable-line
         case 0:
           accountInfo = await getLedgerAccountInfo(liskAPIClient, index);
           break;
@@ -135,22 +133,16 @@ export const displayAccounts = async (liskAPIClient, loginType, hwAccounts, t, u
     if ((!unInitializedAdded && (index === 0 || accountInfo.isInitialized)) ||
       (unInitializedAdded && !accountInfo.isInitialized)) {
       accounts.push(accountInfo);
-      // this.setState({ hwAccounts: this.state.hwAccounts });
     }
     index++;
   }
   while (accountInfo.isInitialized || index === 0);
-  // this.props.settingsUpdated({ ledgerAccountAmount: index });
   /* eslint-disable-next-line */
   return {
     hwAccounts: accounts,
     isLoading: false,
     showNextAvailable: (index === 1),
   };
-  // this.setState({
-  //   isLoading: false,
-  //   showNextAvailable: (index === 1),
-  // });
 };
 //  export const signMessageWithLedger = async (account, message) => {
 //   const command = {

@@ -30,15 +30,6 @@ class LedgerLogin extends React.Component {
     };
   }
 
-  // async componentDidUpdate(prevProps) {
-  // if (this.props.settings.ledgerAccountAmount !== prevProps.settings.ledgerAccountAmount) {
-  //   const accountInfo = await getLedgerAccountInfo
-  // (this.props.liskAPIClient, this.state.hwAccounts.length);  // eslint-disable-line
-
-  //   this.setState({ hwAccounts: this.state.hwAccounts.concat([accountInfo]) });
-  // }
-  // }
-
   componentDidMount() {
     this.setState({ isLoading: true });
     setTimeout(async () => {
@@ -52,16 +43,6 @@ class LedgerLogin extends React.Component {
       this.setState({ ...output });
     }, 2000);
   }
-
-  // showNextAvailableWallet() {
-  //   if (this.state.showNextAvailable) {
-  //     this.props.infoToastDisplayed({
-  // label: this.props.t('Please use the last not-initialized account before creating a new one!'),
-  // });
-  // //   } else {
-  //     this.setState({ showNextAvailable: true });
-  //   }
-  // }
 
   selectAccount(ledgerAccount) {
     // set active peer
@@ -91,10 +72,6 @@ class LedgerLogin extends React.Component {
       const label = this.props.t('Please use the last not-initialized account before creating a new one!');
       this.props.errorToastDisplayed({ label });
     }
-    // this.props.settingsUpdated({
-    //   ledgerAccountAmount: this.props.settings.ledgerAccountAmount + 1,
-    // });
-    // this.forceUpdate();
   }
 
   turnOnEditMode() {
