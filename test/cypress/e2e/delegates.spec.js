@@ -59,7 +59,7 @@ describe('Delegates', () => {
   });
 
   it('Displays 100 delegates and loads more as I scroll to bottom', () => {
-    cy.autologin(accounts.genesis.passphrase, networks.mainnet.node);
+    cy.autologin(accounts.genesis.passphrase, networks.testnet.node);
     cy.visit(urls.delegates);
     cy.get(ss.delegateRow).should('have.length', 100);
     cy.get(ss.delegateList).scrollTo('bottom');
