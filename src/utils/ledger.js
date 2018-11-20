@@ -6,6 +6,7 @@ import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api';
 import { hwConstants, LEDGER_COMMANDS } from '../constants/hwConstants';
 // import { loadingStarted, loadingFinished } from './loading';
 // import signPrefix from '../constants/signPrefix';
+import { getLedgerAccountInfo } from './api/ledger';
 import { infoToastDisplayed, errorToastDisplayed } from '../actions/toaster';
 import { getBufferToHex } from './rawTransactionWrapper';
 import store from '../store';
@@ -100,6 +101,56 @@ export const getAccountFromLedgerIndex = (index = 0) => {
     data: { index },
   };
   return ledgerPlatformHendler(command);
+};
+
+/* eslint-disable no-await-in-loop */
+export const displayAccounts = async (liskAPIClient, loginType, hwAccounts, t, unInitializedAdded = false) => { // eslint-disable-line
+  let index = unInitializedAdded ? hwAccounts.length : 0;
+  let accountInfo;
+  // if (!unInitializedAdded) {
+  //   this.setState({ isLoading: true });
+  // }
+  const accounts = [];
+  do {
+    try {
+      switch (loginType) {   // eslint-disable-line
+        case 0:
+          accountInfo = await getLedgerAccountInfo(liskAPIClient, index);
+          break;
+        // case loginTypes.trezor:
+        //   this.props.errorToastDisplayed({
+        //   text: this.props.t('Not Yet Implemented. Sorry.'),
+        // });
+        //   break;
+        // default:
+        //   this.props.errorToastDisplayed({
+        //   text: this.props.t('Login Type not recognized.')
+        // });
+      }
+    } catch (error) {
+      const text = error && error.message ? `${error.message}.` : t('Error while retrievieng addresses information.');
+      store.dispatch(errorToastDisplayed({ label: text }));
+      return;
+    }
+    if ((!unInitializedAdded && (index === 0 || accountInfo.isInitialized)) ||
+      (unInitializedAdded && !accountInfo.isInitialized)) {
+      accounts.push(accountInfo);
+      // this.setState({ hwAccounts: this.state.hwAccounts });
+    }
+    index++;
+  }
+  while (accountInfo.isInitialized || index === 0);
+  // this.props.settingsUpdated({ ledgerAccountAmount: index });
+  /* eslint-disable-next-line */
+  return {
+    hwAccounts: accounts,
+    isLoading: false,
+    showNextAvailable: (index === 1),
+  };
+  // this.setState({
+  //   isLoading: false,
+  //   showNextAvailable: (index === 1),
+  // });
 };
 //  export const signMessageWithLedger = async (account, message) => {
 //   const command = {
