@@ -60,8 +60,6 @@ Configuration is in [jest.config.js](/LiskHQ/lisk-hub/blob/development/jest.conf
 
 ### How to run them?
 
-*NOTE:* We are currently transitioning from Mocha to Jest suites. The preferred method should then be to cover new features as well as exising code base with Jest suites.
-
 Run Jest suites with:
 ```
 npm run test
