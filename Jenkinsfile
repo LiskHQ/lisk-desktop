@@ -99,7 +99,7 @@ pipeline {
 									rm -rf $WORKSPACE/$BRANCH_NAME/
 									mkdir -p $WORKSPACE/$BRANCH_NAME/
 									tar xf 2.2.0.tar.gz -C $WORKSPACE/$BRANCH_NAME/ --strip-component=2 lisk-docker-2.2.0/examples/
-									cp $WORKSPACE/test/blockchain.db.gz $WORKSPACE/$BRANCH_NAME/dev_blockchain.db.gz
+									cp $WORKSPACE/test/dev_blockchain.db.gz $WORKSPACE/$BRANCH_NAME/dev_blockchain.db.gz
 									cd $WORKSPACE/$BRANCH_NAME
 									cp .env.development .env
 
