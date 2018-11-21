@@ -10,6 +10,7 @@ body {
   top: 0;
   z-index: -1;
   overflow: hidden;
+  background-image: linear-gradient(-243deg, #f8fafd 0%, #eef2f7 95%);
 }
 
 .background-stripes {

@@ -6,7 +6,7 @@
 
 .wrapper {
   width: 100%;
-  box-shadow: var(--normal-shadow);
+  box-shadow: var(--bright-shadow);
   flex-direction: row;
   align-items: flex-start;
   padding: 0;
