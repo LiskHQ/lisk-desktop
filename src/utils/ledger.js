@@ -7,7 +7,7 @@ import { hwConstants, LEDGER_COMMANDS, loginType as loginTypesConst } from '../c
 // import { loadingStarted, loadingFinished } from './loading';
 // import signPrefix from '../constants/signPrefix';
 import { getLedgerAccountInfo } from './api/ledger';
-import { infoToastDisplayed, errorToastDisplayed } from '../actions/toaster';
+import { errorToastDisplayed } from '../actions/toaster';
 import { getBufferToHex, getTransactionBytes, calculateTxId } from './rawTransactionWrapper';
 // import store from '../store';
 
@@ -157,7 +157,7 @@ export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t,
 //    store.dispatch(infoToastDisplayed({ label: LEDGER_MSG.LEDGER_ASK_FOR_CONFIRMATION_PIN }));
 //    return ledgerPlatformHendler(command);
 // };
-/* eslint-disable prefer-const */
+/* eslint-disable */
 export const signTransactionWithLedger = async (tx, account, pin) => {
   const command = {
     action: LEDGER_COMMANDS.SIGN_TX,
