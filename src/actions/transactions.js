@@ -221,6 +221,24 @@ export const transactionsUpdated = ({
       });
   };
 
+const handleSentError = ({ error, account, dispatch }) => {
+  let text;
+  switch (account.loginType) {
+    case 0:
+      text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
+      break;
+    case 1:
+      text = i18next.t('You have cancelled the transaction on your hardware wallet. You can either continue or retry.');
+      break;
+    default:
+      text = error.message;
+  }
+  dispatch({
+    data: { errorMessage: text },
+    type: actionTypes.transactionFailed,
+  });
+};
+
 export const sent = ({
   account, recipientId, amount, passphrase, secondPassphrase, data,
 }) =>
@@ -228,7 +246,6 @@ export const sent = ({
     // account.loginType = 1;
     let error;
     let callResult;
-    let errorMessage;
     const liskAPIClient = getState().peers.liskAPIClient;
     const timeOffset = getTimeOffset(getState());
     switch (account.loginType) {
@@ -240,31 +257,16 @@ export const sent = ({
         // eslint-disable-next-line
         [error, callResult] = await to(sendWithLedger(liskAPIClient, account, recipientId, toRawLsk(amount), secondPassphrase, data, timeOffset));
         break;
-      case 2:
-        errorMessage = i18next.t('Not Yet Implemented. Sorry.');
-        dispatch({ data: { errorMessage }, type: actionTypes.transactionFailed });
-        break;
+      // case 2:
+      //   errorMessage = i18next.t('Not Yet Implemented. Sorry.');
+      //   dispatch({ data: { errorMessage }, type: actionTypes.transactionFailed });
+      //   break;
       default:
-        errorMessage = i18next.t('Login Type not recognized.');
-        dispatch({ data: { errorMessage }, type: actionTypes.transactionFailed });
+        dispatch({ data: { errorMessage: i18next.t('Login Type not recognized.') }, type: actionTypes.transactionFailed });
     }
     loadingFinished('sent');
     if (error) {
-      let text;
-      switch (account.loginType) {
-        case 0:
-          text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
-          break;
-        case 1:
-          text = i18next.t('You have cancelled the transaction on your hardware wallet. You can either continue or retry.');
-          break;
-        default:
-          text = error.message;
-      }
-      dispatch({
-        data: { errorMessage: text },
-        type: actionTypes.transactionFailed,
-      });
+      handleSentError({ error, account, dispatch });
     } else {
       dispatch(transactionAdded({
         id: callResult.id,
