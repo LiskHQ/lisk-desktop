@@ -3,7 +3,7 @@ import isElectron from 'is-electron';
 import TransportU2F from '@ledgerhq/hw-transport-u2f';
 import i18next from 'i18next';
 import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api';
-import { hwConstants, LEDGER_COMMANDS } from '../constants/hwConstants';
+import { hwConstants, LEDGER_COMMANDS, loginType as loginTypesConst } from '../constants/hwConstants';
 // import { loadingStarted, loadingFinished } from './loading';
 // import signPrefix from '../constants/signPrefix';
 import { getLedgerAccountInfo } from './api/ledger';
@@ -112,7 +112,7 @@ export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t,
   do {
     try {
       switch (loginType) { // eslint-disable-line
-        case 0:
+        case loginTypesConst.normal:
           accountInfo = await getLedgerAccountInfo(liskAPIClient, index);
           break;
         // case loginTypes.trezor:

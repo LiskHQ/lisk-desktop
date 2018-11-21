@@ -10,7 +10,7 @@ module.exports = {
     'src/components/dashboard/currencyGraph.test.js', // This should be unskipped in issue #1499
     'src/components/errorBoundary/index.test.js',
     'src/components/feedbackForm/*.test.js',
-    'src/components/ledger/*.test.js',
+    'src/components/hwWallet/*.test.js',
     'src/components/login/*.test.js',
     'src/components/newsFeed/index.test.js', // This component doesn't meet the setted tresholds for mocha but in jest
     'src/components/passphraseCreation/index.test.js',
@@ -48,7 +48,7 @@ module.exports = {
     'src/components/errorBoundary/index.js',
     'src/components/feedbackForm/',
     'src/components/formattedNumber/stories.js',
-    'src/components/ledger/',
+    'src/components/hwWallet/',
     'src/components/login/',
     'src/components/newsFeed/index.js', // This component doesn't meet the setted tresholds for mocha but in jest
     'src/components/newsFeed/news.js',
