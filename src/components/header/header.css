@@ -17,7 +17,9 @@
 .wrapper {
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
+  height: 138px;
 
   & .noPadding {
     padding: 0px;
@@ -81,23 +83,57 @@
 }
 
 .login {
-  text-align: right;
-  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
 
-  & .button {
-    display: block;
+  & > p {
+    color: var(--color-black);
+    font-family: var(--heading-font);
+    font-size: 18px;
+    font-weight: 800;
+    margin: 0;
+    padding: 0;
   }
 
   & .link {
-    display: none;
-    font-size: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5px;
+    height: 23px;
+    font-size: 14px;
+    font-family: var(--content-font);
     font-weight: var(--font-weight-bold);
-    color: var(--color-primary-standard);
+    color: var(--color-black);
+    text-decoration: none;
+
+    & > span:first-child {
+      font-size: 21px;
+    }
+
+    & > span {
+      font-weight: normal;
+      margin-left: 5px;
+      color: var(--color-grayscale-dark);
+    }
+
+    &:hover {
+      color: var(--color-primary-standard);
+
+      & > span:first-child {
+        color: var(--color-primary-standard);
+      }
+    }
   }
 }
 
 .loginInfo {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  height: 86px;
+  margin-right: 4px;
 }
 
 .rightSide {
@@ -106,13 +142,35 @@
 }
 
 .logout {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
   cursor: pointer;
-  padding-left: 20px;
-  color: #fff;
+  color: var(--color-black);
+  background-color: var(--color-white);
+  height: 25px;
+  width: 26px;
+  border-radius: 13.5px;
+  overflow: hidden;
+  font-family: "Open Sans";
+  font-size: 12px;
+  font-weight: 600;
+  position: absolute;
+  top: 44px;
+  right: -5px;
+  transition: all ease 0.1s;
+  box-shadow: var(--bright-shadow);
+
+  &:hover {
+    width: 75px;
+    color: var(--color-primary-standard);
+  }
 }
 
 .logoutIcon {
   font-size: 18px;
+  margin: 0 4px 0 5px;
 }
 
 .logoutInfo {
@@ -145,11 +203,12 @@
     height: var(--avatar-height);
     font-family: 'Open Sans';
     font-weight: 600;
+    vertical-align: top;
 
     & .balance {
       font-size: 24px;
       font-family: var(--heading-font);
-      color: var(--color-white);
+      color: var(--color-black);
       line-height: 0.5em; /* stylelint-disable-line */
       padding-top: 7px;
 

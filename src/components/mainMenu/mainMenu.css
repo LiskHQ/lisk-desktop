@@ -26,6 +26,7 @@
   opacity: 0.5;
   transition: all ease 300ms;
   transition-delay: 200ms;
+  box-shadow: var(--bright-shadow);
 }
 
 :global(.appLoaded) .aside {
