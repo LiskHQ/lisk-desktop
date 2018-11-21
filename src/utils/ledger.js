@@ -6,7 +6,7 @@ import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api';
 import { hwConstants, LEDGER_COMMANDS } from '../constants/hwConstants';
 // import { loadingStarted, loadingFinished } from './loading';
 // import signPrefix from '../constants/signPrefix';
-import { infoToastDisplayed, errorToastDisplayed } from '../actions/toaster';
+// import { infoToastDisplayed, errorToastDisplayed } from '../actions/toaster';
 import { getBufferToHex, getTransactionBytes, calculateTxId } from './rawTransactionWrapper';
 // import store from '../store';
 
@@ -114,7 +114,7 @@ export const getAccountFromLedgerIndex = (index = 0) => {
 //    store.dispatch(infoToastDisplayed({ label: LEDGER_MSG.LEDGER_ASK_FOR_CONFIRMATION_PIN }));
 //    return ledgerPlatformHendler(command);
 // };
-/* eslint-disable prefer-const */
+/* eslint-disable */
 export const signTransactionWithLedger = async (tx, account, pin) => {
   const command = {
     action: LEDGER_COMMANDS.SIGN_TX,
