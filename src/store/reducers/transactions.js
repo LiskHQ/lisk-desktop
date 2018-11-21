@@ -6,7 +6,7 @@ import txFilter from '../../constants/transactionFilters';
  * @param {Object} action
  */
 const initialState = { pending: [], confirmed: [], count: null };
-const transactions = (state = initialState, action) => {
+const transactions = (state = initialState, action) => { // eslint-disable-line complexity
   switch (action.type) {
     case actionTypes.cleanTransactions:
       return initialState;
