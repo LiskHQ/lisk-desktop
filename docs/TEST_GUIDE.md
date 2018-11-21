@@ -131,9 +131,9 @@ COMMANDER="$(command -v lisk)" ./test/e2e-transactions.sh
 ```
 Dump database
 ```
-pg_dump lisk_dev > ./test/blockchain.db
+pg_dump lisk_dev > ./test/dev_blockchain.db
 ```
 Gzip snapshot
 ```
-gzip ./test/blockchain.db
+gzip ./test/dev_blockchain.db
 ```

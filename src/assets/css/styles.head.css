@@ -10,132 +10,7 @@ body {
   top: 0;
   z-index: -1;
   overflow: hidden;
-}
-
-.background-stripes {
-  background-color: #013165;
-  background-image: linear-gradient(109deg, #00335d, #001a56);
-  overflow: hidden;
-  height: 100%;
-  width: 100%;
-  pointer-events: none;
-  -webkit-transform: skewY(21deg) translateZ(0);
-  transform: skewY(21deg) translateZ(0);
-  -webkit-transform-origin: right top;
-  transform-origin: right top;
-}
-
-.background-stripes,
-.stripe {
-  position: absolute;
-}
-
-.stripe:first-child {
-  background-image: linear-gradient(4deg, #002759 5%, #002667 87%);
-  opacity: 1;
-  top: 379.2px;
-  height: 7.2px;
-  width: 61.5%;
-  right: -1.66666%;
-}
-
-.stripe:nth-child(2) {
-  background-image: linear-gradient(180deg, #003986 1%, #00305c 95%);
-  opacity: 0.8;
-  top: 600px;
-  height: 96px;
-  width: 152.49999%;
-  right: -1.66666%;
-}
-
-.stripe:nth-child(3) {
-  background-image: linear-gradient(-44deg, #0057b8, #003061 98%);
-  opacity: 1;
-  top: 696px;
-  height: 7.2px;
-  width: 106.5%;
-  right: -1.66666%;
-}
-
-.stripe:nth-child(4) {
-  background-image: linear-gradient(180deg, #003986 1%, #00305c 95%);
-  opacity: 0.8;
-  top: 703.2px;
-  height: 96px;
-  width: 152.49999%;
-  right: -1.66666%;
-}
-
-.stripe:nth-child(5) {
-  background-image: linear-gradient(243deg, rgba(0, 28, 86, 0) 6%, rgba(0, 36, 88, 0.18) 43%, #0b3b67 73%, #005ea0 99%);
-  opacity: 1;
-  top: 991.2px;
-  height: 552px;
-  width: 106.5%;
-  left: -1.66666%;
-}
-
-.stripe:nth-child(6) {
-  background-image: linear-gradient(243deg, transparent 6%, #002e5b 64%, transparent 77%, transparent 98%);
-  opacity: 0.8;
-  top: 1089.6px;
-  height: 456px;
-  width: 99%;
-  left: -1.66666%;
-}
-
-.stripe:nth-child(7) {
-  top: 1039.2px;
-  width: 46.5%;
-}
-
-.stripe:nth-child(7),
-.stripe:nth-child(8) {
-  background-image: linear-gradient(-120deg, #003767 19%, #002e5d 30%, #00285a 45%, rgba(0, 38, 103, 0.3) 90%);
-  opacity: 1;
-  height: 9.6px;
-  right: -1.66666%;
-}
-
-.stripe:nth-child(8) {
-  top: 1279.2px;
-  width: 51%;
-}
-
-.stripe:nth-child(9) {
-  background-image: linear-gradient(180deg, rgba(0, 83, 140, 0.3) 11%, #00266f 87%);
-  opacity: 0.6;
-  top: 1872px;
-  height: 528px;
-  width: 152.49999%;
-  left: -1.66666%;
-}
-
-.stripe:nth-child(10) {
-  background-image: linear-gradient(106deg, rgba(0, 96, 156, 0.3) 11%, #004880 19%, transparent 87%);
-  opacity: 0.8;
-  top: 1872px;
-  height: 144px;
-  width: 61.5%;
-  left: -1.66666%;
-}
-
-.stripe:nth-child(11) {
-  background-image: linear-gradient(29deg, #007dbb 15%, #00417c 38%, #003372 66%, transparent);
-  opacity: 0.8;
-  top: 2088px;
-  height: 24px;
-  width: 76.5%;
-  left: -1.66666%;
-}
-
-.stripe:nth-child(12) {
-  background-image: linear-gradient(16deg, transparent 19%, #004780 29%, #00437d 39%, #003877 61%, #005c97);
-  opacity: 0.8;
-  top: 1920px;
-  height: 12px;
-  width: 76.5%;
-  right: -1.66666%;
+  background-image: linear-gradient(-243deg, #f8fafd 0%, #eef2f7 95%);
 }
 
 .splash-screen .logo {
@@ -298,20 +173,10 @@ body {
   opacity: 0;
 }
 
-@media (max-width: 1024px) {
-  body {
-    background-color: #f9fbfd;
-  }
-
-  .splash-screen .background-stripes {
-    display: none;
-  }
-
-  .splash-screen figure {
-    background: #013165;
-    border-color: #013165;
-    border-width: 10px 15px 12px;
-    border-style: solid;
-    border-radius: 10px;
-  }
+.splash-screen figure {
+  background: #013165;
+  border-color: #013165;
+  border-width: 10px 15px 12px;
+  border-style: solid;
+  border-radius: 10px;
 }

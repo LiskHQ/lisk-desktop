@@ -122,7 +122,7 @@ export const loadTransaction = ({ id }) =>
     const liskAPIClient = getState().peers.liskAPIClient;
     dispatch({ type: actionTypes.transactionCleared });
     getSingleTransaction({ liskAPIClient, id })
-      .then((response) => { // eslint-disable-line
+      .then((response) => { // eslint-disable-line max-statements
         let added = [];
         let deleted = [];
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../../toolbox/buttons/button';
+import { PrimaryButton, Button } from '../../toolbox/buttons/button';
 import styles from './confirmSecond.css';
 import { passphraseIsValid } from '../../../utils/form';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
@@ -20,6 +20,7 @@ class ConfirmSecond extends React.Component {
         value: '',
         error: '',
       },
+      error: false,
     };
   }
   onChange(name, value, error) {
@@ -44,9 +45,17 @@ class ConfirmSecond extends React.Component {
       this.setState({ step: 'confirm' });
     }
   }
+  componentWillUnmount() {
+    this.props.secondPassphraseRegisteredFailureReset();
+  }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.account.secondPublicKey) {
+    if (nextProps.account.secondPublicKey && !nextProps.error) {
       this.setState({ step: 'done' });
+    } else if (nextProps.step) {
+      this.setState({
+        step: nextProps.step,
+        error: nextProps.error,
+      });
     }
   }
   confirm() {
@@ -57,10 +66,16 @@ class ConfirmSecond extends React.Component {
       step: 'pending',
     });
   }
+  redirectToFirstStep() {
+    this.props.secondPassphraseRegisteredFailureReset();
+    this.props.history.goBack();
+  }
   render() {
     const { hidden, t, history } = this.props;
     const status = hidden ? styles.hidden : '';
-    const doneClass = (this.state.step === 'done' || this.state.step === 'pending') ? styles.done : '';
+    const doneClass = (this.state.step === 'done' ||
+      this.state.step === 'pending' ||
+      this.state.step === 'second-passphrase-register-failure') ? styles.done : '';
     return (<section className={`${styles.wrapper} ${status}`}>
       <header className={doneClass}>
         <TransitionWrapper current={this.state.step} step='login' animationName='slide'>
@@ -87,7 +102,27 @@ class ConfirmSecond extends React.Component {
             </div>
           </article>
         </TransitionWrapper>
+        <TransitionWrapper current={this.state.step} step='second-passphrase-register-failure'>
+          <article className={`${styles.resultContainer} failContainer`}>
+              <FontIcon className={`${styles.headerIcon} ${styles.iconError}`} value='add'></FontIcon>
+              <h2 className={styles.resultHeader}>
+                {t('Transaction failed')}
+              </h2>
+              <div className='subTitle'>
+                {this.state.error}
+              </div>
+              <form onSubmit={this.redirectToFirstStep.bind(this)}>
+                <PrimaryButton
+                  disabled={false}
+                  label={t('Try again')}
+                  className={`${styles.tryButton} try-again`}
+                  onClick={this.redirectToFirstStep.bind(this)}
+                />
+              </form>
+          </article>
+        </TransitionWrapper>
       </header>
+      {this.state.error ? null :
       <div className={`${styles.content} ${doneClass}`}>
         <TransitionWrapper current={this.state.step} step='login'>
           <div className={styles.innerContent}>
@@ -142,7 +177,7 @@ class ConfirmSecond extends React.Component {
             onClick={() => history.push(`${routes.dashboard.path}`) }
           />
         </TransitionWrapper>
-      </div>
+      </div>}
     </section>);
   }
 }

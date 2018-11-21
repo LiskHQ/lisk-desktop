@@ -40,7 +40,7 @@ const mergeVotes = (newList, oldDict) => {
  * @param {Object} state
  * @param {Object} action
  */
-const voting = (state = { // eslint-disable-line
+const voting = (state = { // eslint-disable-line complexity
   votes: {},
   delegates: [],
   totalDelegates: 0,
