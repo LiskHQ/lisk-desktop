@@ -8,6 +8,7 @@
 
 .wrapper {
   margin-right: -24px;
+  box-shadow: var(--normal-shadow);
 }
 
 .autoSuggest {
@@ -19,9 +20,9 @@
   top: 55px;
   z-index: var(--autosuggest-index);
   border-radius: 3px;
-  box-shadow: 0 22px 22px 0 rgba(0, 0, 0, 0.22);
   border-top: none;
   max-height: 353px;
+  box-shadow: var(--normal-shadow);
 
   &:not(:empty) {
     padding-bottom: 15px;
@@ -62,7 +63,7 @@
   z-index: var(--searchbar-input-index);
 
   & input {
-    background-color: var(--color-primary-less-dark);
+    background-color: var(--color-white);
     line-height: var(--search-box-line-height);
     font-size: var(--search-box-font-size);
     color: var(--color-grayscale-medium);

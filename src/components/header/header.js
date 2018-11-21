@@ -10,7 +10,6 @@ import LiskAmount from '../liskAmount';
 import Account from '../account';
 import logo from '../../assets/images/Lisk-Logo.svg';
 import PrivateWrapper from '../privateWrapper';
-import { ActionButton } from './../toolbox/buttons/button';
 import styles from './header.css';
 import CustomCountDown from './customCountDown';
 import Options from '../dialog/options';
@@ -72,7 +71,7 @@ class Header extends React.Component {
 
         <div className={`${styles.loginInfo}`}>
           <div>
-            <div style={{ display: 'inline-block', float: 'left' }}>
+            <div>
               <img src={logo} className={`${styles.logo}`}/>
             </div>
             <div style={{ display: 'inline-block' }}>
@@ -119,27 +118,32 @@ class Header extends React.Component {
                         </div>
                         : null
                       }
-                      <div
-                        className={`${styles.logout} logout`}
-                        onClick={() => this.openLogoutDialog() }>
-                        <FontIcon value='logout' className={styles.logoutIcon} />
-                        {this.props.t('Logout')}
-                      </div>
                     </div>
                   </div>
                   <AccountVisual
                     address={this.props.account.address}
                     size={69} sizeS={40}
                   />
+                  <div
+                    className={`${styles.logout} logout`}
+                    onClick={() => this.openLogoutDialog() }>
+                    {this.props.t('Logout')}
+                    <FontIcon value='logout' className={styles.logoutIcon} />
+                  </div>
                 </div>
               </PrivateWrapper>
-              { this.shouldShowActionButton() &&
-                <Link className={styles.login} to='/'>
-                  <ActionButton className={styles.button}>{this.props.t('Sign in')}</ActionButton>
-                  <span className={styles.link}>
-                    {this.props.t('Sign in')} <FontIcon value='arrow-right'/>
-                  </span>
-                </Link>
+              {
+                this.shouldShowActionButton() &&
+                <div className={styles.login}>
+                  <p>{this.props.t('Welcome back')}</p>
+                  <Link className={styles.link} to='/'>
+                    <FontIcon value='login'/>
+                    {this.props.t('Sign in')}
+                    <span >
+                      {this.props.t('for full access')}
+                    </span>
+                  </Link>
+                </div>
               }
             </div>
           </div>
