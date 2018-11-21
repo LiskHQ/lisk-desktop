@@ -33,12 +33,12 @@ class LedgerLogin extends React.Component {
   componentDidMount() {
     this.setState({ isLoading: true });
     setTimeout(async () => {
-      const output = await displayAccounts(
-        this.props.liskAPIClient,
-        this.props.loginType,
-        this.state.hwAccounts,
-        this.props.t,
-      );
+      const output = await displayAccounts({
+        liskAPIClient: this.props.liskAPIClient,
+        loginType: this.props.loginType,
+        hwAccounts: this.state.hwAccounts,
+        t: this.props.t,
+      });
       this.props.settingsUpdated({ ledgerAccountAmount: output.hwAccounts.lenght });
       this.setState({ ...output });
     }, 2000);
