@@ -70,20 +70,24 @@
 }
 
 .title {
-  color: white;
+  color: var(--color-grayscale-dark);
   height: 56px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  & span:first-child {
+    font-weight: 600;
+  }
 }
 
 .testnetTitle,
 .devnetTitle {
-  color: var(--color-grayscale-medium);
+  color: var(--color-grayscale-dark);
 }
 
 .current {
-  color: var(--color-grayscale-medium);
+  color: var(--color-grayscale-dark);
   margin-top: 8px;
   margin-left: 32px;
   display: inline-block;

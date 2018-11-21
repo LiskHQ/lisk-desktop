@@ -7,7 +7,6 @@
 
 .main {
   max-height: 75vh; /* stylelint-disable-line */
-  overflow: auto;
   padding-left: 0px;
 }
 
@@ -31,7 +30,6 @@
 .bottomModuleWrapper {
   height: 50%;
   min-height: 200px;
-  overflow: hidden;
   padding: 0px 8px;
 }
 

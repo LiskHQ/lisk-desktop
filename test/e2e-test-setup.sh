@@ -12,7 +12,7 @@ cd $1
 pm2 stop app.js
 dropdb lisk_dev
 createdb lisk_dev
-gunzip -fcq "$pwd/test/blockchain.db.gz" | psql -d lisk_dev
+gunzip -fcq "$pwd/test/dev_blockchain.db.gz" | psql -d lisk_dev
 pm2 start app.js
 
 sleep 5
