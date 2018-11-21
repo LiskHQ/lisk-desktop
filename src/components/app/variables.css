@@ -156,8 +156,7 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Box props
   *************************/
-  --normal-shadow: 0 22px 22px 0 rgba(0, 0, 0, 0.22);
-  --bright-shadow: 0 8px 14px 0 rgba(216, 221, 230, 0.4), 0 4px 8px 0 rgba(13, 27, 52, 0.16);
+  --normal-shadow: 0 8px 14px 0 rgba(216, 221, 230, 0.4), 0 4px 8px 0 rgba(13, 27, 52, 0.16);
 
   /*************************
         Media Queries

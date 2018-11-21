@@ -101,7 +101,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 5px;
+    margin-top: 7px;
     height: 23px;
     font-size: 14px;
     font-family: var(--content-font);
@@ -133,7 +133,7 @@
   display: flex;
   flex-direction: column;
   height: 86px;
-  margin-right: 4px;
+  margin: 3px 4px 0 0;
 }
 
 .rightSide {
@@ -160,7 +160,7 @@
   top: 44px;
   right: -5px;
   transition: all ease 0.1s;
-  box-shadow: var(--bright-shadow);
+  box-shadow: var(--normal-shadow);
 
   &:hover {
     width: 75px;
@@ -280,6 +280,7 @@
   .loginInfo {
     width: 100%;
     float: none;
+    margin: 0;
 
     & > div {
       display: flex;
@@ -348,16 +349,12 @@
   }
 
   .login {
-    & .button {
-      display: none;
-    }
-
-    & .link {
-      display: block;
-      vertical-align: middle;
-      margin: var(--header-margin-top-bottom-M) var(--header-margin-right-left-M) var(--header-margin-top-bottom-M) 0px;
-      line-height: 54px;
-    }
+    height: 86px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    margin-right: 5px;
   }
 }
 
@@ -400,6 +397,8 @@
   }
 
   .login {
+    height: 86px;
+
     & .link {
       margin: var(--header-margin-top-bottom-S) var(--header-margin-right-left-S) var(--header-margin-top-bottom-S) 0px;
       line-height: 46px;
@@ -410,5 +409,9 @@
 @media (--xSmall-viewport) {
   .logo {
     padding: 10px 0 7px;
+  }
+
+  .loginInfo {
+    margin: 0;
   }
 }

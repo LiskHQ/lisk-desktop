@@ -7,7 +7,7 @@
 
 .wrapper {
   width: 100%;
-  box-shadow: var(--bright-shadow);
+  box-shadow: var(--normal-shadow);
   margin: 0;
 
   & > aside {
