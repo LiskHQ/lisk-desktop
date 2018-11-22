@@ -77,6 +77,10 @@ module.exports = {
     'src/utils/proxyLogin.js',
     'src/utils/rawTransactionWrapper.js',
     'src/utils/to.js',
+    'src/components/resultBox/resultBox.js', // FollowUp #1515
+    'src/components/passphraseSteps/index.js', // FollowUp #1515
+    'src/actions/peers.js', // FollowUp #1515
+    'src/components/send/steps/confirm/confirm.js', // FollowUp #1515
   ],
   coverageThreshold: {
     global: {
