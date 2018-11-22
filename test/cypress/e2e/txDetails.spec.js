@@ -67,7 +67,7 @@ describe('Tx details', () => {
     cy.get(ss.txReference).should('have.text', '-');
   });
 
-  // TODO update after bugfix
+  // TODO update after bugfix #1424
   // - direct url doesn't work
   // - some values are undefined for tx from snapshot
   it.skip('Delegate registration', () => {

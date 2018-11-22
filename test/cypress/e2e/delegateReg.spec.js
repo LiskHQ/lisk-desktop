@@ -2,6 +2,7 @@ import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
 import urls from '../../constants/urls';
 import enterSecondPassphrase from '../utils/enterSecondPassphrase';
+import compareBalances from '../utils/compareBalances';
 
 const ss = {
   nextButton: '.next',
@@ -18,9 +19,12 @@ const ss = {
   transactionAmount: '.transactionAmount span',
   transactionAmountPlaceholder: '.transactionAmount',
   duplicateNameError: '.error-name-duplicate',
+  headerBalance: '.balance span',
 };
 
 const txConfirmationTimeout = 12000;
+
+const txDelegateRegPrice = 25;
 
 const getRandomDelegateName = () => Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
 
@@ -31,16 +35,17 @@ describe('Delegate Registration', () => {
     randomDelegateName = getRandomDelegateName();
   });
 
-  it(`opens by url ${urls.registerDelegate}`, () => {
+  it(`Opens by url ${urls.registerDelegate}`, () => {
     cy.autologin(accounts['delegate candidate'].passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
     cy.url().should('contain', urls.registerDelegate);
     cy.get(ss.chooseName);
   });
-  // TODO Add balance substraction check after #1391 is fixed
-  it('register delegate', () => {
+
+  it('Register delegate + Header balance is affected', function () {
     cy.autologin(accounts['delegate candidate'].passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
+    cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     cy.get(ss.chooseName).click();
     cy.get(ss.delegateNameInput).click().type(randomDelegateName);
     cy.get(ss.submitDelagateNameBtn).click();
@@ -54,9 +59,12 @@ describe('Delegate Registration', () => {
     cy.get('@tx').find(ss.transactionAddress).should('have.text', 'Delegate registration');
     cy.get('@tx').find(ss.transactionReference).should('have.text', '-');
     cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');
+    cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(() => {
+      compareBalances(this.balanceBefore, this.balanceAfter, txDelegateRegPrice);
+    });
   });
 
-  it('register delegate with second passphrase', () => {
+  it('Register delegate with second passphrase', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
     cy.get(ss.chooseName).click();
@@ -75,7 +83,7 @@ describe('Delegate Registration', () => {
     cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');
   });
 
-  it('try to register already existing delegate name', () => {
+  it('Try to register already existing delegate name', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
     cy.get(ss.chooseName).click();
