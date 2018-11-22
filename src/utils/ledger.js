@@ -7,7 +7,6 @@ import { hwConstants, LEDGER_COMMANDS, loginType as loginTypesConst } from '../c
 // import { loadingStarted, loadingFinished } from './loading';
 // import signPrefix from '../constants/signPrefix';
 import { getLedgerAccountInfo } from './api/ledger';
-import { errorToastDisplayed } from '../actions/toaster';
 import { getBufferToHex, getTransactionBytes, calculateTxId } from './rawTransactionWrapper';
 // import store from '../store';
 
@@ -114,7 +113,7 @@ export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t,
   do {
     try {
       switch (loginType) { // eslint-disable-line
-        case loginTypesConst.normal:
+        case loginTypesConst.ledger:
           accountInfo = await getLedgerAccountInfo(liskAPIClient, index);
           break;
         // case loginTypes.trezor:
@@ -128,8 +127,6 @@ export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t,
         // });
       }
     } catch (error) {
-      const text = error && error.message ? `${error.message}.` : t('Error while retrievieng addresses information.');
-      store.dispatch(errorToastDisplayed({ label: text }));
       return;
     }
     if ((!unInitializedAdded && (index === 0 || accountInfo.isInitialized)) ||
