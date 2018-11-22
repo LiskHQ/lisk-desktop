@@ -2,6 +2,7 @@ import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
 import urls from '../../constants/urls';
 import enterSecondPassphrase from '../utils/enterSecondPassphrase';
+import compareBalances from '../utils/compareBalances';
 
 const ss = {
   sidebarMenuWalletBtn: '#transactions',
@@ -40,13 +41,12 @@ const getRandomAddress = () => `23495548666${Math.floor((Math.random() * 8990000
 const getRandomAmount = () => Math.floor((Math.random() * 10) + 1);
 const getRandomReference = () => Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
 
-const castBalanceStringToNumber = number => parseFloat(number.replace(/,/g, ''));
+const transactionFee = 0.1;
 
 describe('Transfer', () => {
   let randomAddress;
   let randomAmount;
   let randomReference;
-  const transactionFee = 0.1;
 
   beforeEach(() => {
     randomAddress = getRandomAddress();
@@ -73,7 +73,7 @@ describe('Transfer', () => {
     'Header balance is affected', function () {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.wallet);
-    cy.get(ss.headerBalance).invoke('text').as('balanceBeforeString');
+    cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     cy.get(ss.recipientInput).type(randomAddress);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextButton).click();
@@ -86,11 +86,8 @@ describe('Transfer', () => {
     cy.get('@tx').find(ss.transactionAmount).should('have.text', randomAmount.toString());
     cy.wait(txConfirmationTimeout);
     cy.get('@tx').find(ss.spinner).should('not.exist');
-    cy.get(ss.headerBalance).should((headerBalance) => {
-      const balanceAfter = castBalanceStringToNumber(headerBalance.text());
-      const balanceBefore = castBalanceStringToNumber(this.balanceBeforeString);
-      expect(balanceAfter)
-        .to.be.equal(parseFloat((balanceBefore - (randomAmount + transactionFee)).toFixed(6)));
+    cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(() => {
+      compareBalances(this.balanceBefore, this.balanceAfter, randomAmount + transactionFee);
     });
   });
 

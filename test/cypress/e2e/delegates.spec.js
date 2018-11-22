@@ -2,6 +2,7 @@ import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
 import urls from '../../constants/urls';
 import enterSecondPassphrase from '../utils/enterSecondPassphrase';
+import compareBalances from '../utils/compareBalances';
 
 const ss = {
   sidebarMenuDelegatesBtn: '#delegates',
@@ -23,9 +24,14 @@ const ss = {
   voteCheckbox: '.vote-checkbox',
   voteResultHeader: '.result-box-header',
   clearSearchBtn: '.clean-icon',
+  headerBalance: '.balance span',
+  votesPreselection: '.upvotes-message',
+  unvotesPreselection: '.unvotes-message',
+  alreadyVotedPreselection: '.alreadyVoted-message',
 };
 
 const txConfirmationTimeout = 20000;
+const txVotePrice = 1;
 
 describe('Delegates', () => {
   it(`opens by url ${urls.delegates}`, () => {
@@ -88,10 +94,10 @@ describe('Delegates', () => {
     cy.get('@dg').find(ss.delegateProductivity).contains(/\d+ %/);
   });
 
-  // TODO Add balance substraction check after #1391 is fixed
-  it('Unvote and Vote', () => {
+  it('Unvote and Vote + Header balance is affected', function () {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
+    cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.voteCheckbox).should('have.class', 'checked');
     // Unvote
@@ -103,6 +109,9 @@ describe('Delegates', () => {
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.spinner);
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout }).should('have.class', 'unchecked');
+    cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(() => {
+      compareBalances(this.balanceBefore, this.balanceAfter, txVotePrice);
+    });
     // Vote
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.voteCheckbox).click();
@@ -129,21 +138,19 @@ describe('Delegates', () => {
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout });
   });
 
-  // TODO Unskip after #1359 fix
-  it.skip('should allow to select delegates by URL', () => {
-    cy.loginUI(accounts['delegate candidate'], 'dev');
-    cy.visit('/delegates/vote?votes=genesis_12,genesis_14,genesis_16');
-    cy.get('.upvotes-message').should('have.text', 'genesis_12, genesis_14, genesis_16');
-    cy.get('.next').click();
-    cy.get('.confirm').click();
-    cy.get('.result-box-message').should('have.text', 'Your votes are being processed. It may take up to 10 minutes for it to be secured in the blockchain.');
-    cy.wait(10000);
-    cy.visit('/wallet');
-    cy.wait(20000);
-    cy.visit('/delegates/vote?unvotes=genesis_12');
-    cy.get('.unvotes-message').should('have.text', 'genesis_12');
-    cy.visit('/wallet');
-    cy.visit('/delegates/vote?votes=genesis_14,genesis_16');
-    cy.get('.alreadyVoted-messages');
+  it('Bulk vote/unvote delegates by URL', () => {
+    cy.autologin(accounts['delegate candidate'].passphrase, networks.devnet.node);
+    cy.visit(`${urls.delegatesVote}?votes=genesis_12,genesis_14,genesis_16`);
+    cy.get(ss.votesPreselection).contains('genesis_12, genesis_14, genesis_16');
+    cy.get(ss.nextBtn).click();
+    cy.get(ss.confirmBtn).click();
+    cy.get(ss.voteResultHeader).contains('Votes submitted');
+    cy.wait(txConfirmationTimeout);
+    cy.visit(urls.wallet);
+    cy.visit(`${urls.delegatesVote}?unvotes=genesis_12`);
+    cy.get(ss.unvotesPreselection).contains('genesis_12');
+    cy.visit(urls.wallet);
+    cy.visit(`${urls.delegatesVote}?votes=genesis_14,genesis_16`);
+    cy.get(ss.alreadyVotedPreselection).contains('genesis_14, genesis_16');
   });
 });

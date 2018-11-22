@@ -70,8 +70,7 @@ describe('Registration', () => {
     cy.get(ss.networkStatus).contains('Connected to testnet');
   });
 
-  // TODO: unskip after #1326 fixed
-  it.skip('Create Lisk ID for Devnet', function () {
+  it('Create Lisk ID for Devnet', function () {
     cy.addLocalStorage('settings', 'showNetwork', true);
     cy.visit('/');
     chooseNetwork('dev');
@@ -81,13 +80,12 @@ describe('Registration', () => {
     cy.get(ss.nodeAddress).contains(networks.devnet.node);
   });
 
-  // TODO: unskip after #1326 fixed
-  it.skip('Create Lisk ID for invalid address', function () {
+  it('Create Lisk ID for invalid address', () => {
     cy.addLocalStorage('settings', 'showNetwork', true);
     cy.visit('/');
     chooseNetwork('invalid');
     cy.get(ss.newAccountBtn).click();
-    registerUI.call(this);
     cy.get(ss.errorPopup).contains('Unable to connect to the node');
+    cy.get(ss.newAccountBtn);
   });
 });
