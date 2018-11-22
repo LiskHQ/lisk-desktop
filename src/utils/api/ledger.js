@@ -1,3 +1,4 @@
+import to from 'await-to-js';
 import {
   createSendTX,
   createDelegateTX,
@@ -9,7 +10,6 @@ import {
   signTransactionWithLedger,
   getAccountFromLedgerIndex,
 } from '../ledger';
-import to from '../to';
 import { getAccount } from './account';
 
 /**

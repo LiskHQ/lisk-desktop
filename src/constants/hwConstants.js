@@ -6,3 +6,8 @@ export const LEDGER_COMMANDS = {
   SIGN_MSG: 'SIGN_MSG',
   SIGN_TX: 'SIGN_TX',
 };
+
+export const loginType = {
+  normal: 0,
+  ledger: 1,
+};
