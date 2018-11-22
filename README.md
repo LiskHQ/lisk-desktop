@@ -61,6 +61,12 @@ Then, in order to launch electron, you can run
 npm run start
 ```
 
+Then, in order to launch version with hardware wallet, you can run
+
+```
+npm run dev-hardware-wallet
+```
+
 #### Windows
 
 Build package for Windows (on Windows in [Git BASH](https://git-for-windows.github.io/)).

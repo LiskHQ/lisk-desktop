@@ -1,4 +1,6 @@
 import i18next from 'i18next';
+import to from 'await-to-js';
+
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
 import { send, getTransactions, getSingleTransaction, unconfirmedTransactions } from '../utils/api/transactions';
@@ -11,7 +13,6 @@ import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import { toRawLsk } from '../utils/lsk';
 import { sendWithLedger } from '../utils/api/ledger';
-import to from '../utils/to';
 
 export const cleanTransactions = () => ({
   type: actionTypes.cleanTransactions,

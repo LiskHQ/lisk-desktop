@@ -3,12 +3,13 @@ import isElectron from 'is-electron';
 import TransportU2F from '@ledgerhq/hw-transport-u2f';
 import i18next from 'i18next';
 import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api';
-import { hwConstants, LEDGER_COMMANDS } from '../constants/hwConstants';
+import { hwConstants, LEDGER_COMMANDS, loginType as loginTypesConst } from '../constants/hwConstants';
 // import { loadingStarted, loadingFinished } from './loading';
 // import signPrefix from '../constants/signPrefix';
-// import { infoToastDisplayed, errorToastDisplayed } from '../actions/toaster';
+import { getLedgerAccountInfo } from './api/ledger';
+import { errorToastDisplayed } from '../actions/toaster';
 import { getBufferToHex, getTransactionBytes, calculateTxId } from './rawTransactionWrapper';
-// import store from '../store';
+import store from '../store';
 
 export const LEDGER_MSG = {
   LEDGER_NO_TRANSPORT_AVAILABLE: i18next.t('Unable to detect the communication layer with your Ledger Nano S'),
@@ -102,6 +103,48 @@ export const getAccountFromLedgerIndex = (index = 0) => {
     data: { index },
   };
   return ledgerPlatformHendler(command);
+};
+
+/* eslint-disable no-await-in-loop */
+export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t, unInitializedAdded = false, }) => { // eslint-disable-line
+  let index = unInitializedAdded ? hwAccounts.length : 0;
+  let accountInfo;
+
+  const accounts = [];
+  do {
+    try {
+      switch (loginType) { // eslint-disable-line
+        case loginTypesConst.normal:
+          accountInfo = await getLedgerAccountInfo(liskAPIClient, index);
+          break;
+        // case loginTypes.trezor:
+        //   this.props.errorToastDisplayed({
+        //   text: this.props.t('Not Yet Implemented. Sorry.'),
+        // });
+        //   break;
+        // default:
+        //   this.props.errorToastDisplayed({
+        //   text: this.props.t('Login Type not recognized.')
+        // });
+      }
+    } catch (error) {
+      const text = error && error.message ? `${error.message}.` : t('Error while retrievieng addresses information.');
+      store.dispatch(errorToastDisplayed({ label: text }));
+      return;
+    }
+    if ((!unInitializedAdded && (index === 0 || accountInfo.isInitialized)) ||
+      (unInitializedAdded && !accountInfo.isInitialized)) {
+      accounts.push(accountInfo);
+    }
+    index++;
+  }
+  while (accountInfo.isInitialized || index === 0);
+  /* eslint-disable-next-line */
+  return {
+    hwAccounts: accounts,
+    isLoading: false,
+    showNextAvailable: (index === 1),
+  };
 };
 //  export const signMessageWithLedger = async (account, message) => {
 //   const command = {

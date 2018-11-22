@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+import { withRouter } from 'react-router';
 
-import { getLedgerAccountInfo } from '../../utils/api/ledger';
+import { displayAccounts } from '../../utils/ledger';
 import { liskAPIClientSet } from '../../actions/peers';
 import { settingsUpdated } from '../../actions/settings';
 import { errorToastDisplayed } from '../../actions/toaster';
@@ -10,6 +11,7 @@ import { errorToastDisplayed } from '../../actions/toaster';
 import AccountCard from './accountCard';
 import AddAccountCard from './addAccountCard';
 import { FontIcon } from '../fontIcon';
+import routes from '../../constants/routes';
 
 import cubeImage from '../../assets/images/dark-blue-cube.svg';
 import styles from './ledgerLogin.css';
@@ -28,74 +30,19 @@ class LedgerLogin extends React.Component {
     };
   }
 
-  // async componentDidUpdate(prevProps) {
-  // if (this.props.settings.ledgerAccountAmount !== prevProps.settings.ledgerAccountAmount) {
-  //   const accountInfo = await getLedgerAccountInfo
-  // (this.props.liskAPIClient, this.state.hwAccounts.length);  // eslint-disable-line
-
-  //   this.setState({ hwAccounts: this.state.hwAccounts.concat([accountInfo]) });
-  // }
-  // }
-
-  async componentDidMount() {
+  componentDidMount() {
     this.setState({ isLoading: true });
-    setTimeout(() => {
-      this.displayAccounts();
+    setTimeout(async () => {
+      const output = await displayAccounts({
+        liskAPIClient: this.props.liskAPIClient,
+        loginType: this.props.loginType,
+        hwAccounts: this.state.hwAccounts,
+        t: this.props.t,
+      });
+      this.props.settingsUpdated({ ledgerAccountAmount: output.hwAccounts.lenght });
+      this.setState({ ...output });
     }, 2000);
   }
-  /* eslint-disable no-await-in-loop */
-  async displayAccounts(unInitializedAdded = false) { // eslint-disable-line
-    let index = unInitializedAdded ? this.state.hwAccounts.length : 0;
-    let accountInfo;
-    if (!unInitializedAdded) {
-      this.setState({ isLoading: true });
-    }
-    do {
-      try {
-        switch (this.props.loginType) {   // eslint-disable-line
-          case 1:
-            accountInfo = await getLedgerAccountInfo(this.props.liskAPIClient, index);
-            break;
-          // case loginTypes.trezor:
-          //   this.props.errorToastDisplayed({
-          //   text: this.props.t('Not Yet Implemented. Sorry.'),
-          // });
-          //   break;
-          // default:
-          //   this.props.errorToastDisplayed({
-          //   text: this.props.t('Login Type not recognized.')
-          // });
-        }
-      } catch (error) {
-        const text = error && error.message ? `${error.message}.` : this.props.t('Error while retrievieng addresses information.');
-        this.props.errorToastDisplayed({ label: text });
-
-        return;
-      }
-      if ((!unInitializedAdded && (index === 0 || accountInfo.isInitialized)) ||
-        (unInitializedAdded && !accountInfo.isInitialized)) {
-        this.state.hwAccounts.push(accountInfo);
-        this.setState({ hwAccounts: this.state.hwAccounts });
-      }
-      index++;
-    }
-    while (accountInfo.isInitialized || index === 0);
-    this.props.settingsUpdated({ ledgerAccountAmount: index });
-    this.setState({
-      isLoading: false,
-      showNextAvailable: (index === 1),
-    });
-  }
-
-  // showNextAvailableWallet() {
-  //   if (this.state.showNextAvailable) {
-  //     this.props.infoToastDisplayed({
-  // label: this.props.t('Please use the last not-initialized account before creating a new one!'),
-  // });
-  // //   } else {
-  //     this.setState({ showNextAvailable: true });
-  //   }
-  // }
 
   selectAccount(ledgerAccount, index) {
     // set active peer
@@ -107,11 +54,20 @@ class LedgerLogin extends React.Component {
         derivationIndex: index,
       },
     });
+    this.props.history.replace(routes.dashboard.path);
   }
 
   async addAccount() {
     if (this.state.hwAccounts[this.state.hwAccounts.length - 1].isInitialized) {
-      this.displayAccounts(true);
+      const output = await displayAccounts({
+        liskAPIClient: this.props.liskAPIClient,
+        loginType: this.props.loginType,
+        hwAccounts: this.state.hwAccounts,
+        t: this.props.t,
+        unInitializedAdded: true,
+      });
+      const hwAccounts = this.state.hwAccounts.concat([output.hwAccounts[0]]);
+      this.setState({ hwAccounts });
     } else {
       const label = this.props.t('Please use the last not-initialized account before creating a new one!');
       this.props.errorToastDisplayed({ label });
@@ -140,19 +96,11 @@ class LedgerLogin extends React.Component {
 
   render() {
     const loadingAnimation = (<div className={styles.cubeRow}>
-        <div className={`${styles.cube} ${styles['cube-1']}`}>
+      {[1, 2, 3, 4].map(number =>
+        <div key={`cube-${number}`} className={`${styles.cube} ${styles[`cube-${number}`]}`}>
           <img src={cubeImage} />
-        </div>
-        <div className={`${styles.cube} ${styles['cube-2']}`}>
-          <img src={cubeImage} />
-        </div>
-        <div className={`${styles.cube} ${styles['cube-3']}`}>
-          <img src={cubeImage} />
-        </div>
-        <div className={`${styles.cube} ${styles['cube-4']}`}>
-          <img src={cubeImage} />
-        </div>
-      </div>);
+        </div>)}
+    </div>);
 
     return <div>
       {this.state.isLoading ? <h1 className={styles.title}>{this.state.isLoading && this.props.t('Loading accounts')}</h1> : null}
@@ -203,4 +151,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(translate()(LedgerLogin));
+)(withRouter(translate()(LedgerLogin)));
