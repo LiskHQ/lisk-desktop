@@ -8,6 +8,7 @@ import { extractAddress } from '../utils/account';
 import { loadAccount, passphraseUsed } from './account';
 import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
+import transactionTypes from '../constants/transactionTypes';
 import { toRawLsk } from '../utils/lsk';
 import { sendWithLedger } from '../utils/api/ledger';
 import to from '../utils/to';
@@ -275,6 +276,8 @@ export const sent = ({
         recipientId,
         amount: toRawLsk(amount),
         fee: Fees.send,
+        type: transactionTypes.send,
+        asset: { data },
       }));
       dispatch(passphraseUsed(passphrase));
     }
