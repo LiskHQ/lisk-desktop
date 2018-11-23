@@ -33,7 +33,7 @@ class Converter extends React.Component {
         className='amount'
         error={this.props.error}
         value={this.props.value}
-        theme={styles}
+        theme={this.props.theme || styles}
         onFocus={this.props.onFocus}
         onBlur={this.props.onBlur}
         onChange={this.props.onChange}>

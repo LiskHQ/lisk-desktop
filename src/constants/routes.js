@@ -14,6 +14,7 @@ import Voting from '../components/voting';
 import SingleTransaction from '../components/singleTransaction';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
+import Request from '../components/request/request';
 
 export default {
   accountVisualDemo: {
@@ -29,6 +30,11 @@ export default {
   wallet: {
     path: '/wallet',
     component: TransactionDashboard,
+    isPrivate: true,
+  },
+  request: {
+    path: '/request',
+    component: Request,
     isPrivate: true,
   },
   delegates: {

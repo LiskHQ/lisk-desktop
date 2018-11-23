@@ -4,7 +4,7 @@ import styles from './index.css';
 
 class ReferenceInput extends React.Component {
   render() {
-    const { handleChange, reference, label, context } = this.props; // eslint-disable-line
+    const { handleChange, reference, label, context, theme } = this.props; // eslint-disable-line
     return (
       <Input
         className="reference"
@@ -13,7 +13,7 @@ class ReferenceInput extends React.Component {
             context.referenceInput = ref;
           }
         }}
-        theme={styles}
+        theme={theme || styles}
         label={label}
         error={reference.error}
         value={reference.value}
