@@ -8,7 +8,6 @@ import { hwConstants, LEDGER_COMMANDS, loginType as loginTypesConst } from '../c
 // import signPrefix from '../constants/signPrefix';
 import { getLedgerAccountInfo } from './api/ledger';
 import { getBufferToHex, getTransactionBytes, calculateTxId } from './rawTransactionWrapper';
-// import store from '../store';
 
 export const LEDGER_MSG = {
   LEDGER_NO_TRANSPORT_AVAILABLE: i18next.t('Unable to detect the communication layer with your Ledger Nano S'),
