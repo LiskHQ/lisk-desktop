@@ -44,14 +44,14 @@ class LedgerLogin extends React.Component {
     }, 2000);
   }
 
-  selectAccount(ledgerAccount) {
+  selectAccount(ledgerAccount, index) {
     // set active peer
     this.props.liskAPIClientSet({
       publicKey: ledgerAccount.publicKey,
       network: this.props.network,
       hwInfo: { // Use pubKey[0] first 10 char as device id
         deviceId: ledgerAccount.publicKey.substring(0, 10),
-        derivationIndex: 0,
+        derivationIndex: index,
       },
     });
     this.props.history.replace(routes.dashboard.path);
@@ -123,6 +123,7 @@ class LedgerLogin extends React.Component {
                     hardwareAccountName={this.state.hardwareAccountsName[account.address]}
                     isEditMode={this.state.isEditMode}
                     key={`accountCard-${index}`}
+                    index={index}
                     account={account}
                     changeInput={this.changeAccountNameInput.bind(this)}
                     onClickHandler={this.selectAccount.bind(this)} />
@@ -138,6 +139,7 @@ class LedgerLogin extends React.Component {
 const mapStateToProps = state => ({
   liskAPIClient: state.peers && state.peers.liskAPIClient,
   settings: state.settings,
+  loginType: state.account.loginType || 1,
 });
 
 const mapDispatchToProps = dispatch => ({

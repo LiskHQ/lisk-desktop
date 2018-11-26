@@ -37,7 +37,9 @@ const login = (dispatch, getState, data, config) => { // eslint-disable-line max
       publicKey,
       address,
       network: code || 0,
+      loginType: data.hwInfo ? 1 : 0,
       peerAddress: data.network.nodes[0],
+      hwInfo: data.hwInfo ? data.hwInfo : {},
     };
 
     dispatch(accountLoading());

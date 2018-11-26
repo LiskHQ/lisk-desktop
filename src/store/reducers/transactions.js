@@ -6,7 +6,7 @@ import txFilter from '../../constants/transactionFilters';
  * @param {Object} action
  */
 const initialState = { pending: [], confirmed: [], count: null };
-const transactions = (state = initialState, action) => {
+const transactions = (state = initialState, action) => { // eslint-disable-line complexity
   switch (action.type) {
     case actionTypes.cleanTransactions:
       return initialState;
@@ -17,6 +17,10 @@ const transactions = (state = initialState, action) => {
     case actionTypes.transactionFailed:
       return Object.assign({}, state, {
         failed: { errorMessage: action.data.errorMessage },
+      });
+    case actionTypes.transactionFailedClear:
+      return Object.assign({}, state, {
+        failed: undefined,
       });
     case actionTypes.transactionsFailed:
       return Object.assign({}, state, {
