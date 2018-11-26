@@ -247,8 +247,9 @@ class Login extends React.Component {
                     <PrimaryButton label={this.props.t('Log in')}
                       className='login-button'
                       type='submit'
-                      disabled={(this.state.network === networks.customNode.code && this.state.addressValidity !== '') ||
-                      this.state.passphraseValidity !== '' || this.state.passphrase === ''} />
+                      disabled={(this.state.network === networks.customNode.code
+                        && !!this.state.addressValidity)
+                      || !!this.state.passphraseValidity || this.state.passphrase === ''} />
                   </div>
                 </footer>
               </form>
