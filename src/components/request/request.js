@@ -135,8 +135,8 @@ class Request extends Component {
           <div className={`${styles.transaction} ${grid['col-xs-5']} ${grid['col-sm-5']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
             {
               step === 1
-              ? (<p>{t(`This is your Lisk ID shown as a QR code. You can scan it with our Lisk Mobile
-                  app available on Google Play & the AppStore or any QR code reader.`)}
+              ? (<p>
+              {t('This is your Lisk ID shown as a QR code. You can scan it with our Lisk Mobileapp available on Google Play & the AppStore or any QR code reader.')}
                 </p>)
               : (<RequestForm
                   t={t}

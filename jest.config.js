@@ -55,6 +55,8 @@ module.exports = {
     'src/components/passphrase/create/create.js',
     'src/components/passphraseCreation/index.js',
     'src/components/register/register.js',
+    'src/components/request/confirmRequest.js',
+    'src/components/request/index.js',
     'src/components/request/specifyRequest.js',
     'src/components/searchBar/index.js', // Passing in mocha but not in Jest
     'src/components/send/steps/form/stories.js',
