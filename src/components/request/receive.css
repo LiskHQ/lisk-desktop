@@ -85,14 +85,12 @@
 .message {
   width: 100%;
   height: 100%;
+  height: 601.75px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: var(--color-white);
-  z-index: 10;
-  position: absolute;
-  visibility: hidden;
   line-height: 26px;
 
   & h3 {

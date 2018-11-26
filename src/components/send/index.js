@@ -9,8 +9,6 @@ import Form from './steps/form';
 import Confirm from './steps/confirm';
 import Request from '../request';
 import FollowAccount from '../sendTo/followAccount';
-import SpecifyRequest from '../request/specifyRequest';
-import ConfirmRequest from '../request/confirmRequest';
 import PassphraseSteps from './../passphraseSteps';
 import AccountInitialization from '../accountInitialization';
 import { parseSearchParams } from './../../utils/searchParams';
@@ -94,8 +92,6 @@ class Send extends React.Component {
               finalCallback={this.setActiveOnMobile.bind(this, { isActiveOnMobile: false })}
               className={styles.wrapper}>
               <Request {...this.props} setTabSend={this.setActiveTabSend.bind(this)} />
-              <SpecifyRequest {...this.props} />
-              <ConfirmRequest {...this.props} />
             </MultiStep>
           }
         </Box>

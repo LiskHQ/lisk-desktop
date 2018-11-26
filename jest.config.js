@@ -20,6 +20,7 @@ module.exports = {
     'src/components/voteUrlProcessor/index.test.js',
     'src/store/middlewares/login.test.js',
     'src/store/reducers/liskService.test.js',
+    'test/integration/wallet.test.js',
   ],
   verbose: true,
   cache: false,
@@ -79,6 +80,7 @@ module.exports = {
     'src/utils/proxyLogin.js',
     'src/utils/rawTransactionWrapper.js',
     'src/utils/to.js',
+    'test/integration/wallet.test.js',
   ],
   coverageThreshold: {
     global: {

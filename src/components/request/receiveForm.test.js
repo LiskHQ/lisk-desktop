@@ -1,15 +1,16 @@
 import React from 'react';
 import { expect } from 'chai';
-import { Provider } from 'react-redux';
+import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import RequestForm from './requestForm';
+import RequestForm from './receiveForm';
 
-describe('Request Form', () => {
+describe('RequestForm', () => {
   let wrapper;
   let props;
+  let store;
 
   beforeEach(() => {
     props = {
@@ -29,15 +30,18 @@ describe('Request Form', () => {
       },
     };
 
-    const store = configureMockStore([thunk])({
+    store = configureMockStore([thunk])({
       settings: {},
       settingsUpdated: () => {},
       liskService: { priceTicker },
     });
 
-    wrapper = mount(<Provider store={store}>
-      <RequestForm {...props}/>
-    </Provider>);
+    wrapper = mount(<RequestForm {...props}/>, {
+      context: { store },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+      },
+    });
   });
 
   it('Render RequestForm', () => {

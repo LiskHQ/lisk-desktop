@@ -1,11 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import AccountVisual from '../accountVisual';
 import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import ReferenceInput from '../referenceInput';
 import Converter from '../converter';
-import styles from './requestForm.css';
+import styles from './receiveForm.css';
 
 const RequestForm = ({
   address,
@@ -52,14 +51,5 @@ const RequestForm = ({
     />
   </div>
 );
-
-RequestForm.propTypes = {
-  amount: PropTypes.string.isRequired,
-  error: PropTypes.string,
-  onAmountChange: PropTypes.func.isRequired,
-  onReferenceChange: PropTypes.func.isRequired,
-  reference: PropTypes.object.isRequired,
-  t: PropTypes.func.isRequired,
-};
 
 export default RequestForm;

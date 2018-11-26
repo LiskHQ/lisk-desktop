@@ -14,7 +14,7 @@ import Voting from '../components/voting';
 import SingleTransaction from '../components/singleTransaction';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
-import Request from '../components/request/request';
+import Receive from '../components/request';
 
 export default {
   accountVisualDemo: {
@@ -34,7 +34,7 @@ export default {
   },
   request: {
     path: '/request',
-    component: Request,
+    component: Receive,
     isPrivate: true,
   },
   delegates: {
