@@ -6,6 +6,8 @@ import TransactionsList from './transactionsList';
 import styles from './transactions.css';
 import txFilters from '../../constants/transactionFilters';
 import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
+import { ActionButton } from './../toolbox/buttons/button';
+import { FontIcon } from '../fontIcon';
 
 class TransactionsOverview extends React.Component {
   constructor(props) {
@@ -97,7 +99,16 @@ class TransactionsOverview extends React.Component {
           <h2 className={styles.title}>{this.props.t('Activity')} {hasTitle
             ? (<span>{this.props.t('of')} <span className={`${styles.accountTitle} account-title`}>{accountTitle}</span></span>)
             : null}</h2>
-
+          <div className={styles.buttons}>
+            <a onClick={() => this.props.history.push('/request')}>
+              <FontIcon value='request-token'/>
+              {this.props.t('Receive')}
+            </a>
+            <ActionButton
+              onClick={() => {}}>
+              {this.props.t('Send')}
+            </ActionButton>
+          </div>
         </header>
         {this.shouldShowEmptyState() ?
           <EmptyState title={this.props.t('No activity yet')}

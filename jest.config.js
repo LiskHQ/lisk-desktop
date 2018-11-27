@@ -40,9 +40,13 @@ module.exports = {
     '/node_modules/',
     'app/src/ipc.js',
     'app/src/ledger.js',
+    'rc/components/passphraseSteps/index.js',
+    'rc/components/transactions/walletTransactions/walletTransactions.js',
+    'rc/components/transferTabs/index.js',
     'src/actions/liskService.js',
     'src/actions/transactions.js',
     'src/components/account/stories.js',
+    'src/components/accountInitialization/index.js',
     'src/components/backgroundMaker/index.js',
     'src/components/dashboard/currencyGraph.js', // This should be unskipped in issue #1499
     'src/components/dialog/stories.js',
@@ -59,11 +63,16 @@ module.exports = {
     'src/components/request/confirmRequest.js',
     'src/components/request/index.js',
     'src/components/request/specifyRequest.js',
+    'src/components/resultBox/index.js',
     'src/components/searchBar/index.js', // Passing in mocha but not in Jest
+    'src/components/send/steps/confirm/confirm.js', // This test should me fix in a new issue for coverage only
+    'src/components/send/steps/confirm/index.js',
     'src/components/send/steps/form/stories.js',
     'src/components/spinner/stories.js',
     'src/components/toaster/stories.js',
     'src/components/toolbox/transitionWrapper/index.js',
+    'src/components/transactionDashboard/index.js',
+    'src/components/transactionDashboard/index.js',
     'src/components/transactions/transactions.js',
     'src/components/transactions/votedDelegates.js',
     'src/components/voteUrlProcessor/index.js',
@@ -80,7 +89,6 @@ module.exports = {
     'src/utils/proxyLogin.js',
     'src/utils/rawTransactionWrapper.js',
     'src/utils/to.js',
-    'test/integration/wallet.test.js',
   ],
   coverageThreshold: {
     global: {

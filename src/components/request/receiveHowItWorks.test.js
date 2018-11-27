@@ -12,16 +12,20 @@ import ReceiveHowItWorks from './receiveHowItWorks';
 describe('ReceiveHowItWorks', () => {
   let wrapper;
   let props;
+  let store;
 
   beforeEach(() => {
     props = {
       address: '12345L',
       t: key => key,
       nextStep: spy(),
+      prevStep: spy(),
       settingsUpdated: spy(),
+      isMessage: false,
+      status: 'foward',
     };
 
-    const store = configureMockStore([thunk])({
+    store = configureMockStore([thunk])({
       settings: { currency: 'USD' },
       settingsUpdated: () => {},
       liskService: {
@@ -49,5 +53,18 @@ describe('ReceiveHowItWorks', () => {
     wrapper.find('.closeIcon').simulate('click');
     wrapper.update();
     expect(props.nextStep).to.have.been.calledWith();
+  });
+
+  it('go to previous page if status = backward and isMessage = false', () => {
+    props.status = 'backward';
+    wrapper = shallow(<ReceiveHowItWorks {...props}/>, {
+      context: { store, i18n },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
+    });
+
+    expect(props.prevStep).to.have.been.calledWith();
   });
 });

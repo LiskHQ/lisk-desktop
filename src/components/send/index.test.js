@@ -15,6 +15,7 @@ describe('Send', () => {
   let wrapper;
   let transactions;
   let peers;
+  let store;
   const priceTicker = {
     success: true,
     LSK: {
@@ -29,7 +30,7 @@ describe('Send', () => {
       options: {},
     };
 
-    const store = configureMockStore([thunk])({
+    store = configureMockStore([thunk])({
       peers,
       transactions,
       account: { serverPublicKey: 'public_key', balance: 0 },
@@ -52,6 +53,19 @@ describe('Send', () => {
   });
 
   it('clicking send menu item should activate the send component', () => {
+    wrapper.find('.send-menu-item').simulate('click');
+    expect(wrapper.find('.send-box').first()).to.have.className(styles.isActive);
+  });
+
+  it('clicking send menu item should activate the send component', () => {
+    wrapper = mount(<Provider store={store}>
+      <Send
+        history={ { location: {} } }
+        account={{ serverPublicKey: '', balance: 10 }}
+        pendingTransactions={[]}
+        i18n={i18n} />
+    </Provider>);
+
     wrapper.find('.send-menu-item').simulate('click');
     expect(wrapper.find('.send-box').first()).to.have.className(styles.isActive);
   });

@@ -71,6 +71,25 @@
       & .balanceUnit {
         font-weight: var(--font-weight-semi-bold);
       }
+
+      & .buttons {
+        float: right;
+        margin-top: 28px;
+
+        & > a {
+          cursor: pointer;
+          margin-right: 41px;
+          font-size: 16px;
+          font-weight: 600;
+          color: var(--color-primary-standard);
+          font-family: var(--content-font);
+        }
+
+        & > button {
+          width: 110px;
+          font-size: 16px;
+        }
+      }
     }
   }
 }

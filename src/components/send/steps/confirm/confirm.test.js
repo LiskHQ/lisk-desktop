@@ -13,6 +13,7 @@ const fakeStore = configureStore();
 
 describe('Confirm Component', () => {
   let wrapper;
+  let store;
   const account = accounts.delegate;
   const props = {
     account,
@@ -23,13 +24,14 @@ describe('Confirm Component', () => {
     sent: sinon.spy(),
     t: key => key,
     nextStep: () => {},
+    prevStep: () => {},
     followedAccounts: [],
   };
 
   describe('Without account init', () => {
     beforeEach(() => {
       account.serverPublicKey = 'public_key';
-      const store = fakeStore({ account });
+      store = fakeStore({ account });
 
       wrapper = mount(<Confirm {...props} />, {
         context: { store, i18n },
@@ -68,6 +70,9 @@ describe('Confirm Component', () => {
       props.address = '123L';
       props.amount = 1;
       props.accountInit = true;
+      props.followedAccounts = [{ title: 'acc1', address: '12345L' }];
+      props.pendingTransactions = [{ title: 'acc1', address: '90345L', ammount: '1' }];
+      props.failedTransactions = [{ title: 'acc1', address: '90375L', ammount: '1', errorMessage: 'fail' }];
       const store = fakeStore({ account });
 
       wrapper = mount(<Confirm {...props} />, {
@@ -80,8 +85,11 @@ describe('Confirm Component', () => {
     });
 
     it('account initialisation option should not conflict with launch protocol', () => {
+      wrapper.setState({ loading: true });
+      wrapper.update();
       expect(wrapper.state('recipient').value).to.equal(account.address);
       expect(wrapper.state('amount').value).to.equal(0.1);
+      wrapper.find('Button').at(0).simulate('click');
     });
   });
 });
