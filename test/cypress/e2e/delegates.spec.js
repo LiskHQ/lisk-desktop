@@ -1,69 +1,67 @@
 import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
+import ss from '../../constants/selectors';
 import urls from '../../constants/urls';
 import enterSecondPassphrase from '../utils/enterSecondPassphrase';
 import compareBalances from '../utils/compareBalances';
-
-const ss = {
-  sidebarMenuDelegatesBtn: '#delegates',
-  nextButton: '.next',
-  chooseName: '.choose-name',
-  becomeDelegateLink: '.register-delegate',
-  confirmVotesSidebar: '.confirm-votes',
-  nextBtn: '.next',
-  confirmBtn: '.confirm',
-  okayBtn: '.okay-button',
-  spinner: '.spinner',
-  delegateRow: '.delegate-row',
-  delegateList: '.delegate-list',
-  delegateRank: '.delegate-rank',
-  delegateName: '.delegate-name',
-  delegateId: '.delegate-id',
-  delegateProductivity: '.delegate-productivity',
-  searchDelegateInput: 'input.search',
-  voteCheckbox: '.vote-checkbox',
-  voteResultHeader: '.result-box-header',
-  clearSearchBtn: '.clean-icon',
-  headerBalance: '.balance span',
-  votesPreselection: '.upvotes-message',
-  unvotesPreselection: '.unvotes-message',
-  alreadyVotedPreselection: '.alreadyVoted-message',
-};
 
 const txConfirmationTimeout = 20000;
 const txVotePrice = 1;
 
 describe('Delegates', () => {
+  /**
+   * Delegate voting page can be opened by direct link
+   * @expect url is correct
+   * @expect some specific to page element is present on it
+   */
   it(`opens by url ${urls.delegates}`, () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
     cy.url().should('contain', urls.delegates);
-    cy.get(ss.confirmVotesSidebar).find(ss.nextButton);
+    cy.get(ss.votesConfirmSidebar).find(ss.nextBtn);
   });
 
+  /**
+   * Delegate voting page can be opened clicking sidebar button
+   * @expect url is correct
+   * @expect some specific to page element is present on it
+   */
   it('opens by sidebar button', () => {
     cy.addLocalStorage('settings', 'advancedMode', true);
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
     cy.get(ss.sidebarMenuDelegatesBtn).should('have.css', 'opacity', '1').click();
     cy.url().should('contain', urls.delegates);
-    cy.get(ss.confirmVotesSidebar).find(ss.nextButton);
+    cy.get(ss.votesConfirmSidebar).find(ss.nextBtn);
   });
 
-  it('Become a delegate link -> Delegate register page', () => {
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.delegates);
-    cy.get(ss.becomeDelegateLink).click();
-    cy.url().should('contain', urls.registerDelegate);
-    cy.get(ss.chooseName);
-  });
-
+  /**
+   * Become a delegate link absent if I am a delegate
+   * @expect link does not exist
+   */
   it('Become a delegate link absent if I am a delegate', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
     cy.get(ss.becomeDelegateLink).should('not.exist');
   });
 
+  /**
+   * Become a delegate link leads to Delegate register page
+   * @expect url is correct
+   * @expect some specific to page element is present on it
+   */
+  it('Become a delegate link -> Delegate register page', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.delegates);
+    cy.get(ss.becomeDelegateLink).click();
+    cy.url().should('contain', urls.registerDelegate);
+    cy.get(ss.chooseDelegateName);
+  });
+
+  /**
+   * Scrolling down triggers loading another portion of delegates
+   * @expect more delegates are present
+   */
   it('Displays 100 delegates and loads more as I scroll to bottom', () => {
     cy.autologin(accounts.genesis.passphrase, networks.testnet.node);
     cy.visit(urls.delegates);
@@ -72,6 +70,10 @@ describe('Delegates', () => {
     cy.get(ss.delegateRow).should('have.length', 200);
   });
 
+  /**
+   * Delegates table shows all the necessary data
+   * @expect data from Vote, Rank, Name, Lisk ID, Productivity columns match expected values
+   */
   it('Vote, Rank, Name, Lisk ID, Productivity columns show corresponding data', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
@@ -82,6 +84,11 @@ describe('Delegates', () => {
     cy.get('@dg').find(ss.delegateProductivity).contains(/\d+ %/);
   });
 
+  /**
+   * Search functioning correctly
+   * @expect no delegates are shown if search for non-existing name
+   * @expect delegate is shown in 1 row when is found
+   */
   it('Search for a delegate', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
@@ -94,6 +101,14 @@ describe('Delegates', () => {
     cy.get('@dg').find(ss.delegateProductivity).contains(/\d+ %/);
   });
 
+  /**
+   * Voting and unvoting process
+   * @expect successfully go through the voting process
+   * @expect spinner to appear instead of checkbox while tx is pending
+   * @expect checkbox to be unchecked after unvoting
+   * @expect checkbox to be checked after voting back
+   * @expect balance decreases as tx is confirmed
+   */
   it('Unvote and Vote + Header balance is affected', function () {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
@@ -123,6 +138,11 @@ describe('Delegates', () => {
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout }).should('have.class', 'checked');
   });
 
+  /**
+   * Voting with second passphrase
+   * @expect successfully go through the voting process
+   * @expect transaction is confirmed
+   */
   it('Vote with second passphrase', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
@@ -138,6 +158,12 @@ describe('Delegates', () => {
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout });
   });
 
+  /**
+   * Bulk vote/unvote delegates using URL shortcut
+   * @expect chosen to vote delegates shown in pre-selection
+   * @expect chosen to unvote delegates are shown in pre-selection
+   * @expect already voted/unvoted delegates shown in pre-selection
+   */
   it('Bulk vote/unvote delegates by URL', () => {
     cy.autologin(accounts['delegate candidate'].passphrase, networks.devnet.node);
     cy.visit(`${urls.delegatesVote}?votes=genesis_12,genesis_14,genesis_16`);

@@ -1,46 +1,40 @@
 import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
 import urls from '../../constants/urls';
+import ss from '../../constants/selectors';
 import moveMouseRandomly from '../utils/moveMouseRandomly';
 import slideCheckbox from '../utils/slideCheckbox';
 import compareBalances from '../utils/compareBalances';
-
-const ss = {
-  nextButton: '.next',
-  revealCheckbox: '.reveal-checkbox',
-  passphraseTextarea: 'textarea.passphrase',
-  itsSafeBtn: '.yes-its-safe-button',
-  passphraseWordHolder: '.passphrase-holder label',
-  getToDashboardBtn: '.get-to-your-dashboard-button',
-  backButton: '.multistep-back',
-  confirmCheckbox: '.confirm-checkbox',
-  transactionRow: '.transactions-row',
-  spinner: '.spinner',
-  transactionAddress: '.transaction-address span',
-  transactionReference: '.transaction-reference',
-  transactionAmount: '.transactionAmount span',
-  transactionAmountPlaceholder: '.transactionAmount',
-  headerBalance: '.balance span',
-};
 
 const txConfirmationTimeout = 20000;
 const txSecondPassphraseRegPrice = 5;
 
 describe('Second Passphrase Registration', () => {
-  it(`Opens by u~rl ${urls.secondPassphrase}`, () => {
+  /**
+   * Delegate registration page can be opened by direct link
+   * @expect url is correct
+   * @expect some specific to page element is present on it
+   */
+  it(`Opens by url ${urls.secondPassphrase}`, () => {
     cy.autologin(accounts['second passphrase candidate'].passphrase, networks.devnet.node);
     cy.visit(urls.secondPassphrase);
     cy.url().should('not.contain', 'referrer', 'Check if you have registered passphrase already');
     cy.url().should('not.contain', urls.dashboard, 'Check if you have registered passphrase already');
     cy.url().should('contain', urls.secondPassphrase);
-    cy.get(ss.nextButton);
+    cy.get(ss.app).contains('Secure the use of your Lisk ID');
   });
 
-  it('Set up second passphrase + Header balance is affected', function () {
+  /**
+   * Setup second passphrase
+   * @expect successfully go through registration process
+   * @expect transaction appears in the activity list with valid details
+   * @expect header balance value is decreased
+   */
+  it('Setup second passphrase + Header balance is affected', function () {
     cy.autologin(accounts['second passphrase candidate'].passphrase, networks.devnet.node);
     cy.visit(urls.secondPassphrase);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
-    cy.get(ss.nextButton).click();
+    cy.get(ss.nextBtn).click();
     moveMouseRandomly();
     slideCheckbox(ss.revealCheckbox);
     cy.get(ss.passphraseTextarea).invoke('text').as('passphrase');

@@ -1,26 +1,9 @@
 import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
+import ss from '../../constants/selectors';
 import urls from '../../constants/urls';
 import enterSecondPassphrase from '../utils/enterSecondPassphrase';
 import compareBalances from '../utils/compareBalances';
-
-const ss = {
-  nextButton: '.next',
-  chooseName: '.choose-name',
-  delegateNameInput: '.delegate-name input',
-  submitDelagateNameBtn: '.submit-delegate-name',
-  successText: '.success-description',
-  goToDashboardAfterDelegateReg: '.registration-success',
-  confirmDelegateRegBtn: '.confirm-delegate-registration',
-  spinner: '.spinner',
-  transactionRow: '.transactions-row',
-  transactionAddress: '.transaction-address span',
-  transactionReference: '.transaction-reference',
-  transactionAmount: '.transactionAmount span',
-  transactionAmountPlaceholder: '.transactionAmount',
-  duplicateNameError: '.error-name-duplicate',
-  headerBalance: '.balance span',
-};
 
 const txConfirmationTimeout = 12000;
 
@@ -35,23 +18,33 @@ describe('Delegate Registration', () => {
     randomDelegateName = getRandomDelegateName();
   });
 
+  /**
+   * Delegate registration page can be opened by direct link
+   * @expect url is correct
+   * @expect some specific to page element is present on it
+   */
   it(`Opens by url ${urls.registerDelegate}`, () => {
     cy.autologin(accounts['delegate candidate'].passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
     cy.url().should('contain', urls.registerDelegate);
-    cy.get(ss.chooseName);
+    cy.get(ss.chooseDelegateName);
   });
 
+  /**
+   * Go through register delegate process
+   * @expect transaction appears in the activity list in the confirmed state with valid details
+   * @expect header balance value is decreased
+   */
   it('Register delegate + Header balance is affected', function () {
     cy.autologin(accounts['delegate candidate'].passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
-    cy.get(ss.chooseName).click();
+    cy.get(ss.chooseDelegateName).click();
     cy.get(ss.delegateNameInput).click().type(randomDelegateName);
     cy.get(ss.submitDelagateNameBtn).click();
     cy.get(ss.confirmDelegateRegBtn).click();
     cy.wait(txConfirmationTimeout);
-    cy.get('main').contains('Success');
+    cy.get(ss.app).contains('Success');
     cy.get(ss.goToDashboardAfterDelegateReg).click();
     cy.url().should('contain', urls.dashboard);
     cy.get(ss.transactionRow).eq(0).as('tx');
@@ -64,16 +57,21 @@ describe('Delegate Registration', () => {
     });
   });
 
+  /**
+   * Go through register delegate process having 2ph set
+   * @expect tx is in the list in confirmed state
+   * @expect transaction appears in the activity list in the confirmed state with valid details
+   */
   it('Register delegate with second passphrase', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
-    cy.get(ss.chooseName).click();
+    cy.get(ss.chooseDelegateName).click();
     cy.get(ss.delegateNameInput).click().type(randomDelegateName);
     cy.get(ss.submitDelagateNameBtn).click();
     enterSecondPassphrase(accounts['second passphrase account'].secondPassphrase);
     cy.get(ss.confirmDelegateRegBtn).click();
     cy.wait(txConfirmationTimeout);
-    cy.get('main').contains('Success');
+    cy.get(ss.app).contains('Success');
     cy.get(ss.goToDashboardAfterDelegateReg).click();
     cy.url().should('contain', urls.dashboard);
     cy.get(ss.transactionRow).eq(0).as('tx');
@@ -83,11 +81,15 @@ describe('Delegate Registration', () => {
     cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');
   });
 
+  /**
+   * Try to register already existing delegate name
+   * @expect error message
+   */
   it('Try to register already existing delegate name', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
-    cy.get(ss.chooseName).click();
+    cy.get(ss.chooseDelegateName).click();
     cy.get(ss.delegateNameInput).click().type('genesis_51');
-    cy.get(ss.duplicateNameError).should('have.text', 'Name is already taken!');
+    cy.get(ss.delegateDuplicateNameError).should('have.text', 'Name is already taken!');
   });
 });

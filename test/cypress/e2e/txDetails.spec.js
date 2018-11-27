@@ -1,26 +1,8 @@
 import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
 import urls from '../../constants/urls';
+import ss from '../../constants/selectors';
 import regex from '../../../src/utils/regex';
-
-const ss = {
-  nextBtn: '.send-next-button',
-  sendBtn: '.send-button',
-  transactionRow: '.transactions-row',
-  txHeader: '.tx-header',
-  txSenderAddress: '.sender-address',
-  txRecipientAddress: '.receiver-address',
-  txDatePlaceholder: '.tx-date',
-  txDate: '.tx-date .date',
-  txTime: '.tx-time .time',
-  txAddedVotes: '.tx-added-votes .voter-address',
-  txRemovedVotes: '.tx-removed-votes .voter-address',
-  txAmount: '.tx-amount .transactionAmount',
-  txFee: '.tx-fee span',
-  txConfirmations: '.tx-confirmation',
-  txId: '.tx-id .copy-title',
-  txReference: '.tx-reference',
-};
 
 const txConfirmationTimeout = 14000;
 
@@ -29,12 +11,17 @@ const delegateRegTxId = '2697129531259680873';
 const secondPassphraseRegTxId = '18129432350589863394';
 
 describe('Tx details', () => {
+  /**
+   * Transfer transaction details are shown and correct when tx is pending and confirmed
+   * @expect transfer details are correct for pending state
+   * @expect transfer details are correct for confirmed state
+   */
   it('Transfer details while pending and then confirmed', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.wallet}?recipient=${accounts.delegate.address}&amount=5&reference=test-details`);
-    cy.get(ss.nextBtn).click();
+    cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
-    cy.get(ss.transactionRow).find('.spinner').click();
+    cy.get(ss.transactionRow).find(ss.spinner).click();
     // Before confirmation
     cy.get(ss.txHeader).contains('Transaction');
     cy.get(ss.txSenderAddress).should('have.text', accounts.genesis.address);
@@ -52,6 +39,10 @@ describe('Tx details', () => {
     cy.get(ss.txConfirmations).should('have.text', '1');
   });
 
+  /**
+   * Delegate transaction details are shown and correct when tx is confirmed
+   * @expect transfer details are correct for confirmed state
+   */
   it('Delegate vote', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(`${urls.wallet}?id=${delegateVoteTxId}`);
@@ -70,6 +61,10 @@ describe('Tx details', () => {
   // TODO update after bugfix #1424
   // - direct url doesn't work
   // - some values are undefined for tx from snapshot
+  /**
+   * Delegate registration transaction details are shown and correct when tx is confirmed
+   * @expect transfer details are correct for confirmed state
+   */
   it.skip('Delegate registration', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(`${urls.wallet}?id=${delegateRegTxId}`);
@@ -85,6 +80,10 @@ describe('Tx details', () => {
     cy.get(ss.txReference).should('have.text', '-');
   });
 
+  /**
+   * Register second passphrase transaction details are shown and correct when tx is confirmed
+   * @expect transfer details are correct for confirmed state
+   */
   it('Second passphrase registration', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(`${urls.wallet}?id=${secondPassphraseRegTxId}`);
