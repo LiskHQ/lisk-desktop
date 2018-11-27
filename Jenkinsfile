@@ -89,24 +89,37 @@ pipeline {
 						githubNotify context: 'Jenkins e2e tests',
 							     description: 'e2e tests in progress...',
 							     status: 'PENDING'
+						dir('lisk') {
+							// TODO: use archive?
+							checkout([$class: 'GitSCM',
+							          branches: [[name: 'v1.3.0' ]],
+								  userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk']]])
+						}
 						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
 							ansiColor('xterm') {
 								wrap([$class: 'Xvfb', parallelBuild: true, autoDisplayName: true]) {
 									sh '''#!/bin/bash -xe
 									export N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
 
-									wget -nv -c https://github.com/LiskHQ/lisk-docker/archive/2.2.0.tar.gz
 									rm -rf $WORKSPACE/$BRANCH_NAME/
-									mkdir -p $WORKSPACE/$BRANCH_NAME/
-									tar xf 2.2.0.tar.gz -C $WORKSPACE/$BRANCH_NAME/ --strip-component=2 lisk-docker-2.2.0/examples/
+									cp -rf $WORKSPACE/lisk/docker/ $WORKSPACE/$BRANCH_NAME/
 									cp $WORKSPACE/test/dev_blockchain.db.gz $WORKSPACE/$BRANCH_NAME/dev_blockchain.db.gz
 									cd $WORKSPACE/$BRANCH_NAME
 									cp .env.development .env
 
 									# random port assignment
-									yq --yaml-output '.services.lisk.ports[0]="${ENV_LISK_HTTP_PORT}"|.services.lisk.ports[1]="${ENV_LISK_WS_PORT}"' docker-compose.yml |sponge docker-compose.yml
+									cat <<EOF >docker-compose.override.yml
+version: "2"
+services:
 
-									LISK_VERSION=1.1.0-alpha.8 make coldstart
+  lisk:
+      ports:
+        - \\${ENV_LISK_HTTP_PORT}
+        - \\${ENV_LISK_WS_PORT}
+EOF
+
+									# TODO: use environment variable
+									ENV_LISK_VERSION=1.3.0 make coldstart
 									export CYPRESS_baseUrl=http://127.0.0.1:300$N/#/
 									export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
 									cd -
