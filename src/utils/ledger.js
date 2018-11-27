@@ -25,14 +25,11 @@ export const LEDGER_MSG = {
 };
 const { ipc } = window;
 if (ipc) { // On browser-mode is undefined
-  console.log('ipc', ipc);
   ipc.on('ledgerConnected', () => {
-    console.log('ledgerConnected');
     store.dispatch({ type: actionTypes.settingsUpdated, data: { isHarwareWalletConnected: true } });
     store.dispatch(errorToastDisplayed({ label: LEDGER_MSG.LEDGER_CONNECTED }));
   });
   ipc.on('ledgerDisconnected', () => {
-    console.log('ledgerDisconnected');
     store.dispatch(errorToastDisplayed({ label: LEDGER_MSG.LEDGER_DISCONNECTED }));
     store.dispatch({
       type: actionTypes.settingsUpdated,
