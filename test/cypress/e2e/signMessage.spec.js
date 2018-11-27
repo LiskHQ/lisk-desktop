@@ -1,12 +1,7 @@
 import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
+import ss from '../../constants/selectors';
 import urls from '../../constants/urls';
-
-const ss = {
-  messageInput: 'textarea',
-  nextBtn: '.next',
-  resulteBtn: '.result',
-};
 
 const messageToSign = 'my message';
 const signedMessage =
@@ -20,13 +15,22 @@ const signedMessage =
 '-----END LISK SIGNED MESSAGE-----';
 
 describe('Sign message', () => {
+  /**
+   * Sign message page can be opened by direct link
+   * @expect url is correct
+   * @expect some specific to page element is present on it
+   */
   it(`Opens by url ${urls.signMessage}`, () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.signMessage);
     cy.url().should('contain', urls.signMessage);
-    cy.get('main').contains('Sign a message');
+    cy.get(ss.app).contains('Sign a message');
   });
 
+  /**
+   * Sign a message
+   * @expect generated signed message
+   */
   it('Generates signed message', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.signMessage);
@@ -35,6 +39,10 @@ describe('Sign message', () => {
     cy.get(ss.resulteBtn).should('have.text', signedMessage);
   });
 
+  /**
+   * Use shortcut link to prefill message
+   * @expect message is prefilled
+   */
   it('Message gets prefilled following launch protocol link', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.signMessage}?message=${messageToSign}`);
