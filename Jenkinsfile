@@ -7,6 +7,9 @@ pipeline {
 		skipDefaultCheckout true
 		buildDiscarder(logRotator(numToKeepStr: '168', artifactNumToKeepStr: '5'))
 	}
+	environment {
+		LISK_CORE_VERSION = '1.3.0'
+	}
 	stages {
 		stage('Clean workspace and checkout SCM') {
 			steps {
@@ -90,9 +93,8 @@ pipeline {
 							     description: 'e2e tests in progress...',
 							     status: 'PENDING'
 						dir('lisk') {
-							// TODO: use archive?
 							checkout([$class: 'GitSCM',
-							          branches: [[name: 'v1.3.0' ]],
+							          branches: [[name: "v${env.LISK_CORE_VERSION}" ]],
 								  userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk']]])
 						}
 						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
@@ -118,8 +120,7 @@ services:
         - \\${ENV_LISK_WS_PORT}
 EOF
 
-									# TODO: use environment variable
-									ENV_LISK_VERSION=1.3.0 make coldstart
+									ENV_LISK_VERSION="$LISK_CORE_VERSION" make coldstart
 									export CYPRESS_baseUrl=http://127.0.0.1:300$N/#/
 									export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
 									cd -
