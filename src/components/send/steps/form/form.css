@@ -107,6 +107,22 @@ input:read-only {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  text-align: left;
+
+  & > footer {
+    width: 100%;
+    margin: 35px 0 60px;
+
+    & > button {
+      width: 160px;
+      height: 56px;
+    }
+
+    & > button:last-child {
+      margin-left: 22px;
+      height: 57px;
+    }
+  }
 }
 
 .error {

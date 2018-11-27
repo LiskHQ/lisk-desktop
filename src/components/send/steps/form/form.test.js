@@ -62,7 +62,7 @@ describe('Form Component', () => {
   });
 
   it('renders one Button component', () => {
-    expect(wrapper.find('Button')).to.have.length(1);
+    expect(wrapper.find('Button')).to.have.length(2);
   });
 
   it('accepts valid amount', () => {
