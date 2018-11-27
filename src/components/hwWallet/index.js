@@ -98,7 +98,7 @@ class HwWallet extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  network: state.settings.network || networks.mainnet,
+  network: state.settings.network || networks.mainnet.code,
   liskAPIClient: state.peers && state.peers.liskAPIClient,
 });
 

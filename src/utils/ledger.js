@@ -9,6 +9,7 @@ import { hwConstants, LEDGER_COMMANDS, loginType as loginTypesConst } from '../c
 import { getLedgerAccountInfo } from './api/ledger';
 import { errorToastDisplayed } from '../actions/toaster';
 import { getBufferToHex, getTransactionBytes, calculateTxId } from './rawTransactionWrapper';
+import { accountLoggedOut } from '../actions/account';
 import store from '../store';
 import actionTypes from '../constants/actions';
 
@@ -35,7 +36,7 @@ if (ipc) { // On browser-mode is undefined
       type: actionTypes.settingsUpdated,
       data: { isHarwareWalletConnected: false },
     });
-    store.dispatch(errorToastDisplayed({ label: actionTypes.accountLoggedOut }));
+    store.dispatch(accountLoggedOut());
   });
 }
 
