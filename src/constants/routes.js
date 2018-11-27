@@ -15,7 +15,7 @@ import SingleTransaction from '../components/singleTransaction';
 import HwWallet from '../components/hwWallet';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
-import Receive from '../components/receive/';
+import Receive from '../components/receive';
 
 export default {
   accountVisualDemo: {
