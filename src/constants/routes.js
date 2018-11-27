@@ -16,6 +16,7 @@ import HwWallet from '../components/hwWallet';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
 import Receive from '../components/receive';
+import Send from '../components/sendNew';
 
 export default {
   accountVisualDemo: {
@@ -37,6 +38,9 @@ export default {
   request: {
     path: '/request',
     component: Receive,
+  send: {
+    path: '/send',
+    component: Send,
     isPrivate: true,
   },
   delegates: {
