@@ -15,6 +15,7 @@ import SingleTransaction from '../components/singleTransaction';
 import HwWallet from '../components/hwWallet';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
+import Send from '../components/sendNew';
 
 export default {
   accountVisualDemo: {
@@ -30,6 +31,11 @@ export default {
   wallet: {
     path: '/wallet',
     component: TransactionDashboard,
+    isPrivate: true,
+  },
+  send: {
+    path: '/send',
+    component: Send,
     isPrivate: true,
   },
   delegates: {

@@ -16,6 +16,7 @@
 .resultBox {
   text-align: center;
   justify-content: space-around;
+  align-items: center;
   flex-flow: column;
   display: flex;
   width: 100%;
