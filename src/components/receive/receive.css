@@ -1,0 +1,119 @@
+@import '../app/variables.css';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+
+  & header {
+    text-align: left;
+  }
+
+  & header > h3 {
+    color: var(--color-black);
+    font-size: var(--font-size-h3);
+    font-family: var(--heading-font);
+    font-weight: 800;
+  }
+
+  & .qrCode {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & > canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    & > span {
+      margin-top: 33px;
+      font-size: 14px;
+      color: var(--color-grayscale-medium);
+      font-weight: var(--font-weight-bold);
+      font-family: var(--content-font);
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 75%;
+    }
+  }
+
+  & .transaction {
+    font-family: var(--content-font);
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    /* Description Text */
+    & > p {
+      color: var(--color-grayscale-dark);
+      text-align: justify;
+      margin: 0;
+    }
+
+    /* Send Request by email element */
+    & > a {
+      display: flex;
+      align-items: center;
+      color: var(--color-primary-standard);
+      font-weight: var(--font-weight-bold);
+      text-decoration: none;
+      text-align: left;
+      margin-top: 33px;
+    }
+  }
+
+  & footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 42px;
+
+    & button {
+      width: 100%;
+    }
+  }
+}
+
+.message {
+  width: 100%;
+  height: 100%;
+  height: 601.75px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-white);
+  line-height: 26px;
+
+  & h3 {
+    color: var(--color-black);
+    font-size: 24px;
+    font-weight: 800;
+    font-family: var(--heading-font);
+  }
+
+  & p {
+    font-size: 16px;
+    font-family: var(--content-font);
+    color: var(--color-grayscale-dark);
+  }
+}
+
+.closeIcon {
+  position: absolute;
+  top: 48px;
+  right: 88px;
+  cursor: pointer;
+}
+
+.isEnable {
+  visibility: visible;
+}
