@@ -7,7 +7,10 @@ import { hwConstants, LEDGER_COMMANDS, loginType as loginTypesConst } from '../c
 // import { loadingStarted, loadingFinished } from './loading';
 // import signPrefix from '../constants/signPrefix';
 import { getLedgerAccountInfo } from './api/ledger';
+import { errorToastDisplayed } from '../actions/toaster';
 import { getBufferToHex, getTransactionBytes, calculateTxId } from './rawTransactionWrapper';
+import store from '../store';
+import actionTypes from '../constants/actions';
 
 export const LEDGER_MSG = {
   LEDGER_NO_TRANSPORT_AVAILABLE: i18next.t('Unable to detect the communication layer with your Ledger Nano S'),
@@ -22,13 +25,20 @@ export const LEDGER_MSG = {
 };
 const { ipc } = window;
 if (ipc) { // On browser-mode is undefined
+  console.log('ipc', ipc);
   ipc.on('ledgerConnected', () => {
-    // TODO if we want to enable this, it should be in a middleware.
-    // No util should import store, because it causes problems in tests
-    // store.dispatch(infoToastDisplayed({ label: LEDGER_MSG.LEDGER_CONNECTED }));
+    console.log('ledgerConnected');
+    store.dispatch({ type: actionTypes.settingsUpdated, data: { isHarwareWalletConnected: true } });
+    store.dispatch(errorToastDisplayed({ label: LEDGER_MSG.LEDGER_CONNECTED }));
   });
   ipc.on('ledgerDisconnected', () => {
-    // store.dispatch(errorToastDisplayed({ label: LEDGER_MSG.LEDGER_DISCONNECTED }));
+    console.log('ledgerDisconnected');
+    store.dispatch(errorToastDisplayed({ label: LEDGER_MSG.LEDGER_DISCONNECTED }));
+    store.dispatch({
+      type: actionTypes.settingsUpdated,
+      data: { isHarwareWalletConnected: false },
+    });
+    store.dispatch(errorToastDisplayed({ label: actionTypes.accountLoggedOut }));
   });
 }
 

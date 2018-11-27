@@ -235,7 +235,7 @@ class Login extends React.Component {
                   error={this.state.passphraseValidity}
                   value={this.state.passphrase}
                   onChange={this.changeHandler.bind(this, 'passphrase')} />
-                {localStorage.getItem('ledger') ?
+                {this.props.settings.isHarwareWalletConnected ?
                   <div className={`${styles.hardwareWalletLink} hardwareWalletLink`} onClick={() => {
                     this.props.history.replace(routes.hwWallet.path);
                   }}>
