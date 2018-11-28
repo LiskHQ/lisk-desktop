@@ -21,7 +21,7 @@ describe('ReceiveHowItWorks', () => {
       nextStep: spy(),
       prevStep: spy(),
       settingsUpdated: spy(),
-      isMessage: false,
+      requestHowItWorksDisplayed: false,
       status: 'foward',
     };
 
@@ -56,7 +56,7 @@ describe('ReceiveHowItWorks', () => {
   });
 
   it('display message about how it works', () => {
-    props.isMessage = true;
+    props.requestHowItWorksDisplayed = true;
     wrapper = shallow(<ReceiveHowItWorks {...props}/>, {
       context: { store, i18n },
       childContextTypes: {

@@ -88,7 +88,7 @@ class ReceiveConfirmation extends React.Component {
           <div className={`${grid['col-xs-3']} ${grid['col-sm-3']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
             <Button
               className={'back'}
-              // prevStep() shopuld be check as the behavior is not right
+              // prevStep() should be check it as the behavior is not right
               // the reset shouldn't be use for skip
               onClick={() => this.props.prevStep({ reset: true })}>
               {this.props.t('Back')}

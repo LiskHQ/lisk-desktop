@@ -39,7 +39,7 @@ module.exports = {
     '/node_modules/',
     'app/src/ipc.js',
     'app/src/ledger.js',
-    'rc/components/receive/index.js',
+    'src/components/receive/index.js',
     'src/actions/liskService.js',
     'src/actions/peers.js', // FollowUp #1515
     'src/actions/transactions.js',

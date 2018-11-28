@@ -6,7 +6,7 @@ import styles from './receive.css';
 
 class ReceiveHowItWorks extends React.Component {
   componentDidMount() {
-    if (!this.props.isMessage && this.props.status === 'foward') this.props.nextStep({ status: 'foward' });
+    if (!this.props.requestHowItWorksDisplayed && this.props.status === 'foward') this.props.nextStep({ status: 'foward' });
   }
 
   render() {
