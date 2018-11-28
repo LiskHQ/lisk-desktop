@@ -86,7 +86,7 @@ module.exports = {
     'src/components/passphraseSteps/index.js', // FollowUp #1515
     'src/actions/peers.js', // FollowUp #1515
     'src/components/send/steps/confirm/confirm.js', // FollowUp #1515
-    'src/components/sendNew/index.js',
+    'src/components/sendNew/',
   ],
   coverageThreshold: {
     global: {

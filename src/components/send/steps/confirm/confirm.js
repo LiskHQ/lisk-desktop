@@ -106,13 +106,17 @@ class Confirm extends React.Component {
   }
 
   render() {
+    // eslint-disable-next-line
+    const title = this.props.accountInit ?
+      this.props.t('Initialize Lisk ID') :
+      (this.props.account.hwInfo && this.props.account.hwInfo.deviceId ? this.props.t('Confirm transaction on Ledger Nano S') : this.props.t('Confirm transfer'));
     const followedAccount = this.props.followedAccounts
       .find(account => account.address === this.state.recipient.value);
     return (
-      <div className={`${grid['col-lg-4']}  ${styles.wrapper} send`}>
+      <div className={`${styles.wrapper} send`}>
         <div className={styles.header}>
           <header className={styles.headerWrapper}>
-            <h2>{this.props.t('Send LSK')}</h2>
+            <h2>{title}</h2>
           </header>
         </div>
         {this.props.accountInit
@@ -162,7 +166,8 @@ class Confirm extends React.Component {
           </form>
         }
         <footer>
-          <section>
+          <section className={grid.row} >
+            <div className={grid['col-xs-4']}>
               <Button
                 label={this.props.t('Back')}
                 onClick={() => this.props.prevStep({
@@ -170,20 +175,22 @@ class Confirm extends React.Component {
                   recipient: this.props.recipient,
                   amount: this.props.amount,
                 }) }
-                className={`${grid['col-lg-2']} `}
                 type='button'
                 theme={styles}
               />
+            </div>
+            <div className={grid['col-xs-8']}>
               <PrimaryButton
-                className={`send-button ${grid['col-lg-2']}`}
+                className='send-button'
                 label={this.props.accountInit ? this.props.t('Confirm (Fee: {{fee}} LSK)', { fee: fromRawLsk(fees.send) }) : this.props.t('Send')}
                 type='submit'
                 theme={styles}
                 onClick={this.send.bind(this)}
                 disabled={this.state.loading}
               />
+              <div className='subTitle'>{this.props.t('Transactions can’t be reversed')}</div>
+            </div>
           </section>
-          <div className='subTitle'>{this.props.t('Transactions can’t be reversed')}</div>
         </footer>
       </div>
     );

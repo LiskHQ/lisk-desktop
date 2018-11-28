@@ -12,30 +12,10 @@
   justify-content: space-between;
   width: 100%;
   box-sizing: border-box;
-  text-align: left;
 
   & p {
     font-size: var(--font-size-L);
     line-height: 30px;
-  }
-
-  & > footer {
-    width: 100%;
-    margin: 35px 0 60px;
-
-    & > section {
-      width: 100%;
-    }
-
-    & > section > button {
-      width: 160px;
-      height: 56px;
-    }
-
-    & > section > button:last-child {
-      margin-left: 22px;
-      height: 57px;
-    }
   }
 }
 

@@ -19,8 +19,10 @@ class ResultBox extends React.Component {
 
   render() {
     return (
-      <div className={`${grid.row} ${grid['center-lg']} ${styles.resultBox}`}>
-        <div className={`${grid['col-lg-4']}`}>
+      <div className={`${styles.resultBox}`}>
+        <div></div>
+
+        <div>
           <header>
             <div className={styles.header}>
               {this.props.success
