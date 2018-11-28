@@ -1,5 +1,4 @@
 import React from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Button } from '../toolbox/buttons/button';
 import { FontIcon } from '../fontIcon';
 import CopyToClipboard from '../copyToClipboard';
@@ -20,8 +19,10 @@ class ResultBox extends React.Component {
 
   render() {
     return (
-      <div className={`${grid.row} ${grid['center-lg']} ${styles.resultBox}`}>
-        <div className={`${grid['col-lg-4']}`}>
+      <div className={`${styles.resultBox}`}>
+        <div></div>
+
+        <div>
           <header>
             <div className={styles.header}>
               {this.props.success
@@ -43,8 +44,8 @@ class ResultBox extends React.Component {
           }
         </div>
 
-        <footer className={`${grid['col-lg-4']}`}>
-          <Button className={`okay-button ${grid['col-lg-2']} ${styles.okButton}`}
+        <footer>
+          <Button className={`okay-button ${styles.okButton}`}
             onClick={() => {
               this.props.transactionFailedClear();
               // istanbul ignore else

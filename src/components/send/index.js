@@ -105,4 +105,3 @@ class Send extends React.Component {
 }
 
 export default translate()(Send);
-
