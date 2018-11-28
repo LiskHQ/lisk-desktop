@@ -4,7 +4,7 @@
   line-height: 36px;
   display: flex;
   justify-content: center;
-  background: var(--gradient-greyscale);
+  background: none;
   box-shadow: none;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;

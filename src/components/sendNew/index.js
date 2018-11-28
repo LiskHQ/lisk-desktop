@@ -42,21 +42,23 @@ class Send extends React.Component {
     this.setState({ isActiveTabSend });
   }
 
+  goToWallet() {
+    this.props.history.push('/wallet');
+  }
+
   render() {
     const { amount, recipient, reference } = this.getSearchParams();
 
     return (
       <Box className={`send-box ${styles.send}`}>
-        <div className={`${grid.row} ${grid['center-lg']}`}>
-          <div className={`${grid['col-lg-4']}`}>
+        <div className={`${grid.row} ${grid['center-xs']} ${grid['center-sd']} ${grid['center-md']} ${grid['center-lg']}`}>
+          <div className={`${grid['col-xs-8']} ${grid['col-sd-8']} ${grid['col-md-6']} ${grid['col-lg-4']}`}>
             <MultiStep
               key='send'
-              showNav={true}
-              finalCallback={this.setActiveOnMobile.bind(this, { isActiveOnMobile: false })}
+              finalCallback={this.goToWallet.bind(this)}
               className={styles.wrapper}>
-              <AccountInitialization title={this.props.t('')} address={recipient}/>
+              <AccountInitialization address={recipient}/>
               <Form
-                title={this.props.t('1.Complete Form')}
                 autoFocus={this.state.isActiveOnMobile || window.innerWidth > breakpoints.m}
                 address={recipient}
                 amount={amount}
@@ -64,12 +66,13 @@ class Send extends React.Component {
                 setTabSend={this.setActiveTabSend.bind(this)}
                 settingsUpdated={this.props.settingsUpdated}
                 settings={this.props.settings}
+                goToWallet={this.goToWallet.bind(this)}
               />
-              <PassphraseSteps title={this.props.t('')}/>
-              <Confirm title={this.props.t('2.Summary')}/>
-              <ResultBox title={this.props.t('3.Done ')} history={this.props.history}/>
-              <FollowAccount title={this.props.t('')} showConfirmationStep={true}/>
-              <ResultBox title={this.props.t('')} history={this.props.history}/>
+              <PassphraseSteps />
+              <Confirm />
+              <ResultBox history={this.props.history} goToWallet={this.goToWallet.bind(this)} />
+              <FollowAccount showConfirmationStep={true}/>
+              <ResultBox history={this.props.history} goToWallet={this.goToWallet.bind(this)}/>
             </MultiStep>
           </div>
         </div>

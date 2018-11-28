@@ -11,17 +11,26 @@
 
 .form {
   position: relative;
-  margin-bottom: 15px;
+  margin-top: 54px;
+
+  & > div {
+    height: 82px;
+
+    & input {
+      margin-top: 1px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    & > label {
+      font-size: 14px;
+      font-weight: 600px !important;
+    }
+  }
 
   & input {
     border-radius: 0;
   }
-}
-
-.amountWrapper {
-  /* display: flex;
-  flex-direction: row;
-  align-items: center; */
 }
 
 .setMaxAmount {
@@ -61,7 +70,8 @@ input:read-only {
 }
 
 .headerWrapper {
-  padding: 20px 0px;
+  padding: 0 !important;
+  margin: 0;
   line-height: var(--header-line-height);
 
   & .title {
@@ -78,7 +88,7 @@ input:read-only {
 
   & h2 {
     font-weight: var(--font-weight-bold);
-    margin-bottom: 0;
+    margin: 0;
   }
 
   & h3 {
@@ -108,10 +118,11 @@ input:read-only {
   height: 100%;
   box-sizing: border-box;
   text-align: left;
+  margin-top: 115px;
 
   & > footer {
     width: 100%;
-    margin: 35px 0 60px;
+    margin: 50px 0 0;
 
     & > button {
       width: 160px;

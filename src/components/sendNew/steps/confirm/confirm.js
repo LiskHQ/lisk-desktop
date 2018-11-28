@@ -147,7 +147,15 @@ class Confirm extends React.Component {
                 disabled={true}
                 multiline={true}
                 theme={styles}
-              /> : null
+              /> :
+              <ToolBoxInput label={this.props.t('Reference')}
+                className={`reference ${styles.disabledInput}`}
+                error={this.state.reference.error}
+                value={'-'}
+                disabled={true}
+                multiline={true}
+                theme={styles}
+              />
             }
             <ToolBoxInput label={this.props.t('Total incl. {{fee}} LSK Fee', { fee: fromRawLsk(fees.send) })}
               className={`amount ${styles.disabledInput}`}
