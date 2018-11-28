@@ -179,6 +179,7 @@ class Confirm extends React.Component {
                 theme={styles}
               />
               <PrimaryButton
+                className='send-button'
                 label={this.props.accountInit ? this.props.t('Confirm (Fee: {{fee}} LSK)', { fee: fromRawLsk(fees.send) }) : this.props.t('Send')}
                 type='submit'
                 theme={styles}
