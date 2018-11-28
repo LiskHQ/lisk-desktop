@@ -263,7 +263,7 @@ describe('@integration: Wallet', () => {
       step(`Then I should see text ${successMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', successMessage));
     });
 
-    describe.skip('Scenario: should show account initialisation option if no public key and balance is greater than 0', () => {
+    describe('Scenario: should show account initialisation option if no public key and balance is greater than 0', () => {
       step('Given I\'m on "wallet" as "genesis" account and need initialization', () => setupStep('genesis', { isLocked: false, withPublicKey: false }));
       step('Then I should see the account init option', () => helper.haveTextOf('header h2', 'Initialize Lisk ID'));
       step('When I click "account init button"', () => helper.clickOnElement('.account-init-button button'));
@@ -290,12 +290,12 @@ describe('@integration: Wallet', () => {
       step('Then I should be on the confirm page with correct links and QR code', () => helper.checkConfirmRequest('genesis'));
     });
 
-    describe.skip('Scenario: should not show account initialisation option if public key and balance is greater than 0', () => {
+    describe('Scenario: should not show account initialisation option if public key and balance is greater than 0', () => {
       step('Given I\'m on "wallet" as "genesis" account and already initialized ', () => setupStep('genesis'));
       step('Then I should not see the account init option', () => helper.haveTextOf('header h2', 'Transfer'));
     });
 
-    describe.skip('Scenario: should not show account initialisation option if no public key and balance equals 0', () => {
+    describe('Scenario: should not show account initialisation option if no public key and balance equals 0', () => {
       step('Given I\'m on "wallet" as "genesis" account without need for initialized', () => setupStep('empty account', { isLocked: false, withPublicKey: false }));
       step('Then I should not see the account init option', () => helper.haveTextOf('header h2', 'Transfer'));
     });

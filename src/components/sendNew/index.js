@@ -7,8 +7,8 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '../box';
 import MultiStep from './../multiStep';
 import ResultBox from '../resultBox';
-import Form from '../send/steps/form';
-import Confirm from '../send/steps/confirm';
+import Form from './steps/form';
+import Confirm from './steps/confirm';
 import FollowAccount from '../sendTo/followAccount';
 import PassphraseSteps from './../passphraseSteps';
 import AccountInitialization from '../accountInitialization';
@@ -47,28 +47,31 @@ class Send extends React.Component {
 
     return (
       <Box className={`send-box ${styles.send}`}>
-        <div className={`${grid.row} ${grid['center-lg']} `}>
-          <MultiStep
-            key='send'
-            showNav={true}
-            finalCallback={this.setActiveOnMobile.bind(this, { isActiveOnMobile: false })}
-            className={styles.wrapper}>
-            <AccountInitialization address={recipient}/>
-            <Form
-              autoFocus={this.state.isActiveOnMobile || window.innerWidth > breakpoints.m}
-              address={recipient}
-              amount={amount}
-              reference={reference}
-              setTabSend={this.setActiveTabSend.bind(this)}
-              settingsUpdated={this.props.settingsUpdated}
-              settings={this.props.settings}
-            />
-            <PassphraseSteps/>
-            <Confirm/>
-            <ResultBox history={this.props.history}/>
-            <FollowAccount showConfirmationStep={true}/>
-            <ResultBox history={this.props.history}/>
-          </MultiStep>
+        <div className={`${grid.row} ${grid['center-lg']}`}>
+          <div className={`${grid['col-lg-4']}`}>
+            <MultiStep
+              key='send'
+              showNav={true}
+              finalCallback={this.setActiveOnMobile.bind(this, { isActiveOnMobile: false })}
+              className={styles.wrapper}>
+              <AccountInitialization title={this.props.t('')} address={recipient}/>
+              <Form
+                title={this.props.t('1.Complete Form')}
+                autoFocus={this.state.isActiveOnMobile || window.innerWidth > breakpoints.m}
+                address={recipient}
+                amount={amount}
+                reference={reference}
+                setTabSend={this.setActiveTabSend.bind(this)}
+                settingsUpdated={this.props.settingsUpdated}
+                settings={this.props.settings}
+              />
+              <PassphraseSteps title={this.props.t('')}/>
+              <Confirm title={this.props.t('2.Summary')}/>
+              <ResultBox title={this.props.t('3.Done ')} history={this.props.history}/>
+              <FollowAccount title={this.props.t('')} showConfirmationStep={true}/>
+              <ResultBox title={this.props.t('')} history={this.props.history}/>
+            </MultiStep>
+          </div>
         </div>
       </Box>
     );
