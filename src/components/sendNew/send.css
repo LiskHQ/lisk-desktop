@@ -13,7 +13,6 @@
 @media (--medium-viewport) {
   .send {
     position: fixed;
-    top: 100vh; /* stylelint-disable-line */
     right: 0;
     height: 100vh; /* stylelint-disable-line */
     transition: top 300ms ease-in-out;
@@ -80,5 +79,4 @@
   align-items: center;
   width: 100%;
   justify-content: center;
-  padding-top: 50px;
 }

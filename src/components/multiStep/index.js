@@ -82,6 +82,7 @@ class MultiStep extends React.Component {
       prevStep: step.prevStep,
       reset: this.reset.bind(this),
       ...step.data[step.current],
+      finalCallback,
     };
 
     if (step.current === (children.length - 1)) {

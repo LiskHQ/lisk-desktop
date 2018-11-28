@@ -13,15 +13,69 @@
   width: 100%;
   box-sizing: border-box;
   text-align: left;
+  margin: 113px 0 0;
+  padding: 0;
 
   & p {
     font-size: var(--font-size-L);
     line-height: 30px;
   }
 
+  & > form {
+    margin-top: 54px;
+
+    & > div {
+      height: 82px;
+
+      & input {
+        margin-top: 1px;
+        font-size: 16px;
+        font-weight: 600;
+      }
+    }
+
+    & > div:first-child {
+      position: relative;
+
+      & > label {
+        top: 0;
+      }
+
+      & > div {
+        position: absolute;
+        top: 24px;
+      }
+    }
+
+    & > div:nth-child(2) {
+      margin-top: 25px;
+
+      & textarea {
+        font-weight: 600;
+        color: var(--color-grayscale-dark);
+      }
+    }
+
+    & label {
+      font-weight: 600;
+    }
+
+    & input {
+      font-weight: 600;
+    }
+  }
+
   & > footer {
     width: 100%;
-    margin: 35px 0 60px;
+    margin: 23px 0 0;
+
+    & > div {
+      height: 80px;
+
+      & input {
+        margin-top: 1px;
+      }
+    }
 
     & > section {
       width: 100%;
@@ -73,7 +127,8 @@ input:read-only {
 }
 
 .headerWrapper {
-  padding: 20px 0px;
+  padding: 0 !important;
+  margin: 0;
 
   & .title {
     float: left;
@@ -84,7 +139,7 @@ input:read-only {
   }
 
   & h2 {
-    margin-bottom: 0;
+    margin: 0;
   }
 
   & h3 {
@@ -119,12 +174,12 @@ input:read-only {
 .smallAddress {
   margin-top: 9px;
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .address {
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 600;
   padding-top: 10px;
 }
 
@@ -137,6 +192,10 @@ input:read-only {
 .disabledInput input:disabled {
   opacity: 1;
   border: none;
+}
+
+.subTitle {
+  font-size: 14px;
 }
 
 @media (--small-viewport) {
