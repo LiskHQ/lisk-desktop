@@ -10,7 +10,7 @@ const MultiStepNav = ({
   const validateTitles = () => {
     const titlesAreValid = steps.reduce(
       (acc, step) =>
-        (acc && typeof step.props.title === 'string')
+        (acc && typeof step.props.title === 'string' && step.props.title.length > 0)
       , true,
     );
     return showNav !== false && titlesAreValid;
@@ -19,10 +19,7 @@ const MultiStepNav = ({
   const dashedSteps = () => {
     const elements = [];
 
-    const titles = steps.filter(step => step.props.title !== '');
-    console.log(titles);
-
-    titles.forEach((step, index) => {
+    steps.forEach((step, index) => {
       elements.push(step);
       if (index !== steps.length - 1) {
         elements.push({ props: { title: `dash${index}` }, dash: 'dash' });
