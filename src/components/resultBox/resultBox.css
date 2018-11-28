@@ -9,20 +9,24 @@
 }
 
 .icon {
-  font-size: var(--icon-font-size);
+  height: 30px;
+  width: 38.5px;
   color: #ff6236;
 }
 
 .resultBox {
   text-align: center;
   justify-content: space-around;
-  align-items: center;
   flex-flow: column;
   display: flex;
   width: 100%;
 
   & .header {
     position: relative;
+  }
+
+  & header > h2 {
+    font-size: 28px;
   }
 
   & footer {
@@ -32,11 +36,14 @@
   & p {
     color: var(--paragraph-color);
     line-height: var(--paragraph-line-height);
+    font-size: 16px;
   }
 
   & .copy {
     color: var(--copy-color);
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
   }
 }
 
