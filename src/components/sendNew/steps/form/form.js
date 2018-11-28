@@ -158,7 +158,7 @@ class Form extends React.Component {
         </form>
         <footer>
           <Button
-            onClick={() => this.props.prevStep()}
+            onClick={() => this.props.goToWallet()}
             className={`send-prev-button ${styles.nextButton}`}
           >
           {this.props.t('Back')}
