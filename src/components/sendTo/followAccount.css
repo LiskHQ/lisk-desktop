@@ -8,6 +8,7 @@
   box-shadow: none;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
+  text-align: left;
 
   & header {
     & p {
@@ -35,6 +36,16 @@
 
     & .label {
       vertical-align: middle;
+    }
+  }
+
+  & > footer {
+    display: flex;
+    justify-content: space-evenly;
+
+    & > button {
+      width: 160px !important;
+      margin-top: 0 !important;
     }
   }
 }
