@@ -32,6 +32,12 @@
 
   & footer {
     padding: 0px;
+    display: flex;
+    justify-content: space-evenly;
+
+    & > button {
+      width: 160px;
+    }
   }
 
   & p {
