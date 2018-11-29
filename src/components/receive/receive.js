@@ -29,7 +29,7 @@ class Receive extends Component {
           />
           <ReceiveHowItWorks
             t={this.props.t}
-            requestHowItWorksDisplayed={this.props.requestHowItWorksDisplayed}
+            isRequestHowItWorksDisable={this.props.isRequestHowItWorksDisable}
             settingsUpdated={this.props.settingsUpdated}
           />
           <ReceiveConfirmation

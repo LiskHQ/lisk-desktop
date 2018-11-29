@@ -5,8 +5,18 @@
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  height: 100%;
   box-sizing: border-box;
+
+  & > div {
+    height: 100%;
+
+    & > div:nth-child(2) {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
 
   & header {
     text-align: left;
@@ -85,7 +95,6 @@
 .message {
   width: 100%;
   height: 100%;
-  height: 601.75px;
   display: flex;
   flex-direction: column;
   justify-content: center;

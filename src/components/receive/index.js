@@ -6,7 +6,7 @@ import Receive from './receive';
 
 const mapStateToProps = state => ({
   address: state.account.address,
-  requestHowItWorksDisplayed: state.settings.requestMessage,
+  isRequestHowItWorksDisable: state.settings.isRequestHowItWorksDisable,
 });
 
 const mapDispatchToProps = {
