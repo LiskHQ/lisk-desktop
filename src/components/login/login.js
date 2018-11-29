@@ -13,6 +13,7 @@ import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import networks from '../../constants/networks';
 import routes from '../../constants/routes';
+import feedbackLinks from '../../constants/feedbackLinks';
 import getNetwork from '../../utils/getNetwork';
 import { parseSearchParams } from './../../utils/searchParams';
 import Box from '../box';
@@ -236,11 +237,29 @@ class Login extends React.Component {
                   value={this.state.passphrase}
                   onChange={this.changeHandler.bind(this, 'passphrase')} />
                 {this.props.settings.isHarwareWalletConnected ?
-                  <div className={`${styles.hardwareWalletLink} hardwareWalletLink`} onClick={() => {
-                    this.props.history.replace(routes.hwWallet.path);
-                  }}>
-                    Ledger Nano S
-                    <FontIcon className={styles.singUpArrow} value='arrow-right' />
+                  <div>
+                    <div className={styles.ledgerRow}>
+                      <div>
+                        <FontIcon className={styles.singUpArrow} value='usb-stick' />
+                        {this.props.t('Hardware wallet login (beta):')}
+                      </div>
+                      <div className={`${styles.hardwareWalletLink} hardwareWalletLink`} onClick={() => {
+                        this.props.history.replace(routes.hwWallet.path);
+                      }}>
+                        Ledger Nano S
+                        <FontIcon className={styles.singUpArrow} value='arrow-right' />
+                      </div>
+                    </div>
+                    <div className={styles.feedback}>
+                      <a
+                        className={styles.link}
+                        target='_blank'
+                        href={feedbackLinks.ledger}
+                        rel='noopener noreferrer'>
+                        {this.props.t('Give feedback about this feature')}
+                        <FontIcon className={styles.singUpArrow} value='external-link' />
+                      </a>
+                    </div>
                   </div> : null }
                 <footer className={ `${grid.row} ${grid['center-xs']}` }>
                   <div className={grid['col-xs-12']}>

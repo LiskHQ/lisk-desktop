@@ -19,7 +19,23 @@
 
 .hardwareWalletLink {
   cursor: pointer;
-  text-decoration: underline;
+  color: var(--color-primary-standard);
+  margin-left: 10px;
+  font-weight: 600;
+}
+
+.feedback {
+  margin-top: 10px;
+}
+
+.link {
+  color: var(--color-primary-standard);
+  font-weight: 600;
+}
+
+.ledgerRow {
+  display: flex;
+  justify-content: space-between;
 }
 
 .login {
