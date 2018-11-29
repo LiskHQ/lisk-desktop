@@ -7,14 +7,7 @@ import { hwConstants, LEDGER_COMMANDS, loginType as loginTypesConst } from '../c
 // import { loadingStarted, loadingFinished } from './loading';
 // import signPrefix from '../constants/signPrefix';
 import { getLedgerAccountInfo } from './api/ledger';
-import { errorToastDisplayed } from '../actions/toaster';
 import { getBufferToHex, getTransactionBytes, calculateTxId } from './rawTransactionWrapper';
-import { accountLoggedOut } from '../actions/account';
-import { dialogDisplayed, dialogHidden } from '../actions/dialog';
-import Alert from '../components/dialog/alert';
-
-import store from '../store';
-import actionTypes from '../constants/actions';
 
 export const LEDGER_MSG = {
   LEDGER_NO_TRANSPORT_AVAILABLE: i18next.t('Unable to detect the communication layer with your Ledger Nano S'),
@@ -27,36 +20,6 @@ export const LEDGER_MSG = {
   LEDGER_ASK_FOR_CONFIRMATION: i18next.t('Look at your Ledger for confirmation'),
   LEDGER_ASK_FOR_CONFIRMATION_PIN: i18next.t('Look at your Ledger for confirmation of second signature'),
 };
-const { ipc } = window;
-
-if (ipc) { // On browser-mode is undefined
-  ipc.on('ledgerConnected', () => {
-    store.dispatch({ type: actionTypes.settingsUpdated, data: { isHarwareWalletConnected: true } });
-    store.dispatch(errorToastDisplayed({ label: LEDGER_MSG.LEDGER_CONNECTED }));
-  });
-  ipc.on('ledgerDisconnected', () => {
-    // store.dispatch(errorToastDisplayed({ label: LEDGER_MSG.LEDGER_DISCONNECTED }));
-    store.dispatch( // eslint-disable-line
-      dialogDisplayed({
-        childComponent: Alert,
-        childComponentProps: {
-          title: 'You are disconnected',
-          text: 'There is no connection to the Ledger Nano S. Please check the cables if it happened by accident.',
-          closeDialog: () => {
-            store.dispatch(dialogHidden());
-            console.log(location); // eslint-disable-line
-            // location.replace(routes.login.path); // eslint-disable-line
-          },
-        },
-      }));
-    store.dispatch({
-      type: actionTypes.settingsUpdated,
-      data: { isHarwareWalletConnected: false },
-    });
-    store.dispatch(accountLoggedOut());
-    // location.replace(routes.login.path); // eslint-disable-line
-  });
-}
 
 const getLedgerTransportU2F = async () => TransportU2F.create();
 
