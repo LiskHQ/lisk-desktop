@@ -23,6 +23,12 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+import networks from '../../constants/networks';
+
+before(() => {
+  // Check if lisk core is running
+  cy.request(`${networks.devnet.node}/api/node/constants`).then(resp => expect(resp.status).to.eq(200));
+});
 
 beforeEach(() => {
   window.localStorage.setItem('settings', '{"onBoarding": false}');
