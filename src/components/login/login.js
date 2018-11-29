@@ -236,7 +236,7 @@ class Login extends React.Component {
                   error={this.state.passphraseValidity}
                   value={this.state.passphrase}
                   onChange={this.changeHandler.bind(this, 'passphrase')} />
-                {this.props.settings.isHarwareWalletConnected ?
+                {this.props.settings && this.props.settings.isHarwareWalletConnected ?
                   <div>
                     <div className={styles.ledgerRow}>
                       <div>
