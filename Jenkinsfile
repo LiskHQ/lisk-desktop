@@ -113,6 +113,7 @@ pipeline {
 										cd $WORKSPACE/$BRANCH_NAME
 										cp .env.development .env
 
+										sed -i -r -e '/ports:/,+2d' docker-compose.yml
 										# random port assignment
 										cat <<EOF >docker-compose.override.yml
 version: "2"
