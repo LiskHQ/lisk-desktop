@@ -39,7 +39,7 @@ export default {
     path: '/request',
     component: Receive,
   send: {
-    path: '/send',
+    path: '/wallet/send',
     component: Send,
     isPrivate: true,
   },
