@@ -33,12 +33,13 @@ export default {
     path: '/wallet',
     component: TransactionDashboard,
     isPrivate: true,
+    exact: true,
   },
   request: {
     path: '/request',
     component: Receive,
   send: {
-    path: '/send',
+    path: '/wallet/send',
     component: Send,
     isPrivate: true,
   },
