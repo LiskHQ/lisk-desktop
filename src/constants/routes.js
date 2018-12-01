@@ -32,9 +32,10 @@ export default {
     path: '/wallet',
     component: TransactionDashboard,
     isPrivate: true,
+    exact: true,
   },
   send: {
-    path: '/send',
+    path: '/wallet/send',
     component: Send,
     isPrivate: true,
   },

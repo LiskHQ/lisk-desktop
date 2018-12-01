@@ -32,7 +32,7 @@
 
   & .follow {
     margin-top: 25px;
-    height: 56px;
+    height: 58px;
 
     & .label {
       vertical-align: middle;
@@ -44,7 +44,7 @@
     justify-content: space-evenly;
 
     & > button {
-      width: 160px !important;
+      width: calc(100% / 2 - 20px) !important;
       margin-top: 0 !important;
     }
   }
