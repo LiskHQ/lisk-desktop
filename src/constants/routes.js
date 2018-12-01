@@ -36,8 +36,9 @@ export default {
     exact: true,
   },
   request: {
-    path: '/request',
+    path: '/wallet/request',
     component: Receive,
+  },
   send: {
     path: '/wallet/send',
     component: Send,
