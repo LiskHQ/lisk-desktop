@@ -16,7 +16,7 @@
 
 .resultBox {
   text-align: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
   flex-flow: column;
   display: flex;
   width: 100%;
@@ -33,10 +33,11 @@
   & footer {
     padding: 0px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
 
     & > button {
-      width: 160px;
+      width: calc(100% / 2 - 20px);
+      margin: 0;
     }
   }
 
@@ -73,7 +74,7 @@
     width: 100%;
   }
 
-  .addFollowedAccountButton {
-    width: 100%;
+  & .okButton {
+    margin-left: 20px;
   }
 }

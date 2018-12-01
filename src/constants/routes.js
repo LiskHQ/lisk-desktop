@@ -32,6 +32,7 @@ export default {
     path: '/wallet',
     component: TransactionDashboard,
     isPrivate: true,
+    exact: true,
   },
   request: {
     path: '/request',
