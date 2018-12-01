@@ -15,7 +15,10 @@ import SingleTransaction from '../components/singleTransaction';
 import HwWallet from '../components/hwWallet';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
+<<<<<<< HEAD
 import Receive from '../components/receive';
+=======
+>>>>>>> fef3f2b1f3397e9681310fc140af5f409b305492
 import Send from '../components/sendNew';
 
 export default {
