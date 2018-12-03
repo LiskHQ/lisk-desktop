@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Waypoint from 'react-waypoint';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import EmptyState from '../emptyState';
 import TransactionsList from './transactionsList';
 import styles from './transactions.css';
 import txFilters from '../../constants/transactionFilters';
 import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
 import { ActionButton } from '../toolbox/buttons/button';
+import { FontIcon } from '../fontIcon';
 
 class TransactionsOverview extends React.Component {
   constructor(props) {
@@ -94,17 +96,24 @@ class TransactionsOverview extends React.Component {
 
     return (
       <div className={`transactions ${styles.activity}`}>
-        <header>
-          <h2 className={styles.title}>
+        <header className={`${grid.row}`}>
+          <h2 className={`${grid['col-xs-6']} ${grid['col-sd-6']} ${grid['col-md-9']} ${grid['col-lg-9']} ${styles.title}`}>
           {this.props.t('Transaction')}
           {
             hasTitle && (<span>{this.props.t(' of')} <span className={`${styles.accountTitle} account-title`}>{accountTitle}</span></span>)
           }
           </h2>
 
-          <div className={styles.headerButtons}>
-            <ActionButton>
-              {this.props.t('Send')}
+          <div className={`${grid['col-xs-5']} ${grid['col-sd-5']} ${grid['col-md-3']} ${grid['col-lg-3']} ${styles.headerButtons}`}>
+            <a className='help-onboarding'
+              onClick={() => this.props.history.push('/request') }>
+              <FontIcon>request-token</FontIcon>
+              {this.props.t('Receive')}
+            </a>
+            <ActionButton
+              onClick={() => this.props.history.push('/wallet/send') }
+            >
+            {this.props.t('Send')}
             </ActionButton>
           </div>
         </header>
