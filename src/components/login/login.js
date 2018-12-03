@@ -235,13 +235,14 @@ class Login extends React.Component {
                   error={this.state.passphraseValidity}
                   value={this.state.passphrase}
                   onChange={this.changeHandler.bind(this, 'passphrase')} />
-                {localStorage.getItem('ledger') ?
+                  {/* CHANGE CONDITION !!! */}
+                {localStorage.getItem('ledger') ? null :
                   <div className={`${styles.hardwareWalletLink} hardwareWalletLink`} onClick={() => {
                     this.props.history.replace(routes.hwWallet.path);
                   }}>
                     Ledger Nano S
                     <FontIcon className={styles.singUpArrow} value='arrow-right' />
-                  </div> : null }
+                  </div> }
                 <footer className={ `${grid.row} ${grid['center-xs']}` }>
                   <div className={grid['col-xs-12']}>
                     <PrimaryButton label={this.props.t('Log in')}
