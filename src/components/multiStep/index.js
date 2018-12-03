@@ -85,13 +85,8 @@ class MultiStep extends React.Component {
       finalCallback,
     };
 
-    if (step.current === (children.length - 1)) {
-      if (typeof finalCallback === 'function') {
-        extraProps.finalCallback = finalCallback;
-      }
-    } else {
-      extraProps.prevState = Object.assign({}, step.data[step.current + 1]);
-    }
+    extraProps.prevState = Object.assign({}, step.data[step.current + 1]);
+
     return (<div className={className}>
       <MultiStepNav steps={children} showNav={this.props.showNav}
         prevPage={prevPage}
