@@ -8,6 +8,7 @@ import styles from './transactions.css';
 import txFilters from '../../constants/transactionFilters';
 import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
 import { ActionButton } from '../toolbox/buttons/button';
+<<<<<<< HEAD
 import { FontIcon } from '../fontIcon';
 import Ulrs from '../../constants/routes';
 
