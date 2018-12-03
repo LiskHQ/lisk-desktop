@@ -31,6 +31,12 @@
 
     & header {
       line-height: var(--header-line-height);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 141px;
+      margin: 53px 0 0;
+      padding: 0;
 
       & .accountTitle {
         color: var(--color-grayscale-medium);
@@ -41,7 +47,8 @@
       }
 
       & .title {
-        float: left;
+        margin: 0;
+        padding: 0;
       }
 
       & .account {
@@ -70,6 +77,22 @@
 
       & .balanceUnit {
         font-weight: var(--font-weight-semi-bold);
+      }
+
+      & > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      & > div > a {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--color-primary-standard);
+        cursor: pointer;
+        margin-right: 15px;
       }
     }
   }
