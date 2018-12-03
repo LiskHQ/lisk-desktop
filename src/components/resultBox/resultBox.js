@@ -49,7 +49,7 @@ class ResultBox extends React.Component {
             this.props.recipientId && this.isNotYetFollowed(this.props.recipientId) ?
             <Button className={`add-follwed-account-button ${styles.addFollowedAccountButton}`}
               onClick={() => {
-                this.props.nextStep({ address: this.props.reciepientId });
+                this.props.nextStep({ address: this.props.recipientId });
               }}>
               {this.props.t('Add to bookmarks')}
             </Button> : null
