@@ -8,7 +8,10 @@ import styles from './transactions.css';
 import txFilters from '../../constants/transactionFilters';
 import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
 import { ActionButton } from '../toolbox/buttons/button';
+<<<<<<< HEAD
 import { FontIcon } from '../fontIcon';
+=======
+>>>>>>> :recycle: Adding send button to transaction page
 
 class TransactionsOverview extends React.Component {
   constructor(props) {
