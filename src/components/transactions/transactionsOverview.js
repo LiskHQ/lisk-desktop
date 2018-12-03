@@ -6,6 +6,7 @@ import TransactionsList from './transactionsList';
 import styles from './transactions.css';
 import txFilters from '../../constants/transactionFilters';
 import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
+import { ActionButton } from '../toolbox/buttons/button';
 
 class TransactionsOverview extends React.Component {
   constructor(props) {
@@ -94,13 +95,21 @@ class TransactionsOverview extends React.Component {
     return (
       <div className={`transactions ${styles.activity}`}>
         <header>
-          <h2 className={styles.title}>{this.props.t('Activity')} {hasTitle
-            ? (<span>{this.props.t('of')} <span className={`${styles.accountTitle} account-title`}>{accountTitle}</span></span>)
-            : null}</h2>
+          <h2 className={styles.title}>
+          {this.props.t('Transaction')}
+          {
+            hasTitle && (<span>{this.props.t(' of')} <span className={`${styles.accountTitle} account-title`}>{accountTitle}</span></span>)
+          }
+          </h2>
 
+          <div className={styles.headerButtons}>
+            <ActionButton>
+              {this.props.t('Send')}
+            </ActionButton>
+          </div>
         </header>
         {this.shouldShowEmptyState() ?
-          <EmptyState title={this.props.t('No activity yet')}
+          <EmptyState title={this.props.t('No transactions yet')}
             message={this.props.t('The Wallet will show your recent transactions.')} /> :
           null }
         {this.shouldShowEmptyState() ?
