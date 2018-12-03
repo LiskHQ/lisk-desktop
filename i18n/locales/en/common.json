@@ -62,6 +62,7 @@
   "Confirm": "Confirm",
   "Confirm (Fee: 1 LSK)": "Confirm (Fee: 1 LSK)",
   "Confirm (Fee: {{fee}} LSK)": "Confirm (Fee: {{fee}} LSK)",
+  "Confirm on Ledger": "Confirm on Ledger",
   "Confirm to register your second passphrase on the blockchain.": "Confirm to register your second passphrase on the blockchain.",
   "Confirm transaction on Ledger Nano S": "Confirm transaction on Ledger Nano S",
   "Confirm transfer": "Confirm transfer",

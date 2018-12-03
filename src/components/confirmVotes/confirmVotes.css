@@ -39,7 +39,7 @@
 @media (--large-viewport) {
   .content {
     & > h2 {
-      padding: 0 40px;
+      padding: 0;
     }
   }
 }
