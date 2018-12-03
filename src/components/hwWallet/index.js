@@ -13,6 +13,7 @@ import { loadingStarted, loadingFinished } from '../../actions/loading';
 import { liskAPIClientSet } from '../../actions/peers';
 
 import { loginType } from '../../constants/hwConstants';
+import routes from '../../constants/routes';
 
 import styles from './unlockWallet.css';
 
@@ -33,7 +34,7 @@ class HwWallet extends React.Component {
   }
 
   cancelLedgerLogin() {
-    this.setState({ isLedgerLogin: false });
+    this.props.history.push(`${routes.login.path}`);
   }
 
   async ledgerLogin() { // eslint-disable-line max-statements
