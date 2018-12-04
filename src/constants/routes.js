@@ -12,8 +12,10 @@ import TransactionDashboard from '../components/transactionDashboard';
 import AccountTransactions from '../components/accountTransactions';
 import Voting from '../components/voting';
 import SingleTransaction from '../components/singleTransaction';
+import HwWallet from '../components/hwWallet';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
+import Receive from '../components/receive';
 
 export default {
   accountVisualDemo: {
@@ -29,6 +31,11 @@ export default {
   wallet: {
     path: '/wallet',
     component: TransactionDashboard,
+    isPrivate: true,
+  },
+  request: {
+    path: '/request',
+    component: Receive,
     isPrivate: true,
   },
   delegates: {
@@ -111,6 +118,11 @@ export default {
     path: '/transactions',
     pathSuffix: '/:id?',
     component: SingleTransaction,
+    isPrivate: false,
+  },
+  hwWallet: {
+    path: '/hw-walet-login',
+    component: HwWallet,
     isPrivate: false,
   },
   // notFoundExplorer: {

@@ -4,6 +4,7 @@ import { extractAddress, extractPublicKey } from '../../utils/account';
 import { accountLoggedIn, accountLoading, accountLoggedOut } from '../../actions/account';
 import actionTypes from '../../constants/actions';
 import accountConfig from '../../constants/account';
+import { loginType } from '../../constants/hwConstants';
 import { errorToastDisplayed } from '../../actions/toaster';
 
 const { lockDuration } = accountConfig;
@@ -12,7 +13,7 @@ const loginMiddleware = store => next => (action) => { // eslint-disable-line ma
       (!action.data.publicKey && !action.data.passphrase)) {
     return next(action);
   }
-  if (action.type === actionTypes.liskAPIClientSet && action.data.loginType === 1) {
+  if (action.type === actionTypes.liskAPIClientSet && action.data.loginType === loginType.ledger) {
     return next(action);
   }
   next(action);

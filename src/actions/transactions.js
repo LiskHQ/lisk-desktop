@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import to from 'await-to-js';
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
 import { send, getTransactions, getSingleTransaction, unconfirmedTransactions } from '../utils/api/transactions';
@@ -8,11 +9,17 @@ import { extractAddress } from '../utils/account';
 import { loadAccount, passphraseUsed } from './account';
 import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
-import { toRawLsk } from '../utils/lsk';
 import transactionTypes from '../constants/transactionTypes';
+import { toRawLsk } from '../utils/lsk';
+import { sendWithLedger } from '../utils/api/ledger';
 
 export const cleanTransactions = () => ({
   type: actionTypes.cleanTransactions,
+});
+
+export const transactionAdded = data => ({
+  data,
+  type: actionTypes.transactionAdded,
 });
 
 export const transactionsFilterSet = ({
@@ -215,34 +222,63 @@ export const transactionsUpdated = ({
       });
   };
 
+const handleSentError = ({ error, account, dispatch }) => {
+  let text;
+  switch (account.loginType) {
+    case 0:
+      text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
+      break;
+    case 1:
+      text = i18next.t('You have cancelled the transaction on your hardware wallet. You can either continue or retry.');
+      break;
+    default:
+      text = error.message;
+  }
+  dispatch({
+    data: { errorMessage: text },
+    type: actionTypes.transactionFailed,
+  });
+};
+
 export const sent = ({
   account, recipientId, amount, passphrase, secondPassphrase, data,
 }) =>
-  (dispatch, getState) => {
+  async (dispatch, getState) => {
+    // account.loginType = 1;
+    let error;
+    let callResult;
     const liskAPIClient = getState().peers.liskAPIClient;
     const timeOffset = getTimeOffset(getState());
-    // eslint-disable-next-line
-    send(liskAPIClient, recipientId, toRawLsk(amount),passphrase, secondPassphrase, data, timeOffset)
-      .then((response) => {
-        dispatch({
-          data: {
-            id: response.id,
-            senderPublicKey: account.publicKey,
-            senderId: account.address,
-            recipientId,
-            amount: toRawLsk(amount),
-            fee: Fees.send,
-            type: transactionTypes.send,
-            asset: {
-              data,
-            },
-          },
-          type: actionTypes.transactionAdded,
-        });
-      })
-      .catch((error) => {
-        const errorMessage = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
-        dispatch({ data: { errorMessage }, type: actionTypes.transactionFailed });
-      });
-    dispatch(passphraseUsed(passphrase));
+    switch (account.loginType) {
+      case 0:
+        // eslint-disable-next-line
+        [error, callResult] = await to(send(liskAPIClient, recipientId, toRawLsk(amount), passphrase, secondPassphrase, data, timeOffset));
+        break;
+      case 1:
+        // eslint-disable-next-line
+        [error, callResult] = await to(sendWithLedger(liskAPIClient, account, recipientId, toRawLsk(amount), secondPassphrase, data, timeOffset));
+        break;
+      // case 2:
+      //   errorMessage = i18next.t('Not Yet Implemented. Sorry.');
+      //   dispatch({ data: { errorMessage }, type: actionTypes.transactionFailed });
+      //   break;
+      default:
+        dispatch({ data: { errorMessage: i18next.t('Login Type not recognized.') }, type: actionTypes.transactionFailed });
+    }
+    loadingFinished('sent');
+    if (error) {
+      handleSentError({ error, account, dispatch });
+    } else {
+      dispatch(transactionAdded({
+        id: callResult.id,
+        senderPublicKey: account.publicKey,
+        senderId: account.address,
+        recipientId,
+        amount: toRawLsk(amount),
+        fee: Fees.send,
+        type: transactionTypes.send,
+        asset: { data },
+      }));
+      dispatch(passphraseUsed(passphrase));
+    }
   };

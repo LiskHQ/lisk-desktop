@@ -7,6 +7,9 @@ pipeline {
 		skipDefaultCheckout true
 		buildDiscarder(logRotator(numToKeepStr: '168', artifactNumToKeepStr: '5'))
 	}
+	environment {
+		LISK_CORE_VERSION = '1.3.0'
+	}
 	stages {
 		stage('Clean workspace and checkout SCM') {
 			steps {
@@ -16,12 +19,8 @@ pipeline {
 		}
 		stage('Install npm dependencies') {
 			steps {
-				script {
-					// TODO: switch to 'npm ci' (npm >= 5.7.1)
-					// see https://blog.npmjs.org/post/171556855892/introducing-npm-ci-for-faster-more-reliable
-					cache_file = restoreCache("package.json")
-					sh 'npm install'
-					saveCache(cache_file, './node_modules', 10)
+				nvm(getNodejsVersion()) {
+					sh 'npm ci'
 				}
 			}
 		}
@@ -30,26 +29,31 @@ pipeline {
 				parallel (
 					"ESLint": {
 						ansiColor('xterm') {
-							sh '''
-							npm run --silent clean-build
-							npm run --silent copy-files
-							npm run --silent eslint
-							'''
+							nvm(getNodejsVersion()) {
+								sh '''
+								npm run --silent clean-build
+								npm run --silent copy-files
+								npm run --silent eslint
+								'''
+							}
 						}
 					},
 					"build": {
 						withCredentials([string(credentialsId: 'github-lisk-token', variable: 'GH_TOKEN')]) {
-							sh '''
-							npm run --silent build
-							npm run --silent build:testnet
-							npm run --silent bundlesize
+							nvm(getNodejsVersion()) {
+								sh '''
+								npm run --silent build
+								npm run --silent build:testnet
+								npm run --silent bundlesize
 
-							if [ -z $CHANGE_BRANCH ]; then
-							    USE_SYSTEM_XORRISO=true npm run dist:linux
-							else
-							    echo "Skipping desktop build for Linux because we're building a PR."
-							fi
-							'''
+								if [ -z $CHANGE_BRANCH ]; then
+								    npm install
+								    USE_SYSTEM_XORRISO=true npm run dist:linux
+								else
+								    echo "Skipping desktop build for Linux because we're building a PR."
+								fi
+								'''
+							}
 						}
 						archiveArtifacts artifacts: 'app/build/'
 						archiveArtifacts artifacts: 'app/build-testnet/'
@@ -79,9 +83,11 @@ pipeline {
 				parallel (
 					"jest": {
 						ansiColor('xterm') {
-							sh 'ON_JENKINS=true npm run --silent test'
-							withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
-									sh 'cat coverage/jest/lcov.info |coveralls -v'
+							nvm(getNodejsVersion()) {
+								sh 'ON_JENKINS=true npm run --silent test'
+								withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
+										sh 'cat coverage/jest/lcov.info |coveralls -v'
+								}
 							}
 						}
 					},
@@ -89,41 +95,55 @@ pipeline {
 						githubNotify context: 'Jenkins e2e tests',
 							     description: 'e2e tests in progress...',
 							     status: 'PENDING'
+						dir('lisk') {
+							checkout([$class: 'GitSCM',
+							          branches: [[name: "v${env.LISK_CORE_VERSION}" ]],
+								  userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk']]])
+						}
 						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
 							ansiColor('xterm') {
 								wrap([$class: 'Xvfb', parallelBuild: true, autoDisplayName: true]) {
-									sh '''#!/bin/bash -xe
-									export N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
+									nvm(getNodejsVersion()) {
+										sh '''#!/bin/bash -xe
+										export N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
 
-									wget -nv -c https://github.com/LiskHQ/lisk-docker/archive/2.2.0.tar.gz
-									rm -rf $WORKSPACE/$BRANCH_NAME/
-									mkdir -p $WORKSPACE/$BRANCH_NAME/
-									tar xf 2.2.0.tar.gz -C $WORKSPACE/$BRANCH_NAME/ --strip-component=2 lisk-docker-2.2.0/examples/
-									cp $WORKSPACE/test/dev_blockchain.db.gz $WORKSPACE/$BRANCH_NAME/dev_blockchain.db.gz
-									cd $WORKSPACE/$BRANCH_NAME
-									cp .env.development .env
+										rm -rf $WORKSPACE/$BRANCH_NAME/
+										cp -rf $WORKSPACE/lisk/docker/ $WORKSPACE/$BRANCH_NAME/
+										cp $WORKSPACE/test/dev_blockchain.db.gz $WORKSPACE/$BRANCH_NAME/dev_blockchain.db.gz
+										cd $WORKSPACE/$BRANCH_NAME
+										cp .env.development .env
 
-									# random port assignment
-									yq --yaml-output '.services.lisk.ports[0]="${ENV_LISK_HTTP_PORT}"|.services.lisk.ports[1]="${ENV_LISK_WS_PORT}"' docker-compose.yml |sponge docker-compose.yml
+										sed -i -r -e '/ports:/,+2d' docker-compose.yml
+										# random port assignment
+										cat <<EOF >docker-compose.override.yml
+version: "2"
+services:
 
-									LISK_VERSION=1.1.0-alpha.8 make coldstart
-									export CYPRESS_baseUrl=http://127.0.0.1:300$N/#/
-									export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
-									cd -
+  lisk:
+      ports:
+        - \\${ENV_LISK_HTTP_PORT}
+        - \\${ENV_LISK_WS_PORT}
+EOF
 
-									npm run serve -- $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
-									set +e
-									set -o pipefail
+										ENV_LISK_VERSION="$LISK_CORE_VERSION" make coldstart
+										export CYPRESS_baseUrl=http://127.0.0.1:300$N/#/
+										export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
+										cd -
 
-									githubNotify context: 'Jenkins e2e tests',
-										     description: 'e2e tests are running',
-										     status: 'PENDING'
-									npm run cypress:run -- --record |tee cypress.log
-									ret=$?
-									grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress_url
-									echo $ret >.cypress_status
-									exit $ret
-									'''
+										npm run serve -- $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
+										set +e
+										set -o pipefail
+
+										githubNotify context: 'Jenkins e2e tests',
+											     description: 'e2e tests are running',
+											     status: 'PENDING'
+										npm run cypress:run -- --record |tee cypress.log
+										ret=$?
+										grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress_url
+										echo $ret >.cypress_status
+										exit $ret
+										'''
+									}
 								}
 							}
 						}

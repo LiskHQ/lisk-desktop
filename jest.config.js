@@ -10,7 +10,7 @@ module.exports = {
     'src/components/dashboard/currencyGraph.test.js', // This should be unskipped in issue #1499
     'src/components/errorBoundary/index.test.js',
     'src/components/feedbackForm/*.test.js',
-    'src/components/ledger/*.test.js',
+    'src/components/hwWallet/*.test.js',
     'src/components/login/*.test.js',
     'src/components/newsFeed/index.test.js', // This component doesn't meet the setted tresholds for mocha but in jest
     'src/components/passphraseCreation/index.test.js',
@@ -39,7 +39,9 @@ module.exports = {
     '/node_modules/',
     'app/src/ipc.js',
     'app/src/ledger.js',
+    'src/components/receive/index.js',
     'src/actions/liskService.js',
+    'src/actions/peers.js', // FollowUp #1515
     'src/actions/transactions.js',
     'src/components/account/stories.js',
     'src/components/backgroundMaker/index.js',
@@ -48,15 +50,18 @@ module.exports = {
     'src/components/errorBoundary/index.js',
     'src/components/feedbackForm/',
     'src/components/formattedNumber/stories.js',
-    'src/components/ledger/',
+    'src/components/hwWallet/',
     'src/components/login/',
     'src/components/newsFeed/index.js', // This component doesn't meet the setted tresholds for mocha but in jest
     'src/components/newsFeed/news.js',
     'src/components/passphrase/create/create.js',
     'src/components/passphraseCreation/index.js',
+    'src/components/passphraseSteps/index.js', // FollowUp #1515
     'src/components/register/register.js',
     'src/components/request/specifyRequest.js',
+    'src/components/resultBox/resultBox.js', // FollowUp #1515
     'src/components/searchBar/index.js', // Passing in mocha but not in Jest
+    'src/components/send/steps/confirm/confirm.js', // FollowUp #1515
     'src/components/send/steps/form/stories.js',
     'src/components/spinner/stories.js',
     'src/components/toaster/stories.js',

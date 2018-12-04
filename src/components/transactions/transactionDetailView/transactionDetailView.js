@@ -133,7 +133,6 @@ class TransactionDetailView extends React.Component {
 
   render() {
     const transaction = this.getTransaction();
-
     return (
       <div className={`${styles.details}`}>
         {

@@ -3,12 +3,11 @@ import isElectron from 'is-electron';
 import TransportU2F from '@ledgerhq/hw-transport-u2f';
 import i18next from 'i18next';
 import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api';
-import { hwConstants, LEDGER_COMMANDS } from '../constants/hwConstants';
+import { hwConstants, LEDGER_COMMANDS, loginType as loginTypesConst } from '../constants/hwConstants';
 // import { loadingStarted, loadingFinished } from './loading';
 // import signPrefix from '../constants/signPrefix';
-import { infoToastDisplayed, errorToastDisplayed } from '../actions/toaster';
-import { getBufferToHex } from './rawTransactionWrapper';
-import store from '../store';
+import { getLedgerAccountInfo } from './api/ledger';
+import { getBufferToHex, getTransactionBytes, calculateTxId } from './rawTransactionWrapper';
 
 export const LEDGER_MSG = {
   LEDGER_NO_TRANSPORT_AVAILABLE: i18next.t('Unable to detect the communication layer with your Ledger Nano S'),
@@ -24,10 +23,12 @@ export const LEDGER_MSG = {
 const { ipc } = window;
 if (ipc) { // On browser-mode is undefined
   ipc.on('ledgerConnected', () => {
-    store.dispatch(infoToastDisplayed({ label: LEDGER_MSG.LEDGER_CONNECTED }));
+    // TODO if we want to enable this, it should be in a middleware.
+    // No util should import store, because it causes problems in tests
+    // store.dispatch(infoToastDisplayed({ label: LEDGER_MSG.LEDGER_CONNECTED }));
   });
   ipc.on('ledgerDisconnected', () => {
-    store.dispatch(errorToastDisplayed({ label: LEDGER_MSG.LEDGER_DISCONNECTED }));
+    // store.dispatch(errorToastDisplayed({ label: LEDGER_MSG.LEDGER_DISCONNECTED }));
   });
 }
 
@@ -101,6 +102,46 @@ export const getAccountFromLedgerIndex = (index = 0) => {
   };
   return ledgerPlatformHendler(command);
 };
+
+/* eslint-disable no-await-in-loop */
+export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t, unInitializedAdded = false, }) => { // eslint-disable-line
+  let index = unInitializedAdded ? hwAccounts.length : 0;
+  let accountInfo;
+
+  const accounts = [];
+  do {
+    try {
+      switch (loginType) { // eslint-disable-line
+        case loginTypesConst.ledger:
+          accountInfo = await getLedgerAccountInfo(liskAPIClient, index);
+          break;
+        // case loginTypes.trezor:
+        //   this.props.errorToastDisplayed({
+        //   text: this.props.t('Not Yet Implemented. Sorry.'),
+        // });
+        //   break;
+        // default:
+        //   this.props.errorToastDisplayed({
+        //   text: this.props.t('Login Type not recognized.')
+        // });
+      }
+    } catch (error) {
+      return;
+    }
+    if ((!unInitializedAdded && (index === 0 || accountInfo.isInitialized)) ||
+      (unInitializedAdded && !accountInfo.isInitialized)) {
+      accounts.push(accountInfo);
+    }
+    index++;
+  }
+  while (accountInfo.isInitialized || index === 0);
+  /* eslint-disable-next-line */
+  return {
+    hwAccounts: accounts,
+    isLoading: false,
+    showNextAvailable: (index === 1),
+  };
+};
 //  export const signMessageWithLedger = async (account, message) => {
 //   const command = {
 //     action: LEDGER_COMMANDS.SIGN_MSG,
@@ -112,47 +153,47 @@ export const getAccountFromLedgerIndex = (index = 0) => {
 //    store.dispatch(infoToastDisplayed({ label: LEDGER_MSG.LEDGER_ASK_FOR_CONFIRMATION_PIN }));
 //    return ledgerPlatformHendler(command);
 // };
-/* eslint-disable prefer-const */
-// export const signTransactionWithLedger = async (tx, account, pin) => {
-//   const command = {
-//     action: LEDGER_COMMANDS.SIGN_TX,
-//     data: {
-//       index: account.hwInfo.derivationIndex,
-//       tx: getTransactionBytes(tx),
-//     },
-//   };
-//    loadingStarted('ledgerUserAction');
-//   store.dispatch(infoToastDisplayed({ label: LEDGER_MSG.LEDGER_ASK_FOR_CONFIRMATION }));
-//    let signature;
-//   try {
-//     signature = await ledgerPlatformHendler(command);
-//   } catch (err) {
-//     loadingFinished('ledgerUserAction');
-//     throw err;
-//   }
-//    tx.signature = getBufferToHex(signature);
-//   loadingFinished('ledgerUserAction');
-//    // In case of second signature (PIN)
-//   if (typeof pin === 'string' && pin !== '') {
-//     const command2 = {
-//       action: LEDGER_COMMANDS.SIGN_TX,
-//       data: {
-//         index: calculateSecondPassphraseIndex(account.hwInfo.derivationIndex, pin),
-//         tx: getTransactionBytes(tx),
-//       },
-//     };
-//      loadingStarted('ledgerUserAction');
-//     store.dispatch(infoToastDisplayed({ label: LEDGER_MSG.LEDGER_ASK_FOR_CONFIRMATION_PIN }));
-//      let signSignature;
-//     try {
-//       signSignature = await ledgerPlatformHendler(command2);
-//     } catch (err) {
-//       loadingFinished('ledgerUserAction');
-//       throw err;
-//     }
-//      tx.signSignature = getBufferToHex(signSignature);
-//     loadingFinished('ledgerUserAction');
-//   }
-//    tx.id = calculateTxId(tx);
-//   return tx;
-// };
+/* eslint-disable */
+export const signTransactionWithLedger = async (tx, account, pin) => {
+  const command = {
+    action: LEDGER_COMMANDS.SIGN_TX,
+    data: {
+      index: account.hwInfo.derivationIndex,
+      tx: getTransactionBytes(tx),
+    },
+  };
+  //  loadingStarted('ledgerUserAction');
+  // store.dispatch(infoToastDisplayed({ label: LEDGER_MSG.LEDGER_ASK_FOR_CONFIRMATION }));
+  let signature;
+  try {
+    signature = await ledgerPlatformHendler(command);
+  } catch (err) {
+    // loadingFinished('ledgerUserAction');
+    throw err;
+  }
+  tx.signature = getBufferToHex(signature);
+  // loadingFinished('ledgerUserAction');
+  // In case of second signature (PIN)
+  if (typeof pin === 'string' && pin !== '') {
+    const command2 = {
+      action: LEDGER_COMMANDS.SIGN_TX,
+      data: {
+        index: calculateSecondPassphraseIndex(account.hwInfo.derivationIndex, pin),
+        tx: getTransactionBytes(tx),
+      },
+    };
+    //  loadingStarted('ledgerUserAction');
+    // store.dispatch(infoToastDisplayed({ label: LEDGER_MSG.LEDGER_ASK_FOR_CONFIRMATION_PIN }));
+    let signSignature;
+    try {
+      signSignature = await ledgerPlatformHendler(command2);
+    } catch (err) {
+      // loadingFinished('ledgerUserAction');
+      throw err;
+    }
+    tx.signSignature = getBufferToHex(signSignature);
+    // loadingFinished('ledgerUserAction');
+  }
+  tx.id = calculateTxId(tx);
+  return tx;
+};

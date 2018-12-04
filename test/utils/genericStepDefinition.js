@@ -40,6 +40,7 @@ export default class GenericStepDefinition {
    * @param {String} text - expect text of the dom query entry
    */
   haveTextOf(query, text) {
+    this.wrapper.update();
     expect(this.wrapper.find(query).first()).to.have.text(text);
   }
   /**

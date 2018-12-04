@@ -28,12 +28,14 @@ describe('Result Box', () => {
     };
     props = {
       copy,
+      account: {},
       title,
       body,
       success: true,
       reset: spy(),
       copyToClipboard: () => {},
       finalCallback: () => {},
+      transactionFailedClear: () => {},
       t: () => {},
       history: { location: {}, push: () => {}, replace: () => {} },
       followedAccounts: [],
@@ -57,6 +59,7 @@ describe('Result Box', () => {
     props = {
       copy: null,
       title,
+      account: {},
       body,
       success: false,
       reset: () => {},
@@ -85,6 +88,7 @@ describe('Result Box', () => {
       t: () => {},
       onMount: spy(),
       followedAccounts: [],
+      account: {},
     };
 
     wrapper = mount(<ResultBox {...props} />, options);
@@ -106,6 +110,9 @@ describe('Result Box', () => {
       followedAccounts: [{
         address: '1L',
       }],
+      account: {
+        hwInfo: {},
+      },
     };
 
     wrapper = mount(<ResultBox {...props} />, options);

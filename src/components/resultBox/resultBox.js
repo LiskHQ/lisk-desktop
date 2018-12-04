@@ -47,6 +47,7 @@ class ResultBox extends React.Component {
         <footer>
           <Button className={`okay-button ${styles.okButton}`}
             onClick={() => {
+              this.props.transactionFailedClear();
               // istanbul ignore else
               if (typeof this.props.finalCallback === 'function') {
                 this.props.finalCallback();
@@ -56,12 +57,28 @@ class ResultBox extends React.Component {
             }}>
             {this.props.t('Okay')}
           </Button>
-          {this.props.reciepientId && this.isNotYetFollowed(this.props.reciepientId) ?
+          {this.props.success &&
+            this.props.recipientId && this.isNotYetFollowed(this.props.recipientId) ?
             <Button className={`add-follwed-account-button ${styles.addFollowedAccountButton}`}
               onClick={() => {
-                this.props.nextStep({ address: this.props.reciepientId });
+                this.props.nextStep({ address: this.props.recipientId });
               }}>
               {this.props.t('Add to followed accounts')}
+            </Button> : null
+          }
+          {!this.props.success && this.props.account.hwInfo ?
+            <Button className={`add-follwed-account-button ${styles.addFollowedAccountButton}`}
+              onClick={() => {
+                this.props.transactionFailedClear();
+                this.props.prevStep({
+                  success: null,
+                  account: this.props.account,
+                  recipient: this.props.recipient,
+                  amount: this.props.amount,
+                  password: { value: '' },
+                });
+              }}>
+              {this.props.t('Retry')}
             </Button> : null
           }
           <div className='subTitle'>{this.props.subTitle}</div>
