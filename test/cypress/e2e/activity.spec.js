@@ -15,7 +15,7 @@ describe('Dashboard Activity', () => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     });
     /**
-     * 5 transaction are shown in the latest activity
+     * 5 transaction are shown in the latest activity component
      * @expect 5 transactions
      */
     it('5 tx are shown', () => {
@@ -103,7 +103,7 @@ describe('Dashboard Activity', () => {
           cy.get(ss.votedAddress).should('have.length', 101);
         });
         /**
-         * Shows voted delegate's nickname not addresses
+         * Shows voted delegate's nickname, not address
          * @expect delegate's nickname shown
          */
         it('Shows voted delegate nickname ', () => {
@@ -162,7 +162,8 @@ describe('Dashboard Activity', () => {
 
         // TODO Fix after corresponding bugfix
         /**
-         * Shows who-voted-for-this-delegate's nickname if it was delegate
+         * Shows nickname of account on "Who voted for this delegate?"
+         * list if the account is a delegate
          * @expect voters nickname shown
          */
         xit('Shows voters nickname if it is delegate', () => {
@@ -170,7 +171,8 @@ describe('Dashboard Activity', () => {
         });
 
         /**
-         * Shows who-voted-for-this-delegate's address if it was not-delegate
+         * Shows address of account on "Who voted for this delegate?"
+         * list if the account is not a delegate
          * @expect voters address shown
          */
         it('Shows voters address if it is not delegate', () => {

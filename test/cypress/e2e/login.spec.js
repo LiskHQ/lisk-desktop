@@ -109,7 +109,7 @@ describe('Login Page', () => {
   });
 
   /**
-   * ?showNetwork parameter makes network switcher available
+   * ?showNetwork URL parameter makes network switcher available
    * @expect network switcher is visible
    */
   it('Network switcher available by url ?showNetwork=true', () => {
