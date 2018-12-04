@@ -66,6 +66,8 @@ const account = {
   multisignatures: [],
   u_multisignatures: [],
   unconfirmedBalance: '0',
+  loginType: 0,
+  hwInfo: {},
 };
 
 let store;
