@@ -38,20 +38,27 @@ describe('Delegate Registration', () => {
   it('Register delegate + Header balance is affected', function () {
     cy.autologin(accounts['delegate candidate'].passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
+    // Memorize the balance before test
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
+    // Choose delegate name
     cy.get(ss.chooseDelegateName).click();
+    // Enter delegate name
     cy.get(ss.delegateNameInput).click().type(randomDelegateName);
+    // Submit
     cy.get(ss.submitDelagateNameBtn).click();
     cy.get(ss.confirmDelegateRegBtn).click();
+    // Wait for confirmation
     cy.wait(txConfirmationTimeout);
     cy.get(ss.app).contains('Success');
     cy.get(ss.goToDashboardAfterDelegateReg).click();
     cy.url().should('contain', urls.dashboard);
+    // Check tx details
     cy.get(ss.transactionRow).eq(0).as('tx');
     cy.get('@tx').find(ss.spinner).should('not.exist');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', 'Delegate registration');
     cy.get('@tx').find(ss.transactionReference).should('have.text', '-');
     cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');
+    // Get and compare the balance after test
     cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(() => {
       compareBalances(this.balanceBefore, this.balanceAfter, txDelegateRegPrice);
     });

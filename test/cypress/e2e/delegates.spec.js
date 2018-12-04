@@ -85,9 +85,9 @@ describe('Delegates', () => {
   });
 
   /**
-   * Search functioning correctly
-   * @expect no delegates are shown if search for non-existing name
-   * @expect delegate is shown in 1 row when is found
+   * Search for a delegate functioning correctly
+   * @expect enter some gibberish: no delegates are shown
+   * @expect enter a delegate's name: delegate is shown in first row
    */
   it('Search for a delegate', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
