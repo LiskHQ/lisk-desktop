@@ -74,6 +74,21 @@ export const clearVotes = () => ({
   type: actionTypes.votesCleared,
 });
 
+const handleVoteError = ({ error, account }) => {
+  let text;
+  switch (account.loginType) {
+    case 0:
+      text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
+      break;
+    case 1:
+      text = i18next.t('You have cancelled voting on your hardware wallet. You can either continue or retry.');
+      break;
+    default:
+      text = error.message;
+  }
+  return text;
+};
+
 /**
  * Makes Api call to register votes
  * Adds pending state and then after the duration of one round
@@ -116,8 +131,7 @@ export const votePlaced = ({
     }
 
     if (error) {
-      goToNextStep({ success: false, error }); // ???
-      // handleSentError({ error, account, dispatch });
+      goToNextStep({ success: false, text: handleVoteError({ error, account, dispatch }) });
     } else {
       dispatch(pendingVotesAdded());
       dispatch(transactionAdded({
