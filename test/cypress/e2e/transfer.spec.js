@@ -3,7 +3,7 @@ import networks from '../../constants/networks';
 import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
 import enterSecondPassphrase from '../utils/enterSecondPassphrase';
-import compareBalances from '../utils/compareBalances';
+// import compareBalances from '../utils/compareBalances';
 
 const msg = {
   transferTxSuccess: 'Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.',
@@ -18,7 +18,7 @@ const getRandomAddress = () => `23495548666${Math.floor((Math.random() * 8990000
 const getRandomAmount = () => Math.floor((Math.random() * 10) + 1);
 const getRandomReference = () => Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
 
-const transactionFee = 0.1;
+// const transactionFee = 0.1;
 
 describe('Transfer', () => {
   let randomAddress;
@@ -65,7 +65,7 @@ describe('Transfer', () => {
    * @expect header balance value is decreased
    */
   it('Transfer tx with empty ref appears in activity pending -> approved,' +
-    'Header balance is affected', function () {
+    'Header balance is affected', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.wallet);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
@@ -81,9 +81,10 @@ describe('Transfer', () => {
     cy.get('@tx').find(ss.transactionAmount).should('have.text', randomAmount.toString());
     cy.wait(txConfirmationTimeout);
     cy.get('@tx').find(ss.spinner).should('not.exist');
-    cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(() => {
-      compareBalances(this.balanceBefore, this.balanceAfter, randomAmount + transactionFee);
-    });
+    // TODO Unskip when #1539 is fixed
+    // cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(() => {
+    //   compareBalances(this.balanceBefore, this.balanceAfter, randomAmount + transactionFee);
+    // });
   });
 
   /**
