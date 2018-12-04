@@ -16,7 +16,6 @@ const AccountTitleInput = ({
     autoFocus={true}
     disabled={disabled}
     onChange={val => onChange(val, validateInput)}
-    require={true}
   />;
 };
 
