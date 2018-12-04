@@ -13,29 +13,23 @@ import styles from './send.css';
 
 describe('Send', () => {
   let wrapper;
-  let transactions;
-  let peers;
-  const priceTicker = {
-    success: true,
-    LSK: {
-      USD: 1,
-    },
-  };
 
   beforeEach(() => {
-    transactions = {};
-    peers = {
-      data: {},
-      options: {},
-    };
-
     const store = configureMockStore([thunk])({
-      peers,
-      transactions,
+      peers: {
+        data: {},
+        options: {},
+      },
+      transactions: {},
       account: { serverPublicKey: 'public_key', balance: 0 },
       settings: {},
       settingsUpdated: () => {},
-      liskService: { priceTicker },
+      liskService: {
+        success: true,
+        LSK: {
+          USD: 1,
+        },
+      },
       followedAccounts: { accounts: [] },
     });
 

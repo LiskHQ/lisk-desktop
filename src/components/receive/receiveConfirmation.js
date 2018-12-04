@@ -45,7 +45,7 @@ class ReceiveConfirmation extends React.Component {
   }
 
   render() {
-    let link = `lisk://wallet?recipient=${this.props.address}`;
+    let link = `lisk://wallet/send?recipient=${this.props.address}`;
     link = `${link}&amount=${this.state.amount.value}`;
     link = (this.state.reference.value) ? `${link}&reference=${this.state.reference.value}` : link;
     const text = `mailto:?subject=Requesting LSK to ${this.props.address}&body=Hey there,
