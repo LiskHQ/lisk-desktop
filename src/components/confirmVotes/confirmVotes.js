@@ -56,7 +56,7 @@ class ConfirmVotes extends React.Component {
       account,
       votes,
       passphrase: passphrase.value,
-      secondSecret: secondPassphrase.value,
+      secondPassphrase: secondPassphrase.value,
       goToNextStep: this.goToNextStep.bind(this),
     };
     return (
