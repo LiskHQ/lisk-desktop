@@ -42,7 +42,6 @@ class ConfirmVotes extends React.Component {
   }
 
   votePlacedDelayed(value) {
-    this.setState({ didSend: true });
     this.timeout = setTimeout(() => {
       this.props.votePlaced(value);
     }, 120);
@@ -60,7 +59,6 @@ class ConfirmVotes extends React.Component {
       secondSecret: secondPassphrase.value,
       goToNextStep: this.goToNextStep.bind(this),
     };
-
     return (
       <div className={styles.wrapper}>
         <article className={styles.content}>
@@ -70,14 +68,17 @@ class ConfirmVotes extends React.Component {
             {t('Are you certain of your choice?')}
           </p>
           <PrimaryButton
+            disabled={this.state.didSend}
             className={`${styles.confirmButton} confirm`}
-            onClick={() => { votePlaced(data); }}>{t('Confirm (Fee: 1 LSK)')}</PrimaryButton>
+            onClick={() => {
+              this.setState({ didSend: true });
+              votePlaced(data);
+            }}>{t('Confirm (Fee: 1 LSK)')}</PrimaryButton>
           <Button
             className={`${styles.backButton} back`}
             onClick={() => prevStep({ reset: skipped })}>{t('Back')}</Button>
           <Checkbox
             className={`${styles.checkbox} confirmSlider`}
-            disabled={this.state.didSend}
             label={t(`Confirm (Fee: ${fromRawLsk(fees.vote)} LSK)`)}
             icons={{
               done: 'checkmark',
