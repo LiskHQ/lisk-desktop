@@ -78,11 +78,13 @@ const handleVoteError = ({ error, account }) => {
   let text;
   switch (account.loginType) {
     case 0:
-      text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
+      text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while placing your vote.');
       break;
+    /* istanbul ignore next */
     case 1:
       text = i18next.t('You have cancelled voting on your hardware wallet. You can either continue or retry.');
       break;
+    /* istanbul ignore next */
     default:
       text = error.message;
   }
@@ -121,11 +123,13 @@ export const votePlaced = ({
           votedList, unvotedList, secondPassphrase, timeOffset,
         ));
         break;
+      /* istanbul ignore next */
       // eslint-disable-next-line no-case-declarations
       case loginType.ledger:
         [error, callResult] =
           await to(voteWithLedger(liskAPIClient, account, votedList, unvotedList));
         break;
+      /* istanbul ignore next */
       default:
         dispatch({ data: { errorMessage: i18next.t('Login Type not recognized.') }, type: actionTypes.transactionFailed });
     }

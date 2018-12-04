@@ -15,6 +15,7 @@ import {
 } from './voting';
 import Fees from '../constants/fees';
 import networks from '../constants/networks';
+import { loginType } from '../constants/hwConstants';
 import * as delegateApi from '../utils/api/delegate';
 
 const delegateList = [
@@ -92,6 +93,7 @@ describe('actions: voting', () => {
     const account = {
       publicKey: 'test_public-key',
       address: 'test_address',
+      loginType: loginType.normal,
     };
 
     const secondSecret = null;
@@ -124,7 +126,7 @@ describe('actions: voting', () => {
       expect(typeof actionFunction).to.be.deep.equal('function');
     });
 
-    it('should dispatch transactionAdded action if resolved', () => {
+    it('should dispatch transactionAdded action if resolved', async () => {
       delegateApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
@@ -135,22 +137,23 @@ describe('actions: voting', () => {
         type: 3,
       };
 
-      actionFunction(dispatch, getState);
+      await actionFunction(dispatch, getState);
       expect(dispatch).to.have.been
         .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
     });
 
-    it('should call goToNextStep with "success: false" if caught an error', () => {
+    it('should call goToNextStep with "success: false" if caught an error', async () => {
       delegateApiMock.returnsPromise().rejects({ message: 'sample message' });
 
-      actionFunction(dispatch, getState);
+      await actionFunction(dispatch, getState);
       const expectedAction = { success: false, text: 'sample message.' };
       expect(goToNextStep).to.have.been.calledWith(expectedAction);
     });
 
-    it('should call goToNextStep with "success: false" and default message if caught an error but no message returned', () => {
+    it('should call goToNextStep with "success: false" and default message if caught an error but no message returned', async () => {
       delegateApiMock.returnsPromise().rejects({});
-      actionFunction(dispatch, getState);
+
+      await actionFunction(dispatch, getState);
       const expectedAction = { success: false, text: 'An error occurred while placing your vote.' };
       expect(goToNextStep).to.have.been.calledWith(expectedAction);
     });
