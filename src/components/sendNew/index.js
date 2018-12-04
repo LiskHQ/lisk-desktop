@@ -1,16 +1,15 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import { FontIcon } from '../fontIcon';
+// import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import MultiStep from './../multiStep';
 import ResultBox from '../resultBox';
 import Form from './steps/form';
 import Confirm from './steps/confirm';
-import Request from '../request';
 import FollowAccount from '../sendTo/followAccount';
-import SpecifyRequest from '../request/specifyRequest';
-import ConfirmRequest from '../request/confirmRequest';
 import PassphraseSteps from './../passphraseSteps';
 import AccountInitialization from '../accountInitialization';
 import { parseSearchParams } from './../../utils/searchParams';
@@ -43,34 +42,20 @@ class Send extends React.Component {
     this.setState({ isActiveTabSend });
   }
 
+  goToWallet() {
+    this.props.history.push('/wallet');
+  }
+
   render() {
-    const { t } = this.props;
     const { amount, recipient, reference } = this.getSearchParams();
 
     return (
-      <Fragment>
-        <span className={styles.mobileMenu}>
-          <span className={`send-menu-item ${styles.mobileMenuItem}`}
-            onClick={this.setActiveOnMobile.bind(this, { isActiveOnMobile: true })}>
-            {t('Send')}
-          </span>
-          <span className={`request-menu-item ${styles.mobileMenuItem}`}
-            onClick={
-              this.setActiveOnMobile.bind(this, { isActiveOnMobile: true, isActiveTabSend: false })
-            }>
-            {t('Request')}
-          </span>
-        </span>
-        <Box className={`send-box ${styles.send} ${this.state.isActiveOnMobile ? styles.isActive : ''}`}>
-          <span className={`mobile-close-button ${styles.mobileClose}`}
-            onClick={this.setActiveOnMobile.bind(this, { isActiveOnMobile: false })}>
-            {t('Close')} <FontIcon value='close' />
-          </span>
-          {this.state.isActiveTabSend
-            ?
+      <Box className={`send-box ${styles.send}`}>
+        <div className={`${grid.row} ${grid['center-xs']} ${grid['center-sd']} ${grid['center-md']} ${grid['center-lg']}`}>
+          <div className={`${grid['col-xs-8']} ${grid['col-sd-8']} ${grid['col-md-6']} ${grid['col-lg-4']}`}>
             <MultiStep
               key='send'
-              finalCallback={this.setActiveOnMobile.bind(this, { isActiveOnMobile: false })}
+              finalCallback={this.goToWallet.bind(this)}
               className={styles.wrapper}>
               <AccountInitialization address={recipient}/>
               <Form
@@ -81,27 +66,24 @@ class Send extends React.Component {
                 setTabSend={this.setActiveTabSend.bind(this)}
                 settingsUpdated={this.props.settingsUpdated}
                 settings={this.props.settings}
+                goToWallet={this.goToWallet.bind(this)}
               />
-              <PassphraseSteps/>
-              <Confirm/>
-              <ResultBox history={this.props.history}/>
+              <PassphraseSteps />
+              <Confirm />
+              <ResultBox history={this.props.history} goToWallet={this.goToWallet.bind(this)} />
               <FollowAccount showConfirmationStep={true}/>
-              <ResultBox history={this.props.history}/>
+              <ResultBox history={this.props.history} goToWallet={this.goToWallet.bind(this)}/>
             </MultiStep>
-            :
-            <MultiStep
-              key='request'
-              finalCallback={this.setActiveOnMobile.bind(this, { isActiveOnMobile: false })}
-              className={styles.wrapper}>
-              <Request {...this.props} setTabSend={this.setActiveTabSend.bind(this)} />
-              <SpecifyRequest {...this.props} />
-              <ConfirmRequest {...this.props} />
-            </MultiStep>
-          }
-        </Box>
-      </Fragment>
+          </div>
+        </div>
+      </Box>
     );
   }
 }
 
-export default translate()(Send);
+const mapStateToProps = state => ({
+  account: state.account,
+});
+
+export default connect(mapStateToProps)(translate()(Send));
+

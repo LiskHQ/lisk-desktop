@@ -4,10 +4,11 @@
   line-height: 36px;
   display: flex;
   justify-content: center;
-  background: var(--gradient-greyscale);
+  background: none;
   box-shadow: none;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
+  text-align: left;
 
   & header {
     & p {
@@ -31,10 +32,20 @@
 
   & .follow {
     margin-top: 25px;
-    height: 56px;
+    height: 58px;
 
     & .label {
       vertical-align: middle;
+    }
+  }
+
+  & > footer {
+    display: flex;
+    justify-content: space-evenly;
+
+    & > button {
+      width: calc(100% / 2 - 20px) !important;
+      margin-top: 0 !important;
     }
   }
 }

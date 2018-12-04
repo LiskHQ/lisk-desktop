@@ -32,7 +32,7 @@ class FollowAccount extends React.Component {
     return (<Box className={`${styles.wrapper}
       ${this.props.showConfirmationStep ? styles.followedAccountsStep : ''}`}>
       <header>
-        <h2>{t('Follow Account')}</h2>
+        <h2>{t('Add to bookmarks')}</h2>
         <p>{t('Add this account to your dashboard to keep track of its balance, and use it as a bookmark in the future.')}</p>
       </header>
       <AccountTitleInput
@@ -41,6 +41,10 @@ class FollowAccount extends React.Component {
         onChange={this.handleChange.bind(this)}
       />
       <footer>
+        <Button onClick={() => prevStep()} className={`${styles.button} ${styles.follow} cancel`} >
+          <span className={styles.label}>{t('Cancel')}</span>
+        </Button>
+
         <TertiaryButton className={`${styles.button} follow-account-button`}
           disabled={!this.state.title.value || !!this.state.title.error}
           onClick={() => {
@@ -58,12 +62,8 @@ class FollowAccount extends React.Component {
               });
             }
           }}>
-          {t('Add to dashboard')}
+          {t('Add to bookmarks')}
         </TertiaryButton>
-
-        <Button onClick={() => prevStep()} className={`${styles.button} ${styles.follow} cancel`} >
-          <span className={styles.label}>{t('Cancel')}</span>
-        </Button>
       </footer>
     </Box>
     );
