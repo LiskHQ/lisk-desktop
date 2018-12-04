@@ -1,23 +1,8 @@
 import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
+import ss from '../../constants/selectors';
 import urls from '../../constants/urls';
 
-const ss = {
-  transactoinsTable: '.transaction-results',
-  transactionRow: '.transactions-row',
-  seeAllBtn: '.seeAllLink',
-  transactionDetailBackButton: '.transaction-details-back-button',
-  recipientInput: '.recipient input',
-  accountInfoTab: '.account-info',
-  delegateStatisticsTab: '.delegate-statistics ',
-  votedAdress: '.votes .voter-address',
-  voterAdress: '.voters .voter-address',
-  delegateName: '.delegate-name',
-  accountAddress: '.copy-title',
-  searchInput: '#autosuggest-input',
-  showMoreVotesBtn: '.show-votes',
-  explorerAccountLeftBlock: '.explorer-account-left-block',
-};
 
 /**
  * To remove the effect of activating the All tab back after full load
@@ -29,22 +14,36 @@ describe('Dashboard Activity', () => {
     beforeEach(() => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     });
+    /**
+     * 5 transaction are shown in the latest activity component
+     * @expect 5 transactions
+     */
     it('5 tx are shown', () => {
       cy.visit(urls.dashboard);
       cy.get(ss.transactionRow).should('have.length', 5);
     });
 
+    /**
+     * Click on transaction row leads to tx details page
+     * @expect url
+     * @expect some specific to page element is present on it
+     */
     it('Click leads to tx details', () => {
       cy.visit(urls.dashboard);
       cy.get(ss.transactionRow).eq(0).click();
-      cy.url().should('contain', 'wallet?id=');
-      cy.get(ss.transactionDetailBackButton);
+      cy.url().should('contain', `${urls.wallet}?id=`);
+      cy.get(ss.txDetailsBackButton);
     });
 
+    /**
+     * 'See all transactions' link leads to wallet page
+     * @expect url
+     * @expect some specific to page element is present on it
+     */
     it('See all leads to wallet activity', () => {
       cy.visit(urls.dashboard);
-      cy.get(ss.seeAllBtn).click();
-      cy.url().should('contain', 'wallet');
+      cy.get(ss.seeAllTxsBtn).click();
+      cy.url().should('contain', `${urls.wallet}`);
       cy.get(ss.recipientInput);
     });
   });
@@ -65,44 +64,58 @@ describe('Dashboard Activity', () => {
       beforeEach(() => {
         cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       });
+      /**
+       * Scrolling down triggers loading another portion of txs
+       * @expect more txs are present
+       */
       it('25 tx are shown, scrolling loads another 25', () => {
         testSet.open();
         cy.get(ss.transactionRow).should('have.length', 25);
-        cy.get('.transaction-results').scrollTo('bottom');
-        cy.get('.transactions-row').should('have.length', 50);
+        cy.get(ss.transactoinsTable).scrollTo('bottom');
+        cy.get(ss.transactionRow).should('have.length', 50);
       });
 
+      /**
+       * Click on transaction row leads to tx details page
+       * @expect url
+       * @expect some specific to page element is present on it
+       */
       it('Click leads to tx details', () => {
         testSet.open();
         cy.get(ss.transactionRow).eq(0).click();
         cy.url().should('contain', '?id=');
-        cy.get(ss.transactionDetailBackButton);
+        cy.get(ss.txDetailsBackButton);
       });
 
       describe('Account info tabs', () => {
         beforeEach(() => {
           cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+          testSet.open();
+          waitBeforeChangeTabAfterLoading();
+          cy.get(ss.accountInfoTab).click();
         });
+        /**
+         * Maximum possible number of voted accounts is shown
+         * @expect 101 are shown
+         */
         it('Shows 101 votes', () => {
-          testSet.open();
-          waitBeforeChangeTabAfterLoading();
-          cy.get(ss.accountInfoTab).click();
           cy.get(ss.showMoreVotesBtn).click();
-          cy.get(ss.votedAdress).should('have.length', 101);
+          cy.get(ss.votedAddress).should('have.length', 101);
         });
-
+        /**
+         * Shows voted delegate's nickname, not address
+         * @expect delegate's nickname shown
+         */
         it('Shows voted delegate nickname ', () => {
-          testSet.open();
-          waitBeforeChangeTabAfterLoading();
-          cy.get(ss.accountInfoTab).click();
-          cy.get(ss.votedAdress).eq(0).should('have.text', 'genesis_1 ');
+          cy.get(ss.votedAddress).eq(0).should('have.text', 'genesis_1 ');
         });
 
+        /**
+         * Click on voted delegate leads to account page
+         * @expect corresponding delegate name is shown on account's page
+         */
         it('Click on voted delegate leads to account page', () => {
-          testSet.open();
-          waitBeforeChangeTabAfterLoading();
-          cy.get(ss.accountInfoTab).click();
-          cy.get(ss.votedAdress).eq(0).click();
+          cy.get(ss.votedAddress).eq(0).click();
           cy.get(ss.delegateName).should('have.text', 'genesis_1');
         });
       });
@@ -124,44 +137,55 @@ describe('Dashboard Activity', () => {
     describe(testSet.name, () => {
       beforeEach(() => {
         cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
+        testSet.open();
+        waitBeforeChangeTabAfterLoading();
+        cy.get(ss.delegateStatisticsTab).click();
       });
       describe('Delegate statistics tab', () => {
+        /**
+         * Shows voted delegate's nickname not addresses
+         * @expect delegate's nickname shown
+         */
         it('Shows voted delegate nickname ', () => {
-          testSet.open();
-          waitBeforeChangeTabAfterLoading();
-          cy.get(ss.delegateStatisticsTab).click();
-          cy.get(ss.votedAdress).eq(0).should('have.text', 'genesis_17 ');
+          cy.get(ss.votedAddress).eq(0).should('have.text', 'genesis_17 ');
         });
 
+        /**
+         * Click on voted delegate leads to account page
+         * @expect corresponding delegate name is shown on account's page
+         */
         it('Click on voted delegate leads to account page', () => {
-          testSet.open();
-          waitBeforeChangeTabAfterLoading();
-          cy.get(ss.delegateStatisticsTab).click();
-          cy.get(ss.votedAdress).eq(0).click();
+          cy.get(ss.votedAddress).eq(0).click();
           cy.get(ss.delegateName).should('have.text', 'genesis_17');
         });
 
+
         // TODO Fix after corresponding bugfix
+        /**
+         * Shows nickname of account on "Who voted for this delegate?"
+         * list if the account is a delegate
+         * @expect voters nickname shown
+         */
         xit('Shows voters nickname if it is delegate', () => {
-          testSet.open();
-          waitBeforeChangeTabAfterLoading();
-          cy.get(ss.delegateStatisticsTab).click();
           cy.get(ss.voterAdress).eq(0).should('have.text', 'genesis_1 ');
         });
 
+        /**
+         * Shows address of account on "Who voted for this delegate?"
+         * list if the account is not a delegate
+         * @expect voters address shown
+         */
         it('Shows voters address if it is not delegate', () => {
-          testSet.open();
-          waitBeforeChangeTabAfterLoading();
-          cy.get(ss.delegateStatisticsTab).click();
           cy.get(ss.voterAdress).eq(1).should('have.text', '16313739661670634666L ');
         });
 
+        /**
+         * Click on voter leads to account page
+         * @expect according delegate name is shown on account's page
+         */
         it('Click on voter leads to account page', () => {
-          testSet.open();
-          waitBeforeChangeTabAfterLoading();
-          cy.get(ss.delegateStatisticsTab).click();
           cy.get(ss.voterAdress).eq(1).click();
-          cy.get(ss.explorerAccountLeftBlock).find(ss.accountAddress).should('have.text', '16313739661670634666L');
+          cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', '16313739661670634666L');
         });
       });
     });
