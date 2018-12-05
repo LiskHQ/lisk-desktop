@@ -47,7 +47,7 @@ class ResultBox extends React.Component {
         <footer>
           {this.props.success &&
             this.props.recipientId && this.isNotYetFollowed(this.props.recipientId) ?
-            <Button className={`add-follwed-account-button ${styles.addFollowedAccountButton}`}
+            <Button className={`add-followed-account-button ${styles.addFollowedAccountButton}`}
               onClick={() => {
                 this.props.nextStep({ address: this.props.recipientId });
               }}>

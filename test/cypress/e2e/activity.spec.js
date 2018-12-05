@@ -61,14 +61,12 @@ describe('Dashboard Activity', () => {
     },
   ].forEach((testSet) => {
     describe(testSet.name, () => {
-      beforeEach(() => {
-        cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-      });
       /**
        * Scrolling down triggers loading another portion of txs
        * @expect more txs are present
        */
       it('25 tx are shown, scrolling loads another 25', () => {
+        cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
         testSet.open();
         cy.get(ss.transactionRow).should('have.length', 25);
         cy.get(ss.transactoinsTable).scrollTo('bottom');
@@ -81,10 +79,33 @@ describe('Dashboard Activity', () => {
        * @expect some specific to page element is present on it
        */
       it('Click leads to tx details', () => {
+        cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
         testSet.open();
         cy.get(ss.transactionRow).eq(0).click();
         cy.url().should('contain', '?id=');
         cy.get(ss.txDetailsBackButton);
+      });
+
+      /**
+       * Transaction filtering tabs show filtered transaction lists
+       * @expect incoming txs on Incoming tab
+       * @expect outgoing txs on Outgoing tab
+       * @expect all txs on All tab
+       */
+      it('Filtering works', () => {
+        cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
+        testSet.open();
+        cy.get(ss.transactionRow).should('have.length', 2);
+        cy.get(ss.filterIncoming).click();
+        cy.get(ss.transactionRow).should('have.length', 1);
+        cy.get(ss.transactionRow).eq(0)
+          .find(ss.transactionAddress).contains(accounts.genesis.address);
+        cy.get(ss.filterOutgoing).click();
+        cy.get(ss.transactionRow).should('have.length', 1);
+        cy.get(ss.transactionRow).eq(0)
+          .find(ss.transactionAddress).contains('Second passphrase registration');
+        cy.get(ss.filterAll).click();
+        cy.get(ss.transactionRow).should('have.length', 2);
       });
 
       describe('Account info tabs', () => {
