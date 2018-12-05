@@ -9,8 +9,6 @@ import MultiStep from '../multiStep';
 import Send from './send';
 import i18n from '../../i18n';
 
-import styles from './send.css';
-
 describe('Send', () => {
   let wrapper;
   let props;
