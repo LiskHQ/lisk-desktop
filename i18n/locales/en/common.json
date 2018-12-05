@@ -413,7 +413,7 @@
   "You can use your passphrase to sign a message. ": "You can use your passphrase to sign a message. ",
   "You have already registered as a delegate.": "You have already registered as a delegate.",
   "You have cancelled the transaction on your hardware wallet. You can either continue or retry.": "You have cancelled the transaction on your hardware wallet. You can either continue or retry.",
-  "You have cancelled voting on your hardware wallet. You can either continue or retry.": "You have cancelled voting on your hardware wallet. You can either continue or retry.",
+  "You have cancelled voting on your hardware wallet.": "You have cancelled voting on your hardware wallet.",
   "You only need to do this once for each Lisk ID.": "You only need to do this once for each Lisk ID.",
   "You will be able to select the desired network when signing in": "You will be able to select the desired network when signing in",
   "You will be signed out in a minute due to no network activity. You can turn off Auto-Logout in the settings.": "You will be signed out in a minute due to no network activity. You can turn off Auto-Logout in the settings.",
