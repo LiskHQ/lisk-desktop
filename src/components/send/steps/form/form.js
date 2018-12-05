@@ -11,6 +11,7 @@ import AddressInput from '../../../addressInput';
 import ReferenceInput from '../../../referenceInput';
 import Bookmark from '../../../bookmark';
 
+/* istanbul ignore file */
 class Form extends React.Component {
   constructor(props) {
     super(props);

@@ -9,6 +9,7 @@ import txFilters from '../../constants/transactionFilters';
 import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
 import { ActionButton } from '../toolbox/buttons/button';
 import { FontIcon } from '../fontIcon';
+import Ulrs from '../../constants/routes';
 
 class TransactionsOverview extends React.Component {
   constructor(props) {
@@ -104,18 +105,23 @@ class TransactionsOverview extends React.Component {
           }
           </h2>
 
-          <div className={`${grid['col-xs-5']} ${grid['col-sd-5']} ${grid['col-md-3']} ${grid['col-lg-3']} ${styles.headerButtons}`}>
-            <a className='help-onboarding'
-              onClick={() => this.props.history.push('/request') }>
-              <FontIcon>request-token</FontIcon>
-              {this.props.t('Receive')}
-            </a>
-            <ActionButton
-              onClick={() => this.props.history.push('/wallet/send') }
-            >
-            {this.props.t('Send')}
-            </ActionButton>
-          </div>
+          {
+            this.props.match.url === Ulrs.wallet.path &&
+            (
+              <div className={`${grid['col-xs-5']} ${grid['col-sd-5']} ${grid['col-md-3']} ${grid['col-lg-3']} ${styles.headerButtons}`}>
+                <a className='help-onboarding'
+                  onClick={() => this.props.history.push(Ulrs.request.path) }>
+                  <FontIcon>request-token</FontIcon>
+                  {this.props.t('Receive')}
+                </a>
+                <ActionButton
+                  onClick={() => this.props.history.push(Ulrs.send.path) }
+                >
+                {this.props.t('Send')}
+                </ActionButton>
+              </div>
+            )
+          }
         </header>
         {this.shouldShowEmptyState() ?
           <EmptyState title={this.props.t('No transactions yet')}

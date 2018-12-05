@@ -17,6 +17,7 @@ import { parseSearchParams } from './../../utils/searchParams';
 import breakpoints from './../../constants/breakpoints';
 import styles from './send.css';
 
+/* istanbul ignore file */
 class Send extends React.Component {
   constructor(props) {
     super(props);
