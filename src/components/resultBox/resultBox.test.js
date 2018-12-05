@@ -119,4 +119,46 @@ describe('Result Box', () => {
 
     expect(wrapper).to.have.descendants('.add-to-bookmarks');
   });
+
+  it('should go to next step after clicking "Retry"', () => {
+    props = {
+      copy: null,
+      title: 'test',
+      account: { hwInfo: {} },
+      body: 'test',
+      success: false,
+      recipientId: '123',
+      reset: () => {},
+      copyToClipboard: () => {},
+      t: () => {},
+      followedAccounts: ['123'],
+      prevStep: spy(),
+      transactionFailedClear: spy(),
+    };
+    wrapper = mount(<ResultBox {...props} />, options);
+    wrapper.debug();
+    wrapper.find('.add-to-bookmarks').at(0).simulate('click');
+    expect(props.prevStep).to.have.been.calledWith();
+    expect(props.transactionFailedClear).to.have.been.calledWith();
+  });
+
+  it('should go to next step after clicking "Add Bookmark"', () => {
+    props = {
+      copy: null,
+      title: 'test',
+      account: { hwInfo: {} },
+      body: 'test',
+      success: true,
+      recipientId: 455,
+      reset: () => {},
+      copyToClipboard: () => {},
+      t: () => {},
+      followedAccounts: ['123'],
+      nextStep: spy(),
+    };
+    wrapper = mount(<ResultBox {...props} />, options);
+
+    wrapper.find('.add-follwed-account-button').at(0).simulate('click');
+    expect(props.nextStep).to.have.been.calledWith({ address: 455 });
+  });
 });
