@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { useFakeTimers } from 'sinon';
+import { useFakeTimers, spy } from 'sinon';
 import { mount } from 'enzyme';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
@@ -40,9 +40,10 @@ describe('Form Component', () => {
       pendingTransactions: [],
       closeDialog: () => {},
       t: key => key,
-      nextStep: () => {},
+      nextStep: spy(),
       history: { location: { search: '' } },
       followedAccounts: { accounts: [{ address: '123L', title: 'test' }] },
+      goToWallet: spy(),
     };
     wrapper = mount(<Form {...props} />, {
       context: { store, i18n },
@@ -62,7 +63,7 @@ describe('Form Component', () => {
   });
 
   it('renders one Button component', () => {
-    expect(wrapper.find('Button')).to.have.length(1);
+    expect(wrapper.find('Button')).to.have.length(2);
   });
 
   it('accepts valid amount', () => {
@@ -143,5 +144,21 @@ describe('Form Component', () => {
     wrapper.find('.amount input').simulate('blur');
     clock.tick(1200);
     expect(wrapper.state('showSetMaxAmount')).to.equal(false);
+  });
+
+  it('go back to wallet after press Back button', () => {
+    wrapper.find('.send-prev-button').at(0).simulate('click');
+    wrapper.update();
+    /* eslint-disable no-unused-expressions */
+    expect(wrapper.instance().props.goToWallet).to.have.been.calledOnce;
+  });
+
+  it('go next to confirm form after press Next button', () => {
+    wrapper.find('.recipient input').simulate('change', { target: { value: '110045884901031L' } });
+    wrapper.find('.amount input').simulate('change', { target: { value: '1' } });
+    wrapper.find('.send-next-button').at(0).simulate('click');
+    wrapper.update();
+    /* eslint-disable no-unused-expressions */
+    expect(wrapper.instance().props.nextStep).to.have.been.calledOnce;
   });
 });

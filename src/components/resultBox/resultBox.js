@@ -20,8 +20,6 @@ class ResultBox extends React.Component {
   render() {
     return (
       <div className={`${styles.resultBox}`}>
-        <div></div>
-
         <div>
           <header>
             <div className={styles.header}>

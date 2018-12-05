@@ -16,7 +16,7 @@ import HwWallet from '../components/hwWallet';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
 import Receive from '../components/receive';
-import Send from '../components/sendNew';
+import Send from '../components/send';
 
 export default {
   accountVisualDemo: {
