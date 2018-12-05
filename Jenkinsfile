@@ -47,11 +47,7 @@ pipeline {
 							npm run --silent build:testnet
 							npm run --silent bundlesize
 
-							if [ -z $CHANGE_BRANCH ]; then
-							    USE_SYSTEM_XORRISO=true npm run dist:linux
-							else
-							    echo "Skipping desktop build for Linux because we're building a PR."
-							fi
+							USE_SYSTEM_XORRISO=true npm run dist:linux
 							'''
 						}
 						archiveArtifacts artifacts: 'app/build/'
