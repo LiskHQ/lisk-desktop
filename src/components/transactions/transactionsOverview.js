@@ -9,7 +9,10 @@ import txFilters from '../../constants/transactionFilters';
 import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
 import { ActionButton } from '../toolbox/buttons/button';
 import { FontIcon } from '../fontIcon';
+<<<<<<< HEAD
 import Ulrs from '../../constants/routes';
+=======
+>>>>>>> d1cb5e7015d98e452fbf25c99867396cd4bbe92c
 
 class TransactionsOverview extends React.Component {
   constructor(props) {
