@@ -77,11 +77,11 @@ export const clearVotes = () => ({
 const handleVoteError = ({ error, account }) => {
   let text;
   switch (account.loginType) {
-    case 0:
+    case loginType.normal:
       text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while placing your vote.');
       break;
     /* istanbul ignore next */
-    case 1:
+    case loginType.ledger:
       text = i18next.t('You have cancelled voting on your hardware wallet. You can either continue or retry.');
       break;
     /* istanbul ignore next */
