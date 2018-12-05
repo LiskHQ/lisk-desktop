@@ -82,7 +82,7 @@ const handleVoteError = ({ error, account }) => {
       break;
     /* istanbul ignore next */
     case loginType.ledger:
-      text = i18next.t('You have cancelled voting on your hardware wallet. You can either continue or retry.');
+      text = i18next.t('You have cancelled voting on your hardware wallet.');
       break;
     /* istanbul ignore next */
     default:
