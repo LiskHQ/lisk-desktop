@@ -63,7 +63,7 @@ class ConfirmVotes extends React.Component {
       <div className={styles.wrapper}>
         <article className={styles.content}>
           <h2 className={styles.header}>{account.hwInfo && account.hwInfo.deviceId ?
-            t('Confirm on Ledger') : t('Final confirmation') }</h2>
+            t('Confirm vote on Ledger Nano S') : t('Final confirmation') }</h2>
           <p className={styles.message}>
             {t('Are you certain of your choice?')}
           </p>
