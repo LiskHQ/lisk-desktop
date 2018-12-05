@@ -18,9 +18,10 @@ describe('Tx details', () => {
    */
   it('Transfer details while pending and then confirmed', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(`${urls.wallet}?recipient=${accounts.delegate.address}&amount=5&reference=test-details`);
+    cy.visit(`${urls.send}?recipient=${accounts.delegate.address}&amount=5&reference=test-details`);
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
+    cy.get(ss.okayBtn).click();
     cy.get(ss.transactionRow).find(ss.spinner).click();
     // Before confirmation
     cy.get(ss.txHeader).contains('Transaction');

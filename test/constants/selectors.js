@@ -127,6 +127,8 @@ const ss = {
   followedAccountTitle: '.account-title input',
   takeTutorial: '.help-onboarding',
   tutorialTooltip: '.joyride-tooltip__header',
+  tansactionReceiveButton: '.tx-receive-bt',
+  tansactionSendButton: '.tx-send-bt',
 };
 
 export default ss;
