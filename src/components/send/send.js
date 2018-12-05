@@ -31,14 +31,6 @@ class Send extends React.Component {
     return parseSearchParams(this.props.history.location.search);
   }
 
-  setActiveOnMobile({ isActiveOnMobile, isActiveTabSend = true }) {
-    this.setState({ isActiveOnMobile, isActiveTabSend });
-  }
-
-  setActiveTabSend(isActiveTabSend) {
-    this.setState({ isActiveTabSend });
-  }
-
   goToWallet() {
     this.props.history.push('/wallet');
   }
@@ -48,8 +40,8 @@ class Send extends React.Component {
 
     return (
       <Box className={`send-box ${styles.send}`}>
-        <div className={`${grid.row} ${grid['center-xs']} ${grid['center-sd']} ${grid['center-md']} ${grid['center-lg']}`}>
-          <div className={`${grid['col-xs-8']} ${grid['col-sd-8']} ${grid['col-md-6']} ${grid['col-lg-4']}`}>
+        <div className={`${grid.row} ${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`}>
+          <div className={`${grid['col-xs-10']} ${grid['col-sm-10']} ${grid['col-md-8']} ${grid['col-lg-6']}`}>
             <MultiStep
               key='send'
               finalCallback={this.goToWallet.bind(this)}
@@ -60,7 +52,6 @@ class Send extends React.Component {
                 address={recipient}
                 amount={amount}
                 reference={reference}
-                setTabSend={this.setActiveTabSend.bind(this)}
                 settingsUpdated={this.props.settingsUpdated}
                 settings={this.props.settings}
                 goToWallet={this.goToWallet.bind(this)}

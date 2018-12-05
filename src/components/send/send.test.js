@@ -4,6 +4,7 @@ import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
+import { spy } from 'sinon';
 
 import MultiStep from '../multiStep';
 import Send from './send';
@@ -12,6 +13,7 @@ import i18n from '../../i18n';
 describe('Send', () => {
   let wrapper;
   let props;
+  let options;
 
   beforeEach(() => {
     const store = configureMockStore([thunk])({
@@ -35,6 +37,7 @@ describe('Send', () => {
     props = {
       history: {
         location: {},
+        push: spy(),
       },
       account: {
         serverPublicKey: 'public_key',
@@ -43,7 +46,7 @@ describe('Send', () => {
       i18n: { i18n },
     };
 
-    const options = {
+    options = {
       context: { i18n, store },
       childContextTypes: {
         i18n: PropTypes.object.isRequired,
@@ -55,6 +58,23 @@ describe('Send', () => {
   });
 
   it('should render MultiStep component ', () => {
+    expect(wrapper.find(MultiStep)).to.have.lengthOf(1);
+  });
+
+  it('go back to wallet after press Back button', () => {
+    wrapper.find('.send-prev-button').at(0).simulate('click');
+    wrapper.update();
+    /* eslint-disable no-unused-expressions */
+    expect(wrapper.instance().props.history.push).to.have.been.calledOnce;
+  });
+
+  it('go first to account initialization', () => {
+    props.account = {
+      serverPublicKey: '',
+      balance: 1,
+    };
+    props.pendingTransactions = [];
+    wrapper = mount(<Send {...props} />, options);
     expect(wrapper.find(MultiStep)).to.have.lengthOf(1);
   });
 });

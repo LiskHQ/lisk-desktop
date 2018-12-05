@@ -92,6 +92,10 @@
         font-weight: 600;
         color: var(--color-primary-standard);
         cursor: pointer;
+        text-decoration: none;
+      }
+
+      & > div > a:first-child {
         margin-right: 15px;
       }
     }
