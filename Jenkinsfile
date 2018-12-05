@@ -46,9 +46,10 @@ pipeline {
 								npm run --silent build:testnet
 								npm run --silent bundlesize
 
-							npm install
-							USE_SYSTEM_XORRISO=true npm run dist:linux
-							'''
+								npm install
+								USE_SYSTEM_XORRISO=true npm run dist:linux
+								'''
+							}
 						}
 						archiveArtifacts artifacts: 'app/build/'
 						archiveArtifacts artifacts: 'app/build-testnet/'
