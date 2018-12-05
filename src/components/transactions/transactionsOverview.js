@@ -109,12 +109,13 @@ class TransactionsOverview extends React.Component {
             this.props.match.url === Ulrs.wallet.path &&
             (
               <div className={`${grid['col-xs-5']} ${grid['col-sd-5']} ${grid['col-md-3']} ${grid['col-lg-3']} ${styles.headerButtons}`}>
-                <a className='help-onboarding'
+                <a className={'help-onboarding tx-receive-bt'}
                   onClick={() => this.props.history.push(Ulrs.request.path) }>
                   <FontIcon>request-token</FontIcon>
                   {this.props.t('Receive')}
                 </a>
                 <ActionButton
+                  className={'tx-send-bt'}
                   onClick={() => this.props.history.push(Ulrs.send.path) }
                 >
                 {this.props.t('Send')}
