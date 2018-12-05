@@ -22,13 +22,13 @@ class Request extends React.Component {
           <TransferTabs setTabSend={setTabSend} isActiveTabSend={false}/>
         </div>
         <div className={styles.body}>
-          <div className={`${styles.qrCode} ${styles.magnified} request-qr-code`}>
+          <div className={`${styles.qrCode} ${styles.magnified} qr-code`}>
             <QRCode value={account.address} />
           </div>
           <CopyToClipboard
             value={account.address}
             className={styles.copy}/>
-          <a className={`${styles.emailLink} ${styles.paddingLeft}`}
+          <a className={`${styles.emailLink} ${styles.paddingLeft} email-link`}
             href={`mailto:?subject=Requesting LSK to ${account.address}&body=Hey there, here is a link you can use to send me LSK via your wallet: ${encodeURIComponent(link)}`}>
             {t('Send request via E-mail')} <FontIcon value='arrow-right'/>
           </a>
