@@ -37,6 +37,7 @@ class WalletTransactions extends React.Component {
       value: txFilters.all,
     });
   }
+  /* istanbul ignore next */
   onLoadMore() {
     this.props.transactionsRequested({
       address: this.props.address,
@@ -50,6 +51,7 @@ class WalletTransactions extends React.Component {
     It applys to All, Incoming and Outgoing
     for other tabs that are not using transactions there is no need to call API
   */
+  /* istanbul ignore next */
   onFilterSet(filter) {
     if (filter <= 2) {
       this.props.transactionsFilterSet({
