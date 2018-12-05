@@ -1,63 +1,67 @@
 import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
+import ss from '../../constants/selectors';
 import urls from '../../constants/urls';
 import enterSecondPassphrase from '../utils/enterSecondPassphrase';
-
-const ss = {
-  sidebarMenuDelegatesBtn: '#delegates',
-  nextButton: '.next',
-  chooseName: '.choose-name',
-  becomeDelegateLink: '.register-delegate',
-  confirmVotesSidebar: '.confirm-votes',
-  nextBtn: '.next',
-  confirmBtn: '.confirm',
-  okayBtn: '.okay-button',
-  spinner: '.spinner',
-  delegateRow: '.delegate-row',
-  delegateList: '.delegate-list',
-  delegateRank: '.delegate-rank',
-  delegateName: '.delegate-name',
-  delegateId: '.delegate-id',
-  delegateProductivity: '.delegate-productivity',
-  searchDelegateInput: 'input.search',
-  voteCheckbox: '.vote-checkbox',
-  voteResultHeader: '.result-box-header',
-  clearSearchBtn: '.clean-icon',
-};
+// import compareBalances from '../utils/compareBalances';
 
 const txConfirmationTimeout = 20000;
+// const txVotePrice = 1;
 
 describe('Delegates', () => {
+  /**
+   * Delegate voting page can be opened by direct link
+   * @expect url is correct
+   * @expect some specific to page element is present on it
+   */
   it(`opens by url ${urls.delegates}`, () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
     cy.url().should('contain', urls.delegates);
-    cy.get(ss.confirmVotesSidebar).find(ss.nextButton);
+    cy.get(ss.votesConfirmSidebar).find(ss.nextBtn);
   });
 
+  /**
+   * Delegate voting page can be opened clicking sidebar button
+   * @expect url is correct
+   * @expect some specific to page element is present on it
+   */
   it('opens by sidebar button', () => {
     cy.addLocalStorage('settings', 'advancedMode', true);
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
     cy.get(ss.sidebarMenuDelegatesBtn).should('have.css', 'opacity', '1').click();
     cy.url().should('contain', urls.delegates);
-    cy.get(ss.confirmVotesSidebar).find(ss.nextButton);
+    cy.get(ss.votesConfirmSidebar).find(ss.nextBtn);
   });
 
-  it('Become a delegate link -> Delegate register page', () => {
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.delegates);
-    cy.get(ss.becomeDelegateLink).click();
-    cy.url().should('contain', urls.registerDelegate);
-    cy.get(ss.chooseName);
-  });
-
+  /**
+   * Become a delegate link absent if I am a delegate
+   * @expect link does not exist
+   */
   it('Become a delegate link absent if I am a delegate', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
     cy.get(ss.becomeDelegateLink).should('not.exist');
   });
 
+  /**
+   * Become a delegate link leads to Delegate register page
+   * @expect url is correct
+   * @expect some specific to page element is present on it
+   */
+  it('Become a delegate link -> Delegate register page', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.delegates);
+    cy.get(ss.becomeDelegateLink).click();
+    cy.url().should('contain', urls.registerDelegate);
+    cy.get(ss.chooseDelegateName);
+  });
+
+  /**
+   * Scrolling down triggers loading another portion of delegates
+   * @expect more delegates are present
+   */
   it('Displays 100 delegates and loads more as I scroll to bottom', () => {
     cy.autologin(accounts.genesis.passphrase, networks.testnet.node);
     cy.visit(urls.delegates);
@@ -66,6 +70,10 @@ describe('Delegates', () => {
     cy.get(ss.delegateRow).should('have.length', 200);
   });
 
+  /**
+   * Delegates table shows all the necessary data
+   * @expect data from Vote, Rank, Name, Lisk ID, Productivity columns match expected values
+   */
   it('Vote, Rank, Name, Lisk ID, Productivity columns show corresponding data', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
@@ -76,6 +84,11 @@ describe('Delegates', () => {
     cy.get('@dg').find(ss.delegateProductivity).contains(/\d+ %/);
   });
 
+  /**
+   * Search for a delegate functioning correctly
+   * @expect enter some gibberish: no delegates are shown
+   * @expect enter a delegate's name: delegate is shown in first row
+   */
   it('Search for a delegate', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
@@ -88,10 +101,18 @@ describe('Delegates', () => {
     cy.get('@dg').find(ss.delegateProductivity).contains(/\d+ %/);
   });
 
-  // TODO Add balance substraction check after #1391 is fixed
-  it('Unvote and Vote', () => {
+  /**
+   * Voting and unvoting process
+   * @expect successfully go through the voting process
+   * @expect spinner to appear instead of checkbox while tx is pending
+   * @expect checkbox to be unchecked after unvoting
+   * @expect checkbox to be checked after voting back
+   * @expect balance decreases as tx is confirmed
+   */
+  it('Unvote and Vote + Header balance is affected', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
+    cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.voteCheckbox).should('have.class', 'checked');
     // Unvote
@@ -103,6 +124,10 @@ describe('Delegates', () => {
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.spinner);
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout }).should('have.class', 'unchecked');
+    // TODO Unskip when #1539 is fixed
+    // cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(() => {
+    //   compareBalances(this.balanceBefore, this.balanceAfter, txVotePrice);
+    // });
     // Vote
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.voteCheckbox).click();
@@ -114,6 +139,11 @@ describe('Delegates', () => {
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout }).should('have.class', 'checked');
   });
 
+  /**
+   * Voting with second passphrase
+   * @expect successfully go through the voting process
+   * @expect transaction is confirmed
+   */
   it('Vote with second passphrase', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
@@ -129,21 +159,25 @@ describe('Delegates', () => {
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout });
   });
 
-  // TODO Unskip after #1359 fix
-  it.skip('should allow to select delegates by URL', () => {
-    cy.loginUI(accounts['delegate candidate'], 'dev');
-    cy.visit('/delegates/vote?votes=genesis_12,genesis_14,genesis_16');
-    cy.get('.upvotes-message').should('have.text', 'genesis_12, genesis_14, genesis_16');
-    cy.get('.next').click();
-    cy.get('.confirm').click();
-    cy.get('.result-box-message').should('have.text', 'Your votes are being processed. It may take up to 10 minutes for it to be secured in the blockchain.');
-    cy.wait(10000);
-    cy.visit('/wallet');
-    cy.wait(20000);
-    cy.visit('/delegates/vote?unvotes=genesis_12');
-    cy.get('.unvotes-message').should('have.text', 'genesis_12');
-    cy.visit('/wallet');
-    cy.visit('/delegates/vote?votes=genesis_14,genesis_16');
-    cy.get('.alreadyVoted-messages');
+  /**
+   * Bulk vote/unvote delegates using URL shortcut
+   * @expect chosen to vote delegates shown in pre-selection
+   * @expect chosen to unvote delegates are shown in pre-selection
+   * @expect already voted/unvoted delegates shown in pre-selection
+   */
+  it('Bulk vote/unvote delegates by URL', () => {
+    cy.autologin(accounts['delegate candidate'].passphrase, networks.devnet.node);
+    cy.visit(`${urls.delegatesVote}?votes=genesis_12,genesis_14,genesis_16`);
+    cy.get(ss.votesPreselection).contains('genesis_12, genesis_14, genesis_16');
+    cy.get(ss.nextBtn).click();
+    cy.get(ss.confirmBtn).click();
+    cy.get(ss.voteResultHeader).contains('Votes submitted');
+    cy.wait(txConfirmationTimeout);
+    cy.visit(urls.wallet);
+    cy.visit(`${urls.delegatesVote}?unvotes=genesis_12`);
+    cy.get(ss.unvotesPreselection).contains('genesis_12');
+    cy.visit(urls.wallet);
+    cy.visit(`${urls.delegatesVote}?votes=genesis_14,genesis_16`);
+    cy.get(ss.alreadyVotedPreselection).contains('genesis_14, genesis_16');
   });
 });

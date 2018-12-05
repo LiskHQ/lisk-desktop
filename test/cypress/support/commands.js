@@ -45,33 +45,3 @@ Cypress.Commands.add('autologin', (passphrase, network) => {
   localStorage.setItem('liskCoreUrl', network);
   localStorage.setItem('loginKey', passphrase);
 });
-
-
-// TODO: Remove after cucumber tests are gone
-Cypress.Commands.add('loginUI', (account, network) => {
-  cy.visit('/');
-  cy.addLocalStorage('settings', 'showNetwork', true);
-  cy.reload();
-  cy.get('.network').click();
-  switch (network) {
-    case 'main':
-      cy.get('ul li').eq(1).click();
-      break;
-    case 'test':
-      cy.get('ul li').eq(2).click();
-      break;
-    case 'dev':
-      cy.get('ul li').eq(3).click();
-      cy.get('.address input').type(Cypress.env('coreUrl'));
-      break;
-    default:
-      throw new Error(`Network should be one of : main , test, dev . Was: , ${network}`);
-  }
-  cy.get('.passphrase input').click();
-  cy.get('.passphrase input').each(($el, index) => {
-    const passphraseWordsArray = account.passphrase.split(' ');
-    cy.wrap($el).type(passphraseWordsArray[index]);
-  });
-  cy.get('.login-button').click();
-  cy.get('.copy-title');
-});

@@ -1,11 +1,7 @@
 import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
-
-const ss = {
-  newsBlock: '.news-item',
-  editNewsFeed: '.settingsButton',
-  settingsNewsFeedBlock: '.settingsNewsFeed',
-};
+import urls from '../../constants/urls';
+import ss from '../../constants/selectors';
 
 const getSettingsObjFromLS = () => JSON.parse(localStorage.getItem('settings'));
 
@@ -14,13 +10,22 @@ beforeEach(() => {
 });
 
 describe('News', () => {
+  /**
+   * Twitter is switched on by default
+   * @expect twitter news is in the feed
+   */
   it('Twitter is switched on by default', () => {
-    cy.visit('/dashboard');
+    cy.visit(urls.dashboard);
     cy.get(ss.newsBlock).contains('Twitter');
   });
 
-  it('Twitter feed is not shown when is switched off', () => {
-    cy.visit('/dashboard');
+  /**
+   * Switch off twitter feed
+   * @expect localStorage value is set to false
+   * @expect twitter news are not shown in the feed
+   */
+  it('Switch off twitter feed, it is not shown when is switched off', () => {
+    cy.visit(urls.dashboard);
     cy.get(ss.editNewsFeed).click();
     cy.get(ss.settingsNewsFeedBlock).find('input').click({ force: true })
       .should(() => expect(getSettingsObjFromLS().channels.twitter).to.equal(false));
@@ -28,8 +33,13 @@ describe('News', () => {
     cy.get(ss.newsBlock).should('not.exist');
   });
 
-  it('Twitter feed is shown when is switched on', () => {
-    cy.visit('/dashboard');
+  /**
+   * Switch on twitter feed
+   * @expect localStorage value is set to true
+   * @expect twitter news are shown in the feed
+   */
+  it('Switch on twitter feed, it is shown when is switched on', () => {
+    cy.visit(urls.dashboard);
     cy.get(ss.editNewsFeed).click();
     cy.get(ss.settingsNewsFeedBlock).find('input').click({ force: true }).click({ force: true })
       .should(() => expect(getSettingsObjFromLS().channels.twitter).to.equal(true));
@@ -37,6 +47,11 @@ describe('News', () => {
     cy.get(ss.newsBlock).contains('Twitter');
   });
 
+  /**
+   * Tweet text and link is shown and correct
+   * @expect text shown equals one from api response
+   * @expect link shown equals one from api response
+   */
   it('Tweet text and link is shown and correct', () => {
     cy.server();
     cy.fixture('newsfeed/tweet.json').then((tweet) => {
