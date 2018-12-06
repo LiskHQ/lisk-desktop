@@ -117,7 +117,7 @@ class Form extends React.Component {
           { this.props.followedAccounts.length > 0 && this.state.openFollowedAccountSuggestion ?
             <Bookmark
               focusReference={this.focusReference.bind(this)}
-              className='recipient'
+              className='recipient sendBookmark'
               label={this.props.t('Send to address')}
               address={this.state.recipient}
               handleChange={this.handleChange.bind(this, 'recipient', true)}

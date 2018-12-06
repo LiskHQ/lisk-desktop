@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Waypoint from 'react-waypoint';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
+// import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import EmptyState from '../emptyState';
 import TransactionsList from './transactionsList';
@@ -98,8 +98,8 @@ class TransactionsOverview extends React.Component {
 
     return (
       <div className={`transactions ${styles.activity}`}>
-        <header className={`${grid.row}`}>
-          <h2 className={`${grid['col-xs-6']} ${grid['col-sd-6']} ${grid['col-md-9']} ${grid['col-lg-9']} ${styles.title}`}>
+        <header>
+          <h2 className={`${styles.title}`}>
           {this.props.t('Transaction')}
           {
             hasTitle && (<span>{this.props.t(' of')} <span className={`${styles.accountTitle} account-title`}>{accountTitle}</span></span>)
@@ -109,10 +109,10 @@ class TransactionsOverview extends React.Component {
           {
             this.props.match.url === Ulrs.wallet.path &&
             (
-              <div className={`${grid['col-xs-5']} ${grid['col-sd-5']} ${grid['col-md-3']} ${grid['col-lg-3']} ${styles.headerButtons}`}>
+              <div className={`${styles.headerButtons}`}>
                 <Link to={`${Ulrs.request.path}`} className={'help-onboarding tx-receive-bt'}>
                   <FontIcon>request-token</FontIcon>
-                  {this.props.t('Receive')}
+                  {this.props.t('Request')}
                 </Link>
                 <Link to={`${Ulrs.send.path}`} className={'tx-send-bt'}>
                   <ActionButton>

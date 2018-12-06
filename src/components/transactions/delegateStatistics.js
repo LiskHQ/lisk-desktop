@@ -8,7 +8,7 @@ import voting from '../../constants/voting';
 import styles from './delegateStatistics.css';
 
 class DelegateStatistics extends React.Component {
-  render() {
+  render() { // eslint-disable-line complexity
     const { delegate } = this.props;
 
     let status = '';
@@ -39,7 +39,11 @@ class DelegateStatistics extends React.Component {
             <div className={styles.label}>{this.props.t('Vote weight')}</div>
             <div className={styles.value}>{delegate && <LiskAmount val={delegate.vote}/>}</div>
           </div>
-          <div className={`${grid['col-xs-12']} ${grid['col-sm-8']} ${grid['col-md-8']} blocks`}>
+          <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']}`}>
+            <div className={styles.label}>{this.props.t('Forged')}</div>
+            <div className={styles.value}>{delegate && <LiskAmount val={delegate.rewards}/>}</div>
+          </div>
+          <div className={`${grid['col-xs-12']} ${grid['col-sm-8']} ${grid['col-md-4']} blocks`}>
             <div className={styles.label}>{this.props.t('Blocks')}</div>
             <div className={styles.value}>
               {`${delegate && delegate.producedBlocks} (${delegate && delegate.missedBlocks} ${missed})`}

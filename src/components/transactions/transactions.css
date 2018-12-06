@@ -30,13 +30,7 @@
     height: var(--main-box-height);
 
     & header {
-      line-height: var(--header-line-height);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 141px;
-      margin: 53px 0 0;
-      padding: 0;
+      padding-top: 20px;
 
       & .accountTitle {
         color: var(--color-grayscale-medium);
@@ -47,8 +41,8 @@
       }
 
       & .title {
-        margin: 0;
-        padding: 0;
+        margin: 26px 0;
+        float: left;
       }
 
       & .account {
@@ -56,7 +50,6 @@
       }
 
       & h2 {
-        margin-bottom: 0;
         font-weight: var(--font-weight-semi-bold);
       }
 
@@ -79,13 +72,17 @@
         font-weight: var(--font-weight-semi-bold);
       }
 
-      & > div {
+      & .headerButtons {
+        float: right;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        width: calc(100% / 2 - 30%);
+        min-width: 243px;
+        margin-top: 20px;
       }
 
-      & > div > a {
+      & .headerButtons > a {
         display: flex;
         align-items: center;
         font-size: 16px;
@@ -97,6 +94,12 @@
 
       & > div > a:first-child {
         margin-right: 15px;
+      }
+
+      & > div > a:last-child {
+        & button {
+          font-size: 16px;
+        }
       }
     }
   }
@@ -118,6 +121,7 @@
   line-height: var(--list-line-height);
   list-style: none;
   padding-left: 0px;
+  margin-bottom: 37px;
 
   & .item {
     display: inline-block;
@@ -170,28 +174,3 @@
   }
 }
 
-@media (--small-viewport) {
-  .hiddenXs {
-    display: none;
-  }
-}
-
-@media (--xSmall-viewport) {
-  .transactions {
-    & .activity {
-      & header {
-        & .account {
-          display: none;
-        }
-      }
-    }
-  }
-
-  .list {
-    & .item {
-      &:not(:last-of-type) {
-        margin-right: 24px;
-      }
-    }
-  }
-}
