@@ -90,6 +90,7 @@ describe('Delegate Registration', () => {
 
   /**
    * Try to register already existing delegate name
+   * @expect next button is disabled
    * @expect error message
    */
   it('Try to register already existing delegate name', () => {
@@ -97,6 +98,31 @@ describe('Delegate Registration', () => {
     cy.visit(urls.registerDelegate);
     cy.get(ss.chooseDelegateName).click();
     cy.get(ss.delegateNameInput).click().type('genesis_51');
+    cy.get(ss.submitDelagateNameBtn).should('be.disabled');
     cy.get(ss.delegateDuplicateNameError).should('have.text', 'Name is already taken!');
+  });
+
+  /**
+   * Try to register with insufficient balance
+   * @expect choose name button is disabled
+   * @expect error message
+   */
+  it('Try to register with insufficient balance', () => {
+    cy.autologin(accounts['empty account'].passphrase, networks.devnet.node);
+    cy.visit(urls.registerDelegate);
+    cy.get(ss.chooseDelegateName).should('be.disabled');
+    cy.get(ss.chooseDelegateName).parent().contains('Insufficient funds');
+  });
+
+  /**
+   * Try to register being already a delegate
+   * @expect choose name button is disabled
+   * @expect error message
+   */
+  it('Try to register being already a delegate', () => {
+    cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
+    cy.visit(urls.registerDelegate);
+    cy.get(ss.chooseDelegateName).should('be.disabled');
+    cy.get(ss.chooseDelegateName).parent().contains('You have already registered as a delegate.');
   });
 });
