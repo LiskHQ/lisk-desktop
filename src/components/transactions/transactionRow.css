@@ -32,9 +32,7 @@
 }
 
 .arrowRow {
-  & span {
-    margin-right: 8px;
-  }
+  text-align: center;
 }
 
 .rows {
@@ -121,9 +119,5 @@
 @media (--small-viewport) {
   .hiddenXs {
     display: none;
-  }
-
-  .arrowRow {
-    text-align: right;
   }
 }
