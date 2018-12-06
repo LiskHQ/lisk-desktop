@@ -117,7 +117,7 @@ describe('Result Box', () => {
 
     wrapper = mount(<ResultBox {...props} />, options);
 
-    expect(wrapper).to.have.descendants('.add-to-bookmarks');
+    expect(wrapper).to.have.descendants('.add-follwed-account-button');
   });
 
   it('should go to next step after clicking "Retry"', () => {

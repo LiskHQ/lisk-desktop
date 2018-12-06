@@ -19,6 +19,7 @@ import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
 import { liskAPIClientSet } from '../../src/actions/peers';
 import networks from './../../src/constants/networks';
+import { loginType } from './../../src/constants/hwConstants';
 import getNetwork from './../../src/utils/getNetwork';
 
 const delegates = {
@@ -66,6 +67,8 @@ const account = {
   multisignatures: [],
   u_multisignatures: [],
   unconfirmedBalance: '0',
+  loginType: loginType.normal,
+  hwInfo: {},
 };
 
 let store;

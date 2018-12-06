@@ -6,6 +6,13 @@ import fees from '../../constants/fees';
 import { fromRawLsk } from '../../utils/lsk';
 
 class ConfirmVotes extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      didSend: false,
+    };
+  }
+
   componentDidMount() {
     if (typeof this.props.onMount === 'function') {
       this.props.onMount(false, 'ConfirmVotes');
@@ -49,20 +56,24 @@ class ConfirmVotes extends React.Component {
       account,
       votes,
       passphrase: passphrase.value,
-      secondSecret: secondPassphrase.value,
+      secondPassphrase: secondPassphrase.value,
       goToNextStep: this.goToNextStep.bind(this),
     };
-
     return (
       <div className={styles.wrapper}>
         <article className={styles.content}>
-          <h2 className={styles.header}>{t('Final confirmation')}</h2>
+          <h2 className={styles.header}>{account.hwInfo && account.hwInfo.deviceId ?
+            t('Confirm vote on Ledger Nano S') : t('Final confirmation') }</h2>
           <p className={styles.message}>
             {t('Are you certain of your choice?')}
           </p>
           <PrimaryButton
+            disabled={this.state.didSend}
             className={`${styles.confirmButton} confirm`}
-            onClick={() => { votePlaced(data); }}>{t('Confirm (Fee: 1 LSK)')}</PrimaryButton>
+            onClick={() => {
+              this.setState({ didSend: true });
+              votePlaced(data);
+            }}>{t('Confirm (Fee: 1 LSK)')}</PrimaryButton>
           <Button
             className={`${styles.backButton} back`}
             onClick={() => prevStep({ reset: skipped })}>{t('Back')}</Button>
