@@ -127,6 +127,7 @@ const ss = {
   followedAccountTitle: '.account-title input',
   takeTutorial: '.help-onboarding',
   tutorialTooltip: '.joyride-tooltip__header',
+  priceChart: '.chartjs-size-monitor',
 };
 
 export default ss;
