@@ -116,7 +116,7 @@ class Confirm extends React.Component {
       <div className={`${styles.wrapper} send`}>
         <div className={styles.header}>
           <header className={styles.headerWrapper}>
-            <h2>{title}</h2>
+            <h2 className='title'>{title}</h2>
           </header>
         </div>
         {this.props.accountInit

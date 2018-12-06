@@ -60,7 +60,6 @@ module.exports = {
     'src/components/register/register.js',
     'src/components/request/specifyRequest.js',
     'src/components/searchBar/index.js', // Passing in mocha but not in Jest
-    'src/components/send/steps/confirm/confirm.js', // FollowUp #1515
     'src/components/send/steps/form/stories.js',
     'src/components/spinner/stories.js',
     'src/components/toaster/stories.js',
@@ -83,7 +82,6 @@ module.exports = {
     'src/utils/to.js',
     'src/components/passphraseSteps/index.js', // FollowUp #1515
     'src/actions/peers.js', // FollowUp #1515
-    'src/components/send/steps/confirm/confirm.js', // FollowUp #1515
     'src/components/sendNew/',
   ],
   coverageThreshold: {

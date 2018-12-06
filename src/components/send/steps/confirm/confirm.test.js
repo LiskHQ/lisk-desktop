@@ -84,4 +84,28 @@ describe('Confirm Component', () => {
       expect(wrapper.state('amount').value).to.equal(0.1);
     });
   });
+
+  describe('With account hardwareWallet account', () => {
+    beforeEach(() => {
+      props.address = '123L';
+      props.amount = 1;
+      props.accountInit = false;
+      props.account.hwInfo = { deviceId: '123123' };
+      props.pendingTransactions = ['123'];
+
+      const store = fakeStore({ account });
+
+      wrapper = mount(<Confirm {...props} />, {
+        context: { store, i18n },
+        childContextTypes: {
+          store: PropTypes.object.isRequired,
+          i18n: PropTypes.object.isRequired,
+        },
+      });
+    });
+
+    it('hardwareWallet account should show correct title "Confirm transaction on Ledger Nano S"', () => {
+      expect(wrapper.find('.title').at(0)).to.have.text('Confirm transaction on Ledger Nano S');
+    });
+  });
 });
