@@ -38,8 +38,10 @@
 
 @media (--large-viewport) {
   .content {
+    padding: 0;
+
     & > h2 {
-      padding: 0 40px;
+      padding: 0;
     }
   }
 }
