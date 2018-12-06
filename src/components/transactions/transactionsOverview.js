@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Waypoint from 'react-waypoint';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
+// import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import EmptyState from '../emptyState';
 import TransactionsList from './transactionsList';
