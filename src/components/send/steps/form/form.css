@@ -121,7 +121,6 @@ input:read-only {
 .headerWrapper {
   padding: 0 !important;
   margin: 50px 0 0;
-  line-height: var(--header-line-height);
 
   & .title {
     float: left;
