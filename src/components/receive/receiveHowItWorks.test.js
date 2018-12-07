@@ -50,7 +50,7 @@ describe('ReceiveHowItWorks', () => {
   });
 
   it('continue to next component after click on X icon', () => {
-    wrapper.find('.closeIcon').simulate('click');
+    wrapper.find('.okay-button').simulate('click');
     wrapper.update();
     expect(props.nextStep).to.have.been.calledWith();
   });

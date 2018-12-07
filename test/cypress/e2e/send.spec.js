@@ -20,7 +20,7 @@ const getRandomReference = () => Math.random().toString(36).replace(/[^a-z]+/g, 
 
 // const transactionFee = 0.1;
 
-describe('Transfer', () => {
+describe('Send', () => {
   let randomAddress;
   let randomAmount;
   let randomReference;
