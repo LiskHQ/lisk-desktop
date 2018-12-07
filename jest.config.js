@@ -55,7 +55,7 @@ module.exports = {
     'src/components/newsFeed/news.js',
     'src/components/passphrase/create/create.js',
     'src/components/passphraseCreation/index.js',
-    'src/components/passphraseSteps/index.js', // FollowUp #1515
+    'src/components/passphraseSteps/index.js',
     'src/components/register/register.js',
     'src/components/request/specifyRequest.js',
     'src/components/searchBar/index.js', // Passing in mocha but not in Jest
@@ -79,7 +79,6 @@ module.exports = {
     'src/utils/proxyLogin.js',
     'src/utils/rawTransactionWrapper.js',
     'src/utils/to.js',
-    'src/components/passphraseSteps/index.js', // FollowUp #1515
     'src/components/sendNew/',
   ],
   coverageThreshold: {
