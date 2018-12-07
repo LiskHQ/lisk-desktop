@@ -133,6 +133,23 @@ describe('actions: peers', () => {
       expect(dispatch).to.have.been.calledWith();
     });
 
+    it('dispatch liskAPIClientSet action when hwAccount is logged in ', () => {
+      getState = () => ({
+        peers: {
+          liskAPIClient: {},
+        },
+        account: {},
+        settings: { autoLog: true },
+      });
+
+      const network = {
+        testnet: true,
+      };
+
+      liskAPIClientSet({ passphrase, network, hwInfo: {} })(dispatch, getState);
+      expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes', networks.testnet.nodes));
+    });
+
     it('dispatch liskAPIClientSet action even if network.address is undefined', () => {
       liskAPIClientSet({ passphrase, network: {} })(dispatch, getState);
 

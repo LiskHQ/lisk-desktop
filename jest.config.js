@@ -41,7 +41,6 @@ module.exports = {
     'app/src/ledger.js',
     'src/components/receive/index.js',
     'src/actions/liskService.js',
-    'src/actions/peers.js', // FollowUp #1515
     'src/actions/transactions.js',
     'src/components/account/stories.js',
     'src/components/backgroundMaker/index.js',
@@ -81,7 +80,6 @@ module.exports = {
     'src/utils/rawTransactionWrapper.js',
     'src/utils/to.js',
     'src/components/passphraseSteps/index.js', // FollowUp #1515
-    'src/actions/peers.js', // FollowUp #1515
     'src/components/sendNew/',
   ],
   coverageThreshold: {

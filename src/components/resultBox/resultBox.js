@@ -66,7 +66,7 @@ class ResultBox extends React.Component {
             </Button> : null
           }
           {!this.props.success && this.props.account && this.props.account.hwInfo ?
-            <Button className={`add-follwed-account-button ${styles.addFollowedAccountButton}`}
+            <Button className={`add-to-bookmarks ${styles.addFollowedAccountButton}`}
               onClick={() => {
                 this.props.transactionFailedClear();
                 this.props.prevStep({
