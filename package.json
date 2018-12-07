@@ -6,7 +6,7 @@
   "bugs": "https://github.com/LiskHQ/lisk-hub/issues",
   "main": "main.js",
   "scripts": {
-    "postinstall": "node ./config/checkNodeVersion.js",
+    "postinstall": "electron-rebuild --force",
     "build": "npm run clean-build && npm run copy-files && npm run build-prod && npm run build-electron",
     "build:testnet": "npm run build:testnet:pre",
     "build:testnet:pre": "cpx \"./app/build/**\" ./app/build-testnet && npm run build:testnet:post",
@@ -130,6 +130,7 @@
     "electron-builder": "19.32.2",
     "electron-ipc-mock": "0.0.3",
     "electron-json-storage": "=3.2.0",
+    "electron-rebuild": "1.8.2",
     "electron-updater": "2.16.1",
     "enzyme": "=3.1.0",
     "enzyme-adapter-react-16": "=1.0.2",
