@@ -113,14 +113,18 @@ describe('Delegates', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
+    cy.get(ss.nextBtn).should('be.disabled');
+    cy.get(ss.selectionVotingNumber).should('have.text', '0');
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.voteCheckbox).should('have.class', 'checked');
     // Unvote
     cy.get('@dg').find(ss.voteCheckbox).click();
+    cy.get(ss.selectionVotingNumber).should('have.text', '1');
     cy.get(ss.nextBtn).click();
     cy.get(ss.confirmBtn).click();
     cy.get(ss.voteResultHeader).contains('Votes submitted');
     cy.get(ss.okayBtn).click();
+    cy.get(ss.selectionVotingNumber).should('have.text', '0');
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.spinner);
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout }).should('have.class', 'unchecked');
@@ -129,11 +133,15 @@ describe('Delegates', () => {
     //   compareBalances(this.balanceBefore, this.balanceAfter, txVotePrice);
     // });
     // Vote
+    cy.get(ss.nextBtn).should('be.disabled');
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.voteCheckbox).click();
+    cy.get(ss.selectionVotingNumber).should('have.text', '1');
     cy.get(ss.nextBtn).click();
     cy.get(ss.confirmBtn).click();
     cy.get(ss.voteResultHeader).contains('Votes submitted');
+    cy.get(ss.okayBtn).click();
+    cy.get(ss.selectionVotingNumber).should('have.text', '0');
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.spinner);
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout }).should('have.class', 'checked');
@@ -179,5 +187,13 @@ describe('Delegates', () => {
     cy.visit(urls.wallet);
     cy.visit(`${urls.delegatesVote}?votes=genesis_14,genesis_16`);
     cy.get(ss.alreadyVotedPreselection).contains('genesis_14, genesis_16');
+  });
+
+  it('Filter voted/not voted delegates', () => {
+
+  });
+
+  it('All selected delegagtes are listed in confirmation step', () => {
+
   });
 });
