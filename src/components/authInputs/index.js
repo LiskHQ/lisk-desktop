@@ -1,3 +1,4 @@
+/* istanbul skip file */
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
