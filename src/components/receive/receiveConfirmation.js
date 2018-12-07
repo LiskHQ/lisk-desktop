@@ -20,7 +20,6 @@ class ReceiveConfirmation extends React.Component {
     };
 
     this.onInputChange = this.onInputChange.bind(this);
-    this.isFormComplete = this.isFormComplete.bind(this);
   }
 
   onInputChange(value, name, required = true, error) {
@@ -34,22 +33,12 @@ class ReceiveConfirmation extends React.Component {
     });
   }
 
-  isFormComplete() {
-    const { recipient, amount, reference } = this.state;
-
-    return (!!recipient.error ||
-      !recipient.value ||
-      !!reference.error ||
-      !!amount.error ||
-      !amount.value);
-  }
-
   render() {
     let link = `lisk://wallet/send?recipient=${this.props.address}`;
     link = `${link}&amount=${this.state.amount.value}`;
     link = (this.state.reference.value) ? `${link}&reference=${this.state.reference.value}` : link;
-    const text = `mailto:?subject=Requesting LSK to ${this.props.address}&body=Hey there,
-      here is a link you can use to send me LSK via your wallet: ${encodeURIComponent(link)}`;
+    const text = `mailto:?subject=Requesting ${this.state.amount.value} LSK to ${this.props.address}&body=Hey there,
+    here is a link you can use to send me ${this.state.amount.value} LSK via your wallet: ${encodeURIComponent(link)}`;
 
     return (
       <div>
@@ -58,32 +47,34 @@ class ReceiveConfirmation extends React.Component {
             <h3>{this.props.t('Request LSK')}</h3>
           </header>
         </div>
-        <div className={`${grid.row} ${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`}>
-          <div className={`${styles.qrCode} ${grid['col-xs-5']} ${grid['col-sm-5']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
-            <QRCode value={link} />
-          </div>
-          <div className={`${styles.transaction} ${grid['col-xs-5']} ${grid['col-sm-5']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
-            <ReceiveForm
-              t={this.props.t}
-              address={this.props.address}
-              amount={this.state.amount.value}
-              error={this.state.amount.error}
-              onAmountChange={value => this.onInputChange(value, 'amount', true)}
-              onReferenceChange={value => this.onInputChange(value, 'reference', false)}
-              reference={this.state.reference}
-            />
-            <a href={text}>
-              {this.props.t('Send request via E-mail')}
-              <FontIcon value='external-link'/>
-            </a>
-          </div>
-        </div>
-        <div className={`${grid.row} ${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`}>
-          <div className={`${styles.copyToClipboard} ${grid['col-xs-10']} ${grid['col-sm-10']} ${grid['col-md-8']} ${grid['col-lg-6']}`}>
-            <CopyToClipboard
-              value={link}
-              className={`${styles.copy} request-link`}
-            />
+        <div className={`${grid.row}`}>
+          <div className={`${styles.qrAndForm}`}>
+            <div className={`${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`}>
+              <div className={`${styles.qrCode} ${grid['col-xs-5']} ${grid['col-sm-5']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
+                <QRCode value={link} />
+              </div>
+              <div className={`${styles.transaction} ${grid['col-xs-5']} ${grid['col-sm-5']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
+                <ReceiveForm
+                  t={this.props.t}
+                  address={this.props.address}
+                  amount={this.state.amount.value}
+                  error={this.state.amount.error}
+                  onAmountChange={value => this.onInputChange(value, 'amount')}
+                  onReferenceChange={value => this.onInputChange(value, 'reference', false)}
+                  reference={this.state.reference}
+                />
+                <a href={text}>
+                  {this.props.t('Send request via E-mail')}
+                  <FontIcon value='external-link'/>
+                </a>
+              </div>
+            </div>
+            <div className={`${styles.copyToClipboard} ${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`}>
+              <CopyToClipboard
+                value={link}
+                className={`${styles.copy} ${grid['col-xs-10']} ${grid['col-sm-10']} ${grid['col-md-8']} ${grid['col-lg-6']} request-link`}
+              />
+            </div>
           </div>
         </div>
         <footer className={`${grid.row} ${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`}>
@@ -99,7 +90,6 @@ class ReceiveConfirmation extends React.Component {
           <div className={`${grid['col-xs-5']} ${grid['col-sm-5']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
             <ActionButton
               className={'next'}
-              disabled={this.isFormComplete()}
               onClick={() => this.props.goToTransationPage()}
               >
               {this.props.t("Okay, I'm done")}

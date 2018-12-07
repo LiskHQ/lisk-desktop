@@ -24,7 +24,7 @@ class Receive extends Component {
         <MultiStep key='request'>
           <ReceiveDescription
             t={this.props.t}
-            address={this.props.address}
+            address={this.props.address || ''}
             goToTransationPage={this.goToTransationPage}
           />
           <ReceiveHowItWorks
@@ -34,7 +34,7 @@ class Receive extends Component {
           />
           <ReceiveConfirmation
             t={this.props.t}
-            address={this.props.address}
+            address={this.props.address || ''}
             goToTransationPage={this.goToTransationPage}
           />
         </MultiStep>
