@@ -1,4 +1,4 @@
-
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import LoadingBar from './loadingBar';
 
