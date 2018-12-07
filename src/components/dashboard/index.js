@@ -91,8 +91,8 @@ const mapStateToProps = state => ({
   settings: state.settings,
 });
 
-const mapDispatchToProps = dispatch => ({
-  loadTransactions: data => dispatch(loadTransactions(data)),
-});
+const mapDispatchToProps = {
+  loadTransactions,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(Dashboard));
