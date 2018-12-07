@@ -1,3 +1,5 @@
+import to from 'await-to-js';
+import i18next from 'i18next';
 import {
   listAccountDelegates,
   listDelegates,
@@ -5,10 +7,13 @@ import {
 } from '../utils/api/delegate';
 import { getTimeOffset } from '../utils/hacks';
 import { updateDelegateCache } from '../utils/delegates';
+import { voteWithLedger } from '../utils/api/ledger';
 import { passphraseUsed } from './account';
+import { transactionAdded } from './transactions';
 import Fees from '../constants/fees';
 import actionTypes from '../constants/actions';
 import transactionTypes from '../constants/transactionTypes';
+import { loginType } from '../constants/hwConstants';
 
 /**
  * Add pending variable to the list of voted delegates and list of unvoted delegates
@@ -69,16 +74,35 @@ export const clearVotes = () => ({
   type: actionTypes.votesCleared,
 });
 
+const handleVoteError = ({ error, account }) => {
+  let text;
+  switch (account.loginType) {
+    case loginType.normal:
+      text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while placing your vote.');
+      break;
+    /* istanbul ignore next */
+    case loginType.ledger:
+      text = i18next.t('You have cancelled voting on your hardware wallet.');
+      break;
+    /* istanbul ignore next */
+    default:
+      text = error.message;
+  }
+  return text;
+};
+
 /**
  * Makes Api call to register votes
  * Adds pending state and then after the duration of one round
  * cleans the pending state
  */
 export const votePlaced = ({
-  passphrase, account,
-  votes, secondSecret, goToNextStep,
+  passphrase, account, votes, secondPassphrase, goToNextStep,
 }) =>
-  (dispatch, getState) => {
+  async (dispatch, getState) => { // eslint-disable-line max-statements
+    // account.loginType = 1;
+    let error;
+    let callResult;
     const liskAPIClient = getState().peers.liskAPIClient;
     const votedList = [];
     const unvotedList = [];
@@ -92,37 +116,39 @@ export const votePlaced = ({
       }
     });
 
-    vote(
-      liskAPIClient,
-      passphrase,
-      account.publicKey,
-      votedList,
-      unvotedList,
-      secondSecret,
-      timeOffset,
-    ).then((response) => {
-      // Add to list
-      dispatch(pendingVotesAdded());
+    switch (account.loginType) {
+      case loginType.normal:
+        [error, callResult] = await to(vote(
+          liskAPIClient, passphrase, account.publicKey,
+          votedList, unvotedList, secondPassphrase, timeOffset,
+        ));
+        break;
+      /* istanbul ignore next */
+      // eslint-disable-next-line no-case-declarations
+      case loginType.ledger:
+        [error, callResult] =
+          await to(voteWithLedger(liskAPIClient, account, votedList, unvotedList));
+        break;
+      /* istanbul ignore next */
+      default:
+        dispatch({ data: { errorMessage: i18next.t('Login Type not recognized.') }, type: actionTypes.transactionFailed });
+    }
 
-      // Add the new transaction
-      // @todo Handle alerts either in transactionAdded action or middleware
-      dispatch({
-        data: {
-          id: response.id,
-          senderPublicKey: account.publicKey,
-          senderId: account.address,
-          amount: 0,
-          fee: Fees.vote,
-          type: transactionTypes.vote,
-        },
-        type: actionTypes.transactionAdded,
-      });
+    if (error) {
+      goToNextStep({ success: false, text: handleVoteError({ error, account, dispatch }) });
+    } else {
+      dispatch(pendingVotesAdded());
+      dispatch(transactionAdded({
+        id: callResult.id,
+        senderPublicKey: account.publicKey,
+        senderId: account.address,
+        amount: 0,
+        fee: Fees.vote,
+        type: transactionTypes.vote,
+      }));
+      dispatch(passphraseUsed(passphrase));
       goToNextStep({ success: true });
-    }).catch((error) => {
-      const text = error && error.message ? `${error.message}.` : 'An error occurred while placing your vote.';
-      goToNextStep({ success: false, text });
-    });
-    dispatch(passphraseUsed(account.passphrase));
+    }
   };
 
 /**
