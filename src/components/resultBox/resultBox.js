@@ -67,16 +67,7 @@ class ResultBox extends React.Component {
           }
           {!this.props.success && this.props.account && this.props.account.hwInfo ?
             <Button className={`add-to-bookmarks ${styles.addFollowedAccountButton}`}
-              onClick={() => {
-                this.props.transactionFailedClear();
-                this.props.prevStep({
-                  success: null,
-                  account: this.props.account,
-                  recipient: this.props.recipient,
-                  amount: this.props.amount,
-                  password: { value: '' },
-                });
-              }}>
+              onClick={this.handleRetryButton.bind(this)}>
               {this.props.t('Retry')}
             </Button> : null
           }
