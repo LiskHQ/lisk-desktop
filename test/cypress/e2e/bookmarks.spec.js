@@ -10,7 +10,7 @@ describe('Bookmarks', () => {
    */
   it('Bookmarks are not present if there is no followers', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.wallet);
+    cy.visit(urls.send);
     cy.get(ss.recipientInput).click();
     cy.get(ss.bookmarkInput).should('not.exist');
     cy.get(ss.bookmarkList).should('not.exist');
@@ -28,7 +28,7 @@ describe('Bookmarks', () => {
       {"title":"Alice","address":"${accounts.delegate.address}","balance":101}
     ]`);
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.wallet);
+    cy.visit(urls.send);
     cy.get(ss.recipientInput).click();
     cy.get(ss.bookmarkInput);
     cy.get(ss.bookmarkList).eq(0).contains('Alice');
@@ -38,6 +38,7 @@ describe('Bookmarks', () => {
     cy.get(ss.amountInput).click().type(1);
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
+    cy.get(ss.okayBtn).click();
     cy.get(ss.transactionRow).eq(0).find(ss.transactionAddress).should('have.text', accounts.delegate.address);
   });
 
@@ -53,7 +54,7 @@ describe('Bookmarks', () => {
       {"title":"Bob","address":"${accounts.genesis.address}","balance":101}
     ]`);
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.wallet);
+    cy.visit(urls.send);
     cy.get(ss.recipientInput).click().type('Bob');
     cy.get(ss.bookmarkList).eq(0).contains('Bob');
     cy.get(ss.recipientInput).clear();

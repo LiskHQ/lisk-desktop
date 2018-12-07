@@ -1,11 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Waypoint from 'react-waypoint';
+// import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { Link } from 'react-router-dom';
 import EmptyState from '../emptyState';
 import TransactionsList from './transactionsList';
 import styles from './transactions.css';
 import txFilters from '../../constants/transactionFilters';
 import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
+import { ActionButton } from '../toolbox/buttons/button';
+import { FontIcon } from '../fontIcon';
+import Ulrs from '../../constants/routes';
 
 class TransactionsOverview extends React.Component {
   constructor(props) {
@@ -94,13 +99,32 @@ class TransactionsOverview extends React.Component {
     return (
       <div className={`transactions ${styles.activity}`}>
         <header>
-          <h2 className={styles.title}>{this.props.t('Activity')} {hasTitle
-            ? (<span>{this.props.t('of')} <span className={`${styles.accountTitle} account-title`}>{accountTitle}</span></span>)
-            : null}</h2>
+          <h2 className={`${styles.title}`}>
+          {this.props.t('Transaction')}
+          {
+            hasTitle && (<span>{this.props.t(' of')} <span className={`${styles.accountTitle} account-title`}>{accountTitle}</span></span>)
+          }
+          </h2>
 
+          {
+            this.props.match.url === Ulrs.wallet.path &&
+            (
+              <div className={`${styles.headerButtons}`}>
+                <Link to={`${Ulrs.request.path}`} className={'help-onboarding tx-receive-bt'}>
+                  <FontIcon>request-token</FontIcon>
+                  {this.props.t('Request')}
+                </Link>
+                <Link to={`${Ulrs.send.path}`} className={'tx-send-bt'}>
+                  <ActionButton>
+                  {this.props.t('Send')}
+                  </ActionButton>
+                </Link>
+              </div>
+            )
+          }
         </header>
         {this.shouldShowEmptyState() ?
-          <EmptyState title={this.props.t('No activity yet')}
+          <EmptyState title={this.props.t('No transactions yet')}
             message={this.props.t('The Wallet will show your recent transactions.')} /> :
           null }
         {this.shouldShowEmptyState() ?

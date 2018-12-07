@@ -241,7 +241,7 @@ class Login extends React.Component {
                   }}>
                     Ledger Nano S
                     <FontIcon className={styles.singUpArrow} value='arrow-right' />
-                  </div> : null }
+                  </div> : null}
                 <footer className={ `${grid.row} ${grid['center-xs']}` }>
                   <div className={grid['col-xs-12']}>
                     <PrimaryButton label={this.props.t('Log in')}

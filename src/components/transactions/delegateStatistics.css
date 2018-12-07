@@ -123,6 +123,9 @@
 .details {
   line-height: var(--list-line-height);
   color: var(--color-grayscale-dark);
+  background: linear-gradient(90deg, #fff 0%, #f5f8fc 100%);
+  margin: 0 -48px;
+  padding: 0 48px;
 
   & .showAll,
   & .showMore {
