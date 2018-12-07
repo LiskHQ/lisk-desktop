@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { setDefaults, translate } from 'react-i18next';
