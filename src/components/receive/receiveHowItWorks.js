@@ -25,7 +25,7 @@ class ReceiveHowItWorks extends React.Component {
           </div>
 
           <footer>
-          <ActionButton className={'closeIcon'} onClick={() => this.disableAndContinue()} >
+          <ActionButton className={'okay-button'} onClick={() => this.disableAndContinue()} >
             {this.props.t('Okay')}
           </ActionButton>
         </footer>

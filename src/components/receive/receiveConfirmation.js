@@ -72,7 +72,9 @@ class ReceiveConfirmation extends React.Component {
               onReferenceChange={value => this.onInputChange(value, 'reference', false)}
               reference={this.state.reference}
             />
-            <a href={text}>
+            <a
+              href={text}
+              className={'email-link'} >
               {this.props.t('Send request via E-mail')}
               <FontIcon value='external-link'/>
             </a>
@@ -98,7 +100,7 @@ class ReceiveConfirmation extends React.Component {
           </div>
           <div className={`${grid['col-xs-5']} ${grid['col-sm-5']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
             <ActionButton
-              className={'next'}
+              className={'okay-button'}
               disabled={this.isFormComplete()}
               onClick={() => this.props.goToTransationPage()}
               >
