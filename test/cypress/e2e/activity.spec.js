@@ -44,7 +44,7 @@ describe('Dashboard Activity', () => {
       cy.visit(urls.dashboard);
       cy.get(ss.seeAllTxsBtn).click();
       cy.url().should('contain', `${urls.wallet}`);
-      cy.get(ss.recipientInput);
+      cy.get(ss.tansactionReceiveButton);
     });
   });
 

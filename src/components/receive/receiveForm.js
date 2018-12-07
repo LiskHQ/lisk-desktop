@@ -34,7 +34,7 @@ const RequestForm = ({
     <ReferenceInput
       className='reference'
       theme={styles}
-      label={t('Message (optional)')}
+      label={t('Reference (optional)')}
       reference={reference}
       handleChange={onReferenceChange}
     />

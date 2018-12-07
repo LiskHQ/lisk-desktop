@@ -124,7 +124,7 @@ class Bookmark extends React.Component {
     const showSmallVisualAccountStyles = !(!isValidAddress && address.error && address.value);
 
     return (
-      <div className={this.state.show ? styles.scale : ''}>
+      <div className={this.state.show ? styles.scale : styles.standard}>
         <div className={this.state.show ? styles.bookmark : ''}>
           {isValidAddress && !this.state.show && !!isAddressFollowedAccounts ? <AccountVisual
             className={styles.smallAccountVisual}

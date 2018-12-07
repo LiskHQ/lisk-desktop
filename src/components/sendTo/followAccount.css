@@ -3,12 +3,13 @@
 .wrapper {
   line-height: 36px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   background: none;
   box-shadow: none;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
   text-align: left;
+  height: 100%;
 
   & header {
     & p {
