@@ -47,34 +47,34 @@ class Confirmation extends React.Component {
             <h3>{this.props.t('Request LSK')}</h3>
           </header>
         </div>
-        <div className={`${grid.row} ${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`}>
-          <div className={`${styles.qrCode} ${grid['col-xs-5']} ${grid['col-sm-5']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
-            <QRCode value={link} />
-          </div>
-          <div className={`${styles.transaction} ${grid['col-xs-5']} ${grid['col-sm-5']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
-            <ReceiveForm
-              t={this.props.t}
-              address={this.props.address}
-              amount={this.state.amount.value}
-              error={this.state.amount.error}
-              onAmountChange={value => this.onInputChange(value, 'amount', true)}
-              onReferenceChange={value => this.onInputChange(value, 'reference', false)}
-              reference={this.state.reference}
-            />
-            <a
-              href={text}
-              className={'email-link'} >
-              {this.props.t('Send request via E-mail')}
-              <FontIcon value='external-link'/>
-            </a>
-          </div>
-        </div>
-        <div className={`${grid.row} ${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`}>
-          <div className={`${styles.copyToClipboard} ${grid['col-xs-10']} ${grid['col-sm-10']} ${grid['col-md-8']} ${grid['col-lg-6']}`}>
-            <CopyToClipboard
-              value={link}
-              className={`${styles.copy} request-link`}
-            />
+        <div className={`${grid.row}`}>
+          <div className={`${styles.qrAndForm}`}>
+            <div className={`${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`}>
+              <div className={`${styles.qrCode} ${grid['col-xs-5']} ${grid['col-sm-5']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
+                <QRCode value={link} />
+              </div>
+              <div className={`${styles.transaction} ${grid['col-xs-5']} ${grid['col-sm-5']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
+                <ReceiveForm
+                  t={this.props.t}
+                  address={this.props.address}
+                  amount={this.state.amount.value}
+                  error={this.state.amount.error}
+                  onAmountChange={value => this.onInputChange(value, 'amount')}
+                  onReferenceChange={value => this.onInputChange(value, 'reference', false)}
+                  reference={this.state.reference}
+                />
+                <a href={text}>
+                  {this.props.t('Send request via E-mail')}
+                  <FontIcon value='external-link'/>
+                </a>
+              </div>
+            </div>
+            <div className={`${styles.copyToClipboard} ${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`}>
+              <CopyToClipboard
+                value={link}
+                className={`${styles.copy} ${grid['col-xs-10']} ${grid['col-sm-10']} ${grid['col-md-8']} ${grid['col-lg-6']} request-link`}
+              />
+            </div>
           </div>
         </div>
         <footer className={`${grid.row} ${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`}>
@@ -89,8 +89,7 @@ class Confirmation extends React.Component {
           </div>
           <div className={`${grid['col-xs-5']} ${grid['col-sm-5']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
             <ActionButton
-              className={'okay-button'}
-              disabled={this.isFormComplete()}
+              className={'next'}
               onClick={() => this.props.goToTransationPage()}
               >
               {this.props.t("Okay, I'm done")}
