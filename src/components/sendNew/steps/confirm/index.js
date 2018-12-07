@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
@@ -11,8 +12,8 @@ const mapStateToProps = state => ({
   followedAccounts: state.followedAccounts ? state.followedAccounts.accounts : [],
 });
 
-const mapDispatchToProps = dispatch => ({
-  sent: data => dispatch(sent(data)),
-});
+const mapDispatchToProps = {
+  sent,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(Confirm));
