@@ -40,7 +40,7 @@ describe('Transfer', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.wallet);
     cy.url().should('contain', urls.wallet);
-    cy.get(ss.tansactionSendButton).click();
+    cy.get(ss.transactionSendButton).click();
     checkWalletPageLoaded();
   });
 
@@ -54,7 +54,7 @@ describe('Transfer', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.sidebarMenuWalletBtn).should('have.css', 'opacity', '1').click();
     cy.url().should('contain', urls.wallet);
-    cy.get(ss.tansactionSendButton).click();
+    cy.get(ss.transactionSendButton).click();
     checkWalletPageLoaded();
   });
 
@@ -189,8 +189,9 @@ describe('Transfer', () => {
     cy.get(ss.accountInitializationMsg).should('not.exist');
     cy.wait(txConfirmationTimeout);
     cy.reload();
-    cy.visit(urls.wallet);
+    cy.visit(urls.send);
     cy.get(ss.accountInitializationMsg).should('not.exist');
+    cy.visit(urls.wallet);
     cy.get(ss.transactionRow).eq(0).as('tx');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', accounts['without initialization'].address);
     cy.get('@tx').find(ss.transactionReference).should('have.text', 'Account initialization');
@@ -203,7 +204,7 @@ describe('Transfer', () => {
    */
   it('It\'s not allowed to make a transfer if not enough funds', () => {
     cy.autologin(accounts['empty account'].passphrase, networks.devnet.node);
-    cy.visit(urls.wallet);
+    cy.visit(urls.send);
     cy.get(ss.recipientInput).type(randomAddress);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).should('be.disabled');
@@ -218,47 +219,11 @@ describe('Transfer', () => {
     cy.server({ status: 409 });
     cy.route('POST', '/api/transactions', { message: 'Test error' });
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.wallet);
+    cy.visit(urls.send);
     cy.get(ss.recipientInput).type(randomAddress);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
     cy.get(ss.resultMessage).contains('Status 409 : Test error');
-  });
-
-  /**
-   * Click request transfer
-   * @expect qr code is there
-   * @expect mail link contains correct message
-   * @expect click on send tab button leads to send transfer tab
-   */
-  it('Request transfer', () => {
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.wallet);
-    cy.get(ss.transferRequestTab).click();
-    cy.get(ss.qrCode);
-    cy.get(ss.emailLink).should('have.prop', 'href').and('include', `mailto:?subject=Requesting%20LSK%20to%20${accounts.genesis.address}&body=Hey%20there,%20here%20is%20a%20link%20you%20can%20use%20to%20send%20me%20LSK%20via%20your%20wallet:%20lisk%3A%2F%2Fwallet%3Frecipient%3D${accounts.genesis.address}`);
-    cy.get(ss.transferSendTab).click();
-    cy.get(ss.recipientInput);
-  });
-
-  /**
-   * Request specific amount
-   * @expect protocol link contains correct parameters
-   * @expect email link contains correct message
-   * @expect okay button leads to send tab
-   */
-  it('Request specific amount', () => {
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.wallet);
-    cy.get(ss.transferRequestTab).click();
-    cy.get(ss.requestSpecificAmountBtn).click();
-    cy.get(ss.amountInput).type(randomAmount);
-    cy.get(ss.referenceInput).type(randomReference);
-    cy.get(ss.confirmRequestBtn).click();
-    cy.get(ss.confirmRequestBlock).contains(`lisk://wallet?recipient=${accounts.genesis.address}&amount=${randomAmount}&reference=${randomReference}`);
-    cy.get(ss.confirmRequestBlock).find(ss.emailLink).should('have.prop', 'href').and('include', `mailto:?subject=Request%20${randomAmount}%20LSK%20to%20${accounts.genesis.address}&body=Hey%20there,%20here%20is%20a%20link%20you%20can%20use%20to%20send%20me%20${randomAmount}%20LSK%20via%20your%20wallet:%20lisk%3A%2F%2Fwallet%3Frecipient%3D${accounts.genesis.address}%26amount%3D${randomAmount}%26reference%3D${randomReference}`);
-    cy.get(ss.okayBtn).click();
-    cy.get(ss.recipientInput);
   });
 });

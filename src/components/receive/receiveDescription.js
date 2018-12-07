@@ -32,7 +32,9 @@ const ReceiveDescription = (props) => {
           <p>
             {props.t('This is your Lisk ID shown as a QR code. You can scan it with our Lisk Mobileapp available on Google Play & the AppStore or any QR code reader.')}
           </p>
-          <a href={text}>
+          <a
+            href={text}
+            className={'email-link'} >
             {props.t('Send request via E-mail')}
             <FontIcon value='external-link'/>
           </a>
@@ -50,7 +52,7 @@ const ReceiveDescription = (props) => {
 
         <div className={`${grid['col-xs-5']} ${grid['col-sm-5']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
           <ActionButton
-            className={'next'}
+            className={'specify-request'}
             onClick={() => props.nextStep({ address: props.address, status: 'foward' })}
             >
             {props.t('Request specific amount')}
