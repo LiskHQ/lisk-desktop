@@ -142,11 +142,11 @@ const mapStateToProps = state => ({
   loginType: state.account.loginType || 1,
 });
 
-const mapDispatchToProps = dispatch => ({
-  liskAPIClientSet: data => dispatch(liskAPIClientSet(data)),
-  settingsUpdated: data => dispatch(settingsUpdated(data)),
-  errorToastDisplayed: data => dispatch(errorToastDisplayed(data)),
-});
+const mapDispatchToProps = {
+  liskAPIClientSet,
+  settingsUpdated,
+  errorToastDisplayed,
+};
 
 export default connect(
   mapStateToProps,

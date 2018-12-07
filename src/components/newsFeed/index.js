@@ -6,10 +6,10 @@ import { channels } from '../../store/reducers/settings';
 import NewsFeed from './newsFeed';
 
 
-const mapDispatchToProps = dispatch => ({
-  settingsUpdated: data => dispatch(settingsUpdated(data)),
-  getNewsFeed: () => dispatch(getNewsFeed()),
-});
+const mapDispatchToProps = {
+  settingsUpdated,
+  getNewsFeed,
+};
 
 const mapStateToProps = state => ({
   channels: (state.settings && state.settings.channels) ? state.settings.channels : channels,

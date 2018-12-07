@@ -102,11 +102,11 @@ const mapStateToProps = state => ({
   liskAPIClient: state.peers && state.peers.liskAPIClient,
 });
 
-const mapDispatchToProps = dispatch => ({
-  liskAPIClientSet: data => dispatch(liskAPIClientSet(data)),
-  loadingFinished: data => dispatch(loadingFinished(data)),
-  loadingStarted: data => dispatch(loadingStarted(data)),
-});
+const mapDispatchToProps = {
+  liskAPIClientSet,
+  loadingFinished,
+  loadingStarted,
+};
 
 export default connect(
   mapStateToProps,
