@@ -20,7 +20,6 @@ class ReceiveConfirmation extends React.Component {
     };
 
     this.onInputChange = this.onInputChange.bind(this);
-    this.isFormComplete = this.isFormComplete.bind(this);
   }
 
   onInputChange(value, name, required = true, error) {
@@ -34,22 +33,12 @@ class ReceiveConfirmation extends React.Component {
     });
   }
 
-  isFormComplete() {
-    const { recipient, amount, reference } = this.state;
-
-    return (!!recipient.error ||
-      !recipient.value ||
-      !!reference.error ||
-      !!amount.error ||
-      !amount.value);
-  }
-
   render() {
     let link = `lisk://wallet/send?recipient=${this.props.address}`;
     link = `${link}&amount=${this.state.amount.value}`;
     link = (this.state.reference.value) ? `${link}&reference=${this.state.reference.value}` : link;
-    const text = `mailto:?subject=Requesting LSK to ${this.props.address}&body=Hey there,
-      here is a link you can use to send me LSK via your wallet: ${encodeURIComponent(link)}`;
+    const text = `mailto:?subject=Requesting ${this.state.amount.value} LSK to ${this.props.address}&body=Hey there,
+    here is a link you can use to send me ${this.state.amount.value} LSK via your wallet: ${encodeURIComponent(link)}`;
 
     return (
       <div>
