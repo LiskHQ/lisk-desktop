@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
@@ -11,10 +12,8 @@ const mapStateToProps = state => ({
   error: state.secondPassphrase.error,
 });
 
-/* istanbul ignore next */
-const mapDispatchToProps = dispatch => ({
-  secondPassphraseRegisteredFailureReset: data =>
-    dispatch(secondPassphraseRegisteredFailureReset(data)),
-});
+const mapDispatchToProps = {
+  secondPassphraseRegisteredFailureReset,
+};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translate()(ConfirmSecond)));
