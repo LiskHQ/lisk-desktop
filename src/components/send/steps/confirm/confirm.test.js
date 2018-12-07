@@ -41,7 +41,7 @@ describe('Confirm Component', () => {
     });
 
     it('renders two Input components', () => {
-      expect(wrapper.find('Input')).to.have.length(2);
+      expect(wrapper.find('Input')).to.have.length(3);
     });
 
     it('renders two Button component', () => {
@@ -95,8 +95,12 @@ describe('Confirm Component', () => {
         address: '123L',
         amount: 1,
         accountInit: false,
-        account: { ...props.account, hwInfo: { deviceId: '123123' } },
-        pendingTransactions: ['123'],
+        account: { ...account, hwInfo: { deviceId: '123123' } },
+        pendingTransactions: [{
+          senderId: account.address,
+          recipientId: '11004588490103196952L',
+        }],
+        failedTransactions: [],
       };
 
       const store = fakeStore({ account });
@@ -108,6 +112,12 @@ describe('Confirm Component', () => {
           i18n: PropTypes.object.isRequired,
         },
       });
+
+      wrapper.find('.amount input').simulate('change', { target: { value: '1' } });
+      wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952L' } });
+      wrapper.find('.send-button button').simulate('click');
+      wrapper.update();
+
       expect(wrapper.find('.title').at(0)).to.have.text('Confirm transaction on Ledger Nano S');
     });
   });

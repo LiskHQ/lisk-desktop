@@ -1,5 +1,4 @@
 import React from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { fromRawLsk, toRawLsk } from '../../../../utils/lsk';
 import AccountVisual from '../../../accountVisual';
 import { Button, PrimaryButton } from './../../../toolbox/buttons/button';
@@ -112,6 +111,7 @@ class Confirm extends React.Component {
       (this.props.account.hwInfo && this.props.account.hwInfo.deviceId ? this.props.t('Confirm transaction on Ledger Nano S') : this.props.t('Confirm transfer'));
     const followedAccount = this.props.followedAccounts
       .find(account => account.address === this.state.recipient.value);
+
     return (
       <div className={`${styles.wrapper} send`}>
         <div className={styles.header}>
@@ -154,7 +154,15 @@ class Confirm extends React.Component {
                 disabled={true}
                 multiline={true}
                 theme={styles}
-              /> : null
+              /> :
+              <ToolBoxInput label={this.props.t('Reference')}
+                className={`reference ${styles.disabledInput}`}
+                error={this.state.reference.error}
+                value={'-'}
+                disabled={true}
+                multiline={true}
+                theme={styles}
+              />
             }
             <ToolBoxInput label={this.props.t('Total incl. {{fee}} LSK Fee', { fee: fromRawLsk(fees.send) })}
               className={`amount ${styles.disabledInput}`}
@@ -166,8 +174,7 @@ class Confirm extends React.Component {
           </form>
         }
         <footer>
-          <section className={grid.row} >
-            <div className={grid['col-xs-4']}>
+          <section>
               <Button
                 label={this.props.t('Back')}
                 onClick={() => this.props.prevStep({
@@ -178,8 +185,6 @@ class Confirm extends React.Component {
                 type='button'
                 theme={styles}
               />
-            </div>
-            <div className={grid['col-xs-8']}>
               <PrimaryButton
                 className='send-button'
                 label={this.props.accountInit ? this.props.t('Confirm (Fee: {{fee}} LSK)', { fee: fromRawLsk(fees.send) }) : this.props.t('Send')}
@@ -188,9 +193,8 @@ class Confirm extends React.Component {
                 onClick={this.send.bind(this)}
                 disabled={this.state.loading}
               />
-              <div className='subTitle'>{this.props.t('Transactions can’t be reversed')}</div>
-            </div>
           </section>
+          <div className='subTitle'>{this.props.t('Transactions can’t be reversed')}</div>
         </footer>
       </div>
     );

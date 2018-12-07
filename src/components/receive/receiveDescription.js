@@ -8,7 +8,7 @@ import CopyToClipboard from '../copyToClipboard/index';
 import styles from './receive.css';
 
 const ReceiveDescription = (props) => {
-  const link = `lisk://wallet?recipient=${props.address}`;
+  const link = `lisk://wallet/send?recipient=${props.address}`;
   const text = `mailto:?subject=Requesting LSK to ${props.address}&body=Hey there,
     here is a link you can use to send me LSK via your wallet: ${encodeURIComponent(link)}`;
 
@@ -16,7 +16,7 @@ const ReceiveDescription = (props) => {
     <div>
       <div className={`${grid.row} ${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`}>
         <header className={`${grid['col-xs-10']} ${grid['col-sm-10']} ${grid['col-md-8']} ${grid['col-lg-6']}`}>
-          <h3>{props.t('Receive LSK')}</h3>
+          <h3>{props.t('Request LSK')}</h3>
         </header>
       </div>
 

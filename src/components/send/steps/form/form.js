@@ -1,7 +1,6 @@
 import React from 'react';
-import TransferTabs from '../../../transferTabs';
 import { fromRawLsk } from '../../../../utils/lsk';
-import { Button } from '../../../toolbox/buttons/button';
+import { Button, ActionButton } from '../../../toolbox/buttons/button';
 import { authStatePrefill } from '../../../../utils/form';
 import Converter from '../../../converter';
 import fees from '../../../../constants/fees';
@@ -111,17 +110,14 @@ class Form extends React.Component {
   render() {
     return (
       <div className={`${styles.sendWrapper}`}>
-        <div className={styles.header}>
-          <header className={styles.headerWrapper}>
-            <h2>{this.props.t('Transfer')}</h2>
-          </header>
-          <TransferTabs setTabSend={this.props.setTabSend} isActiveTabSend={true}/>
-        </div>
+        <header className={styles.headerWrapper}>
+          <h2>{this.props.t('Send LSK')}</h2>
+        </header>
         <form className={styles.form}>
           { this.props.followedAccounts.length > 0 && this.state.openFollowedAccountSuggestion ?
             <Bookmark
               focusReference={this.focusReference.bind(this)}
-              className='recipient'
+              className='recipient sendBookmark'
               label={this.props.t('Send to address')}
               address={this.state.recipient}
               handleChange={this.handleChange.bind(this, 'recipient', true)}
@@ -161,19 +157,28 @@ class Form extends React.Component {
           </div>
         </form>
         <footer>
-          <Button onClick={() => this.props.nextStep({
-            recipient: this.state.recipient.value,
-            amount: this.state.amount.value,
-            reference: this.state.reference.value,
-          })}
-          disabled={(!!this.state.recipient.error ||
+          <Button
+            onClick={() => this.props.goToWallet()}
+            className={`send-prev-button ${styles.nextButton}`}
+          >
+          {this.props.t('Back')}
+          </Button>
+
+          <ActionButton
+            onClick={() => this.props.nextStep({
+              recipient: this.state.recipient.value,
+              amount: this.state.amount.value,
+              reference: this.state.reference.value,
+            })}
+            disabled={(!!this.state.recipient.error ||
                     !this.state.recipient.value ||
                     !!this.state.amount.error ||
                     !!this.state.reference.error ||
                     !this.state.amount.value)}
-          className={`send-next-button ${styles.nextButton}`}
-          >{this.props.t('Next')}</Button>
-          <div className='subTitle'>{this.props.t('Confirmation in the next step.')}</div>
+            className={`send-next-button ${styles.nextButton}`}
+          >
+          {this.props.t('Next')}
+          </ActionButton>
         </footer>
       </div>
     );
