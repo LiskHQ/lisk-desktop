@@ -9,9 +9,9 @@ const mapStateToProps = state => ({
   showDelegate: state.settings.advancedMode,
 });
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = {
   feedbackDialogDisplayed,
-});
+};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translate()(MainMenu)));
 
