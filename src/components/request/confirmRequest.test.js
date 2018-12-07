@@ -28,7 +28,7 @@ describe('Confirm Request', () => {
   });
 
   it('lets you finish request', () => {
-    wrapper.find('.finish-button').simulate('click');
+    wrapper.find('.okay-button').simulate('click');
     expect(props.finalCallback).to.have.been.calledWith();
   });
 

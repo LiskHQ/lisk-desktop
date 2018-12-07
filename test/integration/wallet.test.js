@@ -1,3 +1,4 @@
+// TODO: delete file after coverage is fulfilled
 import thunk from 'redux-thunk';
 import { step } from 'mocha-steps';
 import { expect } from 'chai';
@@ -275,15 +276,15 @@ describe('@integration: Wallet', () => {
     describe('Scenario: should display the request LSK component when clicking on the tab', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
       step('When I click "request tab"', () => { helper.clickOnElement('.request-tab'); });
-      step('Then I should see the QR code', () => helper.haveLengthOf('.request-qr-code', 1));
+      step('Then I should see the QR code', () => helper.haveLengthOf('.qr-code', 1));
       step('When I click "send tab"', () => { helper.clickOnElement('.send-tab'); });
-      step('Then I should not see the QR code anymore', () => helper.haveLengthOf('.request-qr-code', 0));
+      step('Then I should not see the QR code anymore', () => helper.haveLengthOf('.qr-code', 0));
     });
 
     describe('Scenario: should request specific amount', () => {
       step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
       step('When I click "request tab"', () => { helper.clickOnElement('.request-tab'); });
-      step('Then I should see the QR code', () => helper.haveLengthOf('.request-qr-code', 1));
+      step('Then I should see the QR code', () => helper.haveLengthOf('.qr-code', 1));
       step('When I click "specify request"', () => { helper.clickOnElement('.specify-request'); });
       step('And I fill in "1" to "amount" field', () => { helper.fillInputField('1', 'amount'); });
       step('When I click "confirm request"', () => { helper.clickOnElement('.confirm-request'); });

@@ -2,9 +2,16 @@ const ss = {
   app: '#app',
   transactoinsTable: '.transaction-results',
   transactionRow: '.transactions-row',
+  filterAll: '.filter-all',
+  filterOutgoing: '.filter-out',
+  filterIncoming: '.filter-in',
   seeAllTxsBtn: '.seeAllLink',
   txDetailsBackButton: '.transaction-details-back-button',
   recipientInput: '.recipient input',
+  requestSpecificAmountBtn: '.specify-request',
+  requestLink: '.request-link',
+  emailLink: '.email-link',
+  backButton: '.back',
   accountInfoTab: '.account-info',
   delegateStatisticsTab: '.delegate-statistics ',
   votedAddress: '.votes .voter-address',
@@ -127,8 +134,8 @@ const ss = {
   followedAccountTitle: '.account-title input',
   takeTutorial: '.help-onboarding',
   tutorialTooltip: '.joyride-tooltip__header',
-  tansactionReceiveButton: '.tx-receive-bt',
-  tansactionSendButton: '.tx-send-bt',
+  transactionRequestButton: '.tx-receive-bt',
+  transactionSendButton: '.tx-send-bt',
 };
 
 export default ss;

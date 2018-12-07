@@ -108,7 +108,7 @@ describe('ReceiveConfirmation', () => {
     wrapper.update();
     wrapper.find('.amount input').simulate('change', { target: { value: '1' } });
     wrapper.update();
-    wrapper.find('.next').at(0).simulate('click');
+    wrapper.find('.okay-button').at(0).simulate('click');
     wrapper.update();
     expect(props.goToTransationPage).to.have.been.calledWith();
   });

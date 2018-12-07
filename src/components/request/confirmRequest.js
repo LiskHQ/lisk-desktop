@@ -57,7 +57,7 @@ class ConfirmRequest extends React.Component {
           <CopyToClipboard
             value={link}
             className={styles.copy}/>
-          <a className={styles.emailLink}
+          <a className={`${styles.emailLink} email-link`}
             href={`mailto:?subject=Request ${amount} LSK to ${address}&body=Hey there, here is a link you can use to send me ${amount} LSK via your wallet: ${encodeURIComponent(link)}`}>
             {t('Send request via E-mail')} <FontIcon value='arrow-right'/>
           </a>
@@ -75,7 +75,7 @@ class ConfirmRequest extends React.Component {
               <TertiaryButton
                 label={t("Okay, I'm done")}
                 onClick={() => finalCallback()}
-                className='finish-button'
+                className='okay-button'
               />
               <div className='subTitle'></div>
             </div>

@@ -2,6 +2,7 @@ const urls = {
   dashboard: '/dashboard',
   wallet: '/wallet',
   send: '/wallet/send',
+  request: '/wallet/request',
   help: '/help',
   settings: '/setting',
   accounts: '/explorer/accounts',
