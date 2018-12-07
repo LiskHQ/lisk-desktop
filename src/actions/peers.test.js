@@ -134,14 +134,6 @@ describe('actions: peers', () => {
     });
 
     it('dispatch liskAPIClientSet action when hwAccount is logged in ', () => {
-      getState = () => ({
-        peers: {
-          liskAPIClient: {},
-        },
-        account: {},
-        settings: { autoLog: true },
-      });
-
       const network = {
         testnet: true,
       };
