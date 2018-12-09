@@ -89,7 +89,7 @@ class Confirmation extends React.Component {
           </div>
           <div className={`${grid['col-xs-5']} ${grid['col-sm-5']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
             <ActionButton
-              className={'okay-button'}
+              className={'next okay-button'}
               onClick={() => this.props.goToTransationPage()}
               >
               {this.props.t("Okay, I'm done")}
