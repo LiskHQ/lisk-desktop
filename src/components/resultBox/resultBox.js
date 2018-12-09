@@ -46,14 +46,6 @@ class ResultBox extends React.Component {
         <footer className={`${grid.row} ${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`}>
           {this.props.success &&
             this.props.recipientId && this.isNotYetFollowed(this.props.recipientId) ?
-<<<<<<< HEAD
-            <Button className={`add-followed-account-button ${styles.addFollowedAccountButton}`}
-              onClick={() => {
-                this.props.nextStep({ address: this.props.recipientId });
-              }}>
-              {this.props.t('Add to bookmarks')}
-            </Button> : null
-=======
             <div className={`${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-5']} ${grid['col-lg-5']}`}>
               <Button className={`add-follwed-account-button ${styles.addFollowedAccountButton}`}
                 onClick={() => {
@@ -62,7 +54,6 @@ class ResultBox extends React.Component {
                 {this.props.t('Add to bookmarks')}
               </Button>
             </div> : null
->>>>>>> :nail_care: Update css files for send LSK to properly aligne buttons
           }
           {!this.props.success && this.props.account.hwInfo ?
             <Button className={`add-to-bookmarks ${styles.addFollowedAccountButton}`}
