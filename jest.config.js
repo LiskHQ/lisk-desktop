@@ -15,7 +15,6 @@ module.exports = {
     'src/components/newsFeed/index.test.js', // This component doesn't meet the setted tresholds for mocha but in jest
     'src/components/passphraseCreation/index.test.js',
     'src/components/register/register.test.js',
-    'src/components/request/specifyRequest.test.js',
     'src/components/transactions/votedDelegates.test.js',
     'src/components/voteUrlProcessor/index.test.js',
     'src/store/middlewares/login.test.js',
@@ -60,9 +59,8 @@ module.exports = {
     'src/components/passphraseCreation/index.js',
     'src/components/passphraseSteps/index.js', // FollowUp #1515
     'src/components/passphraseSteps/index.js', // FollowUp #1515
-    'src/components/receive/index.js',
+    'src/components/request/index.js',
     'src/components/register/register.js',
-    'src/components/request/specifyRequest.js',
     'src/components/resultBox/index.js',
     'src/components/resultBox/resultBox.js', // FollowUp #1515
     'src/components/resultBox/resultBox.js', // FollowUp #1515

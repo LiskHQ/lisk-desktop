@@ -2,12 +2,12 @@ import React from 'react';
 import QRCode from 'qrcode.react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import { FontIcon } from '../fontIcon';
-import { Button, ActionButton } from './../toolbox/buttons/button';
-import CopyToClipboard from '../copyToClipboard/index';
-import styles from './receive.css';
+import { FontIcon } from '../../../fontIcon';
+import { Button, ActionButton } from '../../../toolbox/buttons/button';
+import CopyToClipboard from '../../../copyToClipboard/index';
+import styles from '../../receive.css';
 
-const ReceiveDescription = (props) => {
+const Description = (props) => {
   const link = `lisk://wallet/send?recipient=${props.address}`;
   const text = `mailto:?subject=Requesting LSK to ${props.address}&body=Hey there,
     here is a link you can use to send me LSK via your wallet: ${encodeURIComponent(link)}`;
@@ -61,4 +61,4 @@ const ReceiveDescription = (props) => {
   );
 };
 
-export default ReceiveDescription;
+export default Description;

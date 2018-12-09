@@ -15,7 +15,7 @@ import SingleTransaction from '../components/singleTransaction';
 import HwWallet from '../components/hwWallet';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
-import Receive from '../components/receive';
+import Request from '../components/request';
 import Send from '../components/send';
 
 export default {
@@ -37,7 +37,7 @@ export default {
   },
   request: {
     path: '/wallet/request',
-    component: Receive,
+    component: Request,
   },
   send: {
     path: '/wallet/send',

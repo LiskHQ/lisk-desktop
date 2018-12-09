@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import i18n from '../../i18n';
-import Request from './receive';
+import Request from './request';
 
 describe('Render Request', () => {
   let wrapper;
