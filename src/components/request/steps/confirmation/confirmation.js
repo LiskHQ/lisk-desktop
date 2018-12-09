@@ -2,14 +2,14 @@ import React from 'react';
 import QRCode from 'qrcode.react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import ReceiveForm from './receiveForm';
-import { FontIcon } from '../fontIcon';
-import { Button, ActionButton } from './../toolbox/buttons/button';
-import CopyToClipboard from '../copyToClipboard/index';
-import inputValidator from '../../utils/inputValidator';
-import styles from './receive.css';
+import ReceiveForm from './requestForm';
+import { FontIcon } from '../../../fontIcon';
+import { Button, ActionButton } from '../../../toolbox/buttons/button';
+import CopyToClipboard from '../../../copyToClipboard/index';
+import inputValidator from '../../../../utils/inputValidator';
+import styles from '../../receive.css';
 
-class ReceiveConfirmation extends React.Component {
+class Confirmation extends React.Component {
   constructor(props) {
     super(props);
 
@@ -101,4 +101,4 @@ class ReceiveConfirmation extends React.Component {
   }
 }
 
-export default ReceiveConfirmation;
+export default Confirmation;

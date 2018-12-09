@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { spy } from 'sinon';
-import i18n from '../../i18n';
-import ReceiveConfirmation from './receiveConfirmation';
+import i18n from '../../../../i18n';
+import Confirmation from './confirmation';
 
-describe('ReceiveConfirmation', () => {
+describe('Confirmation', () => {
   let wrapper;
   let props;
 
@@ -40,7 +40,7 @@ describe('ReceiveConfirmation', () => {
       },
     });
 
-    wrapper = mount(<ReceiveConfirmation {...props}/>, {
+    wrapper = mount(<Confirmation {...props}/>, {
       context: { store, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,
@@ -49,7 +49,7 @@ describe('ReceiveConfirmation', () => {
     });
   });
 
-  it('render ReceiveConfirmation component', () => {
+  it('render Confirmation component', () => {
     expect(wrapper.exists()).to.equal(true);
   });
 
