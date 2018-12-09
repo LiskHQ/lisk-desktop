@@ -51,10 +51,9 @@
   & footer {
     padding: 0px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     position: absolute;
     bottom: 58px;
-    width: 50%;
 
     & > div > button {
       width: 160px !important;
