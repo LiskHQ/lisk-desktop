@@ -1,30 +1,28 @@
 import React from 'react';
 import { expect } from 'chai';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import i18n from '../../i18n';
-import Request from './receive';
+import { spy } from 'sinon';
+import i18n from '../../../../i18n';
+import HowItWorks from './howItWorks';
 
-describe('Render Request', () => {
+
+describe('HowItWorks', () => {
   let wrapper;
   let props;
   let store;
 
   beforeEach(() => {
-    const history = {
-      location: {
-        pathname: 'request',
-        search: '',
-      },
-      push: () => {},
-    };
-
     props = {
-      history,
       address: '12345L',
       t: key => key,
+      nextStep: spy(),
+      prevStep: spy(),
+      settingsUpdated: spy(),
+      isRequestHowItWorksDisable: false,
+      status: 'foward',
     };
 
     store = configureMockStore([thunk])({
@@ -38,7 +36,7 @@ describe('Render Request', () => {
       },
     });
 
-    wrapper = mount(<Request {...props}/>, {
+    wrapper = shallow(<HowItWorks {...props}/>, {
       context: { store, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,
@@ -47,24 +45,28 @@ describe('Render Request', () => {
     });
   });
 
-  it('render Request component', () => {
+  it('render HowItWorks component', () => {
     expect(wrapper.exists()).to.equal(true);
   });
 
-  it('render Request component without address', () => {
-    props.address = undefined;
-    wrapper = mount(<Request {...props}/>, {
-      context: { store, i18n },
-      childContextTypes: {
-        store: PropTypes.object.isRequired,
-        i18n: PropTypes.object.isRequired,
-      },
-    });
-    expect(wrapper.exists()).to.equal(true);
-  });
-
-  it('go to transaction page on click back button', () => {
-    wrapper.find('Button').at(0).simulate('click');
+  it('continue to next component after click on X icon', () => {
+    wrapper.find('.okay-button').simulate('click');
     wrapper.update();
+    expect(props.nextStep).to.have.been.calledWith();
+  });
+
+  it('display message about how it works', () => {
+    props.isRequestHowItWorksDisable = true;
+    wrapper = shallow(<HowItWorks {...props}/>, {
+      context: { store, i18n },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
+    });
+
+    wrapper.find('.okay-button').simulate('click');
+    wrapper.update();
+    expect(props.nextStep).to.have.been.calledWith();
   });
 });

@@ -1,4 +1,5 @@
 import React from 'react';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Button, ActionButton } from '../toolbox/buttons/button';
 import { FontIcon } from '../fontIcon';
 import CopyToClipboard from '../copyToClipboard';
@@ -42,7 +43,7 @@ class ResultBox extends React.Component {
           }
         </div>
 
-        <footer>
+        <footer className={`${grid.row} ${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`}>
           {this.props.success &&
             this.props.recipientId && this.isNotYetFollowed(this.props.recipientId) ?
             <Button className={`add-followed-account-button ${styles.addFollowedAccountButton}`}
@@ -56,29 +57,16 @@ class ResultBox extends React.Component {
             <Button className={`add-to-bookmarks ${styles.addFollowedAccountButton}`}
               onClick={() => {
                 this.props.transactionFailedClear();
-                this.props.prevStep({
-                  success: null,
-                  account: this.props.account,
-                  recipient: this.props.recipient,
-                  amount: this.props.amount,
-                  password: { value: '' },
-                });
+                // istanbul ignore else
+                if (typeof this.props.finalCallback === 'function') {
+                  this.props.finalCallback();
+                }
+                this.props.reset();
+                this.props.history.replace(this.props.history.location.pathname);
               }}>
-              {this.props.t('Retry')}
-            </Button> : null
-          }
-          <ActionButton className={`okay-button ${styles.okButton}`}
-            onClick={() => {
-              this.props.transactionFailedClear();
-              // istanbul ignore else
-              if (typeof this.props.finalCallback === 'function') {
-                this.props.finalCallback();
-              }
-              this.props.reset();
-              this.props.history.replace(this.props.history.location.pathname);
-            }}>
-            {this.props.t('Okay')}
-          </ActionButton>
+              {this.props.t('Okay')}
+            </ActionButton>
+          </div>
           <div className='subTitle'>{this.props.subTitle}</div>
         </footer>
       </div>

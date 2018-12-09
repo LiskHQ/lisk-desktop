@@ -1,16 +1,8 @@
-import React from 'react';
+import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import QRCode from 'qrcode.react';
-import CopyToClipboard from '../copyToClipboard/index';
-import TransferTabs from './../transferTabs';
-import { Button } from './../toolbox/buttons/button';
-import { FontIcon } from '../fontIcon';
-import styles from './request.css';
 
-class Request extends React.Component {
-  render() {
-    const { t, setTabSend, account } = this.props;
-    const link = `lisk://wallet?recipient=${account.address}`;
+import { settingsUpdated } from '../../actions/settings';
+import Request from './request';
 
     return (
       <div className={`${styles.wrapper}`}>
@@ -42,5 +34,8 @@ class Request extends React.Component {
   }
 }
 
-export default translate()(Request);
+const mapDispatchToProps = {
+  settingsUpdated,
+};
 
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(Request));

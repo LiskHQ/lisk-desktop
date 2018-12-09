@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import MultiStep from '../multiStep';
-import ReceiveDescription from './receiveDescription';
-import ReceiveHowItWorks from './receiveHowItWorks';
-import ReceiveConfirmation from './receiveConfirmation';
+import Description from './steps/description/description';
+import HowItWorks from './steps/howItWorks/howItWorks';
+import Confirmation from './steps/confirmation/confirmation';
 import Box from '../box';
 import url from '../../../test/constants/urls';
 import styles from './receive.css';
 
-class Receive extends Component {
+class Request extends Component {
   constructor(props) {
     super(props);
 
@@ -22,17 +22,17 @@ class Receive extends Component {
     return (
       <Box className={styles.wrapper}>
         <MultiStep key='request'>
-          <ReceiveDescription
+          <Description
             t={this.props.t}
             address={this.props.address || ''}
             goToTransationPage={this.goToTransationPage}
           />
-          <ReceiveHowItWorks
+          <HowItWorks
             t={this.props.t}
             isRequestHowItWorksDisable={this.props.isRequestHowItWorksDisable}
             settingsUpdated={this.props.settingsUpdated}
           />
-          <ReceiveConfirmation
+          <Confirmation
             t={this.props.t}
             address={this.props.address || ''}
             goToTransationPage={this.goToTransationPage}
@@ -43,4 +43,4 @@ class Receive extends Component {
   }
 }
 
-export default Receive;
+export default Request;
