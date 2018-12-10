@@ -1,3 +1,4 @@
+// TODO: delete file after coverage is fulfilled
 import { step } from 'mocha-steps';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
