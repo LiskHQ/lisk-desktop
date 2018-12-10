@@ -45,8 +45,8 @@ class TitleInputForList extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  updateAccount: data => dispatch(followedAccountUpdated(data)),
-});
+const mapDispatchToProps = {
+  updateAccount: followedAccountUpdated,
+};
 
 export default connect(null, mapDispatchToProps)(translate()(TitleInputForList));

@@ -68,8 +68,8 @@ const mapStateToProps = state => ({
   peers: state.peers,
 });
 
-const mapDispatchToProps = dispatch => ({
-  loadTransaction: data => dispatch(loadTransaction(data)),
-});
+const mapDispatchToProps = {
+  loadTransaction,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(SingleTransaction));

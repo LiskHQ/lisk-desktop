@@ -96,8 +96,8 @@ const mapStateToProps = state => ({
   accounts: state.followedAccounts.accounts,
 });
 
-const mapDispatchToProps = dispatch => ({
-  removeAccount: data => dispatch(followedAccountRemoved(data)),
-});
+const mapDispatchToProps = {
+  removeAccount: followedAccountRemoved,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(ViewAccounts));
