@@ -18,16 +18,8 @@ class Setting extends React.Component {
   constructor() {
     super();
     this.state = {
-      activeSlide: 0,
       currencies: settingsConst.currencies,
     };
-  }
-
-  changeSlide(i) {
-    this.reactSwipe.slide(i);
-    this.setState({
-      activeSlide: i,
-    });
   }
 
   // changeLanguage(e) {//eslint-disable-line
