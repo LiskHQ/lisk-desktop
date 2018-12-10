@@ -6,9 +6,10 @@
   "bugs": "https://github.com/LiskHQ/lisk-hub/issues",
   "main": "main.js",
   "scripts": {
-    "postinstall": "npm-run-all electron-rebuild check-node-version",
+    "postinstall": "npm-run-all electron-rebuild check-node-version install-electron-dependencies",
     "electron-rebuild": "electron-rebuild --force",
     "check-node-version": "node ./config/checkNodeVersion.js",
+    "install-electron-dependencies": "npm --prefix ./app install ./app",
     "build": "npm-run-all clean-build copy-files build-prod build-electron",
     "build:testnet": "npm run build:testnet:pre",
     "build:testnet:pre": "cpx \"./app/build/**\" ./app/build-testnet && npm run build:testnet:post",
