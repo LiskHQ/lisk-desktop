@@ -7,6 +7,7 @@ import ConfirmRequest from './confirmRequest';
 describe('Confirm Request', () => {
   let wrapper;
   let props;
+  const setup = params => shallow(<ConfirmRequest {...params} />);
 
   beforeEach(() => {
     props = {
@@ -18,7 +19,7 @@ describe('Confirm Request', () => {
       finalCallback: spy(),
     };
 
-    wrapper = shallow(<ConfirmRequest {...props} />);
+    wrapper = setup(props);
   });
 
   it('lets you go to prior step', () => {
@@ -27,7 +28,7 @@ describe('Confirm Request', () => {
   });
 
   it('lets you finish request', () => {
-    wrapper.find('.finish-button').simulate('click');
+    wrapper.find('.okay-button').simulate('click');
     expect(props.finalCallback).to.have.been.calledWith();
   });
 
@@ -35,5 +36,12 @@ describe('Confirm Request', () => {
     expect(wrapper.find('.qr-code').prop('className')).to.contain('minimized');
     wrapper.find('.qr-code').simulate('click');
     expect(wrapper.find('.qr-code').prop('className')).to.contain('magnified');
+  });
+
+  it('render confirmRequest component with reference props empty and link not have reference', () => {
+    props.reference = '';
+    const link = `lisk://wallet?recipient=${props.address}&amount=${props.amount}`;
+    wrapper = setup(props);
+    expect(wrapper.find('.copy').props().value).to.be.equal(link);
   });
 });

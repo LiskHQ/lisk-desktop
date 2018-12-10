@@ -7,6 +7,24 @@
   padding: 0 20px;
 }
 
+.standard {
+  margin-bottom: 22px;
+
+  & > div > div {
+    & > label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-primary-standard);
+    }
+
+    & > input {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-grayscale-dark);
+    }
+  }
+}
+
 .label {
   margin-top: 25px;
 }
@@ -70,6 +88,7 @@
 .scale {
   width: 110%;
   margin-left: -15px;
+  margin-bottom: 22px;
 }
 
 .bookmarkInput {

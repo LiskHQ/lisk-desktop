@@ -12,6 +12,7 @@ import followedAccountsReducer from '../../../store/reducers/followedAccounts';
 import peersReducer from '../../../store/reducers/peers';
 import accountReducer from '../../../store/reducers/account';
 import transactionsReducer from '../../../store/reducers/transactions';
+import transactionReducer from '../../../store/reducers/transaction';
 import searchReducer from '../../../store/reducers/search';
 import loadingReducer from '../../../store/reducers/loading';
 import filtersReducer from '../../../store/reducers/filters';
@@ -38,6 +39,7 @@ describe('WalletTransactions Component', () => {
     peers: peersReducer,
     account: accountReducer,
     transactions: transactionsReducer,
+    transaction: transactionReducer,
     search: searchReducer,
     loading: loadingReducer,
     filters: filtersReducer,
@@ -104,5 +106,11 @@ describe('WalletTransactions Component', () => {
     wrapper.update();
     expect(wrapper.find('.votes-value').first()).to.have.text(`Votes of this account (${1})`);
     expect(wrapper.find('.voters-value').first()).to.have.text(`Who voted for this delegate (${0})`);
+  });
+
+  it('click on row transaction', () => {
+    wrapper.find('.transactions-row').simulate('click');
+    wrapper.update();
+    expect(wrapper.find('TransactionDetailViewRow').at(0).exists()).to.be.equal(true);
   });
 });

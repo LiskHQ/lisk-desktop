@@ -56,7 +56,7 @@ describe('ReceiveDescription', () => {
   });
 
   it('callde the next function', () => {
-    wrapper.find('.next').at(0).simulate('click');
+    wrapper.find('.specify-request').at(0).simulate('click');
     wrapper.update();
     expect(props.nextStep).to.have.been.calledWith();
   });

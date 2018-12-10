@@ -30,7 +30,7 @@
     height: var(--main-box-height);
 
     & header {
-      line-height: var(--header-line-height);
+      padding-top: 20px;
 
       & .accountTitle {
         color: var(--color-grayscale-medium);
@@ -41,6 +41,7 @@
       }
 
       & .title {
+        margin: 26px 0;
         float: left;
       }
 
@@ -49,7 +50,6 @@
       }
 
       & h2 {
-        margin-bottom: 0;
         font-weight: var(--font-weight-semi-bold);
       }
 
@@ -71,6 +71,36 @@
       & .balanceUnit {
         font-weight: var(--font-weight-semi-bold);
       }
+
+      & .headerButtons {
+        float: right;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: calc(100% / 2 - 30%);
+        min-width: 243px;
+        margin-top: 20px;
+      }
+
+      & .headerButtons > a {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--color-primary-standard);
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      & > div > a:first-child {
+        margin-right: 15px;
+      }
+
+      & > div > a:last-child {
+        & button {
+          font-size: 16px;
+        }
+      }
     }
   }
 }
@@ -91,6 +121,7 @@
   line-height: var(--list-line-height);
   list-style: none;
   padding-left: 0px;
+  margin-bottom: 37px;
 
   & .item {
     display: inline-block;
@@ -143,28 +174,3 @@
   }
 }
 
-@media (--small-viewport) {
-  .hiddenXs {
-    display: none;
-  }
-}
-
-@media (--xSmall-viewport) {
-  .transactions {
-    & .activity {
-      & header {
-        & .account {
-          display: none;
-        }
-      }
-    }
-  }
-
-  .list {
-    & .item {
-      &:not(:last-of-type) {
-        margin-right: 24px;
-      }
-    }
-  }
-}
