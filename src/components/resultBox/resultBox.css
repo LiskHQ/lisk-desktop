@@ -56,14 +56,17 @@
     bottom: 58px;
 
     & > div > button {
-      width: 160px !important;
-      min-width: 160px !important;
       margin: 0;
     }
 
     & .okButton {
-      width: 160px !important;
-      min-width: 160px !important;
+      width: 160px;
+      min-width: 160px;
+    }
+
+    & .addFollowedAccountButton {
+      width: 160px;
+      min-width: 160px;
     }
   }
 }
