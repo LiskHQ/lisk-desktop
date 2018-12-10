@@ -109,6 +109,7 @@ describe('Delegates', () => {
    * @expect checkbox to be checked after voting back
    * @expect balance decreases as tx is confirmed
    */
+  /* eslint-disable max-statements */
   it('Unvote and Vote + Header balance is affected', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
@@ -121,6 +122,7 @@ describe('Delegates', () => {
     cy.get('@dg').find(ss.voteCheckbox).click();
     cy.get(ss.selectionVotingNumber).should('have.text', '1');
     cy.get(ss.nextBtn).click();
+    cy.get(ss.delegateRow).should('have.length', 1);
     cy.get(ss.confirmBtn).click();
     cy.get(ss.voteResultHeader).contains('Votes submitted');
     cy.get(ss.okayBtn).click();
@@ -138,6 +140,7 @@ describe('Delegates', () => {
     cy.get('@dg').find(ss.voteCheckbox).click();
     cy.get(ss.selectionVotingNumber).should('have.text', '1');
     cy.get(ss.nextBtn).click();
+    cy.get(ss.delegateRow).should('have.length', 1);
     cy.get(ss.confirmBtn).click();
     cy.get(ss.voteResultHeader).contains('Votes submitted');
     cy.get(ss.okayBtn).click();
@@ -189,11 +192,28 @@ describe('Delegates', () => {
     cy.get(ss.alreadyVotedPreselection).contains('genesis_14, genesis_16');
   });
 
+  /**
+   * Delegate list filtering
+   * @expect on Voted tab only voted delegates are shown
+   * @expect on Not voted tab only not voted delegates are shown
+   * @expect on All tab all delegates are shown
+   */
   it('Filter voted/not voted delegates', () => {
-
-  });
-
-  it('All selected delegagtes are listed in confirmation step', () => {
-
+    cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
+    cy.visit(urls.delegates);
+    // Filter Voted
+    cy.get(ss.filterVoted).click();
+    cy.get(ss.delegateRow).eq(0).find(ss.delegateName).contains('genesis_17');
+    cy.get(ss.delegateRow).should('have.length', 1);
+    // Filter Not voted
+    cy.get(ss.filterNotVoted).click();
+    cy.get(ss.searchDelegateInput).click().type('genesis_17');
+    cy.get(ss.delegateRow).should('not.exist');
+    cy.get(ss.searchDelegateInput).click().clear();
+    // Filter All
+    cy.get(ss.filterAll).click();
+    cy.get(ss.delegateRow).should('have.length', 100);
+    cy.get(ss.searchDelegateInput).click().type('genesis_17');
+    cy.get(ss.delegateRow).should('have.length', 1);
   });
 });
