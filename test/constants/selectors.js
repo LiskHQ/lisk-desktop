@@ -17,6 +17,8 @@ const ss = {
   qrCode: '.qr-code',
   emailLink: '.email-link',
   confirmRequestBlock: '.confirm-request-step',
+  requestLink: '.request-link',
+  backButton: '.back',
   accountInfoTab: '.account-info',
   delegateStatisticsTab: '.delegate-statistics ',
   votedAddress: '.votes .voter-address',
@@ -141,6 +143,8 @@ const ss = {
   takeTutorial: '.help-onboarding',
   tutorialTooltip: '.joyride-tooltip__header',
   priceChart: '.chartjs-size-monitor',
+  transactionRequestButton: '.tx-receive-bt',
+  transactionSendButton: '.tx-send-bt',
 };
 
 export default ss;

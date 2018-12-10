@@ -15,11 +15,11 @@ module.exports = {
     'src/components/newsFeed/index.test.js', // This component doesn't meet the setted tresholds for mocha but in jest
     'src/components/passphraseCreation/index.test.js',
     'src/components/register/register.test.js',
-    'src/components/request/specifyRequest.test.js',
     'src/components/transactions/votedDelegates.test.js',
     'src/components/voteUrlProcessor/index.test.js',
     'src/store/middlewares/login.test.js',
     'src/store/reducers/liskService.test.js',
+    '<rootDir>/test/integration/wallet.test.js',
   ],
   verbose: true,
   cache: false,
@@ -39,11 +39,12 @@ module.exports = {
     '/node_modules/',
     'app/src/ipc.js',
     'app/src/ledger.js',
-    'src/components/receive/index.js',
     'src/actions/liskService.js',
+    'src/actions/peers.js', // FollowUp #1515
     'src/actions/peers.js', // FollowUp #1515
     'src/actions/transactions.js',
     'src/components/account/stories.js',
+    'src/components/accountInitialization/index.js',
     'src/components/backgroundMaker/index.js',
     'src/components/dashboard/currencyGraph.js', // This should be unskipped in issue #1499
     'src/components/dialog/stories.js',
@@ -57,8 +58,11 @@ module.exports = {
     'src/components/passphrase/create/create.js',
     'src/components/passphraseCreation/index.js',
     'src/components/passphraseSteps/index.js', // FollowUp #1515
+    'src/components/passphraseSteps/index.js', // FollowUp #1515
+    'src/components/request/index.js',
     'src/components/register/register.js',
-    'src/components/request/specifyRequest.js',
+    'src/components/resultBox/index.js',
+    'src/components/resultBox/resultBox.js', // FollowUp #1515
     'src/components/resultBox/resultBox.js', // FollowUp #1515
     'src/components/searchBar/index.js', // Passing in mocha but not in Jest
     'src/components/send/steps/confirm/confirm.js', // FollowUp #1515
@@ -66,8 +70,10 @@ module.exports = {
     'src/components/spinner/stories.js',
     'src/components/toaster/stories.js',
     'src/components/toolbox/transitionWrapper/index.js',
+    'src/components/transactionDashboard/index.js',
     'src/components/transactions/transactions.js',
     'src/components/transactions/votedDelegates.js',
+    'src/components/transferTabs/index.js',
     'src/components/voteUrlProcessor/index.js',
     'src/constants/',
     'src/i18n-scanner.js',
@@ -82,11 +88,6 @@ module.exports = {
     'src/utils/proxyLogin.js',
     'src/utils/rawTransactionWrapper.js',
     'src/utils/to.js',
-    'src/components/resultBox/resultBox.js', // FollowUp #1515
-    'src/components/passphraseSteps/index.js', // FollowUp #1515
-    'src/actions/peers.js', // FollowUp #1515
-    'src/components/send/steps/confirm/confirm.js', // FollowUp #1515
-    'src/components/sendNew/',
   ],
   coverageThreshold: {
     global: {

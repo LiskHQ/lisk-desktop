@@ -83,7 +83,7 @@ class SendTo extends React.Component {
           ${grid['middle-sm']}
           ${styles.sendButton}
         `}>
-          <Link to={`${routes.wallet.path}?recipient=${address}`}>
+          <Link to={`${routes.send.path}?recipient=${address}`}>
             <TertiaryButton className={`${styles.button} send-to-address`} >
               <FontIcon value={'send-token'}/> {t('Send to this address')}
             </TertiaryButton>

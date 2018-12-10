@@ -38,6 +38,7 @@
     & > canvas {
       width: 100% !important;
       height: 100% !important;
+      min-height: 294px !important;
     }
 
     & > span {
@@ -53,12 +54,35 @@
     }
   }
 
+  & .qrAndForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    & > div {
+      display: flex;
+      width: 100%;
+    }
+  }
+
+  & .copyToClipboard {
+    font-size: 14px;
+    color: var(--color-grayscale-medium);
+    font-weight: var(--font-weight-bold);
+    font-family: var(--content-font);
+    word-break: break-all;
+    height: 50px;
+    text-align: left;
+    margin-top: 25px;
+  }
+
   & .transaction {
     font-family: var(--content-font);
     font-size: 14px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    height: 294px;
 
     /* Description Text */
     & > p {
@@ -114,15 +138,28 @@
     font-family: var(--content-font);
     color: var(--color-grayscale-dark);
   }
-}
 
-.closeIcon {
-  position: absolute;
-  top: 48px;
-  right: 88px;
-  cursor: pointer;
+  & > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  & > footer {
+    width: 100%;
+
+    & > button {
+      width: 160px;
+    }
+  }
 }
 
 .isEnable {
   visibility: visible;
+}
+
+@media (--medium-viewport) {
+  .copyToClipboard {
+    margin-top: 15px;
+  }
 }

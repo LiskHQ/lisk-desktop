@@ -1,10 +1,10 @@
 import React from 'react';
 
-import AccountVisual from '../accountVisual';
-import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
-import ReferenceInput from '../referenceInput';
-import Converter from '../converter';
-import styles from './receiveForm.css';
+import AccountVisual from '../../../accountVisual';
+import ToolBoxInput from '../../../toolbox/inputs/toolBoxInput';
+import ReferenceInput from '../../../referenceInput';
+import Converter from '../../../converter';
+import styles from './requestForm.css';
 
 const RequestForm = ({
   address,
@@ -34,7 +34,7 @@ const RequestForm = ({
     <ReferenceInput
       className='reference'
       theme={styles}
-      label={t('Message (optional)')}
+      label={t('Reference (optional)')}
       reference={reference}
       handleChange={onReferenceChange}
     />

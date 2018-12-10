@@ -15,6 +15,7 @@
   & header {
     & h2 {
       font-weight: var(--font-weight-semi-bold);
+      text-align: left;
     }
   }
 
@@ -37,6 +38,11 @@
     text-transform: none;
     min-width: 0;
     width: 100%;
+  }
+
+  & > footer {
+    padding: 0;
+    margin-bottom: 20px;
   }
 }
 

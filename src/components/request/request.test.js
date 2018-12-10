@@ -5,11 +5,12 @@ import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import i18n from '../../i18n';
-import Request from './receive';
+import Request from './request';
 
 describe('Render Request', () => {
   let wrapper;
   let props;
+  let store;
 
   beforeEach(() => {
     const history = {
@@ -26,7 +27,7 @@ describe('Render Request', () => {
       t: key => key,
     };
 
-    const store = configureMockStore([thunk])({
+    store = configureMockStore([thunk])({
       settings: { currency: 'USD' },
       settingsUpdated: () => {},
       liskService: {
@@ -47,6 +48,18 @@ describe('Render Request', () => {
   });
 
   it('render Request component', () => {
+    expect(wrapper.exists()).to.equal(true);
+  });
+
+  it('render Request component without address', () => {
+    props.address = undefined;
+    wrapper = mount(<Request {...props}/>, {
+      context: { store, i18n },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
+    });
     expect(wrapper.exists()).to.equal(true);
   });
 
