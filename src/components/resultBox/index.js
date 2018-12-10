@@ -9,11 +9,11 @@ const mapStateToProps = state => ({
   followedAccounts: state.followedAccounts ? state.followedAccounts.accounts : [],
 });
 
-const mapDispatchToProps = dispatch => ({
-  transactionFailedClear: () => dispatch({
+const mapDispatchToProps = {
+  transactionFailedClear: () => ({
     type: actionTypes.transactionFailedClear,
   }),
-});
+};
 
 export default withRouter(connect(
   mapStateToProps,
