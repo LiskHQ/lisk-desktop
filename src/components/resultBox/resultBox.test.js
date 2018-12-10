@@ -158,7 +158,7 @@ describe('Result Box', () => {
     };
     wrapper = mount(<ResultBox {...props} />, options);
 
-    wrapper.find('.add-follwed-account-button').at(0).simulate('click');
+    wrapper.find('.add-to-bookmarks').at(0).simulate('click');
     expect(props.nextStep).to.have.been.calledWith({ address: 455 });
   });
 });
