@@ -38,6 +38,7 @@ export default {
   request: {
     path: '/wallet/request',
     component: Request,
+    isPrivate: true,
   },
   send: {
     path: '/wallet/send',
