@@ -44,7 +44,7 @@ const win = {
     win.browser.on('focus', () => win.browser.webContents.send('focus'));
 
     if (!process.isPlatform('darwin')) {
-      win.send({ event: 'openUrl', value: process.argv[1] || '/' });
+      win.send({ event: 'openUrl', value: process.getArgv()[1] || '/' });
     }
 
     Menu.setApplicationMenu(menu.build(electron, checkForUpdates));
