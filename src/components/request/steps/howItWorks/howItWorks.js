@@ -1,9 +1,9 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { ActionButton } from './../toolbox/buttons/button';
-import styles from './receive.css';
+import { ActionButton } from '../../../toolbox/buttons/button';
+import styles from '../../receive.css';
 
-class ReceiveHowItWorks extends React.Component {
+class HowItWorks extends React.Component {
   componentDidMount() {
     if (this.props.isRequestHowItWorksDisable && this.props.status === 'foward') this.props.nextStep({ status: 'foward' });
   }
@@ -35,4 +35,4 @@ class ReceiveHowItWorks extends React.Component {
   }
 }
 
-export default ReceiveHowItWorks;
+export default HowItWorks;

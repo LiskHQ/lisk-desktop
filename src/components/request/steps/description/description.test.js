@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { spy } from 'sinon';
-import i18n from '../../i18n';
-import ReceiveDescription from './receiveDescription';
+import i18n from '../../../../i18n';
+import Description from './description';
 
 
-describe('ReceiveDescription', () => {
+describe('Description', () => {
   let wrapper;
   let props;
 
@@ -32,7 +32,7 @@ describe('ReceiveDescription', () => {
       },
     });
 
-    wrapper = mount(<ReceiveDescription {...props}/>, {
+    wrapper = mount(<Description {...props}/>, {
       context: { store, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,
@@ -41,7 +41,7 @@ describe('ReceiveDescription', () => {
     });
   });
 
-  it('render ReceiveDescription component', () => {
+  it('render Description component', () => {
     expect(wrapper.exists()).to.equal(true);
   });
 
