@@ -17,10 +17,15 @@
 .resultBox {
   text-align: center;
   justify-content: space-evenly;
+  align-items: center;
   flex-flow: column;
   display: flex;
   width: 100%;
   height: 100%;
+
+  & > div {
+    margin-bottom: 100px;
+  }
 
   & .header {
     position: relative;
@@ -28,17 +33,6 @@
 
   & header > h2 {
     font-size: 28px;
-  }
-
-  & footer {
-    padding: 0px;
-    display: flex;
-    justify-content: center;
-
-    & > button {
-      width: calc(100% / 2 - 20px);
-      margin: 0;
-    }
   }
 
   & p {
@@ -54,7 +48,25 @@
     font-weight: 600;
   }
 
-  & .okButton {
-    margin-left: 20px;
+  & footer {
+    padding: 0px;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 58px;
+
+    & > div > button {
+      margin: 0;
+    }
+
+    & .okButton {
+      width: 160px;
+      min-width: 160px;
+    }
+
+    & .addFollowedAccountButton {
+      width: 160px;
+      min-width: 160px;
+    }
   }
 }
