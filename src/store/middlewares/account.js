@@ -21,13 +21,17 @@ import piwikOptions from '../../constants/piwik';
 
 const { lockDuration } = accountConfig;
 
-const updateAccountData = (store, action) => {
-  const { account, transactions } = store.getState();
-
-  Piwik.setUserId(account.address);
+const setPiwikAfterLogin = (address) => {
+  Piwik.setUserId(address);
   Piwik.push([piwikOptions.ENABLE_HEART_BEAT_TIMER, 30]);
   Piwik.push([piwikOptions.TRACK_PAGE_VIEW]);
   Piwik.push([piwikOptions.TRACK_ALL_CONTENT_IMPRESSIONS]);
+};
+
+const updateAccountData = (store, action) => {
+  const { account, transactions } = store.getState();
+
+  setPiwikAfterLogin(account.address);
 
   store.dispatch(accountDataUpdated({
     windowIsFocused: action.data.windowIsFocused,
