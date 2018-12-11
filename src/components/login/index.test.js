@@ -67,6 +67,5 @@ options,
     expect(props.peers).to.be.equal(peers);
     expect(props.account).to.be.equal(account);
     expect(typeof props.liskAPIClientSet).to.be.equal('function');
-    expect(typeof props.setActiveDialog).to.be.equal('function');
   });
 });
