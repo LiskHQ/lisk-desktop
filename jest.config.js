@@ -87,8 +87,6 @@ module.exports = {
     'src/utils/applyDeviceClass.js',
     'src/utils/ledger.js',
     'src/utils/proxyLogin.js',
-    'src/utils/rawTransactionWrapper.js',
-    'src/utils/to.js',
   ],
   coverageThreshold: {
     global: {
