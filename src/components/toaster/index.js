@@ -7,9 +7,9 @@ export const mapStateToProps = state => ({
   toasts: state.toaster || [],
 });
 
-export const mapDispatchToProps = {
-  hideToast: toastHidden,
-};
+export const mapDispatchToProps = dispatch => ({
+  hideToast: data => dispatch(toastHidden(data)),
+});
 
 export default connect(
   mapStateToProps,
