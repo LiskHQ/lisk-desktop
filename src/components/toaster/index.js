@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import Toaster from './toaster';
 import { toastHidden } from '../../actions/toaster';

@@ -12,9 +12,9 @@ const mapStateToProps = state => ({
   account: state.account,
 });
 
-const mapDispatchToProps = dispatch => ({
-  registerSecondPassphrase: data => dispatch(secondPassphraseRegistered(data)),
-});
+const mapDispatchToProps = {
+  registerSecondPassphrase: secondPassphraseRegistered,
+};
 
 export default withRouter(connect(
   mapStateToProps,

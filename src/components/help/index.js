@@ -8,8 +8,8 @@ const mapStateToProps = state => ({
   account: state.account,
 });
 
-const mapDispatchToProps = dispatch => ({
-  settingsUpdated: data => dispatch(settingsUpdated(data)),
-});
+const mapDispatchToProps = {
+  settingsUpdated,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(Help));

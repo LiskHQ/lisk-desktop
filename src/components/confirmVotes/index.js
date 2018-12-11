@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 
@@ -10,8 +11,8 @@ const mapStateToProps = state => ({
   account: state.account,
 });
 
-const mapDispatchToProps = dispatch => ({
-  votePlaced: data => dispatch(votePlaced(data)),
-});
+const mapDispatchToProps = {
+  votePlaced,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(ConfirmVotes));

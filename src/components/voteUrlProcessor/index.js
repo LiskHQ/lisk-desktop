@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
@@ -25,12 +26,12 @@ const mapStateToProps = state => ({
   account: state.account,
 });
 
-const mapDispatchToProps = dispatch => ({
-  urlVotesFound: data => dispatch(urlVotesFound(data)),
-  settingsUpdated: data => dispatch(settingsUpdated(data)),
-  clearVoteLookupStatus: () => dispatch(voteLookupStatusCleared()),
-  clearVotes: () => dispatch(clearVotes()),
-});
+const mapDispatchToProps = {
+  urlVotesFound,
+  settingsUpdated,
+  clearVoteLookupStatus: voteLookupStatusCleared,
+  clearVotes,
+};
 
 export default withRouter(connect(
   mapStateToProps,
