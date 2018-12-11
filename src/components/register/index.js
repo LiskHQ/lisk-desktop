@@ -5,9 +5,9 @@ import { liskAPIClientSet } from '../../actions/peers';
 import Register from './register';
 import getNetwork from '../../utils/getNetwork';
 
-const mapDispatchToProps = {
-  liskAPIClientSet,
-};
+const mapDispatchToProps = dispatch => ({
+  liskAPIClientSet: data => dispatch(liskAPIClientSet(data)),
+});
 
 const mapStateToProps = state => ({
   account: state.account,

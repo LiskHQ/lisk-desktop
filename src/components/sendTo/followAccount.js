@@ -70,8 +70,8 @@ class FollowAccount extends React.Component {
   }
 }
 
-const mapDispatchToProps = {
-  addAccount: followedAccountAdded,
-};
+const mapDispatchToProps = dispatch => ({
+  addAccount: data => dispatch(followedAccountAdded(data)),
+});
 
 export default connect(null, mapDispatchToProps)(translate()(FollowAccount));
