@@ -3,13 +3,9 @@ import { Redirect, Route } from 'react-router-dom';
 import ErrorBoundary from '../errorBoundary';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import Piwik from '../../utils/piwik';
-import piwikConfig from '../../constants/piwik';
 
-const piwik = new Piwik({
-  url: piwikConfig.URL,
-  siteId: piwikConfig.SITE_ID,
-  trackErrors: true,
-});
+const piwik = Piwik.initPiwik();
+Piwik.setPiwikParameters();
 
 const CustomRoute = ({
   path, component, isPrivate, exact,
@@ -19,7 +15,6 @@ const CustomRoute = ({
   const fullPath = pathPrefix + path + pathSuffix;
 
   piwik.connectToHistory(rest.history);
-  Piwik.push([piwikConfig.TRACK_PAGE_VIEW]);
 
   return ((isPrivate && isAuthenticated) || !isPrivate ?
     <main className={isPrivate ? offlineStyle.disableWhenOffline : null}>

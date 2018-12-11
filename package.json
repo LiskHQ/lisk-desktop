@@ -86,6 +86,7 @@
     "react-dom": "=16.2.1",
     "react-i18next": "=6.0.6",
     "react-joyride": "1.11.4",
+    "react-piwik": "1.6.0",
     "react-redux": "5.0.6",
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
