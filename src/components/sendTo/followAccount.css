@@ -43,6 +43,7 @@
   & > footer {
     display: flex;
     justify-content: space-evenly;
+    margin-bottom: 8px;
 
     & > button {
       width: calc(100% / 2 - 20px) !important;

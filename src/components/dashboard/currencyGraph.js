@@ -211,8 +211,8 @@ const mapStateToProps = state => ({
   liskService: state.liskService,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getCurrencyGraphData: data => dispatch(getCurrencyGraphData(data)),
-});
+const mapDispatchToProps = {
+  getCurrencyGraphData,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(CurrencyGraph));

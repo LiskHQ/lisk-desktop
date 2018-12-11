@@ -2,12 +2,12 @@ import React from 'react';
 import QRCode from 'qrcode.react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import { FontIcon } from '../fontIcon';
-import { Button, ActionButton } from './../toolbox/buttons/button';
-import CopyToClipboard from '../copyToClipboard/index';
-import styles from './receive.css';
+import { FontIcon } from '../../../fontIcon';
+import { Button, ActionButton } from '../../../toolbox/buttons/button';
+import CopyToClipboard from '../../../copyToClipboard/index';
+import styles from '../../receive.css';
 
-const ReceiveDescription = (props) => {
+const Description = (props) => {
   const link = `lisk://wallet/send?recipient=${props.address}`;
   const text = `mailto:?subject=Requesting LSK to ${props.address}&body=Hey there,
     here is a link you can use to send me LSK via your wallet: ${encodeURIComponent(link)}`;
@@ -32,7 +32,9 @@ const ReceiveDescription = (props) => {
           <p>
             {props.t('This is your Lisk ID shown as a QR code. You can scan it with our Lisk Mobileapp available on Google Play & the AppStore or any QR code reader.')}
           </p>
-          <a href={text}>
+          <a
+            href={text}
+            className={'email-link'} >
             {props.t('Send request via E-mail')}
             <FontIcon value='external-link'/>
           </a>
@@ -50,7 +52,7 @@ const ReceiveDescription = (props) => {
 
         <div className={`${grid['col-xs-5']} ${grid['col-sm-5']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
           <ActionButton
-            className={'next'}
+            className={'specify-request'}
             onClick={() => props.nextStep({ address: props.address, status: 'foward' })}
             >
             {props.t('Request specific amount')}
@@ -61,4 +63,4 @@ const ReceiveDescription = (props) => {
   );
 };
 
-export default ReceiveDescription;
+export default Description;

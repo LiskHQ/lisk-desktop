@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { voteToggled, votesFetched, delegatesFetched, delegatesAdded } from '../../actions/voting';
@@ -13,13 +14,13 @@ const mapStateToProps = state => ({
   refreshDelegates: state.voting.refresh,
 });
 
-const mapDispatchToProps = dispatch => ({
-  voteToggled: data => dispatch(voteToggled(data)),
-  votesFetched: data => dispatch(votesFetched(data)),
-  delegatesFetched: data => dispatch(delegatesFetched(data)),
-  delegatesCleared: () => dispatch(delegatesAdded({
+const mapDispatchToProps = {
+  voteToggled,
+  votesFetched,
+  delegatesFetched,
+  delegatesCleared: delegatesAdded({
     list: [], totalDelegates: 0, refresh: true,
-  })),
-});
+  }),
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(VotingListView));

@@ -30,13 +30,13 @@ const mapStateToProps = state => ({
   suggestions: state.search.suggestions,
 });
 /* istanbul ignore next */
-const mapDispatchToProps = dispatch => ({
-  searchSuggestions: data => dispatch(searchSuggestions(data)),
-  searchClearSuggestions: data => dispatch({
+const mapDispatchToProps = {
+  searchSuggestions,
+  searchClearSuggestions: data => ({
     data,
     type: actionTypes.searchClearSuggestions,
   }),
-});
+};
 
 export default withRouter(connect(
   mapStateToProps,
