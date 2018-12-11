@@ -16,11 +16,18 @@ import { liskAPIClientSet, liskAPIClientUpdate } from '../../actions/peers';
 import networks from '../../constants/networks';
 import settings from '../../constants/settings';
 import txFilters from '../../constants/transactionFilters';
+import Piwik from '../../utils/piwik';
+import piwikOptions from '../../constants/piwik';
 
 const { lockDuration } = accountConfig;
 
 const updateAccountData = (store, action) => {
   const { account, transactions } = store.getState();
+
+  Piwik.setUserId(account.address);
+  Piwik.push([piwikOptions.ENABLE_HEART_BEAT_TIMER, 30]);
+  Piwik.push([piwikOptions.TRACK_PAGE_VIEW]);
+  Piwik.push([piwikOptions.TRACK_ALL_CONTENT_IMPRESSIONS]);
 
   store.dispatch(accountDataUpdated({
     windowIsFocused: action.data.windowIsFocused,
@@ -162,6 +169,7 @@ const accountMiddleware = store => next => (action) => {
     case actionTypes.accountLoggedOut:
       store.dispatch(cleanTransactions());
       localStorage.removeItem('accounts');
+      Piwik.removeUserId();
       break;
     default: break;
   }
