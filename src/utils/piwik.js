@@ -3,7 +3,6 @@ import piwikOptions from '../constants/piwik';
 import localJSONStorage from './localJSONStorage';
 
 let piwik = false;
-let piwikSetAlready = false;
 
 const setPiwikParameters = () => {
   ReactPiwik.push([piwikOptions.REQUIRE_CONSENT]);
@@ -23,12 +22,11 @@ const initPiwik = () => {
   return piwik;
 };
 
-const checkIfPiwikIsEnable = () => {
-  const isPiwikSet = localJSONStorage.get('statistics', false);
+const checkIfPiwikIsEnabled = () => {
+  const trackingStatus = localJSONStorage.get('statistics', false);
 
-  if (isPiwikSet && !piwik && !piwikSetAlready) {
+  if (trackingStatus && !piwik) {
     initPiwik();
-    piwikSetAlready = true;
   }
 };
 
@@ -37,7 +35,7 @@ const disabledPiwikTracking = () => {
 };
 
 const connectPiwikWithHistory = (history) => {
-  checkIfPiwikIsEnable();
+  checkIfPiwikIsEnabled();
 
   if (piwik) {
     piwik.connectToHistory(history);
