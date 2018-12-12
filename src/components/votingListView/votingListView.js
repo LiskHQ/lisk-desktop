@@ -162,6 +162,7 @@ class VotingListView extends React.Component {
         { !this.showInfo() ?
           <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
             <VotingHeader
+              account={this.props.account}
               setActiveFilter={this.setActiveFilter.bind(this)}
               showChangeSummery={showChangeSummery}
               isDelegate={isDelegate}
