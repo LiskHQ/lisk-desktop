@@ -32,6 +32,13 @@ class Setting extends React.Component {
     settingsUpdated({ autoLog: !settings.autoLog });
   }
 
+  isShowTrackingEnable() {
+    const { location } = this.props;
+    const { pathname, search } = location;
+
+    return (pathname.includes('setting') && search.includes('?showTackingSwitch=true'));
+  }
+
   render() {
     const {
       t, settings, settingsUpdated,
@@ -104,17 +111,28 @@ class Setting extends React.Component {
               checked: settings.advancedMode,
             }}/>
         </div>
-        <div className={`${styles.item} ${styles.network}`}>
-          <label>{t('Send anonymus usage statistics')}</label>
-          <Checkbox
-            theme={styles}
-            className={`${styles.smallSlider} statistics`}
-            onChange={() => settingsUpdated({ statistics: !settings.statistics })}
-            input={{
-              value: false,
-              checked: settings.statistics,
-            }}/>
-        </div>
+
+        {
+          this.isShowTrackingEnable() && (
+            <div>
+              <div className={`${styles.item} ${styles.network}`}>
+                <label>{t('Send anonymus usage statistics')}</label>
+                <Checkbox
+                  theme={styles}
+                  className={`${styles.smallSlider} statistics`}
+                  onChange={() => settingsUpdated({ statistics: !settings.statistics })}
+                  input={{
+                    value: false,
+                    checked: settings.statistics,
+                  }}/>
+              </div>
+              <div className={`${styles.item} ${styles.description}`}>
+                {t('')}
+              </div>
+            </div>
+          )
+        }
+
         <h4>{t('Local')}</h4>
         <div className={styles.item}>
           <label>{t('Currency')}</label>

@@ -58,6 +58,10 @@ describe('Setting', () => {
     t,
     toggleMenu: sinon.spy(),
     isAuthenticated: true,
+    location: {
+      pathname: '/setting',
+      search: '?showTackingSwitch=true',
+    },
   };
 
   beforeEach(() => {
