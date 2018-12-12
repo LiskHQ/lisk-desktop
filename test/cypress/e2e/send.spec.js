@@ -12,8 +12,6 @@ const msg = {
 
 const txConfirmationTimeout = 12000;
 
-const checkWalletPageLoaded = () => cy.get(ss.recipientInput);
-
 const getRandomAddress = () => `23495548666${Math.floor((Math.random() * 8990000) + 1000000)}L`;
 const getRandomAmount = () => Math.floor((Math.random() * 10) + 1);
 const getRandomReference = () => Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
@@ -32,30 +30,15 @@ describe('Send', () => {
   });
 
   /**
-   * Wallet page can be opened by direct link
+   * Send page can be opened by direct link
    * @expect url is correct
    * @expect some specific to page element is present on it
    */
-  it(`Wallet page opens by url ${urls.wallet}`, () => {
+  it(`Send page opens by url ${urls.send}`, () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.wallet);
-    cy.url().should('contain', urls.wallet);
-    cy.get(ss.transactionSendButton).click();
-    checkWalletPageLoaded();
-  });
-
-  /**
-   * Sidebar link leads to Wallet page
-   * @expect url is correct
-   * @expect some specific to page element is present on it
-   */
-  it('Wallet page opens by sidebar button', () => {
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.dashboard);
-    cy.get(ss.sidebarMenuWalletBtn).should('have.css', 'opacity', '1').click();
-    cy.url().should('contain', urls.wallet);
-    cy.get(ss.transactionSendButton).click();
-    checkWalletPageLoaded();
+    cy.visit(urls.send);
+    cy.url().should('contain', urls.send);
+    cy.get(ss.recipientInput);
   });
 
   /**
