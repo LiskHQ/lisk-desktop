@@ -107,11 +107,16 @@ class Form extends React.Component {
     }, 200);
   }
 
+  getTitle() {
+    return this.props.account.hwInfo ?
+      <h2>{this.props.t('Confirm transaction on Ledger Nano S')}</h2> : <h2>{this.props.t('Send LSK')}</h2>;
+  }
+
   render() {
     return (
       <div className={`${styles.sendWrapper}`}>
         <header className={styles.headerWrapper}>
-          <h2>{this.props.t('Send LSK')}</h2>
+          {this.getTitle()}
         </header>
         <form className={styles.form}>
           { this.props.followedAccounts.length > 0 && this.state.openFollowedAccountSuggestion ?
