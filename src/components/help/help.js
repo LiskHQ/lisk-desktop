@@ -43,7 +43,7 @@ class Help extends React.Component {
             </h2>
             <div className={styles.articleContainer}>
               <div>
-                <p>{this.props.t('Search for answers in our extensive FAQ')}
+                <p>{this.props.t('Search for answers in our extensive ')}
                   {fAQIcon()}
                   {this.props.t(' or get in touch in via chat ')}
                   {chatIcon()}.
