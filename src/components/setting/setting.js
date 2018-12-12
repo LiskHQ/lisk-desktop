@@ -56,7 +56,8 @@ class Setting extends React.Component {
       hasSecondPassphrase,
     } = this.props;
 
-    const allowAuthClass = !this.props.isAuthenticated ? `${styles.disable} disabled` : '';
+    const allowAuthClass = !this.props.isAuthenticated || this.props.account.hwInfo ?
+      `${styles.disable} disabled` : '';
     const activeCurrency = settings.currency || settingsConst.currencies[0];
 
     return (<Box className={styles.wrapper}>
