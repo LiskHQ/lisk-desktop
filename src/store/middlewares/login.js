@@ -6,13 +6,12 @@ import { errorToastDisplayed } from '../../actions/toaster';
 import { dialogDisplayed, dialogHidden } from '../../actions/dialog';
 import Alert from '../../components/dialog/alert';
 
-const loginMiddleware = (store) => {
+const loginMiddleware = store => next => (action) => { // eslint-disable-line max-statements
+  const state = store.getState();
+  const { account } = state;
   const { ipc } = window;
 
   if (ipc) { // On browser-mode is undefined
-    const state = store.getState();
-    const { account } = state;
-
     ipc.on('ledgerConnected', () => {
       store.dispatch({
         type: actionTypes.settingsUpdated,
@@ -20,6 +19,7 @@ const loginMiddleware = (store) => {
       });
       store.dispatch(errorToastDisplayed({ label: LEDGER_MSG.LEDGER_CONNECTED }));
     });
+
     ipc.on('ledgerDisconnected', () => {
       if (account.address) {
         store.dispatch( // eslint-disable-line
@@ -42,9 +42,7 @@ const loginMiddleware = (store) => {
       });
     });
   }
-  return next => (action) => { // eslint-disable-line max-statements
-    next(action);
-  };
+  next(action);
 };
 
 export default loginMiddleware;
