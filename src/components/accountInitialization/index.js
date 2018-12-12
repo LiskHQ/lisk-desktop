@@ -40,15 +40,15 @@ class AccountInitialization extends React.Component {
         </p>
       </div>
       <footer>
-        <div className={grid.row} >
-          <div className={grid['col-xs-4']}>
+        <div className={` ${grid.row} ${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`} >
+          <div className={`${grid['col-xs-4']} ${grid['col-sd-6']} ${grid['col-md-5']} ${grid['col-lg-4']}`}>
             <Button
               label={t('Discard')}
               onClick={this.closeInfo.bind(this)}
               className={`account-init-discard-button ${styles.button}`}
             />
           </div>
-          <div className={grid['col-xs-8']}>
+          <div className={`${grid['col-xs-4']} ${grid['col-sd-6']} ${grid['col-md-5']} ${grid['col-lg-4']}`}>
             <Button
               label={t('Next')}
               onClick={() => nextStep({ account, accountInit: true }, 2)}

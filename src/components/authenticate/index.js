@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { accountUpdated } from '../../actions/account';
@@ -11,9 +12,9 @@ const mapStateToProps = state => ({
   account: state.account,
 });
 
-const mapDispatchToProps = dispatch => ({
-  accountUpdated: data => dispatch(accountUpdated(data)),
-});
+const mapDispatchToProps = {
+  accountUpdated,
+};
 
 export default connect(
   mapStateToProps,

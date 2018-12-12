@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 
 import { settingsUpdated } from '../../actions/settings';
@@ -16,10 +17,10 @@ const mapStateToProps = state => ({
     },
 });
 
-const mapDispatchToProps = dispatch => ({
-  settingsUpdated: data => dispatch(settingsUpdated(data)),
-  getPriceTicker: () => dispatch(getPriceTicker()),
-});
+const mapDispatchToProps = {
+  settingsUpdated,
+  getPriceTicker,
+};
 
 export default connect(
   mapStateToProps,

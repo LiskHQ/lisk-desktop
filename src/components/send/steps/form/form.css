@@ -170,7 +170,7 @@ input:read-only {
   & > footer {
     width: 100%;
     padding: 0;
-    margin-bottom: 50px;
+    margin-bottom: 60px;
 
     & > button {
       width: 160px;

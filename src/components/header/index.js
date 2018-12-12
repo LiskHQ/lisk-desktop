@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
@@ -16,13 +17,14 @@ const mapStateToProps = state => ({
   showNetworkIndicator: state.settings.showNetwork,
 });
 
-const mapDispatchToProps = dispatch => ({
-  setActiveDialog: data => dispatch(dialogDisplayed(data)),
-  closeDialog: () => dispatch(dialogHidden()),
-  logOut: () => dispatch(accountLoggedOut()),
-  removePassphrase: data => dispatch(removePassphrase(data)),
-  resetTimer: () => dispatch(accountUpdated({ expireTime: Date.now() + lockDuration })),
-});
+const mapDispatchToProps = {
+  setActiveDialog: dialogDisplayed,
+  closeDialog: dialogHidden,
+  logOut: accountLoggedOut,
+  removePassphrase,
+  resetTimer: accountUpdated({ expireTime: Date.now() + lockDuration }),
+};
+
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,

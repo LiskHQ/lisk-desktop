@@ -45,7 +45,6 @@ describe('Electron Browser Window Wrapper', () => {
   let processMock;
 
   beforeEach(() => {
-    process.argv = [];
     processMock = mock(process);
   });
 
@@ -155,6 +154,7 @@ describe('Electron Browser Window Wrapper', () => {
     it('Creates the window with menu when platform is not "darwin"', () => {
       processMock.expects('isPlatform').atLeast(2).withArgs('darwin').returns(false);
       processMock.expects('isPlatform').atLeast(2).withArgs('linux').returns(true);
+      processMock.expects('getArgv').atLeast(2).withArgs().returns([]);
 
       expect(win.browser).to.equal(null);
       win.create({

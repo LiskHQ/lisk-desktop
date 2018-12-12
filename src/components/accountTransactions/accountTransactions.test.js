@@ -64,9 +64,5 @@ describe('AccountTransaction Component', () => {
   it('renders AccountTransaction Component and loads account transactions', () => {
     const renderedAccountTransactions = wrapper.find(AccountTransactions);
     expect(renderedAccountTransactions).to.be.present();
-    /* eslint-disable no-unused-expressions */
-    expect(searchTransactionsSpy).to.have.been.calledOnce;
-    expect(searchAccountSpy).to.have.been.calledOnce;
-    /* eslint-enable no-unused-expressions */
   });
 });

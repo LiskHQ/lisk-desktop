@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { spy } from 'sinon';
-import i18n from '../../i18n';
-import ReceiveHowItWorks from './receiveHowItWorks';
+import i18n from '../../../../i18n';
+import HowItWorks from './howItWorks';
 
 
-describe('ReceiveHowItWorks', () => {
+describe('HowItWorks', () => {
   let wrapper;
   let props;
   let store;
@@ -36,7 +36,7 @@ describe('ReceiveHowItWorks', () => {
       },
     });
 
-    wrapper = shallow(<ReceiveHowItWorks {...props}/>, {
+    wrapper = shallow(<HowItWorks {...props}/>, {
       context: { store, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,
@@ -45,7 +45,7 @@ describe('ReceiveHowItWorks', () => {
     });
   });
 
-  it('render ReceiveHowItWorks component', () => {
+  it('render HowItWorks component', () => {
     expect(wrapper.exists()).to.equal(true);
   });
 
@@ -57,7 +57,7 @@ describe('ReceiveHowItWorks', () => {
 
   it('display message about how it works', () => {
     props.isRequestHowItWorksDisable = true;
-    wrapper = shallow(<ReceiveHowItWorks {...props}/>, {
+    wrapper = shallow(<HowItWorks {...props}/>, {
       context: { store, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,

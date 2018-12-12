@@ -5,7 +5,6 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 // import ReactSwipe from 'react-swipe';
 import Checkbox from '../toolbox/sliderCheckbox';
 import styles from './setting.css';
-import i18n from '../../i18n';
 import accountConfig from '../../constants/account';
 import settingsConst from './../../constants/settings';
 // TODO: will be re-enabled when the functionality is updated
@@ -18,25 +17,9 @@ class Setting extends React.Component {
   constructor() {
     super();
     this.state = {
-      activeSlide: 0,
       currencies: settingsConst.currencies,
     };
   }
-
-  changeSlide(i) {
-    this.reactSwipe.slide(i);
-    this.setState({
-      activeSlide: i,
-    });
-  }
-
-  // changeLanguage(e) {//eslint-disable-line
-  //   if (e.checked) {
-  //     i18n.changeLanguage('de');
-  //   } else {
-  //     i18n.changeLanguage('en');
-  //   }
-  // }
 
   toggleAutoLog(state) {
     const {
@@ -50,12 +33,12 @@ class Setting extends React.Component {
   }
 
   render() {
-    this.language = (i18n.language === 'de');
     const {
       t, settings, settingsUpdated,
       hasSecondPassphrase,
     } = this.props;
 
+    /* istanbul ignore next */
     const allowAuthClass = !this.props.isAuthenticated ? `${styles.disable} disabled` : '';
     const activeCurrency = settings.currency || settingsConst.currencies[0];
 
@@ -135,30 +118,6 @@ class Setting extends React.Component {
             ))}
           </ul>
         </div>
-        {/* TODO: will be re-enabled when the functionality is updated
-        {/* TODO: will be re-enabled when the functionality is updated
-        <div>
-          <Checkbox
-            theme={languageSwitcherTheme}
-            className={`${styles.smallSlider} language-switcher`}
-            onChange={this.changeLanguage.bind(this)}
-            textAsIcon={true}
-            icons={{
-              unchecked: 'EN',
-              checked: 'DE',
-              goal: 'DE',
-              begin: 'EN',
-            }}
-            input={{
-              value: 'true',
-              checked: this.language,
-            }}/>
-          <article>
-            <h5>{t('Language')}</h5>
-            <p>{t('Currently we speaking english and german.')}</p>
-          </article>
-        </div>
-        */}
       </section>
     </Box>);
   }

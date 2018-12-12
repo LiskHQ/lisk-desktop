@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { setDefaults, translate } from 'react-i18next';
@@ -25,11 +26,11 @@ const mapStateToProps = state => ({
   liskAPIClient: state.peers && state.peers.liskAPIClient,
 });
 
-const mapDispatchToProps = dispatch => ({
-  liskAPIClientSet: data => dispatch(liskAPIClientSet(data)),
-  settingsUpdated: data => dispatch(settingsUpdated(data)),
-  errorToastDisplayed: data => dispatch(errorToastDisplayed(data)),
-});
+const mapDispatchToProps = {
+  liskAPIClientSet,
+  settingsUpdated,
+  errorToastDisplayed,
+};
 
 export default connect(
   mapStateToProps,
