@@ -55,8 +55,25 @@ class ResultBox extends React.Component {
               </Button>
             </div> : null
           }
-          {!this.props.success && this.props.account.hwInfo ?
-            <Button className={`add-to-bookmarks ${styles.addFollowedAccountButton}`}
+          {!this.props.success && this.props.account && this.props.account.hwInfo ?
+            <div className={`${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-5']} ${grid['col-lg-5']}`}>
+              <Button className={`add-follwed-account-button ${styles.addFollowedAccountButton}`}
+                onClick={() => {
+                  this.props.transactionFailedClear();
+                  this.props.prevStep({
+                    success: null,
+                    account: this.props.account,
+                    recipient: this.props.recipient,
+                    amount: this.props.amount,
+                    password: { value: '' },
+                  });
+                }}>
+                {this.props.t('Retry')}
+              </Button>
+            </div> : null
+          }
+          <div className={`${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-5']} ${grid['col-lg-5']}`}>
+            <ActionButton className={`okay-button ${styles.okButton}`}
               onClick={() => {
                 this.props.transactionFailedClear();
                 // istanbul ignore else

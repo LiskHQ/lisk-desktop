@@ -47,26 +47,6 @@
     font-size: 16px;
     font-weight: 600;
   }
-}
-
-.okButton {
-  margin-bottom: 20px;
-}
-
-@media (--small-viewport) {
-  .resultBox {
-    height: calc(100vh - 58px - 62px); /* stylelint-disable-line */
-  }
-
-  .icon {
-    margin-top: 40px;
-  }
-}
-
-@media (--xSmall-viewport) {
-  .okButton {
-    width: 100%;
-  }
 
   & footer {
     padding: 0px;

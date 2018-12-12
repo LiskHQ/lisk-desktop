@@ -84,11 +84,9 @@ function testActivity(open) {
      * Click on voted delegate leads to account page
      * @expect corresponding delegate name is shown on account's page
      */
-    it('See all leads to wallet activity', () => {
-      cy.visit(urls.dashboard);
-      cy.get(ss.seeAllTxsBtn).click();
-      cy.url().should('contain', `${urls.wallet}`);
-      cy.get(ss.tansactionReceiveButton);
+    it('Click on voted delegate leads to account page', () => {
+      cy.get(ss.votedAddress).eq(0).click();
+      cy.get(ss.delegateName).should('have.text', 'genesis_1');
     });
   });
 }

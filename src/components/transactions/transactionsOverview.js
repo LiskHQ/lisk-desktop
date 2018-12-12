@@ -98,8 +98,8 @@ class TransactionsOverview extends React.Component {
 
     return (
       <div className={`transactions ${styles.activity}`}>
-        <header className={`${grid.row}`}>
-          <h2 className={`${grid['col-xs-6']} ${grid['col-sd-6']} ${grid['col-md-8']} ${grid['col-lg-9']} ${styles.title}`}>
+        <header>
+          <h2 className={`${styles.title}`}>
           {this.props.t('Transaction')}
           {
             hasTitle && (<span>{this.props.t(' of')} <span className={`${styles.accountTitle} account-title`}>{accountTitle}</span></span>)
@@ -109,9 +109,10 @@ class TransactionsOverview extends React.Component {
           {
             this.props.match.url === Ulrs.wallet.path &&
             (
-              <div className={`${grid['col-xs-5']} ${grid['col-sd-5']} ${grid['col-md-4']} ${grid['col-lg-3']} ${styles.headerButtons}`}>
-                <Link to={`${Ulrs.request.path}`} className={'tx-receive-bt'}>
-                  <FontIcon>request-token</FontIcon> {this.props.t('Receive')}
+              <div className={`${styles.headerButtons}`}>
+                <Link to={`${Ulrs.request.path}`} className={'help-onboarding tx-receive-bt'}>
+                  <FontIcon>request-token</FontIcon>
+                  {this.props.t('Request')}
                 </Link>
                 <Link to={`${Ulrs.send.path}`} className={'tx-send-bt'}>
                   <ActionButton>
