@@ -89,7 +89,7 @@ class LedgerLogin extends React.Component {
     const newHardwareAccountsName = Object.assign(
       {},
       this.state.hardwareAccountsName,
-      { [account]: value },
+      { [account]: value.length < 20 ? value : value.substr(0, 20) },
     );
     this.setState({ hardwareAccountsName: newHardwareAccountsName });
   }
