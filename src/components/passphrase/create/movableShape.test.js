@@ -60,3 +60,4 @@ describe('MovableShape', () => {
     expect(wrapper.find('div').props().style.left).to.be.equal(initialLeft);
   });
 });
+

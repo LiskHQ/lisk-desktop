@@ -19,3 +19,4 @@ const loadingBarMiddleware = () => next => (action) => {
 };
 
 export default loadingBarMiddleware;
+

@@ -61,17 +61,16 @@ export const generateSeed = ({
   byte, seed, percentage, step,
 } = init(), rand = Math.random()) => {
   const available = byte.map((bit, idx) => (!bit ? idx : null)).filter(idx => (idx !== null));
-  const seedIndex = (available.length > 0)
-    ? available[Math.floor(rand * available.length)]
-    : Math.floor(rand * byte.length);
+  const seedIndex = (available.length > 0) ?
+    available[Math.floor(rand * available.length)] :
+    Math.floor(rand * byte.length);
 
   const content = leftPadd(crypto.randomBytes(1)[0].toString(16), '0', 2);
 
   return {
     seed: seed.map((item, idx) => ((idx === seedIndex) ? content : item)),
-    byte: available.length > 0 ? byte.map(
-      (item, idx) => ((idx === seedIndex) ? 1 : item),
-    ) : emptyByte(0),
+    byte: available.length > 0 ? byte.map((item, idx) =>
+      ((idx === seedIndex) ? 1 : item)) : emptyByte(0),
     percentage: (percentage + step),
     step,
   };

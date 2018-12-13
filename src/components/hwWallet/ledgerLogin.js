@@ -96,7 +96,8 @@ class LedgerLogin extends React.Component {
 
   render() {
     const loadingAnimation = (<div className={styles.cubeRow}>
-      {[1, 2, 3, 4].map(number => <div key={`cube-${number}`} className={`${styles.cube} ${styles[`cube-${number}`]}`}>
+      {[1, 2, 3, 4].map(number =>
+        <div key={`cube-${number}`} className={`${styles.cube} ${styles[`cube-${number}`]}`}>
           <img src={cubeImage} />
         </div>)}
     </div>);
@@ -104,17 +105,17 @@ class LedgerLogin extends React.Component {
     return <div>
       {this.state.isLoading ? <h1 className={styles.title}>{this.state.isLoading && this.props.t('Loading accounts')}</h1> : null}
       <div className={this.state.isLoading ? styles.loading : null}>
-      {!this.state.isLoading
-        ? <div>
+      {!this.state.isLoading ?
+          <div>
             <div className={styles.back} onClick={() => { this.props.cancelLedgerLogin(); }}>
               <FontIcon value='arrow-left'/>{this.props.t('Back')}
             </div>
             <div className={styles.title}><h2>{this.props.t('Accounts on Ledger')}</h2></div>
-            {this.state.isEditMode
-              ? <div className={styles.edit} onClick={() => this.saveAccountNames()}>
+            {this.state.isEditMode ?
+              <div className={styles.edit} onClick={() => this.saveAccountNames()}>
                 {this.props.t('Done')}
-              </div>
-              : <div className={styles.edit} onClick={() => this.turnOnEditMode()}>
+              </div> :
+              <div className={styles.edit} onClick={() => this.turnOnEditMode()}>
                 <FontIcon value='edit'/>{this.props.t('Edit')}
               </div>}
             <div className={styles.accountList}>{this.state.hwAccounts.map((account, index) => (
@@ -126,7 +127,7 @@ class LedgerLogin extends React.Component {
                     account={account}
                     changeInput={this.changeAccountNameInput.bind(this)}
                     onClickHandler={this.selectAccount.bind(this)} />
-            ))}
+                ))}
               <AddAccountCard addAccount={this.addAccount.bind(this)} t={this.props.t} />
             </div>
           </div> : loadingAnimation}

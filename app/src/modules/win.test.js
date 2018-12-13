@@ -15,24 +15,25 @@ describe('Electron Browser Window Wrapper', () => {
     screen: { getPrimaryDisplay: () => ({ workAreaSize: { width: 1400, height: 900 } }) },
     BrowserWindow: ({
       width, height, center, webPreferences,
-    }) => ({
-      width,
-      height,
-      center,
-      webPreferences,
-      loadURL: spy(),
-      on: (item, callback) => {
-        callbacks[item] = callback;
-      },
-      webContents: {
+    }) =>
+      ({
+        width,
+        height,
+        center,
+        webPreferences,
+        loadURL: spy(),
         on: (item, callback) => {
           callbacks[item] = callback;
         },
-        send: (event, value) => {
-          events.push({ event, value });
+        webContents: {
+          on: (item, callback) => {
+            callbacks[item] = callback;
+          },
+          send: (event, value) => {
+            events.push({ event, value });
+          },
         },
-      },
-    }),
+      }),
     Menu: {
       setApplicationMenu: spy(),
       buildFromTemplate: () => (electron.Menu),

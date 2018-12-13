@@ -28,3 +28,4 @@ describe('Reducer: secondPassphrase(state, action)', () => {
     });
   });
 });
+

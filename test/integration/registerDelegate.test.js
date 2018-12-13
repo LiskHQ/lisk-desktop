@@ -18,7 +18,7 @@ import transactionsReducer from '../../src/store/reducers/transactions';
 import accountReducer from '../../src/store/reducers/account';
 import peersReducer from '../../src/store/reducers/peers';
 
-import accounts from '../constants/accounts';
+import accounts from '../../test/constants/accounts';
 
 const normalAccount = {
   ...accounts['send all account'],

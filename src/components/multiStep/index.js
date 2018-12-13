@@ -57,8 +57,8 @@ class MultiStep extends React.Component {
   prev(config) {
     const getTarget = (current) => {
       if (current === 0) return current;
-      if (!config || !config.reset) return current - 1;
-      if (config.reset) return 0;
+      else if (!config || !config.reset) return current - 1;
+      else if (config.reset) return 0;
       return current;
     };
     const newState = Object.assign({}, this.state);

@@ -3,13 +3,11 @@ import { step } from 'mocha-steps';
 import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import {
-  stub, useFakeTimers, spy, match,
-} from 'sinon';
+import { stub, useFakeTimers, spy, match } from 'sinon';
 
 import * as accountAPI from '../../src/utils/api/account';
 import * as delegateAPI from '../../src/utils/api/delegate';
-import Register from '../../src/components/register';
+import Register from './../../src/components/register';
 import * as peersActions from '../../src/actions/peers';
 import accountReducer from '../../src/store/reducers/account';
 import settingsReducer from '../../src/store/reducers/settings';
@@ -29,15 +27,16 @@ describe('@integration: Register', () => {
   let delegateAPIStub;
   const events = {};
 
-  const createStore = () => prepareStore({
-    account: accountReducer,
-    peers: peersReducer,
-    settings: settingsReducer,
-  }, [
-    thunk,
-    accountMiddleware,
-    peerMiddleware,
-  ]);
+  const createStore = () =>
+    prepareStore({
+      account: accountReducer,
+      peers: peersReducer,
+      settings: settingsReducer,
+    }, [
+      thunk,
+      accountMiddleware,
+      peerMiddleware,
+    ]);
 
   const restoreStubs = () => {
     localStorageStub.restore();

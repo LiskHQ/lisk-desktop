@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { TertiaryButton, Button } from '../toolbox/buttons/button';
+import { TertiaryButton, Button } from './../toolbox/buttons/button';
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import LiskAmount from '../liskAmount';
 import AccountVisual from '../accountVisual';
 import CopyToClipboard from '../copyToClipboard';
-import routes from '../../constants/routes';
-import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
+import routes from './../../constants/routes';
+import { getIndexOfFollowedAccount } from './../../utils/followedAccounts';
 import { followedAccountRemoved } from '../../actions/followedAccounts';
 import styles from './sendTo.css';
 
@@ -39,8 +39,8 @@ class SendTo extends React.Component {
           ${grid['middle-sm']}
           ${grid.row}
         `}>
-          {account.address
-            ? <AccountVisual
+          {account.address ?
+            <AccountVisual
               address={account.address}
               size={144}
               sizeS={90}
@@ -66,8 +66,8 @@ class SendTo extends React.Component {
             </h2>
             <CopyToClipboard value={account.address} className={`${styles.address}`} copyClassName={styles.copy} />
             {
-              delegate.username
-                ? <div className={styles.delegateRow}>
+              delegate.username ?
+                <div className={styles.delegateRow}>
                   {t('Delegate')}
                   <span className={`${styles.delegateUsername} delegate-name`}>{delegate.username}</span>
                 </div>

@@ -10,3 +10,4 @@ describe('Spinner', () => {
     expect(wrapper.find('div')).to.have.lengthOf(3);
   });
 });
+

@@ -22,7 +22,8 @@ if (env.production) {
 const rootElement = document.getElementById('app');
 
 
-const renderWithRouter = Component => <Provider store={store}>
+const renderWithRouter = Component =>
+  <Provider store={store}>
     <Router>
       <I18nextProvider i18n={ i18n }>
         <Component />
@@ -40,3 +41,4 @@ if (module.hot) {
 }
 
 applyDeviceClass(document.getElementsByTagName('html')[0], navigator);
+

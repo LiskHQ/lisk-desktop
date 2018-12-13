@@ -61,3 +61,4 @@ export class Notify {
 const Notification = new Notify();
 
 export default Notification;
+

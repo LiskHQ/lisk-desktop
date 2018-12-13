@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { Button } from '../toolbox/buttons/button';
+import { Button } from './../toolbox/buttons/button';
 import { FontIcon } from '../fontIcon';
 import styles from './accountInit.css';
-import fees from '../../constants/fees';
+import fees from './../../constants/fees';
 import { fromRawLsk } from '../../utils/lsk';
 
 class AccountInitialization extends React.Component {

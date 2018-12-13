@@ -23,10 +23,10 @@ import followedAccountsMiddleware from '../../src/store/middlewares/followedAcco
 import peerMiddleware from '../../src/store/middlewares/peers';
 import { accountLoggedIn } from '../../src/actions/account';
 import { liskAPIClientSet } from '../../src/actions/peers';
-import networks from '../../src/constants/networks';
-import txTypes from '../../src/constants/transactionTypes';
+import networks from './../../src/constants/networks';
+import txTypes from './../../src/constants/transactionTypes';
 import routes from '../../src/constants/routes';
-import getNetwork from '../../src/utils/getNetwork';
+import getNetwork from './../../src/utils/getNetwork';
 import Dashboard from '../../src/components/dashboard';
 import CurrencyGraph from '../../src/components/dashboard/currencyGraph';
 import accounts from '../constants/accounts';

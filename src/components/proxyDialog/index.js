@@ -60,3 +60,4 @@ class ProxyDialog extends React.Component {
   }
 }
 export default translate()(ProxyDialog);
+

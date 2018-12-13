@@ -26,7 +26,7 @@ class SliderCheckbox extends React.Component {
     const ev = e.nativeEvent;
     if (typeof ev.pageX === 'number') {
       return ev.pageX;
-    } if (ev.changedTouches && ev.changedTouches[0]) {
+    } else if (ev.changedTouches && ev.changedTouches[0]) {
       return ev.changedTouches[0].pageX;
     }
     return ev.clientX;
@@ -51,8 +51,8 @@ class SliderCheckbox extends React.Component {
         ? this.delta
         : ((this.maxMovement + this.buttonWidth) - Math.abs(this.delta));
 
-      if ((this.direction * this.delta) > 0
-        && Math.abs(this.delta) < this.maxMovement) {
+      if ((this.direction * this.delta) > 0 &&
+        Math.abs(this.delta) < this.maxMovement) {
         this.shape.setAttribute('style', `left: ${left}px`);
       }
     }
@@ -75,9 +75,9 @@ class SliderCheckbox extends React.Component {
     this.input.checked = !this.input.checked;
     this.shape.removeAttribute('style');
     this.direction = this.input.checked ? -1 : 1;
-    if (typeof this.props.onChange === 'function'
-      && this.props.input instanceof Object
-      && !(this.props.input instanceof Array)) {
+    if (typeof this.props.onChange === 'function' &&
+      this.props.input instanceof Object &&
+      !(this.props.input instanceof Array)) {
       this.props.onChange({
         checked: this.input.checked,
         value: this.props.input.value,
@@ -125,24 +125,24 @@ class SliderCheckbox extends React.Component {
             </FontIcon>
           </span>
         </span>
-        { label
-          ? <div>
+        { label ?
+          <div>
             <span className='label'>{label}</span>
             {
-              hasSlidingArrows
-                ? <span className={`${styles.arrows} arrow`}>
+              hasSlidingArrows ?
+                <span className={`${styles.arrows} arrow`}>
                   { this.arrows.map(key => <FontIcon key={key} value='arrow-right' />) }
                 </span> : null
             }
           </div> : ''
         }
         {
-          checkType(icons.begin)
-            ? <StaticLabel theme={theme} icons={icons} iconName='begin' /> : null
+          checkType(icons.begin) ?
+            <StaticLabel theme={theme} icons={icons} iconName='begin' /> : null
         }
         {
-          checkType(icons.goal)
-            ? <StaticLabel theme={theme} icons={icons} iconName='goal' /> : null
+          checkType(icons.goal) ?
+            <StaticLabel theme={theme} icons={icons} iconName='goal' /> : null
         }
       </label>
     </div>);

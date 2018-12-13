@@ -1,8 +1,6 @@
 import { expect } from 'chai';
 import actionTypes from '../constants/actions';
-import {
-  toastDisplayed, successToastDisplayed, errorToastDisplayed, toastHidden,
-} from './toaster';
+import { toastDisplayed, successToastDisplayed, errorToastDisplayed, toastHidden } from './toaster';
 
 describe('actions: toaster', () => {
   const data = {

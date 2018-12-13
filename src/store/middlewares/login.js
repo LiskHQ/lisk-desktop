@@ -9,8 +9,8 @@ import { errorToastDisplayed } from '../../actions/toaster';
 
 const { lockDuration } = accountConfig;
 const loginMiddleware = store => next => (action) => { // eslint-disable-line max-statements
-  if (action.type !== actionTypes.liskAPIClientSet
-      || (!action.data.publicKey && !action.data.passphrase)) {
+  if (action.type !== actionTypes.liskAPIClientSet ||
+      (!action.data.publicKey && !action.data.passphrase)) {
     return next(action);
   }
   if (action.type === actionTypes.liskAPIClientSet && action.data.loginType === loginType.ledger) {
@@ -33,8 +33,8 @@ const loginMiddleware = store => next => (action) => { // eslint-disable-line ma
 
   // redirect to main/transactions
   return getAccount(liskAPIClient, address).then((accountData) => {
-    const duration = (passphrase && store.getState().settings.autoLog)
-      ? Date.now() + lockDuration : 0;
+    const duration = (passphrase && store.getState().settings.autoLog) ?
+      Date.now() + lockDuration : 0;
     const accountUpdated = {
       ...accountData,
       ...accountBasics,

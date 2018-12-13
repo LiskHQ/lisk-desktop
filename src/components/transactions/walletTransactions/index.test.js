@@ -6,8 +6,8 @@ import { expect } from 'chai';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { prepareStore } from '../../../../test/utils/applicationInit';
-import * as delegateAPI from '../../../utils/api/delegate';
-import * as transactionsAPI from '../../../utils/api/transactions';
+import * as delegateAPI from '../../../../src/utils/api/delegate';
+import * as transactionsAPI from '../../../../src/utils/api/transactions';
 import followedAccountsReducer from '../../../store/reducers/followedAccounts';
 import peersReducer from '../../../store/reducers/peers';
 import accountReducer from '../../../store/reducers/account';
@@ -17,15 +17,15 @@ import searchReducer from '../../../store/reducers/search';
 import loadingReducer from '../../../store/reducers/loading';
 import filtersReducer from '../../../store/reducers/filters';
 
-import { accountLoggedIn } from '../../../actions/account';
-import { liskAPIClientSet } from '../../../actions/peers';
-import networks from '../../../constants/networks';
-import getNetwork from '../../../utils/getNetwork';
+import { accountLoggedIn } from '../../../../src/actions/account';
+import { liskAPIClientSet } from '../../../../src/actions/peers';
+import networks from './../../../../src/constants/networks';
+import getNetwork from './../../../../src/utils/getNetwork';
 
 import WalletTransactions from './index';
 import i18n from '../../../i18n';
 import accounts from '../../../../test/constants/accounts';
-import txFilters from '../../../constants/transactionFilters';
+import txFilters from './../../../../src/constants/transactionFilters';
 
 describe('WalletTransactions Component', () => {
   let wrapper;

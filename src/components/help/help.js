@@ -2,9 +2,9 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '../box';
 import { FontIcon } from '../fontIcon';
-import { Button } from '../toolbox/buttons/button';
+import { Button } from './../toolbox/buttons/button';
 import styles from './help.css';
-import links from '../../constants/help';
+import links from './../../constants/help';
 
 /* eslint-disable class-methods-use-this */
 class Help extends React.Component {
@@ -27,8 +27,8 @@ class Help extends React.Component {
             <h2>{this.props.t('Help')}</h2>
             <p>{this.props.t('Browse through our tutorials, check out the FAQ or connect with our knowledgeable community.')}</p>
             {
-              this.props.account.address
-                ? <a className='help-onboarding' onClick={() => this.initOnboarding() }>{this.props.t('New to Hub? Take a tour')}
+              this.props.account.address ?
+                <a className='help-onboarding' onClick={() => this.initOnboarding() }>{this.props.t('New to Hub? Take a tour')}
                 <FontIcon>arrow-right</FontIcon>
               </a> : null
             }

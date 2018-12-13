@@ -2,15 +2,15 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import styles from './autoSuggest.css';
-import LiskAmount from '../liskAmount';
+import LiskAmount from './../liskAmount';
 import { FontIcon } from '../fontIcon';
 import ResultsList from './resultsList';
-import routes from '../../constants/routes';
-import keyCodes from '../../constants/keyCodes';
-import localJSONStorage from '../../utils/localJSONStorage';
-import regex from '../../utils/regex';
-import { saveSearch } from '../searchResult/keyAction';
-import { searchEntities } from '../../constants/search';
+import routes from './../../constants/routes';
+import keyCodes from './../../constants/keyCodes';
+import localJSONStorage from './../../utils/localJSONStorage';
+import regex from './../../utils/regex';
+import { saveSearch } from './../searchResult/keyAction';
+import { searchEntities } from './../../constants/search';
 
 class AutoSuggest extends React.Component {
   constructor(props) {
@@ -29,9 +29,8 @@ class AutoSuggest extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.selectedRow = null;
-    const resultsLength = Object.keys(searchEntities).reduce(
-      (total, resultKey) => total + nextProps.results[resultKey].length, 0,
-    );
+    const resultsLength = Object.keys(searchEntities).reduce((total, resultKey) =>
+      total + nextProps.results[resultKey].length, 0);
     let placeholder = '';
     let selectedIdx = -1;
     if (resultsLength > 0) {
@@ -58,9 +57,8 @@ class AutoSuggest extends React.Component {
     saveSearch(value, id);
     this.props.searchClearSuggestions();
 
-    if (!value && [searchEntities.addresses, searchEntities.transactions].filter(
-      entity => entity === type,
-    ).length > 0) {
+    if (!value && [searchEntities.addresses, searchEntities.transactions].filter(entity =>
+      entity === type).length > 0) {
       this.setState({ value: id });
     } else if (value) {
       this.setState({ value, placeholder: '' });
@@ -122,12 +120,12 @@ class AutoSuggest extends React.Component {
     let currentIdx = this.state.selectedIdx;
     let placeholder = '';
     if (this.state.resultsLength === 0) {
-      currentIdx = (currentIdx === this.recentSearches.length - 1)
-        ? this.recentSearches.length - 1 : currentIdx += 1;
+      currentIdx = (currentIdx === this.recentSearches.length - 1) ?
+        this.recentSearches.length - 1 : currentIdx += 1;
       placeholder = this.recentSearches[currentIdx].valueLeft;
     } else {
-      currentIdx = (currentIdx === this.state.resultsLength)
-        ? this.state.resultsLength : currentIdx += 1;
+      currentIdx = (currentIdx === this.state.resultsLength) ?
+        this.state.resultsLength : currentIdx += 1;
       placeholder = this.getValueFromCurrentIdx(currentIdx, this.props.results);
     }
     this.setState({ selectedIdx: currentIdx, placeholder });
@@ -231,8 +229,8 @@ class AutoSuggest extends React.Component {
       id: transaction.id,
       valueLeft: transaction.id,
       valueRight: transaction.height,
-      isSelected: this.props.results.delegates.length
-      + this.props.results.addresses.length + idx === this.state.selectedIdx,
+      isSelected: this.props.results.delegates.length +
+      this.props.results.addresses.length + idx === this.state.selectedIdx,
       type: searchEntities.transactions,
     }));
   }
@@ -288,9 +286,9 @@ class AutoSuggest extends React.Component {
           onChange={this.search.bind(this)}
           autoComplete='off'>
           {
-            this.state.value !== '' || this.state.placeholder !== ''
-              ? <FontIcon value='close' className={`${styles.icon} autosuggest-btn-close`} onClick={this.resetSearch.bind(this)} />
-              : <FontIcon value='search' className={`${styles.icon} ${styles.iconSearch} autosuggest-btn-search`}
+            this.state.value !== '' || this.state.placeholder !== '' ?
+              <FontIcon value='close' className={`${styles.icon} autosuggest-btn-close`} onClick={this.resetSearch.bind(this)} /> :
+              <FontIcon value='search' className={`${styles.icon} ${styles.iconSearch} autosuggest-btn-search`}
                 onClick={this.submitSearch.bind(this)} />
           }
         </Input>
@@ -325,8 +323,8 @@ class AutoSuggest extends React.Component {
             onMouseDown={this.onResultClick.bind(this)}
             setSelectedRow={this.setSelectedRow.bind(this)}
           />
-          { this.state.value === '' && this.state.resultsLength === 0
-            ? <ResultsList
+          { this.state.value === '' && this.state.resultsLength === 0 ?
+            <ResultsList
               key='recent'
               results={this.getRecentSearchResults()}
               header={{
@@ -339,8 +337,8 @@ class AutoSuggest extends React.Component {
             : null
           }
 
-          { this.state.value !== '' && this.state.resultsLength === 0
-            ? <p className={styles.noResults}>{t('No results found')}</p>
+          { this.state.value !== '' && this.state.resultsLength === 0 ?
+            <p className={styles.noResults}>{t('No results found')}</p>
             : null
           }
         </div>

@@ -19,15 +19,15 @@ import followedAccountsReducer from '../../src/store/reducers/followedAccounts';
 import accountMiddleware from '../../src/store/middlewares/account';
 import votingMiddleware from '../../src/store/middlewares/voting';
 import { liskAPIClientSet } from '../../src/actions/peers';
-import networks from '../../src/constants/networks';
-import txTypes from '../../src/constants/transactionTypes';
-import getNetwork from '../../src/utils/getNetwork';
+import networks from './../../src/constants/networks';
+import txTypes from './../../src/constants/transactionTypes';
+import getNetwork from './../../src/utils/getNetwork';
 import { accountLoggedIn } from '../../src/actions/account';
-import AccountTransactions from '../../src/components/accountTransactions';
+import AccountTransactions from './../../src/components/accountTransactions';
 import accounts from '../constants/accounts';
 import routes from '../../src/constants/routes';
 import GenericStepDefinition from '../utils/genericStepDefinition';
-import txFilters from '../../src/constants/transactionFilters';
+import txFilters from './../../src/constants/transactionFilters';
 import peersMiddleware from '../../src/store/middlewares/peers';
 
 const delegateProductivity = {

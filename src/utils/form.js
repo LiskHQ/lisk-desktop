@@ -9,10 +9,10 @@ export const authStatePrefill = account => ({
 });
 
 export const authStateIsValid = state => (
-  !state.passphrase.error
-  && state.passphrase.value !== ''
-  && !state.secondPassphrase.error
-  && state.secondPassphrase.value !== ''
+  !state.passphrase.error &&
+  state.passphrase.value !== '' &&
+  !state.secondPassphrase.error &&
+  state.secondPassphrase.value !== ''
 );
 
 export const passphraseIsValid = passphrase => (!passphrase.error && passphrase.value !== '');

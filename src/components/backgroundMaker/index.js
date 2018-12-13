@@ -19,3 +19,4 @@ const BackgroundMaker = ({ className }) => (
 );
 
 export default BackgroundMaker;
+

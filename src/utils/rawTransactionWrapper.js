@@ -49,7 +49,9 @@ export const createSecondPassphraseTX = (senderPublicKey, secondPublicKey) => {
   };
   return transaction;
 };
-export const concatVoteLists = (voteList, unvoteList) => voteList.map(delegate => `+${delegate}`).concat(unvoteList.map(delegate => `-${delegate}`));
+export const concatVoteLists =
+  (voteList, unvoteList) =>
+    voteList.map(delegate => `+${delegate}`).concat(unvoteList.map(delegate => `-${delegate}`));
 export const createRawVoteTX = (senderPublicKey, recipientId, votedList, unvotedList) => {
   const transaction = {
     type: transactionTypes.vote,

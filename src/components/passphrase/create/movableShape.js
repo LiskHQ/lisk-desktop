@@ -38,10 +38,10 @@ class MovableShape extends React.Component {
       duration: 30,
       ease: easing.easeInOut,
       onUpdate: (x) => {
-        const nextLeft = this.configs.left.initial
-          + (this.props.percentage * this.configs.left.step);
-        const nextBottom = this.configs.bottom.initial
-          + (this.props.percentage * this.configs.bottom.step);
+        const nextLeft = this.configs.left.initial +
+          (this.props.percentage * this.configs.left.step);
+        const nextBottom = this.configs.bottom.initial +
+          (this.props.percentage * this.configs.bottom.step);
         this.progress = x;
         this.shapeRenderer.set('bottom', `${nextBottom}%`);
         this.shapeRenderer.set('left', `${nextLeft}%`);
@@ -99,9 +99,8 @@ class MovableShape extends React.Component {
     const {
       className, group, width, height, idBg, idFg,
     } = this.props;
-    const toggleShape = () => (
-      this.props.percentage > 80 ? false : Math.floor((this.props.percentage / 10)) % 2
-    );
+    const toggleShape = () =>
+      (this.props.percentage > 80 ? false : Math.floor((this.props.percentage / 10)) % 2);
 
     return <div style = { this.state.style }
 

@@ -7,9 +7,9 @@ const VoteCheckbox = ({ data, status, toggle }) => {
   const {
     username, rank, productivity, account,
   } = data;
-  const template = status && status.pending
-    ? <Spinner />
-    : <label className={`${styles.checkbox} vote-checkbox ${status ? 'checked' : 'unchecked'}`} htmlFor={`vote-${account.publicKey}`}>
+  const template = status && status.pending ?
+    <Spinner /> :
+    <label className={`${styles.checkbox} vote-checkbox ${status ? 'checked' : 'unchecked'}`} htmlFor={`vote-${account.publicKey}`}>
       <input type='checkbox'
         id={`vote-${account.publicKey}`}
         checked={status ? status.unconfirmed : false}

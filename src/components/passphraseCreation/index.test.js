@@ -3,10 +3,10 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { stub, spy } from 'sinon';
 import PassphraseCreation from './index';
-import CreateFirst from '../passphrase/create/create';
+import CreateFirst from './../passphrase/create/create';
 import * as isMobile from '../../utils/isMobile';
-import * as passphraseUtils from '../../utils/passphrase';
-import accounts from '../../../test/constants/accounts';
+import * as passphraseUtils from './../../utils/passphrase';
+import accounts from './../../../test/constants/accounts';
 
 describe('Passphrase Creation', () => {
   let wrapper;

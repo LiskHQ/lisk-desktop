@@ -1,4 +1,4 @@
-import i18n from '../i18n';
+import i18n from './../i18n';
 import updateModal from './updateModal';
 
 export default ({ // eslint-disable-line max-statements

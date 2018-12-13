@@ -36,28 +36,33 @@ class QuickTips extends React.Component {
 
     return (
       <Box className={`quickTips ${styles.quickTips}`}>
-        {slides.map(slide => <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-title-${slide.title}`}>
+        {slides.map(slide =>
+          <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-title-${slide.title}`}>
             <div className={styles.picture}>
               <img src={slide.picture} />
             </div>
           </TransitionWrapper>)
         }
-        {slides.map(slide => <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-title-${slide.title}`}>
+        {slides.map(slide =>
+          <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-title-${slide.title}`}>
             <div className={styles.header}>
               <h2>{slide.title}</h2>
             </div>
           </TransitionWrapper>)
         }
         <div className={styles.quickTipBody}>
-          {slides.map(slide => <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-body-${slide.title}`}>
+          {slides.map(slide =>
+            <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-body-${slide.title}`}>
               <div className={`${styles.descriptionRow}`}>
                 <div className={`${styles.description}`}>
-                  {slide.description.map((desc, key) => <span key={`desc-${key}`}>{desc}<br/><br/></span>)}
+                  {slide.description.map((desc, key) =>
+                    <span key={`desc-${key}`}>{desc}<br/><br/></span>)}
                 </div>
               </div>
             </TransitionWrapper>)
           }
-          {slides.map(slide => <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-goto-${slide.title}`}>
+          {slides.map(slide =>
+            <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-goto-${slide.title}`}>
               <div className={styles.footer}>
                 <a href={slide.goTo.link} className={styles.goTo} target='_blank'>
                   {slide.goTo.title}<FontIcon value='arrow-right'/>
@@ -84,3 +89,4 @@ class QuickTips extends React.Component {
   }
 }
 export default translate()(QuickTips);
+

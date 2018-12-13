@@ -5,9 +5,8 @@ import routes from '../constants/routes';
 describe('App Util', () => {
   it('should detach wrong urls', () => {
     const allRoutes = Object.values(routes);
-    const explorerRoutes = allRoutes.filter(
-      routeObj => routeObj.pathPrefix && routeObj.pathPrefix === routes.explorer.path,
-    );
+    const explorerRoutes = allRoutes.filter(routeObj =>
+      routeObj.pathPrefix && routeObj.pathPrefix === routes.explorer.path);
 
     const invalidURLs = ['/explorer/search/123',
       '/explorer/accounts/16313739661670634666L/hi'];
@@ -19,9 +18,8 @@ describe('App Util', () => {
 
   it('should detach right urls', () => {
     const allRoutes = Object.values(routes);
-    const explorerRoutes = allRoutes.filter(
-      routeObj => routeObj.pathPrefix && routeObj.pathPrefix === routes.explorer.path,
-    );
+    const explorerRoutes = allRoutes.filter(routeObj =>
+      routeObj.pathPrefix && routeObj.pathPrefix === routes.explorer.path);
 
     const invalidURLs = ['/explorer/accounts/16313739661670634666L'];
     for (let i = 0; i < invalidURLs.length; i++) {
@@ -30,3 +28,4 @@ describe('App Util', () => {
     }
   });
 });
+

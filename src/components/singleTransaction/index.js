@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { loadTransaction } from '../../actions/transactions';
-import TransactionDetails from '../transactions/transactionDetailView';
+import TransactionDetails from './../transactions/transactionDetailView';
 import CopyToClipboard from '../copyToClipboard';
 import Box from '../box';
 import EmptyState from '../emptyState';
@@ -30,8 +30,8 @@ class SingleTransaction extends React.Component {
 
   render() {
     return <Box className={styles.transaction}>
-      { this.props.transaction.id && !this.props.transaction.error
-        ? <Fragment>
+      { this.props.transaction.id && !this.props.transaction.error ?
+        <Fragment>
           <header>
             <h2>
               <TransactionType
@@ -54,8 +54,8 @@ class SingleTransaction extends React.Component {
                 match={this.props.match} />
             </div>
           </div>
-        </Fragment>
-        : <EmptyState title={this.props.t('No results')}
+        </Fragment> :
+        <EmptyState title={this.props.t('No results')}
           message={this.props.t('Search for Lisk ID or Transaction ID')} />
       }
     </Box>;

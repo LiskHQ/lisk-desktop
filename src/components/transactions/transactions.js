@@ -1,5 +1,5 @@
 import React from 'react';
-import MultiStep from '../multiStep';
+import MultiStep from './../multiStep';
 import styles from './transactions.css';
 import TransactionsOverview from './transactionsOverview';
 import TransactionDetailView from './transactionDetailView';

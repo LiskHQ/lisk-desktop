@@ -17,3 +17,4 @@ const TransferTabs = ({ t, setTabSend, isActiveTabSend }) => (
 );
 
 export default translate()(TransferTabs);
+

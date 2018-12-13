@@ -8,7 +8,7 @@ import sinon from 'sinon';
 import Header from './header';
 import i18n from '../../i18n';
 import routes from '../../constants/routes';
-import accounts from '../../../test/constants/accounts';
+import accounts from './../../../test/constants/accounts';
 
 describe('Header', () => {
   let wrapper;

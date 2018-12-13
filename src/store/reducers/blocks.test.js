@@ -28,3 +28,4 @@ describe('Reducer: blocks(state, action)', () => {
     });
   });
 });
+

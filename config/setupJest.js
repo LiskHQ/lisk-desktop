@@ -60,3 +60,4 @@ const getSelection = () => ({
 });
 window.getSelection = getSelection;
 document.getSelection = getSelection;
+

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styles from './create.css';
-import { FontIcon } from '../../fontIcon';
+import { FontIcon } from './../../fontIcon';
 import { PrimaryButton, Button } from '../../toolbox/buttons/button';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
 import AccountVisual from '../../accountVisual';
@@ -62,8 +62,8 @@ class CreateFirst extends React.Component {
               type={'button'} />
           </aside>
         </header>
-        {address
-          ? <Fragment>
+        {address ?
+          <Fragment>
             <figure>
               <AccountVisual address={address} size={150} />
             </figure>

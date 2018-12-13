@@ -3,7 +3,7 @@ import { spy, stub } from 'sinon';
 import middleware from './peers';
 import actionTypes from '../../constants/actions';
 import { liskAPIClientSet } from '../../actions/peers';
-import * as loginUtils from '../../utils/login';
+import * as loginUtils from './../../utils/login';
 
 describe('Peer middleware', () => {
   let store;
@@ -89,3 +89,4 @@ describe('Peer middleware', () => {
     expect(store.dispatch).to.not.have.been.calledWith(liskAPIClientSet());
   });
 });
+

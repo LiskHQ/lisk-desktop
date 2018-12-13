@@ -34,12 +34,10 @@ class App extends React.Component {
   render() {
     const allRoutes = Object.values(routes);
 
-    const defaultRoutes = allRoutes.filter(
-      routeObj => routeObj.component && !routeObj.pathPrefix && !routeObj.isLoaded,
-    );
-    const explorerRoutes = allRoutes.filter(
-      routeObj => routeObj.pathPrefix && routeObj.pathPrefix === routes.explorer.path,
-    );
+    const defaultRoutes = allRoutes.filter(routeObj =>
+      routeObj.component && !routeObj.pathPrefix && !routeObj.isLoaded);
+    const explorerRoutes = allRoutes.filter(routeObj =>
+      routeObj.pathPrefix && routeObj.pathPrefix === routes.explorer.path);
 
     const routesOutsideMainWrapper = [
       'registerDelegate',
@@ -59,8 +57,8 @@ class App extends React.Component {
               <Header />
               <div id='onboardingAnchor'></div>
               <Switch>
-                {this.state.loaded
-                  ? <Route path={routes.explorer.path} component={ ({ location }) => (
+                {this.state.loaded ?
+                  <Route path={routes.explorer.path} component={ ({ location }) => (
                     isPathCorrect(location, explorerRoutes) ? (
                       <div>
                         {explorerRoutes.map((route, key) => (
@@ -78,8 +76,8 @@ class App extends React.Component {
                   )} />
                   : null
                 }
-                {this.state.loaded
-                  ? defaultRoutes.map((route, key) => (
+                {this.state.loaded ?
+                  defaultRoutes.map((route, key) => (
                     <CustomRoute
                       path={route.path}
                       pathSuffix={route.pathSuffix}

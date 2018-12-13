@@ -25,11 +25,9 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
     case actionTypes.transactionsFailed:
       return Object.assign({}, state, {
         // Filter any failed transaction from pending
-        pending: state.pending.filter(
-          pendingTransaction => action.data.failed.filter(
-            transaction => transaction.id === pendingTransaction.id,
-          ).length === 0,
-        ),
+        pending: state.pending.filter(pendingTransaction =>
+          action.data.failed.filter(transaction =>
+            transaction.id === pendingTransaction.id).length === 0),
       });
     case actionTypes.transactionsLoaded:
       return Object.assign({}, state, {
@@ -42,19 +40,15 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
     case actionTypes.transactionsUpdated:
       return Object.assign({}, state, {
         // Filter any newly confirmed transaction from pending
-        pending: state.pending.filter(
-          pendingTransaction => action.data.confirmed.filter(
-            transaction => transaction.id === pendingTransaction.id,
-          ).length === 0,
-        ),
+        pending: state.pending.filter(pendingTransaction =>
+          action.data.confirmed.filter(transaction =>
+            transaction.id === pendingTransaction.id).length === 0),
         // Add any newly confirmed transaction to confirmed
         confirmed: [
           ...action.data.confirmed,
-          ...state.confirmed.filter(
-            confirmedTransaction => action.data.confirmed.filter(
-              transaction => transaction.id === confirmedTransaction.id,
-            ).length === 0,
-          ),
+          ...state.confirmed.filter(confirmedTransaction =>
+            action.data.confirmed.filter(transaction =>
+              transaction.id === confirmedTransaction.id).length === 0),
         ],
         count: action.data.count,
       });

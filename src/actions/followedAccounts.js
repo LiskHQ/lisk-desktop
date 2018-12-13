@@ -21,12 +21,13 @@ export const followedAccountsRetrieved = accounts => ({
   type: actionTypes.followedAccountsRetrieved,
 });
 
-export const followedAccountFetchedAndUpdated = ({ account }) => (dispatch, getState) => {
-  const liskAPIClient = getState().peers.liskAPIClient;
-  getAccount(liskAPIClient, account.address).then((result) => {
-    if (result.balance !== account.balance) {
-      account.balance = result.balance;
-      dispatch(followedAccountUpdated(account));
-    }
-  });
-};
+export const followedAccountFetchedAndUpdated = ({ account }) =>
+  (dispatch, getState) => {
+    const liskAPIClient = getState().peers.liskAPIClient;
+    getAccount(liskAPIClient, account.address).then((result) => {
+      if (result.balance !== account.balance) {
+        account.balance = result.balance;
+        dispatch(followedAccountUpdated(account));
+      }
+    });
+  };

@@ -10,7 +10,7 @@ const setRowClass = (voteStatus) => {
   const { pending, confirmed, unconfirmed } = voteStatus;
   if (pending) {
     return 'pendingRow';
-  } if (confirmed !== unconfirmed) {
+  } else if (confirmed !== unconfirmed) {
     return confirmed ? `${styles.downVoteRow} selected-row` : `${styles.upVoteRow} selected-row`;
   }
   return confirmed ? styles.votedRow : '';
@@ -20,11 +20,11 @@ class DelegateRow extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   shouldComponentUpdate({ voteStatus }) {
     const oldStatus = this.props.voteStatus;
-    return (!oldStatus && !!voteStatus)
-      || (!!oldStatus && !voteStatus)
-      || ((!!oldStatus && !!voteStatus)
-      && (oldStatus.unconfirmed !== voteStatus.unconfirmed
-      || oldStatus.pending !== voteStatus.pending));
+    return (!oldStatus && !!voteStatus) ||
+      (!!oldStatus && !voteStatus) ||
+      ((!!oldStatus && !!voteStatus) &&
+      (oldStatus.unconfirmed !== voteStatus.unconfirmed ||
+      oldStatus.pending !== voteStatus.pending));
   }
 
   render() {

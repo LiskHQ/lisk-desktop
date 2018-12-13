@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import React, { Fragment } from 'react';
 import CircularProgressBar from 'react-circular-progressbar';
 import votingConst from '../../constants/voting';
-import fees from '../../constants/fees';
+import fees from './../../constants/fees';
 import GradientSVG from './gradientSVG';
 import { FontIcon } from '../fontIcon';
 import { Button } from '../toolbox/buttons/button';
-import { getTotalVotesCount, getVoteList, getUnvoteList } from '../../utils/voting';
+import { getTotalVotesCount, getVoteList, getUnvoteList } from './../../utils/voting';
 import styles from './votesPreview.css';
 
 class VotesPreview extends React.Component {
@@ -42,8 +42,8 @@ class VotesPreview extends React.Component {
     const selectionClass = totalNewVotesCount > maxCountOfVotesInOneTurn ? styles.red : '';
     const totalClass = totalVotesCount > 101 ? styles.red : '';
     const createPercentage = (count, total) => ((count / total) * 100);
-    const surpassedVoteLimit = totalNewVotesCount > maxCountOfVotesInOneTurn
-      || totalVotesCount > 101;
+    const surpassedVoteLimit = totalNewVotesCount > maxCountOfVotesInOneTurn ||
+      totalVotesCount > 101;
     const insufficientFunds = this.props.account.balance - fees.vote < 0;
     const surpassMessage = () => {
       if (insufficientFunds) return t('Insufficient funds');

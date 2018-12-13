@@ -33,18 +33,18 @@ class TransactionsOverview extends React.Component {
   }
 
   componentDidUpdate() {
-    this.canLoadMore = this.props.count === null
-      || this.props.count > this.props.transactions.length;
+    this.canLoadMore = this.props.count === null ||
+      this.props.count > this.props.transactions.length;
   }
 
   isActiveFilter(filter) {
-    return (!this.props.activeFilter && filter === txFilters.all)
-      || (this.props.activeFilter === filter);
+    return (!this.props.activeFilter && filter === txFilters.all) ||
+      (this.props.activeFilter === filter);
   }
 
   shouldShowEmptyState() {
-    return this.props.transactions.length === 0 && !this.isLoading()
-      && (!this.props.activeFilter || this.props.activeFilter === txFilters.all);
+    return this.props.transactions.length === 0 && !this.isLoading() &&
+      (!this.props.activeFilter || this.props.activeFilter === txFilters.all);
   }
 
   isLoading() {
@@ -177,3 +177,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(TransactionsOverview);
+

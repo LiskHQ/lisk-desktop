@@ -36,3 +36,4 @@ export const mountWithContext = (
   };
   return mount(component, options);
 };
+

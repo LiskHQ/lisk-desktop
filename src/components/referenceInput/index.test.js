@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
-import ReferenceInput from '.';
+import ReferenceInput from './';
 
 describe('ReferenceInput', () => {
   let wrapper;

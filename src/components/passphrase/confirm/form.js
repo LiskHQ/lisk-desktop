@@ -9,8 +9,8 @@ const Form = ({
 
   return (<form className={`passphrase-holder ${styles.form} ${styles[formStatus]}`}>
     {
-      wordOptions
-        ? words.map((word, index) => {
+      wordOptions ?
+        words.map((word, index) => {
           if (!missing.includes(index)) {
             return (<span key={word} className={styles.word}>{word}</span>);
           }
@@ -19,12 +19,13 @@ const Form = ({
           return (
             <fieldset key={`${word}-${missingWordIndex}-${trials}`}>
               <span onClick={e => selectFieldset(e)} field={missingWordIndex}
-                className={`${styles.placeholder} ${selectedFieldset === missingWordIndex
-                  ? styles.selected : ''} ${answers[missingWordIndex] ? styles[validity] : ''}`}>
+                className={`${styles.placeholder} ${selectedFieldset === missingWordIndex ?
+                  styles.selected : ''} ${answers[missingWordIndex] ? styles[validity] : ''}`}>
                 { answers[missingWordIndex] ? answers[missingWordIndex].value : '' }
               </span>
               {
-                wordOptions[missingWordIndex].map(wd => <div key={`${wd}-${missingWordIndex}-${trials}`}>
+                wordOptions[missingWordIndex].map(wd =>
+                  <div key={`${wd}-${missingWordIndex}-${trials}`}>
                     <input
                       name={`answer${missingWordIndex}`}
                       className={styles.option}

@@ -5,7 +5,8 @@ import { FontIcon } from '../fontIcon';
 import * as shapes from '../../assets/images/*.svg';
 import styles from './signUp.css';
 
-const SignUp = ({ t, passInputState, validateCorrectNode }) => (<section className={`${styles.signUp} ${styles[passInputState]}`}>
+const SignUp = ({ t, passInputState, validateCorrectNode }) =>
+  (<section className={`${styles.signUp} ${styles[passInputState]}`}>
     <section className={styles.table}>
       <div className='text-left'>
         <h2>

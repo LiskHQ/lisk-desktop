@@ -15,10 +15,10 @@ import votingReducer from '../../src/store/reducers/voting';
 import accountMiddleware from '../../src/store/middlewares/account';
 import votingMiddleware from '../../src/store/middlewares/voting';
 import { liskAPIClientSet } from '../../src/actions/peers';
-import networks from '../../src/constants/networks';
-import getNetwork from '../../src/utils/getNetwork';
+import networks from './../../src/constants/networks';
+import getNetwork from './../../src/utils/getNetwork';
 import { accountLoggedIn } from '../../src/actions/account';
-import SingleTransaction from '../../src/components/singleTransaction';
+import SingleTransaction from './../../src/components/singleTransaction';
 import accounts from '../constants/accounts';
 import GenericStepDefinition from '../utils/genericStepDefinition';
 

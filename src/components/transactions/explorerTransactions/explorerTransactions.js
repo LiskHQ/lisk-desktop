@@ -1,11 +1,11 @@
 import React from 'react';
-import MultiStep from '../../multiStep';
-import styles from '../transactions.css';
+import MultiStep from './../../multiStep';
+import styles from './../transactions.css';
 import TransactionsOverview from '../transactionsOverview';
-import TransactionDetailView from '../transactionDetailView';
-import Box from '../../box';
-import txFilters from '../../../constants/transactionFilters';
-import routes from '../../../constants/routes';
+import TransactionDetailView from './../transactionDetailView';
+import Box from './../../box';
+import txFilters from './../../../constants/transactionFilters';
+import routes from './../../../constants/routes';
 
 class ExplorerTransactions extends React.Component {
   onInit() {
@@ -39,7 +39,6 @@ class ExplorerTransactions extends React.Component {
       filter: this.props.activeFilter,
     });
   }
-
   /*
     Transactions from tabs are filtered based on filter number
     It applys to All, Incoming and Outgoing

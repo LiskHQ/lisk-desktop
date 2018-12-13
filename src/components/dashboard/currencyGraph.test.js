@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { Line as LineChart } from 'react-chartjs-2';
 import sinon from 'sinon';
 import React from 'react';
-import { mountWithContext } from '../../../test/utils/mountHelpers';
+import { mountWithContext } from './../../../test/utils/mountHelpers';
 import { prepareStore } from '../../../test/utils/applicationInit';
 import liskServiceApi from '../../utils/api/liskService';
 

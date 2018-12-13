@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { saveSearch } from './keyAction';
-import localJSONStorage from '../../utils/localJSONStorage';
+import localJSONStorage from './../../utils/localJSONStorage';
 
 describe('Search KeyAction', () => {
   const storage = {};

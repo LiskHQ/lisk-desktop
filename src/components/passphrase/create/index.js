@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import PassphraseCreation from '../../passphraseCreation';
+import PassphraseCreation from './../../passphraseCreation';
 import CreateFirst from './create';
 import styles from './create.css';
 

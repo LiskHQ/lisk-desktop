@@ -34,3 +34,4 @@ describe('Reducer: peers(state, action)', () => {
     expect(changedState).to.deep.equal(newState);
   });
 });
+

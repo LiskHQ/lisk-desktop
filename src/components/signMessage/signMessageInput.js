@@ -3,7 +3,7 @@ import styles from './signMessageInput.css';
 // eslint-disable-next-line import/no-named-as-default
 import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import { PrimaryButton } from '../toolbox/buttons/button';
-import { parseSearchParams } from '../../utils/searchParams';
+import { parseSearchParams } from './../../utils/searchParams';
 import TransitionWrapper from '../toolbox/transitionWrapper';
 
 class SignMessageInput extends React.Component {

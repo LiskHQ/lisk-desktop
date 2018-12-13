@@ -35,11 +35,11 @@ class ResultBox extends React.Component {
           <p className='result-box-message'>
             {this.props.body}
           </p>
-          {this.props.copy
-            ? <CopyToClipboard value={this.props.copy.value}
+          {this.props.copy ?
+            <CopyToClipboard value={this.props.copy.value}
               text={this.props.copy.title}
-              className={`${styles.copy}`} />
-            : null
+              className={`${styles.copy}`} /> :
+            null
           }
         </div>
 

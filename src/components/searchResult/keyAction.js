@@ -1,4 +1,4 @@
-import localJSONStorage from '../../utils/localJSONStorage';
+import localJSONStorage from './../../utils/localJSONStorage';
 /* eslint-disable import/prefer-default-export */
 export const saveSearch = (searchTerm, id) => {
   if (searchTerm.length === 0) return;

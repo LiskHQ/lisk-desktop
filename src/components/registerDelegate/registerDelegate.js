@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import PassphraseSteps from '../passphraseSteps';
+import PassphraseSteps from './../passphraseSteps';
 import Choose from './steps/choose';
 import Confirm from './steps/confirm';
 import MultiStep from '../multiStep';

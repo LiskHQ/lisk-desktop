@@ -1,6 +1,4 @@
-import {
-  createStore, combineReducers, applyMiddleware, compose,
-} from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import throttle from 'lodash.throttle';
 
 import actionTypes from '../constants/actions';

@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import styles from './votingHeader.css';
 import { FontIcon } from '../fontIcon';
-import voteFilters from '../../constants/voteFilters';
-import { fromRawLsk } from '../../utils/lsk';
-import Fees from '../../constants/fees';
-import routes from '../../constants/routes';
+import voteFilters from './../../constants/voteFilters';
+import { fromRawLsk } from './../../utils/lsk';
+import Fees from './../../constants/fees';
+import routes from './../../constants/routes';
 
 
 class VotingHeader extends React.Component {
@@ -80,8 +80,8 @@ class VotingHeader extends React.Component {
           <h2 className={styles.desktopTitle}>{titleDesktop}</h2>
           <h2 className={styles.mobileTitle}>{titleMobile}</h2>
         </div>
-        {!isDelegate
-          ? <Link to={`${routes.registerDelegate.path}`} className={`${styles.link} ${styles.registerLink} register-delegate`}>
+        {!isDelegate ?
+          <Link to={`${routes.registerDelegate.path}`} className={`${styles.link} ${styles.registerLink} register-delegate`}>
             {t('Become a delegate (Fee: {{fee}} LSK)', { fee: fromRawLsk(Fees.registerDelegate) })}
             <FontIcon value='arrow-right'/>
           </Link> : null

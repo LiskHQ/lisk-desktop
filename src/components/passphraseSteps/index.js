@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { extractPublicKey } from '../../utils/account';
-import { Button } from '../toolbox/buttons/button';
+import { Button } from './../toolbox/buttons/button';
 // eslint-disable-next-line import/no-named-as-default
 import PassphraseInput from '../passphraseInput';
 import { passphraseIsValid, authStatePrefill } from '../../utils/form';
@@ -32,9 +32,9 @@ class PassphraseSteps extends React.Component {
       });
     }
 
-    if ((this.props.account.hwInfo && this.props.account.hwInfo.deviceId)
-      || (this.props.account.passphrase
-      && !this.props.account.secondPublicKey)) {
+    if ((this.props.account.hwInfo && this.props.account.hwInfo.deviceId) ||
+      (this.props.account.passphrase &&
+      !this.props.account.secondPublicKey)) {
       this.props.nextStep({
         ...this.props,
         ...authStatePrefill(this.props.account),
@@ -95,8 +95,8 @@ class PassphraseSteps extends React.Component {
   }
 
   getCurrentStep() {
-    if (this.props.account.secondPublicKey
-      && (this.state.done.passphrase || this.props.account.passphrase)) {
+    if (this.props.account.secondPublicKey &&
+      (this.state.done.passphrase || this.props.account.passphrase)) {
       return 'secondPassphrase';
     }
 
@@ -195,3 +195,4 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(translate()(PassphraseSteps));
+

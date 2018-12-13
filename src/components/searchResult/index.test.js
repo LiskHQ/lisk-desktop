@@ -11,3 +11,4 @@ describe('SearchResult', () => {
     expect(wrapper.find('EmptyState')).to.have.prop('title', 'No results');
   });
 });
+

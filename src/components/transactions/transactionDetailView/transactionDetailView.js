@@ -8,8 +8,8 @@ import { FontIcon } from '../../fontIcon';
 import TransactionType from '../transactionType';
 import LiskAmount from '../../liskAmount';
 import Amount from '../amount';
-import routes from '../../../constants/routes';
-import transactions from '../../../constants/transactionTypes';
+import routes from './../../../constants/routes';
+import transactions from './../../../constants/transactionTypes';
 import TransactionDetailViewField from './transactionDetailViewField';
 import TransactionDetailViewRow from './transactionDetailViewRow';
 import DateField from './transactionDetailDateField';
@@ -31,8 +31,8 @@ class TransactionDetailView extends React.Component {
     if (nextProps.location && !nextProps.location.search) this.props.prevStep();
 
     // It rerenders component when pending status changed to confirmed
-    if (nextProps.pendingTransactions
-      && nextProps.pendingTransactions.length === 0 && typeof nextProps.transaction === 'string') {
+    if (nextProps.pendingTransactions &&
+      nextProps.pendingTransactions.length === 0 && typeof nextProps.transaction === 'string') {
       const transactionId = this.getTransactionIdFromURL();
 
       if (this.props.peers.liskAPIClient && transactionId) {
@@ -66,20 +66,20 @@ class TransactionDetailView extends React.Component {
 
   isPendingTransaction() {
     const transactionId = this.getTransactionIdFromURL();
-    return this.props.pendingTransactions
-    && this.props.pendingTransactions.find(tx => tx.id === transactionId);
+    return this.props.pendingTransactions &&
+    this.props.pendingTransactions.find(tx => tx.id === transactionId);
   }
 
   isTransactionEmpty() {
-    return (typeof this.props.transaction === 'object'
-    && Object.keys(this.props.transaction).length !== 0);
+    return (typeof this.props.transaction === 'object' &&
+    Object.keys(this.props.transaction).length !== 0);
   }
 
   getTransaction() {
     const isPendingTransaction = this.isPendingTransaction();
     const isTransactionEmpty = this.isTransactionEmpty();
-    return isTransactionEmpty || (isTransactionEmpty && isPendingTransaction)
-      ? this.props.transaction : (isPendingTransaction || {});
+    return isTransactionEmpty || (isTransactionEmpty && isPendingTransaction) ?
+      this.props.transaction : (isPendingTransaction || {});
   }
 
   isSendTransaction() {
@@ -102,14 +102,14 @@ class TransactionDetailView extends React.Component {
             </Link>
           }
           column>
-          {transaction.senderId
-            ? <figure className={styles.accountVisual}>
+          {transaction.senderId ?
+            <figure className={styles.accountVisual}>
               <AccountVisual address={transaction.senderId} size={43} />
             </figure> : null}
         </TransactionDetailViewField>
 
-        {!isSendTransaction ? <DateField transaction={transaction} t={this.props.t} />
-          : <TransactionDetailViewField
+        {!isSendTransaction ? <DateField transaction={transaction} t={this.props.t} /> :
+          <TransactionDetailViewField
             shouldShow={transaction.recipientId}
             label={this.props.t('Recipient')}
             style={styles.sender}
@@ -120,8 +120,8 @@ class TransactionDetailView extends React.Component {
               </Link>
             }
             column>
-            {transaction.recipientId
-              ? <figure className={styles.accountVisual}>
+            {transaction.recipientId ?
+              <figure className={styles.accountVisual}>
                 <AccountVisual address={transaction.recipientId} size={43} />
               </figure> : null
             }
@@ -136,8 +136,8 @@ class TransactionDetailView extends React.Component {
     return (
       <div className={`${styles.details}`}>
         {
-          this.props.prevStep
-            ? <header>
+          this.props.prevStep ?
+            <header>
               <h3>
                 <small className={`${styles.backButton} transaction-details-back-button`}
                   onClick={() => this.props.history.push(this.props.history.location.pathname)}>
@@ -195,8 +195,8 @@ class TransactionDetailView extends React.Component {
           </TransactionDetailViewRow>
 
           <TransactionDetailViewRow>
-            {this.props.prevStep
-              && <TransactionDetailViewField className={'tx-id'}
+            {this.props.prevStep &&
+              <TransactionDetailViewField className={'tx-id'}
                 label={this.props.t('Transaction ID')}
                 value={
                   <CopyToClipboard

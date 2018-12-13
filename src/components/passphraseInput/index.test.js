@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import PassphraseInputHOC, { PassphraseInput } from './index';
-import keyCodes from '../../constants/keyCodes';
+import keyCodes from './../../constants/keyCodes';
 
 describe('PassphraseInput', () => {
   let wrapper;

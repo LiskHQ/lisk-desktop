@@ -14,13 +14,11 @@ import styles from './login.css';
 import networks from '../../constants/networks';
 import routes from '../../constants/routes';
 import getNetwork from '../../utils/getNetwork';
-import { parseSearchParams } from '../../utils/searchParams';
+import { parseSearchParams } from './../../utils/searchParams';
 import Box from '../box';
 // eslint-disable-next-line import/no-unresolved
 import SignUp from './signUp';
-import {
-  validateUrl, addHttp, getAutoLogInData, findMatchingLoginNetwork,
-} from '../../utils/login';
+import { validateUrl, addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import { FontIcon } from '../fontIcon';
 
 /**
@@ -81,9 +79,9 @@ class Login extends React.Component {
       || params.shownetwork
       || (this.props.settings && this.props.settings.showNetwork);
 
-    if (this.props.account
-      && this.props.account.address && (showNetworkParam !== 'true' || this.secondIteration)
-      && !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.peers.options)) {
+    if (this.props.account &&
+      this.props.account.address && (showNetworkParam !== 'true' || this.secondIteration) &&
+      !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.peers.options)) {
       this.redirectToReferrer();
     }
   }
@@ -94,11 +92,11 @@ class Login extends React.Component {
   }
 
   alreadyLoggedWithThisAddress(address, network) {
-    return this.props.account
-      && this.props.peers.options
-      && this.props.account.address === address
-      && this.props.peers.options.code === network.code
-      && this.props.peers.options.address === network.address;
+    return this.props.account &&
+      this.props.peers.options &&
+      this.props.account.address === address &&
+      this.props.peers.options.code === network.code &&
+      this.props.peers.options.address === network.address;
   }
 
   getNetwork(chosenNetwork) {
@@ -196,9 +194,9 @@ class Login extends React.Component {
 
   render() {
     const networkList = [{ label: this.props.t('Choose Network') }, ...this.networks];
-    return (this.props.account.loading
-      ? <div className={styles.loadingWrapper}></div>
-      : <Box className={styles.wrapper}>
+    return (this.props.account.loading ?
+      <div className={styles.loadingWrapper}></div> :
+      <Box className={styles.wrapper}>
         <section className={`${styles.login} ${styles[this.state.passInputState]}`}>
           <section className={styles.table}>
             <header>
@@ -213,8 +211,8 @@ class Login extends React.Component {
                       className={`network ${styles.network}`}
                     />
                     {
-                      this.state.network === networks.customNode.code
-                      && <ToolBoxInput type='text'
+                      this.state.network === networks.customNode.code &&
+                      <ToolBoxInput type='text'
                              label={this.props.t('Enter IP or domain address of the node')}
                              name='address'
                              className={`address ${styles.outTaken}`}
@@ -237,8 +235,8 @@ class Login extends React.Component {
                   error={this.state.passphraseValidity}
                   value={this.state.passphrase}
                   onChange={this.changeHandler.bind(this, 'passphrase')} />
-                {localStorage.getItem('ledger')
-                  ? <div className={`${styles.hardwareWalletLink} hardwareWalletLink`} onClick={() => {
+                {localStorage.getItem('ledger') ?
+                  <div className={`${styles.hardwareWalletLink} hardwareWalletLink`} onClick={() => {
                     this.props.history.replace(routes.hwWallet.path);
                   }}>
                     Ledger Nano S

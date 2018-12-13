@@ -1,6 +1,7 @@
 import Lisk from 'lisk-elements';
 
-export const extractPublicKey = passphrase => Lisk.cryptography.getKeys(passphrase).publicKey;
+export const extractPublicKey = passphrase =>
+  Lisk.cryptography.getKeys(passphrase).publicKey;
 
 /**
  * @param {String} data - passphrase or public key

@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
-import { searchSuggestions } from '../../actions/search';
-import actionTypes from '../../constants/actions';
-import AutoSuggest from '../autoSuggest';
+import { searchSuggestions } from './../../actions/search';
+import actionTypes from './../../constants/actions';
+import AutoSuggest from './../autoSuggest';
 import styles from './searchBar.css';
 
 class SearchBar extends React.Component {

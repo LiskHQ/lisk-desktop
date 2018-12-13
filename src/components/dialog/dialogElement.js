@@ -21,8 +21,8 @@ class DialogElement extends Component {
         theme={theme}
         type='fullscreen' className='modal-dialog'>
         <div className={styles.dialog}>
-          {this.props.dialog.childComponent
-            ? <div className={`modal-dialog-body ${theme.innerBody}`}>
+          {this.props.dialog.childComponent ?
+            <div className={`modal-dialog-body ${theme.innerBody}`}>
               <div className={styles.title}>{childComponentProps && childComponentProps.title}</div>
                 <this.props.dialog.childComponent
                   {...(this.props.dialog.childComponentProps || {})}

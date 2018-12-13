@@ -2,7 +2,7 @@ import React from 'react';
 
 import { spy } from 'sinon';
 import { expect } from 'chai';
-import { mountWithContext } from '../../../test/utils/mountHelpers';
+import { mountWithContext } from './../../../test/utils/mountHelpers';
 import VotesPreview from './index';
 
 // To-do enable this tests when votesPreview is implemented

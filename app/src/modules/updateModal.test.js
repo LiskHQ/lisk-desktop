@@ -14,26 +14,27 @@ describe('Electron update modal', () => {
   const electron = {
     BrowserWindow: ({
       width, height, center, webPreferences,
-    }) => ({
-      width,
-      height,
-      center,
-      webPreferences,
-      loadURL,
-      show,
-      on: (item, callback) => {
-        callbacks[item] = callback;
-      },
-      webContents: {
+    }) =>
+      ({
+        width,
+        height,
+        center,
+        webPreferences,
+        loadURL,
+        show,
         on: (item, callback) => {
           callbacks[item] = callback;
         },
-        send: (event, value) => {
-          events.push({ event, value });
+        webContents: {
+          on: (item, callback) => {
+            callbacks[item] = callback;
+          },
+          send: (event, value) => {
+            events.push({ event, value });
+          },
+          getURL: () => 'url',
         },
-        getURL: () => 'url',
-      },
-    }),
+      }),
     ipcMain,
     shell: {
       openExternal: spy(),

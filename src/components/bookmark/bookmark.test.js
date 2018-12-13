@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import Bookmark from './index';
 import i18n from '../../i18n';
-import keyCodes from '../../constants/keyCodes';
+import keyCodes from './../../constants/keyCodes';
 
 describe('Bookmark', () => {
   let wrapper;

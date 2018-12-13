@@ -39,3 +39,4 @@ describe('Reducer: settings(state, action)', () => {
     expect(changedState.channels).to.deep.equal({ twitter: true });
   });
 });
+

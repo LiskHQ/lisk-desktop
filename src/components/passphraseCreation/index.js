@@ -1,5 +1,5 @@
 import React from 'react';
-import { generateSeed, generatePassphrase } from '../../utils/passphrase';
+import { generateSeed, generatePassphrase } from './../../utils/passphrase';
 import { extractAddress } from '../../utils/account';
 import isMobile from '../../utils/isMobile';
 import styles from './passphraseCreation.css';
@@ -101,9 +101,9 @@ class PassphraseCreation extends React.Component {
       data, address, step, passphrase,
     } = this.state;
     const percentage = data ? data.percentage : 0;
-    const hintTitle = this.isTouchDevice
-      ? this.props.t('by tilting your device.')
-      : this.props.t('by moving your mouse.');
+    const hintTitle = this.isTouchDevice ?
+      this.props.t('by tilting your device.') :
+      this.props.t('by moving your mouse.');
 
     return (
       <section id='generatorContainer' className={styles.generator}>

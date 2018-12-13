@@ -2,9 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import VotingListView from './votingListView';
-import { mountWithContext } from '../../../test/utils/mountHelpers';
+import { mountWithContext } from './../../../test/utils/mountHelpers';
 import store from '../../store';
-import voteFilters from '../../constants/voteFilters';
+import voteFilters from './../../constants/voteFilters';
 
 describe('VotingListView', () => {
   let wrapper;

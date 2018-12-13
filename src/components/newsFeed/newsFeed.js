@@ -29,17 +29,16 @@ class NewsFeed extends React.Component {
   }
 
   render() {
-    const settingsButton = this.state.showSettings
-      ? (<div className={`settingsButton ${styles.settingsButton}`} onClick={() => { this.hideSettings(); }}>
+    const settingsButton = this.state.showSettings ?
+      (<div className={`settingsButton ${styles.settingsButton}`} onClick={() => { this.hideSettings(); }}>
         <span>{this.props.t('Done')}</span>
-      </div>)
-      : (<div className={`settingsButton ${styles.settingsButton}`} onClick={() => { this.openSettings(); }}>
+      </div>) :
+      (<div className={`settingsButton ${styles.settingsButton}`} onClick={() => { this.openSettings(); }}>
         <FontIcon className='online' value='edit' />
       </div>);
 
-    const filteredNewsFeed = this.props.newsFeed.filter(
-      feed => this.props.channels[feed.source],
-    ) || [];
+    const filteredNewsFeed =
+      this.props.newsFeed.filter(feed => this.props.channels[feed.source]) || [];
 
     return (
       <Box className={`newsFeed-box ${styles.newsFeedBox}`}>
@@ -51,13 +50,13 @@ class NewsFeed extends React.Component {
             {settingsButton}
           </div>
           <div className={styles.container}>
-            {this.state.showSettings
-              ? <SettingsNewsFeed
+            {this.state.showSettings ?
+              <SettingsNewsFeed
                 t={this.props.t}
                 channels={this.props.channels}
                 hideSettings={this.hideSettings.bind(this)}
-                setNewsChannels={this.setNewsChannels.bind(this)} />
-              : <div>
+                setNewsChannels={this.setNewsChannels.bind(this)} /> :
+              <div>
                 {filteredNewsFeed.length > 0 ? filteredNewsFeed.map((news, index) => (
                   <div className={styles.newsWrapper} key={`newsWrapper-${index}`}>
                     <News
@@ -65,8 +64,8 @@ class NewsFeed extends React.Component {
                       {...news} />
                   </div>
                 )) : null}
-                {this.props.showNewsFeedEmptyState && filteredNewsFeed.length === 0
-                  ? <div className={styles.emptyNews}>
+                {this.props.showNewsFeedEmptyState && filteredNewsFeed.length === 0 ?
+                  <div className={styles.emptyNews}>
                     {this.props.t('No newsfeed chosen – click on edit in the top right corner to add a feed.')}
                     <img className={styles.liskLogo} src={logo} />
                   </div> : null}

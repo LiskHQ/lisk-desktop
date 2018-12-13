@@ -191,8 +191,8 @@ class Confirm extends React.Component {
       missing, words, wordOptions, step,
       answers, selectedFieldset, trials, formStatus,
     } = this.state;
-    const errorTitleVisibility = (formStatus === 'outOfTrials'
-      || formStatus === 'invalid') ? styles.visible : '';
+    const errorTitleVisibility = (formStatus === 'outOfTrials' ||
+      formStatus === 'invalid') ? styles.visible : '';
 
     return (
       <section className={`passphrase-verifier ${styles.verifier} ${styles[step]}`}>
@@ -218,11 +218,11 @@ class Confirm extends React.Component {
           </div>
         </section>
         {
-          this.props.secondPassConfirmation
-            ? <SecondPassphraseSteps
+          this.props.secondPassConfirmation ?
+            <SecondPassphraseSteps
               hidden={this.state.step !== 'done'}
-              finalCallback={(passphrase) => { this.props.finalCallback(words.join(' '), passphrase); }}/>
-            : <section className={`${styles.table} ${styles.done}`}>
+              finalCallback={(passphrase) => { this.props.finalCallback(words.join(' '), passphrase); }}/> :
+            <section className={`${styles.table} ${styles.done}`}>
               <div className={styles.tableCell}>
                 <figure>
                   <AccountVisual address={this.getAddress()} size={150} />

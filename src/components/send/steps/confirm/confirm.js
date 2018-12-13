@@ -1,9 +1,9 @@
 import React from 'react';
 import { fromRawLsk, toRawLsk } from '../../../../utils/lsk';
 import AccountVisual from '../../../accountVisual';
-import { Button, PrimaryButton } from '../../../toolbox/buttons/button';
+import { Button, PrimaryButton } from './../../../toolbox/buttons/button';
 import ToolBoxInput from '../../../toolbox/inputs/toolBoxInput';
-import fees from '../../../../constants/fees';
+import fees from './../../../../constants/fees';
 import styles from './confirm.css';
 
 class Confirm extends React.Component {
@@ -45,9 +45,9 @@ class Confirm extends React.Component {
     // Hardware wallet code preventing by going on last step when there is pending transaction
     const pending = this.props.account.hwInfo && this.props.account.hwInfo.deviceId
       ? this.props.pendingTransactions.find(transaction => (
-        transaction.senderId === this.props.account.address
-      && transaction.recipientId === this.state.recipient.value
-      && fromRawLsk(transaction.amount) === this.props.amount
+        transaction.senderId === this.props.account.address &&
+      transaction.recipientId === this.state.recipient.value &&
+      fromRawLsk(transaction.amount) === this.props.amount
       )) : this.props.pendingTransactions.length;
 
     if (this.state.loading && (pending || this.props.failedTransactions)) {
@@ -139,8 +139,8 @@ class Confirm extends React.Component {
                 </div>
               </div>
             </ToolBoxInput>
-            {this.state.reference.value
-              ? <ToolBoxInput label={this.props.t('Reference')}
+            {this.state.reference.value ?
+              <ToolBoxInput label={this.props.t('Reference')}
                 className={`reference ${styles.disabledInput}`}
                 error={this.state.reference.error}
                 value={this.state.reference.value}

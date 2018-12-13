@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import { ActionButton, Button } from '../toolbox/buttons/button';
+import { ActionButton, Button } from './../toolbox/buttons/button';
 
 import ledgerNano from '../../assets/images/ledger-nano-s.png';
 import styles from './unlockWallet.css';

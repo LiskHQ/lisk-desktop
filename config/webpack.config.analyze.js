@@ -2,9 +2,9 @@
 const { resolve } = require('path');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 /* eslint-enable import/no-extraneous-dependencies */
 
 module.exports = merge(baseConfig, reactConfig, {
