@@ -9,13 +9,13 @@ describe('Piwik tracking', () => {
   };
 
   it('connect to router history to piwik, with Tracking Mode DISABLED', () => {
-    const newPiwik = piwik.connectPiwikWithHistory(history);
+    const newPiwik = piwik.tracking(history);
     expect(newPiwik).to.be.equal(false);
   });
 
   it('connect to router history to piwik, with Tracking Mode ENABLED', () => {
-    localJSONStorage.set('statistics', true);
-    const newPiwik = piwik.connectPiwikWithHistory(history);
+    localJSONStorage.set('settings', { statistics: true });
+    const newPiwik = piwik.tracking(history);
     expect(newPiwik).to.not.equal(false);
   });
 });

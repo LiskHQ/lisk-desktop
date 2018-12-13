@@ -11,7 +11,7 @@ const CustomRoute = ({
   const { pathname, search } = rest.history.location;
   const fullPath = pathPrefix + path + pathSuffix;
 
-  Piwik.connectPiwikWithHistory(rest.history);
+  Piwik.tracking(rest.history);
 
   return ((isPrivate && isAuthenticated) || !isPrivate ?
     <main className={isPrivate ? offlineStyle.disableWhenOffline : null}>
