@@ -1,3 +1,4 @@
+// TODO: delete file after coverage is fulfilled
 import { step } from 'mocha-steps';
 import thunk from 'redux-thunk';
 import { expect } from 'chai';
