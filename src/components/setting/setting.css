@@ -60,6 +60,21 @@
   font-size: 12px;
 }
 
+.privatePolicy {
+  font-size: 12px;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 30px;
+
+  & a {
+    font-size: 12px;
+    margin-left: 5px;
+    color: var(--color-primary-standard);
+    font-weight: 600;
+    text-decoration: none;
+  }
+}
+
 .sliderInput {
   width: auto;
 
