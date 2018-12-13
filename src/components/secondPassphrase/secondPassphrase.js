@@ -14,6 +14,7 @@ class SecondPassphrase extends React.Component {
   componentWillUnmount() {
     document.body.classList.remove('contentFocused');
   }
+
   componentDidMount() {
     document.body.classList.add('contentFocused');
     if (this.props.account.secondPublicKey) {

@@ -1,5 +1,5 @@
-import i18n from './../i18n';
-import menu from './../menu';
+import i18n from '../i18n';
+import menu from '../menu';
 import win from './win';
 
 const handler = {

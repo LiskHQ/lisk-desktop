@@ -23,14 +23,15 @@ class AddAccountID extends React.Component {
   }
 
   validateInput(value) {
-    const alreadyFollowing = this.props.accounts.filter(({ address }) =>
-      address === value).length > 0;
+    const alreadyFollowing = this.props.accounts.filter(
+      ({ address }) => address === value,
+    ).length > 0;
 
     if (!value) {
       return this.props.t('Required');
-    } else if (!value.match(regex.address)) {
+    } if (!value.match(regex.address)) {
       return this.props.t('Invalid address');
-    } else if (alreadyFollowing) {
+    } if (alreadyFollowing) {
       return this.props.t('ID already following');
     }
     return undefined;

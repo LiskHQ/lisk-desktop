@@ -1,10 +1,12 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import { searchTransactions, searchMoreTransactions, searchAccount, searchMoreVoters } from '../../../actions/search';
+import {
+  searchTransactions, searchMoreTransactions, searchAccount, searchMoreVoters,
+} from '../../../actions/search';
 import actionTypes from '../../../constants/actions';
 import ExplorerTransactions from './explorerTransactions';
-import txFilters from './../../../constants/transactionFilters';
+import txFilters from '../../../constants/transactionFilters';
 
 /* istanbul ignore next */
 const mapStateToProps = (state, ownProps) => ({
@@ -13,11 +15,11 @@ const mapStateToProps = (state, ownProps) => ({
   transactions: state.search.searchResults,
   votes: state.search.votes[state.search.lastSearch],
   voters: state.search.voters[state.search.lastSearch],
-  votersSize: state.search.votersSize &&
-    state.search.votersSize[state.search.lastSearch] ?
-    state.search.votersSize[state.search.lastSearch] : 0,
-  count: state.search.transactions[state.search.lastSearch] &&
-    (state.search.transactions[state.search.lastSearch].count || null),
+  votersSize: state.search.votersSize
+    && state.search.votersSize[state.search.lastSearch]
+    ? state.search.votersSize[state.search.lastSearch] : 0,
+  count: state.search.transactions[state.search.lastSearch]
+    && (state.search.transactions[state.search.lastSearch].count || null),
   offset: state.search.searchResults.length,
   activeFilter: state.filters.transactions || txFilters.all,
   isSearchInStore: state.search.transactions[ownProps.address] !== undefined,

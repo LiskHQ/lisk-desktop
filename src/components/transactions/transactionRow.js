@@ -5,7 +5,7 @@ import TransactionType from './transactionType';
 import styles from './transactionRow.css';
 import Amount from './amount';
 import Spinner from '../spinner';
-import { DateFromTimestamp } from './../timestamp/index';
+import { DateFromTimestamp } from '../timestamp/index';
 import { FontIcon } from '../fontIcon';
 
 class TransactionRow extends React.Component {
@@ -26,9 +26,9 @@ class TransactionRow extends React.Component {
         </div>
           <div className={`${styles.rightText} ${grid['col-sm-3']} transactions-cell`}>
             <div className={`${styles.hiddenXs} ${styles.reference} transaction-reference`}>
-                {props.value.asset && props.value.asset.data ?
-                  <span>{props.value.asset.data}</span>
-                : '-'}
+                {props.value.asset && props.value.asset.data
+                  ? <span>{props.value.asset.data}</span>
+                  : '-'}
             </div>
           </div>
         <div className={`${styles.rightText} ${grid['col-sm-2']} transactions-cell`}>

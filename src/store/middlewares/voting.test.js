@@ -1,5 +1,7 @@
 import { expect } from 'chai';
-import { spy, stub, mock, match } from 'sinon';
+import {
+  spy, stub, mock, match,
+} from 'sinon';
 
 import { voteLookupStatusUpdated } from '../../actions/voting';
 import * as delegateApi from '../../utils/api/delegate';

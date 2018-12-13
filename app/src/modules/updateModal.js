@@ -1,4 +1,4 @@
-import i18n from './../i18n';
+import i18n from '../i18n';
 
 export default (electron, releaseNotes, updateCallBack, versions) => {
   const { BrowserWindow, ipcMain } = electron;

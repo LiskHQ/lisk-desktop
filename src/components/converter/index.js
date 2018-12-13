@@ -7,9 +7,9 @@ import Converter from './converter';
 
 const mapStateToProps = state => ({
   settings: state.settings,
-  priceTicker: (state.liskService && state.liskService.priceTicker) ?
-    state.liskService.priceTicker :
-    {
+  priceTicker: (state.liskService && state.liskService.priceTicker)
+    ? state.liskService.priceTicker
+    : {
       LSK: {
         USD: '0',
         EUR: '0',

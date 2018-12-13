@@ -71,23 +71,23 @@ class Choose extends React.Component {
     const { t, account } = this.props;
     const hasEnoughLSK = this.hasEnoughLSK();
     const isDelegate = account.isDelegate;
-    const delegateNameHasError = (typeof this.state.delegateName.error === 'string' &&
-      this.state.delegateName.error !== '');
+    const delegateNameHasError = (typeof this.state.delegateName.error === 'string'
+      && this.state.delegateName.error !== '');
     const delegateNameDuplicated = !delegateNameHasError
-      && !this.props.delegate.delegateNameQueried &&
-      this.props.delegate.delegateNameInvalid;
-    const disableSubmitButton = delegateNameHasError ||
-      delegateNameDuplicated ||
-      this.state.delegateName.value === '';
-    const showCheckingAvailability = this.props.delegate.delegateNameQueried &&
-      !delegateNameDuplicated;
-    const showInfoNameAvailable = !delegateNameHasError &&
-      this.state.delegateName.value !== '' &&
-      !delegateNameDuplicated;
-    const showInfoValidation = !showInfoNameAvailable &&
-      !delegateNameHasError &&
-      !delegateNameDuplicated &&
-      !showCheckingAvailability;
+      && !this.props.delegate.delegateNameQueried
+      && this.props.delegate.delegateNameInvalid;
+    const disableSubmitButton = delegateNameHasError
+      || delegateNameDuplicated
+      || this.state.delegateName.value === '';
+    const showCheckingAvailability = this.props.delegate.delegateNameQueried
+      && !delegateNameDuplicated;
+    const showInfoNameAvailable = !delegateNameHasError
+      && this.state.delegateName.value !== ''
+      && !delegateNameDuplicated;
+    const showInfoValidation = !showInfoNameAvailable
+      && !delegateNameHasError
+      && !delegateNameDuplicated
+      && !showCheckingAvailability;
 
     return (
       <section>
@@ -160,8 +160,9 @@ class Choose extends React.Component {
                   disabled={disableSubmitButton}
                   label={t('Next')}
                   className={`${stepStyles.chooseNameBtn} submit-delegate-name`}
-                  onClick={() =>
-                    this.props.nextStep({ delegateName: this.state.delegateName.value })}
+                  onClick={() => this.props.nextStep({
+                    delegateName: this.state.delegateName.value,
+                  })}
                 />
               </form>
             </div>

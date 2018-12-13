@@ -23,6 +23,7 @@ class ConfirmSecond extends React.Component {
       error: false,
     };
   }
+
   onChange(name, value, error) {
     const { publicKey } = this.props.account;
     if (!error && extractPublicKey(value) !== publicKey) {
@@ -35,19 +36,23 @@ class ConfirmSecond extends React.Component {
       },
     });
   }
+
   login() {
     this.setState({
       step: 'confirm',
     });
   }
+
   componentDidMount() {
     if (this.props.account.passphrase) {
       this.setState({ step: 'confirm' });
     }
   }
+
   componentWillUnmount() {
     this.props.secondPassphraseRegisteredFailureReset();
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.account.secondPublicKey && !nextProps.error) {
       this.setState({ step: 'done' });
@@ -58,6 +63,7 @@ class ConfirmSecond extends React.Component {
       });
     }
   }
+
   confirm() {
     const { finalCallback, account } = this.props;
     const passphrase = this.state.passphrase.value || account.passphrase;
@@ -66,16 +72,18 @@ class ConfirmSecond extends React.Component {
       step: 'pending',
     });
   }
+
   redirectToFirstStep() {
     this.props.secondPassphraseRegisteredFailureReset();
     this.props.history.goBack();
   }
+
   render() {
     const { hidden, t, history } = this.props;
     const status = hidden ? styles.hidden : '';
-    const doneClass = (this.state.step === 'done' ||
-      this.state.step === 'pending' ||
-      this.state.step === 'second-passphrase-register-failure') ? styles.done : '';
+    const doneClass = (this.state.step === 'done'
+      || this.state.step === 'pending'
+      || this.state.step === 'second-passphrase-register-failure') ? styles.done : '';
     return (<section className={`${styles.wrapper} ${status}`}>
       <header className={doneClass}>
         <TransitionWrapper current={this.state.step} step='login' animationName='slide'>
@@ -122,8 +130,8 @@ class ConfirmSecond extends React.Component {
           </article>
         </TransitionWrapper>
       </header>
-      {this.state.error ? null :
-      <div className={`${styles.content} ${doneClass}`}>
+      {this.state.error ? null
+        : <div className={`${styles.content} ${doneClass}`}>
         <TransitionWrapper current={this.state.step} step='login'>
           <div className={styles.innerContent}>
             <PassphraseInput

@@ -1,7 +1,6 @@
 import Lisk from 'lisk-elements';
 
-export const listAccountDelegates = (liskAPIClient, address) =>
-  liskAPIClient.votes.get({ address, limit: '101' });
+export const listAccountDelegates = (liskAPIClient, address) => liskAPIClient.votes.get({ address, limit: '101' });
 
 export const listDelegates = (liskAPIClient, options) => new Promise((resolve, reject) => {
   if (!liskAPIClient) {
@@ -13,8 +12,7 @@ export const listDelegates = (liskAPIClient, options) => new Promise((resolve, r
   }
 });
 
-export const getDelegate = (liskAPIClient, options) =>
-  liskAPIClient.delegates.get(options);
+export const getDelegate = (liskAPIClient, options) => liskAPIClient.delegates.get(options);
 
 export const vote = (
   liskAPIClient,
@@ -38,24 +36,25 @@ export const vote = (
   });
 };
 
-export const getVotes = (liskAPIClient, { address, offset, limit }) =>
-  liskAPIClient.votes.get({ address, limit, offset });
+export const getVotes = (liskAPIClient, { address, offset, limit }) => liskAPIClient.votes.get(
+  { address, limit, offset },
+);
 
-export const getAllVotes = (liskAPIClient, address) =>
-  new Promise((resolve, reject) => {
-    getVotes(liskAPIClient, { address, offset: 0, limit: 100 }).then((votesEarlyBatch) => {
-      if (votesEarlyBatch.data.votes && votesEarlyBatch.data.votesUsed < 101) {
-        return resolve(votesEarlyBatch);
-      }
-      return getVotes(liskAPIClient, { address, offset: 100, limit: 1 }).then((votesLasteBatch) => {
-        votesEarlyBatch.data.votes = [...votesEarlyBatch.data.votes, ...votesLasteBatch.data.votes];
-        return resolve(votesEarlyBatch);
-      }).catch(reject);
+export const getAllVotes = (liskAPIClient, address) => new Promise((resolve, reject) => {
+  getVotes(liskAPIClient, { address, offset: 0, limit: 100 }).then((votesEarlyBatch) => {
+    if (votesEarlyBatch.data.votes && votesEarlyBatch.data.votesUsed < 101) {
+      return resolve(votesEarlyBatch);
+    }
+    return getVotes(liskAPIClient, { address, offset: 100, limit: 1 }).then((votesLasteBatch) => {
+      votesEarlyBatch.data.votes = [...votesEarlyBatch.data.votes, ...votesLasteBatch.data.votes];
+      return resolve(votesEarlyBatch);
     }).catch(reject);
-  });
+  }).catch(reject);
+});
 
-export const getVoters = (liskAPIClient, { publicKey, offset = 0, limit = 100 }) =>
-  liskAPIClient.voters.get({ publicKey, offset, limit });
+export const getVoters = (
+  liskAPIClient, { publicKey, offset = 0, limit = 100 },
+) => liskAPIClient.voters.get({ publicKey, offset, limit });
 
 export const registerDelegate = (
   liskAPIClient,

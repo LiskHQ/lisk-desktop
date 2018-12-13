@@ -2,7 +2,7 @@ import { expect } from 'chai'; // eslint-disable-line import/no-extraneous-depen
 import { spy, mock } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
 import win from './win';
 import localeHandler from './localeHandler';
-import i18n from './../i18n';
+import i18n from '../i18n';
 
 describe('localeHandler', () => {
   const callbacks = {};

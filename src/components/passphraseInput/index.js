@@ -5,7 +5,7 @@ import { FontIcon } from '../fontIcon';
 import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import { isValidPassphrase, getPassphraseValidationErrors } from '../../utils/passphrase';
 import styles from './passphraseInput.css';
-import keyCodes from './../../constants/keyCodes';
+import keyCodes from '../../constants/keyCodes';
 
 class PassphraseInput extends React.Component {
   constructor(props) {
@@ -94,8 +94,7 @@ class PassphraseInput extends React.Component {
     return (
       <div onClick={this.setFocused.bind(this)}>
         {this.state.isFocused
-          ?
-          <div className={styles.wrapper}>
+          ? <div className={styles.wrapper}>
             <div
               className={`show-passphrase-toggle ${styles.inputTypeToggle}`}
               onClick={this.toggleInputType.bind(this)}>
@@ -103,8 +102,7 @@ class PassphraseInput extends React.Component {
               /> <label>{this.state.inputType === 'password' ? this.props.t('Show passphrase') : this.props.t('Hide passphrase') }</label>
             </div>
             <div className={grid.row}>
-              {[...Array(12)].map((x, i) =>
-                <div className={`${grid[xs]} ${grid[sm]} ${grid[md]}`} key={i}>
+              {[...Array(12)].map((x, i) => <div className={`${grid[xs]} ${grid[sm]} ${grid[md]}`} key={i}>
                   <ToolBoxInput
                     shouldfocus={this.state.focus === i ? 1 : 0}
                     placeholder={i === 0 ? this.props.t('Start here') : ''}
@@ -133,8 +131,7 @@ class PassphraseInput extends React.Component {
             </div>
             <div className={styles.errorMessage}>{this.props.error}</div>
           </div>
-          :
-          <ToolBoxInput label={this.props.label}
+          : <ToolBoxInput label={this.props.label}
             className={`${this.props.className} ${styles.inputWrapper}`}
             type={this.state.inputType}
             onChange={this.focusAndPaste.bind(this)}

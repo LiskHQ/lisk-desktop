@@ -192,15 +192,15 @@ class CurrencyGraph extends React.Component {
         </div>
         <header><h2>{this.props.t('LSK/BTC')}</h2></header>
         <div className={`${styles.chartWrapper} chart-wrapper`} >
-          {this.props.liskService.prices ?
-            <LineChart
+          {this.props.liskService.prices
+            ? <LineChart
               data={chartData.bind(null, this.props.liskService.prices.data)}
-              options={chartOptions(this.props.liskService.step)}/> :
-            null}
-          {this.props.liskService.graphError ?
-            <EmptyState className={styles.errorMessage}
-              message={this.props.t('Price data currently not available')} /> :
-            null}
+              options={chartOptions(this.props.liskService.step)}/>
+            : null}
+          {this.props.liskService.graphError
+            ? <EmptyState className={styles.errorMessage}
+              message={this.props.t('Price data currently not available')} />
+            : null}
         </div>
       </div>
     );

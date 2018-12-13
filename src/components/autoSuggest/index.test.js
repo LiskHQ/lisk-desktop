@@ -5,10 +5,10 @@ import { spy, stub, useFakeTimers } from 'sinon';
 import { mountWithContext } from '../../../test/utils/mountHelpers';
 import AutoSuggest from './index';
 import styles from './autoSuggest.css';
-import * as searchActions from './../searchResult/keyAction';
-import localJSONStorageUtil from './../../utils/localJSONStorage';
+import * as searchActions from '../searchResult/keyAction';
+import localJSONStorageUtil from '../../utils/localJSONStorage';
 import routes from '../../constants/routes';
-import keyCodes from './../../constants/keyCodes';
+import keyCodes from '../../constants/keyCodes';
 import mockSearchResults from './searchResults.mock';
 
 describe('AutoSuggest', () => {

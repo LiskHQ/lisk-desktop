@@ -3,10 +3,10 @@ import { translate } from 'react-i18next';
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import styles from './sidechains.css';
-import application from './../../assets/images/sidechains/graphic-application.svg';
-import bootstrap from './../../assets/images/sidechains/graphic-bootstrap.svg';
-import hosts from './../../assets/images/sidechains/graphic-hosts.svg';
-import register from './../../assets/images/sidechains/graphic-register.svg';
+import application from '../../assets/images/sidechains/graphic-application.svg';
+import bootstrap from '../../assets/images/sidechains/graphic-bootstrap.svg';
+import hosts from '../../assets/images/sidechains/graphic-hosts.svg';
+import register from '../../assets/images/sidechains/graphic-register.svg';
 
 class Sidechains extends React.Component {
   render() {
@@ -33,4 +33,3 @@ class Sidechains extends React.Component {
 }
 
 export default translate()(Sidechains);
-

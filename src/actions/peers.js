@@ -3,7 +3,7 @@ import Lisk from 'lisk-elements';
 import actionTypes from '../constants/actions';
 import networks from '../constants/networks';
 import { errorToastDisplayed } from './toaster';
-import { loadingStarted, loadingFinished } from '../actions/loading';
+import { loadingStarted, loadingFinished } from './loading';
 
 import { getAccount } from '../utils/api/account';
 import { extractAddress, extractPublicKey } from '../utils/account';
@@ -29,8 +29,8 @@ const login = (dispatch, getState, data, config) => { // eslint-disable-line max
     const { passphrase } = data;
     const { code } = data.network;
     const publicKey = passphrase ? extractPublicKey(passphrase) : data.publicKey;
-    const liskAPIClient = store.peers.liskAPIClient ||
-      new Lisk.APIClient(config.nodes, { nethash: config.nethash });
+    const liskAPIClient = store.peers.liskAPIClient
+      || new Lisk.APIClient(config.nodes, { nethash: config.nethash });
     const address = extractAddress(publicKey);
     const accountBasics = {
       passphrase,
@@ -46,8 +46,8 @@ const login = (dispatch, getState, data, config) => { // eslint-disable-line max
 
     // redirect to main/transactions
     getAccount(liskAPIClient, address).then((accountData) => {
-      const duration = (passphrase && store.settings.autoLog) ?
-        Date.now() + lockDuration : 0;
+      const duration = (passphrase && store.settings.autoLog)
+        ? Date.now() + lockDuration : 0;
       const accountUpdated = {
         ...accountData,
         ...accountBasics,
@@ -77,41 +77,42 @@ const login = (dispatch, getState, data, config) => { // eslint-disable-line max
  * @param {Object} data - Active peer data and the passphrase of account
  * @returns {Object} Action object
  */
-export const liskAPIClientSet = data =>
-  (dispatch, getState) => { // eslint-disable-line max-statements
-    const config = data.network || {};
+export const liskAPIClientSet = data => ( // eslint-disable-line max-statements
+  dispatch, getState,
+) => {
+  const config = data.network || {};
 
-    if (config.address) {
-      config.nodes = [config.address];
-    } else if (config.testnet) {
-      config.nethash = Lisk.APIClient.constants.TESTNET_NETHASH;
-      config.nodes = networks.testnet.nodes;
-    } else {
-      config.nethash = Lisk.APIClient.constants.MAINNET_NETHASH;
-      config.nodes = networks.mainnet.nodes;
-    }
+  if (config.address) {
+    config.nodes = [config.address];
+  } else if (config.testnet) {
+    config.nethash = Lisk.APIClient.constants.TESTNET_NETHASH;
+    config.nodes = networks.testnet.nodes;
+  } else {
+    config.nethash = Lisk.APIClient.constants.MAINNET_NETHASH;
+    config.nodes = networks.mainnet.nodes;
+  }
 
-    if (config.custom) {
-      const liskAPIClient = new Lisk.APIClient(config.nodes, {});
-      loadingStarted('getConstants');
-      liskAPIClient.node.getConstants().then((response) => {
-        dispatch(loadingFinished('getConstants'));
-        config.nethash = response.data.nethash;
-        dispatch(peerSet(data, config));
-        login(dispatch, getState, data, config);
-      }).catch((error) => {
-        dispatch(loadingFinished('getConstants'));
-        if (error && error.message) {
-          dispatch(errorToastDisplayed({ label: i18next.t(`Unable to connect to the node, Error: ${error.message}`) }));
-        } else {
-          dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node, no response from the server.') }));
-        }
-      });
-    } else {
+  if (config.custom) {
+    const liskAPIClient = new Lisk.APIClient(config.nodes, {});
+    loadingStarted('getConstants');
+    liskAPIClient.node.getConstants().then((response) => {
+      dispatch(loadingFinished('getConstants'));
+      config.nethash = response.data.nethash;
       dispatch(peerSet(data, config));
       login(dispatch, getState, data, config);
-    }
-  };
+    }).catch((error) => {
+      dispatch(loadingFinished('getConstants'));
+      if (error && error.message) {
+        dispatch(errorToastDisplayed({ label: i18next.t(`Unable to connect to the node, Error: ${error.message}`) }));
+      } else {
+        dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node, no response from the server.') }));
+      }
+    });
+  } else {
+    dispatch(peerSet(data, config));
+    login(dispatch, getState, data, config);
+  }
+};
 
 
 /**

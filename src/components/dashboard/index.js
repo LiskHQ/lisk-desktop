@@ -58,8 +58,8 @@ class Dashboard extends React.Component {
             history,
             onClick: props => history.push(`${routes.wallet.path}?id=${props.value.id}`),
           }} />
-        </Box> :
-        <QuickTips />}
+        </Box>
+          : <QuickTips />}
         <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>
           <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingLeft: '0px' }}>
             <Box className={`${styles.following}`}>

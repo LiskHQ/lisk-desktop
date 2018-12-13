@@ -6,7 +6,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Checkbox from '../toolbox/sliderCheckbox';
 import styles from './setting.css';
 import accountConfig from '../../constants/account';
-import settingsConst from './../../constants/settings';
+import settingsConst from '../../constants/settings';
 // TODO: will be re-enabled when the functionality is updated
 import routes from '../../constants/routes';
 import { FontIcon } from '../fontIcon';
@@ -53,14 +53,14 @@ class Setting extends React.Component {
         <h4 className={`${allowAuthClass}`}>{t('Security')}</h4>
         <div className={styles.item}>
           <label className={`${allowAuthClass}`}>{t('Second passphrase (Fee: 5 LSK)')}</label>
-          {!hasSecondPassphrase ?
-            <Link
+          {!hasSecondPassphrase
+            ? <Link
               className={`register-second-passphrase ${styles.secondPassphrase} ${allowAuthClass}`}
               to={`${routes.secondPassphrase.path}`}>
               {t('Register')}
               <FontIcon>arrow-right</FontIcon>
-            </Link> :
-            <span
+            </Link>
+            : <span
               className={`second-passphrase-registered ${styles.secondPassphraseEnabled}`}>
               {t('Registered')}
               <FontIcon>checkmark</FontIcon>

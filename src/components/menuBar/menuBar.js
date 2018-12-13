@@ -7,8 +7,8 @@ const MenuBar = (props) => {
   const menuClass = menuStatus ? styles.openMenu : '';
   return (
     <section className={`${styles.menuBar} ${menuClass} menuBar`}>
-      {!menuStatus ?
-        <span className={`${styles.menuButton} menu-button expand`}
+      {!menuStatus
+        ? <span className={`${styles.menuButton} menu-button expand`}
           onClick={() => menuToggle()}>
           {t('Menu')}<FontIcon className={styles.icon} value='menu' />
         </span>
@@ -22,4 +22,3 @@ const MenuBar = (props) => {
 };
 
 export default MenuBar;
-

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import FormattedNumber from './';
+import FormattedNumber from '.';
 
 storiesOf('FormattedNumber', module)
   .add('with val', () => (

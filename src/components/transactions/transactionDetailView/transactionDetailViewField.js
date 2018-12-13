@@ -8,8 +8,8 @@ class TransactionDetailViewField extends React.Component {
     const {
       value, label, style, children, column, shouldShow, className,
     } = this.props;
-    return ((shouldShow === null || shouldShow === false) ? null :
-      <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${column ? styles.column : styles.columnNarrow}`}>
+    return ((shouldShow === null || shouldShow === false) ? null
+      : <div className={`${grid['col-xs-12']} ${grid['col-sm-5']} ${grid['col-md-5']} ${column ? styles.column : styles.columnNarrow}`}>
         <div className={styles.label}>{label}</div>
         {children}
         <div className={`${styles.value} ${style} ${className}`}>{value}</div>

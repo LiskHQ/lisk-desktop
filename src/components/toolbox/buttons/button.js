@@ -43,5 +43,7 @@ const TertiaryButton = themr('tertiaryButton', tertiaryButtonTheme)(TBTertiaryBu
 const ActionButton = themr('actionButton', actionButtonTheme)(TBActionButton);
 const Button = themr('button', secondaryBlueButtonTheme)(TBSecondaryBlueButton);
 
-export { Button, PrimaryButton, SecondaryLightButton, TertiaryButton, ActionButton };
+export {
+  Button, PrimaryButton, SecondaryLightButton, TertiaryButton, ActionButton,
+};
 export default Button;

@@ -22,16 +22,16 @@ class VotedDelegates extends AccountList {
           </div>
           <div className={styles.value}>
             {voters && voters
-                .slice(0, this.state.showMoreVoters ?
-                  this.state.showVotersNumber : this.props.votersSize)}
+              .slice(0, this.state.showMoreVoters
+                ? this.state.showVotersNumber : this.props.votersSize)}
           </div>
-          {voters.length > this.state.showVotersNumber &&
-           this.state.showMoreVoters ?
-            <div onClick={() => { super.showMore('showVotersNumber'); }} className={`${styles.showMore} showMore  show-voters`}>
+          {voters.length > this.state.showVotersNumber
+           && this.state.showMoreVoters
+            ? <div onClick={() => { super.showMore('showVotersNumber'); }} className={`${styles.showMore} showMore  show-voters`}>
               <FontIcon className={styles.arrowDown} value='arrow-down'/>
               {this.props.t('Show more')}
-            </div> :
-            <Waypoint
+            </div>
+            : <Waypoint
               key={voters.length}
               onEnter={() => {
                 if (voters.length < this.props.votersSize) {
@@ -47,4 +47,3 @@ class VotedDelegates extends AccountList {
 }
 
 export default translate()(VotedDelegates);
-

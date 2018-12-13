@@ -3,7 +3,7 @@ import { translate } from 'react-i18next';
 
 import Box from '../box';
 import { FontIcon } from '../fontIcon';
-import { PrimaryButton } from './../toolbox/buttons/button';
+import { PrimaryButton } from '../toolbox/buttons/button';
 import styles from './errorBoundary.css';
 import EmptyState from '../emptyState';
 

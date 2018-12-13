@@ -27,8 +27,8 @@ class UserVotes extends AccountList {
                 .slice(0, this.state.showVotesNumber)}
             </div>
             {votes.length > this.state.showVotesNumber
-              && this.state.votesFilterQuery === '' ?
-              <div onClick={() => { super.showMore('showVotesNumber'); }} className={`${styles.showMore} showMore show-votes`}>
+              && this.state.votesFilterQuery === ''
+              ? <div onClick={() => { super.showMore('showVotesNumber'); }} className={`${styles.showMore} showMore show-votes`}>
                 <FontIcon className={styles.arrowDown} value='arrow-down'/>
                 {this.props.t('Show more')}
               </div> : ''
@@ -41,4 +41,3 @@ class UserVotes extends AccountList {
 }
 
 export default translate()(UserVotes);
-

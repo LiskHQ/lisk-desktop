@@ -2,11 +2,10 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './votingListView.css';
 
-const ListLabels = ({ status, t }) =>
-  (<ul className={`${styles.tableHead} ${grid.row}`}>
+const ListLabels = ({ status, t }) => (<ul className={`${styles.tableHead} ${grid.row}`}>
     {
-      !status ?
-        <li className={`${grid['col-md-1']}  ${grid['col-xs-2']} ${styles.leftText}`}>
+      !status
+        ? <li className={`${grid['col-md-1']}  ${grid['col-xs-2']} ${styles.leftText}`}>
           {t('Vote', { context: 'verb' })}
         </li> : null
     }

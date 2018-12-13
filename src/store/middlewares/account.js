@@ -47,10 +47,10 @@ const updateAccountData = (store, action) => {
 
 const getRecentTransactionOfType = (transactionsList, type) => (
   transactionsList.filter(transaction => (
-    transaction.type === type &&
+    transaction.type === type
     // limit the number of confirmations to 5 to not fire each time there is another new transaction
     // theoretically even less then 5, but just to be on the safe side
-    transaction.confirmations < 5))[0]
+    && transaction.confirmations < 5))[0]
 );
 
 const delegateRegistration = (store, action) => {

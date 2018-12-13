@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import { spy, match } from 'sinon';
 import Joyride from 'react-joyride';
 import { Onboarding } from './index';
-import breakpoints from './../../constants/breakpoints';
+import breakpoints from '../../constants/breakpoints';
 
 describe('Onboarding Component', () => {
   let wrapper;

@@ -75,4 +75,3 @@ describe('Reducer: followedAccounts(state, action)', () => {
     expect(changedState.accounts[1]).to.deep.equal(undefined);
   });
 });
-

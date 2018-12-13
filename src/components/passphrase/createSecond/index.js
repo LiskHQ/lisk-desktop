@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from '../create/create.css';
-import PassphraseCreation from './../../passphraseCreation';
+import PassphraseCreation from '../../passphraseCreation';
 import Create from './create';
 
 class CreateSecond extends React.Component {

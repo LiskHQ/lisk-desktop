@@ -155,41 +155,39 @@ export const votePlaced = ({
  * Gets the list of delegates current account has voted for
  *
  */
-export const votesFetched = ({ address, type }) =>
-  (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    listAccountDelegates(liskAPIClient, address).then((response) => {
-      if (type === 'update') {
-        dispatch(votesUpdated({ list: response.data.votes }));
-      } else {
-        dispatch(votesAdded({ list: response.data.votes }));
-      }
-    });
-  };
+export const votesFetched = ({ address, type }) => (dispatch, getState) => {
+  const liskAPIClient = getState().peers.liskAPIClient;
+  listAccountDelegates(liskAPIClient, address).then((response) => {
+    if (type === 'update') {
+      dispatch(votesUpdated({ list: response.data.votes }));
+    } else {
+      dispatch(votesAdded({ list: response.data.votes }));
+    }
+  });
+};
 
 /**
  * Gets list of all delegates
  */
 export const delegatesFetched = ({
   offset, refresh, q,
-}) =>
-  (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    let params = {
-      offset,
-      limit: '100',
-      sort: 'rank:asc',
-    };
-    params = q ? { ...params, search: q } : params;
-    listDelegates(liskAPIClient, params).then((response) => {
-      updateDelegateCache(response.data, getState().peers);
-      dispatch(delegatesAdded({
-        list: response.data,
-        totalDelegates: response.data.length,
-        refresh,
-      }));
-    });
+}) => (dispatch, getState) => {
+  const liskAPIClient = getState().peers.liskAPIClient;
+  let params = {
+    offset,
+    limit: '100',
+    sort: 'rank:asc',
   };
+  params = q ? { ...params, search: q } : params;
+  listDelegates(liskAPIClient, params).then((response) => {
+    updateDelegateCache(response.data, getState().peers);
+    dispatch(delegatesAdded({
+      list: response.data,
+      totalDelegates: response.data.length,
+      refresh,
+    }));
+  });
+};
 
 
 /**
@@ -197,13 +195,12 @@ export const delegatesFetched = ({
  */
 export const urlVotesFound = ({
   upvotes, unvotes, address,
-}) =>
-  (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    const processUrlVotes = (votes) => {
-      dispatch(votesAdded({ list: votes, upvotes, unvotes }));
-    };
-    listAccountDelegates(liskAPIClient, address)
-      .then((response) => { processUrlVotes(response.data.votes); })
-      .catch(() => { processUrlVotes([]); });
+}) => (dispatch, getState) => {
+  const liskAPIClient = getState().peers.liskAPIClient;
+  const processUrlVotes = (votes) => {
+    dispatch(votesAdded({ list: votes, upvotes, unvotes }));
   };
+  listAccountDelegates(liskAPIClient, address)
+    .then((response) => { processUrlVotes(response.data.votes); })
+    .catch(() => { processUrlVotes([]); });
+};

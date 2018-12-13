@@ -6,6 +6,7 @@ export default class GenericStepDefinition {
     this.wrapper = input;
     this.store = store;
   }
+
   /**
    * simulate click on a dom query
    * @param {String} selector - Valid css query selector
@@ -13,6 +14,7 @@ export default class GenericStepDefinition {
   clickOnElement(selector) {
     this.wrapper.find(selector).first().simulate('click');
   }
+
   /**
    * check that dom query entry is disable or enable
    * if value of status is equal to 'not' query shouldn't be disabled
@@ -26,6 +28,7 @@ export default class GenericStepDefinition {
       expect(this.wrapper.find(query)).to.be.disabled();
     }
   }
+
   /**
    *
    * @param {String} query - dom query that we need to check length of that
@@ -34,6 +37,7 @@ export default class GenericStepDefinition {
   haveLengthOf(query, length) {
     expect(this.wrapper).to.have.exactly(length).descendants(query);
   }
+
   /**
    *
    * @param {String} query - dom query that we need to check text of that
@@ -43,6 +47,7 @@ export default class GenericStepDefinition {
     this.wrapper.update();
     expect(this.wrapper.find(query).first()).to.have.text(text);
   }
+
   /**
    *
    * @param {String} query - dom query that we need to check text of that
@@ -51,6 +56,7 @@ export default class GenericStepDefinition {
   haveInputValueOf(query, text) {
     expect(this.wrapper.find(query).first()).to.have.value(text);
   }
+
   /**
    *
    * @param {String} value - The value to fill in input
@@ -60,6 +66,7 @@ export default class GenericStepDefinition {
     const selector = `.${field.replace(/ /g, '-')} input`;
     this.wrapper.find(selector).first().simulate('change', { target: { value } });
   }
+
   /**
    *
    * @param {String} value - The index of option in the list to click on
@@ -90,6 +97,7 @@ export default class GenericStepDefinition {
   shouldSeeCountInstancesOf(count, selector) {
     expect(this.wrapper).to.have.exactly(count).descendants(selector);
   }
+
   /**
    * prints rendered DOM by wrapper into console
    */

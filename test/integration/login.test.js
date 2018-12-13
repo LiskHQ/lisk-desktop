@@ -19,9 +19,9 @@ import peerMiddleware from '../../src/store/middlewares/peers';
 import { liskAPIClientSet } from '../../src/actions/peers';
 import * as toasterActions from '../../src/actions/toaster';
 import { settingsUpdated } from '../../src/actions/settings';
-import Login from './../../src/components/login';
+import Login from '../../src/components/login';
 import accounts from '../constants/accounts';
-import networks from './../../src/constants/networks';
+import networks from '../../src/constants/networks';
 import GenericStepDefinition from '../utils/genericStepDefinition';
 
 const nethash = '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d';

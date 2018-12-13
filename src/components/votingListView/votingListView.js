@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import Box from '../box';
-import MultiStep from './../multiStep';
+import MultiStep from '../multiStep';
 import VotingHeader from './votingHeader';
 import ListLabels from './listLabels';
 import styles from './votingListView.css';
 import VoteUrlProcessor from '../voteUrlProcessor';
-import voteFilters from './../../constants/voteFilters';
+import voteFilters from '../../constants/voteFilters';
 import { parseSearchParams } from '../../utils/searchParams';
 import VoteList from './voteList';
 import DelegateList from './delegateList';
@@ -117,11 +117,13 @@ class VotingListView extends React.Component {
     const { votes } = this.props;
     switch (this.state.activeFilter) {
       case voteFilters.voted:
-        return delegates.filter(delegate =>
-          (votes[delegate.username] && votes[delegate.username].confirmed));
+        return delegates.filter(
+          delegate => (votes[delegate.username] && votes[delegate.username].confirmed),
+        );
       case voteFilters.notVoted:
-        return delegates.filter(delegate =>
-          (!votes[delegate.username] || !votes[delegate.username].confirmed));
+        return delegates.filter(
+          delegate => (!votes[delegate.username] || !votes[delegate.username].confirmed),
+        );
       default:
         return delegates;
     }
@@ -132,8 +134,8 @@ class VotingListView extends React.Component {
 
     if (!this.isInitial && this.props.delegates.length === 0) {
       message = 'No delegates found.';
-    } else if (this.state.activeFilter === voteFilters.voted &&
-      Object.keys(this.props.votes).length === 0) {
+    } else if (this.state.activeFilter === voteFilters.voted
+      && Object.keys(this.props.votes).length === 0) {
       message = 'You have not voted yet.';
     } else if (this.query !== '' && Object.keys(filteredList).length === 0) {
       message = 'No search result in given criteria.';
@@ -159,8 +161,8 @@ class VotingListView extends React.Component {
     return (
       <Fragment>
         <VoteUrlProcessor closeInfo={this.closeInfo.bind(this)} show={this.showInfo()} />
-        { !this.showInfo() ?
-          <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
+        { !this.showInfo()
+          ? <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
             <VotingHeader
               setActiveFilter={this.setActiveFilter.bind(this)}
               showChangeSummery={showChangeSummery}
@@ -181,8 +183,8 @@ class VotingListView extends React.Component {
                 </MultiStep>
               </div>
               {
-                (filteredList.length === 0) ?
-                  <div className={`empty-message ${styles.emptyMessage}`}>
+                (filteredList.length === 0)
+                  ? <div className={`empty-message ${styles.emptyMessage}`}>
                     {t(this.getEmptyStateMessage(filteredList))}
                   </div> : null
               }

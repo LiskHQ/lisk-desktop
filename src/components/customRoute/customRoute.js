@@ -9,8 +9,8 @@ const CustomRoute = ({
 }) => {
   const { pathname, search } = rest.history.location;
   const fullPath = pathPrefix + path + pathSuffix;
-  return ((isPrivate && isAuthenticated) || !isPrivate ?
-    <main className={isPrivate ? offlineStyle.disableWhenOffline : null}>
+  return ((isPrivate && isAuthenticated) || !isPrivate
+    ? <main className={isPrivate ? offlineStyle.disableWhenOffline : null}>
       <ErrorBoundary errorMessage={t('An error occoured while rendering this page')}>
         <Route path={fullPath} component={component} exact={exact} />
       </ErrorBoundary>

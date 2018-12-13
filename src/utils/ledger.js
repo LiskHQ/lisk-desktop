@@ -41,19 +41,19 @@ export const getLedgerAccount = (index = 0) => {
   ledgerAccount.account(index);
   return ledgerAccount;
 };
-export const calculateSecondPassphraseIndex =
-  (accountIndex, pin) => accountIndex + parseInt(pin, 10) + hwConstants.secondPassphraseOffset;
+export const calculateSecondPassphraseIndex = (
+  accountIndex, pin,
+) => accountIndex + parseInt(pin, 10) + hwConstants.secondPassphraseOffset;
 
-const sendIpcCommand = command =>
-  new Promise((resolve, reject) => {
-    ipc.once('ledgerCommand.result', (event, res) => {
-      if (res.success) {
-        return resolve(res.data);
-      }
-      return reject(new Error(LEDGER_MSG[res.errorKey]));
-    });
-    ipc.send('ledgerCommand.request', command);
+const sendIpcCommand = command => new Promise((resolve, reject) => {
+  ipc.once('ledgerCommand.result', (event, res) => {
+    if (res.success) {
+      return resolve(res.data);
+    }
+    return reject(new Error(LEDGER_MSG[res.errorKey]));
   });
+  ipc.send('ledgerCommand.request', command);
+});
 
 const ledgerPlatformHendler = async (command) => { // eslint-disable-line max-statements
   if (isElectron()) {
@@ -128,8 +128,8 @@ export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t,
     } catch (error) {
       return;
     }
-    if ((!unInitializedAdded && (index === 0 || accountInfo.isInitialized)) ||
-      (unInitializedAdded && !accountInfo.isInitialized)) {
+    if ((!unInitializedAdded && (index === 0 || accountInfo.isInitialized))
+      || (unInitializedAdded && !accountInfo.isInitialized)) {
       accounts.push(accountInfo);
     }
     index++;

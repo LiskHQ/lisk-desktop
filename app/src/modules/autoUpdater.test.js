@@ -17,30 +17,29 @@ describe('autoUpdater', () => {
   const electron = {
     BrowserWindow: ({
       width, height, center, webPreferences,
-    }) =>
-      ({
-        width,
-        height,
-        center,
-        webPreferences,
-        loadURL,
-        show,
-        close: () => {
-          close();
-          callbacks.closed();
-        },
+    }) => ({
+      width,
+      height,
+      center,
+      webPreferences,
+      loadURL,
+      show,
+      close: () => {
+        close();
+        callbacks.closed();
+      },
+      on: (item, callback) => {
+        callbacks[item] = callback;
+      },
+      webContents: {
         on: (item, callback) => {
           callbacks[item] = callback;
         },
-        webContents: {
-          on: (item, callback) => {
-            callbacks[item] = callback;
-          },
-          send: (event, value) => {
-            events.push({ event, value });
-          },
+        send: (event, value) => {
+          events.push({ event, value });
         },
-      }),
+      },
+    }),
     app: {
       getVersion: () => 123,
     },
@@ -209,4 +208,3 @@ describe('autoUpdater', () => {
     consoleSpy.restore();
   });
 });
-

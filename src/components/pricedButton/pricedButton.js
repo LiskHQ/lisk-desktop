@@ -10,11 +10,11 @@ const PricedButton = ({
   return (
     <div className='primary-button'>
       {
-        fee &&
-          (<span className={`${styles.fee} ${hasFunds ? '' : `${styles.error} error-message`} `}>
+        fee
+          && (<span className={`${styles.fee} ${hasFunds ? '' : `${styles.error} error-message`} `}>
             {
-              hasFunds ? t('Fee: {{amount}} LSK', { amount: fromRawLsk(fee) }) :
-                t('Insufficient funds for {{amount}} LSK fee', { amount: fromRawLsk(fee) })
+              hasFunds ? t('Fee: {{amount}} LSK', { amount: fromRawLsk(fee) })
+                : t('Insufficient funds for {{amount}} LSK fee', { amount: fromRawLsk(fee) })
             }
           </span>)
       }

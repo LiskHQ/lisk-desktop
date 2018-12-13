@@ -4,4 +4,3 @@ export default {
   registerDelegate: 2,
   vote: 3,
 };
-

@@ -5,7 +5,7 @@ import Joyride from 'react-joyride';
 import throttle from 'lodash.throttle';
 import { FontIcon } from '../fontIcon';
 import { steps } from './steps';
-import breakpoints from './../../constants/breakpoints';
+import breakpoints from '../../constants/breakpoints';
 import { settingsUpdated } from '../../actions/settings';
 
 class Onboarding extends React.Component {

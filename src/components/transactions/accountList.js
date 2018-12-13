@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontIcon } from '../fontIcon';
-import routes from './../../constants/routes';
+import routes from '../../constants/routes';
 import styles from './delegateStatistics.css';
 
 class AccountList extends React.Component {
@@ -96,4 +96,3 @@ class AccountList extends React.Component {
 }
 
 export default AccountList;
-

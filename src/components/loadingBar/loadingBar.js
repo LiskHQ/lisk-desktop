@@ -40,9 +40,9 @@ class LoadingBar extends React.Component {
 
   render() {
     return <div className={styles.fixedAtTop}>
-      {this.state.visible ?
-        <ProgressBar type="linear" mode="indeterminate" theme={styles}/> :
-        null
+      {this.state.visible
+        ? <ProgressBar type="linear" mode="indeterminate" theme={styles}/>
+        : null
       }
     </div>;
   }

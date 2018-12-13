@@ -5,8 +5,9 @@ import theme from 'react-toolbox/lib/tooltip/theme.css';
 import { translate } from 'react-i18next';
 import i18n from '../../i18n';
 
-const _convertTimeFromFirstBlock = value =>
-  new Date((((Date.UTC(2016, 4, 24, 17, 0, 0, 0) / 1000) + value) * 1000));
+const _convertTimeFromFirstBlock = value => new Date(
+  (((Date.UTC(2016, 4, 24, 17, 0, 0, 0) / 1000) + value) * 1000),
+);
 /**
  * Remove an array of keys from object
  * @param {object} obj - an object that we want to remove some properties from that

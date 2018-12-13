@@ -27,4 +27,3 @@ describe('VotedDelegates', () => {
     expect(wrapper.find('.voters Link').length).to.have.equal(35);
   });
 });
-

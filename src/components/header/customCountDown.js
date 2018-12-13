@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Options from '../dialog/options';
-import routes from './../../constants/routes';
+import routes from '../../constants/routes';
 import styles from './customCountDown.css';
 
 class CustomCountDown extends React.Component {
@@ -69,8 +69,8 @@ class CustomCountDown extends React.Component {
     }} className={`${styles.reset} reset`}> {t('Reset')} </div> : <div></div>;
 
     const resetStyle = resetCondition ? styles.timeout : styles.default;
-    const timer = !timeoutCondition &&
-      <span className={resetStyle}>{t('Session timeout in')} {min}:{sec}</span>;
+    const timer = !timeoutCondition
+      && <span className={resetStyle}>{t('Session timeout in')} {min}:{sec}</span>;
 
     const renderComponent = autoLog ? (<div className={styles.timerRow}>
       {resetButton}

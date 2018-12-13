@@ -6,7 +6,7 @@ import { accountVotersFetched, accountVotesFetched } from '../../../actions/acco
 import { searchAccount } from '../../../actions/search';
 import WalletTransactions from './walletTransactions';
 import actionTypes from '../../../constants/actions';
-import txFilters from './../../../constants/transactionFilters';
+import txFilters from '../../../constants/transactionFilters';
 import removeDuplicateTransactions from '../../../utils/transactions';
 
 /* istanbul ignore next */
@@ -18,17 +18,17 @@ const mapStateToProps = state => ({
       state.transactions.pending,
       state.transactions.confirmed,
     ),
-  votes: state.account.votes ?
-    state.account.votes :
-    state.search.votes[state.account.addres],
-  voters: state.account.voters ?
-    state.account.voters :
-    state.search.voters[state.account.address],
+  votes: state.account.votes
+    ? state.account.votes
+    : state.search.votes[state.account.addres],
+  voters: state.account.voters
+    ? state.account.voters
+    : state.search.voters[state.account.address],
   count: state.transactions.count,
   // Pick delegate from source
-  delegate: (state.account && state.account.delegate) ?
-    state.account && (state.account.delegate || null) :
-    state.search.delegates[state.account.address],
+  delegate: (state.account && state.account.delegate)
+    ? state.account && (state.account.delegate || null)
+    : state.search.delegates[state.account.address],
   activeFilter: state.filters.wallet || txFilters.all,
   loading: state.loading,
 });

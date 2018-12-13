@@ -8,8 +8,8 @@ import { MemoryRouter as Router } from 'react-router-dom';
 import Setting from './setting';
 import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
-import breakpoints from './../../constants/breakpoints';
-import settingsConst from './../../constants/settings';
+import breakpoints from '../../constants/breakpoints';
+import settingsConst from '../../constants/settings';
 
 describe('Setting', () => {
   const history = {

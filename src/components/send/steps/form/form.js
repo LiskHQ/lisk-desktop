@@ -62,13 +62,13 @@ class Form extends React.Component {
     const byteCount = encodeURI(value).split(/%..|./).length - 1;
     if (!value && required) {
       return this.props.t('Required');
-    } else if (name === 'reference' && byteCount > 64) {
+    } if (name === 'reference' && byteCount > 64) {
       return this.props.t('Maximum length exceeded');
-    } else if (!value.match(this.inputValidationRegexps[name])) {
+    } if (!value.match(this.inputValidationRegexps[name])) {
       return name === 'amount' ? this.props.t('Invalid amount') : this.props.t('Invalid address');
-    } else if (name === 'amount' && value > parseFloat(this.getMaxAmount())) {
+    } if (name === 'amount' && value > parseFloat(this.getMaxAmount())) {
       return this.props.t('Not enough LSK');
-    } else if (name === 'amount' && value === '0') {
+    } if (name === 'amount' && value === '0') {
       return this.props.t('Zero not allowed');
     }
     return undefined;
@@ -114,15 +114,15 @@ class Form extends React.Component {
           <h2>{this.props.t('Send LSK')}</h2>
         </header>
         <form className={styles.form}>
-          { this.props.followedAccounts.length > 0 && this.state.openFollowedAccountSuggestion ?
-            <Bookmark
+          { this.props.followedAccounts.length > 0 && this.state.openFollowedAccountSuggestion
+            ? <Bookmark
               focusReference={this.focusReference.bind(this)}
               className='recipient sendBookmark'
               label={this.props.t('Send to address')}
               address={this.state.recipient}
               handleChange={this.handleChange.bind(this, 'recipient', true)}
-            /> :
-            <AddressInput
+            />
+            : <AddressInput
               className='recipient'
               label={this.props.t('Send to address')}
               address={this.state.recipient}
@@ -148,11 +148,11 @@ class Form extends React.Component {
               t={this.props.t}
             />
             {
-              this.state.showSetMaxAmount &&
-              !this.state.amount.value &&
-              this.getMaxAmount() > 0 ?
-                <a onClick={this.handleSetMaxAmount.bind(this)} className={`set-max-amount ${styles.setMaxAmount}`}>{ this.props.t('Set max. amount') }</a>
-              : <div></div>
+              this.state.showSetMaxAmount
+              && !this.state.amount.value
+              && this.getMaxAmount() > 0
+                ? <a onClick={this.handleSetMaxAmount.bind(this)} className={`set-max-amount ${styles.setMaxAmount}`}>{ this.props.t('Set max. amount') }</a>
+                : <div></div>
             }
           </div>
         </form>

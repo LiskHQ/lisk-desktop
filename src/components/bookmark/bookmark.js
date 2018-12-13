@@ -1,8 +1,8 @@
 import React from 'react';
 import AccountVisual from '../accountVisual/index';
 import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
-import keyCodes from './../../constants/keyCodes';
-import regex from './../../utils/regex';
+import keyCodes from '../../constants/keyCodes';
+import regex from '../../utils/regex';
 
 import styles from './bookmark.css';
 
@@ -33,8 +33,8 @@ class Bookmark extends React.Component {
     const { followedAccounts, address } = this.props;
 
     return followedAccounts.filter(account => (
-      (account.title && account.title.toLowerCase().includes(address.value.toLowerCase())) ||
-      (account.address && account.address.toLowerCase().includes(address.value.toLowerCase()))
+      (account.title && account.title.toLowerCase().includes(address.value.toLowerCase()))
+      || (account.address && account.address.toLowerCase().includes(address.value.toLowerCase()))
     ));
   }
 
@@ -116,10 +116,10 @@ class Bookmark extends React.Component {
     const isAddressFollowedAccounts = followedAccounts
       .find(account => account.address === address.value);
 
-    const showBigVisualAccountStyles = isValidAddress &&
-      !this.state.show &&
-      !isAddressFollowedAccounts &&
-      !address.error && address.value;
+    const showBigVisualAccountStyles = isValidAddress
+      && !this.state.show
+      && !isAddressFollowedAccounts
+      && !address.error && address.value;
 
     const showSmallVisualAccountStyles = !(!isValidAddress && address.error && address.value);
 
@@ -171,8 +171,8 @@ class Bookmark extends React.Component {
             }}
             >
           </ToolBoxInput>
-          { this.state.show && filteredFollowedAccounts.length !== 0 ?
-            <ul className={`${filteredFollowedAccounts.length > 0 ? styles.resultList : ''}
+          { this.state.show && filteredFollowedAccounts.length !== 0
+            ? <ul className={`${filteredFollowedAccounts.length > 0 ? styles.resultList : ''}
               ${this.state.show ? styles.show : ''}
               bookmarkList`}>
               {

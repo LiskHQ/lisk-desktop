@@ -13,7 +13,7 @@ import PrivateWrapper from '../privateWrapper';
 import styles from './header.css';
 import CustomCountDown from './customCountDown';
 import Options from '../dialog/options';
-import routes from './../../constants/routes';
+import routes from '../../constants/routes';
 
 class Header extends React.Component {
   /* istanbul ignore next */
@@ -65,8 +65,8 @@ class Header extends React.Component {
             {this.shouldShowSearchBar() && <SearchBar/>}
           </div>
           {this.props.account.loading
-                ? null
-                : <Account {...{ peers, t, showNetworkIndicator }} />}
+            ? null
+            : <Account {...{ peers, t, showNetworkIndicator }} />}
         </div>
 
         <div className={`${styles.loginInfo}`}>
@@ -91,9 +91,9 @@ class Header extends React.Component {
                     <div className={styles.timer}>
                       {this.props.autoLog
                         ? <div>
-                          {((this.props.account.expireTime &&
-                            this.props.account.expireTime !== 0) &&
-                            this.props.account.passphrase)
+                          {((this.props.account.expireTime
+                            && this.props.account.expireTime !== 0)
+                            && this.props.account.passphrase)
                             ? <div className={styles.logoutInfo}>
                               <Countdown
                                 date={this.props.account.expireTime}
@@ -133,8 +133,8 @@ class Header extends React.Component {
                 </div>
               </PrivateWrapper>
               {
-                this.shouldShowActionButton() &&
-                <div className={styles.login}>
+                this.shouldShowActionButton()
+                && <div className={styles.login}>
                   <p>{this.props.t('Welcome back')}</p>
                   <Link className={styles.link} to='/'>
                     <FontIcon value='login'/>

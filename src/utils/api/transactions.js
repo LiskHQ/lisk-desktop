@@ -1,5 +1,5 @@
 import Lisk from 'lisk-elements';
-import txFilters from './../../constants/transactionFilters';
+import txFilters from '../../constants/transactionFilters';
 
 export const send = (
   liskAPIClient,
@@ -9,15 +9,14 @@ export const send = (
   secondPassphrase = null,
   data,
   timeOffset,
-) =>
-  new Promise((resolve, reject) => {
-    const transaction = Lisk.transaction.transfer({
-      recipientId, amount, passphrase, secondPassphrase, data, timeOffset,
-    });
-    liskAPIClient.transactions.broadcast(transaction).then(() => {
-      resolve(transaction);
-    }).catch(reject);
+) => new Promise((resolve, reject) => {
+  const transaction = Lisk.transaction.transfer({
+    recipientId, amount, passphrase, secondPassphrase, data, timeOffset,
   });
+  liskAPIClient.transactions.broadcast(transaction).then(() => {
+    resolve(transaction);
+  }).catch(reject);
+});
 
 export const getTransactions = ({
   liskAPIClient, address, limit = 20, offset = 0,
@@ -43,10 +42,9 @@ export const getSingleTransaction = ({ liskAPIClient, id }) => new Promise((reso
   }
 });
 
-export const unconfirmedTransactions = (liskAPIClient, address, limit = 20, offset = 0, sort = 'timestamp:desc') =>
-  liskAPIClient.node.getTransactions('unconfirmed', {
-    senderId: address,
-    limit,
-    offset,
-    sort,
-  });
+export const unconfirmedTransactions = (liskAPIClient, address, limit = 20, offset = 0, sort = 'timestamp:desc') => liskAPIClient.node.getTransactions('unconfirmed', {
+  senderId: address,
+  limit,
+  offset,
+  sort,
+});

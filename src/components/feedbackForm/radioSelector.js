@@ -16,7 +16,7 @@ class RadioSelector extends React.Component {
               {
                 this.props.icons[idx].map(iconKey => (
                     <FontIcon key={`${this.props.iconPrefix}${iconKey}`} value={`${this.props.iconPrefix}${iconKey}`} />
-                  ))
+                ))
               }
               {this.props.labels ? <span>{this.props.labels[idx]}</span> : null}
             </label>

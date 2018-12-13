@@ -14,9 +14,9 @@ import loadingReducer from '../../store/reducers/loading';
 import filtersReducer from '../../store/reducers/filters';
 import followedAccountsReducer from '../../store/reducers/followedAccounts';
 
-import { liskAPIClientSet } from './../../../src/actions/peers';
-import networks from './../../../src/constants/networks';
-import getNetwork from './../../../src/utils/getNetwork';
+import { liskAPIClientSet } from '../../actions/peers';
+import networks from '../../constants/networks';
+import getNetwork from '../../utils/getNetwork';
 
 import AccountTransactions from './index';
 import i18n from '../../i18n';

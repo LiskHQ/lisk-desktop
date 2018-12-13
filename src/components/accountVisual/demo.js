@@ -3,7 +3,7 @@ import Waypoint from 'react-waypoint';
 
 import { generatePassphrase } from '../../utils/passphrase';
 import { extractAddress } from '../../utils/account';
-import AccountVisual from '../accountVisual';
+import AccountVisual from '.';
 import Box from '../box';
 
 /**

@@ -23,20 +23,20 @@ const AccountCard = ({
     <div className={styles.balance}>
       {fromRawLsk(account.balance)}<p>LSK</p>
     </div>
-    {isEditMode ?
-      <div className={styles.edit}>
+    {isEditMode
+      ? <div className={styles.edit}>
         <ToolBoxInput
           placeholder={'Account Name'}
           onChange={value => changeInput(value, account.address)}
           theme={styles}
           value={hardwareAccountName}></ToolBoxInput>
-      </div> :
-      null}
-      {hardwareAccountName && !isEditMode ?
-        <div className={`${styles.edit} ${styles.editTitle}`}>
+      </div>
+      : null}
+      {hardwareAccountName && !isEditMode
+        ? <div className={`${styles.edit} ${styles.editTitle}`}>
           {hardwareAccountName}
-        </div> :
-      null}
+        </div>
+        : null}
     <div className={styles.addressField}>
       <CopyToClipboard value={account.address} />
     </div>

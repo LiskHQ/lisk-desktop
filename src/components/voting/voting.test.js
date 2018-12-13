@@ -72,4 +72,3 @@ describe('Voting', () => {
     expect(wrapper.find('DelegateList')).to.have.lengthOf(1);
   });
 });
-

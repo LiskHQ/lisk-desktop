@@ -12,4 +12,3 @@ const SearchResult = ({ t }) => (
 );
 
 export default translate()(SearchResult);
-

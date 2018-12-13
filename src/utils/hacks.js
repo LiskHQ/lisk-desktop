@@ -12,7 +12,7 @@ import Lisk from 'lisk-elements';
 //
 // eslint-disable-next-line import/prefer-default-export
 export const getTimeOffset = state => (
-  state.blocks && state.blocks.latestBlocks[0] && state.blocks.latestBlocks[0].timestamp ?
-    state.blocks.latestBlocks[0].timestamp - Lisk.transaction.utils.getTimeFromBlockchainEpoch() :
-    0
+  state.blocks && state.blocks.latestBlocks[0] && state.blocks.latestBlocks[0].timestamp
+    ? state.blocks.latestBlocks[0].timestamp - Lisk.transaction.utils.getTimeFromBlockchainEpoch()
+    : 0
 );

@@ -21,9 +21,8 @@ class DelegateList extends React.Component {
   render() {
     return (<Fragment>
       {
-        this.state.didMount ?
-          this.props.list.map(item =>
-            <DelegateRow key={item.account.address} data={item}
+        this.state.didMount
+          ? this.props.list.map(item => <DelegateRow key={item.account.address} data={item}
               className={this.props.safari}
               voteToggled={this.props.voteToggled}
               voteStatus={this.props.votes[item.username]}

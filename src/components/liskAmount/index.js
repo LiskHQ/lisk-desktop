@@ -11,11 +11,10 @@ const roundTo = (value, places) => {
 };
 
 const LiskAmount = props => (
-  props.val !== undefined ?
-    <FormattedNumber val={roundTo(parseFloat(fromRawLsk(props.val)), props.roundTo)} /> :
-    <span />
+  props.val !== undefined
+    ? <FormattedNumber val={roundTo(parseFloat(fromRawLsk(props.val)), props.roundTo)} />
+    : <span />
 );
 
 
 export default LiskAmount;
-

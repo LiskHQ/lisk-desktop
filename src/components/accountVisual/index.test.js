@@ -4,7 +4,7 @@ import { shallow, mount } from 'enzyme';
 import sinon from 'sinon';
 import AccountVisual from './index';
 import accounts from '../../../test/constants/accounts';
-import breakpoints from './../../constants/breakpoints';
+import breakpoints from '../../constants/breakpoints';
 
 describe('AccountVisual', () => {
   it('should create account visual of an address', () => {

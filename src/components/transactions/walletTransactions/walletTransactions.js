@@ -1,12 +1,12 @@
 import React from 'react';
-import MultiStep from './../../multiStep';
-import styles from './../transactions.css';
+import MultiStep from '../../multiStep';
+import styles from '../transactions.css';
 import TransactionsOverview from '../transactionsOverview';
-import TransactionDetailView from './../transactionDetailView';
-import Box from './../../box';
-import txFilters from './../../../constants/transactionFilters';
+import TransactionDetailView from '../transactionDetailView';
+import Box from '../../box';
+import txFilters from '../../../constants/transactionFilters';
 
-import routes from './../../../constants/routes';
+import routes from '../../../constants/routes';
 
 class WalletTransactions extends React.Component {
   onInit() {
@@ -16,9 +16,9 @@ class WalletTransactions extends React.Component {
       filter: txFilters.all,
     });
 
-    if (this.props.account.isDelegate &&
-      this.props.account.delegate &&
-      this.props.account.delegate.publicKey) {
+    if (this.props.account.isDelegate
+      && this.props.account.delegate
+      && this.props.account.delegate.publicKey) {
       this.props.accountVotersFetched({
         publicKey: this.props.account.delegate.publicKey,
       });
@@ -46,6 +46,7 @@ class WalletTransactions extends React.Component {
       filter: this.props.activeFilter,
     });
   }
+
   /*
     Transactions from tabs are filtered based on filter number
     It applys to All, Incoming and Outgoing
@@ -66,6 +67,7 @@ class WalletTransactions extends React.Component {
       });
     }
   }
+
   onTransactionRowClick(props) {
     this.props.history.push(`${routes.wallet.path}?id=${props.value.id}`);
   }

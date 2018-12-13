@@ -23,14 +23,14 @@ import accountMiddleware from '../../src/store/middlewares/account';
 import peerMiddleware from '../../src/store/middlewares/peers';
 import { accountLoggedIn } from '../../src/actions/account';
 import { liskAPIClientSet } from '../../src/actions/peers';
-import networks from './../../src/constants/networks';
-import txTypes from './../../src/constants/transactionTypes';
-import getNetwork from './../../src/utils/getNetwork';
+import networks from '../../src/constants/networks';
+import txTypes from '../../src/constants/transactionTypes';
+import getNetwork from '../../src/utils/getNetwork';
 import Wallet from '../../src/components/transactionDashboard';
 import accounts from '../constants/accounts';
 import GenericStepDefinition from '../utils/genericStepDefinition';
-import txFilters from './../../src/constants/transactionFilters';
-import routes from './../../src/constants/routes';
+import txFilters from '../../src/constants/transactionFilters';
+import routes from '../../src/constants/routes';
 
 let walletTransactionsProps;
 

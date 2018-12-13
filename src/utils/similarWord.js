@@ -28,26 +28,23 @@ export const levenshteinDistance = (word1, word2) => {
  * @param {string} word
  * @returns {bool}
  */
-export const inDictionary = word =>
-  mnemonic.Words.ENGLISH.indexOf(word) !== -1;
+export const inDictionary = word => mnemonic.Words.ENGLISH.indexOf(word) !== -1;
 
-export const reducedDictByWordLength =
-  mnemonic.Words.ENGLISH.reduce((acc, el) => {
-    const len = el.length;
-    if (acc[len]) {
-      acc[len].push(el);
-    } else {
-      acc[len] = [el];
-    }
-    return acc;
-  }, {});
+export const reducedDictByWordLength = mnemonic.Words.ENGLISH.reduce((acc, el) => {
+  const len = el.length;
+  if (acc[len]) {
+    acc[len].push(el);
+  } else {
+    acc[len] = [el];
+  }
+  return acc;
+}, {});
 
-const getByKey = key =>
-  [
-    reducedDictByWordLength[key - 1],
-    reducedDictByWordLength[key],
-    reducedDictByWordLength[key + 1],
-  ];
+const getByKey = key => [
+  reducedDictByWordLength[key - 1],
+  reducedDictByWordLength[key],
+  reducedDictByWordLength[key + 1],
+];
 
 
 export const getWordsFromDictByLength = (len) => {
@@ -57,8 +54,7 @@ export const getWordsFromDictByLength = (len) => {
     .reduce((acc, el) => acc.concat(el), []);
 };
 
-const matchPartOfString = (word, begin, end) =>
-  word.startsWith(begin) || word.endsWith(end);
+const matchPartOfString = (word, begin, end) => word.startsWith(begin) || word.endsWith(end);
 
 /**
  * Find the similar word based on invalid word

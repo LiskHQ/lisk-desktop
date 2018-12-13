@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { TertiaryButton, Button } from './../toolbox/buttons/button';
+import { TertiaryButton, Button } from '../toolbox/buttons/button';
 import Box from '../box';
-import AccountTitleInput from './../followedAccounts/accountTitleInput';
+import AccountTitleInput from '../followedAccounts/accountTitleInput';
 import { followedAccountAdded } from '../../actions/followedAccounts';
 import styles from './followAccount.css';
 

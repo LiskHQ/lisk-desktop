@@ -13,8 +13,8 @@ const lookupDelegate = (store, username) => {
   const state = store.getState();
   const liskAPIClient = state.peers.liskAPIClient;
   const localStorageDelegates = loadDelegateCache(state.peers);
-  const delegate = localStorageDelegates[username] ||
-    state.voting.delegates.find(d => d.username === username);
+  const delegate = localStorageDelegates[username]
+    || state.voting.delegates.find(d => d.username === username);
   if (delegate) {
     return new Promise((resolve) => {
       resolve({ data: [delegate] });

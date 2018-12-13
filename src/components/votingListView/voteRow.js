@@ -5,10 +5,10 @@ import styles from './votingListView.css';
 class VoteRow extends React.Component {
   shouldComponentUpdate({ data }) {
     const oldData = this.props.data;
-    return (!oldData && !!data) ||
-      (!!oldData && !data) ||
-      ((!!oldData && !!data) &&
-      (oldData.unconfirmed !== data.unconfirmed));
+    return (!oldData && !!data)
+      || (!!oldData && !data)
+      || ((!!oldData && !!data)
+      && (oldData.unconfirmed !== data.unconfirmed));
   }
 
   render() {

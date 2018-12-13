@@ -1,9 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { resolve } = require('path');
 const merge = require('webpack-merge');
-const baseConfig = require('./webpack.config');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const baseConfig = require('./webpack.config');
 /* eslint-enable import/no-extraneous-dependencies */
 
 const extractCSS = new ExtractTextPlugin({

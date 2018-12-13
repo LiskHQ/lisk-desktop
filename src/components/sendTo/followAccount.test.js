@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { mountWithContext } from './../../../test/utils/mountHelpers';
+import { mountWithContext } from '../../../test/utils/mountHelpers';
 import FollowAccount from './followAccount';
 import * as followedAccounts from '../../actions/followedAccounts';
 

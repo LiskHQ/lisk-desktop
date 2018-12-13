@@ -35,8 +35,7 @@ class ViewAccounts extends React.Component {
       {accounts.length
         ? <div className={`${styles.accounts} followed-accounts-list`}>
           <div className={styles.list}>
-            {accounts.map((account, i) =>
-              (<div
+            {accounts.map((account, i) => (<div
                 key={i}
                 className={`${grid.row} ${styles.rows} ${styles.clickable} followed-account`}
                 onClick={() => {
