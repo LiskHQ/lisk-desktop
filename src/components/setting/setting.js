@@ -126,8 +126,9 @@ class Setting extends React.Component {
                     checked: settings.statistics,
                   }}/>
               </div>
-              <div className={`${styles.item} ${styles.description}`}>
-                {t('')}
+              <div className={`${styles.item} ${styles.privatePolicy}`}>
+               { t('For more information refer to our ') }
+                <a href={'https://lisk.io/privacy'} target={'_blank'}>{t('Privacy Policy')}</a>
               </div>
             </div>
           )
