@@ -1,5 +1,4 @@
 {
-  "": "",
   " Chat": " Chat",
   " FAQ": " FAQ",
   " Make sure that you are using the latest version of Lisk Hub.": " Make sure that you are using the latest version of Lisk Hub.",
@@ -126,6 +125,12 @@
   "Filter": "Filter",
   "Filter votes": "Filter votes",
   "Final confirmation": "Final confirmation",
+<<<<<<< HEAD
+=======
+  "Follow": "Follow",
+  "Following": "Following",
+  "For more information refer to our ": "For more information refer to our ",
+>>>>>>> :nail_care: Update css class for privacy policy link
   "Forged": "Forged",
   "Get passphrase": "Get passphrase",
   "Get to your Dashboard": "Get to your Dashboard",
@@ -247,6 +252,7 @@
   "Please use the last not-initialized account before creating a new one!": "Please use the last not-initialized account before creating a new one!",
   "Previous": "Previous",
   "Price data currently not available": "Price data currently not available",
+  "Privacy Policy": "Privacy Policy",
   "Productivity": "Productivity",
   "Proxy Authentication": "Proxy Authentication",
   "Quit": "Quit",
