@@ -55,7 +55,6 @@ describe('Login', () => {
       accountsRetrieved: spy(),
       t: data => data,
       onAccountUpdated: () => {},
-      setActiveDialog: spy(),
       liskAPIClientSet: spy(),
     };
     options = {

@@ -52,7 +52,6 @@ module.exports = {
     'src/components/feedbackForm/',
     'src/components/formattedNumber/stories.js',
     'src/components/hwWallet/',
-    'src/components/login/',
     'src/components/newsFeed/index.js', // This component doesn't meet the setted tresholds for mocha but in jest
     'src/components/newsFeed/news.js',
     'src/components/passphrase/create/create.js',
@@ -86,8 +85,6 @@ module.exports = {
     'src/utils/applyDeviceClass.js',
     'src/utils/ledger.js',
     'src/utils/proxyLogin.js',
-    'src/utils/rawTransactionWrapper.js',
-    'src/utils/to.js',
   ],
   coverageThreshold: {
     global: {
