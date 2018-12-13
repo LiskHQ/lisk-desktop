@@ -4,19 +4,12 @@ properties([disableConcurrentBuilds(), pipelineTriggers([])])
 pipeline {
 	agent { node { label 'lisk-hub' } }
 	options {
-		skipDefaultCheckout true
 		buildDiscarder(logRotator(numToKeepStr: '168', artifactNumToKeepStr: '5'))
 	}
 	environment {
 		LISK_CORE_VERSION = '1.3.0'
 	}
 	stages {
-		stage('Clean workspace and checkout SCM') {
-			steps {
-				deleteDir()
-				checkout scm
-			}
-		}
 		stage('Install npm dependencies') {
 			steps {
 				nvm(getNodejsVersion()) {
@@ -154,9 +147,6 @@ EOF
 	}
 	post {
 		always {
-			ansiColor('xterm') {
-				sh '( cd $WORKSPACE/$BRANCH_NAME && make mrproper || true ) || true'
-			}
 			cobertura autoUpdateHealth: false,
 				  autoUpdateStability: false,
 				  coberturaReportFile: 'coverage/jest/cobertura-coverage.xml',
@@ -186,13 +176,10 @@ EOF
 				}
 			}
 		}
-		success {
+		fixed {
 			script {
-				previous_build = currentBuild.getPreviousBuild()
-				if (previous_build != null && previous_build.result == 'FAILURE') {
-					build_info = getBuildInfo()
-					liskSlackSend('good', "Recovery: build ${build_info} was successful.")
-				}
+				build_info = getBuildInfo()
+				liskSlackSend('good', "Recovery: build ${build_info} was successful.")
 			}
 		}
 		failure {
@@ -201,5 +188,12 @@ EOF
 				liskSlackSend('danger', "Build ${build_info} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)")
 			}
 		}
+		cleanup {
+			ansiColor('xterm') {
+				sh '( cd $WORKSPACE/$BRANCH_NAME && make mrproper || true ) || true'
+			}
+			cleanWs()
+		}
 	}
 }
+// vim: filetype=groovy
