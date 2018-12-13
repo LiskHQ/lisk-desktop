@@ -83,36 +83,28 @@ https://github.com/LiskHQ/lisk-hub/blob/79165170a326a7f98efee098732e55be37d31223
 
 ## Integration tests
 
-### What do they test?
-Integration of all components, utils, reducers, and middlewares on one page, e.g. [Login](/LiskHQ/lisk-hub/blob/development/test/integration/login.test.js), [Wallet](/LiskHQ/lisk-hub/blob/development/test/integration/wallet.test.js), [Delegates](/LiskHQ/lisk-hub/blob/development/test/integration/voting.test.js).
+Recently were reimplemented using Cypress and now reside together with [e2e tests](/LiskHQ/lisk-hub/blob/development/test/cypress/e2e)
 
-### How are they organized?
-Integration tests for each page have their own `*.test.js` file in [/test/integration/](/LiskHQ/lisk-hub/blob/development/test/integration).
-
-Configuration is common with unit tests.
-
-### How to run them?
-They are run together with unit tests.
-
-### What tools are used?
-- All that are used for unit tests.
-- [mocha-steps](https://www.npmjs.com/package/mocha-steps) to write the tests in a more [BDD](https://en.wikipedia.org/wiki/Behavior-driven_development) way.
-- Our own **generic step definitions** [/test/utils/genericStepDefinition.js](LiskHQ/lisk-hub/blob/bfc94e4f46b4e2393bcc1a0ecd6f1bc85590b6a6/test/utils/genericStepDefinition.js)
-- Our own **mount helper** that wraps `enzyme.mount` to avoid some code repetition: [/test/utils/mountHelpers.js](https://github.com/LiskHQ/lisk-hub/blob/bfc94e4f46b4e2393bcc1a0ecd6f1bc85590b6a6/test/utils/mountHelpers.js)
+[Legacy tests](/LiskHQ/lisk-hub/blob/development/test/integration) are obsolete and should be removed after unit test will satisfy coverage criteria
 
 
-## E2E tests
+## E2E and Integration tests
 
 ### What do they test?
-Full user scenarios in the application as a whole, including the communication with Lisk Core. 
+User scenarios in the application, where interaction between components, localStorage, Lisk APIs happens
 
 ### How to run them?
 See [relevant sections of README](/LiskHQ/lisk-hub#run-end-to-end-tests)
 
 ### How are they organized?
-E2E tests for each major feature have the tests specified in its own `*.spec.js` in [/test/cypress/e2e/](/LiskHQ/lisk-hub/blob/development/test/cypress/e2e)
+E2E and integration tests for each major feature have the tests specified in its own `*.spec.js` in [/test/cypress/e2e/](/LiskHQ/lisk-hub/blob/development/test/cypress/e2e)
 
 Configuration is in [cypress.conf.js](/LiskHQ/lisk-hub/blob/development/cypress/cypress.conf.js).
+
+### How do I decide whether I should write E2E or Integration test?
+Use at least one e2e test for every feature / api call.
+
+For the different set of inputs, for setting up app state you can use mocking / stubbing making it an integration test.
 
 ### What tools are used?
 - [Cypress](https://www.cypress.io/) - JavaScript End to End Testing Framework

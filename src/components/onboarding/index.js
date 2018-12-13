@@ -117,9 +117,9 @@ class Onboarding extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  settingsUpdated: data => dispatch(settingsUpdated(data)),
-});
+const mapDispatchToProps = {
+  settingsUpdated,
+};
 const mapStateToProps = state => ({
   isAuthenticated: !!state.account.publicKey,
   showDelegates: state.settings.advancedMode,

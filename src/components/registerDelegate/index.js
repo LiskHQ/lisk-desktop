@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { delegateRegistered } from '../../actions/account';
@@ -10,10 +11,10 @@ const mapStateToProps = state => ({
   delegate: state.delegate,
 });
 
-const mapDispatchToProps = dispatch => ({
-  delegatesFetched: data => dispatch(delegatesFetched(data)),
-  delegateRegistered: data => dispatch(delegateRegistered(data)),
-});
+const mapDispatchToProps = {
+  delegatesFetched,
+  delegateRegistered,
+};
 
 export default connect(
   mapStateToProps,

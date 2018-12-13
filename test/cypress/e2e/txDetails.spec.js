@@ -27,7 +27,6 @@ describe('Tx details', () => {
     cy.get(ss.txHeader).contains('Transaction');
     cy.get(ss.txSenderAddress).should('have.text', accounts.genesis.address);
     cy.get(ss.txRecipientAddress).should('have.text', accounts.delegate.address);
-    cy.get(ss.txDatePlaceholder).should('have.text', 'Pending');
     cy.get(ss.txAddedVotes).should('not.exist');
     cy.get(ss.txRemovedVotes).should('not.exist');
     cy.get(ss.txAmount).should('have.text', '-5');

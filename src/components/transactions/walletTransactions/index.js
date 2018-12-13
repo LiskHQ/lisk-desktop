@@ -33,14 +33,14 @@ const mapStateToProps = state => ({
   loading: state.loading,
 });
 
-const mapDispatchToProps = dispatch => ({
-  searchAccount: data => dispatch(searchAccount(data)),
-  transactionsRequested: data => dispatch(transactionsRequested(data)),
-  transactionsFilterSet: data => dispatch(transactionsFilterSet(data)),
-  accountVotersFetched: data => dispatch(accountVotersFetched(data)),
-  accountVotesFetched: data => dispatch(accountVotesFetched(data)),
-  addFilter: data => dispatch({ type: actionTypes.addFilter, data }),
-});
+const mapDispatchToProps = {
+  searchAccount,
+  transactionsRequested,
+  transactionsFilterSet,
+  accountVotersFetched,
+  accountVotesFetched,
+  addFilter: data => ({ type: actionTypes.addFilter, data }),
+};
 
 export default withRouter(connect(
   mapStateToProps,
