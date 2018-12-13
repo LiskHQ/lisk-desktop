@@ -47,7 +47,7 @@ class Confirm extends React.Component {
       ? this.props.pendingTransactions.find(transaction => (
         transaction.senderId === this.props.account.address &&
       transaction.recipientId === this.state.recipient.value &&
-      fromRawLsk(transaction.amount) === this.props.amount
+      (this.props.accountInit || fromRawLsk(transaction.amount) === this.props.amount)
       )) : this.props.pendingTransactions.length;
 
     if (this.state.loading && (pending || this.props.failedTransactions)) {
