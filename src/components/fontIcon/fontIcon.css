@@ -6,7 +6,7 @@
 }
 
 .icon {
-  font-family: "icons";
+  font-family: "icons"; /* stylelint-disable-line font-family-no-missing-generic-family-keyword */
   font-weight: normal;
   font-style: normal;
   font-size: 24px;

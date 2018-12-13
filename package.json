@@ -180,7 +180,7 @@
     "sinon-stub-promise": "=4.0.0",
     "style-loader": "0.23.1",
     "stylelint": "9.9.0",
-    "stylelint-config-standard": "=17.0.0",
+    "stylelint-config-standard": "18.2.0",
     "stylelint-webpack-plugin": "=0.10.5",
     "url-loader": "1.1.2",
     "url-polyfill": "1.1.3",
