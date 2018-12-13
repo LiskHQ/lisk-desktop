@@ -7,5 +7,5 @@ export const fromRawLsk = value => (
 );
 
 export const toRawLsk = value => (
-  new BigNumber(value * new BigNumber(10).pow(8)).round(0).toNumber()
+  new BigNumber(value * new BigNumber(10).pow(8)).decimalPlaces(0).toNumber()
 );
