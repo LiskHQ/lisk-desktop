@@ -171,7 +171,7 @@ EOF
 					    adjective = 'failed'
 					}
 					githubNotify context: 'Jenkins e2e tests',
-						     description: 'All e2e tests ' + adjective,
+						     description: 'e2e tests ' + adjective,
 						     status: status,
 						     targetUrl: readFile(".cypress_url").trim()
 				}
