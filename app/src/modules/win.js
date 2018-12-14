@@ -1,6 +1,9 @@
+import serve from 'electron-serve';
 import localeHandler from './localeHandler';
 import menu from './../menu';
 import process from './process';
+
+const loadURL = serve({ directory: `${__dirname}` });
 
 const win = {
   browser: null,
@@ -8,6 +11,7 @@ const win = {
   init: ({ electron, path, electronLocalshortcut }) => {
     const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
     const { BrowserWindow } = electron;
+
     win.browser = new BrowserWindow({
       width: width > 1680 ? 1680 : width,
       height: height > 1050 ? 1050 : height,
@@ -28,7 +32,7 @@ const win = {
       win.browser.webContents.toggleDevTools();
     });
 
-    win.browser.loadURL(`file://${__dirname}/index.html`);
+    loadURL(win.browser);
   },
 
 

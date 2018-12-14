@@ -13,6 +13,7 @@ export default {
   SET_CUSTOM_URL: 'setCustomUrl',
   SET_CUSTOM_VARIABLE: 'setCustomVariable',
   SET_DOCUMENT_TITLE: 'setDocumentTitle',
+  SET_GENERATATION_TIME_MS: 'setGenerationTimeMs',
   SET_REFERRER_URL: 'setReferrerUrl',
   SET_SITE_ID: 'setSiteId',
   SET_TRACKER_URL: 'setTrackerUrl',
