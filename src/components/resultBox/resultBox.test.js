@@ -99,14 +99,14 @@ describe('Result Box', () => {
   it('display add follwed account button', () => {
     props = {
       copy: null,
-      title: 'Sorry',
-      body: 'An error occurred while creating the transaction.',
-      success: false,
+      title: 'test',
+      body: 'test',
+      success: true,
       reset: () => {},
       copyToClipboard: () => {},
       t: () => {},
       onMount: spy(),
-      reciepientId: '123L',
+      recipientId: '123L',
       followedAccounts: [{
         address: '1L',
       }],
@@ -137,7 +137,7 @@ describe('Result Box', () => {
     };
     wrapper = mount(<ResultBox {...props} />, options);
     wrapper.debug();
-    wrapper.find('.add-to-bookmarks').at(0).simulate('click');
+    wrapper.find('.add-follwed-account-button').at(0).simulate('click');
     expect(props.prevStep).to.have.been.calledWith();
     expect(props.transactionFailedClear).to.have.been.calledWith();
   });
