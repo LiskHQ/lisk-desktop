@@ -77,10 +77,11 @@
 /* stylelint-disable */
 @for $i from 1 to 4 {
   .cube-$i {
-    animation: float 2000ms .5ms infinite ease-in;
-    animation-delay: calc($i * 0.2)s;
+    animation: float 2000ms 0.5ms infinite ease-in;
+    animation-delay: calc($i * 0.2) s;
     z-index: calc(5 - $i);
     position: absolute;
+
     & img {
       margin-left: calc(70px * $i);
       margin-top: calc(200px - (40 * $i));

@@ -66,8 +66,7 @@ class VotesPreview extends React.Component {
           <div className={`${styles.progressWrapper} ${selectionClass} selection-wrapper`}>
             <CircularProgressBar
               styles={progressBarStyles}
-              percentage={createPercentage(totalNewVotesCount, maxCountOfVotesInOneTurn)}
-              textForPercentage={() => ''}/>
+              percentage={createPercentage(totalNewVotesCount, maxCountOfVotesInOneTurn)} />
             <article className='selection'>
               <span>{t('Selection')} </span>
               <h4>{totalNewVotesCount}</h4>
@@ -77,8 +76,7 @@ class VotesPreview extends React.Component {
           <div className={`${styles.progressWrapper} ${totalClass} ${styles.totalWrapper} total-wrapper`}>
             <CircularProgressBar
               styles={progressBarStyles}
-              percentage={createPercentage(totalVotesCount, maxCountOfVotes)}
-              textForPercentage={() => ''}/>
+              percentage={createPercentage(totalVotesCount, maxCountOfVotes)} />
             <article className='total'>
               <span>{t('Total')} </span>
               <h4>{totalVotesCount}</h4>
