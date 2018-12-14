@@ -81,7 +81,7 @@ class ViewAccounts extends React.Component {
           </div>
         </div>
         : <div className={`${styles.emptyList} followed-accounts-empty-list`}>
-          <p>{t('Keep track of any Lisk ID balance. Only you will see who you added.')}</p>
+          <p>{t('Keep track of any Lisk ID balance. Only you will see who you bookmarked.')}</p>
 
           <div className={`${styles.addAccountLink} ${styles.clickable} add-account-button`} onClick={() => nextStep()}>
             {t('Add a Lisk ID')} <FontIcon value='arrow-right'/>
