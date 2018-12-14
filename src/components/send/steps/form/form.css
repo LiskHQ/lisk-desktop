@@ -20,11 +20,6 @@
       font-size: 16px;
       font-weight: 600;
     }
-
-    & > label {
-      font-size: 14px;
-      font-weight: 600px !important;
-    }
   }
 
   & input {
@@ -32,12 +27,6 @@
   }
 
   & > div:first-child {
-    & > label {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--color-primary-standard);
-    }
-
     & > input {
       font-size: 16px;
       font-weight: 600;
@@ -48,8 +37,6 @@
   & > div:nth-child(2) {
     & > label {
       font-size: 14px;
-      font-weight: 600;
-      color: var(--color-primary-standard);
     }
 
     & > input {
@@ -63,8 +50,6 @@
     & > div:first-child {
       & > label {
         font-size: 14px;
-        font-weight: 600;
-        color: var(--color-primary-standard);
       }
 
       & > input {
