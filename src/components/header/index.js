@@ -22,7 +22,7 @@ const mapDispatchToProps = {
   closeDialog: dialogHidden,
   logOut: accountLoggedOut,
   removePassphrase,
-  resetTimer: accountUpdated({ expireTime: Date.now() + lockDuration }),
+  resetTimer: () => accountUpdated({ expireTime: Date.now() + lockDuration }),
 };
 
 export default withRouter(connect(

@@ -4,19 +4,12 @@ properties([disableConcurrentBuilds(), pipelineTriggers([])])
 pipeline {
 	agent { node { label 'lisk-hub' } }
 	options {
-		skipDefaultCheckout true
 		buildDiscarder(logRotator(numToKeepStr: '168', artifactNumToKeepStr: '5'))
 	}
 	environment {
 		LISK_CORE_VERSION = '1.3.0'
 	}
 	stages {
-		stage('Clean workspace and checkout SCM') {
-			steps {
-				deleteDir()
-				checkout scm
-			}
-		}
 		stage('Install npm dependencies') {
 			steps {
 				nvm(getNodejsVersion()) {
@@ -85,8 +78,10 @@ pipeline {
 						ansiColor('xterm') {
 							nvm(getNodejsVersion()) {
 								sh 'ON_JENKINS=true npm run --silent test'
-								withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
-										sh 'cat coverage/jest/lcov.info |coveralls -v'
+								catchError {
+									withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
+										sh 'cat coverage/jest/lcov.info |coveralls'
+									}
 								}
 							}
 						}
@@ -103,6 +98,9 @@ pipeline {
 						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
 							ansiColor('xterm') {
 								wrap([$class: 'Xvfb', parallelBuild: true, autoDisplayName: true]) {
+									githubNotify context: 'Jenkins e2e tests',
+										     description: 'e2e tests are running',
+										     status: 'PENDING'
 									nvm(getNodejsVersion()) {
 										sh '''#!/bin/bash -xe
 										export N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
@@ -133,10 +131,6 @@ EOF
 										npm run serve -- $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
 										set +e
 										set -o pipefail
-
-										githubNotify context: 'Jenkins e2e tests',
-											     description: 'e2e tests are running',
-											     status: 'PENDING'
 										npm run cypress:run -- --record |tee cypress.log
 										ret=$?
 										grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress_url
@@ -154,9 +148,6 @@ EOF
 	}
 	post {
 		always {
-			ansiColor('xterm') {
-				sh '( cd $WORKSPACE/$BRANCH_NAME && make mrproper || true ) || true'
-			}
 			cobertura autoUpdateHealth: false,
 				  autoUpdateStability: false,
 				  coberturaReportFile: 'coverage/jest/cobertura-coverage.xml',
@@ -180,19 +171,16 @@ EOF
 					    adjective = 'failed'
 					}
 					githubNotify context: 'Jenkins e2e tests',
-						     description: 'All e2e tests ' + adjective,
+						     description: 'e2e tests ' + adjective,
 						     status: status,
 						     targetUrl: readFile(".cypress_url").trim()
 				}
 			}
 		}
-		success {
+		fixed {
 			script {
-				previous_build = currentBuild.getPreviousBuild()
-				if (previous_build != null && previous_build.result == 'FAILURE') {
-					build_info = getBuildInfo()
-					liskSlackSend('good', "Recovery: build ${build_info} was successful.")
-				}
+				build_info = getBuildInfo()
+				liskSlackSend('good', "Recovery: build ${build_info} was successful.")
 			}
 		}
 		failure {
@@ -201,5 +189,12 @@ EOF
 				liskSlackSend('danger', "Build ${build_info} failed (<${env.BUILD_URL}/console|console>, <${env.BUILD_URL}/changes|changes>)")
 			}
 		}
+		cleanup {
+			ansiColor('xterm') {
+				sh '( cd $WORKSPACE/$BRANCH_NAME && make mrproper || true ) || true'
+			}
+			cleanWs()
+		}
 	}
 }
+// vim: filetype=groovy

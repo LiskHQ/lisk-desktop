@@ -6,104 +6,111 @@ const getSearchesObjFromLS = () => JSON.parse(localStorage.getItem('searches'));
 
 describe('Search', () => {
   const testnetTransaction = '755251579479131174';
-  [
-    {
-      name: 'Search for Lisk ID using keyboard Enter',
-      searchAction: () => {
-        cy.get(ss.searchInput).click().type(`${accounts.delegate.address}{enter}`);
-      },
-    },
-    {
-      name: 'Search for Lisk ID using suggestions',
-      searchAction: () => {
-        cy.get(ss.searchInput).click().type(`${accounts.delegate.address}`);
-        cy.get(ss.idResults).eq(0).click();
-      },
-    },
-  ].forEach((testSet) => {
-    /**
-     * Search for Lisk ID
-     * @expect account page with corresponding ID is a result
-     * @expect localStorage have the searches object with correct address
-     * @expect localStorage have the searches object with correct searchTerm
-     */
-    it(testSet.name, () => {
-      cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-      cy.visit('/');
-      testSet.searchAction();
-      cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', accounts.delegate.address)
-        .and(() => {
-          expect(getSearchesObjFromLS()[0].id).to.equal(accounts.delegate.address);
-          expect(getSearchesObjFromLS()[0].searchTerm).to.equal(accounts.delegate.address);
-        });
-    });
+  const mainnetTransaction = '881002485778658401';
+  const mainnetDelegateName = 'tembo';
+
+  function assertAccountPage(accountsAddress) {
+    cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', accountsAddress)
+      .and(() => {
+        expect(getSearchesObjFromLS()[0].id).to.equal(accountsAddress);
+        expect(getSearchesObjFromLS()[0].searchTerm).to.equal(accountsAddress);
+      });
+  }
+
+  function assertTransactionPage(transactionId) {
+    cy.get(ss.transactionId).should('have.text', transactionId)
+      .and(() => {
+        expect(getSearchesObjFromLS()[0].id).to.equal(transactionId);
+        expect(getSearchesObjFromLS()[0].searchTerm).to.equal(transactionId);
+      });
+  }
+
+  function assertDelegatePage(delegateName, delegateId) {
+    cy.get(ss.leftBlockAccountExplorer).find(ss.delegateName).should('have.text', delegateName)
+      .and(() => {
+        expect(getSearchesObjFromLS()[0].id).to.equal(delegateId);
+        expect(getSearchesObjFromLS()[0].searchTerm).to.equal(delegateName);
+      });
+  }
+
+  /**
+   * Search for Lisk ID using keyboard Enter, signed out
+   * @expect account page with corresponding ID is a result
+   * @expect localStorage have the searches object with correct address
+   * @expect localStorage have the searches object with correct searchTerm
+   */
+  it('Search for Lisk ID using keyboard Enter, signed off', () => {
+    cy.visit('/');
+    cy.get(ss.searchInput).click().type(`${accounts.delegate.address}{enter}`);
+    assertAccountPage(accounts.delegate.address);
   });
 
-  [
-    {
-      name: 'Search for Transaction using keyboard Enter',
-      searchAction: () => {
-        cy.get(ss.searchInput).click().type(`${testnetTransaction}{enter}`);
-      },
-    },
-    {
-      name: 'Search for Transaction using suggestions',
-      searchAction: () => {
-        cy.get(ss.searchInput).click().type(`${testnetTransaction}`);
-        cy.get(ss.transactionResults).eq(0).click();
-      },
-    },
-  ].forEach((testSet) => {
-    /**
-     * Search for transaction
-     * @expect transaction details page a result
-     * @expect localStorage have the searches object with correct id
-     * @expect localStorage have the searches object with correct searchTerm
-     */
-    it(testSet.name, () => {
-      cy.autologin(accounts.genesis.passphrase, networks.testnet.node);
-      cy.visit('/');
-      testSet.searchAction();
-      cy.get(ss.transactionId).should('have.text', testnetTransaction)
-        .and(() => {
-          expect(getSearchesObjFromLS()[0].id).to.equal(testnetTransaction);
-          expect(getSearchesObjFromLS()[0].searchTerm).to.equal(testnetTransaction);
-        });
-    });
+  /**
+   * Search for Lisk ID using suggestions, signed in
+   * @expect account page with corresponding ID is a result
+   * @expect localStorage have the searches object with correct address
+   * @expect localStorage have the searches object with correct searchTerm
+   */
+  it('Search for Lisk ID using suggestions, signed in', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit('/');
+    cy.get(ss.searchInput).click().type(`${accounts.delegate.address}`);
+    cy.get(ss.idResults).eq(0).click();
+    assertAccountPage(accounts.delegate.address);
   });
 
-  [
-    // TODO reenable after #1351 fix
-    // {
-    //   name: 'Search for Delegate using keyboard Enter',
-    //   searchAction: () => {
-    //     cy.get(ss.searchInput).click().type(`${accounts.delegate.username}{enter}`);
-    //   },
-    // },
-    {
-      name: 'Search for Delegate using suggestions',
-      searchAction: () => {
-        cy.get(ss.searchInput).click().type(`${accounts.delegate.username}`);
-        cy.get(ss.delegateResults).eq(0).click();
-      },
-    },
-  ].forEach((testSet) => {
-    /**
-     * Search for delegate
-     * @expect account page with corresponding ID is a result
-     * @expect localStorage have the searches object with correct address
-     * @expect localStorage have the searches object with correct searchTerm
-     */
-    it(testSet.name, () => {
-      cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-      cy.visit('/');
-      testSet.searchAction();
-      cy.get(ss.leftBlockAccountExplorer).find(ss.delegateName).should('have.text', accounts.delegate.username)
-        .and(() => {
-          expect(getSearchesObjFromLS()[0].id).to.equal(accounts.delegate.address);
-          expect(getSearchesObjFromLS()[0].searchTerm).to.equal(accounts.delegate.username);
-        });
-    });
+  /**
+   * Search for transaction using keyboard Enter, signed off
+   * @expect transaction details page a result
+   * @expect localStorage have the searches object with correct id
+   * @expect localStorage have the searches object with correct searchTerm
+   */
+  it('Search for Transaction using keyboard Enter, signed off', () => {
+    cy.visit('/');
+    cy.get(ss.searchInput).click().type(`${mainnetTransaction}{enter}`);
+    assertTransactionPage(mainnetTransaction);
+  });
+
+  /**
+   * Search for transaction using suggestions, signed in
+   * @expect transaction details page a result
+   * @expect localStorage have the searches object with correct id
+   * @expect localStorage have the searches object with correct searchTerm
+   */
+  it('Search for Transaction using suggestions, signed in', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.testnet.node);
+    cy.visit('/');
+    cy.get(ss.searchInput).click().type(`${testnetTransaction}`);
+    cy.get(ss.transactionResults).eq(0).click();
+    assertTransactionPage(testnetTransaction);
+  });
+
+  /**
+   * Search for delegate using keyboard Enter, signed off
+   * @expect account page with corresponding ID is a result
+   * @expect localStorage have the searches object with correct address
+   * @expect localStorage have the searches object with correct searchTerm
+   */
+  // TODO reenable after #1351 fix
+  it.skip('Search for Delegate using keyboard Enter, signed off', () => {
+    cy.visit('/');
+    cy.get(ss.searchInput).click().type(`${mainnetDelegateName}{enter}`);
+    assertDelegatePage(accounts.delegate.username);
+  });
+
+  /**
+   * Search for delegate using suggestions, signed in
+   * @expect account page with corresponding ID is a result
+   * @expect localStorage have the searches object with correct address
+   * @expect localStorage have the searches object with correct searchTerm
+   */
+
+  it('Search for Delegate using suggestions, signed in', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit('/');
+    cy.get(ss.searchInput).click().type(`${accounts.delegate.username}`);
+    cy.get(ss.delegateResults).eq(0).click();
+    assertDelegatePage(accounts.delegate.username, accounts.delegate.address);
   });
 
   /**

@@ -1,13 +1,12 @@
 @import '../app/variables.css';
 
 .reset {
-  margin-right: 18px;
+  margin-right: 15px;
   padding-left: 3px;
   padding-right: 3px;
   padding-bottom: 3px;
   cursor: pointer;
-  color: var(--color-white);
-  border-bottom: solid 2px var(--color-white);
+  color: var(--color-primary-standard);
   display: inline;
   font-family: 'Open Sans';
   font-weight: 600;

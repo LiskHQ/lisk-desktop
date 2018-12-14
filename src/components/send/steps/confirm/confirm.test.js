@@ -65,12 +65,15 @@ describe('Confirm Component', () => {
 
   describe('With account init', () => {
     beforeEach(() => {
-      props.address = '123L';
-      props.amount = 1;
-      props.accountInit = true;
+      const newProps = {
+        ...props,
+        address: '123L',
+        amount: 1,
+        accountInit: true,
+      };
       const store = fakeStore({ account });
 
-      wrapper = mount(<Confirm {...props} />, {
+      wrapper = mount(<Confirm {...newProps} />, {
         context: { store, i18n },
         childContextTypes: {
           store: PropTypes.object.isRequired,
@@ -82,6 +85,40 @@ describe('Confirm Component', () => {
     it('account initialisation option should not conflict with launch protocol', () => {
       expect(wrapper.state('recipient').value).to.equal(account.address);
       expect(wrapper.state('amount').value).to.equal(0.1);
+    });
+  });
+
+  describe('With account hardwareWallet account', () => {
+    it('hardwareWallet account should show correct title "Confirm transaction on Ledger Nano S"', () => {
+      const newProps = {
+        ...props,
+        address: '123L',
+        amount: 1,
+        accountInit: false,
+        account: { ...account, hwInfo: { deviceId: '123123' } },
+        pendingTransactions: [{
+          senderId: account.address,
+          recipientId: '11004588490103196952L',
+        }],
+        failedTransactions: [],
+      };
+
+      const store = fakeStore({ account });
+
+      wrapper = mount(<Confirm {...newProps} />, {
+        context: { store, i18n },
+        childContextTypes: {
+          store: PropTypes.object.isRequired,
+          i18n: PropTypes.object.isRequired,
+        },
+      });
+
+      wrapper.find('.amount input').simulate('change', { target: { value: '1' } });
+      wrapper.find('.recipient input').simulate('change', { target: { value: '11004588490103196952L' } });
+      wrapper.find('.send-button button').simulate('click');
+      wrapper.update();
+
+      expect(wrapper.find('.title').at(0)).to.have.text('Confirm transaction on Ledger Nano S');
     });
   });
 });
