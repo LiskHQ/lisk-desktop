@@ -40,8 +40,6 @@ module.exports = {
     'app/src/ipc.js',
     'app/src/ledger.js',
     'src/actions/liskService.js',
-    'src/actions/peers.js', // FollowUp #1515
-    'src/actions/peers.js', // FollowUp #1515
     'src/actions/transactions.js',
     'src/components/account/stories.js',
     'src/components/accountInitialization/index.js',
@@ -56,15 +54,14 @@ module.exports = {
     'src/components/newsFeed/news.js',
     'src/components/passphrase/create/create.js',
     'src/components/passphraseCreation/index.js',
-    'src/components/passphraseSteps/index.js', // FollowUp #1515
-    'src/components/passphraseSteps/index.js', // FollowUp #1515
+    'src/components/passphraseSteps/index.js',
+    'src/components/register/register.js',
+    'src/components/request/specifyRequest.js',
+    'src/components/receive/index.js',
     'src/components/request/index.js',
     'src/components/register/register.js',
     'src/components/resultBox/index.js',
-    'src/components/resultBox/resultBox.js', // FollowUp #1515
-    'src/components/resultBox/resultBox.js', // FollowUp #1515
     'src/components/searchBar/index.js', // Passing in mocha but not in Jest
-    'src/components/send/steps/confirm/confirm.js', // FollowUp #1515
     'src/components/send/steps/form/stories.js',
     'src/components/spinner/stories.js',
     'src/components/toaster/stories.js',
