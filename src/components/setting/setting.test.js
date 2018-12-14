@@ -51,6 +51,7 @@ describe('Setting', () => {
   let wrapper;
 
   const props = {
+    account: {},
     settingsUpdated: sinon.spy(),
     accountUpdated: sinon.spy(),
     settings,
