@@ -53,7 +53,7 @@ describe('Add Account ID Component', () => {
 
   it('recognizes already following address', () => {
     wrapper.find('.address input').simulate('change', { target: { value: '16313739661670634666L' } });
-    expect(wrapper.find('Input.address').text()).to.contain('ID already added to bookmark');
+    expect(wrapper.find('Input.address').text()).to.contain('ID already added to bookmarks');
   });
 
   it('recognizes invalid address', () => {

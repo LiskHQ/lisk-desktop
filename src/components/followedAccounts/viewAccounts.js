@@ -23,7 +23,7 @@ class ViewAccounts extends React.Component {
 
     return <div>
       <header><h2>
-        {t('Bookmark')}
+        {t('Bookmarks')}
         {accounts.length > 0
           ? <div className={`${styles.clickable} ${styles.edit} edit-accounts`}
             onClick={() => this.setState({ edit: !this.state.edit })}>
