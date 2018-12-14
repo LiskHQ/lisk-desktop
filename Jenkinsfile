@@ -78,9 +78,14 @@ pipeline {
 						ansiColor('xterm') {
 							nvm(getNodejsVersion()) {
 								sh 'ON_JENKINS=true npm run --silent test'
-								catchError {
-									withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
-										sh 'cat coverage/jest/lcov.info |coveralls'
+								script {
+									// we don't want to fail the build if reporting to coveralls.io fails
+									try {
+										withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
+											sh 'cat coverage/jest/lcov.info |coveralls'
+										}
+									} catch(err) {
+										println 'Could not report coverage statistics:\n${err}'
 									}
 								}
 							}
