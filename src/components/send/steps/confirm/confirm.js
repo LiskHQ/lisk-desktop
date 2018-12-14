@@ -105,13 +105,20 @@ class Confirm extends React.Component {
   }
 
   render() {
+    // eslint-disable-next-line
+    const title = this.props.accountInit ?
+      this.props.t('Initialize Lisk ID') :
+      (this.props.account.hwInfo && this.props.account.hwInfo.deviceId ? this.props.t('Confirm transaction on Ledger Nano S') : this.props.t('Confirm transfer'));
     const followedAccount = this.props.followedAccounts
       .find(account => account.address === this.state.recipient.value);
+
     return (
       <div className={`${styles.wrapper} send`}>
-        <header className={styles.headerWrapper}>
-          <h2>{this.props.t('Send LSK')}</h2>
-        </header>
+        <div className={styles.header}>
+          <header className={styles.headerWrapper}>
+            <h2 className='title'>{title}</h2>
+          </header>
+        </div>
         {this.props.accountInit
           ? <div>
             <p>{this.props.t('You will send a small amount of {{fee}} LSK to yourself and therefore initialize your ID.', { fee: fromRawLsk(fees.send) })}</p>
