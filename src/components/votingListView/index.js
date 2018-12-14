@@ -19,7 +19,7 @@ const mapDispatchToProps = {
   voteToggled,
   votesFetched,
   delegatesFetched,
-  delegatesCleared: delegatesAdded({
+  delegatesCleared: () => delegatesAdded({
     list: [], totalDelegates: 0, refresh: true,
   }),
 };
