@@ -1,9 +1,7 @@
-import serve from 'electron-serve';
 import localeHandler from './localeHandler';
 import menu from './../menu';
 import process from './process';
-
-const loadURL = serve({ directory: `${__dirname}` });
+import server from '../../server';
 
 const win = {
   browser: null,
@@ -11,6 +9,8 @@ const win = {
   init: ({ electron, path, electronLocalshortcut }) => {
     const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
     const { BrowserWindow } = electron;
+
+    server();
 
     win.browser = new BrowserWindow({
       width: width > 1680 ? 1680 : width,
@@ -32,7 +32,8 @@ const win = {
       win.browser.webContents.toggleDevTools();
     });
 
-    loadURL(win.browser);
+    // win.browser.loadURL(`file://${__dirname}/index.html`);
+    win.browser.loadURL('http://localhost:8080/');
   },
 
 
@@ -122,4 +123,3 @@ const sendEventsFromEventStack = () => {
 
 
 export default win;
-
