@@ -106,7 +106,7 @@ describe('Send', () => {
    * @expect transaction appears in the activity list with correct data
    * @expect transaction appears in the activity list as confirmed
    */
-  it('Transfer tx with second passphrase', () => {
+  it('Transfer tx with second passphrase appears in wallet activity', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(urls.send);
     cy.get(ss.recipientInput).type(randomAddress);

@@ -12,7 +12,7 @@ describe('Following', () => {
    * @expect localStorage have the follower object with correct title
    * @expect following account is shown in widget
    */
-  it('Add follower with title while logged in', () => {
+  it('Add follower while logged in', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
     cy.get(ss.addFollowerAccountButton).click();

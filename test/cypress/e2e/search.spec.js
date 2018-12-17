@@ -104,7 +104,6 @@ describe('Search', () => {
    * @expect localStorage have the searches object with correct address
    * @expect localStorage have the searches object with correct searchTerm
    */
-
   it('Search for Delegate using suggestions, signed in', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit('/');
