@@ -111,6 +111,7 @@ module.exports = {
           'length-zero-no-unit': null,
           'at-rule-no-unknown': null,
           'selector-no-vendor-prefix': true,
+          'no-descending-specificity': null,
         },
       },
     }),

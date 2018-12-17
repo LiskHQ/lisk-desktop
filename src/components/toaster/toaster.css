@@ -8,10 +8,12 @@
     from {
       bottom: -50px;
     }
+
     to {
       bottom: calc($(i) * 50px + 10px);
     }
   }
+
   .index-$i {
     animation: move-$i 500ms ease-in;
     bottom: calc($(i) * 50px + 10px);

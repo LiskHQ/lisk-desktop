@@ -27,6 +27,12 @@
   & :global thead th:first-child {
     display: none !important;
   }
+
+  & ul {
+    list-style-type: none;
+    line-height: 48px;
+    margin: 0;
+  }
 }
 
 .upVoteRow {
@@ -90,14 +96,6 @@
   color: var(--color-black) !important;
   position: relative;
   top: 3px;
-}
-
-.table {
-  & ul {
-    list-style-type: none;
-    line-height: 48px;
-    margin: 0;
-  }
 }
 
 .productivity {

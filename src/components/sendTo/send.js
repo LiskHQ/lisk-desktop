@@ -91,7 +91,7 @@ class SendTo extends React.Component {
           <Button
             onClick={() => handleClick()}
             className={`${styles.button} ${styles.follow} follow-account`} >
-            <FontIcon value={isFollowing ? 'star-filled' : 'star-outline'}/> <span className={styles.label}>{isFollowing ? t('Unfollow') : t('Follow')}</span>
+            <FontIcon value={isFollowing ? 'star-filled' : 'star-outline'}/> <span className={styles.label}>{isFollowing ? t('Remove from bookmarks') : t('Add to bookmarks')}</span>
           </Button>
         </div>
       </section>

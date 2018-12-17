@@ -84,19 +84,19 @@
     height: 100%;
     width: 100%;
     z-index: 25;
-    background-color: rgba(0,26,62, 0.9);
+    background-color: rgba(0, 26, 62, 0.9);
     pointer-events: none;
   }
 }
 
 :global .joyride-hole {
   border-radius: 4px;
-  box-shadow: 0 0 0 9999px rgba(0,26,62, 0.9), 0 0 15px rgba(0,26,62, 0.9);
+  box-shadow: 0 0 0 9999px rgba(0, 26, 62, 0.9), 0 0 15px rgba(0, 26, 62, 0.9);
   position: absolute;
 }
 
 :global .joyride-hole.safari {
-  box-shadow: 0 0 999px 9999px rgba(0,26,62, 0.9), 0 0 15px rgba(0,26,62, 0.9);
+  box-shadow: 0 0 999px 9999px rgba(0, 26, 62, 0.9), 0 0 15px rgba(0, 26, 62, 0.9);
 }
 
 :global .joyride-tooltip {
@@ -179,7 +179,7 @@
 
 @media screen and (min-width: 480px) {
   :global .joyride-tooltip.bottom-right .joyride-tooltip__triangle,
-  :global .joyride-tooltip.top-right  .joyride-tooltip__triangle {
+  :global .joyride-tooltip.top-right .joyride-tooltip__triangle {
     right: 2%;
   }
 }
@@ -344,6 +344,7 @@
   20% {
     opacity: 0.9;
   }
+
   90% {
     opacity: 0.7;
   }

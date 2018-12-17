@@ -13,8 +13,6 @@
   & > div > div {
     & > label {
       font-size: 14px;
-      font-weight: 600;
-      color: var(--color-primary-standard);
     }
 
     & > input {

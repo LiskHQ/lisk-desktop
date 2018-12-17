@@ -23,7 +23,7 @@ class ViewAccounts extends React.Component {
 
     return <div>
       <header><h2>
-        {t('Following')}
+        {t('Bookmarks')}
         {accounts.length > 0
           ? <div className={`${styles.clickable} ${styles.edit} edit-accounts`}
             onClick={() => this.setState({ edit: !this.state.edit })}>
@@ -81,7 +81,7 @@ class ViewAccounts extends React.Component {
           </div>
         </div>
         : <div className={`${styles.emptyList} followed-accounts-empty-list`}>
-          <p>{t('Keep track of any Lisk ID balance. Only you will see who you follow.')}</p>
+          <p>{t('Keep track of any Lisk ID balance. Only you will see who you bookmarked.')}</p>
 
           <div className={`${styles.addAccountLink} ${styles.clickable} add-account-button`} onClick={() => nextStep()}>
             {t('Add a Lisk ID')} <FontIcon value='arrow-right'/>
