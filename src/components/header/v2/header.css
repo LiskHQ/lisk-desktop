@@ -1,0 +1,64 @@
+@import '../../toolbox/buttons/css/base.css';
+@import '../../app/variables.css';
+
+:root {
+  --header-margin-right-left-M: 20px;
+  --header-margin-top-bottom-M: 23px;
+  --header-margin-right-left-S: 20px;
+  --header-margin-top-bottom-S: 10px;
+  --avatar-height: 69px;
+  --avatar-height-s: 33px;
+  --menu-icon-height-XL: 39px;
+  --menu-icon-height-M: 34px;
+  --font-size-normal: 16px;
+  --font-size-small: 12px;
+}
+
+.wrapper {
+  align-items: center;
+  background-color: #fbfcfe;
+  border-bottom: 1px solid #e6e6e8;
+  box-shadow: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 33px 40px;
+  width: 100%;
+}
+
+.logo {
+  height: 32px;
+  width: 27px;
+
+  & > img {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.settingButton {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(72, 77, 97, 0.1);
+  color: #4e80f7;
+  display: block;
+  font-family: Gilroy, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  height: 32px;
+  letter-spacing: 0.5px;
+  line-height: 32px;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+  vertical-align: middle;
+  width: 144px;
+
+  &:hover {
+    background-color: #4e80f4;
+    box-shadow: none;
+    color: #fff;
+  }
+}
