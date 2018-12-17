@@ -32,7 +32,6 @@ const win = {
       win.browser.webContents.toggleDevTools();
     });
 
-    // win.browser.loadURL(`file://${__dirname}/index.html`);
     win.browser.loadURL('http://localhost:8080/');
   },
 

@@ -6,6 +6,8 @@ module.exports = {
     '<rootDir>/test/integration/*.test.js',
   ],
   testPathIgnorePatterns: [
+    '<rootDir>/test/integration/wallet.test.js',
+    'app/src/modules/win.test.js', // This test should be fixed, the problem is how we are runnig electron with expressjs
     'src/actions/transactions.test.js',
     'src/components/dashboard/currencyGraph.test.js', // This should be unskipped in issue #1499
     'src/components/errorBoundary/index.test.js',
@@ -19,7 +21,6 @@ module.exports = {
     'src/components/voteUrlProcessor/index.test.js',
     'src/store/middlewares/login.test.js',
     'src/store/reducers/liskService.test.js',
-    '<rootDir>/test/integration/wallet.test.js',
   ],
   verbose: true,
   cache: false,
@@ -39,6 +40,7 @@ module.exports = {
     '/node_modules/',
     'app/src/ipc.js',
     'app/src/ledger.js',
+    'app/src/modules/win.js',
     'src/actions/liskService.js',
     'src/actions/peers.js', // FollowUp #1515
     'src/actions/peers.js', // FollowUp #1515
@@ -59,8 +61,8 @@ module.exports = {
     'src/components/passphraseCreation/index.js',
     'src/components/passphraseSteps/index.js', // FollowUp #1515
     'src/components/passphraseSteps/index.js', // FollowUp #1515
-    'src/components/request/index.js',
     'src/components/register/register.js',
+    'src/components/request/index.js',
     'src/components/resultBox/index.js',
     'src/components/resultBox/resultBox.js', // FollowUp #1515
     'src/components/resultBox/resultBox.js', // FollowUp #1515
