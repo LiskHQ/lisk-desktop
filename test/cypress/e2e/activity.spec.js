@@ -41,7 +41,7 @@ function testActivity(open) {
    * @expect outgoing txs on Outgoing tab
    * @expect all txs on All tab
    */
-  it('Filtering works', () => {
+  it('Incoming/Outgoing/All filtering works', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(urls.wallet);
     cy.get(ss.transactionRow).should('have.length', 2);
@@ -57,7 +57,7 @@ function testActivity(open) {
       .find(ss.transactionAddress).contains('Second passphrase registration');
   });
 
-  describe('Account info tabs', () => {
+  describe('Account info tab', () => {
     beforeEach(() => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       open();
@@ -76,7 +76,7 @@ function testActivity(open) {
      * Shows voted delegate's nickname, not address
      * @expect delegate's nickname shown
      */
-    it('Shows voted delegate nickname ', () => {
+    it('Shows voted delegate nickname instead of address', () => {
       cy.get(ss.votedAddress).eq(0).should('have.text', 'genesis_1 ');
     });
 
@@ -103,7 +103,7 @@ function testDelegateActivity(open) {
      * Shows voted delegate's nickname not addresses
      * @expect delegate's nickname shown
      */
-    it('Shows voted delegate nickname ', () => {
+    it('Shows voted delegate nickname instead of address', () => {
       cy.get(ss.votedAddress).eq(0).should('have.text', 'genesis_17 ');
     });
 
@@ -117,7 +117,7 @@ function testDelegateActivity(open) {
     });
 
 
-    // TODO Fix after corresponding bugfix
+    // TODO Unskip after corresponding bugfix
     /**
      * Shows nickname of account on "Who voted for this delegate?"
      * list if the account is a delegate
