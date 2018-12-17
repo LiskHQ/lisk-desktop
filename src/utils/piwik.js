@@ -35,11 +35,7 @@ const disabledPiwikTracking = () => {
 const tracking = (history) => {
   const settings = checkIfPiwikIsEnabled();
 
-  // if (!piwik && settings.statistics) {
-  //   initPiwik();
-  // }
-
-  if (!piwik) {
+  if (!piwik && settings.statistics) {
     initPiwik();
   }
 
