@@ -31,7 +31,7 @@
 .descriptionRow {
   display: flex;
   justify-content: space-between;
-  font-family: "Open Sans";
+  font-family: 'Open Sans', sans-serif;
   height: 200px;
   font-size: 16px;
   color: #3c5068;

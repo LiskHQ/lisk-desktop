@@ -31,7 +31,7 @@ class AddAccountID extends React.Component {
     } else if (!value.match(regex.address)) {
       return this.props.t('Invalid address');
     } else if (alreadyFollowing) {
-      return this.props.t('ID already following');
+      return this.props.t('ID already added to bookmarks');
     }
     return undefined;
   }

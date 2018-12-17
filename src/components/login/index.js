@@ -2,12 +2,10 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { setDefaults, translate } from 'react-i18next';
-import { dialogDisplayed } from '../../actions/dialog';
 import Login from './login';
 import { liskAPIClientSet } from '../../actions/peers';
 import { errorToastDisplayed } from '../../actions/toaster';
 import { settingsUpdated } from '../../actions/settings';
-import { loadingStarted, loadingFinished } from '../../actions/loading';
 
 setDefaults({
   wait: true,
@@ -30,11 +28,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   liskAPIClientSet,
-  setActiveDialog: dialogDisplayed,
   settingsUpdated,
   errorToastDisplayed,
-  loadingFinished,
-  loadingStarted,
 };
 
 export default connect(
