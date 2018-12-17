@@ -78,8 +78,15 @@ pipeline {
 						ansiColor('xterm') {
 							nvm(getNodejsVersion()) {
 								sh 'ON_JENKINS=true npm run --silent test'
-								withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
-										sh 'cat coverage/jest/lcov.info |coveralls -v'
+								script {
+									// we don't want to fail the build if reporting to coveralls.io fails
+									try {
+										withCredentials([string(credentialsId: 'lisk-hub-coveralls-token', variable: 'COVERALLS_REPO_TOKEN')]) {
+											sh 'cat coverage/jest/lcov.info |coveralls'
+										}
+									} catch(err) {
+										println 'Could not report coverage statistics:\n${err}'
+									}
 								}
 							}
 						}
@@ -96,6 +103,9 @@ pipeline {
 						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
 							ansiColor('xterm') {
 								wrap([$class: 'Xvfb', parallelBuild: true, autoDisplayName: true]) {
+									githubNotify context: 'Jenkins e2e tests',
+										     description: 'e2e tests are running',
+										     status: 'PENDING'
 									nvm(getNodejsVersion()) {
 										sh '''#!/bin/bash -xe
 										export N=${EXECUTOR_NUMBER:-0}; N=$((N+1))
@@ -126,10 +136,6 @@ EOF
 										npm run serve -- $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
 										set +e
 										set -o pipefail
-
-										githubNotify context: 'Jenkins e2e tests',
-											     description: 'e2e tests are running',
-											     status: 'PENDING'
 										npm run cypress:run -- --record |tee cypress.log
 										ret=$?
 										grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress_url
@@ -170,7 +176,7 @@ EOF
 					    adjective = 'failed'
 					}
 					githubNotify context: 'Jenkins e2e tests',
-						     description: 'All e2e tests ' + adjective,
+						     description: 'e2e tests ' + adjective,
 						     status: status,
 						     targetUrl: readFile(".cypress_url").trim()
 				}

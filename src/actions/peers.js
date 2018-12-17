@@ -10,6 +10,7 @@ import { extractAddress, extractPublicKey } from '../utils/account';
 import { accountLoggedIn, accountLoading, accountLoggedOut } from './account';
 import accountConfig from '../constants/account';
 import settings from '../constants/settings';
+import { loginType } from '../constants/hwConstants';
 
 const peerSet = (data, config) => ({
   data: Object.assign({
@@ -37,7 +38,7 @@ const login = (dispatch, getState, data, config) => { // eslint-disable-line max
       publicKey,
       address,
       network: code || 0,
-      loginType: data.hwInfo ? 1 : 0,
+      loginType: data.hwInfo ? loginType.ledger : loginType.normal,
       peerAddress: data.network.nodes[0],
       hwInfo: data.hwInfo ? data.hwInfo : {},
     };

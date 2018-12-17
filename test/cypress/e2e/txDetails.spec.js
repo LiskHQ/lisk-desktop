@@ -31,7 +31,6 @@ describe('Tx details', () => {
     cy.get(ss.txRemovedVotes).should('not.exist');
     cy.get(ss.txAmount).should('have.text', '-5');
     cy.get(ss.txFee).should('have.text', '0.1');
-    cy.get(ss.txConfirmations).should('have.text', '');
     cy.get(ss.txId).contains(regex.transactionId);
     cy.get(ss.txReference).should('have.text', 'test-details');
     // After confirmation

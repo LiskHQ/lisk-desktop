@@ -82,9 +82,18 @@
 }
 
 .headerIcon {
-  font-size: 68px;
   color: var(--color-action-light);
-  margin-bottom: 30px;
+  height: 48px;
+  width: 48px;
+  margin-bottom: 32px;
+  font-size: 48px;
+  font-weight: bold;
+
+  &::before {
+    background: var(--gradient-action-orange);
+    -webkit-background-clip: text; /* unsupported by autoprefixer */
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 .resultHeader {
@@ -118,20 +127,6 @@
     position: relative;
     min-height: 90%;
     height: auto;
-  }
-}
-
-.headerIcon {
-  height: 48px;
-  width: 48px;
-  margin-bottom: 32px;
-  font-size: 48px;
-  font-weight: bold;
-
-  &::before {
-    background: var(--gradient-action-orange);
-    -webkit-background-clip: text; /* unsupported by autoprefixer */
-    -webkit-text-fill-color: transparent;
   }
 }
 

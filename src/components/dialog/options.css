@@ -7,7 +7,7 @@
 .text {
   padding: 0 70px;
   text-align: center;
-  font-family: Open Sans;
+  font-family: Open Sans, sans-serif;
   font-weight: 400;
   font-size: 16px;
   color: var(--color-grayscale-dark) !important;
