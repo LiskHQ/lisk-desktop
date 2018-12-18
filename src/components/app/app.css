@@ -8,6 +8,15 @@ body {
   width: 100%;
 }
 
+.newWrapper {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 0;
+}
+
 .bodyWrapper {
   position: absolute;
   width: 100%;
