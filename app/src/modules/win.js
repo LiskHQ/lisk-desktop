@@ -10,7 +10,7 @@ const win = {
     const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
     const { BrowserWindow } = electron;
 
-    server();
+    const url = server.init();
 
     win.browser = new BrowserWindow({
       width: width > 1680 ? 1680 : width,
@@ -32,7 +32,7 @@ const win = {
       win.browser.webContents.toggleDevTools();
     });
 
-    win.browser.loadURL('http://localhost:8080/');
+    win.browser.loadURL(url);
   },
 
 

@@ -7,7 +7,6 @@ module.exports = {
   ],
   testPathIgnorePatterns: [
     '<rootDir>/test/integration/wallet.test.js',
-    'app/src/modules/win.test.js', // This test should be fixed, the problem is how we are runnig electron with expressjs
     'src/actions/transactions.test.js',
     'src/components/dashboard/currencyGraph.test.js', // This should be unskipped in issue #1499
     'src/components/errorBoundary/index.test.js',
@@ -40,7 +39,6 @@ module.exports = {
     '/node_modules/',
     'app/src/ipc.js',
     'app/src/ledger.js',
-    'app/src/modules/win.js',
     'src/actions/liskService.js',
     'src/actions/transactions.js',
     'src/components/account/stories.js',
