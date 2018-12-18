@@ -84,6 +84,17 @@ describe('Setting', () => {
     clock.tick(300);
   });
 
+  it('should disable 2nd passphrase when hardwareWallet', () => {
+    const newProps = { ...props, account: { hwInfo: { deviceId: '123' } } };
+    wrapper = mount(<Router>
+      <Setting
+        store={store}
+        {...newProps}/>
+    </Router>, options);
+
+    expect(wrapper.find('.disabled').length).to.have.equal(4);
+  });
+
   it('should not show the onboarding setting when on mobile', () => {
     window.innerWidth = breakpoints.m;
     wrapper = mount(<Router>
