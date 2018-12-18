@@ -22,6 +22,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
+  height: 100px;
   justify-content: space-between;
   padding: 33px 40px;
   width: 100%;
@@ -58,7 +59,6 @@
 
   &:hover {
     background-color: #4e80f4;
-    box-shadow: none;
     color: #fff;
   }
 }
