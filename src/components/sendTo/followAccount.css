@@ -42,13 +42,9 @@
 
   & > footer {
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
     margin-bottom: 8px;
-
-    & > button {
-      width: calc(100% / 2 - 20px) !important;
-      margin-top: 0 !important;
-    }
   }
 }
 
