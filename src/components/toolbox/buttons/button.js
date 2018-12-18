@@ -4,6 +4,8 @@ import { Button as ToolBoxButton } from 'react-toolbox/lib/button';
 import secondaryBlueButtonTheme from './css/secondaryBlueButton.css';
 import secondaryLightButtonTheme from './css/secondaryLightButton.css';
 import primaryButtonTheme from './css/primaryButton.css';
+import newPrimaryButtonTheme from './css/newPrimaryButton.css';
+import newSecondaryButtonTheme from './css/newSecondaryButton.css';
 import tertiaryButtonTheme from './css/tertiaryButton.css';
 import actionButtonTheme from './css/actionButton.css';
 
@@ -38,10 +40,16 @@ class TBActionButton extends React.Component {
 }
 
 const PrimaryButton = themr('importantButton', primaryButtonTheme)(TBPrimaryButton);
+const NewPrimaryButton = themr('importantButton', newPrimaryButtonTheme)(TBPrimaryButton);
 const SecondaryLightButton = themr('lightButton', secondaryLightButtonTheme)(TBSecondaryLightButton);
+const NewSecondaryButton = themr('lightButton', newSecondaryButtonTheme)(TBSecondaryLightButton);
 const TertiaryButton = themr('tertiaryButton', tertiaryButtonTheme)(TBTertiaryButton);
 const ActionButton = themr('actionButton', actionButtonTheme)(TBActionButton);
 const Button = themr('button', secondaryBlueButtonTheme)(TBSecondaryBlueButton);
 
-export { Button, PrimaryButton, SecondaryLightButton, TertiaryButton, ActionButton };
+export {
+  Button, PrimaryButton, SecondaryLightButton,
+  TertiaryButton, ActionButton,
+  NewPrimaryButton, NewSecondaryButton,
+};
 export default Button;
