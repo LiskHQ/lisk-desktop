@@ -13,7 +13,7 @@ const AccountCard = ({
 }) => (
   <div className={styles.card}>
     <div
-      className={styles.accountVisualWrapper}
+      className={`${styles.accountVisualWrapper} accountVisualWrapper`}
       onClick={() => { onClickHandler(account, index); }}>
       <AccountVisual
         address={account.address}

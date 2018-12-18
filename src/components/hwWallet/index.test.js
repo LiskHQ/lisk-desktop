@@ -1,13 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { stub } from 'sinon';
+import { stub, useFakeTimers } from 'sinon';
 import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import HwWalletHOC from './index';
-// import UnlockWallet from './unlockWallet';
+import UnlockWallet from './unlockWallet';
 import LedgerLogin from './ledgerLogin';
 import * as ledgerUtils from '../../utils/ledger';
 
@@ -16,6 +16,7 @@ import networks from '../../constants/networks';
 
 describe('HwWalletHOC', () => {
   const store = configureMockStore([])({
+    peers: {},
     account: {},
     settings: { network: networks.mainnet.code },
     liskAPIClient: {},
@@ -31,12 +32,17 @@ describe('HwWalletHOC', () => {
     },
   };
   let wrapper;
+  let clock;
   let getAccountFromLedgerIndexStub;
 
   beforeEach(() => {
     getAccountFromLedgerIndexStub = stub(ledgerUtils, 'getAccountFromLedgerIndex').returnsPromise().resolves({
       balance: 10e8,
       isDelegate: false,
+    });
+
+    clock = useFakeTimers({
+      toFake: ['setTimeout'],
     });
 
     wrapper = mount(
@@ -63,5 +69,37 @@ describe('HwWalletHOC', () => {
 
   it('should render LedgerLogin component', () => {
     expect(wrapper.find(LedgerLogin).exists()).to.equal(true);
+  });
+
+  it('should render UnlockWallet component after 6 sec timeout', () => {
+    wrapper.update();
+    clock.tick(70000);
+    wrapper.update();
+    expect(wrapper.find(UnlockWallet).exists()).to.equal(true);
+  });
+
+  it('should render LedgerLogin component with publicKey', () => {
+    getAccountFromLedgerIndexStub.restore();
+    getAccountFromLedgerIndexStub = stub(ledgerUtils, 'getAccountFromLedgerIndex').returnsPromise().resolves({
+      balance: 10e8,
+      isDelegate: false,
+      publicKey: '123112',
+    });
+    wrapper.update();
+    expect(wrapper.find(LedgerLogin).exists()).to.equal(true);
+  });
+
+  it('should render LedgerLogin after clicking cancelLedgerLogin', async () => {
+    getAccountFromLedgerIndexStub.restore();
+    getAccountFromLedgerIndexStub = await stub(ledgerUtils, 'getAccountFromLedgerIndex')
+      .returnsPromise().resolves({
+        balance: 10e8,
+        isDelegate: false,
+        publicKey: '123112',
+      });
+    expect(wrapper.find(LedgerLogin).exists()).to.equal(true);
+    wrapper.find(LedgerLogin).props().cancelLedgerLogin();
+    wrapper.update();
+    expect(wrapper.find(LedgerLogin).exists()).to.equal(false);
   });
 });

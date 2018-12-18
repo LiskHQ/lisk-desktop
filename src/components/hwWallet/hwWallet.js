@@ -43,7 +43,6 @@ class HwWallet extends React.Component {
     let ledgerAccount;
     // eslint-disable-next-line prefer-const
     [error, ledgerAccount] = await to(getAccountFromLedgerIndex()); // by default index 0
-
     if (error) {
       // const text = error && error.message ?
       // `${error.message}.` : i18next.t('Error during login with Ledger.');

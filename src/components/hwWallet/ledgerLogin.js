@@ -107,7 +107,7 @@ class LedgerLogin extends React.Component {
       <div className={this.state.isLoading ? styles.loading : null}>
       {!this.state.isLoading ?
           <div>
-            <div className={styles.back} onClick={() => { this.props.cancelLedgerLogin(); }}>
+            <div className={`${styles.back} back`} onClick={() => { this.props.cancelLedgerLogin(); }}>
               <FontIcon value='arrow-left'/>{this.props.t('Back')}
             </div>
             <div className={styles.title}><h2>{this.props.t('Accounts on Ledger')}</h2></div>
