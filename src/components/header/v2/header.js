@@ -11,7 +11,7 @@ const Header = () => (
     </div>
     <div className=''>
       <Link className={styles.settingButton} to={routes.setting.path}>
-        Setting
+        Settings
       </Link>
     </div>
   </header>

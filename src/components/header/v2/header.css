@@ -1,19 +1,6 @@
 @import '../../toolbox/buttons/css/base.css';
 @import '../../app/variables.css';
 
-:root {
-  --header-margin-right-left-M: 20px;
-  --header-margin-top-bottom-M: 23px;
-  --header-margin-right-left-S: 20px;
-  --header-margin-top-bottom-S: 10px;
-  --avatar-height: 69px;
-  --avatar-height-s: 33px;
-  --menu-icon-height-XL: 39px;
-  --menu-icon-height-M: 34px;
-  --font-size-normal: 16px;
-  --font-size-small: 12px;
-}
-
 .wrapper {
   align-items: center;
   background-color: #fbfcfe;
@@ -25,6 +12,8 @@
   height: 100px;
   justify-content: space-between;
   padding: 33px 40px;
+  position: absolute;
+  top: 0;
   width: 100%;
 }
 
