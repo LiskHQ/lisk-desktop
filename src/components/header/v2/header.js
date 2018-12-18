@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { NewSecondaryButton } from '../../toolbox/buttons/button';
 import logo from '../../../assets/images/Lisk-Logo.svg';
 import routes from '../../../constants/routes';
 import styles from './header.css';
@@ -11,7 +12,7 @@ const Header = () => (
     </div>
     <div className=''>
       <Link className={styles.settingButton} to={routes.setting.path}>
-        Settings
+        <NewSecondaryButton>Settings</NewSecondaryButton>
       </Link>
     </div>
   </header>
