@@ -116,7 +116,7 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     // after a new block with second passphrase registration transaction was received
     setTimeout(() => {
       updateAccountData(store, action);
-    }, 5000);
+    }, 500);
   }
 };
 
