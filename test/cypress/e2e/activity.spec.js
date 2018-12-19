@@ -57,6 +57,13 @@ function testActivity(open) {
       .find(ss.transactionAddress).contains('Second passphrase registration');
   });
 
+  /**
+   * Delegate statistics tab is not present for not-delegate
+   */
+  it('No delegate statistics tab is present', () => {
+    cy.get(ss.delegateStatisticsTab).should('not.exist');
+  });
+
   describe('Account info tab', () => {
     beforeEach(() => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
@@ -71,6 +78,11 @@ function testActivity(open) {
     it('Shows 101 votes', () => {
       cy.get(ss.showMoreVotesBtn).click();
       cy.get(ss.votedAddress).should('have.length', 101);
+    });
+
+    it('Filtering votes works', () => {
+      cy.get(ss.searchDelegateInput).click().type('genesis_17');
+      cy.get(ss.votedAddress).should('have.length', 1);
     });
     /**
      * Shows voted delegate's nickname, not address
@@ -100,11 +112,22 @@ function testDelegateActivity(open) {
   });
   describe('Delegate statistics tab', () => {
     /**
+     * Account info tab is not present for delegate
+     */
+    it('No account info tab is present', () => {
+      cy.get(ss.accountInfoTab).should('not.exist');
+    });
+    /**
      * Shows voted delegate's nickname not addresses
      * @expect delegate's nickname shown
      */
     it('Shows voted delegate nickname instead of address', () => {
       cy.get(ss.votedAddress).eq(0).should('have.text', 'genesis_17 ');
+    });
+
+    it('Filtering votes works', () => {
+      cy.get(ss.searchDelegateInput).click().type('genesis_17');
+      cy.get(ss.votedAddress).should('have.length', 1);
     });
 
     /**
@@ -143,6 +166,15 @@ function testDelegateActivity(open) {
     it('Click on voter leads to account page', () => {
       cy.get(ss.voterAdress).eq(1).click();
       cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', '16313739661670634666L');
+    });
+
+    it('Shows statistics', () => {
+      cy.get(ss.delegateStatsUptime).contains('100%');
+      cy.get(ss.delegateStatsUptime).contains('1');
+      cy.get(ss.delegateStatsApproval).contains('100%');
+      cy.get(ss.delegateStatsWeight).contains('99,999');
+      cy.get(ss.delegateStatsForged).contains('0');
+      cy.get(ss.delegateStatsBlocks).contains(/\d/);
     });
   });
 }

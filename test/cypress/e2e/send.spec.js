@@ -5,11 +5,14 @@ import ss from '../../constants/selectors';
 import enterSecondPassphrase from '../utils/enterSecondPassphrase';
 // import compareBalances from '../utils/compareBalances';
 
+const getFollowedAccountObjFromLS = () => JSON.parse(localStorage.getItem('followedAccounts'));
+
 const msg = {
   transferTxSuccess: 'Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.',
   accountInitializatoinAddress: 'Account initialization',
 };
 
+const txSendCost = 0.1;
 const txConfirmationTimeout = 12000;
 
 const getRandomAddress = () => `23495548666${Math.floor((Math.random() * 8990000) + 1000000)}L`;
@@ -87,6 +90,9 @@ describe('Send', () => {
     cy.get(ss.referenceInput).click().type(randomReference);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).click();
+    cy.get(ss.recipientConfirmLabel).last().contains(randomAddress);
+    cy.get(ss.referenceConfirmLabel).contains(randomReference);
+    cy.get(ss.amountInput).invoke('val').should('equal', (randomAmount + txSendCost).toString());
     cy.get(ss.sendBtn).click();
     cy.get(ss.resultMessage).should('have.text', msg.transferTxSuccess);
     cy.visit(urls.dashboard);
@@ -208,5 +214,34 @@ describe('Send', () => {
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
     cy.get(ss.resultMessage).contains('Status 409 : Test error');
+  });
+
+
+  it('Add to bookmarks after transfer tx (when recipient is not in followers)', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.send);
+    cy.get(ss.recipientInput).type(accounts.delegate.address);
+    cy.get(ss.amountInput).click().type(randomAmount);
+    cy.get(ss.nextTransferBtn).click();
+    cy.get(ss.sendBtn).click();
+    cy.get(ss.addToBookmarks).click();
+    cy.get(ss.titleInput).type('Bob');
+    cy.get(ss.confirmAddToBookmarks).click()
+      .should(() => {
+        expect(getFollowedAccountObjFromLS()[0].address).to.equal(accounts.delegate.address);
+        expect(getFollowedAccountObjFromLS()[0].title).to.equal('Bob');
+      });
+    cy.get(ss.resultMessage).contains('has been added to your Dashboard');
+  });
+
+  it('Add to bookmarks button doesn’t exist if recipient is in followers', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node)
+      .then(() => window.localStorage.setItem('followedAccounts', `[{"title":"Alice","address":"${accounts.genesis.address}","balance":101}]`));
+    cy.visit(urls.send);
+    cy.get(ss.recipientInput).type(accounts.genesis.address);
+    cy.get(ss.amountInput).click().type(randomAmount);
+    cy.get(ss.nextTransferBtn).click();
+    cy.get(ss.sendBtn).click();
+    cy.get(ss.addToBookmarks).should('not.exist');
   });
 });

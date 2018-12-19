@@ -7,7 +7,7 @@ import slideCheckbox from '../utils/slideCheckbox';
 import compareBalances from '../utils/compareBalances';
 
 const txConfirmationTimeout = 20000;
-const txSecondPassphraseRegPrice = 5;
+const txSecondPassphraseRegCost = 5;
 
 describe('Second Passphrase Registration', () => {
   /**
@@ -51,7 +51,7 @@ describe('Second Passphrase Registration', () => {
     cy.get('@tx').find(ss.transactionReference).should('have.text', '-');
     cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');
     cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(() => {
-      compareBalances(this.balanceBefore, this.balanceAfter, txSecondPassphraseRegPrice);
+      compareBalances(this.balanceBefore, this.balanceAfter, txSecondPassphraseRegCost);
     });
   });
 });

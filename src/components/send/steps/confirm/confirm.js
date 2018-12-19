@@ -140,7 +140,7 @@ class Confirm extends React.Component {
                 />
                 <div className={styles.text}>
                   <div className={styles.title}>{followedAccount && followedAccount.title}</div>
-                  <div className={`${followedAccount && followedAccount.title ? styles.smallAddress : styles.address}`}>
+                  <div className={`recipient-confirm ${followedAccount && followedAccount.title ? styles.smallAddress : styles.address}`}>
                     {this.state.recipient.value}
                   </div>
                 </div>

@@ -1,6 +1,7 @@
 import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
 import ss from '../../constants/selectors';
+import urls from '../../constants/urls';
 
 const getSearchesObjFromLS = () => JSON.parse(localStorage.getItem('searches'));
 
@@ -98,6 +99,13 @@ describe('Search', () => {
     assertDelegatePage(accounts.delegate.username);
   });
 
+  it('4 search suggestions appears after 3 letters entered', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.testnet.node);
+    cy.visit('/');
+    cy.get(ss.searchInput).click().type(accounts.delegate.username.substring(0, 3));
+    cy.get(ss.delegateResults).should('have.length', 4);
+  });
+
   /**
    * Search for delegate using suggestions, signed in
    * @expect account page with corresponding ID is a result
@@ -176,10 +184,12 @@ describe('Search', () => {
    * @expect recent searches are shown
    * @expect click on proposal leads to corresponding page
    */
-  it('Recent searches are shown as search proposals and clickable', () => {
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    window.localStorage.setItem('searches', `[{"searchTerm":"${accounts.genesis.address}","id":"${accounts.genesis.address}"}]`);
+  it('Recent search is shown as search proposals and clickable', () => {
+    cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit('/');
+    cy.get(ss.searchInput).click().type(`${accounts.genesis.address}{enter}`);
+    cy.get(ss.searchInput).clear();
+    cy.visit(urls.wallet);
     cy.get(ss.searchInput).click();
     cy.get(ss.recentSearches).eq(0).click();
     cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', accounts.genesis.address);
