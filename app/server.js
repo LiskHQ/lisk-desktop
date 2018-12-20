@@ -1,3 +1,5 @@
+// const findAvailablePort = require('./src/modules/portAssign');
+
 const server = {
   // eslint-disable-next-line max-statements
   init: () => {
@@ -6,7 +8,7 @@ const server = {
     const bodyParser = require('body-parser');
 
     const app = express();
-    const port = process.env.PORT || 8080;
+    const port = process.env.PORT || 8081;
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
