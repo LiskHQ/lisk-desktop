@@ -62,7 +62,7 @@ class FollowAccount extends React.Component {
               });
             }
           }}>
-          {t('Add to bookmarks')}
+          {t('Add to list')}
         </TertiaryButton>
       </footer>
     </Box>
