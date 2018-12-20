@@ -6,12 +6,13 @@ import Piwik from '../../utils/piwik';
 
 const CustomRoute = ({
   path, component, isPrivate, exact,
+  settings,
   isAuthenticated, pathSuffix = '', pathPrefix = '', t, ...rest
 }) => {
   const { pathname, search } = rest.history.location;
   const fullPath = pathPrefix + path + pathSuffix;
 
-  Piwik.tracking(rest.history);
+  Piwik.tracking(rest.history, settings);
 
   return ((isPrivate && isAuthenticated) || !isPrivate ?
     <main className={isPrivate ? offlineStyle.disableWhenOffline : null}>
