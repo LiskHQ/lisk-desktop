@@ -42,24 +42,26 @@
 
   & > footer {
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin-bottom: 8px;
+
+    & > button {	
+      width: calc(60% - 10px) !important;
+      margin-top: 0 !important;	
+
+      &:first-child {
+        width: calc(40% - 10px) !important;
+      }
+    }
   }
 }
 
 .followedAccountsStep {
   padding: 2px;
 
-  & .button {
-    width: calc(100% / 2 - 20px) !important;
-  }
-
-  & .follow {
-    margin-top: 0;
-  }
-
   & > footer {
-    flex-direction: row;
+    & > button {	
+      width: calc(100% / 2 - 20px) !important;
+    }
   }
 }
