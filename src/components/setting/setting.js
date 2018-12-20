@@ -32,13 +32,6 @@ class Setting extends React.Component {
     settingsUpdated({ autoLog: !settings.autoLog });
   }
 
-  isShowTrackingEnable() {
-    const { location } = this.props;
-    const { pathname, search } = location;
-
-    return (pathname.includes('setting') && search.includes('?showTackingSwitch=true'));
-  }
-
   render() {
     const {
       t, settings, settingsUpdated,
