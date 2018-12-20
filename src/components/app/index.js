@@ -39,7 +39,6 @@ class App extends React.Component {
     const explorerRoutes = allRoutes.filter(routeObj =>
       routeObj.pathPrefix && routeObj.pathPrefix === routes.explorer.path);
 
-    const routesOldDesign = allRoutes.filter(routeObj => !routeObj.hasNewLayout);
     const routesNewDesign = allRoutes.filter(routeObj => routeObj.hasNewLayout);
 
     const routesOutsideMainWrapper = [
@@ -56,19 +55,8 @@ class App extends React.Component {
         <Onboarding appLoaded={this.state.loaded} />
         <Dialog />
         {
-                  // <Route path={'/splashscreen'} component={() => (
-                  //   <main className={this.state.loaded ?
-                  //     `${styles.newWrapper} ${styles.loaded} appLoaded` :
-                  //     `${styles.newWrapper}`
-                  //   } ref={(el) => { this.main = el; }}>
-                  //     <NewHeader />
-                  //     <Splashscreen />
-                  //   </main>
-                  // )} />
-        }
-
-        {
-          routesOldDesign.filter(x => x.path === location.pathname).length > 0 ? (
+          !(routesNewDesign.filter(route => route.path === location.pathname).length > 0)
+            || isPathCorrect(location, explorerRoutes) ? (
             <main className={this.state.loaded ?
               `${styles.bodyWrapper} ${styles.loaded} appLoaded` :
               `${styles.bodyWrapper}`
@@ -79,9 +67,9 @@ class App extends React.Component {
                   <Header />
                   <div id='onboardingAnchor'></div>
                   <Switch>
-                    {this.state.loaded ?
+                    {this.state.loaded &&
                       <Route path={routes.explorer.path} component={() => (
-                        isPathCorrect(location, explorerRoutes) ? (
+                        isPathCorrect(location, explorerRoutes) && (
                           <div>
                             {explorerRoutes.map((route, key) => (
                               <CustomRoute
@@ -94,11 +82,10 @@ class App extends React.Component {
                                 key={key} />
                             ))}
                           </div>
-                        ) : <Route path='*' component={NotFound} />
+                        )
                       )} />
-                      : null
                     }
-                    {this.state.loaded ?
+                    {this.state.loaded &&
                       defaultRoutes.map((route, key) => (
                         <CustomRoute
                           path={route.path}
@@ -108,7 +95,6 @@ class App extends React.Component {
                           exact={route.exact}
                           key={key} />
                       ))
-                      : null
                     }
 
                     {
@@ -134,14 +120,14 @@ class App extends React.Component {
             } ref={(el) => { this.main = el; }}>
               <NewHeader />
               <Switch>
-                {this.state.loaded ?
+                {this.state.loaded &&
                   routesNewDesign.map((route, key) => (
                     <Route
                       path={route.path}
                       key={key}
                       component={route.component}
                     />
-                  )) : null
+                  ))
                 }
               </Switch>
             </main>
