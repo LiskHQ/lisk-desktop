@@ -55,8 +55,26 @@ class App extends React.Component {
         <Onboarding appLoaded={this.state.loaded} />
         <Dialog />
         {
-          !(routesNewDesign.filter(route => route.path === location.pathname).length > 0)
-            || isPathCorrect(location, explorerRoutes) ? (
+          routesNewDesign.filter(route => route.path === location.pathname).length > 0
+          ? (
+            <main className={this.state.loaded ?
+              `${styles.newWrapper} ${styles.loaded} appLoaded` :
+              `${styles.newWrapper}`
+            } ref={(el) => { this.main = el; }}>
+              <NewHeader />
+              <Switch>
+                {this.state.loaded &&
+                  routesNewDesign.map((route, key) => (
+                    <Route
+                      path={route.path}
+                      key={key}
+                      component={route.component}
+                    />
+                  ))
+                }
+              </Switch>
+            </main>
+          ) : (
             <main className={this.state.loaded ?
               `${styles.bodyWrapper} ${styles.loaded} appLoaded` :
               `${styles.bodyWrapper}`
@@ -113,26 +131,7 @@ class App extends React.Component {
               </section>
               <Toaster />
             </main>
-          ) : (
-            <main className={this.state.loaded ?
-              `${styles.newWrapper} ${styles.loaded} appLoaded` :
-              `${styles.newWrapper}`
-            } ref={(el) => { this.main = el; }}>
-              <NewHeader />
-              <Switch>
-                {this.state.loaded &&
-                  routesNewDesign.map((route, key) => (
-                    <Route
-                      path={route.path}
-                      key={key}
-                      component={route.component}
-                    />
-                  ))
-                }
-              </Switch>
-            </main>
           )
-
         }
         <LoadingBar markAsLoaded={this.markAsLoaded.bind(this)} />
       </OfflineWrapper>
