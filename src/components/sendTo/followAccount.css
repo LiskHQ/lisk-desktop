@@ -41,6 +41,7 @@
   }
 
   & > footer {
+    align-items: center;
     display: flex;
     justify-content: space-between;
     margin-bottom: 8px;
@@ -60,7 +61,10 @@
   padding: 2px;
 
   & > footer {
-    & > button {
+    justify-content: space-evenly;
+
+    & > button,
+    & > button:first-child {
       width: calc(100% / 2 - 20px) !important;
     }
   }
