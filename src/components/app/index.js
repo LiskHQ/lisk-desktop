@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { isPathCorrect } from '../../utils/app';
 import styles from './app.css';
 import Toaster from '../toaster';
@@ -16,7 +16,6 @@ import NewHeader from '../header/v2/header';
 import routes from '../../constants/routes';
 // eslint-disable-next-line import/no-named-as-default
 import Onboarding from '../onboarding';
-import Splashscreen from '../splashscreen/splashscreen';
 
 class App extends React.Component {
   constructor() {
@@ -40,6 +39,9 @@ class App extends React.Component {
     const explorerRoutes = allRoutes.filter(routeObj =>
       routeObj.pathPrefix && routeObj.pathPrefix === routes.explorer.path);
 
+    const routesOldDesign = allRoutes.filter(routeObj => !routeObj.hasNewLayout);
+    const routesNewDesign = allRoutes.filter(routeObj => routeObj.hasNewLayout);
+
     const routesOutsideMainWrapper = [
       'registerDelegate',
       'register',
@@ -47,85 +49,109 @@ class App extends React.Component {
       'login',
     ];
 
+    const { location } = this.props;
+
     return (
       <OfflineWrapper>
         <Onboarding appLoaded={this.state.loaded} />
         <Dialog />
-        <Switch>
-          <Route path={'/splashscreen'} component={() => (
+        {
+                  // <Route path={'/splashscreen'} component={() => (
+                  //   <main className={this.state.loaded ?
+                  //     `${styles.newWrapper} ${styles.loaded} appLoaded` :
+                  //     `${styles.newWrapper}`
+                  //   } ref={(el) => { this.main = el; }}>
+                  //     <NewHeader />
+                  //     <Splashscreen />
+                  //   </main>
+                  // )} />
+        }
+
+        {
+          routesOldDesign.filter(x => x.path === location.pathname).length > 0 ? (
+            <main className={this.state.loaded ?
+              `${styles.bodyWrapper} ${styles.loaded} appLoaded` :
+              `${styles.bodyWrapper}`
+            } ref={(el) => { this.main = el; }}>
+              <MainMenu />
+              <section>
+                <div className={styles.mainBox}>
+                  <Header />
+                  <div id='onboardingAnchor'></div>
+                  <Switch>
+                    {this.state.loaded ?
+                      <Route path={routes.explorer.path} component={() => (
+                        isPathCorrect(location, explorerRoutes) ? (
+                          <div>
+                            {explorerRoutes.map((route, key) => (
+                              <CustomRoute
+                                pathPrefix={route.pathPrefix}
+                                path={route.path}
+                                pathSuffix={route.pathSuffix}
+                                component={route.component}
+                                isPrivate={route.isPrivate}
+                                exact={true}
+                                key={key} />
+                            ))}
+                          </div>
+                        ) : <Route path='*' component={NotFound} />
+                      )} />
+                      : null
+                    }
+                    {this.state.loaded ?
+                      defaultRoutes.map((route, key) => (
+                        <CustomRoute
+                          path={route.path}
+                          pathSuffix={route.pathSuffix}
+                          component={route.component}
+                          isPrivate={route.isPrivate}
+                          exact={route.exact}
+                          key={key} />
+                      ))
+                      : null
+                    }
+
+                    {
+                      routesOutsideMainWrapper.map((route, key) => (
+                        <CustomRoute
+                          path={routes[route].path}
+                          component={routes[route].component}
+                          isPrivate={false}
+                          exact={true}
+                          key={key} />
+                      ))
+                    }
+                    <Route path='*' component={NotFound} />
+                  </Switch>
+                </div>
+              </section>
+              <Toaster />
+            </main>
+          ) : (
             <main className={this.state.loaded ?
               `${styles.newWrapper} ${styles.loaded} appLoaded` :
               `${styles.newWrapper}`
             } ref={(el) => { this.main = el; }}>
               <NewHeader />
-              <Splashscreen />
+              <Switch>
+                {this.state.loaded ?
+                  routesNewDesign.map((route, key) => (
+                    <Route
+                      path={route.path}
+                      key={key}
+                      component={route.component}
+                    />
+                  )) : null
+                }
+              </Switch>
             </main>
-          )} />
-          <Route component={() => (
-            <main className={this.state.loaded ?
-              `${styles.bodyWrapper} ${styles.loaded} appLoaded` :
-              `${styles.bodyWrapper}`
-            } ref={(el) => { this.main = el; }}>
-            <MainMenu />
-            <section>
-              <div className={styles.mainBox}>
-                <Header />
-                <div id='onboardingAnchor'></div>
-                <Switch>
-                  {this.state.loaded ?
-                    <Route path={routes.explorer.path} component={ ({ location }) => (
-                      isPathCorrect(location, explorerRoutes) ? (
-                        <div>
-                          {explorerRoutes.map((route, key) => (
-                            <CustomRoute
-                              pathPrefix={route.pathPrefix}
-                              path={route.path}
-                              pathSuffix={route.pathSuffix}
-                              component={route.component}
-                              isPrivate={route.isPrivate}
-                              exact={true}
-                              key={key} />
-                          ))}
-                        </div>
-                      ) : <Route path='*' component={NotFound} />
-                    )} />
-                    : null
-                  }
-                  {this.state.loaded ?
-                    defaultRoutes.map((route, key) => (
-                      <CustomRoute
-                        path={route.path}
-                        pathSuffix={route.pathSuffix}
-                        component={route.component}
-                        isPrivate={route.isPrivate}
-                        exact={route.exact}
-                        key={key} />
-                    ))
-                    : null
-                  }
+          )
 
-                  {
-                    routesOutsideMainWrapper.map((route, key) => (
-                      <CustomRoute
-                        path={routes[route].path}
-                        component={routes[route].component}
-                        isPrivate={false}
-                        exact={true}
-                        key={key} />
-                    ))
-                  }
-                  <Route path='*' component={NotFound} />
-                </Switch>
-              </div>
-            </section>
-            <Toaster />
-          </main>
-          )} />
-        </Switch>
+        }
         <LoadingBar markAsLoaded={this.markAsLoaded.bind(this)} />
       </OfflineWrapper>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
