@@ -1,6 +1,6 @@
 import { expect } from 'chai';
+import ReactPiwik from 'react-piwik';
 import piwik from './piwik';
-import localJSONStorage from './localJSONStorage';
 
 describe('Piwik tracking', () => {
   const history = {
@@ -8,14 +8,27 @@ describe('Piwik tracking', () => {
     location: {},
   };
 
+  afterEach(() => {
+    ReactPiwik.prototype.connectToHistory.reset();
+  });
+
   it('connect to router history to piwik, with Tracking Mode DISABLED', () => {
-    const newPiwik = piwik.tracking(history);
-    expect(newPiwik).to.be.equal(false);
+    piwik.tracking(history, { statistics: false });
+    expect(ReactPiwik.prototype.connectToHistory).to.not.be.calledWith(history);
   });
 
   it('connect to router history to piwik, with Tracking Mode ENABLED', () => {
-    localJSONStorage.set('settings', { statistics: true });
-    const newPiwik = piwik.tracking(history);
-    expect(newPiwik).to.not.equal(false);
+    piwik.tracking(history, { statistics: false });
+    expect(ReactPiwik.prototype.connectToHistory).to.not.be.calledWith(history);
+    piwik.tracking(history, { statistics: true });
+    expect(ReactPiwik.prototype.connectToHistory).to.be.calledWith(history);
+  });
+
+  it('connect to router history to piwik, with Tracking Mode ENABLED then DISABLED', () => {
+    piwik.tracking(history, { statistics: true });
+    expect(ReactPiwik.prototype.connectToHistory).to.be.calledWith(history);
+    ReactPiwik.prototype.connectToHistory.reset();
+    piwik.tracking(history, { statistics: false });
+    expect(ReactPiwik.prototype.connectToHistory).to.not.be.calledWith(history);
   });
 });
