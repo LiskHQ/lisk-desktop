@@ -45,9 +45,9 @@
     justify-content: space-between;
     margin-bottom: 8px;
 
-    & > button {	
+    & > button {
       width: calc(60% - 10px) !important;
-      margin-top: 0 !important;	
+      margin-top: 0 !important;
 
       &:first-child {
         width: calc(40% - 10px) !important;
@@ -60,7 +60,7 @@
   padding: 2px;
 
   & > footer {
-    & > button {	
+    & > button {
       width: calc(100% / 2 - 20px) !important;
     }
   }
