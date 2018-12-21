@@ -54,4 +54,16 @@ describe('Second Passphrase Registration', () => {
       compareBalances(this.balanceBefore, this.balanceAfter, txSecondPassphraseRegCost);
     });
   });
+
+  /**
+   * Try to register with insufficient balance
+   * @expect choose name button is disabled
+   * @expect error message
+   */
+  it('Try to register with insufficient balance', () => {
+    cy.autologin(accounts['empty account'].passphrase, networks.devnet.node);
+    cy.visit(urls.secondPassphrase);
+    cy.get(ss.nextBtn).should('be.disabled');
+    cy.get(ss.nextBtn).parent().contains('Insufficient funds');
+  });
 });
