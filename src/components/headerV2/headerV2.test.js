@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom';
 import i18n from '../../i18n';
 import HeaderV2 from './headerV2';
 
-describe('New Header', () => {
+describe('V2 Header', () => {
   let wrapper;
   const options = {
     context: { i18n },
@@ -19,7 +19,7 @@ describe('New Header', () => {
     wrapper = mount(<MemoryRouter><HeaderV2 /></MemoryRouter>, options);
   });
 
-  it('should render Logo and Settings Button', () => {
+  it('Should render Logo and Settings Button', () => {
     expect(wrapper.find('.logo').exists()).to.equal(true);
     expect(wrapper.find('.settingButton').exists()).to.equal(true);
   });

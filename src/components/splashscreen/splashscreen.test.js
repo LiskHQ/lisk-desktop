@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router-dom';
 import i18n from '../../i18n';
 import SplashScreen from './splashscreen';
 
-describe('New SplashScreen', () => {
+describe('V2 SplashScreen', () => {
   let wrapper;
   const options = {
     context: { i18n },
