@@ -57,13 +57,6 @@ function testActivity(open) {
       .find(ss.transactionAddress).contains('Second passphrase registration');
   });
 
-  /**
-   * Delegate statistics tab is not present for not-delegate
-   */
-  it('No delegate statistics tab is present', () => {
-    cy.get(ss.delegateStatisticsTab).should('not.exist');
-  });
-
   describe('Account info tab', () => {
     beforeEach(() => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
@@ -71,6 +64,14 @@ function testActivity(open) {
       waitBeforeChangeTabAfterLoading();
       cy.get(ss.accountInfoTab).click();
     });
+
+    /**
+     * Delegate statistics tab is not present for not-delegate
+     */
+    it('No delegate statistics tab is present', () => {
+      cy.get(ss.delegateStatisticsTab).should('not.exist');
+    });
+
     /**
      * Maximum possible number of voted accounts is shown
      * @expect 101 are shown
