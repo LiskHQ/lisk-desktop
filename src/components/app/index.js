@@ -11,7 +11,7 @@ import Header from '../header';
 import Dialog from '../dialog';
 import NotFound from '../notFound';
 
-import NewHeader from '../header/v2/header';
+import HeaderV2 from '../headerV2/headerV2';
 
 import routes from '../../constants/routes';
 // eslint-disable-next-line import/no-named-as-default
@@ -39,7 +39,7 @@ class App extends React.Component {
     const explorerRoutes = allRoutes.filter(routeObj =>
       routeObj.pathPrefix && routeObj.pathPrefix === routes.explorer.path);
 
-    const routesNewDesign = allRoutes.filter(routeObj => routeObj.hasNewLayout);
+    const routesV2Layout = allRoutes.filter(routeObj => routeObj.isV2Layout);
 
     const routesOutsideMainWrapper = [
       'registerDelegate',
@@ -55,16 +55,16 @@ class App extends React.Component {
         <Onboarding appLoaded={this.state.loaded} />
         <Dialog />
         {
-          routesNewDesign.filter(route => route.path === location.pathname).length > 0
+          routesV2Layout.filter(route => route.path === location.pathname).length > 0
           ? (
             <main className={this.state.loaded ?
-              `${styles.newWrapper} ${styles.loaded} appLoaded` :
-              `${styles.newWrapper}`
+              `${styles.v2Wrapper} ${styles.loaded} appLoaded` :
+              `${styles.v2Wrapper}`
             } ref={(el) => { this.main = el; }}>
-              <NewHeader />
+              <HeaderV2 />
               <Switch>
                 {this.state.loaded &&
-                  routesNewDesign.map((route, key) => (
+                  routesV2Layout.map((route, key) => (
                     <Route
                       path={route.path}
                       key={key}

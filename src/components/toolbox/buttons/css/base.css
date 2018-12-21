@@ -36,7 +36,7 @@
   }
 }
 
-@define-mixin newButtonPrimary {
+@define-mixin buttonPrimaryV2 {
   border-radius: 4px;
   color: var(--color-white) !important;
   box-shadow: 0 4px 8px 0 rgba(72, 77, 97, 0.1);
@@ -64,7 +64,7 @@
   }
 }
 
-@define-mixin newButtonSecondary {
+@define-mixin buttonSecondaryV2 {
   border-radius: 4px;
   color: #4e80f7 !important;
   box-shadow: 0 4px 8px 0 rgba(72, 77, 97, 0.1);

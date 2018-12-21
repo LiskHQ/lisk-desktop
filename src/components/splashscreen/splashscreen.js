@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
 import routes from '../../constants/routes';
-import { NewPrimaryButton, NewSecondaryButton } from '../toolbox/buttons/button';
+import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import styles from './splashscreen.css';
 
 const Splashscreen = ({ t }) => (
@@ -16,10 +16,10 @@ const Splashscreen = ({ t }) => (
         }</p>
       </div>
       <Link className={styles.button} to={routes.login.path}>
-        <NewSecondaryButton>{t('Sign in')}</NewSecondaryButton>
+        <SecondaryButtonV2>{t('Sign in')}</SecondaryButtonV2>
       </Link>
       <Link className={styles.button} to={routes.register.path}>
-        <NewPrimaryButton>{t('Create an Account')}</NewPrimaryButton>
+        <PrimaryButtonV2>{t('Create an Account')}</PrimaryButtonV2>
       </Link>
       <span className={styles.separator}>
         <span>{t('or')}</span>

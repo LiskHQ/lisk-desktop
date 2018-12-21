@@ -1,5 +1,5 @@
-@import '../../toolbox/buttons/css/base.css';
-@import '../../app/variables.css';
+@import '../toolbox/buttons/css/base.css';
+@import '../app/variables.css';
 
 .wrapper {
   align-items: center;

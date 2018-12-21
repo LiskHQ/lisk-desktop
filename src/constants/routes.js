@@ -146,6 +146,6 @@ export default {
     path: '/splashscreen',
     component: Splashscreen,
     isPrivate: false,
-    hasNewLayout: true,
+    isV2Layout: true,
   },
 };

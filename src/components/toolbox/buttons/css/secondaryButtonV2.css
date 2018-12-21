@@ -4,5 +4,5 @@
   min-height: 48px;
 
   @mixin buttonBasics;
-  @mixin newButtonPrimary;
+  @mixin buttonSecondaryV2;
 }

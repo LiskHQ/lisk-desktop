@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
-import i18n from '../../../i18n';
-import Header from './header';
+import i18n from '../../i18n';
+import HeaderV2 from './headerV2';
 
 describe('New Header', () => {
   let wrapper;
@@ -16,7 +16,7 @@ describe('New Header', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<MemoryRouter><Header /></MemoryRouter>, options);
+    wrapper = mount(<MemoryRouter><HeaderV2 /></MemoryRouter>, options);
   });
 
   it('should render Logo and Settings Button', () => {
