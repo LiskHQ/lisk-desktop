@@ -23,6 +23,6 @@ describe('V2 SplashScreen', () => {
     const buttons = wrapper.find('.wrapper').children('.button');
     expect(buttons.at(0).text()).to.equal('Sign in');
     expect(buttons.at(1).text()).to.equal('Create an Account');
-    expect(wrapper.find('.link').at(0).text()).to.equal('Explore as Guest');
+    expect(wrapper.find('.link').at(0).text()).to.equal('Explore as a Guest');
   });
 });
