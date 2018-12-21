@@ -18,6 +18,7 @@ import AccountVisualDemo from '../components/accountVisual/demo';
 import Request from '../components/request';
 import Send from '../components/send';
 import Splashscreen from '../components/splashscreen/splashscreen';
+import RegistrationV2 from '../components/registerV2/registerV2';
 
 export default {
   accountVisualDemo: {
@@ -145,6 +146,12 @@ export default {
   splashscreen: {
     path: '/splashscreen',
     component: Splashscreen,
+    isPrivate: false,
+    isV2Layout: true,
+  },
+  registration: {
+    path: '/registration',
+    component: RegistrationV2,
     isPrivate: false,
     isV2Layout: true,
   },
