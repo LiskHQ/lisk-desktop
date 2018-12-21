@@ -25,7 +25,7 @@ const Splashscreen = ({ t }) => (
         <span>{t('or')}</span>
       </span>
       <Link className={styles.link} to={routes.dashboard.path}>
-        {t('Explore as Guest')}
+        {t('Explore as a Guest')}
       </Link>
     </div>
   </div>

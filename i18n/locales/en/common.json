@@ -119,7 +119,7 @@
   "Error during login with Ledger.": "Error during login with Ledger.",
   "Error on Ledger Connection. Be sure your device is connected properly": "Error on Ledger Connection. Be sure your device is connected properly",
   "Explain Blockchain Like I'm 5": "Explain Blockchain Like I'm 5",
-  "Explore as Guest": "Explore as Guest",
+  "Explore as a Guest": "Explore as a Guest",
   "Explore the network": "Explore the network",
   "Failed to connect to node": "Failed to connect to node",
   "Failed to connect: Node {{address}} is not active": "Failed to connect: Node {{address}} is not active",
