@@ -28,7 +28,7 @@
 
 .titleHolder {
   color: #19224d;
-  font-family: var(--heading-gont);
+  font-family: var(--heading-font);
   text-align: center;
 
   & > .stepsLabel {
@@ -56,6 +56,25 @@
   }
 }
 
+@keyframes avatarAnimate {
+  from { transform: scale(1); }
+  to {
+    background: var(--color-white);
+    box-shadow: 0px 0px 10px 4px rgba(213, 224, 247, 1);
+    transform: scale(2.05);
+  }
+}
+
+@for $i from 1 to 5 {
+  .animate > div:nth-child($i) {
+    animation-name: avatarAnimate;
+    animation-iteration-count: 2;
+    animation-direction: alternate;
+    animation-duration: 0.35s;
+    animation-delay: calc(0.35s * ($i - 1));
+  }
+}
+
 .accountHolder {
   align-items: center;
   display: flex;
@@ -66,12 +85,12 @@
   & > div {
     border-radius: 50%;
     padding: 7px;
-    transition: all .35s ease-in-out;
+    transition: all 0.35s ease-in-out;
   }
 
   & > div:hover {
     background: var(--color-white);
-    box-shadow: 0px 0px 10px 4px rgba(213,224,247,1);
+    box-shadow: 0px 0px 10px 4px rgba(213, 224, 247, 1);
     transform: scale(2.05);
   }
 }
@@ -81,4 +100,8 @@
     font-size: 14px;
     font-weight: bold;
   }
+}
+
+.disabledLink {
+  pointer-events: none;
 }

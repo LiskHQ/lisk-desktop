@@ -44,7 +44,7 @@ class RegisterV2 extends React.Component {
               t('Each Avatar is a visual representation of the address, making it unique.')
             }</p>
           </div>
-          <div className={`${styles.accountHolder}`}>
+          <div className={`${styles.accountHolder} ${styles.animate}`}>
             {
               this.state.addresses.map((address, key) => (
                 <AccountVisual
@@ -61,8 +61,11 @@ class RegisterV2 extends React.Component {
                 {t('Go Back')}
               </SecondaryButtonV2>
             </Link>
-            <Link className={`${styles.button} ${grid['col-xs-6']}`} to={routes.register.path}>
-              <PrimaryButtonV2>
+            <Link
+              className={`${styles.button} ${grid['col-xs-6']}`}
+              onClick={e => e.preventDefault()}
+              to={routes.register.path}>
+              <PrimaryButtonV2 disabled={this.state.selected}>
                 {t('Confirm')}
                 <FontIcon className={styles.icon}>arrow-right</FontIcon>
               </PrimaryButtonV2>
