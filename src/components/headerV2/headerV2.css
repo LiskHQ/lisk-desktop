@@ -1,0 +1,40 @@
+@import '../toolbox/buttons/css/base.css';
+@import '../app/variables.css';
+
+.wrapper {
+  align-items: center;
+  background-color: #fbfcfe;
+  border-bottom: 1px solid #e6e6e8;
+  box-shadow: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  height: 100px;
+  justify-content: space-between;
+  padding: 33px 40px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.logo {
+  height: 32px;
+  width: 27px;
+
+  & > img {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.settingButton > button {
+  box-shadow: 0 4px 8px 0 rgba(72, 77, 97, 0.1);
+  font-size: 12px;
+  font-weight: 600;
+  height: 32px;
+  letter-spacing: 0.5px;
+  min-height: 32px;
+  line-height: 32px;
+  width: 144px;
+}

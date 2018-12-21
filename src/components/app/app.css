@@ -8,6 +8,16 @@ body {
   width: 100%;
 }
 
+.v2Wrapper {
+  bottom: 0;
+  left: 0;
+  padding-top: 100px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 0;
+}
+
 .bodyWrapper {
   position: absolute;
   width: 100%;
