@@ -58,8 +58,8 @@ class CustomCountDown extends React.Component {
     const {
       minutes, autoLog, seconds, resetTimer, t,
     } = this.props;
-    const min = minutes < 10 ? `0${minutes}` : minutes;
-    const sec = seconds < 10 ? `0${seconds}` : seconds;
+    const min = `0${minutes}`.slice(-2);
+    const sec = `0${seconds}`.slice(-2);
 
     const resetCondition = (minutes < 5);
     const timeoutCondition = (minutes === 0 && seconds === 0);
