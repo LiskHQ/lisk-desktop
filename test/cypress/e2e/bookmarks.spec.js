@@ -86,6 +86,7 @@ describe('Bookmarks', () => {
       ]`);
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit(urls.dashboard);
+      cy.wait(500); // To let app fetch and update the actual balance
       cy.get(ss.followedAccountBalance).invoke('text').as('balanceBefore');
       cy.visit(urls.send);
       cy.get(ss.recipientInput).type(accounts.genesis.address);
@@ -95,6 +96,7 @@ describe('Bookmarks', () => {
       cy.visit(urls.dashboard);
       cy.get(ss.transactionRow).eq(0).find(ss.spinner);
       cy.get(ss.transactionRow).eq(0).find(ss.spinner, { timeout: txConfirmationTimeout }).should('not.exist');
+      cy.wait(200); // To avoid updating lag
       cy.get(ss.followedAccountBalance).invoke('text').as('balanceAfter').then(() => {
         compareBalances(this.balanceBefore, this.balanceAfter, 0.1);
       });

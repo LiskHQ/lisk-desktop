@@ -165,7 +165,6 @@ describe('Delegates', () => {
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout }).should('have.class', 'checked');
     cy.get(ss.sidebarMenuWalletBtn).click();
     cy.get(ss.transactionRow).eq(0).as('tx');
-    cy.get('@tx').find(ss.spinner).should('not.exist');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', 'Delegate vote');
     cy.get('@tx').find(ss.transactionReference).should('have.text', '-');
     cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');

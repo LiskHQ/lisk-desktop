@@ -148,7 +148,7 @@ function testDelegateActivity(open) {
      * @expect voters nickname shown
      */
     xit('Shows voters nickname if it is delegate', () => {
-      cy.get(ss.voterAdress).eq(0).should('have.text', 'genesis_1 ');
+      cy.get(ss.voterAddress).eq(0).should('have.text', 'genesis_1 ');
     });
 
     /**
@@ -157,7 +157,7 @@ function testDelegateActivity(open) {
      * @expect voters address shown
      */
     it('Shows voters address if it is not delegate', () => {
-      cy.get(ss.voterAdress).eq(1).should('have.text', '16313739661670634666L ');
+      cy.get(ss.voterAddress).eq(1).should('have.text', '16313739661670634666L ');
     });
 
     /**
@@ -165,7 +165,7 @@ function testDelegateActivity(open) {
      * @expect according delegate name is shown on account's page
      */
     it('Click on voter leads to account page', () => {
-      cy.get(ss.voterAdress).eq(1).click();
+      cy.get(ss.voterAddress).eq(1).click();
       cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', '16313739661670634666L');
     });
 
@@ -173,7 +173,7 @@ function testDelegateActivity(open) {
       cy.get(ss.delegateStatsUptime).contains('100%');
       cy.get(ss.delegateStatsUptime).contains('1');
       cy.get(ss.delegateStatsApproval).contains('100%');
-      cy.get(ss.delegateStatsWeight).contains('99,999');
+      cy.get(ss.delegateStatsWeight).contains('100,000,000');
       cy.get(ss.delegateStatsForged).contains('0');
       cy.get(ss.delegateStatsBlocks).contains(/\d/);
     });
