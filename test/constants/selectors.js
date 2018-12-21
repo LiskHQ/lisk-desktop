@@ -155,6 +155,8 @@ const ss = {
   delegateStatsWeight: '.vote',
   delegateStatsForged: '.forged',
   delegateStatsBlocks: '.blocks',
+  followAccountBtn: '.follow-account',
+  bookmarkedAccountTitle: '.transactions .account-title',
 };
 
 export default ss;
