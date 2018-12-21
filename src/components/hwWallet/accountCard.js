@@ -11,10 +11,12 @@ const AccountCard = ({
   account, hardwareAccountName, isEditMode,
   changeInput, onClickHandler, index,
 }) => (
-  <div className={styles.card}>
-    <div
-      className={styles.accountVisualWrapper}
-      onClick={() => { onClickHandler(account, index); }}>
+  <div
+    className={styles.card}
+    onClick={() => {
+      onClickHandler(account, index);
+    }}>
+    <div className={styles.accountVisualWrapper}>
       <AccountVisual
         address={account.address}
         size={100} sizeS={60}
