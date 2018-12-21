@@ -36,7 +36,7 @@ class RegisterV2 extends React.Component {
     const { t } = this.props;
     return (
       <div className={`${styles.register} ${grid.row}`}>
-        <div className={`${styles.wrapper} ${grid['col-sm-6']}`}>
+        <div className={`${styles.wrapper} ${grid['col-sm-8']}`}>
           <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
             <span className={`${styles.stepsLabel}`}>{t('Step 1 / 4')}</span>
             <h1>{t('Choose your Avatar')}</h1>
