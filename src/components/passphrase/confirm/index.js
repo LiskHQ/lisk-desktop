@@ -7,6 +7,7 @@ import TransitionWrapper from '../../toolbox/transitionWrapper';
 import AccountVisual from '../../accountVisual';
 import SecondPassphraseSteps from '../ConfirmSecond';
 import Form from './form';
+import Piwik from '../../../utils/piwik';
 
 class Confirm extends React.Component {
   constructor() {
@@ -173,6 +174,7 @@ class Confirm extends React.Component {
   }
 
   selectFieldset(e) {
+    Piwik.trackingEvent('Confirm', 'button', 'onSelectFieldset');
     const selectedFieldset = parseInt(e.nativeEvent.target.getAttribute('field'), 10);
     this.setState({ selectedFieldset });
   }
@@ -184,6 +186,11 @@ class Confirm extends React.Component {
 
   getAddress() {
     return extractAddress(this.props.passphrase);
+  }
+
+  onFinalCallback() {
+    Piwik.trackingEvent('Confirm', 'button', 'onFinalCallback');
+    this.props.finalCallback(this.state.words.join(' '));
   }
 
   render() {
@@ -233,7 +240,7 @@ class Confirm extends React.Component {
                   disabled={this.state.step !== 'done'}
                   label={this.props.t('Get to your Dashboard')}
                   className={`${styles.button} get-to-your-dashboard-button`}
-                  onClick={() => this.props.finalCallback(words.join(' '))}
+                  onClick={() => this.onFinalCallback.bind(this)}
                 />
               </div>
             </section>

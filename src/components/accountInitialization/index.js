@@ -7,9 +7,11 @@ import { FontIcon } from '../fontIcon';
 import styles from './accountInit.css';
 import fees from './../../constants/fees';
 import { fromRawLsk } from '../../utils/lsk';
+import Piwik from '../../utils/piwik';
 
 class AccountInitialization extends React.Component {
   closeInfo() {
+    Piwik.trackingEvent('AccountInit', 'button', 'closeInfo');
     this.props.nextStep();
   }
 
@@ -23,8 +25,14 @@ class AccountInitialization extends React.Component {
     }
   }
 
+  onNext() {
+    const { account, nextStep } = this.props;
+    Piwik.trackingEvent('AccountInit', 'button', 'next');
+    nextStep({ account, accountInit: true }, 2);
+  }
+
   render() {
-    const { account, t, nextStep } = this.props;
+    const { t } = this.props;
 
     return (<div className={`${styles.wrapper} account-initialization`}>
       <header>
@@ -34,7 +42,12 @@ class AccountInitialization extends React.Component {
         <p>{t('It is recommended that you initialize your Lisk ID.')}</p>
         <p>{t('The easiest way to do this is to send LSK to yourself. It will cost you only the usual {{fee}} LSK transaction fee.', { fee: fromRawLsk(fees.send) })}</p>
         <p>
-          <a target='_blank' href='https://help.lisk.io/account-security/should-i-initialize-my-lisk-account' rel='noopener noreferrer'>
+          <a
+            target='_blank'
+            href='https://help.lisk.io/account-security/should-i-initialize-my-lisk-account'
+            onClick={Piwik.trackingEvent('AccountInit', 'link', 'initializeMyLiskAccount')}
+            rel='noopener noreferrer'
+          >
             {t('Learn more about Lisk ID initialization')} <FontIcon>arrow-right</FontIcon>
           </a>
         </p>
@@ -51,7 +64,7 @@ class AccountInitialization extends React.Component {
           <div className={`${grid['col-xs-4']} ${grid['col-sd-6']} ${grid['col-md-5']} ${grid['col-lg-4']}`}>
             <Button
               label={t('Next')}
-              onClick={() => nextStep({ account, accountInit: true }, 2)}
+              onClick={this.onNext.bind(this)}
               className={`account-init-button ${styles.button}`}/>
           </div>
         </div>

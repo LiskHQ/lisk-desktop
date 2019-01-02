@@ -8,6 +8,7 @@ import GradientSVG from './gradientSVG';
 import { FontIcon } from '../fontIcon';
 import { Button } from '../toolbox/buttons/button';
 import { getTotalVotesCount, getVoteList, getUnvoteList } from './../../utils/voting';
+import Piwik from '../../utils/piwik';
 import styles from './votesPreview.css';
 
 class VotesPreview extends React.Component {
@@ -24,16 +25,19 @@ class VotesPreview extends React.Component {
   }
 
   dismissSurpassMessage() {
+    Piwik.trackingEvent('VotesPreview', 'button', 'onDismissSurpassMessage');
     this.setState({ surpassMessageDismissed: true });
   }
 
-  nextStep() {
+  onNextStep() {
+    Piwik.trackingEvent('VotesPreview', 'button', 'onNextStep');
+    this.props.updateList(true);
     this.props.nextStep({});
     this.props.nextStepGotCalled();
   }
 
   render() { // eslint-disable-line
-    const { votes, t, updateList } = this.props;
+    const { votes, t } = this.props;
     const { maxCountOfVotes, maxCountOfVotesInOneTurn } = votingConst;
     const voteList = getVoteList(votes);
     const unvoteList = getUnvoteList(votes);
@@ -92,7 +96,7 @@ class VotesPreview extends React.Component {
           <Button
             className={`${styles.button} next`}
             type='button'
-            onClick={() => { updateList(true); this.nextStep(); }}
+            onClick={() => this.onNextStep.bind(this)}
             disabled={totalNewVotesCount === 0 || surpassedVoteLimit || insufficientFunds}>
             <span>{t('Next')}</span>
             <FontIcon value='arrow-right' className={styles.arrow} />

@@ -11,6 +11,7 @@ import settingsConst from './../../constants/settings';
 import routes from '../../constants/routes';
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
+import Piwik from '../../utils/piwik';
 // import languageSwitcherTheme from './languageSwitcher.css';
 
 class Setting extends React.Component {
@@ -22,6 +23,7 @@ class Setting extends React.Component {
   }
 
   toggleAutoLog(state) {
+    Piwik.trackingEvent('Settings', 'button', 'onToggleAutoLog');
     const {
       account, settings, settingsUpdated, accountUpdated,
     } = this.props;
@@ -32,9 +34,14 @@ class Setting extends React.Component {
     settingsUpdated({ autoLog: !settings.autoLog });
   }
 
+  onUpdateSettings(newSettings) {
+    Piwik.trackingEvent('Settings', 'button', 'onUpdateSettings');
+    this.props.settingsUpdated(newSettings);
+  }
+
   render() {
     const {
-      t, settings, settingsUpdated,
+      t, settings,
       hasSecondPassphrase,
     } = this.props;
 
@@ -84,7 +91,9 @@ class Setting extends React.Component {
           <Checkbox
             theme={styles}
             className={`${styles.smallSlider} showNetwork`}
-            onChange={() => settingsUpdated({ showNetwork: !settings.showNetwork })}
+            onChange={() =>
+              this.onUpdateSettings({ showNetwork: !settings.showNetwork }).bind(this)
+            }
             input={{
               value: false,
               checked: settings.showNetwork,
@@ -98,7 +107,9 @@ class Setting extends React.Component {
           <Checkbox
             theme={styles}
             className={`${styles.smallSlider} advancedMode`}
-            onChange={() => settingsUpdated({ advancedMode: !settings.advancedMode })}
+            onChange={() =>
+              this.onUpdateSettings({ advancedMode: !settings.advancedMode }).bind(this)
+            }
             input={{
               value: true,
               checked: settings.advancedMode,
@@ -112,7 +123,7 @@ class Setting extends React.Component {
               <li
                 key={`currency-${currency}`}
                 className={`currency currency-${currency} ${currency === activeCurrency ? `${styles.active} active` : ''}`}
-                onClick={() => settingsUpdated({ currency })}>
+                onClick={() => this.onUpdateSettings({ currency }).bind(this)}>
                 {currency}
               </li>
             ))}

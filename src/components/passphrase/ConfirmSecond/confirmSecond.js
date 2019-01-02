@@ -10,6 +10,7 @@ import SliderCheckbox from '../../toolbox/sliderCheckbox';
 // eslint-disable-next-line import/no-named-as-default
 import PassphraseInput from '../../passphraseInput';
 import routes from '../../../constants/routes';
+import Piwik from '../../../utils/piwik';
 
 class ConfirmSecond extends React.Component {
   constructor() {
@@ -23,6 +24,7 @@ class ConfirmSecond extends React.Component {
       error: false,
     };
   }
+
   onChange(name, value, error) {
     const { publicKey } = this.props.account;
     if (!error && extractPublicKey(value) !== publicKey) {
@@ -35,19 +37,24 @@ class ConfirmSecond extends React.Component {
       },
     });
   }
+
   login() {
+    Piwik.trackingEvent('ConfirmSecond', 'button', 'onLogin');
     this.setState({
       step: 'confirm',
     });
   }
+
   componentDidMount() {
     if (this.props.account.passphrase) {
       this.setState({ step: 'confirm' });
     }
   }
+
   componentWillUnmount() {
     this.props.secondPassphraseRegisteredFailureReset();
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.account.secondPublicKey && !nextProps.error) {
       this.setState({ step: 'done' });
@@ -58,7 +65,14 @@ class ConfirmSecond extends React.Component {
       });
     }
   }
+
+  onRedirectToDashboard() {
+    Piwik.trackingEvent('ConfirmSecond', 'button', 'onRedirectToDashboard');
+    this.props.history.push(`${routes.dashboard.path}`);
+  }
+
   confirm() {
+    Piwik.trackingEvent('ConfirmSecond', 'button', 'onConfirm');
     const { finalCallback, account } = this.props;
     const passphrase = this.state.passphrase.value || account.passphrase;
     finalCallback(passphrase);
@@ -66,12 +80,14 @@ class ConfirmSecond extends React.Component {
       step: 'pending',
     });
   }
+
   redirectToFirstStep() {
+    Piwik.trackingEvent('ConfirmSecond', 'button', 'onRedirectToFirstStep');
     this.props.secondPassphraseRegisteredFailureReset();
     this.props.history.goBack();
   }
   render() {
-    const { hidden, t, history } = this.props;
+    const { hidden, t } = this.props;
     const status = hidden ? styles.hidden : '';
     const doneClass = (this.state.step === 'done' ||
       this.state.step === 'pending' ||
@@ -174,7 +190,7 @@ class ConfirmSecond extends React.Component {
           <Button
             label={this.props.t('Go back to Dashboard')}
             className={`${styles.resultButton} get-to-your-dashboard-button`}
-            onClick={() => history.push(`${routes.dashboard.path}`) }
+            onClick={() => this.onRedirectToDashboard.bind(this)}
           />
         </TransitionWrapper>
       </div>}

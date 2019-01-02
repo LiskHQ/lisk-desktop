@@ -31,6 +31,10 @@ const disabledPiwikTracking = () => {
   ReactPiwik.push([piwikOptions.FORGET_CONSENT_GIVEN]);
 };
 
+const trackingEvent = (category, action, name) => {
+  ReactPiwik.push([piwikOptions.TRACK_EVENT, category, action, name]);
+};
+
 // eslint-disable-next-line max-statements
 const tracking = (history) => {
   const settings = checkIfPiwikIsEnabled();
@@ -51,5 +55,5 @@ const tracking = (history) => {
 
 export default {
   tracking,
-  disabledPiwikTracking,
+  trackingEvent,
 };

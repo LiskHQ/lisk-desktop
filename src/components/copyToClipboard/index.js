@@ -3,6 +3,7 @@ import { CopyToClipboard as ReactCopyToClipboard } from 'react-copy-to-clipboard
 import { translate } from 'react-i18next';
 import { FontIcon } from '../fontIcon';
 import styles from './copyToClipboard.css';
+import Piwik from '../../utils/piwik';
 
 class CopyToClipboard extends React.Component {
   constructor() {
@@ -13,6 +14,7 @@ class CopyToClipboard extends React.Component {
   }
 
   textIsCopied() {
+    Piwik.trackingEvent('copyToClipboard', 'button', 'copy');
     this.setState({
       copied: true,
     });
