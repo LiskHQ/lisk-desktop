@@ -13,6 +13,7 @@ import transactions from './../../../constants/transactionTypes';
 import TransactionDetailViewField from './transactionDetailViewField';
 import TransactionDetailViewRow from './transactionDetailViewRow';
 import DateField from './transactionDetailDateField';
+import Piwik from '../../../utils/piwik';
 
 class TransactionDetailView extends React.Component {
   constructor(props) {
@@ -131,6 +132,11 @@ class TransactionDetailView extends React.Component {
     );
   }
 
+  onBackToOverview() {
+    Piwik.trackingEvent('TransactionDetailView', 'button', 'onBackToOverview');
+    this.props.history.push(this.props.history.location.pathname);
+  }
+
   render() {
     const transaction = this.getTransaction();
     return (
@@ -140,7 +146,7 @@ class TransactionDetailView extends React.Component {
             <header>
               <h3>
                 <small className={`${styles.backButton} transaction-details-back-button`}
-                  onClick={() => this.props.history.push(this.props.history.location.pathname)}>
+                  onClick={() => this.onBackToOverview.bind(this)}>
                   <FontIcon className={`${styles.arrow}`} value='arrow-left'/>
                   <span className={`${styles.text}`}>{this.props.t('Back to overview')}</span>
                 </small>

@@ -1,12 +1,19 @@
 import React from 'react';
 import { PrimaryButton } from '../toolbox/buttons/button';
 import { fromRawLsk } from '../../utils/lsk';
+import Piwik from '../../utils/piwik';
 import styles from './pricedButton.css';
 
 const PricedButton = ({
   balance, fee, label, customClassName, onClick, disabled, type, t,
 }) => {
   const hasFunds = balance >= fee;
+
+  function onHandleClick() {
+    Piwik.trackingEvent('PricedButton', 'button', 'onHandleClick');
+    onClick();
+  }
+
   return (
     <div className='primary-button'>
       {
@@ -24,7 +31,7 @@ const PricedButton = ({
         type={type || 'button'}
         className={`next-button ${customClassName}`}
         disabled={disabled || (fee && !hasFunds)}
-        onClick={onClick} />
+        onClick={onHandleClick} />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { PrimaryButton } from './../toolbox/buttons/button';
 import Box from '../box';
 import { parseSearchParams } from '../../utils/searchParams';
 import { FontIcon } from '../fontIcon';
+import Piwik from '../../utils/piwik';
 import styles from './voteUrlProcessor.css';
 
 export default class VoteUrlProcessor extends React.Component {
@@ -24,6 +25,18 @@ export default class VoteUrlProcessor extends React.Component {
 
   getProcessedCount() {
     return this.props.urlVoteCount - this.props.pending.length;
+  }
+
+  onClearVotes() {
+    Piwik.trackingEvent('VoteUrlProcessor', 'button', 'onClearVotes');
+    this.props.clearVoteLookupStatus();
+    this.props.clearVotes();
+    this.props.closeInfo();
+  }
+
+  onCloseInfo() {
+    Piwik.trackingEvent('VoteUrlProcessor', 'button', 'onCloseInfo');
+    this.props.closeInfo();
   }
 
   render() {
@@ -54,11 +67,9 @@ export default class VoteUrlProcessor extends React.Component {
         <section className={styles.wrapper}>
           <header>
               <h2>Your Pre-Selection
-                <div className={`${styles.cancel} clear-votes`} onClick={() => {
-                  this.props.clearVoteLookupStatus();
-                  this.props.clearVotes();
-                  this.props.closeInfo();
-                }}>{this.props.t('Cancel')} <FontIcon value='close' />
+                <div className={`${styles.cancel} clear-votes`} onClick={() => this.onClearVotes.bind(this)}>
+                  {this.props.t('Cancel')}
+                  <FontIcon value='close' />
                 </div>
               </h2>
           </header>
@@ -87,7 +98,7 @@ export default class VoteUrlProcessor extends React.Component {
             )}</div>
           </div>
           <footer>
-            <PrimaryButton label={this.props.t('Ok')} theme={styles} onClick={this.props.closeInfo}/>
+            <PrimaryButton label={this.props.t('Ok')} theme={styles} onClick={this.onCloseInfo.bind(this)}/>
           </footer>
         </section>
       </Box> : null;

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontIcon } from '../fontIcon';
 import routes from './../../constants/routes';
+import Piwik from '../../utils/piwik';
 import styles from './delegateStatistics.css';
 
 class AccountList extends React.Component {
@@ -66,6 +67,7 @@ class AccountList extends React.Component {
   }
 
   clearSearch(filterQuery) {
+    Piwik.trackingEvent('AccountList', 'button', 'onClearSearch');
     this.search(filterQuery, { target: { value: '' } });
   }
 

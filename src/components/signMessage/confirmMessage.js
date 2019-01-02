@@ -9,6 +9,7 @@ import { extractPublicKey } from '../../utils/account';
 import PassphraseInput from '../passphraseInput';
 import TransitionWrapper from '../toolbox/transitionWrapper';
 import CopyToClipboard from '../copyToClipboard';
+import Piwik from '../../utils/piwik';
 import passphraseStepsStyles from '../passphraseSteps/passphraseSteps.css';
 
 class ConfirmMessage extends React.Component {
@@ -53,6 +54,7 @@ class ConfirmMessage extends React.Component {
   }
 
   signMessage() {
+    Piwik.trackingEvent('ConfirmMessage', 'button', 'onConfirm');
     this.setState({
       step: 'done',
       result: this.sign(),

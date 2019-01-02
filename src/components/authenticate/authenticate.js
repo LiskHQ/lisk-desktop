@@ -3,6 +3,7 @@ import { handleChange, authStatePrefill, authStateIsValid } from '../../utils/fo
 import ActionBar from '../actionBar';
 import AuthInputs from '../authInputs';
 import InfoParagraph from '../infoParagraph';
+import Piwik from '../../utils/piwik';
 
 class Authenticate extends React.Component {
   constructor() {
@@ -27,6 +28,7 @@ class Authenticate extends React.Component {
 
   update(e) {
     e.preventDefault();
+    Piwik.trackingEvent('Authenticate', 'button', 'update');
     const data = {
       passphrase: this.state.passphrase.value,
     };
@@ -34,6 +36,12 @@ class Authenticate extends React.Component {
       data.secondPassphrase = this.state.secondPassphrase.value;
     }
     this.props.accountUpdated(data);
+  }
+
+  closeDialog(e) {
+    e.preventDefault();
+    Piwik.trackingEvent('Authenticate', 'button', 'closeDialog');
+    this.props.closeDialog();
   }
 
   render() {
@@ -50,7 +58,8 @@ class Authenticate extends React.Component {
 
         <ActionBar
           secondaryButton={{
-            onClick: this.props.closeDialog,
+            onClick: this.closeDialog.bind(this),
+            className: 'closeDialog-button',
           }}
           primaryButton={{
             label: this.props.t('Unlock account'),

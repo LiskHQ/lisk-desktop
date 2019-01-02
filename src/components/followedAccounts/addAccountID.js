@@ -6,6 +6,7 @@ import { Button, TertiaryButton } from '../toolbox/buttons/button';
 import regex from '../../utils/regex';
 import styles from './followedAccounts.css';
 import AddressInput from '../addressInput/index';
+import Piwik from '../../utils/piwik';
 
 class AddAccountID extends React.Component {
   constructor() {
@@ -36,6 +37,15 @@ class AddAccountID extends React.Component {
     return undefined;
   }
 
+  onPrevStep() {
+    Piwik.trackingEvent('AddAccountID', 'button', 'onPreviousStep');
+    this.props.prevStep();
+  }
+
+  onNextStep() {
+    Piwik.trackingEvent('AddAccountID', 'button', 'onNextStep');
+    this.props.nextStep({ address: this.state.address.value });
+  }
 
   render() {
     return <div className={styles.addAccount}>
@@ -53,7 +63,7 @@ class AddAccountID extends React.Component {
           <Button
             label={this.props.t('Cancel')}
             className={`${styles.cancelButton} cancel`}
-            onClick={() => this.props.prevStep()}
+            onClick={() => this.onPrevStep.bind(this)}
           />
         </div>
         <div className={grid['col-xs-8']}>
@@ -61,7 +71,7 @@ class AddAccountID extends React.Component {
             label={this.props.t('Next')}
             className='next'
             disabled={(!!this.state.address.error || !this.state.address.value)}
-            onClick={() => this.props.nextStep({ address: this.state.address.value })}
+            onClick={() => this.onNextStep.bind(this)}
           />
         </div>
       </footer>

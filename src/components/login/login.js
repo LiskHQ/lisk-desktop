@@ -20,6 +20,7 @@ import Box from '../box';
 import SignUp from './signUp';
 import { validateUrl, addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import { FontIcon } from '../fontIcon';
+import Piwik from '../../utils/piwik';
 
 /**
  * The container component containing login
@@ -108,6 +109,7 @@ class Login extends React.Component {
   }
 
   onLoginSubmission(passphrase) {
+    Piwik.trackingEvent('Login', 'button', 'onLoginSubmission');
     const network = this.getNetwork(this.state.network);
     this.secondIteration = true;
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
@@ -167,6 +169,7 @@ class Login extends React.Component {
   }
 
   validateCorrectNode() {
+    Piwik.trackingEvent('Login', 'button', 'onValidateCorrectNode');
     const { address } = this.state;
     const nodeURL = address !== '' ? addHttp(address) : address;
 
@@ -190,6 +193,11 @@ class Login extends React.Component {
       this.props.liskAPIClientSet({ network });
       this.props.history.push(routes.register.path);
     }
+  }
+
+  onHardwareWalletLink() {
+    Piwik.trackingEvent('Login', 'link', 'onHardwareWalletLink');
+    this.props.history.replace(routes.hwWallet.path);
   }
 
   render() {
@@ -236,9 +244,7 @@ class Login extends React.Component {
                   value={this.state.passphrase}
                   onChange={this.changeHandler.bind(this, 'passphrase')} />
                 {localStorage.getItem('ledger') ?
-                  <div className={`${styles.hardwareWalletLink} hardwareWalletLink`} onClick={() => {
-                    this.props.history.replace(routes.hwWallet.path);
-                  }}>
+                  <div className={`${styles.hardwareWalletLink} hardwareWalletLink`} onClick={() => this.onHardwareWalletLink.bind(this)}>
                     Ledger Nano S
                     <FontIcon className={styles.singUpArrow} value='arrow-right' />
                   </div> : null}

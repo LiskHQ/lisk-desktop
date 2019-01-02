@@ -20,5 +20,6 @@ export default {
   SET_USER_ID: 'setUserId',
   TRACK_ALL_CONTENT_IMPRESSIONS: 'trackAllContentImpressions',
   TRACK_ERRORS: 'trackErrors',
+  TRACK_EVENT: 'trackEvent',
   TRACK_PAGE_VIEW: 'trackPageView',
 };

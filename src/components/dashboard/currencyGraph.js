@@ -6,6 +6,7 @@ import React from 'react';
 
 import { getCurrencyGraphData } from '../../actions/liskService';
 
+import Piwik from '../../utils/piwik';
 import EmptyState from '../emptyState';
 import styles from './currencyGraph.css';
 
@@ -159,6 +160,7 @@ class CurrencyGraph extends React.Component {
   }
 
   setStep(step) {
+    Piwik.trackingEvent('CurrencyGraph', 'button', 'setStep');
     this.setState({ step, data: undefined });
     this.props.getCurrencyGraphData(step);
   }

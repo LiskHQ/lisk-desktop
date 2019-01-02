@@ -14,6 +14,7 @@ import styles from './header.css';
 import CustomCountDown from './customCountDown';
 import Options from '../dialog/options';
 import routes from './../../constants/routes';
+import Piwik from '../../utils/piwik';
 
 class Header extends React.Component {
   /* istanbul ignore next */
@@ -39,6 +40,8 @@ class Header extends React.Component {
   }
 
   openLogoutDialog() {
+    Piwik.trackingEvent('Header', 'button', 'openLogoutDialog');
+
     this.props.setActiveDialog({
       childComponent: Options,
       childComponentProps: {

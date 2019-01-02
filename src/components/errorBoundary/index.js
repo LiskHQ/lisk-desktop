@@ -6,6 +6,7 @@ import { FontIcon } from '../fontIcon';
 import { PrimaryButton } from './../toolbox/buttons/button';
 import styles from './errorBoundary.css';
 import EmptyState from '../emptyState';
+import Piwik from '../../utils/piwik';
 
 /* eslint-disable class-methods-use-this, no-unused-vars */
 class ErrorBoundary extends React.Component {
@@ -19,6 +20,7 @@ class ErrorBoundary extends React.Component {
   }
 
   reloadPage() {
+    Piwik.trackingEvent('ErrorBoundary', 'button', 'reloadPage');
     window.location.reload();
   }
 

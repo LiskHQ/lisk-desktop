@@ -10,7 +10,7 @@ import { PrimaryButton } from '../../../toolbox/buttons/button';
 // eslint-disable-next-line import/no-named-as-default
 import SliderCheckbox from '../../../toolbox/sliderCheckbox';
 import { FontIcon } from '../../../fontIcon';
-
+import Piwik from '../../../../utils/piwik';
 import stepStyles from '../steps.css';
 import styles from './confirm.css';
 
@@ -35,10 +35,12 @@ class Confirm extends React.Component {
   }
 
   redirectToDashboard() {
+    Piwik.trackingEvent('RegisterDelegagte_Confirm', 'button', 'onRedirectToDashboard');
     this.props.history.replace(routes.dashboard.path);
   }
 
   redirectToFirstStep() {
+    Piwik.trackingEvent('RegisterDelegagte_Confirm', 'button', 'onRedirectToFirstStep');
     this.props.prevStep({ reset: true });
   }
 

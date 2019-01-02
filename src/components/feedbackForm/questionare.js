@@ -5,6 +5,7 @@ import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import { Button, PrimaryButton } from '../toolbox/buttons/button';
 import RadioSelector from './radioSelector';
 import { getDeviceMetadata } from '../../utils/app';
+import Piwik from '../../utils/piwik';
 
 const ratingValues = ['angry', 'sad', 'neutral', 'happy', 'laughing'];
 const ratingIcons = ratingValues.map(ratingVal => [ratingVal]);
@@ -48,11 +49,22 @@ class Questionare extends React.Component {
   }
 
   setFeedbackValue(evt, key) {
+    Piwik.trackingEvent('Questionare', 'button', 'setFeedbackValue');
     this.setState({ [key]: evt.target ? evt.target.value : evt });
 
     if (key === 'metadata' && !!evt.target.value) {
       this.setState({ metadata: getDeviceMetadata() });
     }
+  }
+
+  onCancel() {
+    Piwik.trackingEvent('Questionare', 'button', 'onCancel');
+    this.props.onCancel();
+  }
+
+  onSubmit() {
+    Piwik.trackingEvent('Questionare', 'button', 'onSubmit');
+    this.props.onSubmit(this.state);
   }
 
   render() {
@@ -83,10 +95,10 @@ class Questionare extends React.Component {
       </div>
       <div className={styles.actions}>
         <Button label={this.props.t('Cancel')}
-          onClick={() => this.props.onCancel()}
+          onClick={() => this.onCancel.bind(this)}
           className='cancel-button' />
         <PrimaryButton label={this.props.t('Send')} disabled={!this.state.rating}
-          onClick={() => this.props.onSubmit(this.state).bind(this)}
+          onClick={() => this.onSubmit.bind(this)}
           className='send-button'/>
       </div>
     </div>);

@@ -48,8 +48,10 @@ Object.defineProperty(window, 'localStorage', {
 });
 
 ReactPiwik.push = () => {};
+ReactPiwik.trackingEvent = () => {};
 sinon.stub(ReactPiwik.prototype, 'connectToHistory').callsFake(() => 1);
 sinon.stub(ReactPiwik.prototype, 'initPiwik').callsFake(() => {});
+// sinon.stub(ReactPiwik.prototype, 'trackingEvent').callsFake(() => 1);
 
 // https://github.com/nkbt/react-copy-to-clipboard/issues/20#issuecomment-414065452
 // Polyfill window prompts to always confirm.  Needed for react-copy-to-clipboard to work.
