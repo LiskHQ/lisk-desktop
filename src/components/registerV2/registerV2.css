@@ -26,20 +26,20 @@
   }
 }
 
+.stepsLabel {
+  color: #2e2c3b;
+  font-size: 10px;
+  font-weight: 600;
+  height: 18px;
+  letter-spacing: 0.4px;
+  line-height: 1.8;
+  text-transform: uppercase;
+}
+
 .titleHolder {
   color: #19224d;
   font-family: var(--heading-font);
   text-align: center;
-
-  & > .stepsLabel {
-    color: #2e2c3b;
-    font-size: 10px;
-    font-weight: 600;
-    height: 18px;
-    letter-spacing: 0.4px;
-    line-height: 1.8;
-    text-transform: uppercase;
-  }
 
   & > h1 {
     font-size: 24px;
@@ -58,15 +58,12 @@
 
 @keyframes avatarAnimate {
   from { transform: scale(1); }
-  to {
-    background: var(--color-white);
-    box-shadow: 0px 0px 10px 4px rgba(213, 224, 247, 1);
-    transform: scale(2.05);
-  }
+
+  to { transform: scale(2.05); }
 }
 
 @for $i from 1 to 5 {
-  .animate > div:nth-child($i) {
+  .animate > span:nth-child($i) {
     animation-name: avatarAnimate;
     animation-iteration-count: 2;
     animation-direction: alternate;
@@ -75,20 +72,22 @@
   }
 }
 
-.accountHolder {
+.avatarsHolder {
   align-items: center;
   display: flex;
   margin: 100px 0;
   justify-content: space-evenly;
   width: 100%;
 
-  & > div {
+  & > span {
+    cursor: pointer;
+    display: flex;
     border-radius: 50%;
     padding: 7px;
     transition: all 0.35s ease-in-out;
   }
 
-  & > div:hover {
+  & > .selected {
     background: var(--color-white);
     box-shadow: 0px 0px 10px 4px rgba(213, 224, 247, 1);
     transform: scale(2.05);
@@ -96,6 +95,9 @@
 }
 
 .buttonsHolder {
+  justify-content: center;
+  width: 100%;
+
   & .icon {
     font-size: 14px;
     font-weight: bold;
