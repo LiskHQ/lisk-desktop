@@ -61,7 +61,7 @@ describe('Tx details', () => {
     // Recipient
     cy.get(ss.txRecipientAddress).should('not.exist');
     // Date
-    cy.get(ss.txDate).contains(new Date().getFullYear());
+    cy.get(ss.txDate).contains(/20\d\d$/);
     // Added votes
     cy.get(ss.txAddedVotes).contains(accounts.delegate.username)
       .click();
@@ -118,7 +118,7 @@ describe('Tx details', () => {
     // Recipient
     cy.get(ss.txRecipientAddress).should('not.exist');
     // Date
-    cy.get(ss.txDate).contains(new Date().getFullYear());
+    cy.get(ss.txDate).contains(/20\d\d$/);
     // Added votes
     cy.get(ss.txAddedVotes).should('not.exist');
     // Removed votes
