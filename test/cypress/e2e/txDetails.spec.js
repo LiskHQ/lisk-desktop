@@ -51,31 +51,22 @@ describe('Tx details', () => {
   it('Vote', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(`${urls.wallet}?id=${delegateVoteTxId}`);
-    // Header
     cy.get(ss.txHeader).contains('Delegate vote');
-    // Sender
     cy.get(ss.txSenderAddress).should('have.text', accounts.delegate.address)
       .click();
     cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', accounts.delegate.address);
     cy.go('back');
-    // Recipient
     cy.get(ss.txRecipientAddress).should('not.exist');
-    // Date
     cy.get(ss.txDate).contains(/20\d\d$/);
-    // Added votes
     cy.get(ss.txAddedVotes).contains(accounts.delegate.username)
       .click();
     cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', accounts.delegate.address);
     cy.go('back');
-    // Removed votes TODO add unvotes when Commander 2.0 will be free of bugs
+    // TODO add unvotes when Commander 2.0 will be free of bugs
     cy.get(ss.txRemovedVotes).should('not.exist');
-    // Fee
     cy.get(ss.txFee).should('have.text', '1');
-    // Confirmations
     cy.get(ss.txConfirmations).contains(/^\d/);
-    // Transaction ID
     cy.get(ss.txId).contains(regex.transactionId);
-    // Reference
     cy.get(ss.txReference).should('have.text', '-');
   });
 
@@ -108,28 +99,18 @@ describe('Tx details', () => {
   it('Second passphrase registration', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(`${urls.wallet}?id=${secondPassphraseRegTxId}`);
-    // Header
     cy.get(ss.txHeader).contains('Second passphrase registration');
-    // Sender
     cy.get(ss.txSenderAddress).should('have.text', accounts['second passphrase account'].address)
       .click();
     cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', accounts['second passphrase account'].address);
     cy.go('back');
-    // Recipient
     cy.get(ss.txRecipientAddress).should('not.exist');
-    // Date
     cy.get(ss.txDate).contains(/20\d\d$/);
-    // Added votes
     cy.get(ss.txAddedVotes).should('not.exist');
-    // Removed votes
     cy.get(ss.txRemovedVotes).should('not.exist');
-    // Fee
     cy.get(ss.txFee).should('have.text', '5');
-    // Confirmations
     cy.get(ss.txConfirmations).contains(/^\d/);
-    // Transaction ID
     cy.get(ss.txId).contains(regex.transactionId);
-    // Reference
     cy.get(ss.txReference).should('have.text', '-');
   });
 });
