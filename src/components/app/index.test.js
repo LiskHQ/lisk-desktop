@@ -8,6 +8,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from '../../i18n'; // initialized i18next instance
 import App from './';
 import Login from '../login';
+import Splashscreen from '../splashscreen/splashscreen';
 import Transactions from '../transactionDashboard';
 import Voting from '../voting';
 import routes from '../../constants/routes';
@@ -25,6 +26,7 @@ const addRouter = Component => (props, path) =>
 
 const publicComponent = [
   { route: '/', component: Login },
+  { route: '/splashscreen', component: Splashscreen },
 ];
 
 const privateComponent = [
