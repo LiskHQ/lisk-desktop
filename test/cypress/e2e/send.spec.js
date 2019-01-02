@@ -252,7 +252,8 @@ describe('Send: Bookmarks', () => {
    * @expect bookmarks components are not present
    */
   it('Bookmarks are not present if there is no followers', () => {
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node)
+      .then(() => window.localStorage.removeItem('followedAccounts'));
     cy.visit(urls.send);
     cy.get(ss.recipientInput).click();
     cy.get(ss.bookmarkInput).should('not.exist');

@@ -96,7 +96,7 @@ describe('Bookmarks', () => {
       cy.visit(urls.dashboard);
       cy.get(ss.transactionRow).eq(0).find(ss.spinner);
       cy.get(ss.transactionRow).eq(0).find(ss.spinner, { timeout: txConfirmationTimeout }).should('not.exist');
-      cy.wait(500); // To avoid updating lag
+      cy.wait(1000); // To avoid updating lag
       cy.get(ss.followedAccountBalance).invoke('text').as('balanceAfter').then(() => {
         compareBalances(this.balanceBefore, this.balanceAfter, 0.1);
       });
