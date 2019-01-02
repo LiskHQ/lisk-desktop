@@ -48,7 +48,7 @@ describe('Tx details', () => {
     cy.get(ss.txHeader).contains('Delegate vote');
     cy.get(ss.txSenderAddress).should('have.text', accounts.delegate.address);
     cy.get(ss.txRecipientAddress).should('not.exist');
-    cy.get(ss.txDate).contains(new Date().getFullYear());
+    cy.get(ss.txDate).contains(/20\d\d$/);
     cy.get(ss.txAddedVotes).contains(accounts.delegate.username);
     cy.get(ss.txRemovedVotes).should('not.exist');
     cy.get(ss.txFee).should('have.text', '1');
@@ -89,7 +89,7 @@ describe('Tx details', () => {
     cy.get(ss.txHeader).contains('Second passphrase registration');
     cy.get(ss.txSenderAddress).should('have.text', accounts['second passphrase account'].address);
     cy.get(ss.txRecipientAddress).should('not.exist');
-    cy.get(ss.txDate).contains(new Date().getFullYear());
+    cy.get(ss.txDate).contains(/20\d\d$/);
     cy.get(ss.txAddedVotes).should('not.exist');
     cy.get(ss.txRemovedVotes).should('not.exist');
     cy.get(ss.txFee).should('have.text', '5');
