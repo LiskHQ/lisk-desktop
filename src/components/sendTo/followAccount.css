@@ -41,17 +41,31 @@
   }
 
   & > footer {
+    align-items: center;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin-bottom: 8px;
 
     & > button {
-      width: calc(100% / 2 - 20px) !important;
+      width: calc(60% - 10px) !important;
       margin-top: 0 !important;
+
+      &:first-child {
+        width: calc(40% - 10px) !important;
+      }
     }
   }
 }
 
 .followedAccountsStep {
   padding: 2px;
+
+  & > footer {
+    justify-content: space-evenly;
+
+    & > button,
+    & > button:first-child {
+      width: calc(100% / 2 - 20px) !important;
+    }
+  }
 }

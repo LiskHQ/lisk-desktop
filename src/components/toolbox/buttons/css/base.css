@@ -36,6 +36,18 @@
   }
 }
 
+@define-mixin buttonPrimaryV2 {
+  border-radius: 4px;
+  color: var(--color-white) !important;
+  box-shadow: 0 4px 8px 0 rgba(72, 77, 97, 0.1);
+  background-color: #4e80f7;
+  transition: background-color 0.25s ease-in-out !important;
+
+  &:hover {
+    background: var(--color-action-medium-2) !important;
+  }
+}
+
 @define-mixin buttonSecondary--light {
   background: none !important;
   color: var(--color-white) !important;
@@ -49,6 +61,19 @@
   &:hover {
     color: var(--color-black) !important;
     background-color: var(--color-white) !important;
+  }
+}
+
+@define-mixin buttonSecondaryV2 {
+  border-radius: 4px;
+  color: #4e80f7 !important;
+  box-shadow: 0 4px 8px 0 rgba(72, 77, 97, 0.1);
+  background-color: var(--color-white) !important;
+  transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out !important;
+
+  &:hover {
+    background-color: #4e80f4 !important;
+    color: var(--color-white) !important;
   }
 }
 

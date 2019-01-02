@@ -17,6 +17,7 @@ import HwWallet from '../components/hwWallet';
 import AccountVisualDemo from '../components/accountVisual/demo';
 import Request from '../components/request';
 import Send from '../components/send';
+import Splashscreen from '../components/splashscreen/splashscreen';
 
 export default {
   accountVisualDemo: {
@@ -140,5 +141,11 @@ export default {
   // },
   explorer: {
     path: '/explorer',
+  },
+  splashscreen: {
+    path: '/splashscreen',
+    component: Splashscreen,
+    isPrivate: false,
+    isV2Layout: true,
   },
 };

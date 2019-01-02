@@ -6,6 +6,7 @@ module.exports = {
     '<rootDir>/test/integration/*.test.js',
   ],
   testPathIgnorePatterns: [
+    '<rootDir>/test/integration/wallet.test.js',
     'src/actions/transactions.test.js',
     'src/components/dashboard/currencyGraph.test.js', // This should be unskipped in issue #1499
     'src/components/errorBoundary/index.test.js',
@@ -19,7 +20,6 @@ module.exports = {
     'src/components/voteUrlProcessor/index.test.js',
     'src/store/middlewares/login.test.js',
     'src/store/reducers/liskService.test.js',
-    '<rootDir>/test/integration/wallet.test.js',
   ],
   verbose: true,
   cache: false,
@@ -54,12 +54,13 @@ module.exports = {
     'src/components/newsFeed/news.js',
     'src/components/passphrase/create/create.js',
     'src/components/passphraseCreation/index.js',
-    'src/components/passphraseSteps/index.js',
+    'src/components/passphraseSteps/index.js', // FollowUp #1515
     'src/components/register/register.js',
     'src/components/request/specifyRequest.js',
     'src/components/receive/index.js',
     'src/components/request/index.js',
     'src/components/register/register.js',
+    'src/components/request/index.js',
     'src/components/resultBox/index.js',
     'src/components/searchBar/index.js', // Passing in mocha but not in Jest
     'src/components/send/steps/form/stories.js',
