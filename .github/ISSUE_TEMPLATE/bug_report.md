@@ -4,8 +4,6 @@ about: Create a report to help us improve
 
 ---
 
-<!--- Provide a general summary of the issue in the Title above -->
-
 ### Steps to reproduce
 <!-- Provide an unambiguous set of steps to reproduce the bug -->
 
