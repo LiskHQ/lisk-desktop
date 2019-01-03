@@ -146,7 +146,7 @@ class TransactionDetailView extends React.Component {
             <header>
               <h3>
                 <small className={`${styles.backButton} transaction-details-back-button`}
-                  onClick={() => this.onBackToOverview.bind(this)}>
+                  onClick={() => this.onBackToOverview()}>
                   <FontIcon className={`${styles.arrow}`} value='arrow-left'/>
                   <span className={`${styles.text}`}>{this.props.t('Back to overview')}</span>
                 </small>

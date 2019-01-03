@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontIcon } from '../fontIcon';

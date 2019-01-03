@@ -240,7 +240,7 @@ class Confirm extends React.Component {
                   disabled={this.state.step !== 'done'}
                   label={this.props.t('Get to your Dashboard')}
                   className={`${styles.button} get-to-your-dashboard-button`}
-                  onClick={() => this.onFinalCallback.bind(this)}
+                  onClick={() => this.onFinalCallback()}
                 />
               </div>
             </section>

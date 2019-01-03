@@ -188,7 +188,7 @@ class Confirm extends React.Component {
           <section>
               <Button
                 label={this.props.t('Back')}
-                onClick={() => this.onPrevStep.bind(this)}
+                onClick={this.onPrevStep.bind(this)}
                 type='button'
                 theme={styles}
               />

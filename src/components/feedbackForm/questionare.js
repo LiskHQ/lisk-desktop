@@ -95,10 +95,10 @@ class Questionare extends React.Component {
       </div>
       <div className={styles.actions}>
         <Button label={this.props.t('Cancel')}
-          onClick={() => this.onCancel.bind(this)}
+          onClick={() => this.onCancel()}
           className='cancel-button' />
         <PrimaryButton label={this.props.t('Send')} disabled={!this.state.rating}
-          onClick={() => this.onSubmit.bind(this)}
+          onClick={() => this.onSubmit()}
           className='send-button'/>
       </div>
     </div>);

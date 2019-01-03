@@ -94,14 +94,14 @@ class Confirmation extends React.Component {
               className={'back'}
               // prevStep() should be check it as the behavior is not right
               // the reset shouldn't be use for skip
-              onClick={() => this.onPrevStep.bind(this)}>
+              onClick={this.onPrevStep.bind(this)}>
               {this.props.t('Back')}
             </Button>
           </div>
           <div className={`${grid['col-xs-5']} ${grid['col-sm-5']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
             <ActionButton
               className={'next okay-button'}
-              onClick={() => this.onNextStep.bind(this)}
+              onClick={this.onNextStep.bind(this)}
               >
               {this.props.t("Okay, I'm done")}
             </ActionButton>

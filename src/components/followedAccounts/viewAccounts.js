@@ -50,7 +50,7 @@ class ViewAccounts extends React.Component {
         {t('Bookmarks')}
         {accounts.length > 0
           ? <div className={`${styles.clickable} ${styles.edit} edit-accounts`}
-            onClick={() => this.onEditAccount.bind(this)}>
+            onClick={() => this.onEditAccount()}>
             {this.state.edit ? <span>{t('Done')}</span> : <FontIcon value='edit'/>}
           </div>
           : null
@@ -63,7 +63,7 @@ class ViewAccounts extends React.Component {
               (<div
                 key={i}
                 className={`${grid.row} ${styles.rows} ${styles.clickable} followed-account`}
-                onClick={() => this.onFollowedAccount(account).bind(this)}
+                onClick={() => this.onFollowedAccount(account)}
               >
                 <div className={`${styles.leftText} ${grid['col-md-2']}`}>
                   <AccountVisual
@@ -89,7 +89,7 @@ class ViewAccounts extends React.Component {
                   </div>
                   {this.state.edit
                     ? <div className={`${styles.removeAccount} remove-account`}
-                      onClick={() => this.onRemoveAccount(account).bind(this)}>
+                      onClick={() => this.onRemoveAccount(account)}>
                       <FontIcon value='remove'/>
                     </div>
                     : null
@@ -97,7 +97,7 @@ class ViewAccounts extends React.Component {
                 </div>
               </div>))
             }
-            <div className={`${styles.addAccountLink} ${styles.rows} ${styles.clickable} add-account-button`} onClick={() => this.onAddAccount.bind(this)}>
+            <div className={`${styles.addAccountLink} ${styles.rows} ${styles.clickable} add-account-button`} onClick={() => this.onAddAccount()}>
               {t('Add a Lisk ID')} <FontIcon value='arrow-right'/>
             </div>
           </div>
@@ -105,7 +105,7 @@ class ViewAccounts extends React.Component {
         : <div className={`${styles.emptyList} followed-accounts-empty-list`}>
           <p>{t('Keep track of any Lisk ID balance. Only you will see who you bookmarked.')}</p>
 
-          <div className={`${styles.addAccountLink} ${styles.clickable} add-account-button`} onClick={() => this.onAddAccount.bind(this)}>
+          <div className={`${styles.addAccountLink} ${styles.clickable} add-account-button`} onClick={() => this.onAddAccount()}>
             {t('Add a Lisk ID')} <FontIcon value='arrow-right'/>
           </div>
         </div>

@@ -166,7 +166,7 @@ class Choose extends React.Component {
                   disabled={disableSubmitButton}
                   label={t('Next')}
                   className={`${stepStyles.chooseNameBtn} submit-delegate-name`}
-                  onClick={() => this.onNextStep.bind(this)}
+                  onClick={() => this.onNextStep()}
                 />
               </form>
             </div>

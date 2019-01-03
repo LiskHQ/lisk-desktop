@@ -75,7 +75,7 @@ class CustomCountDown extends React.Component {
 
     const resetButton = resetCondition && !timeoutCondition ?
       <div
-        onClick={() => this.onResetTimer.bind(this)}
+        onClick={() => this.onResetTimer()}
         className={`${styles.reset} reset`}
       >
       {t('Reset')}

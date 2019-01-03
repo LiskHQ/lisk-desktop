@@ -91,9 +91,7 @@ class Setting extends React.Component {
           <Checkbox
             theme={styles}
             className={`${styles.smallSlider} showNetwork`}
-            onChange={() =>
-              this.onUpdateSettings({ showNetwork: !settings.showNetwork }).bind(this)
-            }
+            onChange={() => this.onUpdateSettings({ showNetwork: !settings.showNetwork })}
             input={{
               value: false,
               checked: settings.showNetwork,
@@ -107,9 +105,7 @@ class Setting extends React.Component {
           <Checkbox
             theme={styles}
             className={`${styles.smallSlider} advancedMode`}
-            onChange={() =>
-              this.onUpdateSettings({ advancedMode: !settings.advancedMode }).bind(this)
-            }
+            onChange={() => this.onUpdateSettings({ advancedMode: !settings.advancedMode })}
             input={{
               value: true,
               checked: settings.advancedMode,
@@ -140,7 +136,7 @@ class Setting extends React.Component {
               <li
                 key={`currency-${currency}`}
                 className={`currency currency-${currency} ${currency === activeCurrency ? `${styles.active} active` : ''}`}
-                onClick={() => this.onUpdateSettings({ currency }).bind(this)}>
+                onClick={() => this.onUpdateSettings({ currency })}>
                 {currency}
               </li>
             ))}
