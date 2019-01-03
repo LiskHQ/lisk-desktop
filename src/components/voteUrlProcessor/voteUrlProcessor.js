@@ -7,7 +7,16 @@ import { FontIcon } from '../fontIcon';
 import styles from './voteUrlProcessor.css';
 
 export default class VoteUrlProcessor extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+       votes: [],
+       unvotes: [],
+    };
+  }
   componentDidMount() {
+    console.log(this.props);
     this.props.clearVoteLookupStatus();
     const params = parseSearchParams(this.props.history.location.search);
     if (params.votes || params.unvotes) {
@@ -19,6 +28,27 @@ export default class VoteUrlProcessor extends React.Component {
         unvotes,
         address: this.props.account.address,
       });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const params = parseSearchParams(this.props.history.location.search);
+
+    if (prevState.votes !== params.votes || prevState.unvotes !== params.unvotes) {
+      this.props.clearVoteLookupStatus();
+      const upvotes = params.votes ? params.votes.split(',') : [];
+      const unvotes = params.unvotes ? params.unvotes.split(',') : [];
+      this.props.settingsUpdated({ advancedMode: true })
+      this.props.urlVotesFound({
+        upvotes,
+        unvotes,
+        address: this.props.account.address,
+      });
+
+      this.setState({
+        votes: params.votes,
+        unvotes: params.unvotes,
+      })
     }
   }
 
