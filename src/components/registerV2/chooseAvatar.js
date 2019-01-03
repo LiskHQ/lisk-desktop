@@ -61,9 +61,8 @@ class ChooseAvatar extends React.Component {
           }</p>
         </div>
         <div className={`
-          ${styles.avatarsHolder} ${styles.animate} ${grid['col-xs-10']}
-          ${(selected && styles.avatarSelected) || ''}
-        `}>
+          ${styles.avatarsHolder} ${grid['col-xs-10']} ${styles.animate}
+          ${(selected && styles.avatarSelected)}`}>
           {
             addresses.map((address, key) => (
               <span
