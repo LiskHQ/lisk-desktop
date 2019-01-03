@@ -26,9 +26,11 @@ const AccountCard = ({
       {fromRawLsk(account.balance)}<p>LSK</p>
     </div>
     {isEditMode ?
-      <div className={styles.edit}>
+      <div className={styles.edit} onClick={(e) => {
+        e.stopPropagation();
+      }}>
         <ToolBoxInput
-          placeholder={'Account Name'}
+          placeholder={'Title'}
           onChange={value => changeInput(value, account.address)}
           theme={styles}
           value={hardwareAccountName}></ToolBoxInput>
