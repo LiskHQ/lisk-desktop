@@ -95,7 +95,6 @@
     animation-name: avatarBounceBack;
     animation-direction: normal;
     animation-duration: 300ms;
-    animation-fill-mode: both;
     animation-iteration-count: 1;
     animation-timing-function: linear;
   }
