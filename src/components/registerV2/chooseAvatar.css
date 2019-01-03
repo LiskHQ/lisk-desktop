@@ -53,6 +53,8 @@
   }
 
   & > span {
+    animation-direction: normal;
+    animation-timing-function: linear;
     background: transparent;
     cursor: pointer;
     display: flex;
@@ -93,19 +95,15 @@
 
   & > span.unselected {
     animation-name: avatarBounceBack;
-    animation-direction: normal;
     animation-duration: 300ms;
     animation-iteration-count: 1;
-    animation-timing-function: linear;
   }
 
   & > span.selected {
     animation-name: avatarBounce;
-    animation-direction: normal;
     animation-duration: 500ms;
     animation-fill-mode: both;
     animation-iteration-count: 1;
-    animation-timing-function: linear;
 
     &::before {
       transform: scale(1.25);
