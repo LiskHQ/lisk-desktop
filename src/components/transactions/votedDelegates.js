@@ -32,7 +32,7 @@ class VotedDelegates extends AccountList {
           </div>
           {voters.length > this.state.showVotersNumber &&
            this.state.showMoreVoters ?
-            <div onClick={() => this.onShowMore.bind(this)} className={`${styles.showMore} showMore  show-voters`}>
+            <div onClick={() => this.onShowMore()} className={`${styles.showMore} showMore  show-voters`}>
               <FontIcon className={styles.arrowDown} value='arrow-down'/>
               {this.props.t('Show more')}
             </div> :

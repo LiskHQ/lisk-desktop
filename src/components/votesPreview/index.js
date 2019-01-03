@@ -96,7 +96,7 @@ class VotesPreview extends React.Component {
           <Button
             className={`${styles.button} next`}
             type='button'
-            onClick={() => this.onNextStep.bind(this)}
+            onClick={() => this.onNextStep()}
             disabled={totalNewVotesCount === 0 || surpassedVoteLimit || insufficientFunds}>
             <span>{t('Next')}</span>
             <FontIcon value='arrow-right' className={styles.arrow} />

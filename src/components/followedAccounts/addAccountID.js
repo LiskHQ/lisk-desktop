@@ -63,7 +63,7 @@ class AddAccountID extends React.Component {
           <Button
             label={this.props.t('Cancel')}
             className={`${styles.cancelButton} cancel`}
-            onClick={() => this.onPrevStep.bind(this)}
+            onClick={() => this.onPrevStep()}
           />
         </div>
         <div className={grid['col-xs-8']}>
@@ -71,7 +71,7 @@ class AddAccountID extends React.Component {
             label={this.props.t('Next')}
             className='next'
             disabled={(!!this.state.address.error || !this.state.address.value)}
-            onClick={() => this.onNextStep.bind(this)}
+            onClick={() => this.onNextStep()}
           />
         </div>
       </footer>

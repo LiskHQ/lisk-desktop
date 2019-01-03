@@ -85,7 +85,7 @@ class ResultBox extends React.Component {
             this.props.recipientId && this.isNotYetFollowed(this.props.recipientId) ?
             <div className={`${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-5']} ${grid['col-lg-5']}`}>
               <Button className={`add-to-bookmarks ${styles.addFollowedAccountButton}`}
-                onClick={() => this.onAddToBookmarks.bind(this)}>
+                onClick={this.onAddToBookmarks.bind(this)}>
                 {this.props.t('Add to bookmarks')}
               </Button>
             </div> : null
@@ -93,14 +93,14 @@ class ResultBox extends React.Component {
           {!this.props.success && this.props.account && this.props.account.hwInfo ?
             <div className={`${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-5']} ${grid['col-lg-5']}`}>
               <Button className={`add-follwed-account-button ${styles.addFollowedAccountButton}`}
-                onClick={() => this.onAddToFollowedAccounts.bind(this)}>
+                onClick={this.onAddToFollowedAccounts.bind(this)}>
                 {this.props.t('Retry')}
               </Button>
             </div> : null
           }
           <div className={`${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-5']} ${grid['col-lg-5']}`}>
             <ActionButton className={`okay-button ${styles.okButton}`}
-              onClick={() => this.onOk.bind(this)}>
+              onClick={this.onOk.bind(this)}>
               {this.props.t('Okay')}
             </ActionButton>
           </div>

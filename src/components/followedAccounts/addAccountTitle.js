@@ -32,7 +32,7 @@ class AddAccountTitle extends React.Component {
     Piwik.trackingEvent('AddAccountTitle', 'button', 'onAddToList');
 
     const { addAccount, address, prevStep } = this.props;
-    const title = this.state.title.value || address;
+    const title = this.state.title.value;
 
     addAccount({ title, address });
     prevStep({ reset: true });
@@ -53,7 +53,7 @@ class AddAccountTitle extends React.Component {
           <Button
             label={t('Cancel')}
             className={`${styles.cancelButton} cancel`}
-            onClick={() => this.onCancel.bind(this)}
+            onClick={() => this.onCancel()}
           />
         </div>
         <div className={grid['col-xs-8']}>
@@ -61,7 +61,7 @@ class AddAccountTitle extends React.Component {
             label={t('Add to list')}
             disabled={!!this.state.title.error || this.state.title.value === ''}
             className='next'
-            onClick={() => this.onAddToList.bind(this) }
+            onClick={() => this.onAddToList()}
           />
         </div>
       </footer>

@@ -67,7 +67,7 @@ export default class VoteUrlProcessor extends React.Component {
         <section className={styles.wrapper}>
           <header>
               <h2>Your Pre-Selection
-                <div className={`${styles.cancel} clear-votes`} onClick={() => this.onClearVotes.bind(this)}>
+                <div className={`${styles.cancel} clear-votes`} onClick={() => this.onClearVotes()}>
                   {this.props.t('Cancel')}
                   <FontIcon value='close' />
                 </div>
@@ -98,7 +98,7 @@ export default class VoteUrlProcessor extends React.Component {
             )}</div>
           </div>
           <footer>
-            <PrimaryButton label={this.props.t('Ok')} theme={styles} onClick={this.onCloseInfo.bind(this)}/>
+            <PrimaryButton className={'ok-close-info'} label={this.props.t('Ok')} theme={styles} onClick={this.onCloseInfo.bind(this)}/>
           </footer>
         </section>
       </Box> : null;

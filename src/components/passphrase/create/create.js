@@ -83,7 +83,7 @@ class CreateFirst extends React.Component {
               theme={styles}
               label={t('Get passphrase')}
               className="get-passphrase-button"
-              onClick={() => this.onNextStep.bind(this)}
+              onClick={() => this.onNextStep()}
             />
           </Fragment>
           : ''}

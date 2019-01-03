@@ -195,6 +195,7 @@ class Login extends React.Component {
     }
   }
 
+  /* istanbul ignore next */
   onHardwareWalletLink() {
     Piwik.trackingEvent('Login', 'link', 'onHardwareWalletLink');
     this.props.history.replace(routes.hwWallet.path);
@@ -244,7 +245,7 @@ class Login extends React.Component {
                   value={this.state.passphrase}
                   onChange={this.changeHandler.bind(this, 'passphrase')} />
                 {localStorage.getItem('ledger') ?
-                  <div className={`${styles.hardwareWalletLink} hardwareWalletLink`} onClick={() => this.onHardwareWalletLink.bind(this)}>
+                  <div className={`${styles.hardwareWalletLink} hardwareWalletLink`} onClick={() => this.onHardwareWalletLink()}>
                     Ledger Nano S
                     <FontIcon className={styles.singUpArrow} value='arrow-right' />
                   </div> : null}

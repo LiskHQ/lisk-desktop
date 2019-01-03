@@ -66,6 +66,7 @@ class ConfirmSecond extends React.Component {
     }
   }
 
+  /* istanbul ignore next */
   onRedirectToDashboard() {
     Piwik.trackingEvent('ConfirmSecond', 'button', 'onRedirectToDashboard');
     this.props.history.push(`${routes.dashboard.path}`);
@@ -190,7 +191,7 @@ class ConfirmSecond extends React.Component {
           <Button
             label={this.props.t('Go back to Dashboard')}
             className={`${styles.resultButton} get-to-your-dashboard-button`}
-            onClick={() => this.onRedirectToDashboard.bind(this)}
+            onClick={() => this.onRedirectToDashboard()}
           />
         </TransitionWrapper>
       </div>}

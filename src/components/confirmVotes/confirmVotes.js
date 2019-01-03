@@ -88,7 +88,7 @@ class ConfirmVotes extends React.Component {
             onClick={() => this.onNext(data)}>{t('Confirm (Fee: 1 LSK)')}</PrimaryButton>
           <Button
             className={`${styles.backButton} back`}
-            onClick={() => this.onPrev().bind(this)}>{t('Back')}</Button>
+            onClick={() => this.onPrev()}>{t('Back')}</Button>
           <Checkbox
             className={`${styles.checkbox} confirmSlider`}
             label={t(`Confirm (Fee: ${fromRawLsk(fees.vote)} LSK)`)}

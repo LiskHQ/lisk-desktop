@@ -174,14 +174,14 @@ class Form extends React.Component {
         </form>
         <footer>
           <Button
-            onClick={() => this.onPrevStep.bind(this)}
+            onClick={this.onPrevStep.bind(this)}
             className={`send-prev-button ${styles.nextButton}`}
           >
           {this.props.t('Back')}
           </Button>
 
           <ActionButton
-            onClick={() => this.onNextStep.bind(this)}
+            onClick={this.onNextStep.bind(this)}
             disabled={(!!this.state.recipient.error ||
                     !this.state.recipient.value ||
                     !!this.state.amount.error ||

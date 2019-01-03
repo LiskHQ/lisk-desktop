@@ -27,7 +27,6 @@ class Authenticate extends React.Component {
   }
 
   update(e) {
-    e.preventDefault();
     Piwik.trackingEvent('Authenticate', 'button', 'update');
     const data = {
       passphrase: this.state.passphrase.value,

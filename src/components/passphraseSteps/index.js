@@ -175,7 +175,7 @@ class PassphraseSteps extends React.Component {
           <div className={updatedValues.footer.firstGrid}>
             <Button
               label={this.props.t('Back')}
-              onClick={() => this.onPrevStep.bind(this)}
+              onClick={() => this.onPrevStep()}
               type='button'
               theme={updatedStyles}
             />
