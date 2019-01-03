@@ -43,7 +43,7 @@
   align-items: center;
   display: flex;
   margin: 130px 0 180px;
-  justify-content: space-evenly;
+  justify-content: space-between;
   width: 100%;
 
   &.avatarSelected {

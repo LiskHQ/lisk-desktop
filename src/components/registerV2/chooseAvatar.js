@@ -38,10 +38,9 @@ class ChooseAvatar extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   getAvatarAnimationClassName(address, selected, previousSelected) {
-    const className = selected === address
+    return selected === address
       ? styles.selected
-      : previousSelected === address && styles.unselected;
-    return className || '';
+      : (previousSelected === address && styles.unselected) || '';
   }
 
   render() {
@@ -61,10 +60,10 @@ class ChooseAvatar extends React.Component {
             t('Each Avatar is a visual representation of the address, making it unique.')
           }</p>
         </div>
-        <div className={
-          selected
-            ? `${styles.avatarSelected} ${styles.avatarsHolder} ${styles.animate}`
-            : `${styles.avatarsHolder} ${styles.animate}`}>
+        <div className={`
+          ${styles.avatarsHolder} ${styles.animate} ${grid['col-xs-10']}
+          ${(selected && styles.avatarSelected) || ''}
+        `}>
           {
             addresses.map((address, key) => (
               <span
