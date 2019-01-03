@@ -44,6 +44,12 @@ class LedgerLogin extends React.Component {
     }, 2000);
   }
 
+  componentDidUpdate() {
+    if (this.props.account && this.props.account.address) {
+      this.props.history.replace(routes.dashboard.path);
+    }
+  }
+
   selectAccount(ledgerAccount, index) {
     // set active peer
     this.props.liskAPIClientSet({
@@ -54,7 +60,6 @@ class LedgerLogin extends React.Component {
         derivationIndex: index,
       },
     });
-    this.props.history.replace(routes.dashboard.path);
   }
 
   async addAccount() {
@@ -139,6 +144,7 @@ class LedgerLogin extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  account: state.account,
   liskAPIClient: state.peers && state.peers.liskAPIClient,
   settings: state.settings,
   loginType: state.account.loginType || 1,
