@@ -108,7 +108,7 @@ class Form extends React.Component {
   }
 
   getTitle() {
-    return this.props.account.hwInfo ?
+    return this.props.account.hwInfo && this.props.account.hwInfo.deviceId ?
       <h2>{this.props.t('Confirm transaction on Ledger Nano S')}</h2> : <h2>{this.props.t('Send LSK')}</h2>;
   }
 
