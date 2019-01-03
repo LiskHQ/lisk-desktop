@@ -11,8 +11,6 @@ import Header from '../header';
 import Dialog from '../dialog';
 import NotFound from '../notFound';
 
-import HeaderV2 from '../headerV2/headerV2';
-
 import routes from '../../constants/routes';
 // eslint-disable-next-line import/no-named-as-default
 import Onboarding from '../onboarding';
@@ -61,7 +59,6 @@ class App extends React.Component {
               `${styles.v2Wrapper} ${styles.loaded} appLoaded` :
               `${styles.v2Wrapper}`
             } ref={(el) => { this.main = el; }}>
-              <HeaderV2 />
               <Switch>
                 {this.state.loaded &&
                   routesV2Layout.map((route, key) => (

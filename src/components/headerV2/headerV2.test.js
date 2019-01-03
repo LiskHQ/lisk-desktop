@@ -15,12 +15,27 @@ describe('V2 Header', () => {
     },
   };
 
+  const props = {
+    showSettings: true,
+  };
+
   beforeEach(() => {
-    wrapper = mount(<MemoryRouter><HeaderV2 /></MemoryRouter>, options);
+    wrapper = mount(<MemoryRouter>
+      <HeaderV2 {...props} />
+    </MemoryRouter>, options);
   });
 
   it('Should render Logo and Settings Button', () => {
     expect(wrapper.find('.logo').exists()).to.equal(true);
     expect(wrapper.find('.settingButton').exists()).to.equal(true);
+  });
+
+  it('Should render only the Logo', () => {
+    wrapper.setProps({
+      children: React.cloneElement(wrapper.props().children, {
+        showSettings: false,
+      }),
+    });
+    expect(wrapper.find('.logo').exists()).to.equal(true);
   });
 });
