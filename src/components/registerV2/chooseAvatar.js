@@ -8,7 +8,8 @@ import routes from '../../constants/routes';
 import { FontIcon } from '../fontIcon';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import AccountVisual from '../accountVisual';
-import styles from './registerV2.css';
+import registerStyles from './registerV2.css';
+import styles from './chooseAvatar.css';
 import avatar from '../../assets/images/icons-v2/avatar.svg';
 
 class ChooseAvatar extends React.Component {
@@ -40,7 +41,7 @@ class ChooseAvatar extends React.Component {
     const { addresses } = this.state;
     return (
       <React.Fragment>
-        <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
+        <div className={`${registerStyles.titleHolder} ${grid['col-xs-10']}`}>
           <h1>
             <img src={avatar} />
             {t('Choose your Avatar')}
@@ -49,7 +50,10 @@ class ChooseAvatar extends React.Component {
             t('Each Avatar is a visual representation of the address, making it unique.')
           }</p>
         </div>
-        <div className={`${styles.avatarsHolder} ${styles.animate}`}>
+        <div className={
+          selected
+            ? `${styles.avatarSelected} ${styles.avatarsHolder} ${styles.animate}`
+            : `${styles.avatarsHolder} ${styles.animate}`}>
           {
             addresses.map((address, key) => (
               <span
@@ -65,17 +69,17 @@ class ChooseAvatar extends React.Component {
           }
         </div>
 
-        <div className={`${styles.buttonsHolder} ${grid.row}`}>
-          <Link className={`${styles.button} ${grid['col-xs-4']}`} to={routes.splashscreen.path}>
+        <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
+          <Link className={`${registerStyles.button} ${grid['col-xs-4']}`} to={routes.splashscreen.path}>
             <SecondaryButtonV2>
-              <FontIcon className={styles.icon}>arrow-left</FontIcon>
+              <FontIcon className={registerStyles.icon}>arrow-left</FontIcon>
               {t('Go Back')}
             </SecondaryButtonV2>
           </Link>
-          <span className={`${styles.button} ${grid['col-xs-4']}`}>
+          <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
             <PrimaryButtonV2 disabled={!selected}>
               {t('Confirm')}
-              <FontIcon className={styles.icon}>arrow-right</FontIcon>
+              <FontIcon className={registerStyles.icon}>arrow-right</FontIcon>
             </PrimaryButtonV2>
           </span>
         </div>
