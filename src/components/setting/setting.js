@@ -106,7 +106,7 @@ class Setting extends React.Component {
         </div>
         <div>
           <div className={`${styles.item} ${styles.network}`}>
-            <label>{t('Send anonymus usage statistics')}</label>
+            <label>{t('Send anonymous usage statistics')}</label>
             <Checkbox
               theme={styles}
               className={`${styles.smallSlider} statistics`}
