@@ -42,11 +42,17 @@
   text-align: center;
 
   & > h1 {
+    display: flex;
     font-size: 24px;
     font-weight: 600;
+    justify-content: center;
     letter-spacing: 0.1px;
     line-height: 50px;
     margin: 0;
+
+    & > img {
+      margin-right: 16px;
+    }
   }
 
   & > p {

@@ -11,15 +11,15 @@
   flex-direction: row;
   height: 100px;
   justify-content: space-between;
-  padding: 33px 40px;
+  padding: 21px 32px;
   position: absolute;
   top: 0;
   width: 100%;
 }
 
 .logo {
-  height: 32px;
-  width: 27px;
+  height: 56px;
+  width: 56px;
 
   & > img {
     display: block;

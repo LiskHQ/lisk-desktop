@@ -9,6 +9,7 @@ import { FontIcon } from '../fontIcon';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import AccountVisual from '../accountVisual';
 import styles from './registerV2.css';
+import avatar from '../../assets/images/icons-v2/avatar.svg';
 
 class ChooseAvatar extends React.Component {
   constructor() {
@@ -40,7 +41,10 @@ class ChooseAvatar extends React.Component {
     return (
       <React.Fragment>
         <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
-          <h1>{t('Choose your Avatar')}</h1>
+          <h1>
+            <img src={avatar} />
+            {t('Choose your Avatar')}
+          </h1>
           <p>{
             t('Each Avatar is a visual representation of the address, making it unique.')
           }</p>

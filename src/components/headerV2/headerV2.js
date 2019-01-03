@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import { SecondaryButtonV2 } from '../toolbox/buttons/button';
-import logo from '../../assets/images/Lisk-Logo.svg';
+import logo from '../../assets/images/lisk-logo-v2.svg';
 import routes from '../../constants/routes';
 import styles from './headerV2.css';
 
