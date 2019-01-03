@@ -66,7 +66,7 @@ describe('Delegates', () => {
     cy.autologin(accounts.genesis.passphrase, networks.testnet.node);
     cy.visit(urls.delegates);
     cy.get(ss.delegateRow).should('have.length', 100);
-    // TODO Unskip after 1641 fix
+    // TODO Unskip after 1614 fix
     // cy.get(ss.delegateList).scrollTo('bottom');
     // cy.get(ss.delegateRow).should('have.length', 200);
   });
@@ -200,7 +200,7 @@ describe('Delegates', () => {
     cy.autologin(accounts['delegate candidate'].passphrase, networks.devnet.node);
     cy.visit(`${urls.delegatesVote}?votes=genesis_12,genesis_14,genesis_16`);
     cy.get(ss.votesPreselection).contains('genesis_12, genesis_14, genesis_16');
-    cy.get(ss.nextBtn).click();
+    cy.get(ss.nextBtn).should('be.enabled').click();
     cy.get(ss.confirmBtn).click();
     cy.get(ss.voteResultHeader).contains('Votes submitted');
     cy.wait(txConfirmationTimeout);
