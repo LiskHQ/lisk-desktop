@@ -19,6 +19,8 @@ class ChooseAvatar extends React.Component {
     this.state = {
       addresses: [],
     };
+
+    this.getAvatarAnimationClassName = this.getAvatarAnimationClassName.bind(this);
   }
 
   componentDidMount() {
@@ -34,11 +36,20 @@ class ChooseAvatar extends React.Component {
     });
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  getAvatarAnimationClassName(address, selected, previousSelected) {
+    const className = selected === address
+      ? styles.selected
+      : previousSelected === address && styles.unselected;
+    return className || '';
+  }
+
   render() {
     const {
-      t, handleSelectAvatar, selected,
+      t, handleSelectAvatar, selected, previousAddress,
     } = this.props;
     const { addresses } = this.state;
+
     return (
       <React.Fragment>
         <div className={`${registerStyles.titleHolder} ${grid['col-xs-10']}`}>
@@ -57,7 +68,7 @@ class ChooseAvatar extends React.Component {
           {
             addresses.map((address, key) => (
               <span
-                className={selected === address ? styles.selected : ''}
+                className={ this.getAvatarAnimationClassName(address, selected, previousAddress) }
                 onClick={() => handleSelectAvatar(address) }
                 key={key}>
                 <AccountVisual

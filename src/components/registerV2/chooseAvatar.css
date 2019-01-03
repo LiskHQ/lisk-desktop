@@ -1,10 +1,23 @@
+@import './../app/variables.css';
+
 :root {
   --box-shadow-color: rgba(213, 224, 247, 1);
 }
 
+@keyframes avatarBounceBack {
+  0% { transform: scale(1.7); }
+  100% { transform: scale(1); }
+}
+
+@keyframes avatarBounce {
+  0% { transform: scale(1); }
+  70% { transform: scale(1.85); }
+  100% { transform: scale(1.7); }
+}
+
 @keyframes avatarAnimate {
   0% { transform: scale(1); }
-  50% { transform: scale(1.6); }
+  50% { transform: scale(1.4); }
   100% { transform: scale(1); }
 }
 
@@ -13,15 +26,15 @@
   to { box-shadow: 0px 0px 10px 4px var(--box-shadow-color); }
 }
 
-.animate > span {
-  animation-duration: 600ms;
+.animate > span > div {
+  animation-duration: 700ms;
   animation-iteration-count: 1;
   animation-name: avatarAnimate;
   animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 @for $i from 1 to 5 {
-  .animate > span:nth-child($i) {
+  .animate > span:nth-child($i) > div {
     animation-delay: calc(100ms * $i);
   }
 }
@@ -35,7 +48,7 @@
 
   &.avatarSelected {
     & > span:not(.selected) {
-      opacity: 0.6;
+      opacity: 0.45;
     }
   }
 
@@ -45,10 +58,9 @@
     display: flex;
     border-radius: 50%;
     position: relative;
-    transform: scale(1);
     transition:
       opacity 150ms ease-in,
-      transform 200ms ease-in;
+      transform 150ms linear;
 
     &::before,
     &::after {
@@ -79,12 +91,26 @@
     }
   }
 
+  & > span.unselected {
+    animation-name: avatarBounceBack;
+    animation-direction: normal;
+    animation-duration: 300ms;
+    animation-fill-mode: both;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+  }
+
   & > span.selected {
-    transform: scale(1.7);
+    animation-name: avatarBounce;
+    animation-direction: normal;
+    animation-duration: 500ms;
+    animation-fill-mode: both;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
 
     &::before {
       transform: scale(1.25);
-      transition: transform 200ms ease-in-out 200ms;
+      transition: transform 200ms ease-in-out;
     }
 
     &::after {
@@ -94,7 +120,7 @@
       animation-iteration-count: infinite;
       animation-name: glowing;
       transform: scale(1.25);
-      transition: transform 250ms ease-in-out 500ms;
+      transition: transform 250ms ease-in-out;
     }
   }
 }
