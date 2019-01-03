@@ -66,8 +66,9 @@ describe('Delegates', () => {
     cy.autologin(accounts.genesis.passphrase, networks.testnet.node);
     cy.visit(urls.delegates);
     cy.get(ss.delegateRow).should('have.length', 100);
-    cy.get(ss.delegateList).scrollTo('bottom');
-    cy.get(ss.delegateRow).should('have.length', 200);
+    // TODO Unskip after 1614 fix
+    // cy.get(ss.delegateList).scrollTo('bottom');
+    // cy.get(ss.delegateRow).should('have.length', 200);
   });
 
   /**
@@ -116,11 +117,17 @@ describe('Delegates', () => {
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     cy.get(ss.nextBtn).should('be.disabled');
     cy.get(ss.selectionVotingNumber).should('have.text', '0');
+    cy.get(ss.totalVotingNumber).should('have.text', '101');
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.voteCheckbox).should('have.class', 'checked');
     // Unvote
     cy.get('@dg').find(ss.voteCheckbox).click();
     cy.get(ss.selectionVotingNumber).should('have.text', '1');
+    cy.get(ss.totalVotingNumber).should('have.text', '100');
+    cy.get('@dg').find(ss.voteCheckbox).click();
+    cy.get(ss.selectionVotingNumber).should('have.text', '0');
+    cy.get(ss.totalVotingNumber).should('have.text', '101');
+    cy.get('@dg').find(ss.voteCheckbox).click();
     cy.get(ss.nextBtn).click();
     cy.get(ss.delegateRow).should('have.length', 1);
     cy.get(ss.confirmBtn).click();
@@ -130,6 +137,8 @@ describe('Delegates', () => {
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.spinner);
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout }).should('have.class', 'unchecked');
+    cy.get(ss.selectionVotingNumber).should('have.text', '0');
+    cy.get(ss.totalVotingNumber).should('have.text', '100');
     // TODO Unskip when #1539 is fixed
     // cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(() => {
     //   compareBalances(this.balanceBefore, this.balanceAfter, txVotePrice);
@@ -139,15 +148,26 @@ describe('Delegates', () => {
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.voteCheckbox).click();
     cy.get(ss.selectionVotingNumber).should('have.text', '1');
+    cy.get(ss.totalVotingNumber).should('have.text', '101');
+    cy.get('@dg').find(ss.voteCheckbox).click();
+    cy.get(ss.selectionVotingNumber).should('have.text', '0');
+    cy.get(ss.totalVotingNumber).should('have.text', '100');
+    cy.get('@dg').find(ss.voteCheckbox).click();
     cy.get(ss.nextBtn).click();
     cy.get(ss.delegateRow).should('have.length', 1);
     cy.get(ss.confirmBtn).click();
     cy.get(ss.voteResultHeader).contains('Votes submitted');
     cy.get(ss.okayBtn).click();
     cy.get(ss.selectionVotingNumber).should('have.text', '0');
+    cy.get(ss.totalVotingNumber).should('have.text', '101');
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.spinner);
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout }).should('have.class', 'checked');
+    cy.get(ss.sidebarMenuWalletBtn).click();
+    cy.get(ss.transactionRow).eq(0).as('tx');
+    cy.get('@tx').find(ss.transactionAddress).should('have.text', 'Delegate vote');
+    cy.get('@tx').find(ss.transactionReference).should('have.text', '-');
+    cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');
   });
 
   /**
@@ -180,7 +200,7 @@ describe('Delegates', () => {
     cy.autologin(accounts['delegate candidate'].passphrase, networks.devnet.node);
     cy.visit(`${urls.delegatesVote}?votes=genesis_12,genesis_14,genesis_16`);
     cy.get(ss.votesPreselection).contains('genesis_12, genesis_14, genesis_16');
-    cy.get(ss.nextBtn).click();
+    cy.get(ss.nextBtn).should('be.enabled').click();
     cy.get(ss.confirmBtn).click();
     cy.get(ss.voteResultHeader).contains('Votes submitted');
     cy.wait(txConfirmationTimeout);

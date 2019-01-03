@@ -39,7 +39,7 @@ class DelegateStatistics extends React.Component {
             <div className={styles.label}>{this.props.t('Vote weight')}</div>
             <div className={styles.value}>{delegate && <LiskAmount val={delegate.vote}/>}</div>
           </div>
-          <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']}`}>
+          <div className={`${grid['col-xs-12']} ${grid['col-sm-4']} ${grid['col-md-4']} forged`}>
             <div className={styles.label}>{this.props.t('Forged')}</div>
             <div className={styles.value}>{delegate && <LiskAmount val={delegate.rewards}/>}</div>
           </div>
