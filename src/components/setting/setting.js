@@ -104,6 +104,23 @@ class Setting extends React.Component {
               checked: settings.advancedMode,
             }}/>
         </div>
+        <div>
+          <div className={`${styles.item} ${styles.network}`}>
+            <label>{t('Send anonymous usage statistics')}</label>
+            <Checkbox
+              theme={styles}
+              className={`${styles.smallSlider} statistics`}
+              onChange={() => settingsUpdated({ statistics: !settings.statistics })}
+              input={{
+                value: false,
+                checked: settings.statistics,
+              }}/>
+          </div>
+          <div className={`${styles.item} ${styles.privatePolicy}`}>
+            {t('For more information refer to our ')}
+            <a href={'https://lisk.io/privacy'} target={'_blank'}>{t('Privacy Policy')}</a>
+          </div>
+        </div>
         <h4>{t('Local')}</h4>
         <div className={styles.item}>
           <label>{t('Currency')}</label>
