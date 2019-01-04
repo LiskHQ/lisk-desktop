@@ -1,11 +1,12 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { translate } from 'react-i18next';
 import { generatePassphrase } from '../../utils/passphrase';
 import { extractAddress } from '../../utils/account';
 import ChooseAvatar from './chooseAvatar';
+import BackupPassphrase from './backupPassphrase';
 import HeaderV2 from '../headerV2/headerV2';
 import styles from './registerV2.css';
+import MultiStep from '../multiStep';
 
 class RegisterV2 extends React.Component {
   constructor(props) {
@@ -41,23 +42,24 @@ class RegisterV2 extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
     return (
       <React.Fragment>
         <HeaderV2 showSettings={false} />
         <div className={`${styles.register} ${grid.row}`}>
-          <div className={`${styles.wrapper} ${grid['col-sm-8']}`}>
-            <span className={`${styles.stepsLabel}`}>{t('Step 1 / 4')}</span>
+          <MultiStep
+            className={`${styles.wrapper} ${grid['col-sm-8']}`}
+            finalCallback={() => null}>
             <ChooseAvatar
               accounts={this.state.accounts}
               selected={this.state.selectedAccount}
-              handleSelectAvatar={this.handleSelectAvatar}
-              />
-          </div>
+              handleSelectAvatar={this.handleSelectAvatar} />
+            <BackupPassphrase
+              account={this.state.selectedAccount} />
+          </MultiStep>
         </div>
       </React.Fragment>
     );
   }
 }
 
-export default translate()(RegisterV2);
+export default RegisterV2;

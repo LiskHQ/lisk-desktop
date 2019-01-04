@@ -38,12 +38,13 @@ class ChooseAvatar extends React.Component {
 
   render() {
     const {
-      t, handleSelectAvatar, accounts, selected,
+      t, handleSelectAvatar, accounts, selected, nextStep,
     } = this.props;
     const { deselect } = this.state;
 
     return (
       <React.Fragment>
+        <span className={`${registerStyles.stepsLabel}`}>{t('Step 1 / 4')}</span>
         <div className={`${registerStyles.titleHolder} ${grid['col-xs-10']}`}>
           <h1>
             <img src={avatar} />
@@ -54,8 +55,8 @@ class ChooseAvatar extends React.Component {
           }</p>
         </div>
         <div className={`
-          ${styles.avatarsHolder} ${grid['col-xs-10']} ${styles.animate}
-          ${(selected && styles.avatarSelected)}`}>
+          ${styles.avatarsHolder} ${grid['col-xs-10']}
+          ${selected.address ? styles.avatarSelected : styles.animate}`}>
           {
             accounts.map((account, key) => (
               <span
@@ -76,7 +77,6 @@ class ChooseAvatar extends React.Component {
             ))
           }
         </div>
-
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
           <Link className={`${registerStyles.button} ${grid['col-xs-4']}`} to={routes.splashscreen.path}>
             <SecondaryButtonV2>
@@ -85,7 +85,9 @@ class ChooseAvatar extends React.Component {
             </SecondaryButtonV2>
           </Link>
           <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
-            <PrimaryButtonV2 disabled={!selected}>
+            <PrimaryButtonV2
+              onClick={() => nextStep(accounts) }
+              disabled={!selected.address}>
               {t('Confirm')}
               <FontIcon className={registerStyles.icon}>arrow-right</FontIcon>
             </PrimaryButtonV2>
