@@ -2,8 +2,6 @@ import React from 'react';
 import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { generatePassphrase } from '../../utils/passphrase';
-import { extractAddress } from '../../utils/account';
 import routes from '../../constants/routes';
 import { FontIcon } from '../fontIcon';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
@@ -17,37 +15,32 @@ class ChooseAvatar extends React.Component {
     super();
 
     this.state = {
-      addresses: [],
+      deselect: {},
     };
 
     this.getAvatarAnimationClassName = this.getAvatarAnimationClassName.bind(this);
   }
 
-  componentDidMount() {
-    /* istanbul ignore next */
-    const crypotObj = window.crypto || window.msCrypto;
-    const passphrases = [...Array(5)].map(() =>
-      generatePassphrase({
-        seed: [...crypotObj.getRandomValues(new Uint16Array(16))].map(x => (`00${(x % 256).toString(16)}`).slice(-2)),
-      }));
-    const addresses = passphrases.map(pass => extractAddress(pass));
-    this.setState({
-      addresses,
-    });
-  }
-
   // eslint-disable-next-line class-methods-use-this
-  getAvatarAnimationClassName(address, selected, previousSelected) {
+  getAvatarAnimationClassName({ address, selected, previous }) {
     return selected === address
       ? styles.selected
-      : (previousSelected === address && styles.unselected) || '';
+      : (previous === address && styles.deselect) || '';
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.selected !== this.props.selected) {
+      this.setState({
+        deselect: prevProps.selected,
+      });
+    }
   }
 
   render() {
     const {
-      t, handleSelectAvatar, selected, previousAddress,
+      t, handleSelectAvatar, accounts, selected,
     } = this.props;
-    const { addresses } = this.state;
+    const { deselect } = this.state;
 
     return (
       <React.Fragment>
@@ -64,13 +57,19 @@ class ChooseAvatar extends React.Component {
           ${styles.avatarsHolder} ${grid['col-xs-10']} ${styles.animate}
           ${(selected && styles.avatarSelected)}`}>
           {
-            addresses.map((address, key) => (
+            accounts.map((account, key) => (
               <span
-                className={ this.getAvatarAnimationClassName(address, selected, previousAddress) }
-                onClick={() => handleSelectAvatar(address) }
+                className={
+                  this.getAvatarAnimationClassName({
+                    address: account.address,
+                    selected: selected.address,
+                    previous: deselect.address,
+                  })
+                }
+                onClick={() => handleSelectAvatar(account)}
                 key={key}>
                 <AccountVisual
-                  address={address}
+                  address={account.address}
                   size={56}
                   />
               </span>
