@@ -23,6 +23,20 @@ export default class VoteUrlProcessor extends React.Component {
     if (params.votes || params.unvotes) {
       this.setVotesFromParams(params);
     }
+
+    this.props.history.listen(location =>  {
+      if (location.pathname === routes.delegates.path) {
+        const params = parseSearchParams(location.search);
+
+        if (location.search && location.search !== this.state.params) {
+          this.props.clearVoteLookupStatus();
+          this.setVotesFromParams(params);
+          this.setState({
+            params: location.search,
+          })
+        }
+      }
+    });
   }
 
   setVotesFromParams(params) {
@@ -46,19 +60,6 @@ export default class VoteUrlProcessor extends React.Component {
   }
 
   render() {
-    this.props.history.listen(location =>  {
-      if (location.pathname === routes.delegates.path) {
-        const params = parseSearchParams(location.search);
-
-        if (location.search && location.search !== this.state.params) {
-          this.props.clearVoteLookupStatus();
-          this.setVotesFromParams(params);
-          this.setState({
-            params: location.search,
-          })
-        }
-      }
-    });
     const errorMessages = {
       notFound: {
         text: this.props.t('Check spelling – name does not exist on mainnet'),
