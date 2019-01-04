@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="56" height="56" viewBox="0 0 56 56">
+    <defs>
+        <circle id="a" cx="28" cy="28" r="28"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <mask id="b" fill="#fff">
+            <use xlink:href="#a"/>
+        </mask>
+        <circle cx="28" cy="28" r="27" stroke="#1E194D" stroke-width="2"/>
+        <path stroke="#1E194D" stroke-width="2" d="M35 29.958H21v8c0 .588.433 1.02 1 1h12.038c.53.02.962-.412.962-1v-8zM21 20h14v-2a1 1 0 0 0-1-1H22a1 1 0 0 0-1 1v2z" mask="url(#b)"/>
+        <path stroke="#1E194D" stroke-width="2" d="M24.5 32h7a.5.5 0 1 1 0-1h-7a.5.5 0 1 1 0 1zm0 3h7a.5.5 0 1 1 0-1h-7a.5.5 0 1 1 0 1z" mask="url(#b)"/>
+        <g mask="url(#b)">
+            <text font-family="Gilroy-Bold, Gilroy" font-size="6" font-weight="bold" letter-spacing=".36" transform="translate(19 21)">
+                <tspan x="3" y="6" fill="#1E194D">PDF</tspan>
+            </text>
+            <path stroke="#1E194D" d="M19.5 21.5h17v7h-17z"/>
+        </g>
+    </g>
+</svg>
