@@ -43,6 +43,12 @@
   background-color: #4e80f7;
   transition: background-color 0.25s ease-in-out !important;
 
+  &:disabled {
+    background-color: #9db8fa !important;
+    box-shadow: 0 2px 2px 0 rgba(6, 22, 48, 0.1);
+    color: var(--color-white) !important;
+  }
+
   &:hover {
     background: var(--color-action-medium-2) !important;
   }
