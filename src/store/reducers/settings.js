@@ -17,6 +17,7 @@ const initialState = JSON.parse(localStorage.getItem('settings')) || {
   channels,
   hardwareAccounts: {},
   isRequestHowItWorksDisable: false,
+  statistics: false,
 };
 
 /**

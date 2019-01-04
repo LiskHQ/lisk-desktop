@@ -5,14 +5,15 @@ import ss from '../../constants/selectors';
 import enterSecondPassphrase from '../utils/enterSecondPassphrase';
 import compareBalances from '../utils/compareBalances';
 
+const getFollowedAccountObjFromLS = () => JSON.parse(localStorage.getItem('followedAccounts'));
+
 const msg = {
   transferTxSuccess: 'Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.',
   accountInitializatoinAddress: 'Account initialization',
 };
 
+const txSendCost = 0.1;
 const txConfirmationTimeout = 12000;
-
-const checkWalletPageLoaded = () => cy.get(ss.recipientInput);
 
 const getRandomAddress = () => `23495548666${Math.floor((Math.random() * 8990000) + 1000000)}L`;
 const getRandomAmount = () => Math.floor((Math.random() * 10) + 1);
@@ -32,30 +33,15 @@ describe('Send', () => {
   });
 
   /**
-   * Wallet page can be opened by direct link
+   * Send page can be opened by direct link
    * @expect url is correct
    * @expect some specific to page element is present on it
    */
-  it(`Wallet page opens by url ${urls.wallet}`, () => {
+  it(`Send page opens by url ${urls.send}`, () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.wallet);
-    cy.url().should('contain', urls.wallet);
-    cy.get(ss.transactionSendButton).click();
-    checkWalletPageLoaded();
-  });
-
-  /**
-   * Sidebar link leads to Wallet page
-   * @expect url is correct
-   * @expect some specific to page element is present on it
-   */
-  it('Wallet page opens by sidebar button', () => {
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.dashboard);
-    cy.get(ss.sidebarMenuWalletBtn).should('have.css', 'opacity', '1').click();
-    cy.url().should('contain', urls.wallet);
-    cy.get(ss.transactionSendButton).click();
-    checkWalletPageLoaded();
+    cy.visit(urls.send);
+    cy.url().should('contain', urls.send);
+    cy.get(ss.recipientInput);
   });
 
   /**
@@ -103,6 +89,9 @@ describe('Send', () => {
     cy.get(ss.referenceInput).click().type(randomReference);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).click();
+    cy.get(ss.recipientConfirmLabel).last().contains(randomAddress);
+    cy.get(ss.referenceConfirmLabel).contains(randomReference);
+    cy.get(ss.amountInput).invoke('val').should('equal', (randomAmount + txSendCost).toString());
     cy.get(ss.sendBtn).click();
     cy.get(ss.resultMessage).should('have.text', msg.transferTxSuccess);
     cy.visit(urls.dashboard);
@@ -122,7 +111,7 @@ describe('Send', () => {
    * @expect transaction appears in the activity list with correct data
    * @expect transaction appears in the activity list as confirmed
    */
-  it('Transfer tx with second passphrase', () => {
+  it('Transfer tx with second passphrase appears in wallet activity', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(urls.send);
     cy.get(ss.recipientInput).type(randomAddress);
@@ -224,5 +213,100 @@ describe('Send', () => {
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
     cy.get(ss.resultMessage).contains('Status 409 : Test error');
+  });
+
+
+  it('Add to bookmarks after transfer tx (when recipient is not in followers)', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.send);
+    cy.get(ss.recipientInput).type(accounts.delegate.address);
+    cy.get(ss.amountInput).click().type(randomAmount);
+    cy.get(ss.nextTransferBtn).click();
+    cy.get(ss.sendBtn).click();
+    cy.get(ss.addToBookmarks).click();
+    cy.get(ss.titleInput).type('Bob');
+    cy.get(ss.confirmAddToBookmarks).click()
+      .should(() => {
+        expect(getFollowedAccountObjFromLS()[0].address).to.equal(accounts.delegate.address);
+        expect(getFollowedAccountObjFromLS()[0].title).to.equal('Bob');
+      });
+    cy.get(ss.resultMessage).contains('has been added to your Dashboard');
+  });
+
+  it('Add to bookmarks button doesn’t exist if recipient is in followers', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node)
+      .then(() => window.localStorage.setItem('followedAccounts', `[{"title":"Alice","address":"${accounts.genesis.address}","balance":101}]`));
+    cy.visit(urls.send);
+    cy.get(ss.recipientInput).type(accounts.genesis.address);
+    cy.get(ss.amountInput).click().type(randomAmount);
+    cy.get(ss.nextTransferBtn).click();
+    cy.get(ss.sendBtn).click();
+    cy.get(ss.addToBookmarks).should('not.exist');
+  });
+});
+
+describe('Send: Bookmarks', () => {
+  /**
+   * Bookmarks suggestions are not present if there is no followers
+   * @expect bookmarks components are not present
+   */
+  it('Bookmarks are not present if there is no followers', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node)
+      .then(() => window.localStorage.removeItem('followedAccounts'));
+    cy.visit(urls.send);
+    cy.get(ss.recipientInput).click();
+    cy.get(ss.bookmarkInput).should('not.exist');
+    cy.get(ss.bookmarkList).should('not.exist');
+  });
+
+  /**
+   * Choose follower from bookmarks and send tx
+   * @expect bookmark contain name
+   * @expect bookmark contain address
+   * @expect clicking bookmark fills recipient
+   * @expect tx appears in activity with right address
+   */
+  it('Choose follower from bookmarks and send tx', () => {
+    window.localStorage.setItem('followedAccounts', `[
+      {"title":"Alice","address":"${accounts.delegate.address}","balance":101}
+    ]`);
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.send);
+    cy.get(ss.recipientInput).click();
+    cy.get(ss.bookmarkInput);
+    cy.get(ss.bookmarkList).eq(0).contains('Alice');
+    cy.get(ss.bookmarkList).eq(0).contains(accounts.delegate.address);
+    cy.get(ss.bookmarkList).eq(0).click();
+    cy.get(ss.recipientInput).should('have.value', accounts.delegate.address);
+    cy.get(ss.amountInput).click().type(1);
+    cy.get(ss.nextTransferBtn).click();
+    cy.get(ss.sendBtn).click();
+    cy.get(ss.okayBtn).click();
+    cy.get(ss.transactionRow).eq(0).find(ss.transactionAddress).should('have.text', accounts.delegate.address);
+  });
+
+  /**
+   * Search through bookmarks by typing
+   * @expect account found by name
+   * @expect non-existent search show empty list
+   * @expect account found by delegate
+   */
+  it('Search through bookmarks by typing', () => {
+    window.localStorage.setItem('followedAccounts', `[
+      {"title":"Alice","address":"${accounts.delegate.address}","balance":101},
+      {"title":"Bob","address":"${accounts.genesis.address}","balance":101}
+    ]`);
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.send);
+    cy.get(ss.recipientInput).click().type('Bob');
+    cy.get(ss.bookmarkList).eq(0).contains('Bob');
+    cy.get(ss.recipientInput).clear();
+    cy.get(ss.recipientInput).click().type('Merkel');
+    cy.get(ss.bookmarkList).should('not.exist');
+    cy.get(ss.recipientInput).clear();
+    cy.get(ss.recipientInput).click().type(accounts.delegate.address);
+    cy.get(ss.bookmarkList).eq(0).contains(accounts.delegate.address);
+    cy.get(ss.bookmarkList).eq(0).click();
+    cy.get(ss.recipientInput).should('have.value', accounts.delegate.address);
   });
 });

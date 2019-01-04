@@ -7,6 +7,18 @@ describe('Request', () => {
   const randomAmount = Math.floor((Math.random() * 10) + 1);
   const randomReference = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
   /**
+   * Request page can be opened by direct link
+   * @expect url is correct
+   * @expect some specific to page element is present on it
+   */
+  it(`Request page opens by url ${urls.send}`, () => {
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.send);
+    cy.url().should('contain', urls.send);
+    cy.get(ss.recipientInput);
+  });
+
+  /**
    * Request transfer in simple mode
    * @expect mail link contains correct message
    * @expect address link contains correct address

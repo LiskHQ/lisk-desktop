@@ -2,6 +2,7 @@ import { expect } from 'chai'; // eslint-disable-line import/no-extraneous-depen
 import { spy, mock } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
 import win from './win';
 import process from './process';
+import server from '../../server';
 
 describe('Electron Browser Window Wrapper', () => {
   const callbacks = {};
@@ -41,11 +42,15 @@ describe('Electron Browser Window Wrapper', () => {
     },
     app: { getName: () => ('Lisk Hub'), getVersion: () => ('some version') },
   };
+  const url = 'http://localhost:8080/';
 
   let processMock;
+  let serverMock;
 
   beforeEach(() => {
     processMock = mock(process);
+    serverMock = mock(server);
+    serverMock.expects('init').returns(url);
   });
 
 
@@ -55,6 +60,7 @@ describe('Electron Browser Window Wrapper', () => {
     win.eventStack.length = 0;
     events.length = 0;
     processMock.restore();
+    serverMock.restore();
   });
 
   describe('Init', () => {
@@ -64,7 +70,7 @@ describe('Electron Browser Window Wrapper', () => {
       expect(win.browser.webPreferences.preload).to.equal('test');
       expect(win.browser.center).to.equal(true);
       expect(win.browser.devtools).to.equal(true);
-      expect(win.browser.loadURL).to.have.been.calledWith(`file://${__dirname}/index.html`);
+      expect(win.browser.loadURL).to.have.been.calledWith(url);
     });
 
     it('Creates the window of maximum size possible size on < 1680X1050 display', () => {
