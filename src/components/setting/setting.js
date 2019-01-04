@@ -117,7 +117,7 @@ class Setting extends React.Component {
             <Checkbox
               theme={styles}
               className={`${styles.smallSlider} statistics`}
-              onChange={() => settingsUpdated({ statistics: !settings.statistics })}
+              onChange={() => this.onUpdateSettings({ statistics: !settings.statistics })}
               input={{
                 value: false,
                 checked: settings.statistics,
