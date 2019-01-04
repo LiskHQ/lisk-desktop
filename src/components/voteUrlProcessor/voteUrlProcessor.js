@@ -3,6 +3,7 @@ import React from 'react';
 import { PrimaryButton } from './../toolbox/buttons/button';
 import Box from '../box';
 import { parseSearchParams } from '../../utils/searchParams';
+import routes from '../../constants/routes';
 import { FontIcon } from '../fontIcon';
 import styles from './voteUrlProcessor.css';
 
@@ -13,21 +14,13 @@ export default class VoteUrlProcessor extends React.Component {
     this.state = {
        votes: [],
        unvotes: [],
+       params: '',
     };
   }
   componentDidMount() {
     this.props.clearVoteLookupStatus();
     const params = parseSearchParams(this.props.history.location.search);
     if (params.votes || params.unvotes) {
-      this.setVotesFromParams(params);
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const params = parseSearchParams(this.props.history.location.search);
-
-    if (prevState.votes !== params.votes || prevState.unvotes !== params.unvotes) {
-      this.props.clearVoteLookupStatus();
       this.setVotesFromParams(params);
     }
   }
@@ -53,6 +46,19 @@ export default class VoteUrlProcessor extends React.Component {
   }
 
   render() {
+    this.props.history.listen(location =>  {
+      if (location.pathname === routes.delegates.path) {
+        const params = parseSearchParams(location.search);
+
+        if (location.search && location.search !== this.state.params) {
+          this.props.clearVoteLookupStatus();
+          this.setVotesFromParams(params);
+          this.setState({
+            params: location.search,
+          })
+        }
+      }
+    });
     const errorMessages = {
       notFound: {
         text: this.props.t('Check spelling – name does not exist on mainnet'),
