@@ -84,7 +84,6 @@ describe('Send', () => {
     cy.get('@tx').find(ss.transactionAmount).should('have.text', randomAmount.toString());
     cy.wait(txConfirmationTimeout);
     cy.get('@tx').find(ss.spinner).should('not.exist');
-    // TODO Unskip when #1539 is fixed
     cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(function () {
       compareBalances(this.balanceBefore, this.balanceAfter, randomAmount + transactionFee);
     });
