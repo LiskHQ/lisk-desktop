@@ -131,7 +131,7 @@ describe('Delegates', () => {
     cy.get('@dg').find(ss.spinner);
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout }).should('have.class', 'unchecked');
     // TODO Unskip when #1539 is fixed
-    cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(() => {
+    cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(function () {
       compareBalances(this.balanceBefore, this.balanceAfter, txVotePrice);
     });
     // Vote

@@ -59,7 +59,7 @@ describe('Delegate Registration', () => {
     cy.get('@tx').find(ss.transactionReference).should('have.text', '-');
     cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');
     // TODO Unskip when #1539 is fixed
-    cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(() => {
+    cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(function () {
       compareBalances(this.balanceBefore, this.balanceAfter, txDelegateRegPrice);
     });
   });
