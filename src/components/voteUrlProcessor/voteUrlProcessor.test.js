@@ -45,6 +45,7 @@ describe('VoteUrlProcessor', () => {
         location: {
           search: '?votes=delegate_name',
         },
+        listen: () => {},
       },
     }} />);
     expect(props.urlVotesFound).to.have.been.calledWith({
@@ -62,6 +63,7 @@ describe('VoteUrlProcessor', () => {
         location: {
           search: '?unvotes=delegate_name',
         },
+        listen: () => {},
       },
     }} />);
     expect(props.urlVotesFound).to.have.been.calledWith({
