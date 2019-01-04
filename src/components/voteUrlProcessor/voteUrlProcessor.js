@@ -16,18 +16,10 @@ export default class VoteUrlProcessor extends React.Component {
     };
   }
   componentDidMount() {
-    console.log(this.props);
     this.props.clearVoteLookupStatus();
     const params = parseSearchParams(this.props.history.location.search);
     if (params.votes || params.unvotes) {
-      const upvotes = params.votes ? params.votes.split(',') : [];
-      const unvotes = params.unvotes ? params.unvotes.split(',') : [];
-      this.props.settingsUpdated({ advancedMode: true })
-      this.props.urlVotesFound({
-        upvotes,
-        unvotes,
-        address: this.props.account.address,
-      });
+      this.setVotesFromParams(params);
     }
   }
 
@@ -36,20 +28,24 @@ export default class VoteUrlProcessor extends React.Component {
 
     if (prevState.votes !== params.votes || prevState.unvotes !== params.unvotes) {
       this.props.clearVoteLookupStatus();
-      const upvotes = params.votes ? params.votes.split(',') : [];
-      const unvotes = params.unvotes ? params.unvotes.split(',') : [];
-      this.props.settingsUpdated({ advancedMode: true })
-      this.props.urlVotesFound({
-        upvotes,
-        unvotes,
-        address: this.props.account.address,
-      });
-
-      this.setState({
-        votes: params.votes,
-        unvotes: params.unvotes,
-      })
+      this.setVotesFromParams(params);
     }
+  }
+
+  setVotesFromParams(params) {
+    const upvotes = params.votes ? params.votes.split(',') : [];
+    const unvotes = params.unvotes ? params.unvotes.split(',') : [];
+    this.props.settingsUpdated({ advancedMode: true })
+    this.props.urlVotesFound({
+      upvotes,
+      unvotes,
+      address: this.props.account.address,
+    });
+
+    this.setState({
+      votes: params.votes,
+      unvotes: params.unvotes,
+    });
   }
 
   getProcessedCount() {
