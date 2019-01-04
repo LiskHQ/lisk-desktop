@@ -25,6 +25,7 @@ export default class VoteUrlProcessor extends React.Component {
     }
 
     this.props.history.listen(location =>  {
+      /* istanbul ignore if */
       if (location.pathname === routes.delegates.path) {
         const params = parseSearchParams(location.search);
 
