@@ -18,6 +18,9 @@ describe('CustomRoute', () => {
     history: { location: { pathname: '' } },
     path: '/private',
     component: Private,
+    settings: {
+      statistics: false,
+    },
   };
   const options = {
     context: { store, history, i18n },
