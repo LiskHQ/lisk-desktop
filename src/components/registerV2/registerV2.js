@@ -31,7 +31,7 @@ class RegisterV2 extends React.Component {
         <HeaderV2 showSettings={false} />
         <div className={`${styles.register} ${grid.row}`}>
           <div className={`${styles.wrapper} ${grid['col-sm-8']}`}>
-            <span className={`${styles.stepsLabel}`}>{t('Step')} {'1 / 4'}</span>
+            <span className={`${styles.stepsLabel}`}>{t('Step 1 / 4')}</span>
             <ChooseAvatar
               addresses={this.state.addresses}
               selected={this.state.selectedAddress}
