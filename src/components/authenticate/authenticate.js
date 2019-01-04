@@ -26,7 +26,7 @@ class Authenticate extends React.Component {
     this.message = `${t('You are looking into a saved account. In order to {{nextAction}} you need to enter your passphrase.', { nextAction })}`;
   }
 
-  update(e) {
+  update() {
     Piwik.trackingEvent('Authenticate', 'button', 'update');
     const data = {
       passphrase: this.state.passphrase.value,
