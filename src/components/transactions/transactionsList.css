@@ -24,7 +24,7 @@
 
 @media (--large-viewport) {
   .results {
-    overflow-y: auto;
+    overflow-y: hidden;
     margin: 0px calc(0 - var(--box-padding-left-L));
   }
 }
