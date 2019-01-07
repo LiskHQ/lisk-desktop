@@ -11,7 +11,7 @@ import Piwik from '../../utils/piwik';
 
 class AccountInitialization extends React.Component {
   closeInfo() {
-    Piwik.trackingEvent('AccountInit', 'button', 'Close indo dialog');
+    Piwik.trackingEvent('AccountInit', 'button', 'Close info dialog');
     this.props.nextStep();
   }
 
