@@ -26,23 +26,6 @@
   flex-direction: column;
   width: 100%;
 
-  & .infoIcon {
-    align-items: center;
-    background: #868ba1;
-    border-radius: 50%;
-    display: flex;
-    height: 16px;
-    justify-content: center;
-    margin-left: 8px;
-    width: 16px;
-
-    &::before {
-      content: '?';
-      color: var(--color-white);
-      font-size: 10px;
-    }
-  }
-
   & > h2 {
     align-items: center;
     color: #2e2c3b;
