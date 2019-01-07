@@ -47,7 +47,7 @@ class Dashboard extends React.Component {
     const showMore = this.state.showMore ? styles.onShowMoreToggle : '';
 
     return (
-      <div className={`${grid.row} ${styles.wrapper} `}>
+      <div className={`${styles.wrapper} testing`}>
         <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
           {
             isLoggedIn ?

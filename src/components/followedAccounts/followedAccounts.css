@@ -163,6 +163,16 @@ header {
   }
 }
 
+.showMore {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 30px;
+  color: #2475b9;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 @media (--xLarge-viewport) {
   .accounts {
     & .list {

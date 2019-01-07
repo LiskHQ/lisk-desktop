@@ -46,7 +46,8 @@ class ViewAccounts extends React.Component {
         }
         </h2>
       </header>
-      {accounts.length
+      {
+        accounts.length
         ? <div className={`${styles.accounts} followed-accounts-list`}>
           <div className={styles.list}>
             {accounts.map((account, i) =>
@@ -107,6 +108,9 @@ class ViewAccounts extends React.Component {
           </div>
         </div>
       }
+      <div className={styles.showMore}>
+        {t('Show More')}
+      </div>
     </div>;
   }
 }

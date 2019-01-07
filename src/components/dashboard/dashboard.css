@@ -41,6 +41,11 @@
 .latestActivity {
   height: 413px;
   margin: 0px 0px 20px;
+
+  & :global(.transaction-results) {
+    overflow-y: hidden;
+    margin: 0px calc(0 - var(--box-padding-left-XL));
+  }
 }
 
 .showMore {
