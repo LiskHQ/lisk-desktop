@@ -14,12 +14,12 @@ const Description = (props) => {
     here is a link you can use to send me LSK via your wallet: ${encodeURIComponent(link)}`;
 
   function onPrevStep() {
-    Piwik.trackingEvent('Request_Description', 'button', 'onPreviousStep');
+    Piwik.trackingEvent('Request_Description', 'button', 'Previous step');
     props.goToTransationPage();
   }
 
   function onNextStep() {
-    Piwik.trackingEvent('Request_Description', 'button', 'onNextStep');
+    Piwik.trackingEvent('Request_Description', 'button', 'Next step');
     props.nextStep({ address: props.address, status: 'foward' });
   }
 

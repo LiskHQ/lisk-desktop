@@ -35,12 +35,12 @@ class Confirm extends React.Component {
   }
 
   redirectToDashboard() {
-    Piwik.trackingEvent('RegisterDelegagte_Confirm', 'button', 'onRedirectToDashboard');
+    Piwik.trackingEvent('RegisterDelegagte_Confirm', 'button', 'Redirect to dashboard');
     this.props.history.replace(routes.dashboard.path);
   }
 
   redirectToFirstStep() {
-    Piwik.trackingEvent('RegisterDelegagte_Confirm', 'button', 'onRedirectToFirstStep');
+    Piwik.trackingEvent('RegisterDelegagte_Confirm', 'button', 'Redirect to first step');
     this.props.prevStep({ reset: true });
   }
 

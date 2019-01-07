@@ -14,7 +14,7 @@ class CopyToClipboard extends React.Component {
   }
 
   textIsCopied() {
-    Piwik.trackingEvent('copyToClipboard', 'button', 'copy');
+    Piwik.trackingEvent('CopyToClipboard', 'button', 'Copy');
     this.setState({
       copied: true,
     });

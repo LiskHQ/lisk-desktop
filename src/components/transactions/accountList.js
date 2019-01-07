@@ -68,7 +68,7 @@ class AccountList extends React.Component {
   }
 
   clearSearch(filterQuery) {
-    Piwik.trackingEvent('AccountList', 'button', 'onClearSearch');
+    Piwik.trackingEvent('Trasanctions_AccountList', 'button', 'Clear search');
     this.search(filterQuery, { target: { value: '' } });
   }
 

@@ -8,7 +8,7 @@ import styles from './delegateStatistics.css';
 
 class UserVotes extends AccountList {
   onShowMore() {
-    Piwik.trackingEvent('UserVotes', 'button', 'onShowMore');
+    Piwik.trackingEvent('Transactions_UserVotes', 'button', 'Show more');
     super.showMore('showVotesNumber');
   }
 

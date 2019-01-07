@@ -15,7 +15,7 @@ class Create extends React.Component {
   }
 
   next() {
-    Piwik.trackingEvent('SecondPassphrase_Create', 'button', 'onNext');
+    Piwik.trackingEvent('Passphrase_SecondPassphrase_Create', 'button', 'Next step');
     this.props.addEventListener();
     this.setState({ step: 'generate' });
   }

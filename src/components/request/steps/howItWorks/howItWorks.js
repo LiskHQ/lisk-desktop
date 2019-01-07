@@ -10,7 +10,7 @@ class HowItWorks extends React.Component {
   }
 
   disableAndContinue() {
-    Piwik.trackingEvent('Request_HowItWorks', 'button', 'onDisableAndContinue');
+    Piwik.trackingEvent('Request_HowItWorks', 'button', 'Disable and continue');
     this.props.settingsUpdated({ isRequestHowItWorksDisable: true });
     this.props.nextStep({ address: this.props.address, status: 'foward' });
   }

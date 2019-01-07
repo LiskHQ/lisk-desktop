@@ -49,7 +49,7 @@ class Questionare extends React.Component {
   }
 
   setFeedbackValue(evt, key) {
-    Piwik.trackingEvent('Questionare', 'button', 'setFeedbackValue');
+    Piwik.trackingEvent('Questionare', 'button', 'Set feedback value');
     this.setState({ [key]: evt.target ? evt.target.value : evt });
 
     if (key === 'metadata' && !!evt.target.value) {
@@ -58,12 +58,12 @@ class Questionare extends React.Component {
   }
 
   onCancel() {
-    Piwik.trackingEvent('Questionare', 'button', 'onCancel');
+    Piwik.trackingEvent('Questionare', 'button', 'Cancel');
     this.props.onCancel();
   }
 
   onSubmit() {
-    Piwik.trackingEvent('Questionare', 'button', 'onSubmit');
+    Piwik.trackingEvent('Questionare', 'button', 'Submit');
     this.props.onSubmit(this.state);
   }
 

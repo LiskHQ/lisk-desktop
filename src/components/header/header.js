@@ -40,7 +40,7 @@ class Header extends React.Component {
   }
 
   openLogoutDialog() {
-    Piwik.trackingEvent('Header', 'button', 'openLogoutDialog');
+    Piwik.trackingEvent('Header', 'button', 'Open logout dialog');
 
     this.props.setActiveDialog({
       childComponent: Options,

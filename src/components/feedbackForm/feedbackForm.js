@@ -6,12 +6,12 @@ import Piwik from '../../utils/piwik';
 
 class FeedbackForm extends Component {
   onCancel() {
-    Piwik.trackingEvent('feedbackForm', 'button', 'cancel');
+    Piwik.trackingEvent('FeedbackForm', 'button', 'Cancel');
     this.props.hideDialog();
   }
 
   onSubmit(feedbackState) {
-    Piwik.trackingEvent('feedbackForm', 'button', 'submit');
+    Piwik.trackingEvent('FeedbackForm', 'button', 'Submit');
     // TODO: integrate with api
     this.props.sendFeedback(feedbackState);
     this.props.hideDialog();

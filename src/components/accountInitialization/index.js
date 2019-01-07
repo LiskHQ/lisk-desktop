@@ -11,7 +11,7 @@ import Piwik from '../../utils/piwik';
 
 class AccountInitialization extends React.Component {
   closeInfo() {
-    Piwik.trackingEvent('AccountInit', 'button', 'closeInfo');
+    Piwik.trackingEvent('AccountInit', 'button', 'Close indo dialog');
     this.props.nextStep();
   }
 
@@ -27,7 +27,7 @@ class AccountInitialization extends React.Component {
 
   onNext() {
     const { account, nextStep } = this.props;
-    Piwik.trackingEvent('AccountInit', 'button', 'next');
+    Piwik.trackingEvent('AccountInit', 'button', 'Next step');
     nextStep({ account, accountInit: true }, 2);
   }
 
@@ -45,7 +45,7 @@ class AccountInitialization extends React.Component {
           <a
             target='_blank'
             href='https://help.lisk.io/account-security/should-i-initialize-my-lisk-account'
-            onClick={Piwik.trackingEvent('AccountInit', 'link', 'initializeMyLiskAccount')}
+            onClick={() => Piwik.trackingEvent('AccountInit', 'link', 'Initialize my lisk account')}
             rel='noopener noreferrer'
           >
             {t('Learn more about Lisk ID initialization')} <FontIcon>arrow-right</FontIcon>

@@ -45,7 +45,7 @@ class MainMenu extends React.Component {
   }
 
   menuToggle() {
-    Piwik.trackingEvent('MainMenu', 'link', 'menuToggle');
+    Piwik.trackingEvent('MainMenu', 'link', 'Menu toggle');
     const setting = !this.state.active ? false : this.state.setting;
     this.setState({ active: !this.state.active, setting });
   }

@@ -16,7 +16,7 @@ class QuickTips extends React.Component {
   }
 
   nextStep() {
-    Piwik.trackingEvent('QuickTips', 'button', 'onNextStep');
+    Piwik.trackingEvent('QuickTips', 'button', 'Next step');
     const { currentIndex } = this.state;
     const nextIndex = currentIndex + 1;
 
@@ -24,7 +24,7 @@ class QuickTips extends React.Component {
   }
 
   previousStep() {
-    Piwik.trackingEvent('QuickTips', 'button', 'onPreviousStep');
+    Piwik.trackingEvent('QuickTips', 'button', 'Previous step');
     const { currentIndex } = this.state;
     const nextIndex = currentIndex - 1;
 

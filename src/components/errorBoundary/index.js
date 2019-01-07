@@ -20,7 +20,7 @@ class ErrorBoundary extends React.Component {
   }
 
   reloadPage() {
-    Piwik.trackingEvent('ErrorBoundary', 'button', 'reloadPage');
+    Piwik.trackingEvent('ErrorBoundary', 'button', 'Reload page');
     window.location.reload();
   }
 

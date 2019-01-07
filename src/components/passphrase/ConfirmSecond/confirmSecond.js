@@ -39,7 +39,7 @@ class ConfirmSecond extends React.Component {
   }
 
   login() {
-    Piwik.trackingEvent('ConfirmSecond', 'button', 'onLogin');
+    Piwik.trackingEvent('Passphrase_ConfirmSecond', 'button', 'Login');
     this.setState({
       step: 'confirm',
     });
@@ -68,12 +68,12 @@ class ConfirmSecond extends React.Component {
 
   /* istanbul ignore next */
   onRedirectToDashboard() {
-    Piwik.trackingEvent('ConfirmSecond', 'button', 'onRedirectToDashboard');
+    Piwik.trackingEvent('Passphrase_ConfirmSecond', 'button', 'Redirect to dashboard');
     this.props.history.push(`${routes.dashboard.path}`);
   }
 
   confirm() {
-    Piwik.trackingEvent('ConfirmSecond', 'button', 'onConfirm');
+    Piwik.trackingEvent('Passphrase_ConfirmSecond', 'button', 'Confirm');
     const { finalCallback, account } = this.props;
     const passphrase = this.state.passphrase.value || account.passphrase;
     finalCallback(passphrase);
@@ -83,7 +83,7 @@ class ConfirmSecond extends React.Component {
   }
 
   redirectToFirstStep() {
-    Piwik.trackingEvent('ConfirmSecond', 'button', 'onRedirectToFirstStep');
+    Piwik.trackingEvent('Passphrase_ConfirmSecond', 'button', 'Redirect to first step');
     this.props.secondPassphraseRegisteredFailureReset();
     this.props.history.goBack();
   }

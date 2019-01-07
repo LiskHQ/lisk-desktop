@@ -91,13 +91,13 @@ class PassphraseSteps extends React.Component {
   }
 
   setDone(step) {
-    Piwik.trackingEvent('PassphraseSteps', 'button', 'onNextStep');
+    Piwik.trackingEvent('PassphraseSteps', 'button', 'Next step');
     const done = Object.assign(this.state.done, { [step]: true });
     this.setState({ done });
   }
 
   onPrevStep() {
-    Piwik.trackingEvent('PassphraseSteps', 'button', 'onPreviousStep');
+    Piwik.trackingEvent('PassphraseSteps', 'button', 'Previous step');
     this.props.prevStep({
       recipient: this.props.recipient,
       amount: this.props.amount,

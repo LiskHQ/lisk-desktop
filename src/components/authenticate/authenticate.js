@@ -27,7 +27,7 @@ class Authenticate extends React.Component {
   }
 
   update() {
-    Piwik.trackingEvent('Authenticate', 'button', 'update');
+    Piwik.trackingEvent('Authenticate', 'button', 'Update');
     const data = {
       passphrase: this.state.passphrase.value,
     };
@@ -39,7 +39,7 @@ class Authenticate extends React.Component {
 
   closeDialog(e) {
     e.preventDefault();
-    Piwik.trackingEvent('Authenticate', 'button', 'closeDialog');
+    Piwik.trackingEvent('Authenticate', 'button', 'Close dialog');
     this.props.closeDialog();
   }
 

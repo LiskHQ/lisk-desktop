@@ -61,7 +61,7 @@ class PassphraseInput extends React.Component {
   }
 
   toggleInputType() {
-    Piwik.trackingEvent('PassphraseInput', 'button', 'onToggleInputType');
+    Piwik.trackingEvent('PassphraseInput', 'button', 'Toggle input type');
     this.setState({ inputType: this.state.inputType === 'password' ? 'text' : 'password' });
   }
 
@@ -77,7 +77,7 @@ class PassphraseInput extends React.Component {
   }
 
   setFocused() {
-    Piwik.trackingEvent('PassphraseInput', 'button', 'onSetFocused');
+    Piwik.trackingEvent('PassphraseInput', 'button', 'Set focused');
     if (this.props.onFocus) this.props.onFocus();
     this.setState({ isFocused: true });
   }

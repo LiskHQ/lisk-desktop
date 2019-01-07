@@ -24,10 +24,10 @@ class SendTo extends React.Component {
     const isFollowing = getIndexOfFollowedAccount(accounts, account) !== -1;
     const handleClick = () => {
       if (isFollowing) {
-        Piwik.trackingEvent('SendTo', 'button', 'onRemoveAccount');
+        Piwik.trackingEvent('SendTo', 'button', 'Remove account');
         removeAccount(account);
       } else {
-        Piwik.trackingEvent('SendTo', 'button', 'onNextStep');
+        Piwik.trackingEvent('SendTo', 'button', 'Next step');
         nextStep(account);
       }
     };

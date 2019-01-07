@@ -29,12 +29,12 @@ class HwWallet extends React.Component {
   }
 
   handleOnClick() {
-    Piwik.trackingEvent('HwWallet', 'button', 'onContinue');
+    Piwik.trackingEvent('HwWallet', 'button', 'Continue');
     this.ledgerLogin();
   }
 
   cancelLedgerLogin() {
-    Piwik.trackingEvent('HwWallet', 'button', 'onCancelLedger');
+    Piwik.trackingEvent('HwWallet', 'button', 'Cancel Ledger');
     this.setState({ isLedgerLogin: false });
   }
 

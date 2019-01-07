@@ -29,7 +29,7 @@ class Choose extends React.Component {
   }
 
   checkSufficientFunds(evt) {
-    Piwik.trackingEvent('Choose', 'button', 'onCheckSufficientFunds');
+    Piwik.trackingEvent('RegisterDelegate_Choose', 'button', 'Choose a name');
     if (!this.hasEnoughLSK()) {
       evt.preventDefault();
       return;
@@ -69,7 +69,7 @@ class Choose extends React.Component {
   }
 
   onNextStep() {
-    Piwik.trackingEvent('Choose', 'button', 'onCheckSufficientFunds');
+    Piwik.trackingEvent('RegisterDelegate_Choose', 'button', 'Next step');
     this.props.nextStep({ delegateName: this.state.delegateName.value });
   }
 

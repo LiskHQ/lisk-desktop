@@ -33,7 +33,7 @@ class SignMessageInput extends React.Component {
   }
 
   done() {
-    Piwik.trackingEvent('SignMessageInput', 'button', 'onNextStep');
+    Piwik.trackingEvent('SignMessageInput', 'button', 'Next step');
     this.props.nextStep({ message: this.state.message.value });
   }
 

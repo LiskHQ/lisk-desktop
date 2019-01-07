@@ -174,7 +174,7 @@ class Confirm extends React.Component {
   }
 
   selectFieldset(e) {
-    Piwik.trackingEvent('Confirm', 'button', 'onSelectFieldset');
+    Piwik.trackingEvent('Passphrase_Confirm', 'button', 'Select fieldset');
     const selectedFieldset = parseInt(e.nativeEvent.target.getAttribute('field'), 10);
     this.setState({ selectedFieldset });
   }
@@ -189,7 +189,7 @@ class Confirm extends React.Component {
   }
 
   onFinalCallback() {
-    Piwik.trackingEvent('Confirm', 'button', 'onFinalCallback');
+    Piwik.trackingEvent('Passphrase_Confirm', 'button', 'Final callback');
     this.props.finalCallback(this.state.words.join(' '));
   }
 

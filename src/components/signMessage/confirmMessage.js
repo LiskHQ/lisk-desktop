@@ -54,7 +54,7 @@ class ConfirmMessage extends React.Component {
   }
 
   signMessage() {
-    Piwik.trackingEvent('ConfirmMessage', 'button', 'onConfirm');
+    Piwik.trackingEvent('SignMessage_ConfirmMessage', 'button', 'Confirm');
     this.setState({
       step: 'done',
       result: this.sign(),

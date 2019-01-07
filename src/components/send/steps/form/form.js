@@ -80,7 +80,7 @@ class Form extends React.Component {
   }
 
   handleSetMaxAmount() {
-    Piwik.trackingEvent('Send_Form', 'button', 'onSetMaxAmount');
+    Piwik.trackingEvent('Send_Form', 'button', 'Set max amount');
     const amount = parseFloat(this.getMaxAmount());
     this.setState({
       amount: {
@@ -110,12 +110,12 @@ class Form extends React.Component {
   }
 
   onPrevStep() {
-    Piwik.trackingEvent('Send_Form', 'button', 'OnPreviousStep');
+    Piwik.trackingEvent('Send_Form', 'button', 'Previous step');
     this.props.goToWallet();
   }
 
   onNextStep() {
-    Piwik.trackingEvent('Send_Form', 'button', 'OnNextStep');
+    Piwik.trackingEvent('Send_Form', 'button', 'Next step');
     this.props.nextStep({
       recipient: this.state.recipient.value,
       amount: this.state.amount.value,

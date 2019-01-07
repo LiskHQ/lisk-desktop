@@ -18,12 +18,12 @@ class CreateFirst extends React.Component {
   }
 
   showHint() {
-    Piwik.trackingEvent('CreateFirst', 'button', 'onShowHint');
+    Piwik.trackingEvent('Passphrase_CreateFirst', 'button', 'Show hint');
     this.setState({ showHint: !this.state.showHint });
   }
 
   onNextStep() {
-    Piwik.trackingEvent('CreateFirst', 'button', 'onNextStep');
+    Piwik.trackingEvent('Passphrase_CreateFirst', 'button', 'Next step');
     this.props.nextStep({
       passphrase: this.props.passphrase,
       header: this.props.t('Your passphrase is used to access your Lisk ID.'),

@@ -56,7 +56,7 @@ class CustomCountDown extends React.Component {
   }
 
   onResetTimer() {
-    Piwik.trackingEvent('CustomCountDown', 'button', 'onResetTimer');
+    Piwik.trackingEvent('CustomCountDown', 'button', 'Reset timer');
     this.props.resetTimer();
   }
 

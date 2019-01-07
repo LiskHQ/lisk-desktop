@@ -160,7 +160,7 @@ class CurrencyGraph extends React.Component {
   }
 
   setStep(step) {
-    Piwik.trackingEvent('CurrencyGraph', 'button', 'setStep');
+    Piwik.trackingEvent('CurrencyGraph', 'button', 'Set step');
     this.setState({ step, data: undefined });
     this.props.getCurrencyGraphData(step);
   }

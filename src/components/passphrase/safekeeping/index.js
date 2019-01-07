@@ -21,7 +21,7 @@ class Safekeeping extends React.Component {
   }
 
   next(e) {
-    Piwik.trackingEvent('SafeKeeping', 'button', 'onNextStep');
+    Piwik.trackingEvent('SafeKeeping', 'button', 'Next step');
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
       if (e.value === 'introduction-step' && e.checked) {
@@ -33,12 +33,12 @@ class Safekeeping extends React.Component {
   }
 
   onPrevStep() {
-    Piwik.trackingEvent('SafeKeeping', 'button', 'onPreviousStep');
+    Piwik.trackingEvent('SafeKeeping', 'button', 'Previous step');
     this.props.prevStep({ jump: 2 });
   }
 
   done() {
-    Piwik.trackingEvent('SafeKeeping', 'button', 'doneStep');
+    Piwik.trackingEvent('SafeKeeping', 'button', 'Done');
     this.setState({ step: 'done-step' });
     setTimeout(() => {
       this.props.nextStep({ passphrase: this.props.passphrase });

@@ -24,12 +24,12 @@ class AddAccountTitle extends React.Component {
   }
 
   onCancel() {
-    Piwik.trackingEvent('AddAccountTitle', 'button', 'onCancel');
+    Piwik.trackingEvent('AddAccountTitle', 'button', 'Cancel');
     this.props.prevStep({ reset: true });
   }
 
   onAddToList() {
-    Piwik.trackingEvent('AddAccountTitle', 'button', 'onAddToList');
+    Piwik.trackingEvent('AddAccountTitle', 'button', 'Add to list');
 
     const { addAccount, address, prevStep } = this.props;
     const title = this.state.title.value;

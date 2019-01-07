@@ -30,12 +30,12 @@ class ResultBox extends React.Component {
   }
 
   onAddToBookmarks() {
-    Piwik.trackingEvent('ResultBox', 'button', 'onAddToBookmarks');
+    Piwik.trackingEvent('ResultBox', 'button', 'Add to bookmarks');
     this.props.nextStep({ address: this.props.recipientId });
   }
 
   onAddToFollowedAccounts() {
-    Piwik.trackingEvent('ResultBox', 'button', 'onAddToFollowedAccounts');
+    Piwik.trackingEvent('ResultBox', 'button', 'Add to followed accounts');
     this.props.transactionFailedClear();
     this.props.prevStep({
       success: null,
@@ -47,7 +47,7 @@ class ResultBox extends React.Component {
   }
 
   onOk() {
-    Piwik.trackingEvent('ResultBox', 'button', 'onOK');
+    Piwik.trackingEvent('ResultBox', 'button', 'ok');
     this.props.transactionFailedClear();
     // istanbul ignore else
     if (typeof this.props.finalCallback === 'function') this.props.finalCallback();

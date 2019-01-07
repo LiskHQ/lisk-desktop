@@ -35,12 +35,12 @@ class Confirmation extends React.Component {
   }
 
   onNextStep() {
-    Piwik.trackingEvent('Request_Confirmation', 'button', 'onNextStep');
+    Piwik.trackingEvent('Request_Confirmation', 'button', 'Next step');
     this.props.goToTransationPage();
   }
 
   onPrevStep() {
-    Piwik.trackingEvent('Request_Confirmation', 'button', 'onPreviousStep');
+    Piwik.trackingEvent('Request_Confirmation', 'button', 'Previous step');
     this.props.prevStep({ reset: true });
   }
 

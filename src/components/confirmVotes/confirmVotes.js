@@ -49,13 +49,13 @@ class ConfirmVotes extends React.Component {
   }
 
   onNext(data) {
-    Piwik.trackingEvent('ConfirmVotes', 'button', 'next');
+    Piwik.trackingEvent('ConfirmVotes', 'button', 'Next step');
     this.setState({ didSend: true });
     this.props.votePlaced(data);
   }
 
   onPrev() {
-    Piwik.trackingEvent('ConfirmVotes', 'button', 'previous');
+    Piwik.trackingEvent('ConfirmVotes', 'button', 'Previous step');
     this.props.prevStep({ reset: this.props.skipped });
   }
 

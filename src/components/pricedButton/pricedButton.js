@@ -10,7 +10,7 @@ const PricedButton = ({
   const hasFunds = balance >= fee;
 
   function onHandleClick() {
-    Piwik.trackingEvent('PricedButton', 'button', 'onHandleClick');
+    Piwik.trackingEvent('PricedButton', 'button', 'Handle click');
     onClick();
   }
 

@@ -109,7 +109,7 @@ class Login extends React.Component {
   }
 
   onLoginSubmission(passphrase) {
-    Piwik.trackingEvent('Login', 'button', 'onLoginSubmission');
+    Piwik.trackingEvent('Login', 'button', 'Login submission');
     const network = this.getNetwork(this.state.network);
     this.secondIteration = true;
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
@@ -169,7 +169,7 @@ class Login extends React.Component {
   }
 
   validateCorrectNode() {
-    Piwik.trackingEvent('Login', 'button', 'onValidateCorrectNode');
+    Piwik.trackingEvent('Login', 'button', 'Validate correct node');
     const { address } = this.state;
     const nodeURL = address !== '' ? addHttp(address) : address;
 
@@ -197,7 +197,7 @@ class Login extends React.Component {
 
   /* istanbul ignore next */
   onHardwareWalletLink() {
-    Piwik.trackingEvent('Login', 'link', 'onHardwareWalletLink');
+    Piwik.trackingEvent('Login', 'link', 'Hardware wallet link');
     this.props.history.replace(routes.hwWallet.path);
   }
 

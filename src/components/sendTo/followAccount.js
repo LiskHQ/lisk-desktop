@@ -24,12 +24,12 @@ class FollowAccount extends React.Component {
   }
 
   onPrevStep() {
-    Piwik.trackingEvent('FollowAccount', 'button', 'onPreviousStep');
+    Piwik.trackingEvent('FollowAccount', 'button', 'Previous step');
     this.props.prevStep();
   }
 
   onFollowAccount() {
-    Piwik.trackingEvent('FollowAccount', 'button', 'onFollowAccount');
+    Piwik.trackingEvent('FollowAccount', 'button', 'Follow account');
 
     const { address } = this.props;
     const title = this.state.title.value;

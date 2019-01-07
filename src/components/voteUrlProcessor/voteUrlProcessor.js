@@ -28,14 +28,14 @@ export default class VoteUrlProcessor extends React.Component {
   }
 
   onClearVotes() {
-    Piwik.trackingEvent('VoteUrlProcessor', 'button', 'onClearVotes');
+    Piwik.trackingEvent('VoteUrlProcessor', 'button', 'Clear Votes');
     this.props.clearVoteLookupStatus();
     this.props.clearVotes();
     this.props.closeInfo();
   }
 
   onCloseInfo() {
-    Piwik.trackingEvent('VoteUrlProcessor', 'button', 'onCloseInfo');
+    Piwik.trackingEvent('VoteUrlProcessor', 'button', 'Close info');
     this.props.closeInfo();
   }
 

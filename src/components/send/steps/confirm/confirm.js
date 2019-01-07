@@ -90,7 +90,7 @@ class Confirm extends React.Component {
 
   send(event) {
     event.preventDefault();
-    Piwik.trackingEvent('Send_Confirmation', 'button', 'onSend');
+    Piwik.trackingEvent('Send_Confirmation', 'button', 'Send');
     this.setState({ loading: true });
     this.props.sent({
       account: this.props.account,
@@ -103,7 +103,7 @@ class Confirm extends React.Component {
   }
 
   onPrevStep() {
-    Piwik.trackingEvent('Send_Confirmation', 'button', 'onPreviousStep');
+    Piwik.trackingEvent('Send_Confirmation', 'button', 'Previous step');
     this.props.prevStep({
       reset: this.props.skipped,
       recipient: this.props.recipient,

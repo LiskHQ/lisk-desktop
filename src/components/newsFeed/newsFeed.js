@@ -18,12 +18,12 @@ class NewsFeed extends React.Component {
   }
 
   openSettings() {
-    Piwik.trackingEvent('NewsFeed', 'button', 'onOpenSettings');
+    Piwik.trackingEvent('NewsFeed', 'button', 'Open settings');
     this.setState({ showSettings: true });
   }
 
   hideSettings() {
-    Piwik.trackingEvent('NewsFeed', 'button', 'onHideSettings');
+    Piwik.trackingEvent('NewsFeed', 'button', 'Hide settings');
     this.setState({ showSettings: false });
   }
 

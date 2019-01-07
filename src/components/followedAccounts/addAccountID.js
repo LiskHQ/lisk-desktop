@@ -38,12 +38,12 @@ class AddAccountID extends React.Component {
   }
 
   onPrevStep() {
-    Piwik.trackingEvent('AddAccountID', 'button', 'onPreviousStep');
+    Piwik.trackingEvent('AddAccountID', 'button', 'Previous step');
     this.props.prevStep();
   }
 
   onNextStep() {
-    Piwik.trackingEvent('AddAccountID', 'button', 'onNextStep');
+    Piwik.trackingEvent('AddAccountID', 'button', 'Next step');
     this.props.nextStep({ address: this.state.address.value });
   }
 

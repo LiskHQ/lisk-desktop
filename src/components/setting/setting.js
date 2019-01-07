@@ -23,7 +23,7 @@ class Setting extends React.Component {
   }
 
   toggleAutoLog(state) {
-    Piwik.trackingEvent('Settings', 'button', 'onToggleAutoLog');
+    Piwik.trackingEvent('Settings', 'button', 'Toggle autoLog');
     const {
       account, settings, settingsUpdated, accountUpdated,
     } = this.props;
@@ -35,7 +35,7 @@ class Setting extends React.Component {
   }
 
   onUpdateSettings(newSettings) {
-    Piwik.trackingEvent('Settings', 'button', 'onUpdateSettings');
+    Piwik.trackingEvent('Settings', 'button', 'Update settings');
     this.props.settingsUpdated(newSettings);
   }
 

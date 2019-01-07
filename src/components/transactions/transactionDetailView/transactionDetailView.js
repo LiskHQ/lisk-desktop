@@ -133,7 +133,7 @@ class TransactionDetailView extends React.Component {
   }
 
   onBackToOverview() {
-    Piwik.trackingEvent('TransactionDetailView', 'button', 'onBackToOverview');
+    Piwik.trackingEvent('Transactions_DetailView', 'button', 'Back to overview');
     this.props.history.push(this.props.history.location.pathname);
   }
 

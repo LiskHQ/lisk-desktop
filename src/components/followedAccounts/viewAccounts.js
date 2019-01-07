@@ -18,24 +18,24 @@ class ViewAccounts extends React.Component {
   }
 
   onEditAccount() {
-    Piwik.trackingEvent('ViewAccounts', 'button', 'onEditAccount');
+    Piwik.trackingEvent('ViewAccounts', 'button', 'Edit account');
     this.setState({ edit: !this.state.edit });
   }
 
   onFollowedAccount(account) {
-    Piwik.trackingEvent('ViewAccounts', 'button', 'onFollowedAccount');
+    Piwik.trackingEvent('ViewAccounts', 'button', 'Followed account');
 
     const { history } = this.props;
     if (!this.state.edit) history.push(`${routes.explorer.path}${routes.accounts.path}/${account.address}`);
   }
 
   onRemoveAccount(account) {
-    Piwik.trackingEvent('ViewAccounts', 'button', 'onRemoveAccount');
+    Piwik.trackingEvent('ViewAccounts', 'button', 'Remove account');
     this.props.removeAccount(account);
   }
 
   onAddAccount() {
-    Piwik.trackingEvent('ViewAccounts', 'button', 'onAddAccount');
+    Piwik.trackingEvent('ViewAccounts', 'button', 'Add account');
     this.props.nextStep();
   }
 

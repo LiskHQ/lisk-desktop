@@ -56,12 +56,12 @@ class VotingHeader extends React.Component {
   }
 
   clearSearch() {
-    Piwik.trackingEvent('VotingHeader', 'button', 'onClearSearch');
+    Piwik.trackingEvent('VoatingListView', 'button', 'Clear Message');
     this.search({ nativeEvent: { target: { value: '' } } });
   }
 
   filterVotes(filter) {
-    Piwik.trackingEvent('VotingHeader', 'button', 'onFilterVotes');
+    Piwik.trackingEvent('VoatingListView', 'button', 'Filter votes');
     this.setState({ activeFilter: filter.value });
     this.props.setActiveFilter(filter.value);
   }

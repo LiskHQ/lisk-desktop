@@ -25,12 +25,12 @@ class VotesPreview extends React.Component {
   }
 
   dismissSurpassMessage() {
-    Piwik.trackingEvent('VotesPreview', 'button', 'onDismissSurpassMessage');
+    Piwik.trackingEvent('VotesPreview', 'button', 'Dismiss surpass message');
     this.setState({ surpassMessageDismissed: true });
   }
 
   onNextStep() {
-    Piwik.trackingEvent('VotesPreview', 'button', 'onNextStep');
+    Piwik.trackingEvent('VotesPreview', 'button', 'Next step');
     this.props.updateList(true);
     this.props.nextStep({});
     this.props.nextStepGotCalled();

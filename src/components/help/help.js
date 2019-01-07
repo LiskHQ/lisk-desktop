@@ -10,7 +10,7 @@ import Piwik from '../../utils/piwik';
 /* eslint-disable class-methods-use-this */
 class Help extends React.Component {
   initOnboarding() {
-    Piwik.trackingEvent('Help', 'button', 'initOnboarding');
+    Piwik.trackingEvent('Help', 'button', 'Init onboarding');
     this.props.settingsUpdated({ onBoarding: true });
   }
 
