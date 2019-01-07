@@ -20,6 +20,10 @@ class Dashboard extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      showMore: false,
+    };
+
     const isLoggedIn = props.account.address;
 
     if (isLoggedIn) {
@@ -30,53 +34,69 @@ class Dashboard extends React.Component {
     }
   }
 
+  onShowMoreToggle() {
+    this.setState({ showMore: !this.state.showMore });
+  }
+
   render() {
     const {
       transactions, t, account, loading, history,
     } = this.props;
 
     const isLoggedIn = account.address;
+    const showMore = this.state.showMore ? styles.onShowMoreToggle : '';
 
-    return <div className={`${grid.row} ${styles.wrapper}`}>
-      <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
-        {isLoggedIn ? <Box className={`${styles.latestActivity}`}>
-          <header>
-            <h2 className={styles.title}>
-              {t('Latest activity')}
-              <Link to={`${routes.wallet.path}`} className={`${styles.seeAllLink} seeAllLink`}>
-                {t('See all transactions')}
-                <FontIcon value='arrow-right'/>
-              </Link>
-            </h2>
-          </header>
-          <TransactionsList {...{
-            transactions,
-            t,
-            address: account.address,
-            dashboard: true,
-            loading,
-            history,
-            onClick: props => history.push(`${routes.wallet.path}?id=${props.value.id}`),
-          }} />
-        </Box> :
-        <QuickTips />}
-        <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>
-          <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingLeft: '0px' }}>
-            <Box className={`${styles.following}`}>
-              <FollowedAccounts history={history}/>
-            </Box>
-          </div>
-          <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingRight: '0px' }}>
-            <Box className={`${styles.graph}`}>
-              <CurrencyGraph />
-            </Box>
+    return (
+      <div className={`${grid.row} ${styles.wrapper} `}>
+        <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
+          {
+            isLoggedIn ?
+            <Box className={`${styles.latestActivity} ${showMore}`}>
+              <header>
+                <h2 className={styles.title}>
+                  {t('Latest activity')}
+                  <Link to={`${routes.wallet.path}`} className={`${styles.seeAllLink} seeAllLink`}>
+                    {t('See all transactions')}
+                    <FontIcon value='arrow-right'/>
+                  </Link>
+                </h2>
+              </header>
+              <TransactionsList {...{
+                transactions,
+                t,
+                address: account.address,
+                dashboard: true,
+                loading,
+                history,
+                onClick: props => history.push(`${routes.wallet.path}?id=${props.value.id}`),
+              }} />
+              <div
+                className={`${styles.showMore}`}
+                onClick={() => this.onShowMoreToggle()}
+              >
+              {this.state.showMore ? t('Show Less') : t('Show More')}
+              </div>
+            </Box> :
+            <QuickTips />
+          }
+          <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>
+            <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingLeft: '0px' }}>
+              <Box className={`${styles.following}`}>
+                <FollowedAccounts history={history}/>
+              </Box>
+            </div>
+            <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingRight: '0px' }}>
+              <Box className={`${styles.graph}`}>
+                <CurrencyGraph />
+              </Box>
+            </div>
           </div>
         </div>
+        <div className={`${grid['col-md-4']} ${grid['col-xs-12']} ${styles.newsFeedWrapper}`}>
+          <NewsFeed />
+        </div>
       </div>
-      <div className={`${grid['col-md-4']} ${grid['col-xs-12']} ${styles.newsFeedWrapper}`}>
-        <NewsFeed />
-      </div>
-    </div>;
+    );
   }
 }
 

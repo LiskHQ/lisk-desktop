@@ -24,8 +24,8 @@ body {
   height: 100%;
   left: 0;
   top: 0;
-  align-items: center;
   display: flex;
+  align-items: flex-start;
   z-index: 0;
 
   & > section {
