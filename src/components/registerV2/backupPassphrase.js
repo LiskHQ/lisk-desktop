@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { FontIcon } from '../fontIcon';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
-import Tooltip from '../toolbox/tooltip';
+import Tooltip from '../toolbox/tooltip/tooltip';
 import key from '../../assets/images/icons-v2/key.svg';
 import lock from '../../assets/images/icons-v2/lock.svg';
 // import pdf from '../../assets/images/icons-v2/pdf.svg';
@@ -56,17 +56,23 @@ class BackupPassphrase extends React.Component {
             <div className={`${styles.optionContent}`}>
               <h2>
                 {t('Passphrase')}
+
                 <Tooltip
                   title={'Save the passphrase'}
-                  footer={{ link: 'http://lisk.io', text: 'Read more' }}
-                >
+                  footer={
+                    <a href="http://lisk.io"
+                      rel="noopener noreferrer"
+                      target="_blank">
+                        {t('Read More')}
+                    </a>}>
                   <p>
-                    We strongly recommend to store passphrase in a safe place.
-                    You can use a password manager or paperwallet.
+                    {t(`We strongly recommend to store passphrase in a safe place.
+                    You can use a password manager or paperwallet.`)}
                   </p>
                 </Tooltip>
+
               </h2>
-              <p>{account.passphrase}</p>
+              <p className='option-value'>{account.passphrase}</p>
               <CopyToClipboard
                 text={account.passphrase}
                 onCopy={() => this.textIsCopied()}>
@@ -77,27 +83,31 @@ class BackupPassphrase extends React.Component {
             </div>
           </div>
           {/*
-          **  <div className={`${styles.option}`}>
-          **    <div className={`${styles.optionIcon}`}>
-          **      <img src={pdf} />
-          **    </div>
-          **    <div className={`${styles.optionContent}`}>
-          **      <h2>
-          **        {t('Paper version')}
-          **        <Tooltip
-          **          title={'Save the passphrase'}
-          **          footer={{ link: 'http://lisk.io', text: 'Read more' }}
-          **        >
-          **          <p>
-          **            We strongly recommend to store passphrase in a safe place.
-          **            You can use a password manager or paperwallet.
-          **          </p>
-          **        </Tooltip>
-          **      </h2>
-          **      <p>{'Lisk.pdf'}</p>
-          **      <a className={`${styles.action}`} href='#'>{t('Download PDF')}</a>
-          **    </div>
-          **  </div>
+            <div className={`${styles.option}`}>
+              <div className={`${styles.optionIcon}`}>
+                <img src={pdf} />
+              </div>
+              <div className={`${styles.optionContent}`}>
+                <h2>
+                  {t('Paper version')}
+                  <Tooltip
+                    title={'Paperwallet'}
+                    footer={
+                      <a href="http://lisk.io"
+                        rel="noopener noreferrer"
+                        target="_blank">
+                          {t('Read More')}
+                      </a>}>
+                    <p>
+                      {t(`You can print your passphrase to store in a safe place.
+                      It is highly recommended to delete PDF file after printing.`)}
+                    </p>
+                  </Tooltip>
+                </h2>
+                <p className='option-value'>{'Lisk.pdf'}</p>
+                <a className={`${styles.action}`} href='#'>{t('Download PDF')}</a>
+              </div>
+            </div>
         */}
         </div>
 

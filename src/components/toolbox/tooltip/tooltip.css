@@ -57,7 +57,7 @@
     width: 6px;
   }
 
-  &.tooltipShow {
+  &.shownTooltip {
     opacity: 1;
     transform: translateY(-50%) scale(1);
   }
@@ -71,11 +71,15 @@
     font-weight: bold;
   }
 
-  & .link {
+  & a {
     color: #9db8fa;
   }
 
-  & main {
-    margin: 8px 0;
+  & header {
+    margin-bottom: 8px;
+  }
+
+  & footer {
+    margin-top: 8px;
   }
 }
