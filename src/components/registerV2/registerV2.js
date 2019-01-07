@@ -2,15 +2,15 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { generatePassphrase } from '../../utils/passphrase';
 import { extractAddress } from '../../utils/account';
+import HeaderV2 from '../headerV2/headerV2';
+import MultiStep from '../multiStep';
 import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
-import HeaderV2 from '../headerV2/headerV2';
 import styles from './registerV2.css';
-import MultiStep from '../multiStep';
 
 class RegisterV2 extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       accounts: [],
       selectedAccount: {},
@@ -42,6 +42,7 @@ class RegisterV2 extends React.Component {
   }
 
   render() {
+    const { accounts, selectedAccount } = this.state;
     return (
       <React.Fragment>
         <HeaderV2 showSettings={false} />
@@ -50,11 +51,11 @@ class RegisterV2 extends React.Component {
             className={`${styles.wrapper} ${grid['col-sm-8']}`}
             finalCallback={() => null}>
             <ChooseAvatar
-              accounts={this.state.accounts}
-              selected={this.state.selectedAccount}
+              accounts={accounts}
+              selected={selectedAccount}
               handleSelectAvatar={this.handleSelectAvatar} />
             <BackupPassphrase
-              account={this.state.selectedAccount} />
+              account={selectedAccount} />
           </MultiStep>
         </div>
       </React.Fragment>

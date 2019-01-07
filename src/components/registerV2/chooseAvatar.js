@@ -86,7 +86,7 @@ class ChooseAvatar extends React.Component {
           </Link>
           <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
             <PrimaryButtonV2
-              onClick={() => nextStep(accounts) }
+              onClick={() => nextStep({ accounts })}
               disabled={!selected.address}>
               {t('Confirm')}
               <FontIcon className={registerStyles.icon}>arrow-right</FontIcon>
