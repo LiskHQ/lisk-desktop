@@ -40,6 +40,28 @@ There shouldn't any complex computation - it should be in an helper function or 
 
 All JSX should be in `render` method, there shouldn't be any helper methods with JXS (like in https://github.com/LiskHQ/lisk-hub/blob/796ce53fa637a6806b2ac3279dcf1d893f0805db/src/components/transactions/transactionDetailView/transactionDetailView.js#L53-L65 ) but rather it should be a separate component.
 
-## How to unit-test components, what should be mocked, what to assert on?
+## How to unit-test React components?
+A component should be tested by it's API, that is input and output.
+
+The input is:
+- `props` that the component receives
+- *actions* that the user performs (clicks, typing, etc.)
+
+The output is:
+- the HTML that is rendered
+
+A unit test should not know about the implementation details of the component, specifically `this.state`.
+
+A unit test of a component has typically these parts:
+
+1. Setup: `mount` or `shallow` the component with some props.
+2. Action: simulate click, input, or change props.
+3. Assertion: `expect` enzyme wrapper to contain something (some element or text), or some `props` to have been called.
+
+Setup is often the same for all the test of one component, so it is abstracted in `beforeEach` block, like in https://github.com/LiskHQ/lisk-hub/blob/796ce53fa637a6806b2ac3279dcf1d893f0805db/src/components/actionBar/index.test.js#L17-L41
+
+Action is sometimes not needed, so the only really mandatory part of a test case is an assertion, like in https://github.com/LiskHQ/lisk-hub/blob/796ce53fa637a6806b2ac3279dcf1d893f0805db/src/components/actionBar/index.test.js#L43-L45
+
+## What should be mocked in component unit test?
 
 TODO
