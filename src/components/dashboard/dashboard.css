@@ -39,8 +39,24 @@
 }
 
 .latestActivity {
-  height: calc(50% - 20px);
+  height: 413px;
   margin: 0px 0px 20px;
+}
+
+.showMore {
+  min-height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2475b9;
+  cursor: pointer;
+}
+
+.onShowMoreToggle {
+  transition: height 0.5s ease;
+  height: auto;
 }
 
 @media (--medium-viewport) {
