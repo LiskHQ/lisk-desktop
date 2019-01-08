@@ -35,10 +35,9 @@ class RegisterV2 extends React.Component {
     });
   }
 
+  /* istanbul ignore next */
   handleSelectAvatar(selectedAccount) {
-    this.setState({
-      selectedAccount,
-    });
+    this.setState({ selectedAccount });
   }
 
   render() {

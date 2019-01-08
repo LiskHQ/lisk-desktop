@@ -22,12 +22,4 @@ describe('V2 Register Process', () => {
   it('Should render on initial step -> Choose Avatar', () => {
     expect(wrapper.find('ChooseAvatar')).to.have.length(1);
   });
-
-  it('Should update selected Address', () => {
-    const accounts = wrapper.find('RegisterV2').instance().state.accounts;
-    const randomAccount = accounts[Math.floor(Math.random() * accounts.length)];
-    expect(wrapper.find('RegisterV2').instance().state.selectedAccount).to.deep.equal({});
-    wrapper.find('RegisterV2').instance().handleSelectAvatar(randomAccount);
-    expect(wrapper.find('RegisterV2').instance().state.selectedAccount).to.deep.equal(randomAccount);
-  });
 });
