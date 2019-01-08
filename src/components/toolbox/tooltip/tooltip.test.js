@@ -40,22 +40,15 @@ describe('Tooltip wrapper', () => {
   it('Should show the tooltip on click', () => {
     expect(wrapper.find('.tooltip.shownTooltip')).to.have.length(0);
     wrapper.find('.infoIcon').simulate('click');
-    expect(wrapper.state('showTooltip')).to.equal(true);
-  });
-
-  it('Should close the tooltip when handleClose is called', () => {
-    wrapper.setState({ showTooltip: true });
-    expect(wrapper.state('showTooltip')).to.equal(true);
-    wrapper.instance().handleClose();
-    expect(wrapper.state('showTooltip')).to.equal(false);
+    expect(wrapper.find('.tooltip')).to.have.className('shownTooltip');
   });
 
   it('Should show modal when mouse enter and close after 1 second when mouse leave', () => {
     wrapper.simulate('mousemove');
-    expect(wrapper.state('showTooltip')).to.equal(true);
+    expect(wrapper.find('.tooltip')).to.have.className('shownTooltip');
     wrapper.simulate('mouseleave');
     clock.tick(1000);
-    expect(wrapper.state('showTooltip')).to.equal(false);
+    expect(wrapper.find('.tooltip')).not.to.have.className('shownTooltip');
   });
 
   it('Should reset setTimeout if mouse enter before timeout is over', () => {
@@ -64,6 +57,6 @@ describe('Tooltip wrapper', () => {
     clock.tick(500);
     wrapper.simulate('mousemove');
     clock.tick(1000);
-    expect(wrapper.state('showTooltip')).to.equal(true);
+    expect(wrapper.find('.tooltip')).to.have.className('shownTooltip');
   });
 });
