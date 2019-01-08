@@ -9,24 +9,7 @@ import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import registerStyles from './registerV2.css';
 import styles from './confirmPassphrase.css';
 import avatar from '../../assets/images/icons-v2/avatar.svg';
-
-const Options = ({
-  optionIndex, options, answers, handleSelect, enabled = null,
-}) => (
-  <div className={`${styles.optionsHolder}`}>
-    <span className={`${styles.blank} ${answers[optionIndex] && styles.filled}`}>
-      { answers[optionIndex] }
-    </span>
-    {options.map((option, optionKey) =>
-      <span className={`${styles.option}`} key={optionKey}>
-        <PrimaryButtonV2
-          onClick={() => handleSelect(option, optionIndex)}
-          disabled={!enabled}>
-          { option }
-        </PrimaryButtonV2>
-      </span>)}
-  </div>
-);
+import Options from './confirmPassphraseOptions';
 
 class ConfirmPassphrase extends React.Component {
   constructor() {
@@ -38,6 +21,8 @@ class ConfirmPassphrase extends React.Component {
       answers: [],
       options: [],
     };
+
+    this.handleSelect = this.handleSelect.bind(this);
   }
 
   componentWillMount() {
@@ -55,9 +40,30 @@ class ConfirmPassphrase extends React.Component {
       return index;
     }).sort((a, b) => a - b);
 
+    const options = this.assembleWordOptions(this.props.passphrase, words);
     this.setState({
+      options,
       words,
+      answers: [],
     });
+  }
+
+  handleConfirm() {
+    const { answers, words } = this.state;
+    const passphrase = this.props.passphrase.split(/\s/);
+    const corrects = answers.filter((answer, index) => answer === passphrase[words[index]]);
+    if (corrects.length === answers.length) {
+      this.setState({
+        correct: true,
+      });
+    } else {
+      this.getRandomWordsFromPassphrase(this.props.passphrase, this.state.words.length);
+    }
+  }
+
+  enableConfirmButton() {
+    const { answers, words } = this.state;
+    return answers.filter(answer => !!answer).length === words.length;
   }
 
   assembleWordOptions(passphrase, missing) {
@@ -104,19 +110,18 @@ class ConfirmPassphrase extends React.Component {
 
         <div className={`${styles.confirmHolder}`}>
           {passphrase.split(/\s/).map((word, key) =>
-            <div className={styles.word} key={key}>
+            <span className={styles.word} key={key}>
               { !words.includes(key)
                 ? word
                 : <Options
                   options={options[optionIndex]}
                   answers={this.state.answers}
-                  handleSelect={this.handleSelect.bind(this)}
+                  handleSelect={this.handleSelect}
                   enabled={optionIndex === 0 || this.state.answers[optionIndex - 1]}
                   optionIndex={optionIndex++} />
               }
-            </div>)
+            </span>)
           }
-
         </div>
 
 
@@ -128,7 +133,9 @@ class ConfirmPassphrase extends React.Component {
             </SecondaryButtonV2>
           </Link>
           <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
-            <PrimaryButtonV2>
+            <PrimaryButtonV2
+              onClick={this.handleConfirm.bind(this)}
+              disabled={!this.enableConfirmButton()}>
               {t('Confirm')}
               <FontIcon className={registerStyles.icon}>arrow-right</FontIcon>
             </PrimaryButtonV2>
