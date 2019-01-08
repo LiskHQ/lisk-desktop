@@ -45,6 +45,7 @@
     letter-spacing: 0.1px;
     margin: 15px 0;
     text-align: left;
+    word-spacing: 8px;
   }
 
   & .action {
