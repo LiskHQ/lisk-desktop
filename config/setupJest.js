@@ -55,6 +55,7 @@ Object.defineProperty(window, 'crypto', {
 });
 
 ReactPiwik.push = () => {};
+ReactPiwik.trackingEvent = () => {};
 sinon.stub(ReactPiwik.prototype, 'connectToHistory').callsFake(() => 1);
 sinon.stub(ReactPiwik.prototype, 'initPiwik').callsFake(() => {});
 

@@ -8,6 +8,7 @@ import voteFilters from './../../constants/voteFilters';
 import { fromRawLsk } from './../../utils/lsk';
 import Fees from './../../constants/fees';
 import routes from './../../constants/routes';
+import Piwik from '../../utils/piwik';
 
 
 class VotingHeader extends React.Component {
@@ -55,10 +56,12 @@ class VotingHeader extends React.Component {
   }
 
   clearSearch() {
+    Piwik.trackingEvent('VoatingListView', 'button', 'Clear Message');
     this.search({ nativeEvent: { target: { value: '' } } });
   }
 
   filterVotes(filter) {
+    Piwik.trackingEvent('VoatingListView', 'button', 'Filter votes');
     this.setState({ activeFilter: filter.value });
     this.props.setActiveFilter(filter.value);
   }

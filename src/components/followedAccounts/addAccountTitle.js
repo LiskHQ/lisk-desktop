@@ -6,6 +6,7 @@ import { Button, TertiaryButton } from '../toolbox/buttons/button';
 import { followedAccountAdded } from '../../actions/followedAccounts';
 import styles from './followedAccounts.css';
 import TitleInput from './accountTitleInput';
+import Piwik from '../../utils/piwik';
 
 class AddAccountTitle extends React.Component {
   constructor() {
@@ -22,12 +23,24 @@ class AddAccountTitle extends React.Component {
     });
   }
 
-  render() {
-    const {
-      t, prevStep, addAccount, address,
-    } = this.props;
+  onCancel() {
+    Piwik.trackingEvent('AddAccountTitle', 'button', 'Cancel');
+    this.props.prevStep({ reset: true });
+  }
 
-    const title = this.state.title.value || address;
+  onAddToList() {
+    Piwik.trackingEvent('AddAccountTitle', 'button', 'Add to list');
+
+    const { addAccount, address, prevStep } = this.props;
+    const title = this.state.title.value;
+
+    addAccount({ title, address });
+    prevStep({ reset: true });
+  }
+
+  render() {
+    const { t } = this.props;
+
     return <div className={styles.addAccount}>
       <header><h2>{t('How would you call it?')}</h2></header>
       <div>
@@ -40,7 +53,7 @@ class AddAccountTitle extends React.Component {
           <Button
             label={t('Cancel')}
             className={`${styles.cancelButton} cancel`}
-            onClick={() => prevStep({ reset: true })}
+            onClick={() => this.onCancel()}
           />
         </div>
         <div className={grid['col-xs-8']}>
@@ -48,10 +61,7 @@ class AddAccountTitle extends React.Component {
             label={t('Add to list')}
             disabled={!!this.state.title.error || this.state.title.value === ''}
             className='next'
-            onClick={() => {
-              addAccount({ title, address });
-              prevStep({ reset: true });
-            }}
+            onClick={() => this.onAddToList()}
           />
         </div>
       </footer>

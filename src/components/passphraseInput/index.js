@@ -6,6 +6,7 @@ import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import { isValidPassphrase, getPassphraseValidationErrors } from '../../utils/passphrase';
 import styles from './passphraseInput.css';
 import keyCodes from './../../constants/keyCodes';
+import Piwik from '../../utils/piwik';
 
 class PassphraseInput extends React.Component {
   constructor(props) {
@@ -60,6 +61,7 @@ class PassphraseInput extends React.Component {
   }
 
   toggleInputType() {
+    Piwik.trackingEvent('PassphraseInput', 'button', 'Toggle input type');
     this.setState({ inputType: this.state.inputType === 'password' ? 'text' : 'password' });
   }
 
@@ -75,6 +77,7 @@ class PassphraseInput extends React.Component {
   }
 
   setFocused() {
+    Piwik.trackingEvent('PassphraseInput', 'button', 'Set focused');
     if (this.props.onFocus) this.props.onFocus();
     this.setState({ isFocused: true });
   }

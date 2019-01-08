@@ -7,6 +7,7 @@ import { Button } from './../toolbox/buttons/button';
 // eslint-disable-next-line import/no-named-as-default
 import PassphraseInput from '../passphraseInput';
 import { passphraseIsValid, authStatePrefill } from '../../utils/form';
+import Piwik from '../../utils/piwik';
 import styles from './passphraseSteps.css';
 
 class PassphraseSteps extends React.Component {
@@ -90,8 +91,18 @@ class PassphraseSteps extends React.Component {
   }
 
   setDone(step) {
+    Piwik.trackingEvent('PassphraseSteps', 'button', 'Next step');
     const done = Object.assign(this.state.done, { [step]: true });
     this.setState({ done });
+  }
+
+  onPrevStep() {
+    Piwik.trackingEvent('PassphraseSteps', 'button', 'Previous step');
+    this.props.prevStep({
+      recipient: this.props.recipient,
+      amount: this.props.amount,
+      reset: this.props.accountInit,
+    });
   }
 
   getCurrentStep() {
@@ -164,11 +175,7 @@ class PassphraseSteps extends React.Component {
           <div className={updatedValues.footer.firstGrid}>
             <Button
               label={this.props.t('Back')}
-              onClick={() => this.props.prevStep({
-                recipient: this.props.recipient,
-                amount: this.props.amount,
-                reset: this.props.accountInit,
-              })}
+              onClick={() => this.onPrevStep()}
               type='button'
               theme={updatedStyles}
             />
