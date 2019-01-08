@@ -54,10 +54,10 @@ describe('V2 Register Process - Backup Passphrase', () => {
   });
 
   it('Should copy passphrase when clicking copy passphrase and reset after 3 seconds', () => {
-    expect(wrapper.find('BackupPassphrase').instance().state.passphraseCopied).to.be.equal(false);
+    expect(wrapper.find('CopyToClipboard .action')).not.to.have.className('copied');
     wrapper.find('CopyToClipboard').simulate('click');
-    expect(wrapper.find('BackupPassphrase').instance().state.passphraseCopied);
+    expect(wrapper.find('CopyToClipboard .action')).to.have.className('copied');
     clock.tick(3000);
-    expect(wrapper.find('BackupPassphrase').instance().state.passphraseCopied).to.be.equal(false);
+    expect(wrapper.find('CopyToClipboard .action')).not.to.have.className('copied');
   });
 });
