@@ -1,0 +1,54 @@
+@import './../app/variables.css';
+
+.confirmHolder {
+  align-items: flex-start;
+  display: flex;
+  margin: 70px 0;
+  justify-content: space-between;
+  width: 100%;
+
+  & .word {
+    color: #1e194d;
+    font-family: Gilroy, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    line-height: 2.78;
+    text-align: center;
+  }
+
+  & .optionsHolder {
+    display: flex;
+    flex-direction: column;
+
+    & .blank {
+      align-items: center;
+      border: 1px dashed #1e194d;
+      border-radius: 4px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      height: 36px;
+      margin: 8px 0;
+    }
+
+    & .filled {
+      background-color: var(--color-white);
+      border: none;
+      box-shadow: 0 4px 8px 0 rgba(6, 22, 48, 0.1);
+      color: #1e194d;
+    }
+
+    & .option {
+      display: flex;
+      height: 36px;
+      margin: 8px 0;
+
+      & > button {
+        min-height: 36px;
+        height: 36px;
+        width: auto;
+      }
+    }
+  }
+}
