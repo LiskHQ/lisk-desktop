@@ -3,6 +3,7 @@ import electronLocalshortcut from 'electron-localshortcut'; // eslint-disable-li
 import { autoUpdater } from 'electron-updater'; // eslint-disable-line import/no-extraneous-dependencies
 import path from 'path';
 import storage from 'electron-json-storage'; // eslint-disable-line import/no-extraneous-dependencies
+import fp from 'find-free-port';
 import win from './modules/win';
 import './styles.dialog.css';
 // import localeHandler from './modules/localeHandler';
@@ -26,8 +27,15 @@ let appIsReady = false;
 
 app.on('ready', () => {
   appIsReady = true;
-  win.create({
-    electron, path, electronLocalshortcut, storage, checkForUpdates,
+
+  fp(3000, (err, port) => {
+    if (err) {
+      throw new Error(err);
+    }
+
+    win.create({
+      electron, path, electronLocalshortcut, storage, checkForUpdates, port,
+    });
   });
 });
 
@@ -47,8 +55,14 @@ app.on('activate', () => {
   // sometimes, the event is triggered before app.on('ready', ...)
   // then creating new windows will fail
   if (win.browser === null && appIsReady) {
-    win.create({
-      electron, path, electronLocalshortcut, storage, checkForUpdates,
+    fp(3000, (err, port) => {
+      if (err) {
+        throw new Error(err);
+      }
+
+      win.create({
+        electron, path, electronLocalshortcut, storage, checkForUpdates, port,
+      });
     });
   }
 });
