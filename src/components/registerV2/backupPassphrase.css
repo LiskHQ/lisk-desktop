@@ -65,3 +65,11 @@
     }
   }
 }
+
+@media (--medium-viewport) {
+  .optionContent {
+    & > p {
+      word-spacing: 2px;
+    }
+  }
+}

@@ -55,7 +55,7 @@ class ChooseAvatar extends React.Component {
           }</p>
         </div>
         <div className={`
-          ${styles.avatarsHolder} ${grid['col-xs-10']}
+          ${styles.avatarsHolder} ${grid['col-sm-10']}
           ${selected.address ? styles.avatarSelected : styles.animate}`}>
           {
             accounts.map((account, key) => (
