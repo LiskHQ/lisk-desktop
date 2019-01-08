@@ -48,7 +48,7 @@ class BackupPassphrase extends React.Component {
           <p>{t('Keep it safe is only way to access the wallet')}</p>
         </div>
 
-        <div className={`${styles.optionsHolder} ${grid['col-xs-10']}`}>
+        <div className={`${styles.optionsHolder} ${grid['col-sm-11']}`}>
           <div className={`${styles.option}`}>
             <div className={`${styles.optionIcon}`}>
               <img src={lock} />
