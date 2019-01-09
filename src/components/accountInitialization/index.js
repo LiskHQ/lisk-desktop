@@ -7,6 +7,7 @@ import { FontIcon } from '../fontIcon';
 import styles from './accountInit.css';
 import fees from './../../constants/fees';
 import { fromRawLsk } from '../../utils/lsk';
+import links from './../../constants/externalLinks';
 import Piwik from '../../utils/piwik';
 
 class AccountInitialization extends React.Component {
@@ -44,7 +45,7 @@ class AccountInitialization extends React.Component {
         <p>
           <a
             target='_blank'
-            href='https://help.lisk.io/account-security/should-i-initialize-my-lisk-account'
+            href={links.accountInitialization}
             onClick={() => Piwik.trackingEvent('AccountInit', 'link', 'Initialize my lisk account')}
             rel='noopener noreferrer'
           >

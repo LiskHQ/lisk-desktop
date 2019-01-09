@@ -4,11 +4,24 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 import sinon from 'sinon';
+import { generatePassphrase } from '../../utils/passphrase';
+import { extractAddress } from '../../utils/account';
 import i18n from '../../i18n';
 import ChooseAvatar from './chooseAvatar';
 
-describe('V2 Register Process', () => {
+describe('V2 Register Process - Choose Avatar', () => {
   let wrapper;
+
+  const crypotObj = window.crypto || window.msCrypto;
+  const passphrases = [...Array(5)].map(() =>
+    generatePassphrase({
+      seed: [...crypotObj.getRandomValues(new Uint16Array(16))].map(x => (`00${(x % 256).toString(16)}`).slice(-2)),
+    }));
+  const accounts = passphrases.map(pass => ({
+    address: extractAddress(pass),
+    passphrase: pass,
+  }));
+
   const options = {
     context: { i18n },
     childContextTypes: {
@@ -19,6 +32,7 @@ describe('V2 Register Process', () => {
   const props = {
     handleSelectAvatar: sinon.spy(),
     selected: '',
+    accounts,
   };
 
   beforeEach(() => {
@@ -33,18 +47,18 @@ describe('V2 Register Process', () => {
   });
 
   it('Should pass selected address to handler function', () => {
+    const randomAvatar = Math.floor(Math.random() * 5);
     const confirmButton = wrapper.find('Button').at(1);
-    const avatar = wrapper.find('AccountVisual').at(2);
     expect(confirmButton.prop('disabled'));
-    avatar.simulate('click');
-    expect(props.handleSelectAvatar).to.have.been.calledWith(avatar.prop('address'));
+    wrapper.find('AccountVisual').at(randomAvatar).simulate('click');
+    expect(props.handleSelectAvatar).to.have.been.calledWith(accounts[randomAvatar]);
 
     wrapper.setProps({
       children: React.cloneElement(wrapper.props().children, {
-        selected: avatar.prop('address'),
+        selected: accounts[randomAvatar],
       }),
     });
 
-    expect(wrapper.find('ChooseAvatar').prop('selected')).to.be.eql(avatar.prop('address'));
+    expect(wrapper.find('ChooseAvatar').prop('selected')).to.be.eql(accounts[randomAvatar]);
   });
 });
