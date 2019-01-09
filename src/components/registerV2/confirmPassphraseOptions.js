@@ -1,15 +1,22 @@
 import React from 'react';
+import { FontIcon } from '../fontIcon';
 import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 import styles from './confirmPassphrase.css';
 
 const ConfirmPassphraseOptions = ({
-  optionIndex, options, answers, handleSelect, enabled = null,
+  optionIndex, options, answers, handleSelect, hasErrors, isCorrect, enabled = null,
 }) => (
-  <span className={`${styles.optionsHolder} ${answers[optionIndex] ? styles.answered : ''}`}>
+  <span className={`${styles.optionsHolder} ${answers[optionIndex] ? styles.answered : ''} ${hasErrors ? styles.hasErrors : ''} ${isCorrect ? styles.isCorrect : ''}`}>
     <span
       className={`${styles.answer}`}
-      onClick={() => !!answers[optionIndex] && handleSelect(null, optionIndex)}>
-      <span className={`${styles.choice}`}>{answers[optionIndex]}</span>
+      onClick={() => !!answers[optionIndex] && !hasErrors
+        && !isCorrect && handleSelect(null, optionIndex)}>
+      <span className={`${styles.choice}`}>
+        {answers[optionIndex]}
+        <span className={`${styles.checkmark}`}>
+          <FontIcon value='checkmark' />
+        </span>
+      </span>
     </span>
     <span className={`${styles.options}`}>
       {options.map((option, optionKey) =>

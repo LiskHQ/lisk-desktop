@@ -1,26 +1,44 @@
 @import './../app/variables.css';
 
+@keyframes optionsAppear {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+@keyframes optionsDisappear {
+  from { transform: scale(1); }
+  to { transform: scale(0); }
+}
+
+@for $i from 1 to 3 {
+  .confirmHolder .options span:nth-child($i) {
+    animation-delay: calc(100ms * $i);
+  }
+}
+
 .confirmHolder {
   align-items: flex-start;
   display: flex;
+  font-size: 18px;
   min-height: 210px;
   margin: 70px 0;
-  justify-content: space-between;
+  justify-content: space-evenly;
   width: 100%;
 
   & .word {
     color: #1e194d;
     font-family: Gilroy, sans-serif;
-    font-size: 18px;
+    font-size: inherit;
     font-weight: 600;
     letter-spacing: 0.1px;
-    line-height: 2.78;
+    line-height: 36px;
     text-align: center;
   }
 
   & .optionsHolder {
     display: flex;
     flex-direction: column;
+    margin: -8px 0;
 
     & .answer {
       height: 36px;
@@ -41,6 +59,27 @@
       }
     }
 
+    & .checkmark {
+      align-items: center;
+      background-color: var(--color-white);
+      border-radius: 50%;
+      box-shadow: 0 4px 8px 0 rgba(6, 22, 48, 0.1);
+      display: flex;
+      height: 24px;
+      justify-content: center;
+      position: absolute;
+      right: -12px;
+      top: -12px;
+      transition: transform 250ms linear;
+      transform: scale(0);
+      width: 24px;
+      will-change: transform;
+
+      & > span {
+        font-size: 14px;
+      }
+    }
+
     & .choice {
       align-items: center;
       background-color: var(--color-white);
@@ -54,17 +93,14 @@
       justify-content: center;
       padding: 0 10px;
       position: relative;
-      transition: transform 250ms linear, opacity 250ms linear;
+      transition: transform 250ms linear, opacity 250ms linear, color 250ms linear;
       transform: scale(0);
       width: 100%;
+      will-change: transform, opacity, color;
     }
   }
 
   & .answered {
-    & .answer {
-      border: none;
-    }
-
     & .choice {
       opacity: 1;
       transform: scale(1);
@@ -81,6 +117,26 @@
       &.selected {
         animation-delay: 0ms;
       }
+    }
+  }
+
+  & .hasErrors {
+    & .choice {
+      background-color: #ff7721;
+      box-shadow: 0 4px 8px 0 rgba(227, 190, 155, 0.4);
+      color: var(--color-white);
+      cursor: initial;
+      transition: background 250ms linear 100ms, box-shadow 250ms linear 100ms;
+    }
+  }
+
+  & .isCorrect {
+    & .choice {
+      cursor: initial;
+    }
+
+    & .checkmark {
+      transform: scale(1);
     }
   }
 
@@ -102,7 +158,7 @@
 
     & > button {
       font-family: Gilroy, sans-serif;
-      font-size: 18px;
+      font-size: inherit;
       min-height: 36px;
       height: 36px;
       width: 100%;
@@ -110,18 +166,8 @@
   }
 }
 
-@for $i from 1 to 3 {
-  .confirmHolder .options span:nth-child($i) {
-    animation-delay: calc(100ms * $i);
+@media (--small-viewport) {
+  .confirmHolder {
+    font-size: 14px;
   }
-}
-
-@keyframes optionsAppear {
-  from { transform: scale(0); }
-  to { transform: scale(1); }
-}
-
-@keyframes optionsDisappear {
-  from { transform: scale(1); }
-  to { transform: scale(0); }
 }
