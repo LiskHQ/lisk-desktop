@@ -48,7 +48,7 @@ class RegisterV2 extends React.Component {
         <HeaderV2 showSettings={false} />
         <div className={`${styles.register} ${grid.row}`}>
           <MultiStep
-            className={`${styles.wrapper} ${grid['col-sm-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}>
+            className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}>
             <ChooseAvatar
               accounts={accounts}
               selected={selectedAccount}
@@ -57,7 +57,6 @@ class RegisterV2 extends React.Component {
               account={selectedAccount} />
             <ConfirmPassphrase
               passphrase={selectedAccount.passphrase} />
-            <h1>Success!</h1>
           </MultiStep>
         </div>
       </React.Fragment>
