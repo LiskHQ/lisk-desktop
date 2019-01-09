@@ -2,8 +2,6 @@ import React from 'react';
 import fillWordsList from 'bitcore-mnemonic/lib/words/english';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { Link } from 'react-router-dom';
-import routes from '../../constants/routes';
 import { FontIcon } from '../fontIcon';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import registerStyles from './registerV2.css';
@@ -64,7 +62,7 @@ class ConfirmPassphrase extends React.Component {
     if (corrects.length === answers.length) {
       this.setState({ isCorrect: true });
       this.timeout = setTimeout(() =>
-        this.props.next(), 1500);
+        this.props.nextStep(this.state), 1500);
     } else {
       const tries = this.state.tries + 1;
       this.setState({
@@ -110,7 +108,7 @@ class ConfirmPassphrase extends React.Component {
   }
 
   render() {
-    const { t, passphrase } = this.props;
+    const { t, passphrase, prevStep } = this.props;
     const {
       words, options, hasErrors, answers, isCorrect,
     } = this.state;
@@ -148,12 +146,12 @@ class ConfirmPassphrase extends React.Component {
 
 
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
-          <Link className={`${registerStyles.button} ${grid['col-xs-4']}`} to={routes.splashscreen.path}>
-            <SecondaryButtonV2>
+          <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
+            <SecondaryButtonV2 onClick={prevStep}>
               <FontIcon className={registerStyles.icon}>arrow-left</FontIcon>
               {t('Go Back')}
             </SecondaryButtonV2>
-          </Link>
+          </span>
           <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
             <PrimaryButtonV2
               onClick={this.handleConfirm.bind(this)}

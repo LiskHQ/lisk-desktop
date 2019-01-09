@@ -73,7 +73,6 @@
       transition: transform 250ms linear;
       transform: scale(0);
       width: 24px;
-      will-change: transform;
 
       & > span {
         font-size: 14px;
@@ -96,7 +95,6 @@
       transition: transform 250ms linear, opacity 250ms linear, color 250ms linear;
       transform: scale(0);
       width: 100%;
-      will-change: transform, opacity, color;
     }
   }
 
