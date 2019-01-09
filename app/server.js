@@ -1,5 +1,3 @@
-// const findAvailablePort = require('./src/modules/portAssign');
-
 const server = {
   // eslint-disable-next-line max-statements
   init: (newPort) => {
