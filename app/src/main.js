@@ -29,7 +29,6 @@ const createWindow = (err, port) => {
   if (err) {
     throw new Error(err);
   }
-
   win.create({
     electron, path, electronLocalshortcut, storage, checkForUpdates, port,
   });
