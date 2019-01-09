@@ -17,30 +17,32 @@ class ConfirmPassphrase extends React.Component {
       numberOfWords: 2,
       words: [2, 9],
       tries: 0,
+      maxTries: 3,
       answers: [],
       options: [],
       hasErrors: false,
       isCorrect: false,
+      outOfTries: false,
     };
 
     this.handleSelect = this.handleSelect.bind(this);
+    this.handleConfirm = this.handleConfirm.bind(this);
+    this.verifyChoices = this.verifyChoices.bind(this);
   }
 
   componentWillMount() {
     const options = this.assembleWordOptions(this.props.passphrase, this.state.words);
-    this.setState({
-      options,
-    });
+    this.setState({ options });
   }
 
   componentWillUnmount() {
     clearTimeout(this.timeout);
   }
 
-  getRandomWordsFromPassphrase(passphrase, qty) {
+  getRandomIndexesFromPassphrase(passphrase, qty) {
     let indexes = passphrase.split(/\s/).map((w, index) => index);
     const words = [...Array(qty)].map(() => {
-      const index = Math.floor(Math.random() * indexes.length);
+      const index = indexes[Math.floor(Math.random() * indexes.length)];
       indexes = [...indexes.slice(0, index), ...indexes.slice(index + 1)];
       return index;
     }).sort((a, b) => a - b);
@@ -54,24 +56,28 @@ class ConfirmPassphrase extends React.Component {
     });
   }
 
-  handleConfirm() {
+  verifyChoices() {
     const { answers, words } = this.state;
     const passphrase = this.props.passphrase.split(/\s/);
     const corrects = answers.filter((answer, index) => answer === passphrase[words[index]]);
-    clearTimeout(this.timeout);
-    if (corrects.length === answers.length) {
-      this.setState({ isCorrect: true });
-      this.timeout = setTimeout(() =>
-        this.props.nextStep(this.state), 1500);
-    } else {
-      const tries = this.state.tries + 1;
-      this.setState({
-        tries,
-        hasErrors: true,
-      });
-      this.timeout = setTimeout(() =>
-        this.getRandomWordsFromPassphrase(this.props.passphrase, this.state.numberOfWords), 1500);
-    }
+    return corrects.length === answers.length;
+  }
+
+  handleConfirm(status) {
+    const { tries } = this.state;
+    const triesCount = status ? tries : tries + 1;
+    const state = {
+      tries: triesCount,
+      isCorrect: status,
+      hasErrors: !status,
+      outOfTries: !(triesCount < this.state.maxTries),
+    };
+    const cb = status
+      ? () => this.props.nextStep(this.state)
+      : () => !state.outOfTries &&
+        this.getRandomIndexesFromPassphrase(this.props.passphrase, this.state.numberOfWords);
+    this.setState(state);
+    this.timeout = setTimeout(cb, 1500);
   }
 
   enableConfirmButton() {
@@ -110,7 +116,7 @@ class ConfirmPassphrase extends React.Component {
   render() {
     const { t, passphrase, prevStep } = this.props;
     const {
-      words, options, hasErrors, answers, isCorrect,
+      words, options, hasErrors, answers, isCorrect, outOfTries,
     } = this.state;
     let optionIndex = 0;
 
@@ -123,7 +129,6 @@ class ConfirmPassphrase extends React.Component {
           </h1>
           <p>{t('Choose the rights word missing from your Passphrase.')}</p>
           <p>{t('It was given in a previous step')}</p>
-          <p>{this.state.tries}</p>
         </div>
 
         <div className={`${styles.confirmHolder}`}>
@@ -142,6 +147,11 @@ class ConfirmPassphrase extends React.Component {
               }
             </span>)
           }
+          {
+            <div className={`${styles.errorMessage} ${outOfTries ? styles.showError : ''}`}>
+              {outOfTries && <span>{t('Please go back and check your passphrase again.')}</span>}
+            </div>
+          }
         </div>
 
 
@@ -154,7 +164,7 @@ class ConfirmPassphrase extends React.Component {
           </span>
           <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
             <PrimaryButtonV2
-              onClick={this.handleConfirm.bind(this)}
+              onClick={() => this.handleConfirm(this.verifyChoices())}
               disabled={!this.enableConfirmButton()}>
               {t('Confirm')}
               <FontIcon className={registerStyles.icon}>arrow-right</FontIcon>

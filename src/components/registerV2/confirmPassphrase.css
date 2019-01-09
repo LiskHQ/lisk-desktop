@@ -23,6 +23,7 @@
   min-height: 210px;
   margin: 70px 0;
   justify-content: space-evenly;
+  position: relative;
   width: 100%;
 
   & .word {
@@ -161,6 +162,35 @@
       height: 36px;
       width: 100%;
     }
+  }
+
+  & .errorMessage {
+    background-color: var(--color-white);
+    border-radius: 4px;
+    box-shadow: 0 4px 8px 0 rgba(6, 22, 48, 0.1);
+    max-width: 50%;
+    padding: 20px;
+    position: absolute;
+    transition: transform 350ms ease-in;
+    transform: scale(0);
+    top: 20%;
+
+    &.showError {
+      transform: scale(1);
+    }
+
+    & > span {
+      color: #dd6e0c;
+      font-family: 'Open sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.47;
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .confirmHolder {
+    font-size: 16px;
   }
 }
 
