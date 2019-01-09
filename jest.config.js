@@ -39,7 +39,6 @@ module.exports = {
     '/node_modules/',
     'app/src/ipc.js',
     'app/src/ledger.js',
-    'app/src/modules/portAssign.js',
     'src/actions/liskService.js',
     'src/actions/transactions.js',
     'src/components/account/stories.js',
