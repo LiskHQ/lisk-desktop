@@ -4,6 +4,7 @@ import AccountVisual from '../../../accountVisual';
 import { Button, PrimaryButton } from './../../../toolbox/buttons/button';
 import ToolBoxInput from '../../../toolbox/inputs/toolBoxInput';
 import fees from './../../../../constants/fees';
+import Piwik from '../../../../utils/piwik';
 import styles from './confirm.css';
 
 class Confirm extends React.Component {
@@ -89,6 +90,7 @@ class Confirm extends React.Component {
 
   send(event) {
     event.preventDefault();
+    Piwik.trackingEvent('Send_Confirmation', 'button', 'Send');
     this.setState({ loading: true });
     this.props.sent({
       account: this.props.account,
@@ -97,6 +99,15 @@ class Confirm extends React.Component {
       passphrase: this.props.passphrase.value,
       secondPassphrase: this.props.secondPassphrase.value,
       data: this.props.accountInit ? this.props.t('Account initialization') : this.props.reference,
+    });
+  }
+
+  onPrevStep() {
+    Piwik.trackingEvent('Send_Confirmation', 'button', 'Previous step');
+    this.props.prevStep({
+      reset: this.props.skipped,
+      recipient: this.props.recipient,
+      amount: this.props.amount,
     });
   }
 
@@ -177,11 +188,7 @@ class Confirm extends React.Component {
           <section>
               <Button
                 label={this.props.t('Back')}
-                onClick={() => this.props.prevStep({
-                  reset: this.props.skipped,
-                  recipient: this.props.recipient,
-                  amount: this.props.amount,
-                }) }
+                onClick={this.onPrevStep.bind(this)}
                 type='button'
                 theme={styles}
               />

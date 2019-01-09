@@ -5,6 +5,7 @@ import { PrimaryButton, Button } from '../../toolbox/buttons/button';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
 import AccountVisual from '../../accountVisual';
 import Shapes from './shapes';
+import Piwik from '../../../utils/piwik';
 
 class CreateFirst extends React.Component {
   constructor() {
@@ -17,12 +18,22 @@ class CreateFirst extends React.Component {
   }
 
   showHint() {
+    Piwik.trackingEvent('Passphrase_CreateFirst', 'button', 'Show hint');
     this.setState({ showHint: !this.state.showHint });
+  }
+
+  onNextStep() {
+    Piwik.trackingEvent('Passphrase_CreateFirst', 'button', 'Next step');
+    this.props.nextStep({
+      passphrase: this.props.passphrase,
+      header: this.props.t('Your passphrase is used to access your Lisk ID.'),
+      message: this.props.t('I am responsible for keeping my passphrase safe. No one can reset it, not even Lisk.'),
+    });
   }
 
   render() {
     const {
-      t, percentage, address, hintTitle, step, nextStep, passphrase,
+      t, percentage, address, hintTitle, step,
     } = this.props;
     const modifyID = (id) => {
       const substring = id.slice(3, id.length - 1);
@@ -72,11 +83,7 @@ class CreateFirst extends React.Component {
               theme={styles}
               label={t('Get passphrase')}
               className="get-passphrase-button"
-              onClick={() => nextStep({
-                passphrase,
-                header: t('Your passphrase is used to access your Lisk ID.'),
-                message: t('I am responsible for keeping my passphrase safe. No one can reset it, not even Lisk.'),
-              })}
+              onClick={() => this.onNextStep()}
             />
           </Fragment>
           : ''}

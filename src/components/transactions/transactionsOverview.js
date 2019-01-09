@@ -11,6 +11,7 @@ import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
 import { ActionButton } from '../toolbox/buttons/button';
 import { FontIcon } from '../fontIcon';
 import Ulrs from '../../constants/routes';
+import Piwik from '../../utils/piwik';
 
 class TransactionsOverview extends React.Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class TransactionsOverview extends React.Component {
   }
 
   loadMore() {
+    Piwik.trackingEvent('TransactionsOverview', 'button', 'Load more');
     if (this.canLoadMore) {
       this.canLoadMore = false;
       this.props.onLoadMore();
@@ -52,6 +54,7 @@ class TransactionsOverview extends React.Component {
   }
 
   setTransactionsFilter(filter) {
+    Piwik.trackingEvent('TransactionsOverview', 'button', 'Set transactions filter');
     this.props.onFilterSet(filter);
   }
 

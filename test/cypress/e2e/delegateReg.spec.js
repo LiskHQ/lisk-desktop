@@ -3,11 +3,11 @@ import networks from '../../constants/networks';
 import ss from '../../constants/selectors';
 import urls from '../../constants/urls';
 import enterSecondPassphrase from '../utils/enterSecondPassphrase';
-// import compareBalances from '../utils/compareBalances';
+import compareBalances from '../utils/compareBalances';
 
 const txConfirmationTimeout = 12000;
 
-// const txDelegateRegPrice = 25;
+const txDelegateRegPrice = 25;
 
 const getRandomDelegateName = () => Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
 
@@ -58,10 +58,9 @@ describe('Delegate Registration', () => {
     cy.get('@tx').find(ss.transactionAddress).should('have.text', 'Delegate registration');
     cy.get('@tx').find(ss.transactionReference).should('have.text', '-');
     cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');
-    // TODO Unskip when #1539 is fixed
-    // cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(() => {
-    //   compareBalances(this.balanceBefore, this.balanceAfter, txDelegateRegPrice);
-    // });
+    cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(function () {
+      compareBalances(this.balanceBefore, this.balanceAfter, txDelegateRegPrice);
+    });
   });
 
   /**

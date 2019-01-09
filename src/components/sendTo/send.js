@@ -12,6 +12,7 @@ import CopyToClipboard from '../copyToClipboard';
 import routes from './../../constants/routes';
 import { getIndexOfFollowedAccount } from './../../utils/followedAccounts';
 import { followedAccountRemoved } from '../../actions/followedAccounts';
+import Piwik from '../../utils/piwik';
 import styles from './sendTo.css';
 
 class SendTo extends React.Component {
@@ -23,8 +24,10 @@ class SendTo extends React.Component {
     const isFollowing = getIndexOfFollowedAccount(accounts, account) !== -1;
     const handleClick = () => {
       if (isFollowing) {
+        Piwik.trackingEvent('SendTo', 'button', 'Remove account');
         removeAccount(account);
       } else {
+        Piwik.trackingEvent('SendTo', 'button', 'Next step');
         nextStep(account);
       }
     };

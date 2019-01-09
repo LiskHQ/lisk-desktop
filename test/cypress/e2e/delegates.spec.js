@@ -3,10 +3,10 @@ import networks from '../../constants/networks';
 import ss from '../../constants/selectors';
 import urls from '../../constants/urls';
 import enterSecondPassphrase from '../utils/enterSecondPassphrase';
-// import compareBalances from '../utils/compareBalances';
+import compareBalances from '../utils/compareBalances';
 
 const txConfirmationTimeout = 20000;
-// const txVotePrice = 1;
+const txVotePrice = 1;
 
 describe('Delegates', () => {
   /**
@@ -139,10 +139,9 @@ describe('Delegates', () => {
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout }).should('have.class', 'unchecked');
     cy.get(ss.selectionVotingNumber).should('have.text', '0');
     cy.get(ss.totalVotingNumber).should('have.text', '100');
-    // TODO Unskip when #1539 is fixed
-    // cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(() => {
-    //   compareBalances(this.balanceBefore, this.balanceAfter, txVotePrice);
-    // });
+    cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(function () {
+      compareBalances(this.balanceBefore, this.balanceAfter, txVotePrice);
+    });
     // Vote
     cy.get(ss.nextBtn).should('be.disabled');
     cy.get(ss.delegateRow).eq(0).as('dg');

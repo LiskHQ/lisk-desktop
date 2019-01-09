@@ -1,6 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { ActionButton } from '../../../toolbox/buttons/button';
+import Piwik from '../../../../utils/piwik';
 import styles from '../../receive.css';
 
 class HowItWorks extends React.Component {
@@ -9,6 +10,7 @@ class HowItWorks extends React.Component {
   }
 
   disableAndContinue() {
+    Piwik.trackingEvent('Request_HowItWorks', 'button', 'Disable and continue');
     this.props.settingsUpdated({ isRequestHowItWorksDisable: true });
     this.props.nextStep({ address: this.props.address, status: 'foward' });
   }

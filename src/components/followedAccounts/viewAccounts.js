@@ -9,6 +9,7 @@ import styles from './followedAccounts.css';
 import routes from '../../constants/routes';
 import TitleInput from './titleInputForList';
 import { followedAccountRemoved } from '../../actions/followedAccounts';
+import Piwik from '../../utils/piwik';
 
 class ViewAccounts extends React.Component {
   constructor() {
@@ -16,9 +17,32 @@ class ViewAccounts extends React.Component {
     this.state = { edit: false };
   }
 
+  onEditAccount() {
+    Piwik.trackingEvent('ViewAccounts', 'button', 'Edit account');
+    this.setState({ edit: !this.state.edit });
+  }
+
+  onFollowedAccount(account) {
+    Piwik.trackingEvent('ViewAccounts', 'button', 'Followed account');
+
+    const { history } = this.props;
+    if (!this.state.edit) history.push(`${routes.explorer.path}${routes.accounts.path}/${account.address}`);
+  }
+
+  onRemoveAccount(account) {
+    Piwik.trackingEvent('ViewAccounts', 'button', 'Remove account');
+    this.props.removeAccount(account);
+  }
+
+  onAddAccount() {
+    Piwik.trackingEvent('ViewAccounts', 'button', 'Add account');
+    this.props.nextStep();
+  }
+
   render() {
     const {
-      t, accounts, history, nextStep, removeAccount,
+      t,
+      accounts,
     } = this.props;
 
     return <div>
@@ -26,7 +50,7 @@ class ViewAccounts extends React.Component {
         {t('Bookmarks')}
         {accounts.length > 0
           ? <div className={`${styles.clickable} ${styles.edit} edit-accounts`}
-            onClick={() => this.setState({ edit: !this.state.edit })}>
+            onClick={() => this.onEditAccount()}>
             {this.state.edit ? <span>{t('Done')}</span> : <FontIcon value='edit'/>}
           </div>
           : null
@@ -39,9 +63,7 @@ class ViewAccounts extends React.Component {
               (<div
                 key={i}
                 className={`${grid.row} ${styles.rows} ${styles.clickable} followed-account`}
-                onClick={() => {
-                  if (!this.state.edit) history.push(`${routes.explorer.path}${routes.accounts.path}/${account.address}`);
-                }}
+                onClick={() => this.onFollowedAccount(account)}
               >
                 <div className={`${styles.leftText} ${grid['col-md-2']}`}>
                   <AccountVisual
@@ -67,7 +89,7 @@ class ViewAccounts extends React.Component {
                   </div>
                   {this.state.edit
                     ? <div className={`${styles.removeAccount} remove-account`}
-                      onClick={() => removeAccount(account) }>
+                      onClick={() => this.onRemoveAccount(account)}>
                       <FontIcon value='remove'/>
                     </div>
                     : null
@@ -75,7 +97,7 @@ class ViewAccounts extends React.Component {
                 </div>
               </div>))
             }
-            <div className={`${styles.addAccountLink} ${styles.rows} ${styles.clickable} add-account-button`} onClick={() => nextStep()}>
+            <div className={`${styles.addAccountLink} ${styles.rows} ${styles.clickable} add-account-button`} onClick={() => this.onAddAccount()}>
               {t('Add a Lisk ID')} <FontIcon value='arrow-right'/>
             </div>
           </div>
@@ -83,7 +105,7 @@ class ViewAccounts extends React.Component {
         : <div className={`${styles.emptyList} followed-accounts-empty-list`}>
           <p>{t('Keep track of any Lisk ID balance. Only you will see who you bookmarked.')}</p>
 
-          <div className={`${styles.addAccountLink} ${styles.clickable} add-account-button`} onClick={() => nextStep()}>
+          <div className={`${styles.addAccountLink} ${styles.clickable} add-account-button`} onClick={() => this.onAddAccount()}>
             {t('Add a Lisk ID')} <FontIcon value='arrow-right'/>
           </div>
         </div>

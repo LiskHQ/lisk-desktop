@@ -12,6 +12,7 @@ import AccountCard from './accountCard';
 import AddAccountCard from './addAccountCard';
 import { FontIcon } from '../fontIcon';
 import routes from '../../constants/routes';
+import Piwik from '../../utils/piwik';
 
 import cubeImage from '../../assets/images/dark-blue-cube.svg';
 import styles from './ledgerLogin.css';
@@ -45,6 +46,7 @@ class LedgerLogin extends React.Component {
   }
 
   selectAccount(ledgerAccount, index) {
+    Piwik.trackingEvent('LedgerLogin', 'button', 'Select account');
     // set active peer
     this.props.liskAPIClientSet({
       publicKey: ledgerAccount.publicKey,
@@ -58,6 +60,7 @@ class LedgerLogin extends React.Component {
   }
 
   async addAccount() {
+    Piwik.trackingEvent('LedgerLogin', 'button', 'Add account');
     if (this.state.hwAccounts[this.state.hwAccounts.length - 1].isInitialized) {
       const output = await displayAccounts({
         liskAPIClient: this.props.liskAPIClient,
@@ -75,10 +78,12 @@ class LedgerLogin extends React.Component {
   }
 
   turnOnEditMode() {
+    Piwik.trackingEvent('LedgerLogin', 'button', 'Turn on edit mode');
     this.setState({ isEditMode: true });
   }
 
   saveAccountNames() {
+    Piwik.trackingEvent('LedgerLogin', 'button', 'Save account names');
     this.props.settingsUpdated({
       hardwareAccounts: this.state.hardwareAccountsName,
     });
@@ -94,6 +99,11 @@ class LedgerLogin extends React.Component {
     this.setState({ hardwareAccountsName: newHardwareAccountsName });
   }
 
+  onCancelLegderLogin() {
+    Piwik.trackingEvent('LedgerLogin', 'button', 'Cancel ledger login');
+    this.props.cancelLedgerLogin();
+  }
+
   render() {
     const loadingAnimation = (<div className={styles.cubeRow}>
       {[1, 2, 3, 4].map(number =>
@@ -107,7 +117,7 @@ class LedgerLogin extends React.Component {
       <div className={this.state.isLoading ? styles.loading : null}>
       {!this.state.isLoading ?
           <div>
-            <div className={styles.back} onClick={() => { this.props.cancelLedgerLogin(); }}>
+            <div className={styles.back} onClick={() => this.onCancelLegderLogin() }>
               <FontIcon value='arrow-left'/>{this.props.t('Back')}
             </div>
             <div className={styles.title}><h2>{this.props.t('Accounts on Ledger')}</h2></div>

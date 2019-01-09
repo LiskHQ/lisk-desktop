@@ -5,6 +5,7 @@ import Box from '../box';
 import { FontIcon } from '../fontIcon';
 import SettingsNewsFeed from './settingsNewsFeed';
 import logo from '../../assets/images/Lisk-Logo.svg';
+import Piwik from '../../utils/piwik';
 
 class NewsFeed extends React.Component {
   constructor(props) {
@@ -17,10 +18,12 @@ class NewsFeed extends React.Component {
   }
 
   openSettings() {
+    Piwik.trackingEvent('NewsFeed', 'button', 'Open settings');
     this.setState({ showSettings: true });
   }
 
   hideSettings() {
+    Piwik.trackingEvent('NewsFeed', 'button', 'Hide settings');
     this.setState({ showSettings: false });
   }
 

@@ -4,6 +4,7 @@ import styles from './safekeeping.css';
 // eslint-disable-next-line import/no-named-as-default
 import SliderCheckbox from '../../toolbox/sliderCheckbox';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
+import Piwik from '../../../utils/piwik';
 
 class Safekeeping extends React.Component {
   constructor() {
@@ -20,6 +21,7 @@ class Safekeeping extends React.Component {
   }
 
   next(e) {
+    Piwik.trackingEvent('SafeKeeping', 'button', 'Next step');
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
       if (e.value === 'introduction-step' && e.checked) {
@@ -30,7 +32,13 @@ class Safekeeping extends React.Component {
     }, 500);
   }
 
+  onPrevStep() {
+    Piwik.trackingEvent('SafeKeeping', 'button', 'Previous step');
+    this.props.prevStep({ jump: 2 });
+  }
+
   done() {
+    Piwik.trackingEvent('SafeKeeping', 'button', 'Done');
     this.setState({ step: 'done-step' });
     setTimeout(() => {
       this.props.nextStep({ passphrase: this.props.passphrase });
@@ -39,7 +47,7 @@ class Safekeeping extends React.Component {
 
   render() {
     const {
-      t, passphrase, prevStep, header, message,
+      t, passphrase, header, message,
     } = this.props;
 
     return (
@@ -109,7 +117,7 @@ class Safekeeping extends React.Component {
               secondaryButton={{
                 label: t('Back'),
                 className: `${styles.hidden} back-button`,
-                onClick: () => prevStep({ jump: 2 }),
+                onClick: this.onPrevStep.bind(this),
               }}
               primaryButton={{
                 disabled: this.state.step === 'done-step',
