@@ -11,6 +11,7 @@ import settingsConst from './../../constants/settings';
 import routes from '../../constants/routes';
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
+import links from './../../constants/externalLinks';
 // import languageSwitcherTheme from './languageSwitcher.css';
 
 class Setting extends React.Component {
@@ -118,7 +119,7 @@ class Setting extends React.Component {
           </div>
           <div className={`${styles.item} ${styles.privatePolicy}`}>
             {t('For more information refer to our ')}
-            <a href={'https://lisk.io/privacy'} target={'_blank'}>{t('Privacy Policy')}</a>
+            <a href={links.privacyPolicy} target={'_blank'}>{t('Privacy Policy')}</a>
           </div>
         </div>
         <h4>{t('Local')}</h4>

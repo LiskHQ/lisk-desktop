@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { FontIcon } from '../fontIcon';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
-import links from '../../constants/help';
+import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import key from '../../assets/images/icons-v2/key.svg';
 import lock from '../../assets/images/icons-v2/lock.svg';

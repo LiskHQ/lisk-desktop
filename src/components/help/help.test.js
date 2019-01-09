@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { spy, mock } from 'sinon';
 import Help from './help';
-import links from './../../constants/help';
+import links from './../../constants/externalLinks';
 
 describe('Help Page', () => {
   let wrapper;

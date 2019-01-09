@@ -8,6 +8,7 @@ import GradientSVG from './gradientSVG';
 import { FontIcon } from '../fontIcon';
 import { Button } from '../toolbox/buttons/button';
 import { getTotalVotesCount, getVoteList, getUnvoteList } from './../../utils/voting';
+import links from './../../constants/externalLinks';
 import styles from './votesPreview.css';
 
 class VotesPreview extends React.Component {
@@ -58,7 +59,7 @@ class VotesPreview extends React.Component {
         ${totalNewVotesCount > 0 ? styles.hasChanges : ''}`}>
         <header>
           <h2>{t('Votes')}</h2>
-          <a target='_blank' href='http://help.lisk.io/voting-and-delegates' rel='noopener noreferrer'>
+          <a target='_blank' href={links.votingAndDelegates} rel='noopener noreferrer'>
             {t('Learn how voting works')} <FontIcon>arrow-right</FontIcon>
           </a>
         </header>

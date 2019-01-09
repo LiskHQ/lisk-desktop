@@ -4,7 +4,7 @@ import Box from '../box';
 import { FontIcon } from '../fontIcon';
 import { Button } from './../toolbox/buttons/button';
 import styles from './help.css';
-import links from './../../constants/help';
+import links from './../../constants/externalLinks';
 
 /* eslint-disable class-methods-use-this */
 class Help extends React.Component {
