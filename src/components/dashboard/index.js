@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import React from 'react';
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
@@ -47,11 +46,11 @@ class Dashboard extends React.Component {
     const showMore = this.state.showMore ? styles.onShowMoreToggle : '';
 
     return (
-      <div className={`${styles.wrapper} testing`}>
-        <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
-          {
-            isLoggedIn ?
-            <Box className={`${styles.latestActivity} ${showMore}`}>
+      <div className={`${styles.wrapper}`}>
+
+        {
+          isLoggedIn
+          ? <Box className={`${styles.latestActivity} ${showMore}`}>
               <header>
                 <h2 className={styles.title}>
                   {t('Latest activity')}
@@ -76,23 +75,23 @@ class Dashboard extends React.Component {
               >
               {this.state.showMore ? t('Show Less') : t('Show More')}
               </div>
-            </Box> :
-            <QuickTips />
-          }
-          <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>
-            <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingLeft: '0px' }}>
-              <Box className={`${styles.following}`}>
-                <FollowedAccounts history={history}/>
-              </Box>
-            </div>
-            <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingRight: '0px' }}>
-              <Box className={`${styles.graph}`}>
-                <CurrencyGraph />
-              </Box>
-            </div>
-          </div>
+            </Box>
+          : <QuickTips />
+        }
+
+        <div className={`${styles.bookmarks}`} style={{ paddingLeft: '0px' }}>
+          <Box className={`${styles.following}`}>
+            <FollowedAccounts history={history}/>
+          </Box>
         </div>
-        <div className={`${grid['col-md-4']} ${grid['col-xs-12']} ${styles.newsFeedWrapper}`}>
+
+        <div className={`${styles.graphs}`} style={{ paddingRight: '0px' }}>
+          <Box className={`${styles.graph}`}>
+            <CurrencyGraph />
+          </Box>
+        </div>
+
+        <div className={`${styles.newsFeedWrapper}`}>
           <NewsFeed />
         </div>
       </div>
