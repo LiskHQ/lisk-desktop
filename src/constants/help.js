@@ -5,5 +5,6 @@ const links = {
   seeMore: 'https://lisk.io/academy/blockchain-basics/how-does-blockchain-work',
   liskChat: 'https://lisk.chat/home',
   helpDeskChannel: 'https://lisk.chat/channel/help-desk',
+  howToStorePassphrase: 'https://lisk.io/academy/blockchain-business/cryptocurrencies/how-to-stay-secure-when-trading-cryptocurrencies'
 };
 export default links;
