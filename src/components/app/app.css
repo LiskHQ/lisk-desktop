@@ -24,7 +24,7 @@ body {
   height: 100%;
   left: 0;
   top: 0;
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   z-index: 0;
 
