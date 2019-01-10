@@ -22,17 +22,32 @@ class ViewAccounts extends React.Component {
     } = this.props;
 
     return <div>
-      <header><h2>
+      <header>
+        <h2>
         {t('Bookmarks')}
-        {accounts.length > 0
-          ? <div className={`${styles.clickable} ${styles.edit} edit-accounts`}
-            onClick={() => this.setState({ edit: !this.state.edit })}>
-            {this.state.edit ? <span>{t('Done')}</span> : <FontIcon value='edit'/>}
-          </div>
-          : null
+        {
+          accounts.length > 0 &&
+          (
+            <div
+              className={`${styles.clickable} ${styles.edit} edit-accounts`}
+              onClick={() => this.setState({ edit: !this.state.edit })}
+            >
+            {
+              !this.state.edit &&
+              <span onClick={() => nextStep()}>Add <FontIcon value='add'/></span>
+            }
+            {
+              this.state.edit
+              ? <span>{t('Done')}</span>
+              : <span>Edit <FontIcon value='edit'/></span>
+            }
+            </div>
+          )
         }
-      </h2></header>
-      {accounts.length
+        </h2>
+      </header>
+      {
+        accounts.length
         ? <div className={`${styles.accounts} followed-accounts-list`}>
           <div className={styles.list}>
             {accounts.map((account, i) =>
@@ -75,9 +90,14 @@ class ViewAccounts extends React.Component {
                 </div>
               </div>))
             }
-            <div className={`${styles.addAccountLink} ${styles.rows} ${styles.clickable} add-account-button`} onClick={() => nextStep()}>
-              {t('Add a Lisk ID')} <FontIcon value='arrow-right'/>
-            </div>
+            {
+              !accounts.length &&
+              (
+                <div className={`${styles.addAccountLink} ${styles.rows} ${styles.clickable} add-account-button`} onClick={() => nextStep()}>
+                  {t('Add a Lisk ID')} <FontIcon value='arrow-right'/>
+                </div>
+              )
+            }
           </div>
         </div>
         : <div className={`${styles.emptyList} followed-accounts-empty-list`}>
@@ -88,6 +108,9 @@ class ViewAccounts extends React.Component {
           </div>
         </div>
       }
+      <div className={styles.showMore}>
+        {t('Show More')}
+      </div>
     </div>;
   }
 }

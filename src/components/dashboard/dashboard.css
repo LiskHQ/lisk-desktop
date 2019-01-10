@@ -1,8 +1,11 @@
 @import '../app/variables.css';
 
 .wrapper {
-  width: 100%;
-  margin: 0px;
+  display: grid;
+  grid-template-columns: 1fr .3fr .7fr .7fr .3fr 1fr; /* stylelint-disable-line */
+  grid-template-rows: 1fr 1fr .1fr .9fr 1fr; /* stylelint-disable-line */
+  grid-gap: 15px 15px;
+  max-height: 75vh; /* stylelint-disable-line */
 }
 
 .main {

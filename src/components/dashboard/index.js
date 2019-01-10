@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import React from 'react';
 import throttle from 'lodash.throttle';
 import { FontIcon } from '../fontIcon';
@@ -50,6 +49,10 @@ class Dashboard extends React.Component {
     this.setState({ isDesktop: window.innerWidth > breakpoints.m });
   }
 
+  onShowMoreToggle() {
+    this.setState({ showMore: !this.state.showMore });
+  }
+
   render() {
     const {
       account,
@@ -60,6 +63,7 @@ class Dashboard extends React.Component {
     } = this.props;
 
     const isLoggedIn = account.address;
+    const showMore = this.state.showMore ? styles.onShowMoreToggle : '';
 
     return (
       <div className={`${grid.row} ${styles.wrapper}`}>
