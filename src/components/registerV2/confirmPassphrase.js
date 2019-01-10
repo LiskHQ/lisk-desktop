@@ -73,7 +73,7 @@ class ConfirmPassphrase extends React.Component {
       outOfTries: !(triesCount < this.state.maxTries),
     };
     const cb = status
-      ? () => this.props.nextStep(this.state)
+      ? () => this.props.nextStep({ passphrase: this.props.passphrase })
       : () => !state.outOfTries &&
         this.getRandomIndexesFromPassphrase(this.props.passphrase, this.state.numberOfWords);
     this.setState(state);
