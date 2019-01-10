@@ -8,26 +8,33 @@
   max-height: 75vh; /* stylelint-disable-line */
 }
 
-.latestActivity {
-  grid-area: 1 / 1 / 4 / 5;
+.main {
+  max-height: 75vh; /* stylelint-disable-line */
+  padding: 0px;
+}
 
-  & :global(.transaction-results) {
-    overflow-y: hidden;
-    margin: 0px calc(0 - var(--box-padding-left-XL));
+.latestActivity {
+  height: calc(50% - 20px);
+  margin: 0 0 20px;
+}
+
+.bottomModuleWrapper {
+  height: 50%;
+  min-height: 200px;
+  padding: 0px 8px;
+
+  & > div:first-child {
+    padding-right: 10px;
+  }
+
+  & > div:last-child {
+    padding-left: 10px;
   }
 }
 
 .newsFeedWrapper {
   padding-right: 0px;
-  grid-area: 1 / 5 / 6 / 7;
-}
-
-.bookmarks {
-  grid-area: 4 / 1 / 6 / 3;
-}
-
-.graphs {
-  grid-area: 4 / 3 / 6 / 5;
+  padding-left: 15px;
 }
 
 .seeAllLink {
@@ -39,46 +46,59 @@
   font-weight: var(--font-weight-bold);
 }
 
-.send {
-  position: relative;
-}
-
-.bottomModuleWrapper {
-  min-height: 200px;
-  grid-area: 4 / 1 / 6 / 4;
-}
-
 .graph {
   overflow: hidden;
   padding: 0px;
 }
 
-.showMore {
-  min-height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
-  font-weight: 600;
-  color: #2475b9;
-  cursor: pointer;
-}
-
-.onShowMoreToggle {
-  transition: height 0.5s ease;
-  height: auto;
-}
-
 @media (--medium-viewport) {
   .wrapper {
+    margin: 0;
+    min-height: unset;
+
     & .main {
-      max-width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
       flex-basis: 100%;
-      max-height: unset;
-      overflow: hidden;
+      max-width: 100%;
+      min-height: min-content;
+    }
+  }
+
+  .latestActivity {
+    height: 400px;
+    min-height: 0;
+    margin: 0 8px 20px;
+  }
+
+  .bottomModuleWrapper {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    flex-basis: 50%;
+    margin: 0;
+
+    & > div {
+      max-width: 100%;
+      padding: 0;
     }
 
-    margin: 0;
+    & > div:first-child {
+      margin-bottom: 20px;
+      padding-right: 0;
+    }
+
+    & > div:last-child {
+      padding-left: 0;
+    }
+  }
+
+  .newsFeedWrapper {
+    flex-basis: 50%;
+    padding: 0 8px;
   }
 
   .graph {
@@ -90,23 +110,5 @@
   .following {
     height: auto;
     min-height: 300px;
-  }
-
-  .bottomModuleWrapper {
-    height: auto;
-  }
-
-  .latestActivity {
-    height: unset;
-    min-height: unset;
-    overflow: hidden;
-  }
-}
-
-@media (--small-viewport) {
-  .seeAllLink {
-    display: block;
-    margin-top: 16px;
-    margin-left: 0;
   }
 }

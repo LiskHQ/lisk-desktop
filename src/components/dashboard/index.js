@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import React from 'react';
+import throttle from 'lodash.throttle';
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import { loadTransactions } from '../../actions/transactions';
@@ -12,6 +13,7 @@ import FollowedAccounts from '../followedAccounts/index';
 import QuickTips from '../quickTips';
 import NewsFeed from '../newsFeed';
 import removeDuplicateTransactions from '../../utils/transactions';
+import breakpoints from './../../constants/breakpoints';
 
 import styles from './dashboard.css';
 
@@ -20,7 +22,7 @@ class Dashboard extends React.Component {
     super(props);
 
     this.state = {
-      showMore: false,
+      isDesktop: window.innerWidth > breakpoints.m,
     };
 
     const isLoggedIn = props.account.address;
@@ -31,6 +33,20 @@ class Dashboard extends React.Component {
         publicKey: props.account.publicKey,
       });
     }
+
+    this.resizeWindow = this.resizeWindow.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', throttle(this.resizeWindow, 1000));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resizeWindow);
+  }
+
+  resizeWindow() {
+    this.setState({ isDesktop: window.innerWidth > breakpoints.m });
   }
 
   onShowMoreToggle() {
@@ -39,18 +55,22 @@ class Dashboard extends React.Component {
 
   render() {
     const {
-      transactions, t, account, loading, history,
+      account,
+      history,
+      loading,
+      t,
+      transactions,
     } = this.props;
 
     const isLoggedIn = account.address;
     const showMore = this.state.showMore ? styles.onShowMoreToggle : '';
 
     return (
-      <div className={`${styles.wrapper}`}>
-
-        {
-          isLoggedIn
-          ? <Box className={`${styles.latestActivity} ${showMore}`}>
+      <div className={`${grid.row} ${styles.wrapper}`}>
+        <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
+          {
+            isLoggedIn
+            ? <Box className={`${styles.latestActivity}`}>
               <header>
                 <h2 className={styles.title}>
                   {t('Latest activity')}
@@ -69,31 +89,34 @@ class Dashboard extends React.Component {
                 history,
                 onClick: props => history.push(`${routes.wallet.path}?id=${props.value.id}`),
               }} />
-              <div
-                className={`${styles.showMore}`}
-                onClick={() => this.onShowMoreToggle()}
-              >
-              {this.state.showMore ? t('Show Less') : t('Show More')}
-              </div>
             </Box>
-          : <QuickTips />
+            : <QuickTips />
+          }
+          <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>
+            <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingLeft: '0px' }}>
+              <Box className={`${styles.following}`}>
+                <FollowedAccounts history={history}/>
+              </Box>
+            </div>
+            <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingRight: '0px' }}>
+              <Box className={`${styles.graph}`}>
+                <CurrencyGraph />
+              </Box>
+            </div>
+          </div>
+          {
+            !this.state.isDesktop &&
+            <div className={`${grid['col-md-4']} ${grid['col-xs-12']} ${styles.newsFeedWrapper}`}>
+              <NewsFeed />
+            </div>
+          }
+        </div>
+        {
+          this.state.isDesktop &&
+          <div className={`${grid['col-md-4']} ${grid['col-xs-12']} ${styles.newsFeedWrapper}`}>
+            <NewsFeed />
+          </div>
         }
-
-        <div className={`${styles.bookmarks}`} style={{ paddingLeft: '0px' }}>
-          <Box className={`${styles.following}`}>
-            <FollowedAccounts history={history}/>
-          </Box>
-        </div>
-
-        <div className={`${styles.graphs}`} style={{ paddingRight: '0px' }}>
-          <Box className={`${styles.graph}`}>
-            <CurrencyGraph />
-          </Box>
-        </div>
-
-        <div className={`${styles.newsFeedWrapper}`}>
-          <NewsFeed />
-        </div>
       </div>
     );
   }
