@@ -22,6 +22,7 @@ const followedAccounts = (state = { accounts: getFollowedAccountsFromLocalStorag
           balance: action.data.balance,
           address: action.data.address,
           title: action.data.title,
+          publicKey: action.data.publicKey,
         };
         accounts[indexOfAccount] = changedAccount;
       }

@@ -1,15 +1,27 @@
 import actionTypes from '../constants/actions';
 import { getAccount } from '../utils/api/account';
 
-export const followedAccountAdded = account => ({
-  data: account,
-  type: actionTypes.followedAccountAdded,
-});
+export const followedAccountAdded = account =>
+  (dispatch, getState) => {
+    const liskAPIClient = getState().peers.liskAPIClient;
+    getAccount(liskAPIClient, account.address).then((response) => {
+      dispatch({
+        data: { ...account, publicKey: response.publicKey },
+        type: actionTypes.followedAccountAdded,
+      });
+    });
+  };
 
-export const followedAccountUpdated = account => ({
-  data: account,
-  type: actionTypes.followedAccountUpdated,
-});
+export const followedAccountUpdated = account =>
+  (dispatch, getState) => {
+    const liskAPIClient = getState().peers.liskAPIClient;
+    getAccount(liskAPIClient, account.address).then((response) => {
+      dispatch({
+        data: { ...account, publicKey: response.publicKey },
+        type: actionTypes.followedAccountUpdated,
+      });
+    });
+  };
 
 export const followedAccountRemoved = account => ({
   data: account,
