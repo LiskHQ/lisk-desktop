@@ -44,6 +44,7 @@ export default class VoteUrlProcessor extends React.Component {
     const upvotes = params.votes ? params.votes.split(',') : [];
     const unvotes = params.unvotes ? params.unvotes.split(',') : [];
     this.props.settingsUpdated({ advancedMode: true })
+    this.props.toggleShowInfo(true);
     this.props.urlVotesFound({
       upvotes,
       unvotes,
@@ -91,7 +92,7 @@ export default class VoteUrlProcessor extends React.Component {
                 <div className={`${styles.cancel} clear-votes`} onClick={() => {
                   this.props.clearVoteLookupStatus();
                   this.props.clearVotes();
-                  this.props.closeInfo();
+                  this.props.toggleShowInfo(false);
                 }}>{this.props.t('Cancel')} <FontIcon value='close' />
                 </div>
               </h2>
@@ -121,7 +122,7 @@ export default class VoteUrlProcessor extends React.Component {
             )}</div>
           </div>
           <footer>
-            <PrimaryButton label={this.props.t('Ok')} theme={styles} onClick={this.props.closeInfo}/>
+            <PrimaryButton label={this.props.t('Ok')} theme={styles} onClick={() => this.props.toggleShowInfo(false)}/>
           </footer>
         </section>
       </Box> : null;

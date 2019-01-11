@@ -17,7 +17,7 @@ describe('VoteUrlProcessor', () => {
       account,
       clearVoteLookupStatus: sinon.spy(),
       clearVotes: sinon.spy(),
-      closeInfo: sinon.spy(),
+      toggleShowInfo: sinon.spy(),
       urlVotesFound: sinon.spy(),
       settingsUpdated: sinon.spy(),
       notVotedYet: [],
@@ -87,7 +87,7 @@ describe('VoteUrlProcessor', () => {
     wrapper.find('.clear-votes').simulate('click');
     expect(props.clearVoteLookupStatus).to.have.been.calledWith();
     expect(props.clearVotes).to.have.been.calledWith();
-    expect(props.closeInfo).to.have.been.calledWith();
+    expect(props.toggleShowInfo).to.have.been.calledWith();
   });
 });
 
