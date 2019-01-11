@@ -4,6 +4,7 @@
   --background-color-tooltip: var(--color-content-light);
   --tooltip-arrow-size: 6px;
   --info-icon-size: 16px;
+  --tooltip-spacing-inside: 8px;
 }
 
 .tooltipWrapper {
@@ -36,7 +37,7 @@
   color: var(--color-white);
   font-family: var(--content-font);
   font-size: var(--paragraph-font-size-l);
-  left: 36px;
+  left: calc(var(--info-icon-size) * 2);
   line-height: 1.47;
   max-width: 380px;
   opacity: 0;
@@ -78,10 +79,10 @@
   }
 
   & header {
-    margin-bottom: 8px;
+    margin-bottom: var(--tooltip-spacing-inside);
   }
 
   & footer {
-    margin-top: 8px;
+    margin-top: var(--tooltip-spacing-inside);
   }
 }

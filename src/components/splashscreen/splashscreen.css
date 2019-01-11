@@ -41,7 +41,7 @@
 
   & > p {
     color: var(--color-content-light);
-    font-family: "Open sans", sans-serif;
+    font-family: var(--content-font);
     font-size: var(--paragraph-font-size-l);
     font-weight: var(--font-weight-normal);
     line-height: 1.47;

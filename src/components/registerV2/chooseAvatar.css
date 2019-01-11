@@ -114,7 +114,7 @@
     &::after {
       animation-delay: var(--animation-speed-standard);
       animation-direction: alternate;
-      animation-duration: 1s;
+      animation-duration: var(--animation-speed-slowest);
       animation-iteration-count: infinite;
       animation-name: glowing;
     }

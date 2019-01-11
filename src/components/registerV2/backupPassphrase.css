@@ -55,7 +55,7 @@
     font-size: var(--paragraph-font-size-l);
     font-weight: var(--font-weight-semi-bold);
     line-height: 1.47;
-    transition: color 100ms linear;
+    transition: color var(--animation-speed-fast) linear;
     text-decoration: underline;
 
     &.copied {

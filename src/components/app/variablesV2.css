@@ -101,6 +101,7 @@ or "warn/action" ineastd of "red/green"
   --animation-speed-fast: 250ms;
   --animation-speed-standard: 500ms;
   --animation-speed-slow: 700ms;
+  --animation-speed-slowest: 1000ms;
   --animation-delay-standard: 100ms;
 
   /*************************
