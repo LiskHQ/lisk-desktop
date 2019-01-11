@@ -47,9 +47,8 @@ describe('V2 Register Process - Backup Passphrase', () => {
     clock.restore();
   });
 
-  it('Should render with passphrase of selected account and disabled button', () => {
+  it('Should render with passphrase of selected account', () => {
     expect(wrapper.find('.option p.option-value').at(0)).to.have.text(account.passphrase);
-    expect(wrapper.find('.buttonsHolder Button').at(1).prop('disabled')).to.be.equal(true);
   });
 
   it('Should copy passphrase when clicking copy passphrase and reset after 3 seconds', () => {
@@ -58,7 +57,6 @@ describe('V2 Register Process - Backup Passphrase', () => {
     expect(wrapper.find('CopyToClipboard .action')).to.have.className('copied');
     clock.tick(3000);
     expect(wrapper.find('CopyToClipboard .action')).not.to.have.className('copied');
-    expect(wrapper.find('.buttonsHolder Button').at(1).prop('disabled')).to.be.equal(false);
   });
 
   it('Should go to next step when clicking confirm after copying or saving the passphrase', () => {
