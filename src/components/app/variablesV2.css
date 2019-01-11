@@ -1,0 +1,114 @@
+/*****************************************
+
+Please Read the guide line
+before adding any rules here
+
+# No component specific rule
+This file is inteded to solely include
+global/common variables, every rule added here
+must be used at least in 2 different
+components.
+
+# Usecases
+Try to isolate these variables with another
+variable in the component specific stylesheet
+in order to make component-wide changes
+faster and consistent.
+
+# Avoid rules and mixins
+Please avoid defining any rules here
+In addition, mixins have their own files,
+Please prefer only variables here.
+
+# Use with :global
+Please do not define any variables ourside
+the :root scope, since then it won't be
+available application wide
+
+# naming
+variable names should correspond to the
+role of the value not th presentation
+for example, a color name can include
+the css rule it belongs to e.g. color
+or "background-color" and "primary/secondary"
+or "warn/action" ineastd of "red/green"
+
+****************************************/
+
+:root {
+  /*************************
+        Font
+  *************************/
+  --font-size-h1: 65px;
+  --font-size-h2: 32px;
+  --font-size-h3: 28px;
+  --font-size-h4: 26px;
+  --font-size-h5: 20px;
+  --font-size-h6: 16px;
+  --font-size-small: 14px;
+  --heading-font: 'Gilroy', 'Open Sans', sans-serif;
+  --content-font: 'Open Sans', sans-serif;
+  --font-weight-normal: 400;
+  --font-weight-semi-bold: 500;
+  --font-weight-bold: 600;
+  --font-weight-very-bold: 700;
+  --subtitle-font-size: 16px;
+  --paragraph-font-size-l: 15px;
+  --paragraph-font-size-s: 14px;
+  --input-font-size: 16px;
+  --button-font-size: 14px;
+
+  /*************************
+        Sizes
+  *************************/
+  --border-radius-normal: 3px;
+  --header-height-m: 100px;
+  --header-height-s: 72px;
+
+  /*************************
+        Padding
+  *************************/
+  --header-padding: 0 32px;
+
+  /*************************
+        Colors
+  *************************/
+  --color-primary-standard: #4e80f7;
+  --color-primary-light: #9db8fa;
+  --color-white: #fff;
+  --color-error: #da1d00;
+  --color-background-wrapper: linear-gradient(120deg, #f7f9fb, #fbfcfd);
+  --color-background-header: linear-gradient(95deg, #fbfcfe, #fbfcfd);
+
+  /*************************
+        Box
+  *************************/
+  --box-shadow-button: 0 4px 8px 0 rgba(72, 77, 97, 0.1);
+  --border-radius-standard: 4px;
+
+  /*************************
+        Transitions
+  *************************/
+  --transition-button: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+
+  /*************************
+        Z-Indexes
+  *************************/
+  --normal-index: 1;
+  --menubar-index: 4;
+  --headerbar-index: 20;
+  --autosuggest-index: 21;
+  --searchbar-input-index: 22;
+  --searchbar-placeholder-index: 23;
+  --accounts-index: 24;
+
+  /*************************
+        Media Queries
+  *************************/
+  @custom-media --xLarge-viewport (min-width: 1400px);
+  @custom-media --large-viewport (max-width: 1400px);
+  @custom-media --medium-viewport (max-width: 1024px);
+  @custom-media --small-viewport (max-width: 768px);
+  @custom-media --xSmall-viewport (max-width: 414px);
+  @custom-media --xxSmall-viewport (max-width: 320px);
+}
