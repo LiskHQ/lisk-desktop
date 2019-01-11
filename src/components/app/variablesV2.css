@@ -52,7 +52,7 @@ or "warn/action" ineastd of "red/green"
   --font-weight-semi-bold: 500;
   --font-weight-bold: 600;
   --font-weight-very-bold: 700;
-  --subtitle-font-size: 16px;
+  --subtitle-font-size: 18px;
   --paragraph-font-size-l: 15px;
   --paragraph-font-size-s: 14px;
   --input-font-size: 16px;
@@ -91,6 +91,7 @@ or "warn/action" ineastd of "red/green"
   *************************/
   --box-shadow-button: 0 4px 8px 0 rgba(72, 77, 97, 0.1);
   --box-shadow-header: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
+  --box-shadow-avatar: 0 0 4px 0 rgba(72, 77, 97, 0.2);
   --border-radius-standard: 4px;
 
   /*************************
