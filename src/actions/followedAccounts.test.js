@@ -13,16 +13,15 @@ import accounts from '../../test/constants/accounts';
 
 describe('actions: followedAccount', () => {
   const dispatch = spy();
-  const data = {
-    publicKey: accounts.genesis.publicKey,
-    balance: accounts.genesis.balance,
-    title: accounts.genesis.address,
-  };
   const getState = () => ({
     peers: { liskAPIClient: {} },
   });
-
   it('should create an action to retrieve the followed accounts list', () => {
+    const data = {
+      publicKey: accounts.genesis.publicKey,
+      balance: accounts.genesis.balance,
+      title: accounts.genesis.address,
+    };
     const expectedAction = {
       data,
       type: actionTypes.followedAccountsRetrieved,
@@ -31,14 +30,29 @@ describe('actions: followedAccount', () => {
   });
 
   it('should create an action to add a followed account', () => {
+    stub(accountApi, 'getAccount').returnsPromise();
+    accountApi.getAccount.resolves({
+      publicKey: accounts.genesis.publicKey,
+    });
+    const data = {
+      balance: accounts.genesis.balance,
+      title: accounts.genesis.address,
+    };
     const expectedAction = {
-      data,
+      data: { ...data, publicKey: accounts.genesis.publicKey },
       type: actionTypes.followedAccountAdded,
     };
-    expect(followedAccountAdded(data)).to.be.deep.equal(expectedAction);
+    followedAccountAdded(data)(dispatch, getState);
+    expect(dispatch).to.been.calledWith(expectedAction);
+    accountApi.getAccount.restore();
   });
 
   it('should create an action to update a followed account', () => {
+    const data = {
+      publicKey: accounts.genesis.publicKey,
+      balance: accounts.genesis.balance,
+      title: accounts.genesis.address,
+    };
     const expectedAction = {
       data,
       type: actionTypes.followedAccountUpdated,
@@ -47,6 +61,11 @@ describe('actions: followedAccount', () => {
   });
 
   it('should create an action to remove a followed account', () => {
+    const data = {
+      publicKey: accounts.genesis.publicKey,
+      balance: accounts.genesis.balance,
+      title: accounts.genesis.address,
+    };
     const expectedAction = {
       data,
       type: actionTypes.followedAccountRemoved,
@@ -56,20 +75,44 @@ describe('actions: followedAccount', () => {
 
   it('should update a followed account if balance changed', () => {
     stub(accountApi, 'getAccount').returnsPromise();
+    const data = {
+      title: accounts.genesis.address,
+      balance: accounts.genesis.balance,
+      publicKey: '',
+    };
 
-    // Case 1: balance does not change
-    accountApi.getAccount.resolves({ balance: accounts.genesis.balance });
+    // Case 1: balance and publicKey does not change
+    accountApi.getAccount.resolves({
+      balance: accounts.genesis.balance,
+      publicKey: '',
+    });
 
     followedAccountFetchedAndUpdated({ account: data })(dispatch, getState);
     expect(dispatch).to.not.have.been.calledWith();
 
     // Case 2: balance does change
-    accountApi.getAccount.resolves({ balance: 0 });
+    accountApi.getAccount.resolves({
+      balance: 0,
+      publicKey: '',
+    });
+
+    followedAccountFetchedAndUpdated({ account: data })(dispatch, getState);
+    expect(dispatch).to.been.calledWith(followedAccountUpdated({
+      publicKey: '',
+      balance: 0,
+      title: accounts.genesis.address,
+    }));
+
+    // Case 3: publicKey does change
+    accountApi.getAccount.resolves({
+      balance: accounts.genesis.balance,
+      publicKey: accounts.genesis.publicKey,
+    });
 
     followedAccountFetchedAndUpdated({ account: data })(dispatch, getState);
     expect(dispatch).to.been.calledWith(followedAccountUpdated({
       publicKey: accounts.genesis.publicKey,
-      balance: 0,
+      balance: accounts.genesis.balance,
       title: accounts.genesis.address,
     }));
 

@@ -12,16 +12,10 @@ export const followedAccountAdded = account =>
     });
   };
 
-export const followedAccountUpdated = account =>
-  (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    getAccount(liskAPIClient, account.address).then((response) => {
-      dispatch({
-        data: { ...account, publicKey: response.publicKey },
-        type: actionTypes.followedAccountUpdated,
-      });
-    });
-  };
+export const followedAccountUpdated = account => ({
+  data: account,
+  type: actionTypes.followedAccountUpdated,
+});
 
 export const followedAccountRemoved = account => ({
   data: account,
@@ -37,8 +31,9 @@ export const followedAccountFetchedAndUpdated = ({ account }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     getAccount(liskAPIClient, account.address).then((result) => {
-      if (result.balance !== account.balance) {
+      if (result.balance !== account.balance || result.publicKey !== account.publicKey) {
         account.balance = result.balance;
+        account.publicKey = result.publicKey;
         dispatch(followedAccountUpdated(account));
       }
     });
