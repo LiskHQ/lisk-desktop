@@ -13,11 +13,8 @@ class ConfirmPassphrase extends React.Component {
   constructor() {
     super();
     this.state = {
-      numberOfOptions: 3,
-      numberOfWords: 2,
       words: [2, 9],
       tries: 0,
-      maxTries: 3,
       answers: [],
       options: [],
       hasErrors: false,
@@ -65,17 +62,19 @@ class ConfirmPassphrase extends React.Component {
 
   handleConfirm(status) {
     const { tries } = this.state;
+    const numberOfWords = 2;
+    const maxTries = 3;
     const triesCount = status ? tries : tries + 1;
     const state = {
       tries: triesCount,
       isCorrect: status,
       hasErrors: !status,
-      outOfTries: !(triesCount < this.state.maxTries),
+      outOfTries: !(triesCount < maxTries),
     };
     const cb = status
       ? () => this.props.nextStep({ passphrase: this.props.passphrase })
       : () => !state.outOfTries &&
-        this.getRandomIndexesFromPassphrase(this.props.passphrase, this.state.numberOfWords);
+        this.getRandomIndexesFromPassphrase(this.props.passphrase, numberOfWords);
     this.setState(state);
     this.timeout = setTimeout(cb, 1500);
   }
@@ -87,9 +86,11 @@ class ConfirmPassphrase extends React.Component {
     return answers.filter(answer => !!answer).length === words.length && !hasErrors && !isCorrect;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   assembleWordOptions(passphrase, missing) {
     const words = passphrase.split(/\s/);
     const wordsList = fillWordsList.filter(word => !passphrase.includes(word));
+    const numberOfOptions = 3;
 
     const mixWithMissingWords = options =>
       options.map((list, listIndex) => {
@@ -99,7 +100,7 @@ class ConfirmPassphrase extends React.Component {
       });
 
     const wordOptions = [...Array(missing.length)].map(() =>
-      [...Array(this.state.numberOfOptions)].map(() =>
+      [...Array(numberOfOptions)].map(() =>
         wordsList[Math.floor(Math.random() * wordsList.length)]));
 
     return mixWithMissingWords(wordOptions);

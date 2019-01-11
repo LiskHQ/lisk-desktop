@@ -18,14 +18,12 @@ class BackupPassphrase extends React.Component {
 
     this.state = {
       passphraseCopied: false,
-      hasSaved: false,
     };
   }
 
   textIsCopied() {
     this.setState({
       passphraseCopied: true,
-      hasSaved: true,
     });
 
     this.timeout = setTimeout(() => {
@@ -128,8 +126,7 @@ class BackupPassphrase extends React.Component {
             </SecondaryButtonV2>
           </span>
           <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
-            <PrimaryButtonV2 disabled={!this.state.hasSaved}
-              onClick={() => nextStep({ account })}>
+            <PrimaryButtonV2 onClick={() => nextStep({ account })}>
               {t('Continue')}
               <FontIcon className={registerStyles.icon}>arrow-right</FontIcon>
             </PrimaryButtonV2>
