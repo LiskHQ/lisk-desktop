@@ -22,7 +22,12 @@
 }
 
 .followedAccountsWrapper {
-  height: 100%;
+  height: auto;
+  min-height: 410px;
+
+  @media (--medium-viewport) {
+    min-height: 398px;
+  }
 }
 
 .cancelButton {
@@ -81,6 +86,11 @@ header {
 }
 
 .accounts {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  height: 265px;
+
   & .list {
     overflow-y: initial;
 
@@ -164,39 +174,8 @@ header {
 }
 
 .showMore {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 30px;
-  color: #2475b9;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-@media (--xLarge-viewport) {
-  .accounts {
-    & .list {
-      overflow-y: auto;
-      margin: 0px calc(0 - var(--box-padding-left-XL));
-    }
-
-    & .rows {
-      padding: 0px var(--box-padding-left-XL);
-    }
-  }
-}
-
-@media (--large-viewport) {
-  .accounts {
-    & .list {
-      overflow-y: auto;
-      margin: 0px calc(0 - var(--box-padding-left-L));
-    }
-
-    & .rows {
-      padding: 0px var(--box-padding-left-L);
-    }
-  }
+  position: relative;
+  z-index: 2;
 }
 
 @media (--medium-viewport) {
@@ -206,8 +185,7 @@ header {
 
   .accounts {
     & .list {
-      overflow-y: initial;
-      padding-bottom: 100px;
+      overflow: hidden;
       margin: 0px calc(0 - var(--box-padding-left-M));
     }
 
@@ -223,4 +201,8 @@ header {
       }
     }
   }
+}
+
+.showMoreToggle {
+  height: auto;
 }

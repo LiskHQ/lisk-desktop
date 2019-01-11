@@ -14,7 +14,14 @@ import Piwik from '../../utils/piwik';
 class ViewAccounts extends React.Component {
   constructor() {
     super();
-    this.state = { edit: false };
+    this.state = {
+      edit: false,
+      showMore: false,
+    };
+  }
+
+  onShowMoreToggle() {
+    this.setState({ showMore: !this.state.showMore });
   }
 
   onEditAccount() {
@@ -58,7 +65,7 @@ class ViewAccounts extends React.Component {
             >
             {
               !this.state.edit &&
-              <span onClick={() => nextStep()}>Add <FontIcon value='add'/></span>
+              <span className={'add-account-button'} onClick={() => nextStep()}>Add <FontIcon value='add'/></span>
             }
             {
               this.state.edit
@@ -72,7 +79,7 @@ class ViewAccounts extends React.Component {
       </header>
       {
         accounts.length
-        ? <div className={`${styles.accounts} followed-accounts-list`}>
+        ? <div className={`${styles.accounts} ${this.state.showMore && styles.showMoreToggle} followed-accounts-list`}>
           <div className={styles.list}>
             {accounts.map((account, i) =>
               (<div
@@ -130,9 +137,14 @@ class ViewAccounts extends React.Component {
           </div>
         </div>
       }
-      <div className={styles.showMore}>
-        {t('Show More')}
-      </div>
+      {
+        accounts.length >= 4 &&
+        <ShowMore
+          className={`${styles.showMore} show-more`}
+          onClick={() => this.onShowMoreToggle()}
+          text={ this.state.showMore ? t('Show Less') : t('Show More')}
+        />
+      }
     </div>;
   }
 }

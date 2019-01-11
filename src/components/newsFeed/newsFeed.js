@@ -36,7 +36,7 @@ class NewsFeed extends React.Component {
     this.setState({ showMore: !this.state.showMore });
   }
 
-  render() {
+  render() { // eslint-disable-line complexity
     const settingsButton = this.state.showSettings ?
       (<div className={`settingsButton ${styles.settingsButton}`} onClick={() => { this.hideSettings(); }}>
         <span>{this.props.t('Done')}</span>
@@ -60,7 +60,7 @@ class NewsFeed extends React.Component {
             </header>
             {settingsButton}
           </div>
-          <div className={styles.container}>
+          <div className={`${styles.container} ${this.state.showMore && styles.showMore}`}>
             {
               this.state.showSettings ?
               <SettingsNewsFeed
@@ -88,14 +88,13 @@ class NewsFeed extends React.Component {
               </div>
             }
           </div>
-          <footer>
-          </footer>
-        </div>
-        <div
-          className={`${styles.showMore}`}
-          onClick={() => this.onShowMore()}
-        >
-        {this.props.t('Show More')}
+          {
+            filteredNewsFeed.length >= 4 &&
+            <ShowMore
+              onClick={() => this.onShowMore()}
+              text={this.state.showMore ? this.props.t('Show Less') : this.props.t('Show More')}
+            />
+          }
         </div>
       </Box>
     );

@@ -1,11 +1,8 @@
 @import '../app/variables.css';
 
 .wrapper {
-  display: grid;
-  grid-template-columns: 1fr .3fr .7fr .7fr .3fr 1fr; /* stylelint-disable-line */
-  grid-template-rows: 1fr 1fr .1fr .9fr 1fr; /* stylelint-disable-line */
-  grid-gap: 15px 15px;
-  max-height: 75vh; /* stylelint-disable-line */
+  width: 100%;
+  margin: 0px;
 }
 
 .main {
@@ -14,22 +11,39 @@
 }
 
 .latestActivity {
-  height: calc(50% - 20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: auto;
   margin: 0 0 20px;
+  padding: 0;
+
+  & > header {
+    padding: 20px 48px 0;
+  }
+
+  & :global(.transaction-results) {
+    margin: 0;
+  }
 }
 
 .bottomModuleWrapper {
-  height: 50%;
+  height: auto;
   min-height: 200px;
   padding: 0px 8px;
 
   & > div:first-child {
     padding-right: 10px;
+    height: auto;
   }
 
   & > div:last-child {
     padding-left: 10px;
   }
+}
+
+.following {
+  height: auto;
 }
 
 .newsFeedWrapper {
@@ -49,6 +63,11 @@
 .graph {
   overflow: hidden;
   padding: 0px;
+  height: 410px;
+}
+
+.showMore {
+  margin-top: 5px;
 }
 
 @media (--medium-viewport) {
@@ -65,11 +84,12 @@
       flex-basis: 100%;
       max-width: 100%;
       min-height: min-content;
+      padding-bottom: 105px;
     }
   }
 
   .latestActivity {
-    height: 400px;
+    height: auto;
     min-height: 0;
     margin: 0 8px 20px;
   }
