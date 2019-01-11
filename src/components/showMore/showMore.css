@@ -1,0 +1,21 @@
+@import '../app/variables.css';
+
+.wrapper {
+  width: 100%;
+  min-height: 30px;
+  height: 30px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: 0px -10px 25px -10px lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: #fff;
+
+  & > span {
+    color: var(--color-primary-standard);
+    font-size: 14px;
+    font-weight: 600;
+  }
+}

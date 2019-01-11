@@ -7,6 +7,7 @@
 
 .newsFeedBox {
   padding: 0;
+  height: auto;
 }
 
 .settingsButton {
@@ -19,24 +20,6 @@
     cursor: pointer;
     color: #2475b9;
   }
-}
-
-.hideContent {
-  overflow: hidden;
-}
-
-.showContent {
-  height: auto;
-}
-
-.showMore {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 30px;
-  color: #2475b9;
-  font-weight: 600;
-  cursor: pointer;
 }
 
 .header {
@@ -58,6 +41,10 @@
 }
 
 .container {
+  min-height: 670px;
+  overflow: hidden;
+  height: 66vh; /* stylelint-disable-line unit-whitelist */
+
   & .newsWrapper {
     padding: 0 32px;
   }
@@ -79,5 +66,15 @@
   .newsFeedBox {
     height: auto;
     margin-bottom: var(--footer-height-m);
+    min-height: 0;
   }
+
+  .container {
+    min-height: 500px;
+    height: 550px;
+  }
+}
+
+.showMore {
+  height: auto;
 }

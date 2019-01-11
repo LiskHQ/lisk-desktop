@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import React from 'react';
 import throttle from 'lodash.throttle';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
 import { loadTransactions } from '../../actions/transactions';
@@ -14,6 +15,7 @@ import QuickTips from '../quickTips';
 import NewsFeed from '../newsFeed';
 import removeDuplicateTransactions from '../../utils/transactions';
 import breakpoints from './../../constants/breakpoints';
+import ShowMore from '../showMore';
 
 import styles from './dashboard.css';
 
@@ -22,6 +24,7 @@ class Dashboard extends React.Component {
     super(props);
 
     this.state = {
+      showMore: false,
       isDesktop: window.innerWidth > breakpoints.m,
     };
 
@@ -63,7 +66,6 @@ class Dashboard extends React.Component {
     } = this.props;
 
     const isLoggedIn = account.address;
-    const showMore = this.state.showMore ? styles.onShowMoreToggle : '';
 
     return (
       <div className={`${grid.row} ${styles.wrapper}`}>
@@ -81,20 +83,29 @@ class Dashboard extends React.Component {
                 </h2>
               </header>
               <TransactionsList {...{
-                transactions,
-                t,
                 address: account.address,
                 dashboard: true,
-                loading,
                 history,
+                loading,
                 onClick: props => history.push(`${routes.wallet.path}?id=${props.value.id}`),
+                showMore: this.state.showMore,
+                t,
+                transactions,
               }} />
+              {
+                transactions.length > 3 &&
+                <ShowMore
+                  className={styles.showMore}
+                  onClick={() => this.onShowMoreToggle()}
+                  text={this.state.showMore ? t('Show Less') : t('Show More')}
+                />
+              }
             </Box>
             : <QuickTips />
           }
           <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>
             <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingLeft: '0px' }}>
-              <Box className={`${styles.following}`}>
+              <Box className={`${styles.following} bookmarks`}>
                 <FollowedAccounts history={history}/>
               </Box>
             </div>
