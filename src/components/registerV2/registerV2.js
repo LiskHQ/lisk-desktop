@@ -6,6 +6,7 @@ import HeaderV2 from '../headerV2/headerV2';
 import MultiStep from '../multiStep';
 import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
+import ConfirmPassphrase from './confirmPassphrase';
 import styles from './registerV2.css';
 
 class RegisterV2 extends React.Component {
@@ -47,14 +48,15 @@ class RegisterV2 extends React.Component {
         <HeaderV2 showSettings={false} />
         <div className={`${styles.register} ${grid.row}`}>
           <MultiStep
-            className={`${styles.wrapper} ${grid['col-sm-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}
-            finalCallback={() => null}>
+            className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}>
             <ChooseAvatar
               accounts={accounts}
               selected={selectedAccount}
               handleSelectAvatar={this.handleSelectAvatar} />
             <BackupPassphrase
               account={selectedAccount} />
+            <ConfirmPassphrase
+              passphrase={selectedAccount.passphrase} />
           </MultiStep>
         </div>
       </React.Fragment>

@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { useFakeTimers } from 'sinon';
-import { MemoryRouter } from 'react-router-dom';
+import { spy, useFakeTimers } from 'sinon';
 import { generatePassphrase } from '../../utils/passphrase';
 import { extractAddress } from '../../utils/account';
 import i18n from '../../i18n';
@@ -32,12 +31,11 @@ describe('V2 Register Process - Backup Passphrase', () => {
 
   const props = {
     account,
+    nextStep: spy(),
   };
 
   beforeEach(() => {
-    wrapper = mount(<MemoryRouter>
-      <BackupPassphrase {...props} />
-    </MemoryRouter>, options);
+    wrapper = mount(<BackupPassphrase {...props} />, options);
 
     clock = useFakeTimers({
       now: new Date(2018, 1, 1),
@@ -59,5 +57,11 @@ describe('V2 Register Process - Backup Passphrase', () => {
     expect(wrapper.find('CopyToClipboard .action')).to.have.className('copied');
     clock.tick(3000);
     expect(wrapper.find('CopyToClipboard .action')).not.to.have.className('copied');
+  });
+
+  it('Should go to next step when clicking confirm after copying or saving the passphrase', () => {
+    wrapper.find('CopyToClipboard').simulate('click');
+    wrapper.find('.buttonsHolder Button').at(1).simulate('click');
+    expect(props.nextStep).to.have.been.calledWith();
   });
 });

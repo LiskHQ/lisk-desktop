@@ -7,7 +7,7 @@ import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import key from '../../assets/images/icons-v2/key.svg';
-import lock from '../../assets/images/icons-v2/lock.svg';
+import lock from '../../assets/images/icons-v2/circle-lock.svg';
 // import pdf from '../../assets/images/icons-v2/pdf.svg';
 import registerStyles from './registerV2.css';
 import styles from './backupPassphrase.css';
@@ -26,15 +26,21 @@ class BackupPassphrase extends React.Component {
       passphraseCopied: true,
     });
 
-    setTimeout(() => {
+    this.timeout = setTimeout(() => {
       this.setState({
         passphraseCopied: false,
       });
     }, 3000);
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
+
   render() {
-    const { t, account, prevStep } = this.props;
+    const {
+      t, account, prevStep, nextStep,
+    } = this.props;
     const { passphraseCopied } = this.state;
 
     return (
@@ -120,7 +126,7 @@ class BackupPassphrase extends React.Component {
             </SecondaryButtonV2>
           </span>
           <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
-            <PrimaryButtonV2>
+            <PrimaryButtonV2 onClick={() => nextStep({ account })}>
               {t('Continue')}
               <FontIcon className={registerStyles.icon}>arrow-right</FontIcon>
             </PrimaryButtonV2>
