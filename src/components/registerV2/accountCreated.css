@@ -1,0 +1,30 @@
+@import '../app/variables.css';
+
+.accountHolder {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 80px 0;
+
+  & .avatar {
+    background: var(--color-white);
+    border-radius: 50%;
+    box-shadow: 0 0 4px 0 rgba(72, 77, 97, 0.2);
+    box-sizing: border-box;
+    display: flex;
+    height: 92px;
+    padding: 3px;
+    width: 92px;
+  }
+
+  & .address {
+    color: #1e194d;
+    font-family: Gilroy, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    margin: 40px 0;
+    text-align: center;
+  }
+}

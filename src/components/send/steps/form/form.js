@@ -9,6 +9,7 @@ import regex from '../../../../utils/regex';
 import AddressInput from '../../../addressInput';
 import ReferenceInput from '../../../referenceInput';
 import Bookmark from '../../../bookmark';
+import Piwik from '../../../../utils/piwik';
 
 class Form extends React.Component {
   constructor(props) {
@@ -79,6 +80,7 @@ class Form extends React.Component {
   }
 
   handleSetMaxAmount() {
+    Piwik.trackingEvent('Send_Form', 'button', 'Set max amount');
     const amount = parseFloat(this.getMaxAmount());
     this.setState({
       amount: {
@@ -107,11 +109,30 @@ class Form extends React.Component {
     }, 200);
   }
 
+  getTitle() {
+    return this.props.account.hwInfo && this.props.account.hwInfo.deviceId ?
+      <h2>{this.props.t('Confirm transaction on Ledger Nano S')}</h2> : <h2>{this.props.t('Send LSK')}</h2>;
+  }
+
+  onPrevStep() {
+    Piwik.trackingEvent('Send_Form', 'button', 'Previous step');
+    this.props.goToWallet();
+  }
+
+  onNextStep() {
+    Piwik.trackingEvent('Send_Form', 'button', 'Next step');
+    this.props.nextStep({
+      recipient: this.state.recipient.value,
+      amount: this.state.amount.value,
+      reference: this.state.reference.value,
+    });
+  }
+
   render() {
     return (
       <div className={`${styles.sendWrapper}`}>
         <header className={styles.headerWrapper}>
-          <h2>{this.props.t('Send LSK')}</h2>
+          {this.getTitle()}
         </header>
         <form className={styles.form}>
           { this.props.followedAccounts.length > 0 && this.state.openFollowedAccountSuggestion ?
@@ -158,18 +179,14 @@ class Form extends React.Component {
         </form>
         <footer>
           <Button
-            onClick={() => this.props.goToWallet()}
+            onClick={this.onPrevStep.bind(this)}
             className={`send-prev-button ${styles.nextButton}`}
           >
           {this.props.t('Back')}
           </Button>
 
           <ActionButton
-            onClick={() => this.props.nextStep({
-              recipient: this.state.recipient.value,
-              amount: this.state.amount.value,
-              reference: this.state.reference.value,
-            })}
+            onClick={this.onNextStep.bind(this)}
             disabled={(!!this.state.recipient.error ||
                     !this.state.recipient.value ||
                     !!this.state.amount.error ||

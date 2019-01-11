@@ -28,6 +28,10 @@ const disabledPiwikTracking = () => {
   ReactPiwik.push([piwikOptions.FORGET_CONSENT_GIVEN]);
 };
 
+const trackingEvent = (category, action, name) => {
+  if (piwikInstance) ReactPiwik.push([piwikOptions.TRACK_EVENT, category, action, name]);
+};
+
 const tracking = (history, settings) => {
   if (!piwikInstance && settings.statistics) {
     piwikInstance = initPiwik();
@@ -43,4 +47,5 @@ const tracking = (history, settings) => {
 
 export default {
   tracking,
+  trackingEvent,
 };

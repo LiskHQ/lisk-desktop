@@ -22,13 +22,4 @@ describe('V2 Register Process', () => {
   it('Should render on initial step -> Choose Avatar', () => {
     expect(wrapper.find('ChooseAvatar')).to.have.length(1);
   });
-
-  it('Should update selected Address', () => {
-    expect(wrapper.find('RegisterV2').instance().state.selectedAddress).to.be.eq('');
-    wrapper.find('RegisterV2').instance().handleSelectAvatar('12345L');
-    expect(wrapper.find('RegisterV2').instance().state.selectedAddress).to.be.equal('12345L');
-    wrapper.find('RegisterV2').instance().handleSelectAvatar('123L');
-    expect(wrapper.find('RegisterV2').instance().state.selectedAddress).to.be.equal('123L');
-    expect(wrapper.find('RegisterV2').instance().state.previousAddress).to.be.equal('12345L');
-  });
 });

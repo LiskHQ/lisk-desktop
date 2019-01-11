@@ -93,7 +93,7 @@
     }
   }
 
-  & > span.unselected {
+  & > span.deselect {
     animation-name: avatarBounceBack;
     animation-duration: 300ms;
     animation-iteration-count: 1;

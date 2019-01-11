@@ -5,6 +5,7 @@ import Box from '../box';
 import { parseSearchParams } from '../../utils/searchParams';
 import routes from '../../constants/routes';
 import { FontIcon } from '../fontIcon';
+import Piwik from '../../utils/piwik';
 import styles from './voteUrlProcessor.css';
 
 export default class VoteUrlProcessor extends React.Component {
@@ -61,6 +62,18 @@ export default class VoteUrlProcessor extends React.Component {
     return this.props.urlVoteCount - this.props.pending.length;
   }
 
+  onClearVotes() {
+    Piwik.trackingEvent('VoteUrlProcessor', 'button', 'Clear Votes');
+    this.props.clearVoteLookupStatus();
+    this.props.clearVotes();
+    this.props.toggleShowInfo(false);
+  }
+
+  onCloseInfo() {
+    Piwik.trackingEvent('VoteUrlProcessor', 'button', 'Close info');
+    this.props.toggleShowInfo(false);
+  }
+
   render() {
     const errorMessages = {
       notFound: {
@@ -89,11 +102,9 @@ export default class VoteUrlProcessor extends React.Component {
         <section className={styles.wrapper}>
           <header>
               <h2>Your Pre-Selection
-                <div className={`${styles.cancel} clear-votes`} onClick={() => {
-                  this.props.clearVoteLookupStatus();
-                  this.props.clearVotes();
-                  this.props.toggleShowInfo(false);
-                }}>{this.props.t('Cancel')} <FontIcon value='close' />
+                <div className={`${styles.cancel} clear-votes`} onClick={() => this.onClearVotes()}>
+                  {this.props.t('Cancel')}
+                  <FontIcon value='close' />
                 </div>
               </h2>
           </header>
@@ -122,7 +133,7 @@ export default class VoteUrlProcessor extends React.Component {
             )}</div>
           </div>
           <footer>
-            <PrimaryButton label={this.props.t('Ok')} theme={styles} onClick={() => this.props.toggleShowInfo(false)}/>
+            <PrimaryButton className={'ok-close-info'} label={this.props.t('Ok')} theme={styles} onClick={this.onCloseInfo.bind(this)}/>
           </footer>
         </section>
       </Box> : null;

@@ -4,6 +4,7 @@ import styles from './confirmVotes.css';
 import Checkbox from '../toolbox/sliderCheckbox';
 import fees from '../../constants/fees';
 import { fromRawLsk } from '../../utils/lsk';
+import Piwik from '../../utils/piwik';
 
 class ConfirmVotes extends React.Component {
   constructor(props) {
@@ -47,10 +48,24 @@ class ConfirmVotes extends React.Component {
     }, 120);
   }
 
+  onNext(data) {
+    Piwik.trackingEvent('ConfirmVotes', 'button', 'Next step');
+    this.setState({ didSend: true });
+    this.props.votePlaced(data);
+  }
+
+  onPrev() {
+    Piwik.trackingEvent('ConfirmVotes', 'button', 'Previous step');
+    this.props.prevStep({ reset: this.props.skipped });
+  }
+
   render() {
     const {
-      t, prevStep, votePlaced, skipped,
-      votes, account, secondPassphrase, passphrase,
+      t,
+      votes,
+      account,
+      secondPassphrase,
+      passphrase,
     } = this.props;
     const data = {
       account,
@@ -70,13 +85,10 @@ class ConfirmVotes extends React.Component {
           <PrimaryButton
             disabled={this.state.didSend}
             className={`${styles.confirmButton} confirm`}
-            onClick={() => {
-              this.setState({ didSend: true });
-              votePlaced(data);
-            }}>{t('Confirm (Fee: 1 LSK)')}</PrimaryButton>
+            onClick={() => this.onNext(data)}>{t('Confirm (Fee: 1 LSK)')}</PrimaryButton>
           <Button
             className={`${styles.backButton} back`}
-            onClick={() => prevStep({ reset: skipped })}>{t('Back')}</Button>
+            onClick={() => this.onPrev()}>{t('Back')}</Button>
           <Checkbox
             className={`${styles.checkbox} confirmSlider`}
             label={t(`Confirm (Fee: ${fromRawLsk(fees.vote)} LSK)`)}

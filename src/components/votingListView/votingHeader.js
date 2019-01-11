@@ -8,6 +8,7 @@ import voteFilters from './../../constants/voteFilters';
 import { fromRawLsk } from './../../utils/lsk';
 import Fees from './../../constants/fees';
 import routes from './../../constants/routes';
+import Piwik from '../../utils/piwik';
 
 
 class VotingHeader extends React.Component {
@@ -55,10 +56,12 @@ class VotingHeader extends React.Component {
   }
 
   clearSearch() {
+    Piwik.trackingEvent('VoatingListView', 'button', 'Clear Message');
     this.search({ nativeEvent: { target: { value: '' } } });
   }
 
   filterVotes(filter) {
+    Piwik.trackingEvent('VoatingListView', 'button', 'Filter votes');
     this.setState({ activeFilter: filter.value });
     this.props.setActiveFilter(filter.value);
   }
@@ -74,13 +77,14 @@ class VotingHeader extends React.Component {
     const votingTitle = t('Voting');
     const titleDesktop = this.props.showChangeSummery ? selectionTitle : delegateTitle;
     const titleMobile = this.props.showChangeSummery ? selectionTitle : votingTitle;
+    const isHardwareWallet = this.props.account.hwInfo && this.props.account.hwInfo.deviceId;
     return (
       <header className={`${styles.header} ${styles[this.state.headerPosition]}`}>
         <div>
           <h2 className={styles.desktopTitle}>{titleDesktop}</h2>
           <h2 className={styles.mobileTitle}>{titleMobile}</h2>
         </div>
-        {!isDelegate ?
+        {!isDelegate && !isHardwareWallet ?
           <Link to={`${routes.registerDelegate.path}`} className={`${styles.link} ${styles.registerLink} register-delegate`}>
             {t('Become a delegate (Fee: {{fee}} LSK)', { fee: fromRawLsk(Fees.registerDelegate) })}
             <FontIcon value='arrow-right'/>

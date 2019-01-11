@@ -1,0 +1,201 @@
+@import './../app/variables.css';
+
+@keyframes optionsAppear {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+@keyframes optionsDisappear {
+  from { transform: scale(1); }
+  to { transform: scale(0); }
+}
+
+@for $i from 1 to 3 {
+  .confirmHolder .options span:nth-child($i) {
+    animation-delay: calc(100ms * $i);
+  }
+}
+
+.confirmHolder {
+  align-items: flex-start;
+  display: flex;
+  font-size: 18px;
+  min-height: 210px;
+  margin: 70px 0;
+  justify-content: space-evenly;
+  position: relative;
+  width: 100%;
+
+  & .word {
+    color: #1e194d;
+    font-family: Gilroy, sans-serif;
+    font-size: inherit;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    line-height: 36px;
+    text-align: center;
+  }
+
+  & .optionsHolder {
+    display: flex;
+    flex-direction: column;
+    margin: -8px 0;
+
+    & .answer {
+      height: 36px;
+      margin: 8px 0;
+      min-width: 90px;
+      position: relative;
+
+      &::before {
+        border: 1px dashed #1e194d;
+        border-radius: 5px;
+        box-sizing: border-box;
+        content: '';
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+    }
+
+    & .checkmark {
+      align-items: center;
+      background-color: var(--color-white);
+      border-radius: 50%;
+      box-shadow: 0 4px 8px 0 rgba(6, 22, 48, 0.1);
+      display: flex;
+      height: 24px;
+      justify-content: center;
+      position: absolute;
+      right: -12px;
+      top: -12px;
+      transition: transform 250ms linear;
+      transform: scale(0);
+      width: 24px;
+
+      & > span {
+        font-size: 14px;
+      }
+    }
+
+    & .choice {
+      align-items: center;
+      background-color: var(--color-white);
+      border-radius: 4px;
+      box-shadow: 0 4px 8px 0 rgba(6, 22, 48, 0.1);
+      box-sizing: border-box;
+      color: #1e194d;
+      cursor: pointer;
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      padding: 0 10px;
+      position: relative;
+      transition: transform 250ms linear, opacity 250ms linear, color 250ms linear;
+      transform: scale(0);
+      width: 100%;
+    }
+  }
+
+  & .answered {
+    & .choice {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    & .options .option {
+      animation-name: optionsDisappear;
+      animation-delay: 75ms;
+      animation-duration: 500ms;
+      animation-fill-mode: forwards;
+      animation-iteration-count: 1;
+      transform: scale(1);
+
+      &.selected {
+        animation-delay: 0ms;
+      }
+    }
+  }
+
+  & .hasErrors {
+    & .choice {
+      background-color: #ff7721;
+      box-shadow: 0 4px 8px 0 rgba(227, 190, 155, 0.4);
+      color: var(--color-white);
+      cursor: initial;
+      transition: background 250ms linear 100ms, box-shadow 250ms linear 100ms;
+    }
+  }
+
+  & .isCorrect {
+    & .choice {
+      cursor: initial;
+    }
+
+    & .checkmark {
+      transform: scale(1);
+    }
+  }
+
+  & .options {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  & .option {
+    animation-name: optionsAppear;
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    display: flex;
+    height: 36px;
+    margin: 8px 0;
+    transform: scale(0);
+
+    & > button {
+      font-family: Gilroy, sans-serif;
+      font-size: inherit;
+      min-height: 36px;
+      height: 36px;
+      width: 100%;
+    }
+  }
+
+  & .errorMessage {
+    background-color: var(--color-white);
+    border-radius: 4px;
+    box-shadow: 0 4px 8px 0 rgba(6, 22, 48, 0.1);
+    max-width: 50%;
+    padding: 20px;
+    position: absolute;
+    transition: transform 350ms ease-in;
+    transform: scale(0);
+    top: 20%;
+
+    &.showError {
+      transform: scale(1);
+    }
+
+    & > span {
+      color: #dd6e0c;
+      font-family: 'Open sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.47;
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .confirmHolder {
+    font-size: 16px;
+  }
+}
+
+@media (--small-viewport) {
+  .confirmHolder {
+    font-size: 14px;
+  }
+}

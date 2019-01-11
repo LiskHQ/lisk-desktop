@@ -89,5 +89,19 @@ describe('VoteUrlProcessor', () => {
     expect(props.clearVotes).to.have.been.calledWith();
     expect(props.toggleShowInfo).to.have.been.calledWith();
   });
+
+  it('close dialog when click on closeInfo button', () => {
+    props.show = true;
+    props.upvotes =  ['delegate_1', 'delegate_3'];
+    props.unvotes =  ['delegate_2'];
+
+    wrapper = mount(<VoteUrlProcessor {...props} />);
+
+    expect(wrapper.find('.upvotes-message')).to.have.text('delegate_1, delegate_3');
+    expect(wrapper.find('.unvotes-message')).to.have.text('delegate_2');
+
+    wrapper.find('.ok-close-info').at(0).simulate('click');
+    expect(props.toggleShowInfo).to.have.been.calledWith();
+  });
 });
 

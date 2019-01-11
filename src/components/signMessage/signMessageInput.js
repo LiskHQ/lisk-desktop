@@ -5,6 +5,7 @@ import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import { PrimaryButton } from '../toolbox/buttons/button';
 import { parseSearchParams } from './../../utils/searchParams';
 import TransitionWrapper from '../toolbox/transitionWrapper';
+import Piwik from '../../utils/piwik';
 
 class SignMessageInput extends React.Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class SignMessageInput extends React.Component {
   }
 
   done() {
+    Piwik.trackingEvent('SignMessageInput', 'button', 'Next step');
     this.props.nextStep({ message: this.state.message.value });
   }
 

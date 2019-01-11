@@ -3,7 +3,7 @@ import networks from '../../constants/networks';
 import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
 import enterSecondPassphrase from '../utils/enterSecondPassphrase';
-// import compareBalances from '../utils/compareBalances';
+import compareBalances from '../utils/compareBalances';
 
 const getFollowedAccountObjFromLS = () => JSON.parse(localStorage.getItem('followedAccounts'));
 
@@ -19,7 +19,7 @@ const getRandomAddress = () => `23495548666${Math.floor((Math.random() * 8990000
 const getRandomAmount = () => Math.floor((Math.random() * 10) + 1);
 const getRandomReference = () => Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
 
-// const transactionFee = 0.1;
+const transactionFee = 0.1;
 
 describe('Send', () => {
   let randomAddress;
@@ -70,10 +70,9 @@ describe('Send', () => {
     cy.get('@tx').find(ss.transactionAmount).should('have.text', randomAmount.toString());
     cy.wait(txConfirmationTimeout);
     cy.get('@tx').find(ss.spinner).should('not.exist');
-    // TODO Unskip when #1539 is fixed
-    // cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(() => {
-    //   compareBalances(this.balanceBefore, this.balanceAfter, randomAmount + transactionFee);
-    // });
+    cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(function () {
+      compareBalances(this.balanceBefore, this.balanceAfter, randomAmount + transactionFee);
+    });
   });
 
   /**

@@ -1,19 +1,18 @@
 import { app, ipcMain } from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
 import Lisk from 'lisk-elements'; // eslint-disable-line import/no-extraneous-dependencies
 import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api'; // eslint-disable-line import/no-extraneous-dependencies
+import TransportNodeHid from '@ledgerhq/hw-transport-node-hid'; // eslint-disable-line import/no-extraneous-dependencies
+
 import win from './modules/win';
 
-
-// eslint-disable-next-line import/no-extraneous-dependencies
-// TransportNodeHid = require('@ledgerhq/hw-transport-node-hid');
 // mock transportnodehid, todo fix this to work also on windows and linux
-const TransportNodeHid = {
-  open: () => {},
-  listen: () => {},
-  setListenDevicesDebounce: () => {},
-  setListenDevicesPollingSkip: () => {},
-};
-TransportNodeHid.setListenDevicesDebounce(200);
+// const TransportNodeHid = {
+//   open: () => {},
+//   listen: () => {},
+//   setListenDevicesDebounce: () => {},
+//   setListenDevicesPollingSkip: () => {},
+// };
+// TransportNodeHid.setListenDevicesDebounce(200);
 /*
 TransportNodeHid.setListenDevicesDebug((msg, ...args) => {
   console.log(msg);

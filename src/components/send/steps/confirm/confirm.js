@@ -4,6 +4,7 @@ import AccountVisual from '../../../accountVisual';
 import { Button, PrimaryButton } from './../../../toolbox/buttons/button';
 import ToolBoxInput from '../../../toolbox/inputs/toolBoxInput';
 import fees from './../../../../constants/fees';
+import Piwik from '../../../../utils/piwik';
 import styles from './confirm.css';
 
 class Confirm extends React.Component {
@@ -39,6 +40,9 @@ class Confirm extends React.Component {
       },
     };
     this.setState(newState);
+    if (this.props.account.hwInfo && this.props.account.hwInfo.deviceId) {
+      this.send(newState);
+    }
   }
 
   componentDidUpdate() {
@@ -47,7 +51,7 @@ class Confirm extends React.Component {
       ? this.props.pendingTransactions.find(transaction => (
         transaction.senderId === this.props.account.address &&
       transaction.recipientId === this.state.recipient.value &&
-      fromRawLsk(transaction.amount) === this.props.amount
+      (this.props.accountInit || fromRawLsk(transaction.amount) === this.props.amount)
       )) : this.props.pendingTransactions.length;
 
     if (this.state.loading && (pending || this.props.failedTransactions)) {
@@ -87,16 +91,25 @@ class Confirm extends React.Component {
     });
   }
 
-  send(event) {
-    event.preventDefault();
+  send(newState = {}) {
+    Piwik.trackingEvent('Send_Confirmation', 'button', 'Send');
     this.setState({ loading: true });
     this.props.sent({
       account: this.props.account,
-      recipientId: this.state.recipient.value,
-      amount: this.state.amount.value,
+      recipientId: this.state.recipient.value || newState.recipient.value,
+      amount: this.state.amount.value || newState.amount.value,
       passphrase: this.props.passphrase.value,
       secondPassphrase: this.props.secondPassphrase.value,
       data: this.props.accountInit ? this.props.t('Account initialization') : this.props.reference,
+    });
+  }
+
+  onPrevStep() {
+    Piwik.trackingEvent('Send_Confirmation', 'button', 'Previous step');
+    this.props.prevStep({
+      reset: this.props.skipped,
+      recipient: this.props.recipient,
+      amount: this.props.amount,
     });
   }
 
@@ -177,11 +190,7 @@ class Confirm extends React.Component {
           <section>
               <Button
                 label={this.props.t('Back')}
-                onClick={() => this.props.prevStep({
-                  reset: this.props.skipped,
-                  recipient: this.props.recipient,
-                  amount: this.props.amount,
-                }) }
+                onClick={this.onPrevStep.bind(this)}
                 type='button'
                 theme={styles}
               />
@@ -190,7 +199,10 @@ class Confirm extends React.Component {
                 label={this.props.accountInit ? this.props.t('Confirm (Fee: {{fee}} LSK)', { fee: fromRawLsk(fees.send) }) : this.props.t('Send')}
                 type='submit'
                 theme={styles}
-                onClick={this.send.bind(this)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.send();
+                }}
                 disabled={this.state.loading}
               />
           </section>

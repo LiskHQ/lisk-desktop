@@ -4,11 +4,13 @@ import Box from '../box';
 import { FontIcon } from '../fontIcon';
 import { Button } from './../toolbox/buttons/button';
 import styles from './help.css';
-import links from './../../constants/help';
+import links from './../../constants/externalLinks';
+import Piwik from '../../utils/piwik';
 
 /* eslint-disable class-methods-use-this */
 class Help extends React.Component {
   initOnboarding() {
+    Piwik.trackingEvent('Help', 'button', 'Init onboarding');
     this.props.settingsUpdated({ onBoarding: true });
   }
 

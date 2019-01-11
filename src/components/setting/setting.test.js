@@ -52,6 +52,7 @@ describe('Setting', () => {
   let wrapper;
 
   const props = {
+    account: {},
     settingsUpdated: sinon.spy(),
     accountUpdated: sinon.spy(),
     settings,
@@ -86,6 +87,17 @@ describe('Setting', () => {
   it('should change advanceMode setting when clicking on checkbox', () => {
     wrapper.find('.advancedMode').at(0).find('input').simulate('change', { target: { checked: false, value: false } });
     clock.tick(300);
+  });
+
+  it('should disable 2nd passphrase when hardwareWallet', () => {
+    const newProps = { ...props, account: { hwInfo: { deviceId: '123' } } };
+    wrapper = mount(<Router>
+      <Setting
+        store={store}
+        {...newProps}/>
+    </Router>, options);
+
+    expect(wrapper.find('.disabled').length).to.have.equal(4);
   });
 
   it('should not show the onboarding setting when on mobile', () => {

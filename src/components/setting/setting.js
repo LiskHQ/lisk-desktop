@@ -11,6 +11,8 @@ import settingsConst from './../../constants/settings';
 import routes from '../../constants/routes';
 import { FontIcon } from '../fontIcon';
 import Box from '../box';
+import links from './../../constants/externalLinks';
+import Piwik from '../../utils/piwik';
 // import languageSwitcherTheme from './languageSwitcher.css';
 
 class Setting extends React.Component {
@@ -22,6 +24,7 @@ class Setting extends React.Component {
   }
 
   toggleAutoLog(state) {
+    Piwik.trackingEvent('Settings', 'button', 'Toggle autoLog');
     const {
       account, settings, settingsUpdated, accountUpdated,
     } = this.props;
@@ -32,14 +35,20 @@ class Setting extends React.Component {
     settingsUpdated({ autoLog: !settings.autoLog });
   }
 
+  onUpdateSettings(newSettings) {
+    Piwik.trackingEvent('Settings', 'button', 'Update settings');
+    this.props.settingsUpdated(newSettings);
+  }
+
   render() {
     const {
-      t, settings, settingsUpdated,
+      t, settings,
       hasSecondPassphrase,
     } = this.props;
 
-    /* istanbul ignore next */
-    const allowAuthClass = !this.props.isAuthenticated ? `${styles.disable} disabled` : '';
+    const allowAuthClass = !this.props.isAuthenticated ||
+      (this.props.account.hwInfo && this.props.account.hwInfo.deviceId) ?
+      `${styles.disable} disabled` : '';
     const activeCurrency = settings.currency || settingsConst.currencies[0];
 
     return (<Box className={styles.wrapper}>
@@ -84,7 +93,7 @@ class Setting extends React.Component {
           <Checkbox
             theme={styles}
             className={`${styles.smallSlider} showNetwork`}
-            onChange={() => settingsUpdated({ showNetwork: !settings.showNetwork })}
+            onChange={() => this.onUpdateSettings({ showNetwork: !settings.showNetwork })}
             input={{
               value: false,
               checked: settings.showNetwork,
@@ -98,7 +107,7 @@ class Setting extends React.Component {
           <Checkbox
             theme={styles}
             className={`${styles.smallSlider} advancedMode`}
-            onChange={() => settingsUpdated({ advancedMode: !settings.advancedMode })}
+            onChange={() => this.onUpdateSettings({ advancedMode: !settings.advancedMode })}
             input={{
               value: true,
               checked: settings.advancedMode,
@@ -110,7 +119,7 @@ class Setting extends React.Component {
             <Checkbox
               theme={styles}
               className={`${styles.smallSlider} statistics`}
-              onChange={() => settingsUpdated({ statistics: !settings.statistics })}
+              onChange={() => this.onUpdateSettings({ statistics: !settings.statistics })}
               input={{
                 value: false,
                 checked: settings.statistics,
@@ -118,7 +127,7 @@ class Setting extends React.Component {
           </div>
           <div className={`${styles.item} ${styles.privatePolicy}`}>
             {t('For more information refer to our ')}
-            <a href={'https://lisk.io/privacy'} target={'_blank'}>{t('Privacy Policy')}</a>
+            <a href={links.privacyPolicy} target={'_blank'}>{t('Privacy Policy')}</a>
           </div>
         </div>
         <h4>{t('Local')}</h4>
@@ -129,7 +138,7 @@ class Setting extends React.Component {
               <li
                 key={`currency-${currency}`}
                 className={`currency currency-${currency} ${currency === activeCurrency ? `${styles.active} active` : ''}`}
-                onClick={() => settingsUpdated({ currency })}>
+                onClick={() => this.onUpdateSettings({ currency })}>
                 {currency}
               </li>
             ))}

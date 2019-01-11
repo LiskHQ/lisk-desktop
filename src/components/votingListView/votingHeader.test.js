@@ -29,6 +29,7 @@ describe('VotingHeader', () => {
   });
 
   const props = {
+    account: {},
     votedDelegates: [
       {
         username: 'username1',
