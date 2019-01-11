@@ -14,12 +14,12 @@ describe('Reducer: followedAccounts(state, action)', () => {
     address: accounts.genesis.address,
     balance: accounts.genesis.balance,
     title: accounts.genesis.address,
-    // publicKey: accounts.genesis.publicKey,
+    publicKey: accounts.genesis.publicKey,
   };
   const account2 = {
     address: accounts.delegate.address,
     balance: accounts.delegate.balance,
-    // publicKey: accounts.delegate.publicKey,
+    publicKey: accounts.delegate.publicKey,
   };
 
   it(`should return accounts if action.type is ${actionTypes.followedAccountsRetrieved}`, () => {
@@ -36,7 +36,7 @@ describe('Reducer: followedAccounts(state, action)', () => {
       address: accounts['empty account'].address,
       balance: accounts['empty account'].balance,
       title: accounts['empty account'].address,
-      // publicKey: accounts['empty account'].publicKey,
+      publicKey: accounts['empty account'].publicKey,
     };
 
     const state = { accounts: [account, account2] };
@@ -53,7 +53,7 @@ describe('Reducer: followedAccounts(state, action)', () => {
       address: accounts.delegate.address,
       balance: accounts.delegate.balance,
       title: 'bob',
-      // publicKey: account.delegate.publicKey,
+      publicKey: accounts.delegate.publicKey,
     };
 
     const state = { accounts: [account, account2] };
