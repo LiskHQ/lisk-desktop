@@ -1,7 +1,9 @@
-@import '../../app/variables.css';
+@import '../../app/variablesV2.css';
 
 :root {
-  --background-color-tooltip: #2e2c3b;
+  --background-color-tooltip: var(--color-content-light);
+  --tooltip-arrow-size: 6px;
+  --info-icon-size: 16px;
 }
 
 .tooltipWrapper {
@@ -10,30 +12,30 @@
 
 .infoIcon {
   align-items: center;
-  background: #868ba1;
+  background: var(--color-dark-gray);
   border-radius: 50%;
   cursor: pointer;
   display: flex;
-  height: 16px;
+  height: var(--info-icon-size);
   justify-content: center;
-  margin-left: 8px;
-  width: 16px;
+  margin-left: calc(var(--info-icon-size) / 2);
+  width: var(--info-icon-size);
 
   &::before {
     content: '?';
     color: var(--color-white);
-    font-size: 10px;
+    font-size: var(--font-size-small);
   }
 }
 
 .tooltip {
   background-color: var(--background-color-tooltip);
-  border-radius: 4px;
-  box-shadow: 0 4px 8px 0 rgba(6, 22, 48, 0.1);
+  border-radius: var(--border-radius-standard);
+  box-shadow: var(--box-shadow-standard);
   box-sizing: border-box;
   color: var(--color-white);
-  font-family: 'Open sans', sans-serif;
-  font-size: 15px;
+  font-family: var(--content-font);
+  font-size: var(--paragraph-font-size-l);
   left: 36px;
   line-height: 1.47;
   max-width: 380px;
@@ -44,17 +46,17 @@
   top: 50%;
   transform: translateY(-50%) scale(0);
   transform-origin: left center;
-  transition: transform 250ms linear, opacity 250ms linear;
+  transition: transform var(--animation-speed-fast) linear, opacity var(--animation-speed-fast) linear;
   width: 45vw; /* stylelint-disable-line */
 
   & .tooltipArrow {
     color: var(--background-color-tooltip);
     height: auto;
-    left: -6px;
+    left: -var(--tooltip-arrow-size);
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 6px;
+    width: var(--tooltip-arrow-size);
   }
 
   &.shownTooltip {
@@ -67,12 +69,12 @@
   }
 
   & .title {
-    font-family: Gilroy, sans-serif;
-    font-weight: bold;
+    font-family: var(--heading-font);
+    font-weight: var(--font-weight-bold);
   }
 
   & a {
-    color: #9db8fa;
+    color: var(--color-primary-light);
   }
 
   & header {
