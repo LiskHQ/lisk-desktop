@@ -331,6 +331,7 @@
   "Show passphrase": "Show passphrase",
   "Sidechains": "Sidechains",
   "Sidechains will revolutionize the way decentralized apps are developed. Here you will be able to find hosts, and monitor your sidechains soon.": "Sidechains will revolutionize the way decentralized apps are developed. Here you will be able to find hosts, and monitor your sidechains soon.",
+  "Sign In": "Sign In",
   "Sign a message": "Sign a message",
   "Sign back in": "Sign back in",
   "Sign in": "Sign in",
@@ -342,6 +343,7 @@
   "Step 1 / 4": "Step 1 / 4",
   "Step 2 / 4": "Step 2 / 4",
   "Step 3 / 4": "Step 3 / 4",
+  "Step 4 / 4": "Step 4 / 4",
   "Submit": "Submit",
   "Success": "Success",
   "Success!": "Success!",
@@ -424,6 +426,7 @@
   "You are looking into a saved account. In order to {{nextAction}} you need to enter your passphrase.": "You are looking into a saved account. In order to {{nextAction}} you need to enter your passphrase.",
   "You are responsible for safekeeping your second passphrase. No one can restore it, not even Lisk.": "You are responsible for safekeeping your second passphrase. No one can restore it, not even Lisk.",
   "You can customize amount & message.": "You can customize amount & message.",
+  "You can now manage and secure your LSK tokens.": "You can now manage and secure your LSK tokens.",
   "You can now use Lisk Hub.<br": {
     " If you want to repeat the onboarding, navigate to \"Help\" on the sidebar.": "You can now use Lisk Hub.<br> If you want to repeat the onboarding, navigate to \"Help\" on the sidebar."
   },
@@ -439,6 +442,7 @@
   "You will need it to use your Lisk ID, like sending and voting. You are responsible for keeping your second passphrase safe. No one can restore it, not even Lisk.": "You will need it to use your Lisk ID, like sending and voting. You are responsible for keeping your second passphrase safe. No one can restore it, not even Lisk.",
   "You will send a small amount of {{fee}} LSK to yourself and therefore initialize your ID.": "You will send a small amount of {{fee}} LSK to yourself and therefore initialize your ID.",
   "You've received {{value}} LSK.": "You've received {{value}} LSK.",
+  "Your Account is created!": "Your Account is created!",
   "Your Lisk ID is how you recognize and interact with your unique Lisk account, think of it as your email.": "Your Lisk ID is how you recognize and interact with your unique Lisk account, think of it as your email.",
   "Your delegate name is being registered": "Your delegate name is being registered",
   "Your passphrase is used to access your Lisk ID.": "Your passphrase is used to access your Lisk ID.",
