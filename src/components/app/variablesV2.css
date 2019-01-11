@@ -45,7 +45,7 @@ or "warn/action" ineastd of "red/green"
   --font-size-h4: 26px;
   --font-size-h5: 20px;
   --font-size-h6: 16px;
-  --font-size-small: 14px;
+  --font-size-small: 10px;
   --heading-font: 'Gilroy', 'Open Sans', sans-serif;
   --content-font: 'Open Sans', sans-serif;
   --font-weight-normal: 400;
@@ -102,12 +102,7 @@ or "warn/action" ineastd of "red/green"
         Z-Indexes
   *************************/
   --normal-index: 1;
-  --menubar-index: 4;
-  --headerbar-index: 20;
-  --autosuggest-index: 21;
-  --searchbar-input-index: 22;
-  --searchbar-placeholder-index: 23;
-  --accounts-index: 24;
+  --overlay-index: 20;
 
   /*************************
         Media Queries
