@@ -12,7 +12,7 @@ const Splashscreen = ({ t }) => (
     <HeaderV2 showSettings={true} />
     <div className={`${styles.splashscreen} ${grid.row}`}>
       <div className={`${styles.wrapper} ${grid['col-sm-6']}`}>
-        <div className={`${grid['col-xs-10']} ${styles.titleHolder}`}>
+        <div className={`${styles.titleHolder}`}>
           <h1>{t('Welcome to the Lisk Hub!')}</h1>
           <p>{
             t('Create an account or sign in to manage your LSK, become a delegate or vote for another delegates.')
@@ -21,7 +21,7 @@ const Splashscreen = ({ t }) => (
         <Link className={styles.button} to={routes.login.path}>
           <SecondaryButtonV2>{t('Sign in')}</SecondaryButtonV2>
         </Link>
-        <Link className={styles.button} to={routes.register.path}>
+        <Link className={styles.button} to={routes.registration.path}>
           <PrimaryButtonV2>{t('Create an Account')}</PrimaryButtonV2>
         </Link>
         <span className={styles.separator}>

@@ -1,10 +1,12 @@
+@import '../app/variablesV2.css';
+
 .splashscreen {
   align-items: center;
-  background-color: #f7f9fb;
   display: flex;
   margin: 0;
   min-height: 100%;
   justify-content: center;
+  padding: 20px 0;
   text-align: center;
   width: 100%;
 }
@@ -13,7 +15,6 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  padding: 20px 0;
 
   & .button {
     margin-top: 12px;
@@ -29,22 +30,22 @@
   max-width: 400px;
 
   & > h1 {
-    color: #1e194d;
-    font-family: Gilroy, sans-serif;
-    font-size: 32px;
+    color: var(--color-content);
+    font-family: var(--heading-font);
+    font-size: var(--font-size-h2);
     line-height: 1.56;
-    font-weight: 600;
-    margin: 0 0 3px;
+    font-weight: var(--font-weight-bold);
+    margin: 0;
     text-align: center;
   }
 
   & > p {
-    color: #2e2c3b;
+    color: var(--color-content-light);
     font-family: "Open sans", sans-serif;
-    font-size: 15px;
-    font-weight: normal;
+    font-size: var(--paragraph-font-size-l);
+    font-weight: var(--font-weight-normal);
     line-height: 1.47;
-    margin: 0 0 50px;
+    margin: 5px 0 50px;
     text-align: center;
   }
 }
@@ -57,15 +58,15 @@
   width: 100%;
 
   & > span {
-    color: #2e2c3b;
-    font-family: "Open sans", sans-serif;
-    font-size: 15px;
+    color: var(--color-content-light);
+    font-family: var(--content-font);
+    font-size: var(--paragraph-font-size-l);
     margin: 0 12px;
   }
 
   &::after,
   &::before {
-    background: #2e2c3b;
+    background: var(--color-content-light);
     content: '';
     height: 1px;
     opacity: 0.2;
@@ -74,11 +75,11 @@
 }
 
 .link {
-  color: #4e80f7;
+  color: var(--color-link);
   display: inline-block;
-  font-family: Gilroy, sans-serif;
-  font-size: 15px;
-  font-weight: bold;
+  font-family: var(--heading-font);
+  font-size: var(--paragraph-font-size-l);
+  font-weight: var(--font-weight-bold);
   line-height: 1.47;
   margin-bottom: 20px;
   text-align: center;
