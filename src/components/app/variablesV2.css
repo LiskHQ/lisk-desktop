@@ -57,6 +57,7 @@ or "warn/action" ineastd of "red/green"
   --paragraph-font-size-s: 14px;
   --input-font-size: 16px;
   --button-font-size: 14px;
+  --button-font-size-s: 12px;
 
   /*************************
         Sizes
@@ -64,6 +65,8 @@ or "warn/action" ineastd of "red/green"
   --border-radius-normal: 3px;
   --header-height-m: 100px;
   --header-height-s: 72px;
+  --header-elements-height: 32px;
+  --header-logo-size: 56px;
 
   /*************************
         Padding
@@ -78,12 +81,13 @@ or "warn/action" ineastd of "red/green"
   --color-white: #fff;
   --color-error: #da1d00;
   --color-background-wrapper: linear-gradient(120deg, #f7f9fb, #fbfcfd);
-  --color-background-header: linear-gradient(95deg, #fbfcfe, #fbfcfd);
+  --color-background-header: #fbfcfd;
 
   /*************************
         Box
   *************************/
   --box-shadow-button: 0 4px 8px 0 rgba(72, 77, 97, 0.1);
+  --box-shadow-header: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
   --border-radius-standard: 4px;
 
   /*************************
