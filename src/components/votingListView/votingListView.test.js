@@ -27,6 +27,7 @@ describe('VotingListView', () => {
     username1: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
   };
   const props = {
+    account: {},
     refreshDelegates: false,
     delegates,
     totalDelegates: 10,

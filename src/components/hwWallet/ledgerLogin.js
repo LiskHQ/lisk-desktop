@@ -45,6 +45,12 @@ class LedgerLogin extends React.Component {
     }, 2000);
   }
 
+  componentDidUpdate() {
+    if (this.props.account && this.props.account.address) {
+      this.props.history.replace(routes.dashboard.path);
+    }
+  }
+
   selectAccount(ledgerAccount, index) {
     Piwik.trackingEvent('LedgerLogin', 'button', 'Select account');
     // set active peer
@@ -56,7 +62,6 @@ class LedgerLogin extends React.Component {
         derivationIndex: index,
       },
     });
-    this.props.history.replace(routes.dashboard.path);
   }
 
   async addAccount() {
@@ -94,14 +99,14 @@ class LedgerLogin extends React.Component {
     const newHardwareAccountsName = Object.assign(
       {},
       this.state.hardwareAccountsName,
-      { [account]: value },
+      { [account]: value.length < 20 ? value : value.substr(0, 20) },
     );
     this.setState({ hardwareAccountsName: newHardwareAccountsName });
   }
 
   onCancelLegderLogin() {
     Piwik.trackingEvent('LedgerLogin', 'button', 'Cancel ledger login');
-    this.props.cancelLedgerLogin();
+    this.props.history.push(routes.login.path);
   }
 
   render() {
@@ -147,6 +152,7 @@ class LedgerLogin extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  account: state.account,
   liskAPIClient: state.peers && state.peers.liskAPIClient,
   settings: state.settings,
   loginType: state.account.loginType || 1,

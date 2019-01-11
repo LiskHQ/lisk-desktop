@@ -13,6 +13,7 @@ import { loadingStarted, loadingFinished } from '../../actions/loading';
 import { liskAPIClientSet } from '../../actions/peers';
 import Piwik from '../../utils/piwik';
 import { loginType } from '../../constants/hwConstants';
+import routes from '../../constants/routes';
 
 import styles from './unlockWallet.css';
 
@@ -35,7 +36,7 @@ class HwWallet extends React.Component {
 
   cancelLedgerLogin() {
     Piwik.trackingEvent('HwWallet', 'button', 'Cancel Ledger');
-    this.setState({ isLedgerLogin: false });
+    this.props.history.push(`${routes.login.path}`);
   }
 
   async ledgerLogin() { // eslint-disable-line max-statements
@@ -55,10 +56,7 @@ class HwWallet extends React.Component {
       // `${error.message}.` : i18next.t('Error during login with Ledger.');
       // this.props.errorToastDisplayed({ label: error.message });
     } else {
-      const network = Object.assign({}, getNetwork(this.props.network));
-      if (this.state.network === networks.customNode.code) {
-        network.address = this.state.address;
-      }
+      const network = this.getNetwork();
 
       if (ledgerAccount.publicKey) {
         clearTimeout(finishTimeout);
@@ -79,13 +77,24 @@ class HwWallet extends React.Component {
     }
   }
 
+  getNetwork() {
+    const network = {
+      ...getNetwork(this.props.network),
+    };
+    if (this.props.network === networks.customNode.code &&
+        this.props.peers.options && this.props.peers.options.address) {
+      network.address = this.props.peers.options.address;
+    }
+    return network;
+  }
+
   render() {
     if (this.state.isLedgerLogin) {
       return (
         <Box>
           <LedgerLogin
             loginType={loginType.normal}
-            network={getNetwork(this.props.network)}
+            network={this.getNetwork()}
             cancelLedgerLogin={this.cancelLedgerLogin.bind(this)} />
         </Box>);
     }
@@ -100,8 +109,8 @@ class HwWallet extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  network: state.settings.network,
-  liskAPIClient: state.peers && state.peers.liskAPIClient,
+  network: state.settings.network || networks.mainnet.code,
+  peers: state.peers,
 });
 
 const mapDispatchToProps = {

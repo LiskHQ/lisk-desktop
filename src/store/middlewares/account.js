@@ -165,6 +165,7 @@ const accountMiddleware = store => next => (action) => {
     case actionTypes.accountLoggedOut:
       store.dispatch(cleanTransactions());
       localStorage.removeItem('accounts');
+      localStorage.removeItem('isHarwareWalletConnected');
       break;
     default: break;
   }

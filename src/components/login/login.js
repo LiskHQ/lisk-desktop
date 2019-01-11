@@ -13,6 +13,7 @@ import PassphraseInput from '../passphraseInput';
 import styles from './login.css';
 import networks from '../../constants/networks';
 import routes from '../../constants/routes';
+import feedbackLinks from '../../constants/feedbackLinks';
 import getNetwork from '../../utils/getNetwork';
 import { parseSearchParams } from './../../utils/searchParams';
 import Box from '../box';
@@ -168,20 +169,21 @@ class Login extends React.Component {
     return showNetworkParam === 'true' || (showNetwork && showNetworkParam !== 'false');
   }
 
-  validateCorrectNode() {
-    Piwik.trackingEvent('Login', 'button', 'Validate correct node');
+  validateCorrectNode(nextPath) {
     const { address } = this.state;
     const nodeURL = address !== '' ? addHttp(address) : address;
-
     if (this.state.network === networks.customNode.code) {
       const liskAPIClient = new Lisk.APIClient([nodeURL], {});
       liskAPIClient.node.getConstants()
         .then((res) => {
           if (res.data) {
             this.props.liskAPIClientSet({
-              network: this.getNetwork(this.state.network),
+              network: {
+                ...this.getNetwork(this.state.network),
+                address: nodeURL,
+              },
             });
-            this.props.history.push(routes.register.path);
+            this.props.history.push(nextPath);
           } else {
             throw new Error();
           }
@@ -191,14 +193,8 @@ class Login extends React.Component {
     } else {
       const network = this.getNetwork(this.state.network);
       this.props.liskAPIClientSet({ network });
-      this.props.history.push(routes.register.path);
+      this.props.history.push(nextPath);
     }
-  }
-
-  /* istanbul ignore next */
-  onHardwareWalletLink() {
-    Piwik.trackingEvent('Login', 'link', 'Hardware wallet link');
-    this.props.history.replace(routes.hwWallet.path);
   }
 
   render() {
@@ -244,11 +240,30 @@ class Login extends React.Component {
                   error={this.state.passphraseValidity}
                   value={this.state.passphrase}
                   onChange={this.changeHandler.bind(this, 'passphrase')} />
-                {localStorage.getItem('ledger') ?
-                  <div className={`${styles.hardwareWalletLink} hardwareWalletLink`} onClick={() => this.onHardwareWalletLink()}>
-                    Ledger Nano S
-                    <FontIcon className={styles.singUpArrow} value='arrow-right' />
-                  </div> : null}
+                {this.props.settings && this.props.settings.isHarwareWalletConnected ?
+                  <div>
+                    <div className={styles.ledgerRow}>
+                      <div>
+                        <FontIcon className={styles.singUpArrow} value='usb-stick' />
+                        {this.props.t('Hardware wallet login (beta):')}
+                      </div>
+                      <div className={`${styles.hardwareWalletLink} hardwareWalletLink`}
+                        onClick={this.validateCorrectNode.bind(this, routes.hwWallet.path)}>
+                        Ledger Nano S
+                        <FontIcon className={styles.singUpArrow} value='arrow-right' />
+                      </div>
+                    </div>
+                    <div className={styles.feedback}>
+                      <a
+                        className={styles.link}
+                        target='_blank'
+                        href={feedbackLinks.ledger}
+                        rel='noopener noreferrer'>
+                        {this.props.t('Give feedback about this feature')}
+                        <FontIcon className={styles.singUpArrow} value='external-link' />
+                      </a>
+                    </div>
+                  </div> : null }
                 <footer className={ `${grid.row} ${grid['center-xs']}` }>
                   <div className={grid['col-xs-12']}>
                     <PrimaryButton label={this.props.t('Log in')}
@@ -266,7 +281,7 @@ class Login extends React.Component {
         <SignUp
           t={this.props.t}
           passInputState={this.state.passInputState}
-          validateCorrectNode={this.validateCorrectNode.bind(this)}/>
+          validateCorrectNode={this.validateCorrectNode.bind(this, routes.register.path)}/>
       </Box>
     );
   }
