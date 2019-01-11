@@ -19,6 +19,7 @@ describe('Reducer: followedAccounts(state, action)', () => {
   const account2 = {
     address: accounts.delegate.address,
     balance: accounts.delegate.balance,
+    title: accounts.genesis.address,
     publicKey: accounts.delegate.publicKey,
   };
 
