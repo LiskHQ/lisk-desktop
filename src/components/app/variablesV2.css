@@ -53,16 +53,16 @@ or "warn/action" ineastd of "red/green"
   --font-weight-bold: 600;
   --font-weight-very-bold: 700;
   --subtitle-font-size: 18px;
+  --subtitle-font-size-s: 16px;
   --paragraph-font-size-l: 15px;
   --paragraph-font-size-s: 14px;
-  --input-font-size: 16px;
-  --button-font-size: 14px;
+  --button-font-size: var(--paragraph-font-size-s);
   --button-font-size-s: 12px;
 
   /*************************
         Sizes
   *************************/
-  --border-radius-normal: 3px;
+  --border-radius-standard: 4px;
   --header-height-m: 100px;
   --header-height-s: 72px;
   --header-elements-height: 32px;
@@ -79,7 +79,7 @@ or "warn/action" ineastd of "red/green"
   --color-primary-standard: #4e80f7;
   --color-primary-light: #9db8fa;
   --color-white: #fff;
-  --color-error: #da1d00;
+  --color-error: #ff7721;
   --color-content: #19224d;
   --color-content-light: #2e2c3b;
   --color-background-wrapper: linear-gradient(120deg, #f7f9fb, #fbfcfd);
@@ -89,15 +89,23 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Box
   *************************/
-  --box-shadow-button: 0 4px 8px 0 rgba(72, 77, 97, 0.1);
+  --box-shadow-standard: 0 4px 8px 0 rgba(72, 77, 97, 0.1);
+  --box-shadow-button: var(--box-shadow-standard);
   --box-shadow-header: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
-  --box-shadow-avatar: 0 0 4px 0 rgba(72, 77, 97, 0.2);
-  --border-radius-standard: 4px;
+  --box-shadow-avatar: var(--box-shadow-standard);
+
+  /*************************
+        Animation
+  *************************/
+  --animation-speed-fast: 250ms;
+  --animation-speed-standard: 500ms;
+  --animation-speed-slow: 700ms;
+  --animation-delay-standard: 100ms;
 
   /*************************
         Transitions
   *************************/
-  --transition-button: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+  --transition-button: background-color var(--animation-speed-fast) ease-in-out, color var(--animation-speed-fast) ease-in-out;
 
   /*************************
         Z-Indexes

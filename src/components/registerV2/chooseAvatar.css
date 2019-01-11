@@ -1,4 +1,4 @@
-@import './../app/variables.css';
+@import './../app/variablesV2.css';
 
 :root {
   --box-shadow-color: rgba(213, 224, 247, 1);
@@ -27,7 +27,7 @@
 }
 
 .animate > span > div {
-  animation-duration: 700ms;
+  animation-duration: var(--animation-speed-slow);
   animation-iteration-count: 1;
   animation-name: avatarAnimate;
   animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -35,7 +35,7 @@
 
 @for $i from 1 to 5 {
   .animate > span:nth-child($i) > div {
-    animation-delay: calc(100ms * $i);
+    animation-delay: calc(var(--animation-delay-standard) * $i);
   }
 }
 
@@ -61,8 +61,8 @@
     border-radius: 50%;
     position: relative;
     transition:
-      opacity 150ms ease-in,
-      transform 150ms linear;
+      opacity var(--animation-speed-fast) ease-in,
+      transform var(--animation-speed-fast) linear;
 
     &::before,
     &::after {
@@ -72,7 +72,7 @@
       left: 0;
       position: absolute;
       transform: scale(0.9);
-      transition: transform 200ms ease-in-out;
+      transition: transform var(--animation-speed-fast) ease-in-out;
       top: 0;
       width: 100%;
     }
@@ -95,29 +95,28 @@
 
   & > span.deselect {
     animation-name: avatarBounceBack;
-    animation-duration: 300ms;
+    animation-duration: var(--animation-speed-fast);
     animation-iteration-count: 1;
   }
 
   & > span.selected {
     animation-name: avatarBounce;
-    animation-duration: 500ms;
+    animation-duration: var(--animation-speed-standard);
     animation-fill-mode: both;
     animation-iteration-count: 1;
 
-    &::before {
+    &::before,
+    &::after {
       transform: scale(1.3);
-      transition: transform 200ms ease-in-out;
+      transition: transform var(--animation-speed-fast) ease-in-out;
     }
 
     &::after {
-      animation-delay: 500ms;
+      animation-delay: var(--animation-speed-standard);
       animation-direction: alternate;
       animation-duration: 1s;
       animation-iteration-count: infinite;
       animation-name: glowing;
-      transform: scale(1.3);
-      transition: transform 250ms ease-in-out;
     }
   }
 }
