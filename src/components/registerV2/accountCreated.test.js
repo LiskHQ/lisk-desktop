@@ -38,8 +38,8 @@ describe('V2 Register Process - Account created', () => {
   });
 
   it('Should render with correct avatar and address', () => {
-    expect(wrapper.find('AccountVisual')).to.have.length(1);
-    expect(wrapper.find('AccountVisual').prop('address')).to.have.equal(account.address);
-    expect(wrapper.find('.address').text()).to.be.equal(account.address);
+    expect(wrapper).to.have.exactly(1).descendants('AccountVisual');
+    expect(wrapper.find('AccountVisual')).to.have.prop('address', account.address);
+    expect(wrapper.find('.address')).to.have.text(account.address);
   });
 });
