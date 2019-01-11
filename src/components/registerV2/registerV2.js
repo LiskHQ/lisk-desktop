@@ -7,6 +7,7 @@ import MultiStep from '../multiStep';
 import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
 import ConfirmPassphrase from './confirmPassphrase';
+import AccountCreated from './accountCreated';
 import styles from './registerV2.css';
 
 class RegisterV2 extends React.Component {
@@ -57,6 +58,8 @@ class RegisterV2 extends React.Component {
               account={selectedAccount} />
             <ConfirmPassphrase
               passphrase={selectedAccount.passphrase} />
+            <AccountCreated
+              account={selectedAccount} />
           </MultiStep>
         </div>
       </React.Fragment>
