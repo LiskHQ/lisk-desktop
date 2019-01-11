@@ -6,6 +6,7 @@ import HeaderV2 from '../headerV2/headerV2';
 import MultiStep from '../multiStep';
 import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
+import AccountCreated from './accountCreated';
 import styles from './registerV2.css';
 
 class RegisterV2 extends React.Component {
@@ -54,6 +55,8 @@ class RegisterV2 extends React.Component {
               selected={selectedAccount}
               handleSelectAvatar={this.handleSelectAvatar} />
             <BackupPassphrase
+              account={selectedAccount} />
+            <AccountCreated
               account={selectedAccount} />
           </MultiStep>
         </div>

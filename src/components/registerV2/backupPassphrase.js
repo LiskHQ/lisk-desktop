@@ -34,7 +34,9 @@ class BackupPassphrase extends React.Component {
   }
 
   render() {
-    const { t, account, prevStep } = this.props;
+    const {
+      t, account, prevStep, nextStep,
+    } = this.props;
     const { passphraseCopied } = this.state;
 
     return (
@@ -120,7 +122,7 @@ class BackupPassphrase extends React.Component {
             </SecondaryButtonV2>
           </span>
           <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
-            <PrimaryButtonV2>
+            <PrimaryButtonV2 onClick={() => nextStep({ account })}>
               {t('Continue')}
               <FontIcon className={registerStyles.icon}>arrow-right</FontIcon>
             </PrimaryButtonV2>
