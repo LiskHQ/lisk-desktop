@@ -83,6 +83,7 @@ or "warn/action" ineastd of "red/green"
   --color-content: #19224d;
   --color-content-light: #2e2c3b;
   --color-dark-gray: #868ba1;
+  --color-light-gray: #e6e6e6;
   --color-background-wrapper: linear-gradient(120deg, #f7f9fb, #fbfcfd);
   --color-background-header: #fbfcfd;
   --color-link: var(--color-primary-standard);
