@@ -7,7 +7,7 @@ pipeline {
 		buildDiscarder(logRotator(numToKeepStr: '168', artifactNumToKeepStr: '5'))
 	}
 	environment {
-		LISK_CORE_VERSION = '1.3.0'
+		LISK_CORE_VERSION = '1.4.0-rc.0'
 	}
 	stages {
 		stage('Install npm dependencies') {
@@ -115,7 +115,7 @@ pipeline {
 										sed -i -r -e '/ports:/,+2d' docker-compose.yml
 										# random port assignment
 										cat <<EOF >docker-compose.override.yml
-version: "2"
+version: "3"
 services:
 
   lisk:

@@ -4,10 +4,15 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
 import { FontIcon } from '../fontIcon';
 import AccountList from './accountList';
-
+import Piwik from '../../utils/piwik';
 import styles from './delegateStatistics.css';
 
 class VotedDelegates extends AccountList {
+  onShowMore() {
+    Piwik.trackingEvent('Transactions_VotedDelegates', 'button', 'Show more');
+    super.showMore('showVotersNumber');
+  }
+
   render() {
     const voters = super.getFormatedDelegates('voters', 'votersFilterQuery');
 
@@ -27,7 +32,7 @@ class VotedDelegates extends AccountList {
           </div>
           {voters.length > this.state.showVotersNumber &&
            this.state.showMoreVoters ?
-            <div onClick={() => { super.showMore('showVotersNumber'); }} className={`${styles.showMore} showMore  show-voters`}>
+            <div onClick={() => this.onShowMore()} className={`${styles.showMore} showMore  show-voters`}>
               <FontIcon className={styles.arrowDown} value='arrow-down'/>
               {this.props.t('Show more')}
             </div> :

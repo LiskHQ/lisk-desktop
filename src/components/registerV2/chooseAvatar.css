@@ -1,0 +1,123 @@
+@import './../app/variables.css';
+
+:root {
+  --box-shadow-color: rgba(213, 224, 247, 1);
+}
+
+@keyframes avatarBounceBack {
+  0% { transform: scale(1.6); }
+  100% { transform: scale(1); }
+}
+
+@keyframes avatarBounce {
+  0% { transform: scale(1.3); }
+  70% { transform: scale(1.8); }
+  100% { transform: scale(1.6); }
+}
+
+@keyframes avatarAnimate {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+@keyframes glowing {
+  from { box-shadow: 0px 0px 10px 2px var(--box-shadow-color); }
+  to { box-shadow: 0px 0px 10px 4px var(--box-shadow-color); }
+}
+
+.animate > span > div {
+  animation-duration: 700ms;
+  animation-iteration-count: 1;
+  animation-name: avatarAnimate;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@for $i from 1 to 5 {
+  .animate > span:nth-child($i) > div {
+    animation-delay: calc(100ms * $i);
+  }
+}
+
+.avatarsHolder {
+  align-items: center;
+  display: flex;
+  margin: 130px 0 180px;
+  justify-content: space-between;
+  width: 100%;
+
+  &.avatarSelected {
+    & > span:not(.selected) {
+      opacity: 0.45;
+    }
+  }
+
+  & > span {
+    animation-direction: normal;
+    animation-timing-function: linear;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    border-radius: 50%;
+    position: relative;
+    transition:
+      opacity 150ms ease-in,
+      transform 150ms linear;
+
+    &::before,
+    &::after {
+      border-radius: 50%;
+      content: '';
+      height: 100%;
+      left: 0;
+      position: absolute;
+      transform: scale(0.9);
+      transition: transform 200ms ease-in-out;
+      top: 0;
+      width: 100%;
+    }
+
+    &::before {
+      background: var(--color-white);
+      z-index: -1;
+    }
+
+    &::after {
+      box-shadow: 0px 0px 10px 2px var(--box-shadow-color);
+      z-index: -2;
+    }
+
+    &:hover {
+      opacity: 1 !important;
+      transform: scale(1.3);
+    }
+  }
+
+  & > span.deselect {
+    animation-name: avatarBounceBack;
+    animation-duration: 300ms;
+    animation-iteration-count: 1;
+  }
+
+  & > span.selected {
+    animation-name: avatarBounce;
+    animation-duration: 500ms;
+    animation-fill-mode: both;
+    animation-iteration-count: 1;
+
+    &::before {
+      transform: scale(1.3);
+      transition: transform 200ms ease-in-out;
+    }
+
+    &::after {
+      animation-delay: 500ms;
+      animation-direction: alternate;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-name: glowing;
+      transform: scale(1.3);
+      transition: transform 250ms ease-in-out;
+    }
+  }
+}

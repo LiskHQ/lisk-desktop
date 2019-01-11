@@ -7,6 +7,7 @@ import { FontIcon } from '../../../fontIcon';
 import { Button, ActionButton } from '../../../toolbox/buttons/button';
 import CopyToClipboard from '../../../copyToClipboard/index';
 import inputValidator from '../../../../utils/inputValidator';
+import Piwik from '../../../../utils/piwik';
 import styles from '../../receive.css';
 
 class Confirmation extends React.Component {
@@ -31,6 +32,16 @@ class Confirmation extends React.Component {
           : inputValidator.validateInput(this.props.t, name, value, required),
       },
     });
+  }
+
+  onNextStep() {
+    Piwik.trackingEvent('Request_Confirmation', 'button', 'Next step');
+    this.props.goToTransationPage();
+  }
+
+  onPrevStep() {
+    Piwik.trackingEvent('Request_Confirmation', 'button', 'Previous step');
+    this.props.prevStep({ reset: true });
   }
 
   render() {
@@ -83,14 +94,14 @@ class Confirmation extends React.Component {
               className={'back'}
               // prevStep() should be check it as the behavior is not right
               // the reset shouldn't be use for skip
-              onClick={() => this.props.prevStep({ reset: true })}>
+              onClick={this.onPrevStep.bind(this)}>
               {this.props.t('Back')}
             </Button>
           </div>
           <div className={`${grid['col-xs-5']} ${grid['col-sm-5']} ${grid['col-md-4']} ${grid['col-lg-3']}`}>
             <ActionButton
               className={'next okay-button'}
-              onClick={() => this.props.goToTransationPage()}
+              onClick={this.onNextStep.bind(this)}
               >
               {this.props.t("Okay, I'm done")}
             </ActionButton>

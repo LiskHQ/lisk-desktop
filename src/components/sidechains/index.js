@@ -7,6 +7,7 @@ import application from './../../assets/images/sidechains/graphic-application.sv
 import bootstrap from './../../assets/images/sidechains/graphic-bootstrap.svg';
 import hosts from './../../assets/images/sidechains/graphic-hosts.svg';
 import register from './../../assets/images/sidechains/graphic-register.svg';
+import links from './../../constants/externalLinks';
 
 class Sidechains extends React.Component {
   render() {
@@ -23,7 +24,7 @@ class Sidechains extends React.Component {
         <div className={styles.subHeader}>
           {t('Sidechains will revolutionize the way decentralized apps are developed. Here you will be able to find hosts, and monitor your sidechains soon.')}
         </div>
-        <a target='_blank' href='http://help.lisk.io/faq#sidechains' rel='noopener noreferrer'>
+        <a target='_blank' href={links.sidechains} rel='noopener noreferrer'>
           {t('Learn more about Lisk sidechains')}&nbsp;<FontIcon>arrow-right</FontIcon>
         </a>
         <img src={application} className={styles.smallGraphic}/>

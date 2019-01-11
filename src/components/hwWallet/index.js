@@ -11,7 +11,7 @@ import getNetwork from '../../utils/getNetwork';
 import { getAccountFromLedgerIndex } from '../../utils/ledger';
 import { loadingStarted, loadingFinished } from '../../actions/loading';
 import { liskAPIClientSet } from '../../actions/peers';
-
+import Piwik from '../../utils/piwik';
 import { loginType } from '../../constants/hwConstants';
 import routes from '../../constants/routes';
 
@@ -30,10 +30,12 @@ class HwWallet extends React.Component {
   }
 
   handleOnClick() {
+    Piwik.trackingEvent('HwWallet', 'button', 'Continue');
     this.ledgerLogin();
   }
 
   cancelLedgerLogin() {
+    Piwik.trackingEvent('HwWallet', 'button', 'Cancel Ledger');
     this.props.history.push(`${routes.login.path}`);
   }
 

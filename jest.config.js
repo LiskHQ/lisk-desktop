@@ -55,12 +55,12 @@ module.exports = {
     'src/components/passphrase/create/create.js',
     'src/components/passphraseCreation/index.js',
     'src/components/passphraseSteps/index.js', // FollowUp #1515
-    'src/components/register/register.js',
-    'src/components/request/specifyRequest.js',
     'src/components/receive/index.js',
-    'src/components/request/index.js',
+    'src/components/register/register.js',
     'src/components/register/register.js',
     'src/components/request/index.js',
+    'src/components/request/index.js',
+    'src/components/request/specifyRequest.js',
     'src/components/resultBox/index.js',
     'src/components/searchBar/index.js', // Passing in mocha but not in Jest
     'src/components/send/steps/form/stories.js',

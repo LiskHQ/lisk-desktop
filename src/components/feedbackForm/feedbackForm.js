@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './feedbackForm.css';
 import Questionare from './questionare';
+import Piwik from '../../utils/piwik';
 
 class FeedbackForm extends Component {
   onCancel() {
+    Piwik.trackingEvent('FeedbackForm', 'button', 'Cancel');
     this.props.hideDialog();
   }
 
   onSubmit(feedbackState) {
+    Piwik.trackingEvent('FeedbackForm', 'button', 'Submit');
     // TODO: integrate with api
     this.props.sendFeedback(feedbackState);
     this.props.hideDialog();

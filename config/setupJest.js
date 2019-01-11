@@ -9,6 +9,7 @@ import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import i18next from 'i18next';
 import ReactPiwik from 'react-piwik';
+import crypto from 'crypto';
 // TODO remove next line after upgrading node version to at least 7
 import 'es7-object-polyfill';
 
@@ -47,7 +48,14 @@ Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
 });
 
+Object.defineProperty(window, 'crypto', {
+  value: {
+    getRandomValues: arr => crypto.randomBytes(arr.length),
+  },
+});
+
 ReactPiwik.push = () => {};
+ReactPiwik.trackingEvent = () => {};
 sinon.stub(ReactPiwik.prototype, 'connectToHistory').callsFake(() => 1);
 sinon.stub(ReactPiwik.prototype, 'initPiwik').callsFake(() => {});
 

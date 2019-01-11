@@ -94,14 +94,17 @@ const passphraseUsed = (store, action) => {
 const checkTransactionsAndUpdateAccount = (store, action) => {
   const state = store.getState();
   const { account, transactions } = state;
-
-  store.dispatch(updateTransactionsIfNeeded(
-    {
-      transactions,
-      account,
-    },
-    action.data.windowIsFocused,
-  ));
+  // Adding timeout explained in
+  // https://github.com/LiskHQ/lisk-hub/pull/1609
+  setTimeout(() => {
+    store.dispatch(updateTransactionsIfNeeded(
+      {
+        transactions,
+        account,
+      },
+      action.data.windowIsFocused,
+    ));
+  }, 500);
 
   const tx = action.data.block.transactions || [];
   const accountAddress = state.account.address;
@@ -116,7 +119,7 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     // after a new block with second passphrase registration transaction was received
     setTimeout(() => {
       updateAccountData(store, action);
-    }, 5000);
+    }, 500);
   }
 };
 

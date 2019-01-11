@@ -5,7 +5,7 @@ import { fromRawLsk } from '../../../../utils/lsk';
 import { PrimaryButton } from '../../../toolbox/buttons/button';
 import ToolBoxInput from '../../../toolbox/inputs/toolBoxInput';
 import { FontIcon } from '../../../fontIcon';
-
+import Piwik from '../../../../utils/piwik';
 import stepStyles from '../steps.css';
 import styles from './choose.css';
 
@@ -29,6 +29,7 @@ class Choose extends React.Component {
   }
 
   checkSufficientFunds(evt) {
+    Piwik.trackingEvent('RegisterDelegate_Choose', 'button', 'Choose a name');
     if (!this.hasEnoughLSK()) {
       evt.preventDefault();
       return;
@@ -65,6 +66,11 @@ class Choose extends React.Component {
         this.props.checkDelegateUsernameAvailable(this.state.delegateName.value);
       }
     }, 250);
+  }
+
+  onNextStep() {
+    Piwik.trackingEvent('RegisterDelegate_Choose', 'button', 'Next step');
+    this.props.nextStep({ delegateName: this.state.delegateName.value });
   }
 
   render() { // eslint-disable-line
@@ -160,8 +166,7 @@ class Choose extends React.Component {
                   disabled={disableSubmitButton}
                   label={t('Next')}
                   className={`${stepStyles.chooseNameBtn} submit-delegate-name`}
-                  onClick={() =>
-                    this.props.nextStep({ delegateName: this.state.delegateName.value })}
+                  onClick={() => this.onNextStep()}
                 />
               </form>
             </div>

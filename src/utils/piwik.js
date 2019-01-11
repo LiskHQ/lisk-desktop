@@ -1,8 +1,7 @@
 import ReactPiwik from 'react-piwik';
 import piwikOptions from '../constants/piwik';
-import localJSONStorage from './localJSONStorage';
 
-let piwik = false;
+let piwikInstance = false;
 
 const setPiwikParameters = () => {
   ReactPiwik.push([piwikOptions.REMEMBER_CONSENT_GIVEN]);
@@ -14,7 +13,7 @@ const setPiwikParameters = () => {
 };
 
 const initPiwik = () => {
-  piwik = new ReactPiwik({
+  const piwik = new ReactPiwik({
     url: piwikOptions.URL,
     siteId: piwikOptions.SITE_ID,
     trackErrors: true,
@@ -25,31 +24,28 @@ const initPiwik = () => {
   return piwik;
 };
 
-const checkIfPiwikIsEnabled = () => localJSONStorage.get('settings', false);
-
 const disabledPiwikTracking = () => {
   ReactPiwik.push([piwikOptions.FORGET_CONSENT_GIVEN]);
 };
 
-// eslint-disable-next-line max-statements
-const tracking = (history) => {
-  const settings = checkIfPiwikIsEnabled();
+const trackingEvent = (category, action, name) => {
+  if (piwikInstance) ReactPiwik.push([piwikOptions.TRACK_EVENT, category, action, name]);
+};
 
-  if (!piwik && settings.statistics) {
-    initPiwik();
+const tracking = (history, settings) => {
+  if (!piwikInstance && settings.statistics) {
+    piwikInstance = initPiwik();
   }
 
-  if (piwik && settings.statistics) {
-    piwik.connectToHistory(history);
-  } else if (piwik) {
+  if (piwikInstance && settings.statistics) {
+    ReactPiwik.push([piwikOptions.REMEMBER_CONSENT_GIVEN]);
+    piwikInstance.connectToHistory(history);
+  } else if (piwikInstance) {
     disabledPiwikTracking();
-    piwik = false;
   }
-
-  return piwik;
 };
 
 export default {
   tracking,
-  disabledPiwikTracking,
+  trackingEvent,
 };

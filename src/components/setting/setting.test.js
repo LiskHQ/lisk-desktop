@@ -23,6 +23,7 @@ describe('Setting', () => {
     advancedMode: true,
     showNetwork: false,
     currency: settingsConst.currencies[0],
+    statistics: false,
   };
 
   const account = {
@@ -58,6 +59,10 @@ describe('Setting', () => {
     t,
     toggleMenu: sinon.spy(),
     isAuthenticated: true,
+    location: {
+      pathname: '/setting',
+      search: '?showTackingSwitch=true',
+    },
   };
 
   beforeEach(() => {
@@ -132,6 +137,23 @@ describe('Setting', () => {
     wrapper.update();
     const expectedCallToSettingsUpdated = {
       showNetwork: !settings.showNetwork,
+    };
+    expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+  });
+
+  it('should change usage statistics when clicking on checkbox', () => {
+    props.settings.currency = undefined;
+    wrapper = mount(<Router>
+      <Setting
+        store={store}
+        {...props}/>
+    </Router>, options);
+
+    wrapper.find('.statistics').at(0).find('input').simulate('change', { target: { checked: false, value: false } });
+    clock.tick(300);
+    wrapper.update();
+    const expectedCallToSettingsUpdated = {
+      statistics: !settings.statistics,
     };
     expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
   });

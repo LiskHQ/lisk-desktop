@@ -18,6 +18,7 @@ const initialState = JSON.parse(localStorage.getItem('settings')) || {
   hardwareAccounts: {},
   isHarwareWalletConnected: false,
   isRequestHowItWorksDisable: false,
+  statistics: false,
 };
 
 /**

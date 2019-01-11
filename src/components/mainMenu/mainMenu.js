@@ -10,6 +10,7 @@ import * as menuLogos from '../../assets/images/main-menu-icons/*.svg'; //eslint
 import { FontIcon } from '../fontIcon';
 import routes from '../../constants/routes';
 import feedbackLinks from '../../constants/feedbackLinks';
+import Piwik from '../../utils/piwik';
 
 const getIndex = (history, tabs) => {
   let index = -1;
@@ -44,6 +45,7 @@ class MainMenu extends React.Component {
   }
 
   menuToggle() {
+    Piwik.trackingEvent('MainMenu', 'link', 'Menu toggle');
     const setting = !this.state.active ? false : this.state.setting;
     this.setState({ active: !this.state.active, setting });
   }

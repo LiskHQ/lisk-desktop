@@ -1,6 +1,6 @@
 
 export default {
-  URL: 'matomo.lisk.io/',
+  URL: 'https://matomo.lisk.io/',
   SITE_ID: 1,
   DELETE_CUSTOM_VARIABLE: 'deleteCustomVariable',
   ENABLE_HEART_BEAT_TIMER: 'enableHeartBeatTimer',
@@ -20,5 +20,6 @@ export default {
   SET_USER_ID: 'setUserId',
   TRACK_ALL_CONTENT_IMPRESSIONS: 'trackAllContentImpressions',
   TRACK_ERRORS: 'trackErrors',
+  TRACK_EVENT: 'trackEvent',
   TRACK_PAGE_VIEW: 'trackPageView',
 };

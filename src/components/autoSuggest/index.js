@@ -11,6 +11,7 @@ import localJSONStorage from './../../utils/localJSONStorage';
 import regex from './../../utils/regex';
 import { saveSearch } from './../searchResult/keyAction';
 import { searchEntities } from './../../constants/search';
+import Piwik from '../../utils/piwik';
 
 class AutoSuggest extends React.Component {
   constructor(props) {
@@ -40,7 +41,9 @@ class AutoSuggest extends React.Component {
     this.setState({ resultsLength, selectedIdx, placeholder });
   }
 
+  // eslint-disable-next-line max-statements
   onResultClick(id, type, value) {
+    Piwik.trackingEvent('AutoSuggest', 'button', 'Results');
     let urlSearch;
     switch (type) {
       case searchEntities.addresses:
@@ -75,6 +78,7 @@ class AutoSuggest extends React.Component {
   }
 
   submitSearch() {
+    Piwik.trackingEvent('AutoSuggest', 'button', 'Search submit');
     this.onResultClick(
       this.selectedRow.dataset.id,
       this.selectedRow.dataset.type,
@@ -154,6 +158,7 @@ class AutoSuggest extends React.Component {
   }
 
   handleSubmit() {
+    Piwik.trackingEvent('AutoSuggest', 'button', 'Handle submit');
     if (this.state.value === '' && this.state.placeholder === '') {
       return;
     }
@@ -190,6 +195,7 @@ class AutoSuggest extends React.Component {
   }
 
   resetSearch() {
+    Piwik.trackingEvent('AutoSuggest', 'button', 'Clear suggestions');
     this.lastSearch = null;
     this.setState({ value: '', placeholder: '' });
     this.props.searchClearSuggestions();
@@ -201,6 +207,7 @@ class AutoSuggest extends React.Component {
   }
 
   selectInput() {
+    Piwik.trackingEvent('AutoSuggest', 'button', 'Select Input');
     this.inputRef.inputNode.select();
   }
 
