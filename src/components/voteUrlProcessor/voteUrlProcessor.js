@@ -67,11 +67,13 @@ export default class VoteUrlProcessor extends React.Component {
     this.props.clearVoteLookupStatus();
     this.props.clearVotes();
     this.props.toggleShowInfo(false);
+    this.props.history.push(routes.delegates.path);
   }
 
   onCloseInfo() {
     Piwik.trackingEvent('VoteUrlProcessor', 'button', 'Close info');
     this.props.toggleShowInfo(false);
+    this.props.history.push(routes.delegates.path);
   }
 
   render() {

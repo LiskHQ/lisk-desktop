@@ -31,6 +31,7 @@ describe('VoteUrlProcessor', () => {
           search: '',
         },
         listen: () => {},
+        push: () => {},
       },
       urlVoteCount: 0,
       t: key => key,
