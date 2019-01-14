@@ -1,5 +1,4 @@
 @import '../toolbox/buttons/css/base.css';
-@import '../app/variables.css';
 @import '../app/variablesV2.css';
 
 .wrapper {
@@ -28,13 +27,52 @@
   }
 }
 
+.buttonsHolder {
+  display: flex;
+  justify-content: space-between;
+
+  & > * {
+    margin-left: 24px;
+  }
+}
+
 .settingButton > button {
   font-size: var(--button-font-size-s);
   height: var(--header-elements-height);
   letter-spacing: 0.5px;
-  min-height: var(--header-elements-height);
   line-height: var(--header-elements-height);
+  min-height: var(--header-elements-height);
   width: 144px;
+}
+
+.dropdownHandler {
+  align-items: center;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-light-gray);
+  border-radius: var(--border-radius-standard);
+  box-shadow: var(--box-shadow-standard);
+  box-sizing: border-box;
+  color: var(--color-content-light);
+  cursor: pointer;
+  display: flex;
+  font-family: var(--heading-font);
+  font-size: var(--button-font-size-s);
+  font-weight: var(--font-weight-bold);
+  height: var(--header-elements-height);
+  justify-content: space-between;
+  letter-spacing: 0.5px;
+  line-height: var(--header-elements-height);
+  min-height: var(--header-elements-height);
+  padding: 0 24px;
+  position: relative;
+  width: 144px;
+
+  &::after {
+    border: 5px solid transparent;
+    border-bottom: 0;
+    border-top-color: var(--color-content-light);
+    content: '';
+  }
 }
 
 @media (--small-viewport) {
