@@ -11,7 +11,7 @@
   min-width: 145px;
   padding: 24px 0;
   position: absolute;
-  right: 0;
+  right: -1px;
   transform: scale(0);
   transform-origin: calc(100% - 25px) -3px;
   transition: transform var(--animation-speed-fast) linear;
