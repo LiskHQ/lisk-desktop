@@ -32,15 +32,16 @@ class HeaderV2 extends React.Component {
         <div className={`${styles.logo}`}>
           <img src={logo} />
         </div>
-        <div>
+        <div className={`${styles.buttonsHolder}`}>
           {showSettings
             && <Link className={styles.settingButton} to={routes.setting.path}>
               <SecondaryButtonV2>{t('Settings')}</SecondaryButtonV2>
             </Link>
           }
           {showNetwork
-            && <span onClick={this.toggleDropdown} style={{ position: 'relative' }}>
-              {this.state.selectedNetwork}
+            && <span className={`${styles.dropdownHandler}`}
+              onClick={this.toggleDropdown}>
+              Main Net
               <DropdownV2 showDropdown={this.state.showDropdown}>
                 <span>Main Net</span>
                 <span>Test Net</span>
