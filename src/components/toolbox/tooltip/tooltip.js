@@ -75,7 +75,7 @@ class Tooltip extends React.Component {
           className={styles.infoIcon}
           onClick={this.handleClick}
           />
-        <div className={`${styles.tooltip}
+        <div className={`${styles.tooltip} tooltip-window
           ${this.state.showTooltip && styles.shownTooltip}`}>
           <span className={`${styles.tooltipArrow}`}>
             <svg fill="currentColor" viewBox="0 0 8 36"><path d="M8 0C7 11 0 13 0 18s7 9 8 18z"/></svg>
