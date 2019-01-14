@@ -54,10 +54,9 @@ describe('actions: followedAccount', () => {
     expect(followedAccountRemoved(data)).to.be.deep.equal(expectedAction);
   });
 
-  it('should update a followed account if balance or privateKey changed', () => {
+  it('should not update a followed account if balance and publicKey doesn\'t change', () => {
     stub(accountApi, 'getAccount').returnsPromise();
 
-    // Case 1: balance and publicKey does not change
     accountApi.getAccount.resolves({
       balance: accounts.genesis.balance,
       publicKey: accounts.genesis.publicKey,
@@ -66,7 +65,12 @@ describe('actions: followedAccount', () => {
     followedAccountFetchedAndUpdated({ account: data })(dispatch, getState);
     expect(dispatch).to.not.have.been.calledWith();
 
-    // Case 2: balance does change
+    accountApi.getAccount.restore();
+  });
+
+  it('should update a followed account if balance does change', () => {
+    stub(accountApi, 'getAccount').returnsPromise();
+
     accountApi.getAccount.resolves({
       balance: 0,
       publicKey: accounts.genesis.publicKey,
@@ -79,7 +83,12 @@ describe('actions: followedAccount', () => {
       title: accounts.genesis.address,
     }));
 
-    // Case 3: publicKey does change
+    accountApi.getAccount.restore();
+  });
+
+  it('should update a followed account if publicKey does change', () => {
+    stub(accountApi, 'getAccount').returnsPromise();
+
     accountApi.getAccount.resolves({
       balance: accounts.genesis.balance,
       publicKey: accounts.delegate.publicKey,
@@ -92,7 +101,12 @@ describe('actions: followedAccount', () => {
       title: accounts.genesis.address,
     }));
 
-    // Case 4: publicKey changes to undefined
+    accountApi.getAccount.restore();
+  });
+
+  it('should not update a followed account if publicKey changed to undefined', () => {
+    stub(accountApi, 'getAccount').returnsPromise();
+
     accountApi.getAccount.resolves({
       balance: accounts.genesis.balance,
       publicKey: undefined,
@@ -105,7 +119,12 @@ describe('actions: followedAccount', () => {
       title: accounts.genesis.address,
     }));
 
-    // Case 5: publicKey previously not existed
+    accountApi.getAccount.restore();
+  });
+
+  it('should not update a followed account if publicKey previously unexisted', () => {
+    stub(accountApi, 'getAccount').returnsPromise();
+
     const testData = {
       balance: accounts.genesis.balance,
       title: accounts.genesis.address,
