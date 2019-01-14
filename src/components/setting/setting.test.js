@@ -97,7 +97,7 @@ describe('Setting', () => {
         {...newProps}/>
     </Router>, options);
 
-    expect(wrapper.find('.disabled').length).to.have.equal(4);
+    expect(wrapper.find('.disabled').length).to.have.equal(3);
   });
 
   it('should not show the onboarding setting when on mobile', () => {
