@@ -40,11 +40,24 @@
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  height: 100%;
+  height: 410px;
   box-sizing: border-box;
+
+  & > div {
+    padding: 0 48px;
+    box-sizing: border-box;
+  }
+
+  & > footer {
+    padding: 0 48px 20px;
+    box-sizing: border-box;
+  }
 }
 
 header {
+  padding: 20px 48px 0;
+  box-sizing: border-box;
+
   & .edit {
     height: 40px;
     min-width: 120px;
@@ -102,6 +115,7 @@ header {
       margin-left: 0;
       line-height: var(--main-row-line-height);
       white-space: nowrap;
+      padding: 0 48px;
 
       &:nth-of-type(even) {
         background: var(--row-background-color);
@@ -180,24 +194,44 @@ header {
 
 @media (--medium-viewport) {
   .addAccount {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 398px;
+    box-sizing: border-box;
+
+    & > div {
+      padding: 0 48px;
+      box-sizing: border-box;
+    }
+
+    & > footer {
+      padding: 0 48px 20px;
+      box-sizing: border-box;
+    }
   }
 
   .accounts {
     & .list {
       overflow: hidden;
-      margin: 0px calc(0 - var(--box-padding-left-M));
-    }
 
-    & .rows {
-      padding: 0px var(--box-padding-left-M);
+      & .rows {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-      &:nth-of-type(even) {
-        background: var(--gradient-greyscale-mobile);
-      }
+        & .accountInformation {
+          margin: 0;
+        }
 
-      &:nth-of-type(odd) {
-        background: var(--color-grayscale-mobile-background);
+        &:nth-of-type(even) {
+          background: var(--gradient-greyscale-mobile);
+        }
+
+        &:nth-of-type(odd) {
+          background: var(--color-grayscale-mobile-background);
+        }
       }
     }
   }

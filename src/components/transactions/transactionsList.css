@@ -17,28 +17,25 @@
 
 @media (--xLarge-viewport) {
   .results {
-    height: 270px;
-    overflow: hidden;
+    overflow: auto;
     margin: 0px calc(0 - var(--box-padding-left-XL));
   }
 }
 
 @media (--large-viewport) {
   .results {
-    height: 270px;
-    overflow: hidden;
+    overflow: auto;
     margin: 0px calc(0 - var(--box-padding-left-L));
   }
 }
 
 @media (--medium-viewport) {
   .results {
-    height: 270px;
-    overflow: hidden;
+    overflow: auto;
     margin: 0px calc(0 - var(--box-padding-left-M));
   }
 }
 
 .onShowMore {
-  height: auto;
+  height: auto !important;
 }

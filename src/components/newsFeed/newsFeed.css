@@ -43,7 +43,7 @@
 .container {
   min-height: 670px;
   overflow: hidden;
-  height: 66vh; /* stylelint-disable-line unit-whitelist */
+  height: 705px;
 
   & .newsWrapper {
     padding: 0 32px;
@@ -56,9 +56,15 @@
 
 .newsFeed {
   width: 100%;
+  height: 848px;
 }
 
 @media (--medium-viewport) {
+  .newsFeed {
+    width: 100%;
+    height: 718px;
+  }
+
   .liskLogo {
     display: none;
   }
@@ -70,7 +76,7 @@
 
   .container {
     min-height: 500px;
-    height: 550px;
+    height: 587px;
   }
 }
 

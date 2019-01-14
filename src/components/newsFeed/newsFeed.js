@@ -46,22 +46,21 @@ class NewsFeed extends React.Component {
         <FontIcon className='online' value='edit' />
       </div>);
 
-    const onHideContent = !this.state.showMore && styles.hideContent;
-    const onShowConten = this.state.showMore && styles.showContent;
+    const onShowMore = this.state.showMore ? styles.showMore : '';
 
     const filteredNewsFeed =
       this.props.newsFeed.filter(feed => this.props.channels[feed.source]) || [];
 
     return (
-      <Box className={`newsFeed-box ${styles.newsFeedBox} ${onShowConten}`}>
-        <div className={`${styles.newsFeed} ${onHideContent}`}>
+      <Box className={`newsFeed-box ${styles.newsFeedBox}`}>
+        <div className={`${styles.newsFeed} ${onShowMore}`}>
           <div className={styles.header}>
             <header className={styles.headerWrapper}>
               <h2>{this.props.t('News')}</h2>
             </header>
             {settingsButton}
           </div>
-          <div className={`${styles.container} ${this.state.showMore && styles.showMore}`}>
+          <div className={`${styles.container} ${onShowMore}`}>
             {
               this.state.showSettings ?
               <SettingsNewsFeed
@@ -90,7 +89,7 @@ class NewsFeed extends React.Component {
             }
           </div>
           {
-            filteredNewsFeed.length >= 4 &&
+            filteredNewsFeed.length >= 4 && !this.state.showSettings &&
             <ShowMore
               className={'show-more'}
               onClick={() => this.onShowMore()}

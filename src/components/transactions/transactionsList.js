@@ -106,7 +106,7 @@ class TransactionsList extends React.Component {
         // otherwise (XS) the whole transaction box will be scrollable
         // (see transactionOverview.js)
         this.isLargeScreen()
-          ? <Waypoint bottomOffset='-80%'
+          ? <Waypoint bottomOffset='-20%'
             key={transactions.length}
             onEnter={() => {
               if (!dashboard) {

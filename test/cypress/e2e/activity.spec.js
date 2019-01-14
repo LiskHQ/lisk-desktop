@@ -14,7 +14,7 @@ function testActivity(open) {
    * Scrolling down triggers loading another portion of txs
    * @expect more txs are present
    */
-  it.skip('25 tx are shown, scrolling loads another 25', () => {
+  it('25 tx are shown, scrolling loads another 25', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     open();
     cy.get(ss.transactionRow).should('have.length', 25);
@@ -188,9 +188,9 @@ describe('Latest activity', () => {
    * 5 transaction are shown in the latest activity component
    * @expect 5 transactions
    */
-  it('5 tx are shown', () => {
+  it('25 tx are shown', () => {
     cy.visit(urls.dashboard);
-    cy.get(ss.transactionRow).should('have.length', 5);
+    cy.get(ss.transactionRow).should('have.length', 25);
   });
 
   /**
