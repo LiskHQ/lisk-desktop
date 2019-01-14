@@ -11,36 +11,45 @@ const loginMiddleware = store => next => (action) => { // eslint-disable-line ma
   const { account } = state;
   const { ipc } = window;
 
-  if (ipc) { // On browser-mode is undefined
-    ipc.on('ledgerConnected', () => {
-      store.dispatch({
-        type: actionTypes.settingsUpdated,
-        data: { isHarwareWalletConnected: true },
-      });
-      store.dispatch(errorToastDisplayed({ label: LEDGER_MSG.LEDGER_CONNECTED }));
-    });
+  switch (action.type) {
+    case actionTypes.storeCreated:
+      if (ipc) { // On browser-mode is undefined
+        store.dispatch({
+          type: actionTypes.settingsUpdated,
+          data: { isHarwareWalletConnected: false },
+        });
 
-    ipc.on('ledgerDisconnected', () => {
-      if (account.address) {
-        store.dispatch( // eslint-disable-line
-          dialogDisplayed({
-            childComponent: Alert,
-            childComponentProps: {
-              title: 'You are disconnected',
-              text: 'There is no connection to the Ledger Nano S. Please check the cables if it happened by accident.',
-              closeDialog: () => {
-                store.dispatch(dialogHidden());
-                location.reload(); // eslint-disable-line
-              },
-            },
-          }));
-        store.dispatch(accountLoggedOut());
+        ipc.on('ledgerConnected', () => {
+          store.dispatch({
+            type: actionTypes.settingsUpdated,
+            data: { isHarwareWalletConnected: true },
+          });
+          store.dispatch(errorToastDisplayed({ label: LEDGER_MSG.LEDGER_CONNECTED }));
+        });
+
+        ipc.on('ledgerDisconnected', () => {
+          if (account.address) {
+            store.dispatch( // eslint-disable-line
+              dialogDisplayed({
+                childComponent: Alert,
+                childComponentProps: {
+                  title: 'You are disconnected',
+                  text: 'There is no connection to the Ledger Nano S. Please check the cables if it happened by accident.',
+                  closeDialog: () => {
+                    store.dispatch(dialogHidden());
+                    location.reload(); // eslint-disable-line
+                  },
+                },
+              }));
+            store.dispatch(accountLoggedOut());
+          }
+          store.dispatch({
+            type: actionTypes.settingsUpdated,
+            data: { isHarwareWalletConnected: false },
+          });
+        });
       }
-      store.dispatch({
-        type: actionTypes.settingsUpdated,
-        data: { isHarwareWalletConnected: false },
-      });
-    });
+    default: break;
   }
   next(action);
 };
