@@ -49,6 +49,7 @@
   transform-origin: left center;
   transition: transform var(--animation-speed-fast) linear, opacity var(--animation-speed-fast) linear;
   width: 45vw; /* stylelint-disable-line */
+  z-index: var(--overlay-index);
 
   & .tooltipArrow {
     color: var(--background-color-tooltip);
