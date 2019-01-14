@@ -14,7 +14,7 @@ function testActivity(open) {
    * Scrolling down triggers loading another portion of txs
    * @expect more txs are present
    */
-  it('25 tx are shown, scrolling loads another 25', () => {
+  it.skip('25 tx are shown, scrolling loads another 25', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     open();
     cy.get(ss.transactionRow).should('have.length', 25);

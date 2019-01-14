@@ -65,7 +65,6 @@
 
   .newsFeedBox {
     height: auto;
-    margin-bottom: var(--footer-height-m);
     min-height: 0;
   }
 

@@ -3,10 +3,11 @@
 .wrapper {
   width: 100%;
   margin: 0px;
+  padding-bottom: 50px;
 }
 
 .main {
-  max-height: 75vh; /* stylelint-disable-line */
+  height: auto;
   padding: 0px;
 }
 
@@ -84,7 +85,7 @@
       flex-basis: 100%;
       max-width: 100%;
       min-height: min-content;
-      padding-bottom: 105px;
+      padding-bottom: 50px;
     }
   }
 
