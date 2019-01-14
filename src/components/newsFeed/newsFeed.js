@@ -6,6 +6,7 @@ import { FontIcon } from '../fontIcon';
 import SettingsNewsFeed from './settingsNewsFeed';
 import logo from '../../assets/images/Lisk-Logo.svg';
 import Piwik from '../../utils/piwik';
+import ShowMore from '../showMore';
 
 class NewsFeed extends React.Component {
   constructor(props) {

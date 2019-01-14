@@ -10,6 +10,7 @@ import routes from '../../constants/routes';
 import TitleInput from './titleInputForList';
 import { followedAccountRemoved } from '../../actions/followedAccounts';
 import Piwik from '../../utils/piwik';
+import ShowMore from '../showMore';
 
 class ViewAccounts extends React.Component {
   constructor() {
@@ -65,7 +66,7 @@ class ViewAccounts extends React.Component {
             >
             {
               !this.state.edit &&
-              <span className={'add-account-button'} onClick={() => nextStep()}>Add <FontIcon value='add'/></span>
+              <span className={'add-account-button'} onClick={() => this.onAddAccount()}>Add <FontIcon value='add'/></span>
             }
             {
               this.state.edit
@@ -122,7 +123,7 @@ class ViewAccounts extends React.Component {
             {
               !accounts.length &&
               (
-                <div className={`${styles.addAccountLink} ${styles.rows} ${styles.clickable} add-account-button`} onClick={() => nextStep()}>
+                <div className={`${styles.addAccountLink} ${styles.rows} ${styles.clickable} add-account-button`} onClick={() => this.onAddAccount()}>
                   {t('Add a Lisk ID')} <FontIcon value='arrow-right'/>
                 </div>
               )
