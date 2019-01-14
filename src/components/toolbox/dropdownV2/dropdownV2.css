@@ -7,13 +7,15 @@
   box-shadow: var(--box-shadow-standard);
   box-sizing: border-box;
   display: flex;
+  line-height: 1;
   min-width: 145px;
   padding: 24px 0;
   position: absolute;
   right: 0;
   transform: scale(0);
-  transform-origin: top right;
+  transform-origin: calc(100% - 25px) -3px;
   transition: transform var(--animation-speed-fast) linear;
+  top: calc(100% + 3px);
   width: 100%;
   z-index: var(--overlay-index);
 
@@ -30,6 +32,10 @@
     stroke: var(--color-light-gray);
     top: -9px;
     width: 36px;
+
+    & > svg {
+      display: block;
+    }
   }
 }
 
