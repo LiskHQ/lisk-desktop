@@ -1,5 +1,4 @@
 @import './variables.css';
-@import './variablesV2.css';
 @import './global.css';
 @import './type.css';
 
@@ -7,17 +6,6 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
-}
-
-.v2Wrapper {
-  background-image: var(--color-background-wrapper);
-  bottom: 0;
-  left: 0;
-  padding-top: var(--header-height-m);
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: var(--normal-index);
 }
 
 .bodyWrapper {
@@ -111,10 +99,6 @@ body {
 @media (--small-viewport) {
   body {
     margin-top: var(--header-height-s);
-  }
-
-  .v2Wrapper {
-    padding-top: var(--header-height-s);
   }
 
   html.on-device,
