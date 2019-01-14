@@ -63,9 +63,10 @@
   letter-spacing: 0.5px;
   line-height: var(--header-elements-height);
   min-height: var(--header-elements-height);
+  min-width: 144px;
   padding: 0 24px;
   position: relative;
-  width: 144px;
+  width: auto;
 
   &::after {
     border: 5px solid transparent;
