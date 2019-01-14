@@ -1,4 +1,9 @@
-@import '../app/variables.css';
+@import '../app/variablesV2.css';
+
+:root {
+  --avatar-padding: 3px;
+  --avatar-size: calc(96px - var(--avatar-padding));
+}
 
 .accountHolder {
   align-items: center;
@@ -10,19 +15,19 @@
   & .avatar {
     background: var(--color-white);
     border-radius: 50%;
-    box-shadow: 0 0 4px 0 rgba(72, 77, 97, 0.2);
+    box-shadow: var(--box-shadow-avatar);
     box-sizing: border-box;
     display: flex;
-    height: 92px;
-    padding: 3px;
-    width: 92px;
+    height: var(--avatar-size);
+    padding: var(--avatar-padding);
+    width: var(--avatar-size);
   }
 
   & .address {
-    color: #1e194d;
-    font-family: Gilroy, sans-serif;
-    font-size: 18px;
-    font-weight: 600;
+    color: var(--color-content);
+    font-family: var(--heading-font);
+    font-size: var(--subtitle-font-size);
+    font-weight: var(--font-weight-bold);
     letter-spacing: 0.1px;
     margin: 40px 0;
     text-align: center;

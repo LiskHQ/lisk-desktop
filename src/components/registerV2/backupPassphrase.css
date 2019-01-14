@@ -1,4 +1,4 @@
-@import '../app/variables.css';
+@import '../app/variablesV2.css';
 
 .optionsHolder {
   justify-content: center;
@@ -28,20 +28,20 @@
 
   & > h2 {
     align-items: center;
-    color: #2e2c3b;
+    color: var(--color-content-light);
     display: flex;
-    font-family: "Open Sans", sans-serif;
-    font-size: 15px;
-    font-weight: 500;
+    font-family: var(--content-font);
+    font-size: var(--paragraph-font-size-l);
+    font-weight: var(--font-weight-semi-bold);
     line-height: 1.47;
     margin: 0;
   }
 
   & > p {
-    color: #1e194d;
-    font-family: Gilroy, sans-serif;
-    font-size: 14px;
-    font-weight: 600;
+    color: var(--color-content);
+    font-family: var(--heading-font);
+    font-size: var(--paragraph-font-size-s);
+    font-weight: var(--font-weight-bold);
     letter-spacing: 0.1px;
     margin: 15px 0;
     text-align: left;
@@ -49,17 +49,17 @@
   }
 
   & .action {
-    color: #4e80f7;
+    color: var(--color-primary-standard);
     cursor: pointer;
-    font-family: "Open Sans", sans-serif;
-    font-size: 15px;
-    font-weight: 500;
+    font-family: var(--content-font);
+    font-size: var(--paragraph-font-size-l);
+    font-weight: var(--font-weight-semi-bold);
     line-height: 1.47;
-    transition: color 100ms linear;
+    transition: color var(--animation-speed-fast) linear;
     text-decoration: underline;
 
     &.copied {
-      color: #9db8fa;
+      color: var(--color-primary-light);
       cursor: default;
       text-decoration: none;
     }

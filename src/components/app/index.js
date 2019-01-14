@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { isPathCorrect } from '../../utils/app';
 import styles from './app.css';
+import stylesV2 from './appV2.css';
 import Toaster from '../toaster';
 import MainMenu from '../mainMenu';
 import LoadingBar from '../loadingBar';
@@ -56,7 +57,7 @@ class App extends React.Component {
           routesV2Layout.filter(route => route.path === location.pathname).length > 0
           ? (
             <main className={this.state.loaded ?
-              `${styles.v2Wrapper} ${styles.loaded} appLoaded` :
+              `${stylesV2.v2Wrapper} ${stylesV2.loaded} appLoaded` :
               `${styles.v2Wrapper}`
             } ref={(el) => { this.main = el; }}>
               <Switch>
