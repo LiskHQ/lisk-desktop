@@ -50,7 +50,7 @@
     color: var(--color-content-light);
     cursor: pointer;
     font-family: var(--heading-font);
-    font-size: var(--paragraph-font-size-s);
+    font-size: var(--button-font-size-s);
     font-weight: var(--font-weight-bold);
     letter-spacing: 0.5px;
     padding: 8px 24px;
