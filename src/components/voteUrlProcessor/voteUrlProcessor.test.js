@@ -17,7 +17,7 @@ describe('VoteUrlProcessor', () => {
       account,
       clearVoteLookupStatus: sinon.spy(),
       clearVotes: sinon.spy(),
-      closeInfo: sinon.spy(),
+      toggleShowInfo: sinon.spy(),
       urlVotesFound: sinon.spy(),
       settingsUpdated: sinon.spy(),
       notVotedYet: [],
@@ -30,6 +30,8 @@ describe('VoteUrlProcessor', () => {
         location: {
           search: '',
         },
+        listen: () => {},
+        push: () => {},
       },
       urlVoteCount: 0,
       t: key => key,
@@ -44,6 +46,7 @@ describe('VoteUrlProcessor', () => {
         location: {
           search: '?votes=delegate_name',
         },
+        listen: () => {},
       },
     }} />);
     expect(props.urlVotesFound).to.have.been.calledWith({
@@ -61,6 +64,7 @@ describe('VoteUrlProcessor', () => {
         location: {
           search: '?unvotes=delegate_name',
         },
+        listen: () => {},
       },
     }} />);
     expect(props.urlVotesFound).to.have.been.calledWith({
@@ -84,7 +88,7 @@ describe('VoteUrlProcessor', () => {
     wrapper.find('.clear-votes').simulate('click');
     expect(props.clearVoteLookupStatus).to.have.been.calledWith();
     expect(props.clearVotes).to.have.been.calledWith();
-    expect(props.closeInfo).to.have.been.calledWith();
+    expect(props.toggleShowInfo).to.have.been.calledWith();
   });
 
   it('close dialog when click on closeInfo button', () => {
@@ -98,7 +102,7 @@ describe('VoteUrlProcessor', () => {
     expect(wrapper.find('.unvotes-message')).to.have.text('delegate_2');
 
     wrapper.find('.ok-close-info').at(0).simulate('click');
-    expect(props.closeInfo).to.have.been.calledWith();
+    expect(props.toggleShowInfo).to.have.been.calledWith();
   });
 });
 
