@@ -62,10 +62,12 @@ class Tooltip extends React.Component {
   }
 
   render() {
-    const { title, children, footer } = this.props;
+    const {
+      title, children, footer, className,
+    } = this.props;
     return (
       <div
-        className={`${styles.tooltipWrapper}`}
+        className={`${styles.tooltipWrapper} ${className}`}
         onMouseLeave={this.handleMouseLeave}
         onMouseMove={this.handleMouseMove}
         ref={this.setWrapperRef}>
