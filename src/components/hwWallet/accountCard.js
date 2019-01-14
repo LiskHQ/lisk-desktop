@@ -4,12 +4,13 @@ import { fromRawLsk } from '../../utils/lsk';
 import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import AccountVisual from '../accountVisual';
 import CopyToClipboard from '../copyToClipboard';
+import keyCodes from './../../constants/keyCodes';
 
 import styles from './accountCard.css';
 
 const AccountCard = ({
   account, hardwareAccountName, isEditMode,
-  changeInput, onClickHandler, index,
+  changeInput, onClickHandler, index, saveAccountNames,
 }) => (
   <div
     className={styles.card}
@@ -33,6 +34,7 @@ const AccountCard = ({
           placeholder={'Title'}
           onChange={value => changeInput(value, account.address)}
           theme={styles}
+          onKeyDown={ (event) => { if (event.keyCode === keyCodes.enter) saveAccountNames(); }}
           value={hardwareAccountName}></ToolBoxInput>
       </div> :
       null}
