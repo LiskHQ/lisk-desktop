@@ -58,7 +58,6 @@ class AutoSuggest extends React.Component {
         break;
     }
     saveSearch(value, id);
-    this.props.searchClearSuggestions();
 
     if (!value && [searchEntities.addresses, searchEntities.transactions].filter(entity =>
       entity === type).length > 0) {
@@ -343,8 +342,11 @@ class AutoSuggest extends React.Component {
             />
             : null
           }
-
-          { this.state.value !== '' && this.state.resultsLength === 0 ?
+          { this.state.value.length <= 2 ?
+            <p className={styles.noResults}>{t('Type at least 3 characters')}</p>
+            : null
+          }
+          { this.state.value.length > 2 && this.state.resultsLength === 0 ?
             <p className={styles.noResults}>{t('No results found')}</p>
             : null
           }

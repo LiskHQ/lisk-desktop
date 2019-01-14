@@ -212,7 +212,6 @@ describe('AutoSuggest', () => {
       which: keyCodes.tab,
     });
     expect(submitSearchSpy).to.have.been.calledWith();
-    expect(props.searchClearSuggestions).to.have.been.calledWith();
   });
 
   it('should show recent searches and close dropdown on keyboard event {escape}', () => {
