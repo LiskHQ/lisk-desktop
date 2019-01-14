@@ -49,6 +49,7 @@ const loginMiddleware = store => next => (action) => { // eslint-disable-line ma
           });
         });
       }
+      break;
     default: break;
   }
   next(action);
