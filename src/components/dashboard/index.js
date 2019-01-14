@@ -1,3 +1,4 @@
+// istanbul ignore file
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
