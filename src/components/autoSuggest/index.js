@@ -259,9 +259,15 @@ class AutoSuggest extends React.Component {
       });
     return this.recentSearches;
   }
-
   render() {
     const { t } = this.props;
+
+    const getNoResultMessage = () => {
+      let noResultMessage;
+      if (this.state.value.length > 0 && this.state.value.length <= 2) noResultMessage = 'Type at least 3 characters';
+      if (this.state.value.length > 2 && this.state.resultsLength === 0) noResultMessage = 'No results found';
+      return noResultMessage;
+    };
 
     let placeholderValue = '';
     if (this.state.placeholder === '' && this.state.value === '') {
@@ -274,28 +280,32 @@ class AutoSuggest extends React.Component {
       <div className={styles.wrapper}>
         <input
           value={placeholderValue}
-          onChange={() => {}}
+          onChange={() => {
+          }}
           className={`${styles.placeholder} autosuggest-placeholder`}
           type='text'
-          name='autosuggest-placeholder' />
+          name='autosuggest-placeholder'/>
         <Input type='text'
-          id='autosuggest-input'
-          name='searchBarInput'
-          value={this.state.value}
-          innerRef={(el) => { this.inputRef = el; }}
-          className={`${styles.input} autosuggest-input`}
-          theme={styles}
-          onClick={this.selectInput.bind(this)}
-          onFocus={() => this.setState({ show: true })}
-          onBlur={this.closeDropdown.bind(this)}
-          onKeyDown={this.handleKey.bind(this)}
-          onChange={this.search.bind(this)}
-          autoComplete='off'>
+               id='autosuggest-input'
+               name='searchBarInput'
+               value={this.state.value}
+               innerRef={(el) => {
+                 this.inputRef = el;
+               }}
+               className={`${styles.input} autosuggest-input`}
+               theme={styles}
+               onClick={this.selectInput.bind(this)}
+               onFocus={() => this.setState({ show: true })}
+               onBlur={this.closeDropdown.bind(this)}
+               onKeyDown={this.handleKey.bind(this)}
+               onChange={this.search.bind(this)}
+               autoComplete='off'>
           {
             this.state.value !== '' || this.state.placeholder !== '' ?
-              <FontIcon value='close' className={`${styles.icon} autosuggest-btn-close`} onClick={this.resetSearch.bind(this)} /> :
+              <FontIcon value='close' className={`${styles.icon} autosuggest-btn-close`}
+                        onClick={this.resetSearch.bind(this)}/> :
               <FontIcon value='search' className={`${styles.icon} ${styles.iconSearch} autosuggest-btn-search`}
-                onClick={this.submitSearch.bind(this)} />
+                        onClick={this.submitSearch.bind(this)}/>
           }
         </Input>
         <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}>
@@ -329,7 +339,7 @@ class AutoSuggest extends React.Component {
             onMouseDown={this.onResultClick.bind(this)}
             setSelectedRow={this.setSelectedRow.bind(this)}
           />
-          { this.state.value === '' && this.state.resultsLength === 0 ?
+          {this.state.value === '' && this.state.resultsLength === 0 ?
             <ResultsList
               key='recent'
               results={this.getRecentSearchResults()}
@@ -342,14 +352,7 @@ class AutoSuggest extends React.Component {
             />
             : null
           }
-          { this.state.value.length <= 2 ?
-            <p className={styles.noResults}>{t('Type at least 3 characters')}</p>
-            : null
-          }
-          { this.state.value.length > 2 && this.state.resultsLength === 0 ?
-            <p className={styles.noResults}>{t('No results found')}</p>
-            : null
-          }
+          {<p className={styles.noResults}>{t(getNoResultMessage())}</p>}
         </div>
       </div>
     );
