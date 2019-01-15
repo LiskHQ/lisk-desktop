@@ -140,6 +140,7 @@ class LedgerLogin extends React.Component {
                     key={`accountCard-${index}`}
                     index={index}
                     account={account}
+                    saveAccountNames={this.saveAccountNames.bind(this)}
                     changeInput={this.changeAccountNameInput.bind(this)}
                     onClickHandler={this.selectAccount.bind(this)} />
                 ))}

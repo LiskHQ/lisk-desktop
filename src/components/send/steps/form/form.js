@@ -109,11 +109,6 @@ class Form extends React.Component {
     }, 200);
   }
 
-  getTitle() {
-    return this.props.account.hwInfo && this.props.account.hwInfo.deviceId ?
-      <h2>{this.props.t('Confirm transaction on Ledger Nano S')}</h2> : <h2>{this.props.t('Send LSK')}</h2>;
-  }
-
   onPrevStep() {
     Piwik.trackingEvent('Send_Form', 'button', 'Previous step');
     this.props.goToWallet();
@@ -132,7 +127,7 @@ class Form extends React.Component {
     return (
       <div className={`${styles.sendWrapper}`}>
         <header className={styles.headerWrapper}>
-          {this.getTitle()}
+          <h2>{this.props.t('Send LSK')}</h2>
         </header>
         <form className={styles.form}>
           { this.props.followedAccounts.length > 0 && this.state.openFollowedAccountSuggestion ?
