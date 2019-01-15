@@ -357,7 +357,7 @@ class AutoSuggest extends React.Component {
             />
             : null
           }
-          <p className={styles.noResults}>{this.getNoResultMessage()}</p>
+          <p className={`${styles.noResults} no-result-message`}>{this.getNoResultMessage()}</p>
         </div>
       </div>
     );
