@@ -1,38 +1,82 @@
 import React from 'react';
+import i18next from 'i18next';
+
+import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
-import { translate } from 'react-i18next';
 import routes from '../../constants/routes';
 import { FontIcon } from '../fontIcon';
+import { parseSearchParams } from './../../utils/searchParams';
+import { getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
+import networks from '../../constants/networks';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import HeaderV2 from '../headerV2/headerV2';
+import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
 import lock from '../../assets/images/icons-v2/lock.svg';
 import styles from './loginV2.css';
 
 class LoginV2 extends React.Component {
-  constructor() {
+  constructor() { // eslint-disable-line max-statements
     super();
 
+    const { liskCoreUrl } = getAutoLogInData();
+    let loginNetwork = findMatchingLoginNetwork();
+
+    if (loginNetwork) {
+      loginNetwork = loginNetwork.slice(-1).shift();
+    } else if (!loginNetwork) {
+      loginNetwork = liskCoreUrl ? networks.customNode : networks.default;
+    }
+
     this.state = {
-      showPassphrase: false,
       isValid: false,
+      passphrase: '',
+      network: loginNetwork.code,
     };
 
-    this.handleToggleShowPassphrase = this.handleToggleShowPassphrase.bind(this);
+    this.getNetworksList();
+
+    this.passFocused = this.passFocused.bind(this);
   }
 
-  handleToggleShowPassphrase() {
-    const showPassphrase = !this.state.showPassphrase;
-    this.setState({ showPassphrase });
+  componentDidMount() {
+    i18next.on('languageChanged', () => {
+      this.getNetworksList();
+    });
+  }
+
+  passFocused() {
+    this.setState({
+      passInputState: 'focused',
+    });
+  }
+
+  getNetworksList() {
+    this.networks = Object.keys(networks)
+      .filter(network => network !== 'default')
+      .map((network, index) => ({
+        label: i18next.t(networks[network].name),
+        value: index,
+      }));
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  showNetworkOptions() {
+    const showNetwork = this.props.settings && this.props.settings.showNetwork;
+    const params = parseSearchParams(this.props.history.location.search);
+    const showNetworkParam = params.showNetwork || params.shownetwork;
+
+    return showNetworkParam === 'true' || (showNetwork && showNetworkParam !== 'false');
   }
 
   render() {
     const { t } = this.props;
     return (
       <React.Fragment>
-      <HeaderV2 showSettings={true} showNetwork={true} />
+        <HeaderV2 networkList={this.networks}
+          showSettings={true} showNetwork={this.showNetworkOptions()} />
         <div className={`${styles.login} ${grid.row}`}>
           <div
             className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}>
@@ -50,7 +94,6 @@ class LoginV2 extends React.Component {
                 </Link>
               </p>
             </div>
-
 
             <div className={`${styles.inputsHolder}`}>
               <h2>
@@ -73,23 +116,11 @@ class LoginV2 extends React.Component {
                 </Tooltip>
               </h2>
 
-              <div className={`${styles.inputs} ${grid.row}`}>
-                {[...Array(12)].map((x, i) => (
-                  <span key={i} className={`${grid['col-xs-2']}`}>
-                    <input placeholder={i + 1} className={i % 2 === 0 ? styles.error : ''}
-                      type={this.state.showPassphrase ? 'text' : 'password'} />
-                  </span>
-                ))}
-              </div>
-
-              <label className={`${styles.showPassphrase}`}>
-                <input checked={this.state.showPassphrase}
-                  type='checkbox' onChange={this.handleToggleShowPassphrase}/>
-                <span className={`${styles.fakeCheckbox}`}>
-                  <FontIcon className={`${styles.icon}`}>checkmark</FontIcon>
-                </span>
-                <span className={`${styles.label}`}>{t('Show passphrase')}</span>
-              </label>
+              <PassphraseInputV2
+                className='passphrase'
+                onFocus={this.passFocused.bind(this)}
+                error={this.state.passphraseValidity}
+                value={this.state.passphrase} />
 
             </div>
 
