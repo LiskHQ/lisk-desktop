@@ -49,7 +49,7 @@ const ledgerObserver = {
   next: async ({ device, type }) => {
     if (device) {
       if (type === 'add') {
-        if (process.platform === 'darwin' || await isInsideLedgerApp(device.path)) {
+        if (process.platform !== 'linux' || await isInsideLedgerApp(device.path)) {
           ledgerPath = device.path;
           win.send({ event: 'ledgerConnected', value: null });
         }
