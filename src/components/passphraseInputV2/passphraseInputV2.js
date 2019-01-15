@@ -15,7 +15,8 @@ class passphraseInputV2 extends React.Component {
       partialPassphraseError: [],
       values: [],
       focus: 0,
-      error: '',
+      validationError: '',
+      passphraseIsInvalid: false,
     };
 
     this.handleToggleShowPassphrase = this.handleToggleShowPassphrase.bind(this);
@@ -38,9 +39,10 @@ class passphraseInputV2 extends React.Component {
   }
 
   // eslint-disable-next-line max-statements
-  handleValueChange(index, value) {
+  handleValueChange({ target }) {
     let { values, focus } = this.state;
-    const insertedValue = value.trim().replace(/\W+/g, ' ');
+    const index = target.dataset.index;
+    const insertedValue = target.value.trim().replace(/\W+/g, ' ');
     const insertedValueAsArray = insertedValue.split(' ');
 
     values[index] = insertedValue;
@@ -51,14 +53,11 @@ class passphraseInputV2 extends React.Component {
       focus = insertedValueAsArray.length - 1;
     }
 
-    let errorState = { error: '', partialPassphraseError: [] };
+    let errorState = { validationError: '', partialPassphraseError: [], passphraseIsInvalid: false };
     const passphrase = values.join(' ');
     if (!isValidPassphrase(passphrase)) {
-      const { partialPassphraseError, validationError } = getPassphraseValidationErrors(passphrase);
-      errorState = {
-        partialPassphraseError,
-        error: validationError,
-      };
+      errorState = getPassphraseValidationErrors(passphrase);
+      errorState.passphraseIsInvalid = errorState.validationError === this.props.t('Passphrase is not valid');
     }
 
     this.setState({
@@ -66,10 +65,12 @@ class passphraseInputV2 extends React.Component {
       focus,
       ...errorState,
     });
+
+    this.props.onFill(passphrase, errorState.validationError);
   }
 
-  setFocusedField({ field = null }) {
-    this.setState({ focus: field });
+  setFocusedField(e) {
+    this.setState({ focus: e.target.dataset.index });
   }
 
   handleToggleShowPassphrase() {
@@ -89,28 +90,21 @@ class passphraseInputV2 extends React.Component {
               <input
                 ref={ref => ref !== null && this.state.focus === i && ref.focus() }
                 placeholder={i + 1}
-                className={`${this.state.partialPassphraseError[i] ? styles.error : ''}`}
+                className={`${this.state.partialPassphraseError[i] || this.state.passphraseIsInvalid ? styles.error : ''}`}
                 value={values[i] || ''}
                 type={this.state.showPassphrase ? 'text' : 'password'}
                 autoComplete='off'
-                onFocus={(e) => {
-                  const val = e.target.value;
-                  e.target.value = '';
-                  e.target.value = val;
-
-                  this.setFocusedField({ field: i });
-                }}
-                onBlur={this.setFocusedField}
-                onChange={e => this.handleValueChange(i, e.target.value)}
+                onFocus={this.setFocusedField}
+                onChange={this.handleValueChange}
                 onKeyDown={this.keyAction}
-                index={i}
+                data-index={i}
               />
             </span>
           ))}
         </div>
 
         <span className={`${styles.errorMessage}`}>
-          { this.state.error }
+          { this.state.validationError }
         </span>
 
         <label className={`${styles.showPassphrase}`}>

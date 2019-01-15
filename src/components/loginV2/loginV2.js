@@ -38,18 +38,12 @@ class LoginV2 extends React.Component {
 
     this.getNetworksList();
 
-    this.passFocused = this.passFocused.bind(this);
+    this.checkPassphrase = this.checkPassphrase.bind(this);
   }
 
   componentDidMount() {
     i18next.on('languageChanged', () => {
       this.getNetworksList();
-    });
-  }
-
-  passFocused() {
-    this.setState({
-      passInputState: 'focused',
     });
   }
 
@@ -69,6 +63,13 @@ class LoginV2 extends React.Component {
     const showNetworkParam = params.showNetwork || params.shownetwork;
 
     return showNetworkParam === 'true' || (showNetwork && showNetworkParam !== 'false');
+  }
+
+  checkPassphrase(passphrase, validationError) {
+    this.setState({
+      passphrase,
+      isValid: !validationError,
+    });
   }
 
   render() {
@@ -117,10 +118,7 @@ class LoginV2 extends React.Component {
               </h2>
 
               <PassphraseInputV2
-                className='passphrase'
-                onFocus={this.passFocused.bind(this)}
-                error={this.state.passphraseValidity}
-                value={this.state.passphrase} />
+                onFill={this.checkPassphrase} />
 
             </div>
 
