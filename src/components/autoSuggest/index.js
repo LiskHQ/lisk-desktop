@@ -259,15 +259,20 @@ class AutoSuggest extends React.Component {
       });
     return this.recentSearches;
   }
+
+  getNoResultMessage() {
+    let noResultMessage;
+    if (this.state.value.length > 0 && this.state.value.length <= 2) {
+      noResultMessage = this.props.t('Type at least 3 characters');
+    }
+    if (this.state.value.length > 2 && this.state.resultsLength === 0) {
+      noResultMessage = this.props.t('No results found');
+    }
+    return noResultMessage;
+  }
+
   render() {
     const { t } = this.props;
-
-    const getNoResultMessage = () => {
-      let noResultMessage;
-      if (this.state.value.length > 0 && this.state.value.length <= 2) noResultMessage = 'Type at least 3 characters';
-      if (this.state.value.length > 2 && this.state.resultsLength === 0) noResultMessage = 'No results found';
-      return noResultMessage;
-    };
 
     let placeholderValue = '';
     if (this.state.placeholder === '' && this.state.value === '') {
@@ -352,7 +357,7 @@ class AutoSuggest extends React.Component {
             />
             : null
           }
-          {<p className={styles.noResults}>{t(getNoResultMessage())}</p>}
+          <p className={styles.noResults}>{this.getNoResultMessage()}</p>
         </div>
       </div>
     );
