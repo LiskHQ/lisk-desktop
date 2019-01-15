@@ -196,10 +196,31 @@ describe('Search', () => {
   });
 
   /**
-   * Search for nonexistent item
-   * @expect no results message
+   * Type not sufficient amount of chars
+   * @expect 'Type at least 3 characters' message
    */
-  it('Search for nonexistent item - shows no results message', () => {
+  it('Type 2 chars - dropdown shows not enough chars message', () => {
+    cy.visit('/');
+    cy.get(ss.searchInput).click().type('43');
+    cy.get(ss.searchNoResultMessage).eq(0).should('have.text', 'Type at least 3 characters');
+  });
+
+  /**
+   * Type not existent gibberish of chars
+   * @expect 'No results found' message
+   */
+  it('Type nonexistent thing - dropdown shows not results found message', () => {
+    cy.visit('/');
+    cy.get(ss.searchInput).click().type('43th3j4bt324');
+    cy.get(ss.searchNoResultMessage).eq(0).should('have.text', 'No results found');
+  });
+
+
+  /**
+   * Search for nonexistent item
+   * @expect no results plug
+   */
+  it('Search for nonexistent item - shows no results plug', () => {
     cy.visit('/');
     cy.get(ss.searchInput).click().type('43th3j4bt324{enter}');
     cy.get(ss.emptyResultsMessage).should('have.text', 'No results');

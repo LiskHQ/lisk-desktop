@@ -56,7 +56,7 @@ class SingleTransaction extends React.Component {
           </div>
         </Fragment> :
         <EmptyState title={this.props.t('No results')}
-          message={this.props.t('Search for Lisk ID or Transaction ID')} />
+          message={this.props.t('Search for Lisk ID, Delegate or Transaction ID')} />
       }
     </Box>;
   }

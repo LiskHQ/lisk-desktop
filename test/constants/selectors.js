@@ -67,6 +67,7 @@ const ss = {
   recentSearches: '.addresses-result',
   idResults: '.addresses-result',
   closeSearchBtn: '.autosuggest-btn-close',
+  searchNoResultMessage: '.no-result-message',
   accountBalance: '.balance span',
   transactionId: '.transaction-id .copy-title',
   logoutBtn: '.logout',
