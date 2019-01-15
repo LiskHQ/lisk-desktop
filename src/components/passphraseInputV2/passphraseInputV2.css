@@ -21,15 +21,18 @@
     text-align: center;
     width: 100%;
 
-    &:focus {
-      border-color: var(--color-primary-standard);
-      outline: none;
-    }
-
     &.error {
       border-color: var(--color-error);
       color: var(--color-error);
       outline-color: var(--color-error);
+      outline-style: auto;
+      outline-width: 5px;
+      outline-offset: -2px;
+    }
+
+    &:focus {
+      border-color: var(--color-primary-standard);
+      outline-color: var(--color-primary-standard);
       outline-style: auto;
       outline-width: 5px;
       outline-offset: -2px;
