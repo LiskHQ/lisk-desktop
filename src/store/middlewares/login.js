@@ -7,8 +7,6 @@ import { dialogDisplayed, dialogHidden } from '../../actions/dialog';
 import Alert from '../../components/dialog/alert';
 
 const loginMiddleware = store => next => (action) => { // eslint-disable-line max-statements
-  const state = store.getState();
-  const { account } = state;
   const { ipc } = window;
 
   switch (action.type) {
@@ -28,6 +26,8 @@ const loginMiddleware = store => next => (action) => { // eslint-disable-line ma
         });
 
         ipc.on('ledgerDisconnected', () => {
+          const state = store.getState();
+          const { account } = state;
           if (account.address) {
             store.dispatch( // eslint-disable-line
               dialogDisplayed({
