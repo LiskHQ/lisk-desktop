@@ -8,6 +8,7 @@ import styles from './headerV2.css';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
 
 class HeaderV2 extends React.Component {
+  // eslint-disable-next-line max-statements
   constructor() {
     super();
 
@@ -20,13 +21,14 @@ class HeaderV2 extends React.Component {
 
   toggleDropdown() {
     const showDropdown = !this.state.showDropdown;
-    this.setState({
-      showDropdown,
-    });
+    this.setState({ showDropdown });
   }
 
   render() {
-    const { t, showSettings, showNetwork } = this.props;
+    const {
+      t, showSettings, showNetwork, networkList,
+      selectedNetwork, handleNetworkSelect,
+    } = this.props;
     return (
       <header className={`${styles.wrapper} mainHeader`}>
         <div className={`${styles.logo}`}>
@@ -41,11 +43,13 @@ class HeaderV2 extends React.Component {
           {showNetwork
             && <span className={`${styles.dropdownHandler}`}
               onClick={this.toggleDropdown}>
-              Main Net
+              { networkList[selectedNetwork].label }
               <DropdownV2 showDropdown={this.state.showDropdown}>
-                <span>Main Net</span>
-                <span>Test Net</span>
-                <span>Custom Net</span>
+                {networkList && networkList.map((network, key) => (
+                  <span
+                    onClick={() => handleNetworkSelect(network.value)}
+                    key={key}>{network.label}</span>
+                ))}
               </DropdownV2>
             </span>
           }
