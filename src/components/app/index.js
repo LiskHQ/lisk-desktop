@@ -71,6 +71,7 @@ class App extends React.Component {
                   ))
                 }
               </Switch>
+              <Toaster />
             </main>
           ) : (
             <main className={this.state.loaded ?

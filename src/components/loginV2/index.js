@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { setDefaults, translate } from 'react-i18next';
 import LoginV2 from './loginV2';
 import { liskAPIClientSet } from '../../actions/peers';
+import { errorToastDisplayed } from '../../actions/toaster';
 import { settingsUpdated } from '../../actions/settings';
 
 setDefaults({
@@ -24,6 +25,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   liskAPIClientSet,
   settingsUpdated,
+  errorToastDisplayed,
 };
 
 export default connect(
