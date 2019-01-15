@@ -9,8 +9,8 @@ const DropdownV2 = ({ children, showDropdown }) => (
       </svg>
     </span>
     <div className={`${styles.optionsHolder}`}>
-      { children.map((child, key) => (
-        <span key={key} className={`${styles.option}`}>{child}</span>
+      { children && children.map(child => (
+        React.cloneElement(child, { className: `${styles.option}` })
       )) }
     </div>
   </div>
