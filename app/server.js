@@ -1,12 +1,15 @@
 const server = {
   // eslint-disable-next-line max-statements
-  init: (newPort) => {
+  init: (port) => {
     const express = require('express'); // eslint-disable-line
     const Path = require('path');
     const bodyParser = require('body-parser'); // eslint-disable-line
 
+    if (process.env.LISK_HUB_URL) {
+      return process.env.LISK_HUB_URL;
+    }
+
     const app = express();
-    const port = process.env.PORT || newPort;
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
