@@ -70,7 +70,7 @@ npm run dev-hardware-wallet
 In order to launch electron that gets live updates from already running webpack-dev-server on port 8080, you can run
 
 ```
-LISK_HUB_PORT=8080 npm run start
+LISK_HUB_URL="http://localhost:8080" npm run start
 ```
 
 #### Windows

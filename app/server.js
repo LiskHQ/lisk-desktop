@@ -5,8 +5,8 @@ const server = {
     const Path = require('path');
     const bodyParser = require('body-parser'); // eslint-disable-line
 
-    if (process.env.LISK_HUB_PORT) {
-      return `http://localhost:${port}/`;
+    if (process.env.LISK_HUB_URL) {
+      return process.env.LISK_HUB_URL;
     }
 
     const app = express();
