@@ -51,6 +51,12 @@ describe('NewsFeed', () => {
         timestamp: '',
         url: '',
       },
+      {
+        source: 'test',
+        content: '',
+        timestamp: '',
+        url: '',
+      },
     ],
   };
   const timestampNow = 1483228800000;

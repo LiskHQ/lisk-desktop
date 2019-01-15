@@ -23,7 +23,7 @@
 
 .followedAccountsWrapper {
   height: auto;
-  min-height: 410px;
+  min-height: 428px;
 
   @media (--medium-viewport) {
     min-height: 398px;
@@ -84,6 +84,7 @@ header {
 .bookmarkHeader {
   padding: 20px 48px 0;
   box-sizing: border-box;
+  height: 119px;
 }
 
 .addAccountLink {

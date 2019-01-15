@@ -89,7 +89,7 @@ class NewsFeed extends React.Component {
             }
           </div>
           {
-            filteredNewsFeed.length >= 4 && !this.state.showSettings &&
+            filteredNewsFeed.length > 4 && !this.state.showSettings &&
             <ShowMore
               className={`${styles.showMoreAlign} show-more`}
               onClick={() => this.onShowMore()}

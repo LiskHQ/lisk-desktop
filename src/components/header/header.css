@@ -20,6 +20,8 @@
   align-items: center;
   justify-content: space-between;
   height: 138px;
+  box-sizing: border-box;
+  padding-top: 15px;
 
   & .noPadding {
     padding: 0px;
