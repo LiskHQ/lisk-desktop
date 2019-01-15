@@ -54,7 +54,7 @@ class ViewAccounts extends React.Component {
     } = this.props;
 
     return <div>
-      <header>
+      <header className={`${styles.bookmarkHeader}`}>
         <h2>
         {t('Bookmarks')}
         {
@@ -139,7 +139,7 @@ class ViewAccounts extends React.Component {
         </div>
       }
       {
-        accounts.length >= 4 &&
+        accounts.length > 4 &&
         <ShowMore
           className={`${styles.showMore} show-more`}
           onClick={() => this.onShowMoreToggle()}

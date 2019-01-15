@@ -55,6 +55,9 @@
 }
 
 .newsFeed {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   width: 100%;
   height: 848px;
 }
@@ -62,7 +65,7 @@
 @media (--medium-viewport) {
   .newsFeed {
     width: 100%;
-    height: 718px;
+    height: 730px;
   }
 
   .liskLogo {
@@ -78,6 +81,11 @@
     min-height: 500px;
     height: 587px;
   }
+}
+
+.showMoreAlign {
+  margin-top: auto;
+  align-self: flex-end;
 }
 
 .showMore {

@@ -53,8 +53,6 @@
   .wrapper {
     padding: 0 var(--box-padding-left-M) 0 var(--box-padding-left-M);
     min-height: calc(100vh - var(--m-menu-bar-height) - var(--m-menu-bar-height)); /* stylelint-disable-line */
-    background-color: var(--color-grayscale-mobile-background);
-    box-shadow: unset;
   }
 }
 

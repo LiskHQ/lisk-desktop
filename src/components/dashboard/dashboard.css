@@ -14,13 +14,14 @@
 .latestActivity {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   min-height: 418px;
   height: auto;
   margin: 0 0 20px;
   padding: 0;
 
   & > header {
+    box-sizing: border-box;
     padding: 20px 48px 0;
   }
 
@@ -72,7 +73,8 @@
 }
 
 .showMore {
-  margin-top: 5px;
+  align-self: flex-end;
+  margin-top: auto;
 }
 
 @media (--medium-viewport) {

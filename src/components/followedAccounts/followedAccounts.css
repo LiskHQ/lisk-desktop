@@ -43,6 +43,11 @@
   height: 410px;
   box-sizing: border-box;
 
+  & > header {
+    box-sizing: border-box;
+    padding: 20px 48px 0;
+  }
+
   & > div {
     padding: 0 48px;
     box-sizing: border-box;
@@ -55,9 +60,6 @@
 }
 
 header {
-  padding: 20px 48px 0;
-  box-sizing: border-box;
-
   & .edit {
     height: 40px;
     min-width: 120px;
@@ -79,6 +81,11 @@ header {
   }
 }
 
+.bookmarkHeader {
+  padding: 20px 48px 0;
+  box-sizing: border-box;
+}
+
 .addAccountLink {
   color: var(--color-primary-standard) !important;
   font-weight: var(--font-weight-bold);
@@ -86,6 +93,8 @@ header {
 }
 
 .emptyList {
+  padding: 0 48px;
+
   & p {
     color: var(--color-grayscale-dark);
     font-size: 16px;
@@ -99,10 +108,9 @@ header {
 }
 
 .accounts {
-  position: relative;
-  z-index: 1;
+  width: 100%;
   overflow: hidden;
-  height: 265px;
+  height: 279px;
 
   & .list {
     overflow-y: initial;
@@ -188,8 +196,7 @@ header {
 }
 
 .showMore {
-  position: relative;
-  z-index: 2;
+  margin-top: auto;
 }
 
 @media (--medium-viewport) {
