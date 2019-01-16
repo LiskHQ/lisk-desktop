@@ -27,13 +27,14 @@ class passphraseInputV2 extends React.Component {
 
   keyAction(event) {
     let { focus } = this.state;
+    const index = parseInt(event.target.dataset.index, 10);
     const value = this.state.values[focus];
     if (event.which === keyCodes.space || event.which === keyCodes.arrowRight) {
-      focus = focus < this.props.inputsLength - 1 ? focus + 1 : focus;
+      focus = index + 1 > this.props.inputsLength - 1 ? index : index + 1;
       event.preventDefault();
     }
     if ((event.which === keyCodes.delete && !value) || event.which === keyCodes.arrowLeft) {
-      focus = focus <= 0 ? 0 : focus - 1;
+      focus = index - 1 < 0 ? index : index - 1;
     }
     this.setState({ focus });
   }
@@ -77,7 +78,8 @@ class passphraseInputV2 extends React.Component {
     this.props.onFill(passphrase, errorState.validationError);
   }
 
-  setFocusedField(focus) {
+  setFocusedField({ target }) {
+    const focus = parseInt(target.dataset.index, 10);
     this.setState({ focus });
   }
 
@@ -102,7 +104,7 @@ class passphraseInputV2 extends React.Component {
                 value={values[i] || ''}
                 type={this.state.showPassphrase ? 'text' : 'password'}
                 autoComplete='off'
-                onFocus={() => this.setFocusedField(i)}
+                onFocus={this.setFocusedField}
                 onChange={this.handleValueChange}
                 onKeyDown={this.keyAction}
                 data-index={i}
