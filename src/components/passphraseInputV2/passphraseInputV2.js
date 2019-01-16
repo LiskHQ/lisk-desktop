@@ -60,6 +60,14 @@ class passphraseInputV2 extends React.Component {
       errorState.passphraseIsInvalid = errorState.validationError === this.props.t('Passphrase is not valid');
     }
 
+    if (!passphrase.length) {
+      errorState = {
+        ...errorState,
+        passphraseIsInvalid: true,
+        validationError: this.props.t('Required'),
+      };
+    }
+
     this.setState({
       values,
       focus,
