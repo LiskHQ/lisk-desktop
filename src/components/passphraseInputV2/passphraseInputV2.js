@@ -103,7 +103,7 @@ class passphraseInputV2 extends React.Component {
           ))}
         </div>
 
-        <span className={`${styles.errorMessage}`}>
+        <span className={`${styles.errorMessage} ${this.state.validationError ? styles.showError : ''}`}>
           { this.state.validationError }
         </span>
 
