@@ -194,7 +194,7 @@ class LoginV2 extends React.Component {
                       type="url"
                       value={this.state.address}
                       onChange={this.changeAddress} />
-                    <span className={`${styles.errorMessage}`}>
+                    <span className={`${styles.errorMessage} ${this.state.addressValidity ? styles.showError : ''}`}>
                       { this.state.addressValidity }
                     </span>
                   </div>
