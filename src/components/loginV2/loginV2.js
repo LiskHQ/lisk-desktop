@@ -190,7 +190,7 @@ class LoginV2 extends React.Component {
                   <h2 className={`${styles.inputLabel}`}>{t('Enter IP or domain address of the node')}</h2>
                   <div className={`${styles.addressInput}`}>
                     <input
-                      className={`${this.state.addressValidity ? styles.error : ''}`}
+                      className={`${this.state.addressValidity ? 'error' : ''}`}
                       type="url"
                       value={this.state.address}
                       onChange={this.changeAddress} />
@@ -220,6 +220,7 @@ class LoginV2 extends React.Component {
                 </h2>
 
                 <PassphraseInputV2
+                  inputsLength={12}
                   onFill={this.checkPassphrase} />
 
               </div>
@@ -236,7 +237,7 @@ class LoginV2 extends React.Component {
                     type='submit'
                     disabled={(this.state.network === networks.customNode.code
                       && !!this.state.addressValidity)
-                      || !!this.state.passphraseValidity
+                      || !this.state.isValid
                       || this.state.passphrase === ''}>
                     {t('Confirm')}
                     <FontIcon className={`${styles.icon}`}>arrow-right</FontIcon>
