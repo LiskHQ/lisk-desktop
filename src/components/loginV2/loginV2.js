@@ -205,7 +205,7 @@ class LoginV2 extends React.Component {
                     className={`${styles.tooltip}`}
                     title={'What is passphrase?'}
                     footer={
-                      <a href={links.howToStorePassphrase}
+                      <a href={links.whatIsAnPassphrase}
                         rel="noopener noreferrer"
                         target="_blank">
                           {t('Read More')}
@@ -215,7 +215,6 @@ class LoginV2 extends React.Component {
                       {t('You saved your password when registering your account.')}
                     </p>
                     <p>{t('You can use tab or space to go to the next field.')}</p>
-                    <p>{t('For longer passphrases, simply paste it in the first input field.')}</p>
                   </Tooltip>
                 </h2>
 
