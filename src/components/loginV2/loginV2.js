@@ -203,7 +203,7 @@ class LoginV2 extends React.Component {
                   {t('Type or insert your passphrase')}
                   <Tooltip
                     className={`${styles.tooltip}`}
-                    title={'What is passphrase?'}
+                    title={t('What is passphrase?')}
                     footer={
                       <a href={links.whatIsAnPassphrase}
                         rel="noopener noreferrer"
