@@ -116,7 +116,7 @@
     text-align: left;
     width: 100%;
 
-    &.error {
+    &:global(.error) {
       border-color: var(--color-error);
       color: var(--color-error);
       outline-color: var(--color-error);

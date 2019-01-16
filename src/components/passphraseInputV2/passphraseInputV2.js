@@ -79,18 +79,18 @@ class passphraseInputV2 extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, inputsLength } = this.props;
     const { values } = this.state;
 
     return (
       <React.Fragment>
         <div className={`${styles.inputs} ${grid.row}`}>
-          {[...Array(12)].map((x, i) => (
+          {[...Array(inputsLength)].map((x, i) => (
             <span key={i} className={`${grid['col-xs-2']}`}>
               <input
                 ref={ref => ref !== null && this.state.focus === i && ref.focus() }
                 placeholder={i + 1}
-                className={`${this.state.partialPassphraseError[i] || this.state.passphraseIsInvalid ? styles.error : ''}`}
+                className={`${this.state.partialPassphraseError[i] || this.state.passphraseIsInvalid ? 'error' : ''}`}
                 value={values[i] || ''}
                 type={this.state.showPassphrase ? 'text' : 'password'}
                 autoComplete='off'
