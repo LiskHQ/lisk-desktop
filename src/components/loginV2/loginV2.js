@@ -1,6 +1,5 @@
 import React from 'react';
 import i18next from 'i18next';
-
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
@@ -18,6 +17,7 @@ import HeaderV2 from '../headerV2/headerV2';
 import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
 import lock from '../../assets/images/icons-v2/lock.svg';
 import styles from './loginV2.css';
+import Piwik from '../../utils/piwik';
 
 class LoginV2 extends React.Component {
   constructor() { // eslint-disable-line max-statements
@@ -142,7 +142,7 @@ class LoginV2 extends React.Component {
   }
 
   onLoginSubmission(passphrase) {
-    // Piwik.trackingEvent('Login', 'button', 'Login submission');
+    Piwik.trackingEvent('Login V2', 'button', 'Login submission');
     const network = this.getNetwork(this.state.network);
     this.secondIteration = true;
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
