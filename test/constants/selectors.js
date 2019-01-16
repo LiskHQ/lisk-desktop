@@ -134,6 +134,7 @@ const ss = {
   nodeAddress: '.peer',
   networkStatus: '.network-status',
   errorPopup: '.toast',
+  newsFeed: '.newsFeed-box',
   newsBlock: '.news-item',
   editNewsFeed: '.settingsButton',
   settingsNewsFeedBlock: '.settingsNewsFeed',
@@ -148,6 +149,7 @@ const ss = {
   priceChart: '.chartjs-size-monitor',
   transactionRequestButton: '.tx-receive-bt',
   transactionSendButton: '.tx-send-bt',
+  bookmarks: '.bookmarks',
   addToBookmarks: '.add-to-bookmarks',
   confirmAddToBookmarks: '.follow-account-button',
   delegateStatsUptime: '.productivity',
@@ -158,6 +160,7 @@ const ss = {
   delegateStatsBlocks: '.blocks',
   followAccountBtn: '.follow-account',
   bookmarkedAccountTitle: '.transactions .account-title',
+  showMoreButton: '.show-more-button',
 };
 
 export default ss;

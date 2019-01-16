@@ -101,5 +101,42 @@ describe('Bookmarks', () => {
         compareBalances(this.balanceBefore, this.balanceAfter, 0.1);
       });
     });
+
+    /**
+     * 4 bookmarks are shown by default in newsfeed
+     * @expect 4 bookmarks visible
+     */
+    it('4 bookmarks are shown by default', () => {
+      window.localStorage.setItem('followedAccounts', `[
+        {"title":"1","address":"${accounts.genesis.address}","balance":101},
+        {"title":"2","address":"${accounts.genesis.address}","balance":101},
+        {"title":"3","address":"${accounts.genesis.address}","balance":101},
+        {"title":"4","address":"${accounts.genesis.address}","balance":101},
+        {"title":"5","address":"${accounts.genesis.address}","balance":101},
+        {"title":"6","address":"${accounts.genesis.address}","balance":101}
+      ]`);
+      cy.visit(urls.dashboard);
+      cy.get(ss.followedAccount).eq(4).should('be.visible');
+      cy.get(ss.followedAccount).eq(5).should('be.not.visible');
+    });
+
+    /**
+     * More bookmarks are shown after Show More click
+     * @expect All bookmarks visible
+     */
+    it('More bookmarks are shown after Show More click', () => {
+      window.localStorage.setItem('followedAccounts', `[
+        {"title":"1","address":"${accounts.genesis.address}","balance":101},
+        {"title":"2","address":"${accounts.genesis.address}","balance":101},
+        {"title":"3","address":"${accounts.genesis.address}","balance":101},
+        {"title":"4","address":"${accounts.genesis.address}","balance":101},
+        {"title":"5","address":"${accounts.genesis.address}","balance":101},
+        {"title":"6","address":"${accounts.genesis.address}","balance":101}
+      ]`);
+      cy.visit(urls.dashboard);
+      cy.get(ss.bookmarks).find(ss.showMoreButton).click();
+      cy.get(ss.followedAccount).should('have.length', 6);
+      cy.get(ss.followedAccount).eq(5).trigger('mouseover').should('be.visible');
+    });
   });
 });
