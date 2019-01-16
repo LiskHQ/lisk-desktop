@@ -11,6 +11,7 @@ import CustomRoute from '../customRoute';
 import Header from '../header';
 import Dialog from '../dialog';
 import NotFound from '../notFound';
+import StatusBar from '../statusBar';
 
 import routes from '../../constants/routes';
 // eslint-disable-next-line import/no-named-as-default
@@ -127,6 +128,7 @@ class App extends React.Component {
                   </Switch>
                 </div>
               </section>
+              <StatusBar />
               <Toaster />
             </main>
           )

@@ -1,0 +1,39 @@
+@import '../app/variablesV2.css';
+
+.wrapper {
+  height: 20px;
+  min-width: 116px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  /* Message */
+  & > p {
+    font-size: var(--font-size-small);
+    color: var(--color-content-grayblue);
+    font-weight: var(--font-weight-semi-bold);
+    margin-left: 8px;
+
+    /* Network name */
+    & > span {
+      margin-left: 5px;
+      color: var(--color-content-light);
+    }
+  }
+}
+
+.status {
+  height: 5px;
+  width: 5px;
+  border-radius: 50px;
+}
+
+.online {
+  background-color: #25ca95;
+}
+
+.offline {
+  background-color: red;
+}
