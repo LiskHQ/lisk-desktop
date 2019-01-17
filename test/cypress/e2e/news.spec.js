@@ -61,4 +61,26 @@ describe('News', () => {
       cy.get(ss.newsBlock).find('a').should('have.attr', 'href').and('equal', tweet[0].url);
     });
   });
+
+  /**
+   * 4 tweets are shown by default in newsfeed
+   * @expect 4 tweets visible
+   */
+  it('4 tweets are shown by default', () => {
+    cy.visit(urls.dashboard);
+    cy.get(ss.newsBlock).eq(4).should('be.visible');
+    cy.get(ss.newsBlock).eq(5).should('be.not.visible');
+  });
+
+  /**
+   * 20 tweets are shown after Show More click
+   * @expect 20 tweets visible
+   */
+  it('20 tweets are shown after Show More click', () => {
+    cy.visit(urls.dashboard);
+    cy.get(ss.newsFeed).find(ss.showMoreButton).click();
+    cy.get(ss.newsBlock).should('have.length', 20);
+    cy.get(ss.newsBlock).eq(5).should('be.visible');
+    cy.get(ss.newsBlock).eq(19).trigger('mouseover').should('be.visible');
+  });
 });

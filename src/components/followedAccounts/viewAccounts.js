@@ -10,11 +10,19 @@ import routes from '../../constants/routes';
 import TitleInput from './titleInputForList';
 import { followedAccountRemoved } from '../../actions/followedAccounts';
 import Piwik from '../../utils/piwik';
+import ShowMore from '../showMore';
 
 class ViewAccounts extends React.Component {
   constructor() {
     super();
-    this.state = { edit: false };
+    this.state = {
+      edit: false,
+      showMore: false,
+    };
+  }
+
+  onShowMoreToggle() {
+    this.setState({ showMore: !this.state.showMore });
   }
 
   onEditAccount() {
@@ -46,18 +54,33 @@ class ViewAccounts extends React.Component {
     } = this.props;
 
     return <div>
-      <header><h2>
+      <header className={`${styles.bookmarkHeader}`}>
+        <h2>
         {t('Bookmarks')}
-        {accounts.length > 0
-          ? <div className={`${styles.clickable} ${styles.edit} edit-accounts`}
-            onClick={() => this.onEditAccount()}>
-            {this.state.edit ? <span>{t('Done')}</span> : <FontIcon value='edit'/>}
-          </div>
-          : null
+        {
+          accounts.length > 0 &&
+          (
+            <div
+              className={`${styles.clickable} ${styles.edit} edit-accounts`}
+              onClick={() => this.setState({ edit: !this.state.edit })}
+            >
+            {
+              !this.state.edit &&
+              <span className={'add-account-button'} onClick={() => this.onAddAccount()}>Add <FontIcon value='add'/></span>
+            }
+            {
+              this.state.edit
+              ? <span>{t('Done')}</span>
+              : <span>Edit <FontIcon value='edit'/></span>
+            }
+            </div>
+          )
         }
-      </h2></header>
-      {accounts.length
-        ? <div className={`${styles.accounts} followed-accounts-list`}>
+        </h2>
+      </header>
+      {
+        accounts.length
+        ? <div className={`${styles.accounts} ${this.state.showMore && styles.showMoreToggle} followed-accounts-list`}>
           <div className={styles.list}>
             {accounts.map((account, i) =>
               (<div
@@ -97,9 +120,14 @@ class ViewAccounts extends React.Component {
                 </div>
               </div>))
             }
-            <div className={`${styles.addAccountLink} ${styles.rows} ${styles.clickable} add-account-button`} onClick={() => this.onAddAccount()}>
-              {t('Add a Lisk ID')} <FontIcon value='arrow-right'/>
-            </div>
+            {
+              !accounts.length &&
+              (
+                <div className={`${styles.addAccountLink} ${styles.rows} ${styles.clickable} add-account-button`} onClick={() => this.onAddAccount()}>
+                  {t('Add a Lisk ID')} <FontIcon value='arrow-right'/>
+                </div>
+              )
+            }
           </div>
         </div>
         : <div className={`${styles.emptyList} followed-accounts-empty-list`}>
@@ -109,6 +137,14 @@ class ViewAccounts extends React.Component {
             {t('Add a Lisk ID')} <FontIcon value='arrow-right'/>
           </div>
         </div>
+      }
+      {
+        accounts.length > 4 &&
+        <ShowMore
+          className={`${styles.showMore} show-more`}
+          onClick={() => this.onShowMoreToggle()}
+          text={ this.state.showMore ? t('Show Less') : t('Show More')}
+        />
       }
     </div>;
   }

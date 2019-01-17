@@ -185,12 +185,25 @@ describe('Latest activity', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
   });
   /**
-   * 5 transaction are shown in the latest activity component
-   * @expect 5 transactions
+   * 3 transaction are shown in the latest activity component
+   * @expect 3 transactions visible
    */
-  it('5 tx are shown', () => {
+  it('3 tx are shown by default', () => {
     cy.visit(urls.dashboard);
-    cy.get(ss.transactionRow).should('have.length', 5);
+    cy.get(ss.transactionRow).eq(3).should('be.visible');
+    cy.get(ss.transactionRow).eq(4).should('be.not.visible');
+  });
+
+  /**
+   * 25 transaction are shown in the latest activity component after clicking Show more
+   * @expect 25 transactions visible
+   */
+  it('25 tx are shown after Show More click', () => {
+    cy.visit(urls.dashboard);
+    cy.get(ss.transactionRow).should('have.length', 25);
+    cy.get(ss.showMoreButton).eq(0).click();
+    cy.get(ss.transactionRow).eq(4).should('be.visible');
+    cy.get(ss.transactionRow).eq(24).trigger('mouseover').should('be.visible');
   });
 
   /**

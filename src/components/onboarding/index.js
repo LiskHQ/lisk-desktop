@@ -20,6 +20,8 @@ class Onboarding extends React.Component {
       skip: false,
       steps: [],
     };
+
+    this.resizeWindow = this.resizeWindow.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -30,7 +32,7 @@ class Onboarding extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', throttle(this.resizeWindow.bind(this), 1000));
+    window.addEventListener('resize', throttle(this.resizeWindow, 1000));
 
     if (this.props.appLoaded) {
       this.addSteps(this.props.showDelegates);
@@ -38,7 +40,7 @@ class Onboarding extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeWindow.bind(this));
+    window.removeEventListener('resize', this.resizeWindow);
   }
 
   resizeWindow() {

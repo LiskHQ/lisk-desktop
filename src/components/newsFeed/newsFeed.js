@@ -6,12 +6,14 @@ import { FontIcon } from '../fontIcon';
 import SettingsNewsFeed from './settingsNewsFeed';
 import logo from '../../assets/images/Lisk-Logo.svg';
 import Piwik from '../../utils/piwik';
+import ShowMore from '../showMore';
 
 class NewsFeed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showSettings: false,
+      showMore: false,
     };
 
     props.getNewsFeed();
@@ -31,7 +33,11 @@ class NewsFeed extends React.Component {
     this.props.settingsUpdated(data);
   }
 
-  render() {
+  onShowMore() {
+    this.setState({ showMore: !this.state.showMore });
+  }
+
+  render() { // eslint-disable-line complexity
     const settingsButton = this.state.showSettings ?
       (<div className={`settingsButton ${styles.settingsButton}`} onClick={() => { this.hideSettings(); }}>
         <span>{this.props.t('Done')}</span>
@@ -40,43 +46,56 @@ class NewsFeed extends React.Component {
         <FontIcon className='online' value='edit' />
       </div>);
 
+    const onShowMore = this.state.showMore ? styles.showMore : '';
+
     const filteredNewsFeed =
       this.props.newsFeed.filter(feed => this.props.channels[feed.source]) || [];
 
     return (
       <Box className={`newsFeed-box ${styles.newsFeedBox}`}>
-        <div className={styles.newsFeed}>
+        <div className={`${styles.newsFeed} ${onShowMore}`}>
           <div className={styles.header}>
             <header className={styles.headerWrapper}>
               <h2>{this.props.t('News')}</h2>
             </header>
             {settingsButton}
           </div>
-          <div className={styles.container}>
-            {this.state.showSettings ?
+          <div className={`${styles.container} ${onShowMore}`}>
+            {
+              this.state.showSettings ?
               <SettingsNewsFeed
                 t={this.props.t}
                 channels={this.props.channels}
                 hideSettings={this.hideSettings.bind(this)}
                 setNewsChannels={this.setNewsChannels.bind(this)} /> :
               <div>
-                {filteredNewsFeed.length > 0 ? filteredNewsFeed.map((news, index) => (
-                  <div className={styles.newsWrapper} key={`newsWrapper-${index}`}>
-                    <News
-                      t={this.props.t}
-                      {...news} />
-                  </div>
-                )) : null}
-                {this.props.showNewsFeedEmptyState && filteredNewsFeed.length === 0 ?
-                  <div className={styles.emptyNews}>
+                {
+                  filteredNewsFeed.length > 0 &&
+                  filteredNewsFeed.map((news, index) =>
+                    <div className={styles.newsWrapper} key={`newsWrapper-${index}`}>
+                      <News
+                        t={this.props.t}
+                        {...news} />
+                    </div>)
+                }
+                {
+                  this.props.showNewsFeedEmptyState && filteredNewsFeed.length === 0 &&
+                  (<div className={styles.emptyNews}>
                     {this.props.t('No newsfeed chosen – click on edit in the top right corner to add a feed.')}
                     <img className={styles.liskLogo} src={logo} />
-                  </div> : null}
+                  </div>)
+                }
               </div>
             }
           </div>
-          <footer>
-          </footer>
+          {
+            filteredNewsFeed.length > 4 && !this.state.showSettings &&
+            <ShowMore
+              className={`${styles.showMoreAlign} show-more`}
+              onClick={() => this.onShowMore()}
+              text={this.state.showMore ? this.props.t('Show Less') : this.props.t('Show More')}
+            />
+          }
         </div>
       </Box>
     );

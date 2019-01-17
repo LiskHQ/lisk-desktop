@@ -1,7 +1,7 @@
 @import '../app/variables.css';
 
 .quickTips {
-  height: calc(50% - 20px);
+  height: 418px;
   margin: 0px 0px 20px;
   overflow: hidden;
 }
