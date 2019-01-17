@@ -31,7 +31,6 @@ class Dashboard extends React.Component {
     this.state = {
       showMore: false,
       isDesktop: window.innerWidth > breakpoints.m,
-      showInitilization: false,
     };
 
     const isLoggedIn = props.account.address;
@@ -44,22 +43,19 @@ class Dashboard extends React.Component {
     }
 
     this.resizeWindow = this.resizeWindow.bind(this);
+    this.shouldShowInitializatiion = this.shouldShowInitializatiion.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('resize', throttle(this.resizeWindow, 1000));
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
-      const { account, transactions, address } = this.props;
-      const needsNoAccountInit = account.serverPublicKey
-        || account.balance === 0
-        || (transactions.pending && transactions.pending.length > 0);
-      this.setState({
-        showInitilization: !(needsNoAccountInit || address),
-      });
-    }
+  shouldShowInitializatiion() {
+    const { account, transactions, address } = this.props;
+    const needsNoAccountInit = account.serverPublicKey
+      || account.balance === 0
+      || (transactions.pending && transactions.pending.length > 0);
+    return !(needsNoAccountInit || address);
   }
 
   componentWillUnmount() {
@@ -87,7 +83,7 @@ class Dashboard extends React.Component {
 
     return (
       <React.Fragment>
-        { !this.state.showInitilization &&
+        { isLoggedIn && this.shouldShowInitializatiion() &&
           <div className={`${grid.row} ${styles.bannerWrapper}`}>
             <Banner
               className={`${grid['col-xs-12']}`}

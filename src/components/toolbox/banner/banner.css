@@ -2,6 +2,7 @@
 @import '../../app/variablesV2.css';
 
 .banner {
+  background-color: var(--color-background-dark);
   background-color: var(--color-primary-semi-dark);
   border-radius: var(--border-radius-standard);
   box-shadow: var(--box-shadow-standard);
