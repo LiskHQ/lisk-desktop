@@ -29,7 +29,7 @@ describe('ExternalLinks', () => {
         icon: 'help-icon',
         internal: true,
       },
-    ]
+    ],
   };
 
   const history = {

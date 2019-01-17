@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FontIcon } from '../fontIcon';
 import styles from './externalLinks.css';
 
 const ExternalLinks = props => (
@@ -14,7 +13,7 @@ const ExternalLinks = props => (
               key={index}
               to={`${link.path}`}
             >
-              {link.icon && <FontIcon value={link.icon}/>}
+              {link.icon && <img src={link.icon}/>}
               {link.label}
             </Link>
           );
@@ -27,7 +26,7 @@ const ExternalLinks = props => (
             key={index}
             target='_blank'
           >
-            {link.icon && <FontIcon value={link.icon}/>}
+            {link.icon && <img src={link.icon}/>}
             {link.label}
           </a>
         );

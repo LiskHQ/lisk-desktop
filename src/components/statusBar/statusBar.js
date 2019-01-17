@@ -6,6 +6,7 @@ import routes from '../../constants/routes';
 import Network from './network';
 import ExternalLinks from './externalLinks';
 import feedbackLinks from '../../constants/feedbackLinks';
+import svg from '../../utils/svgIcons';
 import styles from './statusBar.css';
 
 class StatusBar extends React.Component {
@@ -30,14 +31,14 @@ class StatusBar extends React.Component {
         label: this.props.t('Feedback'),
         path: `${feedbackLinks.general}`,
         id: 'feedback',
-        icon: 'logo-icon',
+        icon: svg.feedback_icon,
         internal: false,
       },
       {
         label: this.props.t('Help'),
         path: `${routes.help.path}`,
         id: 'help',
-        icon: 'logo-icon',
+        icon: svg.help_icon,
         internal: true,
       },
     ];

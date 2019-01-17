@@ -36,7 +36,7 @@
     }
 
     /* Session timeout text */
-    & > span {
+    & > p {
       color: var(--color-content-grayblue);
       font-size: var(--font-size-small);
     }
