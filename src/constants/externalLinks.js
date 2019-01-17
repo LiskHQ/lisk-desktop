@@ -14,6 +14,7 @@ const links = {
   sidechains: 'https://lisk.io/help-center/dapp-development/what-are-sidechains',
   votingAndDelegates: 'https://lisk.io/help-center#voting-and-delegates',
   accountInitialization: 'https://lisk.io/help-center/account-security/should-i-initialize-my-lisk-account',
+  whatIsAnPassphrase: 'https://lisk.io/help-center/account-security/what-is-a-lisk-passphrase',
 };
 export default links;
 

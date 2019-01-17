@@ -82,6 +82,7 @@ or "warn/action" ineastd of "red/green"
   --color-error: #ff7721;
   --color-content: #19224d;
   --color-content-light: #2e2c3b;
+  --color-content-lighter: rgba(46, 44, 59, 0.6);
   --color-background-dark: #1e194d;
   --color-dark-gray: #868ba1;
   --color-light-gray: #e6e6e6;
@@ -100,6 +101,7 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Animation
   *************************/
+  --animation-speed-faster: 150ms;
   --animation-speed-fast: 250ms;
   --animation-speed-standard: 500ms;
   --animation-speed-slow: 700ms;
