@@ -88,6 +88,13 @@ describe('V2 passphraseInput change focus with keypresses', () => {
     nextField = wrapper.find('input').at(1);
   });
 
+  it('Should remove selected class from inputs on blur', () => {
+    firstField.simulate('click');
+    expect(firstField).to.have.className('selected');
+    firstField.simulate('blur');
+    expect(firstField).to.not.have.className('selected');
+  });
+
   it('should focus next element on space press', () => {
     firstField.simulate('click');
     firstField.simulate('keyDown', {
