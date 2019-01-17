@@ -211,10 +211,15 @@ class LoginV2 extends React.Component {
                           {t('Read More')}
                       </a>}>
                     <p>
-                      {t('Passphrase is both your login and password combined. ')}
-                      {t('You saved your password when registering your account.')}
+                      {t('Passphrase is both ')}
+                      <strong>{t('your login and password ')}</strong>
+                      {t('combined. You saved your password when registering your account.')}
                     </p>
-                    <p>{t('You can use tab or space to go to the next field.')}</p>
+                    <p>
+                      {t('You can use ')}
+                      <strong>{t('tab or space ')}</strong>
+                      {t('to go to the next field.')}
+                    </p>
                   </Tooltip>
                 </h2>
 
