@@ -8,7 +8,6 @@ import styles from './headerV2.css';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
 
 class HeaderV2 extends React.Component {
-  // eslint-disable-next-line max-statements
   constructor() {
     super();
 
