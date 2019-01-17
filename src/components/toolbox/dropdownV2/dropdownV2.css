@@ -1,0 +1,65 @@
+@import '../../app/variablesV2.css';
+
+.dropdown {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-light-gray);
+  border-radius: var(--border-radius-standard);
+  box-shadow: var(--box-shadow-standard);
+  box-sizing: border-box;
+  display: flex;
+  line-height: 1;
+  min-width: 145px;
+  padding: 24px 0;
+  position: absolute;
+  right: -1px;
+  transform: scale(0);
+  transform-origin: calc(100% - 25px) -5px;
+  transition: transform var(--animation-speed-faster) linear;
+  top: calc(100% + 5px);
+  width: 100%;
+  z-index: var(--overlay-index);
+
+  &.show {
+    transform: scale(1);
+  }
+
+  & .dropdownArrow {
+    color: white;
+    height: 9px;
+    font-size: 0;
+    position: absolute;
+    right: 10px;
+    stroke: var(--color-light-gray);
+    top: -9px;
+    width: 36px;
+
+    & > svg {
+      display: block;
+    }
+  }
+}
+
+.optionsHolder {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  & .option {
+    background-color: var(--color-white);
+    box-sizing: border-box;
+    color: var(--color-content-light);
+    cursor: pointer;
+    font-family: var(--heading-font);
+    font-size: var(--button-font-size-s);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.5px;
+    padding: 8px 24px;
+    transition: background var(--animation-speed-fast) linear, color var(--animation-speed-fast) linear;
+    width: 100%;
+
+    &:hover {
+      background-color: var(--color-primary-standard);
+      color: var(--color-white);
+    }
+  }
+}
