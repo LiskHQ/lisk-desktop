@@ -21,6 +21,7 @@ class passphraseInputV2 extends React.Component {
 
     this.handleToggleShowPassphrase = this.handleToggleShowPassphrase.bind(this);
     this.setFocusedField = this.setFocusedField.bind(this);
+    this.removeFocusedField = this.removeFocusedField.bind(this);
     this.handleValueChange = this.handleValueChange.bind(this);
     this.keyAction = this.keyAction.bind(this);
   }
@@ -78,6 +79,10 @@ class passphraseInputV2 extends React.Component {
     this.props.onFill(passphrase, errorState.validationError);
   }
 
+  removeFocusedField() {
+    this.setState({ focus: null });
+  }
+
   setFocusedField({ target }) {
     const focus = parseInt(target.dataset.index, 10);
     this.setState({ focus });
@@ -99,11 +104,12 @@ class passphraseInputV2 extends React.Component {
             <span key={i} className={`${grid['col-xs-2']}`}>
               <input
                 ref={ref => ref !== null && this.state.focus === i && ref.focus() }
-                placeholder={i + 1}
+                placeholder={this.state.focus === i ? '' : i + 1 }
                 className={`${this.state.partialPassphraseError[i] || this.state.passphraseIsInvalid ? 'error' : ''} ${this.state.focus === i ? 'selected' : ''}`}
                 value={values[i] || ''}
                 type={this.state.showPassphrase ? 'text' : 'password'}
                 autoComplete='off'
+                onBlur={this.removeFocusedField}
                 onFocus={this.setFocusedField}
                 onChange={this.handleValueChange}
                 onKeyDown={this.keyAction}

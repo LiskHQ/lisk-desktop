@@ -212,8 +212,8 @@ class LoginV2 extends React.Component {
                       </a>}>
                     <p>
                       {t('Passphrase is both ')}
-                      <strong>{t('your login and password ')}</strong>
-                      {t('combined. You saved your password when registering your account.')}
+                      <strong>{t('your login and passphrase ')}</strong>
+                      {t('combined. You saved your passphrase when registering your account.')}
                     </p>
                     <p>
                       {t('You can use ')}

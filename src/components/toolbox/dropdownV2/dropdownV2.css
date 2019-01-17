@@ -14,7 +14,7 @@
   right: -1px;
   transform: scale(0);
   transform-origin: calc(100% - 25px) -5px;
-  transition: transform var(--animation-speed-fast) linear;
+  transition: transform var(--animation-speed-faster) linear;
   top: calc(100% + 5px);
   width: 100%;
   z-index: var(--overlay-index);

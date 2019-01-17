@@ -7,6 +7,7 @@ import { MemoryRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import LoginV2 from './loginV2';
+import accounts from '../../../test/constants/accounts';
 import routes from '../../constants/routes';
 
 describe('LoginV2', () => {
@@ -58,7 +59,7 @@ describe('LoginV2', () => {
     lifecycleExperimental: true,
   };
 
-  const passphrase = 'recipe bomb asset salon coil symbol tiger engine assist pact pumpkin';
+  const { passphrase } = accounts.genesis;
   let localStorageStub;
 
   beforeEach(() => {
@@ -76,7 +77,8 @@ describe('LoginV2', () => {
   describe('Generals', () => {
     it('should show error about passphrase length if passphrase have wrong length', () => {
       const expectedError = 'Passphrase should have 12 words, entered passphrase has 11';
-      wrapper.find('passphraseInputV2 input').first().simulate('change', { target: { value: passphrase, dataset: { index: 0 } } });
+      const lastIndex = passphrase.lastIndexOf(' ');
+      wrapper.find('passphraseInputV2 input').first().simulate('change', { target: { value: passphrase.substring(0, lastIndex), dataset: { index: 0 } } });
       expect(wrapper.find('passphraseInputV2 .errorMessage')).to.contain(expectedError);
     });
 
