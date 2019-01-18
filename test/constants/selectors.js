@@ -98,6 +98,7 @@ const ss = {
   secondPassphraseNextBtn: '.second-passphrase-next',
   resultMessage: '.result-box-message',
   okayBtn: '.okay-button',
+  initializeBanner: '.initialize-banner',
   accountInitializationMsg: '.account-initialization',
   accountInitializationBtn: '.account-init-button',
   sidebarMenuDelegatesBtn: '#delegates',

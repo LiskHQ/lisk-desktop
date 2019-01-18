@@ -203,6 +203,7 @@ class Confirm extends React.Component {
         <footer>
           <section>
               <Button
+                className={'back'}
                 label={this.props.t('Back')}
                 onClick={this.onPrevStep.bind(this)}
                 type='button'

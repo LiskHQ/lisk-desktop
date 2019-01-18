@@ -86,7 +86,7 @@ class Dashboard extends React.Component {
         { isLoggedIn && this.shouldShowInitializatiion() &&
           <div className={`${grid.row} ${styles.bannerWrapper}`}>
             <Banner
-              className={`${grid['col-xs-12']}`}
+              className={`${grid['col-xs-12']} initialize-banner`}
               title={t('Initialize Lisk ID')}
               footer={(
                 <Link to={`${routes.send.path}?initializeAccount`}>

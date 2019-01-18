@@ -24,11 +24,11 @@ class AccountInitialization extends React.Component {
       || account.balance === 0
       || transactions.pending.length > 0;
 
-    history.replace({
-      pathname: history.location.pathname,
-      search: '',
-    });
     if (search.includes('initializeAccount') && !needsNoAccountInit) {
+      history.replace({
+        pathname: history.location.pathname,
+        search: '',
+      });
       nextStep({ account, accountInit: true }, 2);
     } else if (needsNoAccountInit || address || search.includes('wallet')) {
       nextStep();
