@@ -145,10 +145,11 @@ export default {
     path: '/explorer',
   },
   splashscreen: {
-    path: '/splashscreen',
+    path: '/',
     component: Splashscreen,
     isPrivate: false,
     isV2Layout: true,
+    exact: true,
   },
   registration: {
     path: '/registration',
