@@ -17,7 +17,7 @@ import HwWallet from '../components/hwWallet';
 import AccountVisualDemo from '../components/accountVisual/demo';
 import Request from '../components/request';
 import Send from '../components/send';
-import Splashscreen from '../components/splashscreen/splashscreen';
+import Splashscreen from '../components/splashscreen';
 import RegistrationV2 from '../components/registerV2/registerV2';
 import LoginV2 from '../components/loginV2';
 
