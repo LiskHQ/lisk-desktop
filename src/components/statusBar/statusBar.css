@@ -1,8 +1,9 @@
 @import '../app/variablesV2.css';
 
 .wrapper {
-  width: 100%;
-  max-width: 1352px;
+  width: calc(100% - 195px);
+
+  /* max-width: 1352px; This will be the max width once that the aside menu will remove */
   height: 20px;
   padding: 0 24px;
   background-color: var(--color-background-header);
@@ -17,7 +18,7 @@
   position: fixed;
   bottom: 0;
   left: 0;
-  margin-left: 14%;
+  margin-left: 166px;
 }
 
 .timer {
@@ -40,5 +41,12 @@
       color: var(--color-content-grayblue);
       font-size: var(--font-size-small);
     }
+  }
+}
+
+@media (--large-viewport) {
+  .wrapper {
+    width: calc(100% - 166px);
+    margin-left: 135px;
   }
 }

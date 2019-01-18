@@ -29,6 +29,7 @@ const Network = (props) => {
           <p>
             {t('Connected to:')}
             <span>{activeNetwork[iconCode]}</span>
+            <span>{peers.liskAPIClient.currentNode}</span>
           </p>
         </Fragment>
       }
