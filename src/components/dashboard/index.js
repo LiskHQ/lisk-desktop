@@ -51,11 +51,11 @@ class Dashboard extends React.Component {
   }
 
   shouldShowInitializatiion() {
-    const { account, transactions, address } = this.props;
+    const { account, transactions } = this.props;
     const needsNoAccountInit = account.serverPublicKey
       || account.balance === 0
       || (transactions.pending && transactions.pending.length > 0);
-    return !(needsNoAccountInit || address);
+    return !needsNoAccountInit;
   }
 
   componentWillUnmount() {
@@ -89,7 +89,7 @@ class Dashboard extends React.Component {
               className={`${grid['col-xs-12']}`}
               title={t('Initialize Lisk ID')}
               footer={(
-                <Link to={routes.send.path}>
+                <Link to={`${routes.send.path}?initializeAccount`}>
                   <SecondaryLightButton>{t('Create First Transaction')}</SecondaryLightButton>
                 </Link>)}>
               <p>{t('It is recommended that you initialize your Lisk ID.')}</p>

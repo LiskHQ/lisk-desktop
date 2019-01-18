@@ -117,7 +117,7 @@ class TransactionsOverview extends React.Component {
                   <FontIcon>request-token</FontIcon>
                   {this.props.t('Request')}
                 </Link>
-                <Link to={`${Ulrs.send.path}`} className={'tx-send-bt'}>
+                <Link to={`${Ulrs.send.path}?wallet`} className={'tx-send-bt'}>
                   <ActionButton>
                   {this.props.t('Send')}
                   </ActionButton>

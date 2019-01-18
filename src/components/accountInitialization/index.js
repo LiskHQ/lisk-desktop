@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Button } from './../toolbox/buttons/button';
-import { FontIcon } from '../fontIcon';
 import styles from './accountInit.css';
 import fees from './../../constants/fees';
+import { parseSearchParams } from './../../utils/searchParams';
 import { fromRawLsk } from '../../utils/lsk';
-import links from './../../constants/externalLinks';
 import Piwik from '../../utils/piwik';
 
 class AccountInitialization extends React.Component {
@@ -17,12 +16,22 @@ class AccountInitialization extends React.Component {
   }
 
   componentDidMount() {
-    const { account, transactions, address } = this.props;
+    const {
+      account, nextStep, history, transactions, address,
+    } = this.props;
+    const search = Object.keys(parseSearchParams(history.location.search));
     const needsNoAccountInit = account.serverPublicKey
       || account.balance === 0
       || transactions.pending.length > 0;
-    if (needsNoAccountInit || address) {
-      this.props.nextStep();
+
+    history.replace({
+      pathname: history.location.pathname,
+      search: '',
+    });
+    if (search.includes('initializeAccount') && !needsNoAccountInit) {
+      nextStep({ account, accountInit: true }, 2);
+    } else if (needsNoAccountInit || address || search.includes('wallet')) {
+      nextStep();
     }
   }
 
@@ -42,16 +51,6 @@ class AccountInitialization extends React.Component {
       <div>
         <p>{t('It is recommended that you initialize your Lisk ID.')}</p>
         <p>{t('The easiest way to do this is to send LSK to yourself. It will cost you only the usual {{fee}} LSK transaction fee.', { fee: fromRawLsk(fees.send) })}</p>
-        <p>
-          <a
-            target='_blank'
-            href={links.accountInitialization}
-            onClick={() => Piwik.trackingEvent('AccountInit', 'link', 'Initialize my lisk account')}
-            rel='noopener noreferrer'
-          >
-            {t('Learn more about Lisk ID initialization')} <FontIcon>arrow-right</FontIcon>
-          </a>
-        </p>
       </div>
       <footer>
         <div className={` ${grid.row} ${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`} >

@@ -2,9 +2,11 @@ import React from 'react';
 import { fromRawLsk, toRawLsk } from '../../../../utils/lsk';
 import AccountVisual from '../../../accountVisual';
 import { Button, PrimaryButton } from './../../../toolbox/buttons/button';
+import { FontIcon } from '../../../fontIcon';
 import ToolBoxInput from '../../../toolbox/inputs/toolBoxInput';
 import fees from './../../../../constants/fees';
 import Piwik from '../../../../utils/piwik';
+import links from '../../../../constants/externalLinks';
 import styles from './confirm.css';
 
 class Confirm extends React.Component {
@@ -104,6 +106,7 @@ class Confirm extends React.Component {
     });
   }
 
+  /* istanbul ignore next */
   onPrevStep() {
     Piwik.trackingEvent('Send_Confirmation', 'button', 'Previous step');
     this.props.prevStep({
@@ -136,6 +139,17 @@ class Confirm extends React.Component {
           ? <div>
             <p>{this.props.t('You will send a small amount of {{fee}} LSK to yourself and therefore initialize your ID.', { fee: fromRawLsk(fees.send) })}</p>
             <p>{this.props.t('You only need to do this once for each Lisk ID.')}</p>
+            <p>
+              <a
+                target='_blank'
+                href={links.accountInitialization}
+                /* istanbul ignore next */
+                onClick={() => Piwik.trackingEvent('AccountInit', 'link', 'Initialize my lisk account')}
+                rel='noopener noreferrer'
+              >
+                {this.props.t('Learn more about Lisk ID initialization')} <FontIcon>arrow-right</FontIcon>
+              </a>
+            </p>
           </div>
           : <form>
             <ToolBoxInput
