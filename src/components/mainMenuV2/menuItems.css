@@ -1,0 +1,35 @@
+@import '../app/variables.css';
+@import '../app/variablesV2.css';
+
+.wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: auto;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  margin-right: 32px;
+}
+
+.item > img {
+  margin-right: 8px;
+}
+
+.item > span {
+  font-size: 12px;
+  font-weight: 600;
+  color: #868ba1;
+}
+
+.selected {
+  & > span {
+    color: var(--color-link-active);
+  }
+}

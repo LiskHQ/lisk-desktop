@@ -16,12 +16,11 @@ body {
   top: 0;
   align-items: center;
   display: flex;
+  flex-direction: column;
   z-index: 0;
 
   & > section {
     width: 100%;
-    padding-left: calc(var(--sidebar-width) + 24px);
-    padding-right: 24px;
     opacity: 0;
     transition: all ease 250ms;
   }
@@ -80,10 +79,6 @@ body {
   }
 
   .bodyWrapper {
-    & > section {
-      padding-left: calc(var(--sidebar-width-xl) + 24px);
-    }
-
     & > aside {
       width: var(--sidebar-width-xl);
     }

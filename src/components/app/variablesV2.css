@@ -65,6 +65,7 @@ or "warn/action" ineastd of "red/green"
   --border-radius-standard: 4px;
   --header-height-m: 100px;
   --header-height-s: 72px;
+  --header-height-xs: 60px;
   --header-elements-height: 32px;
   --header-logo-size: 56px;
 
@@ -86,6 +87,8 @@ or "warn/action" ineastd of "red/green"
   --color-light-gray: #e6e6e6;
   --color-background-wrapper: linear-gradient(120deg, #f7f9fb, #fbfcfd);
   --color-background-header: #fbfcfd;
+  --color-background-menu: #f8f9fb;
+  --color-link-active: #4070f4;
   --color-link: var(--color-primary-standard);
 
   /*************************

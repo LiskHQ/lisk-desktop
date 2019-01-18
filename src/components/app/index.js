@@ -4,7 +4,7 @@ import { isPathCorrect } from '../../utils/app';
 import styles from './app.css';
 import stylesV2 from './appV2.css';
 import Toaster from '../toaster';
-import MainMenu from '../mainMenu';
+import MainMenu from '../mainMenuV2';
 import LoadingBar from '../loadingBar';
 import OfflineWrapper from '../offlineWrapper';
 import CustomRoute from '../customRoute';
