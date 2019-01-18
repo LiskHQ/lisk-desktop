@@ -53,6 +53,7 @@ class LoginV2 extends React.Component {
     this.changeAddress = this.changeAddress.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onLoginSubmission = this.onLoginSubmission.bind(this);
+    this.validateCorrectNode = this.validateCorrectNode.bind(this);
   }
 
   componentDidMount() {
@@ -207,7 +208,7 @@ class LoginV2 extends React.Component {
                 {t('Sign in with a Passphrase')}
               </h1>
               <p>
-                {t('New to Lisk?')}
+                {t('New to Lisk? ')}
                 <Link className={`${styles.link}`}
                   to={routes.registration.path}>
                   {t('Create an Account')}
@@ -231,6 +232,7 @@ class LoginV2 extends React.Component {
                     </span>
                   </div>
                 </div>
+
                 <h2 className={`${styles.inputLabel}`}>
                   {t('Type or insert your passphrase')}
                   <Tooltip
@@ -259,33 +261,26 @@ class LoginV2 extends React.Component {
                   inputsLength={12}
                   onFill={this.checkPassphrase} />
 
-              </div>
-
-              {this.props.settings && this.props.settings.isHarwareWalletConnected &&
-                <div>
-                  <div className={styles.ledgerRow}>
-                    <div>
-                      <FontIcon className={styles.singUpArrow} value='usb-stick' />
-                      {this.props.t('Hardware wallet login (beta):')}
+                {this.props.settings && this.props.settings.isHarwareWalletConnected && (
+                  <div className={styles.hardwareHolder}>
+                    <div className={`${styles.label}`}>
+                      {t('Hardware login (beta): ')}
+                      <span className={`${styles.link} hardwareWalletLink`}
+                        onClick={() => this.validateCorrectNode(routes.hwWallet.path)}>
+                        Ledger Nano S
+                      </span>
                     </div>
-                    <div className={`${styles.hardwareWalletLink} hardwareWalletLink`}
-                      onClick={this.validateCorrectNode.bind(this, routes.hwWallet.path)}>
-                      Ledger Nano S
-                      <FontIcon className={styles.singUpArrow} value='arrow-right' />
-                    </div>
-                  </div>
-                  <div className={styles.feedback}>
                     <a
                       className={styles.link}
                       target='_blank'
                       href={feedbackLinks.ledger}
                       rel='noopener noreferrer'>
-                      {this.props.t('Give feedback about this feature')}
-                      <FontIcon className={styles.singUpArrow} value='external-link' />
+                      {t('Give feedback about this feature')}
                     </a>
                   </div>
-                </div>
-              }
+                )}
+
+              </div>
 
               <div className={`${styles.buttonsHolder} ${grid.row}`}>
                 <Link className={`${styles.button} ${grid['col-xs-4']}`} to={routes.splashscreen.path}>

@@ -106,7 +106,7 @@ class LedgerLogin extends React.Component {
 
   onCancelLegderLogin() {
     Piwik.trackingEvent('LedgerLogin', 'button', 'Cancel ledger login');
-    this.props.history.push(routes.login.path);
+    this.props.history.push(routes.loginV2.path);
   }
 
   render() {

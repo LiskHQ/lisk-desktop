@@ -36,7 +36,7 @@ class HwWallet extends React.Component {
 
   cancelLedgerLogin() {
     Piwik.trackingEvent('HwWallet', 'button', 'Cancel Ledger');
-    this.props.history.push(`${routes.login.path}`);
+    this.props.history.push(`${routes.loginV2.path}`);
   }
 
   async ledgerLogin() { // eslint-disable-line max-statements

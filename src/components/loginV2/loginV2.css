@@ -20,6 +20,10 @@
   flex-direction: column;
   padding: 20px 24px;
 
+  & form {
+    width: 100%;
+  }
+
   & .button {
     margin-top: 12px;
     width: 100%;
@@ -170,16 +174,36 @@
   }
 }
 
+.hardwareHolder {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 40px;
+  width: 100%;
+
+  & .label {
+    color: var(--color-content-light);
+    font-family: var(--content-font);
+    font-size: var(--paragraph-font-size-l);
+    font-weight: var(--font-weight-semi-bold);
+    height: 22px;
+    line-height: 1.47;
+    margin-bottom: 8px;
+  }
+}
+
 .link {
   color: var(--color-link);
+  cursor: pointer;
   display: inline-block;
   font-family: var(--heading-font);
   font-size: var(--paragraph-font-size-l);
   font-weight: var(--font-weight-bold);
   line-height: 1.47;
   margin-bottom: 20px;
-  margin-left: 5px;
   text-align: center;
+  text-decoration: underline;
 }
 
 .tooltip {
