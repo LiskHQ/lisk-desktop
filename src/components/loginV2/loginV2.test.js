@@ -100,6 +100,17 @@ describe('LoginV2', () => {
       customNode.find('input').simulate('change', { target: { value: 'localhost:4000' } });
       expect(customNode.find('.errorMessage')).to.not.have.className('showError');
     });
+
+    it('Should show hardware login if hardware is connected and should go to hwWallet on click', () => {
+      wrapper.setProps({
+        children: React.cloneElement(wrapper.props().children, {
+          settings: { isHarwareWalletConnected: true },
+        }),
+      });
+      expect(wrapper).to.have.exactly(1).descendants('.hardwareHolder');
+      wrapper.find('.hardwareWalletLink').simulate('click');
+      expect(props.history.push).to.have.been.calledWith(`${routes.hwWallet.path}`);
+    });
   });
 
   describe('History management', () => {

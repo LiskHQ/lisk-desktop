@@ -57,9 +57,7 @@ class LoginV2 extends React.Component {
   }
 
   componentDidMount() {
-    i18next.on('languageChanged', () => {
-      this.getNetworksList();
-    });
+    i18next.on('languageChanged', this.getNetworksList);
   }
 
   componentDidUpdate(prevProps) {
