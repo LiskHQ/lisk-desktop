@@ -1,5 +1,8 @@
+// eslint-disable-line
 import React from 'react';
 import i18next from 'i18next';
+import Lisk from 'lisk-elements';
+
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
@@ -12,6 +15,7 @@ import getNetwork from '../../utils/getNetwork';
 import networks from '../../constants/networks';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
+import feedbackLinks from '../../constants/feedbackLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import HeaderV2 from '../headerV2/headerV2';
 import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
@@ -155,6 +159,34 @@ class LoginV2 extends React.Component {
     }
   }
 
+  validateCorrectNode(nextPath) {
+    const { address } = this.state;
+    const nodeURL = address !== '' ? addHttp(address) : address;
+    if (this.state.network === networks.customNode.code) {
+      const liskAPIClient = new Lisk.APIClient([nodeURL], {});
+      liskAPIClient.node.getConstants()
+        .then((res) => {
+          if (res.data) {
+            this.props.liskAPIClientSet({
+              network: {
+                ...this.getNetwork(this.state.network),
+                address: nodeURL,
+              },
+            });
+            this.props.history.push(nextPath);
+          } else {
+            throw new Error();
+          }
+        }).catch(() => {
+          this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
+        });
+    } else {
+      const network = this.getNetwork(this.state.network);
+      this.props.liskAPIClientSet({ network });
+      this.props.history.push(nextPath);
+    }
+  }
+
   render() {
     const { t } = this.props;
     return (
@@ -228,6 +260,32 @@ class LoginV2 extends React.Component {
                   onFill={this.checkPassphrase} />
 
               </div>
+
+              {this.props.settings && this.props.settings.isHarwareWalletConnected &&
+                <div>
+                  <div className={styles.ledgerRow}>
+                    <div>
+                      <FontIcon className={styles.singUpArrow} value='usb-stick' />
+                      {this.props.t('Hardware wallet login (beta):')}
+                    </div>
+                    <div className={`${styles.hardwareWalletLink} hardwareWalletLink`}
+                      onClick={this.validateCorrectNode.bind(this, routes.hwWallet.path)}>
+                      Ledger Nano S
+                      <FontIcon className={styles.singUpArrow} value='arrow-right' />
+                    </div>
+                  </div>
+                  <div className={styles.feedback}>
+                    <a
+                      className={styles.link}
+                      target='_blank'
+                      href={feedbackLinks.ledger}
+                      rel='noopener noreferrer'>
+                      {this.props.t('Give feedback about this feature')}
+                      <FontIcon className={styles.singUpArrow} value='external-link' />
+                    </a>
+                  </div>
+                </div>
+              }
 
               <div className={`${styles.buttonsHolder} ${grid.row}`}>
                 <Link className={`${styles.button} ${grid['col-xs-4']}`} to={routes.splashscreen.path}>

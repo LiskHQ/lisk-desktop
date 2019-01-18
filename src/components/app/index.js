@@ -60,6 +60,7 @@ class App extends React.Component {
               `${stylesV2.v2Wrapper} ${stylesV2.loaded} appLoaded` :
               `${styles.v2Wrapper}`
             } ref={(el) => { this.main = el; }}>
+              <div id='onboardingAnchor'></div>
               <Switch>
                 {this.state.loaded &&
                   routesV2Layout.map((route, key) => (
@@ -67,6 +68,7 @@ class App extends React.Component {
                       path={route.path}
                       key={key}
                       component={route.component}
+                      exact={route.exact}
                     />
                   ))
                 }
