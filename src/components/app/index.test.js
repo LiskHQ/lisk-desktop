@@ -7,7 +7,6 @@ import configureStore from 'redux-mock-store';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '../../i18n'; // initialized i18next instance
 import App from './';
-import Login from '../login';
 import Splashscreen from '../splashscreen/splashscreen';
 import Transactions from '../transactionDashboard';
 import Voting from '../voting';
@@ -25,8 +24,7 @@ const addRouter = Component => (props, path) =>
     </Provider>);
 
 const publicComponent = [
-  { route: '/', component: Login },
-  { route: '/splashscreen', component: Splashscreen },
+  { route: '/', component: Splashscreen },
 ];
 
 const privateComponent = [
@@ -68,7 +66,7 @@ describe('App', () => {
         wrapper.find('LoadingBar').props().markAsLoaded();
         wrapper.update();
         expect(wrapper.find(component).exists()).to.be.equal(false);
-        expect(wrapper.find(Login).exists()).to.be.equal(true);
+        expect(wrapper.find(Splashscreen).exists()).to.be.equal(true);
       });
     });
   });
