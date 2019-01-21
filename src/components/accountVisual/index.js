@@ -174,6 +174,8 @@ class AccountVisual extends React.Component {
   constructor(props) {
     super(props);
     this.state = { isSBreakpoint: window.innerWidth <= breakpoints.s };
+
+    this.resizeWindow = this.resizeWindow.bind(this);
   }
 
   shouldComponentUpdate(nextProps, state) {
@@ -190,11 +192,11 @@ class AccountVisual extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.resizeWindow.bind(this));
+    window.addEventListener('resize', this.resizeWindow());
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeWindow.bind(this));
+    window.removeEventListener('resize', this.resizeWindow());
   }
 
   render() { // eslint-disable-line max-statements

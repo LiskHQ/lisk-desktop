@@ -12,8 +12,8 @@ const MenuItems = props => (
           className={styles.item}
           activeClassName={styles.selected}
         >
-          <img src={item.icon} />
-          <span>{item.label}</span>
+          <img src={ props.location.pathname === item.path ? item.iconActive : item.icon } />
+          <span>{props.t(item.label)}</span>
         </NavLink>)
     }
   </div>
