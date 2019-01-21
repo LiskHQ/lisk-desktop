@@ -164,7 +164,7 @@ const ss = {
   showMoreButton: '.show-more-button',
   chooseAvatar: '.choose-avatar span',
   copyPassphrase: '.option-value',
-  passphraseWordConfirm: '.passphrase-holder .option',
+  passphraseWordConfirm: '.passphrase-holder .word-option',
   passphraseConfirmButton: '.passphrase-is-correct-button',
 };
 
