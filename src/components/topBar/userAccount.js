@@ -1,10 +1,16 @@
 import React from 'react';
+<<<<<<< HEAD
 import { Link } from 'react-router-dom';
 import AccountVisual from '../accountVisual';
 import CopyToClipboard from '../copyToClipboard';
 import LiskAmount from '../liskAmount';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
 import { dropdownLinks } from './constants';
+=======
+import AccountVisual from '../accountVisual';
+import CopyToClipboard from '../copyToClipboard';
+import LiskAmount from '../liskAmount';
+>>>>>>> :nail_care: Update css file for menuItems, searchBar and userAccount
 import styles from './userAccount.css';
 
 const UserAccount = props => (
@@ -20,6 +26,7 @@ const UserAccount = props => (
         <span>{props.t(' LSK')}</span>
       </div>
     </div>
+<<<<<<< HEAD
     <div
       className={styles.avatar}
       onClick={() => props.onDropdownToggle()}
@@ -59,4 +66,13 @@ const UserAccount = props => (
 );
 
 
+=======
+    <AccountVisual
+      address={'123L'}
+      size={69} sizeS={40}
+    />
+  </div>
+);
+
+>>>>>>> :nail_care: Update css file for menuItems, searchBar and userAccount
 export default UserAccount;

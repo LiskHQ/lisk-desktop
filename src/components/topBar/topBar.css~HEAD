@@ -1,4 +1,3 @@
-@import '../toolbox/buttons/css/base.css';
 @import '../app/variables.css';
 @import '../app/variablesV2.css';
 
@@ -16,7 +15,7 @@
 
 .elements {
   width: 100%;
-  max-width: 1320px;
+  max-width: 1400px;
   height: var(--header-height-xs);
   display: flex;
   justify-content: space-between;
@@ -24,6 +23,34 @@
   box-sizing: border-box;
   padding: 14px 24px;
   background: transparent;
+}
+
+.signIn {
+  height: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  & > p {
+    padding: 0;
+    margin: 0;
+    font-family: var(--content-font);
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  & > span {
+    font-family: var(--content-font);
+    font-size: 12px;
+  }
+
+  & > span > a {
+    font-family: var(--content-font);
+    font-size: 12px;
+    margin-right: 5px;
+    color: #4e80f7;
+  }
 }
 
 @media (--small-viewport) {

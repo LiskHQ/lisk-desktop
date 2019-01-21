@@ -8,7 +8,11 @@
 }
 
 .information {
+<<<<<<< HEAD
   font-family: var(--content-font);
+=======
+  font-family: var(--heading-font);
+>>>>>>> :nail_care: Update css file for menuItems, searchBar and userAccount
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -18,14 +22,21 @@
 }
 
 .copyAddress {
+<<<<<<< HEAD
   font-size: 12px;
   font-weight: 500;
   color: var(--color-dark-gray);
+=======
+  font-size: 11px;
+  font-weight: 500;
+  color: #868ba1;
+>>>>>>> :nail_care: Update css file for menuItems, searchBar and userAccount
 }
 
 .balance {
   font-size: 11px;
   font-weight: 600;
+<<<<<<< HEAD
   color: var(--color-content-light);
   font-family: var(--heading-font);
 }
@@ -73,4 +84,7 @@
       display: block;
     }
   }
+=======
+  color: #2e2c3b;
+>>>>>>> :nail_care: Update css file for menuItems, searchBar and userAccount
 }

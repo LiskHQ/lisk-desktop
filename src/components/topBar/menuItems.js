@@ -9,8 +9,7 @@ const MenuItems = props => (
         <NavLink
           key={item.id}
           to={item.path}
-          className={`${styles.item} ${(props.isUserLogout && item.id !== 'dashboard') ? styles.notActive : ''}`}
-          id={item.id}
+          className={styles.item}
           activeClassName={styles.selected}
         >
           <img src={ props.location.pathname === item.path ? item.iconActive : item.icon } />
