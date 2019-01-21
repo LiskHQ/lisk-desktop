@@ -5,14 +5,25 @@
 .wrapper {
   width: 100%;
   height: var(--header-height-xs);
+  box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: center;
   background: var(--color-background-menu);
   border-bottom: 1px solid var(--color-light-gray);
   box-shadow: var(--box-shadow-header);
+}
+
+.elements {
+  width: 100%;
+  max-width: 1320px;
+  height: var(--header-height-xs);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   box-sizing: border-box;
   padding: 14px 24px;
+  background: transparent;
 }
 
 @media (--small-viewport) {

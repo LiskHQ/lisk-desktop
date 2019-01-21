@@ -4,11 +4,10 @@ import { isPathCorrect } from '../../utils/app';
 import styles from './app.css';
 import stylesV2 from './appV2.css';
 import Toaster from '../toaster';
-import MainMenu from '../mainMenuV2';
+import TopBar from '../topBar';
 import LoadingBar from '../loadingBar';
 import OfflineWrapper from '../offlineWrapper';
 import CustomRoute from '../customRoute';
-import Header from '../header';
 import Dialog from '../dialog';
 import NotFound from '../notFound';
 // import StatusBar from '../statusBar'; // This will be enable with PR #1674
@@ -81,10 +80,9 @@ class App extends React.Component {
               `${styles.bodyWrapper} ${styles.loaded} appLoaded` :
               `${styles.bodyWrapper}`
             } ref={(el) => { this.main = el; }}>
-              <MainMenu />
+              <TopBar />
               <section>
                 <div className={styles.mainBox}>
-                  <Header />
                   <div id='onboardingAnchor'></div>
                   <Switch>
                     {this.state.loaded &&
