@@ -1,0 +1,30 @@
+@import '../app/variablesV2.css';
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.information {
+  font-family: var(--heading-font);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  min-width: 156px;
+  margin-right: 16px;
+}
+
+.copyAddress {
+  font-size: 11px;
+  font-weight: 500;
+  color: #868ba1;
+}
+
+.balance {
+  font-size: 11px;
+  font-weight: 600;
+  color: #2e2c3b;
+}

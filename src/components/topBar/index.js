@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import { feedbackDialogDisplayed } from '../../actions/dialog';
-import MainMenu from './mainMenu';
+import TopBar from './topBar';
 
 const mapStateToProps = state => ({
   account: state.account,
@@ -13,5 +13,5 @@ const mapDispatchToProps = {
   feedbackDialogDisplayed,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translate()(MainMenu)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translate()(TopBar)));
 
