@@ -7,6 +7,7 @@ import configureMockStore from 'redux-mock-store';
 import { MemoryRouter } from 'react-router-dom';
 import i18n from '../../i18n';
 import SplashScreen from './splashscreen';
+import accounts from '../../../test/constants/accounts';
 import routes from '../../constants/routes';
 
 describe('V2 SplashScreen', () => {
@@ -26,11 +27,7 @@ describe('V2 SplashScreen', () => {
     replace: spy(),
   };
 
-  const account = {
-    isDelegate: false,
-    address: '16313739661670634666L',
-    username: 'lisk-hub',
-  };
+  const account = accounts.genesis;
 
   const store = configureMockStore([])({
     peers,
