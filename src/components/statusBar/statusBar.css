@@ -19,6 +19,7 @@
   bottom: 0;
   left: 0;
   margin-left: 166px;
+  font-family: var(--content-font-new);
 }
 
 .timer {
@@ -40,6 +41,7 @@
     & > p {
       color: var(--color-content-grayblue);
       font-size: var(--font-size-small);
+      font-family: var(--content-font-new);
     }
   }
 }

@@ -21,6 +21,11 @@
       margin-left: 5px;
       color: var(--color-content-light);
     }
+
+    & > span:first-child {
+      font-weight: 600;
+      text-transform: capitalize;
+    }
   }
 }
 

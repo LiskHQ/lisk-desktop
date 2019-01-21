@@ -48,6 +48,7 @@ or "warn/action" ineastd of "red/green"
   --font-size-small: 10px;
   --heading-font: 'Gilroy', 'Open Sans', sans-serif;
   --content-font: 'Open Sans', sans-serif;
+  --content-font-new: 'gilroy-base', 'Open Sans', sans-serif;
   --font-weight-normal: 400;
   --font-weight-semi-bold: 500;
   --font-weight-bold: 600;
