@@ -133,7 +133,7 @@ class ConfirmPassphrase extends React.Component {
           <p>{t('It was given in a previous step')}</p>
         </div>
 
-        <div className={`${styles.confirmHolder}`}>
+        <div className={`${styles.confirmHolder} passphrase-holder`}>
           {passphrase.split(/\s/).map((word, key) =>
             <span className={styles.word} key={key}>
               { !words.includes(key)
@@ -166,6 +166,7 @@ class ConfirmPassphrase extends React.Component {
           </span>
           <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
             <PrimaryButtonV2
+              className={'passphrase-is-correct-button'}
               onClick={() => this.handleConfirm(this.verifyChoices())}
               disabled={!this.enableConfirmButton()}>
               {t('Confirm')}

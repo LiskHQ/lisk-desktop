@@ -56,7 +56,8 @@ class ChooseAvatar extends React.Component {
         </div>
         <div className={`
           ${styles.avatarsHolder} ${grid['col-xs-10']}
-          ${selected.address ? styles.avatarSelected : styles.animate}`}>
+          ${selected.address ? styles.avatarSelected : styles.animate}
+          choose-avatar`}>
           {
             accounts.map((account, key) => (
               <span
@@ -86,6 +87,7 @@ class ChooseAvatar extends React.Component {
           </Link>
           <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
             <PrimaryButtonV2
+              className={'get-passphrase-button'}
               onClick={() => nextStep({ accounts })}
               disabled={!selected.address}>
               {t('Confirm')}
