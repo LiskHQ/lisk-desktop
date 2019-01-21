@@ -8,7 +8,7 @@ import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import key from '../../assets/images/icons-v2/key.svg';
 import lock from '../../assets/images/icons-v2/circle-lock.svg';
-// import pdf from '../../assets/images/icons-v2/pdf.svg';
+import pdf from '../../assets/images/icons-v2/pdf.svg';
 import registerStyles from './registerV2.css';
 import styles from './backupPassphrase.css';
 
@@ -90,33 +90,31 @@ class BackupPassphrase extends React.Component {
               </CopyToClipboard>
             </div>
           </div>
-          {/*
-            <div className={`${styles.option}`}>
-              <div className={`${styles.optionIcon}`}>
-                <img src={pdf} />
-              </div>
-              <div className={`${styles.optionContent}`}>
-                <h2>
-                  {t('Paper version')}
-                  <Tooltip
-                    title={'Paperwallet'}
-                    footer={
-                      <a href="http://lisk.io"
-                        rel="noopener noreferrer"
-                        target="_blank">
-                          {t('Read More')}
-                      </a>}>
-                    <p>
-                      {t(`You can print your passphrase to store in a safe place.
-                      It is highly recommended to delete PDF file after printing.`)}
-                    </p>
-                  </Tooltip>
-                </h2>
-                <p className='option-value'>{'Lisk.pdf'}</p>
-                <a className={`${styles.action}`} href='#'>{t('Download PDF')}</a>
-              </div>
+          <div className={`${styles.option}`}>
+            <div className={`${styles.optionIcon}`}>
+              <img src={pdf} />
             </div>
-        */}
+            <div className={`${styles.optionContent}`}>
+              <h2>
+                {t('Paper version')}
+                <Tooltip
+                  title={'Paperwallet'}
+                  footer={
+                    <a href="http://lisk.io"
+                      rel="noopener noreferrer"
+                      target="_blank">
+                        {t('Read More')}
+                    </a>}>
+                  <p>
+                    {t('You can print your passphrase to store in a safe place.')}
+                    {t('It is highly recommended to delete PDF file after printing.')}
+                  </p>
+                </Tooltip>
+              </h2>
+              <p className='option-value'>{'Lisk.pdf'}</p>
+              <a className={`${styles.action}`} href='#'>{t('Download PDF')}</a>
+            </div>
+          </div>
         </div>
 
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
