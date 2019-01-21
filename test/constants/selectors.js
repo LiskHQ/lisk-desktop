@@ -163,6 +163,10 @@ const ss = {
   followAccountBtn: '.follow-account',
   bookmarkedAccountTitle: '.transactions .account-title',
   showMoreButton: '.show-more-button',
+  chooseAvatar: '.choose-avatar span',
+  copyPassphrase: '.option-value',
+  passphraseWordConfirm: '.passphrase-holder .option',
+  passphraseConfirmButton: '.passphrase-is-correct-button',
 };
 
 export default ss;
