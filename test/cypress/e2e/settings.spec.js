@@ -25,7 +25,7 @@ describe('Settings', () => {
    * @expect some specific to page element is present on it
    */
   it('Opens by sidebar button', () => {
-    cy.visit('/');
+    cy.visit(urls.dashboard);
     cy.get(ss.sidebarMenuSettingsBtn).should('have.css', 'opacity', '1').click();
     cy.url().should('contain', urls.settings);
     checkSettingsPageLoaded();
