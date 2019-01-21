@@ -7,7 +7,7 @@ import urls from '../../constants/urls';
 import chooseNetwork from '../utils/chooseNetwork';
 
 const loginUI = (passphrase) => {
-  cy.get(ss.passphraseInput).click();
+  cy.get(ss.passphraseInput).first().click();
   cy.get(ss.passphraseInput).each(($el, index) => {
     const passphraseWordsArray = passphrase.split(' ');
     cy.wrap($el).type(passphraseWordsArray[index]);
@@ -26,7 +26,7 @@ describe('Login Page', () => {
     cy.visit('/');
     cy.get(ss.createLiskIdBtn).click();
     cy.url().should('include', urls.register);
-    cy.get(ss.app).contains('Create your Lisk ID');
+    cy.get(ss.app).contains('Choose your Avatar');
   });
 
   /**
@@ -37,6 +37,8 @@ describe('Login Page', () => {
    */
   it('Log in to Mainnet by default ("Switch Network" is not set)', () => {
     cy.visit('/');
+    cy.get(ss.loginBtn).click();
+    cy.url().should('include', urls.login);
     loginUI(accounts.genesis.passphrase);
     cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
     cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(0));
@@ -51,7 +53,7 @@ describe('Login Page', () => {
    */
   it('Log in to Mainnet by default ("Switch Network" is false)', () => {
     cy.addLocalStorage('settings', 'showNetwork', false);
-    cy.visit('/');
+    cy.visit('/login');
     loginUI(accounts.genesis.passphrase);
     cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
     cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(0));
@@ -66,7 +68,7 @@ describe('Login Page', () => {
    */
   it('Log in to Mainnet (Selected network)', () => {
     cy.addLocalStorage('settings', 'showNetwork', true);
-    cy.visit('/');
+    cy.visit('/login');
     chooseNetwork('main');
     loginUI(accounts.genesis.passphrase);
     cy.get(ss.networkStatus).contains('Connected to mainnet');
@@ -82,7 +84,7 @@ describe('Login Page', () => {
    */
   it('Log in to Testnet', () => {
     cy.addLocalStorage('settings', 'showNetwork', true);
-    cy.visit('/');
+    cy.visit('/login');
     chooseNetwork('test');
     loginUI(accounts['testnet guy'].passphrase);
     cy.get(ss.networkStatus).contains('Connected to testnet');
@@ -99,7 +101,7 @@ describe('Login Page', () => {
    */
   it('Log in to Devnet', () => {
     cy.addLocalStorage('settings', 'showNetwork', true);
-    cy.visit('/');
+    cy.visit('/login');
     chooseNetwork('dev');
     loginUI(accounts.genesis.passphrase);
     cy.get(ss.networkStatus).contains('Connected to devnet');
@@ -113,7 +115,7 @@ describe('Login Page', () => {
    * @expect network switcher is visible
    */
   it('Network switcher available by url ?showNetwork=true', () => {
-    cy.visit('?showNetwork=true');
+    cy.visit('/login?showNetwork=true');
     cy.get(ss.networkDropdown).should('be.visible');
   });
 
@@ -123,7 +125,7 @@ describe('Login Page', () => {
    */
   it('Log in to invalid address', () => {
     cy.addLocalStorage('settings', 'showNetwork', true);
-    cy.visit('/');
+    cy.visit('/login');
     chooseNetwork('invalid');
     loginUI(accounts.genesis.passphrase);
     cy.get(ss.errorPopup).contains('Unable to connect to the node');

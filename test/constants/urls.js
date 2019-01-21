@@ -7,6 +7,7 @@ const urls = {
   settings: '/setting',
   accounts: '/explorer/accounts',
   register: '/register',
+  login: '/login',
   secondPassphrase: '/second-passphrase',
   registerDelegate: '/register-delegate',
   delegates: '/delegates',
