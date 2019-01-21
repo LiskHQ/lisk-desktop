@@ -179,8 +179,21 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin-top: 40px;
+  margin-top: 0;
+  max-height: 0;
+  transform: scale(0);
+  transform-origin: left center;
+  transition:
+    margin var(--animation-speed-fast) linear,
+    max-height var(--animation-speed-fast) linear,
+    transform var(--animation-speed-fast) linear;
   width: 100%;
+
+  &.show {
+    margin-top: 40px;
+    max-height: 72px;
+    transform: scale(1);
+  }
 
   & .label {
     color: var(--color-content-light);

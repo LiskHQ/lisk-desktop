@@ -259,8 +259,7 @@ class LoginV2 extends React.Component {
                   inputsLength={12}
                   onFill={this.checkPassphrase} />
 
-                {this.props.settings && this.props.settings.isHarwareWalletConnected && (
-                  <div className={styles.hardwareHolder}>
+                  <div className={`${styles.hardwareHolder} ${(this.props.settings && this.props.settings.isHarwareWalletConnected) ? styles.show : ''}`}>
                     <div className={`${styles.label}`}>
                       {t('Hardware login (beta): ')}
                       <span className={`${styles.link} hardwareWalletLink`}
@@ -276,7 +275,6 @@ class LoginV2 extends React.Component {
                       {t('Give feedback about this feature')}
                     </a>
                   </div>
-                )}
 
               </div>
 
