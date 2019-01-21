@@ -99,7 +99,7 @@ class passphraseInputV2 extends React.Component {
 
     return (
       <React.Fragment>
-        <div className={`${styles.inputs} ${grid.row}`}>
+        <div className={`${styles.inputs} ${grid.row} passphrase`}>
           {[...Array(inputsLength)].map((x, i) => (
             <span key={i} className={`${grid['col-xs-2']}`}>
               <input
