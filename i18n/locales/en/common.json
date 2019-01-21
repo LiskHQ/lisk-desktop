@@ -175,6 +175,7 @@
   "Invalid address": "Invalid address",
   "Invalid amount": "Invalid amount",
   "Is Blockchain Secure?": "Is Blockchain Secure?",
+  "It is highly recommended to delete PDF file after printing.": "It is highly recommended to delete PDF file after printing.",
   "It is recommended that you initialize your Lisk ID.": "It is recommended that you initialize your Lisk ID.",
   "It was given in a previous step": "It was given in a previous step",
   "Keep it safe is only way to access the wallet": "Keep it safe is only way to access the wallet",
@@ -418,7 +419,7 @@
   "Voting": "Voting",
   "Wallet": "Wallet",
   "We recommend including date & time or a specific keyword.": "We recommend including date & time or a specific keyword.",
-  "We strongly recommend to store passphrase in a safe place.\n                    You can use a password manager or paperwallet.": "We strongly recommend to store passphrase in a safe place.\n                    You can use a password manager or paperwallet.",
+  "We strongly recommend to store passphrase in a safe place.": "We strongly recommend to store passphrase in a safe place.",
   "Welcome back": "Welcome back",
   "Welcome to Lisk Hub": "Welcome to Lisk Hub",
   "Welcome to the Lisk Hub!": "Welcome to the Lisk Hub!",
@@ -440,9 +441,10 @@
   "You can now use Lisk Hub.<br": {
     " If you want to repeat the onboarding, navigate to \"Help\" on the sidebar.": "You can now use Lisk Hub.<br> If you want to repeat the onboarding, navigate to \"Help\" on the sidebar."
   },
-  "You can print your passphrase to store in a safe place.\n                      It is highly recommended to delete PDF file after printing.": "You can print your passphrase to store in a safe place.\n                      It is highly recommended to delete PDF file after printing.",
+  "You can print your passphrase to store in a safe place.": "You can print your passphrase to store in a safe place.",
   "You can share your Lisk ID with anyone you wish, but never reveal your passphrase to anyone as it would allow full access to your account.": "You can share your Lisk ID with anyone you wish, but never reveal your passphrase to anyone as it would allow full access to your account.",
   "You can use ": "You can use ",
+  "You can use a password manager or paperwallet.": "You can use a password manager or paperwallet.",
   "You can use your passphrase to sign a message. ": "You can use your passphrase to sign a message. ",
   "You have already registered as a delegate.": "You have already registered as a delegate.",
   "You have cancelled the transaction on your hardware wallet. You can either continue or retry.": "You have cancelled the transaction on your hardware wallet. You can either continue or retry.",
