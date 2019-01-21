@@ -162,7 +162,7 @@ describe('Send', () => {
   });
 
   /**
-   * Initialization dialogue and functionality shouldn't be shown through wallet send.
+   * Initialization banner should appear on dashboard with account not initialized.
    * @expect initialization dialogue is shown
    * @expect successfully go through initialization
    * @expect transfer transaction appear with correct data
@@ -171,6 +171,10 @@ describe('Send', () => {
   it('Should show initialize banner with account not initialized', () => {
     cy.autologin(accounts['without initialization'].passphrase, networks.devnet.node);
     cy.reload();
+    cy.visit(urls.wallet);
+    cy.get(ss.transactionSendButton).click();
+    cy.get(ss.accountInitializationMsg).should('not.exist');
+    cy.get(ss.recipientInput).should('exist');
     cy.visit(urls.dashboard);
     cy.get(ss.initializeBanner).should('exist');
     cy.get(ss.initializeBanner).find('a').click();
@@ -185,19 +189,8 @@ describe('Send', () => {
     cy.get(ss.transactionRow).eq(0).as('tx');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', accounts['without initialization'].address);
     cy.get('@tx').find(ss.transactionReference).should('have.text', 'Account initialization');
-  });
-
-  /**
-   * Initialization dialogue and functionality shouldn't be shown through wallet send.
-   * @expect initialization dialogue is not shown
-   */
-  it('Should be able to send even with account not initialized', () => {
-    cy.autologin(accounts['without initialization'].passphrase, networks.devnet.node);
-    cy.reload();
-    cy.visit(urls.wallet);
-    cy.get(ss.transactionSendButton).click();
-    cy.get(ss.accountInitializationMsg).should('not.exist');
-    cy.get(ss.recipientInput).should('exist');
+    cy.visit(urls.dashboard);
+    cy.get(ss.initializeBanner).should('not.exist');
   });
 
   /**
