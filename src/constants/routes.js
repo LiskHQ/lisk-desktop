@@ -151,8 +151,8 @@ export default {
     isV2Layout: true,
     exact: true,
   },
-  registration: {
-    path: '/registration',
+  registerV2: {
+    path: '/register',
     component: RegistrationV2,
     isPrivate: false,
     isV2Layout: true,

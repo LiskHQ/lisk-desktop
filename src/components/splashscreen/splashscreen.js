@@ -50,10 +50,10 @@ class Splashscreen extends React.Component {
                 t('Create an account or sign in to manage your LSK, become a delegate or vote for another delegates.')
               }</p>
             </div>
-            <Link className={styles.button} to={routes.loginV2.path}>
+            <Link className={`${styles.button} login-button`} to={routes.loginV2.path}>
               <SecondaryButtonV2>{t('Sign in')}</SecondaryButtonV2>
             </Link>
-            <Link className={styles.button} to={routes.registration.path}>
+            <Link className={`${styles.button} new-account-button`} to={routes.registerV2.path}>
               <PrimaryButtonV2>{t('Create an Account')}</PrimaryButtonV2>
             </Link>
             <span className={styles.separator}>

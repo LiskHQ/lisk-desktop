@@ -40,7 +40,7 @@ class HeaderV2 extends React.Component {
             </Link>
           }
           {showNetwork
-            && <span className={`${styles.dropdownHandler}`}
+            && <span className={`${styles.dropdownHandler} network`}
               onClick={this.toggleDropdown}>
               { networkList[selectedNetwork].label }
               <DropdownV2 showDropdown={this.state.showDropdown}>
