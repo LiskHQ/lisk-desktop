@@ -126,7 +126,9 @@ class BackupPassphrase extends React.Component {
             </SecondaryButtonV2>
           </span>
           <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
-            <PrimaryButtonV2 onClick={() => nextStep({ account })}>
+            <PrimaryButtonV2
+              className={'yes-its-safe-button'}
+              onClick={() => nextStep({ account })}>
               {t('Continue')}
               <FontIcon className={registerStyles.icon}>arrow-right</FontIcon>
             </PrimaryButtonV2>
