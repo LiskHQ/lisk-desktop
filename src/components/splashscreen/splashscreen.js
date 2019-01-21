@@ -25,8 +25,8 @@ class Splashscreen extends React.Component {
   }
 
   redirectToReferrer() {
-    const tem = this.getReferrerRoute();
-    this.props.history.replace(tem);
+    const referrerRoute = this.getReferrerRoute();
+    this.props.history.replace(referrerRoute);
   }
 
   alreadyLoggedWithThisAddress(address, network) {
