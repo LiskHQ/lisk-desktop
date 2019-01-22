@@ -3,8 +3,7 @@ import to from 'await-to-js';
 import Box from '../box';
 
 import UnlockWallet from './unlockWallet';
-import LedgerLogin from './ledgerLogin';
-import networks from '../../constants/networks';
+import LedgerLogin from './ledgerLoginHOC';
 import getNetwork from '../../utils/getNetwork';
 import { getAccountFromLedgerIndex } from '../../utils/ledger';
 
@@ -43,15 +42,8 @@ class HwWallet extends React.Component {
     let ledgerAccount;
     // eslint-disable-next-line prefer-const
     [error, ledgerAccount] = await to(getAccountFromLedgerIndex()); // by default index 0
-    if (error) {
-      // const text = error && error.message ?
-      // `${error.message}.` : i18next.t('Error during login with Ledger.');
-      // this.props.errorToastDisplayed({ label: error.message });
-    } else {
+    if (!error) {
       const network = Object.assign({}, getNetwork(this.props.network));
-      if (this.state.network === networks.customNode.code) {
-        network.address = this.state.address;
-      }
 
       if (ledgerAccount.publicKey) {
         clearTimeout(finishTimeout);
@@ -64,10 +56,6 @@ class HwWallet extends React.Component {
         publicKey: ledgerAccount.publicKey,
         loginType: loginType.ledger,
         network,
-        // hwInfo: { // Use pubKey[0] first 10 char as device id
-        //   deviceId: ledgerAccount.publicKey.substring(0, 10),
-        //   derivationIndex: 0,
-        // },
       });
     }
   }

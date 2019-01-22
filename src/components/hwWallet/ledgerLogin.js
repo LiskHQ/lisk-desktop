@@ -1,13 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
-import { withRouter } from 'react-router';
-
 import { displayAccounts } from '../../utils/ledger';
-import { liskAPIClientSet } from '../../actions/peers';
-import { settingsUpdated } from '../../actions/settings';
-import { errorToastDisplayed } from '../../actions/toaster';
-
 import AccountCard from './accountCard';
 import AddAccountCard from './addAccountCard';
 import { FontIcon } from '../fontIcon';
@@ -106,16 +98,16 @@ class LedgerLogin extends React.Component {
       {this.state.isLoading ? <h1 className={styles.title}>{this.state.isLoading && this.props.t('Loading accounts')}</h1> : null}
       <div className={this.state.isLoading ? styles.loading : null}>
       {!this.state.isLoading ?
-          <div>
+          <div className='loadedAccounts'>
             <div className={`${styles.back} back`} onClick={() => { this.props.cancelLedgerLogin(); }}>
               <FontIcon value='arrow-left'/>{this.props.t('Back')}
             </div>
             <div className={styles.title}><h2>{this.props.t('Accounts on Ledger')}</h2></div>
             {this.state.isEditMode ?
-              <div className={styles.edit} onClick={() => this.saveAccountNames()}>
+              <div className={`${styles.edit} saveAccountNames`} onClick={() => this.saveAccountNames()}>
                 {this.props.t('Done')}
               </div> :
-              <div className={styles.edit} onClick={() => this.turnOnEditMode()}>
+              <div className={`${styles.edit} editMode`} onClick={() => this.turnOnEditMode()}>
                 <FontIcon value='edit'/>{this.props.t('Edit')}
               </div>}
             <div className={styles.accountList}>{this.state.hwAccounts.map((account, index) => (
@@ -136,19 +128,4 @@ class LedgerLogin extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  liskAPIClient: state.peers && state.peers.liskAPIClient,
-  settings: state.settings,
-  loginType: state.account.loginType || 1,
-});
-
-const mapDispatchToProps = {
-  liskAPIClientSet,
-  settingsUpdated,
-  errorToastDisplayed,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withRouter(translate()(LedgerLogin)));
+export default LedgerLogin;
