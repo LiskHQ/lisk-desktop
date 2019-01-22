@@ -52,7 +52,7 @@ class BackupPassphrase extends React.Component {
             {t('Backup your Passphrase')}
           </h1>
           <p>{t('Passphrase is both your login and password combined')}</p>
-          <p>{t('Keep it safe is only way to access the wallet')}</p>
+          <p>{t('Keep it safe it is the only way to access the wallet')}</p>
         </div>
 
         <div className={`${styles.optionsHolder} ${grid['col-sm-11']}`}>
