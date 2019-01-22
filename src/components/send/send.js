@@ -46,7 +46,9 @@ class Send extends React.Component {
               key='send'
               finalCallback={this.goToWallet.bind(this)}
               className={styles.wrapper}>
-              <AccountInitialization address={recipient}/>
+              <AccountInitialization
+                history={this.props.history}
+                address={recipient}/>
               <Form
                 autoFocus={this.state.isActiveOnMobile || window.innerWidth > breakpoints.m}
                 address={recipient}

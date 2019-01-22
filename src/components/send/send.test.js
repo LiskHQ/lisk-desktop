@@ -36,6 +36,7 @@ describe('Send', () => {
 
     props = {
       history: {
+        replace: spy(),
         location: {},
         push: spy(),
       },

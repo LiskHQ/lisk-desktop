@@ -1,0 +1,33 @@
+@import '../../app/variables.css';
+@import '../../app/variablesV2.css';
+
+.banner {
+  background-color: var(--color-background-dark);
+  background-color: var(--color-primary-semi-dark);
+  border-radius: var(--border-radius-standard);
+  box-shadow: var(--box-shadow-standard);
+  box-sizing: border-box;
+  color: var(--color-white);
+  padding: 40px;
+
+  & .title {
+    font-family: var(--heading-font);
+    font-size: var(--subtitle-font-size);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.1px;
+    margin: 0;
+  }
+
+  & .content {
+    font-family: var(--content-font);
+    font-size: var(--paragraph-font-size-s);
+    font-weight: var(--font-weight-semi-bold);
+    line-height: 1.71;
+    letter-spacing: 0.1px;
+    margin: 20px 0;
+
+    & > p {
+      margin: 0;
+    }
+  }
+}

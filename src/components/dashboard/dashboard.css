@@ -6,6 +6,12 @@
   padding-bottom: 50px;
 }
 
+.bannerWrapper {
+  margin: 0px;
+  padding-bottom: 20px;
+  width: 100%;
+}
+
 .main {
   height: auto;
   padding: 0px;
