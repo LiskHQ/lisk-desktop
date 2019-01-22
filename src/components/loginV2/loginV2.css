@@ -223,4 +223,8 @@
   & :global(.tooltip-window) {
     max-width: 464px;
   }
+
+  & .tooltipText {
+    margin-bottom: 8px;
+  }
 }
