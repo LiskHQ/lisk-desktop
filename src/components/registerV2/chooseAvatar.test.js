@@ -41,9 +41,14 @@ describe('V2 Register Process - Choose Avatar', () => {
     </MemoryRouter>, options);
   });
 
-  it('Should render with five avatars and confirm button disabled', () => {
-    expect(wrapper.find('AccountVisual')).to.have.length(5);
-    expect(wrapper.find('Button').at(1).prop('disabled'));
+  it('Should render with five avatars', () => {
+    expect(wrapper).to.have.exactly(5).descendants('AccountVisual');
+  });
+
+  it('Should animate avatars when confirm is clicked', () => {
+    expect(wrapper.find('.avatarsHolder')).to.not.have.className('animate');
+    wrapper.find('Button').at(1).simulate('click');
+    expect(wrapper.find('.avatarsHolder')).to.have.className('animate');
   });
 
   it('Should pass selected address to handler function', () => {
