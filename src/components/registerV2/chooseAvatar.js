@@ -19,6 +19,8 @@ class ChooseAvatar extends React.Component {
     };
 
     this.getAvatarAnimationClassName = this.getAvatarAnimationClassName.bind(this);
+    this.handleNextStep = this.handleNextStep.bind(this);
+    this.setWrapperRef = this.setWrapperRef.bind(this);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -36,9 +38,25 @@ class ChooseAvatar extends React.Component {
     }
   }
 
+  setWrapperRef(node) {
+    this.wrapperRef = node;
+  }
+
+  handleNextStep() {
+    const { accounts, selected, nextStep } = this.props;
+    if (selected.address) {
+      nextStep({ accounts });
+    } else {
+      const animateClass = `${styles.animate}`;
+      clearTimeout(this.timeout);
+      this.wrapperRef.classList.add(animateClass);
+      this.timeout = setTimeout(() => this.wrapperRef.classList.remove(animateClass), 1250);
+    }
+  }
+
   render() {
     const {
-      t, handleSelectAvatar, accounts, selected, nextStep,
+      t, handleSelectAvatar, accounts, selected,
     } = this.props;
     const { deselect } = this.state;
 
@@ -54,9 +72,11 @@ class ChooseAvatar extends React.Component {
             t('Each Avatar is a visual representation of the address, making it unique.')
           }</p>
         </div>
-        <div className={`
+        <div
+          ref={this.setWrapperRef}
+          className={`
           ${styles.avatarsHolder} ${grid['col-xs-10']}
-          ${selected.address ? styles.avatarSelected : styles.animate}
+          ${selected.address ? styles.avatarSelected : ''}
           choose-avatar`}>
           {
             accounts.map((account, key) => (
@@ -88,8 +108,7 @@ class ChooseAvatar extends React.Component {
           <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
             <PrimaryButtonV2
               className={'get-passphrase-button'}
-              onClick={() => nextStep({ accounts })}
-              disabled={!selected.address}>
+              onClick={this.handleNextStep}>
               {t('Confirm')}
               <FontIcon className={registerStyles.icon}>arrow-right</FontIcon>
             </PrimaryButtonV2>
