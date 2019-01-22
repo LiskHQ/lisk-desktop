@@ -11,6 +11,7 @@ import CustomRoute from '../customRoute';
 import Header from '../header';
 import Dialog from '../dialog';
 import NotFound from '../notFound';
+// import StatusBar from '../statusBar'; // This will be enable with PR #1674
 
 import routes from '../../constants/routes';
 // eslint-disable-next-line import/no-named-as-default

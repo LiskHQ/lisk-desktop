@@ -48,6 +48,7 @@ or "warn/action" ineastd of "red/green"
   --font-size-small: 10px;
   --heading-font: 'Gilroy', 'Open Sans', sans-serif;
   --content-font: 'Open Sans', sans-serif;
+  --content-font-new: 'gilroy-base', 'Open Sans', sans-serif;
   --font-weight-normal: 400;
   --font-weight-semi-bold: 500;
   --font-weight-bold: 600;
@@ -86,6 +87,7 @@ or "warn/action" ineastd of "red/green"
   --color-background-dark: #1e194d;
   --color-dark-gray: #868ba1;
   --color-light-gray: #e6e6e6;
+  --color-content-grayblue: #7383a7;
   --color-background-wrapper: linear-gradient(120deg, #f7f9fb, #fbfcfd);
   --color-background-header: #fbfcfd;
   --color-link: var(--color-primary-standard);

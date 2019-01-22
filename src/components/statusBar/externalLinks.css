@@ -1,0 +1,26 @@
+@import '../app/variablesV2.css';
+
+.wrapper {
+  box-sizing: border-box;
+  height: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+
+  & > a {
+    height: 20px;
+    display: flex;
+    align-items: center;
+    font-family: var(--content-font-new);
+    font-size: var(--font-size-small);
+    color: var(--color-primary-standard);
+    font-weight: var(--font-weight-bold);
+    text-decoration: none;
+    margin-left: 27px;
+
+    & > img {
+      margin-right: 3px;
+    }
+  }
+}
