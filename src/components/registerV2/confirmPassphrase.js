@@ -129,7 +129,7 @@ class ConfirmPassphrase extends React.Component {
             <img src={lock} />
             {t('Confirm your passphrase')}
           </h1>
-          <p>{t('Choose the rights word missing from your Passphrase.')}</p>
+          <p>{t('Choose the missing words from your Passphrase.')}</p>
           <p>{t('It was given in a previous step')}</p>
         </div>
 
