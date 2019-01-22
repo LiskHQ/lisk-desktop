@@ -1,5 +1,8 @@
+// eslint-disable-line
 import React from 'react';
 import i18next from 'i18next';
+import Lisk from 'lisk-elements';
+
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
@@ -12,6 +15,7 @@ import getNetwork from '../../utils/getNetwork';
 import networks from '../../constants/networks';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
+import feedbackLinks from '../../constants/feedbackLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import HeaderV2 from '../headerV2/headerV2';
 import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
@@ -49,12 +53,11 @@ class LoginV2 extends React.Component {
     this.changeAddress = this.changeAddress.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onLoginSubmission = this.onLoginSubmission.bind(this);
+    this.validateCorrectNode = this.validateCorrectNode.bind(this);
   }
 
   componentDidMount() {
-    i18next.on('languageChanged', () => {
-      this.getNetworksList();
-    });
+    i18next.on('languageChanged', this.getNetworksList);
   }
 
   componentDidUpdate(prevProps) {
@@ -155,6 +158,34 @@ class LoginV2 extends React.Component {
     }
   }
 
+  validateCorrectNode(nextPath) {
+    const { address } = this.state;
+    const nodeURL = address !== '' ? addHttp(address) : address;
+    if (this.state.network === networks.customNode.code) {
+      const liskAPIClient = new Lisk.APIClient([nodeURL], {});
+      liskAPIClient.node.getConstants()
+        .then((res) => {
+          if (res.data) {
+            this.props.liskAPIClientSet({
+              network: {
+                ...this.getNetwork(this.state.network),
+                address: nodeURL,
+              },
+            });
+            this.props.history.push(nextPath);
+          } else {
+            throw new Error();
+          }
+        }).catch(() => {
+          this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
+        });
+    } else {
+      const network = this.getNetwork(this.state.network);
+      this.props.liskAPIClientSet({ network });
+      this.props.history.push(nextPath);
+    }
+  }
+
   render() {
     const { t } = this.props;
     return (
@@ -175,7 +206,7 @@ class LoginV2 extends React.Component {
                 {t('Sign in with a Passphrase')}
               </h1>
               <p>
-                {t('New to Lisk?')}
+                {t('New to Lisk? ')}
                 <Link className={`${styles.link}`}
                   to={routes.registration.path}>
                   {t('Create an Account')}
@@ -199,6 +230,7 @@ class LoginV2 extends React.Component {
                     </span>
                   </div>
                 </div>
+
                 <h2 className={`${styles.inputLabel}`}>
                   {t('Type or insert your passphrase')}
                   <Tooltip
@@ -226,6 +258,23 @@ class LoginV2 extends React.Component {
                 <PassphraseInputV2
                   inputsLength={12}
                   onFill={this.checkPassphrase} />
+
+                  <div className={`${styles.hardwareHolder} ${(this.props.settings && this.props.settings.isHarwareWalletConnected) ? styles.show : ''}`}>
+                    <div className={`${styles.label}`}>
+                      {t('Hardware login (beta): ')}
+                      <span className={`${styles.link} hardwareWalletLink`}
+                        onClick={() => this.validateCorrectNode(routes.hwWallet.path)}>
+                        Ledger Nano S
+                      </span>
+                    </div>
+                    <a
+                      className={styles.link}
+                      target='_blank'
+                      href={feedbackLinks.ledger}
+                      rel='noopener noreferrer'>
+                      {t('Give feedback about this feature')}
+                    </a>
+                  </div>
 
               </div>
 

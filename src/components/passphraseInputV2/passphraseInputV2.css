@@ -2,7 +2,7 @@
 
 .inputs {
   flex-wrap: wrap;
-  padding-top: 40px;
+  margin-top: 12px;
 
   & > span {
     margin: 12px 0;
