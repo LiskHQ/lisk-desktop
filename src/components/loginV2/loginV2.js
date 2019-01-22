@@ -191,7 +191,7 @@ class LoginV2 extends React.Component {
                   <div className={`${styles.addressInput} address`}>
                     <input
                       className={`${this.state.addressValidity ? 'error' : ''}`}
-                      type="url"
+                      type="text"
                       value={this.state.address}
                       onChange={this.changeAddress} />
                     <span className={`${styles.errorMessage} ${this.state.addressValidity ? styles.showError : ''}`}>
@@ -210,12 +210,12 @@ class LoginV2 extends React.Component {
                         target="_blank">
                           {t('Read More')}
                       </a>}>
-                    <p>
+                    <p className={`${styles.tooltipText}`}>
                       {t('Passphrase is both ')}
                       <strong>{t('your login and passphrase ')}</strong>
                       {t('combined. You saved your passphrase when registering your account.')}
                     </p>
-                    <p>
+                    <p className={`${styles.tooltipText}`}>
                       {t('You can use ')}
                       <strong>{t('tab or space ')}</strong>
                       {t('to go to the next field.')}

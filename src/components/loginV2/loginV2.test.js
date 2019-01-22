@@ -78,7 +78,10 @@ describe('LoginV2', () => {
     it('should show error about passphrase length if passphrase have wrong length', () => {
       const expectedError = 'Passphrase should have 12 words, entered passphrase has 11';
       const lastIndex = passphrase.lastIndexOf(' ');
-      wrapper.find('passphraseInputV2 input').first().simulate('change', { target: { value: passphrase.substring(0, lastIndex), dataset: { index: 0 } } });
+      const clipboardData = {
+        getData: () => passphrase.substring(0, lastIndex),
+      };
+      wrapper.find('passphraseInputV2 input').first().simulate('paste', { clipboardData });
       expect(wrapper.find('passphraseInputV2 .errorMessage')).to.contain(expectedError);
     });
 

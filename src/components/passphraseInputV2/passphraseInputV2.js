@@ -24,6 +24,7 @@ class passphraseInputV2 extends React.Component {
     this.removeFocusedField = this.removeFocusedField.bind(this);
     this.handleValueChange = this.handleValueChange.bind(this);
     this.keyAction = this.keyAction.bind(this);
+    this.handlePaste = this.handlePaste.bind(this);
   }
 
   keyAction(event) {
@@ -36,30 +37,35 @@ class passphraseInputV2 extends React.Component {
     }
     if ((event.which === keyCodes.delete && !value) || event.which === keyCodes.arrowLeft) {
       focus = index - 1 < 0 ? index : index - 1;
+      event.preventDefault();
     }
     this.setState({ focus });
   }
 
+  handlePaste({ clipboardData }) {
+    const pastedValue = clipboardData.getData('Text');
+    const insertedValue = pastedValue.trim().replace(/\W+/g, ' ').split(/\s/);
+    this.validatePassphrase({ values: insertedValue });
+  }
+
   // eslint-disable-next-line max-statements
   handleValueChange({ target }) {
-    let { values, focus } = this.state;
-    const index = target.dataset.index;
+    const { values } = this.state;
+    const index = parseInt(target.dataset.index, 10);
     const insertedValue = target.value.trim().replace(/\W+/g, ' ');
-    const insertedValueAsArray = insertedValue.split(' ');
+    if (insertedValue.split(/\s/).length > 1) return;
 
     values[index] = insertedValue;
-    focus = index;
+    this.validatePassphrase({ values, focus: index });
+  }
 
-    if (insertedValueAsArray.length > 1) {
-      values = insertedValueAsArray;
-      focus = insertedValueAsArray.length - 1;
-    }
-
+  validatePassphrase({ values, focus = null }) {
     let errorState = { validationError: '', partialPassphraseError: [], passphraseIsInvalid: false };
     const passphrase = values.join(' ');
     if (!isValidPassphrase(passphrase)) {
       errorState = getPassphraseValidationErrors(passphrase);
-      errorState.passphraseIsInvalid = errorState.validationError === this.props.t('Passphrase is not valid');
+      errorState.passphraseIsInvalid =
+        errorState.validationError === this.props.t('Passphrase is not valid');
     }
 
     if (!passphrase.trim().length) {
@@ -111,6 +117,7 @@ class passphraseInputV2 extends React.Component {
                 autoComplete='off'
                 onBlur={this.removeFocusedField}
                 onFocus={this.setFocusedField}
+                onPaste={this.handlePaste}
                 onChange={this.handleValueChange}
                 onKeyDown={this.keyAction}
                 data-index={i}
