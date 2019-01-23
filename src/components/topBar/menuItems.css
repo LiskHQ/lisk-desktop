@@ -7,9 +7,11 @@
   align-items: center;
   width: auto;
   min-width: 334px;
+  margin-left: -25px;
 }
 
 .item {
+  height: 36px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -21,6 +23,12 @@
   &:last-child {
     margin-right: 0;
   }
+}
+
+.notActive {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.5;
 }
 
 .item > img {
@@ -37,6 +45,12 @@
 .selected {
   & > span {
     color: var(--color-link-active);
+  }
+}
+
+@media (--large-viewport) {
+  .wrapper {
+    margin-left: 23px;
   }
 }
 

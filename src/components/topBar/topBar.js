@@ -20,7 +20,6 @@ class TopBar extends React.Component {
 
     this.confirLogout = this.confirLogout.bind(this);
     this.onLogout = this.onLogout.bind(this);
-    this.onDropdownToggle = this.onDropdownToggle.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.setDropdownRef = this.setDropdownRef.bind(this);
@@ -35,7 +34,6 @@ class TopBar extends React.Component {
   onLogout() {
     Piwik.trackingEvent('Header', 'button', 'Open logout dialog');
 
-    this.onDropdownToggle();
     this.props.setActiveDialog({
       childComponent: Options,
       childComponentProps: {
@@ -51,10 +49,6 @@ class TopBar extends React.Component {
         },
       },
     });
-  }
-
-  onDropdownToggle() {
-    this.setState({ isDropdownEnable: !this.state.isDropdownEnable });
   }
 
   handleClick() {
@@ -77,27 +71,31 @@ class TopBar extends React.Component {
   }
 
   render() {
-    const { t, showDelegate } = this.props;
+    const { t, showDelegate, account } = this.props;
 
     const items = showDelegate
       ? menuLinks
       : menuLinks.filter(item => item.id !== 'delegates');
+
+    const isUserLogout = Object.keys(account).length === 0 || account.afterLogout;
 
     return (
       <div className={styles.wrapper}>
         <div className={styles.elements}>
           <img src={liskLogo} />
           <MenuItems
+            isUserLogout={isUserLogout}
             items={items}
-            t={t}
             location={this.props.location}
+            t={t}
           />
           <SearchBar />
           <UserAccount
             account={this.props.account}
-            onLogout={this.onLogout}
-            onDropdownToggle={this.handleClick}
             isDropdownEnable={this.state.isDropdownEnable}
+            isUserLogout={isUserLogout}
+            onDropdownToggle={this.handleClick}
+            onLogout={this.onLogout}
             setDropdownRef={this.setDropdownRef}
             t={t}
           />

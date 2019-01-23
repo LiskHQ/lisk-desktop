@@ -9,7 +9,7 @@ const MenuItems = props => (
         <NavLink
           key={item.id}
           to={item.path}
-          className={styles.item}
+          className={`${styles.item} ${(props.isUserLogout && item.id !== 'dashboard') ? styles.notActive : ''}`}
           id={item.id}
           activeClassName={styles.selected}
         >
