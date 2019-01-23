@@ -3,7 +3,7 @@
 .empty {
   text-align: center;
   font-weight: var(--font-weight-semi-bold);
-  padding-top: 25px;
+  padding-top: 100px;
   color: var(--color-grayscale-dark);
 }
 
@@ -17,22 +17,25 @@
 
 @media (--xLarge-viewport) {
   .results {
-    overflow-y: auto;
+    overflow: auto;
     margin: 0px calc(0 - var(--box-padding-left-XL));
   }
 }
 
 @media (--large-viewport) {
   .results {
-    overflow-y: auto;
+    overflow: auto;
     margin: 0px calc(0 - var(--box-padding-left-L));
   }
 }
 
 @media (--medium-viewport) {
   .results {
-    overflow-y: initial;
-    padding-bottom: 100px;
+    overflow: auto;
     margin: 0px calc(0 - var(--box-padding-left-M));
   }
+}
+
+.onShowMore {
+  height: auto !important;
 }

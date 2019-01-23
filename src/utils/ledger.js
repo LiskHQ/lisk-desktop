@@ -20,17 +20,6 @@ export const LEDGER_MSG = {
   LEDGER_ASK_FOR_CONFIRMATION: i18next.t('Look at your Ledger for confirmation'),
   LEDGER_ASK_FOR_CONFIRMATION_PIN: i18next.t('Look at your Ledger for confirmation of second signature'),
 };
-const { ipc } = window;
-if (ipc) { // On browser-mode is undefined
-  ipc.on('ledgerConnected', () => {
-    // TODO if we want to enable this, it should be in a middleware.
-    // No util should import store, because it causes problems in tests
-    // store.dispatch(infoToastDisplayed({ label: LEDGER_MSG.LEDGER_CONNECTED }));
-  });
-  ipc.on('ledgerDisconnected', () => {
-    // store.dispatch(errorToastDisplayed({ label: LEDGER_MSG.LEDGER_DISCONNECTED }));
-  });
-}
 
 const getLedgerTransportU2F = async () => TransportU2F.create();
 

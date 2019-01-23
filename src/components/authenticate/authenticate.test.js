@@ -124,4 +124,10 @@ describe('Authenticate', () => {
       passphrase,
     });
   });
+
+  it('should close dialog on click the close button', () => {
+    wrapper.find('button.closeDialog-button').simulate('click');
+    wrapper.update();
+    expect(props.closeDialog).to.have.been.calledWith();
+  });
 });

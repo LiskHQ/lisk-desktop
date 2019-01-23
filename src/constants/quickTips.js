@@ -2,6 +2,7 @@ import academy from '../assets/images/dashboard/academy.svg';
 import id from '../assets/images/dashboard/id.svg';
 import transparent from '../assets/images/dashboard/transparent.svg';
 import vote from '../assets/images/dashboard/vote.svg';
+import links from './externalLinks';
 
 const quickTips = t => [
   {
@@ -12,7 +13,7 @@ const quickTips = t => [
     ],
     goTo: {
       title: t('Learn more'),
-      link: 'https://lisk.io/academy/welcome-to-the-lisk-academy/getting-started-with-lisk',
+      link: links.gettingStarted,
     },
     picture: id,
   },
@@ -24,7 +25,7 @@ const quickTips = t => [
     ],
     goTo: {
       title: t('Learn more'),
-      link: 'https://lisk.io/academy/welcome-to-the-lisk-academy/getting-started-with-lisk/voting-on-lisk',
+      link: links.votingOnLisk,
     },
     picture: vote,
   },
@@ -36,7 +37,7 @@ const quickTips = t => [
     ],
     goTo: {
       title: t('Learn more'),
-      link: 'https://lisk.io/academy/blockchain-basics/benefits-of-blockchain/blockchain-transparency-explained',
+      link: links.blockchainTransparencyExplained,
     },
     picture: transparent,
   },
@@ -47,7 +48,7 @@ const quickTips = t => [
     ],
     goTo: {
       title: t('Learn more'),
-      link: 'https://lisk.io/academy',
+      link: links.liskAcademy,
     },
     picture: academy,
   },

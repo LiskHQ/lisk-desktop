@@ -4,7 +4,7 @@ import Box from '../box';
 import quickTips from '../../constants/quickTips';
 import { FontIcon } from '../fontIcon';
 import TransitionWrapper from '../toolbox/transitionWrapper';
-
+import Piwik from '../../utils/piwik';
 import styles from './index.css';
 
 class QuickTips extends React.Component {
@@ -16,6 +16,7 @@ class QuickTips extends React.Component {
   }
 
   nextStep() {
+    Piwik.trackingEvent('QuickTips', 'button', 'Next step');
     const { currentIndex } = this.state;
     const nextIndex = currentIndex + 1;
 
@@ -23,6 +24,7 @@ class QuickTips extends React.Component {
   }
 
   previousStep() {
+    Piwik.trackingEvent('QuickTips', 'button', 'Previous step');
     const { currentIndex } = this.state;
     const nextIndex = currentIndex - 1;
 
@@ -70,13 +72,13 @@ class QuickTips extends React.Component {
 
                 <div className={styles.steps}>
                   <div
-                    onClick={() => { this.previousStep(); }}
+                    onClick={() => this.previousStep()}
                     className={`previousStep ${styles.previousStep}
                       ${currentIndex === 0 ? `${styles.disabled} disabled` : ''}`}
                   ><FontIcon className={styles.arrow} value='arrow-left'/>{this.props.t('Previous')}</div>
                     <div className="pagination">{`${currentIndex + 1}  /  ${quickTips(this.props.t).length}`}</div>
                   <div
-                    onClick={() => { this.nextStep(); }}
+                    onClick={() => this.nextStep()}
                     className={`nextStep ${styles.nextStep}
                       ${currentIndex + 1 === quickTips(this.props.t).length ? `${styles.disabled} disabled` : ''}`}
                   >{this.props.t('Next')}<FontIcon className={styles.arrow} value='arrow-right'/></div>

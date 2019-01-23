@@ -54,22 +54,90 @@ describe('actions: followedAccount', () => {
     expect(followedAccountRemoved(data)).to.be.deep.equal(expectedAction);
   });
 
-  it('should update a followed account if balance changed', () => {
+  it('should not update a followed account if balance and publicKey doesn\'t change', () => {
     stub(accountApi, 'getAccount').returnsPromise();
 
-    // Case 1: balance does not change
-    accountApi.getAccount.resolves({ balance: accounts.genesis.balance });
+    accountApi.getAccount.resolves({
+      balance: accounts.genesis.balance,
+      publicKey: accounts.genesis.publicKey,
+    });
 
     followedAccountFetchedAndUpdated({ account: data })(dispatch, getState);
     expect(dispatch).to.not.have.been.calledWith();
 
-    // Case 2: balance does change
-    accountApi.getAccount.resolves({ balance: 0 });
+    accountApi.getAccount.restore();
+  });
+
+  it('should update a followed account if balance does change', () => {
+    stub(accountApi, 'getAccount').returnsPromise();
+
+    accountApi.getAccount.resolves({
+      balance: 0,
+      publicKey: accounts.genesis.publicKey,
+    });
 
     followedAccountFetchedAndUpdated({ account: data })(dispatch, getState);
     expect(dispatch).to.been.calledWith(followedAccountUpdated({
       publicKey: accounts.genesis.publicKey,
       balance: 0,
+      title: accounts.genesis.address,
+    }));
+
+    accountApi.getAccount.restore();
+  });
+
+  it('should update a followed account if publicKey does change', () => {
+    stub(accountApi, 'getAccount').returnsPromise();
+
+    accountApi.getAccount.resolves({
+      balance: accounts.genesis.balance,
+      publicKey: accounts.delegate.publicKey,
+    });
+
+    followedAccountFetchedAndUpdated({ account: data })(dispatch, getState);
+    expect(dispatch).to.been.calledWith(followedAccountUpdated({
+      publicKey: accounts.delegate.publicKey,
+      balance: accounts.genesis.balance,
+      title: accounts.genesis.address,
+    }));
+
+    accountApi.getAccount.restore();
+  });
+
+  it('should not update a followed account if publicKey changed to undefined', () => {
+    stub(accountApi, 'getAccount').returnsPromise();
+
+    accountApi.getAccount.resolves({
+      balance: accounts.genesis.balance,
+      publicKey: undefined,
+    });
+
+    followedAccountFetchedAndUpdated({ account: data })(dispatch, getState);
+    expect(dispatch).to.been.calledWith(followedAccountUpdated({
+      publicKey: accounts.delegate.publicKey,
+      balance: accounts.genesis.balance,
+      title: accounts.genesis.address,
+    }));
+
+    accountApi.getAccount.restore();
+  });
+
+  it('should not update a followed account if publicKey previously unexisted', () => {
+    stub(accountApi, 'getAccount').returnsPromise();
+
+    const testData = {
+      balance: accounts.genesis.balance,
+      title: accounts.genesis.address,
+    };
+    accountApi.getAccount.resolves({
+      balance: accounts.genesis.balance,
+      publicKey: accounts.delegate.publicKey,
+    });
+
+    followedAccountFetchedAndUpdated({ account: testData })(dispatch, getState);
+    expect(dispatch).to.been.calledWith(followedAccountUpdated({
+      publicKey: accounts.delegate.publicKey,
+      balance: accounts.genesis.balance,
       title: accounts.genesis.address,
     }));
 

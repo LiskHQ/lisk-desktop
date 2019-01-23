@@ -167,12 +167,6 @@ describe('@integration: Dashboard', () => {
   });
 
   describe('Transactions', () => {
-    describe('Scenario: should allow to view transactions', () => {
-      step('Given I\'m on "wallet" as "genesis" account', () => setupStep('genesis'));
-      step('Then I should see 5 rows', () => helper.shouldSeeCountInstancesOf(5, 'TransactionRow'));
-      step('Then I click on one of the transactions and expect to get directed to its details', () => helper.clickOnTransaction());
-    });
-
     describe('Scenario: should not display Transactions', () => {
       step('Given I\'m on "wallet" as "genesis" account not Logged in', () => setupStep('genesis', { isLoggedIn: false }));
       step('Then I should see 0 instances of "send box"', () => helper.shouldSeeCountInstancesOf(0, TransactionRow));

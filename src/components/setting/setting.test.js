@@ -23,6 +23,7 @@ describe('Setting', () => {
     advancedMode: true,
     showNetwork: false,
     currency: settingsConst.currencies[0],
+    statistics: false,
   };
 
   const account = {
@@ -51,12 +52,17 @@ describe('Setting', () => {
   let wrapper;
 
   const props = {
+    account: {},
     settingsUpdated: sinon.spy(),
     accountUpdated: sinon.spy(),
     settings,
     t,
     toggleMenu: sinon.spy(),
     isAuthenticated: true,
+    location: {
+      pathname: '/setting',
+      search: '?showTackingSwitch=true',
+    },
   };
 
   beforeEach(() => {
@@ -81,6 +87,17 @@ describe('Setting', () => {
   it('should change advanceMode setting when clicking on checkbox', () => {
     wrapper.find('.advancedMode').at(0).find('input').simulate('change', { target: { checked: false, value: false } });
     clock.tick(300);
+  });
+
+  it('should disable 2nd passphrase when hardwareWallet', () => {
+    const newProps = { ...props, account: { hwInfo: { deviceId: '123' } } };
+    wrapper = mount(<Router>
+      <Setting
+        store={store}
+        {...newProps}/>
+    </Router>, options);
+
+    expect(wrapper.find('.disabled').length).to.have.equal(3);
   });
 
   it('should not show the onboarding setting when on mobile', () => {
@@ -120,6 +137,23 @@ describe('Setting', () => {
     wrapper.update();
     const expectedCallToSettingsUpdated = {
       showNetwork: !settings.showNetwork,
+    };
+    expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+  });
+
+  it('should change usage statistics when clicking on checkbox', () => {
+    props.settings.currency = undefined;
+    wrapper = mount(<Router>
+      <Setting
+        store={store}
+        {...props}/>
+    </Router>, options);
+
+    wrapper.find('.statistics').at(0).find('input').simulate('change', { target: { checked: false, value: false } });
+    clock.tick(300);
+    wrapper.update();
+    const expectedCallToSettingsUpdated = {
+      statistics: !settings.statistics,
     };
     expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
   });

@@ -7,7 +7,7 @@ pipeline {
 		buildDiscarder(logRotator(numToKeepStr: '168', artifactNumToKeepStr: '5'))
 	}
 	environment {
-		LISK_CORE_VERSION = '1.3.0'
+		LISK_CORE_VERSION = '1.4.0-rc.0'
 	}
 	stages {
 		stage('Install npm dependencies') {
@@ -39,12 +39,8 @@ pipeline {
 								npm run --silent build:testnet
 								npm run --silent bundlesize
 
-								if [ -z $CHANGE_BRANCH ]; then
-								    npm install
-								    USE_SYSTEM_XORRISO=true npm run dist:linux
-								else
-								    echo "Skipping desktop build for Linux because we're building a PR."
-								fi
+								npm install
+								USE_SYSTEM_XORRISO=true npm run dist:linux
 								'''
 							}
 						}
@@ -119,7 +115,7 @@ pipeline {
 										sed -i -r -e '/ports:/,+2d' docker-compose.yml
 										# random port assignment
 										cat <<EOF >docker-compose.override.yml
-version: "2"
+version: "3"
 services:
 
   lisk:

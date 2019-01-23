@@ -1,0 +1,81 @@
+@import './../app/variablesV2.css';
+
+:root {
+  --registration-title-font-size: 24px;
+}
+
+.register {
+  align-items: center;
+  display: flex;
+  margin: 0;
+  min-height: 100%;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+
+  & .button {
+    margin-top: 12px;
+    width: 100%;
+
+    & > button {
+      width: 100%;
+    }
+  }
+}
+
+.stepsLabel {
+  color: var(--color-content-light);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+  height: 18px;
+  letter-spacing: 0.4px;
+  line-height: 1.8;
+  text-transform: uppercase;
+}
+
+.titleHolder {
+  color: var(--color-content);
+  font-family: var(--heading-font);
+  text-align: center;
+
+  & > h1 {
+    display: flex;
+    font-size: var(--registration-title-font-size);
+    font-weight: var(--font-weight-bold);
+    justify-content: center;
+    letter-spacing: 0.1px;
+    line-height: 50px;
+    margin: 0;
+
+    & > img {
+      margin-right: 16px;
+    }
+  }
+
+  & > p {
+    font-family: var(--content-font);
+    font-size: var(--paragraph-font-size-l);
+    margin: 0;
+  }
+}
+
+.buttonsHolder {
+  justify-content: center;
+  width: 100%;
+
+  & .icon {
+    font-size: var(--paragraph-font-size-s);
+    font-weight: bold;
+  }
+}
+
+.disabledLink {
+  pointer-events: none;
+}

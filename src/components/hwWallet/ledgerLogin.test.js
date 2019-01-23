@@ -38,6 +38,7 @@ describe('LedgerLogin', () => {
       loginType: loginType.ledger,
       settings: {},
       t: () => {},
+      history: { replace: () => {}, push: spy() },
     };
 
     wrapper = mount(<LedgerLogin {...props} />, { storeState: store });
@@ -86,7 +87,7 @@ describe('LedgerLogin', () => {
     wrapper.find('AccountCard').props().changeInput();
     expect(wrapper.state().hardwareAccountsName).to.eql({
       '123L': 'test',
-      undefined,
+      undefined: '',
     });
   });
 

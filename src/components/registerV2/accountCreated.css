@@ -1,0 +1,35 @@
+@import '../app/variablesV2.css';
+
+:root {
+  --avatar-padding: 3px;
+  --avatar-size: calc(96px - var(--avatar-padding));
+}
+
+.accountHolder {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 80px 0;
+
+  & .avatar {
+    background: var(--color-white);
+    border-radius: 50%;
+    box-shadow: var(--box-shadow-avatar);
+    box-sizing: border-box;
+    display: flex;
+    height: var(--avatar-size);
+    padding: var(--avatar-padding);
+    width: var(--avatar-size);
+  }
+
+  & .address {
+    color: var(--color-content);
+    font-family: var(--heading-font);
+    font-size: var(--subtitle-font-size);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.1px;
+    margin: 40px 0;
+    text-align: center;
+  }
+}

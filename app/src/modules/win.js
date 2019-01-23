@@ -1,13 +1,19 @@
 import localeHandler from './localeHandler';
 import menu from './../menu';
 import process from './process';
+import server from '../../server';
 
 const win = {
   browser: null,
   eventStack: [],
-  init: ({ electron, path, electronLocalshortcut }) => {
+  init: ({
+    electron, path, electronLocalshortcut, port,
+  }) => {
     const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
     const { BrowserWindow } = electron;
+
+    const url = server.init(port);
+
     win.browser = new BrowserWindow({
       width: width > 1680 ? 1680 : width,
       height: height > 1050 ? 1050 : height,
@@ -28,16 +34,18 @@ const win = {
       win.browser.webContents.toggleDevTools();
     });
 
-    win.browser.loadURL(`file://${__dirname}/index.html`);
+    win.browser.loadURL(url);
   },
 
 
   create: ({ // eslint-disable-line max-statements
-    electron, path, electronLocalshortcut, storage, checkForUpdates,
+    electron, path, electronLocalshortcut, storage, checkForUpdates, port,
   }) => {
     const { Menu } = electron;
 
-    win.init({ electron, path, electronLocalshortcut });
+    win.init({
+      electron, path, electronLocalshortcut, port,
+    });
     localeHandler.send({ storage });
 
     win.browser.on('blur', () => win.browser.webContents.send('blur'));
@@ -118,4 +126,3 @@ const sendEventsFromEventStack = () => {
 
 
 export default win;
-

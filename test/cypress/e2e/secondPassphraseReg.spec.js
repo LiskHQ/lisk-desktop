@@ -7,7 +7,7 @@ import slideCheckbox from '../utils/slideCheckbox';
 import compareBalances from '../utils/compareBalances';
 
 const txConfirmationTimeout = 20000;
-const txSecondPassphraseRegPrice = 5;
+const txSecondPassphraseRegCost = 5;
 
 describe('Second Passphrase Registration', () => {
   /**
@@ -51,7 +51,19 @@ describe('Second Passphrase Registration', () => {
     cy.get('@tx').find(ss.transactionReference).should('have.text', '-');
     cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');
     cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(() => {
-      compareBalances(this.balanceBefore, this.balanceAfter, txSecondPassphraseRegPrice);
+      compareBalances(this.balanceBefore, this.balanceAfter, txSecondPassphraseRegCost);
     });
+  });
+
+  /**
+   * Try to register with insufficient balance
+   * @expect choose name button is disabled
+   * @expect error message
+   */
+  it('Try to register with insufficient balance', () => {
+    cy.autologin(accounts['empty account'].passphrase, networks.devnet.node);
+    cy.visit(urls.secondPassphrase);
+    cy.get(ss.nextBtn).should('be.disabled');
+    cy.get(ss.nextBtn).parent().contains('Insufficient funds');
   });
 });

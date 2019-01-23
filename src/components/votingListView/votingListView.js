@@ -147,8 +147,8 @@ class VotingListView extends React.Component {
     return !this.props.nextStepCalled && (params.votes || params.unvotes) && this.state.showInfo;
   }
 
-  closeInfo() {
-    this.setState({ showInfo: false });
+  toggleShowInfo(shouldShow) {
+    this.setState({ showInfo: shouldShow });
   }
 
   render() {
@@ -158,10 +158,11 @@ class VotingListView extends React.Component {
     } = this.props;
     return (
       <Fragment>
-        <VoteUrlProcessor closeInfo={this.closeInfo.bind(this)} show={this.showInfo()} />
+        <VoteUrlProcessor toggleShowInfo={this.toggleShowInfo.bind(this)} show={this.showInfo()} />
         { !this.showInfo() ?
           <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
             <VotingHeader
+              account={this.props.account}
               setActiveFilter={this.setActiveFilter.bind(this)}
               showChangeSummery={showChangeSummery}
               isDelegate={isDelegate}

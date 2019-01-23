@@ -3,6 +3,7 @@ import electronLocalshortcut from 'electron-localshortcut'; // eslint-disable-li
 import { autoUpdater } from 'electron-updater'; // eslint-disable-line import/no-extraneous-dependencies
 import path from 'path';
 import storage from 'electron-json-storage'; // eslint-disable-line import/no-extraneous-dependencies
+import fp from 'find-free-port';
 import win from './modules/win';
 import './styles.dialog.css';
 // import localeHandler from './modules/localeHandler';
@@ -10,6 +11,8 @@ import updateChecker from './modules/autoUpdater';
 
 require('babel-polyfill'); // eslint-disable-line import/no-extraneous-dependencies
 require('./ledger');
+
+const defaultServerPort = 3000;
 
 const checkForUpdates = updateChecker({
   autoUpdater,
@@ -20,15 +23,21 @@ const checkForUpdates = updateChecker({
 });
 
 const { app, ipcMain } = electron;
-
 let appIsReady = false;
 
+const createWindow = (err, port) => {
+  if (err) {
+    throw new Error(err);
+  }
+  win.create({
+    electron, path, electronLocalshortcut, storage, checkForUpdates, port,
+  });
+};
 
 app.on('ready', () => {
   appIsReady = true;
-  win.create({
-    electron, path, electronLocalshortcut, storage, checkForUpdates,
-  });
+
+  fp(defaultServerPort, createWindow);
 });
 
 app.on('window-all-closed', () => {
@@ -47,9 +56,7 @@ app.on('activate', () => {
   // sometimes, the event is triggered before app.on('ready', ...)
   // then creating new windows will fail
   if (win.browser === null && appIsReady) {
-    win.create({
-      electron, path, electronLocalshortcut, storage, checkForUpdates,
-    });
+    fp(defaultServerPort, createWindow);
   }
 });
 
@@ -89,6 +96,12 @@ app.on('login', (event, webContents, request, authInfo, callback) => {
 ipcMain.on('proxyCredentialsEntered', (event, username, password) => {
   global.myTempFunction(username, password);
 });
+
+
+// ipcMain.on('ledgerConnected', () => {
+//   console.log('ledgerConnected');
+//   store.dispatch({ type: actionTypes.connectHardwareWallet });
+// });
 
 // ToDo - enable this feature when it is implemented in the new design
 // ipcMain.on('set-locale', (event, locale) => {

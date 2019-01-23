@@ -5,6 +5,7 @@ import { TertiaryButton, Button } from './../toolbox/buttons/button';
 import Box from '../box';
 import AccountTitleInput from './../followedAccounts/accountTitleInput';
 import { followedAccountAdded } from '../../actions/followedAccounts';
+import Piwik from '../../utils/piwik';
 import styles from './followAccount.css';
 
 class FollowAccount extends React.Component {
@@ -22,12 +23,34 @@ class FollowAccount extends React.Component {
     });
   }
 
-  render() {
-    const {
-      prevStep, t, addAccount, address,
-    } = this.props;
+  onPrevStep() {
+    Piwik.trackingEvent('FollowAccount', 'button', 'Previous step');
+    this.props.prevStep();
+  }
 
+  onFollowAccount() {
+    Piwik.trackingEvent('FollowAccount', 'button', 'Follow account');
+
+    const { address } = this.props;
     const title = this.state.title.value;
+
+    this.props.addAccount({ title, address });
+    // istanbul ignore else
+    if (!this.props.showConfirmationStep) {
+      this.props.prevStep();
+    } else {
+      this.props.nextStep({
+        success: true,
+        title: this.props.t('Success'),
+        body: this.props.t('{{title}} has been added to your Dashboard.', { title }),
+        followedAccount: [{ address }],
+        reciepientId: address,
+      });
+    }
+  }
+
+  render() {
+    const { t } = this.props;
 
     return (<Box className={`${styles.wrapper}
       ${this.props.showConfirmationStep ? styles.followedAccountsStep : ''}`}>
@@ -41,28 +64,14 @@ class FollowAccount extends React.Component {
         onChange={this.handleChange.bind(this)}
       />
       <footer>
-        <Button onClick={() => prevStep()} className={`${styles.button} ${styles.follow} cancel`} >
+        <Button onClick={() => this.onPrevStep()} className={`${styles.button} ${styles.follow} cancel`} >
           <span className={styles.label}>{t('Cancel')}</span>
         </Button>
 
         <TertiaryButton className={`${styles.button} follow-account-button`}
           disabled={!this.state.title.value || !!this.state.title.error}
-          onClick={() => {
-            addAccount({ title, address });
-            // istanbul ignore else
-            if (!this.props.showConfirmationStep) {
-              this.props.prevStep();
-            } else {
-              this.props.nextStep({
-                success: true,
-                title: this.props.t('Success'),
-                body: this.props.t('{{title}} has been added to your Dashboard.', { title }),
-                followedAccount: [{ address }],
-                reciepientId: address,
-              });
-            }
-          }}>
-          {t('Add to bookmarks')}
+          onClick={() => this.onFollowAccount()}>
+          {t('Add to list')}
         </TertiaryButton>
       </footer>
     </Box>

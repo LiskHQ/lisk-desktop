@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import Options from '../dialog/options';
 import routes from './../../constants/routes';
+import Piwik from '../../utils/piwik';
 import styles from './customCountDown.css';
 
 class CustomCountDown extends React.Component {
@@ -54,23 +55,36 @@ class CustomCountDown extends React.Component {
     this.props.closeDialog();
   }
 
+  onResetTimer() {
+    Piwik.trackingEvent('CustomCountDown', 'button', 'Reset timer');
+    this.props.resetTimer();
+  }
+
   render() {
     const {
-      minutes, autoLog, seconds, resetTimer, t,
+      minutes,
+      autoLog,
+      seconds,
+      t,
     } = this.props;
-    const min = minutes < 10 ? `0${minutes}` : minutes;
-    const sec = seconds < 10 ? `0${seconds}` : seconds;
+    const min = `0${minutes}`.slice(-2);
+    const sec = `0${seconds}`.slice(-2);
 
     const resetCondition = (minutes < 5);
     const timeoutCondition = (minutes === 0 && seconds === 0);
 
-    const resetButton = resetCondition && !timeoutCondition ? <div onClick={() => {
-      resetTimer();
-    }} className={`${styles.reset} reset`}> {t('Reset')} </div> : <div></div>;
+    const resetButton = resetCondition && !timeoutCondition ?
+      <div
+        onClick={() => this.onResetTimer()}
+        className={`${styles.reset} reset`}
+      >
+      {t('Reset')}
+      </div> :
+      <div></div>;
 
-    const resetStyle = resetCondition ? styles.timeout : styles.default;
+    const resetStyle = resetCondition ? styles.timeout : styles.time;
     const timer = !timeoutCondition &&
-      <span className={resetStyle}>{t('Session timeout in')} {min}:{sec}</span>;
+      <p className={styles.default}>{t('Session timeout in')} <span className={resetStyle}>{min}:{sec}</span></p>;
 
     const renderComponent = autoLog ? (<div className={styles.timerRow}>
       {resetButton}

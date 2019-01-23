@@ -3,27 +3,77 @@ import React from 'react';
 import { PrimaryButton } from './../toolbox/buttons/button';
 import Box from '../box';
 import { parseSearchParams } from '../../utils/searchParams';
+import routes from '../../constants/routes';
 import { FontIcon } from '../fontIcon';
+import Piwik from '../../utils/piwik';
 import styles from './voteUrlProcessor.css';
 
 export default class VoteUrlProcessor extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+       votes: [],
+       unvotes: [],
+       params: '',
+    };
+  }
   componentDidMount() {
     this.props.clearVoteLookupStatus();
     const params = parseSearchParams(this.props.history.location.search);
     if (params.votes || params.unvotes) {
-      const upvotes = params.votes ? params.votes.split(',') : [];
-      const unvotes = params.unvotes ? params.unvotes.split(',') : [];
-      this.props.settingsUpdated({ advancedMode: true })
-      this.props.urlVotesFound({
-        upvotes,
-        unvotes,
-        address: this.props.account.address,
-      });
+      this.setVotesFromParams(params);
     }
+
+    this.props.history.listen(location =>  {
+      /* istanbul ignore if */
+      if (location.pathname === routes.delegates.path) {
+        const params = parseSearchParams(location.search);
+
+        if (location.search && location.search !== this.state.params) {
+          this.props.clearVoteLookupStatus();
+          this.setVotesFromParams(params);
+          this.setState({
+            params: location.search,
+          })
+        }
+      }
+    });
+  }
+
+  setVotesFromParams(params) {
+    const upvotes = params.votes ? params.votes.split(',') : [];
+    const unvotes = params.unvotes ? params.unvotes.split(',') : [];
+    this.props.settingsUpdated({ advancedMode: true })
+    this.props.toggleShowInfo(true);
+    this.props.urlVotesFound({
+      upvotes,
+      unvotes,
+      address: this.props.account.address,
+    });
+
+    this.setState({
+      votes: params.votes,
+      unvotes: params.unvotes,
+    });
   }
 
   getProcessedCount() {
     return this.props.urlVoteCount - this.props.pending.length;
+  }
+
+  onClearVotes() {
+    Piwik.trackingEvent('VoteUrlProcessor', 'button', 'Clear Votes');
+    this.props.clearVoteLookupStatus();
+    this.props.clearVotes();
+    this.props.toggleShowInfo(false);
+    this.props.history.push(routes.delegates.path);
+  }
+
+  onCloseInfo() {
+    Piwik.trackingEvent('VoteUrlProcessor', 'button', 'Close info');
+    this.props.toggleShowInfo(false);
+    this.props.history.push(routes.delegates.path);
   }
 
   render() {
@@ -54,11 +104,9 @@ export default class VoteUrlProcessor extends React.Component {
         <section className={styles.wrapper}>
           <header>
               <h2>Your Pre-Selection
-                <div className={`${styles.cancel} clear-votes`} onClick={() => {
-                  this.props.clearVoteLookupStatus();
-                  this.props.clearVotes();
-                  this.props.closeInfo();
-                }}>{this.props.t('Cancel')} <FontIcon value='close' />
+                <div className={`${styles.cancel} clear-votes`} onClick={() => this.onClearVotes()}>
+                  {this.props.t('Cancel')}
+                  <FontIcon value='close' />
                 </div>
               </h2>
           </header>
@@ -87,7 +135,7 @@ export default class VoteUrlProcessor extends React.Component {
             )}</div>
           </div>
           <footer>
-            <PrimaryButton label={this.props.t('Ok')} theme={styles} onClick={this.props.closeInfo}/>
+            <PrimaryButton className={'ok-close-info'} label={this.props.t('Ok')} theme={styles} onClick={this.onCloseInfo.bind(this)}/>
           </footer>
         </section>
       </Box> : null;

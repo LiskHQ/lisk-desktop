@@ -25,8 +25,9 @@ export const followedAccountFetchedAndUpdated = ({ account }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     getAccount(liskAPIClient, account.address).then((result) => {
-      if (result.balance !== account.balance) {
+      if (result.balance !== account.balance || result.publicKey !== account.publicKey) {
         account.balance = result.balance;
+        if (result.publicKey) account.publicKey = result.publicKey;
         dispatch(followedAccountUpdated(account));
       }
     });

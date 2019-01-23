@@ -1,0 +1,89 @@
+@import '../../app/variablesV2.css';
+
+:root {
+  --background-color-tooltip: var(--color-content-light);
+  --tooltip-arrow-size: 6px;
+  --info-icon-size: 16px;
+  --tooltip-spacing-inside: 8px;
+}
+
+.tooltipWrapper {
+  position: relative;
+}
+
+.infoIcon {
+  align-items: center;
+  background: var(--color-dark-gray);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  height: var(--info-icon-size);
+  justify-content: center;
+  margin-left: calc(var(--info-icon-size) / 2);
+  width: var(--info-icon-size);
+
+  &::before {
+    content: '?';
+    color: var(--color-white);
+    font-size: var(--font-size-small);
+  }
+}
+
+.tooltip {
+  background-color: var(--background-color-tooltip);
+  border-radius: var(--border-radius-standard);
+  box-shadow: var(--box-shadow-standard);
+  box-sizing: border-box;
+  color: var(--color-white);
+  font-family: var(--content-font);
+  font-size: var(--paragraph-font-size-l);
+  left: calc(var(--info-icon-size) * 2);
+  line-height: 1.47;
+  max-width: 380px;
+  opacity: 0;
+  padding: 24px;
+  position: absolute;
+  text-align: left;
+  top: 50%;
+  transform: translateY(-50%) scale(0);
+  transform-origin: left center;
+  transition: transform var(--animation-speed-fast) linear, opacity var(--animation-speed-fast) linear;
+  width: 45vw; /* stylelint-disable-line */
+  z-index: var(--overlay-index);
+
+  & .tooltipArrow {
+    color: var(--background-color-tooltip);
+    height: auto;
+    left: -var(--tooltip-arrow-size);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--tooltip-arrow-size);
+  }
+
+  &.shownTooltip {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+
+  & p {
+    margin: 0;
+  }
+
+  & .title {
+    font-family: var(--heading-font);
+    font-weight: var(--font-weight-bold);
+  }
+
+  & a {
+    color: var(--color-primary-light);
+  }
+
+  & header {
+    margin-bottom: var(--tooltip-spacing-inside);
+  }
+
+  & footer {
+    margin-top: var(--tooltip-spacing-inside);
+  }
+}

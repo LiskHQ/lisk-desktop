@@ -40,6 +40,7 @@ class TransactionsList extends React.Component {
       address,
       onClick,
       loadMore,
+      showMore,
       t,
     } = this.props;
     // All, incoming, outgoing are filter values. To be more consistance with other possible tabs
@@ -89,7 +90,7 @@ class TransactionsList extends React.Component {
         searchMoreVoters={this.props.searchMoreVoters} />;
     }
 
-    return <div className={`${styles.results} transaction-results`}>
+    return <div className={`${styles.results} ${showMore && styles.onShowMore} transaction-results`}>
       <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
       {transactions
         .filter(fixIncomingFilter)
@@ -105,7 +106,7 @@ class TransactionsList extends React.Component {
         // otherwise (XS) the whole transaction box will be scrollable
         // (see transactionOverview.js)
         this.isLargeScreen()
-          ? <Waypoint bottomOffset='-80%'
+          ? <Waypoint bottomOffset='-20%'
             key={transactions.length}
             onEnter={() => {
               if (!dashboard) {

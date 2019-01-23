@@ -1,0 +1,75 @@
+@import '../app/variablesV2.css';
+
+.optionsHolder {
+  justify-content: center;
+  margin: 50px 0 75px;
+  width: 100%;
+
+  & .option {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    width: 100%;
+  }
+}
+
+.optionIcon {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 0 24px;
+}
+
+.optionContent {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  & > h2 {
+    align-items: center;
+    color: var(--color-content-light);
+    display: flex;
+    font-family: var(--content-font);
+    font-size: var(--paragraph-font-size-l);
+    font-weight: var(--font-weight-semi-bold);
+    line-height: 1.47;
+    margin: 0;
+  }
+
+  & > p {
+    color: var(--color-content);
+    font-family: var(--heading-font);
+    font-size: var(--paragraph-font-size-s);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.1px;
+    margin: 15px 0;
+    text-align: left;
+    word-spacing: 8px;
+  }
+
+  & .action {
+    color: var(--color-primary-standard);
+    cursor: pointer;
+    font-family: var(--content-font);
+    font-size: var(--paragraph-font-size-l);
+    font-weight: var(--font-weight-semi-bold);
+    line-height: 1.47;
+    transition: color var(--animation-speed-fast) linear;
+    text-decoration: underline;
+
+    &.copied {
+      color: var(--color-primary-light);
+      cursor: default;
+      text-decoration: none;
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .optionContent {
+    & > p {
+      word-spacing: 2px;
+    }
+  }
+}

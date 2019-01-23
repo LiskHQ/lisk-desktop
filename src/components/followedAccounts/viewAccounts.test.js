@@ -55,6 +55,9 @@ describe('Followed accounts list Component', () => {
           accounts: [
             { address: '123L', balance: 0, title: 'bob' },
             { address: '567L', balance: 100000, title: '' },
+            { address: '23467L', balance: 30000, title: '' },
+            { address: '23464567L', balance: 3000, title: '' },
+            { address: '2346456347L', balance: 3000, title: '' },
           ],
         },
       });
@@ -137,6 +140,17 @@ describe('Followed accounts list Component', () => {
       expect(followedAccounts.followedAccountUpdated).to.have.been.calledWith({
         address: '567L', balance: 100000, title: 'my friend',
       });
+    });
+
+    it('should render showMore button propery', () => {
+      expect(wrapper.find('.show-more').exists()).to.equal(true);
+      expect(wrapper.find('.showMoreToggle').exists()).to.equal(false);
+      wrapper.find('.show-more').at(0).simulate('click');
+      wrapper.update();
+      expect(wrapper.find('.showMoreToggle').exists()).to.equal(true);
+      wrapper.find('.show-more').at(0).simulate('click');
+      wrapper.update();
+      expect(wrapper.find('.showMoreToggle').exists()).to.equal(false);
     });
   });
 });

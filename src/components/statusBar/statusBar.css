@@ -1,0 +1,54 @@
+@import '../app/variablesV2.css';
+
+.wrapper {
+  width: calc(100% - 195px);
+
+  /* max-width: 1352px; This will be the max width once that the aside menu will remove */
+  height: 20px;
+  padding: 0 24px;
+  background-color: var(--color-background-header);
+  box-shadow: var(--box-shadow-standard);
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin-left: 166px;
+  font-family: var(--content-font-new);
+}
+
+.timer {
+  min-width: 168px;
+
+  /* Custom Countdown container */
+  & > div {
+    flex-direction: row-reverse;
+
+    /* Reset Button */
+    & > div {
+      margin: 0 0 0 24px;
+      padding: 0;
+      font-size: var(--font-size-small);
+      color: var(--color-primary-standard);
+    }
+
+    /* Session timeout text */
+    & > p {
+      color: var(--color-content-grayblue);
+      font-size: var(--font-size-small);
+      font-family: var(--content-font-new);
+    }
+  }
+}
+
+@media (--large-viewport) {
+  .wrapper {
+    width: calc(100% - 166px);
+    margin-left: 135px;
+  }
+}

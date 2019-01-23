@@ -4,6 +4,7 @@ import AccountCard from './accountCard';
 import AddAccountCard from './addAccountCard';
 import { FontIcon } from '../fontIcon';
 import routes from '../../constants/routes';
+import Piwik from '../../utils/piwik';
 
 import cubeImage from '../../assets/images/dark-blue-cube.svg';
 import styles from './ledgerLogin.css';
@@ -36,7 +37,14 @@ class LedgerLogin extends React.Component {
     }, 2000);
   }
 
+  componentDidUpdate() {
+    if (this.props.account && this.props.account.address) {
+      this.props.history.replace(routes.dashboard.path);
+    }
+  }
+
   selectAccount(ledgerAccount, index) {
+    Piwik.trackingEvent('LedgerLogin', 'button', 'Select account');
     // set active peer
     this.props.liskAPIClientSet({
       publicKey: ledgerAccount.publicKey,
@@ -46,10 +54,10 @@ class LedgerLogin extends React.Component {
         derivationIndex: index,
       },
     });
-    this.props.history.replace(routes.dashboard.path);
   }
 
   async addAccount() {
+    Piwik.trackingEvent('LedgerLogin', 'button', 'Add account');
     if (this.state.hwAccounts[this.state.hwAccounts.length - 1].isInitialized) {
       const output = await displayAccounts({
         liskAPIClient: this.props.liskAPIClient,
@@ -67,21 +75,23 @@ class LedgerLogin extends React.Component {
   }
 
   turnOnEditMode() {
+    Piwik.trackingEvent('LedgerLogin', 'button', 'Turn on edit mode');
     this.setState({ isEditMode: true });
   }
 
   saveAccountNames() {
+    Piwik.trackingEvent('LedgerLogin', 'button', 'Save account names');
     this.props.settingsUpdated({
       hardwareAccounts: this.state.hardwareAccountsName,
     });
     this.setState({ isEditMode: !this.state.isEditMode });
   }
 
-  changeAccountNameInput(value, account) {
+  changeAccountNameInput(value = '', account) {
     const newHardwareAccountsName = Object.assign(
       {},
       this.state.hardwareAccountsName,
-      { [account]: value },
+      { [account]: value.length < 20 ? value : value.substr(0, 20) },
     );
     this.setState({ hardwareAccountsName: newHardwareAccountsName });
   }
@@ -117,6 +127,7 @@ class LedgerLogin extends React.Component {
                     key={`accountCard-${index}`}
                     index={index}
                     account={account}
+                    saveAccountNames={this.saveAccountNames.bind(this)}
                     changeInput={this.changeAccountNameInput.bind(this)}
                     onClickHandler={this.selectAccount.bind(this)} />
                 ))}

@@ -26,12 +26,38 @@ describe('NewsFeed', () => {
     channels: { test: true },
     t,
     getNewsFeed: () => {},
-    newsFeed: [{
-      source: 'test',
-      content: '',
-      timestamp: '',
-      url: '',
-    }],
+    newsFeed: [
+      {
+        source: 'test',
+        content: '',
+        timestamp: '',
+        url: '',
+      },
+      {
+        source: 'test',
+        content: '',
+        timestamp: '',
+        url: '',
+      },
+      {
+        source: 'test',
+        content: '',
+        timestamp: '',
+        url: '',
+      },
+      {
+        source: 'test',
+        content: '',
+        timestamp: '',
+        url: '',
+      },
+      {
+        source: 'test',
+        content: '',
+        timestamp: '',
+        url: '',
+      },
+    ],
   };
   const timestampNow = 1483228800000;
   const newsFeed = [
@@ -43,6 +69,24 @@ describe('NewsFeed', () => {
     },
     {
       source: 'test',
+      content: 'test',
+      timestamp: new Date(),
+      url: 'test',
+    },
+    {
+      source: 'test3',
+      content: 'test',
+      timestamp: new Date(),
+      url: 'test',
+    },
+    {
+      source: 'test4',
+      content: 'test',
+      timestamp: new Date(),
+      url: 'test',
+    },
+    {
+      source: 'test5',
       content: 'test',
       timestamp: new Date(),
       url: 'test',
@@ -105,5 +149,19 @@ describe('NewsFeed', () => {
     wrapper.update();
 
     expect(wrapper).to.have.descendants('.news-item');
+  });
+
+  it('should render showMore button properly', () => {
+    const wrapper = mount(<MemoryRouter>
+      <NewsFeed {...props} />
+    </MemoryRouter>, options);
+    expect(wrapper.find('.show-more').exists()).to.equal(true);
+    expect(wrapper.find('.showMore').exists()).to.equal(false);
+    wrapper.find('.show-more').at(0).simulate('click');
+    wrapper.update();
+    expect(wrapper.find('.showMore').exists()).to.equal(true);
+    wrapper.find('.show-more').at(0).simulate('click');
+    wrapper.update();
+    expect(wrapper.find('.showMore').exists()).to.equal(false);
   });
 });

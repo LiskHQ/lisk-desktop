@@ -1,0 +1,18 @@
+.okButton {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.description {
+  padding: 0 50px;
+  font-size: 16px !important;
+  color: #3c5068 !important;
+  font-family: "Open Sans", sans-serif;
+  line-height: 26px !important;
+  text-align: center;
+}
+
+.alertBox {
+  padding-top: 10px;
+}

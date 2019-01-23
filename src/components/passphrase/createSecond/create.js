@@ -6,6 +6,7 @@ import TransitionWrapper from '../../toolbox/transitionWrapper';
 import { PrimaryButton } from '../../toolbox/buttons/button';
 import { fromRawLsk } from '../../../utils/lsk';
 import fees from '../../../constants/fees';
+import Piwik from '../../../utils/piwik';
 
 class Create extends React.Component {
   constructor() {
@@ -14,6 +15,7 @@ class Create extends React.Component {
   }
 
   next() {
+    Piwik.trackingEvent('Passphrase_SecondPassphrase_Create', 'button', 'Next step');
     this.props.addEventListener();
     this.setState({ step: 'generate' });
   }

@@ -8,6 +8,8 @@ import sinonStubPromise from 'sinon-stub-promise';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import i18next from 'i18next';
+import ReactPiwik from 'react-piwik';
+import crypto from 'crypto';
 // TODO remove next line after upgrading node version to at least 7
 import 'es7-object-polyfill';
 
@@ -46,6 +48,17 @@ Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
 });
 
+Object.defineProperty(window, 'crypto', {
+  value: {
+    getRandomValues: arr => crypto.randomBytes(arr.length),
+  },
+});
+
+ReactPiwik.push = () => {};
+ReactPiwik.trackingEvent = () => {};
+sinon.stub(ReactPiwik.prototype, 'connectToHistory').callsFake(() => 1);
+sinon.stub(ReactPiwik.prototype, 'initPiwik').callsFake(() => {});
+
 // https://github.com/nkbt/react-copy-to-clipboard/issues/20#issuecomment-414065452
 // Polyfill window prompts to always confirm.  Needed for react-copy-to-clipboard to work.
 global.prompt = () => true;
@@ -60,4 +73,3 @@ const getSelection = () => ({
 });
 window.getSelection = getSelection;
 document.getSelection = getSelection;
-

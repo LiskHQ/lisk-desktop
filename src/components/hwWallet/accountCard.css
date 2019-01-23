@@ -7,6 +7,7 @@
   background-color: #fff;
   box-shadow: 0 8px 16px 0 rgba(29, 72, 119, 0.16);
   margin: 10px;
+  cursor: pointer;
 
   & div {
     width: 100%;
@@ -16,7 +17,6 @@
 }
 
 .accountVisualWrapper {
-  cursor: pointer;
   margin: 30px 0;
 }
 
