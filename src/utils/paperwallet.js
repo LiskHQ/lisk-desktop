@@ -1,7 +1,7 @@
 import JSPDF from 'jspdf';
-import logo from '../../assets/images/paperwallet/lisk-logo-blue-on-white-rgb.png';
-import usbStick from '../../assets/images/paperwallet/usb-stick.png';
-import printer from '../../assets/images/paperwallet/print.png';
+import logo from '../assets/images/paperwallet/lisk-logo-blue-on-white-rgb.png';
+import usbStick from '../assets/images/paperwallet/usb-stick.png';
+import printer from '../assets/images/paperwallet/print.png';
 import fonts from './paperwalletFonts';
 
 class Paperwallet {
