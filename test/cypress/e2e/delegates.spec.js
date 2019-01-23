@@ -65,10 +65,9 @@ describe('Delegates', () => {
   it('Displays 100 delegates and loads more as I scroll to bottom', () => {
     cy.autologin(accounts.genesis.passphrase, networks.testnet.node);
     cy.visit(urls.delegates);
-    cy.get(ss.delegateRow).should('have.length', 100);
-    // TODO Unskip after 1614 fix
-    // cy.get(ss.delegateList).scrollTo('bottom');
-    // cy.get(ss.delegateRow).should('have.length', 200);
+    cy.get(ss.delegateName);
+    cy.get(ss.delegateList).scrollTo('bottom');
+    cy.get(ss.delegateRow).should('have.length', 200);
   });
 
   /**

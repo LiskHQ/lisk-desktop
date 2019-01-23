@@ -44,11 +44,9 @@ class VotingListView extends React.Component {
     }
 
     if (this.props.delegates.length < nextProps.delegates.length) {
-      setTimeout(() => {
-        this.freezeLoading = false;
-        this.offset = nextProps.delegates.length;
-        this.isInitial = false;
-      }, 5);
+      this.freezeLoading = false;
+      this.offset = nextProps.delegates.length;
+      this.isInitial = false;
     }
   }
 
