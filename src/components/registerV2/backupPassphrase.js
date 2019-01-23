@@ -6,6 +6,7 @@ import { FontIcon } from '../fontIcon';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
+import Paperwallet from '../paperwallet/paperwallet';
 import key from '../../assets/images/icons-v2/key.svg';
 import lock from '../../assets/images/icons-v2/circle-lock.svg';
 import pdf from '../../assets/images/icons-v2/pdf.svg';
@@ -19,6 +20,8 @@ class BackupPassphrase extends React.Component {
     this.state = {
       passphraseCopied: false,
     };
+
+    this.generatePaperwallet = this.generatePaperwallet.bind(this);
   }
 
   textIsCopied() {
@@ -31,6 +34,12 @@ class BackupPassphrase extends React.Component {
         passphraseCopied: false,
       });
     }, 3000);
+  }
+
+  generatePaperwallet() {
+    const { account, t } = this.props;
+    const paperwallet = new Paperwallet({ account, t });
+    paperwallet.save();
   }
 
   componentWillUnmount() {
@@ -111,7 +120,9 @@ class BackupPassphrase extends React.Component {
                 </Tooltip>
               </h2>
               <p className='option-value'>{'Lisk.pdf'}</p>
-              <a className={`${styles.action}`} href='#'>{t('Download PDF')}</a>
+              <span
+                onClick={this.generatePaperwallet}
+                className={`${styles.action}`}>{t('Download PDF')}</span>
             </div>
           </div>
         </div>
