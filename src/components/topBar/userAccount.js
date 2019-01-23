@@ -1,16 +1,10 @@
 import React from 'react';
-<<<<<<< HEAD
 import { Link } from 'react-router-dom';
 import AccountVisual from '../accountVisual';
 import CopyToClipboard from '../copyToClipboard';
 import LiskAmount from '../liskAmount';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
 import { dropdownLinks } from './constants';
-=======
-import AccountVisual from '../accountVisual';
-import CopyToClipboard from '../copyToClipboard';
-import LiskAmount from '../liskAmount';
->>>>>>> :nail_care: Update css file for menuItems, searchBar and userAccount
 import styles from './userAccount.css';
 
 const UserAccount = props => (
@@ -22,13 +16,12 @@ const UserAccount = props => (
         copyClassName={styles.copy}
       />
       <div className={`${styles.balance} balance`}>
-        <LiskAmount val={props.account.balance}/>
-        <span>{props.t(' LSK')}</span>
+        <LiskAmount val={props.account.balance} />
+        <small>{props.t(' LSK')}</small>
       </div>
     </div>
-<<<<<<< HEAD
     <div
-      className={styles.avatar}
+      className={`${styles.avatar} user-avatar`}
       onClick={() => props.onDropdownToggle()}
     >
       <span
@@ -53,7 +46,7 @@ const UserAccount = props => (
         </Link>
 
         <span
-          className={`${styles.dropdownOption}`}
+          className={`${styles.dropdownOption} logout`}
           onClick={() => props.onLogout()}
           >
           <img src={dropdownLinks.logout.icon} className={styles.defaultIcon}/>
@@ -66,13 +59,4 @@ const UserAccount = props => (
 );
 
 
-=======
-    <AccountVisual
-      address={'123L'}
-      size={69} sizeS={40}
-    />
-  </div>
-);
-
->>>>>>> :nail_care: Update css file for menuItems, searchBar and userAccount
 export default UserAccount;

@@ -7,9 +7,13 @@ import walletActiveIcon from '../../assets/images/icons-v2/wallet-active.svg';
 import delegatesIcon from '../../assets/images/icons-v2/delegates.svg';
 import delegatesActiveIcon from '../../assets/images/icons-v2/delegates-active.svg';
 import settingsIcon from '../../assets/images/icons-v2/settings.svg';
+<<<<<<< HEAD
 import settingsActiveIcon from '../../assets/images/icons-v2/settings-active.svg';
 import logoutIcon from '../../assets/images/icons-v2/logout.svg';
 import logoutActiveIcon from '../../assets/images/icons-v2/logout-active.svg';
+=======
+import logoutIcon from '../../assets/images/icons-v2/logout.svg';
+>>>>>>> :nail_care: Update css file for top bar elementsto match small sizes
 
 export const menuLinks = [
   {
@@ -41,13 +45,19 @@ export const dropdownLinks = {
     path: `${routes.setting.path}`,
     id: 'settings',
     icon: settingsIcon,
+<<<<<<< HEAD
     icon_active: settingsActiveIcon,
+=======
+>>>>>>> :nail_care: Update css file for top bar elementsto match small sizes
   },
   logout: {
     label: 'Log Out',
     id: 'logout',
     icon: logoutIcon,
+<<<<<<< HEAD
     icon_active: logoutActiveIcon,
+=======
+>>>>>>> :nail_care: Update css file for top bar elementsto match small sizes
   },
 };
 
