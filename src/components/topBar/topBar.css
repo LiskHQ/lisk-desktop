@@ -1,4 +1,3 @@
-@import '../toolbox/buttons/css/base.css';
 @import '../app/variables.css';
 @import '../app/variablesV2.css';
 
@@ -16,7 +15,7 @@
 
 .elements {
   width: 100%;
-  max-width: 1320px;
+  max-width: 1400px;
   height: var(--header-height-xs);
   display: flex;
   justify-content: space-between;
