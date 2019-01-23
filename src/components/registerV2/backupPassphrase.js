@@ -7,7 +7,7 @@ import { FontIcon } from '../fontIcon';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
-import Paperwallet from '../paperwallet/paperwallet';
+import Paperwallet from '../../utils/paperwallet';
 import key from '../../assets/images/icons-v2/key.svg';
 import lock from '../../assets/images/icons-v2/circle-lock.svg';
 import pdf from '../../assets/images/icons-v2/pdf.svg';
