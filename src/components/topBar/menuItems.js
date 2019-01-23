@@ -10,6 +10,7 @@ const MenuItems = props => (
           key={item.id}
           to={item.path}
           className={styles.item}
+          id={item.id}
           activeClassName={styles.selected}
         >
           <img src={ props.location.pathname === item.path ? item.iconActive : item.icon } />
