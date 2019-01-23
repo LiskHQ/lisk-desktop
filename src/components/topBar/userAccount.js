@@ -1,7 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import AccountVisual from '../accountVisual';
 import CopyToClipboard from '../copyToClipboard';
 import LiskAmount from '../liskAmount';
+import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
+import { dropdownLinks } from './constants';
 import styles from './userAccount.css';
 
 const UserAccount = props => (
@@ -17,10 +20,40 @@ const UserAccount = props => (
         <span>{props.t(' LSK')}</span>
       </div>
     </div>
-    <AccountVisual
-      address={'123L'}
-      size={69} sizeS={40}
-    />
+
+    <div
+      className={styles.avatar}
+      onClick={() => props.onDropdownToggle()}
+    >
+      <span
+        className={styles.onAvatar}
+        ref={node => props.setDropdownRef(node)}
+      >
+        <AccountVisual
+          address={props.account.address || ''}
+          size={40}
+        />
+      </span>
+
+      <DropdownV2 showDropdown={props.isDropdownEnable}>
+        <Link
+          id={dropdownLinks.settings.id}
+          to={dropdownLinks.settings.path}
+          className={styles.dropdownOption}
+        >
+          <img src={dropdownLinks.settings.icon} />
+          <span>{props.t(dropdownLinks.settings.label)}</span>
+        </Link>
+
+        <span
+          className={`${styles.dropdownOption}`}
+          onClick={() => props.onLogout()}
+          >
+          <img src={dropdownLinks.logout.icon} id={dropdownLinks.logout.id} />
+          <span>{props.t(dropdownLinks.logout.label)}</span>
+        </span>
+      </DropdownV2>
+    </div>
   </div>
 );
 

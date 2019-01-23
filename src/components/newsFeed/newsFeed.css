@@ -43,7 +43,7 @@
 .container {
   min-height: 670px;
   overflow: hidden;
-  height: 705px;
+  height: 723px;
 
   & .newsWrapper {
     padding: 0 32px;

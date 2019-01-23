@@ -8,7 +8,7 @@
 }
 
 .information {
-  font-family: var(--heading-font);
+  font-family: var(--content-font);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -18,13 +18,45 @@
 }
 
 .copyAddress {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
-  color: #868ba1;
+  color: var(--color-dark-gray);
 }
 
 .balance {
   font-size: 11px;
   font-weight: 600;
-  color: #2e2c3b;
+  color: var(--color-content-light);
+  font-family: var(--heading-font);
+}
+
+.avatar {
+  position: relative;
+
+  & > div {
+    top: 56px;
+    right: -7px;
+  }
+}
+
+.onAvatar {
+  cursor: pointer;
+  display: flex;
+  border-radius: 50%;
+  position: relative;
+  padding: 3px;
+
+  &:hover {
+    background-color: var(--color-white);
+    box-shadow: 0 0 2px 0 skyblue;
+  }
+}
+
+.dropdownOption {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  text-decoration: none;
+  font-family: var(--content-font) !important;
+  cursor: pointer;
 }

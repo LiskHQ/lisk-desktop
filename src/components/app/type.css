@@ -42,6 +42,13 @@ avaialble application-wide
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'gilroy-regular';
+  src: url('../../assets/fonts/gilroy/gilroy-Medium.otf');
+  font-weight: 400;
+  font-style: normal;
+}
+
 body {
   font-family: var(--content-font);
   font-weight: 300;

@@ -68,8 +68,7 @@
     font-size: var(--search-box-font-size);
     color: var(--color-grayscale-medium);
     width: 100%;
-    padding: 0;
-    padding-left: 24px;
+    padding: 0 0 0 24px;
     border-radius: 3px;
     border: none;
     transition: background-color 300ms linear;
@@ -130,9 +129,13 @@
     right: 0;
   }
 
+  .placeholder {
+    left: 22px;
+  }
+
   .input {
     & input {
-      padding-left: 21px;
+      padding-left: 23px;
     }
 
     & .icon {
