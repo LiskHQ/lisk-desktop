@@ -1,7 +1,6 @@
 import { liskAPIClientSet, liskAPIClientUpdate } from '../../actions/peers';
 import actionTypes from '../../constants/actions';
 import networks from './../../constants/networks';
-import getNetwork from './../../utils/getNetwork';
 import { shouldAutoLogIn, getAutoLogInData, findMatchingLoginNetwork } from './../../utils/login';
 
 const peersMiddleware = store => next => (action) => {
@@ -16,11 +15,11 @@ const peersMiddleware = store => next => (action) => {
   // else default network
   if (loginNetwork) {
     loginNetwork = loginNetwork.slice(-1).shift();
-  } else if (!loginNetwork) {
-    loginNetwork = liskCoreUrl ? networks.customNode : networks.default;
+  } else if (!loginNetwork && liskCoreUrl) {
+    loginNetwork = { ...networks.customNode, address: liskCoreUrl };
+  } else if (!loginNetwork && !liskCoreUrl) {
+    loginNetwork = networks.default;
   }
-
-  const network = Object.assign({}, getNetwork(loginNetwork.code));
 
   switch (action.type) {
     case actionTypes.storeCreated:
@@ -29,7 +28,7 @@ const peersMiddleware = store => next => (action) => {
       // https://github.com/LiskHQ/lisk-hub/issues/1339
       /* istanbul ignore else */
       if (!shouldAutoLogIn(autologinData)) {
-        store.dispatch(liskAPIClientSet({ network }));
+        store.dispatch(liskAPIClientSet({ network: loginNetwork }));
       }
       store.dispatch(liskAPIClientUpdate({ online: true }));
       break;
