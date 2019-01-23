@@ -1,4 +1,5 @@
 import React from 'react';
+import QRCode from 'qrcode.react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
@@ -22,6 +23,7 @@ class BackupPassphrase extends React.Component {
     };
 
     this.generatePaperwallet = this.generatePaperwallet.bind(this);
+    this.setCanvasRef = this.setCanvasRef.bind(this);
   }
 
   textIsCopied() {
@@ -38,12 +40,17 @@ class BackupPassphrase extends React.Component {
 
   generatePaperwallet() {
     const { account, t } = this.props;
-    const paperwallet = new Paperwallet({ account, t });
+    const qrcode = this.canvasRef.firstChild.toDataURL();
+    const paperwallet = new Paperwallet({ account, t, qrcode });
     paperwallet.save();
   }
 
   componentWillUnmount() {
     clearTimeout(this.timeout);
+  }
+
+  setCanvasRef(node) {
+    this.canvasRef = node;
   }
 
   render() {
@@ -120,6 +127,9 @@ class BackupPassphrase extends React.Component {
                   </p>
                 </Tooltip>
               </h2>
+              <div style={{ display: 'none' }} ref={this.setCanvasRef}>
+                <QRCode value={account.address} />
+              </div>
               <p className='option-value'>{'Lisk.pdf'}</p>
               <span
                 onClick={this.generatePaperwallet}
