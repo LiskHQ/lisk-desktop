@@ -1,17 +1,19 @@
 import React from 'react';
 import { expect } from 'chai';
-import { mount } from 'enzyme';
-import { stub, useFakeTimers } from 'sinon';
+import { mount, shallow } from 'enzyme';
+import { stub, useFakeTimers, spy } from 'sinon';
 import { MemoryRouter } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import HwWalletHOC from './index';
+import HwWallet from './hwWallet';
 import UnlockWallet from './unlockWallet';
 import LedgerLogin from './ledgerLoginHOC';
 import * as ledgerUtils from '../../utils/ledger';
 
 import networks from '../../constants/networks';
+import routes from '../../constants/routes';
 
 describe('HwWalletHOC', () => {
   const store = configureMockStore([])({
@@ -23,13 +25,25 @@ describe('HwWalletHOC', () => {
     loadingFinished: () => {},
     loadingStarted: () => {},
   });
+
+  const history = {
+    location: {
+      pathname: '',
+      search: '',
+    },
+    push: spy(),
+    replace: spy(),
+  };
+
   const options = {
-    context: { store, i18n },
+    context: { store, i18n, router: { route: history, history } },
     childContextTypes: {
       store: PropTypes.object.isRequired,
       i18n: PropTypes.object.isRequired,
+      router: PropTypes.object.isRequired,
     },
   };
+
   let wrapper;
   let clock;
   let getAccountFromLedgerIndexStub;
@@ -47,7 +61,7 @@ describe('HwWalletHOC', () => {
       });
 
       wrapper = mount(
-        <MemoryRouter><HwWalletHOC store={store}/></MemoryRouter>,
+        <MemoryRouter><HwWalletHOC /></MemoryRouter>,
         options,
       );
     });
@@ -79,13 +93,16 @@ describe('HwWalletHOC', () => {
       expect(wrapper.find(UnlockWallet).exists()).to.equal(true);
     });
 
-    it('should render LedgerLogin component with publicKey', () => {
+    it('should render LedgerLogin component with publicKey while being on customNetwork', () => {
+      wrapper.setState({ network: networks.customNode.code });
       wrapper.update();
       expect(wrapper.find(LedgerLogin).exists()).to.equal(true);
     });
   });
 
   describe('account without publicKey', () => {
+    let props;
+
     beforeEach(() => {
       getAccountFromLedgerIndexStub = stub(ledgerUtils, 'getAccountFromLedgerIndex').returnsPromise().resolves({
         balance: 10e8,
@@ -96,22 +113,22 @@ describe('HwWalletHOC', () => {
         toFake: ['setTimeout'],
       });
 
-      wrapper = mount(
-        <MemoryRouter><HwWalletHOC store={store}/></MemoryRouter>,
-        options,
-      );
+      props = {
+        history,
+      };
+
+      wrapper = shallow(<HwWallet {...props}/>, options);
     });
 
     afterEach(() => {
       getAccountFromLedgerIndexStub.restore();
     });
 
-    it('should render LedgerLogin after clicking cancelLedgerLogin while being on customNetwork', async () => {
+    it('should render LedgerLogin after clicking cancelLedgerLogin', async () => {
       expect(wrapper.find(LedgerLogin).exists()).to.equal(true);
       wrapper.find(LedgerLogin).props().cancelLedgerLogin();
-      wrapper.setState({ network: networks.customNode.code });
-      wrapper.update();
-      clock.tick(3000);
+
+      expect(props.history.push).to.be.calledWith(routes.loginV2.path);
     });
   });
 });

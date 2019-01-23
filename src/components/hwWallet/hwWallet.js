@@ -48,7 +48,7 @@ class HwWallet extends React.Component {
     [error, ledgerAccount] = await to(getAccountFromLedgerIndex()); // by default index 0
     if (!error) {
       const network = Object.assign({}, getNetwork(this.props.network));
-
+      /* istanbul ignore else */
       if (ledgerAccount.publicKey) {
         clearTimeout(finishTimeout);
         this.props.loadingFinished('ledgerLogin');

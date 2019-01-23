@@ -12,7 +12,7 @@ describe('AccountCard', () => {
   let wrapper;
   let props;
 
-  it('should find ToolBoxInput when isEditMode true', () => {
+  beforeEach(() => {
     props = {
       account: {
         address: '123L',
@@ -30,46 +30,24 @@ describe('AccountCard', () => {
         i18n: PropTypes.object.isRequired,
       },
     });
+  });
 
+  it('should find ToolBoxInput when isEditMode true', () => {
     expect(wrapper.find(ToolBoxInput).exists()).to.equal(true);
   });
 
   it('should call changeInput when changing text in ToolBoxInput', () => {
-    props = {
-      account: {
-        address: '123L',
-      },
-      hardwareAccountName: 'test',
-      isEditMode: true,
-      changeInput: spy(),
-      onClickHandler: spy(),
-      index: 0,
-    };
-
-    wrapper = mount(<AccountCard {...props} />, {
-      context: { i18n },
-      childContextTypes: {
-        i18n: PropTypes.object.isRequired,
-      },
-    });
-
     wrapper.find(ToolBoxInput).props().onChange('test');
     expect(props.changeInput).to.have.been.calledWith('test', '123L');
   });
 
   it('should call onClickHandler on click accountVisualWrapper', () => {
-    props = {
-      account: {
-        address: '123L',
-      },
-      hardwareAccountName: 'test',
+    const newProps = {
+      ...props,
       isEditMode: false,
-      changeInput: spy(),
-      onClickHandler: spy(),
-      index: 0,
     };
 
-    wrapper = mount(<AccountCard {...props} />, {
+    wrapper = mount(<AccountCard {...newProps} />, {
       context: { i18n },
       childContextTypes: {
         i18n: PropTypes.object.isRequired,
