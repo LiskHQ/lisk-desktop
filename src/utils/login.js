@@ -23,7 +23,7 @@ export const addHttp = (url) => {
 export const validateUrl = (value) => {
   let url;
   let addressValidity = '';
-  const errorMessage = i18next.t('Please, check the address');
+  const errorMessage = i18next.t('Please check the address');
   try {
     url = new URL(addHttp(value));
     addressValidity = url && value.indexOf(' ') === -1 && isValidIp(url) ? '' : errorMessage;

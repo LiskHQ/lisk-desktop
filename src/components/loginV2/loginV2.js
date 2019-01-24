@@ -218,7 +218,7 @@ class LoginV2 extends React.Component {
 
               <div className={`${styles.inputsHolder}`}>
                 <div className={`${styles.customNode} ${this.state.network === networks.customNode.code ? styles.showInput : ''}`}>
-                  <h2 className={`${styles.inputLabel}`}>{t('Enter IP or domain address of the node')}</h2>
+                  <h2 className={`${styles.inputLabel}`}>{t('Enter the IP or domain address of your node.')}</h2>
                   <div className={`${styles.addressInput} address`}>
                     <input
                       className={`${this.state.addressValidity ? 'error' : ''}`}
@@ -232,10 +232,10 @@ class LoginV2 extends React.Component {
                 </div>
 
                 <h2 className={`${styles.inputLabel}`}>
-                  {t('Type or insert your passphrase')}
+                  {t('Type or paste your passphrase here.')}
                   <Tooltip
                     className={`${styles.tooltip}`}
-                    title={t('What is passphrase?')}
+                    title={t('What is your passphrase?')}
                     footer={
                       <a href={links.whatIsAnPassphrase}
                         rel="noopener noreferrer"
@@ -243,9 +243,9 @@ class LoginV2 extends React.Component {
                           {t('Read More')}
                       </a>}>
                     <p className={`${styles.tooltipText}`}>
-                      {t('Passphrase is both ')}
+                      {t('Your passphrase is both  ')}
                       <strong>{t('your login and passphrase ')}</strong>
-                      {t('combined. You saved your passphrase when registering your account.')}
+                      {t('to your Lisk Hub. It is provided during account registration.')}
                     </p>
                     <p className={`${styles.tooltipText}`}>
                       {t('You can use ')}
