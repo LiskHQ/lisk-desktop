@@ -57,7 +57,7 @@ class Paperwallet {
     this.doc.setFontStyle('bold').setFontSize(12)
       .text(t('Lisk passphrase backup'), 300, 65, textOptions);
     this.doc.setFontStyle('normal').setFontSize(10)
-      .text(t('Keep it safe. Never throw it away'), 300, 80, textOptions);
+      .text(t('Keep this safe, never throw it away or share it with anyone.'), 300, 80, textOptions);
 
     this.doc.setFontStyle('bold').setFontSize(12)
       .text(date.join('.'), 545, 70, {
@@ -75,9 +75,9 @@ class Paperwallet {
     this.doc.addImage(usbStick, 'PNG', 65, 185, 27, 27);
 
     this.doc.setFontStyle('normal').setFontSize(10);
-    this.doc.text(t('How we recommend to store it'), 65, 130, textOptions);
-    this.doc.text(t('Print it on paper and keep it secure'), 97, 167, textOptions);
-    this.doc.text(t('Save it on a encrypted hard drive: USB key or a backup drive'), 97, 202, textOptions);
+    this.doc.text(t('How we recommend to store your passphrase.'), 65, 130, textOptions);
+    this.doc.text(t('Print more than one copy and store them in two separate secure places.'), 97, 167, textOptions);
+    this.doc.text(t('Save your passphrase on an encrypted hard drive.'), 97, 202, textOptions);
     return this;
   }
 
@@ -91,7 +91,10 @@ class Paperwallet {
       .text(account.address, 65, 280, textOptions);
 
     this.doc.setFontStyle('normal').setFontSize(10)
-      .text(t('Passphrase. Use it to access your Lisk account manually'), 65, 330, textOptions);
+      .text([
+        t('Your passphrase.'),
+        t('This allows you to manually access your Lisk account.'),
+      ], 65, 330, textOptions);
     this.doc.setFontStyle('bold').setFontSize(18)
       .text(this.passphrase, 300, 387, {
         ...textOptions,
@@ -110,7 +113,7 @@ class Paperwallet {
     const textOptions = this.textOptions;
     const marginTop = this.passphrase.length * 45;
     this.doc.setFontSize(10).setFontStyle('normal');
-    this.doc.text(t('Scan this QR code using Lisk Mobile App to access Lisk account'), 65, 400 + marginTop, textOptions);
+    this.doc.text(t('Scan this QR code using the Lisk Mobile app to access your Lisk account.'), 65, 400 + marginTop, textOptions);
     this.doc.addImage(qrcode, 'PNG', 240, 420 + marginTop, 120, 120);
     return this;
   }
