@@ -17,7 +17,7 @@ const loginUI = (passphrase) => {
 
 const castNumberToBalanceString = number => numeral(fromRawLsk(number)).format('0,0.[0000000000000]');
 
-describe('Login Page', () => {
+describe.skip('Login Page', () => {
   /**
    * 'Create lisk id' link leads to registration page
    * @expect some specific to page element is present on it

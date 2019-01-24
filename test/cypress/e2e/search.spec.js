@@ -171,6 +171,7 @@ describe('Search', () => {
   it('Search after logout - happens in last used network', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit('/');
+    cy.get(ss.userAvatar).click();
     cy.get(ss.logoutBtn).click();
     cy.clearLocalStorage();
     cy.get(ss.dialogButtons).eq(1).click();

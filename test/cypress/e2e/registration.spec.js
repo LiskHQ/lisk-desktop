@@ -18,7 +18,7 @@ const registerUI = function () {
   cy.get(ss.getToDashboardBtn).click();
 };
 
-describe('Registration', () => {
+describe.skip('Registration', () => {
   /**
    * Registration page can be opened by direct link
    * @expect url is correct

@@ -1,34 +1,25 @@
 // istanbul ignore file
 import routes from '../../constants/routes';
-import dashboardIcon from '../../assets/images/icons-v2/dashboard.svg';
-import dashboardActiveIcon from '../../assets/images/icons-v2/dashboard-active.svg';
-import walletIcon from '../../assets/images/icons-v2/wallet.svg';
-import walletActiveIcon from '../../assets/images/icons-v2/wallet-active.svg';
-import delegatesIcon from '../../assets/images/icons-v2/delegates.svg';
-import delegatesActiveIcon from '../../assets/images/icons-v2/delegates-active.svg';
-import settingsIcon from '../../assets/images/icons-v2/settings.svg';
-import settingsActiveIcon from '../../assets/images/icons-v2/settings-active.svg';
-import logoutIcon from '../../assets/images/icons-v2/logout.svg';
-import logoutActiveIcon from '../../assets/images/icons-v2/logout-active.svg';
+import svg from '../../utils/svgIcons';
 
 export const menuLinks = [
   {
-    icon: dashboardIcon,
-    iconActive: dashboardActiveIcon,
+    icon: svg.dashboard_icon,
+    iconActive: svg.dashboard_active_icon,
     id: 'dashboard',
     label: 'Dashboard',
     path: routes.dashboard.path,
   },
   {
-    icon: walletIcon,
-    iconActive: walletActiveIcon,
+    icon: svg.wallet_icon,
+    iconActive: svg.wallet_active_icon,
     id: 'transactions',
     label: 'My Wallet',
     path: routes.wallet.path,
   },
   {
-    icon: delegatesIcon,
-    iconActive: delegatesActiveIcon,
+    icon: svg.delegates_icon,
+    iconActive: svg.delegates_active_icon,
     id: 'delegates',
     label: 'Delegates',
     path: routes.delegates.path,
@@ -37,17 +28,17 @@ export const menuLinks = [
 
 export const dropdownLinks = {
   settings: {
+    icon_active: svg.settings_active_icon,
+    icon: svg.settings_icon,
+    id: 'settings',
     label: 'Settings',
     path: `${routes.setting.path}`,
-    id: 'settings',
-    icon: settingsIcon,
-    icon_active: settingsActiveIcon,
   },
   logout: {
-    label: 'Log Out',
+    icon_active: svg.logout_active_icon,
+    icon: svg.logout_icon,
     id: 'logout',
-    icon: logoutIcon,
-    icon_active: logoutActiveIcon,
+    label: 'Log Out',
   },
 };
 

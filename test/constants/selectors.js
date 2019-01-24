@@ -71,6 +71,7 @@ const ss = {
   accountBalance: '.balance span',
   transactionId: '.transaction-id .copy-title',
   logoutBtn: '.logout',
+  userAvatar: '.user-avatar',
   dialogButtons: '.ok-button',
   emptyResultsMessage: '.empty-message',
   revealCheckbox: '.reveal-checkbox',

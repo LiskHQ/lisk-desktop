@@ -191,11 +191,11 @@ class AccountVisual extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.resizeWindow());
+    window.addEventListener('resize', this.resizeWindow);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeWindow());
+    window.removeEventListener('resize', this.resizeWindow);
   }
 
   render() { // eslint-disable-line max-statements
