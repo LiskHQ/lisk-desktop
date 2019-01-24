@@ -17,7 +17,7 @@ const AccountCard = ({
     onClick={() => {
       onClickHandler(account, index);
     }}>
-    <div className={styles.accountVisualWrapper}>
+    <div className={`${styles.accountVisualWrapper} accountVisualWrapper`}>
       <AccountVisual
         address={account.address}
         size={100} sizeS={60}
@@ -27,14 +27,18 @@ const AccountCard = ({
       {fromRawLsk(account.balance)}<p>LSK</p>
     </div>
     {isEditMode ?
-      <div className={styles.edit} onClick={(e) => {
+      <div
+        className={styles.edit}
+        onClick={/* istanbul ignore next */(e) => {
         e.stopPropagation();
       }}>
         <ToolBoxInput
           placeholder={'Title'}
           onChange={value => changeInput(value, account.address)}
           theme={styles}
-          onKeyDown={ (event) => { if (event.keyCode === keyCodes.enter) saveAccountNames(); }}
+          onKeyDown={/* istanbul ignore next */(event) => {
+            if (event.keyCode === keyCodes.enter) saveAccountNames();
+          }}
           value={hardwareAccountName}></ToolBoxInput>
       </div> :
       null}
