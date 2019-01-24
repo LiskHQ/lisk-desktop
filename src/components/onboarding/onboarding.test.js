@@ -37,7 +37,7 @@ describe('Onboarding Component', () => {
 
     it('adds steps and does not start the onboarding when on mobile', () => {
       expect(joyrideComponentWillReceiveProps).to.have.been.calledWith(match({ run: false }));
-      expect(joyrideComponentWillReceiveProps.getCall(0).args[0].steps.length).to.equal(9);
+      expect(joyrideComponentWillReceiveProps.getCall(0).args[0].steps.length).to.equal(6);
     });
 
     it('goes through the onboarding', () => {

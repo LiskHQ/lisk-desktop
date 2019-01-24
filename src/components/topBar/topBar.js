@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
 import MenuItems from './menuItems';
 import SearchBar from '../searchBar';
@@ -61,6 +62,7 @@ class TopBar extends React.Component {
     this.setState(prevState => ({ isDropdownEnable: !prevState.isDropdownEnable }));
   }
 
+  // istanbul ignore next
   handleClickOutside(e) {
     if (this.dropdownRef && this.dropdownRef.contains(e.target)) return;
     this.handleClick();
@@ -90,15 +92,29 @@ class TopBar extends React.Component {
             t={t}
           />
           <SearchBar />
-          <UserAccount
-            account={this.props.account}
-            isDropdownEnable={this.state.isDropdownEnable}
-            isUserLogout={isUserLogout}
-            onDropdownToggle={this.handleClick}
-            onLogout={this.onLogout}
-            setDropdownRef={this.setDropdownRef}
-            t={t}
-          />
+
+          {
+            !isUserLogout &&
+              <UserAccount
+                account={this.props.account}
+                isDropdownEnable={this.state.isDropdownEnable}
+                onDropdownToggle={this.handleClick}
+                onLogout={this.onLogout}
+                setDropdownRef={this.setDropdownRef}
+                t={t}
+              />
+          }
+
+          {
+            isUserLogout &&
+              <div className={styles.signIn}>
+                <p>{t('Welcome back')}</p>
+                <span>
+                  <Link to={'/'}>{t('Sign in')}</Link>
+                  {t('for full access')}
+                </span>
+              </div>
+          }
         </div>
       </div>
     );
