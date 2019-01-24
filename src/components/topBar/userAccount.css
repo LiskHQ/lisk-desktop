@@ -24,10 +24,14 @@
 }
 
 .balance {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--color-content-light);
   font-family: var(--heading-font);
+
+  & > span:first-child {
+    font-size: 15px;
+  }
 }
 
 .avatar {
