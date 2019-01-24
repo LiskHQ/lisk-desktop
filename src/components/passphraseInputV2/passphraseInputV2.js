@@ -13,7 +13,7 @@ class passphraseInputV2 extends React.Component {
     this.state = {
       showPassphrase: false,
       partialPassphraseError: [],
-      values: [],
+      values: [...Array(props.inputsLength).fill('')],
       focus: 0,
       validationError: '',
       passphraseIsInvalid: false,
@@ -42,13 +42,25 @@ class passphraseInputV2 extends React.Component {
     this.setState({ focus });
   }
 
-  handlePaste({ clipboardData }) {
-    const pastedValue = clipboardData.getData('Text');
-    const insertedValue = pastedValue.trim().replace(/\W+/g, ' ').split(/\s/);
-    this.validatePassphrase({ values: insertedValue });
+  handlePaste({ clipboardData, target }) {
+    let { values } = this.state;
+    const index = parseInt(target.dataset.index, 10);
+    const pastedValue = clipboardData.getData('Text').trim().replace(/\W+/g, ' ').split(/\s/);
+    if (pastedValue.length <= 1) {
+      values[index] = '';
+    } else {
+      const insertedValue = [
+        ...Array(index),
+        ...pastedValue,
+      ];
+      values = insertedValue
+        .map((value, key) => value || this.state.values[key])
+        .splice(0, this.props.inputsLength);
+    }
+
+    this.validatePassphrase({ values });
   }
 
-  // eslint-disable-next-line max-statements
   handleValueChange({ target }) {
     const { values } = this.state;
     const index = parseInt(target.dataset.index, 10);
@@ -61,14 +73,14 @@ class passphraseInputV2 extends React.Component {
 
   validatePassphrase({ values, focus = null }) {
     let errorState = { validationError: '', partialPassphraseError: [], passphraseIsInvalid: false };
-    const passphrase = values.join(' ');
+    const passphrase = values.join(' ').trim();
     if (!isValidPassphrase(passphrase)) {
       errorState = getPassphraseValidationErrors(passphrase);
       errorState.passphraseIsInvalid =
         errorState.validationError === this.props.t('Passphrase is not valid');
     }
 
-    if (!passphrase.trim().length) {
+    if (!passphrase.length) {
       errorState = {
         ...errorState,
         passphraseIsInvalid: true,
