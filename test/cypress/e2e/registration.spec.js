@@ -1,18 +1,6 @@
 import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
 
-const registerUI = function () {
-  cy.get(ss.chooseAvatar).first().click();
-  cy.get(ss.getPassphraseButton).click();
-  cy.get(ss.copyPassphrase).invoke('text').as('passphrase');
-  cy.get(ss.itsSafeBtn).click();
-  cy.get(ss.passphraseWordConfirm).each(($el) => {
-    if (this.passphrase.includes($el[0].textContent)) cy.wrap($el).click();
-  });
-  cy.get(ss.passphraseConfirmButton).click();
-  cy.get(ss.loginBtn).click();
-};
-
 describe('Registration', () => {
   /**
    * Registration page can be opened by direct link
@@ -26,11 +14,19 @@ describe('Registration', () => {
   });
 
   /**
-   * Create Lisk ID
-   * @expect Lisk ID is created
+   * Create an account
+   * @expect Account is created
    */
-  it('Create Lisk ID', function () {
+  it('Create an account', function () {
     cy.visit(urls.register);
-    registerUI.call(this);
+    cy.get(ss.chooseAvatar).first().click();
+    cy.get(ss.getPassphraseButton).click();
+    cy.get(ss.copyPassphrase).invoke('text').as('passphrase');
+    cy.get(ss.itsSafeBtn).click();
+    cy.get(ss.passphraseWordConfirm).each(($el) => {
+      if (this.passphrase.includes($el[0].textContent)) cy.wrap($el).click();
+    });
+    cy.get(ss.passphraseConfirmButton).click();
+    cy.get(ss.loginBtn).click();
   });
 });

@@ -59,7 +59,7 @@ class Splashscreen extends React.Component {
             <span className={styles.separator}>
               <span>{t('or')}</span>
             </span>
-            <Link className={styles.link} to={routes.dashboard.path}>
+            <Link className={`${styles.link} explore-as-guest-button`} to={routes.dashboard.path}>
               {t('Explore as a Guest')}
             </Link>
           </div>

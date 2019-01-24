@@ -42,7 +42,7 @@ describe('Help', () => {
      * Tutorial does not start on app start
      */
     it('does not start when not logged in, onBoarding = true', () => {
-      cy.addLocalStorage('settings', 'onBoarding', true);
+      cy.addObjectToLocalStorage('settings', 'onBoarding', true);
       cy.visit('/');
       cy.get(ss.tutorialTooltip).should('not.exist');
     });
@@ -51,7 +51,7 @@ describe('Help', () => {
      * Tutorial does not start after sign in if onBoarding is set to false
      */
     it('does not start when logged in, onBoarding = false', () => {
-      cy.addLocalStorage('settings', 'onBoarding', false);
+      cy.addObjectToLocalStorage('settings', 'onBoarding', false);
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit('/');
       cy.get(ss.tutorialTooltip).should('not.exist');
@@ -101,7 +101,7 @@ describe('Help', () => {
      * @expect onBoarding is set to false
      */
     it('link is there if logged in, go through onboarding', () => {
-      cy.addLocalStorage('settings', 'onBoarding', false);
+      cy.addObjectToLocalStorage('settings', 'onBoarding', false);
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit(urls.help);
       cy.get(ss.startOnBoardingLink).click();
@@ -130,7 +130,7 @@ describe('Help', () => {
      * @expect onBoarding is set to false
      */
     it('skip onboarding in the process', () => {
-      cy.addLocalStorage('settings', 'onBoarding', true);
+      cy.addObjectToLocalStorage('settings', 'onBoarding', true);
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit('/');
       cy.get(ss.onBoardingHeader).should('have.text', 'Welcome to Lisk Hub');

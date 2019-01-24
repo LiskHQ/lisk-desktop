@@ -34,7 +34,11 @@ beforeEach(() => {
   window.localStorage.setItem('settings', '{"onBoarding": false}');
 });
 
-Cypress.Commands.add('addLocalStorage', (item, key, value) => {
+Cypress.Commands.add('addToLocalStorage', (item, value) => {
+  window.localStorage.setItem(item, value);
+});
+
+Cypress.Commands.add('addObjectToLocalStorage', (item, key, value) => {
   const itemString = window.localStorage.getItem(item);
   const itemObject = itemString ? JSON.parse(itemString) : {};
   itemObject[key] = value;
