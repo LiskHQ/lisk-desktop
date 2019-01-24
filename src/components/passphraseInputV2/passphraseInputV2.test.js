@@ -49,17 +49,22 @@ describe('V2 passphraseInput validations, rendering and functionalities', () => 
 
   it('Should call props.onFill with error="Required" if an empty passphrase is entered', () => {
     const passphrase = '';
-    const clipboardData = {
-      getData: () => passphrase,
+    const target = {
+      dataset: { index: 0 },
+      value: passphrase,
     };
-    wrapper.find('input').first().simulate('paste', { clipboardData });
+    wrapper.find('input').first().simulate('change', { target });
     expect(wrapper.props().onFill).to.have.been.calledWith(passphrase, 'Required');
   });
 
   const ONLY_ONE_WORD_ERROR = 'Passphrase should have 12 words, entered passphrase has 1';
   it(`should call props.onFill with error="${ONLY_ONE_WORD_ERROR}" if an "test" passphrase is entered`, () => {
     const passphrase = 'test';
-    wrapper.find('input').first().simulate('change', { target: { value: passphrase, dataset: { index: 0 } } });
+    const target = {
+      dataset: { index: 0 },
+      value: passphrase,
+    };
+    wrapper.find('input').first().simulate('change', { target });
     wrapper.setProps({ value: passphrase });
     expect(wrapper.props().onFill).to.have.been.calledWith(passphrase, ONLY_ONE_WORD_ERROR);
   });
