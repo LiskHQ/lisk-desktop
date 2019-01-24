@@ -238,6 +238,7 @@ class LoginV2 extends React.Component {
                     title={t('What is your passphrase?')}
                     footer={
                       <a href={links.whatIsAnPassphrase}
+                        tabIndex={'-1'}
                         rel="noopener noreferrer"
                         target="_blank">
                           {t('Read More')}
