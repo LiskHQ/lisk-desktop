@@ -13,7 +13,7 @@ class passphraseInputV2 extends React.Component {
     this.state = {
       showPassphrase: false,
       partialPassphraseError: [],
-      values: [...Array(props.inputsLength).fill('')],
+      values: [],
       focus: 0,
       validationError: '',
       passphraseIsInvalid: false,
@@ -54,7 +54,7 @@ class passphraseInputV2 extends React.Component {
         ...pastedValue,
       ];
       values = insertedValue
-        .map((value, key) => value || this.state.values[key])
+        .map((value, key) => value || values[key])
         .splice(0, this.props.inputsLength);
     }
 
