@@ -114,13 +114,7 @@ class BackupPassphrase extends React.Component {
               <h2>
                 {t('Paper version')}
                 <Tooltip
-                  title={'Paperwallet'}
-                  footer={
-                    <a href="http://lisk.io"
-                      rel="noopener noreferrer"
-                      target="_blank">
-                        {t('Read More')}
-                    </a>}>
+                  title={'Paperwallet'}>
                   <p>
                     {t('You can print your passphrase to store in a safe place.')}
                     {t('It is highly recommended to delete PDF file after printing.')}
