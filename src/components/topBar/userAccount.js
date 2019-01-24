@@ -16,12 +16,12 @@ const UserAccount = props => (
         copyClassName={styles.copy}
       />
       <div className={`${styles.balance} balance`}>
-        <LiskAmount val={props.account.balance}/>
-        <span>{props.t(' LSK')}</span>
+        <LiskAmount val={props.account.balance} />
+        <small>{props.t(' LSK')}</small>
       </div>
     </div>
     <div
-      className={styles.avatar}
+      className={`${styles.avatar} user-avatar`}
       onClick={() => props.onDropdownToggle()}
     >
       <span
@@ -46,7 +46,7 @@ const UserAccount = props => (
         </Link>
 
         <span
-          className={`${styles.dropdownOption}`}
+          className={`${styles.dropdownOption} logout`}
           onClick={() => props.onLogout()}
           >
           <img src={dropdownLinks.logout.icon} className={styles.defaultIcon}/>

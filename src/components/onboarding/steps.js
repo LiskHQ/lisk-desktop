@@ -154,7 +154,7 @@ export const styles = {
 export const steps = t => ([
   {
     title: t('Onboarding whenever you need'),
-    text: t('Go to "Help" on your Sidebar to start the onboarding whenever you need.'),
+    text: t('Go to "Help" on your bottom bar to start the onboarding whenever you need.'),
     selector: '#onboardingAnchor',
     position: 'bottom',
     style: styles.skip,
@@ -183,13 +183,13 @@ export const steps = t => ([
     position: 'bottom',
     style: styles.step,
   },
-  // {
-  //   title: t('Explore the network'),
-  //   text: t('Search for delegates, addresses and transactions.'),
-  //   selector: '#autosuggest-input',
-  //   position: 'bottom',
-  //   style: styles.step,
-  // },
+  {
+    title: t('Explore the network'),
+    text: t('Search for delegates, addresses and transactions.'),
+    selector: '#autosuggest-input',
+    position: 'bottom',
+    style: styles.step,
+  },
   {
     title: t('Keep the overview'),
     text: t('Click here to go to the main page of Lisk Hub and find all relevant statistics and ID information'),
@@ -204,6 +204,27 @@ export const steps = t => ([
     position: 'right',
     style: styles.step,
   },
+  {
+    title: t('Delegate voting'),
+    text: t('View forging delegates and vote for the ones you support.'),
+    selector: '#delegates',
+    position: 'right',
+    style: styles.step,
+  },
+  // {
+  //   title: t('Manage your application'),
+  //   text: t('Register and oversee your decentralized application here. Available soon.'),
+  //   selector: '#sidechains',
+  //   position: 'right',
+  //   style: styles.step,
+  // },
+  // {
+  //   title: t('Access extra features'),
+  //   text: t('Change account settings, enable delegate voting.'),
+  //   selector: '#settings',
+  //   position: 'right',
+  //   style: styles.step,
+  // },
   {
     title: t('You’ve completed the tour!'),
     text: t('You can now use Lisk Hub.<br> If you want to repeat the onboarding, navigate to "Help" on the sidebar.'),

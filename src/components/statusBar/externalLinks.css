@@ -12,7 +12,7 @@
     height: 20px;
     display: flex;
     align-items: center;
-    font-family: var(--content-font-new);
+    font-family: var(--content-font);
     font-size: var(--font-size-small);
     color: var(--color-primary-standard);
     font-weight: var(--font-weight-bold);

@@ -1,7 +1,7 @@
 import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
 
-describe('Registration', () => {
+describe.skip('Registration', () => {
   /**
    * Registration page can be opened by direct link
    * @expect url is correct
