@@ -22,12 +22,12 @@ describe('validateUrl', () => {
     expect(data).to.deep.equal(expectedData);
   });
 
-  it('should set address and addressValidity="Please, check the address" for a valid address', () => {
+  it('should set address and addressValidity="Please check the address" for a valid address', () => {
     const validURL = 'http:localhost:8080';
     const data = validateUrl(validURL);
     const expectedData = {
       address: validURL,
-      addressValidity: 'Please, check the address',
+      addressValidity: 'Please check the address',
     };
     expect(data).to.deep.equal(expectedData);
   });

@@ -47,7 +47,7 @@ class Splashscreen extends React.Component {
             <div className={`${styles.titleHolder}`}>
               <h1>{t('Welcome to the Lisk Hub!')}</h1>
               <p>{
-                t('Create an account or sign in to manage your LSK, become a delegate or vote for another delegates.')
+                t('Create an account, sign in to manage your LSK tokens, become a delegate or vote for other delegates.')
               }</p>
             </div>
             <Link className={`${styles.button} login-button`} to={routes.loginV2.path}>
