@@ -51,7 +51,7 @@
     font-family: var(--content-font);
     font-size: var(--button-font-size-s);
     margin-right: 5px;
-    color: #4e80f7;
+    color: var(--color-primary-standard);
   }
 }
 
