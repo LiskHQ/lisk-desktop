@@ -124,8 +124,7 @@ class Paperwallet {
       .renderInstructions()
       .renderAccount()
       .renderFooter()
-      .doc.output('dataurlnewwindow');
-    // .doc.save('Lisk.pdf');
+      .doc.save('Lisk.pdf');
   }
 }
 
