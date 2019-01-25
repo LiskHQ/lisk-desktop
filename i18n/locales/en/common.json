@@ -126,7 +126,6 @@
   "Enter your second passphrase to confirm": "Enter your second passphrase to confirm",
   "Entered passphrase does not belong to the active account": "Entered passphrase does not belong to the active account",
   "Error": "Error",
-  "Error during login with Ledger.": "Error during login with Ledger.",
   "Error on Ledger Connection. Be sure your device is connected properly": "Error on Ledger Connection. Be sure your device is connected properly",
   "Explain Blockchain Like I'm 5": "Explain Blockchain Like I'm 5",
   "Explore as a Guest": "Explore as a Guest",
@@ -179,7 +178,7 @@
   "Invalid address": "Invalid address",
   "Invalid amount": "Invalid amount",
   "Is Blockchain Secure?": "Is Blockchain Secure?",
-  "It is highly recommended to delete PDF file after printing.": "It is highly recommended to delete PDF file after printing.",
+  "It is highly recommended to delete the PDF and remove it from your trash after printing.": "It is highly recommended to delete the PDF and remove it from your trash after printing.",
   "It is recommended that you initialize your Lisk ID.": "It is recommended that you initialize your Lisk ID.",
   "It will cost you only the usual {{fee}} LSK transaction fee.": "It will cost you only the usual {{fee}} LSK transaction fee.",
   "Keep the overview": "Keep the overview",
@@ -451,10 +450,9 @@
   "You can now use Lisk Hub.<br": {
     " If you want to repeat the onboarding, navigate to \"Help\" on the sidebar.": "You can now use Lisk Hub.<br> If you want to repeat the onboarding, navigate to \"Help\" on the sidebar."
   },
-  "You can print your passphrase to store in a safe place.": "You can print your passphrase to store in a safe place.",
+  "You can print your passphrase to be stored in a safe place. ": "You can print your passphrase to be stored in a safe place. ",
   "You can share your Lisk ID with anyone you wish, but never reveal your passphrase to anyone as it would allow full access to your account.": "You can share your Lisk ID with anyone you wish, but never reveal your passphrase to anyone as it would allow full access to your account.",
   "You can use ": "You can use ",
-  "You can use a password manager or paperwallet.": "You can use a password manager or paperwallet.",
   "You can use your passphrase to sign a message. ": "You can use your passphrase to sign a message. ",
   "You have already registered as a delegate.": "You have already registered as a delegate.",
   "You have cancelled the transaction on your hardware wallet. You can either continue or retry.": "You have cancelled the transaction on your hardware wallet. You can either continue or retry.",

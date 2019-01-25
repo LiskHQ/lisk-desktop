@@ -7,7 +7,7 @@ import { FontIcon } from '../fontIcon';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
-import Paperwallet from '../../utils/paperwallet';
+import renderPaperwallet from '../../utils/paperwallet';
 import key from '../../assets/images/icons-v2/key.svg';
 import lock from '../../assets/images/icons-v2/circle-lock.svg';
 import pdf from '../../assets/images/icons-v2/pdf.svg';
@@ -38,11 +38,13 @@ class BackupPassphrase extends React.Component {
     }, 3000);
   }
 
+  /* istanbul ignore next */
   generatePaperwallet() {
-    const { account, t } = this.props;
-    const qrcode = this.canvasRef.firstChild.toDataURL();
-    const paperwallet = new Paperwallet({ account, t, qrcode });
-    paperwallet.save();
+    const data = {
+      ...this.props,
+      qrcode: this.canvasRef.firstChild.toDataURL(),
+    };
+    renderPaperwallet(data);
   }
 
   componentWillUnmount() {
@@ -116,8 +118,8 @@ class BackupPassphrase extends React.Component {
                 <Tooltip
                   title={'Paperwallet'}>
                   <p>
-                    {t('You can print your passphrase to store in a safe place.')}
-                    {t('It is highly recommended to delete PDF file after printing.')}
+                    {t('You can print your passphrase to be stored in a safe place. ')}
+                    {t('It is highly recommended to delete the PDF and remove it from your trash after printing.')}
                   </p>
                 </Tooltip>
               </h2>
