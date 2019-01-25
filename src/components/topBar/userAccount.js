@@ -58,6 +58,4 @@ const UserAccount = props => (
   </div>
 );
 
-
-
 export default UserAccount;
