@@ -56,6 +56,7 @@ describe('Send', () => {
     'Header balance is affected', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.send);
+    cy.wait(500);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     cy.get(ss.recipientInput).type(randomAddress);
     cy.get(ss.amountInput).click().type(randomAmount);

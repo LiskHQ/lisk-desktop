@@ -39,6 +39,7 @@ describe('Delegate Registration', () => {
     cy.autologin(accounts['delegate candidate'].passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
     // Memorize the balance before test
+    cy.wait(500);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     // Choose delegate name
     cy.get(ss.chooseDelegateName).click();
