@@ -73,7 +73,6 @@ class App extends React.Component {
                   ))
                 }
               </Switch>
-              <StatusBar />
               <Toaster />
             </main>
           ) : (
