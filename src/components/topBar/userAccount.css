@@ -25,7 +25,7 @@
 
 .balance {
   font-size: 12px;
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
   color: var(--color-content-light);
   font-family: var(--heading-font);
 
