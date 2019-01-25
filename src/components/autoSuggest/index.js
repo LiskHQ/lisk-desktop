@@ -85,6 +85,7 @@ class AutoSuggest extends React.Component {
     );
   }
 
+  /* istanbul ignore next */
   submitAnySearch() {
     let searchType = null;
     if (this.state.value.match(regex.address)) {
@@ -138,6 +139,7 @@ class AutoSuggest extends React.Component {
     let currentIdx = this.state.selectedIdx;
     currentIdx = (currentIdx === 0) ? 0 : currentIdx -= 1;
     let placeholder = '';
+    /* istanbul ignore if */
     if (this.state.resultsLength === 0) {
       placeholder = this.recentSearches[currentIdx].valueLeft;
     } else {
@@ -158,14 +160,18 @@ class AutoSuggest extends React.Component {
 
   handleSubmit() {
     Piwik.trackingEvent('AutoSuggest', 'button', 'Handle submit');
+    /* istanbul ignore if */
     if (this.state.value === '' && this.state.placeholder === '') {
       return;
     }
-
-    if (this.state.resultsLength > 0 || this.state.placeholder !== '') {
-      this.submitSearch();
-    } else {
-      this.submitAnySearch();
+    // If no results found block enter button
+    /* istanbul ignore else */
+    if (!(this.state.value.length > 2 && this.state.resultsLength === 0)) {
+      if (this.state.resultsLength > 0 || this.state.placeholder !== '') {
+        this.submitSearch();
+      } else {
+        this.submitAnySearch();
+      }
     }
   }
 

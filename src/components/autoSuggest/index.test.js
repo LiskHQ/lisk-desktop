@@ -147,39 +147,6 @@ describe('AutoSuggest', () => {
       .calledWith(`${routes.transactions.pathPrefix}${routes.transactions.path}/${results.transactions[0].id}`);
   });
 
-  it('should redirect to search result page on keyboard event {enter}', () => {
-    const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
-    autosuggestInput.simulate('change', { target: { value: 'notExistingDelegate' } });
-    autosuggestInput.simulate('keyDown', {
-      keyCode: keyCodes.enter,
-      which: keyCodes.enter,
-    });
-    expect(saveSearchSpy).not.to.have.been.calledWith();
-    expect(props.history.push).to.have.been
-      .calledWith(`${routes.search.pathPrefix}${routes.search.path}/notExistingDelegate`);
-  });
-
-  it('should redirect to entity result page when not yet suggestions and pattern matching', () => {
-    wrapper.setProps({
-      results: {
-        delegates: [],
-        addresses: [],
-        transactions: [],
-      },
-    });
-    wrapper.update();
-    const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
-    autosuggestInput.simulate('change', { target: { value: '123' } });
-    autosuggestInput.simulate('keyDown', {
-      keyCode: keyCodes.enter,
-      which: keyCodes.enter,
-    });
-    expect(saveSearchSpy).to.have.been.calledWith();
-    expect(submitSearchAnythingSpy).to.have.been.calledWith();
-    expect(props.history.push).to.have.been
-      .calledWith(`${routes.transactions.pathPrefix}${routes.transactions.path}/123`);
-  });
-
   it('should update placeholder on events {arrowUp/arrowDown} and redirect to entity page on keyboard event {tab}', () => {
     const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
 
@@ -245,5 +212,21 @@ describe('AutoSuggest', () => {
     expect(submitSearchSpy).not.to.have.been.calledWith();
     const autosuggestDropdown = wrapper.find('.autosuggest-dropdown').first();
     expect(autosuggestDropdown).not.to.have.className(styles.show);
+  });
+
+  it('should call searchClearSuggestions when resetSearch is triggered', () => {
+    const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
+
+    wrapper.setState({
+      value: 'test',
+      placeholder: 'test',
+    });
+    wrapper.update();
+    autosuggestInput.simulate('change', { target: { value: 'peter' } });
+    wrapper.update();
+
+    wrapper.find('.autosuggest-btn-close').at(0).simulate('click');
+
+    expect(props.searchClearSuggestions).to.have.been.calledWith();
   });
 });
