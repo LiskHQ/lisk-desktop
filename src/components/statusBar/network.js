@@ -4,7 +4,7 @@ import networks from '../../constants/networks';
 import styles from './network.css';
 
 const Network = (props) => {
-  const { peers, t, showNetworkIndicator } = props;
+  const { peers, t } = props;
   const net = ['mainnet', 'testnet', 'devnet'];
   const activeNetwork = net.map(code => t(code));
 
@@ -17,19 +17,16 @@ const Network = (props) => {
   }
 
   const statusColor = peers.status && peers.status.online ? styles.online : styles.offline;
-  const shouldShowNetworkIndicator = peers.liskAPIClient &&
-      (showNetworkIndicator || peers.options.code !== networks.mainnet.code);
 
   return (
-    <section className={styles.wrapper}>
+    <section className={`${styles.wrapper} network-status`}>
       {
-        shouldShowNetworkIndicator &&
         <Fragment>
           <span className={`${styles.status} ${statusColor}`}></span>
           <p>
             {t('Connected to:')}
             <span>{activeNetwork[iconCode]}</span>
-            <span>{peers.liskAPIClient.currentNode}</span>
+            <span className={'peer'}>{peers.liskAPIClient ? peers.liskAPIClient.currentNode : ''}</span>
           </p>
         </Fragment>
       }

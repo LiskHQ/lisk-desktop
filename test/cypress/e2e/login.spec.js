@@ -17,7 +17,7 @@ const loginUI = (passphrase) => {
 
 const castNumberToBalanceString = number => numeral(fromRawLsk(number)).format('0,0.[0000000000000]');
 
-describe.skip('Login Page', () => {
+describe('Login Page', () => {
   /**
    * Login page can be opened by direct link
    * @expect url is correct
@@ -39,7 +39,7 @@ describe.skip('Login Page', () => {
     loginUI(accounts.genesis.passphrase);
     cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
     cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(0));
-    cy.get(ss.networkStatus).should('not.exist');
+    cy.get(ss.networkStatus).contains('Connected to:mainnet');
   });
 
   /**
@@ -54,7 +54,7 @@ describe.skip('Login Page', () => {
     loginUI(accounts.genesis.passphrase);
     cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
     cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(0));
-    cy.get(ss.networkStatus).should('not.exist');
+    cy.get(ss.networkStatus).contains('Connected to:mainnet');
   });
 
   /**
@@ -68,7 +68,7 @@ describe.skip('Login Page', () => {
     cy.visit(urls.login);
     chooseNetwork('main');
     loginUI(accounts.genesis.passphrase);
-    cy.get(ss.networkStatus).contains('Connected to mainnet');
+    cy.get(ss.networkStatus).contains('Connected to:mainnet');
     cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
     cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(0));
   });
@@ -84,7 +84,7 @@ describe.skip('Login Page', () => {
     cy.visit(urls.login);
     chooseNetwork('test');
     loginUI(accounts['testnet guy'].passphrase);
-    cy.get(ss.networkStatus).contains('Connected to testnet');
+    cy.get(ss.networkStatus).contains('Connected to:testnet');
     cy.get(ss.headerAddress).should('have.text', accounts['testnet guy'].address);
     cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(accounts['testnet guy'].balance));
   });
@@ -101,7 +101,7 @@ describe.skip('Login Page', () => {
     cy.visit(urls.login);
     chooseNetwork('dev');
     loginUI(accounts.genesis.passphrase);
-    cy.get(ss.networkStatus).contains('Connected to devnet');
+    cy.get(ss.networkStatus).contains('Connected to:devnet');
     cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
     cy.get(ss.headerBalance).should('contain', castNumberToBalanceString(accounts.genesis.balance).substring(0, 3));
     cy.get(ss.nodeAddress).contains(networks.devnet.node);

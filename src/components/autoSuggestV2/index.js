@@ -344,7 +344,7 @@ class AutoSuggest extends React.Component {
             onMouseDown={this.onResultClick.bind(this)}
             setSelectedRow={this.setSelectedRow.bind(this)}
           />
-          {this.state.value === '' && this.state.resultsLength === 0 ?
+          {(this.state.value === '' && this.state.resultsLength === 0) &&
             <ResultsList
               key='recent'
               results={this.getRecentSearchResults()}
@@ -355,7 +355,6 @@ class AutoSuggest extends React.Component {
               onMouseDown={this.onResultClick.bind(this)}
               setSelectedRow={this.setSelectedRow.bind(this)}
             />
-            : null
           }
           <p className={`${styles.noResults} no-result-message`}>{this.getNoResultMessage()}</p>
         </div>

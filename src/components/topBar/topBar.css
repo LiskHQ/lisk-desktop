@@ -38,18 +38,18 @@
     padding: 0;
     margin: 0;
     font-family: var(--content-font);
-    font-size: 15px;
-    font-weight: 600;
+    font-size: var(--paragraph-font-size-l);
+    font-weight: var(--font-weight-bold);
   }
 
   & > span {
     font-family: var(--content-font);
-    font-size: 12px;
+    font-size: var(--button-font-size-s);
   }
 
   & > span > a {
     font-family: var(--content-font);
-    font-size: 12px;
+    font-size: var(--button-font-size-s);
     margin-right: 5px;
     color: #4e80f7;
   }

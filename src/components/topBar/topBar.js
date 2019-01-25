@@ -94,7 +94,7 @@ class TopBar extends React.Component {
           <SearchBar />
 
           {
-            (!isUserLogout && account.balance) &&
+            (!isUserLogout && account.balance) ?
               <UserAccount
                 account={this.props.account}
                 isDropdownEnable={this.state.isDropdownEnable}
@@ -103,6 +103,7 @@ class TopBar extends React.Component {
                 setDropdownRef={this.setDropdownRef}
                 t={t}
               />
+              : null
           }
 
           {

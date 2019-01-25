@@ -102,6 +102,7 @@ or "warn/action" ineastd of "red/green"
   --box-shadow-button: var(--box-shadow-standard);
   --box-shadow-header: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
   --box-shadow-avatar: var(--box-shadow-standard);
+  --box-shadow-search: 0 2px 4px 0 rgba(8, 24, 49, 0.06);
 
   /*************************
         Animation

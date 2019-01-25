@@ -52,7 +52,7 @@
 
   &:hover {
     background-color: var(--color-white);
-    box-shadow: 0 0 2px 0 skyblue;
+    box-shadow: 0 0 2px 0 rgba(213, 224, 247, 1);
   }
 }
 

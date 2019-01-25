@@ -14,7 +14,7 @@
   max-width: var(--search-box-width-l);
   height: 36px;
   box-sizing: border-box;
-  border-radius: 4px;
+  border-radius: var(--border-radius-standard);
   position: relative;
   background-color: var(--color-white);
   margin-left: 9px;

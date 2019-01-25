@@ -36,9 +36,9 @@
 }
 
 .item > span {
-  font-size: 12px;
-  font-weight: 600;
-  color: #868ba1;
+  font-size: var(--button-font-size-s);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-dark-gray);
   font-family: var(--content-font);
 }
 
