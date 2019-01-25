@@ -19,7 +19,7 @@
 
 .copyAddress {
   font-size: 12px;
-  font-weight: 500;
+  font-weight: var(--font-weight-semi-bold);
   color: var(--color-dark-gray);
 }
 
