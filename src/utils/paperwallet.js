@@ -92,20 +92,17 @@ class Paperwallet {
       .text(account.address, 65, 280, textOptions);
 
     this.doc.setFontStyle('normal').setFontSize(10)
-      .text([
-        t('Your passphrase.'),
-        t('This allows you to manually access your Lisk account.'),
-      ], 65, 330, textOptions);
+      .text(t('Your passphrase. This allows you to manually access your Lisk account.'), 65, 330, textOptions);
     this.doc.setFontStyle('bold').setFontSize(18)
-      .text(this.passphrase, 300, 395, {
+      .text(this.passphrase, 300, 385, {
         ...textOptions,
         align: 'center',
         lineHeightFactor: 2.22,
       });
 
     this.doc.setFillColor('#000000')
-      .rect(65, 360, 470, 1, 'F')
-      .rect(65, (360 + (this.passphrase.length * 45)), 470, 1, 'F');
+      .rect(65, 350, 470, 1, 'F')
+      .rect(65, (350 + (this.passphrase.length * 45)), 470, 1, 'F');
     return this;
   }
 
@@ -114,8 +111,8 @@ class Paperwallet {
     const textOptions = this.textOptions;
     const marginTop = this.passphrase.length * 45;
     this.doc.setFontSize(10).setFontStyle('normal');
-    this.doc.text(t('Scan this QR code using the Lisk Mobile app to access your Lisk account.'), 65, 410 + marginTop, textOptions);
-    this.doc.addImage(qrcode, 'PNG', 240, 430 + marginTop, 120, 120);
+    this.doc.text(t('Scan this QR code using the Lisk Mobile app to access your Lisk account.'), 65, 400 + marginTop, textOptions);
+    this.doc.addImage(qrcode, 'PNG', 240, 420 + marginTop, 120, 120);
     return this;
   }
 

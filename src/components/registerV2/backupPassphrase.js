@@ -124,7 +124,7 @@ class BackupPassphrase extends React.Component {
                 </Tooltip>
               </h2>
               <div style={{ display: 'none' }} ref={this.setCanvasRef}>
-                <QRCode value={account.address} />
+                <QRCode value={account.passphrase} />
               </div>
               <p className='option-value'>{'Lisk.pdf'}</p>
               <span
