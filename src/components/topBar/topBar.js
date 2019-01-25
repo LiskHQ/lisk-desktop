@@ -94,7 +94,7 @@ class TopBar extends React.Component {
           <SearchBar />
 
           {
-            (!isUserLogout && account.balance) ?
+            !isUserLogout ?
               <UserAccount
                 account={this.props.account}
                 isDropdownEnable={this.state.isDropdownEnable}
