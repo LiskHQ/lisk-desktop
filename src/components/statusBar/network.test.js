@@ -67,6 +67,6 @@ describe('Network', () => {
     data.peers.options.code = 0;
     wrapper = setup(data);
     expect(wrapper.find('.wrapper')).to.have.length(1);
-    expect(wrapper.find('.status')).to.have.length(0);
+    expect(wrapper.find('.status')).to.have.length(1);
   });
 });
