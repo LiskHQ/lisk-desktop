@@ -46,9 +46,8 @@ or "warn/action" ineastd of "red/green"
   --font-size-h5: 20px;
   --font-size-h6: 16px;
   --font-size-small: 10px;
-  --heading-font: 'Gilroy', 'Open Sans', sans-serif;
-  --content-font: 'Open Sans', sans-serif;
-  --content-font-new: 'gilroy-base', 'Open Sans', sans-serif;
+  --heading-font: 'gilroy', 'Open Sans', sans-serif;
+  --content-font: 'gilroy-regular', 'Open Sans', sans-serif;
   --font-weight-normal: 400;
   --font-weight-semi-bold: 500;
   --font-weight-bold: 600;
@@ -66,8 +65,10 @@ or "warn/action" ineastd of "red/green"
   --border-radius-standard: 4px;
   --header-height-m: 100px;
   --header-height-s: 72px;
+  --header-height-xs: 60px;
   --header-elements-height: 32px;
   --header-logo-size: 56px;
+  --search-box-width-l: 597px;
 
   /*************************
         Padding
@@ -90,6 +91,8 @@ or "warn/action" ineastd of "red/green"
   --color-content-grayblue: #7383a7;
   --color-background-wrapper: linear-gradient(120deg, #f7f9fb, #fbfcfd);
   --color-background-header: #fbfcfd;
+  --color-background-menu: #f8f9fb;
+  --color-link-active: #4070f4;
   --color-link: var(--color-primary-standard);
 
   /*************************
@@ -99,6 +102,7 @@ or "warn/action" ineastd of "red/green"
   --box-shadow-button: var(--box-shadow-standard);
   --box-shadow-header: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
   --box-shadow-avatar: var(--box-shadow-standard);
+  --box-shadow-search: 0 2px 4px 0 rgba(8, 24, 49, 0.06);
 
   /*************************
         Animation

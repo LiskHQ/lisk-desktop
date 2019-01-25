@@ -99,23 +99,28 @@ class Onboarding extends React.Component {
 
   render() {
     const { isDesktop, skip, intro } = this.state;
-    return <div className={this.props.isAuthenticated && this.props.start && isDesktop ? 'joyride-showing' : ''}> <Joyride
-      ref={(el) => { this.joyride = el; }}
-      steps={this.state.steps}
-      run={this.props.isAuthenticated && this.props.start && isDesktop}
-      locale={{
-        last: (<span>{this.props.t('Complete')}</span>),
-        skip: skip ? <span>{this.props.t('Use Lisk Hub')}</span> : <span>{this.props.t('Click here to skip')}</span>,
-        next: intro ? <span>{this.props.t('Start the tour')}</span> : <span>{this.props.t('Next')} <FontIcon value='arrow-right'/></span>,
-      }}
-      callback={this.onboardingCallback.bind(this)}
-      showOverlay={true}
-      showSkipButton={true}
-      autoStart={true}
-      type='continuous'
-      holePadding={0}
-      keyboardNavigation={false}
-    /></div>;
+
+    return (
+      <div className={this.props.isAuthenticated && this.props.start && isDesktop ? 'joyride-showing' : ''}>
+        <Joyride
+          ref={(el) => { this.joyride = el; }}
+          steps={this.state.steps}
+          run={this.props.isAuthenticated && this.props.start && isDesktop}
+          locale={{
+            last: (<span>{this.props.t('Complete')}</span>),
+            skip: skip ? <span>{this.props.t('Use Lisk Hub')}</span> : <span>{this.props.t('Click here to skip')}</span>,
+            next: intro ? <span>{this.props.t('Start the tour')}</span> : <span>{this.props.t('Next')} <FontIcon value='arrow-right'/></span>,
+          }}
+          callback={this.onboardingCallback.bind(this)}
+          showOverlay={true}
+          showSkipButton={true}
+          autoStart={true}
+          type='continuous'
+          holePadding={0}
+          keyboardNavigation={false}
+        />
+      </div>
+    );
   }
 }
 

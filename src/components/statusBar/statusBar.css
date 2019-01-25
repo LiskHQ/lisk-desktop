@@ -2,8 +2,8 @@
 
 .wrapper {
   width: calc(100% - 195px);
-
-  /* max-width: 1352px; This will be the max width once that the aside menu will remove */
+  max-width: 1352px;
+  min-width: 615px;
   height: 20px;
   padding: 0 24px;
   background-color: var(--color-background-header);
@@ -17,9 +17,8 @@
   align-items: center;
   position: fixed;
   bottom: 0;
-  left: 0;
-  margin-left: 166px;
-  font-family: var(--content-font-new);
+  font-family: var(--content-font);
+  z-index: var(--overlay-index);
 }
 
 .timer {
@@ -41,7 +40,7 @@
     & > p {
       color: var(--color-content-grayblue);
       font-size: var(--font-size-small);
-      font-family: var(--content-font-new);
+      font-family: var(--content-font);
     }
   }
 }
@@ -49,6 +48,5 @@
 @media (--large-viewport) {
   .wrapper {
     width: calc(100% - 166px);
-    margin-left: 135px;
   }
 }

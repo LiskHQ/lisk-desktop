@@ -12,32 +12,22 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  left: 0;
   top: 0;
+  left: 0;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  flex-direction: column;
   z-index: 0;
 
   & > section {
+    margin-top: 25px;
     width: 100%;
-    padding-left: calc(var(--sidebar-width) + 24px);
-    padding-right: 24px;
     opacity: 0;
     transition: all ease 250ms;
   }
 
   &.loaded > section {
     opacity: 1;
-  }
-
-  & > aside {
-    position: fixed;
-    width: var(--sidebar-width);
-    height: 100%;
-    top: 0;
-    left: 0;
-    background: var(--color-white);
-    overflow: auto;
   }
 }
 
@@ -52,13 +42,13 @@ body {
 
 .mainBox {
   margin: 0 auto;
+  width: 100%;
   max-width: var(--main-box-width);
 }
 
 @media (--medium-viewport) {
   body {
     background-color: var(--color-grayscale-mobile-background);
-    margin-top: var(--header-height-m);
   }
 
   .bodyWrapper {
@@ -78,29 +68,20 @@ body {
   body {
     font-size: 16px;
   }
-
-  .bodyWrapper {
-    & > section {
-      padding-left: calc(var(--sidebar-width-xl) + 24px);
-    }
-
-    & > aside {
-      width: var(--sidebar-width-xl);
-    }
-  }
 }
 
 @media (--large-viewport) {
   body {
     font-size: 15px;
   }
+
+  .mainBox {
+    box-sizing: border-box;
+    padding: 0 25px;
+  }
 }
 
 @media (--small-viewport) {
-  body {
-    margin-top: var(--header-height-s);
-  }
-
   html.on-device,
   html.on-device body {
     -webkit-overflow-scrolling: touch !important;

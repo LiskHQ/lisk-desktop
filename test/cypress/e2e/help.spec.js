@@ -76,10 +76,9 @@ describe('Help', () => {
       cy.get(ss.onBoardingTooltipPrimaryBtn).click();
       cy.get(ss.onBoardingHeader).should('have.text', 'Send LSK');
       cy.get(ss.onBoardingTooltipPrimaryBtn).click();
-      cy.get(ss.onBoardingHeader).should('have.text', 'Manage your application');
-      cy.get(ss.onBoardingTooltipPrimaryBtn).click();
-      cy.get(ss.onBoardingHeader).should('have.text', 'Access extra features');
-      cy.get(ss.onBoardingTooltipPrimaryBtn).click();
+      // this should be enabled once Joyride can open the dropdown on topBar
+      // cy.get(ss.onBoardingHeader).should('have.text', 'Access extra features');
+      // cy.get(ss.onBoardingTooltipPrimaryBtn).click();
       cy.get(ss.onBoardingHeader).should('have.text', 'You’ve completed the tour!');
       cy.get(ss.onBoardingTooltipPrimaryBtn).click();
       cy.get(ss.onBoardingHeader).should('not.exist')
@@ -115,10 +114,10 @@ describe('Help', () => {
       cy.get(ss.onBoardingTooltipPrimaryBtn).click();
       cy.get(ss.onBoardingHeader).should('have.text', 'Send LSK');
       cy.get(ss.onBoardingTooltipPrimaryBtn).click();
-      cy.get(ss.onBoardingHeader).should('have.text', 'Manage your application');
-      cy.get(ss.onBoardingTooltipPrimaryBtn).click();
-      cy.get(ss.onBoardingHeader).should('have.text', 'Access extra features');
-      cy.get(ss.onBoardingTooltipPrimaryBtn).click();
+      // cy.get(ss.onBoardingHeader).should('have.text', 'Manage your application');
+      // cy.get(ss.onBoardingTooltipPrimaryBtn).click();
+      // cy.get(ss.onBoardingHeader).should('have.text', 'Access extra features');
+      // cy.get(ss.onBoardingTooltipPrimaryBtn).click();
       cy.get(ss.onBoardingHeader).should('have.text', 'You’ve completed the tour!');
       cy.get(ss.onBoardingTooltipPrimaryBtn).click();
       cy.get(ss.onBoardingHeader).should('not.exist')

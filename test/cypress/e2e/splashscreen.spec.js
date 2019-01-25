@@ -29,7 +29,7 @@ describe('Splashscreen', () => {
     cy.visit('/');
     cy.get(ss.exploreAsGuestBtn).click();
     cy.url().should('include', urls.dashboard);
-    cy.get(ss.networkStatus).contains('Connected to mainnet');
+    cy.get(ss.networkStatus).contains('mainnet');
   });
 
   it('Explore as guest connects to last used', () => {
@@ -37,7 +37,7 @@ describe('Splashscreen', () => {
     cy.visit('/');
     cy.get(ss.exploreAsGuestBtn).click();
     cy.url().should('include', urls.dashboard);
-    cy.get(ss.networkStatus).contains('Connected to testnet');
+    cy.get(ss.networkStatus).contains('testnet');
   });
 
   it('Settings button', () => {

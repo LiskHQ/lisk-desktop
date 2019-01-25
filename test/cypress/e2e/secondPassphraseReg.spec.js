@@ -33,6 +33,7 @@ describe('Second Passphrase Registration', () => {
   it('Setup second passphrase + Header balance is affected', function () {
     cy.autologin(accounts['second passphrase candidate'].passphrase, networks.devnet.node);
     cy.visit(urls.secondPassphrase);
+    cy.wait(500);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     cy.get(ss.nextBtn).click();
     moveMouseRandomly();
