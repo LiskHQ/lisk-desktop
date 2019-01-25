@@ -71,6 +71,7 @@
     "inflight": "1.0.6",
     "is-electron": "2.2.0",
     "js-sha256": "0.9.0",
+    "jspdf": "1.5.3",
     "lisk-elements": "1.1.3",
     "lodash.throttle": "4.1.1",
     "lolex": "=2.3.2",
@@ -231,7 +232,7 @@
   "bundlesize": [
     {
       "path": "./app/build/bundle.app.*.js",
-      "maxSize": "1.50 MB"
+      "maxSize": "1.60 MB"
     },
     {
       "path": "./app/build/bundle.vendor.*.js",

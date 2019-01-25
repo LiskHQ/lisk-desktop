@@ -1,4 +1,5 @@
 import React from 'react';
+import QRCode from 'qrcode.react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
@@ -6,9 +7,10 @@ import { FontIcon } from '../fontIcon';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
+import renderPaperwallet from '../../utils/paperwallet';
 import key from '../../assets/images/icons-v2/key.svg';
 import lock from '../../assets/images/icons-v2/circle-lock.svg';
-// import pdf from '../../assets/images/icons-v2/pdf.svg';
+import pdf from '../../assets/images/icons-v2/pdf.svg';
 import registerStyles from './registerV2.css';
 import styles from './backupPassphrase.css';
 
@@ -19,6 +21,9 @@ class BackupPassphrase extends React.Component {
     this.state = {
       passphraseCopied: false,
     };
+
+    this.generatePaperwallet = this.generatePaperwallet.bind(this);
+    this.setCanvasRef = this.setCanvasRef.bind(this);
   }
 
   textIsCopied() {
@@ -33,8 +38,21 @@ class BackupPassphrase extends React.Component {
     }, 3000);
   }
 
+  /* istanbul ignore next */
+  generatePaperwallet() {
+    const data = {
+      ...this.props,
+      qrcode: this.canvasRef.firstChild.toDataURL(),
+    };
+    renderPaperwallet(data);
+  }
+
   componentWillUnmount() {
     clearTimeout(this.timeout);
+  }
+
+  setCanvasRef(node) {
+    this.canvasRef = node;
   }
 
   render() {
@@ -90,33 +108,30 @@ class BackupPassphrase extends React.Component {
               </CopyToClipboard>
             </div>
           </div>
-          {/*
-            <div className={`${styles.option}`}>
-              <div className={`${styles.optionIcon}`}>
-                <img src={pdf} />
-              </div>
-              <div className={`${styles.optionContent}`}>
-                <h2>
-                  {t('Paper version')}
-                  <Tooltip
-                    title={'Paperwallet'}
-                    footer={
-                      <a href="http://lisk.io"
-                        rel="noopener noreferrer"
-                        target="_blank">
-                          {t('Read More')}
-                      </a>}>
-                    <p>
-                      {t(`You can print your passphrase to store in a safe place.
-                      It is highly recommended to delete PDF file after printing.`)}
-                    </p>
-                  </Tooltip>
-                </h2>
-                <p className='option-value'>{'Lisk.pdf'}</p>
-                <a className={`${styles.action}`} href='#'>{t('Download PDF')}</a>
-              </div>
+          <div className={`${styles.option}`}>
+            <div className={`${styles.optionIcon}`}>
+              <img src={pdf} />
             </div>
-        */}
+            <div className={`${styles.optionContent}`}>
+              <h2>
+                {t('Paper version')}
+                <Tooltip
+                  title={'Paperwallet'}>
+                  <p>
+                    {t('You can print your passphrase to be stored in a safe place. ')}
+                    {t('It is highly recommended to delete the PDF and remove it from your trash after printing.')}
+                  </p>
+                </Tooltip>
+              </h2>
+              <div style={{ display: 'none' }} ref={this.setCanvasRef}>
+                <QRCode value={account.passphrase} />
+              </div>
+              <p className='option-value'>{'Lisk.pdf'}</p>
+              <span
+                onClick={this.generatePaperwallet}
+                className={`${styles.action}`}>{t('Download PDF')}</span>
+            </div>
+          </div>
         </div>
 
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
