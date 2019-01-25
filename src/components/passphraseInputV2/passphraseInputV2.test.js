@@ -40,20 +40,31 @@ describe('V2 passphraseInput validations, rendering and functionalities', () => 
 
   it('Should call props.onFill with passphrase and empty error if passphrase is valid', () => {
     const { passphrase } = accounts.genesis;
-    wrapper.find('input').first().simulate('change', { target: { value: passphrase, dataset: { index: 0 } } });
+    const clipboardData = {
+      getData: () => passphrase,
+    };
+    wrapper.find('input').first().simulate('paste', { clipboardData });
     expect(wrapper.props().onFill).to.have.been.calledWith(passphrase, '');
   });
 
   it('Should call props.onFill with error="Required" if an empty passphrase is entered', () => {
     const passphrase = '';
-    wrapper.find('input').first().simulate('change', { target: { value: passphrase, dataset: { index: 0 } } });
+    const target = {
+      dataset: { index: 0 },
+      value: passphrase,
+    };
+    wrapper.find('input').first().simulate('change', { target });
     expect(wrapper.props().onFill).to.have.been.calledWith(passphrase, 'Required');
   });
 
   const ONLY_ONE_WORD_ERROR = 'Passphrase should have 12 words, entered passphrase has 1';
   it(`should call props.onFill with error="${ONLY_ONE_WORD_ERROR}" if an "test" passphrase is entered`, () => {
     const passphrase = 'test';
-    wrapper.find('input').first().simulate('change', { target: { value: passphrase, dataset: { index: 0 } } });
+    const target = {
+      dataset: { index: 0 },
+      value: passphrase,
+    };
+    wrapper.find('input').first().simulate('change', { target });
     wrapper.setProps({ value: passphrase });
     expect(wrapper.props().onFill).to.have.been.calledWith(passphrase, ONLY_ONE_WORD_ERROR);
   });
@@ -61,7 +72,10 @@ describe('V2 passphraseInput validations, rendering and functionalities', () => 
   const NOT_VALID_ERROR = 'Passphrase is not valid';
   it(`should call props.onFill with error="${NOT_VALID_ERROR}" if an otherwise invalid passphrase is entered`, () => {
     const passphrase = 'stock wagon borrow episode laundry kitten salute link globe zero feed marble';
-    wrapper.find('input').first().simulate('change', { target: { value: passphrase, dataset: { index: 0 } } });
+    const clipboardData = {
+      getData: () => passphrase,
+    };
+    wrapper.find('input').first().simulate('paste', { clipboardData });
     expect(wrapper.props().onFill).to.have.been.calledWith(passphrase, NOT_VALID_ERROR);
   });
 });

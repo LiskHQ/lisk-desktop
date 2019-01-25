@@ -144,7 +144,7 @@ describe('Send', () => {
    * @expect amount in USD
    */
   it('Fiat converter shows amount in USD', () => {
-    cy.addLocalStorage('settings', 'currency', 'USD');
+    cy.addObjectToLocalStorage('settings', 'currency', 'USD');
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.send}?recipient=4995063339468361088L&amount=5`);
     cy.get(ss.convertedPrice).contains(/^\d{1,100}(\.\d{1,2})? USD$/);
@@ -155,7 +155,7 @@ describe('Send', () => {
    * @expect amount in EUR
    */
   it('Fiat converter shows amount in EUR', () => {
-    cy.addLocalStorage('settings', 'currency', 'EUR');
+    cy.addObjectToLocalStorage('settings', 'currency', 'EUR');
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.send}?recipient=4995063339468361088L&amount=5`);
     cy.get(ss.convertedPrice).contains(/^\d{1,100}(\.\d{1,2})? EUR$/);

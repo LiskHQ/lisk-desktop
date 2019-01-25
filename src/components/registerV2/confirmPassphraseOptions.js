@@ -24,6 +24,7 @@ const ConfirmPassphraseOptions = ({
           className={`${styles.option} ${answers[optionIndex] === option ? styles.selected : ''}`}
           key={optionKey}>
           <PrimaryButtonV2
+            className={'word-option'}
             onClick={() => handleSelect(option, optionIndex)}
             disabled={!enabled}>
             { option }

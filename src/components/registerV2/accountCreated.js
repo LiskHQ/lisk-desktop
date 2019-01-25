@@ -15,9 +15,9 @@ const AccountCreated = ({ t, account }) => (
     <div className={`${registerStyles.titleHolder}`}>
       <h1>
         <img src={check} />
-        {t('Your Account is created!')}
+        {t('Your account has been created!')}
       </h1>
-      <p>{t('You can now manage and secure your LSK tokens.')}</p>
+      <p>{t('You can now securely manage your LSK tokens.')}</p>
     </div>
 
     <div className={`${styles.accountHolder}`}>
@@ -31,7 +31,9 @@ const AccountCreated = ({ t, account }) => (
     </div>
 
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
-      <Link className={`${registerStyles.button} ${grid['col-xs-5']}`} to={routes.loginV2.path}>
+      <Link
+        className={`${registerStyles.button} ${grid['col-xs-5']} login-button`}
+        to={routes.loginV2.path}>
         <PrimaryButtonV2>
           {t('Sign In')}
         </PrimaryButtonV2>

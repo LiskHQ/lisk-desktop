@@ -17,7 +17,7 @@ import HwWallet from '../components/hwWallet';
 import AccountVisualDemo from '../components/accountVisual/demo';
 import Request from '../components/request';
 import Send from '../components/send';
-import Splashscreen from '../components/splashscreen/splashscreen';
+import Splashscreen from '../components/splashscreen';
 import RegistrationV2 from '../components/registerV2/registerV2';
 import LoginV2 from '../components/loginV2';
 
@@ -145,13 +145,14 @@ export default {
     path: '/explorer',
   },
   splashscreen: {
-    path: '/splashscreen',
+    path: '/',
     component: Splashscreen,
     isPrivate: false,
     isV2Layout: true,
+    exact: true,
   },
-  registration: {
-    path: '/registration',
+  registerV2: {
+    path: '/register',
     component: RegistrationV2,
     isPrivate: false,
     isV2Layout: true,

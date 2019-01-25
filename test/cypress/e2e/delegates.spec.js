@@ -27,7 +27,7 @@ describe('Delegates', () => {
    * @expect some specific to page element is present on it
    */
   it('opens by sidebar button', () => {
-    cy.addLocalStorage('settings', 'advancedMode', true);
+    cy.addObjectToLocalStorage('settings', 'advancedMode', true);
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
     cy.get(ss.sidebarMenuDelegatesBtn).should('have.css', 'opacity', '1').click();

@@ -119,7 +119,6 @@ const ss = {
   unvotesPreselection: '.unvotes-message',
   alreadyVotedPreselection: '.alreadyVoted-message',
   addFollowerAccountButton: '.add-account-button',
-  addressInput: '.address input',
   followedAccountItem: '.followed-account',
   titleInput: '.account-title input',
   followedAccountBalance: '.followed-account-balance span',
@@ -132,6 +131,8 @@ const ss = {
   passphraseInput: '.passphrase input',
   loginBtn: '.login-button',
   networkDropdown: '.network',
+  networkOptions: '.network .options > *',
+  addressInput: '.address input',
   headerAddress: '.copy-title',
   nodeAddress: '.peer',
   networkStatus: '.network-status',
@@ -141,7 +142,6 @@ const ss = {
   editNewsFeed: '.settingsButton',
   settingsNewsFeedBlock: '.settingsNewsFeed',
   getPassphraseButton: '.get-passphrase-button',
-  iUnderstandCheckbox: '.i-understand-checkbox',
   editFollowingAccounts: '.edit-accounts',
   removeFollowingAccount: '.remove-account',
   followedAccount: '.followed-account',
@@ -163,6 +163,11 @@ const ss = {
   followAccountBtn: '.follow-account',
   bookmarkedAccountTitle: '.transactions .account-title',
   showMoreButton: '.show-more-button',
+  chooseAvatar: '.choose-avatar span',
+  copyPassphrase: '.option-value',
+  passphraseWordConfirm: '.passphrase-holder .word-option',
+  passphraseConfirmButton: '.passphrase-is-correct-button',
+  exploreAsGuestBtn: '.explore-as-guest-button',
 };
 
 export default ss;

@@ -208,7 +208,7 @@ class LoginV2 extends React.Component {
               <p>
                 {t('New to Lisk? ')}
                 <Link className={`${styles.link}`}
-                  to={routes.registration.path}>
+                  to={routes.registerV2.path}>
                   {t('Create an Account')}
                 </Link>
               </p>
@@ -218,11 +218,11 @@ class LoginV2 extends React.Component {
 
               <div className={`${styles.inputsHolder}`}>
                 <div className={`${styles.customNode} ${this.state.network === networks.customNode.code ? styles.showInput : ''}`}>
-                  <h2 className={`${styles.inputLabel}`}>{t('Enter IP or domain address of the node')}</h2>
-                  <div className={`${styles.addressInput}`}>
+                  <h2 className={`${styles.inputLabel}`}>{t('Enter the IP or domain address of your node.')}</h2>
+                  <div className={`${styles.addressInput} address`}>
                     <input
                       className={`${this.state.addressValidity ? 'error' : ''}`}
-                      type="url"
+                      type="text"
                       value={this.state.address}
                       onChange={this.changeAddress} />
                     <span className={`${styles.errorMessage} ${this.state.addressValidity ? styles.showError : ''}`}>
@@ -232,22 +232,23 @@ class LoginV2 extends React.Component {
                 </div>
 
                 <h2 className={`${styles.inputLabel}`}>
-                  {t('Type or insert your passphrase')}
+                  {t('Type or paste your passphrase here.')}
                   <Tooltip
                     className={`${styles.tooltip}`}
-                    title={t('What is passphrase?')}
+                    title={t('What is your passphrase?')}
                     footer={
                       <a href={links.whatIsAnPassphrase}
+                        tabIndex={'-1'}
                         rel="noopener noreferrer"
                         target="_blank">
                           {t('Read More')}
                       </a>}>
-                    <p>
-                      {t('Passphrase is both ')}
+                    <p className={`${styles.tooltipText}`}>
+                      {t('Your passphrase is both  ')}
                       <strong>{t('your login and passphrase ')}</strong>
-                      {t('combined. You saved your passphrase when registering your account.')}
+                      {t('to your Lisk Hub. It is provided during account registration.')}
                     </p>
-                    <p>
+                    <p className={`${styles.tooltipText}`}>
                       {t('You can use ')}
                       <strong>{t('tab or space ')}</strong>
                       {t('to go to the next field.')}
@@ -287,6 +288,7 @@ class LoginV2 extends React.Component {
                 </Link>
                 <span className={`${styles.button} ${grid['col-xs-4']}`}>
                   <PrimaryButtonV2
+                    className={'login-button'}
                     type='submit'
                     disabled={(this.state.network === networks.customNode.code
                       && !!this.state.addressValidity)

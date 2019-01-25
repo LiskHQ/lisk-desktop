@@ -51,8 +51,10 @@ class BackupPassphrase extends React.Component {
             <img src={key} />
             {t('Backup your Passphrase')}
           </h1>
-          <p>{t('Passphrase is both your login and password combined')}</p>
-          <p>{t('Keep it safe is only way to access the wallet')}</p>
+          <p>{t('Your passphrase is both your login and password to your Lisk Hub.')}</p>
+          <p>{
+            t('You must keep it safe as it is the only way to access your wallet and cannot be recovered if lost.')
+          }</p>
         </div>
 
         <div className={`${styles.optionsHolder} ${grid['col-sm-11']}`}>
@@ -72,10 +74,9 @@ class BackupPassphrase extends React.Component {
                       target="_blank">
                         {t('Read More')}
                     </a>}>
-                  <p>
-                    {t(`We strongly recommend to store passphrase in a safe place.
-                    You can use a password manager or paperwallet.`)}
-                  </p>
+                  <p>{
+                    t('We strongly recommend to store your passphrase in a safe place, such as on a password manager or paperwallet.')
+                  }</p>
                 </Tooltip>
 
               </h2>
@@ -126,7 +127,9 @@ class BackupPassphrase extends React.Component {
             </SecondaryButtonV2>
           </span>
           <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
-            <PrimaryButtonV2 onClick={() => nextStep({ account })}>
+            <PrimaryButtonV2
+              className={'yes-its-safe-button'}
+              onClick={() => nextStep({ account })}>
               {t('Continue')}
               <FontIcon className={registerStyles.icon}>arrow-right</FontIcon>
             </PrimaryButtonV2>
