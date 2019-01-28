@@ -6,6 +6,8 @@ import EmptyState from '../emptyState';
 import TransactionsList from './transactionsList';
 import styles from './transactions.css';
 import txFilters from '../../constants/transactionFilters';
+import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
+import Ulrs from '../../constants/routes';
 import Piwik from '../../utils/piwik';
 
 class TransactionsOverview extends React.Component {
@@ -86,8 +88,26 @@ class TransactionsOverview extends React.Component {
       };
     }
 
+    const index = getIndexOfFollowedAccount(
+      this.props.followedAccounts,
+      { address: this.props.address },
+    );
+    const accountTitle = this.props.followedAccounts[index]
+      && this.props.followedAccounts[index].title;
+    const hasTitle = index !== -1 && accountTitle !== this.props.address;
+
     return (
       <div className={`transactions ${styles.activity}`}>
+        { this.props.match.url !== Ulrs.wallet.path &&
+          <header>
+            <h2 className={`${styles.title}`}>
+            {this.props.t('Transaction')}
+            {
+              hasTitle && (<span>{this.props.t(' of')} <span className={`${styles.accountTitle} account-title`}>{accountTitle}</span></span>)
+            }
+            </h2>
+          </header>
+        }
         {this.shouldShowEmptyState() ?
           <EmptyState title={this.props.t('No transactions yet')}
             message={this.props.t('The Wallet will show your recent transactions.')} /> :
@@ -136,6 +156,7 @@ class TransactionsOverview extends React.Component {
   }
 }
 const mapStateToProps = state => ({
+  followedAccounts: state.followedAccounts.accounts,
   peers: state.peers,
   account: state.account,
 });
