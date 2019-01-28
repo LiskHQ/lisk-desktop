@@ -1,0 +1,61 @@
+@import '../app/variablesV2.css';
+
+.transactions {
+  border-radius: var(--border-radius-standard);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.txFilters {
+  background-color: var(--color-background-menu);
+  border-bottom: 1px solid var(--color-light-gray);
+  display: flex;
+  list-style: none;
+  margin: 0 -1px;
+  padding: 0;
+
+  & > li {
+    align-items: center;
+    border-bottom: 1px solid var(--color-light-gray);
+    border-left: 1px solid var(--color-background-menu);
+    border-right: 1px solid var(--color-background-menu);
+    color: var(--color-dark-gray);
+    cursor: pointer;
+    display: flex;
+    font-family: var(--heading-font);
+    font-size: var(--paragraph-font-size-s);
+    font-weight: var(--font-weight-bold);
+    justify-content: center;
+    margin-bottom: -1px;
+    padding: 16px;
+    position: relative;
+
+    &::before {
+      background-color: var(--color-light-gray);
+      content: '';
+      height: 16px;
+      left: -1px;
+      position: absolute;
+      width: 1px;
+    }
+
+    &:first-child,
+    &.active {
+      &::before {
+        display: none;
+      }
+    }
+
+    &.active {
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-white);
+      border-left: 1px solid var(--color-light-gray);
+      border-right: 1px solid var(--color-light-gray);
+
+      & + li::before {
+        display: none;
+      }
+    }
+  }
+}
