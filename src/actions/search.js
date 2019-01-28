@@ -22,14 +22,17 @@ const searchDelegate = ({ publicKey, address }) =>
 const searchVotes = ({ address }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    getAllVotes(liskAPIClient, address).then(response =>
-      dispatch({
-        type: actionTypes.searchVotes,
-        data: {
-          votes: response.data.votes,
-          address,
-        },
-      }));
+    /* istanbul ignore else */
+    if (liskAPIClient) {
+      getAllVotes(liskAPIClient, address).then(response =>
+        dispatch({
+          type: actionTypes.searchVotes,
+          data: {
+            votes: response.data.votes,
+            address,
+          },
+        }));
+    }
   };
 
 const searchVoters = ({
@@ -37,18 +40,21 @@ const searchVoters = ({
 }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    getVoters(liskAPIClient, {
-      publicKey, offset, limit,
-    }).then(response =>
-      dispatch({
-        type: actionTypes.searchVoters,
-        data: {
-          append: append || false,
-          voters: response.data.voters,
-          votersSize: response.data.votes,
-          address,
-        },
-      }));
+    /* istanbul ignore else */
+    if (liskAPIClient) {
+      getVoters(liskAPIClient, {
+        publicKey, offset, limit,
+      }).then(response =>
+        dispatch({
+          type: actionTypes.searchVoters,
+          data: {
+            append: append || false,
+            voters: response.data.voters,
+            votersSize: response.data.votes,
+            address,
+          },
+        }));
+    }
   };
 
 export const searchMoreVoters = ({ address, offset = 0, limit = 100 }) =>
@@ -69,17 +75,20 @@ export const searchMoreVoters = ({ address, offset = 0, limit = 100 }) =>
 export const searchAccount = ({ address }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    dispatch(searchVotes({ address }));
-    getAccount(liskAPIClient, address).then((response) => {
-      const accountData = {
-        ...response,
-      };
-      if (accountData.publicKey) {
-        dispatch(searchDelegate({ publicKey: accountData.publicKey, address }));
-        dispatch(searchVoters({ address, publicKey: accountData.publicKey }));
-      }
-      dispatch({ data: accountData, type: actionTypes.searchAccount });
-    });
+    /* istanbul ignore else */
+    if (liskAPIClient) {
+      dispatch(searchVotes({ address }));
+      getAccount(liskAPIClient, address).then((response) => {
+        const accountData = {
+          ...response,
+        };
+        if (accountData.publicKey) {
+          dispatch(searchDelegate({ publicKey: accountData.publicKey, address }));
+          dispatch(searchVoters({ address, publicKey: accountData.publicKey }));
+        }
+        dispatch({ data: accountData, type: actionTypes.searchAccount });
+      });
+    }
   };
 
 export const searchTransactions = ({
@@ -88,30 +97,32 @@ export const searchTransactions = ({
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     if (showLoading) dispatch(loadingStarted(actionTypes.searchTransactions));
-    getTransactions({
-      liskAPIClient, address, limit, filter,
-    })
-      .then((transactionsResponse) => {
-        dispatch({
-          data: {
-            address,
-            transactions: transactionsResponse.data,
-            count: parseInt(transactionsResponse.meta.count, 10) || 0,
-            filter,
-          },
-          type: actionTypes.searchTransactions,
-        });
-        if (filter !== undefined) {
+    if (liskAPIClient) {
+      getTransactions({
+        liskAPIClient, address, limit, filter,
+      })
+        .then((transactionsResponse) => {
           dispatch({
             data: {
-              filterName: 'transactions',
-              value: filter,
+              address,
+              transactions: transactionsResponse.data,
+              count: parseInt(transactionsResponse.meta.count, 10) || 0,
+              filter,
             },
-            type: actionTypes.addFilter,
+            type: actionTypes.searchTransactions,
           });
-        }
-        if (showLoading) dispatch(loadingFinished(actionTypes.searchTransactions));
-      });
+          if (filter !== undefined) {
+            dispatch({
+              data: {
+                filterName: 'transactions',
+                value: filter,
+              },
+              type: actionTypes.addFilter,
+            });
+          }
+          if (showLoading) dispatch(loadingFinished(actionTypes.searchTransactions));
+        });
+    }
   };
 
 export const searchMoreTransactions = ({

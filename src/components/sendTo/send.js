@@ -61,13 +61,15 @@ class SendTo extends React.Component {
               ${grid['col-md-12']}
               ${grid['col-lg-12']}
             `}>
-            <h2>
+            {!Number.isNaN(account.balance) ? <h2>
               <span className={'balance'}>
                 <LiskAmount val={account.balance}/>
                 <small className={styles.balanceUnit}>LSK</small>
               </span>
-            </h2>
-            <CopyToClipboard value={account.address} className={`${styles.address}`} copyClassName={styles.copy} />
+            </h2> : null}
+            {account.address ?
+              <CopyToClipboard value={account.address} className={`${styles.address}`} copyClassName={styles.copy} /> :
+              null}
             {
               delegate.username ?
                 <div className={styles.delegateRow}>
