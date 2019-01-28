@@ -30,6 +30,7 @@ describe('Account', () => {
   it('Add / Remove bookmark', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.accounts}/${accounts.delegate.address}`);
+    cy.wait(1000); // Avoid failing on jenkins
     cy.get(ss.followAccountBtn).contains('Add to bookmark');
     cy.get(ss.followAccountBtn).click();
     cy.get(ss.titleInput).type('Bob');
