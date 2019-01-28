@@ -1,0 +1,86 @@
+@import '../../app/variablesV2.css';
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 25px 0;
+}
+
+.account {
+  align-items: center;
+  display: flex;
+  height: 48px;
+  justify-content: flex-start;
+
+  & .accountInfo {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-evenly;
+    margin-left: 10px;
+
+    & > div {
+      align-items: bottom;
+      display: flex;
+    }
+  }
+
+  & .title {
+    color: var(--color-content-light);
+    font-family: var(--heading-font);
+    font-size: var(--subtitle-font-size);
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+  }
+
+  & .label {
+    align-items: center;
+    background-color: #ffe5bb;
+    border-radius: var(--border-radius-standard);
+    color: #e48e00;
+    display: flex;
+    font-family: var(--heading-font);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-bold);
+    height: 17px;
+    margin: 0 5px;
+    padding: 0 8px;
+    white-space: nowrap;
+  }
+
+  & .address {
+    color: var(--color-dark-gray);
+    font-family: var(--content-font);
+    font-size: var(--button-font-size-s);
+    font-weight: var(--font-weight-semi-bold);
+  }
+}
+
+.buttonsHolder {
+  display: flex;
+  justify-content: space-between;
+
+  & > * {
+    margin-left: 10px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  & button {
+    min-height: 40px;
+    height: 40px;
+    width: 180px;
+  }
+}
+
+@media (--small-viewport) {
+  .buttonsHolder {
+    & button {
+      padding: 0 24px;
+      width: auto;
+    }
+  }
+}
