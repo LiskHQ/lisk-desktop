@@ -1,9 +1,5 @@
 import React from 'react';
-import MultiStep from './../../multiStep';
-import styles from './../transactions.css';
-import TransactionsOverview from '../transactionsOverview';
-import TransactionDetailView from './../transactionDetailView';
-import Box from './../../box';
+import TransactionsOverview from '../../transactionsV2/transactionsOverview';
 import txFilters from './../../../constants/transactionFilters';
 
 import routes from './../../../constants/routes';
@@ -80,12 +76,7 @@ class WalletTransactions extends React.Component {
     };
 
     return (
-      <Box>
-        <MultiStep className={styles.transactions}>
-          <TransactionsOverview {...overviewProps} />
-          <TransactionDetailView {...this.props} />
-        </MultiStep>
-      </Box>
+      <TransactionsOverview {...overviewProps} />
     );
   }
 }
