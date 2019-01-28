@@ -9,6 +9,8 @@ import styles from './transactions.css';
 import txFilters from '../../constants/transactionFilters';
 import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
 import { ActionButton } from '../toolbox/buttons/button';
+import FilterButton from './filterButton';
+import FilterBar from './filterBar';
 import { FontIcon } from '../fontIcon';
 import Ulrs from '../../constants/routes';
 import Piwik from '../../utils/piwik';
@@ -17,6 +19,10 @@ class TransactionsOverview extends React.Component {
   constructor(props) {
     super(props);
     this.canLoadMore = true;
+
+    this.state = {
+      filters: {},
+    };
 
     this.props.onInit();
   }
@@ -56,6 +62,10 @@ class TransactionsOverview extends React.Component {
   setTransactionsFilter(filter) {
     Piwik.trackingEvent('TransactionsOverview', 'button', 'Set transactions filter');
     this.props.onFilterSet(filter);
+  }
+
+  saveFilters(filters) {
+    this.setState({ filters });
   }
 
   render() { // eslint-disable-line complexity
@@ -139,6 +149,10 @@ class TransactionsOverview extends React.Component {
                 {filter.name}
               </li>
             ))}
+            <div>
+              <FilterButton saveFilters={this.saveFilters.bind(this)}/>
+              <FilterBar filters={this.state.filters} />
+            </div>
           </ul>
         }
         {
