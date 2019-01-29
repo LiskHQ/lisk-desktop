@@ -68,6 +68,23 @@ class TransactionsOverview extends React.Component {
     this.setState({ filters });
   }
 
+  clearFilter(filterName) {
+    this.setState({
+      filters: {
+        ...this.state.filters,
+        [filterName]: '',
+      },
+    });
+  }
+
+  clearAllFilters() {
+    this.setState({ filters: {} });
+  }
+
+  changeFilters(name, value) {
+    this.setState({ filters: { ...this.state.filters, [name]: value } });
+  }
+
   render() { // eslint-disable-line complexity
     const filters = [
       {
@@ -149,12 +166,15 @@ class TransactionsOverview extends React.Component {
                 {filter.name}
               </li>
             ))}
-            <div>
+            <li className={`${styles.filters} ${styles.item}`}>
               <FilterButton saveFilters={this.saveFilters.bind(this)}/>
-              <FilterBar filters={this.state.filters} />
-            </div>
+            </li>
           </ul>
         }
+        {Object.values(this.state.filters).find(filter => filter) ? <FilterBar
+          clearFilter={this.clearFilter.bind(this)}
+          clearAllFilters={this.clearAllFilters.bind(this)}
+          filters={this.state.filters} /> : null}
         {
           <TransactionsList
             filter={filters[this.props.activeFilter]}

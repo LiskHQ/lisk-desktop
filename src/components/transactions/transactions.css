@@ -138,6 +138,16 @@
   }
 }
 
+.filters {
+  position: absolute;
+  background: #fff;
+  width: 360px;
+}
+
+.topHeader {
+  display: flex;
+}
+
 @media (--xLarge-viewport) {
   .transactions {
     & .activity {
