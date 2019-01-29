@@ -63,3 +63,17 @@
     }
   }
 }
+
+.amountLabel {
+  font-family: var(--heading-font);
+  font-size: var(--paragraph-font-size-l);
+  font-weight: var(--font-weight-bold);
+
+  &.greyLabel {
+    color: var(--color-content-light);
+  }
+
+  &.greenLabel {
+    color: #00b262;
+  }
+}
