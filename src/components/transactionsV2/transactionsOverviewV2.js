@@ -1,11 +1,10 @@
 import React from 'react';
-import Waypoint from 'react-waypoint';
 import { connect } from 'react-redux';
 import Box from '../box';
-import EmptyState from '../emptyState';
 import txFilters from '../../constants/transactionFilters';
 import Piwik from '../../utils/piwik';
-import styles from './transactions.css';
+import TransactionsListV2 from './transactionsListV2';
+import styles from './transactionsV2.css';
 
 class TransactionsOverview extends React.Component {
   constructor(props) {
@@ -34,12 +33,6 @@ class TransactionsOverview extends React.Component {
   setTransactionsFilter(filter) {
     Piwik.trackingEvent('TransactionsOverview', 'button', 'Set transactions filter');
     this.props.onFilterSet(filter);
-  }
-
-  shouldShowEmptyState() {
-    const isLoading = this.props.loading.length > 0;
-    return this.props.transactions.length === 0 && !isLoading &&
-      (!this.props.activeFilter || this.props.activeFilter === txFilters.all);
   }
 
   generateFilters(isSmallScreen) {
@@ -84,9 +77,7 @@ class TransactionsOverview extends React.Component {
 
     return (
       <Box className={`${styles.transactions} transactions`}>
-        {this.shouldShowEmptyState() ?
-          <EmptyState title={this.props.t('No transactions yet')}
-            message={this.props.t('The Wallet will show your recent transactions.')} /> :
+        <React.Fragment>
           <ul className={`${styles.txFilters}`}>
             {filters.map((filter, i) => (
               <li key={i} className={`transaction-filter-item ${filter.className} ${this.isActiveFilter(filter.value) ? styles.active : ''}`}
@@ -95,34 +86,22 @@ class TransactionsOverview extends React.Component {
               </li>
             ))}
           </ul>
-        }
-        {
-          // <TransactionsList
-          //   filter={filters[this.props.activeFilter]}
-          //   delegate={this.props.delegate}
-          //   votes={this.props.votes}
-          //   voters={this.props.voters}
-          //   votersSize={this.props.votersSize}
-          //   searchMoreVoters={this.props.searchMoreVoters}
-          //   address={this.props.address}
-          //   publicKey={this.props.publicKey}
-          //   transactions={this.props.transactions}
-          //   loadMore={this.loadMore.bind(this)}
-          //   nextStep={this.props.nextStep}
-          //   loading={this.isLoading()}
-          //   t={this.props.t}
-          //   history={this.props.history}
-          //   onClick={props => this.props.onTransactionRowClick(props)}
-          // />
-        }
-        {
-          // the whole transactions box should be scrollable on XS
-          // otherwise only the transaction list should be scrollable
-          // (see transactionList.js)
-          isSmallScreen
-            && <Waypoint bottomOffset='-80%' key={this.props.transactions.length}
-              onEnter={() => { this.loadMore(); }}></Waypoint>
-        }
+          <TransactionsListV2
+            transactions={this.props.transactions}
+            loadMore={this.loadMore.bind(this)}
+            filter={filters[this.props.activeFilter]}
+            delegate={this.props.delegate}
+            votes={this.props.votes}
+            voters={this.props.voters}
+            votersSize={this.props.votersSize}
+            searchMoreVoters={this.props.searchMoreVoters}
+            address={this.props.address}
+            publicKey={this.props.publicKey}
+            nextStep={this.props.nextStep}
+            history={this.props.history}
+            onClick={props => this.props.onTransactionRowClick(props)}
+          />
+        </React.Fragment>
       </Box>
     );
   }
