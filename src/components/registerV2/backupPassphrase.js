@@ -129,7 +129,7 @@ class BackupPassphrase extends React.Component {
               <p className='option-value'>{'Lisk.pdf'}</p>
               <span
                 onClick={this.generatePaperwallet}
-                className={`${styles.action}`}>{t('Download PDF')}</span>
+                className={`${styles.action} download-pdf`}>{t('Download PDF')}</span>
             </div>
           </div>
         </div>
