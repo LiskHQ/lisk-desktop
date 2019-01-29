@@ -1,0 +1,41 @@
+@import '../app/variablesV2.css';
+
+.row {
+  padding: 0 8px;
+  padding: 0 0.5em; /* stylelint-disable-line */
+
+  &:nth-child(2n+3) {
+    background-color: #f8f9fb;
+  }
+
+  & > * {
+    box-sizing: border-box;
+    color: var(--color-dark-gray);
+    padding: 14px 16px;
+    font-family: var(--heading-font);
+    font-size: var(--button-font-size-s);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.33;
+    text-align: left;
+
+    &:last-child {
+      text-align: right;
+    }
+  }
+}
+
+.header {
+  & > * {
+    color: var(--color-content-grayblue);
+    font-family: var(--heading-font);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.2px;
+    line-height: 1;
+  }
+}
+
+@media (--small-viewport) {
+  .hiddenXs {
+    display: none;
+  }
+}

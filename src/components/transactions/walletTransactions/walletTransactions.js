@@ -1,5 +1,5 @@
 import React from 'react';
-import TransactionsOverview from '../../transactionsV2/transactionsOverview';
+import TransactionsOverview from '../../transactionsV2/transactionsOverviewV2';
 import txFilters from './../../../constants/transactionFilters';
 
 import routes from './../../../constants/routes';
