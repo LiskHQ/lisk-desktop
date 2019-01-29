@@ -31,6 +31,7 @@ class TransactionsListV2 extends React.Component {
     const {
       transactions,
       address,
+      followedAccounts,
       t,
     } = this.props;
     // All, incoming, outgoing are filter values. To be more consistance with other possible tabs
@@ -71,14 +72,11 @@ class TransactionsListV2 extends React.Component {
       <TransactionsHeaderV2 tableStyle={tableStyle} />
       {transactions.length
         ? transactions.filter(fixIncomingFilter)
-          .map((transaction, i) => {
-            console.log(transaction);
-            return (
-            <TransactionRowV2 key={i}
-              address={address}
-              value={transaction} />
-            );
-          })
+            .map((transaction, i) =>
+              <TransactionRowV2 key={i}
+                followedAccounts={followedAccounts}
+                address={address}
+                value={transaction} />)
         : <p className={`${styles.empty} empty-message`}>
           {t('There are no transactions.')}
         </p>

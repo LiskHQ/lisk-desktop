@@ -87,6 +87,7 @@ class TransactionsOverview extends React.Component {
             ))}
           </ul>
           <TransactionsListV2
+            followedAccounts={this.props.followedAccounts}
             transactions={this.props.transactions}
             loadMore={this.loadMore.bind(this)}
             filter={filters[this.props.activeFilter]}
