@@ -71,6 +71,11 @@ or "warn/action" ineastd of "red/green"
   --search-box-width-l: 597px;
 
   /*************************
+        Radious
+  *************************/
+  --border-radius-box: 6px;
+
+  /*************************
         Padding
   *************************/
   --header-padding: 0 32px;
@@ -93,6 +98,7 @@ or "warn/action" ineastd of "red/green"
   --color-background-header: #fbfcfd;
   --color-background-menu: #f8f9fb;
   --color-link-active: #4070f4;
+  --color-title-header-box: #4c4c4c;
   --color-link: var(--color-primary-standard);
 
   /*************************
@@ -103,6 +109,7 @@ or "warn/action" ineastd of "red/green"
   --box-shadow-header: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
   --box-shadow-avatar: var(--box-shadow-standard);
   --box-shadow-search: 0 2px 4px 0 rgba(8, 24, 49, 0.06);
+  --box-shadow-standar2: 0 1px 5px 0 rgba(30, 25, 77, 0.12);
 
   /*************************
         Animation

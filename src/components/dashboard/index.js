@@ -5,8 +5,8 @@ import { translate } from 'react-i18next';
 import React from 'react';
 import throttle from 'lodash.throttle';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { FontIcon } from '../fontIcon';
 import Box from '../box';
+import BoxV2 from '../boxV2';
 import { loadTransactions } from '../../actions/transactions';
 import TransactionsList from '../transactions/transactionsList';
 import CurrencyGraph from './currencyGraph';
@@ -102,15 +102,14 @@ class Dashboard extends React.Component {
           <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
             {
               isLoggedIn
-              ? <Box className={`${styles.latestActivity}`}>
+              ? <BoxV2 className={`${styles.latestActivity}`}>
                 <header>
-                  <h2 className={styles.title}>
+                  <h1 className={styles.title}>
                     {t('Latest activity')}
                     <Link to={`${routes.wallet.path}`} className={`${styles.seeAllLink} seeAllLink`}>
                       {t('See all transactions')}
-                      <FontIcon value='arrow-right'/>
                     </Link>
-                  </h2>
+                  </h1>
                 </header>
                 <TransactionsList {...{
                   address: account.address,
@@ -130,7 +129,7 @@ class Dashboard extends React.Component {
                     text={this.state.showMore ? t('Show Less') : t('Show More')}
                   />
                 }
-              </Box>
+              </BoxV2>
               : <QuickTips />
             }
             <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>

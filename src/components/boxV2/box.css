@@ -1,0 +1,39 @@
+@import './../app/variablesV2.css';
+
+.wrapper {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+  border-radius: var(--border-radius-box);
+  background: var(--color-white);
+  box-shadow: var(--box-shadow-standar2);
+
+  /* box-shadow: var(--normal-shadow); */
+  overflow: hidden;
+}
+
+.wrapper > header {
+  width: 100%;
+  height: 48px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: var(--color-background-menu);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 16px;
+  border-bottom: 1px solid rgba(111, 114, 118, 0.1);
+
+  & h1 {
+    font-family: var(--content-font);
+    font-size: var(--paragraph-font-size-s);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-title-header-box);
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
