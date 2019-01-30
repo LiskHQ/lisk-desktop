@@ -50,12 +50,6 @@
 
 @media (--large-viewport) {
   .wrapper {
-    margin-left: 23px;
-  }
-}
-
-@media (--medium-viewport) {
-  .wrapper {
     margin-left: 40px;
     min-width: 238px;
   }
@@ -69,7 +63,7 @@
   }
 }
 
-@media (--small-viewport) {
+@media (--medium-viewport) {
   .wrapper {
     margin-left: 32px;
     min-width: 120px;
