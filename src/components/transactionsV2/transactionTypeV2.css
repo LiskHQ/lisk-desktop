@@ -7,12 +7,12 @@
   & .icon {
     display: block;
     height: 24px;
+    margin-right: 24px;
     width: 24px;
   }
 
   & .info {
     display: flex;
-    margin-left: 24px;
 
     & > .avatar {
       margin-right: 24px;
@@ -31,5 +31,19 @@
     font-family: var(--heading-font);
     font-size: var(--paragraph-font-size-l);
     font-weight: var(--font-weight-bold);
+  }
+}
+
+@media (--medium-viewport) {
+  .transactionType {
+    & .icon {
+      display: none;
+    }
+
+    & .info {
+      & > .avatar {
+        display: none;
+      }
+    }
   }
 }

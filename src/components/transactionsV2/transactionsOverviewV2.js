@@ -26,8 +26,9 @@ class TransactionsOverview extends React.Component {
   }
 
   isActiveFilter(filter) {
-    return (!this.props.activeFilter && filter === txFilters.all) ||
-      (this.props.activeFilter === filter);
+    const { activeFilter } = this.props;
+    return (!activeFilter && filter === txFilters.all) ||
+      (activeFilter === filter);
   }
 
   setTransactionsFilter(filter) {
@@ -36,7 +37,7 @@ class TransactionsOverview extends React.Component {
   }
 
   generateFilters(isSmallScreen) {
-    const filters = [
+    return [
       {
         name: this.props.t('All transactions'),
         value: txFilters.all,
@@ -53,22 +54,6 @@ class TransactionsOverview extends React.Component {
         className: 'filter-out',
       },
     ];
-
-    if (this.props.delegate && Object.keys(this.props.delegate).length > 0) {
-      filters[txFilters.statistics] = {
-        name: isSmallScreen ? this.props.t('Stats') : this.props.t('Delegate statistics'),
-        value: txFilters.statistics,
-        className: 'delegate-statistics',
-      };
-    } else {
-      filters[txFilters.accountInfo] = {
-        name: isSmallScreen ? this.props.t('Info') : this.props.t('Account Info'),
-        value: txFilters.accountInfo,
-        className: 'account-info',
-      };
-    }
-
-    return filters;
   }
 
   render() {

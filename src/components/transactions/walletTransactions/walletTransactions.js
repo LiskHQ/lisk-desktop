@@ -4,6 +4,7 @@ import styles from './../transactions.css';
 import TransactionsOverview from '../transactionsOverview';
 import TransactionDetailView from './../transactionDetailView';
 import Box from './../../box';
+import TransactionsOverviewV2 from '../../transactionsV2/transactionsOverviewV2';
 import txFilters from './../../../constants/transactionFilters';
 import WalletHeader from './walletHeader';
 import routes from './../../../constants/routes';
@@ -82,8 +83,12 @@ class WalletTransactions extends React.Component {
     return (
       <React.Fragment>
         { // istanbul ignore next
-        this.props.match.url === routes.walletV2.path &&
-          <WalletHeader {...this.props} /> }
+        this.props.match.url === routes.walletV2.path && (
+          <React.Fragment>
+            <WalletHeader {...this.props} />
+            <TransactionsOverviewV2 {...overviewProps} />
+          </React.Fragment>
+        )}
         <Box>
           <MultiStep className={styles.transactions}>
             <TransactionsOverview {...overviewProps} />

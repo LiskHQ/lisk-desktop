@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   height: auto;
+  margin-bottom: 40px;
   min-height: 600px;
   padding: 0;
 }
@@ -64,6 +65,23 @@
   }
 }
 
+.txDetails {
+  &.delegateVote {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    & > span {
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+
+  & .label {
+    display: inline;
+  }
+}
+
 .amountLabel {
   font-family: var(--heading-font);
   font-size: var(--paragraph-font-size-l);
@@ -75,5 +93,23 @@
 
   &.greenLabel {
     color: #00b262;
+  }
+}
+
+@media (--medium-viewport) {
+  .txDetails {
+    &.delegateVote {
+      & > span {
+        margin-right: 20%;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    & .label {
+      display: none;
+    }
   }
 }
