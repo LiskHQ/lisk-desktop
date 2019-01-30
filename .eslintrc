@@ -14,6 +14,7 @@
     "it": true,
     "beforeEach": true,
     "afterEach": true,
+    "expect": true,
     "ipc": true,
     "PRODUCTION": true,
     "TEST": true,
