@@ -32,11 +32,11 @@ class FilterButton extends React.Component {
   changeFilters(name, value) {
     let errors = {};
     if (name === 'amountTo') {
-      errors = { amountToValidity: Number.isNaN(value) ? 'Invalid number' : '' };
+      errors = { amountToValidity: Number.isNaN(Number(value)) ? 'Invalid number' : '' };
     }
 
     if (name === 'amountFrom') {
-      errors = { amountFromValidity: Number.isNaN(value) ? 'Invalid number' : '' };
+      errors = { amountFromValidity: Number.isNaN(Number(value)) ? 'Invalid number' : '' };
     }
 
     this.setState({ filters: { ...this.state.filters, [name]: value }, ...errors });
