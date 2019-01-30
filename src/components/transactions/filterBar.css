@@ -11,6 +11,7 @@
 .filter {
   display: flex;
   padding: 0 20px;
+  height: 30px;
   margin: 10px;
   border-radius: 4px;
   box-shadow: 0 3px 3px -1px rgba(10, 22, 70, 0.1), 0 0 1px 0 rgba(10, 22, 70, 0.06);

@@ -167,14 +167,17 @@ class TransactionsOverview extends React.Component {
               </li>
             ))}
             <li className={`${styles.filters} ${styles.item}`}>
-              <FilterButton saveFilters={this.saveFilters.bind(this)}/>
+              <FilterButton
+                saveFilters={this.saveFilters.bind(this)}
+                t={this.props.t} />
             </li>
           </ul>
         }
         {Object.values(this.state.filters).find(filter => filter) ? <FilterBar
           clearFilter={this.clearFilter.bind(this)}
           clearAllFilters={this.clearAllFilters.bind(this)}
-          filters={this.state.filters} /> : null}
+          filters={this.state.filters}
+          t={this.props.t} /> : null}
         {
           <TransactionsList
             filter={filters[this.props.activeFilter]}
