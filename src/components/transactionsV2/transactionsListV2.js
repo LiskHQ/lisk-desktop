@@ -7,8 +7,6 @@ import txFilters from '../../constants/transactionFilters';
 import txTypes from '../../constants/transactionTypes';
 import styles from './transactionsListV2.css';
 import { parseSearchParams } from '../../utils/searchParams';
-import DelegateStatistics from '../transactions/delegateStatistics';
-import UserVotes from '../transactions/userVotes';
 
 class TransactionsListV2 extends React.Component {
   componentWillReceiveProps(nextProps) {
@@ -45,28 +43,6 @@ class TransactionsListV2 extends React.Component {
 
       return !(isFilterIncoming && (isTypeNonSend || isAccountInit));
     };
-
-    const isDelegateStatistics = tabObj && (tabObj.value === txFilters.statistics);
-
-    if (isDelegateStatistics) {
-      return <DelegateStatistics
-        delegate={this.props.delegate}
-        votes={this.props.votes}
-        voters={this.props.voters}
-        votersSize={this.props.votersSize}
-        searchMoreVoters={this.props.searchMoreVoters} />;
-    }
-
-    const isAccountInfo = tabObj && (tabObj.value === txFilters.accountInfo);
-
-    if (isAccountInfo) {
-      return <UserVotes
-        delegate={this.props.delegate}
-        votes={this.props.votes}
-        voters={this.props.voters}
-        votersSize={this.props.votersSize}
-        searchMoreVoters={this.props.searchMoreVoters} />;
-    }
 
     return <div className={`${styles.results} transaction-results`}>
       <TransactionsHeaderV2 tableStyle={tableStyle} />

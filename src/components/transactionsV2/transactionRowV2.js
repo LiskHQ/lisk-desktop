@@ -2,11 +2,12 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
 import TransactionTypeV2 from './transactionTypeV2';
+import TransactionDetailV2 from './transactionDetailV2';
 import styles from './transactionRowV2.css';
 import AmountV2 from './amountV2';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
 import LiskAmount from '../liskAmount';
-import { DateFromTimestamp } from './../timestamp/index';
+import { DateTimeFromTimestamp } from './../timestamp/index';
 
 class TransactionRow extends React.Component {
   // eslint-disable-next-line class-methods-use-this
@@ -25,14 +26,13 @@ class TransactionRow extends React.Component {
             address={props.address} />
         </div>
           <div className={`${styles.hiddenXs} ${grid['col-sm-2']} ${grid['col-lg-3']} transactions-cell`}>
-            <div className={`${styles.reference} transaction-reference`}>
-                {props.value.asset && props.value.asset.data ?
-                  <span>{props.value.asset.data}</span>
-                : '-'}
-            </div>
+            <TransactionDetailV2
+              t={props.t}
+              type={props.value.type}
+              asset={props.value.asset} />
           </div>
         <div className={`${styles.hiddenXs} ${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
-          {props.value.confirmations ? <DateFromTimestamp time={props.value.timestamp} />
+          {props.value.confirmations ? <DateTimeFromTimestamp time={props.value.timestamp} />
             : <SpinnerV2 />}
         </div>
         <div className={`${styles.hiddenXs} ${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>

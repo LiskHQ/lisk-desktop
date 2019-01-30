@@ -1,5 +1,5 @@
 import React from 'react';
-import TransactionsOverview from '../../transactionsV2/transactionsOverviewV2';
+import TransactionsOverviewV2 from '../../transactionsV2/transactionsOverviewV2';
 import txFilters from './../../../constants/transactionFilters';
 
 import routes from './../../../constants/routes';
@@ -76,7 +76,7 @@ class WalletTransactions extends React.Component {
     };
 
     return (
-      <TransactionsOverview {...overviewProps} />
+      <TransactionsOverviewV2 {...overviewProps} />
     );
   }
 }
