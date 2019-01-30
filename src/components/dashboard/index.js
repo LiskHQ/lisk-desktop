@@ -139,9 +139,9 @@ class Dashboard extends React.Component {
                 </Box>
               </div>
               <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingRight: '0px' }}>
-                <Box className={`${styles.graph}`}>
+                <div className={`${styles.graph}`}>
                   <CurrencyGraph />
-                </Box>
+                </div>
               </div>
             </div>
             {

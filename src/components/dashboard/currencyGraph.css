@@ -8,6 +8,10 @@
   height: 100%;
   min-height: 200px;
   position: relative;
+
+  & > header {
+    justify-content: space-between;
+  }
 }
 
 .chartWrapper {
@@ -52,22 +56,6 @@
 
   &.active {
     color: var(--color-grayscale-dark);
-  }
-}
-
-@media (--xLarge-viewport) {
-  .wrapper {
-    & header {
-      padding: 20px var(--box-padding-left-XL) 0 var(--box-padding-left-XL);
-    }
-  }
-}
-
-@media (--large-viewport) {
-  .wrapper {
-    & header {
-      padding: 20px var(--box-padding-left-L) 0 var(--box-padding-left-L);
-    }
   }
 }
 

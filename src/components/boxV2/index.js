@@ -3,7 +3,8 @@ import styles from './box.css';
 
 const Box = (props) => {
   const childs = props.children;
-  const hasHeader = childs.some(child => typeof child.type !== 'function' && child.type === 'header');
+
+  const hasHeader = Array.isArray(childs) && childs.some(child => child.type === 'header');
 
   return (
     <div className={`${styles.wrapper} ${hasHeader ? styles.withHeader : ''} ${props.className}`}>

@@ -1,18 +1,18 @@
 @import '../app/variables.css';
+@import '../app/variablesV2.css';
 
-.headerWrapper {
-  display: flex;
-  padding: 0 32px;
+.header {
+  justify-content: space-between !important;
 }
 
 .newsFeedBox {
   padding: 0;
   height: auto;
+  font-family: var(--content-font);
 }
 
 .settingsButton {
   display: flex;
-  padding: 20px 32px 0;
   align-items: center;
   font-weight: 600;
 
@@ -20,11 +20,6 @@
     cursor: pointer;
     color: #2475b9;
   }
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
 }
 
 .emptyNews {
@@ -41,17 +36,18 @@
 }
 
 .container {
-  min-height: 670px;
+  min-height: 690px;
   overflow: hidden;
-  height: 723px;
+  height: 690px;
 
   & .newsWrapper {
-    padding: 0 32px;
-    height: 182px;
+    padding: 16px;
+    height: 115px;
+    box-sizing: border-box;
   }
 
-  & .newsWrapper:nth-child(odd) {
-    background: linear-gradient(90deg, #fff, #f5f8fc);
+  & .newsWrapper:nth-child(even) {
+    background-color: #f8f9fb;
   }
 }
 

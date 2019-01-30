@@ -5,7 +5,7 @@ import moment from 'moment';
 import React from 'react';
 
 import { getCurrencyGraphData } from '../../actions/liskService';
-
+import Box from '../boxV2';
 import Piwik from '../../utils/piwik';
 import EmptyState from '../emptyState';
 import styles from './currencyGraph.css';
@@ -182,17 +182,22 @@ class CurrencyGraph extends React.Component {
     });
 
     return (
-      <div className={`${styles.wrapper}`} >
-        <div className={styles.stepSwitchWrapper}>
-          {steps.map(step => (
-            <span key={step.title}
-              className={`${styles.stepSwitch} ${this.state.step === step ? styles.active : null} step`}
-              onClick={this.setStep.bind(this, step)}>
-              {step.title}
-            </span>
-          ))}
-        </div>
-        <header><h2>{this.props.t('LSK/BTC')}</h2></header>
+      <Box className={`${styles.wrapper}`} >
+        <header>
+          <h1>{this.props.t('Market')}</h1>
+
+          <div className={styles.stepSwitchWrapper}>
+            {
+              steps.map(step => (
+                <span key={step.title}
+                  className={`${styles.stepSwitch} ${this.state.step === step ? styles.active : null} step`}
+                  onClick={this.setStep.bind(this, step)}>
+                  {step.title}
+                </span>))
+            }
+          </div>
+        </header>
+
         <div className={`${styles.chartWrapper} chart-wrapper`} >
           {this.props.liskService.prices ?
             <LineChart
@@ -204,7 +209,7 @@ class CurrencyGraph extends React.Component {
               message={this.props.t('Price data currently not available')} /> :
             null}
         </div>
-      </div>
+      </Box>
     );
   }
 }

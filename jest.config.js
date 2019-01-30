@@ -20,7 +20,7 @@ module.exports = {
     'src/store/middlewares/login.test.js',
     'src/store/reducers/liskService.test.js',
   ],
-  verbose: true,
+  verbose: false,
   cache: false,
   moduleFileExtensions: ['js'],
   moduleDirectories: ['node_modules'],
