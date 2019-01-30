@@ -20,7 +20,7 @@ describe('Wallet Header', () => {
   const props = {
     account: accounts.genesis,
     followedAccounts: [],
-    match: { url: routes.wallet.path },
+    match: { url: routes.walletV2.path },
     address: accounts.genesis.address,
   };
 
@@ -33,6 +33,7 @@ describe('Wallet Header', () => {
   it('Should render Account Info and Request and Send LSK buttons', () => {
     const accountInfo = wrapper.find('.accountInfo');
     expect(accountInfo.text()).to.includes(accounts.genesis.address);
+    expect(wrapper).to.have.descendants('.buttonsHolder');
   });
 
   it('Should render bookmark title instead of Wallet if address is in user bookmark', () => {
