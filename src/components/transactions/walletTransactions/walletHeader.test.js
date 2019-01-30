@@ -8,7 +8,7 @@ import WalletHeader from './walletHeader';
 import routes from '../../../constants/routes';
 import accounts from '../../../../test/constants/accounts';
 
-describe('V2 Header', () => {
+describe('Wallet Header', () => {
   let wrapper;
   const options = {
     context: { i18n },
@@ -33,7 +33,6 @@ describe('V2 Header', () => {
   it('Should render Account Info and Request and Send LSK buttons', () => {
     const accountInfo = wrapper.find('.accountInfo');
     expect(accountInfo.text()).to.includes(accounts.genesis.address);
-    expect(wrapper).to.have.descendants('.buttonsHolder');
   });
 
   it('Should render bookmark title instead of Wallet if address is in user bookmark', () => {
