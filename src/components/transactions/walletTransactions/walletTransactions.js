@@ -1,7 +1,11 @@
 import React from 'react';
-import TransactionsOverviewV2 from '../../transactionsV2/transactionsOverviewV2';
+import MultiStep from './../../multiStep';
+import styles from './../transactions.css';
+import TransactionsOverview from '../transactionsOverview';
+import TransactionDetailView from './../transactionDetailView';
+import Box from './../../box';
 import txFilters from './../../../constants/transactionFilters';
-
+import TransactionsOverviewV2 from '../../transactionsV2/transactionsOverviewV2';
 import routes from './../../../constants/routes';
 
 class WalletTransactions extends React.Component {
@@ -75,9 +79,15 @@ class WalletTransactions extends React.Component {
       onTransactionRowClick: this.onTransactionRowClick.bind(this),
     };
 
-    return (
-      <TransactionsOverviewV2 {...overviewProps} />
-    );
+    // istanbul ignore next
+    return (this.props.match.url !== routes.walletV2.path ?
+        <Box>
+          <MultiStep className={styles.transactions}>
+            <TransactionsOverview {...overviewProps} />
+            <TransactionDetailView {...this.props} />
+          </MultiStep>
+        </Box>
+      : <TransactionsOverviewV2 {...overviewProps} />);
   }
 }
 
