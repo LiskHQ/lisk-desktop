@@ -57,6 +57,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
         confirmed: action.data.confirmed,
         count: action.data.count,
         filter: action.data.filter,
+        customFilters: action.data.customFilters,
       });
     case actionTypes.transactionsLoadFinish:
       return Object.assign({}, state, {

@@ -21,7 +21,7 @@ class TransactionsOverview extends React.Component {
     this.canLoadMore = true;
 
     this.state = {
-      filters: {},
+      customFilters: {},
     };
 
     this.props.onInit();
@@ -62,27 +62,6 @@ class TransactionsOverview extends React.Component {
   setTransactionsFilter(filter) {
     Piwik.trackingEvent('TransactionsOverview', 'button', 'Set transactions filter');
     this.props.onFilterSet(filter);
-  }
-
-  saveFilters(filters) {
-    this.setState({ filters });
-  }
-
-  clearFilter(filterName) {
-    this.setState({
-      filters: {
-        ...this.state.filters,
-        [filterName]: '',
-      },
-    });
-  }
-
-  clearAllFilters() {
-    this.setState({ filters: {} });
-  }
-
-  changeFilters(name, value) {
-    this.setState({ filters: { ...this.state.filters, [name]: value } });
   }
 
   render() { // eslint-disable-line complexity
@@ -168,15 +147,16 @@ class TransactionsOverview extends React.Component {
             ))}
             <li className={`${styles.filters} ${styles.item}`}>
               <FilterButton
-                saveFilters={this.saveFilters.bind(this)}
+                saveFilters={this.props.saveFilters}
+                customFilters={this.props.customFilters}
                 t={this.props.t} />
             </li>
           </ul>
         }
-        {Object.values(this.state.filters).find(filter => filter) ? <FilterBar
-          clearFilter={this.clearFilter.bind(this)}
-          clearAllFilters={this.clearAllFilters.bind(this)}
-          filters={this.state.filters}
+        {Object.values(this.props.customFilters).find(filter => filter) ? <FilterBar
+          clearFilter={this.props.clearFilter}
+          clearAllFilters={this.props.clearAllFilters}
+          customFilters={this.props.customFilters}
           t={this.props.t} /> : null}
         {
           <TransactionsList

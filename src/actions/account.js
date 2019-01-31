@@ -212,7 +212,7 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
     );
 
     if (windowFocus || hasRecentTransactions(transactions)) {
-      const { filter } = transactions;
+      const { filter, customFilters } = transactions;
       const address = transactions.account ? transactions.account.address : account.address;
 
       dispatch(transactionsUpdated({
@@ -220,6 +220,7 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
         address,
         limit: 25,
         filter,
+        customFilters,
       }));
     }
   };

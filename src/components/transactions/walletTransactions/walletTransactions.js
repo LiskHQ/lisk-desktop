@@ -9,10 +9,18 @@ import txFilters from './../../../constants/transactionFilters';
 import routes from './../../../constants/routes';
 
 class WalletTransactions extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      filter: {},
+      customFilters: {},
+    };
+  }
+
   onInit() {
     this.props.transactionsFilterSet({
       address: this.props.account.address,
-      limit: 25,
+      limit: 50,
       filter: txFilters.all,
     });
 
@@ -53,21 +61,58 @@ class WalletTransactions extends React.Component {
   */
   /* istanbul ignore next */
   onFilterSet(filter) {
+    this.setState({ filter });
     if (filter <= 2) {
       this.props.transactionsFilterSet({
         address: this.props.address,
         limit: 25,
         filter,
+        customFilters: this.state.customFilters,
       });
     } else {
       this.props.addFilter({
         filterName: 'wallet',
         value: filter,
+        customFilters: this.state.customFilters,
       });
     }
   }
+
   onTransactionRowClick(props) {
     this.props.history.push(`${routes.wallet.path}?id=${props.value.id}`);
+  }
+
+  saveFilters(customFilters) {
+    this.props.transactionsFilterSet({
+      address: this.props.address,
+      limit: 25,
+      filter: this.props.activeFilter,
+      customFilters,
+    });
+    this.setState({ customFilters });
+  }
+
+  clearFilter(filterName) {
+    this.setState({
+      customFilters: {
+        ...this.state.customFilters,
+        [filterName]: '',
+      },
+    });
+  }
+
+  clearAllFilters() {
+    this.setState({ customFilters: {} });
+    this.props.transactionsFilterSet({
+      address: this.props.address,
+      limit: 25,
+      value: this.state.filter,
+      customFilters: {},
+    });
+  }
+
+  changeFilters(name, value) {
+    this.setState({ customFilters: { ...this.state.customFilters, [name]: value } });
   }
 
   render() {
@@ -77,6 +122,11 @@ class WalletTransactions extends React.Component {
       onLoadMore: this.onLoadMore.bind(this),
       onFilterSet: this.onFilterSet.bind(this),
       onTransactionRowClick: this.onTransactionRowClick.bind(this),
+      saveFilters: this.saveFilters.bind(this),
+      clearFilter: this.clearFilter.bind(this),
+      clearAllFilters: this.clearAllFilters.bind(this),
+      changeFilters: this.changeFilters.bind(this),
+      customFilters: this.state.customFilters,
     };
 
     return (
