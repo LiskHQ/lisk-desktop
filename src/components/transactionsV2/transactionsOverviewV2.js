@@ -5,11 +5,16 @@ import txFilters from '../../constants/transactionFilters';
 import Piwik from '../../utils/piwik';
 import TransactionsListV2 from './transactionsListV2';
 import styles from './transactionsV2.css';
+import routes from '../../constants/routes';
 
 class TransactionsOverview extends React.Component {
   constructor(props) {
     super(props);
     this.canLoadMore = true;
+
+    this.props.onInit();
+
+    this.onTransactionRowClick = this.onTransactionRowClick.bind(this);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -17,12 +22,8 @@ class TransactionsOverview extends React.Component {
     return window.innerWidth <= 768;
   }
 
-  loadMore() {
-    Piwik.trackingEvent('TransactionsOverview', 'button', 'Load more');
-    if (this.canLoadMore) {
-      this.canLoadMore = false;
-      this.props.onLoadMore();
-    }
+  onTransactionRowClick(props) {
+    this.props.history.push(`${routes.transactions.pathPrefix}${routes.transactions.path}/${props.value.id}`);
   }
 
   isActiveFilter(filter) {
@@ -74,18 +75,11 @@ class TransactionsOverview extends React.Component {
           <TransactionsListV2
             followedAccounts={this.props.followedAccounts}
             transactions={this.props.transactions}
-            loadMore={this.loadMore.bind(this)}
             filter={filters[this.props.activeFilter]}
-            delegate={this.props.delegate}
-            votes={this.props.votes}
-            voters={this.props.voters}
-            votersSize={this.props.votersSize}
-            searchMoreVoters={this.props.searchMoreVoters}
             address={this.props.address}
             publicKey={this.props.publicKey}
-            nextStep={this.props.nextStep}
             history={this.props.history}
-            onClick={props => this.props.onTransactionRowClick(props)}
+            onClick={props => this.onTransactionRowClick(props)}
           />
         </React.Fragment>
       </Box>

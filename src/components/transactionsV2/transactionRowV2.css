@@ -5,6 +5,10 @@
   padding: 0 8px;
   padding: 0 0.5em; /* stylelint-disable-line */
 
+  &:hover {
+    cursor: pointer;
+  }
+
   &:nth-child(2n+3) {
     background-color: var(--color-background-menu);
   }

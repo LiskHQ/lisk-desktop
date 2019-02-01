@@ -6,25 +6,8 @@ import TransactionRowV2 from './transactionRowV2';
 import txFilters from '../../constants/transactionFilters';
 import txTypes from '../../constants/transactionTypes';
 import styles from './transactionsListV2.css';
-import { parseSearchParams } from '../../utils/searchParams';
 
 class TransactionsListV2 extends React.Component {
-  componentWillReceiveProps(nextProps) {
-    // istanbul ignore else
-    if (nextProps.transactions && this.props.nextStep) this.showDetails(nextProps.transactions);
-  }
-
-  showDetails(transactions) {
-    const paramsId = parseSearchParams(this.props.history.location.search).id;
-
-    // istanbul ignore else
-    if (paramsId) {
-      const value = transactions.filter(transaction => transaction.id === paramsId)[0];
-      // istanbul ignore else
-      if (value) this.props.nextStep({ value, t: this.props.t });
-    }
-  }
-
   render() { // eslint-disable-line
     const {
       transactions,
@@ -52,7 +35,8 @@ class TransactionsListV2 extends React.Component {
               <TransactionRowV2 key={i}
                 followedAccounts={followedAccounts}
                 address={address}
-                value={transaction} />)
+                value={transaction}
+                onClick={this.props.onClick}/>)
         : <p className={`${styles.empty} empty-message`}>
           {t('There are no transactions.')}
         </p>

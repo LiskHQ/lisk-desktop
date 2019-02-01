@@ -1,71 +1,93 @@
 import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { mountWithContext } from '../../../test/utils/mountHelpers';
+import { mount } from 'enzyme';
+import PropTypes from 'prop-types';
+import configureMockStore from 'redux-mock-store';
+import i18n from '../../i18n';
 import TransactionsOverviewV2 from './transactionsOverviewV2';
-import store from '../../store';
 import accounts from '../../../test/constants/accounts';
+import routes from '../../constants/routes';
 
 describe('TransactionsOverview', () => {
   let wrapper;
-  let props;
-  let onInitSpy;
-  let onLoadMoreSpy;
-  let onFilterSetSpy;
+
+  const peers = {
+    data: {},
+    options: {},
+    liskAPIClient: {},
+  };
+
+  const transactions = [{
+    id: '11327666066806006572',
+    type: 0,
+    timestamp: 15647029,
+    senderId: '5201600508578320196L',
+    recipientId: accounts.genesis.address,
+    amount: 69550000000,
+    fee: 10000000,
+    confirmations: 4314504,
+    address: '12345678L',
+    asset: {},
+  }];
+
+  const store = configureMockStore([])({
+    peers,
+    account: accounts.genesis,
+    followedAccounts: {
+      accounts: [],
+    },
+  });
+
+  const props = {
+    t: data => data,
+    address: accounts.genesis.address,
+    onInit: spy(),
+    onLoadMore: spy(),
+    onFilterSet: spy(),
+    match: { url: routes.walletV2.path },
+    account: accounts.genesis,
+    followedAccounts: [],
+    transactions,
+    peers,
+    history: {
+      push: spy(),
+    },
+  };
+
+  const options = {
+    context: {
+      store, i18n,
+    },
+    childContextTypes: {
+      store: PropTypes.object.isRequired,
+      i18n: PropTypes.object.isRequired,
+    },
+  };
 
   beforeEach(() => {
-    window.innerWidth = 200;
-    props = {
-      t: () => {},
-      loading: [],
-      peers: {
-        liskAPIClient: {},
-      },
-      transactions: [{ id: '13395546734664987127' }],
-      count: 1000,
-      address: accounts.genesis.address,
-      onInit: () => {},
-      onLoadMore: () => {},
-      onFilterSet: () => {},
-      match: { url: '/wallet' },
-    };
-    store.getState = () => ({
-      followedAccounts: { accounts: [] },
-      peers: { status: {}, options: {}, liskAPIClient: {} },
-      transactions: {
-        confirmed: [],
-      },
-      account: {
-        address: accounts.genesis.address,
-      },
-      search: {},
-    });
-    onInitSpy = spy(props, 'onInit');
-    onLoadMoreSpy = spy(props, 'onLoadMore');
-    onFilterSetSpy = spy(props, 'onFilterSet');
-    wrapper = mountWithContext(
-      <TransactionsOverviewV2 {...props} store={store} />,
-      { storeState: store },
-    );
+    wrapper = mount(<TransactionsOverviewV2 {...props}/>, options);
   });
 
-  it('should render Waypoint on smallScreen', () => {
-    expect(wrapper).to.have.descendants('Waypoint');
+  it('should call history.push on rowClick', () => {
+    const expectedPath = `${routes.transactions.pathPrefix}${routes.transactions.path}/${transactions[0].id}`;
+    wrapper.find('.transactions-row').first().simulate('click');
+    expect(props.history.push).to.have.been.calledWith(expectedPath);
   });
 
-  /* eslint-disable no-unused-expressions */
   it('should call onInit on constructor call', () => {
-    expect(onInitSpy).to.have.been.calledOnce;
-  });
-
-  it('should call onLoadMore when Waypoint reached', () => {
-    wrapper.find('Waypoint').props().onEnter();
-    expect(onLoadMoreSpy).to.have.been.calledOnce;
+    expect(props.onInit).to.have.been.calledWith();
   });
 
   it('should call onFilterSet when filtering transations', () => {
     wrapper.find('.transaction-filter-item').first().simulate('click');
-    expect(onFilterSetSpy).to.have.been.calledOnce;
+    expect(props.onFilterSet).to.have.been.calledWith();
   });
-  /* eslint-enable no-unused-expressions */
+
+  it('should render with shortname when screen is small', () => {
+    window.innerWidth = 200;
+    wrapper = mount(<TransactionsOverviewV2 {...props}/>, options);
+    expect(wrapper.find('.filter-in')).to.have.text('In');
+    expect(wrapper.find('.filter-out')).to.have.text('Out');
+  });
 });

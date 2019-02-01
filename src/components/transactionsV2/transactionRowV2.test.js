@@ -43,8 +43,7 @@ describe('TransactionRow', () => {
   it('should render 5 columns', () => {
     const wrapper = mount(<Router>
         <TransactionRowV2
-          {...props}
-          nextStep={() => {}} />
+          {...props} />
       </Router>, options);
 
     expect(wrapper.find('.transactions-cell')).to.have.lengthOf(5);
@@ -63,9 +62,27 @@ describe('TransactionRow', () => {
     rowData.confirmations = undefined;
     const wrapper = mount(<Router>
         <TransactionRowV2
-          {...props}
-          nextStep={() => {}} />
+          {...props} />
       </Router>, options);
-    expect(wrapper.find('.spinner')).to.have.lengthOf(1);
+    expect(wrapper).to.have.exactly(1).descendants('.spinner');
+  });
+
+  it('should hide Spinner after first confirmation', () => {
+    rowData.confirmations = undefined;
+    const wrapper = mount(<Router>
+        <TransactionRowV2
+          {...props} />
+      </Router>, options);
+    expect(wrapper).to.have.exactly(1).descendants('.spinner');
+    wrapper.setProps({
+      children: React.cloneElement(wrapper.props().children, {
+        value: {
+          ...props.value,
+          confirmations: 800,
+        },
+      }),
+    });
+    wrapper.update();
+    expect(wrapper).to.not.have.descendants('.spinner');
   });
 });

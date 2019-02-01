@@ -2,25 +2,14 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
-import { BrowserRouter as Router } from 'react-router-dom';
-import configureMockStore from 'redux-mock-store';
+import { MemoryRouter as Router } from 'react-router-dom';
 import TransactionTypeV2 from './transactionTypeV2';
-import history from '../../history';
 import i18n from '../../i18n';
 
-const store = configureMockStore([])({
-  peers: {
-    liskAPIClient: {},
-  },
-  account: {},
-});
-
 const options = {
-  context: { i18n, store, history },
+  context: { i18n },
   childContextTypes: {
-    store: PropTypes.object.isRequired,
     i18n: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
   },
 };
 
@@ -60,9 +49,11 @@ const createTest = (type) => {
     const inputValue = {
       type,
       senderId: '1085993630748340485L',
+      showTransaction: true,
+      followedAccounts: [],
     };
     const wrapper = mount(<Router><TransactionTypeV2 {...inputValue} /></Router>, options);
-    expect(wrapper.find('span').text()).to.be.equal(expectedValue);
+    expect(wrapper.find('.title')).to.have.text(expectedValue);
   });
 };
 
@@ -76,6 +67,7 @@ it('sets TransactionType equal the values of "props.senderId"', () => {
   const inputValue = {
     type: 0,
     senderId: '1085993630748340485L',
+    followedAccounts: [],
   };
   const wrapper = mount(<Router><TransactionTypeV2 {...inputValue} /></Router>, options);
   expect(wrapper.text()).to.equal(inputValue.senderId);
