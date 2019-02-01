@@ -6,7 +6,7 @@ import AmountV2 from './amountV2';
 import i18n from '../../i18n';
 
 
-describe('Amount', () => {
+describe('Amount V2', () => {
   it('should have className "greenLabel" for type 0', () => {
     const props = {
       value: {

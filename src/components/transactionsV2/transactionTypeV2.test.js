@@ -57,7 +57,7 @@ const createTest = (type) => {
   });
 };
 
-describe('TransactionType', () => {
+describe('TransactionType V2', () => {
   for (let i = 1; i < 8; i++) {
     createTest(i);
   }

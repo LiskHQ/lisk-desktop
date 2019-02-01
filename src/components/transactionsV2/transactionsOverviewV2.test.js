@@ -9,7 +9,7 @@ import TransactionsOverviewV2 from './transactionsOverviewV2';
 import accounts from '../../../test/constants/accounts';
 import routes from '../../constants/routes';
 
-describe('TransactionsOverview', () => {
+describe('TransactionsOverview V2', () => {
   let wrapper;
 
   const peers = {

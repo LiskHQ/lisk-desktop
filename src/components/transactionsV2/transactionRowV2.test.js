@@ -8,7 +8,7 @@ import accounts from '../../../test/constants/accounts';
 import TransactionRowV2 from './transactionRowV2';
 import history from '../../history';
 
-describe('TransactionRow', () => {
+describe('TransactionRow V2', () => {
   const rowData = {
     id: '1038520263604146911',
     height: 5,
