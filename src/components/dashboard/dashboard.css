@@ -32,6 +32,11 @@
     height: 240px;
     overflow: hidden;
   }
+
+  & > p {
+    margin: auto;
+    padding: 0;
+  }
 }
 
 .bottomModuleWrapper {
@@ -52,6 +57,7 @@
 .following {
   height: auto;
   padding: 0;
+  width: calc(50% - 10px);
 }
 
 .newsFeedWrapper {

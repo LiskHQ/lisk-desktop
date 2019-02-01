@@ -23,6 +23,10 @@
   }
 }
 
+.cellAddress {
+  min-width: 140px;
+}
+
 .reference {
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -32,10 +36,13 @@
 
 .date {
   color: #868ba1;
+  min-width: 70px;
 }
 
 .amount {
   color: var(--color-content-light);
+  min-width: 70px;
+  text-align: right;
 
   & > span:last-child {
     margin-left: 5px;

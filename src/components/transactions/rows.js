@@ -20,7 +20,7 @@ class Row extends React.Component {
         className={`${styles.row} transactions-row`}
         onClick={onClick}
       >
-        <div className={'transactions-cell'}>
+        <div className={`${styles.cellAddress} transactions-cell`}>
           <div className={'transaction-address'}>
             <TransactionType {...props.value} address={props.address}></TransactionType>
           </div>

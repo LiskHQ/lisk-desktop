@@ -1,4 +1,5 @@
 @import '../app/variables.css';
+@import '../app/variablesV2.css';
 
 :root {
   --amount-negative-color: var(--color-grayscale-dark);
@@ -23,7 +24,6 @@
 
 .followedAccountsWrapper {
   height: auto;
-  min-height: 428px;
 
   @media (--medium-viewport) {
     min-height: 398px;
@@ -40,35 +40,43 @@
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  height: 410px;
+  height: 327px;
   box-sizing: border-box;
 
-  & > header {
-    box-sizing: border-box;
-    padding: 20px 48px 0;
-  }
-
   & > div {
-    padding: 0 48px;
+    padding: 0 16px;
     box-sizing: border-box;
   }
 
   & > footer {
-    padding: 0 48px 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     box-sizing: border-box;
+    padding: 0 16px 20px;
+
+    & > div > button {
+      font-size: 12px;
+      min-height: 32px;
+    }
+
+    & > div {
+      width: calc(50% - 10px);
+    }
   }
 }
 
 header {
   & .edit {
     height: 40px;
-    min-width: 120px;
+    min-width: 60px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     color: var(--color-primary-standard);
     font-weight: var(--font-weight-bold);
-    font-size: 14px;
+    font-size: 12px;
     float: right;
 
     & > span:last-child {
@@ -82,9 +90,7 @@ header {
 }
 
 .bookmarkHeader {
-  padding: 20px 48px 0;
-  box-sizing: border-box;
-  height: 119px;
+  justify-content: space-between !important;
 }
 
 .addAccountLink {
@@ -93,18 +99,36 @@ header {
   font-size: 15px;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 208px;
+  height: auto;
+  box-sizing: border-box;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--content-font);
+}
+
 .emptyList {
-  padding: 0 48px;
+  padding: 0 16px;
 
   & p {
     color: var(--color-grayscale-dark);
-    font-size: 16px;
-    line-height: 26px;
+    font-size: 12px;
   }
+}
 
-  & .addAccountLink {
-    position: absolute;
-    bottom: 32px;
+.addBookmarkBtn {
+  margin-top: 25px;
+
+  & > button {
+    width: 100%;
+    height: 32px;
+    min-height: 32px;
+    font-size: 12px;
   }
 }
 

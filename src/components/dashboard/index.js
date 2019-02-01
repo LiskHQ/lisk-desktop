@@ -5,7 +5,6 @@ import { translate } from 'react-i18next';
 import React from 'react';
 import throttle from 'lodash.throttle';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Box from '../box';
 import BoxV2 from '../boxV2';
 import { loadTransactions } from '../../actions/transactions';
 import TransactionsList from '../transactions/transactionsList';
@@ -129,14 +128,12 @@ class Dashboard extends React.Component {
                     text={this.state.showMore ? t('Show Less') : t('Show More')}
                   />
                 }
-              </BoxV2>
+                </BoxV2>
               : <QuickTips />
             }
             <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>
-              <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingLeft: '0px' }}>
-                <Box className={`${styles.following} bookmarks`}>
-                  <FollowedAccounts history={history}/>
-                </Box>
+              <div className={`${styles.following} bookmarks`}>
+                <FollowedAccounts history={history}/>
               </div>
               <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingRight: '0px' }}>
                 <div className={`${styles.graph}`}>
