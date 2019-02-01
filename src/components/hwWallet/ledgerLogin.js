@@ -54,6 +54,8 @@ class LedgerLogin extends React.Component {
         derivationIndex: index,
       },
     });
+
+    this.props.history.push(`${routes.dashboard.path}`);
   }
 
   async addAccount() {
