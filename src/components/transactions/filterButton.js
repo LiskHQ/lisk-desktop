@@ -23,10 +23,8 @@ class FilterButton extends React.Component {
       amountToValidity: '',
       amountFromValidity: '',
     };
-  }
-
-  toggleFilters() {
-    this.setState({ showFilters: !this.state.showFilters, customFilters: {} });
+    this.toggleFilters = this.toggleFilters.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
   changeFilters(name, value) {
@@ -44,12 +42,36 @@ class FilterButton extends React.Component {
 
   saveFilters() {
     const customFilters = this.state.customFilters;
-    this.setState({ showFilters: false, customFilters: {} });
+    this.setState({
+      showFilters: false,
+      customFilters: {
+        dateFrom: '',
+        dateTo: '',
+        amountFrom: '',
+        amountTo: '',
+        message: '',
+      },
+    });
     this.props.saveFilters(customFilters);
   }
 
+  toggleFilters() {
+    if (!this.state.showFilters) {
+      document.addEventListener('click', this.handleClickOutside, false);
+    } else {
+      document.removeEventListener('click', this.handleClickOutside, false);
+    }
+
+    this.setState(prevState => ({ showFilters: !prevState.showFilters }));
+  }
+
+  // istanbul ignore next
+  handleClickOutside(e) {
+    if (this.dropdownRef && this.dropdownRef.contains(e.target)) return;
+    this.toggleFilters();
+  }
+
   render() {
-    console.log('filterButton', this.state.customFilters, this.state.customFilters.message);
     return (
       <div>
         <div
@@ -58,7 +80,9 @@ class FilterButton extends React.Component {
             {this.props.t('Filter Transactions')}
         </div>
         <DropdownV2 showDropdown={this.state.showFilters}>
-          <form className={styles.container} onSubmit={this.handleSubmit}>
+          <div
+            className={styles.container}
+            ref={(node) => { this.dropdownRef = node; }}>
             {/* <div className={styles.triangleBorder}></div>
             <div className={styles.triangle}></div> */}
             <div className={styles.label}>{this.props.t('Date')}</div>
@@ -126,7 +150,7 @@ class FilterButton extends React.Component {
                 className={styles.saveButton}
                 onClick={this.saveFilters.bind(this)}>{this.props.t('Apply Filters')}</Button>
             </div>
-          </form>
+          </div>
         </DropdownV2>
       </div>);
   }

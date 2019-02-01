@@ -153,7 +153,8 @@ class TransactionsOverview extends React.Component {
             </li>
           </ul>
         }
-        {Object.values(this.props.customFilters).find(filter => filter) ? <FilterBar
+        {this.props.customFilters &&
+          Object.values(this.props.customFilters).find(filter => filter) ? <FilterBar
           clearFilter={this.props.clearFilter}
           clearAllFilters={this.props.clearAllFilters}
           customFilters={this.props.customFilters}
