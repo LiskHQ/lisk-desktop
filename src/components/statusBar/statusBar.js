@@ -19,9 +19,10 @@ class StatusBar extends React.Component {
     const { autoLogout, account } = this.props;
 
     return autoLogout &&
-    account.expireTime &&
-    account.expireTime !== 0 &&
-    account.passphrase.length > 0;
+      account.expireTime &&
+      account.expireTime !== 0 &&
+      account.passphrase &&
+      account.passphrase.length > 0;
   }
 
 
