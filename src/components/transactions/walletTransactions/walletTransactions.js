@@ -83,18 +83,19 @@ class WalletTransactions extends React.Component {
     return (
       <React.Fragment>
         { // istanbul ignore next
-        this.props.match.url === routes.walletV2.path && (
+        this.props.match.url === routes.walletV2.path ? (
           <React.Fragment>
             <WalletHeader {...this.props} />
             <TransactionsOverviewV2 {...overviewProps} />
           </React.Fragment>
+        ) : (
+          <Box>
+            <MultiStep className={styles.transactions}>
+              <TransactionsOverview {...overviewProps} />
+              <TransactionDetailView {...this.props} />
+            </MultiStep>
+          </Box>
         )}
-        <Box>
-          <MultiStep className={styles.transactions}>
-            <TransactionsOverview {...overviewProps} />
-            <TransactionDetailView {...this.props} />
-          </MultiStep>
-        </Box>
       </React.Fragment>
     );
   }
