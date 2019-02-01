@@ -101,32 +101,30 @@ class TransactionsOverview extends React.Component {
 
     return (
       <div className={`transactions ${styles.activity}`}>
-        { this.props.match.url !== Ulrs.walletV2.path &&
-          <header>
-            <h2 className={`${styles.title}`}>
-            {this.props.t('Transaction')}
-            {
-              hasTitle && (<span>{this.props.t(' of')} <span className={`${styles.accountTitle} account-title`}>{accountTitle}</span></span>)
-            }
-            </h2>
-            {
-              this.props.match.url === Ulrs.wallet.path &&
-              (
-                <div className={`${styles.headerButtons}`}>
-                  <Link to={`${Ulrs.request.path}`} className={'help-onboarding tx-receive-bt'}>
-                    <FontIcon>request-token</FontIcon>
-                    {this.props.t('Request')}
-                  </Link>
-                  <Link to={`${Ulrs.send.path}?wallet`} className={'tx-send-bt'}>
-                    <ActionButton>
-                    {this.props.t('Send')}
-                    </ActionButton>
-                  </Link>
-                </div>
-              )
-            }
-          </header>
-        }
+        <header>
+          <h2 className={`${styles.title}`}>
+          {this.props.t('Transaction')}
+          {
+            hasTitle && (<span>{this.props.t(' of')} <span className={`${styles.accountTitle} account-title`}>{accountTitle}</span></span>)
+          }
+          </h2>
+          {
+            this.props.match.url === Ulrs.wallet.path &&
+            (
+              <div className={`${styles.headerButtons}`}>
+                <Link to={`${Ulrs.request.path}`} className={'help-onboarding tx-receive-bt'}>
+                  <FontIcon>request-token</FontIcon>
+                  {this.props.t('Request')}
+                </Link>
+                <Link to={`${Ulrs.send.path}?wallet`} className={'tx-send-bt'}>
+                  <ActionButton>
+                  {this.props.t('Send')}
+                  </ActionButton>
+                </Link>
+              </div>
+            )
+          }
+        </header>
         {this.shouldShowEmptyState() ?
           <EmptyState title={this.props.t('No transactions yet')}
             message={this.props.t('The Wallet will show your recent transactions.')} /> :
