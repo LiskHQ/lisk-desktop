@@ -50,9 +50,6 @@ describe('autoUpdater', () => {
   beforeEach(() => {
     callbacks = {};
     params = {
-      process: {
-        platform: 'darwin',
-      },
       autoUpdater: {
         checkForUpdates: spy(),
         on: (name, callback) => {
@@ -88,18 +85,13 @@ describe('autoUpdater', () => {
     expect(params.autoUpdater.checkForUpdates).to.have.been.calledWithExactly();
   });
 
-  it('should check for updates every 24 hours if platform is not linux', () => {
+  it('should check for updates every 24 hours', () => {
     autoUpdater(params);
     expect(params.autoUpdater.checkForUpdates).to.have.callCount(1);
     clock.tick(24 * 60 * 60 * 1000);
     expect(params.autoUpdater.checkForUpdates).to.have.callCount(2);
     clock.tick(24 * 60 * 60 * 1000);
     expect(params.autoUpdater.checkForUpdates).to.have.callCount(3);
-
-    params.autoUpdater.checkForUpdates.reset();
-    params.process.platform = 'linux';
-    autoUpdater(params);
-    expect(params.autoUpdater.checkForUpdates).to.have.callCount(0);
   });
 
   it('should show error box when there was an error', () => {

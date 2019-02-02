@@ -2,19 +2,17 @@ import i18n from './../i18n';
 import updateModal from './updateModal';
 
 export default ({ // eslint-disable-line max-statements
-  autoUpdater, dialog, win, process, electron,
+  autoUpdater, dialog, win, electron,
 }) => {
   const updater = {
     menuItem: { enabled: true },
   };
   autoUpdater.autoDownload = false;
 
-  if (process.platform !== 'linux') {
+  autoUpdater.checkForUpdates();
+  setInterval(() => {
     autoUpdater.checkForUpdates();
-    setInterval(() => {
-      autoUpdater.checkForUpdates();
-    }, 24 * 60 * 60 * 1000);
-  }
+  }, 24 * 60 * 60 * 1000);
 
   autoUpdater.on('error', (error) => {
     // eslint-disable-next-line no-console

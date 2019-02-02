@@ -43,6 +43,7 @@ pipeline {
 						archiveArtifacts artifacts: 'app/build/'
 						archiveArtifacts artifacts: 'app/build-testnet/'
 						archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/lisk-hub*'
+						archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/latest-linux.yml'
 						stash includes: 'app/build/', name: 'build'
 					}
 				)
