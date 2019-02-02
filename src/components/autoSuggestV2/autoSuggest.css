@@ -134,6 +134,10 @@
     right: 0;
   }
 
+  .placeholder {
+    left: 22px;
+  }
+
   .input {
     & input {
       padding-left: 21px;
