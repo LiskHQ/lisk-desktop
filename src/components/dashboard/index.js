@@ -21,6 +21,8 @@ import fees from './../../constants/fees';
 import ShowMore from '../showMore';
 import { SecondaryLightButton } from '../toolbox/buttons/button';
 import Banner from '../toolbox/banner/banner';
+import ExtensionPoint from '../extensionPoint';
+import LiskHubExtensions from '../../utils/liskHubExtensions';
 
 import styles from './dashboard.css';
 
@@ -138,17 +140,20 @@ class Dashboard extends React.Component {
                 <Box className={`${styles.following} bookmarks`}>
                   <FollowedAccounts history={history}/>
                 </Box>
+                <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn1} />
               </div>
               <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingRight: '0px' }}>
                 <Box className={`${styles.graph}`}>
                   <CurrencyGraph />
                 </Box>
+                <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn2} />
               </div>
             </div>
             {
               !this.state.isDesktop &&
               <div className={`${grid['col-md-4']} ${grid['col-xs-12']} ${styles.newsFeedWrapper}`}>
                 <NewsFeed />
+                <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn3} />
               </div>
             }
           </div>
@@ -156,6 +161,7 @@ class Dashboard extends React.Component {
             this.state.isDesktop &&
             <div className={`${grid['col-md-4']} ${grid['col-xs-12']} ${styles.newsFeedWrapper}`}>
               <NewsFeed />
+              <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn3} />
             </div>
           }
         </div>
