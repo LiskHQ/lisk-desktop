@@ -44,3 +44,19 @@ if (module.hot) {
 applyDeviceClass(document.getElementsByTagName('html')[0], navigator);
 
 window.LiskHubExtensions = LiskHubExtensions;
+
+/*
+ * TODO all code below this point is a sample extensions 
+ * that should be loaded by the "Add extension " page as a separate <script>
+ */
+const HelloWorldModule = props => <div style={{ marginTop: 20 }} > {/* TODO avoid the style here */}
+  <LiskHubExtensions.Components.Box>
+    <h2> {props.t('Hello Lisk Hub Extensions!')} </h2>
+    <LiskHubExtensions.Components.Button label={props.t('Sample Button')} />
+  </LiskHubExtensions.Components.Box>
+</div>;
+
+LiskHubExtensions.addModule({
+  identifier: LiskHubExtensions.identifiers.dashboardColumn1,
+  component: HelloWorldModule,
+});
