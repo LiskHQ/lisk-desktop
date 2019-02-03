@@ -12,6 +12,7 @@ import proxyLogin from './utils/proxyLogin';
 import externalLinks from './utils/externalLinks';
 import env from './constants/env';
 import ipcLocale from './utils/ipcLocale';
+import LiskHubExtensions from './utils/liskHubExtensions';
 
 if (env.production) {
   proxyLogin.init();
@@ -42,3 +43,4 @@ if (module.hot) {
 
 applyDeviceClass(document.getElementsByTagName('html')[0], navigator);
 
+window.LiskHubExtensions = LiskHubExtensions;
