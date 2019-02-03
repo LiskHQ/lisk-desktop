@@ -61,7 +61,7 @@
 
 @media (--medium-viewport) {
   .wrapper {
-    min-height: 300px;
+    min-height: 327px;
 
     & header {
       padding: 20px var(--box-padding-left-M) 0 var(--box-padding-left-M);

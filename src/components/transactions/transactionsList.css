@@ -39,3 +39,7 @@
 .onShowMore {
   height: auto !important;
 }
+
+.onBarEnabled {
+  margin-bottom: 0 !important;
+}

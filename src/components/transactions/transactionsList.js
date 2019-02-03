@@ -89,7 +89,7 @@ class TransactionsList extends React.Component {
         searchMoreVoters={this.props.searchMoreVoters} />;
     }
 
-    return <div className={`${styles.results} ${showMore && styles.onShowMore} transaction-results`}>
+    return <div className={`${styles.results} ${this.props.isBarEnabledTransactions ? styles.onBarEnabled : ''} ${showMore && styles.onShowMore} transaction-results`}>
       {
         transactions
         .filter(fixIncomingFilter)

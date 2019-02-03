@@ -36,9 +36,9 @@
 }
 
 .container {
-  min-height: 690px;
+  min-height: 578px;
   overflow: hidden;
-  height: 690px;
+  height: 578px;
 
   & .newsWrapper {
     padding: 16px;
@@ -77,11 +77,6 @@
   .container {
     min-height: 500px;
     height: 587px;
-
-    & .newsWrapper {
-      padding: 0 32px;
-      height: 147px;
-    }
   }
 }
 

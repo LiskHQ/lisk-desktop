@@ -62,14 +62,14 @@ class AddAccountID extends React.Component {
           />
         </div>
         <footer>
-          <div className={'cancel'}>
+          <div>
             <SecondaryButtonV2
               label={this.props.t('Cancel')}
               className={`${styles.cancelButton} cancel`}
               onClick={() => this.onPrevStep()}
             />
           </div>
-          <div className={'next'}>
+          <div>
             <PrimaryButtonV2
               label={this.props.t('Next')}
               className='next'

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import BoxV2 from '../boxV2';
 import AccountVisual from '../accountVisual/index';
 import LiskAmount from '../liskAmount/index';
@@ -55,6 +54,8 @@ class ViewAccounts extends React.Component {
       accounts,
     } = this.props;
 
+    const showBar = accounts.length > 5;
+
     return (
       <BoxV2>
         <header className={`${styles.bookmarkHeader}`}>
@@ -82,23 +83,23 @@ class ViewAccounts extends React.Component {
         <div className={`${styles.container}`}>
         {
           accounts.length
-          ? <div className={`${styles.accounts} ${this.state.showMore && styles.showMoreToggle} followed-accounts-list`}>
+          ? <div className={`${styles.accounts} ${showBar ? styles.onShowBar : ''} ${this.state.showMore ? styles.showMoreToggle : ''} followed-accounts-list`}>
               <div className={styles.list}>
                 {
                   accounts.map((account, i) =>
                   (<div
                     key={i}
-                    className={`${grid.row} ${styles.rows} ${styles.clickable} followed-account`}
+                    className={`${styles.rows} ${styles.clickable} followed-account`}
                     onClick={() => this.onFollowedAccount(account)}
                   >
-                    <div className={`${styles.leftText} ${grid['col-md-2']}`}>
+                    <div className={''}>
                       <AccountVisual
                         className={styles.accountVisual}
                         address={account.address}
-                        size={43}
-                      />
+                        size={35}/>
                     </div>
-                    <div className={`${styles.rightText} ${styles.accountInformation} ${grid['col-md-10']}`}>
+
+                    <div className={`${styles.accountInformation}`}>
                       <div className={this.state.edit ? styles.editMode : null}>
                         <div className={`${styles.balance} followed-account-balance`}>
                           <LiskAmount val={account.balance} /> <span>LSK</span>
@@ -144,7 +145,7 @@ class ViewAccounts extends React.Component {
         }
         </div>
         {
-          accounts.length > 4 &&
+          accounts.length > 5 &&
           <ShowMore
             className={`${styles.showMore} show-more`}
             onClick={() => this.onShowMoreToggle()}

@@ -24,10 +24,6 @@
 
 .followedAccountsWrapper {
   height: auto;
-
-  @media (--medium-viewport) {
-    min-height: 398px;
-  }
 }
 
 .cancelButton {
@@ -40,12 +36,34 @@
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  height: 327px;
+  height: 318px;
   box-sizing: border-box;
 
   & > div {
     padding: 0 16px;
     box-sizing: border-box;
+  }
+
+  & div > div {
+    font-family: var(--content-font) !important;
+  }
+
+  & > div > div > input {
+    font-size: 12px !important;
+    font-weight: 600;
+    color: var(--color-content-light) !important;
+  }
+
+  & > div > div > label {
+    font-size: 15px !important;
+    font-weight: 600;
+    color: var(--color-content-light) !important;
+  }
+
+  & > div > div > span:last-child {
+    font-size: 12px !important;
+    font-weight: 400;
+    color: var(--color-error) !important;
   }
 
   & > footer {
@@ -135,20 +153,21 @@ header {
 .accounts {
   width: 100%;
   overflow: hidden;
-  height: 279px;
+  height: 240px;
+  margin-bottom: 30px;
 
   & .list {
     overflow-y: initial;
 
     & .rows {
+      height: 60px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
       color: var(--amount-negative-color);
-      border-bottom: 0;
-      border-top: 0;
-      margin-right: 0;
-      margin-left: 0;
-      line-height: var(--main-row-line-height);
-      white-space: nowrap;
-      padding: 0 48px;
+      margin: 0;
+      padding: 0 16px;
 
       &:nth-of-type(even) {
         background: var(--row-background-color);
@@ -164,41 +183,45 @@ header {
 
       & .accountInformation {
         font-weight: var(--font-weight-bold);
-        line-height: 25px;
-        margin: auto;
+        width: calc(100% - 40px);
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
 
         & .balance {
           color: var(--color-black);
-          font-size: 16px;
+          font-size: 12px;
+          text-align: right;
         }
 
         & .title {
           color: var(--color-grayscale-medium);
-          font-size: 14px;
+          font-size: 12px;
           padding: 0px;
         }
 
         & .title input {
           color: var(--color-grayscale-medium);
           font-weight: var(--font-weight-bold);
-          font-size: 14px;
+          font-size: 12px;
           text-align: right;
         }
 
         & .title input:disabled {
           opacity: 1;
           border: none;
+          padding: 0;
         }
 
         & .editMode {
-          padding-right: 10px;
-          display: inline-block;
-          vertical-align: middle;
+          margin-right: 10px;
+          width: 75%;
 
           & .balance {
             color: var(--color-grayscale-medium);
             font-weight: var(--font-weight-bold);
-            font-size: 14px;
+            font-size: 12px;
           }
         }
 
@@ -225,12 +248,16 @@ header {
 }
 
 @media (--medium-viewport) {
+  .followedAccountsWrapper {
+    min-height: 318px;
+  }
+
   .addAccount {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-    height: 398px;
+    height: 318px;
     box-sizing: border-box;
 
     & > div {
@@ -267,6 +294,10 @@ header {
       }
     }
   }
+}
+
+.onShowBar {
+  margin-bottom: 0;
 }
 
 .showMoreToggle {

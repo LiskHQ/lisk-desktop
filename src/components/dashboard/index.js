@@ -79,6 +79,7 @@ class Dashboard extends React.Component {
     } = this.props;
 
     const isLoggedIn = account.address;
+    const isBarEnabledTransactions = transactions.length > 4;
 
     return (
       <React.Fragment>
@@ -117,11 +118,12 @@ class Dashboard extends React.Component {
                   loading,
                   onClick: props => history.push(`${routes.wallet.path}?id=${props.value.id}`),
                   showMore: this.state.showMore,
+                  isBarEnabledTransactions,
                   t,
                   transactions,
                 }} />
                 {
-                  transactions.length > 3 &&
+                  isBarEnabledTransactions &&
                   <ShowMore
                     className={styles.showMore}
                     onClick={() => this.onShowMoreToggle()}
