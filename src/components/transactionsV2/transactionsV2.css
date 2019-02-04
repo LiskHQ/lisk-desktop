@@ -1,0 +1,119 @@
+@import '../app/variablesV2.css';
+
+.transactions {
+  background: var(--color-white);
+  border-radius: var(--border-radius-standard);
+  box-shadow: var(--box-shadow-transaction-table);
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  margin-bottom: 40px;
+  min-height: 600px;
+  overflow: auto;
+  overflow-x: hidden;
+  padding: 0;
+}
+
+.txFilters {
+  background-color: var(--color-background-menu);
+  border-bottom: 1px solid var(--color-light-gray);
+  display: flex;
+  height: 50px;
+  list-style: none;
+  margin: 0 -1px;
+  padding: 0;
+
+  & > li {
+    align-items: center;
+    border-bottom: 1px solid var(--color-light-gray);
+    border-left: 1px solid var(--color-background-menu);
+    border-right: 1px solid var(--color-background-menu);
+    color: var(--color-content-grayblue);
+    cursor: pointer;
+    display: flex;
+    font-family: var(--heading-font);
+    font-size: var(--paragraph-font-size-s);
+    font-weight: var(--font-weight-bold);
+    justify-content: center;
+    margin-bottom: -1px;
+    padding: 16px;
+    position: relative;
+
+    &::before {
+      background-color: var(--color-light-gray);
+      content: '';
+      height: 16px;
+      left: -1px;
+      position: absolute;
+      width: 1px;
+    }
+
+    &:first-child,
+    &.active {
+      &::before {
+        display: none;
+      }
+    }
+
+    &.active {
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-white);
+      border-left: 1px solid var(--color-light-gray);
+      border-right: 1px solid var(--color-light-gray);
+      color: #4c4c4c;
+
+      & + li::before {
+        display: none;
+      }
+    }
+  }
+}
+
+.txDetails {
+  &.delegateVote {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    & > span {
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+
+  & .label {
+    display: inline;
+  }
+}
+
+.amountLabel {
+  font-family: var(--heading-font);
+  font-size: var(--paragraph-font-size-l);
+  font-weight: var(--font-weight-bold);
+
+  &.greyLabel {
+    color: var(--color-content-light);
+  }
+
+  &.greenLabel {
+    color: #00b262;
+  }
+}
+
+@media (--medium-viewport) {
+  .txDetails {
+    &.delegateVote {
+      & > span {
+        margin-right: 20%;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    & .label {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,49 @@
+@import '../app/variablesV2.css';
+
+.transactionType {
+  align-items: center;
+  display: flex;
+
+  & .icon {
+    display: block;
+    height: 24px;
+    margin-right: 24px;
+    width: 24px;
+  }
+
+  & .info {
+    display: flex;
+
+    & > .avatar {
+      margin-right: 24px;
+    }
+
+    & > .accountInfo {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+    }
+  }
+
+  & .title {
+    color: var(--color-content-light);
+    display: block;
+    font-family: var(--heading-font);
+    font-size: var(--paragraph-font-size-l);
+    font-weight: var(--font-weight-bold);
+  }
+}
+
+@media (--medium-viewport) {
+  .transactionType {
+    & .icon {
+      display: none;
+    }
+
+    & .info {
+      & > .avatar {
+        display: none;
+      }
+    }
+  }
+}
