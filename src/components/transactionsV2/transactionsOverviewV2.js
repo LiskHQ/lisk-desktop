@@ -5,7 +5,6 @@ import txFilters from '../../constants/transactionFilters';
 import Piwik from '../../utils/piwik';
 import TransactionsListV2 from './transactionsListV2';
 import styles from './transactionsV2.css';
-import routes from '../../constants/routes';
 
 class TransactionsOverview extends React.Component {
   constructor(props) {
@@ -13,18 +12,11 @@ class TransactionsOverview extends React.Component {
     this.canLoadMore = true;
 
     this.props.onInit();
-
-    this.onTransactionRowClick = this.onTransactionRowClick.bind(this);
   }
 
   // eslint-disable-next-line class-methods-use-this
   isSmallScreen() {
     return window.innerWidth <= 768;
-  }
-
-  onTransactionRowClick(props) {
-    const transactionPath = `${routes.transactions.pathPrefix}${routes.transactions.path}/${props.value.id}`;
-    this.props.history.push(transactionPath);
   }
 
   isActiveFilter(filter) {
@@ -80,7 +72,7 @@ class TransactionsOverview extends React.Component {
             address={this.props.address}
             publicKey={this.props.publicKey}
             history={this.props.history}
-            onClick={props => this.onTransactionRowClick(props)}
+            onClick={props => this.props.onTransactionRowClick(props)}
           />
         </React.Fragment>
       </Box>
