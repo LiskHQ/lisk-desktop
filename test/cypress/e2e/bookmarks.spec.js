@@ -86,7 +86,7 @@ describe('Bookmarks', () => {
       ]`);
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit(urls.dashboard);
-      cy.wait(500); // To let app fetch and update the actual balance
+      cy.wait(1000); // To let app fetch and update the actual balance
       cy.get(ss.followedAccountBalance).invoke('text').as('balanceBefore');
       cy.visit(urls.send);
       cy.get(ss.recipientInput).type(accounts.genesis.address);

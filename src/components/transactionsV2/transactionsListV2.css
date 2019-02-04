@@ -1,0 +1,27 @@
+@import '../app/variablesV2.css';
+
+.empty {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  font-family: var(--heading-font);
+  font-size: var(--paragraph-font-size-s);
+  font-weight: var(--font-weight-bold);
+  justify-content: center;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--color-content-light);
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin: 0;
+  overflow-y: initial;
+}
+
+.emptyResult {
+  align-items: center;
+  justify-content: center;
+}
