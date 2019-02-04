@@ -1,15 +1,15 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { transactionsRequested, transactionsFilterSet } from '../../../actions/transactions';
 import { accountVotersFetched, accountVotesFetched } from '../../../actions/account';
 import { searchAccount } from '../../../actions/search';
-import WalletTransactions from './walletTransactions';
+import WalletTransactionsV2 from './walletTransactionsV2';
 import actionTypes from '../../../constants/actions';
 import txFilters from './../../../constants/transactionFilters';
 import removeDuplicateTransactions from '../../../utils/transactions';
 
-/* istanbul ignore next */
 const mapStateToProps = state => ({
   account: state.account,
   transaction: state.transaction,
@@ -46,4 +46,4 @@ const mapDispatchToProps = {
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(translate()(WalletTransactions)));
+)(translate()(WalletTransactionsV2)));

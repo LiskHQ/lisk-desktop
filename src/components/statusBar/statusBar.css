@@ -1,7 +1,7 @@
 @import '../app/variablesV2.css';
 
 .wrapper {
-  width: calc(100% - 195px);
+  width: calc(100% - 48px);
   max-width: 1352px;
   min-width: 615px;
   height: 20px;
@@ -42,11 +42,5 @@
       font-size: var(--font-size-small);
       font-family: var(--content-font);
     }
-  }
-}
-
-@media (--large-viewport) {
-  .wrapper {
-    width: calc(100% - 166px);
   }
 }

@@ -19,9 +19,10 @@ class StatusBar extends React.Component {
     const { autoLogout, account } = this.props;
 
     return autoLogout &&
-    account.expireTime &&
-    account.expireTime !== 0 &&
-    account.passphrase.length > 0;
+      account.expireTime &&
+      account.expireTime !== 0 &&
+      account.passphrase &&
+      account.passphrase.length > 0;
   }
 
 
@@ -61,7 +62,7 @@ class StatusBar extends React.Component {
       <div className={`bottom-bar ${styles.wrapper}`}>
         <div className={`${styles.timer}`}>
           {
-            this.isTimerEnabled() &&
+            this.isTimerEnabled() ?
             (
               <Countdown
                 date={account.expireTime}
@@ -78,7 +79,7 @@ class StatusBar extends React.Component {
                 />
               </Countdown>
             )
-          }
+          : null}
         </div>
         <Network
           peers={peers}

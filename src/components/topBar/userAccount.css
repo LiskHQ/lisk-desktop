@@ -21,6 +21,7 @@
   font-size: 12px;
   font-weight: var(--font-weight-semi-bold);
   color: var(--color-dark-gray);
+  white-space: nowrap;
 }
 
 .balance {
