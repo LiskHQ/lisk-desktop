@@ -52,7 +52,7 @@ class TopBar extends React.Component {
 
   render() {
     const { t, showDelegate, account } = this.props;
-    console.log(this.props);
+
     const items = showDelegate
       ? menuLinks
       : menuLinks.filter(item => item.id !== 'delegates');
