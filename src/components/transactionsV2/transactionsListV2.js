@@ -8,11 +8,12 @@ import txTypes from '../../constants/transactionTypes';
 import styles from './transactionsListV2.css';
 
 class TransactionsListV2 extends React.Component {
-  render() { // eslint-disable-line
+  render() {
     const {
       transactions,
       address,
       followedAccounts,
+      canLoadMore,
       t,
     } = this.props;
     // All, incoming, outgoing are filter values. To be more consistance with other possible tabs
@@ -27,7 +28,7 @@ class TransactionsListV2 extends React.Component {
       return !(isFilterIncoming && (isTypeNonSend || isAccountInit));
     };
 
-    return <div className={`${styles.results} transaction-results`}>
+    return <div className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} transaction-results`}>
       <TransactionsHeaderV2 tableStyle={tableStyle} />
       {transactions.length
         ? transactions.filter(fixIncomingFilter)
@@ -40,6 +41,10 @@ class TransactionsListV2 extends React.Component {
         : <p className={`${styles.empty} empty-message`}>
           {t('There are no transactions.')}
         </p>
+      }
+      { canLoadMore && <span
+        onClick={this.props.onLoadMore}
+        className={styles.showMore}>{t('Show More')}</span>
       }
     </div>;
   }

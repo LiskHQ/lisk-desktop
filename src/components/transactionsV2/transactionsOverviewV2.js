@@ -5,10 +5,9 @@ import Piwik from '../../utils/piwik';
 import TransactionsListV2 from './transactionsListV2';
 import styles from './transactionsV2.css';
 
-class TransactionsOverview extends React.Component {
+class TransactionsOverviewV2 extends React.Component {
   constructor(props) {
     super(props);
-    this.canLoadMore = true;
 
     this.props.onInit();
   }
@@ -82,5 +81,5 @@ const mapStateToProps = state => ({
   account: state.account,
 });
 
-export default connect(mapStateToProps)(TransactionsOverview);
+export default connect(mapStateToProps)(TransactionsOverviewV2);
 

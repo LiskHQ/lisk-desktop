@@ -18,6 +18,7 @@ const mapStateToProps = state => ({
       state.transactions.pending,
       state.transactions.confirmed,
     ),
+  transactionsCount: state.transactions.count,
   votes: state.account.votes ?
     state.account.votes :
     state.search.votes[state.account.addres],
