@@ -23,7 +23,8 @@ class TransactionsOverview extends React.Component {
   }
 
   onTransactionRowClick(props) {
-    this.props.history.push(`${routes.transactions.pathPrefix}${routes.transactions.path}/${props.value.id}`);
+    const transactionPath = `${routes.transactions.pathPrefix}${routes.transactions.path}/${props.value.id}`;
+    this.props.history.push(transactionPath);
   }
 
   isActiveFilter(filter) {

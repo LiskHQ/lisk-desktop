@@ -1,11 +1,8 @@
 import React from 'react';
-import MultiStep from './../../multiStep';
-import styles from './../transactions.css';
-import TransactionsOverview from '../transactionsOverview';
-import TransactionDetailView from './../transactionDetailView';
-import Box from './../../box';
-import txFilters from './../../../constants/transactionFilters';
-import routes from './../../../constants/routes';
+import TransactionsOverviewV2 from '../transactionsOverviewV2';
+import txFilters from '../../../constants/transactionFilters';
+import WalletHeader from './walletHeader';
+import routes from '../../../constants/routes';
 
 class WalletTransactions extends React.Component {
   onInit() {
@@ -79,12 +76,10 @@ class WalletTransactions extends React.Component {
     };
 
     return (
-      <Box>
-        <MultiStep className={styles.transactions}>
-          <TransactionsOverview {...overviewProps} />
-          <TransactionDetailView {...this.props} />
-        </MultiStep>
-      </Box>
+      <React.Fragment>
+        <WalletHeader {...this.props} />
+        <TransactionsOverviewV2 {...overviewProps} />
+      </React.Fragment>
     );
   }
 }
