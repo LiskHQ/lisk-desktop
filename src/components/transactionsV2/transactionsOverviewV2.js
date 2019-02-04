@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Box from '../box';
 import txFilters from '../../constants/transactionFilters';
 import Piwik from '../../utils/piwik';
 import TransactionsListV2 from './transactionsListV2';
@@ -55,27 +54,25 @@ class TransactionsOverview extends React.Component {
     const filters = this.generateFilters(isSmallScreen);
 
     return (
-      <Box className={`${styles.transactions} transactions`}>
-        <React.Fragment>
-          <ul className={`${styles.txFilters}`}>
-            {filters.map((filter, i) => (
-              <li key={i} className={`transaction-filter-item ${filter.className} ${this.isActiveFilter(filter.value) ? styles.active : ''}`}
-                onClick={() => this.setTransactionsFilter(filter.value)}>
-                {filter.name}
-              </li>
-            ))}
-          </ul>
-          <TransactionsListV2
-            followedAccounts={this.props.followedAccounts}
-            transactions={this.props.transactions}
-            filter={filters[this.props.activeFilter]}
-            address={this.props.address}
-            publicKey={this.props.publicKey}
-            history={this.props.history}
-            onClick={props => this.props.onTransactionRowClick(props)}
-          />
-        </React.Fragment>
-      </Box>
+      <div className={`${styles.transactions} transactions`}>
+        <ul className={`${styles.txFilters}`}>
+          {filters.map((filter, i) => (
+            <li key={i} className={`transaction-filter-item ${filter.className} ${this.isActiveFilter(filter.value) ? styles.active : ''}`}
+              onClick={() => this.setTransactionsFilter(filter.value)}>
+              {filter.name}
+            </li>
+          ))}
+        </ul>
+        <TransactionsListV2
+          followedAccounts={this.props.followedAccounts}
+          transactions={this.props.transactions}
+          filter={filters[this.props.activeFilter]}
+          address={this.props.address}
+          publicKey={this.props.publicKey}
+          history={this.props.history}
+          onClick={props => this.props.onTransactionRowClick(props)}
+        />
+      </div>
     );
   }
 }

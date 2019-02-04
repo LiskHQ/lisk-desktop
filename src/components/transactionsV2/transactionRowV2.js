@@ -33,7 +33,7 @@ class TransactionRow extends React.Component {
           </div>
         <div className={`${styles.hiddenXs} ${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
           {props.value.confirmations ? <DateTimeFromTimestamp time={props.value.timestamp} />
-            : <SpinnerV2 />}
+            : <SpinnerV2 label={props.t('Pending...')} />}
         </div>
         <div className={`${styles.hiddenXs} ${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
           <LiskAmount val={props.value.fee}/> {props.t('LSK')}

@@ -1,12 +1,16 @@
 @import '../app/variablesV2.css';
 
 .transactions {
+  background: var(--color-white);
   border-radius: var(--border-radius-standard);
+  box-shadow: var(--box-shadow-transaction-table);
   display: flex;
   flex-direction: column;
   height: auto;
   margin-bottom: 40px;
   min-height: 600px;
+  overflow: auto;
+  overflow-x: hidden;
   padding: 0;
 }
 
@@ -24,7 +28,7 @@
     border-bottom: 1px solid var(--color-light-gray);
     border-left: 1px solid var(--color-background-menu);
     border-right: 1px solid var(--color-background-menu);
-    color: var(--color-dark-gray);
+    color: var(--color-content-grayblue);
     cursor: pointer;
     display: flex;
     font-family: var(--heading-font);
