@@ -36,103 +36,103 @@ or "warn/action" ineastd of "red/green"
 ****************************************/
 
 :root {
-      /*************************
-            Font
-      *************************/
-      --font-size-h1: 65px;
-      --font-size-h2: 32px;
-      --font-size-h3: 28px;
-      --font-size-h4: 26px;
-      --font-size-h5: 20px;
-      --font-size-h6: 16px;
-      --font-size-small: 10px;
-      --heading-font: 'gilroy', 'Open Sans', sans-serif;
-      --content-font: 'gilroy-regular', 'Open Sans', sans-serif;
-      --font-weight-normal: 400;
-      --font-weight-semi-bold: 500;
-      --font-weight-bold: 600;
-      --font-weight-very-bold: 700;
-      --subtitle-font-size: 18px;
-      --subtitle-font-size-s: 16px;
-      --paragraph-font-size-l: 15px;
-      --paragraph-font-size-s: 14px;
-      --button-font-size: var(--paragraph-font-size-s);
-      --button-font-size-s: 12px;
+  /*************************
+        Font
+  *************************/
+  --font-size-h1: 65px;
+  --font-size-h2: 32px;
+  --font-size-h3: 28px;
+  --font-size-h4: 26px;
+  --font-size-h5: 20px;
+  --font-size-h6: 16px;
+  --font-size-small: 10px;
+  --heading-font: 'gilroy', 'Open Sans', sans-serif;
+  --content-font: 'gilroy-regular', 'Open Sans', sans-serif;
+  --font-weight-normal: 400;
+  --font-weight-semi-bold: 500;
+  --font-weight-bold: 600;
+  --font-weight-very-bold: 700;
+  --subtitle-font-size: 18px;
+  --subtitle-font-size-s: 16px;
+  --paragraph-font-size-l: 15px;
+  --paragraph-font-size-s: 14px;
+  --button-font-size: var(--paragraph-font-size-s);
+  --button-font-size-s: 12px;
 
-      /*************************
-            Sizes
-      *************************/
-      --border-radius-standard: 4px;
-      --header-height-m: 100px;
-      --header-height-s: 72px;
-      --header-height-xs: 60px;
-      --header-elements-height: 32px;
-      --header-logo-size: 56px;
-      --search-box-width-l: 597px;
+  /*************************
+        Sizes
+  *************************/
+  --border-radius-standard: 4px;
+  --header-height-m: 100px;
+  --header-height-s: 72px;
+  --header-height-xs: 60px;
+  --header-elements-height: 32px;
+  --header-logo-size: 56px;
+  --search-box-width-l: 597px;
 
-      /*************************
-            Padding
-      *************************/
-      --header-padding: 0 32px;
+  /*************************
+        Padding
+  *************************/
+  --header-padding: 0 32px;
 
-      /*************************
-            Colors
-      *************************/
-      --color-primary-standard: #4e80f7;
-      --color-primary-light: #9db8fa;
-      --color-white: #fff;
-      --color-error: #ff7721;
-      --color-content: #19224d;
-      --color-content-light: #2e2c3b;
-      --color-content-lighter: rgba(46, 44, 59, 0.6);
-      --color-background-dark: #1e194d;
-      --color-dark-gray: #868ba1;
-      --color-light-gray: #e6e6e6;
-      --color-content-grayblue: #7383a7;
-      --color-background-wrapper: linear-gradient(120deg, #f7f9fb, #fbfcfd);
-      --color-background-header: #fbfcfd;
-      --color-background-menu: #f8f9fb;
-      --color-link-active: #4070f4;
-      --color-link: var(--color-primary-standard);
+  /*************************
+        Colors
+  *************************/
+  --color-primary-standard: #4e80f7;
+  --color-primary-light: #9db8fa;
+  --color-white: #fff;
+  --color-error: #ff7721;
+  --color-content: #19224d;
+  --color-content-light: #2e2c3b;
+  --color-content-lighter: rgba(46, 44, 59, 0.6);
+  --color-background-dark: #1e194d;
+  --color-dark-gray: #868ba1;
+  --color-light-gray: #e6e6e6;
+  --color-content-grayblue: #7383a7;
+  --color-background-wrapper: linear-gradient(120deg, #f7f9fb, #fbfcfd);
+  --color-background-header: #fbfcfd;
+  --color-background-menu: #f8f9fb;
+  --color-link-active: #4070f4;
+  --color-link: var(--color-primary-standard);
 
-      /*************************
-            Box
-      *************************/
-      --box-shadow-standard: 0 4px 8px 0 rgba(72, 77, 97, 0.1);
-      --box-shadow-button: var(--box-shadow-standard);
-      --box-shadow-header: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
-      --box-shadow-avatar: var(--box-shadow-standard);
-      --box-shadow-search: 0 2px 4px 0 rgba(8, 24, 49, 0.06);
-      --box-shadow-transaction-table: var(--box-shadow-standard), 0 -2px 8px 0 rgba(72, 77, 97, .1);
+  /*************************
+        Box
+  *************************/
+  --box-shadow-standard: 0 4px 8px 0 rgba(72, 77, 97, 0.1);
+  --box-shadow-button: var(--box-shadow-standard);
+  --box-shadow-header: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
+  --box-shadow-avatar: var(--box-shadow-standard);
+  --box-shadow-search: 0 2px 4px 0 rgba(8, 24, 49, 0.06);
+  --box-shadow-transaction-table: var(--box-shadow-standard), 0 -2px 8px 0 rgba(72, 77, 97, .1);
 
-      /*************************
-            Animation
-      *************************/
-      --animation-speed-faster: 150ms;
-      --animation-speed-fast: 250ms;
-      --animation-speed-standard: 500ms;
-      --animation-speed-slow: 700ms;
-      --animation-speed-slowest: 1000ms;
-      --animation-delay-standard: 100ms;
+  /*************************
+        Animation
+  *************************/
+  --animation-speed-faster: 150ms;
+  --animation-speed-fast: 250ms;
+  --animation-speed-standard: 500ms;
+  --animation-speed-slow: 700ms;
+  --animation-speed-slowest: 1000ms;
+  --animation-delay-standard: 100ms;
 
-      /*************************
-            Transitions
-      *************************/
-      --transition-button: background-color var(--animation-speed-fast) ease-in-out, color var(--animation-speed-fast) ease-in-out;
+  /*************************
+        Transitions
+  *************************/
+  --transition-button: background-color var(--animation-speed-fast) ease-in-out, color var(--animation-speed-fast) ease-in-out;
 
-      /*************************
-            Z-Indexes
-      *************************/
-      --normal-index: 1;
-      --overlay-index: 20;
+  /*************************
+        Z-Indexes
+  *************************/
+  --normal-index: 1;
+  --overlay-index: 20;
 
-      /*************************
-            Media Queries
-      *************************/
-      @custom-media --xLarge-viewport (min-width: 1400px);
-      @custom-media --large-viewport (max-width: 1400px);
-      @custom-media --medium-viewport (max-width: 1024px);
-      @custom-media --small-viewport (max-width: 768px);
-      @custom-media --xSmall-viewport (max-width: 414px);
-      @custom-media --xxSmall-viewport (max-width: 320px);
-    }
+  /*************************
+        Media Queries
+  *************************/
+  @custom-media --xLarge-viewport (min-width: 1400px);
+  @custom-media --large-viewport (max-width: 1400px);
+  @custom-media --medium-viewport (max-width: 1024px);
+  @custom-media --small-viewport (max-width: 768px);
+  @custom-media --xSmall-viewport (max-width: 414px);
+  @custom-media --xxSmall-viewport (max-width: 320px);
+}
