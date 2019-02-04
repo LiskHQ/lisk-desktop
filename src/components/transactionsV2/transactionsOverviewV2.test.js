@@ -7,7 +7,6 @@ import configureMockStore from 'redux-mock-store';
 import i18n from '../../i18n';
 import TransactionsOverviewV2 from './transactionsOverviewV2';
 import accounts from '../../../test/constants/accounts';
-import routes from '../../constants/routes';
 
 describe('TransactionsOverview V2', () => {
   let wrapper;
@@ -45,7 +44,6 @@ describe('TransactionsOverview V2', () => {
     onInit: spy(),
     onLoadMore: spy(),
     onFilterSet: spy(),
-    match: { url: routes.walletV2.path },
     account: accounts.genesis,
     followedAccounts: [],
     transactions,
@@ -67,12 +65,6 @@ describe('TransactionsOverview V2', () => {
 
   beforeEach(() => {
     wrapper = mount(<TransactionsOverviewV2 {...props}/>, options);
-  });
-
-  it('should call history.push on rowClick', () => {
-    const expectedPath = `${routes.transactions.pathPrefix}${routes.transactions.path}/${transactions[0].id}`;
-    wrapper.find('.transactions-row').first().simulate('click');
-    expect(props.history.push).to.have.been.calledWith(expectedPath);
   });
 
   it('should call onInit on constructor call', () => {
