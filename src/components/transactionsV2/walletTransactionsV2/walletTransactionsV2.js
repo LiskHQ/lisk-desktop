@@ -21,14 +21,6 @@ class WalletTransactions extends React.Component {
       filter: txFilters.all,
     });
 
-    if (this.props.account.isDelegate &&
-      this.props.account.delegate &&
-      this.props.account.delegate.publicKey) {
-      this.props.accountVotersFetched({
-        publicKey: this.props.account.delegate.publicKey,
-      });
-    }
-
     this.props.searchAccount({
       address: this.props.address,
     });

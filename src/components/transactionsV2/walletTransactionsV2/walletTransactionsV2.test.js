@@ -80,8 +80,8 @@ describe('WalletTransactions V2 Component', () => {
   });
 
   it('click on row transaction', () => {
+    const transactionPath = `${routes.transactions.pathPrefix}${routes.transactions.path}/${transactions[0].id}`;
     wrapper.find('.transactions-row').first().simulate('click');
-    // eslint-disable-next-line no-unused-expressions
-    expect(props.history.push).to.have.been.called;
+    expect(props.history.push).to.have.been.calledWith(transactionPath);
   });
 });

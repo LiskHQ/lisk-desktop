@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
@@ -9,7 +10,6 @@ import actionTypes from '../../../constants/actions';
 import txFilters from './../../../constants/transactionFilters';
 import removeDuplicateTransactions from '../../../utils/transactions';
 
-/* istanbul ignore next */
 const mapStateToProps = state => ({
   account: state.account,
   transaction: state.transaction,
