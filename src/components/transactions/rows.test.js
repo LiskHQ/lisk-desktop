@@ -10,10 +10,10 @@ import PropTypes from 'prop-types';
 
 import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
-import TransactionRow from './transactionRow';
+import Rows from './rows';
 import history from '../../history';
 
-describe('TransactionRow', () => {
+describe('Rows', () => {
   const store = configureMockStore([])({});
   const rowData = {
     id: '1038520263604146911',
@@ -44,33 +44,36 @@ describe('TransactionRow', () => {
     },
   };
 
-  it('should render 4 columns', () => {
+  it('should render 3 columns', () => {
     const wrapper = mount(<Provider store={store}>
       <Router>
         <I18nextProvider i18n={ i18n }>
-          <TransactionRow
+          <Rows
             tableStyle={tableStyle}
             address={address}
             value={rowData}
             nextStep={() => {}}
             onClick={() => {}}
-          ></TransactionRow>
+            t={v => v}
+          ></Rows>
         </I18nextProvider>
       </Router>
     </Provider>, options);
 
-    expect(wrapper.find('.transactions-cell')).to.have.lengthOf(5);
+    expect(wrapper.find('.transactions-cell')).to.have.lengthOf(3);
   });
 
   it('should not cause any error on click if props.onClick is not defined', () => {
     const wrapper = mount(<Provider store={store}>
       <Router>
         <I18nextProvider i18n={ i18n }>
-          <TransactionRow
+          <Rows
             tableStyle={tableStyle}
             address={address}
             value={rowData}
-          ></TransactionRow>
+            onClick={() => {}}
+            t={v => v}
+          ></Rows>
         </I18nextProvider>
       </Router>
     </Provider>, options);
@@ -83,12 +86,14 @@ describe('TransactionRow', () => {
     const wrapper = mount(<Provider store={store}>
       <Router>
         <I18nextProvider i18n={ i18n }>
-          <TransactionRow
+          <Rows
             tableStyle={tableStyle}
             address={address}
             value={rowData}
+            onClick={() => {}}
+            t={v => v}
             nextStep={() => {}}>
-          </TransactionRow>
+          </Rows>
         </I18nextProvider>
       </Router>
     </Provider>, options);

@@ -69,7 +69,7 @@ describe('News', () => {
   it('4 tweets are shown by default', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.newsBlock).eq(4).should('be.visible');
-    cy.get(ss.newsBlock).eq(5).should('be.not.visible');
+    cy.get(ss.newsBlock).eq(20).should('be.not.visible');
   });
 
   /**

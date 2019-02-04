@@ -188,10 +188,10 @@ describe('Latest activity', () => {
    * 3 transaction are shown in the latest activity component
    * @expect 3 transactions visible
    */
-  it('3 tx are shown by default', () => {
+  it('4 tx are shown by default', () => {
     cy.visit(urls.dashboard);
-    cy.get(ss.transactionRow).eq(3).should('be.visible');
-    cy.get(ss.transactionRow).eq(4).should('be.not.visible');
+    cy.get(ss.transactionRow).eq(4).should('be.visible');
+    cy.get(ss.transactionRow).eq(25).should('be.not.visible');
   });
 
   /**

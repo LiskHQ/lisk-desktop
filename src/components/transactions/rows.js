@@ -13,12 +13,11 @@ class Row extends React.Component {
 
   render() {
     const { props } = this;
-    const onClick = !props.onClick ? (() => {}) : () => props.onClick(this.props);
 
     return (
       <div
         className={`${styles.row} transactions-row`}
-        onClick={onClick}
+        onClick={() => props.onClick(this.props)}
       >
         <div className={`${styles.cellAddress} transactions-cell`}>
           <div className={'transaction-address'}>
