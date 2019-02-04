@@ -46,7 +46,7 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', throttle(this.resizeWindow, 1000));
+    window.addEventListener('resize', throttle(this.resizeWindow, 10));
   }
 
   shouldShowInitializatiion() {

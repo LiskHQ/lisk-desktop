@@ -24,6 +24,7 @@
 
 .followedAccountsWrapper {
   height: auto;
+  min-height: 318px;
 }
 
 .cancelButton {
@@ -122,7 +123,7 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 271px;
+  min-height: 270px;
   height: auto;
   box-sizing: border-box;
   font-size: 12px;

@@ -24,7 +24,7 @@ describe('News', () => {
    * @expect localStorage value is set to false
    * @expect twitter news are not shown in the feed
    */
-  it('Switch off twitter feed, it is not shown when is switched off', () => {
+  it.skip('Switch off twitter feed, it is not shown when is switched off', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.editNewsFeed).click();
     cy.get(ss.settingsNewsFeedBlock).find('input').click({ force: true })
@@ -38,7 +38,7 @@ describe('News', () => {
    * @expect localStorage value is set to true
    * @expect twitter news are shown in the feed
    */
-  it('Switch on twitter feed, it is shown when is switched on', () => {
+  it.skip('Switch on twitter feed, it is shown when is switched on', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.editNewsFeed).click();
     cy.get(ss.settingsNewsFeedBlock).find('input').click({ force: true }).click({ force: true })

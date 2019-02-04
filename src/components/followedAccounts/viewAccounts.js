@@ -54,7 +54,7 @@ class ViewAccounts extends React.Component {
       accounts,
     } = this.props;
 
-    const showBar = accounts.length > 5;
+    const showBar = accounts.length > 4;
 
     return (
       <BoxV2>
@@ -143,15 +143,16 @@ class ViewAccounts extends React.Component {
               </div>
             </div>
         }
-        </div>
         {
-          accounts.length > 5 &&
-          <ShowMore
-            className={`${styles.showMore} show-more`}
-            onClick={() => this.onShowMoreToggle()}
-            text={ this.state.showMore ? t('Show Less') : t('Show More')}
-          />
+          accounts.length > 4
+          ? <ShowMore
+              className={`${styles.showMore} show-more`}
+              onClick={() => this.onShowMoreToggle()}
+              text={ this.state.showMore ? t('Show Less') : t('Show More')}
+            />
+          : null
         }
+        </div>
     </BoxV2>
     );
   }
