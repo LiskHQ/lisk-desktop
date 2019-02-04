@@ -5,7 +5,6 @@ import MenuItems from './menuItems';
 import SearchBar from '../searchBar';
 import UserAccount from './userAccount';
 import Piwik from '../../utils/piwik';
-import Options from '../dialog/options';
 import { menuLinks } from './constants';
 import styles from './topBar.css';
 
@@ -19,37 +18,16 @@ class TopBar extends React.Component {
       isDropdownEnable: false,
     };
 
-    this.confirLogout = this.confirLogout.bind(this);
     this.onLogout = this.onLogout.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.setDropdownRef = this.setDropdownRef.bind(this);
   }
 
-  confirLogout() {
-    this.props.logOut();
-    this.props.closeDialog();
-    this.props.history.replace(`${routes.dashboard.path}`);
-  }
-
   onLogout() {
     Piwik.trackingEvent('Header', 'button', 'Open logout dialog');
-
-    this.props.setActiveDialog({
-      childComponent: Options,
-      childComponentProps: {
-        title: this.props.t('Logout'),
-        text: this.props.t('After logging out of your account you will be able to access the Dashboard, Settings and Search.'),
-        firstButton: {
-          text: this.props.t('Cancel'),
-          onClickHandler: this.props.closeDialog,
-        },
-        secondButton: {
-          text: this.props.t('Logout'),
-          onClickHandler: this.confirLogout,
-        },
-      },
-    });
+    this.props.logOut();
+    this.props.history.replace(`${routes.dashboard.path}`);
   }
 
   handleClick() {
@@ -74,7 +52,7 @@ class TopBar extends React.Component {
 
   render() {
     const { t, showDelegate, account } = this.props;
-
+    console.log(this.props);
     const items = showDelegate
       ? menuLinks
       : menuLinks.filter(item => item.id !== 'delegates');
