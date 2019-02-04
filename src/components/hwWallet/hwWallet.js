@@ -69,6 +69,7 @@ class HwWallet extends React.Component {
       return (
         <Box>
           <LedgerLogin
+            account={this.props.account}
             loginType={loginType.normal}
             network={getNetwork(this.props.network)}
             cancelLedgerLogin={this.cancelLedgerLogin.bind(this)} />

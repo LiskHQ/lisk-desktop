@@ -10,6 +10,7 @@ import HwWallet from './hwWallet';
 const mapStateToProps = state => ({
   network: state.settings.network || networks.mainnet.code,
   peers: state.peers,
+  account: state.account,
 });
 
 const mapDispatchToProps = {
