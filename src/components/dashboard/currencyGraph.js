@@ -26,8 +26,8 @@ const chartOptions = step => ({
       time: step.timeFormat,
       distribution: 'linear',
       ticks: {
-        fontColor: '#2C4062',
-        fontSize: 14,
+        fontColor: '#7383a7',
+        fontSize: 12,
         fontFamily: '\'Open Sans\', sans-serif',
       },
       gridLines: {
@@ -55,6 +55,9 @@ const chartOptions = step => ({
       radius: 0,
       hoverRadius: 8,
       hitRadius: 40,
+    },
+    line: {
+      tension: 0,
     },
   },
   tooltips: {
@@ -84,10 +87,9 @@ const chartOptions = step => ({
 });
 
 const getGradient = (ctx) => {
-  const gradient = ctx.createLinearGradient(0, 0, 800, 0);
-  gradient.addColorStop(0, '#004AFF');
-  gradient.addColorStop(0.5, '#57AFFF');
-  gradient.addColorStop(1, '#93F4FE');
+  const gradient = ctx.createLinearGradient(0, 100, 0, 250);
+  gradient.addColorStop(0, '#e9f3ff');
+  gradient.addColorStop(1, 'white');
   return gradient;
 };
 
@@ -99,8 +101,8 @@ const chartData = (data, canvas) => {
     datasets: [{
       data,
       backgroundColor: gradient,
-      borderColor: gradient,
-      borderWidth: 0,
+      borderColor: '#7ab7ff',
+      borderWidth: 2,
     }],
   };
 };
@@ -167,12 +169,6 @@ class CurrencyGraph extends React.Component {
 
   render() {
     Chart.pluginService.register({
-      beforeDraw(chartInstance) {
-        drawGradientRectangle(chartInstance, {
-          bottomPosition: bottomPadding + 35,
-          height: 50,
-        });
-      },
       afterDraw(chartInstance) {
         drawGradientRectangle(chartInstance, {
           bottomPosition: bottomPadding + 32,
