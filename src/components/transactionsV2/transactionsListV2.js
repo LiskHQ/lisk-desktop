@@ -6,6 +6,8 @@ import TransactionRowV2 from './transactionRowV2';
 import txFilters from '../../constants/transactionFilters';
 import txTypes from '../../constants/transactionTypes';
 import styles from './transactionsListV2.css';
+import SpinnerV2 from '../spinnerV2/spinnerV2';
+import actionTypes from '../../constants/actions';
 
 class TransactionsListV2 extends React.Component {
   render() {
@@ -14,6 +16,7 @@ class TransactionsListV2 extends React.Component {
       address,
       followedAccounts,
       canLoadMore,
+      loading,
       t,
     } = this.props;
     // All, incoming, outgoing are filter values. To be more consistance with other possible tabs
@@ -28,8 +31,20 @@ class TransactionsListV2 extends React.Component {
       return !(isFilterIncoming && (isTypeNonSend || isAccountInit));
     };
 
-    return <div className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} transaction-results`}>
+    const actions = [actionTypes.transactionsRequested, actionTypes.transactionsFilterSet];
+    const isLoading = loading.some(type => actions.includes(type));
+    const spinnerClass = loading.includes(actionTypes.transactionsRequested)
+      ? styles.bottom : styles.top;
+
+    return <div className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} ${isLoading ? styles.isLoading : ''} transaction-results`}>
       <TransactionsHeaderV2 tableStyle={tableStyle} />
+      {
+        isLoading ? (
+          <div className={styles.loadingOverlay}>
+            <SpinnerV2 className={`${styles.loadingSpinner} ${spinnerClass}`} />
+          </div>
+        ) : null
+      }
       {transactions.length
         ? transactions.filter(fixIncomingFilter)
             .map((transaction, i) =>

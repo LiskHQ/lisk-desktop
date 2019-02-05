@@ -70,6 +70,7 @@ class TransactionsOverviewV2 extends React.Component {
           publicKey={this.props.publicKey}
           history={this.props.history}
           onClick={props => this.props.onTransactionRowClick(props)}
+          loading={this.props.loading}
           canLoadMore={this.props.canLoadMore}
           onLoadMore={this.props.onLoadMore}
         />
