@@ -23,7 +23,7 @@ export const transactionAdded = data => ({
 });
 
 export const transactionsFilterSet = ({
-  address, limit, filter, customFilters,
+  address, limit, filter, customFilters = {},
 }) => (dispatch, getState) => {
   const liskAPIClient = getState().peers.liskAPIClient;
 

@@ -82,6 +82,7 @@ class WalletTransactions extends React.Component {
     this.props.history.push(`${routes.wallet.path}?id=${props.value.id}`);
   }
 
+  /* istanbul ignore next */
   saveFilters(customFilters) {
     this.props.transactionsFilterSet({
       address: this.props.address,
@@ -92,6 +93,7 @@ class WalletTransactions extends React.Component {
     this.setState({ customFilters });
   }
 
+  /* istanbul ignore next */
   clearFilter(filterName) {
     this.setState({
       customFilters: {
@@ -101,6 +103,7 @@ class WalletTransactions extends React.Component {
     });
   }
 
+  /* istanbul ignore next */
   clearAllFilters() {
     this.setState({ customFilters: {} });
     this.props.transactionsFilterSet({

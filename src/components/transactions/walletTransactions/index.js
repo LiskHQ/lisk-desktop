@@ -32,7 +32,7 @@ const mapStateToProps = state => ({
   activeFilter: state.filters.wallet || txFilters.all,
   loading: state.loading,
 });
-
+/* istanbul ignore next */
 const mapDispatchToProps = {
   searchAccount,
   transactionsRequested,

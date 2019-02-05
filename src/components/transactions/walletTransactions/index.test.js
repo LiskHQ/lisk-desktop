@@ -57,10 +57,7 @@ describe('WalletTransactions Component', () => {
       match: { params: { address: accounts.genesis.address } },
       history: { push: spy(), location: { search: ' ' } },
       t: key => key,
-      saveFilters: spy(),
-      clearFilter: spy(),
       clearAllFilters: spy(),
-      changeFilters: spy(),
     };
 
     transactionsActionsStub.withArgs({
@@ -68,6 +65,7 @@ describe('WalletTransactions Component', () => {
       address: accounts.genesis.address,
       limit: 25,
       filter: txFilters.all,
+      customFilters: {},
     }).returnsPromise().resolves({ data: [{ id: 'Some ID' }], meta: { count: 1000 } });
 
 
@@ -76,6 +74,7 @@ describe('WalletTransactions Component', () => {
       address: match.any,
       limit: 25,
       filter: txFilters.statistics,
+      customFilters: {},
     }).returnsPromise().resolves({ data: [{ id: 'Some ID' }], meta: { count: 1000 } });
 
     store.dispatch(accountLoggedIn({
@@ -117,10 +116,4 @@ describe('WalletTransactions Component', () => {
     wrapper.update();
     expect(wrapper.find('TransactionDetailViewRow').at(0).exists()).to.be.equal(true);
   });
-
-  // it('should call transactionsFilterSet', () => {
-  //   wrapper.find('.transactions-row').simulate('click');
-  //   wrapper.update();
-  //   expect(wrapper.find('TransactionDetailViewRow').at(0).exists()).to.be.equal(true);
-  // });
 });

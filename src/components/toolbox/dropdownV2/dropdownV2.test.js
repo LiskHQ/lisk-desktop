@@ -7,17 +7,13 @@ describe('Dropdown V2', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<DropdownV2 showDropdown={false} />);
+    wrapper = mount(<DropdownV2 showDropdown={false}>
+      <div></div>
+    </DropdownV2>);
   });
 
   it('Should render with dropdown closed', () => {
     expect(wrapper).to.not.have.className('show');
-  });
-
-  it('Should open without content', () => {
-    wrapper.setProps({ showDropdown: true });
-    expect(wrapper).to.have.className('show');
-    expect(wrapper.find('.optionsHolder')).to.be.blank();
   });
 
   it('Should open with passed children props', () => {

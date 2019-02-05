@@ -110,8 +110,8 @@ class FilterButton extends React.Component {
                 theme={styles}
                 value={this.state.customFilters.dateTo}
                 onChange={(val) => { this.changeFilters('dateTo', val); }}/>
-            </div> */}
-            {/* <div className={styles.label}>{this.props.t('Amount')}</div>
+            </div>
+            <div className={styles.label}>{this.props.t('Amount')}</div>
             <div className={styles.row}>
               <Input
                 type='text'

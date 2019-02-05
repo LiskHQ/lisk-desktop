@@ -4,7 +4,7 @@ import { FontIcon } from '../fontIcon';
 import styles from './filterBar.css';
 
 const FilterBar = props => (
-  <div className={`${styles.container}`}>
+  <div className={`${styles.container} filterBar`}>
     <div className={styles.label}>{props.t('Filtered results')}:</div>
     {Object.keys(props.customFilters).map((filter, index) =>
       (props.customFilters[filter] ?
