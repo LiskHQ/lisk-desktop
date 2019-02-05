@@ -71,6 +71,11 @@ or "warn/action" ineastd of "red/green"
   --search-box-width-l: 597px;
 
   /*************************
+        Radious
+  *************************/
+  --border-radius-box: 6px;
+
+  /*************************
         Padding
   *************************/
   --header-padding: 0 32px;
@@ -84,6 +89,7 @@ or "warn/action" ineastd of "red/green"
   --color-error: #ff7721;
   --color-content: #19224d;
   --color-content-light: #2e2c3b;
+  --color-primary-very-light: #e8f0fa;
   --color-content-lighter: rgba(46, 44, 59, 0.6);
   --color-background-dark: #1e194d;
   --color-dark-gray: #868ba1;
@@ -93,7 +99,9 @@ or "warn/action" ineastd of "red/green"
   --color-background-header: #fbfcfd;
   --color-background-menu: #f8f9fb;
   --color-link-active: #4070f4;
+  --color-title-header-box: #4c4c4c;
   --color-link: var(--color-primary-standard);
+  --color-rows-hover: rgba(157, 184, 250, 0.2);
 
   /*************************
         Box
@@ -103,7 +111,9 @@ or "warn/action" ineastd of "red/green"
   --box-shadow-header: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
   --box-shadow-avatar: var(--box-shadow-standard);
   --box-shadow-search: 0 2px 4px 0 rgba(8, 24, 49, 0.06);
+  --box-shadow-standar2: 0 1px 5px 0 rgba(30, 25, 77, 0.12);
   --box-shadow-transaction-table: var(--box-shadow-standard), 0 -2px 8px 0 rgba(72, 77, 97, 0.1);
+  --box-shadow-graph-selector: 0 1px 5px 0 rgba(30, 25, 77, 0.06);
 
   /*************************
         Animation

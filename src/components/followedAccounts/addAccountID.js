@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { Button, TertiaryButton } from '../toolbox/buttons/button';
+import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import regex from '../../utils/regex';
 import styles from './followedAccounts.css';
 import AddressInput from '../addressInput/index';
 import Piwik from '../../utils/piwik';
+import BoxV2 from '../boxV2';
 
 class AddAccountID extends React.Component {
   constructor() {
@@ -48,34 +48,38 @@ class AddAccountID extends React.Component {
   }
 
   render() {
-    return <div className={styles.addAccount}>
-      <header><h2>{this.props.t('Choose an ID')}</h2></header>
-      <div>
-        <AddressInput
-          label={this.props.t('Enter a Lisk ID')}
-          className='address'
-          address={this.state.address}
-          handleChange={this.handleChange.bind(this)}
-        />
-      </div>
-      <footer className={grid.row} >
-        <div className={grid['col-xs-4']}>
-          <Button
-            label={this.props.t('Cancel')}
-            className={`${styles.cancelButton} cancel`}
-            onClick={() => this.onPrevStep()}
+    return (
+      <BoxV2 className={styles.addAccount}>
+        <header>
+          <h1>{this.props.t('Add a bookmark')}</h1>
+        </header>
+        <div>
+          <AddressInput
+            label={this.props.t('Lisk ID')}
+            className='address'
+            address={this.state.address}
+            handleChange={this.handleChange.bind(this)}
           />
         </div>
-        <div className={grid['col-xs-8']}>
-          <TertiaryButton
-            label={this.props.t('Next')}
-            className='next'
-            disabled={(!!this.state.address.error || !this.state.address.value)}
-            onClick={() => this.onNextStep()}
-          />
-        </div>
-      </footer>
-    </div>;
+        <footer>
+          <div>
+            <SecondaryButtonV2
+              label={this.props.t('Cancel')}
+              className={`${styles.cancelButton} cancel`}
+              onClick={() => this.onPrevStep()}
+            />
+          </div>
+          <div>
+            <PrimaryButtonV2
+              label={this.props.t('Next')}
+              className='next'
+              disabled={(!!this.state.address.error || !this.state.address.value)}
+              onClick={() => this.onNextStep()}
+            />
+          </div>
+        </footer>
+      </BoxV2>
+    );
   }
 }
 

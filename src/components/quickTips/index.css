@@ -1,25 +1,37 @@
 @import '../app/variables.css';
+@import '../app/variablesV2.css';
 
 .quickTips {
-  height: 418px;
+  height: 318px;
   margin: 0px 0px 20px;
   overflow: hidden;
+  padding: 16px;
 }
 
 .footer {
   display: flex;
   justify-content: space-between;
-  padding: 20px 0;
+  align-items: flex-end;
+  padding: 0;
 
   & .goTo {
-    color: #2475b9;
+    color: var(--color-primary-standard);
     text-decoration: none;
-    font-weight: 600;
+    font-family: var(--content-font);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--button-font-size-s);
   }
 }
 
 .header {
-  padding-top: 20px;
+  margin-bottom: 25px;
+
+  & > h2 {
+    margin: 0;
+    font-family: var(--content-font);
+    font-weight: 600;
+    font-size: 18px;
+  }
 }
 
 .picture {
@@ -31,25 +43,28 @@
 .descriptionRow {
   display: flex;
   justify-content: space-between;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--content-font);
   height: 200px;
-  font-size: 16px;
-  color: #3c5068;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-content-light);
 
   & .description {
-    width: 60%;
+    width: 279px;
+    line-height: 1.5;
     overflow-y: auto;
   }
 }
 
 .steps {
   display: flex;
-  color: #2475b9;
-  font-size: 16px;
+  color: var(--color-primary-standard);
+  font-size: 12px;
   font-weight: 600;
+  font-family: var(--content-font);
 
   & span {
-    font-size: 24px;
+    font-size: 12px;
   }
 
   & .previousStep {
@@ -61,15 +76,15 @@
     cursor: pointer;
     margin-left: 20px;
   }
+
+  & > div:nth-child(2) {
+    color: var(--color-content-light);
+  }
 }
 
 .disabled {
   pointer-events: none;
-  color: #ccd9e4;
-}
-
-.arrow {
-  line-height: 22px !important;
+  color: var(--color-primary-light);
 }
 
 .quickTipBody {

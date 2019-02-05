@@ -1,0 +1,50 @@
+@import '../app/variablesV2.css';
+
+.row {
+  width: 100%;
+  height: 60px;
+  font-family: var(--content-font);
+  font-size: var(--button-font-size-s);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 0 16px;
+  color: var(--color-content-light);
+
+  &:nth-of-type(even) {
+    background-color: #f8f9fb;
+  }
+
+  &:hover {
+    background-color: var(--color-rows-hover);
+  }
+}
+
+.cellAddress {
+  min-width: 140px;
+}
+
+.reference {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: left;
+}
+
+.date {
+  color: #868ba1;
+  min-width: 70px;
+}
+
+.amount {
+  color: var(--color-content-light);
+  min-width: 70px;
+  text-align: right;
+
+  & > span:last-child {
+    margin-left: 5px;
+  }
+}

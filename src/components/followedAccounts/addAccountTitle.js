@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { Button, TertiaryButton } from '../toolbox/buttons/button';
+import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import { followedAccountAdded } from '../../actions/followedAccounts';
 import styles from './followedAccounts.css';
 import TitleInput from './accountTitleInput';
 import Piwik from '../../utils/piwik';
+import BoxV2 from '../boxV2';
 
 class AddAccountTitle extends React.Component {
   constructor() {
@@ -41,31 +41,35 @@ class AddAccountTitle extends React.Component {
   render() {
     const { t } = this.props;
 
-    return <div className={styles.addAccount}>
-      <header><h2>{t('How would you call it?')}</h2></header>
-      <div>
-        <TitleInput
-          title={this.state.title}
-          onChange={this.handleChange.bind(this)} />
-      </div>
-      <footer className={grid.row} >
-        <div className={grid['col-xs-4']}>
-          <Button
-            label={t('Cancel')}
-            className={`${styles.cancelButton} cancel`}
-            onClick={() => this.onCancel()}
-          />
+    return (
+      <BoxV2 className={styles.addAccount}>
+        <header>
+          <h1>{t('How would you call it?')}</h1>
+        </header>
+        <div>
+          <TitleInput
+            title={this.state.title}
+            onChange={this.handleChange.bind(this)} />
         </div>
-        <div className={grid['col-xs-8']}>
-          <TertiaryButton
-            label={t('Add to list')}
-            disabled={!!this.state.title.error || this.state.title.value === ''}
-            className='next'
-            onClick={() => this.onAddToList()}
-          />
-        </div>
-      </footer>
-    </div>;
+        <footer>
+          <div>
+            <SecondaryButtonV2
+              label={t('Cancel')}
+              className={`${styles.cancelButton} cancel`}
+              onClick={() => this.onCancel()}
+            />
+          </div>
+          <div>
+            <PrimaryButtonV2
+              label={t('Add to list')}
+              disabled={!!this.state.title.error || this.state.title.value === ''}
+              className='next'
+              onClick={() => this.onAddToList()}
+            />
+          </div>
+        </footer>
+      </BoxV2>
+    );
   }
 }
 
