@@ -18,7 +18,7 @@ import { fromRawLsk } from '../../utils/lsk';
 import breakpoints from './../../constants/breakpoints';
 import fees from './../../constants/fees';
 import ShowMore from '../showMore';
-import { SecondaryLightButton } from '../toolbox/buttons/button';
+import { SecondaryButtonV2 } from '../toolbox/buttons/button';
 import Banner from '../toolbox/banner/banner';
 
 import styles from './dashboard.css';
@@ -90,7 +90,7 @@ class Dashboard extends React.Component {
               title={t('Initialize Lisk ID')}
               footer={(
                 <Link to={`${routes.send.path}?initializeAccount`}>
-                  <SecondaryLightButton>{t('Create First Transaction')}</SecondaryLightButton>
+                  <SecondaryButtonV2>{t('Create First Transaction')}</SecondaryButtonV2>
                 </Link>)}>
               <p>{t('It is recommended that you initialize your Lisk ID.')}</p>
               <p>{t('The easiest way to do this is to send LSK to yourself by clicking this button.')}</p>
