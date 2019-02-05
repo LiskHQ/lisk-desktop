@@ -65,6 +65,7 @@ describe('WalletTransactions V2 Component', () => {
       accountVotersFetched: spy(),
       accountVotesFetched: spy(),
       addFilter: spy(),
+      loading: [],
       t: key => key,
     };
 

@@ -48,6 +48,7 @@ describe('TransactionsOverview V2', () => {
     followedAccounts: [],
     transactions,
     peers,
+    loading: [],
     history: {
       push: spy(),
     },
