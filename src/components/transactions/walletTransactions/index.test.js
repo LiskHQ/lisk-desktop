@@ -57,6 +57,10 @@ describe('WalletTransactions Component', () => {
       match: { params: { address: accounts.genesis.address } },
       history: { push: spy(), location: { search: ' ' } },
       t: key => key,
+      saveFilters: spy(),
+      clearFilter: spy(),
+      clearAllFilters: spy(),
+      changeFilters: spy(),
     };
 
     transactionsActionsStub.withArgs({
@@ -113,4 +117,10 @@ describe('WalletTransactions Component', () => {
     wrapper.update();
     expect(wrapper.find('TransactionDetailViewRow').at(0).exists()).to.be.equal(true);
   });
+
+  // it('should call transactionsFilterSet', () => {
+  //   wrapper.find('.transactions-row').simulate('click');
+  //   wrapper.update();
+  //   expect(wrapper.find('TransactionDetailViewRow').at(0).exists()).to.be.equal(true);
+  // });
 });

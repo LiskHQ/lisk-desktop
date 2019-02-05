@@ -75,17 +75,17 @@ class FilterButton extends React.Component {
     return (
       <div>
         <div
-          className={styles.filterTransactions}
+          className={`${styles.filterTransactions} filterTransactions`}
           onClick={() => this.toggleFilters()}>
             {this.props.t('Filter Transactions')}
         </div>
         <DropdownV2 showDropdown={this.state.showFilters}>
           <div
-            className={styles.container}
+            className={`${styles.container} container`}
             ref={(node) => { this.dropdownRef = node; }}>
             {/* <div className={styles.triangleBorder}></div>
             <div className={styles.triangle}></div> */}
-            <div className={styles.label}>{this.props.t('Date')}</div>
+            {/* <div className={styles.label}>{this.props.t('Date')}</div>
             <div className={styles.row}>
               <Input
                 type='text'
@@ -95,12 +95,12 @@ class FilterButton extends React.Component {
                 theme={styles}
                 value={this.state.customFilters.dateFrom}
                 onChange={(val) => { this.changeFilters('dateFrom', val); }}/>
-              {/* TODO <DatePicker
+              TODO <DatePicker
                 dateFormat="MM-dd-yy"
                 placeholderText="MM-DD-YY"
                 selected={this.state.filters.dateFrom}
                 onChange={(val) => { this.changeFilters('dateFrom', val); }}
-              /> */}
+              />
               <div className={styles.dash}>—</div>
               <Input
                 type='text'
@@ -110,8 +110,8 @@ class FilterButton extends React.Component {
                 theme={styles}
                 value={this.state.customFilters.dateTo}
                 onChange={(val) => { this.changeFilters('dateTo', val); }}/>
-            </div>
-            <div className={styles.label}>{this.props.t('Amount')}</div>
+            </div> */}
+            {/* <div className={styles.label}>{this.props.t('Amount')}</div>
             <div className={styles.row}>
               <Input
                 type='text'
@@ -132,12 +132,12 @@ class FilterButton extends React.Component {
                 theme={styles}
                 value={this.state.customFilters.amountTo}
                 onChange={(val) => { this.changeFilters('amountTo', val); }}/>
-            </div>
+            </div> */}
             <div className={styles.label}>{this.props.t('Message')}</div>
             <div className={styles.row}>
               <Input
                 type='text'
-                id='filter-message'
+                className='filter-message'
                 name='message'
                 placeholder='Message'
                 theme={styles}
@@ -147,7 +147,7 @@ class FilterButton extends React.Component {
             <div className={styles.buttonContainer}>
               <Button
                 tooltip='tooltip here'
-                className={styles.saveButton}
+                className={`${styles.saveButton} saveButton`}
                 onClick={this.saveFilters.bind(this)}>{this.props.t('Apply Filters')}</Button>
             </div>
           </div>

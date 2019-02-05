@@ -20,7 +20,7 @@ class WalletTransactions extends React.Component {
   onInit() {
     this.props.transactionsFilterSet({
       address: this.props.account.address,
-      limit: 50,
+      limit: 25,
       filter: txFilters.all,
     });
 

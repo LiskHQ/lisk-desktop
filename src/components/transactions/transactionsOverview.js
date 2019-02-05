@@ -20,10 +20,6 @@ class TransactionsOverview extends React.Component {
     super(props);
     this.canLoadMore = true;
 
-    this.state = {
-      customFilters: {},
-    };
-
     this.props.onInit();
   }
 
