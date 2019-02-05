@@ -24,6 +24,7 @@ describe('Account', () => {
     cy.visit(`${urls.accounts}/${accounts.genesis.address}`);
     cy.get(ss.leftBlockAccountExplorer).find(ss.delegateName).should('not.exist');
     cy.visit(`${urls.accounts}/${accounts.delegate.address}`);
+    cy.wait(1000); // Avoid failing on jenkins
     cy.get(ss.leftBlockAccountExplorer).find(ss.delegateName).contains(accounts.delegate.username);
   });
 
