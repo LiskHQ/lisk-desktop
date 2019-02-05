@@ -1,10 +1,13 @@
 import React from 'react';
 import styles from './spinnerV2.css';
 
-const SpinnerV2 = ({ label }) => (
-  <span className={styles.wrapper}>
+const SpinnerV2 = ({ label, className = '' }) => (
+  <span className={`${styles.wrapper} ${className}`}>
     <span className={`${styles.spinner} spinner`}/>
-    <span className={`${styles.label}`}>{label}</span>
+    {label
+      ? <span className={`${styles.label} spinner-label`}>{label}</span>
+      : null
+    }
   </span>
 );
 
