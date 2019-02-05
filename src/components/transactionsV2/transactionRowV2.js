@@ -9,7 +9,7 @@ import SpinnerV2 from '../spinnerV2/spinnerV2';
 import LiskAmount from '../liskAmount';
 import { DateTimeFromTimestamp } from './../timestamp/index';
 
-class TransactionRow extends React.Component {
+class TransactionRowV2 extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   shouldComponentUpdate(nextProps) {
     return nextProps.value.id !== this.props.value.id || nextProps.value.confirmations <= 1000;
@@ -25,7 +25,7 @@ class TransactionRow extends React.Component {
             followedAccounts={props.followedAccounts}
             address={props.address} />
         </div>
-          <div className={`${styles.hiddenXs} ${grid['col-sm-2']} ${grid['col-lg-3']} transactions-cell`}>
+          <div className={`${styles.hiddenXs} ${grid['col-sm-3']} ${grid['col-lg-3']} transactions-cell`}>
             <TransactionDetailV2
               t={props.t}
               type={props.value.type}
@@ -35,7 +35,7 @@ class TransactionRow extends React.Component {
           {props.value.confirmations ? <DateTimeFromTimestamp time={props.value.timestamp} />
             : <SpinnerV2 label={props.t('Pending...')} />}
         </div>
-        <div className={`${styles.hiddenXs} ${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
+        <div className={`${styles.hiddenXs} ${grid['col-sm-1']} ${grid['col-lg-2']} transactions-cell`}>
           <LiskAmount val={props.value.fee}/> {props.t('LSK')}
         </div>
         <div className={`${grid['col-xs-6']} ${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
@@ -46,4 +46,4 @@ class TransactionRow extends React.Component {
   }
 }
 
-export default translate()(TransactionRow);
+export default translate()(TransactionRowV2);

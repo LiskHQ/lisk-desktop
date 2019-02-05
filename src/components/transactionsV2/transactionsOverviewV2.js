@@ -5,17 +5,16 @@ import Piwik from '../../utils/piwik';
 import TransactionsListV2 from './transactionsListV2';
 import styles from './transactionsV2.css';
 
-class TransactionsOverview extends React.Component {
+class TransactionsOverviewV2 extends React.Component {
   constructor(props) {
     super(props);
-    this.canLoadMore = true;
 
     this.props.onInit();
   }
 
   // eslint-disable-next-line class-methods-use-this
   isSmallScreen() {
-    return window.innerWidth <= 768;
+    return window.innerWidth <= 1024;
   }
 
   isActiveFilter(filter) {
@@ -29,7 +28,7 @@ class TransactionsOverview extends React.Component {
     this.props.onFilterSet(filter);
   }
 
-  generateFilters(isSmallScreen) {
+  generateFilters() {
     return [
       {
         name: this.props.t('All transactions'),
@@ -37,12 +36,12 @@ class TransactionsOverview extends React.Component {
         className: 'filter-all',
       },
       {
-        name: isSmallScreen ? this.props.t('In') : this.props.t('Incoming transactions'),
+        name: this.props.t('Incoming transactions'),
         value: txFilters.incoming,
         className: 'filter-in',
       },
       {
-        name: isSmallScreen ? this.props.t('Out') : this.props.t('Outgoing transactions'),
+        name: this.props.t('Outgoing transactions'),
         value: txFilters.outgoing,
         className: 'filter-out',
       },
@@ -51,7 +50,7 @@ class TransactionsOverview extends React.Component {
 
   render() {
     const isSmallScreen = this.isSmallScreen();
-    const filters = this.generateFilters(isSmallScreen);
+    const filters = this.generateFilters();
 
     return (
       <div className={`${styles.transactions} transactions`}>
@@ -65,12 +64,16 @@ class TransactionsOverview extends React.Component {
         </ul>
         <TransactionsListV2
           followedAccounts={this.props.followedAccounts}
+          canLoadMore={this.props.canLoadMore}
           transactions={this.props.transactions}
           filter={filters[this.props.activeFilter]}
           address={this.props.address}
           publicKey={this.props.publicKey}
           history={this.props.history}
           onClick={props => this.props.onTransactionRowClick(props)}
+          loading={this.props.loading}
+          onLoadMore={this.props.onLoadMore}
+          isSmallScreen={isSmallScreen}
         />
       </div>
     );
@@ -82,5 +85,5 @@ const mapStateToProps = state => ({
   account: state.account,
 });
 
-export default connect(mapStateToProps)(TransactionsOverview);
+export default connect(mapStateToProps)(TransactionsOverviewV2);
 

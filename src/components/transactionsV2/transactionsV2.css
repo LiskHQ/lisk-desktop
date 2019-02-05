@@ -3,7 +3,7 @@
 .transactions {
   background: var(--color-white);
   border-radius: var(--border-radius-standard);
-  box-shadow: var(--box-shadow-transaction-table);
+  box-shadow: var(--box-shadow-standard), var(--box-shadow-top);
   display: flex;
   flex-direction: column;
   height: auto;
@@ -70,6 +70,8 @@
 }
 
 .txDetails {
+  word-break: break-word;
+
   &.delegateVote {
     display: flex;
     flex-wrap: wrap;
@@ -97,23 +99,5 @@
 
   &.greenLabel {
     color: #00b262;
-  }
-}
-
-@media (--medium-viewport) {
-  .txDetails {
-    &.delegateVote {
-      & > span {
-        margin-right: 20%;
-
-        &:last-child {
-          margin-right: 0;
-        }
-      }
-    }
-
-    & .label {
-      display: none;
-    }
   }
 }

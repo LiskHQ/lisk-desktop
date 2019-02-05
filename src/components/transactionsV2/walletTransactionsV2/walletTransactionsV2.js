@@ -4,7 +4,7 @@ import txFilters from '../../../constants/transactionFilters';
 import WalletHeader from './walletHeader';
 import routes from '../../../constants/routes';
 
-class WalletTransactions extends React.Component {
+class WalletTransactionsV2 extends React.Component {
   constructor() {
     super();
 
@@ -72,6 +72,7 @@ class WalletTransactions extends React.Component {
   render() {
     const overviewProps = {
       ...this.props,
+      canLoadMore: this.props.transactions.length < this.props.transactionsCount,
       onInit: this.onInit,
       onLoadMore: this.onLoadMore,
       onFilterSet: this.onFilterSet,
@@ -87,4 +88,4 @@ class WalletTransactions extends React.Component {
   }
 }
 
-export default WalletTransactions;
+export default WalletTransactionsV2;

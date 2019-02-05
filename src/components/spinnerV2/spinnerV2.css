@@ -25,9 +25,11 @@
   animation-duration: var(--animation-speed-standard);
   animation-iteration-count: infinite;
   animation-timing-function: linear;
-  border: 2px solid var(--color-dark-gray);
+  border: 2px solid currentColor;
   border-bottom-color: transparent;
   border-radius: 50%;
+  box-sizing: border-box;
+  color: inherit;
   display: block;
   height: 14px;
   width: 14px;
