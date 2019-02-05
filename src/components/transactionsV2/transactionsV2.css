@@ -101,21 +101,3 @@
     color: #00b262;
   }
 }
-
-@media (--medium-viewport) {
-  .txDetails {
-    &.delegateVote {
-      & > span {
-        margin-right: 20%;
-
-        &:last-child {
-          margin-right: 0;
-        }
-      }
-    }
-
-    & .label {
-      display: none;
-    }
-  }
-}

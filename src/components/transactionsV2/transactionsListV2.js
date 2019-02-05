@@ -1,6 +1,5 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import tableStyle from 'react-toolbox/lib/table/theme.css';
 import TransactionsHeaderV2 from './transactionsHeaderV2';
 import TransactionRowV2 from './transactionRowV2';
 import txFilters from '../../constants/transactionFilters';
@@ -17,10 +16,12 @@ class TransactionsListV2 extends React.Component {
       followedAccounts,
       canLoadMore,
       loading,
+      isSmallScreen,
       t,
     } = this.props;
     // All, incoming, outgoing are filter values. To be more consistance with other possible tabs
     // We can refer to props.filter as tabObj
+
     const tabObj = this.props.filter;
     const fixIncomingFilter = (transaction) => {
       const isTypeNonSend = transaction.type !== txTypes.send;
@@ -37,7 +38,7 @@ class TransactionsListV2 extends React.Component {
       ? styles.bottom : styles.top;
 
     return <div className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} ${isLoading ? styles.isLoading : ''} transaction-results`}>
-      <TransactionsHeaderV2 tableStyle={tableStyle} />
+      <TransactionsHeaderV2 isSmallScreen={isSmallScreen} />
       {
         isLoading ? (
           <div className={styles.loadingOverlay}>
