@@ -30,6 +30,7 @@
   "After registration, your second passphrase will be required when confirming every transaction and every vote.": "After registration, your second passphrase will be required when confirming every transaction and every vote.",
   "All": "All",
   "All transactions": "All transactions",
+  "Amount": "Amount",
   "Amount (LSK)": "Amount (LSK)",
   "An error occoured while rendering this page": "An error occoured while rendering this page",
   "An error occurred while creating the transaction.": "An error occurred while creating the transaction.",

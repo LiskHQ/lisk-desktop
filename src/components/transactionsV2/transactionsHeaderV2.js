@@ -11,7 +11,7 @@ const TransactionsHeaderV2 = ({ t, isSmallScreen }) => (
     <div className={`${styles.hiddenXs} ${grid['col-sm-1']} ${grid['col-lg-2']} transactions-header`}>{
       isSmallScreen ? t('Fee') : t('Transaction Fee')
     }</div>
-    <div className={`${grid['col-xs-6']} ${grid['col-sm-2']} ${grid['col-lg-2']} transactions-header`}>{t('Amount (LSK)')}</div>
+    <div className={`${grid['col-xs-6']} ${grid['col-sm-2']} ${grid['col-lg-2']} transactions-header`}>{t('Amount')}</div>
   </div>);
 
 export default translate()(TransactionsHeaderV2);
