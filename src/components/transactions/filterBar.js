@@ -12,7 +12,9 @@ const FilterBar = props => (
           className={`${styles.filter}`}
           key={filter + index}>
             <p>{props.customFilters[filter]}</p>
-            <div onClick={() => {
+            <div
+              className='clearFilter'
+              onClick={() => {
               props.clearFilter(filter);
             }}>
               <FontIcon className={styles.icon} value='close' />
@@ -21,7 +23,9 @@ const FilterBar = props => (
         null))}
     <div className={`${styles.filter} ${styles.clearAll}`}>
       <div>
-        <p onClick={() => { props.clearAllFilters(); }}>{props.t('Clear All filters')}</p>
+        <p
+          className='clearAll'
+          onClick={() => { props.clearAllFilters(); }}>{props.t('Clear All filters')}</p>
       </div>
     </div>
   </div>);

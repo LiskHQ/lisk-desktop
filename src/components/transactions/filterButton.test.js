@@ -24,4 +24,17 @@ describe('FilterButton', () => {
     wrapper.find(Button).props().onClick();
     expect(props.saveFilters).to.be.calledWith(expectedValue);
   });
+
+  it('should toggle Filters dropdown', () => {
+    const props = {
+      t: spy(),
+    };
+
+    const wrapper = shallow(<FilterButton {...props} />);
+    expect(wrapper.state('showFilters')).to.be.been.equal(false);
+    wrapper.find('.filterTransactions').simulate('click');
+    expect(wrapper.state('showFilters')).to.be.been.equal(true);
+    wrapper.find('.filterTransactions').simulate('click');
+    expect(wrapper.state('showFilters')).to.be.been.equal(false);
+  });
 });
