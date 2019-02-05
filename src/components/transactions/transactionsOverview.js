@@ -110,7 +110,6 @@ class TransactionsOverview extends React.Component {
             hasTitle && (<span>{this.props.t(' of')} <span className={`${styles.accountTitle} account-title`}>{accountTitle}</span></span>)
           }
           </h2>
-
           {
             this.props.match.url === Ulrs.wallet.path &&
             (

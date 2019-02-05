@@ -20,6 +20,10 @@ describe('TopBar', () => {
     location: { pathname: routes.dashboard.path },
     showDelegate: false,
     t: val => val,
+    logOut: sinon.spy(),
+    history: {
+      replace: () => {},
+    },
   };
 
   const history = {
@@ -82,9 +86,9 @@ describe('TopBar', () => {
   it('logout user when user do a click on logout function', () => {
     wrapper.find('.avatar').simulate('click');
     wrapper.update();
-    wrapper.find('span.dropdownOption').simulate('click');
+    wrapper.find('.logout').simulate('click');
     wrapper.update();
-    expect(myProps.setActiveDialog).have.been.calledWith();
+    expect(myProps.logOut).have.been.calledWith();
   });
 
   it('renders sign in component when user is logout', () => {

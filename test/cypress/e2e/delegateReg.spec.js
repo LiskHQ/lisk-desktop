@@ -39,7 +39,6 @@ describe('Delegate Registration', () => {
     cy.autologin(accounts['delegate candidate'].passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
     // Memorize the balance before test
-    cy.wait(500);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     // Choose delegate name
     cy.get(ss.chooseDelegateName).click();
@@ -57,7 +56,6 @@ describe('Delegate Registration', () => {
     cy.get(ss.transactionRow).eq(0).as('tx');
     cy.get('@tx').find(ss.spinner).should('not.exist');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', 'Delegate registration');
-    cy.get('@tx').find(ss.transactionReference).should('have.text', '-');
     cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');
     cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(function () {
       compareBalances(this.balanceBefore, this.balanceAfter, txDelegateRegPrice);
@@ -84,7 +82,6 @@ describe('Delegate Registration', () => {
     cy.get(ss.transactionRow).eq(0).as('tx');
     cy.get('@tx').find(ss.spinner).should('not.exist');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', 'Delegate registration');
-    cy.get('@tx').find(ss.transactionReference).should('have.text', '-');
     cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');
   });
 

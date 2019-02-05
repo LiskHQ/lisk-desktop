@@ -20,10 +20,12 @@ body {
   z-index: 0;
 
   & > section {
-    margin-top: 25px;
+    margin-top: 85px;
     width: 100%;
     opacity: 0;
     transition: all ease 250ms;
+    position: relative;
+    z-index: -1;
   }
 
   &.loaded > section {

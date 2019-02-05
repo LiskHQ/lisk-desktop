@@ -1,18 +1,18 @@
 @import '../app/variables.css';
+@import '../app/variablesV2.css';
 
-.headerWrapper {
-  display: flex;
-  padding: 0 32px;
+.header {
+  justify-content: space-between !important;
 }
 
 .newsFeedBox {
   padding: 0;
   height: auto;
+  font-family: var(--content-font);
 }
 
 .settingsButton {
   display: flex;
-  padding: 20px 32px 0;
   align-items: center;
   font-weight: 600;
 
@@ -22,36 +22,38 @@
   }
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-}
-
 .emptyNews {
-  padding: 0 32px;
-  font-size: var(--subtitle-font-size);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--content-font);
+  font-size: var(--paragraph-font-size-l);
+  padding-top: 16px;
 }
 
 .liskLogo {
-  position: absolute;
-  bottom: 0;
-  left: -50px;
-  height: 400px;
   opacity: 0.2;
 }
 
 .container {
-  min-height: 670px;
+  min-height: 578px;
   overflow: hidden;
-  height: 723px;
+  height: 578px;
 
-  & .newsWrapper {
-    padding: 0 32px;
-    height: 182px;
+  & > div {
+    height: 100%;
   }
 
-  & .newsWrapper:nth-child(odd) {
-    background: linear-gradient(90deg, #fff, #f5f8fc);
+  & .newsWrapper {
+    padding: 16px;
+    height: 115px;
+    box-sizing: border-box;
+  }
+
+  & .newsWrapper:nth-child(even) {
+    background-color: #f8f9fb;
   }
 }
 
@@ -81,11 +83,6 @@
   .container {
     min-height: 500px;
     height: 587px;
-
-    & .newsWrapper {
-      padding: 0 32px;
-      height: 147px;
-    }
   }
 }
 

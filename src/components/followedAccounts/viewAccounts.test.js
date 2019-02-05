@@ -58,6 +58,7 @@ describe('Followed accounts list Component', () => {
             { address: '23467L', balance: 30000, title: '' },
             { address: '23464567L', balance: 3000, title: '' },
             { address: '2346456347L', balance: 3000, title: '' },
+            { address: '234645634347L', balance: 3000, title: '' },
           ],
         },
       });

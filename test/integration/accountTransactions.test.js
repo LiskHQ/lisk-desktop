@@ -29,6 +29,7 @@ import routes from '../../src/constants/routes';
 import GenericStepDefinition from '../utils/genericStepDefinition';
 import txFilters from './../../src/constants/transactionFilters';
 import peersMiddleware from '../../src/store/middlewares/peers';
+import Rows from '../../src/components/transactions/rows';
 
 const delegateProductivity = {
   producedblocks: 43961,
@@ -248,7 +249,7 @@ describe('@integration: Account Transactions', () => {
 
   describe('Scenario: should allow to view transactions details of any account', () => {
     step('Given I\'m on "accounts/123L" as "genesis" account', () => setupStep({ accountType: 'genesis', address: '123L' }));
-    step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
+    step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, Rows));
     step('When I click on a transaction row', () => helper.clickOnElement('.transactions-row'));
     step('Then I should be redirected to transactoinDetails step', () => helper.checkRedirectionToDetails('123L', '123456'));
   });
@@ -257,23 +258,23 @@ describe('@integration: Account Transactions', () => {
     step('Given I\'m on "wallet" as "genesis" account', () => setupStep({ accountType: 'genesis', address: '123L' }));
     step('Then the "All" filter should be selected by default', () => helper.checkSelectedFilter('all'));
     step('When I click on the "Outgoing" filter', () => helper.clickOnElement('.filter-out'));
-    step('Then I expect to see the results for "Outgoing"', () => helper.shouldSeeCountInstancesOf(5, 'TransactionRow'));
+    step('Then I expect to see the results for "Outgoing"', () => helper.shouldSeeCountInstancesOf(5, Rows));
     step('When I click on the "Incoming" filter', () => helper.clickOnElement('.filter-in'));
-    step('Then I expect to see the results for "Incoming"', () => helper.shouldSeeCountInstancesOf(15, 'TransactionRow'));
+    step('Then I expect to see the results for "Incoming"', () => helper.shouldSeeCountInstancesOf(15, Rows));
     step('When I click again on the "All" filter', () => helper.clickOnElement('.filter-all'));
-    step('Then I expect to see the results for "All"', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
+    step('Then I expect to see the results for "All"', () => helper.shouldSeeCountInstancesOf(20, Rows));
   });
 
   describe('Scenario: allows to view transactions without login', () => {
     step('Given I\'m on "accounts/123L" with no account', () => setupStep({ address: '123L' }));
-    step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
+    step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, Rows));
   });
 
   describe('Scenario: allows to load more cache transactions of an account', () => {
     step('Given I\'m on "accounts/123L" with no account', () => setupStep({ address: '123L' }));
-    step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, 'TransactionRow'));
+    step('Then I should see 20 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(20, Rows));
     step('When I scroll to the bottom of "transactions box"', () => { wrapper.find('Waypoint').props().onEnter(); });
-    step('Then I should see 40 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(40, 'TransactionRow'));
+    step('Then I should see 40 transaction rows as result of the address 123L', () => helper.shouldSeeCountInstancesOf(40, Rows));
   });
 
   describe('Scenario: should allow to view delegate details of a delegate account', () => {

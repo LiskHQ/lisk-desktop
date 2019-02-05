@@ -5,8 +5,7 @@ import { translate } from 'react-i18next';
 import React from 'react';
 import throttle from 'lodash.throttle';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { FontIcon } from '../fontIcon';
-import Box from '../box';
+import BoxV2 from '../boxV2';
 import { loadTransactions } from '../../actions/transactions';
 import TransactionsList from '../transactions/transactionsList';
 import CurrencyGraph from './currencyGraph';
@@ -19,7 +18,7 @@ import { fromRawLsk } from '../../utils/lsk';
 import breakpoints from './../../constants/breakpoints';
 import fees from './../../constants/fees';
 import ShowMore from '../showMore';
-import { SecondaryLightButton } from '../toolbox/buttons/button';
+import { SecondaryButtonV2 } from '../toolbox/buttons/button';
 import Banner from '../toolbox/banner/banner';
 
 import styles from './dashboard.css';
@@ -47,7 +46,7 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', throttle(this.resizeWindow, 1000));
+    window.addEventListener('resize', throttle(this.resizeWindow, 10));
   }
 
   shouldShowInitializatiion() {
@@ -80,6 +79,7 @@ class Dashboard extends React.Component {
     } = this.props;
 
     const isLoggedIn = account.address;
+    const isBarEnabledTransactions = transactions.length > 4;
 
     return (
       <React.Fragment>
@@ -90,7 +90,7 @@ class Dashboard extends React.Component {
               title={t('Initialize Lisk ID')}
               footer={(
                 <Link to={`${routes.send.path}?initializeAccount`}>
-                  <SecondaryLightButton>{t('Create First Transaction')}</SecondaryLightButton>
+                  <SecondaryButtonV2>{t('Create First Transaction')}</SecondaryButtonV2>
                 </Link>)}>
               <p>{t('It is recommended that you initialize your Lisk ID.')}</p>
               <p>{t('The easiest way to do this is to send LSK to yourself by clicking this button.')}</p>
@@ -102,15 +102,14 @@ class Dashboard extends React.Component {
           <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
             {
               isLoggedIn
-              ? <Box className={`${styles.latestActivity}`}>
+              ? <BoxV2 className={`${styles.latestActivity}`}>
                 <header>
-                  <h2 className={styles.title}>
+                  <h1 className={styles.title}>
                     {t('Latest activity')}
                     <Link to={`${routes.wallet.path}`} className={`${styles.seeAllLink} seeAllLink`}>
                       {t('See all transactions')}
-                      <FontIcon value='arrow-right'/>
                     </Link>
-                  </h2>
+                  </h1>
                 </header>
                 <TransactionsList {...{
                   address: account.address,
@@ -119,30 +118,29 @@ class Dashboard extends React.Component {
                   loading,
                   onClick: props => history.push(`${routes.wallet.path}?id=${props.value.id}`),
                   showMore: this.state.showMore,
+                  isBarEnabledTransactions,
                   t,
                   transactions,
                 }} />
                 {
-                  transactions.length > 3 &&
+                  isBarEnabledTransactions &&
                   <ShowMore
                     className={styles.showMore}
                     onClick={() => this.onShowMoreToggle()}
                     text={this.state.showMore ? t('Show Less') : t('Show More')}
                   />
                 }
-              </Box>
+                </BoxV2>
               : <QuickTips />
             }
             <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>
-              <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingLeft: '0px' }}>
-                <Box className={`${styles.following} bookmarks`}>
-                  <FollowedAccounts history={history}/>
-                </Box>
+              <div className={`${styles.following} bookmarks`}>
+                <FollowedAccounts history={history}/>
               </div>
               <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingRight: '0px' }}>
-                <Box className={`${styles.graph}`}>
+                <div className={`${styles.graph}`}>
                   <CurrencyGraph />
-                </Box>
+                </div>
               </div>
             </div>
             {

@@ -5,7 +5,6 @@ import TransactionsOverview from '../transactionsOverview';
 import TransactionDetailView from './../transactionDetailView';
 import Box from './../../box';
 import txFilters from './../../../constants/transactionFilters';
-
 import routes from './../../../constants/routes';
 
 class WalletTransactions extends React.Component {

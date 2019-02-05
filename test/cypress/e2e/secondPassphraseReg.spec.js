@@ -33,7 +33,6 @@ describe('Second Passphrase Registration', () => {
   it('Setup second passphrase + Header balance is affected', function () {
     cy.autologin(accounts['second passphrase candidate'].passphrase, networks.devnet.node);
     cy.visit(urls.secondPassphrase);
-    cy.wait(500);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     cy.get(ss.nextBtn).click();
     moveMouseRandomly();
@@ -49,7 +48,6 @@ describe('Second Passphrase Registration', () => {
     cy.get(ss.transactionRow).eq(0).as('tx');
     cy.get('@tx').find(ss.spinner).should('not.exist');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', 'Second passphrase registration');
-    cy.get('@tx').find(ss.transactionReference).should('have.text', '-');
     cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');
     cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(() => {
       compareBalances(this.balanceBefore, this.balanceAfter, txSecondPassphraseRegCost);

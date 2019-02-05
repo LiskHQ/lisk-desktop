@@ -1,4 +1,5 @@
 @import '../app/variables.css';
+@import '../app/variablesV2.css';
 
 .wrapper {
   width: 100%;
@@ -21,20 +22,21 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  min-height: 418px;
+  min-height: 318px;
   height: auto;
   margin: 0 0 20px;
   padding: 0;
 
-  & > header {
-    box-sizing: border-box;
-    padding: 20px 48px 0;
+  & :global(.transaction-results) {
+    margin: 0 0 30px;
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
   }
 
-  & :global(.transaction-results) {
-    margin: 0;
-    height: 270px;
-    overflow: hidden;
+  & > p {
+    margin: auto;
+    padding: 0;
   }
 }
 
@@ -56,6 +58,7 @@
 .following {
   height: auto;
   padding: 0;
+  width: calc(50% - 10px);
 }
 
 .newsFeedWrapper {
@@ -64,18 +67,18 @@
 }
 
 .seeAllLink {
-  font-size: 15px;
+  font-family: var(--content-font);
+  font-size: 14px;
+  font-weight: 600;
   color: var(--color-primary-standard);
   margin-left: 40px;
   text-decoration: none;
-  font-family: var(--content-font);
-  font-weight: var(--font-weight-bold);
 }
 
 .graph {
   overflow: hidden;
   padding: 0px;
-  height: 428px;
+  height: 318px;
 }
 
 .showMore {
@@ -136,12 +139,26 @@
 
   .graph {
     height: 60%;
-    min-height: 300px;
+    min-height: 327px;
     margin-bottom: 0;
+    overflow: initial;
   }
 
   .following {
     height: auto;
     min-height: 300px;
+    width: 100%;
+  }
+
+  .main > div:first-child {
+    margin: 0 0 20px;
+  }
+
+  .main > div:nth-child(2) {
+    padding-left: 0;
+  }
+
+  .main > div:last-child {
+    padding-right: 0;
   }
 }

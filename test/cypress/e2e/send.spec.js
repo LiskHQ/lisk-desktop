@@ -56,7 +56,6 @@ describe('Send', () => {
     'Header balance is affected', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.send);
-    cy.wait(500);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     cy.get(ss.recipientInput).type(randomAddress);
     cy.get(ss.amountInput).click().type(randomAmount);
@@ -67,7 +66,6 @@ describe('Send', () => {
     cy.get(ss.transactionRow).eq(0).as('tx');
     cy.get('@tx').find('.spinner');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', randomAddress);
-    cy.get('@tx').find(ss.transactionReference).should('have.text', '-');
     cy.get('@tx').find(ss.transactionAmount).should('have.text', randomAmount.toString());
     cy.wait(txConfirmationTimeout);
     cy.get('@tx').find(ss.spinner).should('not.exist');
@@ -99,7 +97,6 @@ describe('Send', () => {
     cy.get(ss.transactionRow).eq(0).as('tx');
     cy.get('@tx').find(ss.spinner);
     cy.get('@tx').find(ss.transactionAddress).should('have.text', randomAddress);
-    cy.get('@tx').find(ss.transactionReference).should('have.text', randomReference);
     cy.get('@tx').find(ss.transactionAmount).should('have.text', randomAmount.toString());
     cy.wait(txConfirmationTimeout);
     cy.get('@tx').find(ss.spinner).should('not.exist');
@@ -189,7 +186,6 @@ describe('Send', () => {
     cy.visit(urls.wallet);
     cy.get(ss.transactionRow).eq(0).as('tx');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', accounts['without initialization'].address);
-    cy.get('@tx').find(ss.transactionReference).should('have.text', 'Account initialization');
     cy.visit(urls.dashboard);
     cy.get(ss.initializeBanner).should('not.exist');
   });

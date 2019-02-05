@@ -30,7 +30,9 @@ describe('TransactionRow', () => {
     signature: '3d276c1cb00edbc803e8911033727fe4a77f931868f89dc2f42deeefd7aa2eef1a58cd289517546ac3135f804499d1406234597d5b6198c4b9dac373c2b1bd03',
     signatures: [],
     confirmations: 892,
-    asset: {},
+    asset: {
+      data: '123',
+    },
   };
   const address = '16313739661670634666L';
 
@@ -51,6 +53,7 @@ describe('TransactionRow', () => {
             address={address}
             value={rowData}
             nextStep={() => {}}
+            onClick={() => {}}
           ></TransactionRow>
         </I18nextProvider>
       </Router>

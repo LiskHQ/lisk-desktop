@@ -31,6 +31,7 @@ const mapStateToProps = state => ({
     state.search.delegates[state.account.address],
   activeFilter: state.filters.wallet || txFilters.all,
   loading: state.loading,
+  followedAccounts: state.followedAccounts.accounts,
 });
 /* istanbul ignore next */
 const mapDispatchToProps = {
