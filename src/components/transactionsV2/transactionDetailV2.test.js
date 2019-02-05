@@ -53,6 +53,6 @@ describe('TransactionRow V2', () => {
     };
     wrapper.setProps(newProps);
     expect(wrapper.find('.txDetails')).to.have.className('delegateVote');
-    expect(wrapper).to.have.text('↑ 2 Upvotes,↓ 1 Downvotes');
+    expect(wrapper).to.have.text('↑ 2 Upvotes, ↓ 1 Downvotes');
   });
 });
