@@ -13,7 +13,7 @@ const Banner = ({
     <main className={`${styles.content}`}>
       { children }
     </main>
-    <footer className={`${styles.footer}`}>
+    <footer>
       { footer }
     </footer>
   </section>
