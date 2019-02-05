@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import TransactionsListV2 from './transactionsListV2';
-
+import actionTypes from '../../constants/actions';
 import txFilters from '../../constants/transactionFilters';
 import i18n from '../../i18n';
 
@@ -37,6 +37,7 @@ describe('TransactionsList V2', () => {
       value: txFilters.incoming,
       name: 'In',
     },
+    loading: [],
     transactions,
     onClick: () => {},
     loadMore: () => {},
@@ -61,5 +62,14 @@ describe('TransactionsList V2', () => {
     wrapper = mount(<TransactionsListV2 {...propsNoTx} />, options);
     expect(wrapper).to.have.descendants('TransactionsHeaderV2');
     expect(wrapper).to.have.descendants('.empty-message');
+  });
+
+  it('should render loading spinner', () => {
+    const loadingProps = {
+      ...props,
+      loading: [actionTypes.transactionsFilterSet],
+    };
+    wrapper = mount(<TransactionsListV2 {...loadingProps} />, options);
+    expect(wrapper).to.have.descendants('SpinnerV2');
   });
 });
