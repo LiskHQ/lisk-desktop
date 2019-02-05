@@ -70,6 +70,8 @@
 }
 
 .txDetails {
+  word-break: break-word;
+
   &.delegateVote {
     display: flex;
     flex-wrap: wrap;
