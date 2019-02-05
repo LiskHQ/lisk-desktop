@@ -171,15 +171,11 @@ header {
       padding: 0 16px;
 
       &:nth-of-type(even) {
-        background: var(--row-background-color);
-      }
-
-      &:nth-of-type(odd) {
-        background: var(--gradient-greyscale);
+        background: var(--color-background-menu);
       }
 
       &:hover {
-        background: var(--color-primary-very-light);
+        background: var(--color-rows-hover);
       }
 
       & .accountInformation {

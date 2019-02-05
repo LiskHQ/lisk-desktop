@@ -1,4 +1,5 @@
 @import '../app/variables';
+@import '../app/variablesV2.css';
 
 :root {
   --stepSwitch-font-size: 16px;
@@ -40,45 +41,56 @@
 }
 
 .stepSwitchWrapper {
-  float: right;
-  margin: 50px 10px 50px 0px;
-  z-index: 10;
-  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .stepSwitch {
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
   cursor: pointer;
-  font-size: var(--stepSwitch-font-size);
-  font-weight: 600;
-  font-family: var(--heading-font);
-  color: var(--color-grayscale-light);
+  font-size: var(--paragraph-font-size-s);
+  font-weight: var(--font-weight-semi-bold);
+  font-family: var(--content-font);
+  color: var(--color-title-header-box);
+  margin: 0 5px;
+  position: relative;
+
+  &:not(:first-child)::before {
+    background-color: var(--color-dark-gray);
+    content: '';
+    height: 18px;
+    opacity: 0.1;
+    left: -5px;
+    position: absolute;
+    width: 1px;
+  }
 
   &.active {
-    color: var(--color-grayscale-dark);
+    background-color: var(--color-white);
+    color: var(--color-primary-standard);
+    box-shadow: var(--box-shadow-graph-selector);
+    border-radius: 2px;
   }
 }
 
 @media (--medium-viewport) {
   .wrapper {
     min-height: 327px;
-
-    & header {
-      padding: 20px var(--box-padding-left-M) 0 var(--box-padding-left-M);
-    }
   }
 
   .chartWrapper {
+    height: 89px;
     min-height: 230px;
   }
 
   .errorMessage {
     margin-top: 30px;
-  }
-}
-
-@media (--small-viewport) {
-  .stepSwitchWrapper {
-    margin: 45px 0;
   }
 }

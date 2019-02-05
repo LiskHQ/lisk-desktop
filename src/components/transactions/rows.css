@@ -19,7 +19,7 @@
   }
 
   &:hover {
-    background-color: var(--color-primary-very-light);
+    background-color: var(--color-rows-hover);
   }
 }
 

@@ -10,8 +10,8 @@
 .results {
   overflow-y: initial;
 
-  & .turnArrow {
-    transform: rotate(180deg);
+  & > div > div {
+    font-weight: 600;
   }
 }
 

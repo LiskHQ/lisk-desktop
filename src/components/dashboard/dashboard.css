@@ -141,11 +141,24 @@
     height: 60%;
     min-height: 327px;
     margin-bottom: 0;
+    overflow: initial;
   }
 
   .following {
     height: auto;
     min-height: 300px;
     width: 100%;
+  }
+
+  .main > div:first-child {
+    margin: 0 0 20px;
+  }
+
+  .main > div:nth-child(2) {
+    padding-left: 0;
+  }
+
+  .main > div:last-child {
+    padding-right: 0;
   }
 }
