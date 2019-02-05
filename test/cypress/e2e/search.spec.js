@@ -173,7 +173,6 @@ describe('Search', () => {
     cy.visit('/');
     cy.get(ss.userAvatar).click();
     cy.get(ss.logoutBtn).click();
-    cy.clearLocalStorage();
     cy.get(ss.searchInput).click().type(`${accounts.delegate.username}`);
     cy.get(ss.delegateResults).eq(0).click();
     cy.get(ss.leftBlockAccountExplorer).find(ss.delegateName).should('have.text', accounts.delegate.username);

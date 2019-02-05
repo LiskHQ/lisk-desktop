@@ -72,7 +72,6 @@ const ss = {
   transactionId: '.transaction-id .copy-title',
   logoutBtn: '.logout',
   userAvatar: '.user-avatar',
-  dialogButtons: '.ok-button',
   emptyResultsMessage: '.empty-message',
   revealCheckbox: '.reveal-checkbox',
   passphraseTextarea: 'textarea.passphrase',
