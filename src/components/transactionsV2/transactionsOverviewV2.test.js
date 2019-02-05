@@ -76,11 +76,4 @@ describe('TransactionsOverview V2', () => {
     wrapper.find('.transaction-filter-item').first().simulate('click');
     expect(props.onFilterSet).to.have.been.calledWith();
   });
-
-  it('should render with shortname when screen is small', () => {
-    window.innerWidth = 200;
-    wrapper = mount(<TransactionsOverviewV2 {...props}/>, options);
-    expect(wrapper.find('.filter-in')).to.have.text('In');
-    expect(wrapper.find('.filter-out')).to.have.text('Out');
-  });
 });
