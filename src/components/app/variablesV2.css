@@ -103,7 +103,7 @@ or "warn/action" ineastd of "red/green"
   --box-shadow-header: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
   --box-shadow-avatar: var(--box-shadow-standard);
   --box-shadow-search: 0 2px 4px 0 rgba(8, 24, 49, 0.06);
-  --box-shadow-transaction-table: var(--box-shadow-standard), 0 -2px 8px 0 rgba(72, 77, 97, 0.1);
+  --box-shadow-top: 0 -2px 8px 0 rgba(72, 77, 97, 0.1);
 
   /*************************
         Animation
