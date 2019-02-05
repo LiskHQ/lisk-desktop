@@ -14,7 +14,7 @@ class TransactionsOverviewV2 extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   isSmallScreen() {
-    return window.innerWidth <= 768;
+    return window.innerWidth <= 1024;
   }
 
   isActiveFilter(filter) {
@@ -28,7 +28,7 @@ class TransactionsOverviewV2 extends React.Component {
     this.props.onFilterSet(filter);
   }
 
-  generateFilters(isSmallScreen) {
+  generateFilters() {
     return [
       {
         name: this.props.t('All transactions'),
@@ -36,12 +36,12 @@ class TransactionsOverviewV2 extends React.Component {
         className: 'filter-all',
       },
       {
-        name: isSmallScreen ? this.props.t('In') : this.props.t('Incoming transactions'),
+        name: this.props.t('Incoming transactions'),
         value: txFilters.incoming,
         className: 'filter-in',
       },
       {
-        name: isSmallScreen ? this.props.t('Out') : this.props.t('Outgoing transactions'),
+        name: this.props.t('Outgoing transactions'),
         value: txFilters.outgoing,
         className: 'filter-out',
       },
@@ -50,7 +50,7 @@ class TransactionsOverviewV2 extends React.Component {
 
   render() {
     const isSmallScreen = this.isSmallScreen();
-    const filters = this.generateFilters(isSmallScreen);
+    const filters = this.generateFilters();
 
     return (
       <div className={`${styles.transactions} transactions`}>
@@ -73,6 +73,7 @@ class TransactionsOverviewV2 extends React.Component {
           loading={this.props.loading}
           canLoadMore={this.props.canLoadMore}
           onLoadMore={this.props.onLoadMore}
+          isSmallScreen={isSmallScreen}
         />
       </div>
     );

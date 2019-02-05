@@ -137,6 +137,7 @@
   "Explore the network": "Explore the network",
   "Failed to connect to node": "Failed to connect to node",
   "Failed to connect: Node {{address}} is not active": "Failed to connect: Node {{address}} is not active",
+  "Fee": "Fee",
   "Fee: {{amount}} LSK": "Fee: {{amount}} LSK",
   "Feedback": "Feedback",
   "Filter": "Filter",
