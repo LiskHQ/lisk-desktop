@@ -17,7 +17,7 @@ class WalletTransactionsV2 extends React.Component {
   onInit() {
     this.props.transactionsFilterSet({
       address: this.props.account.address,
-      limit: 25,
+      limit: 30,
       filter: txFilters.all,
     });
 
@@ -38,7 +38,7 @@ class WalletTransactionsV2 extends React.Component {
   onLoadMore() {
     this.props.transactionsRequested({
       address: this.props.address,
-      limit: 25,
+      limit: 30,
       offset: this.props.transactions.length,
       filter: this.props.activeFilter,
     });
@@ -53,7 +53,7 @@ class WalletTransactionsV2 extends React.Component {
     if (filter <= 2) {
       this.props.transactionsFilterSet({
         address: this.props.address,
-        limit: 25,
+        limit: 30,
         filter,
       });
     } else {
