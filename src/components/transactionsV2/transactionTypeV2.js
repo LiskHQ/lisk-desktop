@@ -52,7 +52,7 @@ const TransactionTypeV2 = (props) => { // eslint-disable-line complexity
   const hasTitle = index !== -1 && accountTitle !== props.address;
 
   return (
-    <div className={styles.transactionType}>
+    <div className={`${styles.transactionType} transaction-address`}>
       <img src={icon} className={styles.icon} />
       <div className={styles.info}>
       { type || props.showTransaction
