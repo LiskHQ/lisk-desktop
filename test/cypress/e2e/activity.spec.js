@@ -185,12 +185,12 @@ function testWalletV2(open, account) {
    * Clicking show more button triggers loading another portion of txs
    * @expect more txs are present
    */
-  it('25 tx are shown, clicking show more loads another 25', () => {
+  it('30 tx are shown, clicking show more loads another 30', () => {
     cy.autologin(account.passphrase, networks.devnet.node);
     open();
-    cy.get(ss.transactionRow).should('have.length', 25);
+    cy.get(ss.transactionRow).should('have.length', 30);
     cy.get(ss.showMoreButton).click();
-    cy.get(ss.transactionRow).should('have.length', 50);
+    cy.get(ss.transactionRow).should('have.length', 60);
   });
 
   /**
@@ -232,25 +232,25 @@ describe('Latest activity', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
   });
   /**
-   * 3 transaction are shown in the latest activity component
-   * @expect 3 transactions visible
+   * 4 transaction are shown in the latest activity component
+   * @expect 4 transactions visible
    */
   it('4 tx are shown by default', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.transactionRow).eq(4).should('be.visible');
-    cy.get(ss.transactionRow).eq(25).should('be.not.visible');
+    cy.get(ss.transactionRow).eq(30).should('be.not.visible');
   });
 
   /**
-   * 25 transaction are shown in the latest activity component after clicking Show more
-   * @expect 25 transactions visible
+   * 30 transaction are shown in the latest activity component after clicking Show more
+   * @expect 30 transactions visible
    */
-  it('25 tx are shown after Show More click', () => {
+  it('30 tx are shown after Show More click', () => {
     cy.visit(urls.dashboard);
-    cy.get(ss.transactionRow).should('have.length', 25);
+    cy.get(ss.transactionRow).should('have.length', 30);
     cy.get(ss.showMoreButton).eq(0).click();
     cy.get(ss.transactionRow).eq(4).should('be.visible');
-    cy.get(ss.transactionRow).eq(24).trigger('mouseover').should('be.visible');
+    cy.get(ss.transactionRow).eq(29).trigger('mouseover').should('be.visible');
   });
 
   /**
