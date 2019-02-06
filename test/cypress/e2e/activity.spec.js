@@ -180,6 +180,53 @@ function testDelegateActivity(open) {
   });
 }
 
+function testWalletV2(open, account) {
+  /**
+   * Clicking show more button triggers loading another portion of txs
+   * @expect more txs are present
+   */
+  it('25 tx are shown, clicking show more loads another 25', () => {
+    cy.autologin(account.passphrase, networks.devnet.node);
+    open();
+    cy.get(ss.transactionRow).should('have.length', 25);
+    cy.get(ss.showMoreButton).click();
+    cy.get(ss.transactionRow).should('have.length', 50);
+  });
+
+  /**
+   * Click on transaction row leads to tx details page
+   * @expect url
+   */
+  it('Click leads to tx details', () => {
+    cy.autologin(account.passphrase, networks.devnet.node);
+    open();
+    cy.get(ss.transactionRow).eq(0).click();
+    cy.url().should('contain', urls.transactions);
+  });
+
+  /**
+   * Transaction filtering tabs show filtered transaction lists
+   * @expect incoming txs on Incoming tab
+   * @expect outgoing txs on Outgoing tab
+   * @expect all txs on All tab
+   */
+  it('Incoming/Outgoing/All filtering works', () => {
+    cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
+    open();
+    cy.get(ss.transactionRow).should('have.length', 2);
+    cy.get(ss.filterIncoming).click();
+    cy.get(ss.transactionRow).should('have.length', 1);
+    cy.get(ss.transactionRow).eq(0)
+      .find(ss.transactionAddress).contains(accounts.genesis.address);
+    cy.get(ss.filterAll).click();
+    cy.get(ss.transactionRow).should('have.length', 2);
+    cy.get(ss.filterOutgoing).click();
+    cy.get(ss.transactionRow).should('have.length', 1);
+    cy.get(ss.transactionRow).eq(0)
+      .find(ss.transactionAddress).contains('Second passphrase registration');
+  });
+}
+
 describe('Latest activity', () => {
   beforeEach(() => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
@@ -214,8 +261,7 @@ describe('Latest activity', () => {
   it('Click leads to tx details', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.transactionRow).eq(0).click();
-    cy.url().should('contain', `${urls.wallet}?id=`);
-    cy.get(ss.txDetailsBackButton);
+    cy.url().should('contain', urls.transactions);
   });
 
   /**
@@ -232,15 +278,15 @@ describe('Latest activity', () => {
 });
 
 describe('Wallet activity', () => {
-  testActivity(() => cy.visit(urls.wallet));
+  testWalletV2(() => cy.visit(urls.wallet), accounts.genesis);
 });
 
 describe('Account Activity opened from search', () => {
   testActivity(() => cy.get(ss.searchInput).click().type(`${accounts.genesis.address}{enter}`));
 });
 
-describe('Wallet Activity for delegate', () => {
-  testDelegateActivity(() => cy.visit(urls.wallet));
+describe.skip('Wallet Activity for delegate', () => {
+  testWalletV2(() => cy.visit(urls.wallet), accounts.delegate);
 });
 
 describe('Account Activity opened from search for delegate', () => {

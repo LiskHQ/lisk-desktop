@@ -50,7 +50,7 @@ describe('Tx details', () => {
    */
   it('Vote', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
-    cy.visit(`${urls.wallet}?id=${delegateVoteTxId}`);
+    cy.visit(`${urls.transactions}/${delegateVoteTxId}`);
     cy.get(ss.txHeader).contains('Delegate vote');
     cy.get(ss.txSenderAddress).should('have.text', accounts.delegate.address)
       .click();
@@ -79,7 +79,7 @@ describe('Tx details', () => {
    */
   it.skip('Delegate registration', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
-    cy.visit(`${urls.wallet}?id=${delegateRegTxId}`);
+    cy.visit(`${urls.transactions}/${delegateRegTxId}`);
     cy.get(ss.txHeader).contains('Delegate registration');
     cy.get(ss.txSenderAddress).should('have.text', accounts.delegate.address);
     cy.get(ss.txRecipientAddress).should('not.exist');
@@ -98,7 +98,7 @@ describe('Tx details', () => {
    */
   it('Second passphrase registration', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
-    cy.visit(`${urls.wallet}?id=${secondPassphraseRegTxId}`);
+    cy.visit(`${urls.transactions}/${secondPassphraseRegTxId}`);
     cy.get(ss.txHeader).contains('Second passphrase registration');
     cy.get(ss.txSenderAddress).should('have.text', accounts['second passphrase account'].address)
       .click();
