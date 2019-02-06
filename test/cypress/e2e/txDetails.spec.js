@@ -4,7 +4,7 @@ import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
 import regex from '../../../src/utils/regex';
 
-const txConfirmationTimeout = 14000;
+const txConfirmationTimeout = 12000;
 
 const delegateVoteTxId = '7150719741601338678';
 const delegateRegTxId = '2697129531259680873';
@@ -33,6 +33,8 @@ describe('Tx details', () => {
       .click();
     cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', accounts.delegate.address);
     cy.go('back');
+    cy.wait(txConfirmationTimeout);
+    cy.reload();
     cy.get(ss.txAddedVotes).should('not.exist');
     cy.get(ss.txRemovedVotes).should('not.exist');
     cy.get(ss.txAmount).should('have.text', '-5');
@@ -40,8 +42,8 @@ describe('Tx details', () => {
     cy.get(ss.txId).contains(regex.transactionId);
     cy.get(ss.txReference).should('have.text', 'test-details');
     // After confirmation
-    cy.get(ss.txDate, { timeout: txConfirmationTimeout }).contains(new Date().getFullYear());
-    cy.get(ss.txConfirmations).should('have.text', '1');
+    cy.get(ss.txDate).contains(new Date().getFullYear());
+    cy.get(ss.txConfirmations).should('not.have.text', '');
   });
 
   /**
