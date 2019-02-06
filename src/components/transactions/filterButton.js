@@ -1,10 +1,11 @@
 import React from 'react';
-import Button from 'react-toolbox/lib/button';
 import Input from 'react-toolbox/lib/input';
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+import keyCodes from './../../constants/keyCodes';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
+import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 
 import styles from './filterButton.css';
 
@@ -68,8 +69,20 @@ class FilterButton extends React.Component {
 
   // istanbul ignore next
   handleClickOutside(e) {
-    if (this.dropdownRef && this.dropdownRef.contains(e.target)) return;
+    if (this.dropdownRef && this.dropdownRef.contains(e.target) && this.state.showFilters) return;
     this.toggleFilters();
+  }
+
+  handleKey(event) {
+    switch (event.keyCode) {
+      case keyCodes.enter:
+        this.saveFilters();
+        break;
+      /* istanbul ignore next */
+      default:
+        break;
+    }
+    return false;
   }
 
   render() {
@@ -140,16 +153,16 @@ class FilterButton extends React.Component {
                 type='text'
                 className='filter-message'
                 name='message'
-                placeholder='Message'
+                placeholder={this.props.t('Write message')}
                 theme={styles}
-                value={this.state.customFilters.message}
+                value={this.state.customFilters.message || this.props.customFilters.message}
+                onKeyDown={this.handleKey.bind(this)}
                 onChange={(val) => { this.changeFilters('message', val); }}/>
             </div>
             <div className={styles.buttonContainer}>
-              <Button
-                tooltip='tooltip here'
+              <PrimaryButtonV2
                 className={`${styles.saveButton} saveButton`}
-                onClick={this.saveFilters.bind(this)}>{this.props.t('Apply Filters')}</Button>
+                onClick={this.saveFilters.bind(this)}>{this.props.t('Apply Filters')}</PrimaryButtonV2>
             </div>
           </div>
         </DropdownV2>

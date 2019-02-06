@@ -1,3 +1,5 @@
+@import '../app/variables.css';
+
 .container {
   background-color: #fff;
   top: 40px;
@@ -31,16 +33,15 @@
   font-size: 15px;
   font-weight: 600;
   margin-left: 20px;
-  margin-top: 20px;
 }
 
 .buttonContainer {
-  padding: 0px 20px 10px;
+  padding: 0px 20px;
 }
 
 .row {
   display: flex;
-  margin: 10px 0;
+  margin: 14px 0;
 }
 
 .dash {
@@ -50,7 +51,8 @@
 
 .saveButton {
   width: 100%;
-  height: 40px;
+  margin-top: 14px;
+  min-height: 40px;
   border-radius: 4px;
   box-shadow: 0 2px 4px 0 rgba(4, 32, 76, 0.2);
   background-color: #4e80f7;
@@ -76,14 +78,14 @@
     font-size: 12px;
     color: var(--color-grayscale-medium);
     width: 100%;
-    padding: 4px 0 0 10px;
+    padding: 8px 0 0 14px;
     border-radius: 3px;
     border: none;
     transition: background-color 300ms linear;
 
     &::selection {
-      color: #fff;
-      background: var(--search-box-selection-background);
+      color: var(--color-white);
+      background: var(--color-primary-light);
     }
 
     &::placeholder {
