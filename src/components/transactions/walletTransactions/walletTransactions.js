@@ -94,23 +94,15 @@ class WalletTransactions extends React.Component {
 
   /* istanbul ignore next */
   clearFilter(filterName) {
-    this.setState({
-      customFilters: {
-        ...this.state.customFilters,
-        [filterName]: '',
-      },
+    this.saveFilters({
+      ...this.state.customFilters,
+      [filterName]: '',
     });
   }
 
   /* istanbul ignore next */
   clearAllFilters() {
-    this.setState({ customFilters: {} });
-    this.props.transactionsFilterSet({
-      address: this.props.address,
-      limit: 25,
-      value: this.state.filter,
-      customFilters: {},
-    });
+    this.saveFilters({});
   }
 
   changeFilters(name, value) {

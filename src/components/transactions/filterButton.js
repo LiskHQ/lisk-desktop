@@ -42,8 +42,9 @@ class FilterButton extends React.Component {
 
   saveFilters() {
     const customFilters = this.state.customFilters;
+    this.toggleFilters();
+
     this.setState({
-      showFilters: false,
       customFilters: {
         dateFrom: '',
         dateTo: '',
@@ -76,7 +77,7 @@ class FilterButton extends React.Component {
       <div>
         <div
           className={`${styles.filterTransactions} filterTransactions`}
-          onClick={() => this.toggleFilters()}>
+          onClick={() => { this.toggleFilters(); }}>
             {this.props.t('Filter Transactions')}
         </div>
         <DropdownV2 showDropdown={this.state.showFilters}>
