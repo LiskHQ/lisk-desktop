@@ -185,12 +185,12 @@ function testWalletV2(open, account) {
    * Clicking show more button triggers loading another portion of txs
    * @expect more txs are present
    */
-  it('30 tx are shown, clicking show more loads another 30', () => {
+  it('30 tx are shown, clicking show more loads more transactions', () => {
     cy.autologin(account.passphrase, networks.devnet.node);
     open();
     cy.get(ss.transactionRow).should('have.length', 30);
     cy.get(ss.showMoreButton).click();
-    cy.get(ss.transactionRow).should('have.length', 60);
+    cy.get(ss.transactionRow).should('have.length.greaterThan', 30);
   });
 
   /**
