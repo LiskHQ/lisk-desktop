@@ -20,7 +20,7 @@ describe('Wallet Header', () => {
   const props = {
     account: accounts.genesis,
     followedAccounts: [],
-    match: { url: routes.walletV2.path },
+    match: { url: routes.wallet.path },
     address: accounts.genesis.address,
   };
 
