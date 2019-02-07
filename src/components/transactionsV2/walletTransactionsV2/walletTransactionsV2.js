@@ -38,14 +38,6 @@ class WalletTransactionsV2 extends React.Component {
       filter: txFilters.all,
     });
 
-    this.props.searchAccount({
-      address: this.props.address,
-    });
-
-    this.props.accountVotesFetched({
-      address: this.props.address,
-    });
-
     this.props.addFilter({
       filterName: 'wallet',
       value: txFilters.all,
@@ -106,7 +98,7 @@ class WalletTransactionsV2 extends React.Component {
   render() {
     const overviewProps = {
       ...this.props,
-      canLoadMore: this.props.transactions.length < this.props.transactionsCount,
+      canLoadMore: this.props.transactions.length < this.props.count,
       onInit: this.onInit,
       onLoadMore: this.onLoadMore,
       onFilterSet: this.onFilterSet,
@@ -120,7 +112,7 @@ class WalletTransactionsV2 extends React.Component {
         <WalletHeader {...this.props} />
         { account.balance === 0 && localJSONStorage.get('closedWalletOnboarding') !== 'true' ?
           <Banner
-            className={`${styles.onboarding}`}
+            className={`${styles.onboarding} wallet-onboarding`}
             onClose={this.closeOnboarding}
             title={t('It’s time to get some LSK to your Hub Account!')}
             footer={(
