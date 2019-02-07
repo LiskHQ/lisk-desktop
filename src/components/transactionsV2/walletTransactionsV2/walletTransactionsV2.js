@@ -1,17 +1,34 @@
 import React from 'react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
+import localJSONStorage from '../../../utils/localJSONStorage';
 import TransactionsOverviewV2 from '../transactionsOverviewV2';
 import txFilters from '../../../constants/transactionFilters';
+import Banner from '../../toolbox/banner/banner';
 import WalletHeader from './walletHeader';
 import routes from '../../../constants/routes';
+import styles from './walletTransactionsV2.css';
 
 class WalletTransactionsV2 extends React.Component {
   constructor() {
     super();
 
+    this.state = {
+      copied: false,
+      closedOnboarding: false,
+    };
+    this.copyTimeout = null;
+
     this.onInit = this.onInit.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onFilterSet = this.onFilterSet.bind(this);
     this.onTransactionRowClick = this.onTransactionRowClick.bind(this);
+    this.onCopy = this.onCopy.bind(this);
+    this.closeOnboarding = this.closeOnboarding.bind(this);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.copyTimeout);
   }
 
   onInit() {
@@ -69,6 +86,23 @@ class WalletTransactionsV2 extends React.Component {
     this.props.history.push(transactionPath);
   }
 
+  onCopy() {
+    clearTimeout(this.copyTimeout);
+    this.setState({
+      copied: true,
+    });
+
+    this.copyTimeout = setTimeout(() =>
+      this.setState({
+        copied: false,
+      }), 3000);
+  }
+
+  closeOnboarding() {
+    localJSONStorage.set('closedWalletOnboarding', 'true');
+    this.setState({ closedOnboarding: true });
+  }
+
   render() {
     const overviewProps = {
       ...this.props,
@@ -79,9 +113,31 @@ class WalletTransactionsV2 extends React.Component {
       onTransactionRowClick: this.onTransactionRowClick,
     };
 
+    const { t, account } = this.props;
+
     return (
       <React.Fragment>
         <WalletHeader {...this.props} />
+        { account.balance === 0 && localJSONStorage.get('closedWalletOnboarding') !== 'true' ?
+          <Banner
+            className={`${styles.onboarding}`}
+            onClose={this.closeOnboarding}
+            title={t('It’s time to get some LSK to your Hub Account!')}
+            footer={(
+              <div className={styles.copyAddress}>
+                <span className={styles.address}>{account.address}</span>
+                <CopyToClipboard
+                  text={account.address}
+                  onCopy={this.onCopy}>
+                    <SecondaryButtonV2 disabled={this.state.copied}>
+                      <span>{this.state.copied ? t('Copied') : t('Copy')}</span>
+                    </SecondaryButtonV2>
+                </CopyToClipboard>
+              </div>
+            )}>
+            <p>{t('You can get LSK tokens on any supported exchanges and send them to your unique Lisk Address:')}</p>
+          </Banner> : null
+        }
         <TransactionsOverviewV2 {...overviewProps} />
       </React.Fragment>
     );

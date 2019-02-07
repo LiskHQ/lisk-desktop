@@ -1,5 +1,5 @@
 import React from 'react';
-import { spy } from 'sinon';
+import { spy, useFakeTimers } from 'sinon';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 import PropTypes from 'prop-types';
@@ -84,5 +84,44 @@ describe('WalletTransactions V2 Component', () => {
     const transactionPath = `${routes.transactions.pathPrefix}${routes.transactions.path}/${transactions[0].id}`;
     wrapper.find('.transactions-row').first().simulate('click');
     expect(props.history.push).to.have.been.calledWith(transactionPath);
+  });
+
+  describe('Onboarding Banner', () => {
+    let clock;
+
+    beforeEach(() => {
+      const newProps = {
+        ...props,
+        account: accounts['empty account'],
+      };
+
+      clock = useFakeTimers({
+        now: new Date(2018, 1, 1),
+        toFake: ['setTimeout', 'clearTimeout'],
+      });
+
+      wrapper = mount(<Router>
+        <WalletTransactionsV2 {...newProps} />
+      </Router>, options);
+    });
+
+    afterEach(() => {
+      clock.restore();
+    });
+
+    it('should copy address on click on banner copy and setTimeout', () => {
+      const copyBtn = wrapper.find('.onboarding .copyAddress button');
+      expect(copyBtn).to.have.text('Copy');
+      copyBtn.simulate('click');
+      expect(copyBtn).to.have.text('Copied');
+      clock.tick(3000);
+      expect(copyBtn).to.have.text('Copy');
+    });
+
+    it('should render onboarding banner and hide when close is clicked', () => {
+      expect(wrapper).to.have.descendants('.onboarding');
+      wrapper.find('.onboarding .closeBtn').simulate('click');
+      expect(wrapper).to.not.have.descendants('.onboarding');
+    });
   });
 });

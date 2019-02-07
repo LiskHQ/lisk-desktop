@@ -1,0 +1,32 @@
+@import '../../app/variablesV2.css';
+
+.onboarding {
+  margin-bottom: 24px;
+
+  & .copyAddress {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 40px;
+
+    & .address {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      box-sizing: border-box;
+      color: var(--color-white);
+      font-family: var(--content-font);
+      font-size: var(--paragraph-font-size-s);
+      font-weight: var(--font-weight-bold);
+      letter-spacing: 0.3px;
+      line-height: 1.07;
+      margin-right: 24px;
+      outline: none;
+      padding: 16px 24px;
+      text-align: center;
+    }
+
+    & > button {
+      width: 116px;
+    }
+  }
+}
