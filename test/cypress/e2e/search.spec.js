@@ -92,8 +92,7 @@ describe('Search', () => {
    * @expect localStorage have the searches object with correct address
    * @expect localStorage have the searches object with correct searchTerm
    */
-  // TODO reenable after #1351 fix
-  it.skip('Search for Delegate using keyboard Enter, signed off', () => {
+  it('Search for Delegate using keyboard Enter, signed off', () => {
     cy.visit('/');
     cy.get(ss.searchInput).click().type(`${mainnetDelegateName}{enter}`);
     assertDelegatePage(accounts.delegate.username);
