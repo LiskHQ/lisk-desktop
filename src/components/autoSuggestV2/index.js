@@ -171,9 +171,11 @@ class AutoSuggest extends React.Component {
     if (this.state.value === '' && this.state.placeholder === '') {
       return;
     }
-    // If no results found block enter button
+
+    const accountTransactionRegex = /^\d+?(L$|$)/;
     /* istanbul ignore else */
-    if (this.state.value.length > 2 && this.state.resultsLength === 0) {
+    if (this.state.value.length > 2 && this.state.resultsLength === 0
+      && !accountTransactionRegex.test(this.state.value)) {
       this.shouldSubmit = true;
       return;
     }
