@@ -16,7 +16,7 @@ const walletHeader = (props) => {
     && props.followedAccounts[index].title;
   const hasTitle = index !== -1 && accountTitle !== props.address;
 
-  const isMyWallet = props.match.url === routes.walletV2.path;
+  const isMyWallet = props.match.url === routes.wallet.path;
 
   return (
     <header className={`${styles.wrapper}`}>

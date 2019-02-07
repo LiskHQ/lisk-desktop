@@ -28,8 +28,7 @@ class TransactionRowV2 extends React.Component {
           <div className={`${styles.hiddenXs} ${grid['col-sm-3']} ${grid['col-lg-3']} transactions-cell`}>
             <TransactionDetailV2
               t={props.t}
-              type={props.value.type}
-              asset={props.value.asset} />
+              transaction={props.value} />
           </div>
         <div className={`${styles.hiddenXs} ${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
           {props.value.confirmations ? <DateTimeFromTimestamp time={props.value.timestamp} />

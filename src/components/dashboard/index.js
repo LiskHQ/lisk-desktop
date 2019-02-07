@@ -116,7 +116,7 @@ class Dashboard extends React.Component {
                   dashboard: true,
                   history,
                   loading,
-                  onClick: props => history.push(`${routes.wallet.path}?id=${props.value.id}`),
+                  onClick: props => history.push(`${routes.transactions.pathPrefix}${routes.transactions.path}/${props.value.id}`),
                   showMore: this.state.showMore,
                   isBarEnabledTransactions,
                   t,

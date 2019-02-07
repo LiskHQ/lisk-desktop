@@ -6,6 +6,7 @@ const urls = {
   help: '/help',
   settings: '/setting',
   accounts: '/explorer/accounts',
+  transactions: '/explorer/transactions',
   register: '/register',
   login: '/login',
   secondPassphrase: '/second-passphrase',
