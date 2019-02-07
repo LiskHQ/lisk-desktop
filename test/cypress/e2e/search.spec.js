@@ -8,7 +8,6 @@ const getSearchesObjFromLS = () => JSON.parse(localStorage.getItem('searches'));
 describe('Search', () => {
   const testnetTransaction = '755251579479131174';
   const mainnetTransaction = '881002485778658401';
-  const mainnetDelegateName = 'tembo';
 
   function assertAccountPage(accountsAddress) {
     cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', accountsAddress)
@@ -94,8 +93,8 @@ describe('Search', () => {
    */
   it('Search for Delegate using keyboard Enter, signed off', () => {
     cy.visit(urls.dashboard);
-    cy.get(ss.searchInput).click().type(`${mainnetDelegateName}{enter}`);
-    assertDelegatePage(accounts.delegate.username);
+    cy.get(ss.searchInput).click().type(`${accounts['mainnet delegate'].username}{enter}`);
+    assertDelegatePage(accounts['mainnet delegate'].username, accounts['mainnet delegate'].address);
   });
 
   it('4 search suggestions appears after 3 letters entered', () => {
@@ -169,7 +168,7 @@ describe('Search', () => {
    */
   it('Search after logout - happens in last used network', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit('/');
+    cy.visit(urls.dashboard);
     cy.get(ss.userAvatar).click();
     cy.get(ss.logoutBtn).click();
     cy.get(ss.searchInput).click().type(`${accounts.delegate.username}`);
@@ -186,9 +185,9 @@ describe('Search', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
     cy.get(ss.searchInput).click().type(`${accounts.genesis.address}{enter}`);
-    cy.get(ss.searchInput).clear();
-    cy.visit(urls.wallet);
+    assertAccountPage(accounts.genesis.address);
     cy.get(ss.searchInput).click();
+    cy.visit(urls.wallet);
     cy.get(ss.recentSearches).eq(0).click();
     cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', accounts.genesis.address);
   });
@@ -211,16 +210,5 @@ describe('Search', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.searchInput).click().type('43th3j4bt324');
     cy.get(ss.searchNoResultMessage).eq(0).should('have.text', 'No results found');
-  });
-
-
-  /**
-   * Search for nonexistent item
-   * @expect no results plug
-   */
-  it('Search for nonexistent item - shows no results plug', () => {
-    cy.visit(urls.dashboard);
-    cy.get(ss.searchInput).click().type('43th3j4bt324{enter}');
-    cy.get(ss.emptyResultsMessage).should('have.text', 'No results');
   });
 });
