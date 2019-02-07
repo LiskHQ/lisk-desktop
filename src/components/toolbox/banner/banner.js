@@ -12,7 +12,7 @@ const Banner = ({
       </h1>
       { onClose ? <span
         onClick={onClose}
-        className={`${styles.closeBtn}`} /> : null}
+        className={`${styles.closeBtn} banner-close`} /> : null}
     </header>
     <main className={`${styles.content}`}>
       { children }
