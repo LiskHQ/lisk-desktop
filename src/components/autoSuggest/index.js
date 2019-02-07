@@ -28,6 +28,13 @@ class AutoSuggest extends React.Component {
     };
   }
 
+  componentDidUpdate() {
+    if (this.shouldSubmit && this.state.placeholder) {
+      this.handleSubmit();
+      this.shouldSubmit = false;
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     this.selectedRow = null;
     const resultsLength = Object.keys(searchEntities).reduce((total, resultKey) =>
@@ -166,12 +173,15 @@ class AutoSuggest extends React.Component {
     }
     // If no results found block enter button
     /* istanbul ignore else */
-    if (!(this.state.value.length > 2 && this.state.resultsLength === 0)) {
-      if (this.state.resultsLength > 0 || this.state.placeholder !== '') {
-        this.submitSearch();
-      } else {
-        this.submitAnySearch();
-      }
+    if (this.state.value.length > 2 && this.state.resultsLength === 0) {
+      this.shouldSubmit = true;
+      return;
+    }
+
+    if (this.state.resultsLength > 0 || this.state.placeholder !== '') {
+      this.submitSearch();
+    } else {
+      this.submitAnySearch();
     }
   }
 
@@ -194,6 +204,7 @@ class AutoSuggest extends React.Component {
         break;
       /* istanbul ignore next */
       default:
+        this.shouldSubmit = false;
         break;
     }
     return false;
