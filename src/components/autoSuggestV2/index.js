@@ -92,6 +92,7 @@ class AutoSuggest extends React.Component {
     );
   }
 
+  /* istanbul ignore next */
   submitAnySearch() {
     let searchType = null;
     if (this.state.value.match(regex.address)) {
@@ -145,6 +146,7 @@ class AutoSuggest extends React.Component {
     let currentIdx = this.state.selectedIdx;
     currentIdx = (currentIdx === 0) ? 0 : currentIdx -= 1;
     let placeholder = '';
+    /* istanbul ignore if */
     if (this.state.resultsLength === 0) {
       placeholder = this.recentSearches[currentIdx].valueLeft;
     } else {

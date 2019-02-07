@@ -147,6 +147,17 @@ describe('AutoSuggest', () => {
       .calledWith(`${routes.transactions.pathPrefix}${routes.transactions.path}/${results.transactions[0].id}`);
   });
 
+  it('should not redirect to search result page on keyboard event {enter} if no results', () => {
+    const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
+    autosuggestInput.simulate('change', { target: { value: 'notExistingDelegate' } });
+    autosuggestInput.simulate('keyDown', {
+      keyCode: keyCodes.enter,
+      which: keyCodes.enter,
+    });
+    expect(saveSearchSpy).not.to.have.been.calledWith();
+    expect(props.history.push).not.to.have.been.calledWith();
+  });
+
   it('should update placeholder on events {arrowUp/arrowDown} and redirect to entity page on keyboard event {tab}', () => {
     const autosuggestInput = wrapper.find('.autosuggest-input').find('input').first();
 
