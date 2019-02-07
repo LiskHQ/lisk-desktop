@@ -12,6 +12,7 @@ import styles from './filterButton.css';
 class FilterButton extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       showFilters: false,
       customFilters: {
@@ -46,13 +47,7 @@ class FilterButton extends React.Component {
     this.toggleFilters();
 
     this.setState({
-      customFilters: {
-        dateFrom: '',
-        dateTo: '',
-        amountFrom: '',
-        amountTo: '',
-        message: '',
-      },
+      customFilters: this.state.customFilters,
     });
     this.props.saveFilters(customFilters);
   }
