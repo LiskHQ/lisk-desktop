@@ -5,12 +5,14 @@ import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import TransactionDetailV2 from './transactionDetailV2';
 
-describe('TransactionRow V2', () => {
+describe('TransactionDetail V2', () => {
   let wrapper;
 
   const props = {
-    type: 0,
-    asset: {},
+    transaction: {
+      type: 0,
+      asset: {},
+    },
     t: data => data,
   };
 
@@ -31,25 +33,29 @@ describe('TransactionRow V2', () => {
 
   it('should render the message if transaction has message set', () => {
     const newProps = {
-      asset: { data: 'test-details' },
+      transaction: { asset: { data: 'test-details' } },
     };
     wrapper.setProps(newProps);
-    expect(wrapper).to.have.text(newProps.asset.data);
+    expect(wrapper).to.have.text(newProps.transaction.asset.data);
   });
 
   it('should render delegateName if type=2', () => {
     const newProps = {
-      asset: { delegate: { username: 'delegateName' } },
-      type: 2,
+      transaction: {
+        asset: { delegate: { username: 'delegateName' } },
+        type: 2,
+      },
     };
     wrapper.setProps(newProps);
-    expect(wrapper).to.have.text(newProps.asset.delegate.username);
+    expect(wrapper).to.have.text(newProps.transaction.asset.delegate.username);
   });
 
   it('should render upvotes and downvotes count if type=3', () => {
     const newProps = {
-      asset: { votes: ['+12345L', '+123456789L', '-123L'] },
-      type: 3,
+      transaction: {
+        asset: { votes: ['+12345L', '+123456789L', '-123L'] },
+        type: 3,
+      },
     };
     wrapper.setProps(newProps);
     expect(wrapper.find('.txDetails')).to.have.className('delegateVote');
