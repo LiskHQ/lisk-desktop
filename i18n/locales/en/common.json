@@ -83,6 +83,7 @@
   "Connection re-established": "Connection re-established",
   "Continue": "Continue",
   "Continue to Dashboard": "Continue to Dashboard",
+  "Copied": "Copied",
   "Copied!": "Copied!",
   "Copy": "Copy",
   "Copy Transaction ID to clipboard": "Copy Transaction ID to clipboard",
@@ -188,6 +189,7 @@
   "It is highly recommended to delete the PDF and remove it from your trash after printing.": "It is highly recommended to delete the PDF and remove it from your trash after printing.",
   "It is recommended that you initialize your Lisk ID.": "It is recommended that you initialize your Lisk ID.",
   "It will cost you only the usual {{fee}} LSK transaction fee.": "It will cost you only the usual {{fee}} LSK transaction fee.",
+  "It’s time to get some LSK to your Hub Account!": "It’s time to get some LSK to your Hub Account!",
   "Keep the overview": "Keep the overview",
   "Keep this safe, never throw it away or share it with anyone.": "Keep this safe, never throw it away or share it with anyone.",
   "Keep track of any Lisk ID balance. Only you will see who you bookmarked.": "Keep track of any Lisk ID balance. Only you will see who you bookmarked.",
@@ -459,6 +461,7 @@
   "You are looking into a saved account. In order to {{nextAction}} you need to enter your passphrase.": "You are looking into a saved account. In order to {{nextAction}} you need to enter your passphrase.",
   "You are responsible for safekeeping your second passphrase. No one can restore it, not even Lisk.": "You are responsible for safekeeping your second passphrase. No one can restore it, not even Lisk.",
   "You can customize amount & message.": "You can customize amount & message.",
+  "You can get LSK tokens on any supported exchanges and send them to your unique Lisk Address:": "You can get LSK tokens on any supported exchanges and send them to your unique Lisk Address:",
   "You can now securely manage your LSK tokens.": "You can now securely manage your LSK tokens.",
   "You can now use Lisk Hub.<br": {
     " If you want to repeat the onboarding, navigate to \"Help\" on the sidebar.": "You can now use Lisk Hub.<br> If you want to repeat the onboarding, navigate to \"Help\" on the sidebar."
