@@ -204,6 +204,7 @@ class AutoSuggest extends React.Component {
         break;
       /* istanbul ignore next */
       default:
+        this.shouldSubmit = false;
         break;
     }
     return false;
