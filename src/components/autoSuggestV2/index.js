@@ -28,6 +28,13 @@ class AutoSuggest extends React.Component {
     };
   }
 
+  componentDidUpdate() {
+    if (this.shouldSubmit && this.state.placeholder) {
+      this.handleSubmit();
+      this.shouldSubmit = false;
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     this.selectedRow = null;
     const resultsLength = Object.keys(searchEntities).reduce((total, resultKey) =>
@@ -158,7 +165,14 @@ class AutoSuggest extends React.Component {
 
   handleSubmit() {
     Piwik.trackingEvent('AutoSuggest', 'button', 'Handle submit');
+    /* istanbul ignore if */
     if (this.state.value === '' && this.state.placeholder === '') {
+      return;
+    }
+    // If no results found block enter button
+    /* istanbul ignore else */
+    if (this.state.value.length > 2 && this.state.resultsLength === 0) {
+      this.shouldSubmit = true;
       return;
     }
 
