@@ -9,7 +9,7 @@ import './styles.dialog.css';
 // import localeHandler from './modules/localeHandler';
 import updateChecker from './modules/autoUpdater';
 
-require('babel-polyfill'); // eslint-disable-line import/no-extraneous-dependencies
+require('@babel/polyfill'); // eslint-disable-line import/no-extraneous-dependencies
 require('./ledger');
 
 const defaultServerPort = 3000;

@@ -22,14 +22,22 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           presets: [
-            ['env', {
+            ['@babel/preset-env', {
               targets: {
                 browsers: ['last 2 versions', 'safari >= 7'],
               },
             }],
-            'react',
-            'stage-3'],
-          plugins: ['syntax-trailing-function-commas', 'import-glob', 'transform-decorators-legacy'],
+            '@babel/preset-react',
+          ],
+          plugins: [
+            'syntax-trailing-function-commas',
+            'import-glob',
+            ['@babel/plugin-proposal-decorators', { legacy: true }],
+            '@babel/plugin-syntax-dynamic-import',
+            '@babel/plugin-syntax-import-meta',
+            ['@babel/plugin-proposal-class-properties', { loose: false }],
+            '@babel/plugin-proposal-json-strings',
+          ],
           env: {
             test: {
               plugins: ['istanbul'],
