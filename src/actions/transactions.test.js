@@ -93,9 +93,7 @@ describe('actions: transactions', () => {
     getState = () => ({
       peers: {
         liskAPIClient: {
-          current: 0,
           options: {
-            code: 0,
             name: networks.mainnet.name,
           },
         },
