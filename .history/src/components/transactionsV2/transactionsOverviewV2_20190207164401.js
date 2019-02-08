@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import txFilters from '../../constants/transactionFilters';
 import Piwik from '../../utils/piwik';
-import FilterButton from './filterButton';
-import FilterBar from './filterBar';
 import TransactionsListV2 from './transactionsListV2';
 import styles from './transactionsV2.css';
 
@@ -63,19 +61,7 @@ class TransactionsOverviewV2 extends React.Component {
               {filter.name}
             </li>
           ))}
-          <li className={`${styles.filters} ${styles.item}`}>
-            <FilterButton
-              saveFilters={this.props.saveFilters}
-              customFilters={this.props.customFilters}
-              t={this.props.t} />
-          </li>
         </ul>
-        {this.props.customFilters &&
-          Object.values(this.props.customFilters).find(filter => filter) ? <FilterBar
-          clearFilter={this.props.clearFilter}
-          clearAllFilters={this.props.clearAllFilters}
-          customFilters={this.props.customFilters}
-          t={this.props.t} /> : null}
         <TransactionsListV2
           followedAccounts={this.props.followedAccounts}
           canLoadMore={this.props.canLoadMore}

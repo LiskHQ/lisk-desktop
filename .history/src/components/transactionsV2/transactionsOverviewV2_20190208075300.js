@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import txFilters from '../../constants/transactionFilters';
 import Piwik from '../../utils/piwik';
-import FilterButton from './filterButton';
-import FilterBar from './filterBar';
 import TransactionsListV2 from './transactionsListV2';
 import styles from './transactionsV2.css';
 

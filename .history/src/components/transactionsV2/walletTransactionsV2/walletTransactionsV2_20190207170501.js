@@ -57,19 +57,16 @@ class WalletTransactionsV2 extends React.Component {
   */
   /* istanbul ignore next */
   onFilterSet(filter) {
-    this.setState({ filter });
     if (filter <= 2) {
       this.props.transactionsFilterSet({
         address: this.props.address,
         limit: 30,
         filter,
-        customFilters: this.state.customFilters,
       });
     } else {
       this.props.addFilter({
         filterName: 'wallet',
         value: filter,
-        customFilters: this.state.customFilters,
       });
     }
   }

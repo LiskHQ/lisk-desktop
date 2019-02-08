@@ -163,10 +163,4 @@ export default {
     isPrivate: false,
     isV2Layout: true,
   },
-  walletV2: {
-    path: '/walletV2',
-    component: TransactionDashboard,
-    isPrivage: true,
-    exact: true,
-  },
 };

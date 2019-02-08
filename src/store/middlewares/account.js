@@ -39,7 +39,7 @@ const updateAccountData = (store, action) => {
   if (shouldAutoLogIn(getAutoLogInData()) && action.data.passphrase) {
     store.dispatch(transactionsFilterSet({
       address: extractAddress(extractPublicKey(action.data.passphrase)),
-      limit: 25,
+      limit: 30,
       filter: txFilters.all,
     }));
   }

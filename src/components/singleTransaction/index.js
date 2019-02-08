@@ -33,17 +33,19 @@ class SingleTransaction extends React.Component {
       { this.props.transaction.id && !this.props.transaction.error ?
         <Fragment>
           <header>
-            <h2>
+            <h2 className={'tx-header'}>
               <TransactionType
                 {...this.props.transaction}
                 address={this.props.transaction.senderId}
                 showTransaction />
             </h2>
-            <CopyToClipboard
-              value={this.props.match.params.id}
-              text={this.props.match.params.id}
-              className={`${styles.copyLabel} transaction-id`}
-              copyClassName={`${styles.copyIcon}`} />
+            <span className={'tx-id'}>
+              <CopyToClipboard
+                value={this.props.match.params.id}
+                text={this.props.match.params.id}
+                className={`${styles.copyLabel} transaction-id`}
+                copyClassName={`${styles.copyIcon}`} />
+            </span>
           </header>
           <div className={styles.content}>
             <div className={styles.detailsWrapper}>

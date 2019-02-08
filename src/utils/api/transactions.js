@@ -40,7 +40,14 @@ export const getSingleTransaction = ({ liskAPIClient, id }) => new Promise((reso
   if (!liskAPIClient) {
     reject();
   } else {
-    liskAPIClient.transactions.get({ id }).then(response => resolve(response));
+    liskAPIClient.transactions.get({ id })
+      .then((response) => {
+        if (response.data.length !== 0) {
+          resolve(response);
+        } else {
+          resolve(liskAPIClient.node.getTransactions('unconfirmed', { id }).then(resp => resp));
+        }
+      });
   }
 });
 

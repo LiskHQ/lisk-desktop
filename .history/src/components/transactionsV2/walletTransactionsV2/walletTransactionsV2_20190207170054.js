@@ -7,14 +7,7 @@ import routes from '../../../constants/routes';
 class WalletTransactionsV2 extends React.Component {
   constructor() {
     super();
-    this.state = {
-      filter: {},
-      customFilters: {},
-    };
-    this.saveFilters = this.saveFilters.bind(this);
-    this.clearFilter = this.clearFilter.bind(this);
-    this.clearAllFilters = this.clearAllFilters.bind(this);
-    this.changeFilters = this.changeFilters.bind(this);
+
     this.onInit = this.onInit.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onFilterSet = this.onFilterSet.bind(this);
@@ -57,19 +50,16 @@ class WalletTransactionsV2 extends React.Component {
   */
   /* istanbul ignore next */
   onFilterSet(filter) {
-    this.setState({ filter });
     if (filter <= 2) {
       this.props.transactionsFilterSet({
         address: this.props.address,
         limit: 30,
         filter,
-        customFilters: this.state.customFilters,
       });
     } else {
       this.props.addFilter({
         filterName: 'wallet',
         value: filter,
-        customFilters: this.state.customFilters,
       });
     }
   }
@@ -77,34 +67,6 @@ class WalletTransactionsV2 extends React.Component {
   onTransactionRowClick(props) {
     const transactionPath = `${routes.transactions.pathPrefix}${routes.transactions.path}/${props.value.id}`;
     this.props.history.push(transactionPath);
-  }
-
-  /* istanbul ignore next */
-  saveFilters(customFilters) {
-    this.props.transactionsFilterSet({
-      address: this.props.address,
-      limit: 25,
-      filter: this.props.activeFilter,
-      customFilters,
-    });
-    this.setState({ customFilters });
-  }
-
-  /* istanbul ignore next */
-  clearFilter(filterName) {
-    this.saveFilters({
-      ...this.state.customFilters,
-      [filterName]: '',
-    });
-  }
-
-  /* istanbul ignore next */
-  clearAllFilters() {
-    this.saveFilters({});
-  }
-
-  changeFilters(name, value) {
-    this.setState({ customFilters: { ...this.state.customFilters, [name]: value } });
   }
 
   render() {
@@ -115,11 +77,6 @@ class WalletTransactionsV2 extends React.Component {
       onLoadMore: this.onLoadMore,
       onFilterSet: this.onFilterSet,
       onTransactionRowClick: this.onTransactionRowClick,
-      saveFilters: this.saveFilters.bind(this),
-      clearFilter: this.clearFilter.bind(this),
-      clearAllFilters: this.clearAllFilters.bind(this),
-      changeFilters: this.changeFilters.bind(this),
-      customFilters: this.state.customFilters,
     };
 
     return (

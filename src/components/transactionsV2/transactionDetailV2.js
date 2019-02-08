@@ -18,19 +18,22 @@ const generateVotes = (asset, t) => {
   );
 };
 
-const TransactionDetailV2 = ({ type, asset, t }) => {
+const TransactionDetailV2 = ({
+  transaction, t,
+}) => {
+  const { asset, username, type } = transaction;
   let data = '-';
   let className = '';
   switch (type) {
     case 2:
-      data = asset.delegate.username || data;
+      data = asset && asset.delegate ? asset.delegate.username : username;
       break;
     case 3:
       className = styles.delegateVote;
-      data = generateVotes(asset, t);
+      data = asset && asset.votes ? generateVotes(asset, t) : data;
       break;
     default:
-      data = asset.data || data;
+      data = asset && asset.data ? asset.data : data;
       break;
   }
 
