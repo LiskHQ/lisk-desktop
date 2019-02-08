@@ -136,21 +136,6 @@
     border-bottom: 2px solid var(--amount-negative-color);
     color: var(--amount-negative-color);
   }
-
-  & > li:last-child {
-    right: 50px;
-    position: absolute;
-  }
-}
-
-.filters {
-  position: absolute;
-  background: #fff;
-  width: 360px;
-}
-
-.topHeader {
-  display: flex;
 }
 
 @media (--xLarge-viewport) {

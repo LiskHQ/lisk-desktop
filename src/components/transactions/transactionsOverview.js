@@ -9,8 +9,6 @@ import styles from './transactions.css';
 import txFilters from '../../constants/transactionFilters';
 import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
 import { ActionButton } from '../toolbox/buttons/button';
-import FilterButton from './filterButton';
-import FilterBar from './filterBar';
 import { FontIcon } from '../fontIcon';
 import Ulrs from '../../constants/routes';
 import Piwik from '../../utils/piwik';
@@ -140,20 +138,8 @@ class TransactionsOverview extends React.Component {
                 {filter.name}
               </li>
             ))}
-            <li className={`${styles.filters} ${styles.item}`}>
-              <FilterButton
-                saveFilters={this.props.saveFilters}
-                customFilters={this.props.customFilters}
-                t={this.props.t} />
-            </li>
           </ul>
         }
-        {this.props.customFilters &&
-          Object.values(this.props.customFilters).find(filter => filter) ? <FilterBar
-          clearFilter={this.props.clearFilter}
-          clearAllFilters={this.props.clearAllFilters}
-          customFilters={this.props.customFilters}
-          t={this.props.t} /> : null}
         {
           <TransactionsList
             filter={filters[this.props.activeFilter]}
