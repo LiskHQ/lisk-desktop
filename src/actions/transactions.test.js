@@ -93,7 +93,9 @@ describe('actions: transactions', () => {
     getState = () => ({
       peers: {
         liskAPIClient: {
+          current: 0,
           options: {
+            code: 0,
             name: networks.mainnet.name,
           },
         },
@@ -116,6 +118,9 @@ describe('actions: transactions', () => {
       dispatch = sinon.spy();
       getState = () => ({
         peers: {
+          options: {
+            code: 0,
+          },
           liskAPIClient: {
             options: {
               name: 'Mainnet',
@@ -133,18 +138,18 @@ describe('actions: transactions', () => {
     it('should create an action function', () => {
       expect(typeof actionFunction).to.be.deep.equal('function');
     });
-    // TODO: enable this when voting functionalities is fixed
-    it.skip('should dispatch one transactionAddDelegateName action when transaction contains one vote added', () => {
-      const delegateResponse = { delegate: { username: 'peterpan' } };
+
+    it('should dispatch one transactionAddDelegateName action when transaction contains one vote added', () => {
+      const delegateResponse = { username: 'peterpan' };
       const transactionResponse = {
         asset: {
           votes: [`+${accounts.delegate.publicKey}`],
         },
       };
       transactionApiMock.returnsPromise().resolves({ data: [transactionResponse] });
-      delegateApiMock.returnsPromise().resolves({ data: delegateResponse });
+      delegateApiMock.returnsPromise().resolves({ data: [delegateResponse] });
       const expectedActionPayload = {
-        ...delegateResponse,
+        delegate: delegateResponse,
         voteArrayName: 'added',
       };
 
@@ -154,14 +159,18 @@ describe('actions: transactions', () => {
       expect(dispatch).to.have.been
         .calledWith({ data: expectedActionPayload, type: actionTypes.transactionAddDelegateName });
     });
-    // TODO: enable this when voting functionalities is fixed
-    it.skip('should dispatch one transactionAddDelegateName action when transaction contains one vote deleted', () => {
-      const delegateResponse = { delegate: { username: 'peterpan' } };
-      const transactionResponse = { transaction: { votes: { deleted: [accounts.delegate.publicKey] }, count: '0' } };
-      transactionApiMock.returnsPromise().resolves(transactionResponse);
-      delegateApiMock.returnsPromise().resolves(delegateResponse);
+
+    it('should dispatch one transactionAddDelegateName action when transaction contains one vote deleted', () => {
+      const delegateResponse = { username: 'peterpan' };
+      const transactionResponse = {
+        asset: {
+          votes: [`-${accounts.delegate.publicKey}`],
+        },
+      };
+      transactionApiMock.returnsPromise().resolves({ data: [transactionResponse] });
+      delegateApiMock.returnsPromise().resolves({ data: [delegateResponse] });
       const expectedActionPayload = {
-        ...delegateResponse,
+        delegate: delegateResponse,
         voteArrayName: 'deleted',
       };
 
@@ -217,6 +226,8 @@ describe('actions: transactions', () => {
         recipientId: data.recipientId,
         amount: toRawLsk(data.amount),
         fee: Fees.send,
+        asset: { data: undefined },
+        type: 0,
       };
 
       await actionFunction(dispatch, getState);
