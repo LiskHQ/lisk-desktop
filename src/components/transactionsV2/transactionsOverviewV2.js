@@ -56,20 +56,20 @@ class TransactionsOverviewV2 extends React.Component {
 
     return (
       <div className={`${styles.transactions} transactions`}>
-        <ul className={`${styles.txFilters}`}>
-          {filters.map((filter, i) => (
-            <li key={i} className={`transaction-filter-item ${filter.className} ${this.isActiveFilter(filter.value) ? styles.active : ''}`}
-              onClick={() => this.setTransactionsFilter(filter.value)}>
-              {filter.name}
-            </li>
-          ))}
-          <li className={`${styles.filters} ${styles.item}`}>
-            <FilterButton
-              saveFilters={this.props.saveFilters}
-              customFilters={this.props.customFilters}
-              t={this.props.t} />
-          </li>
-        </ul>
+        <div className={styles.container}>
+          <ul className={`${styles.txFilters}`}>
+            {filters.map((filter, i) => (
+              <li key={i} className={`transaction-filter-item ${filter.className} ${this.isActiveFilter(filter.value) ? styles.active : ''}`}
+                onClick={() => this.setTransactionsFilter(filter.value)}>
+                {filter.name}
+              </li>
+            ))}
+          </ul>
+          <FilterButton
+            saveFilters={this.props.saveFilters}
+            customFilters={this.props.customFilters}
+            t={this.props.t} />
+        </div>
         {this.props.customFilters &&
           Object.values(this.props.customFilters).find(filter => filter) ? <FilterBar
           clearFilter={this.props.clearFilter}

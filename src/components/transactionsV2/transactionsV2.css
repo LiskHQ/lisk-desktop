@@ -66,7 +66,26 @@
         display: none;
       }
     }
+/* 
+    &:last-child {
+      right: 35px;
+      position: absolute;
+      background: #fff;
+      padding: 10px 20px;
+      margin-top: 7px;
+      border: none;
+      border-radius: 4px;
+      box-shadow: 0 3px 3px -1px rgba(10, 22, 70, 0.1), 0 0 1px 0 rgba(10, 22, 70, 0.06);
+
+      &::before {
+        display: none;
+      }
+    } */
   }
+}
+
+.topHeader {
+  display: flex;
 }
 
 .txDetails {
@@ -100,4 +119,25 @@
   &.greenLabel {
     color: #00b262;
   }
+}
+
+.container {
+  display: flex;
+  background: #f8f9fb;
+  justify-content: space-between;
+}
+
+.item {
+  color: var(--color-content-grayblue);
+  cursor: pointer;
+  font-family: var(--heading-font);
+  font-size: var(--paragraph-font-size-s);
+  font-weight: var(--font-weight-bold);
+  background: #fff;
+  padding: 0 20px 0;
+  margin: 8px 10px;
+  width: 200px;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 3px 3px -1px rgba(10, 22, 70, 0.1), 0 0 1px 0 rgba(10, 22, 70, 0.06);
 }
