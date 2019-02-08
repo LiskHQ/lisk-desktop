@@ -211,4 +211,14 @@ describe('Search', () => {
     cy.get(ss.searchInput).click().type('43th3j4bt324');
     cy.get(ss.searchNoResultMessage).eq(0).should('have.text', 'No results found');
   });
+
+  /**
+   * Search for nonexistent item
+   * @expect no results plug
+   */
+  it('Search for nonexistent item - shows no results plug', () => {
+    cy.visit(urls.dashboard);
+    cy.get(ss.searchInput).click().type('321321{enter}');
+    cy.get(ss.emptyResultsMessage).should('have.text', 'No results');
+  });
 });
