@@ -114,7 +114,7 @@ class WalletTransactionsV2 extends React.Component {
           <Banner
             className={`${styles.onboarding} wallet-onboarding`}
             onClose={this.closeOnboarding}
-            title={t('It’s time to get some LSK to your Hub Account!')}
+            title={t('Add some LSK to your Lisk Hub account now!')}
             footer={(
               <div className={styles.copyAddress}>
                 <span className={styles.address}>{account.address}</span>
@@ -127,7 +127,7 @@ class WalletTransactionsV2 extends React.Component {
                 </CopyToClipboard>
               </div>
             )}>
-            <p>{t('You can get LSK tokens on any supported exchanges and send them to your unique Lisk Address:')}</p>
+            <p>{t('You can find the LSK token on all of the worlds top exchanges and send them to your unique Lisk address:')}</p>
           </Banner> : null
         }
         <TransactionsOverviewV2 {...overviewProps} />
