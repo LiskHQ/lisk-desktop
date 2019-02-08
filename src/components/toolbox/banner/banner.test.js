@@ -1,6 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
+import { spy } from 'sinon';
 import Banner from './banner';
 
 describe('Banner', () => {
@@ -20,5 +21,14 @@ describe('Banner', () => {
     expect(wrapper.find('header .title')).to.have.text(props.title);
     expect(wrapper.find('main')).to.contain(props.children);
     expect(wrapper.find('footer')).to.contain(props.footer);
+  });
+
+  it('Should render with close button and call onClose props', () => {
+    const newProps = { onClose: spy() };
+    wrapper.setProps(newProps);
+    wrapper.update();
+    expect(wrapper).to.have.descendants('.closeBtn');
+    wrapper.find('.closeBtn').simulate('click');
+    expect(newProps.onClose).to.have.been.calledWith();
   });
 });

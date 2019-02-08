@@ -168,6 +168,8 @@ const ss = {
   passphraseWordConfirm: '.passphrase-holder .word-option',
   passphraseConfirmButton: '.passphrase-is-correct-button',
   exploreAsGuestBtn: '.explore-as-guest-button',
+  walletOnboarding: '.wallet-onboarding',
+  walletOnboardingClose: '.wallet-onboarding .banner-close',
 };
 
 export default ss;
