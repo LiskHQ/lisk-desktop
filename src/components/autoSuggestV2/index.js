@@ -281,7 +281,7 @@ class AutoSuggest extends React.Component {
 
   getNoResultMessage() {
     let noResultMessage;
-    if (this.state.value !== '' && this.state.value.length > 0 && this.state.value.length <= 2) {
+    if (this.state.value.length > 0 && this.state.value.length <= 2) {
       noResultMessage = this.props.t('Type at least 3 characters');
     }
     if (this.state.value.length > 2 && this.state.resultsLength === 0) {
@@ -319,7 +319,7 @@ class AutoSuggest extends React.Component {
           className={`${styles.input} autosuggest-input`}
           theme={styles}
           onClick={this.selectInput.bind(this)}
-          onFocus={() => this.setState({ show: this.state.value !== '' })}
+          onFocus={() => this.setState({ show: true })}
           onBlur={this.closeDropdown.bind(this)}
           onKeyDown={this.handleKey.bind(this)}
           onChange={this.search.bind(this)}
@@ -363,7 +363,7 @@ class AutoSuggest extends React.Component {
             onMouseDown={this.onResultClick.bind(this)}
             setSelectedRow={this.setSelectedRow.bind(this)}
           />
-          {(this.state.value === '' && this.state.resultsLength === 0) &&
+          {this.state.value === '' && this.state.resultsLength === 0 ?
             <ResultsList
               key='recent'
               results={this.getRecentSearchResults()}
@@ -374,6 +374,7 @@ class AutoSuggest extends React.Component {
               onMouseDown={this.onResultClick.bind(this)}
               setSelectedRow={this.setSelectedRow.bind(this)}
             />
+            : null
           }
           <p className={`${styles.noResults} no-result-message`}>{this.getNoResultMessage()}</p>
         </div>
