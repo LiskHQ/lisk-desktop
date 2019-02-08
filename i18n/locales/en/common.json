@@ -17,6 +17,7 @@
   "Add a Lisk ID to follow": "Add a Lisk ID to follow",
   "Add a bookmark": "Add a bookmark",
   "Add new": "Add new",
+  "Add some LSK to your Lisk Hub account now!": "Add some LSK to your Lisk Hub account now!",
   "Add this account to your dashboard to keep track of its balance, and use it as a bookmark in the future.": "Add this account to your dashboard to keep track of its balance, and use it as a bookmark in the future.",
   "Add to bookmarks": "Add to bookmarks",
   "Add to list": "Add to list",
@@ -83,6 +84,7 @@
   "Connection re-established": "Connection re-established",
   "Continue": "Continue",
   "Continue to Dashboard": "Continue to Dashboard",
+  "Copied": "Copied",
   "Copied!": "Copied!",
   "Copy": "Copy",
   "Copy Transaction ID to clipboard": "Copy Transaction ID to clipboard",
@@ -459,6 +461,7 @@
   "You are looking into a saved account. In order to {{nextAction}} you need to enter your passphrase.": "You are looking into a saved account. In order to {{nextAction}} you need to enter your passphrase.",
   "You are responsible for safekeeping your second passphrase. No one can restore it, not even Lisk.": "You are responsible for safekeeping your second passphrase. No one can restore it, not even Lisk.",
   "You can customize amount & message.": "You can customize amount & message.",
+  "You can find the LSK token on all of the worlds top exchanges and send them to your unique Lisk address:": "You can find the LSK token on all of the worlds top exchanges and send them to your unique Lisk address:",
   "You can now securely manage your LSK tokens.": "You can now securely manage your LSK tokens.",
   "You can now use Lisk Hub.<br": {
     " If you want to repeat the onboarding, navigate to \"Help\" on the sidebar.": "You can now use Lisk Hub.<br> If you want to repeat the onboarding, navigate to \"Help\" on the sidebar."

@@ -1,17 +1,34 @@
 import React from 'react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
+import localJSONStorage from '../../../utils/localJSONStorage';
 import TransactionsOverviewV2 from '../transactionsOverviewV2';
 import txFilters from '../../../constants/transactionFilters';
+import Banner from '../../toolbox/banner/banner';
 import WalletHeader from './walletHeader';
 import routes from '../../../constants/routes';
+import styles from './walletTransactionsV2.css';
 
 class WalletTransactionsV2 extends React.Component {
   constructor() {
     super();
 
+    this.state = {
+      copied: false,
+      closedOnboarding: false,
+    };
+    this.copyTimeout = null;
+
     this.onInit = this.onInit.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onFilterSet = this.onFilterSet.bind(this);
     this.onTransactionRowClick = this.onTransactionRowClick.bind(this);
+    this.onCopy = this.onCopy.bind(this);
+    this.closeOnboarding = this.closeOnboarding.bind(this);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.copyTimeout);
   }
 
   onInit() {
@@ -19,14 +36,6 @@ class WalletTransactionsV2 extends React.Component {
       address: this.props.account.address,
       limit: 30,
       filter: txFilters.all,
-    });
-
-    this.props.searchAccount({
-      address: this.props.address,
-    });
-
-    this.props.accountVotesFetched({
-      address: this.props.address,
     });
 
     this.props.addFilter({
@@ -69,19 +78,58 @@ class WalletTransactionsV2 extends React.Component {
     this.props.history.push(transactionPath);
   }
 
+  onCopy() {
+    clearTimeout(this.copyTimeout);
+    this.setState({
+      copied: true,
+    });
+
+    this.copyTimeout = setTimeout(() =>
+      this.setState({
+        copied: false,
+      }), 3000);
+  }
+
+  closeOnboarding() {
+    localJSONStorage.set('closedWalletOnboarding', 'true');
+    this.setState({ closedOnboarding: true });
+  }
+
   render() {
     const overviewProps = {
       ...this.props,
-      canLoadMore: this.props.transactions.length < this.props.transactionsCount,
+      canLoadMore: this.props.transactions.length < this.props.count,
       onInit: this.onInit,
       onLoadMore: this.onLoadMore,
       onFilterSet: this.onFilterSet,
       onTransactionRowClick: this.onTransactionRowClick,
     };
 
+    const { t, account } = this.props;
+
     return (
       <React.Fragment>
         <WalletHeader {...this.props} />
+        { account.balance === 0 && localJSONStorage.get('closedWalletOnboarding') !== 'true' ?
+          <Banner
+            className={`${styles.onboarding} wallet-onboarding`}
+            onClose={this.closeOnboarding}
+            title={t('Add some LSK to your Lisk Hub account now!')}
+            footer={(
+              <div className={styles.copyAddress}>
+                <span className={styles.address}>{account.address}</span>
+                <CopyToClipboard
+                  text={account.address}
+                  onCopy={this.onCopy}>
+                    <SecondaryButtonV2 disabled={this.state.copied}>
+                      <span>{this.state.copied ? t('Copied') : t('Copy')}</span>
+                    </SecondaryButtonV2>
+                </CopyToClipboard>
+              </div>
+            )}>
+            <p>{t('You can find the LSK token on all of the worlds top exchanges and send them to your unique Lisk address:')}</p>
+          </Banner> : null
+        }
         <TransactionsOverviewV2 {...overviewProps} />
       </React.Fragment>
     );
