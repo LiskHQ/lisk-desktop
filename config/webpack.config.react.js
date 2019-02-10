@@ -36,7 +36,7 @@ const cssLoader = {
   loader: 'css-loader',
   options: {
     sourceMap: true,
-    minimize: true,
+    // minimize: true,
     modules: true,
     importLoaders: 1,
     localIdentName: '[name]__[local]___[hash:base64:5]',
@@ -46,7 +46,7 @@ const headCssLoader = {
   loader: 'css-loader',
   options: {
     sourceMap: true,
-    minimize: true,
+    // minimize: true,
     modules: false,
   },
 };
@@ -62,26 +62,24 @@ const cssLoadersConfig = {
         ident: 'postcss',
         sourceMap: true,
         sourceComments: true,
-        plugins: [
-          /* eslint-disable import/no-extraneous-dependencies */
-          require('postcss-partial-import')({}),
-          require('postcss-mixins')({}),
-          require('postcss-nesting')({}),
-          require('postcss-cssnext')({
+        plugins: {
+          'postcss-partial-import': {},
+          'postcss-mixins': {},
+          'postcss-nesting': {},
+          'postcss-cssnext': {
             features: {
               customProperties: {
                 variables: reactToolboxVariables,
               },
             },
-          }),
-          require('postcss-functions')({
+          },
+          'postcss-functions': {
             functions: {
               rem: px => `${(px / 10)}rem`,
             },
-          }),
-          require('postcss-for')({}),
-          /* eslint-enable import/no-extraneous-dependencies */
-        ],
+          },
+          'postcss-for': {},
+        },
       },
     },
   ],

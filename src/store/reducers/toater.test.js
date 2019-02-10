@@ -26,4 +26,3 @@ describe('Reducer: toaster(state, action)', () => {
     expect(changedState).to.deep.equal([]);
   });
 });
-

@@ -202,4 +202,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(translate()(PassphraseSteps));
-

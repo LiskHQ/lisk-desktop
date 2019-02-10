@@ -21,4 +21,3 @@ describe('Subscriber: settings(state)', () => {
     settingsUtils.setSettingsInLocalStorage.restore();
   });
 });
-

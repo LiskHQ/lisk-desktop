@@ -26,7 +26,8 @@ class SliderCheckbox extends React.Component {
     const ev = e.nativeEvent;
     if (typeof ev.pageX === 'number') {
       return ev.pageX;
-    } else if (ev.changedTouches && ev.changedTouches[0]) {
+    }
+    if (ev.changedTouches && ev.changedTouches[0]) {
       return ev.changedTouches[0].pageX;
     }
     return ev.clientX;

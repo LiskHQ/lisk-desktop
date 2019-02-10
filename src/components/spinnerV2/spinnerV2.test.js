@@ -16,4 +16,3 @@ describe('Spinner V2', () => {
     expect(wrapper.find('.label')).to.have.text('Pending...');
   });
 });
-

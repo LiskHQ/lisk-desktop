@@ -17,4 +17,3 @@ const links = {
   whatIsAnPassphrase: 'https://lisk.io/help-center/account-security/what-is-a-lisk-passphrase',
 };
 export default links;
-

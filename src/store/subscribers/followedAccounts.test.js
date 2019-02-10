@@ -28,4 +28,3 @@ describe('Subscriber: followedAccounts(state)', () => {
     followedAccountsUtils.setFollowedAccountsInLocalStorage.restore();
   });
 });
-

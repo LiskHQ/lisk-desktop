@@ -27,8 +27,8 @@ class VotedDelegates extends AccountList {
           </div>
           <div className={styles.value}>
             {voters && voters
-                .slice(0, this.state.showMoreVoters ?
-                  this.state.showVotersNumber : this.props.votersSize)}
+              .slice(0, this.state.showMoreVoters ?
+                this.state.showVotersNumber : this.props.votersSize)}
           </div>
           {voters.length > this.state.showVotersNumber &&
            this.state.showMoreVoters ?
@@ -52,4 +52,3 @@ class VotedDelegates extends AccountList {
 }
 
 export default translate()(VotedDelegates);
-

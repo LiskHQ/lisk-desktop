@@ -37,4 +37,3 @@ describe('VoteRow', () => {
     expect(shouldUpdate).to.be.equal(false);
   });
 });
-

@@ -10,8 +10,8 @@ const MultiStepNav = ({
   const validateTitles = () => {
     const titlesAreValid = steps.reduce(
       (acc, step) =>
-        (acc && typeof step.props.title === 'string' && step.props.title.length > 0)
-      , true,
+        (acc && typeof step.props.title === 'string' && step.props.title.length > 0),
+      true,
     );
     return showNav !== false && titlesAreValid;
   };

@@ -20,4 +20,3 @@ describe('FontIcon', () => {
     expect(reg.test(className)).to.be.equal(true);
   });
 });
-

@@ -23,4 +23,3 @@ class ReferenceInput extends React.Component {
 }
 
 export default ReferenceInput;
-

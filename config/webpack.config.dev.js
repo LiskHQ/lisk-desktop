@@ -1,5 +1,4 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const webpack = require('webpack');
 const { resolve } = require('path');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config');
@@ -7,6 +6,7 @@ const reactConfig = require('./webpack.config.react');
 /* eslint-enable import/no-extraneous-dependencies */
 
 module.exports = merge(baseConfig, reactConfig, {
+  mode: 'development',
   output: {
     path: resolve(__dirname, '../app', '../dist'),
     filename: 'bundle.[name].js',
@@ -18,17 +18,39 @@ module.exports = merge(baseConfig, reactConfig, {
     historyApiFallback: true,
     host: '0.0.0.0',
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      PRODUCTION: false,
-      TEST: false,
-      // because of https://fb.me/react-minification
-      'process.env': {
-        NODE_ENV: null,
+  optimization: {
+    splitChunks: {
+      chunks: 'async',
+      minSize: 30000,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name: true,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+        },
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+        head: {
+          name: 'head',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: false,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
       },
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-    }),
-  ],
+    },
+  },
 });

@@ -34,4 +34,3 @@ class Sidechains extends React.Component {
 }
 
 export default translate()(Sidechains);
-

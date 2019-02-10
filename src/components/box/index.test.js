@@ -23,4 +23,3 @@ describe('Box', () => {
     expect(wrapper.find('span').html()).to.be.equal('<span>text</span>');
   });
 });
-

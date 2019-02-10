@@ -8,7 +8,8 @@ const filterAndOrderByMatch = (searchTerm, delegates) =>
     result.username.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0).sort((first, second) => {
     if (first.username < second.username) {
       return -1;
-    } else if (first.username > second.username) {
+    }
+    if (first.username > second.username) {
       return 1;
     }
     return 0;

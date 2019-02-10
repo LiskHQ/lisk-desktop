@@ -25,6 +25,7 @@ const ExternalLinks = props => (
             id={link.id}
             key={index}
             target='_blank'
+            rel='noopener noreferrer'
           >
             {link.icon && <img src={link.icon}/>}
             {link.label}

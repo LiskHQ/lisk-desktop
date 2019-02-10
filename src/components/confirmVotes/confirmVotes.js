@@ -106,4 +106,3 @@ class ConfirmVotes extends React.Component {
 }
 
 export default ConfirmVotes;
-

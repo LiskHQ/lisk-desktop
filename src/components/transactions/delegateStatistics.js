@@ -58,4 +58,3 @@ class DelegateStatistics extends React.Component {
 }
 
 export default translate()(DelegateStatistics);
-

@@ -86,4 +86,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(TransactionsOverviewV2);
-

@@ -71,7 +71,7 @@ const TransactionTypeV2 = (props) => { // eslint-disable-line complexity
               { hasTitle && <span>{address}</span> }
             </div>
           </React.Fragment>
-          )}
+        )}
       </div>
     </div>
   );

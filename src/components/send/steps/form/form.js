@@ -63,13 +63,17 @@ class Form extends React.Component {
     const byteCount = encodeURI(value).split(/%..|./).length - 1;
     if (!value && required) {
       return this.props.t('Required');
-    } else if (name === 'reference' && byteCount > 64) {
+    }
+    if (name === 'reference' && byteCount > 64) {
       return this.props.t('Maximum length exceeded');
-    } else if (!value.match(this.inputValidationRegexps[name])) {
+    }
+    if (!value.match(this.inputValidationRegexps[name])) {
       return name === 'amount' ? this.props.t('Invalid amount') : this.props.t('Invalid address');
-    } else if (name === 'amount' && value > parseFloat(this.getMaxAmount())) {
+    }
+    if (name === 'amount' && value > parseFloat(this.getMaxAmount())) {
       return this.props.t('Not enough LSK');
-    } else if (name === 'amount' && value === '0') {
+    }
+    if (name === 'amount' && value === '0') {
       return this.props.t('Zero not allowed');
     }
     return undefined;
@@ -168,7 +172,7 @@ class Form extends React.Component {
               !this.state.amount.value &&
               this.getMaxAmount() > 0 ?
                 <a onClick={this.handleSetMaxAmount.bind(this)} className={`set-max-amount ${styles.setMaxAmount}`}>{ this.props.t('Set max. amount') }</a>
-              : <div></div>
+                : <div></div>
             }
           </div>
         </form>

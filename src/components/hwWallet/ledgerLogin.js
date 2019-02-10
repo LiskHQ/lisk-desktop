@@ -130,7 +130,7 @@ class LedgerLogin extends React.Component {
                     saveAccountNames={this.saveAccountNames.bind(this)}
                     changeInput={this.changeAccountNameInput.bind(this)}
                     onClickHandler={this.selectAccount.bind(this)} />
-                ))}
+            ))}
               <AddAccountCard addAccount={this.addAccount.bind(this)} t={this.props.t} />
             </div>
           </div> : loadingAnimation}

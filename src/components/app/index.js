@@ -55,7 +55,7 @@ class App extends React.Component {
         <Dialog />
         {
           routesV2Layout.filter(route => route.path === location.pathname).length > 0
-          ? (
+            ? (
             <main className={this.state.loaded ?
               `${stylesV2.v2Wrapper} ${stylesV2.loaded} appLoaded` :
               `${styles.v2Wrapper}`
@@ -75,7 +75,7 @@ class App extends React.Component {
               </Switch>
               <Toaster />
             </main>
-          ) : (
+            ) : (
             <main className={this.state.loaded ?
               `${styles.bodyWrapper} ${styles.loaded} appLoaded` :
               `${styles.bodyWrapper}`
@@ -132,7 +132,7 @@ class App extends React.Component {
               <StatusBar />
               <Toaster />
             </main>
-          )
+            )
         }
         <LoadingBar markAsLoaded={this.markAsLoaded.bind(this)} />
       </OfflineWrapper>

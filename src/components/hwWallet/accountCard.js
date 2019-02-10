@@ -30,8 +30,8 @@ const AccountCard = ({
       <div
         className={styles.edit}
         onClick={/* istanbul ignore next */(e) => {
-        e.stopPropagation();
-      }}>
+          e.stopPropagation();
+        }}>
         <ToolBoxInput
           placeholder={'Title'}
           onChange={value => changeInput(value, account.address)}
@@ -46,7 +46,7 @@ const AccountCard = ({
         <div className={`${styles.edit} ${styles.editTitle}`}>
           {hardwareAccountName}
         </div> :
-      null}
+        null}
     <div className={styles.addressField}>
       <CopyToClipboard value={account.address} />
     </div>

@@ -18,4 +18,3 @@ const LiskAmount = props => (
 
 
 export default LiskAmount;
-

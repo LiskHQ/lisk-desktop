@@ -48,7 +48,7 @@ class TransactionsListV2 extends React.Component {
       }
       {transactions.length
         ? transactions.filter(fixIncomingFilter)
-            .map((transaction, i) =>
+          .map((transaction, i) =>
               <TransactionRowV2 key={i}
                 followedAccounts={followedAccounts}
                 address={address}

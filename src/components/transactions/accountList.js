@@ -99,4 +99,3 @@ class AccountList extends React.Component {
 }
 
 export default AccountList;
-

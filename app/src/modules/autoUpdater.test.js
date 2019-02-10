@@ -209,4 +209,3 @@ describe('autoUpdater', () => {
     consoleSpy.restore();
   });
 });
-

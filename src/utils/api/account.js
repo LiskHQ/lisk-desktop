@@ -40,4 +40,3 @@ export const setSecondPassphrase = (
       resolve(transaction);
     }).catch(reject);
   });
-

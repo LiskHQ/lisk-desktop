@@ -29,9 +29,11 @@ class AddAccountID extends React.Component {
 
     if (!value) {
       return this.props.t('Required');
-    } else if (!value.match(regex.address)) {
+    }
+    if (!value.match(regex.address)) {
       return this.props.t('Invalid address');
-    } else if (alreadyFollowing) {
+    }
+    if (alreadyFollowing) {
       return this.props.t('ID already added to bookmarks');
     }
     return undefined;

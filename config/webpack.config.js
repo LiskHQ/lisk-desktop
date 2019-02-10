@@ -58,10 +58,6 @@ module.exports = {
         exclude: [/fonts/],
         loader: 'url-loader',
       },
-      {
-        test: /\.json$/,
-        loaders: ['json-loader'],
-      },
     ],
   },
 };

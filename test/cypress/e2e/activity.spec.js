@@ -246,4 +246,3 @@ describe('Wallet Activity for delegate', () => {
 describe('Account Activity opened from search for delegate', () => {
   testDelegateActivity(() => cy.get(ss.searchInput).click().type(`${accounts.delegate.address}{enter}`));
 });
-

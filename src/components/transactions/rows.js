@@ -27,8 +27,8 @@ class Row extends React.Component {
         <div className={`${styles.date} transactions-cell`}>
           {
             props.value.confirmations
-            ? <DateFromTimestamp time={props.value.timestamp} />
-            : <Spinner />
+              ? <DateFromTimestamp time={props.value.timestamp} />
+              : <Spinner />
           }
         </div>
         <div className={`${styles.amount} transactions-cell`}>

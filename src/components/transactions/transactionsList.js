@@ -92,8 +92,8 @@ class TransactionsList extends React.Component {
     return <div className={`${styles.results} ${this.props.isBarEnabledTransactions ? styles.onBarEnabled : ''} ${showMore && styles.onShowMore} transaction-results`}>
       {
         transactions
-        .filter(fixIncomingFilter)
-        .map((transaction, i) =>
+          .filter(fixIncomingFilter)
+          .map((transaction, i) =>
           <Rows address={address}
             key={i}
             t={t}

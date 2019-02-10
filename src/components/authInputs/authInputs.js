@@ -50,4 +50,3 @@ class AuthInputs extends React.Component {
 }
 
 export default AuthInputs;
-

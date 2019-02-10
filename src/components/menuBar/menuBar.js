@@ -22,4 +22,3 @@ const MenuBar = (props) => {
 };
 
 export default MenuBar;
-

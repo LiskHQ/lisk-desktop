@@ -130,8 +130,8 @@ class MainMenu extends React.Component {
               disableAnimatedBottomBorder={true}
               className={`${styles.tabs} ${styles.topTabs} main-tabs`}>
               {tabs.map(({
-                   label, image, id, enabledWhenNotLoggedIn,
-                  }, index) =>
+                label, image, id, enabledWhenNotLoggedIn,
+              }, index) =>
                 <Tab
                   key={index}
                   label={<TabTemplate label={label} img={image} />}
@@ -142,8 +142,8 @@ class MainMenu extends React.Component {
             </ToolboxTabs>
             <div className={`${styles.tabs} ${styles.bottomTabs} main-tabs`}>
               {bottomMenuTabs.map(({
-                   label, image, id, route,
-                  }, index) => (
+                label, image, id, route,
+              }, index) => (
                 <Link to={route}
                     id={id}
                     key={index}
@@ -172,8 +172,8 @@ class MainMenu extends React.Component {
                   disableAnimatedBottomBorder={true}
                   className={`${styles.tabs} main-tabs`}>
                   {tabs.map(({
-                       label, image, id, enabledWhenNotLoggedIn,
-                      }, index) =>
+                    label, image, id, enabledWhenNotLoggedIn,
+                  }, index) =>
                     <Tab
                       key={index}
                       label={<TabTemplate label={label} img={image} />}
@@ -188,8 +188,8 @@ class MainMenu extends React.Component {
                   disableAnimatedBottomBorder={true}
                   className={`${styles.tabs} ${styles.bottomTabs} main-tabs`}>
                   {bottomMenuTabs.map(({
-                      label, image, id, enabledWhenNotLoggedIn,
-                      }, index) =>
+                    label, image, id, enabledWhenNotLoggedIn,
+                  }, index) =>
                     <Tab
                       key={index}
                       label={<TabTemplate label={label} img={image} isFontIcon />}

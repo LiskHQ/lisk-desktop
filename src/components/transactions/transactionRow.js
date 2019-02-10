@@ -29,7 +29,7 @@ class TransactionRow extends React.Component {
             <div className={`${styles.hiddenXs} ${styles.reference} transaction-reference`}>
                 {props.value.asset && props.value.asset.data ?
                   <span>{props.value.asset.data}</span>
-                : '-'}
+                  : '-'}
             </div>
           </div>
         <div className={`${styles.rightText} ${grid['col-sm-2']} transactions-cell`}>

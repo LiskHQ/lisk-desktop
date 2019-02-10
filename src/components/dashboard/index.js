@@ -102,7 +102,7 @@ class Dashboard extends React.Component {
           <div className={`${grid['col-md-8']} ${grid['col-xs-12']} ${styles.main}`}>
             {
               isLoggedIn
-              ? <BoxV2 className={`${styles.latestActivity}`}>
+                ? <BoxV2 className={`${styles.latestActivity}`}>
                 <header>
                   <h1 className={styles.title}>
                     {t('Latest activity')}
@@ -131,7 +131,7 @@ class Dashboard extends React.Component {
                   />
                 }
                 </BoxV2>
-              : <QuickTips />
+                : <QuickTips />
             }
             <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>
               <div className={`${styles.following} bookmarks`}>

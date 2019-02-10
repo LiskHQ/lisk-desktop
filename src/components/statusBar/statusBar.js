@@ -63,7 +63,7 @@ class StatusBar extends React.Component {
         <div className={`${styles.timer}`}>
           {
             this.isTimerEnabled() ?
-            (
+              (
               <Countdown
                 date={account.expireTime}
                 onComplete={() => this.onCountdownComplete()}
@@ -78,8 +78,8 @@ class StatusBar extends React.Component {
                   t={t}
                 />
               </Countdown>
-            )
-          : null}
+              )
+              : null}
         </div>
         <Network
           peers={peers}

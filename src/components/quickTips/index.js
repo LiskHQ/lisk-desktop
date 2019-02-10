@@ -66,7 +66,7 @@ class QuickTips extends React.Component {
           {slides.map(slide =>
             <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-goto-${slide.title}`}>
               <div className={styles.footer}>
-                <a href={slide.goTo.link} className={styles.goTo} target='_blank'>
+                <a href={slide.goTo.link} className={styles.goTo} target='_blank' rel='noopener noreferrer'>
                   {slide.goTo.title}
                 </a>
 
@@ -97,4 +97,3 @@ class QuickTips extends React.Component {
   }
 }
 export default translate()(QuickTips);
-

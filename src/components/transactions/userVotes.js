@@ -46,4 +46,3 @@ class UserVotes extends AccountList {
 }
 
 export default translate()(UserVotes);
-

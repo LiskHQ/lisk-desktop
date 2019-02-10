@@ -73,8 +73,8 @@ class ViewAccounts extends React.Component {
               }
               {
                 this.state.edit
-                ? <span>{t('Done')}</span>
-                : <span>Edit</span>
+                  ? <span>{t('Done')}</span>
+                  : <span>Edit</span>
               }
               </div>
             )
@@ -83,11 +83,11 @@ class ViewAccounts extends React.Component {
         <div className={`${styles.container}`}>
         {
           accounts.length
-          ? <div className={`${styles.accounts} ${showBar ? styles.onShowBar : ''} ${this.state.showMore ? styles.showMoreToggle : ''} followed-accounts-list`}>
+            ? <div className={`${styles.accounts} ${showBar ? styles.onShowBar : ''} ${this.state.showMore ? styles.showMoreToggle : ''} followed-accounts-list`}>
               <div className={styles.list}>
                 {
                   accounts.map((account, i) =>
-                  (<div
+                    (<div
                     key={i}
                     className={`${styles.rows} ${styles.clickable} followed-account`}
                     onClick={() => this.onFollowedAccount(account)}
@@ -116,11 +116,11 @@ class ViewAccounts extends React.Component {
                       </div>
                       {
                         this.state.edit
-                        ? <div className={`${styles.removeAccount} remove-account`}
+                          ? <div className={`${styles.removeAccount} remove-account`}
                             onClick={() => this.onRemoveAccount(account)}>
                             <FontIcon value='remove'/>
                           </div>
-                        : null
+                          : null
                       }
                     </div>
                   </div>))
@@ -135,7 +135,7 @@ class ViewAccounts extends React.Component {
                 }
               </div>
             </div>
-          : <div className={`${styles.emptyList} followed-accounts-empty-list`}>
+            : <div className={`${styles.emptyList} followed-accounts-empty-list`}>
               <p>{t('Keep track of any Lisk ID balance. Only you will see who you bookmarked.')}</p>
 
               <div className={`${styles.addBookmarkBtn} add-account-button`} onClick={() => this.onAddAccount()}>
@@ -145,12 +145,12 @@ class ViewAccounts extends React.Component {
         }
         {
           accounts.length > 4
-          ? <ShowMore
+            ? <ShowMore
               className={`${styles.showMore} show-more`}
               onClick={() => this.onShowMoreToggle()}
               text={ this.state.showMore ? t('Show Less') : t('Show More')}
             />
-          : null
+            : null
         }
         </div>
     </BoxV2>

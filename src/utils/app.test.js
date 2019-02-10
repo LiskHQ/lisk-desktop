@@ -28,4 +28,3 @@ describe('App Util', () => {
     }
   });
 });
-

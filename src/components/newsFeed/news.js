@@ -33,7 +33,7 @@ class News extends React.Component {
           {url ? content.replace(url, '') : url}
         </div>
         <div className={styles.readMore}>
-          <a href={url} target="_blank">{t('Show More')}</a>
+          <a href={url} target='_blank' rel='noopener noreferrer'>{t('Show More')}</a>
         </div>
       </div>
     );

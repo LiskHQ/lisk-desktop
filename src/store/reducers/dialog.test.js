@@ -31,4 +31,3 @@ describe('Reducer: dialogs(state, action)', () => {
     expect(changedState).to.deep.equal({});
   });
 });
-

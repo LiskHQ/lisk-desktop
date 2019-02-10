@@ -68,8 +68,8 @@ class Header extends React.Component {
             {this.shouldShowSearchBar() && <SearchBar/>}
           </div>
           {this.props.account.loading
-                ? null
-                : <Account {...{ peers, t, showNetworkIndicator }} />}
+            ? null
+            : <Account {...{ peers, t, showNetworkIndicator }} />}
         </div>
 
         <div className={`${styles.loginInfo}`}>

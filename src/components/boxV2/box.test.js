@@ -18,4 +18,3 @@ describe('Box', () => {
     expect(wrapper.find('header').html()).to.be.equal('<header>Activities</header>');
   });
 });
-

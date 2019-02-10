@@ -19,4 +19,3 @@ const mapDispatchToProps = {
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translate()(TopBar)));
-
