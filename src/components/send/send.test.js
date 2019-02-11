@@ -44,7 +44,6 @@ describe('Send', () => {
       },
       i18n: { i18n },
     };
-    jest.spyOn(props.history, 'push');
 
     options = {
       context: { i18n, store },
