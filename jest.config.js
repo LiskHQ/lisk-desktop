@@ -7,7 +7,6 @@ module.exports = {
   ],
   testPathIgnorePatterns: [
     '<rootDir>/test/integration/wallet.test.js',
-    'src/actions/transactions.test.js',
     'src/components/dashboard/currencyGraph.test.js', // This should be unskipped in issue #1499
     'src/components/errorBoundary/index.test.js',
     'src/components/feedbackForm/*.test.js',

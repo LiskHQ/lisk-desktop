@@ -8,7 +8,6 @@ const getSearchesObjFromLS = () => JSON.parse(localStorage.getItem('searches'));
 describe('Search', () => {
   const testnetTransaction = '755251579479131174';
   const mainnetTransaction = '881002485778658401';
-  const mainnetDelegateName = 'tembo';
 
   function assertAccountPage(accountsAddress) {
     cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', accountsAddress)
@@ -92,11 +91,10 @@ describe('Search', () => {
    * @expect localStorage have the searches object with correct address
    * @expect localStorage have the searches object with correct searchTerm
    */
-  // TODO reenable after #1351 fix
-  it.skip('Search for Delegate using keyboard Enter, signed off', () => {
+  it('Search for Delegate using keyboard Enter, signed off', () => {
     cy.visit(urls.dashboard);
-    cy.get(ss.searchInput).click().type(`${mainnetDelegateName}{enter}`);
-    assertDelegatePage(accounts.delegate.username);
+    cy.get(ss.searchInput).click().type(`${accounts['mainnet delegate'].username}{enter}`);
+    assertDelegatePage(accounts['mainnet delegate'].username, accounts['mainnet delegate'].address);
   });
 
   it('4 search suggestions appears after 3 letters entered', () => {
@@ -170,7 +168,7 @@ describe('Search', () => {
    */
   it('Search after logout - happens in last used network', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit('/');
+    cy.visit(urls.dashboard);
     cy.get(ss.userAvatar).click();
     cy.get(ss.logoutBtn).click();
     cy.get(ss.searchInput).click().type(`${accounts.delegate.username}`);
@@ -214,14 +212,13 @@ describe('Search', () => {
     cy.get(ss.searchNoResultMessage).eq(0).should('have.text', 'No results found');
   });
 
-
   /**
    * Search for nonexistent item
    * @expect no results plug
    */
   it('Search for nonexistent item - shows no results plug', () => {
     cy.visit(urls.dashboard);
-    cy.get(ss.searchInput).click().type('43th3j4bt324{enter}');
+    cy.get(ss.searchInput).click().type('321321{enter}');
     cy.get(ss.emptyResultsMessage).should('have.text', 'No results');
   });
 });
