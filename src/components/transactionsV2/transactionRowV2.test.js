@@ -1,6 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
+import { useFakeTimers } from 'sinon';
 import { MemoryRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -9,6 +10,8 @@ import TransactionRowV2 from './transactionRowV2';
 import history from '../../history';
 
 describe('TransactionRow V2', () => {
+  let clock;
+
   const rowData = {
     id: '1038520263604146911',
     height: 5,
@@ -40,6 +43,17 @@ describe('TransactionRow V2', () => {
     },
   };
 
+  beforeEach(() => {
+    clock = useFakeTimers({
+      now: new Date(2018, 1, 1),
+      toFake: ['setTimeout', 'clearTimeout'],
+    });
+  });
+
+  afterEach(() => {
+    clock.restore();
+  });
+
   it('should render 5 columns', () => {
     const wrapper = mount(<Router>
         <TransactionRowV2
@@ -64,25 +78,29 @@ describe('TransactionRow V2', () => {
         <TransactionRowV2
           {...props} />
       </Router>, options);
-    expect(wrapper).to.have.exactly(1).descendants('.spinner');
+    expect(wrapper).to.have.className('pending');
+    expect(wrapper.find('.status')).to.have.className('showSpinner');
   });
 
-  it('should hide Spinner after first confirmation', () => {
+  it('should hide Spinner after first confirmation and timeout expires', () => {
     rowData.confirmations = undefined;
     const wrapper = mount(<Router>
         <TransactionRowV2
           {...props} />
       </Router>, options);
-    expect(wrapper).to.have.exactly(1).descendants('.spinner');
+    expect(wrapper).to.have.className('pending');
+    expect(wrapper.find('.status')).to.have.className('showSpinner');
     wrapper.setProps({
       children: React.cloneElement(wrapper.props().children, {
         value: {
-          ...props.value,
+          ...rowData,
           confirmations: 800,
         },
       }),
     });
     wrapper.update();
-    expect(wrapper).to.not.have.descendants('.spinner');
+    clock.tick(2000);
+    expect(wrapper).to.not.have.className('pending');
+    expect(wrapper.find('.status')).to.have.className('showDate');
   });
 });
