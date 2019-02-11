@@ -38,7 +38,7 @@ class CustomCountDown extends React.Component {
           text: t('Your session was timed out after 10 minutes of no network activity. You may continue to use certain sections of your Lisk Hub or sign back in to access everything.'),
           firstButton: {
             text: t('Sign back in'),
-            onClickHandler: this.goTo.bind(this, routes.login.path),
+            onClickHandler: this.goTo.bind(this, routes.loginV2.path),
           },
           secondButton: {
             text: t('Continue to Dashboard'),
