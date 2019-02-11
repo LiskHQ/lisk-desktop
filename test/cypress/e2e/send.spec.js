@@ -64,11 +64,11 @@ describe('Send', () => {
     cy.get(ss.resultMessage).should('have.text', msg.transferTxSuccess);
     cy.get(ss.okayBtn).click();
     cy.get(ss.transactionRow).eq(0).as('tx');
-    cy.get('@tx').find('.spinner');
+    cy.get('@tx').find(ss.spinner).should('be.visible');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', randomAddress);
     cy.get('@tx').find(ss.transactionAmount).should('have.text', randomAmount.toString());
     cy.wait(txConfirmationTimeout);
-    cy.get('@tx').find(ss.spinner).should('not.exist');
+    cy.get('@tx').find(ss.spinner).should('be.not.visible');
     cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(function () {
       compareBalances(this.balanceBefore, this.balanceAfter, randomAmount + transactionFee);
     });
@@ -95,11 +95,11 @@ describe('Send', () => {
     cy.get(ss.resultMessage).should('have.text', msg.transferTxSuccess);
     cy.visit(urls.dashboard);
     cy.get(ss.transactionRow).eq(0).as('tx');
-    cy.get('@tx').find(ss.spinner);
+    cy.get('@tx').find(ss.spinner).should('be.visible');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', randomAddress);
     cy.get('@tx').find(ss.transactionAmount).should('have.text', randomAmount.toString());
     cy.wait(txConfirmationTimeout);
-    cy.get('@tx').find(ss.spinner).should('not.exist');
+    cy.get('@tx').find(ss.spinner).should('be.not.visible');
   });
 
   /**
@@ -121,7 +121,7 @@ describe('Send', () => {
     cy.get(ss.resultMessage).should('have.text', msg.transferTxSuccess);
     cy.get(ss.okayBtn).click();
     cy.get(ss.transactionRow).eq(0).as('tx');
-    cy.get('@tx').find('.spinner');
+    cy.get('@tx').find(ss.spinner).should('be.visible');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', randomAddress);
   });
 
