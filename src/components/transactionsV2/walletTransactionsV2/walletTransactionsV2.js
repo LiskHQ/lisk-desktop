@@ -113,6 +113,7 @@ class WalletTransactionsV2 extends React.Component {
     this.saveFilters({});
   }
 
+  /* istanbul ignore next */
   changeFilters(name, value) {
     this.setState({ customFilters: { ...this.state.customFilters, [name]: value } });
   }

@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { spy } from 'sinon';
 import Input from 'react-toolbox/lib/input';
-import Button from 'react-toolbox/lib/button';
+import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 import FilterButton from './filterButton';
 
 describe('FilterButton', () => {
@@ -11,6 +11,7 @@ describe('FilterButton', () => {
     const props = {
       saveFilters: spy(),
       t: spy(),
+      customFilters: {},
     };
     const expectedValue = {
       dateFrom: '',
@@ -21,13 +22,14 @@ describe('FilterButton', () => {
     };
     const wrapper = shallow(<FilterButton {...props} />);
     wrapper.find(Input).props().onChange('test');
-    wrapper.find(Button).props().onClick();
+    wrapper.find(PrimaryButtonV2).props().onClick();
     expect(props.saveFilters).to.be.calledWith(expectedValue);
   });
 
   it('should toggle Filters dropdown', () => {
     const props = {
       t: spy(),
+      customFilters: {},
     };
 
     const wrapper = shallow(<FilterButton {...props} />);

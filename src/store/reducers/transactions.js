@@ -5,7 +5,18 @@ import txFilter from '../../constants/transactionFilters';
  * @param {Array} state
  * @param {Object} action
  */
-const initialState = { pending: [], confirmed: [], count: null };
+const initialState = {
+  pending: [],
+  confirmed: [],
+  count: null,
+  customFilters: {
+    dateFrom: '',
+    dateTo: '',
+    amountFrom: '',
+    amountTo: '',
+    message: '',
+  },
+};
 const transactions = (state = initialState, action) => { // eslint-disable-line complexity
   switch (action.type) {
     case actionTypes.cleanTransactions:
