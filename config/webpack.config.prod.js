@@ -1,40 +1,24 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const webpack = require('webpack');
 const { resolve } = require('path');
-const merge = require('webpack-merge');
-const { NamedModulesPlugin } = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const FileChanger = require('webpack-file-changer');
+const { DefinePlugin } = require('webpack');
 const baseConfig = require('./webpack.config');
+const FileChanger = require('webpack-file-changer');
+const merge = require('webpack-merge');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const reactConfig = require('./webpack.config.react');
-/* eslint-enable import/no-extraneous-dependencies */
 
 module.exports = merge(baseConfig, reactConfig, {
+  mode: 'production',
   output: {
     path: resolve(__dirname, '../app', '../app/build'),
     filename: 'bundle.[name].[hash].js',
   },
   plugins: [
-    new webpack.DefinePlugin({
+    new DefinePlugin({
       PRODUCTION: true,
       TEST: false,
-      // because of https://fb.me/react-minification
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-      },
     }),
-    /*
-     * TODO re-enable when #1439 is fixed
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
-      mangle: false,
-    }),
-    */
-    new NamedModulesPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-    }),
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: 'styles.[hash].css',
       allChunks: true,
     }),
@@ -51,4 +35,27 @@ module.exports = merge(baseConfig, reactConfig, {
       ],
     }),
   ],
+  optimization: {
+    minimize: true,
+    splitChunks: {
+      chunks: 'async',
+      minSize: 30000,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name: true,
+      cacheGroups: {
+        vendor: {
+          name: 'vendor',
+          test: /[\\/]node_modules[\\/]/,
+        },
+        default: {
+          minChunks: 2,
+          reuseExistingChunk: true,
+        },
+      },
+    },
+  },
 });

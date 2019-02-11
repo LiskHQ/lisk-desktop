@@ -10,8 +10,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import i18next from 'i18next';
 import ReactPiwik from 'react-piwik';
 import crypto from 'crypto';
-// TODO remove next line after upgrading node version to at least 7
-import 'es7-object-polyfill';
+import '@babel/polyfill';
 
 require('jest-localstorage-mock');
 

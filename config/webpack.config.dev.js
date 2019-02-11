@@ -1,9 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
+const { DefinePlugin } = require('webpack');
 const { resolve } = require('path');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
-/* eslint-enable import/no-extraneous-dependencies */
 
 module.exports = merge(baseConfig, reactConfig, {
   mode: 'development',
@@ -18,7 +18,14 @@ module.exports = merge(baseConfig, reactConfig, {
     historyApiFallback: true,
     host: '0.0.0.0',
   },
+  plugins: [
+    new DefinePlugin({
+      PRODUCTION: false,
+      TEST: false,
+    }),
+  ],
   optimization: {
+    minimize: false,
     splitChunks: {
       chunks: 'async',
       minSize: 30000,
@@ -30,24 +37,11 @@ module.exports = merge(baseConfig, reactConfig, {
       name: true,
       cacheGroups: {
         vendor: {
+          name: 'vendor',
           test: /[\\/]node_modules[\\/]/,
-          priority: -10,
-        },
-        styles: {
-          name: 'styles',
-          test: /\.css$/,
-          chunks: 'all',
-          enforce: true,
-        },
-        head: {
-          name: 'head',
-          test: /\.css$/,
-          chunks: 'all',
-          enforce: false,
         },
         default: {
           minChunks: 2,
-          priority: -20,
           reuseExistingChunk: true,
         },
       },

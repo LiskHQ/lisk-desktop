@@ -1,26 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const { resolve } = require('path');
-const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-/* eslint-enable import/no-extraneous-dependencies */
-
-const extractCSS = new ExtractTextPlugin({
-  filename: 'dialog.css',
-  allChunks: false,
-});
-const cssLoader = {
-  loader: 'css-loader',
-  options: {
-    sourceMap: true,
-    minimize: true,
-    modules: false,
-    import: true,
-  },
-};
+const merge = require('webpack-merge');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = merge(baseConfig, {
+  mode: 'production',
   entry: {
     main: `${resolve(__dirname, '../app/src')}/main.js`,
   },
@@ -33,7 +19,10 @@ module.exports = merge(baseConfig, {
     __dirname: false,
   },
   plugins: [
-    extractCSS,
+    new MiniCssExtractPlugin({
+      filename: 'dialog.css',
+      allChunks: false,
+    }),
     new HtmlWebpackPlugin({
       template: './app/src/update.html',
       inject: false,
@@ -44,7 +33,16 @@ module.exports = merge(baseConfig, {
     rules: [
       {
         test: /styles\.dialog\.css$/,
-        use: [].concat(extractCSS.extract(cssLoader)),
+        use: [
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              modules: false,
+              import: true,
+            },
+          },
+        ],
       },
     ],
   },
