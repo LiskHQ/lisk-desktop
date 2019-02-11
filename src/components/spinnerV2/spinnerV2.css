@@ -2,7 +2,29 @@
 
 @keyframes rotate {
   0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  100% { transform: rotate(-360deg); }
+}
+
+@keyframes checkmark {
+  0% {
+    height: 0;
+    width: 0;
+  }
+
+  20% {
+    height: 50%;
+    width: 0;
+  }
+
+  40% {
+    height: 50%;
+    width: 100%;
+  }
+
+  100% {
+    height: 50%;
+    width: 100%;
+  }
 }
 
 .wrapper {
@@ -21,16 +43,43 @@
 }
 
 .spinner {
-  animation-name: rotate;
-  animation-duration: var(--animation-speed-standard);
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  border: 2px solid currentColor;
-  border-bottom-color: transparent;
-  border-radius: 50%;
   box-sizing: border-box;
   color: inherit;
   display: block;
   height: 14px;
   width: 14px;
+
+  &::after {
+    animation-name: rotate;
+    animation-duration: var(--animation-speed-standard);
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    border: 2px solid currentColor;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    box-sizing: border-box;
+    content: '';
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
+  &.completed {
+    position: relative;
+    transform: rotate(-45deg);
+
+    &::after {
+      animation-name: checkmark;
+      animation-duration: var(--animation-speed-slow);
+      animation-fill-mode: forwards;
+      animation-iteration-count: 1;
+      animation-timing-function: linear;
+      border: 0 solid transparent;
+      border-bottom: 2px solid currentColor;
+      border-left: 2px solid currentColor;
+      border-radius: 0;
+      height: 50%;
+      width: 100%;
+    }
+  }
 }
