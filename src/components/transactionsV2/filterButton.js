@@ -31,6 +31,7 @@ class FilterButton extends React.Component {
     this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
+  /* istanbul ignore next */
   componentWillReceiveProps(nextProps) {
     if (nextProps.customFilters.message !== this.props.customFilters.message) {
       this.setState({ customFilters: nextProps.customFilters });

@@ -119,9 +119,8 @@
   font-size: var(--paragraph-font-size-s);
   font-weight: var(--font-weight-bold);
   background: #fff;
-  padding: 0 20px 0;
   margin: 8px 10px;
-  width: 200px;
+  width: 230px;
   border: none;
   border-radius: 4px;
   box-shadow: 0 3px 3px -1px rgba(10, 22, 70, 0.1), 0 0 1px 0 rgba(10, 22, 70, 0.06);
