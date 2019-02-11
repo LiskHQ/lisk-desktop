@@ -69,7 +69,7 @@ describe('ExternalLinks', () => {
 
   it('should reset time after call reset timer function', () => {
     wrapper.find('Countdown').props().onComplete();
-    expect(props.history.replace).to.have.been.calledWith(`${routes.login.path}`);
+    expect(props.history.replace).to.have.been.calledWith(`${routes.loginV2.path}`);
   });
 
   it('should redirect to dashboard after 10 min', () => {

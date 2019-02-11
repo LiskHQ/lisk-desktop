@@ -28,14 +28,14 @@ class Header extends React.Component {
     const { pathname } = this.props.location;
     return !this.props.isAuthenticated
       && !this.props.account.loading
-      && pathname !== routes.login.path
-      && ![routes.register.path, routes.addAccount.path]
+      && pathname !== routes.loginV2.path
+      && ![routes.registerV2.path, routes.addAccount.path]
         .some(el => pathname.includes(el));
   }
 
   shouldShowSearchBar() {
     const { pathname } = this.props.location;
-    return ![routes.register.path, routes.addAccount.path]
+    return ![routes.registerV2.path, routes.addAccount.path]
       .some(el => pathname.includes(el));
   }
 
@@ -103,7 +103,7 @@ class Header extends React.Component {
                                 renderer={CountDownTemplate}
                                 onComplete={() => {
                                   this.props.logOut();
-                                  this.props.history.replace(routes.login.path);
+                                  this.props.history.replace(routes.loginV2.path);
                                 }}
                               >
                                 <CustomCountDown
