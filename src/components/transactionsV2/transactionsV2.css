@@ -66,21 +66,6 @@
         display: none;
       }
     }
-/* 
-    &:last-child {
-      right: 35px;
-      position: absolute;
-      background: #fff;
-      padding: 10px 20px;
-      margin-top: 7px;
-      border: none;
-      border-radius: 4px;
-      box-shadow: 0 3px 3px -1px rgba(10, 22, 70, 0.1), 0 0 1px 0 rgba(10, 22, 70, 0.06);
-
-      &::before {
-        display: none;
-      }
-    } */
   }
 }
 
