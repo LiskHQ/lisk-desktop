@@ -31,6 +31,12 @@ class FilterButton extends React.Component {
     this.handleClickOutside = this.handleClickOutside.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.customFilters.message !== this.props.customFilters.message) {
+      this.setState({ customFilters: nextProps.customFilters });
+    }
+  }
+
   changeFilters(name, value) {
     // let errors = {};
     // if (name === 'amountTo') {
@@ -48,9 +54,6 @@ class FilterButton extends React.Component {
     const customFilters = this.state.customFilters;
     this.toggleFilters();
 
-    this.setState({
-      customFilters: this.state.customFilters,
-    });
     this.props.saveFilters(customFilters);
   }
 
@@ -83,6 +86,8 @@ class FilterButton extends React.Component {
   }
 
   render() {
+    const message = this.state.customFilters.message || this.props.customFilters.message;
+
     return (
       <div className={`${transactionsStyles.filters} ${transactionsStyles.item}`}>
         <div
@@ -154,7 +159,7 @@ class FilterButton extends React.Component {
                   name='message'
                   placeholder={this.props.t('Write message')}
                   theme={styles}
-                  value={this.state.customFilters.message || this.props.customFilters.message}
+                  value={message || ''}
                   onKeyDown={this.handleKey.bind(this)}
                   onChange={(val) => { this.changeFilters('message', val); }}/>
               </div>
