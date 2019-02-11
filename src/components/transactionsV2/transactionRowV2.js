@@ -14,29 +14,32 @@ class TransactionRowV2 extends React.Component {
     super();
 
     this.state = {
-      isUnconfirmed: true,
+      isConfirmed: false,
     };
 
-    this.setUnconfirmed = this.setUnconfirmed.bind(this);
+    this.setIsConfirmed = this.setIsConfirmed.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (this.state.isUnconfirmed && nextProps.value.confirmations) {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (!this.state.isConfirmed && nextProps.value.confirmations) {
       clearTimeout(this.timeout);
-      this.timeout = setTimeout(this.setUnconfirmed, 2000);
+      this.timeout = setTimeout(this.setIsConfirmed, 2000);
     }
-    return nextProps.value.id !== this.props.value.id || nextProps.value.confirmations <= 1000;
+
+    return (!this.state.isConfirmed && nextState.isConfirmed)
+      || nextProps.value.id !== this.props.value.id
+      || nextProps.value.confirmations <= 1000;
   }
 
   componentDidMount() {
     if (this.props.value.confirmations && this.props.value.confirmations > 0) {
-      this.setUnconfirmed();
+      this.setIsConfirmed();
     }
   }
 
-  setUnconfirmed() {
+  setIsConfirmed() {
     this.setState({
-      isUnconfirmed: false,
+      isConfirmed: true,
     });
   }
 
@@ -48,7 +51,7 @@ class TransactionRowV2 extends React.Component {
     const { props } = this;
     const onClick = props.onClick || (() => {});
     const hasConfirmations = props.value.confirmations && props.value.confirmations > 0;
-    const { isUnconfirmed } = this.state;
+    const { isConfirmed } = this.state;
     return (
       <div className={`${grid.row} ${styles.row} ${!hasConfirmations ? styles.pending : ''} transactions-row`} onClick={() => onClick(props)}>
         <div className={`${grid['col-xs-6']} ${grid['col-sm-4']} ${grid['col-lg-3']} transactions-cell`}>
@@ -62,7 +65,7 @@ class TransactionRowV2 extends React.Component {
               transaction={props.value} />
           </div>
         <div className={`${styles.hiddenXs} ${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
-          <div className={`${styles.status} ${isUnconfirmed ? styles.showSpinner : styles.showDate}`}>
+          <div className={`${styles.status} ${!isConfirmed ? styles.showSpinner : styles.showDate}`}>
             <SpinnerV2 completed={hasConfirmations} label={props.t('Pending...')} />
             <DateTimeFromTimestamp time={props.value.timestamp} />
           </div>
