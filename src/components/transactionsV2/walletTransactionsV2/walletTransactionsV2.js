@@ -10,6 +10,7 @@ import routes from '../../../constants/routes';
 import styles from './walletTransactionsV2.css';
 
 class WalletTransactionsV2 extends React.Component {
+  // eslint-disable-next-line max-statements
   constructor() {
     super();
 
@@ -21,7 +22,7 @@ class WalletTransactionsV2 extends React.Component {
     };
 
     this.copyTimeout = null;
-    
+
     this.saveFilters = this.saveFilters.bind(this);
     this.clearFilter = this.clearFilter.bind(this);
     this.clearAllFilters = this.clearAllFilters.bind(this);
