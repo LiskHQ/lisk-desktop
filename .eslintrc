@@ -17,7 +17,8 @@
     "ipc": true,
     "PRODUCTION": true,
     "TEST": true,
-    "jest": true
+    "jest": true,
+    "expect": true
   },
   "env": {
     "browser": true,
