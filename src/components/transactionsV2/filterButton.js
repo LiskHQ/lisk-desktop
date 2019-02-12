@@ -48,10 +48,10 @@ class FilterButton extends React.Component {
     //   errors = { amountFromValidity: Number.isNaN(Number(value)) ? 'Invalid number' : '' };
     // }
 
-    if (name === 'message') {
-      const byteCount = encodeURI(value).split(/%..|./).length - 1;
-      errors = { messageValidity: byteCount > 64 ? 'Maximum length exceeded' : '' };
-    }
+    // if (name === 'message') {
+    const byteCount = encodeURI(value).split(/%..|./).length - 1;
+    errors = { messageValidity: byteCount > 64 ? 'Maximum length exceeded' : '' };
+    // }
 
     this.setState({ customFilters: { ...this.state.customFilters, [name]: value }, ...errors });
   }
