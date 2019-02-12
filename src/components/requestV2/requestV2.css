@@ -82,6 +82,23 @@
     }
   }
 
+  & .amountField {
+    align-items: center;
+    display: flex;
+    position: relative;
+    width: 100%;
+
+    & .converter {
+      position: absolute;
+      right: 16px;
+    }
+
+    & .input {
+      padding-right: 120px;
+      width: 100%;
+    }
+  }
+
   & .input {
     font-size: var(--button-font-size-s);
     height: 36px;
@@ -118,6 +135,7 @@
     transform var(--animation-speed-fast) linear;
 
   &.hide {
+    margin: 0;
     max-height: 0;
     max-width: 0;
     opacity: 0;

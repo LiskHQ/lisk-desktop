@@ -4,6 +4,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { translate } from 'react-i18next';
 import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 import { InputV2 } from '../toolbox/inputsV2';
+import ConverterV2 from '../converterV2';
 import styles from './requestV2.css';
 
 class RequestV2 extends React.Component {
@@ -121,13 +122,19 @@ class RequestV2 extends React.Component {
           </span>
           <label className={`${styles.fieldGroup}`}>
             <span className={`${styles.fieldLabel}`}>{t('Amount (LSK)')}</span>
-            <InputV2
-              autoComplete={'no'}
-              onChange={this.handleFieldChange}
-              name='amount'
-              value={fields.amount.value}
-              placeholder={t('Requested amount')}
-              className={`${styles.input} ${fields.amount.error ? 'error' : ''}`} />
+            <span className={`${styles.amountField}`}>
+              <InputV2
+                autoComplete={'no'}
+                onChange={this.handleFieldChange}
+                name='amount'
+                value={fields.amount.value}
+                placeholder={t('Requested amount')}
+                className={`${styles.input} ${fields.amount.error ? 'error' : ''}`} />
+              <ConverterV2
+                className={styles.converter}
+                value={fields.amount.value}
+                error={fields.amount.error} />
+            </span>
             <span className={`${styles.feedback} ${fields.amount.error ? 'error' : ''} ${fields.amount.feedback ? styles.show : ''}`}>
               {fields.amount.feedback}
             </span>
