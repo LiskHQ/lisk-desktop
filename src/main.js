@@ -1,4 +1,5 @@
 import React from 'react';
+import { transform } from "@babel/core";
 import ReactDOM from 'react-dom';
 import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -45,6 +46,40 @@ applyDeviceClass(document.getElementsByTagName('html')[0], navigator);
 
 window.LiskHubExtensions = LiskHubExtensions;
 
+const traverseInternal = (object, keys, keyIndex) => {
+  if (keyIndex >= keys.length) {
+    return object;
+  }
+
+  return traverseInternal(object[keys[keyIndex]], keys, keyIndex + 1);
+};
+
+const traverse = (object, deepKey) => {
+  return traverseInternal(object, deepKey.split('.'), 0);
+};
+
+function loadRemoteComponent(url){
+  return fetch(url)
+  .then(res=>res.text())
+  .then(source=>{
+    console.log(source);
+    var exports = {}
+    function require(name){
+      if(name == 'react') return React
+      else throw `You can't use modules other than "react" in remote component.`
+    }
+    // const transformedSource = transform(source, {
+    //   presets: ['react', 'es2015', 'stage-2']
+    // }).code
+    // console.log(transformedSource, 'transformedSource');
+    // eval(transformedSource)
+    eval(source);
+    // traverse(componentRegistry, this.componentName);
+    // return source;
+    return exports.__esModule ? exports.default : exports
+  })
+}
+
 /*
  * TODO all code below this point is a sample extensions
  * that should be loaded by the "Add extension " page as a separate <script>
@@ -52,6 +87,9 @@ window.LiskHubExtensions = LiskHubExtensions;
 const HelloWorldModule = props => <div style={{ marginTop: 20 }} > {/* TODO avoid the style here */}
   <LiskHubExtensions.components.Box>
     <h2> {props.t('Hello Lisk Hub Extensions!')} </h2>
+    {loadRemoteComponent('https://codepen.io/michaeltomasik/pen/pGKjaJ.js').then((Hello) => {
+      ReactDOM.render(<Hello name='MIKE'/> , document.getElementById('dashboard-column-2'))
+    })}
     <LiskHubExtensions.components.Button label={props.t('Sample Button')} />
   </LiskHubExtensions.components.Box>
 </div>;

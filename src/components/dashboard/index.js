@@ -161,6 +161,7 @@ class Dashboard extends React.Component {
             this.state.isDesktop &&
             <div className={`${grid['col-md-4']} ${grid['col-xs-12']} ${styles.newsFeedWrapper}`}>
               <NewsFeed />
+              <div id='dashboard-column-2'></div>
               <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn3} />
             </div>
           }
