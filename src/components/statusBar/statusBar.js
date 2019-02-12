@@ -12,7 +12,7 @@ import styles from './statusBar.css';
 class StatusBar extends React.Component {
   onCountdownComplete() {
     this.props.logOut();
-    this.props.history.replace(routes.login.path);
+    this.props.history.replace(routes.loginV2.path);
   }
 
   isTimerEnabled() {
