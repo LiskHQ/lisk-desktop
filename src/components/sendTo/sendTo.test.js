@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import configureMockStore from 'redux-mock-store';
-import { mountWithContext } from './../../../test/utils/mountHelpers';
+import { mountWithContext } from '../../../test/unit-test-utils/mountHelpers';
 import SendTo from './send';
 import * as followedAccounts from '../../actions/followedAccounts';
 import routes from './../../constants/routes';

@@ -6,7 +6,7 @@ import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import TransactionsList from './transactionsList';
 
-import { prepareStore } from '../../../test/utils/applicationInit';
+import { prepareStore } from '../../../test/unit-test-utils/applicationInit';
 import peersReducer from '../../store/reducers/peers';
 import accountReducer from '../../store/reducers/account';
 import transactionReducer from '../../store/reducers/transaction';
