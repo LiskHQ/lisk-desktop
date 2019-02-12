@@ -94,6 +94,19 @@
   }
 }
 
+@media (--medium-viewport) {
+  .requestContainer {
+    & .requestDropdown {
+      right: -160px;
+      transform-origin: calc(100% - 246px) -5px;
+
+      & :global(.dropdown-arrow) {
+        right: 246px;
+      }
+    }
+  }
+}
+
 @media (--small-viewport) {
   .buttonsHolder {
     & button {
