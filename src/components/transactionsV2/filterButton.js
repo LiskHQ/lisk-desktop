@@ -25,6 +25,7 @@ class FilterButton extends React.Component {
       },
       amountToValidity: '',
       amountFromValidity: '',
+      messageValidity: '',
     };
     this.toggleFilters = this.toggleFilters.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
@@ -38,7 +39,7 @@ class FilterButton extends React.Component {
   }
 
   changeFilters(name, value) {
-    // let errors = {};
+    let errors = {};
     // if (name === 'amountTo') {
     //   errors = { amountToValidity: Number.isNaN(Number(value)) ? 'Invalid number' : '' };
     // }
@@ -46,8 +47,13 @@ class FilterButton extends React.Component {
     // if (name === 'amountFrom') {
     //   errors = { amountFromValidity: Number.isNaN(Number(value)) ? 'Invalid number' : '' };
     // }
-    this.setState({ customFilters: { ...this.state.customFilters, [name]: value } });
-    // this.setState({ customFilters: { ...this.state.customFilters, [name]: value }, ...errors });
+
+    if (name === 'message') {
+      const byteCount = encodeURI(value).split(/%..|./).length - 1;
+      errors = { messageValidity: byteCount > 64 ? 'Maximum length exceeded' : '' };
+    }
+
+    this.setState({ customFilters: { ...this.state.customFilters, [name]: value }, ...errors });
   }
 
   saveFilters() {
@@ -86,7 +92,7 @@ class FilterButton extends React.Component {
   }
 
   render() {
-    const message = this.state.customFilters.message || this.props.customFilters.message;
+    const message = this.state.customFilters.message;
 
     return (
       <div className={`${transactionsStyles.filters} ${transactionsStyles.item}`}>
@@ -159,6 +165,7 @@ class FilterButton extends React.Component {
                   name='message'
                   placeholder={this.props.t('Write message')}
                   theme={styles}
+                  error={this.state.messageValidity}
                   value={message || ''}
                   onKeyDown={this.handleKey.bind(this)}
                   onChange={(val) => { this.changeFilters('message', val); }}/>

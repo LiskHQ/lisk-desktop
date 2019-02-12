@@ -82,7 +82,7 @@
     font-size: 12px;
     color: var(--color-grayscale-medium);
     width: 100%;
-    padding: 8px 0 0 14px;
+    padding: 8px 0 6px 14px;
     border-radius: 3px;
     border: none;
     transition: background-color 300ms linear;
@@ -99,8 +99,15 @@
     }
 
     &:focus {
-      outline: none;
-      background-color: var(--color-white);
+      border-color: var(--color-primary-standard);
+      outline-color: var(--color-primary-standard);
+      outline-style: auto;
+      outline-width: 5px;
+      outline-offset: -2px;
+    }
+
+    &::placeholder {
+      color: var(--color-content-lighter);
     }
   }
 
