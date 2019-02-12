@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import AccountVisual from '../../accountVisual';
 import { getIndexOfFollowedAccount } from '../../../utils/followedAccounts';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
+import RequestV2 from '../../requestV2/requestV2';
+import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import styles from './walletHeader.css';
 import routes from '../../../constants/routes';
 
@@ -48,11 +50,14 @@ const walletHeader = (props) => {
       { isMyWallet &&
         (
           <div className={`${styles.buttonsHolder}`}>
-            <Link to={`${routes.request.path}`} className={'help-onboarding tx-receive-bt'}>
+            <span className={`${styles.requestContainer} help-onboarding tx-receive-bt`}>
               <SecondaryButtonV2>
                 {props.t('Request LSK')}
               </SecondaryButtonV2>
-            </Link>
+              <DropdownV2 showDropdown={true} className={`${styles.requestDropdown}`}>
+                <RequestV2 address={props.address} />
+              </DropdownV2>
+            </span>
             <Link to={`${routes.send.path}?wallet`} className={'tx-send-bt'}>
               <PrimaryButtonV2>
                 {props.t('Send LSK')}

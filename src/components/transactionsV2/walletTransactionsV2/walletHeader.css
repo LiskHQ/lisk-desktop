@@ -58,6 +58,20 @@
   }
 }
 
+.requestContainer {
+  position: relative;
+
+  & .requestDropdown {
+    transform-origin: top center;
+    width: auto;
+
+    & :global(.dropdown-arrow) {
+      right: 50%;
+      transform: translateX(50%);
+    }
+  }
+}
+
 .buttonsHolder {
   display: flex;
   justify-content: space-between;
