@@ -5,7 +5,7 @@ import { mount } from 'enzyme';
 import { expect } from 'chai';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { prepareStore } from '../../../test/utils/applicationInit';
+import { prepareStore } from '../../../test/unit-test-utils/applicationInit';
 import * as search from '../../actions/search';
 import peersReducer from '../../store/reducers/peers';
 import accountReducer from '../../store/reducers/account';
