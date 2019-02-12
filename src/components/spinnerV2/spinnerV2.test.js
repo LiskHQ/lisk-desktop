@@ -8,6 +8,12 @@ describe('Spinner V2', () => {
     const wrapper = mount(<SpinnerV2 className={'test'} />);
     expect(wrapper).to.have.className('test');
     expect(wrapper).to.have.descendants('.spinner');
+    expect(wrapper).to.not.have.descendants('.completed');
+  });
+
+  it('should render with completed state', () => {
+    const wrapper = mount(<SpinnerV2 completed={true} />);
+    expect(wrapper).to.have.exactly(1).descendants('.completed');
   });
 
   it('should render the spinner with given label', () => {

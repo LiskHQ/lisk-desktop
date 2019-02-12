@@ -22,7 +22,7 @@ describe('Tx details', () => {
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
     cy.get(ss.okayBtn).click();
-    cy.get(ss.transactionRow).find(ss.spinner).click();
+    cy.get(ss.transactionRow).first().find(ss.spinner).click();
     // Before confirmation
     cy.get(ss.txHeader).contains('Transaction');
     cy.get(ss.txSenderAddress).should('have.text', accounts.genesis.address)

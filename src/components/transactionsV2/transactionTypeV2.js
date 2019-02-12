@@ -55,7 +55,7 @@ const TransactionTypeV2 = (props) => { // eslint-disable-line complexity
 
   return (
     <div className={`${styles.transactionType} transaction-address`}>
-      <img src={icon} className={styles.icon} />
+      <img src={icon} className={`${styles.icon} tx-icon`} />
       <div className={styles.info}>
       { type || props.showTransaction
         ? (
@@ -63,7 +63,7 @@ const TransactionTypeV2 = (props) => { // eslint-disable-line complexity
         ) : (
           <React.Fragment>
             <AccountVisual
-              className={styles.avatar}
+              className={`${styles.avatar} tx-avatar`}
               address={address}
               size={36} />
             <div className={styles.accountInfo}>
