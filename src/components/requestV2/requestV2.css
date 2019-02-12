@@ -124,22 +124,10 @@
 
 .qrSection {
   width: 305px;
-  max-width: 305px;
-  max-height: 400px;
-  opacity: 1;
-  transform: scale(1);
-  transition:
-    max-height var(--animation-speed-fast) linear,
-    max-width var(--animation-speed-fast) linear,
-    opacity var(--animation-speed-fast) linear,
-    transform var(--animation-speed-fast) linear;
+  display: block;
 
   &.hide {
-    margin: 0;
-    max-height: 0;
-    max-width: 0;
-    opacity: 0;
-    transform: scale(0);
+    display: none;
   }
 
   & .qrCodeContainer {
