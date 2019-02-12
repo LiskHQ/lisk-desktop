@@ -114,6 +114,7 @@ class RequestV2 extends React.Component {
   render() {
     const { t } = this.props;
     const { fields } = this.state;
+    const messageMaxLength = 64;
     return (
       <div className={`${styles.container}`}>
         <section className={`${styles.formSection}`}>
@@ -148,7 +149,7 @@ class RequestV2 extends React.Component {
               value={fields.message.value}
               placeholder={t('Write message')}
               className={`${styles.input} ${fields.message.error ? 'error' : ''}`} />
-            <span className={`${styles.feedback} ${fields.message.error ? 'error' : ''} ${fields.message.feedback ? styles.show : ''}`}>
+            <span className={`${styles.feedback} ${fields.message.error || messageMaxLength - fields.message.value.length < 10 ? 'error' : ''} ${fields.message.feedback ? styles.show : ''}`}>
               {fields.message.feedback}
             </span>
           </label>
