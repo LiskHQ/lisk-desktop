@@ -122,7 +122,9 @@ describe('actions: transactions', () => {
       delegateApi.getDelegate.mockResolvedValue({ data: [delegateResponse] });
 
       await actionFunction(dispatch, getState);
-      await setTimeout(() => {}); // the timeout ensures that the async code inside `actionFunction ` is called before the next assertion
+      // the following timeout ensures that the async code inside `actionFunction `
+      // is called before the next assertion
+      await setTimeout(() => {});
       expect(dispatch).toHaveBeenCalledWith({
         data: transactionResponse, type: actionTypes.transactionLoaded,
       });
@@ -146,6 +148,8 @@ describe('actions: transactions', () => {
       };
 
       await actionFunction(dispatch, getState);
+      // the following timeout ensures that the async code inside `actionFunction `
+      // is called before the next assertion
       await setTimeout(() => {});
       expect(dispatch).toHaveBeenCalledWith({
         data: transactionResponse, type: actionTypes.transactionLoaded,
