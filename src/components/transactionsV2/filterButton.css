@@ -105,10 +105,6 @@
       outline-width: 5px;
       outline-offset: -2px;
     }
-
-    &::placeholder {
-      color: var(--color-content-lighter);
-    }
   }
 
   & span:nth-child(2) {
