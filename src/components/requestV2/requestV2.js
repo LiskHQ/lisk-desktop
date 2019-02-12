@@ -3,7 +3,7 @@ import QRCode from 'qrcode.react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { translate } from 'react-i18next';
 import { PrimaryButtonV2 } from '../toolbox/buttons/button';
-import { InputV2 } from '../toolbox/inputsV2';
+import { InputV2, AutoresizeTextarea } from '../toolbox/inputsV2';
 import ConverterV2 from '../converterV2';
 import styles from './requestV2.css';
 
@@ -142,23 +142,22 @@ class RequestV2 extends React.Component {
           </label>
           <label className={`${styles.fieldGroup}`}>
             <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
-            <InputV2
-              autoComplete={'no'}
+            <AutoresizeTextarea
               onChange={this.handleFieldChange}
               name='message'
               value={fields.message.value}
               placeholder={t('Write message')}
-              className={`${styles.input} ${fields.message.error ? 'error' : ''}`} />
+              className={`${styles.textarea} ${fields.message.error ? 'error' : ''}`} />
             <span className={`${styles.feedback} ${fields.message.error || messageMaxLength - fields.message.value.length < 10 ? 'error' : ''} ${fields.message.feedback ? styles.show : ''}`}>
               {fields.message.feedback}
             </span>
           </label>
           <label className={`${styles.fieldGroup}`}>
             <span className={`${styles.fieldLabel}`}>{t('Sharing link')}</span>
-            <InputV2
+            <AutoresizeTextarea
               name='shareLink'
               value={this.state.shareLink}
-              className={`${styles.input} ${styles.input}`}
+              className={`${styles.textarea}`}
               readOnly />
           </label>
           <footer className={`${styles.sectionFooter}`}>

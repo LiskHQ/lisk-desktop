@@ -99,16 +99,14 @@
     }
   }
 
-  & .input {
+  & .input,
+  & .textarea {
     font-size: var(--button-font-size-s);
     height: 36px;
     line-height: 1.83;
   }
 
   & .textarea {
-    font-size: var(--button-font-size-s);
-    height: auto;
-    line-height: 1.83;
     resize: none;
     overflow: hidden;
   }
