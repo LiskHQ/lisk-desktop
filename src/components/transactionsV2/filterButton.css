@@ -60,6 +60,8 @@
 }
 
 .filterTransactions {
+  display: flex;
+  font-size: var(--button-font-size-s);
   padding: 10px 40px 0;
   text-align: right;
   height: 25px;
@@ -117,16 +119,17 @@
 
 .bigDropdown {
   width: 368px;
-  position: relative;
-  margin-left: -150px;
+  position: absolute;
 }
 
 .triangleDown {
   font-size: 15px;
+  margin-top: -3px;
   margin-left: 10px;
 }
 
 .dropdownContainer {
+  position: relative;
   max-width: 1400px;
   width: 100%;
   height: 0px;

@@ -5,9 +5,9 @@
   display: flex;
   height: 50px;
   justify-content: start;
-  font-family: Gilroy; /* stylelint-disable-line */
-  font-size: 12px;
-  font-weight: 600;
+  font-family: var(--heading-font);
+  font-size: var(--button-font-size-s);
+  font-weight: var(--font-weight-bold);
   padding: 0 20px;
 }
 
@@ -16,8 +16,8 @@
   padding: 0 15px;
   height: 30px;
   margin: 10px;
-  border-radius: 4px;
-  box-shadow: 0 3px 3px -1px rgba(10, 22, 70, 0.1), 0 0 1px 0 rgba(10, 22, 70, 0.06);
+  border-radius: var(--border-radius-standard);
+  box-shadow: var(--box-shadow-standard);
   background-color: #fff;
   color: var(--color-content-grayblue);
 
@@ -32,10 +32,10 @@
 }
 
 .icon {
-  font-size: 16px;
+  font-size: var(--font-size-h6);
   cursor: pointer;
   margin-top: 5px;
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
 }
 
 .label {
@@ -43,7 +43,7 @@
 }
 
 .clearAll {
-  color: #4e80f7;
+  color: var(--color-content-grayblue);
   cursor: pointer;
 
   & div {

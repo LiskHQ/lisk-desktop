@@ -1,6 +1,5 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
-import { FontIcon } from '../fontIcon';
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
@@ -95,7 +94,7 @@ class FilterButton extends React.Component {
           className={`${styles.filterTransactions} filterTransactions`}
           onClick={() => { this.toggleFilters(); }}>
             {this.props.t('Filter Transactions')}
-            <FontIcon className={styles.triangleDown} value='arrow-down'/>
+              <div className={styles.triangleDown}>▾</div>
         </div>
         <div className={styles.dropdownContainer}>
           <DropdownV2 className={styles.bigDropdown} showDropdown={this.state.showFilters}>

@@ -7,9 +7,7 @@ describe('Dropdown V2', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<DropdownV2 showDropdown={false}>
-      <div></div>
-    </DropdownV2>);
+    wrapper = mount(<DropdownV2 showDropdown={false} />);
   });
 
   it('Should render with dropdown closed', () => {

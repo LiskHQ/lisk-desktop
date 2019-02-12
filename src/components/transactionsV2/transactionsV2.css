@@ -16,7 +16,6 @@
 
 .txFilters {
   background-color: var(--color-background-menu);
-  border-bottom: 1px solid var(--color-light-gray);
   display: flex;
   height: 50px;
   list-style: none;
@@ -110,6 +109,7 @@
   display: flex;
   background: #f8f9fb;
   justify-content: space-between;
+  border-bottom: 1px solid var(--color-light-gray);
 }
 
 .item {

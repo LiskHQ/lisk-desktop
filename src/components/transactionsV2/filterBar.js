@@ -25,7 +25,7 @@ const FilterBar = props => (
       <div>
         <p
           className='clearAll'
-          onClick={() => { props.clearAllFilters(); }}>{props.t('Clear All filters')}</p>
+          onClick={props.clearAllFilters}>{props.t('Clear All filters')}</p>
       </div>
     </div>
   </div>);
