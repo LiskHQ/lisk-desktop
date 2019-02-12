@@ -71,6 +71,11 @@ Please refer to [Jest examples](https://github.com/facebook/jest/tree/master/exa
 See [relevant sections of README](/LiskHQ/lisk-hub#run-unit-tests)
 
 ### What tools are used?
+#### Current preferred way (we are in a transition period):
+- **Assertions, Spying and Mocking** - use Jest built-in 
+- To test **React components** we use [enzyme](http://airbnb.io/enzyme/)
+- To assert on React components we use [jest-enzyme](https://github.com/FormidableLabs/enzyme-matchers/tree/master/packages/jest-enzyme) because it gives more descriptive messages when the assertion fails
+ #### Deprecated way:
 - **Assertions** use `expect` syntax of [chai](http://www.chaijs.com/), e.g.:
 https://github.com/LiskHQ/lisk-hub/blob/80afda8289b75cb70bf345d14d36117fde2bdd90/src/utils/passphrase.test.js#L136
 - **Spies, stubs, and mocks** use [sinon](http://sinonjs.org/), e.g.:
