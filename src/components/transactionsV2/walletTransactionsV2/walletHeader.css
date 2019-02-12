@@ -62,11 +62,14 @@
   position: relative;
 
   & .requestDropdown {
-    transform-origin: top center;
+    left: auto;
+    right: -110px;
+    transform-origin: calc(100% - 196px) -5px;
+    top: calc(100% + 10px);
     width: auto;
 
     & :global(.dropdown-arrow) {
-      right: 50%;
+      right: 196px;
       transform: translateX(50%);
     }
   }

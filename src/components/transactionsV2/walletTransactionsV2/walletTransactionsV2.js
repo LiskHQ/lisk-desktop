@@ -10,12 +10,14 @@ import routes from '../../../constants/routes';
 import styles from './walletTransactionsV2.css';
 
 class WalletTransactionsV2 extends React.Component {
+  // eslint-disable-next-line max-statements
   constructor() {
     super();
 
     this.state = {
       copied: false,
       closedOnboarding: false,
+      showRequestDropdown: false,
     };
     this.copyTimeout = null;
 
@@ -25,6 +27,9 @@ class WalletTransactionsV2 extends React.Component {
     this.onTransactionRowClick = this.onTransactionRowClick.bind(this);
     this.onCopy = this.onCopy.bind(this);
     this.closeOnboarding = this.closeOnboarding.bind(this);
+    this.handleClickOutsideRequest = this.handleClickOutsideRequest.bind(this);
+    this.toggleRequestDropdown = this.toggleRequestDropdown.bind(this);
+    this.setRequestDropdownRef = this.setRequestDropdownRef.bind(this);
   }
 
   componentWillUnmount() {
@@ -95,6 +100,26 @@ class WalletTransactionsV2 extends React.Component {
     this.setState({ closedOnboarding: true });
   }
 
+  toggleRequestDropdown() {
+    if (!this.state.showRequestDropdown) {
+      document.addEventListener('click', this.handleClickOutsideRequest);
+    } else {
+      document.removeEventListener('click', this.handleClickOutsideRequest);
+    }
+
+    this.setState(prevState => ({ showRequestDropdown: !prevState.showRequestDropdown }));
+  }
+
+  // istanbul ignore next
+  handleClickOutsideRequest(e) {
+    if (this.requestDropdownRef && this.requestDropdownRef.contains(e.target)) return;
+    this.toggleRequestDropdown();
+  }
+
+  setRequestDropdownRef(node) {
+    this.requestDropdownRef = node;
+  }
+
   render() {
     const overviewProps = {
       ...this.props,
@@ -109,7 +134,16 @@ class WalletTransactionsV2 extends React.Component {
 
     return (
       <React.Fragment>
-        <WalletHeader {...this.props} />
+        <WalletHeader
+          followedAccounts={this.props.followedAccounts}
+          address={this.props.address}
+          match={this.props.match}
+          t={t}
+          account={account}
+          showDropdown={this.state.showRequestDropdown}
+          onDropdownToggle={this.toggleRequestDropdown}
+          setDropdownRef={this.setRequestDropdownRef}
+        />
         { account.balance === 0 && localJSONStorage.get('closedWalletOnboarding') !== 'true' ?
           <Banner
             className={`${styles.onboarding} wallet-onboarding`}

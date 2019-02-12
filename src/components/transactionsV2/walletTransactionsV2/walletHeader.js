@@ -9,22 +9,25 @@ import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import styles from './walletHeader.css';
 import routes from '../../../constants/routes';
 
-const walletHeader = (props) => {
+const walletHeader = ({
+  account, followedAccounts, address, t, match,
+  onDropdownToggle, showDropdown, setDropdownRef,
+}) => {
   const index = getIndexOfFollowedAccount(
-    props.followedAccounts,
-    { address: props.address },
+    followedAccounts,
+    { address },
   );
-  const accountTitle = props.followedAccounts[index]
-    && props.followedAccounts[index].title;
-  const hasTitle = index !== -1 && accountTitle !== props.address;
+  const accountTitle = followedAccounts[index]
+    && followedAccounts[index].title;
+  const hasTitle = index !== -1 && accountTitle !== address;
 
-  const isMyWallet = props.match.url === routes.wallet.path;
+  const isMyWallet = match.url === routes.wallet.path;
 
   return (
     <header className={`${styles.wrapper}`}>
       <div className={`${styles.account}`}>
         <AccountVisual
-          address={props.account.address}
+          address={account.address}
           size={48}
           />
         <div className={styles.accountInfo}>
@@ -32,17 +35,17 @@ const walletHeader = (props) => {
             <h2 className={`${styles.title}`}>
             { hasTitle
               ? <span className={'account-title'}>{accountTitle}</span>
-              : <span>{props.t('Wallet')}</span>
+              : <span>{t('Wallet')}</span>
             }
             </h2>
             {
               isMyWallet && <span className={`${styles.label} my-account`}>
-                {props.t('My Account')}
+                {t('My Account')}
               </span>
             }
           </div>
           <span className={styles.address}>
-            {props.address}
+            {address}
           </span>
         </div>
       </div>
@@ -50,17 +53,19 @@ const walletHeader = (props) => {
       { isMyWallet &&
         (
           <div className={`${styles.buttonsHolder}`}>
-            <span className={`${styles.requestContainer} help-onboarding tx-receive-bt`}>
-              <SecondaryButtonV2>
-                {props.t('Request LSK')}
+            <span
+              ref={setDropdownRef}
+              className={`${styles.requestContainer} help-onboarding tx-receive-bt`}>
+              <SecondaryButtonV2 onClick={onDropdownToggle}>
+                {t('Request LSK')}
               </SecondaryButtonV2>
-              <DropdownV2 showDropdown={true} className={`${styles.requestDropdown}`}>
-                <RequestV2 address={props.address} />
+              <DropdownV2 showDropdown={showDropdown} className={`${styles.requestDropdown}`}>
+                <RequestV2 address={address} />
               </DropdownV2>
             </span>
             <Link to={`${routes.send.path}?wallet`} className={'tx-send-bt'}>
               <PrimaryButtonV2>
-                {props.t('Send LSK')}
+                {t('Send LSK')}
               </PrimaryButtonV2>
             </Link>
           </div>
