@@ -1,4 +1,5 @@
 import React from 'react';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import localJSONStorage from '../../../utils/localJSONStorage';
@@ -6,6 +7,7 @@ import TransactionsOverviewV2 from '../transactionsOverviewV2';
 import txFilters from '../../../constants/transactionFilters';
 import Banner from '../../toolbox/banner/banner';
 import WalletHeader from './walletHeader';
+import WalletDetails from '../../wallet/walletDetails';
 import routes from '../../../constants/routes';
 import styles from './walletTransactionsV2.css';
 
@@ -130,6 +132,14 @@ class WalletTransactionsV2 extends React.Component {
             <p>{t('You can find the LSK token on all of the worlds top exchanges and send them to your unique Lisk address:')}</p>
           </Banner> : null
         }
+
+        <WalletDetails
+          className={`${grid['col-md-4']} ${grid['col-lg-3']}`}
+          transactions={this.props.transactions}
+          balance={this.props.balance}
+          address={this.props.address}
+          />
+
         <TransactionsOverviewV2 {...overviewProps} />
       </React.Fragment>
     );
