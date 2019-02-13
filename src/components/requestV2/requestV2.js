@@ -124,7 +124,7 @@ class RequestV2 extends React.Component {
           </span>
           <label className={`${styles.fieldGroup}`}>
             <span className={`${styles.fieldLabel}`}>{t('Amount (LSK)')}</span>
-            <span className={`${styles.amountField}`}>
+            <span className={`${styles.amountField} amount`}>
               <InputV2
                 autoComplete={'off'}
                 onChange={this.handleFieldChange}
@@ -141,7 +141,7 @@ class RequestV2 extends React.Component {
               {fields.amount.feedback}
             </span>
           </label>
-          <label className={`${styles.fieldGroup}`}>
+          <label className={`${styles.fieldGroup} reference`}>
             <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
             <AutoresizeTextarea
               spellCheck={false}
@@ -159,7 +159,7 @@ class RequestV2 extends React.Component {
             <AutoresizeTextarea
               name='shareLink'
               value={this.state.shareLink}
-              className={`${styles.textarea}`}
+              className={`${styles.textarea} request-link`}
               readOnly />
           </label>
           <footer className={`${styles.sectionFooter}`}>
@@ -176,13 +176,13 @@ class RequestV2 extends React.Component {
             </CopyToClipboard>
             <span className={`${styles.footerContent} ${this.state.showQRCode ? styles.hide : ''}`}>
               {t('Got the Lisk Mobile App?')} <span
-                className={`${styles.footerActionable}`}
+                className={`${styles.footerActionable} toggle-qrcode`}
                 onClick={this.toggleQRCode}>{t('Show the QR code')}
               </span>
             </span>
           </footer>
         </section>
-        <section className={`${styles.qrSection} ${!this.state.showQRCode ? styles.hide : ''}`}>
+        <section className={`${styles.qrSection} ${!this.state.showQRCode ? styles.hide : ''} qrcode-section`}>
           <span className={`${styles.label}`}>
             {t('Simply scan the QR code using the Lisk Mobile app or any other QR code reader')}
           </span>

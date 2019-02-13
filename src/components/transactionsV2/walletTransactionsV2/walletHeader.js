@@ -92,7 +92,7 @@ class walletHeader extends React.Component {
                 <SecondaryButtonV2 onClick={this.toggleRequestDropdown}>
                   {t('Request LSK')}
                 </SecondaryButtonV2>
-                <DropdownV2 showDropdown={this.state.showRequestDropdown} className={`${styles.requestDropdown}`}>
+                <DropdownV2 showDropdown={this.state.showRequestDropdown} className={`${styles.requestDropdown} request-dropdown`}>
                   <RequestV2 address={address} />
                 </DropdownV2>
               </span>
