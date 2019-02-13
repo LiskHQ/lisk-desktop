@@ -60,7 +60,6 @@
     "dpos-ledger-api": "2.0.0",
     "electron-localshortcut": "3.1.0",
     "express": "4.16.4",
-    "find-free-port": "2.0.0",
     "flexboxgrid": "=6.3.1",
     "hard-source-webpack-plugin": "0.13.1",
     "history": "=4.7.2",
