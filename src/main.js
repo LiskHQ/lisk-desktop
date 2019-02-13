@@ -65,8 +65,10 @@ function loadRemoteComponent(url){
     console.log(source);
     var exports = {}
     function require(name){
-      if(name == 'react') return React
+
+      if(name == 'react') return React 
       else throw `You can't use modules other than "react" in remote component.`
+      if(name == 'LiskHubExtensions') return LiskHubExtensions
     }
     // const transformedSource = transform(source, {
     //   presets: ['react', 'es2015', 'stage-2']
@@ -84,15 +86,20 @@ function loadRemoteComponent(url){
  * TODO all code below this point is a sample extensions
  * that should be loaded by the "Add extension " page as a separate <script>
  */
-const HelloWorldModule = props => <div style={{ marginTop: 20 }} > {/* TODO avoid the style here */}
-  <LiskHubExtensions.components.Box>
-    <h2> {props.t('Hello Lisk Hub Extensions!')} </h2>
-    {loadRemoteComponent('https://codepen.io/michaeltomasik/pen/pGKjaJ.js').then((Hello) => {
-      ReactDOM.render(<Hello name='MIKE'/> , document.getElementById('dashboard-column-2'))
-    })}
-    <LiskHubExtensions.components.Button label={props.t('Sample Button')} />
-  </LiskHubExtensions.components.Box>
-</div>;
+const HelloWorldModule = props => {
+  return (
+    <div style={{ marginTop: 20 }} > {/* TODO avoid the style here */}
+      <LiskHubExtensions.components.Box>
+        <h2> {props.t('Hello Lisk Hub Extensions!')} </h2>
+        <LiskHubExtensions.components.Button label={props.t('Sample Button')} />
+        {loadRemoteComponent('https://gist.githubusercontent.com/michaeltomasik/67563192c6fa4cd362379a09f2b8099b/raw/64ab78b10da3eee713fa0377e17911324d51bf59/script.js').then((Hello) => {
+          console.log(LiskHubExtensions, props);
+          ReactDOM.render(<Hello name='MIKE' t={props.t}/> , document.getElementById('dashboard-column-2'))
+        }).bind(props)}
+      </LiskHubExtensions.components.Box>
+    </div>
+  );
+}
 
 LiskHubExtensions.addModule({
   identifier: LiskHubExtensions.identifiers.dashboardColumn1,
