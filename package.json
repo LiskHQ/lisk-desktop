@@ -61,6 +61,7 @@
     "electron-localshortcut": "3.1.0",
     "express": "4.16.4",
     "flexboxgrid": "=6.3.1",
+    "get-port": "4.1.0",
     "hard-source-webpack-plugin": "0.13.1",
     "history": "=4.7.2",
     "i18next": "12.1.0",
