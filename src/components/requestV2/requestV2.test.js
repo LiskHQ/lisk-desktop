@@ -85,45 +85,45 @@ describe('RequestV2', () => {
     });
   });
 
-  describe('Message field', () => {
+  describe('Reference field', () => {
     it('Should show feedback if some text inserted and hide if empty', () => {
-      const messageField = wrapper.find('.fieldGroup').at(1);
-      let evt = { target: { name: 'message', value: 'test' } };
-      expect(messageField.find('.feedback')).to.not.have.className('show');
-      messageField.find('AutoresizeTextarea').simulate('change', evt);
+      const referenceField = wrapper.find('.fieldGroup').at(1);
+      let evt = { target: { name: 'reference', value: 'test' } };
+      expect(referenceField.find('.feedback')).to.not.have.className('show');
+      referenceField.find('AutoresizeTextarea').simulate('change', evt);
       wrapper.update();
-      expect(messageField.find('.feedback')).to.have.className('show');
-      expect(messageField.find('.feedback')).to.not.have.className('error');
+      expect(referenceField.find('.feedback')).to.have.className('show');
+      expect(referenceField.find('.feedback')).to.not.have.className('error');
 
-      evt = { target: { name: 'message', value: '' } };
-      messageField.find('AutoresizeTextarea').simulate('change', evt);
+      evt = { target: { name: 'reference', value: '' } };
+      referenceField.find('AutoresizeTextarea').simulate('change', evt);
       wrapper.update();
-      expect(messageField.find('.feedback')).to.not.have.className('show');
+      expect(referenceField.find('.feedback')).to.not.have.className('show');
     });
 
     it('Should show error feedback over limit of characters', () => {
-      const messageField = wrapper.find('.fieldGroup').at(1);
+      const referenceField = wrapper.find('.fieldGroup').at(1);
       const evt = {
         target: {
-          name: 'message',
+          name: 'reference',
           value: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.',
         },
       };
-      messageField.find('AutoresizeTextarea').simulate('change', evt);
+      referenceField.find('AutoresizeTextarea').simulate('change', evt);
       wrapper.update();
-      expect(messageField.find('.feedback')).to.have.className('show');
-      expect(messageField.find('.feedback')).to.have.className('error');
+      expect(referenceField.find('.feedback')).to.have.className('show');
+      expect(referenceField.find('.feedback')).to.have.className('error');
     });
   });
 
   describe('Share Link', () => {
-    it('Should update share link with amount and message', () => {
+    it('Should update share link with amount and reference', () => {
       const linkField = wrapper.find('.fieldGroup').at(2);
       const shareLink = `lisk://wallet/send?recipient=${props.address}`;
       let evt;
       expect(linkField.find(AutoresizeTextarea).html()).to.contain(shareLink);
 
-      evt = { target: { name: 'message', value: 'test' } };
+      evt = { target: { name: 'reference', value: 'test' } };
       wrapper.find('.fieldGroup').at(1).find('AutoresizeTextarea').simulate('change', evt);
       expect(linkField.find(AutoresizeTextarea).html()).to.contain(`${evt.target.name}=${evt.target.value}`);
 
