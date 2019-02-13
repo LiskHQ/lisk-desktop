@@ -17,7 +17,6 @@ class WalletTransactionsV2 extends React.Component {
     this.state = {
       copied: false,
       closedOnboarding: false,
-      showRequestDropdown: false,
     };
     this.copyTimeout = null;
 
@@ -27,9 +26,6 @@ class WalletTransactionsV2 extends React.Component {
     this.onTransactionRowClick = this.onTransactionRowClick.bind(this);
     this.onCopy = this.onCopy.bind(this);
     this.closeOnboarding = this.closeOnboarding.bind(this);
-    this.handleClickOutsideRequest = this.handleClickOutsideRequest.bind(this);
-    this.toggleRequestDropdown = this.toggleRequestDropdown.bind(this);
-    this.setRequestDropdownRef = this.setRequestDropdownRef.bind(this);
   }
 
   componentWillUnmount() {
@@ -100,26 +96,6 @@ class WalletTransactionsV2 extends React.Component {
     this.setState({ closedOnboarding: true });
   }
 
-  toggleRequestDropdown() {
-    if (!this.state.showRequestDropdown) {
-      document.addEventListener('click', this.handleClickOutsideRequest);
-    } else {
-      document.removeEventListener('click', this.handleClickOutsideRequest);
-    }
-
-    this.setState(prevState => ({ showRequestDropdown: !prevState.showRequestDropdown }));
-  }
-
-  // istanbul ignore next
-  handleClickOutsideRequest(e) {
-    if (this.requestDropdownRef && this.requestDropdownRef.contains(e.target)) return;
-    this.toggleRequestDropdown();
-  }
-
-  setRequestDropdownRef(node) {
-    this.requestDropdownRef = node;
-  }
-
   render() {
     const overviewProps = {
       ...this.props,
@@ -140,9 +116,6 @@ class WalletTransactionsV2 extends React.Component {
           match={this.props.match}
           t={t}
           account={account}
-          showDropdown={this.state.showRequestDropdown}
-          onDropdownToggle={this.toggleRequestDropdown}
-          setDropdownRef={this.setRequestDropdownRef}
         />
         { account.balance === 0 && localJSONStorage.get('closedWalletOnboarding') !== 'true' ?
           <Banner
