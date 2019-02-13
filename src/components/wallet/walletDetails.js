@@ -3,9 +3,7 @@ import { translate } from 'react-i18next';
 import BoxV2 from '../boxV2';
 import styles from './walletDetails.css';
 import LiskAmount from '../liskAmount';
-import iconChart from '../../assets/images/icons-v2/icon-chart.svg';
-import iconCal from '../../assets/images/icons-v2/icon-calendar.svg';
-import iconLastTx from '../../assets/images/icons-v2/icon-last-tx.svg';
+import svg from '../../utils/svgIcons';
 import transactionTypes from '../../constants/transactionTypes';
 
 const walletDetails = ({
@@ -33,7 +31,7 @@ const walletDetails = ({
       </header>
       <div className={`${styles.content}`}>
         <div className={`${styles.details} account-balance`}>
-          <img className={`${styles.icon}`} src={iconChart} />
+          <img className={`${styles.icon}`} src={svg.icon_chart} />
           <div className={`${styles.info}`}>
             <span className={`${styles.label}`}>{t('Account Balance')}</span>
             <span className={`${styles.value}`}>
@@ -43,7 +41,7 @@ const walletDetails = ({
           </div>
         </div>
         <div className={`${styles.details} last-transaction`}>
-          <img className={`${styles.icon}`} src={iconLastTx} />
+          <img className={`${styles.icon}`} src={svg.icon_last_tx} />
           <div className={`${styles.info}`}>
             <span className={`${styles.label}`}>{t('Last Transaction')}</span>
             <span className={`${styles.value}`}>
@@ -53,7 +51,7 @@ const walletDetails = ({
           </div>
         </div>
         <div className={`${styles.details} last-visit`}>
-          <img className={`${styles.icon}`} src={iconCal} />
+          <img className={`${styles.icon}`} src={svg.icon_cal} />
           <div className={`${styles.info}`}>
             <span className={`${styles.label}`}>{t('Since Last Visit')}</span>
             <span className={`${styles.value}`}>
