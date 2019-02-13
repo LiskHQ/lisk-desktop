@@ -3,16 +3,18 @@ import electronLocalshortcut from 'electron-localshortcut'; // eslint-disable-li
 import { autoUpdater } from 'electron-updater'; // eslint-disable-line import/no-extraneous-dependencies
 import path from 'path';
 import storage from 'electron-json-storage'; // eslint-disable-line import/no-extraneous-dependencies
-import fp from 'find-free-port';
+import getPort from 'get-port';
 import win from './modules/win';
 import './styles.dialog.css';
 // import localeHandler from './modules/localeHandler';
 import updateChecker from './modules/autoUpdater';
+import server from '../server';
 
 require('babel-polyfill'); // eslint-disable-line import/no-extraneous-dependencies
 require('./ledger');
 
-const defaultServerPort = 3000;
+const startServer = async () => server.init(await getPort());
+const serverUrl = startServer();
 
 const checkForUpdates = updateChecker({
   autoUpdater,
@@ -25,19 +27,15 @@ const checkForUpdates = updateChecker({
 const { app, ipcMain } = electron;
 let appIsReady = false;
 
-const createWindow = (err, port) => {
-  if (err) {
-    throw new Error(err);
-  }
+const createWindow = () => {
   win.create({
-    electron, path, electronLocalshortcut, storage, checkForUpdates, port,
+    electron, path, electronLocalshortcut, storage, checkForUpdates, serverUrl,
   });
 };
 
 app.on('ready', () => {
   appIsReady = true;
-
-  fp(defaultServerPort, createWindow);
+  createWindow();
 });
 
 app.on('window-all-closed', () => {
@@ -56,7 +54,7 @@ app.on('activate', () => {
   // sometimes, the event is triggered before app.on('ready', ...)
   // then creating new windows will fail
   if (win.browser === null && appIsReady) {
-    fp(defaultServerPort, createWindow);
+    createWindow();
   }
 });
 

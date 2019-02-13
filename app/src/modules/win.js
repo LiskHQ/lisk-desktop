@@ -1,18 +1,15 @@
 import localeHandler from './localeHandler';
 import menu from './../menu';
 import process from './process';
-import server from '../../server';
 
 const win = {
   browser: null,
   eventStack: [],
   init: ({
-    electron, path, electronLocalshortcut, port,
+    electron, path, electronLocalshortcut, serverUrl,
   }) => {
     const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
     const { BrowserWindow } = electron;
-
-    const url = server.init(port);
 
     win.browser = new BrowserWindow({
       width: width > 1680 ? 1680 : width,
@@ -34,17 +31,17 @@ const win = {
       win.browser.webContents.toggleDevTools();
     });
 
-    win.browser.loadURL(url);
+    win.browser.loadURL(serverUrl);
   },
 
 
   create: ({ // eslint-disable-line max-statements
-    electron, path, electronLocalshortcut, storage, checkForUpdates, port,
+    electron, path, electronLocalshortcut, storage, checkForUpdates, serverUrl,
   }) => {
     const { Menu } = electron;
 
     win.init({
-      electron, path, electronLocalshortcut, port,
+      electron, path, electronLocalshortcut, serverUrl,
     });
     localeHandler.send({ storage });
 
