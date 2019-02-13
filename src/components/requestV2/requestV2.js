@@ -21,7 +21,7 @@ class RequestV2 extends React.Component {
           value: '',
           feedback: '',
         },
-        message: {
+        reference: {
           error: false,
           value: '',
           feedback: '',
@@ -146,12 +146,12 @@ class RequestV2 extends React.Component {
             <AutoresizeTextarea
               spellCheck={false}
               onChange={this.handleFieldChange}
-              name='message'
-              value={fields.message.value}
+              name='reference'
+              value={fields.reference.value}
               placeholder={t('Write message')}
-              className={`${styles.textarea} ${fields.message.error ? 'error' : ''}`} />
-            <span className={`${styles.feedback} ${fields.message.error || messageMaxLength - fields.message.value.length < 10 ? 'error' : ''} ${fields.message.feedback ? styles.show : ''}`}>
-              {fields.message.feedback}
+              className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
+            <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - fields.reference.value.length < 10 ? 'error' : ''} ${fields.reference.feedback ? styles.show : ''}`}>
+              {fields.reference.feedback}
             </span>
           </label>
           <label className={`${styles.fieldGroup}`}>
