@@ -18,7 +18,7 @@
   margin: 10px;
   border-radius: var(--border-radius-standard);
   box-shadow: var(--box-shadow-standard);
-  background-color: #fff;
+  background-color: var(--color-white);
   color: var(--color-content-grayblue);
 
   & div {
