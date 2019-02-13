@@ -50,21 +50,15 @@
   font-size: 12px;
 }
 
-.saveButton {
+.button {
   width: 100%;
-  margin-top: 14px;
-  min-height: 40px;
-  border-radius: 4px;
-  box-shadow: var(--box-shadow-search);
-  background-color: var(--color-primary-standard);
-  color: var(--color-white) !important;
 }
 
 .filterTransactions {
   display: flex;
+  justify-content: center;
   font-size: var(--button-font-size-s);
   padding: 10px 40px 0;
-  text-align: right;
   height: 25px;
 }
 
