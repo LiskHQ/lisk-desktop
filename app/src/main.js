@@ -13,8 +13,14 @@ import server from '../server';
 require('babel-polyfill'); // eslint-disable-line import/no-extraneous-dependencies
 require('./ledger');
 
-const startServer = async () => server.init(await getPort());
-const serverUrl = startServer();
+const defaultServerPort = 3000;
+let serverUrl;
+const startServer = () => getPort({ port: defaultServerPort })
+  .then((port) => {
+    serverUrl = server.init(port);
+  });
+
+startServer();
 
 const checkForUpdates = updateChecker({
   autoUpdater,
