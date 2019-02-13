@@ -27,7 +27,7 @@ describe('TransactionsOverview', () => {
       onInit: () => {},
       onLoadMore: () => {},
       onFilterSet: () => {},
-      match: { url: '/wallet' },
+      match: { url: '' },
     };
     store.getState = () => ({
       followedAccounts: { accounts: [] },
