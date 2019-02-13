@@ -2,15 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Waypoint from 'react-waypoint';
 // import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { Link } from 'react-router-dom';
 import EmptyState from '../emptyState';
 import TransactionsList from './transactionsList';
 import styles from './transactions.css';
 import txFilters from '../../constants/transactionFilters';
 import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
-import { ActionButton } from '../toolbox/buttons/button';
-import { FontIcon } from '../fontIcon';
-import Ulrs from '../../constants/routes';
 import Piwik from '../../utils/piwik';
 
 class TransactionsOverview extends React.Component {
@@ -108,22 +104,6 @@ class TransactionsOverview extends React.Component {
             hasTitle && (<span>{this.props.t(' of')} <span className={`${styles.accountTitle} account-title`}>{accountTitle}</span></span>)
           }
           </h2>
-          {
-            this.props.match.url === Ulrs.wallet.path &&
-            (
-              <div className={`${styles.headerButtons}`}>
-                <Link to={`${Ulrs.request.path}`} className={'help-onboarding tx-receive-bt'}>
-                  <FontIcon>request-token</FontIcon>
-                  {this.props.t('Request')}
-                </Link>
-                <Link to={`${Ulrs.send.path}?wallet`} className={'tx-send-bt'}>
-                  <ActionButton>
-                  {this.props.t('Send')}
-                  </ActionButton>
-                </Link>
-              </div>
-            )
-          }
         </header>
         {this.shouldShowEmptyState() ?
           <EmptyState title={this.props.t('No transactions yet')}
