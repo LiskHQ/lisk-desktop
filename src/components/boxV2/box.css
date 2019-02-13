@@ -9,7 +9,7 @@
   box-sizing: border-box;
   border-radius: var(--border-radius-box);
   background: var(--color-white);
-  box-shadow: var(--box-shadow-standar2);
+  box-shadow: var(--box-shadow-standard), var(--box-shadow-top);
 
   /* box-shadow: var(--normal-shadow); */
   overflow: hidden;
