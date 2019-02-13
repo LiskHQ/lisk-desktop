@@ -16,7 +16,7 @@ const ss = {
   requestSpecificAmountBtn: '.specify-request',
   confirmRequestBtn: '.confirm-request',
   qrCode: '.qr-code',
-  emailLink: '.email-link',
+  requestQrCode: '.qrcode-section',
   confirmRequestBlock: '.confirm-request-step',
   requestLink: '.request-link',
   backButton: '.back',
@@ -91,6 +91,7 @@ const ss = {
   resulteBtn: '.result',
   sidebarMenuWalletBtn: '#transactions',
   referenceInput: '.reference input',
+  referenceTextarea: '.reference textarea',
   referenceConfirmLabel: '.reference',
   convertorElement: '.convertor',
   convertedPrice: '.converted-price',
@@ -170,6 +171,7 @@ const ss = {
   exploreAsGuestBtn: '.explore-as-guest-button',
   walletOnboarding: '.wallet-onboarding',
   walletOnboardingClose: '.wallet-onboarding .banner-close',
+  requestDropdown: '.request-dropdown',
 };
 
 export default ss;
