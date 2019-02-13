@@ -14,13 +14,22 @@ class AutoresizeTextarea extends React.Component {
 
   componentDidMount() {
     this.height = parseInt(this.textRef.scrollHeight, 10);
+    this.textRef.style.height = `${this.height}px`;
   }
 
-  /* istanbul ignore next */
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.value !== this.props.value) {
+      this.textRef.style.height = `${this.height}px`;
+      return true;
+    }
+    return false;
+  }
+
   componentDidUpdate() {
-    const { clientHeight, scrollHeight } = this.textRef;
+    const { offsetHeight, scrollHeight } = this.textRef;
     this.textRef.style.height = `${this.height}px`;
-    if (clientHeight < scrollHeight && scrollHeight > this.height) {
+    /* istanbul ignore next */
+    if (offsetHeight < scrollHeight && scrollHeight > this.height) {
       this.textRef.style.height = `${scrollHeight}px`;
     }
   }
