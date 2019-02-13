@@ -2,7 +2,7 @@
 @import '../app/variablesV2.css';
 
 .container {
-  background-color: #fff;
+  background-color: var(--color-white);
   top: 40px;
 
   & .triangle {
@@ -13,7 +13,7 @@
     top: -3%;
     left: 70%;
     border-width: 0 20px 10px;
-    border-color: transparent transparent #fff;
+    border-color: transparent transparent var(--color-white);
   }
 
   & .triangleBorder {
@@ -29,10 +29,10 @@
 }
 
 .label {
-  color: #2e2c3b;
-  font-family: Gilroy; /* stylelint-disable-line */
-  font-size: 15px;
-  font-weight: 600;
+  color: var(--color-content-light);
+  font-family: var(--heading-font);
+  font-size: var(--paragraph-font-size-l);
+  font-weight: var(--font-weight-bold);
   margin-left: 20px;
 }
 
@@ -55,9 +55,9 @@
   margin-top: 14px;
   min-height: 40px;
   border-radius: 4px;
-  box-shadow: 0 2px 4px 0 rgba(4, 32, 76, 0.2);
-  background-color: #4e80f7;
-  color: #fff !important;
+  box-shadow: var(--box-shadow-search);
+  background-color: var(--color-primary-standard);
+  color: var(--color-white) !important;
 }
 
 .filterTransactions {
@@ -73,7 +73,7 @@
   padding: 1px;
   height: 36px;
   background-color: var(--color-white);
-  border: 0.5px solid #a6adbd;
+  border: 0.5px solid var(--color-content-light);
   border-radius: 4px;
   width: 100%;
 
