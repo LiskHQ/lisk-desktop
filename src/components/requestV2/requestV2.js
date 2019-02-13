@@ -46,6 +46,7 @@ class RequestV2 extends React.Component {
     });
   }
 
+  /* istanbul ignore next */
   componentWillUnmount() {
     clearTimeout(this.timeout);
   }
@@ -104,7 +105,7 @@ class RequestV2 extends React.Component {
     const { address } = this.props;
     return Object.keys(fields).reduce((link, fieldName) => {
       const field = fields[fieldName];
-      return field.value !== '' && !field.error
+      return field.value !== ''
         ? `${link}&${fieldName}=${encodeURI(field.value)}`
         : link;
     }, `lisk://wallet/send?recipient=${address}`);
@@ -125,7 +126,7 @@ class RequestV2 extends React.Component {
             <span className={`${styles.fieldLabel}`}>{t('Amount (LSK)')}</span>
             <span className={`${styles.amountField}`}>
               <InputV2
-                autoComplete={'no'}
+                autoComplete={'off'}
                 onChange={this.handleFieldChange}
                 name='amount'
                 value={fields.amount.value}
@@ -143,6 +144,7 @@ class RequestV2 extends React.Component {
           <label className={`${styles.fieldGroup}`}>
             <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
             <AutoresizeTextarea
+              spellCheck={false}
               onChange={this.handleFieldChange}
               name='message'
               value={fields.message.value}
@@ -165,7 +167,7 @@ class RequestV2 extends React.Component {
               onCopy={this.onCopy}
               text={this.state.shareLink}>
                 <PrimaryButtonV2
-                  disabled={this.state.linkCopied || this.state.hasError}>
+                  disabled={this.state.linkCopied}>
                   {this.state.linkCopied
                     ? t('Link copied')
                     : t('Copy Link')
