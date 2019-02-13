@@ -9,7 +9,7 @@ import iconLastTx from '../../assets/images/icons-v2/icon-last-tx.svg';
 import transactionTypes from '../../constants/transactionTypes';
 
 const walletDetails = ({
-  balance, className, t, transactions, address,
+  balance, className = '', t, transactions, address,
 }) => {
   const lastTx = {
     tx: { amount: 0 },
@@ -32,7 +32,7 @@ const walletDetails = ({
         <h1>{t('Wallet overview')}</h1>
       </header>
       <div className={`${styles.content}`}>
-        <div className={`${styles.details}`}>
+        <div className={`${styles.details} account-balance`}>
           <img className={`${styles.icon}`} src={iconChart} />
           <div className={`${styles.info}`}>
             <span className={`${styles.label}`}>{t('Account Balance')}</span>
@@ -42,7 +42,7 @@ const walletDetails = ({
             </span>
           </div>
         </div>
-        <div className={`${styles.details}`}>
+        <div className={`${styles.details} last-transaction`}>
           <img className={`${styles.icon}`} src={iconLastTx} />
           <div className={`${styles.info}`}>
             <span className={`${styles.label}`}>{t('Last Transaction')}</span>
@@ -52,7 +52,7 @@ const walletDetails = ({
             </span>
           </div>
         </div>
-        <div className={`${styles.details}`}>
+        <div className={`${styles.details} last-visit`}>
           <img className={`${styles.icon}`} src={iconCal} />
           <div className={`${styles.info}`}>
             <span className={`${styles.label}`}>{t('Since Last Visit')}</span>
