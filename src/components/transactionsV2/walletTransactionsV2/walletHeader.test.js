@@ -1,5 +1,7 @@
 import React from 'react';
+import thunk from 'redux-thunk';
 import PropTypes from 'prop-types';
+import configureMockStore from 'redux-mock-store';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
@@ -10,10 +12,22 @@ import accounts from '../../../../test/constants/accounts';
 
 describe('Wallet Header', () => {
   let wrapper;
+  const store = configureMockStore([thunk])({
+    settings: { currency: 'USD' },
+    settingsUpdated: () => {},
+    liskService: {
+      success: true,
+      LSK: {
+        USD: 1,
+      },
+    },
+  });
+
   const options = {
-    context: { i18n },
+    context: { i18n, store },
     childContextTypes: {
       i18n: PropTypes.object.isRequired,
+      store: PropTypes.object.isRequired,
     },
   };
 

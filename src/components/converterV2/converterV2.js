@@ -17,7 +17,7 @@ class ConverterV2 extends React.Component {
 
     const currency = settings.currency || 'USD';
 
-    let price = !!error && Number.isNaN(value)
+    let price = error && Number.isNaN(value)
       ? (0).toFixed(2) : (value * LSK[currency]).toFixed(2);
 
     price = price > converter.maxLSKSupply || price === 'NaN' || price < 0 ? (0).toFixed(2) : price;

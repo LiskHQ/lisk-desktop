@@ -18,19 +18,20 @@
   transition:
     opacity var(--animation-speed-faster) linear,
     transform var(--animation-speed-faster) linear,
-    z-index var(--animation-speed-faster) linear;
+    visibility var(--animation-speed-faster) linear;
   top: calc(100% + 5px);
+  visibility: hidden;
   width: 100%;
-  z-index: -1;
 
   &.show {
     opacity: 1;
     transform: scale(1);
+    visibility: visible;
     z-index: var(--overlay-index);
   }
 
   & .dropdownArrow {
-    color: white;
+    color: var(--color-white);
     height: 9px;
     font-size: 0;
     position: absolute;

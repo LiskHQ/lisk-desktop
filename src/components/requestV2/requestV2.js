@@ -3,7 +3,7 @@ import QRCode from 'qrcode.react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { translate } from 'react-i18next';
 import { PrimaryButtonV2 } from '../toolbox/buttons/button';
-import { InputV2 } from '../toolbox/inputsV2';
+import { InputV2, AutoresizeTextarea } from '../toolbox/inputsV2';
 import ConverterV2 from '../converterV2';
 import styles from './requestV2.css';
 
@@ -113,7 +113,7 @@ class RequestV2 extends React.Component {
   // eslint-disable-next-line complexity
   render() {
     const { t } = this.props;
-    const { fields } = this.state;
+    const { fields, shareLink, showQRCode } = this.state;
     const messageMaxLength = 64;
     return (
       <div className={`${styles.container}`}>
@@ -142,29 +142,28 @@ class RequestV2 extends React.Component {
           </label>
           <label className={`${styles.fieldGroup}`}>
             <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
-            <InputV2
-              autoComplete={'no'}
+            <AutoresizeTextarea
               onChange={this.handleFieldChange}
               name='message'
               value={fields.message.value}
               placeholder={t('Write message')}
-              className={`${styles.input} ${fields.message.error ? 'error' : ''}`} />
+              className={`${styles.textarea} ${fields.message.error ? 'error' : ''}`} />
             <span className={`${styles.feedback} ${fields.message.error || messageMaxLength - fields.message.value.length < 10 ? 'error' : ''} ${fields.message.feedback ? styles.show : ''}`}>
               {fields.message.feedback}
             </span>
           </label>
           <label className={`${styles.fieldGroup}`}>
             <span className={`${styles.fieldLabel}`}>{t('Sharing link')}</span>
-            <InputV2
+            <AutoresizeTextarea
               name='shareLink'
-              value={this.state.shareLink}
-              className={`${styles.input} ${styles.input}`}
+              value={shareLink}
+              className={`${styles.textarea}`}
               readOnly />
           </label>
           <footer className={`${styles.sectionFooter}`}>
             <CopyToClipboard
               onCopy={this.onCopy}
-              text={this.state.shareLink}>
+              text={shareLink}>
                 <PrimaryButtonV2
                   disabled={this.state.linkCopied || this.state.hasError}>
                   {this.state.linkCopied
@@ -173,7 +172,7 @@ class RequestV2 extends React.Component {
                   }
                 </PrimaryButtonV2>
             </CopyToClipboard>
-            <span className={`${styles.footerContent} ${this.state.showQRCode ? styles.hide : ''}`}>
+            <span className={`${styles.footerContent} ${showQRCode ? styles.hide : ''}`}>
               {t('Got the Lisk Mobile App?')} <span
                 className={`${styles.footerActionable}`}
                 onClick={this.toggleQRCode}>{t('Show the QR code')}
@@ -181,12 +180,12 @@ class RequestV2 extends React.Component {
             </span>
           </footer>
         </section>
-        <section className={`${styles.qrSection} ${!this.state.showQRCode ? styles.hide : ''}`}>
+        <section className={`${styles.qrSection} ${!showQRCode ? styles.hide : ''}`}>
           <span className={`${styles.label}`}>
             {t('Simply scan the QR code using the Lisk Mobile app or any other QR code reader')}
           </span>
           <div className={`${styles.qrCodeContainer}`}>
-            <QRCode value={this.state.shareLink} size={200} />
+            <QRCode value={shareLink} size={200} />
           </div>
           <footer className={`${styles.sectionFooter}`}>
             <span
