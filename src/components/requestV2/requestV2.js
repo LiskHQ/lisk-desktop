@@ -69,7 +69,7 @@ class RequestV2 extends React.Component {
     if (target.name === 'amount') {
       target.value = /^\./.test(target.value) ? `0${target.value}` : target.value;
       feedback = error ? t('Please use only digits and dots') : feedback;
-    } else if (target.name === 'message' && target.value.length > 0) {
+    } else if (target.name === 'reference' && target.value.length > 0) {
       feedback = error
         ? t('{{length}} extra characters', { length: target.value.length - messageMaxLength })
         : t('{{length}} out of {{total}} characters left', {
