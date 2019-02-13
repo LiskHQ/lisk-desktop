@@ -16,7 +16,9 @@
     "afterEach": true,
     "ipc": true,
     "PRODUCTION": true,
-    "TEST": true
+    "TEST": true,
+    "jest": true,
+    "expect": true
   },
   "env": {
     "browser": true,
@@ -54,7 +56,7 @@
   },
   "overrides": [
     {
-      "files": [ 
+      "files": [
         "*.test.js",
         "*.spec.js"
       ],

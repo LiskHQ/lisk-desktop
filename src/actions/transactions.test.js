@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import txFilters from './../constants/transactionFilters';
 import { sent, transactionsRequested, loadTransaction, transactionsUpdated } from './transactions';
@@ -10,13 +8,16 @@ import Fees from '../constants/fees';
 import networks from '../constants/networks';
 import { toRawLsk } from '../utils/lsk';
 
+jest.mock('../utils/api/transactions');
+jest.mock('../utils/api/delegate');
+
 describe('actions: transactions', () => {
+  const dispatch = jest.fn();
   let getState = () => ({
     peers: { liskAPIClient: {} },
   });
 
   describe('transactionsUpdated', () => {
-    let transactionsApiMock;
     const data = {
       address: '15626650747375562521',
       limit: 20,
@@ -24,26 +25,16 @@ describe('actions: transactions', () => {
       filter: txFilters.all,
     };
     const actionFunction = transactionsUpdated(data);
-    let dispatch;
 
-    beforeEach(() => {
-      transactionsApiMock = sinon.stub(transactionsApi, 'getTransactions');
-      dispatch = sinon.spy();
-    });
-
-    afterEach(() => {
-      transactionsApiMock.restore();
-    });
-
-    it('should dispatch transactionsUpdated action if resolved', () => {
-      transactionsApiMock.returnsPromise().resolves({ data: [], meta: { count: '0' } });
+    it('should dispatch transactionsUpdated action if resolved', async () => {
+      transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { count: '0' } });
       const expectedAction = {
         count: 0,
         confirmed: [],
       };
 
-      actionFunction(dispatch, getState);
-      expect(dispatch).to.have.been.calledWith({
+      await actionFunction(dispatch, getState);
+      expect(dispatch).toHaveBeenCalledWith({
         data: expectedAction,
         type: actionTypes.transactionsUpdated,
       });
@@ -51,7 +42,6 @@ describe('actions: transactions', () => {
   });
 
   describe('transactionsRequested', () => {
-    let transactionsApiMock;
     const data = {
       address: '15626650747375562521L',
       limit: 20,
@@ -59,23 +49,13 @@ describe('actions: transactions', () => {
       filter: txFilters.all,
     };
     const actionFunction = transactionsRequested(data);
-    let dispatch;
-
-    beforeEach(() => {
-      transactionsApiMock = sinon.stub(transactionsApi, 'getTransactions');
-      dispatch = sinon.spy();
-    });
-
-    afterEach(() => {
-      transactionsApiMock.restore();
-    });
 
     it('should create an action function', () => {
-      expect(typeof actionFunction).to.be.deep.equal('function');
+      expect(typeof actionFunction).toBe('function');
     });
 
-    it('should dispatch transactionsLoaded action if resolved', () => {
-      transactionsApiMock.returnsPromise().resolves({ data: [], meta: { count: '0' } });
+    it('should dispatch transactionsLoaded action if resolved', async () => {
+      transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { count: '0' } });
       const expectedAction = {
         count: 0,
         confirmed: [],
@@ -83,9 +63,10 @@ describe('actions: transactions', () => {
         filter: data.filter,
       };
 
-      actionFunction(dispatch, getState);
-      expect(dispatch).to.have.been
-        .calledWith({ data: expectedAction, type: actionTypes.transactionsLoaded });
+      await actionFunction(dispatch, getState);
+      expect(dispatch).toHaveBeenCalledWith({
+        data: expectedAction, type: actionTypes.transactionsLoaded,
+      });
     });
   });
 
@@ -99,8 +80,6 @@ describe('actions: transactions', () => {
         },
       },
     });
-    let transactionApiMock;
-    let delegateApiMock;
     const data = {
       address: '15626650747375562521',
       limit: 20,
@@ -108,12 +87,8 @@ describe('actions: transactions', () => {
       filter: txFilters.all,
     };
     const actionFunction = loadTransaction(data);
-    let dispatch;
 
     beforeEach(() => {
-      transactionApiMock = sinon.stub(transactionsApi, 'getSingleTransaction');
-      delegateApiMock = sinon.stub(delegateApi, 'getDelegate');
-      dispatch = sinon.spy();
       getState = () => ({
         peers: {
           options: {
@@ -128,55 +103,60 @@ describe('actions: transactions', () => {
       });
     });
 
-    afterEach(() => {
-      transactionApiMock.restore();
-      delegateApiMock.restore();
-    });
-
     it('should create an action function', () => {
-      expect(typeof actionFunction).to.be.deep.equal('function');
+      expect(typeof actionFunction).toBe('function');
     });
 
-    it('should dispatch one transactionAddDelegateName action when transaction contains one vote added', () => {
-      const delegateResponse = { username: 'peterpan' };
+    it('should dispatch one transactionAddDelegateName action when transaction contains one vote added', async () => {
       const transactionResponse = {
         asset: {
           votes: [`+${accounts.delegate.publicKey}`],
         },
       };
-      transactionApiMock.returnsPromise().resolves({ data: [transactionResponse] });
-      delegateApiMock.returnsPromise().resolves({ data: [delegateResponse] });
+      const delegateResponse = { username: 'peterpan' };
       const expectedActionPayload = {
         delegate: delegateResponse,
         voteArrayName: 'added',
       };
+      transactionsApi.getSingleTransaction.mockResolvedValue({ data: [transactionResponse] });
+      delegateApi.getDelegate.mockResolvedValue({ data: [delegateResponse] });
 
-      actionFunction(dispatch, getState);
-      expect(dispatch).to.have.been
-        .calledWith({ data: transactionResponse, type: actionTypes.transactionLoaded });
-      expect(dispatch).to.have.been
-        .calledWith({ data: expectedActionPayload, type: actionTypes.transactionAddDelegateName });
+      await actionFunction(dispatch, getState);
+      // the following timeout ensures that the async code inside `actionFunction `
+      // is called before the next assertion
+      await setTimeout(() => {});
+      expect(dispatch).toHaveBeenCalledWith({
+        data: transactionResponse, type: actionTypes.transactionLoaded,
+      });
+      expect(dispatch).toHaveBeenCalledWith({
+        data: expectedActionPayload, type: actionTypes.transactionAddDelegateName,
+      });
     });
 
-    it('should dispatch one transactionAddDelegateName action when transaction contains one vote deleted', () => {
+    it('should dispatch one transactionAddDelegateName action when transaction contains one vote deleted', async () => {
       const delegateResponse = { username: 'peterpan' };
       const transactionResponse = {
         asset: {
           votes: [`-${accounts.delegate.publicKey}`],
         },
       };
-      transactionApiMock.returnsPromise().resolves({ data: [transactionResponse] });
-      delegateApiMock.returnsPromise().resolves({ data: [delegateResponse] });
+      transactionsApi.getSingleTransaction.mockResolvedValue({ data: [transactionResponse] });
+      delegateApi.getDelegate.mockResolvedValue({ data: [delegateResponse] });
       const expectedActionPayload = {
         delegate: delegateResponse,
         voteArrayName: 'deleted',
       };
 
-      actionFunction(dispatch, getState);
-      expect(dispatch).to.have.been
-        .calledWith({ data: transactionResponse, type: actionTypes.transactionLoaded });
-      expect(dispatch).to.have.been
-        .calledWith({ data: expectedActionPayload, type: actionTypes.transactionAddDelegateName });
+      await actionFunction(dispatch, getState);
+      // the following timeout ensures that the async code inside `actionFunction `
+      // is called before the next assertion
+      await setTimeout(() => {});
+      expect(dispatch).toHaveBeenCalledWith({
+        data: transactionResponse, type: actionTypes.transactionLoaded,
+      });
+      expect(dispatch).toHaveBeenCalledWith({
+        data: expectedActionPayload, type: actionTypes.transactionAddDelegateName,
+      });
     });
   });
 
@@ -184,7 +164,6 @@ describe('actions: transactions', () => {
     getState = () => ({
       peers: { liskAPIClient: {} },
     });
-    let transactionsApiMock;
     const data = {
       recipientId: '15833198055097037957L',
       amount: 100,
@@ -197,26 +176,19 @@ describe('actions: transactions', () => {
       },
     };
     const actionFunction = sent(data);
-    let dispatch;
 
     beforeEach(() => {
-      transactionsApiMock = sinon.stub(transactionsApi, 'send');
-      dispatch = sinon.spy();
       getState = () => ({
         peers: { liskAPIClient: {} },
       });
     });
 
-    afterEach(() => {
-      transactionsApiMock.restore();
-    });
-
     it('should create an action function', () => {
-      expect(typeof actionFunction).to.be.deep.equal('function');
+      expect(typeof actionFunction).toBe('function');
     });
 
     it('should dispatch transactionAdded action if resolved', async () => {
-      transactionsApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
+      transactionsApi.send.mockResolvedValue({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
         senderPublicKey: 'test_public-key',
@@ -229,28 +201,27 @@ describe('actions: transactions', () => {
       };
 
       await actionFunction(dispatch, getState);
-      expect(dispatch).to.have.been
-        .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
+      expect(dispatch).toHaveBeenCalledWith({
+        data: expectedAction, type: actionTypes.transactionAdded,
+      });
     });
 
     it('should dispatch transactionFailed action if caught', async () => {
-      transactionsApiMock.returnsPromise().rejects({ message: 'sample message' });
-
-      await actionFunction(dispatch, getState);
+      transactionsApi.send.mockRejectedValue({ message: 'sample message' });
       const expectedAction = {
         data: {
           errorMessage: 'sample message.',
         },
         type: actionTypes.transactionFailed,
       };
-      expect(dispatch).to.have.been.calledWith(expectedAction);
+
+      await actionFunction(dispatch, getState);
+      expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
 
     it('should dispatch transactionFailed action if caught but no message returned', async () => {
       const errorMessage = 'An error occurred while creating the transaction';
-      transactionsApiMock.returnsPromise().rejects({ message: errorMessage });
-
-      await actionFunction(dispatch, getState);
+      transactionsApi.send.mockRejectedValue({ message: errorMessage });
       const expectedErrorMessage = errorMessage + '.'; // eslint-disable-line
       const expectedAction = {
         data: {
@@ -258,7 +229,9 @@ describe('actions: transactions', () => {
         },
         type: actionTypes.transactionFailed,
       };
-      expect(dispatch).to.have.been.calledWith(expectedAction);
+
+      await actionFunction(dispatch, getState);
+      expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
   });
 
