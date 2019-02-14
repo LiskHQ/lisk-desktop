@@ -9,6 +9,7 @@ import { liskAPIClientUpdate } from './peers';
 import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
+import { updateWallet } from './wallets';
 
 /**
  * Trigger this action to remove passphrase from account object
@@ -240,6 +241,7 @@ export const accountDataUpdated = ({
         ));
       }
       dispatch(accountUpdated(result));
+      dispatch(updateWallet(account));
       dispatch(liskAPIClientUpdate({ online: true }));
     }).catch((res) => {
       dispatch(liskAPIClientUpdate({ online: false, code: res.error.code }));
