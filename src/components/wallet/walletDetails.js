@@ -7,7 +7,8 @@ import svg from '../../utils/svgIcons';
 import transactionTypes from '../../constants/transactionTypes';
 
 const walletDetails = ({
-  balance, className = '', t, transactions, address,
+  balance, t, transactions, address,
+  wallets, className = '',
 }) => {
   const lastTx = {
     tx: { amount: 0 },
@@ -23,6 +24,9 @@ const walletDetails = ({
       lastTx.pre = '-';
     }
   }
+
+  const lastVisitDifference = balance -
+    ((wallets[address] && wallets[address].lastBalance) || balance);
 
   return (
     <BoxV2 className={`${className} ${styles.wrapper}`}>
@@ -55,7 +59,7 @@ const walletDetails = ({
           <div className={`${styles.info}`}>
             <span className={`${styles.label}`}>{t('Since Last Visit')}</span>
             <span className={`${styles.value}`}>
-              0
+              {lastVisitDifference > 0 ? '+' : ''}<LiskAmount val={lastVisitDifference} />
               <span className={`${styles.currency}`}> {t('LSK')}</span>
             </span>
           </div>

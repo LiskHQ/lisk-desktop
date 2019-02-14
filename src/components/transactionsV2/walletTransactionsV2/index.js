@@ -20,6 +20,7 @@ const mapStateToProps = state => ({
   activeFilter: state.filters.wallet || txFilters.all,
   loading: state.loading,
   followedAccounts: state.followedAccounts.accounts,
+  wallets: state.wallets,
 });
 
 const mapDispatchToProps = {
