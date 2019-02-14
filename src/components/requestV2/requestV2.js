@@ -123,7 +123,7 @@ class RequestV2 extends React.Component {
   // eslint-disable-next-line complexity
   render() {
     const { t } = this.props;
-    const { fields } = this.state;
+    const { fields, shareLink, showQRCode } = this.state;
     const messageMaxLength = 64;
     return (
       <div className={`${styles.container}`}>
@@ -168,14 +168,14 @@ class RequestV2 extends React.Component {
             <span className={`${styles.fieldLabel}`}>{t('Sharing link')}</span>
             <AutoresizeTextarea
               name='shareLink'
-              value={this.state.shareLink}
+              value={shareLink}
               className={`${styles.textarea} request-link`}
               readOnly />
           </label>
           <footer className={`${styles.sectionFooter}`}>
             <CopyToClipboard
               onCopy={this.onCopy}
-              text={this.state.shareLink}>
+              text={shareLink}>
                 <PrimaryButtonV2
                   disabled={this.state.linkCopied}>
                   {this.state.linkCopied
@@ -184,7 +184,7 @@ class RequestV2 extends React.Component {
                   }
                 </PrimaryButtonV2>
             </CopyToClipboard>
-            <span className={`${styles.footerContent} ${this.state.showQRCode ? styles.hide : ''}`}>
+            <span className={`${styles.footerContent} ${showQRCode ? styles.hide : ''}`}>
               {t('Got the Lisk Mobile App?')} <span
                 className={`${styles.footerActionable} toggle-qrcode`}
                 onClick={this.toggleQRCode}>{t('Show the QR code')}
@@ -192,12 +192,12 @@ class RequestV2 extends React.Component {
             </span>
           </footer>
         </section>
-        <section className={`${styles.qrSection} ${!this.state.showQRCode ? styles.hide : ''} qrcode-section`}>
+        <section className={`${styles.qrSection} ${!showQRCode ? styles.hide : ''} qrcode-section`}>
           <span className={`${styles.label}`}>
             {t('Simply scan the QR code using the Lisk Mobile app or any other QR code reader')}
           </span>
           <div className={`${styles.qrCodeContainer}`}>
-            <QRCode value={this.state.shareLink} size={200} />
+            <QRCode value={shareLink} size={200} />
           </div>
           <footer className={`${styles.sectionFooter}`}>
             <span
