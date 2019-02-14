@@ -34,7 +34,7 @@
     font-size: var(--paragraph-font-size-s);
     font-weight: var(--font-weight-bold);
     justify-content: center;
-    margin-bottom: -1px;
+    margin-bottom: -2px;
     padding: 16px;
     position: relative;
 
@@ -120,7 +120,6 @@
   font-weight: var(--font-weight-bold);
   background: var(--color-white);
   margin: 8px 10px;
-  width: 230px;
   border: none;
   border-radius: var(--border-radius-standard);
   box-shadow: 0 3px 3px -1px rgba(10, 22, 70, 0.1), 0 0 1px 0 rgba(10, 22, 70, 0.06);

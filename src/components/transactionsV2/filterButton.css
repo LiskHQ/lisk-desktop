@@ -53,12 +53,16 @@
 .button {
   width: 100%;
 }
+.bar::before,
+  .bar::after {
+  height: 0px;
+}
 
 .filterTransactions {
   display: flex;
   justify-content: center;
   font-size: var(--button-font-size-s);
-  padding: 10px 40px 0;
+  padding: 10px 20px 0;
   height: 25px;
 }
 
@@ -67,7 +71,7 @@
   padding: 1px;
   height: 36px;
   background-color: var(--color-white);
-  border: 0.5px solid var(--color-content-light);
+  border: 0.5px solid #a6adbd;
   border-radius: 4px;
   width: 100%;
 
@@ -77,7 +81,7 @@
     font-size: 12px;
     color: var(--color-grayscale-medium);
     width: 100%;
-    padding: 8px 0 6px 14px;
+    padding: 8px 0 8px 14px;
     border-radius: 3px;
     border: none;
     transition: background-color 300ms linear;
