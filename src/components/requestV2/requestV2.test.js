@@ -83,6 +83,22 @@ describe('RequestV2', () => {
       wrapper.update();
       expect(amountField.find('.feedback')).to.have.className('error');
     });
+
+    it('Should show error feedback if ending in . or multiples .', () => {
+      const evt = { target: { name: 'amount', value: 1 } };
+      const multipleDotsEvt = { target: { name: 'amount', value: '1.2.3' } };
+      const endingDotEvt = { target: { name: 'amount', value: '12.' } };
+      const amountField = wrapper.find('.fieldGroup').at(0);
+      amountField.find('InputV2').simulate('change', endingDotEvt);
+      wrapper.update();
+      expect(amountField.find('.feedback')).to.have.className('error');
+      amountField.find('InputV2').simulate('change', evt);
+      wrapper.update();
+      expect(amountField.find('.feedback')).to.not.have.className('error');
+      amountField.find('InputV2').simulate('change', multipleDotsEvt);
+      wrapper.update();
+      expect(amountField.find('.feedback')).to.have.className('error');
+    });
   });
 
   describe('Reference field', () => {

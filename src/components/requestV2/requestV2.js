@@ -57,18 +57,29 @@ class RequestV2 extends React.Component {
     }));
   }
 
+  validateAmountField(value) {
+    if (/([^\d.])/g.test(value)) {
+      return this.props.t('Please use only digits and dots');
+    } else if (/(\.)(.*\1){1}/g.test(value)) {
+      return this.props.t('Invalid amount');
+    } else if (/\.$/.test(value)) {
+      return this.props.t('Invalid amount');
+    }
+    return false;
+  }
+
   // eslint-disable-next-line max-statements
   handleFieldChange({ target }) {
     const { t } = this.props;
     const messageMaxLength = 64;
     const error = target.name === 'amount'
-      ? /([^\d.])/g.test(target.value) || /(\.)(.*\1){1}/g.test(target.value)
+      ? this.validateAmountField(target.value)
       : target.value.length > messageMaxLength;
     let feedback = '';
 
     if (target.name === 'amount') {
       target.value = /^\./.test(target.value) ? `0${target.value}` : target.value;
-      feedback = error ? t('Please use only digits and dots') : feedback;
+      feedback = error || feedback;
     } else if (target.name === 'reference' && target.value.length > 0) {
       feedback = error
         ? t('{{length}} extra characters', { length: target.value.length - messageMaxLength })
@@ -80,7 +91,7 @@ class RequestV2 extends React.Component {
 
     const field = {
       [target.name]: {
-        error,
+        error: !!error,
         value: target.value,
         feedback,
       },
@@ -144,6 +155,7 @@ class RequestV2 extends React.Component {
           <label className={`${styles.fieldGroup} reference`}>
             <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
             <AutoresizeTextarea
+              maxLength={100}
               spellCheck={false}
               onChange={this.handleFieldChange}
               name='reference'
