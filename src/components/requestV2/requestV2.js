@@ -106,7 +106,7 @@ class RequestV2 extends React.Component {
     return Object.keys(fields).reduce((link, fieldName) => {
       const field = fields[fieldName];
       return field.value !== ''
-        ? `${link}&${fieldName}=${encodeURI(field.value)}`
+        ? `${link}&${fieldName}=${encodeURIComponent(field.value)}`
         : link;
     }, `lisk://wallet/send?recipient=${address}`);
   }
