@@ -60,9 +60,7 @@ class RequestV2 extends React.Component {
   validateAmountField(value) {
     if (/([^\d.])/g.test(value)) {
       return this.props.t('Please use only digits and dots');
-    } else if (/(\.)(.*\1){1}/g.test(value)) {
-      return this.props.t('Invalid amount');
-    } else if (/\.$/.test(value)) {
+    } else if (/(\.)(.*\1){1}/g.test(value) || /\.$/.test(value)) {
       return this.props.t('Invalid amount');
     }
     return false;
