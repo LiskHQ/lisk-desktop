@@ -19,6 +19,8 @@ export default class ExtensionPoint extends React.Component {
         const Component = LiskHubExtensions._modules[moduleId];
         if (Component) {
           return <Component
+            name='Test'
+            onClick={() => { console.log('OnClick'); }}
             t={this.props.t}
             identifier={this.props.identifier}
             key={i} />;
