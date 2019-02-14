@@ -138,6 +138,7 @@ class WalletTransactionsV2 extends React.Component {
           transactions={this.props.transactions}
           balance={this.props.balance}
           address={this.props.address}
+          wallets={this.props.wallets}
           />
 
         <TransactionsOverviewV2 {...overviewProps} />
