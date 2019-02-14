@@ -83,7 +83,7 @@ class walletHeader extends React.Component {
           </div>
         </div>
 
-        { isMyWallet &&
+        { isMyWallet ?
           (
             <div className={`${styles.buttonsHolder}`}>
               <span
@@ -102,7 +102,7 @@ class walletHeader extends React.Component {
                 </PrimaryButtonV2>
               </Link>
             </div>
-          )
+          ) : null
         }
       </header>
     );
