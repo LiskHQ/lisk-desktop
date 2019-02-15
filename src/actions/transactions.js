@@ -123,6 +123,14 @@ export const transactionsRequested = ({
       });
   };
 
+export const loadLastTransaction = address => (dispatch, getState) => {
+  const { liskAPIClient } = getState().peers;
+  dispatch({ type: actionTypes.transactionCleared });
+  getTransactions({
+    liskAPIClient, address, limit: 1, offset: 0,
+  }).then(response => dispatch({ data: response.data[0], type: actionTypes.transactionLoaded }));
+};
+
 export const loadTransaction = ({ id }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
