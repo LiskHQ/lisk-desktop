@@ -78,7 +78,6 @@ const actionTypes = {
   addPriceTicker: 'ADD_PRICE_TICKER',
   cleanTransactions: 'CLEAN_TRANSACTIONS',
   walletUpdated: 'WALLET_UPDATED',
-  setWalletsLastBalance: 'SET_WALLETS_LAST_BALANCE',
 };
 
 export default actionTypes;

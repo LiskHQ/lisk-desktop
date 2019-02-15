@@ -30,7 +30,7 @@ export const setWalletsLastBalance = () => {
     },
   }), {});
   return ({
-    type: actionTypes.setWalletsLastBalance,
+    type: actionTypes.walletUpdated,
     data,
   });
 };
