@@ -58,11 +58,14 @@ describe('WalletTransactions V2 Component', () => {
       history: { push: spy(), location: { search: ' ' } },
       followedAccounts: [],
       transactionsCount: 1000,
+      transaction: transactions[0],
       transactions,
       transactionsRequested: spy(),
       transactionsFilterSet: spy(),
+      loadLastTransaction: spy(),
       addFilter: spy(),
       loading: [],
+      wallets: {},
       t: key => key,
     };
 

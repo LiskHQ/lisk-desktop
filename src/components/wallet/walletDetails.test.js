@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { expect } from 'chai';
+import { spy } from 'sinon';
 import { mount } from 'enzyme';
 import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
@@ -33,6 +34,9 @@ describe('Wallet Details Module', () => {
     address: accounts.genesis.address,
     balance: accounts.genesis.balance,
     transactions: [transaction],
+    lastTransaction: transaction,
+    wallets: {},
+    loadLastTransaction: spy(),
     t: key => key,
   };
 
@@ -47,32 +51,74 @@ describe('Wallet Details Module', () => {
     expect(wrapper.find('.last-transaction .value')).to.have.text(expectedLastTx);
   });
 
-  it('Last transaction must have - sign if outgoing transaction', () => {
-    wrapper.setProps({
-      transactions: [{
-        ...transaction,
-        senderId: accounts.genesis.address,
-        recipientId: '12345L',
-      }],
+  describe('Last transaction', () => {
+    it('Last transaction must have - sign if outgoing transaction', () => {
+      wrapper.setProps({
+        lastTransaction: {
+          ...transaction,
+          senderId: accounts.genesis.address,
+          recipientId: '12345L',
+        },
+      });
+      const expectedLastTx = '-695.5 LSK';
+      expect(wrapper.find('.last-transaction .value')).to.have.text(expectedLastTx);
     });
-    const expectedLastTx = '-695.5 LSK';
-    expect(wrapper.find('.last-transaction .value')).to.have.text(expectedLastTx);
+
+    it('Last transaction must have no sign if self transaction', () => {
+      wrapper.setProps({
+        lastTransaction: {
+          ...transaction,
+          senderId: accounts.genesis.address,
+        },
+      });
+      const expectedLastTx = '695.5 LSK';
+      expect(wrapper.find('.last-transaction .value')).to.have.text(expectedLastTx);
+    });
+
+    it('If no last transaction render as 0 LSK', () => {
+      wrapper.setProps({ lastTransaction: {} });
+      const expectedLastTx = '0 LSK';
+      expect(wrapper.find('.last-transaction .value')).to.have.text(expectedLastTx);
+    });
+
+    it('Should update last transaction if balance is different from previous one', () => {
+      wrapper.setProps({ balance: accounts.genesis.balance + 10 });
+      wrapper.update();
+      expect(props.loadLastTransaction).to.have.been.calledWith(props.address);
+    });
   });
 
-  it('Last transaction must have no sign if self transaction', () => {
-    wrapper.setProps({
-      transactions: [{
-        ...transaction,
-        senderId: accounts.genesis.address,
-      }],
+  describe('Since last visit', () => {
+    it('Should render 0 if no last balance saved or empty localStorage wallets item', () => {
+      const expectedDifference = '0 LSK';
+      const walletProps = {
+        ...props,
+        wallets: { [accounts.genesis.address]: { balance: 0 } },
+      };
+      expect(wrapper.find('.last-visit .value')).to.have.text(expectedDifference);
+      wrapper = mount(<WalletDetails {...walletProps} />, options);
+      expect(wrapper.find('.last-visit .value')).to.have.text(expectedDifference);
     });
-    const expectedLastTx = '695.5 LSK';
-    expect(wrapper.find('.last-transaction .value')).to.have.text(expectedLastTx);
-  });
 
-  it('If no last transaction render as 0 LSK', () => {
-    wrapper.setProps({ transactions: [] });
-    const expectedLastTx = '0 LSK';
-    expect(wrapper.find('.last-transaction .value')).to.have.text(expectedLastTx);
+    it('Should render difference from previous visit', () => {
+      let walletProps = {
+        ...props,
+        balance: 0,
+        wallets: { [accounts.genesis.address]: { lastBalance: 1000000000 } },
+      };
+      let expectedDifference = '-10 LSK';
+      wrapper = mount(<WalletDetails {...walletProps} />, options);
+      wrapper.setProps(walletProps);
+      expect(wrapper.find('.last-visit .value')).to.have.text(expectedDifference);
+
+      walletProps = {
+        ...props,
+        balance: 1000000000,
+        wallets: { [accounts.genesis.address]: { lastBalance: 0 } },
+      };
+      expectedDifference = '+10 LSK';
+      wrapper = mount(<WalletDetails {...walletProps} />, options);
+      expect(wrapper.find('.last-visit .value')).to.have.text(expectedDifference);
+    });
   });
 });
