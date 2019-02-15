@@ -64,7 +64,7 @@ describe('actions: wallets', () => {
 
       const expectedAction = {
         data,
-        type: actionTypes.setWalletsLastBalance,
+        type: actionTypes.walletUpdated,
       };
 
       expect(setWalletsLastBalance()).toEqual(expectedAction);
