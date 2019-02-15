@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import configureMockStore from 'redux-mock-store';
 import { spy, stub, useFakeTimers } from 'sinon';
-import { mountWithContext } from '../../../test/utils/mountHelpers';
+import { mountWithContext } from '../../../test/unit-test-utils/mountHelpers';
 import AutoSuggest from './index';
 import styles from './autoSuggest.css';
 import * as searchActions from './../searchResult/keyAction';

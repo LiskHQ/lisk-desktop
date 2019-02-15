@@ -30,6 +30,6 @@ describe('externalLinks', () => {
 
     externalLinks.init();
     callbacks.openUrl({}, 'lisk://register');
-    historyMock.expects('replace').once().withArgs(routes.register.path);
+    historyMock.expects('replace').once().withArgs(routes.registerV2.path);
   });
 });

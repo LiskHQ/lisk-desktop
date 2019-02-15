@@ -1,7 +1,7 @@
 import React from 'react';
 import { spy } from 'sinon';
 import { expect } from 'chai';
-import { mountWithContext } from '../../../test/utils/mountHelpers';
+import { mountWithContext } from '../../../test/unit-test-utils/mountHelpers';
 import VotedDelegates from './votedDelegates';
 
 describe('VotedDelegates', () => {

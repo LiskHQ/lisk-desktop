@@ -2,8 +2,6 @@ import Dashboard from '../components/dashboard';
 import Help from '../components/help';
 import Sidechains from '../components/sidechains';
 import Setting from '../components/setting';
-import Login from '../components/login';
-import Register from '../components/register';
 import RegisterDelegate from '../components/registerDelegate';
 import SecondPassphrase from '../components/secondPassphrase';
 import SignMessage from '../components/signMessage';
@@ -78,12 +76,6 @@ export default {
     component: SignMessage,
     isPrivate: true,
   },
-  register: {
-    path: '/register',
-    component: Register,
-    isLoaded: true,
-    isPrivate: false,
-  },
   registerDelegate: {
     path: '/register-delegate',
     component: RegisterDelegate,
@@ -92,16 +84,9 @@ export default {
   },
   addAccount: {
     path: '/add-account',
-    component: Login,
+    component: LoginV2,
     isLoaded: true,
     isPrivate: false,
-  },
-  login: {
-    path: '/',
-    component: Login,
-    isLoaded: true,
-    isPrivate: false,
-    exact: true,
   },
   // notFound: {
   //   path: '*',

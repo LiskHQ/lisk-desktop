@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { mountWithContext } from '../../../test/utils/mountHelpers';
+import { mountWithContext } from '../../../test/unit-test-utils/mountHelpers';
 import DelegateStatistics from './delegateStatistics';
 
 describe('DelegateStatistics', () => {

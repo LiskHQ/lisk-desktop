@@ -2,7 +2,7 @@ import React from 'react';
 import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { mountWithContext } from '../../../../test/utils/mountHelpers';
+import { mountWithContext } from '../../../../test/unit-test-utils/mountHelpers';
 import DateField from './transactionDetailDateField';
 import txTypes from '../../../constants/transactionTypes';
 
