@@ -6,67 +6,85 @@ import LiskAmount from '../liskAmount';
 import svg from '../../utils/svgIcons';
 import transactionTypes from '../../constants/transactionTypes';
 
-const walletDetails = ({
-  balance, t, transactions, address,
-  wallets, className = '',
-}) => {
-  const lastTx = {
-    tx: { amount: 0 },
-    pre: '',
-  };
+class walletDetails extends React.Component {
+  constructor() {
+    super();
 
-  if (transactions && transactions[0]) {
-    lastTx.tx = transactions[0];
-    if (lastTx.tx.senderId !== address) {
-      lastTx.pre = '+';
-    } else if (lastTx.tx.type === transactionTypes.send &&
-        lastTx.tx.recipientId !== address) {
-      lastTx.pre = '-';
-    }
+    this.state = {
+      lastTx: {
+        tx: { id: null, amount: 0 },
+        pre: '',
+      },
+    };
   }
 
-  const lastVisitDifference = balance -
-    ((wallets[address] && wallets[address].lastBalance) || balance);
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.lastTransaction.id && nextProps.lastTransaction.id !== this.state.lastTx.tx.id) {
+      const tx = nextProps.lastTransaction;
+      let pre = tx.senderId !== this.props.address ? '+' : '';
+      if (tx.type === transactionTypes.send &&
+          tx.recipientId !== this.props.address) {
+        pre = '-';
+      }
+      this.setState({ lastTx: { tx, pre } });
+    }
 
-  return (
-    <BoxV2 className={`${className} ${styles.wrapper}`}>
-      <header>
-        <h1>{t('Wallet overview')}</h1>
-      </header>
-      <div className={`${styles.content}`}>
-        <div className={`${styles.details} account-balance`}>
-          <img className={`${styles.icon}`} src={svg.icon_chart} />
-          <div className={`${styles.info}`}>
-            <span className={`${styles.label}`}>{t('Account Balance')}</span>
-            <span className={`${styles.value}`}>
-              <LiskAmount val={balance} />
-              <span className={`${styles.currency}`}> {t('LSK')}</span>
-            </span>
+    if (nextProps.balance !== this.props.balance) {
+      this.props.loadLastTransaction(this.props.address);
+      return false;
+    }
+    return true;
+  }
+
+  render() {
+    const {
+      balance, t, address, wallets, className = '',
+    } = this.props;
+    const { lastTx } = this.state;
+
+    const lastVisitDifference = balance -
+      ((wallets[address] && wallets[address].lastBalance) || balance);
+
+    return (
+      <BoxV2 className={`${className} ${styles.wrapper}`}>
+        <header>
+          <h1>{t('Wallet overview')}</h1>
+        </header>
+        <div className={`${styles.content}`}>
+          <div className={`${styles.details} account-balance`}>
+            <img className={`${styles.icon}`} src={svg.icon_chart} />
+            <div className={`${styles.info}`}>
+              <span className={`${styles.label}`}>{t('Account Balance')}</span>
+              <span className={`${styles.value}`}>
+                <LiskAmount val={balance} />
+                <span className={`${styles.currency}`}> {t('LSK')}</span>
+              </span>
+            </div>
+          </div>
+          <div className={`${styles.details} last-transaction`}>
+            <img className={`${styles.icon}`} src={svg.icon_last_tx} />
+            <div className={`${styles.info}`}>
+              <span className={`${styles.label}`}>{t('Last Transaction')}</span>
+              <span className={`${styles.value}`}>
+                {lastTx.pre}<LiskAmount val={lastTx.tx.amount} />
+                <span className={`${styles.currency}`}> {t('LSK')}</span>
+              </span>
+            </div>
+          </div>
+          <div className={`${styles.details} last-visit`}>
+            <img className={`${styles.icon}`} src={svg.icon_cal} />
+            <div className={`${styles.info}`}>
+              <span className={`${styles.label}`}>{t('Since Last Visit')}</span>
+              <span className={`${styles.value}`}>
+                {lastVisitDifference > 0 ? '+' : ''}<LiskAmount val={lastVisitDifference} />
+                <span className={`${styles.currency}`}> {t('LSK')}</span>
+              </span>
+            </div>
           </div>
         </div>
-        <div className={`${styles.details} last-transaction`}>
-          <img className={`${styles.icon}`} src={svg.icon_last_tx} />
-          <div className={`${styles.info}`}>
-            <span className={`${styles.label}`}>{t('Last Transaction')}</span>
-            <span className={`${styles.value}`}>
-              {lastTx.pre}<LiskAmount val={lastTx.tx.amount} />
-              <span className={`${styles.currency}`}> {t('LSK')}</span>
-            </span>
-          </div>
-        </div>
-        <div className={`${styles.details} last-visit`}>
-          <img className={`${styles.icon}`} src={svg.icon_cal} />
-          <div className={`${styles.info}`}>
-            <span className={`${styles.label}`}>{t('Since Last Visit')}</span>
-            <span className={`${styles.value}`}>
-              {lastVisitDifference > 0 ? '+' : ''}<LiskAmount val={lastVisitDifference} />
-              <span className={`${styles.currency}`}> {t('LSK')}</span>
-            </span>
-          </div>
-        </div>
-      </div>
-    </BoxV2>
-  );
-};
+      </BoxV2>
+    );
+  }
+}
 
 export default translate()(walletDetails);
