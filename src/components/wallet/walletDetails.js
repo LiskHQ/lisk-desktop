@@ -7,17 +7,6 @@ import svg from '../../utils/svgIcons';
 import transactionTypes from '../../constants/transactionTypes';
 
 class walletDetails extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      lastTx: {
-        tx: { id: null, amount: 0 },
-        pre: '',
-      },
-    };
-  }
-
   shouldComponentUpdate(nextProps) {
     if (nextProps.balance !== this.props.balance) {
       this.props.loadLastTransaction(this.props.address);
@@ -26,26 +15,22 @@ class walletDetails extends React.Component {
     return true;
   }
 
-  componentDidUpdate() {
-    const { lastTransaction, address } = this.props;
-
-    if (lastTransaction.id
-      && lastTransaction.id !== this.state.lastTx.tx.id) {
-      const tx = lastTransaction;
-      let pre = tx.senderId !== address ? '+' : '';
-      pre = tx.type === transactionTypes.send && tx.recipientId !== address ? '-' : pre;
-      this.setState({ lastTx: { tx, pre } });
-    }
-  }
-
   render() {
     const {
       balance, t, address, wallets, className = '',
+      lastTransaction,
     } = this.props;
-    const { lastTx } = this.state;
+
+    const lastTx = {
+      tx: { amount: 0, ...lastTransaction },
+      pre: lastTransaction.senderId && lastTransaction.senderId !== address ? '+' : '',
+    };
+    lastTx.pre = lastTransaction.type === transactionTypes.send
+      && lastTransaction.recipientId !== address ? '-' : lastTx.pre;
 
     const lastVisitDifference = balance -
-      ((wallets[address] && wallets[address].lastBalance) || balance);
+      (wallets[address] && wallets[address].lastBalance !== undefined
+        ? wallets[address].lastBalance : balance);
 
     return (
       <BoxV2 className={`${className} ${styles.wrapper}`}>
