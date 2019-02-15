@@ -342,7 +342,7 @@ describe('actions: account', () => {
       };
 
       accountDataUpdated(data)(dispatch, getState);
-      expect(dispatch).to.have.callCount(3);
+      expect(dispatch).to.have.callCount(4);
       expect(peersActionsStub).to.have.not.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
     });
 
