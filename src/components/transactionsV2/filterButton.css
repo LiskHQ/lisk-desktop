@@ -53,8 +53,9 @@
 .button {
   width: 100%;
 }
+
 .bar::before,
-  .bar::after {
+.bar::after {
   height: 0px;
 }
 
