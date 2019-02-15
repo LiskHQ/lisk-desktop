@@ -18,7 +18,7 @@ import settings from '../../constants/settings';
 import txFilters from '../../constants/transactionFilters';
 
 import { setWalletsLastBalance } from '../../actions/wallets';
-import { getWalletsFromLocalStorage, setWalletsInLocalStorage } from '../../utils/wallets';
+import { setWalletsInLocalStorage } from '../../utils/wallets';
 
 const { lockDuration } = accountConfig;
 
@@ -147,13 +147,14 @@ const accountMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
     case actionTypes.storeCreated:
+      store.dispatch(setWalletsLastBalance());
       autoLogInIfNecessary(store, next, action);
       break;
     // update on login because the 'save account' button
     // depends on a rerendering of the page
     // TODO: fix the 'save account' path problem, so we can remove this
     case actionTypes.accountLoggedIn:
-      store.dispatch(setWalletsLastBalance(getWalletsFromLocalStorage()));
+      store.dispatch(setWalletsLastBalance());
       updateAccountData(store, action);
       break;
     case actionTypes.newBlockCreated:

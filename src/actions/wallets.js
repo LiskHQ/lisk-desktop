@@ -1,20 +1,36 @@
 import actionTypes from '../constants/actions';
+import { getWalletsFromLocalStorage } from '../utils/wallets';
 
-export const clearWallets = () => ({
-  type: actionTypes.walletsCleared,
-});
+window.getWalletsFromLocalStorage = getWalletsFromLocalStorage;
 
-export const deleteWallet = data => ({
-  type: actionTypes.walletDeleted,
-  data,
-});
+export const updateWallet = (account) => {
+  const wallets = getWalletsFromLocalStorage();
+  const data = {
+    ...wallets,
+    [account.address]: {
+      ...wallets[account.address],
+      balance: account.balance,
+    },
+  };
 
-export const updateWallet = data => ({
-  type: actionTypes.walletUpdated,
-  data,
-});
+  return ({
+    type: actionTypes.walletUpdated,
+    data,
+  });
+};
 
-export const setWalletsLastBalance = data => ({
-  type: actionTypes.setWalletsLastBalance,
-  data,
-});
+export const setWalletsLastBalance = () => {
+  const wallets = getWalletsFromLocalStorage();
+  const addresses = Object.keys(wallets);
+  const data = addresses.reduce((acc, address) => ({
+    ...acc,
+    [address]: {
+      ...wallets[address],
+      lastBalance: wallets[address].balance,
+    },
+  }), {});
+  return ({
+    type: actionTypes.setWalletsLastBalance,
+    data,
+  });
+};

@@ -77,8 +77,6 @@ const actionTypes = {
   showEmptyNewsFeed: 'SHOW_EMPTY_NEWS_FEED',
   addPriceTicker: 'ADD_PRICE_TICKER',
   cleanTransactions: 'CLEAN_TRANSACTIONS',
-  walletsCleared: 'WALLETS_CLEARED',
-  walletDeleted: 'WALLET_DELETED',
   walletUpdated: 'WALLET_UPDATED',
   setWalletsLastBalance: 'SET_WALLETS_LAST_BALANCE',
 };
