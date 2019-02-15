@@ -241,7 +241,7 @@ export const accountDataUpdated = ({
         ));
       }
       dispatch(accountUpdated(result));
-      dispatch(updateWallet(account));
+      dispatch(updateWallet(result));
       dispatch(liskAPIClientUpdate({ online: true }));
     }).catch((res) => {
       dispatch(liskAPIClientUpdate({ online: false, code: res.error.code }));
