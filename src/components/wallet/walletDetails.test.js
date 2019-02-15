@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { expect } from 'chai';
-import { spy } from 'sinon';
 import { mount } from 'enzyme';
 import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
@@ -36,7 +34,7 @@ describe('Wallet Details Module', () => {
     transactions: [transaction],
     lastTransaction: transaction,
     wallets: {},
-    loadLastTransaction: spy(),
+    loadLastTransaction: jest.fn(),
     t: key => key,
   };
 
@@ -47,8 +45,8 @@ describe('Wallet Details Module', () => {
   it('Should render with passed props', () => {
     const expectedBalance = '99,800,000 LSK';
     const expectedLastTx = '+695.5 LSK';
-    expect(wrapper.find('.account-balance .value')).to.have.text(expectedBalance);
-    expect(wrapper.find('.last-transaction .value')).to.have.text(expectedLastTx);
+    expect(wrapper.find('.account-balance .value')).toHaveText(expectedBalance);
+    expect(wrapper.find('.last-transaction .value')).toHaveText(expectedLastTx);
   });
 
   describe('Last transaction', () => {
@@ -61,7 +59,7 @@ describe('Wallet Details Module', () => {
         },
       });
       const expectedLastTx = '-695.5 LSK';
-      expect(wrapper.find('.last-transaction .value')).to.have.text(expectedLastTx);
+      expect(wrapper.find('.last-transaction .value')).toHaveText(expectedLastTx);
     });
 
     it('Last transaction must have no sign if self transaction', () => {
@@ -72,19 +70,19 @@ describe('Wallet Details Module', () => {
         },
       });
       const expectedLastTx = '695.5 LSK';
-      expect(wrapper.find('.last-transaction .value')).to.have.text(expectedLastTx);
+      expect(wrapper.find('.last-transaction .value')).toHaveText(expectedLastTx);
     });
 
     it('If no last transaction render as 0 LSK', () => {
       wrapper.setProps({ lastTransaction: {} });
       const expectedLastTx = '0 LSK';
-      expect(wrapper.find('.last-transaction .value')).to.have.text(expectedLastTx);
+      expect(wrapper.find('.last-transaction .value')).toHaveText(expectedLastTx);
     });
 
     it('Should update last transaction if balance is different from previous one', () => {
       wrapper.setProps({ balance: accounts.genesis.balance + 10 });
       wrapper.update();
-      expect(props.loadLastTransaction).to.have.been.calledWith(props.address);
+      expect(props.loadLastTransaction).toBeCalledWith(props.address);
     });
   });
 
@@ -95,9 +93,9 @@ describe('Wallet Details Module', () => {
         ...props,
         wallets: { [accounts.genesis.address]: { balance: 0 } },
       };
-      expect(wrapper.find('.last-visit .value')).to.have.text(expectedDifference);
+      expect(wrapper.find('.last-visit .value')).toHaveText(expectedDifference);
       wrapper = mount(<WalletDetails {...walletProps} />, options);
-      expect(wrapper.find('.last-visit .value')).to.have.text(expectedDifference);
+      expect(wrapper.find('.last-visit .value')).toHaveText(expectedDifference);
     });
 
     it('Should render difference from previous visit', () => {
@@ -109,7 +107,7 @@ describe('Wallet Details Module', () => {
       let expectedDifference = '-10 LSK';
       wrapper = mount(<WalletDetails {...walletProps} />, options);
       wrapper.setProps(walletProps);
-      expect(wrapper.find('.last-visit .value')).to.have.text(expectedDifference);
+      expect(wrapper.find('.last-visit .value')).toHaveText(expectedDifference);
 
       walletProps = {
         ...props,
@@ -118,7 +116,7 @@ describe('Wallet Details Module', () => {
       };
       expectedDifference = '+10 LSK';
       wrapper = mount(<WalletDetails {...walletProps} />, options);
-      expect(wrapper.find('.last-visit .value')).to.have.text(expectedDifference);
+      expect(wrapper.find('.last-visit .value')).toHaveText(expectedDifference);
     });
   });
 });
