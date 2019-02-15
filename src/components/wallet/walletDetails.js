@@ -19,21 +19,23 @@ class walletDetails extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (nextProps.lastTransaction.id && nextProps.lastTransaction.id !== this.state.lastTx.tx.id) {
-      const tx = nextProps.lastTransaction;
-      let pre = tx.senderId !== this.props.address ? '+' : '';
-      if (tx.type === transactionTypes.send &&
-          tx.recipientId !== this.props.address) {
-        pre = '-';
-      }
-      this.setState({ lastTx: { tx, pre } });
-    }
-
     if (nextProps.balance !== this.props.balance) {
       this.props.loadLastTransaction(this.props.address);
       return false;
     }
     return true;
+  }
+
+  componentDidUpdate() {
+    const { lastTransaction, address } = this.props;
+
+    if (lastTransaction.id
+      && lastTransaction.id !== this.state.lastTx.tx.id) {
+      const tx = lastTransaction;
+      let pre = tx.senderId !== address ? '+' : '';
+      pre = tx.type === transactionTypes.send && tx.recipientId !== address ? '-' : pre;
+      this.setState({ lastTx: { tx, pre } });
+    }
   }
 
   render() {
