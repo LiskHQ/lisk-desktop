@@ -34,6 +34,8 @@ class WalletTransactionsV2 extends React.Component {
   }
 
   onInit() {
+    this.props.loadLastTransaction(this.props.account.address);
+
     this.props.transactionsFilterSet({
       address: this.props.account.address,
       limit: 30,
@@ -135,7 +137,8 @@ class WalletTransactionsV2 extends React.Component {
 
         <WalletDetails
           className={`${grid['col-md-4']} ${grid['col-lg-3']}`}
-          transactions={this.props.transactions}
+          lastTransaction={this.props.transaction}
+          loadLastTransaction={this.props.loadLastTransaction}
           balance={this.props.balance}
           address={this.props.address}
           wallets={this.props.wallets}

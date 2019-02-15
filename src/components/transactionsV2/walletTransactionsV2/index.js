@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import { transactionsRequested, transactionsFilterSet } from '../../../actions/transactions';
+import { loadLastTransaction, transactionsRequested, transactionsFilterSet } from '../../../actions/transactions';
 import WalletTransactionsV2 from './walletTransactionsV2';
 import actionTypes from '../../../constants/actions';
 import txFilters from './../../../constants/transactionFilters';
@@ -26,6 +26,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   transactionsRequested,
   transactionsFilterSet,
+  loadLastTransaction,
   addFilter: data => ({ type: actionTypes.addFilter, data }),
 };
 
