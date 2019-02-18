@@ -9,6 +9,13 @@ import HeaderV2 from '../headerV2/headerV2';
 import styles from './splashscreen.css';
 
 class Splashscreen extends React.Component {
+  componentDidMount() {
+    // istanbul ignore else
+    if (this.props.settings.isTermsOfUse) {
+      this.props.history.push(routes.termsOfUse.path);
+    }
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.account &&
       this.props.account.address &&

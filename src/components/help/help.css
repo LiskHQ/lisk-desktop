@@ -56,6 +56,10 @@
 
 .sideBar {
   padding-right: 0px;
+
+  & > header > a:last-child {
+    margin-top: 25px;
+  }
 }
 
 .helpSection {

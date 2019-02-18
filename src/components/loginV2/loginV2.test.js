@@ -21,10 +21,15 @@ describe('LoginV2', () => {
     data: {},
     options: {},
   };
+
+  const settings = {
+    isTermsOfUse: false,
+  };
+
   const store = configureMockStore([])({
     peers,
     account,
-    settings: {},
+    settings,
   });
   const history = {
     location: {
@@ -44,6 +49,7 @@ describe('LoginV2', () => {
     onAccountUpdated: () => {},
     liskAPIClientSet: spy(),
     settingsUpdated: spy(),
+    settings,
   };
 
   const options = {
@@ -158,6 +164,23 @@ describe('LoginV2', () => {
       wrapper.update();
       wrapper.find('form').simulate('submit');
       expect(props.liskAPIClientSet).to.have.been.calledWith();
+    });
+  });
+
+  describe('Terms of Use not accepted', () => {
+    props.settings.isTermsOfUse = true;
+
+    beforeEach(() => {
+      wrapper = mount(<MemoryRouter><LoginV2 {...props}/></MemoryRouter>, options);
+    });
+
+    afterEach(() => {
+      history.location.search = '';
+      localStorageStub.restore();
+    });
+
+    it('redirect to Terms of Use page', () => {
+      expect(props.history.push).to.have.been.calledWith(`${routes.termsOfUse.path}`);
     });
   });
 });

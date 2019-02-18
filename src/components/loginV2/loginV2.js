@@ -57,6 +57,11 @@ class LoginV2 extends React.Component {
   }
 
   componentDidMount() {
+    // istanbul ignore else
+    if (this.props.settings.isTermsOfUse) {
+      this.props.history.push(routes.termsOfUse.path);
+    }
+
     i18next.on('languageChanged', this.getNetworksList);
   }
 
