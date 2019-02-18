@@ -172,6 +172,7 @@ class FilterButton extends React.Component {
               </div>
               <div className={styles.buttonContainer}>
                 <PrimaryButtonV2
+                  disabled={this.state.messageValidity}
                   theme={styles}
                   className='saveButton'
                   onClick={this.saveFilters.bind(this)}>{this.props.t('Apply Filters')}</PrimaryButtonV2>
