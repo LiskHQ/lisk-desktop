@@ -20,7 +20,7 @@ const CustomRoute = ({
         <Route path={fullPath} component={component} exact={exact} />
       </ErrorBoundary>
     </main>
-    : <Redirect to={`/?referrer=${pathname}${encodeURIComponent(search)}`} />
+    : <Redirect to={`/login?referrer=${pathname}${encodeURIComponent(search)}`} />
   );
 };
 
