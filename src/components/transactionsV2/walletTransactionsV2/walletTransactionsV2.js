@@ -1,5 +1,5 @@
 import React from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
+// import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import localJSONStorage from '../../../utils/localJSONStorage';
@@ -143,7 +143,8 @@ class WalletTransactionsV2 extends React.Component {
         }
 
         <WalletDetails
-          className={`${grid['col-md-4']} ${grid['col-lg-3']}`}
+          // Uncomment after adding Graph module
+          // className={`${grid['col-md-4']} ${grid['col-lg-3']}`}
           lastTransaction={this.props.transaction}
           loadLastTransaction={this.props.loadLastTransaction}
           balance={this.props.balance}
