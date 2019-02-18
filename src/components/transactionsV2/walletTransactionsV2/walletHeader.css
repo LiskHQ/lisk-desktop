@@ -58,6 +58,23 @@
   }
 }
 
+.requestContainer {
+  position: relative;
+
+  & .requestDropdown {
+    left: auto;
+    right: -110px;
+    transform-origin: calc(100% - 196px) -5px;
+    top: calc(100% + 10px);
+    width: auto;
+
+    & :global(.dropdown-arrow) {
+      right: 196px;
+      transform: translateX(50%);
+    }
+  }
+}
+
 .buttonsHolder {
   display: flex;
   justify-content: space-between;
@@ -74,6 +91,19 @@
     min-height: 40px;
     height: 40px;
     width: 180px;
+  }
+}
+
+@media (--medium-viewport) {
+  .requestContainer {
+    & .requestDropdown {
+      right: -160px;
+      transform-origin: calc(100% - 246px) -5px;
+
+      & :global(.dropdown-arrow) {
+        right: 246px;
+      }
+    }
   }
 }
 
