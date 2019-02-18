@@ -13,7 +13,6 @@ import SingleTransaction from '../components/singleTransaction';
 import HwWallet from '../components/hwWallet';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
-import Request from '../components/request';
 import Send from '../components/send';
 import Splashscreen from '../components/splashscreen';
 import RegistrationV2 from '../components/registerV2/registerV2';
@@ -35,11 +34,6 @@ export default {
     component: TransactionDashboard,
     isPrivate: true,
     exact: true,
-  },
-  request: {
-    path: '/wallet/request',
-    component: Request,
-    isPrivate: true,
   },
   send: {
     path: '/wallet/send',

@@ -154,7 +154,13 @@ class WalletTransactionsV2 extends React.Component {
 
     return (
       <React.Fragment>
-        <WalletHeader {...this.props} />
+        <WalletHeader
+          followedAccounts={this.props.followedAccounts}
+          address={this.props.address}
+          match={this.props.match}
+          t={t}
+          account={account}
+        />
         { account.balance === 0 && localJSONStorage.get('closedWalletOnboarding') !== 'true' ?
           <Banner
             className={`${styles.onboarding} wallet-onboarding`}

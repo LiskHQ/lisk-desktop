@@ -1,0 +1,49 @@
+@import '../../app/variablesV2.css';
+
+.input {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-dark-gray);
+  border-radius: var(--border-radius-standard);
+  box-sizing: border-box;
+  color: var(--color-content-light);
+  font-family: var(--content-font);
+  font-size: var(--paragraph-font-size-l);
+  font-weight: var(--font-weight-semi-bold);
+  height: 46px;
+  line-height: 1.47;
+  padding: 8px 16px;
+  text-align: left;
+  transition:
+    border var(--animation-speed-fast) linear,
+    color var(--animation-speed-fast) linear,
+    outline var(--animation-speed-fast) linear;
+  width: 100%;
+
+  &:global(.error) {
+    border-color: var(--color-error);
+    color: var(--color-error);
+    outline-color: var(--color-error);
+    outline-style: auto;
+    outline-width: 5px;
+    outline-offset: -2px;
+  }
+
+  &:focus {
+    border-color: var(--color-primary-standard);
+    outline-color: var(--color-primary-standard);
+    outline-style: auto;
+    outline-width: 5px;
+    outline-offset: -2px;
+  }
+
+  &::placeholder {
+    color: var(--color-content-lighter);
+  }
+
+  &:read-only {
+    background-color: rgba(134, 139, 161, 0.1);
+    border: 1px solid var(--color-dark-gray) !important;
+    color: var(--color-content-grayblue);
+    outline: none;
+  }
+}

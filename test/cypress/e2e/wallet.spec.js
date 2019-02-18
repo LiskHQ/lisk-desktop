@@ -52,11 +52,11 @@ describe('Wallet', () => {
     cy.get(ss.recipientInput);
   });
 
-  it('Request button -> Request page', () => {
+  it('Request button -> Request dropdown', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.wallet);
+    cy.get(ss.requestDropdown).should('be.not.visible');
     cy.get(ss.transactionRequestButton).click();
-    cy.url().should('contain', urls.request);
-    cy.get(ss.requestSpecificAmountBtn);
+    cy.get(ss.requestDropdown).should('be.visible');
   });
 });
