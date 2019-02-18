@@ -69,6 +69,10 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
         },
         filter: txFilter.all,
       });
+    case 'extensinonTest':
+      return Object.assign({}, state, {
+        test: new Date().toLocaleTimeString(),
+      });
     case (actionTypes.accountSwitched):
       return { pending: [], confirmed: [], count: 0 };
     default:

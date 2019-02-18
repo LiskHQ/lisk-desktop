@@ -22,6 +22,10 @@ export const transactionAdded = data => ({
   type: actionTypes.transactionAdded,
 });
 
+export const testExtensions = () => ({
+  type: 'extensinonTest',
+});
+
 export const transactionsFilterSet = ({
   address, limit, filter,
 }) => (dispatch, getState) => {
