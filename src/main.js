@@ -11,6 +11,8 @@ import store from './store';
 import i18n from './i18n'; // initialized i18next instance
 import proxyLogin from './utils/proxyLogin';
 import externalLinks from './utils/externalLinks';
+import localJSONStorage from './utils/localJSONStorage';
+import { loadRemoteComponent } from './utils/extensions';
 import env from './constants/env';
 import ipcLocale from './utils/ipcLocale';
 import LiskHubExtensions from './utils/liskHubExtensions';
@@ -58,30 +60,16 @@ const traverse = (object, deepKey) => {
   return traverseInternal(object, deepKey.split('.'), 0);
 };
 
-function loadRemoteComponent(url){
-  return fetch(url)
-  .then(res=>res.text())
-  .then(source=>{
-    console.log(source);
-    var exports = {}
-    function require(name){
+const urls = localJSONStorage.get('url', []);
 
-      if(name == 'react') return React 
-      // else throw `You can't use modules other than "react" in remote component.`
-      if(name == 'LiskHubExtensions') return LiskHubExtensions
-    }
-    // const transformedSource = transform(source, {
-    //   presets: ['react', 'es2015', 'stage-2']
-    // }).code
-    // console.log(transformedSource, 'transformedSource');
-    // eval(transformedSource)
-    eval(source);
-    // traverse(componentRegistry, this.componentName);
-    // return source;
-    return exports.__esModule ? exports.default : exports
-  })
-}
-loadRemoteComponent('https://codepen.io/michaeltomasik/pen/NozxqG.js')
+console.log(urls, window.localStorage.getItem('url'), 'URLS');
+
+urls.forEach(url => {
+  console.log(url);
+  loadRemoteComponent(url);
+});
+
+// loadRemoteComponent('https://codepen.io/michaeltomasik/pen/NozxqG.js')
 
 /*
  * TODO all code below this point is a sample extensions

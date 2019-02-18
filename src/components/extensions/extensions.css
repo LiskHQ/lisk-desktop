@@ -1,0 +1,30 @@
+.headerWrapper {
+  display: flex;
+  padding: 0 32px 200px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.container {
+  min-height: 670px;
+  overflow: hidden;
+  height: 723px;
+
+  & .extentionsWrapper {
+    padding: 0 32px;
+    height: 250px;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  padding: 0 32px;
+
+  & button {
+    margin: 10px;
+  }
+}

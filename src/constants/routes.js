@@ -20,6 +20,7 @@ import Send from '../components/send';
 import Splashscreen from '../components/splashscreen';
 import RegistrationV2 from '../components/registerV2/registerV2';
 import LoginV2 from '../components/loginV2';
+import Extensions from '../components/extensions';
 
 export default {
   accountVisualDemo: {
@@ -94,6 +95,11 @@ export default {
     path: '/add-account',
     component: Login,
     isLoaded: true,
+    isPrivate: false,
+  },
+  extensions: {
+    path: '/extensions',
+    component: Extensions,
     isPrivate: false,
   },
   login: {
