@@ -18,6 +18,7 @@ import Send from '../components/send';
 import Splashscreen from '../components/splashscreen';
 import RegistrationV2 from '../components/registerV2/registerV2';
 import LoginV2 from '../components/loginV2';
+import TermsOfUse from '../components/termsOfUse';
 
 export default {
   accountVisualDemo: {
@@ -145,6 +146,12 @@ export default {
   loginV2: {
     path: '/login',
     component: LoginV2,
+    isPrivate: false,
+    isV2Layout: true,
+  },
+  termsOfUse: {
+    path: '/terms-of-use',
+    component: TermsOfUse,
     isPrivate: false,
     isV2Layout: true,
   },
