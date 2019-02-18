@@ -31,7 +31,9 @@ class passphraseInputV2 extends React.Component {
   keyAction(event) {
     let { focus, inputsLength } = this.state;
     const index = parseInt(event.target.dataset.index, 10);
-    if (event.which === keyCodes.space || event.which === keyCodes.arrowRight) {
+    if (event.which === keyCodes.space
+      || event.which === keyCodes.arrowRight
+      || event.which === keyCodes.tab) {
       inputsLength = index + 1 > inputsLength - 1 ? this.props.maxInputsLength : inputsLength;
       focus = index + 1 > inputsLength - 1 ? index : index + 1;
       event.preventDefault();
