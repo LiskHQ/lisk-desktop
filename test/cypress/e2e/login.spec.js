@@ -5,15 +5,7 @@ import networks from '../../constants/networks';
 import ss from '../../constants/selectors';
 import urls from '../../constants/urls';
 import chooseNetwork from '../utils/chooseNetwork';
-
-const loginUI = (passphrase) => {
-  cy.get(ss.passphraseInput).first().click();
-  cy.get(ss.passphraseInput).each(($el, index) => {
-    const passphraseWordsArray = passphrase.split(' ');
-    cy.wrap($el).type(passphraseWordsArray[index]);
-  });
-  cy.get(ss.loginBtn).click();
-};
+import loginUI from '../utils/loginUI';
 
 const castNumberToBalanceString = number => numeral(fromRawLsk(number)).format('0,0.[0000000000000]');
 

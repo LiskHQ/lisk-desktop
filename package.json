@@ -134,7 +134,7 @@
     "cpx": "=1.5.0",
     "css-hot-loader": "1.4.3",
     "css-loader": "0.28.7",
-    "cypress": "3.1.4",
+    "cypress": "3.1.5",
     "cypress-pipe": "1.3.3",
     "del-cli": "1.1.0",
     "electron": "3.0.11",

@@ -4,6 +4,7 @@ import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
 import enterSecondPassphrase from '../utils/enterSecondPassphrase';
 import compareBalances from '../utils/compareBalances';
+import loginUI from '../utils/loginUI';
 
 const getFollowedAccountObjFromLS = () => JSON.parse(localStorage.getItem('followedAccounts'));
 
@@ -129,9 +130,21 @@ describe('Send', () => {
    * Shortcut URL prefills recipient, amount and reference
    * @expect recipient, amount and reference are prefilled
    */
-  it('Launch protocol link prefills recipient, amount and reference', () => {
+  it('Launch protocol prefills fields  - from logged in state', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.send}/?recipient=4995063339468361088L&amount=5&reference=test`);
+    cy.get(ss.recipientInput).should('have.value', '4995063339468361088L');
+    cy.get(ss.amountInput).should('have.value', '5');
+    cy.get(ss.referenceInput).should('have.value', 'test');
+  });
+
+  /**
+   * Shortcut URL opens login page, then redirects to send page with prefilled fields
+   * @expect recipient, amount and reference are prefilled
+   */
+  it('Launch protocol prefills fields  - from logged out state', () => {
+    cy.visit(`${urls.send}/?recipient=4995063339468361088L&amount=5&reference=test`);
+    loginUI(accounts.genesis.passphrase);
     cy.get(ss.recipientInput).should('have.value', '4995063339468361088L');
     cy.get(ss.amountInput).should('have.value', '5');
     cy.get(ss.referenceInput).should('have.value', 'test');
