@@ -10,11 +10,12 @@ export default class ExtensionPoint extends React.Component {
 
   render() {
     const modules = this.props.modules[this.props.identifier] || [];
-    console.log("UPDATE", this.props)
+
     // TODO implement a way to highlight all extension points on a page
     // for easier discover by extension developers
     // e.g. localStorage.setItem('highlightExtensionPoints', true)
     // and this component will get a red border and title with its 'identifier'
+
     return <React.Fragment>
       { modules.map(({ moduleId }, i) => {
         const Component = LiskHubExtensions._modules[moduleId];
@@ -22,9 +23,9 @@ export default class ExtensionPoint extends React.Component {
           return <Component
             data = {{
               latestBlocks: this.props.blocks && this.props.blocks.latestBlocks,
+              time: this.props.test,
             }}
-            name={this.props.test}
-            onClick={() => { this.props.testExtensions(); }}
+            onClickHandle={() => { this.props.testExtensions(); }}
             t={this.props.t}
             identifier={this.props.identifier}
             key={i} />;
