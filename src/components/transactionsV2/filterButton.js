@@ -50,7 +50,7 @@ class FilterButton extends React.Component {
 
     // if (name === 'message') {
     const byteCount = encodeURI(value).split(/%..|./).length - 1;
-    errors = { messageValidity: byteCount > 64 ? 'Maximum length exceeded' : '' };
+    errors = { messageValidity: byteCount > 62 ? 'Maximum length exceeded' : '' };
     // }
 
     this.setState({ customFilters: { ...this.state.customFilters, [name]: value }, ...errors });
