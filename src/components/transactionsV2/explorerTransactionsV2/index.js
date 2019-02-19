@@ -17,7 +17,7 @@ const mapStateToProps = (state, ownProps) => ({
     state.search.votersSize[state.search.lastSearch] ?
     state.search.votersSize[state.search.lastSearch] : 0,
   count: state.search.transactions[state.search.lastSearch] &&
-    (state.search.transactions[state.search.lastSearch].count || null),
+    (state.search.transactions[state.search.lastSearch].count || 0),
   offset: state.search.searchResults.length,
   activeFilter: state.filters.transactions || txFilters.all,
   isSearchInStore: state.search.transactions[ownProps.address] !== undefined,

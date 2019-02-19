@@ -12,7 +12,7 @@ class ExplorerTransactions extends React.Component {
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onFilterSet = this.onFilterSet.bind(this);
     this.onTransactionRowClick = this.onTransactionRowClick.bind(this);
-    this.searchMoreVoters = this.searchMoreVoters.bind(this);
+    // this.searchMoreVoters = this.searchMoreVoters.bind(this);
   }
 
   onInit() {
@@ -32,12 +32,12 @@ class ExplorerTransactions extends React.Component {
     });
   }
 
-  searchMoreVoters(offset) {
-    this.props.searchMoreVoters({
-      address: this.props.address,
-      offset,
-    });
-  }
+  // searchMoreVoters(offset) {
+  //   this.props.searchMoreVoters({
+  //     address: this.props.address,
+  //     offset,
+  //   });
+  // }
 
   onLoadMore() {
     this.props.searchMoreTransactions({
@@ -53,18 +53,11 @@ class ExplorerTransactions extends React.Component {
     for other tabs that are not using transactions there is no need to call API
   */
   onFilterSet(filter) {
-    if (filter <= 2) {
-      this.props.searchTransactions({
-        address: this.props.address,
-        limit: 30,
-        filter,
-      });
-    } else {
-      this.props.addFilter({
-        filterName: 'transactions',
-        value: filter,
-      });
-    }
+    this.props.searchTransactions({
+      address: this.props.address,
+      limit: 30,
+      filter,
+    });
   }
 
   onTransactionRowClick(props) {
@@ -80,7 +73,7 @@ class ExplorerTransactions extends React.Component {
       onLoadMore: this.onLoadMore,
       onFilterSet: this.onFilterSet,
       onTransactionRowClick: this.onTransactionRowClick,
-      searchMoreVoters: this.searchMoreVoters,
+      // searchMoreVoters: this.searchMoreVoters,
     };
 
     return (
