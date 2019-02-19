@@ -73,7 +73,6 @@
   font-weight: var(--font-weight-semi-bold);
   text-align: right;
   width: 100%;
-  text-align: right;
   position: absolute;
   top: 40px;
 }
@@ -83,7 +82,8 @@
   margin-bottom: 20px !important;
 }
 
-.errored > .inputElement, .errored > .inputElement:focus {
+.errored > .inputElement,
+.errored > .inputElement:focus {
   color: var(--color-error);
   border-color: var(--color-error);
   outline-color: #eaa604;
@@ -103,7 +103,6 @@
 
   & input {
     background-color: var(--color-white);
-    line-height: var(--search-box-line-height);
     font-size: 12px;
     color: var(--color-grayscale-medium);
     width: 100%;
