@@ -10,6 +10,7 @@ import routes from '../../../constants/routes';
 import styles from './walletTransactionsV2.css';
 
 class WalletTransactionsV2 extends React.Component {
+  // eslint-disable-next-line max-statements
   constructor() {
     super();
 
