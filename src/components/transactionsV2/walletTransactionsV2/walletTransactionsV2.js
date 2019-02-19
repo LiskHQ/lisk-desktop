@@ -5,7 +5,7 @@ import localJSONStorage from '../../../utils/localJSONStorage';
 import TransactionsOverviewV2 from '../transactionsOverviewV2';
 import txFilters from '../../../constants/transactionFilters';
 import Banner from '../../toolbox/banner/banner';
-import WalletHeader from './walletHeader';
+import TransactionsOverviewHeader from '../transactionsOverviewHeader/transactionsOverviewHeader';
 import routes from '../../../constants/routes';
 import styles from './walletTransactionsV2.css';
 
@@ -153,7 +153,7 @@ class WalletTransactionsV2 extends React.Component {
 
     return (
       <React.Fragment>
-        <WalletHeader
+        <TransactionsOverviewHeader
           followedAccounts={this.props.followedAccounts}
           address={this.props.address}
           match={this.props.match}
