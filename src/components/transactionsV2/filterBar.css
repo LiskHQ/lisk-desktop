@@ -1,0 +1,52 @@
+@import '../app/variablesV2.css';
+
+.container {
+  width: 100%;
+  display: flex;
+  height: 50px;
+  justify-content: start;
+  font-family: var(--heading-font);
+  font-size: var(--button-font-size-s);
+  font-weight: var(--font-weight-bold);
+  padding: 0 20px;
+}
+
+.filter {
+  display: flex;
+  padding: 0 15px;
+  height: 30px;
+  margin: 10px;
+  border-radius: var(--border-radius-standard);
+  box-shadow: var(--box-shadow-standard);
+  background-color: var(--color-white);
+  color: var(--color-content-grayblue);
+
+  & div {
+    margin-left: 20px;
+  }
+
+  & p {
+    padding: 5px 0;
+    margin: 0;
+  }
+}
+
+.icon {
+  font-size: var(--font-size-h6);
+  cursor: pointer;
+  margin-top: 5px;
+  font-weight: var(--font-weight-bold);
+}
+
+.label {
+  margin-top: 20px;
+}
+
+.clearAll {
+  color: var(--color-content-grayblue);
+  cursor: pointer;
+
+  & div {
+    margin-left: 0px;
+  }
+}
