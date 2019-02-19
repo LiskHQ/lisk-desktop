@@ -21,6 +21,7 @@ import getNetwork from './../../../src/utils/getNetwork';
 import AccountTransactions from './index';
 import i18n from '../../i18n';
 import accounts from '../../../test/constants/accounts';
+import routes from '../../constants/routes';
 
 describe('AccountTransaction Component', () => {
   let wrapper;
@@ -42,7 +43,10 @@ describe('AccountTransaction Component', () => {
     searchAccountSpy = spy(search, 'searchAccount');
 
     props = {
-      match: { params: { address: accounts.genesis.address } },
+      match: {
+        url: `${routes.accounts.pathPrefix}${routes.accounts.path}/${accounts.genesis.address}`,
+        params: { address: accounts.genesis.address },
+      },
       history: { push: spy(), location: { search: ' ' } },
       t: key => key,
     };
