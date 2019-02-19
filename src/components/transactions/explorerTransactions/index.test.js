@@ -5,7 +5,7 @@ import { mount } from 'enzyme';
 import { expect } from 'chai';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { prepareStore } from '../../../../test/utils/applicationInit';
+import { prepareStore } from '../../../../test/unit-test-utils/applicationInit';
 import * as accountAPI from '../../../../src/utils/api/account';
 import * as delegateAPI from '../../../../src/utils/api/delegate';
 import * as transactionsAPI from '../../../../src/utils/api/transactions';

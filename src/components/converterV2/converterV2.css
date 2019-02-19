@@ -1,0 +1,14 @@
+@import '../app/variablesV2.css';
+
+.wrapper {
+  display: flex;
+
+  & .price {
+    color: var(--color-content-grayblue);
+    font-family: var(--content-font);
+    font-size: var(--button-font-size-s);
+    font-weight: var(--font-weight-semi-bold);
+    line-height: 1.5;
+    text-align: right;
+  }
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { mountWithContext } from '../../../test/utils/mountHelpers';
+import { mountWithContext } from '../../../test/unit-test-utils/mountHelpers';
 import SearchResult from './index';
 
 describe('SearchResult', () => {

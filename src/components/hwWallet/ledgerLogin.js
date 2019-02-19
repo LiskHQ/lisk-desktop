@@ -39,7 +39,7 @@ class LedgerLogin extends React.Component {
 
   componentDidUpdate() {
     if (this.props.account && this.props.account.address) {
-      this.props.history.replace(routes.dashboard.path);
+      this.props.history.push(`${routes.dashboard.path}`);
     }
   }
 
@@ -54,8 +54,6 @@ class LedgerLogin extends React.Component {
         derivationIndex: index,
       },
     });
-
-    this.props.history.push(`${routes.dashboard.path}`);
   }
 
   async addAccount() {

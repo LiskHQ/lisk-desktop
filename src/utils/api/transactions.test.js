@@ -63,5 +63,12 @@ describe('Utils: Transactions API', () => {
       expect(liskAPIClient.transactions.get).to.have.been.calledWith({ id });
       expect(typeof promise.then).to.be.equal('function');
     });
+
+    it('should liskAPIClient.node.getTransactions if empty response', () => {
+      liskAPIClient.transactions.get = stub().returnsPromise().resolves({ data: [] });
+      const promise = getSingleTransaction({ liskAPIClient, id });
+      expect(liskAPIClient.node.getTransactions).to.have.been.calledWith('unconfirmed', { id });
+      expect(typeof promise.then).to.be.equal('function');
+    });
   });
 });

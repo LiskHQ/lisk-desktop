@@ -1,8 +1,7 @@
 import React from 'react';
 import Waypoint from 'react-waypoint';
-import tableStyle from 'react-toolbox/lib/table/theme.css';
-import TransactionRow from './transactionRow';
-import TransactionsHeader from './transactionsHeader';
+// import tableStyle from 'react-toolbox/lib/table/theme.css';
+import Rows from './rows';
 
 import txFilters from '../../constants/transactionFilters';
 import txTypes from '../../constants/transactionTypes';
@@ -90,17 +89,18 @@ class TransactionsList extends React.Component {
         searchMoreVoters={this.props.searchMoreVoters} />;
     }
 
-    return <div className={`${styles.results} ${showMore && styles.onShowMore} transaction-results`}>
-      <TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>
-      {transactions
+    return <div className={`${styles.results} ${this.props.isBarEnabledTransactions ? styles.onBarEnabled : ''} ${showMore && styles.onShowMore} transaction-results`}>
+      {
+        transactions
         .filter(fixIncomingFilter)
-        .map((transaction, i) => (
-          <TransactionRow address={address}
+        .map((transaction, i) =>
+          <Rows address={address}
             key={i}
             t={t}
             value={transaction}
             onClick={onClick}
-          />))}
+          />)
+      }
       {
         // the transaction list should be scrollable on a large screen
         // otherwise (XS) the whole transaction box will be scrollable

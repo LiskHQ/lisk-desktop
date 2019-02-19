@@ -1,10 +1,8 @@
 import React from 'react';
-import { expect } from 'chai';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
-import { spy } from 'sinon';
 
 import MultiStep from '../multiStep';
 import Send from './send';
@@ -36,9 +34,9 @@ describe('Send', () => {
 
     props = {
       history: {
-        replace: spy(),
+        replace: jest.fn(),
         location: {},
-        push: spy(),
+        push: jest.fn(),
       },
       account: {
         serverPublicKey: 'public_key',
@@ -59,14 +57,14 @@ describe('Send', () => {
   });
 
   it('should render MultiStep component ', () => {
-    expect(wrapper.find(MultiStep)).to.have.lengthOf(1);
+    expect(wrapper.find(MultiStep)).toHaveLength(1);
   });
 
   it('go back to wallet after press Back button', () => {
     wrapper.find('.send-prev-button').at(0).simulate('click');
     wrapper.update();
     /* eslint-disable no-unused-expressions */
-    expect(wrapper.instance().props.history.push).to.have.been.calledOnce;
+    expect(wrapper.instance().props.history.push).toHaveBeenCalledTimes(1);
   });
 
   it('go first to account initialization', () => {
@@ -76,6 +74,6 @@ describe('Send', () => {
     };
     props.pendingTransactions = [];
     wrapper = mount(<Send {...props} />, options);
-    expect(wrapper.find(MultiStep)).to.have.lengthOf(1);
+    expect(wrapper.find(MultiStep)).toHaveLength(1);
   });
 });

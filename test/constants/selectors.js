@@ -16,7 +16,7 @@ const ss = {
   requestSpecificAmountBtn: '.specify-request',
   confirmRequestBtn: '.confirm-request',
   qrCode: '.qr-code',
-  emailLink: '.email-link',
+  requestQrCode: '.qrcode-section',
   confirmRequestBlock: '.confirm-request-step',
   requestLink: '.request-link',
   backButton: '.back',
@@ -72,7 +72,6 @@ const ss = {
   transactionId: '.transaction-id .copy-title',
   logoutBtn: '.logout',
   userAvatar: '.user-avatar',
-  dialogButtons: '.ok-button',
   emptyResultsMessage: '.empty-message',
   revealCheckbox: '.reveal-checkbox',
   passphraseTextarea: 'textarea.passphrase',
@@ -92,6 +91,7 @@ const ss = {
   resulteBtn: '.result',
   sidebarMenuWalletBtn: '#transactions',
   referenceInput: '.reference input',
+  referenceTextarea: '.reference textarea',
   referenceConfirmLabel: '.reference',
   convertorElement: '.convertor',
   convertedPrice: '.converted-price',
@@ -169,6 +169,9 @@ const ss = {
   passphraseWordConfirm: '.passphrase-holder .word-option',
   passphraseConfirmButton: '.passphrase-is-correct-button',
   exploreAsGuestBtn: '.explore-as-guest-button',
+  walletOnboarding: '.wallet-onboarding',
+  walletOnboardingClose: '.wallet-onboarding .banner-close',
+  requestDropdown: '.request-dropdown',
 };
 
 export default ss;

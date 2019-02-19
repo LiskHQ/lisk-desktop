@@ -164,7 +164,6 @@ describe('Delegates', () => {
     cy.get(ss.sidebarMenuWalletBtn).click();
     cy.get(ss.transactionRow).eq(0).as('tx');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', 'Delegate vote');
-    cy.get('@tx').find(ss.transactionReference).should('have.text', '-');
     cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');
   });
 
@@ -196,6 +195,7 @@ describe('Delegates', () => {
    */
   it('Bulk vote/unvote delegates by URL', () => {
     cy.autologin(accounts['delegate candidate'].passphrase, networks.devnet.node);
+    cy.visit(urls.dashboard);
     cy.visit(`${urls.delegatesVote}?votes=genesis_12,genesis_14,genesis_16`);
     cy.get(ss.votesPreselection).contains('genesis_12, genesis_14, genesis_16');
     cy.get(ss.nextBtn).should('be.enabled').click();

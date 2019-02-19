@@ -1,3 +1,4 @@
+// istanbul ignore file
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';

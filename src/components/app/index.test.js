@@ -8,7 +8,8 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from '../../i18n'; // initialized i18next instance
 import App from './';
 import Splashscreen from '../splashscreen/splashscreen';
-import Transactions from '../transactionDashboard';
+import Login from '../loginV2/loginV2';
+import TransactionsDashboard from '../transactionDashboard';
 import Voting from '../voting';
 import routes from '../../constants/routes';
 
@@ -25,10 +26,11 @@ const addRouter = Component => (props, path) =>
 
 const publicComponent = [
   { route: '/', component: Splashscreen },
+  { route: '/login', component: Login },
 ];
 
 const privateComponent = [
-  { route: `${routes.wallet.path}`, component: Transactions },
+  { route: `${routes.wallet.path}`, component: TransactionsDashboard },
   { route: `${routes.delegates.path}`, component: Voting },
 ];
 
@@ -66,7 +68,7 @@ describe('App', () => {
         wrapper.find('LoadingBar').props().markAsLoaded();
         wrapper.update();
         expect(wrapper.find(component).exists()).to.be.equal(false);
-        expect(wrapper.find(Splashscreen).exists()).to.be.equal(true);
+        expect(wrapper.find(Login).exists()).to.be.equal(true);
       });
     });
   });

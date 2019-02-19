@@ -1,0 +1,130 @@
+@import '../app/variablesV2.css';
+
+@keyframes appear {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+
+  40% {
+    height: 85px;
+    opacity: 0;
+  }
+  70% { height: 80px; }
+
+  100% {
+    height: 80px;
+    opacity: 1;
+  }
+}
+
+@keyframes showIcons {
+  0% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+
+  70% {
+    opacity: 1;
+    transform: scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.row {
+  align-items: center;
+  cursor: pointer;
+  padding: 0 8px;
+  padding: 0 0.5em; /* stylelint-disable-line */
+
+  &:nth-child(2n+3) {
+    background-color: var(--color-background-menu);
+  }
+
+  & > * {
+    box-sizing: border-box;
+    color: var(--color-dark-gray);
+    padding: 22px 16px;
+    font-family: var(--content-font);
+    font-size: var(--button-font-size-s);
+    font-weight: var(--font-weight-semi-bold);
+    line-height: 1.33;
+    text-align: left;
+
+    &:last-child {
+      text-align: right;
+    }
+  }
+
+  &.pending {
+    animation-delay: var(--animation-speed-slowest);
+    animation-duration: var(--animation-speed-slow);
+    animation-fill-mode: both;
+    animation-iteration-count: 1;
+    animation-name: appear;
+    animation-timing-function: linear;
+
+    & :global(.tx-avatar),
+    & :global(.tx-icon) {
+      animation-delay: calc(var(--animation-speed-slowest) + calc(var(--animation-speed-slow) / 1.5));
+      animation-duration: var(--animation-speed-standard);
+      animation-fill-mode: both;
+      animation-iteration-count: 1;
+      animation-name: showIcons;
+      animation-timing-function: linear;
+    }
+  }
+}
+
+.header {
+  cursor: initial;
+
+  & > * {
+    color: var(--color-content-grayblue);
+    font-family: var(--heading-font);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.2px;
+    line-height: 1;
+    padding: 14px 16px;
+  }
+}
+
+.status {
+  display: flex;
+  position: relative;
+
+  & > span {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--animation-speed-fast) linear, visibility var(--animation-speed-fast) linear;
+
+    &:last-child {
+      transition-delay: var(--animation-delay-standard);
+      position: absolute;
+    }
+  }
+
+  &.showSpinner {
+    & > span:first-child {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &.showDate {
+    & > span:last-child {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .hiddenXs {
+    display: none;
+  }
+}

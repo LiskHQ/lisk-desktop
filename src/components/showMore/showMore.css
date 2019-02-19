@@ -1,4 +1,4 @@
-@import '../app/variables.css';
+@import '../app/variablesV2.css';
 
 .wrapper {
   width: 100%;
@@ -12,6 +12,7 @@
   align-items: center;
   cursor: pointer;
   background-color: #fff;
+  font-family: var(--content-font);
 
   & > span {
     color: var(--color-primary-standard);

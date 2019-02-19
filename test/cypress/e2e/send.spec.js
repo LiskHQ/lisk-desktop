@@ -4,6 +4,7 @@ import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
 import enterSecondPassphrase from '../utils/enterSecondPassphrase';
 import compareBalances from '../utils/compareBalances';
+import loginUI from '../utils/loginUI';
 
 const getFollowedAccountObjFromLS = () => JSON.parse(localStorage.getItem('followedAccounts'));
 
@@ -64,12 +65,11 @@ describe('Send', () => {
     cy.get(ss.resultMessage).should('have.text', msg.transferTxSuccess);
     cy.get(ss.okayBtn).click();
     cy.get(ss.transactionRow).eq(0).as('tx');
-    cy.get('@tx').find('.spinner');
+    cy.get('@tx').find(ss.spinner).should('be.visible');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', randomAddress);
-    cy.get('@tx').find(ss.transactionReference).should('have.text', '-');
     cy.get('@tx').find(ss.transactionAmount).should('have.text', randomAmount.toString());
     cy.wait(txConfirmationTimeout);
-    cy.get('@tx').find(ss.spinner).should('not.exist');
+    cy.get('@tx').find(ss.spinner).should('be.not.visible');
     cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(function () {
       compareBalances(this.balanceBefore, this.balanceAfter, randomAmount + transactionFee);
     });
@@ -96,12 +96,11 @@ describe('Send', () => {
     cy.get(ss.resultMessage).should('have.text', msg.transferTxSuccess);
     cy.visit(urls.dashboard);
     cy.get(ss.transactionRow).eq(0).as('tx');
-    cy.get('@tx').find(ss.spinner);
+    cy.get('@tx').find(ss.spinner).should('be.visible');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', randomAddress);
-    cy.get('@tx').find(ss.transactionReference).should('have.text', randomReference);
     cy.get('@tx').find(ss.transactionAmount).should('have.text', randomAmount.toString());
     cy.wait(txConfirmationTimeout);
-    cy.get('@tx').find(ss.spinner).should('not.exist');
+    cy.get('@tx').find(ss.spinner).should('be.not.visible');
   });
 
   /**
@@ -123,7 +122,7 @@ describe('Send', () => {
     cy.get(ss.resultMessage).should('have.text', msg.transferTxSuccess);
     cy.get(ss.okayBtn).click();
     cy.get(ss.transactionRow).eq(0).as('tx');
-    cy.get('@tx').find('.spinner');
+    cy.get('@tx').find(ss.spinner).should('be.visible');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', randomAddress);
   });
 
@@ -131,9 +130,21 @@ describe('Send', () => {
    * Shortcut URL prefills recipient, amount and reference
    * @expect recipient, amount and reference are prefilled
    */
-  it('Launch protocol link prefills recipient, amount and reference', () => {
+  it('Launch protocol prefills fields  - from logged in state', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.send}/?recipient=4995063339468361088L&amount=5&reference=test`);
+    cy.get(ss.recipientInput).should('have.value', '4995063339468361088L');
+    cy.get(ss.amountInput).should('have.value', '5');
+    cy.get(ss.referenceInput).should('have.value', 'test');
+  });
+
+  /**
+   * Shortcut URL opens login page, then redirects to send page with prefilled fields
+   * @expect recipient, amount and reference are prefilled
+   */
+  it('Launch protocol prefills fields  - from logged out state', () => {
+    cy.visit(`${urls.send}/?recipient=4995063339468361088L&amount=5&reference=test`);
+    loginUI(accounts.genesis.passphrase);
     cy.get(ss.recipientInput).should('have.value', '4995063339468361088L');
     cy.get(ss.amountInput).should('have.value', '5');
     cy.get(ss.referenceInput).should('have.value', 'test');
@@ -188,7 +199,6 @@ describe('Send', () => {
     cy.visit(urls.wallet);
     cy.get(ss.transactionRow).eq(0).as('tx');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', accounts['without initialization'].address);
-    cy.get('@tx').find(ss.transactionReference).should('have.text', 'Account initialization');
     cy.visit(urls.dashboard);
     cy.get(ss.initializeBanner).should('not.exist');
   });
@@ -290,7 +300,9 @@ describe('Send: Bookmarks', () => {
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
     cy.get(ss.okayBtn).click();
-    cy.get(ss.transactionRow).eq(0).find(ss.transactionAddress).should('have.text', accounts.delegate.address);
+    cy.get(ss.transactionRow).eq(0).as('tx');
+    cy.get('@tx').find(ss.transactionAddress).eq(0).should('have.text', 'Alice');
+    cy.get('@tx').find(ss.transactionAddress).eq(1).should('have.text', accounts.delegate.address);
   });
 
   /**

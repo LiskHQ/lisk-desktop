@@ -3,8 +3,6 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { mount } from 'enzyme';
 import Toaster from './toaster';
-import actionTypes from '../../constants/actions';
-import { mapStateToProps, mapDispatchToProps } from './index';
 
 describe('Toaster', () => {
   const toasts = [{
@@ -46,21 +44,5 @@ describe('Toaster', () => {
     hideToastSpy.restore();
 
     clock.restore();
-  });
-
-  it('hideToast dispatches toastHidden action', () => {
-    const dispatchSpy = sinon.spy();
-    const { hideToast } = mapDispatchToProps(dispatchSpy);
-    const payload = [{ toast1: {} }];
-    hideToast(payload);
-    const dispatchSpyCallArgs = dispatchSpy.args[0][0];
-    expect(dispatchSpyCallArgs.type).to.be.eql(actionTypes.toastHidden);
-    expect(dispatchSpyCallArgs.data).to.be.eql(payload);
-  });
-
-  it('inits with empty toasts when empty state', () => {
-    const initialState = {};
-    const toastsState = mapStateToProps(initialState);
-    expect(toastsState.toasts.length).to.be.equal(0);
   });
 });

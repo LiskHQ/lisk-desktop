@@ -31,6 +31,8 @@ export const transactionsFilterSet = ({
 }) => (dispatch, getState) => {
   const liskAPIClient = getState().peers.liskAPIClient;
 
+  dispatch(loadingStarted(actionTypes.transactionsFilterSet));
+
   return getTransactions({
     liskAPIClient,
     address,
@@ -54,6 +56,7 @@ export const transactionsFilterSet = ({
         type: actionTypes.addFilter,
       });
     }
+    dispatch(loadingFinished(actionTypes.transactionsFilterSet));
   });
 };
 
@@ -105,11 +108,13 @@ export const transactionsRequested = ({
   address, limit, offset, filter,
 }) =>
   (dispatch, getState) => {
+    dispatch(loadingStarted(actionTypes.transactionsRequested));
     const liskAPIClient = getState().peers.liskAPIClient;
     getTransactions({
       liskAPIClient, address, limit, offset, filter,
     })
       .then((response) => {
+        dispatch(loadingFinished(actionTypes.transactionsRequested));
         dispatch({
           data: {
             count: parseInt(response.meta.count, 10),

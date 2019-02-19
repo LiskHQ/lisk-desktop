@@ -117,7 +117,7 @@ describe('Bookmarks', () => {
       ]`);
       cy.visit(urls.dashboard);
       cy.get(ss.followedAccount).eq(4).should('be.visible');
-      cy.get(ss.followedAccount).eq(5).should('be.not.visible');
+      cy.get(ss.followedAccount).eq(6).should('be.not.visible');
     });
 
     /**

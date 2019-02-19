@@ -2,8 +2,6 @@ import Dashboard from '../components/dashboard';
 import Help from '../components/help';
 import Sidechains from '../components/sidechains';
 import Setting from '../components/setting';
-import Login from '../components/login';
-import Register from '../components/register';
 import RegisterDelegate from '../components/registerDelegate';
 import SecondPassphrase from '../components/secondPassphrase';
 import SignMessage from '../components/signMessage';
@@ -15,7 +13,6 @@ import SingleTransaction from '../components/singleTransaction';
 import HwWallet from '../components/hwWallet';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
-import Request from '../components/request';
 import Send from '../components/send';
 import Splashscreen from '../components/splashscreen';
 import RegistrationV2 from '../components/registerV2/registerV2';
@@ -38,11 +35,6 @@ export default {
     component: TransactionDashboard,
     isPrivate: true,
     exact: true,
-  },
-  request: {
-    path: '/wallet/request',
-    component: Request,
-    isPrivate: true,
   },
   send: {
     path: '/wallet/send',
@@ -79,12 +71,6 @@ export default {
     component: SignMessage,
     isPrivate: true,
   },
-  register: {
-    path: '/register',
-    component: Register,
-    isLoaded: true,
-    isPrivate: false,
-  },
   registerDelegate: {
     path: '/register-delegate',
     component: RegisterDelegate,
@@ -93,7 +79,7 @@ export default {
   },
   addAccount: {
     path: '/add-account',
-    component: Login,
+    component: LoginV2,
     isLoaded: true,
     isPrivate: false,
   },
@@ -101,13 +87,6 @@ export default {
     path: '/extensions',
     component: Extensions,
     isPrivate: false,
-  },
-  login: {
-    path: '/',
-    component: Login,
-    isLoaded: true,
-    isPrivate: false,
-    exact: true,
   },
   // notFound: {
   //   path: '*',
@@ -168,11 +147,5 @@ export default {
     component: LoginV2,
     isPrivate: false,
     isV2Layout: true,
-  },
-  walletV2: {
-    path: '/walletV2',
-    component: TransactionDashboard,
-    isPrivage: true,
-    exact: true,
   },
 };

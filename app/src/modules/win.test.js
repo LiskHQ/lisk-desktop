@@ -70,7 +70,6 @@ describe('Electron Browser Window Wrapper', () => {
       expect(win.browser.webPreferences.preload).to.equal('test');
       expect(win.browser.center).to.equal(true);
       expect(win.browser.devtools).to.equal(true);
-      expect(win.browser.loadURL).to.have.been.calledWith(url);
     });
 
     it('Creates the window of maximum size possible size on < 1680X1050 display', () => {

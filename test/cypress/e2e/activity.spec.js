@@ -180,30 +180,77 @@ function testDelegateActivity(open) {
   });
 }
 
+function testWalletV2(open, account) {
+  /**
+   * Clicking show more button triggers loading another portion of txs
+   * @expect more txs are present
+   */
+  it('30 tx are shown, clicking show more loads more transactions', () => {
+    cy.autologin(account.passphrase, networks.devnet.node);
+    open();
+    cy.get(ss.transactionRow).should('have.length', 30);
+    cy.get(ss.showMoreButton).click();
+    cy.get(ss.transactionRow).should('have.length.greaterThan', 30);
+  });
+
+  /**
+   * Click on transaction row leads to tx details page
+   * @expect url
+   */
+  it('Click leads to tx details', () => {
+    cy.autologin(account.passphrase, networks.devnet.node);
+    open();
+    cy.get(ss.transactionRow).eq(0).click();
+    cy.url().should('contain', urls.transactions);
+  });
+
+  /**
+   * Transaction filtering tabs show filtered transaction lists
+   * @expect incoming txs on Incoming tab
+   * @expect outgoing txs on Outgoing tab
+   * @expect all txs on All tab
+   */
+  it('Incoming/Outgoing/All filtering works', () => {
+    cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
+    open();
+    cy.get(ss.transactionRow).should('have.length', 2);
+    cy.get(ss.filterIncoming).click();
+    cy.get(ss.transactionRow).should('have.length', 1);
+    cy.get(ss.transactionRow).eq(0)
+      .find(ss.transactionAddress).contains(accounts.genesis.address);
+    cy.get(ss.filterAll).click();
+    cy.get(ss.transactionRow).should('have.length', 2);
+    cy.get(ss.filterOutgoing).click();
+    cy.get(ss.transactionRow).should('have.length', 1);
+    cy.get(ss.transactionRow).eq(0)
+      .find(ss.transactionAddress).contains('Second passphrase registration');
+  });
+}
+
 describe('Latest activity', () => {
   beforeEach(() => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
   });
   /**
-   * 3 transaction are shown in the latest activity component
-   * @expect 3 transactions visible
+   * 4 transaction are shown in the latest activity component
+   * @expect 4 transactions visible
    */
-  it('3 tx are shown by default', () => {
+  it('4 tx are shown by default', () => {
     cy.visit(urls.dashboard);
-    cy.get(ss.transactionRow).eq(3).should('be.visible');
-    cy.get(ss.transactionRow).eq(4).should('be.not.visible');
+    cy.get(ss.transactionRow).eq(4).should('be.visible');
+    cy.get(ss.transactionRow).eq(30).should('be.not.visible');
   });
 
   /**
-   * 25 transaction are shown in the latest activity component after clicking Show more
-   * @expect 25 transactions visible
+   * 30 transaction are shown in the latest activity component after clicking Show more
+   * @expect 30 transactions visible
    */
-  it('25 tx are shown after Show More click', () => {
+  it('30 tx are shown after Show More click', () => {
     cy.visit(urls.dashboard);
-    cy.get(ss.transactionRow).should('have.length', 25);
+    cy.get(ss.transactionRow).should('have.length', 30);
     cy.get(ss.showMoreButton).eq(0).click();
     cy.get(ss.transactionRow).eq(4).should('be.visible');
-    cy.get(ss.transactionRow).eq(24).trigger('mouseover').should('be.visible');
+    cy.get(ss.transactionRow).eq(29).trigger('mouseover').should('be.visible');
   });
 
   /**
@@ -214,8 +261,7 @@ describe('Latest activity', () => {
   it('Click leads to tx details', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.transactionRow).eq(0).click();
-    cy.url().should('contain', `${urls.wallet}?id=`);
-    cy.get(ss.txDetailsBackButton);
+    cy.url().should('contain', urls.transactions);
   });
 
   /**
@@ -232,15 +278,15 @@ describe('Latest activity', () => {
 });
 
 describe('Wallet activity', () => {
-  testActivity(() => cy.visit(urls.wallet));
+  testWalletV2(() => cy.visit(urls.wallet), accounts.genesis);
 });
 
 describe('Account Activity opened from search', () => {
   testActivity(() => cy.get(ss.searchInput).click().type(`${accounts.genesis.address}{enter}`));
 });
 
-describe('Wallet Activity for delegate', () => {
-  testDelegateActivity(() => cy.visit(urls.wallet));
+describe.skip('Wallet Activity for delegate', () => {
+  testWalletV2(() => cy.visit(urls.wallet), accounts.delegate);
 });
 
 describe('Account Activity opened from search for delegate', () => {

@@ -4,7 +4,7 @@ import actionTypes from '../../constants/actions';
 import { feedbackDialogDisplayed, dialogHidden } from '../../actions/dialog';
 import FeedbackFrom from './feedbackForm';
 
-export const mapDispatchToProps = {
+const mapDispatchToProps = {
   hideDialog: dialogHidden,
   showDialog: feedbackDialogDisplayed,
   sendFeedback: data => ({ data, type: actionTypes.sendFeedback }),
