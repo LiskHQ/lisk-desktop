@@ -8,6 +8,15 @@ class ExplorerTransactions extends React.Component {
   constructor() {
     super();
 
+    this.state = {
+      filter: {},
+      customFilters: {},
+    };
+
+    this.saveFilters = this.saveFilters.bind(this);
+    this.clearFilter = this.clearFilter.bind(this);
+    this.clearAllFilters = this.clearAllFilters.bind(this);
+    this.changeFilters = this.changeFilters.bind(this);
     this.onInit = this.onInit.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onFilterSet = this.onFilterSet.bind(this);
@@ -65,6 +74,35 @@ class ExplorerTransactions extends React.Component {
     this.props.history.push(transactionPath);
   }
 
+  /* istanbul ignore next */
+  saveFilters(customFilters) {
+    this.props.transactionsFilterSet({
+      address: this.props.address,
+      limit: 25,
+      filter: this.props.activeFilter,
+      customFilters,
+    });
+    this.setState({ customFilters });
+  }
+
+  /* istanbul ignore next */
+  clearFilter(filterName) {
+    this.saveFilters({
+      ...this.state.customFilters,
+      [filterName]: '',
+    });
+  }
+
+  /* istanbul ignore next */
+  clearAllFilters() {
+    this.saveFilters({});
+  }
+
+  /* istanbul ignore next */
+  changeFilters(name, value) {
+    this.setState({ customFilters: { ...this.state.customFilters, [name]: value } });
+  }
+
   render() {
     const overviewProps = {
       ...this.props,
@@ -73,6 +111,11 @@ class ExplorerTransactions extends React.Component {
       onLoadMore: this.onLoadMore,
       onFilterSet: this.onFilterSet,
       onTransactionRowClick: this.onTransactionRowClick,
+      saveFilters: this.saveFilters.bind(this),
+      clearFilter: this.clearFilter.bind(this),
+      clearAllFilters: this.clearAllFilters.bind(this),
+      changeFilters: this.changeFilters.bind(this),
+      customFilters: this.state.customFilters,
       // searchMoreVoters: this.searchMoreVoters,
     };
 
