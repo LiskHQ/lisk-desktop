@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
+import { transactionsFilterSet } from '../../../actions/transactions';
 import { searchTransactions, searchMoreTransactions, searchAccount, searchMoreVoters } from '../../../actions/search';
 import actionTypes from '../../../constants/actions';
 import ExplorerTransactionsV2 from './explorerTransactionsV2';
@@ -28,6 +29,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 /* istanbul ignore next */
 const mapDispatchToProps = {
+  transactionsFilterSet,
   searchAccount,
   searchTransactions,
   searchMoreTransactions,
