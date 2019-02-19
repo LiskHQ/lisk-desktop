@@ -14,6 +14,9 @@ describe('Account', () => {
   it('Opens by url + Address & Balance are correct', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.accounts}/16313739661666666666L`);
+    // Timeout to avoid Cypress bug
+    // https://github.com/cypress-io/cypress/issues/695
+    cy.wait(1000);
     cy.url().should('contain', '16313739661666666666L');
     cy.get(ss.accountAddress).eq(1).contains('16313739661666666666L');
     cy.get(ss.accountBalance).eq(1).contains('0');
@@ -24,6 +27,9 @@ describe('Account', () => {
     cy.visit(`${urls.accounts}/${accounts.genesis.address}`);
     cy.get(ss.delegateName).should('not.exist');
     cy.visit(`${urls.accounts}/${accounts.delegate.address}`);
+    // Timeout to avoid Cypress bug
+    // https://github.com/cypress-io/cypress/issues/695
+    cy.wait(1000);
     cy.get(ss.delegateName).contains(accounts.delegate.username);
   });
 

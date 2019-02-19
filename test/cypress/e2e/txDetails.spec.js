@@ -22,9 +22,11 @@ describe('Tx details', () => {
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
     cy.get(ss.okayBtn).click();
-    cy.get(ss.transactionRow).first().find(ss.spinner).click();
+    cy.get(ss.transactionRow).first()
+      .find(ss.spinner).should('be.visible')
+      .click();
     // Before confirmation
-    cy.get(ss.txHeader).contains('Transaction');
+    cy.get(ss.txHeader, { timeout: 10000 }).contains('Transaction');
     cy.get(ss.txSenderAddress).should('have.text', accounts.genesis.address)
       .click();
     cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', accounts.genesis.address);
