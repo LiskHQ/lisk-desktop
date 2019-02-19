@@ -77,7 +77,7 @@ describe('Wallet Header', () => {
   describe('Not current user walelt', () => {
     const anotherProps = {
       ...props,
-      match: { url: '' },
+      address: accounts['empty account'].address,
     };
 
     beforeEach(() => {
@@ -86,10 +86,10 @@ describe('Wallet Header', () => {
       </MemoryRouter>, options);
     });
 
-    it('Should render only account info it not my wallet', () => {
+    it('Should render only account info and send button if not my wallet', () => {
       expect(wrapper).to.have.descendants('.accountInfo');
       expect(wrapper.find('.accountInfo')).to.not.have.descendants('.my-account');
-      expect(wrapper).to.not.have.descendants('.buttonsHolder');
+      expect(wrapper).to.not.have.descendants('.tx-receive-bt');
     });
   });
 });

@@ -1,4 +1,5 @@
 import React from 'react';
+import thunk from 'redux-thunk';
 import { spy, useFakeTimers } from 'sinon';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
@@ -33,12 +34,13 @@ describe('WalletTransactions V2 Component', () => {
     asset: {},
   }];
 
-  const store = configureMockStore([])({
+  const store = configureMockStore([thunk])({
     peers,
     account: accounts.genesis,
     followedAccounts: {
       accounts: [],
     },
+    settings: {},
   });
 
   const options = {
@@ -53,6 +55,7 @@ describe('WalletTransactions V2 Component', () => {
 
   beforeEach(() => {
     props = {
+      address: accounts.genesis.address,
       account: accounts.genesis,
       match: { params: { address: accounts.genesis.address } },
       history: { push: spy(), location: { search: ' ' } },
