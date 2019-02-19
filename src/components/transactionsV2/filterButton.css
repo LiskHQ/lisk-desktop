@@ -67,6 +67,31 @@
   height: 25px;
 }
 
+.error {
+  color: var(--color-error);
+  font-size: var(--button-font-size-s);
+  font-weight: var(--font-weight-semi-bold);
+  text-align: right;
+  width: 100%;
+  text-align: right;
+  position: absolute;
+  top: 40px;
+}
+
+.errored {
+  border-color: var(--color-error);
+  margin-bottom: 20px !important;
+}
+
+.errored > .inputElement, .errored > .inputElement:focus {
+  color: var(--color-error);
+  border-color: var(--color-error);
+  outline-color: var(--color-error);
+  outline-style: auto;
+  outline-width: 5px;
+  outline-offset: -2px;
+}
+
 .input {
   margin: 0 20px;
   padding: 1px;
