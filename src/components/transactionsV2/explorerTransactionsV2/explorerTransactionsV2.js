@@ -79,7 +79,6 @@ class ExplorerTransactions extends React.Component {
     return (
       <React.Fragment>
         <TransactionsOverviewHeader
-          delegate={this.props.delegate}
           followedAccounts={this.props.followedAccounts}
           address={this.props.address}
           match={this.props.match}
