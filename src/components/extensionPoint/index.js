@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { testExtensions } from '../../actions/transactions.js';
+import { testExtensions } from '../../actions/transactions';
 import ExtensionPoint from './extensionPoint';
 
 const mapStateToProps = state => ({

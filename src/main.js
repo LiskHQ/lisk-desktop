@@ -1,5 +1,4 @@
 import React from 'react';
-import { transform } from "@babel/core";
 import ReactDOM from 'react-dom';
 import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -12,7 +11,7 @@ import i18n from './i18n'; // initialized i18next instance
 import proxyLogin from './utils/proxyLogin';
 import externalLinks from './utils/externalLinks';
 import localJSONStorage from './utils/localJSONStorage';
-import { loadRemoteComponent } from './utils/extensions';
+import loadRemoteComponent from './utils/extensions';
 import env from './constants/env';
 import ipcLocale from './utils/ipcLocale';
 import LiskHubExtensions from './utils/liskHubExtensions';
@@ -48,50 +47,8 @@ applyDeviceClass(document.getElementsByTagName('html')[0], navigator);
 
 window.LiskHubExtensions = LiskHubExtensions;
 
-const traverseInternal = (object, keys, keyIndex) => {
-  if (keyIndex >= keys.length) {
-    return object;
-  }
-
-  return traverseInternal(object[keys[keyIndex]], keys, keyIndex + 1);
-};
-
-const traverse = (object, deepKey) => {
-  return traverseInternal(object, deepKey.split('.'), 0);
-};
-
 const urls = localJSONStorage.get('url', []);
 
-console.log(urls, window.localStorage.getItem('url'), 'URLS');
-
-urls.forEach(url => {
-  console.log(url);
+urls.forEach((url) => {
   loadRemoteComponent(url);
 });
-
-// loadRemoteComponent('https://codepen.io/michaeltomasik/pen/NozxqG.js')
-
-/*
- * TODO all code below this point is a sample extensions
- * that should be loaded by the "Add extension " page as a separate <script>
- */
-// import React from 'react'
-// import LiskHubExtensions from 'LiskHubExtensions'
-
-// class Hello extends React.Component {
-//   render () {
-//     return (<h1>Hello {this.props.name}!
-//         <LiskHubExtensions.components.Button
-// onClick={() => {
-//   console.log('onClick', this.props);
-//   this.props.onClick();
-// }}
-// label={this.props.t('Sample Button')} />
-//     </h1>);
-//   }
-// }
-
-// LiskHubExtensions.addModule({
-//   identifier: LiskHubExtensions.identifiers.dashboardColumn1,
-//   component: Hello,
-// });

@@ -1,7 +1,6 @@
 import React from 'react';
 import LiskHubExtensions from '../../utils/liskHubExtensions';
 
-
 export default class ExtensionPoint extends React.Component {
   componentDidCatch(error) {
     // eslint-disable-next-line no-console

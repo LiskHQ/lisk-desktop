@@ -4,7 +4,7 @@ import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import Box from '../box';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import localJSONStorage from './../../utils/localJSONStorage';
-import { loadRemoteComponent } from './../../utils/extensions';
+import loadRemoteComponent from './../../utils/extensions';
 
 import styles from './extensions.css';
 
@@ -28,7 +28,7 @@ class Extensions extends React.Component {
   }
 
   addExtension() {
-    let urls = localJSONStorage.get('url', []);
+    const urls = localJSONStorage.get('url', []);
     urls.push(this.state.url);
     localJSONStorage.set('url', urls);
     loadRemoteComponent(this.state.url);

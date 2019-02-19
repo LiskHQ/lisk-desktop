@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import Extensions from './extensions';
 
-const mapStateToProps = state => {};
+const mapStateToProps = () => {};
 
 const mapDispatchToProps = {
 };
