@@ -79,17 +79,17 @@
 }
 
 .errored {
-  border-color: var(--color-error);
+  border-color: var(--color-error) !important;
   margin-bottom: 20px !important;
 }
 
 .errored > .inputElement, .errored > .inputElement:focus {
   color: var(--color-error);
   border-color: var(--color-error);
-  outline-color: var(--color-error);
+  outline-color: #eaa604;
   outline-style: auto;
-  outline-width: 5px;
-  outline-offset: -2px;
+  outline-width: 3px;
+  outline-offset: -1px;
 }
 
 .input {
