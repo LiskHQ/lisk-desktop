@@ -1,6 +1,6 @@
 import React from 'react';
 import thunk from 'redux-thunk';
-import { spy, useFakeTimers } from 'sinon';
+import { spy } from 'sinon';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 import PropTypes from 'prop-types';
