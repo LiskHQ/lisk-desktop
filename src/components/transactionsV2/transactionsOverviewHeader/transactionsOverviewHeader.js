@@ -1,11 +1,11 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import AccountVisual from '../../accountVisual';
 import { getIndexOfFollowedAccount } from '../../../utils/followedAccounts';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import RequestV2 from '../../requestV2/requestV2';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
+import AccountVisual from '../../accountVisual';
 import styles from './transactionsOverviewHeader.css';
 import routes from '../../../constants/routes';
 
@@ -44,19 +44,18 @@ class transactionsHeader extends React.Component {
 
   render() {
     const {
-      followedAccounts, address, t, delegate = {},
+      followedAccounts, address, t,
     } = this.props;
     const index = getIndexOfFollowedAccount(
       followedAccounts,
       { address },
     );
-    let accountTitle = followedAccounts[index]
+    const accountTitle = index > -1 && followedAccounts[index]
       && followedAccounts[index].title;
-    accountTitle = delegate.username || accountTitle;
-
-    const hasTitle = index !== -1 && accountTitle !== address;
 
     const isMyWallet = address === this.props.account.address;
+    const hasTitle = !!accountTitle;
+    const placeholder = isMyWallet ? t('Wallet') : address;
 
     return (
       <header className={`${styles.wrapper}`}>
@@ -65,60 +64,48 @@ class transactionsHeader extends React.Component {
             address={address}
             size={48}
             />
-          { isMyWallet ? (
-            <div className={styles.accountInfo}>
-              <div>
-                <h2 className={`${styles.title}`}>
-                { hasTitle
-                  ? <span className={'account-title'}>{accountTitle}</span>
-                  : <span>{t('Wallet')}</span>
-                }
-                </h2>
+          <div className={styles.accountInfo}>
+            <div>
+              <h2 className={`${styles.title}`}>
+                <span className={'account-title'}>
+                { hasTitle ? accountTitle : placeholder }
+                </span>
+              </h2>
+              { isMyWallet ? (
                 <span className={`${styles.label} my-account`}>
                   {t('My Account')}
                 </span>
-              </div>
-              <span className={styles.address}>
-                {address}
-              </span>
+              ) : null }
             </div>
-          ) : (
-            <div className={styles.accountInfo}>
-              <div>
-                <h2 className={`${styles.title}`}>
-                { hasTitle
-                  ? <span className={'account-title'}>{accountTitle}</span>
-                  : <span>{address}</span>
-                }
-                </h2>
-              </div>
-              { hasTitle
-                ? <span className={styles.address}>{address}</span>
-                : null
-              }
-            </div>
-          )}
+            { hasTitle || isMyWallet
+              ? (
+                <span className={styles.address}>
+                  {address}
+                </span>
+              ) : null
+            }
+          </div>
         </div>
 
-          <div className={`${styles.buttonsHolder}`}>
-          { isMyWallet ?
-            <span
-              ref={this.setRequestDropdownRef}
-              className={`${styles.requestContainer} help-onboarding tx-receive-bt`}>
-              <SecondaryButtonV2 onClick={this.toggleRequestDropdown}>
-                {t('Request LSK')}
-              </SecondaryButtonV2>
-              <DropdownV2 showDropdown={this.state.showRequestDropdown} className={`${styles.requestDropdown} request-dropdown`}>
-                <RequestV2 address={address} />
-              </DropdownV2>
-            </span>
-          : null }
-            <Link to={`${routes.send.path}?wallet&recipient=${address}`} className={'tx-send-bt'}>
-              <PrimaryButtonV2>
-                {t('Send LSK')}
-              </PrimaryButtonV2>
-            </Link>
-          </div>
+        <div className={`${styles.buttonsHolder}`}>
+        { isMyWallet ?
+          <span
+            ref={this.setRequestDropdownRef}
+            className={`${styles.requestContainer} help-onboarding tx-receive-bt`}>
+            <SecondaryButtonV2 onClick={this.toggleRequestDropdown}>
+              {t('Request LSK')}
+            </SecondaryButtonV2>
+            <DropdownV2 showDropdown={this.state.showRequestDropdown} className={`${styles.requestDropdown} request-dropdown`}>
+              <RequestV2 address={address} />
+            </DropdownV2>
+          </span>
+        : null }
+          <Link to={`${routes.send.path}?wallet&recipient=${address}`} className={'tx-send-bt'}>
+            <PrimaryButtonV2>
+              {t('Send LSK')}
+            </PrimaryButtonV2>
+          </Link>
+        </div>
       </header>
     );
   }
