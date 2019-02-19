@@ -34,7 +34,7 @@ class TermsOfUse extends React.Component {
 
   onAccept() {
     Piwik.trackingEvent('SplashScreen', 'Button', 'Accept Terms of Use');
-    this.props.settingsUpdated({ isTermsOfUse: false });
+    this.props.settingsUpdated({ isTermsOfUse: true });
   }
 
   render() {
