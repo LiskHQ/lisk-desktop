@@ -6,11 +6,11 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 import i18n from '../../../i18n';
-import WalletHeader from './walletHeader';
+import TransactionHeader from './transactionsOverviewHeader';
 import routes from '../../../constants/routes';
 import accounts from '../../../../test/constants/accounts';
 
-describe('Wallet Header', () => {
+describe('Transactions Overview Header', () => {
   let wrapper;
   const store = configureMockStore([thunk])({
     settings: { currency: 'USD' },
@@ -41,7 +41,7 @@ describe('Wallet Header', () => {
   describe('Current user wallet', () => {
     beforeEach(() => {
       wrapper = mount(<MemoryRouter>
-        <WalletHeader {...props} />
+        <TransactionHeader {...props} />
       </MemoryRouter>, options);
     });
 
@@ -82,7 +82,7 @@ describe('Wallet Header', () => {
 
     beforeEach(() => {
       wrapper = mount(<MemoryRouter>
-        <WalletHeader {...anotherProps} />
+        <TransactionHeader {...anotherProps} />
       </MemoryRouter>, options);
     });
 

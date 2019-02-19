@@ -6,10 +6,10 @@ import { getIndexOfFollowedAccount } from '../../../utils/followedAccounts';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import RequestV2 from '../../requestV2/requestV2';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
-import styles from './walletHeader.css';
+import styles from './transactionsOverviewHeader.css';
 import routes from '../../../constants/routes';
 
-class walletHeader extends React.Component {
+class transactionsHeader extends React.Component {
   constructor() {
     super();
 
@@ -44,14 +44,16 @@ class walletHeader extends React.Component {
 
   render() {
     const {
-      followedAccounts, address, t,
+      followedAccounts, address, t, delegate = {},
     } = this.props;
     const index = getIndexOfFollowedAccount(
       followedAccounts,
       { address },
     );
-    const accountTitle = followedAccounts[index]
+    let accountTitle = followedAccounts[index]
       && followedAccounts[index].title;
+    accountTitle = delegate.username || accountTitle;
+
     const hasTitle = index !== -1 && accountTitle !== address;
 
     const isMyWallet = address === this.props.account.address;
@@ -63,24 +65,39 @@ class walletHeader extends React.Component {
             address={address}
             size={48}
             />
-          <div className={styles.accountInfo}>
-            <div>
-              <h2 className={`${styles.title}`}>
-              { hasTitle
-                ? <span className={'account-title'}>{accountTitle}</span>
-                : <span>{t('Wallet')}</span>
-              }
-              </h2>
-              {
-                isMyWallet && <span className={`${styles.label} my-account`}>
+          { isMyWallet ? (
+            <div className={styles.accountInfo}>
+              <div>
+                <h2 className={`${styles.title}`}>
+                { hasTitle
+                  ? <span className={'account-title'}>{accountTitle}</span>
+                  : <span>{t('Wallet')}</span>
+                }
+                </h2>
+                <span className={`${styles.label} my-account`}>
                   {t('My Account')}
                 </span>
+              </div>
+              <span className={styles.address}>
+                {address}
+              </span>
+            </div>
+          ) : (
+            <div className={styles.accountInfo}>
+              <div>
+                <h2 className={`${styles.title}`}>
+                { hasTitle
+                  ? <span className={'account-title'}>{accountTitle}</span>
+                  : <span>{address}</span>
+                }
+                </h2>
+              </div>
+              { hasTitle
+                ? <span className={styles.address}>{address}</span>
+                : null
               }
             </div>
-            <span className={styles.address}>
-              {address}
-            </span>
-          </div>
+          )}
         </div>
 
           <div className={`${styles.buttonsHolder}`}>
@@ -107,4 +124,4 @@ class walletHeader extends React.Component {
   }
 }
 
-export default translate()(walletHeader);
+export default translate()(transactionsHeader);

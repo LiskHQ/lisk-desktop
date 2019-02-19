@@ -1,7 +1,7 @@
 import React from 'react';
 import TransactionsOverviewV2 from '../transactionsOverviewV2';
 import txFilters from '../../../constants/transactionFilters';
-import WalletHeader from '../walletTransactionsV2/walletHeader';
+import TransactionsOverviewHeader from '../transactionsOverviewHeader/transactionsOverviewHeader';
 import routes from '../../../constants/routes';
 
 class ExplorerTransactions extends React.Component {
@@ -78,7 +78,8 @@ class ExplorerTransactions extends React.Component {
 
     return (
       <React.Fragment>
-        <WalletHeader
+        <TransactionsOverviewHeader
+          delegate={this.props.delegate}
           followedAccounts={this.props.followedAccounts}
           address={this.props.address}
           match={this.props.match}
