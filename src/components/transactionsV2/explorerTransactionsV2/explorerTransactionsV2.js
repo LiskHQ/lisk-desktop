@@ -76,9 +76,9 @@ class ExplorerTransactions extends React.Component {
 
   /* istanbul ignore next */
   saveFilters(customFilters) {
-    this.props.transactionsFilterSet({
+    this.props.searchTransactions({
       address: this.props.address,
-      limit: 25,
+      limit: 30,
       filter: this.props.activeFilter,
       customFilters,
     });
