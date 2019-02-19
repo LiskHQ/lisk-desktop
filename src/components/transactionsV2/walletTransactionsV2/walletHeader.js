@@ -44,7 +44,7 @@ class walletHeader extends React.Component {
 
   render() {
     const {
-      account, followedAccounts, address, t, match,
+      followedAccounts, address, t,
     } = this.props;
     const index = getIndexOfFollowedAccount(
       followedAccounts,
@@ -54,13 +54,13 @@ class walletHeader extends React.Component {
       && followedAccounts[index].title;
     const hasTitle = index !== -1 && accountTitle !== address;
 
-    const isMyWallet = match.url === routes.wallet.path;
+    const isMyWallet = address === this.props.account.address;
 
     return (
       <header className={`${styles.wrapper}`}>
         <div className={`${styles.account}`}>
           <AccountVisual
-            address={account.address}
+            address={address}
             size={48}
             />
           <div className={styles.accountInfo}>
@@ -83,27 +83,25 @@ class walletHeader extends React.Component {
           </div>
         </div>
 
-        { isMyWallet ?
-          (
-            <div className={`${styles.buttonsHolder}`}>
-              <span
-                ref={this.setRequestDropdownRef}
-                className={`${styles.requestContainer} help-onboarding tx-receive-bt`}>
-                <SecondaryButtonV2 onClick={this.toggleRequestDropdown}>
-                  {t('Request LSK')}
-                </SecondaryButtonV2>
-                <DropdownV2 showDropdown={this.state.showRequestDropdown} className={`${styles.requestDropdown} request-dropdown`}>
-                  <RequestV2 address={address} />
-                </DropdownV2>
-              </span>
-              <Link to={`${routes.send.path}?wallet`} className={'tx-send-bt'}>
-                <PrimaryButtonV2>
-                  {t('Send LSK')}
-                </PrimaryButtonV2>
-              </Link>
-            </div>
-          ) : null
-        }
+          <div className={`${styles.buttonsHolder}`}>
+          { isMyWallet ?
+            <span
+              ref={this.setRequestDropdownRef}
+              className={`${styles.requestContainer} help-onboarding tx-receive-bt`}>
+              <SecondaryButtonV2 onClick={this.toggleRequestDropdown}>
+                {t('Request LSK')}
+              </SecondaryButtonV2>
+              <DropdownV2 showDropdown={this.state.showRequestDropdown} className={`${styles.requestDropdown} request-dropdown`}>
+                <RequestV2 address={address} />
+              </DropdownV2>
+            </span>
+          : null }
+            <Link to={`${routes.send.path}?wallet&recipient=${address}`} className={'tx-send-bt'}>
+              <PrimaryButtonV2>
+                {t('Send LSK')}
+              </PrimaryButtonV2>
+            </Link>
+          </div>
       </header>
     );
   }
