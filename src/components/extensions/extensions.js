@@ -13,7 +13,7 @@ class Extensions extends React.Component {
     super();
 
     this.state = {
-      url: '',
+      url: localJSONStorage.get('url', ''),
     };
   }
 
@@ -22,15 +22,18 @@ class Extensions extends React.Component {
   }
 
   removeExtension() {
-    let urls = localJSONStorage.get('url', []);
-    urls = urls.filter(url => url !== this.state.url);
-    localJSONStorage.set('url', urls);
+    // TODO Multiple extensions
+    // let urls = localJSONStorage.get('url', '');
+    // urls = urls.filter(url => url !== this.state.url);
+    this.setState({ url: '' });
+    localJSONStorage.set('url', '');
   }
 
   addExtension() {
-    const urls = localJSONStorage.get('url', []);
-    urls.push(this.state.url);
-    localJSONStorage.set('url', urls);
+    // TODO Multiple extensions
+    // const urls = localJSONStorage.get('url', '');
+    // urls.push(this.state.url);
+    localJSONStorage.set('url', this.state.url);
     loadRemoteComponent(this.state.url);
   }
 

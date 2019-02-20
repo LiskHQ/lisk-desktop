@@ -47,8 +47,11 @@ applyDeviceClass(document.getElementsByTagName('html')[0], navigator);
 
 window.LiskHubExtensions = LiskHubExtensions;
 
-const urls = localJSONStorage.get('url', []);
+// TODO multiple URLS
+const url = localJSONStorage.get('url', '');
 
-urls.forEach((url) => {
+// urls.forEach((url) => {
+if (url) {
   loadRemoteComponent(url);
-});
+}
+// });
