@@ -1,0 +1,60 @@
+@import '../../app/variablesV2.css';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs {
+  border-bottom: 1px solid var(--color-dark-gray);
+  display: flex;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+
+  & > li {
+    font-family: var(--content-font);
+    font-size: var(--paragraph-font-size-l);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-dark-gray);
+    cursor: pointer;
+    letter-spacing: 0.05px;
+    line-height: 1.2;
+    list-style: none;
+    padding: 11px 47px;
+    position: relative;
+    transition: color var(--animation-speed-fast) linear;
+
+    &::after {
+      background: var(--color-content-light);
+      bottom: -1px;
+      content: '';
+      height: 2px;
+      left: 0;
+      position: absolute;
+      transform: scaleX(0);
+      transition: transform var(--animation-speed-fast) linear;
+      width: 100%;
+    }
+  }
+
+  & > .active {
+    color: var(--color-content-light);
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+.contentHolder {
+  margin-top: 24px;
+
+  & > div {
+    display: none;
+
+    &.active {
+      display: block;
+    }
+  }
+}
