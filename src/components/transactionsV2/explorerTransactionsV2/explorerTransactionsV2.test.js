@@ -11,7 +11,7 @@ import i18n from '../../../i18n';
 import accounts from '../../../../test/constants/accounts';
 import routes from '../../../constants/routes';
 
-describe('WalletTransactions V2 Component', () => {
+describe('ExplorerTransactions V2 Component', () => {
   let wrapper;
   let props;
 
