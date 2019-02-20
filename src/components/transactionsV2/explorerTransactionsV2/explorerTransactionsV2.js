@@ -3,6 +3,7 @@ import TransactionsOverviewV2 from '../transactionsOverviewV2';
 import txFilters from '../../../constants/transactionFilters';
 import TransactionsOverviewHeader from '../transactionsOverviewHeader/transactionsOverviewHeader';
 import routes from '../../../constants/routes';
+import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 
 class ExplorerTransactions extends React.Component {
   constructor() {
@@ -124,13 +125,18 @@ class ExplorerTransactions extends React.Component {
     return (
       <React.Fragment>
         <TransactionsOverviewHeader
+          delegate={this.props.delegate}
           followedAccounts={this.props.followedAccounts}
           address={this.props.address}
           match={this.props.match}
           t={this.props.t}
           account={this.props.account}
         />
-        <TransactionsOverviewV2 {...overviewProps} />
+        <TabsContainer>
+          <TransactionsOverviewV2
+            tabName={'Wallet'}
+            {...overviewProps} />
+        </TabsContainer>
       </React.Fragment>
     );
   }
