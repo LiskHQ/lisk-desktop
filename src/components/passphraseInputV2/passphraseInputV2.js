@@ -110,6 +110,9 @@ class passphraseInputV2 extends React.Component {
 
   setFocusedField({ target }) {
     const focus = parseInt(target.dataset.index, 10);
+    const value = target.value;
+    target.value = '';
+    target.value = value;
     this.setState({ focus });
   }
 
