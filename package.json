@@ -112,6 +112,7 @@
     "webpack-merge": "=4.1.5"
   },
   "devDependencies": {
+    "@babel/core": "7.3.3",
     "@storybook/addon-actions": "4.1.1",
     "@storybook/react": "4.1.1",
     "babel-core": "6.26.3",
@@ -127,6 +128,7 @@
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-3": "=6.24.1",
+    "babel-standalone": "6.26.0",
     "bundlesize": "0.17.0",
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
