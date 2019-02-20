@@ -30,7 +30,7 @@ describe('V2 SplashScreen', () => {
   const account = accounts.genesis;
 
   const settings = {
-    isTermsOfUse: false,
+    areTermsOfUseAccepted: false,
   };
 
   const store = configureMockStore([])({
@@ -90,7 +90,7 @@ describe('V2 SplashScreen', () => {
   });
 
   describe('Terms of Use', () => {
-    props.settings.isTermsOfUse = true;
+    props.settings.areTermsOfUseAccepted = true;
 
     beforeEach(() => {
       wrapper = mount(<MemoryRouter><SplashScreen {...props} /></MemoryRouter>, options);

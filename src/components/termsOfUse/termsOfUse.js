@@ -22,7 +22,7 @@ class TermsOfUse extends React.Component {
 
   onTermsOfUseAlreadyAccepted() {
     // istanbul ignore else
-    if (!this.props.settings.isTermsOfUse) {
+    if (!this.props.settings.areTermsOfUseAccepted) {
       this.props.history.push(routes.splashscreen.path);
     }
   }
@@ -34,7 +34,7 @@ class TermsOfUse extends React.Component {
 
   onAccept() {
     Piwik.trackingEvent('SplashScreen', 'Button', 'Accept Terms of Use');
-    this.props.settingsUpdated({ isTermsOfUse: true });
+    this.props.settingsUpdated({ areTermsOfUseAccepted: true });
   }
 
   render() {

@@ -23,7 +23,7 @@ describe('LoginV2', () => {
   };
 
   const settings = {
-    isTermsOfUse: false,
+    areTermsOfUseAccepted: false,
   };
 
   const store = configureMockStore([])({
@@ -168,7 +168,7 @@ describe('LoginV2', () => {
   });
 
   describe('Terms of Use not accepted', () => {
-    props.settings.isTermsOfUse = true;
+    props.settings.areTermsOfUseAccepted = true;
 
     beforeEach(() => {
       wrapper = mount(<MemoryRouter><LoginV2 {...props}/></MemoryRouter>, options);

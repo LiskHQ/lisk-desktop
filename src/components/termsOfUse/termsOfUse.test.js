@@ -16,7 +16,7 @@ describe('TermsOfUse', () => {
   };
 
   const settings = {
-    isTermsOfUse: false,
+    areTermsOfUseAccepted: false,
   };
 
   const store = configureMockStore([])({
@@ -52,12 +52,12 @@ describe('TermsOfUse', () => {
 
   it('click on accept terms and conditions', () => {
     wrapper.find('.accept-terms').at(0).simulate('click');
-    expect(props.settingsUpdated).to.have.been.calledWith({ isTermsOfUse: true });
+    expect(props.settingsUpdated).to.have.been.calledWith({ areTermsOfUseAccepted: true });
   });
 
   it('should redirect if isTermsOfUse is set to true', () => {
     wrapper.setProps({
-      settings: { isTermsOfUse: false },
+      settings: { areTermsOfUseAccepted: false },
     });
     wrapper.update();
     expect(props.history.push).to.have.been.calledWith(`${routes.splashscreen.path}`);
