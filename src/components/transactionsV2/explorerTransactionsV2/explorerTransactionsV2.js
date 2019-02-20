@@ -66,6 +66,7 @@ class ExplorerTransactions extends React.Component {
       address: this.props.address,
       limit: 30,
       filter,
+      customFilters: this.state.customFilters,
     });
   }
 
