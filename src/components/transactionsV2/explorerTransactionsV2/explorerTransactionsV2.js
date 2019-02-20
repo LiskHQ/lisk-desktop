@@ -54,6 +54,7 @@ class ExplorerTransactions extends React.Component {
       limit: 30,
       offset: this.props.offset,
       filter: this.props.activeFilter,
+      customFilters: this.state.customFilters,
     });
   }
   /*

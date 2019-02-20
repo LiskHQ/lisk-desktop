@@ -127,13 +127,13 @@ export const searchTransactions = ({
   };
 
 export const searchMoreTransactions = ({
-  address, limit, offset, filter,
+  address, limit, offset, filter, customFilters = {},
 }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     dispatch(loadingStarted(actionTypes.searchMoreTransactions));
     getTransactions({
-      liskAPIClient, address, limit, offset, filter,
+      liskAPIClient, address, limit, offset, filter, customFilters,
     })
       .then((transactionsResponse) => {
         dispatch({
@@ -142,6 +142,7 @@ export const searchMoreTransactions = ({
             transactions: transactionsResponse.data,
             count: parseInt(transactionsResponse.meta.count, 10),
             filter,
+            customFilters,
           },
           type: actionTypes.searchMoreTransactions,
         });
