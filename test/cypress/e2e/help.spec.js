@@ -26,8 +26,10 @@ describe('Help', () => {
    * @expect some specific to page element is present on it
    */
   it('opens by sidebar button', () => {
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit('/');
+    cy.get(ss.termsOfUse).click();
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.reload();
     cy.get(ss.sidebarMenuHelpBtn).should('have.css', 'opacity', '1').click();
     cy.url().should('contain', urls.help);
     checkHelpPageLoaded();
@@ -134,6 +136,8 @@ describe('Help', () => {
       cy.addObjectToLocalStorage('settings', 'onBoarding', true);
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit('/');
+      cy.get(ss.termsOfUse).click();
+      cy.reload();
       cy.get(ss.onBoardingHeader).should('have.text', 'Welcome to Lisk Hub');
       cy.get(ss.onBoardingTooltipPrimaryBtn).click();
       cy.get(ss.onBoardingHeader).should('have.text', 'Lisk ID');
