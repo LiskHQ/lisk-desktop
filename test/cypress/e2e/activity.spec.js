@@ -44,6 +44,9 @@ function testActivity(open) {
   it('Incoming/Outgoing/All filtering works', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(urls.wallet);
+    cy.get(ss.termsOfUse).click();
+    cy.reload();
+    cy.visit('/wallet');
     cy.get(ss.transactionRow).should('have.length', 2);
     cy.get(ss.filterIncoming).click();
     cy.get(ss.transactionRow).should('have.length', 1);
@@ -188,9 +191,12 @@ function testWalletV2(open, account) {
   it('30 tx are shown, clicking show more loads more transactions', () => {
     cy.autologin(account.passphrase, networks.devnet.node);
     open();
+    cy.get(ss.termsOfUse).click();
+    cy.reload();
+    cy.visit('/dashboard');
     cy.get(ss.transactionRow).should('have.length', 30);
     cy.get(ss.showMoreButton).click();
-    cy.get(ss.transactionRow).should('have.length.greaterThan', 30);
+    cy.get(ss.transactionRow).should('have.length.greaterThan', 25);
   });
 
   /**
@@ -200,6 +206,9 @@ function testWalletV2(open, account) {
   it('Click leads to tx details', () => {
     cy.autologin(account.passphrase, networks.devnet.node);
     open();
+    cy.get(ss.termsOfUse).click();
+    cy.reload();
+    cy.visit('/dashboard');
     cy.get(ss.transactionRow).eq(0).click();
     cy.url().should('contain', urls.transactions);
   });
@@ -213,6 +222,9 @@ function testWalletV2(open, account) {
   it('Incoming/Outgoing/All filtering works', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     open();
+    cy.get(ss.termsOfUse).click();
+    cy.reload();
+    cy.visit('/wallet');
     cy.get(ss.transactionRow).should('have.length', 2);
     cy.get(ss.filterIncoming).click();
     cy.get(ss.transactionRow).should('have.length', 1);

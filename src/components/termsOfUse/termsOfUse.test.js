@@ -57,7 +57,7 @@ describe('TermsOfUse', () => {
 
   it('should redirect if isTermsOfUse is set to true', () => {
     wrapper.setProps({
-      settings: { areTermsOfUseAccepted: false },
+      settings: { areTermsOfUseAccepted: true },
     });
     wrapper.update();
     expect(props.history.push).to.have.been.calledWith(`${routes.splashscreen.path}`);

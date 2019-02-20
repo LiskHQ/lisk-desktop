@@ -67,6 +67,7 @@ describe('Help', () => {
     it('pops up on clean login, go through onboarding', () => {
       cy.visit('/');
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+      cy.get(ss.termsOfUse).click();
       cy.reload();
       cy.get(ss.onBoardingHeader).should('have.text', 'Welcome to Lisk Hub')
         .and(() => expect(getSettingsObjFromLS().onBoarding).to.equal(true));
@@ -136,7 +137,7 @@ describe('Help', () => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit('/');
       cy.get(ss.termsOfUse).click();
-      cy.reload();
+      cy.visit('/dashboard');
       cy.get(ss.onBoardingHeader).should('have.text', 'Welcome to Lisk Hub');
       cy.get(ss.onBoardingTooltipPrimaryBtn).click();
       cy.get(ss.onBoardingHeader).should('have.text', 'Lisk ID');

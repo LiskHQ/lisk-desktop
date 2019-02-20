@@ -9,6 +9,8 @@ describe('Splashscreen', () => {
    */
   it('Sign in -> Login page', () => {
     cy.visit('/');
+    cy.get(ss.termsOfUse).click();
+    cy.reload();
     cy.get(ss.loginBtn).click();
     cy.url().should('include', urls.login);
     cy.get(ss.app).contains('Sign in with a Passphrase');
@@ -19,6 +21,8 @@ describe('Splashscreen', () => {
    */
   it('Create an account -> Register page', () => {
     cy.visit('/');
+    cy.get(ss.termsOfUse).click();
+    cy.reload();
     cy.get(ss.createLiskIdBtn).click();
     cy.url().should('include', urls.register);
     cy.get(ss.app).contains('Choose your Avatar');
@@ -27,6 +31,8 @@ describe('Splashscreen', () => {
   it('Explore as guest connects to mainnet by default', () => {
     cy.addObjectToLocalStorage('settings', 'showNetwork', true);
     cy.visit('/');
+    cy.get(ss.termsOfUse).click();
+    cy.reload();
     cy.get(ss.exploreAsGuestBtn).click();
     cy.url().should('include', urls.dashboard);
     cy.get(ss.networkStatus).contains('mainnet');
@@ -35,6 +41,8 @@ describe('Splashscreen', () => {
   it('Explore as guest connects to last used', () => {
     cy.addToLocalStorage('liskCoreUrl', networks.testnet.nodes[0]);
     cy.visit('/');
+    cy.get(ss.termsOfUse).click();
+    cy.reload();
     cy.get(ss.exploreAsGuestBtn).click();
     cy.url().should('include', urls.dashboard);
     cy.get(ss.networkStatus).contains('testnet');
@@ -42,6 +50,8 @@ describe('Splashscreen', () => {
 
   it('Settings button', () => {
     cy.visit('/');
+    cy.get(ss.termsOfUse).click();
+    cy.reload();
     cy.get(ss.app).contains('Settings').click();
     cy.url().should('contain', urls.settings);
     cy.get(ss.switchNetworksTrigger);

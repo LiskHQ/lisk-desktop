@@ -81,6 +81,10 @@ describe('LoginV2', () => {
   });
 
   describe('Generals', () => {
+    it('redirect to Terms of Use page', () => {
+      expect(props.history.push).to.have.been.calledWith(`${routes.termsOfUse.path}`);
+    });
+
     it('should show error about passphrase length if passphrase have wrong length', () => {
       const expectedError = 'Passphrase should have 12 words, entered passphrase has 11';
       const lastIndex = passphrase.lastIndexOf(' ');
@@ -164,23 +168,6 @@ describe('LoginV2', () => {
       wrapper.update();
       wrapper.find('form').simulate('submit');
       expect(props.liskAPIClientSet).to.have.been.calledWith();
-    });
-  });
-
-  describe('Terms of Use not accepted', () => {
-    props.settings.areTermsOfUseAccepted = true;
-
-    beforeEach(() => {
-      wrapper = mount(<MemoryRouter><LoginV2 {...props}/></MemoryRouter>, options);
-    });
-
-    afterEach(() => {
-      history.location.search = '';
-      localStorageStub.restore();
-    });
-
-    it('redirect to Terms of Use page', () => {
-      expect(props.history.push).to.have.been.calledWith(`${routes.termsOfUse.path}`);
     });
   });
 });

@@ -18,6 +18,8 @@ describe('Second Passphrase Registration', () => {
   it(`Opens by url ${urls.secondPassphrase}`, () => {
     cy.autologin(accounts['second passphrase candidate'].passphrase, networks.devnet.node);
     cy.visit(urls.secondPassphrase);
+    cy.get(ss.termsOfUse).click();
+    cy.visit(urls.secondPassphrase);
     cy.url().should('not.contain', 'referrer', 'Check if you have registered passphrase already');
     cy.url().should('not.contain', urls.dashboard, 'Check if you have registered passphrase already');
     cy.url().should('contain', urls.secondPassphrase);
@@ -32,6 +34,8 @@ describe('Second Passphrase Registration', () => {
    */
   it('Setup second passphrase + Header balance is affected', function () {
     cy.autologin(accounts['second passphrase candidate'].passphrase, networks.devnet.node);
+    cy.visit(urls.secondPassphrase);
+    cy.get(ss.termsOfUse).click();
     cy.visit(urls.secondPassphrase);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     cy.get(ss.nextBtn).click();
@@ -61,6 +65,8 @@ describe('Second Passphrase Registration', () => {
    */
   it('Try to register with insufficient balance', () => {
     cy.autologin(accounts['empty account'].passphrase, networks.devnet.node);
+    cy.visit(urls.secondPassphrase);
+    cy.get(ss.termsOfUse).click();
     cy.visit(urls.secondPassphrase);
     cy.get(ss.nextBtn).should('be.disabled');
     cy.get(ss.nextBtn).parent().contains('Insufficient funds');

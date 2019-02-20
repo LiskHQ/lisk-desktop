@@ -14,6 +14,8 @@ describe('Request', () => {
   it('Request LSK', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.wallet);
+    cy.get(ss.termsOfUse).click();
+    cy.visit(urls.wallet);
     cy.get(ss.transactionRequestButton).click();
     cy.get(ss.requestLink).contains(accounts.genesis.address);
   });
@@ -24,6 +26,8 @@ describe('Request', () => {
    */
   it('Request specific amount', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.wallet);
+    cy.get(ss.termsOfUse).click();
     cy.visit(urls.wallet);
     cy.get(ss.transactionRequestButton).click();
     // Enter amount and reference
@@ -39,6 +43,8 @@ describe('Request', () => {
    */
   it('Should show qrCode', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.wallet);
+    cy.get(ss.termsOfUse).click();
     cy.visit(urls.wallet);
     cy.get(ss.transactionRequestButton).click();
     cy.get(ss.requestQrCode).should('be.not.visible');

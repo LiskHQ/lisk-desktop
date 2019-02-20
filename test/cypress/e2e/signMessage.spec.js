@@ -23,6 +23,8 @@ describe('Sign message', () => {
   it(`Opens by url ${urls.signMessage}`, () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.signMessage);
+    cy.get(ss.termsOfUse).click();
+    cy.visit(urls.signMessage);
     cy.url().should('contain', urls.signMessage);
     cy.get(ss.app).contains('Sign a message');
   });
@@ -33,6 +35,8 @@ describe('Sign message', () => {
    */
   it('Generates signed message', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.signMessage);
+    cy.get(ss.termsOfUse).click();
     cy.visit(urls.signMessage);
     cy.get(ss.messageInput).type(messageToSign);
     cy.get(ss.nextBtn).click();
@@ -45,6 +49,8 @@ describe('Sign message', () => {
    */
   it('Message gets prefilled following launch protocol link', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(`${urls.signMessage}?message=${messageToSign}`);
+    cy.get(ss.termsOfUse).click();
     cy.visit(`${urls.signMessage}?message=${messageToSign}`);
     cy.get(ss.messageInput).contains(messageToSign);
   });

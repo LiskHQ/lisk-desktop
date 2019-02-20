@@ -12,6 +12,8 @@ describe('Wallet', () => {
   it(`Wallet page opens by url ${urls.wallet}`, () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.wallet);
+    cy.get(ss.termsOfUse).click();
+    cy.visit(urls.wallet);
     cy.url().should('contain', urls.wallet);
     cy.get(ss.transactionSendButton);
   });
@@ -24,6 +26,8 @@ describe('Wallet', () => {
    */
   it('Wallet page shows onboarding banner', () => {
     cy.autologin(accounts['empty account'].passphrase, networks.devnet.node);
+    cy.visit(urls.wallet);
+    cy.get(ss.termsOfUse).click();
     cy.visit(urls.wallet);
     cy.get(ss.walletOnboarding).should('exist');
     cy.get(ss.walletOnboardingClose).click();
@@ -47,6 +51,8 @@ describe('Wallet', () => {
   it('Send button -> Send page', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.wallet);
+    cy.get(ss.termsOfUse).click();
+    cy.visit(urls.wallet);
     cy.get(ss.transactionSendButton).click();
     cy.url().should('contain', urls.send);
     cy.get(ss.recipientInput);
@@ -54,6 +60,8 @@ describe('Wallet', () => {
 
   it('Request button -> Request dropdown', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.wallet);
+    cy.get(ss.termsOfUse).click();
     cy.visit(urls.wallet);
     cy.get(ss.requestDropdown).should('be.not.visible');
     cy.get(ss.transactionRequestButton).click();

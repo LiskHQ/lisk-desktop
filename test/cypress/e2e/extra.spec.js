@@ -7,6 +7,8 @@ describe('Extra', () => {
   it('Sidechains page opens by sidebar button', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.sidechains);
+    cy.get(ss.termsOfUse).click();
+    cy.visit(urls.sidechains);
     cy.get(ss.app).contains('Coming soon.');
   });
 

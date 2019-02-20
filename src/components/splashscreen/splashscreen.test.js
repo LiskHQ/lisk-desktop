@@ -90,13 +90,15 @@ describe('V2 SplashScreen', () => {
   });
 
   describe('Terms of Use', () => {
-    props.settings.areTermsOfUseAccepted = true;
-
     beforeEach(() => {
       wrapper = mount(<MemoryRouter><SplashScreen {...props} /></MemoryRouter>, options);
     });
 
     it('redirect to terms of use page', () => {
+      wrapper.setProps({
+        settings: { areTermsOfUseAccepted: false },
+      });
+      wrapper.update();
       expect(props.history.push).to.have.been.calledWith(`${routes.termsOfUse.path}`);
     });
   });

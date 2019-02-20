@@ -41,6 +41,8 @@ describe('Send', () => {
   it(`Send page opens by url ${urls.send}`, () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.send);
+    cy.get(ss.termsOfUse).click();
+    cy.visit(urls.send);
     cy.url().should('contain', urls.send);
     cy.get(ss.recipientInput);
   });
@@ -56,6 +58,8 @@ describe('Send', () => {
   it('Transfer tx with empty ref appears in activity pending -> approved,' +
     'Header balance is affected', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.send);
+    cy.get(ss.termsOfUse).click();
     cy.visit(urls.send);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     cy.get(ss.recipientInput).type(randomAddress);
@@ -85,6 +89,8 @@ describe('Send', () => {
   it('Transfer tx with ref appears in dashboard activity pending -> approved', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.send);
+    cy.get(ss.termsOfUse).click();
+    cy.visit(urls.send);
     cy.get(ss.recipientInput).type(randomAddress);
     cy.get(ss.referenceInput).click().type(randomReference);
     cy.get(ss.amountInput).click().type(randomAmount);
@@ -113,6 +119,8 @@ describe('Send', () => {
   it('Transfer tx with second passphrase appears in wallet activity', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(urls.send);
+    cy.get(ss.termsOfUse).click();
+    cy.visit(urls.send);
     cy.get(ss.recipientInput).type(randomAddress);
     cy.get(ss.referenceInput).click().type(randomReference);
     cy.get(ss.amountInput).click().type(randomAmount);
@@ -133,6 +141,8 @@ describe('Send', () => {
   it('Launch protocol prefills fields  - from logged in state', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.send}/?recipient=4995063339468361088L&amount=5&reference=test`);
+    cy.get(ss.termsOfUse).click();
+    cy.visit(`${urls.send}/?recipient=4995063339468361088L&amount=5&reference=test`);
     cy.get(ss.recipientInput).should('have.value', '4995063339468361088L');
     cy.get(ss.amountInput).should('have.value', '5');
     cy.get(ss.referenceInput).should('have.value', 'test');
@@ -143,6 +153,8 @@ describe('Send', () => {
    * @expect recipient, amount and reference are prefilled
    */
   it('Launch protocol prefills fields  - from logged out state', () => {
+    cy.visit(`${urls.send}/?recipient=4995063339468361088L&amount=5&reference=test`);
+    cy.get(ss.termsOfUse).click();
     cy.visit(`${urls.send}/?recipient=4995063339468361088L&amount=5&reference=test`);
     loginUI(accounts.genesis.passphrase);
     cy.get(ss.recipientInput).should('have.value', '4995063339468361088L');
@@ -158,6 +170,8 @@ describe('Send', () => {
     cy.addObjectToLocalStorage('settings', 'currency', 'USD');
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.send}?recipient=4995063339468361088L&amount=5`);
+    cy.get(ss.termsOfUse).click();
+    cy.visit(`${urls.send}?recipient=4995063339468361088L&amount=5`);
     cy.get(ss.convertedPrice).contains(/^\d{1,100}(\.\d{1,2})? USD$/);
   });
 
@@ -168,6 +182,8 @@ describe('Send', () => {
   it('Fiat converter shows amount in EUR', () => {
     cy.addObjectToLocalStorage('settings', 'currency', 'EUR');
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(`${urls.send}?recipient=4995063339468361088L&amount=5`);
+    cy.get(ss.termsOfUse).click();
     cy.visit(`${urls.send}?recipient=4995063339468361088L&amount=5`);
     cy.get(ss.convertedPrice).contains(/^\d{1,100}(\.\d{1,2})? EUR$/);
   });
@@ -182,6 +198,8 @@ describe('Send', () => {
   it('Should show initialize banner with account not initialized', () => {
     cy.autologin(accounts['without initialization'].passphrase, networks.devnet.node);
     cy.reload();
+    cy.visit(urls.wallet);
+    cy.get(ss.termsOfUse).click();
     cy.visit(urls.wallet);
     cy.get(ss.transactionSendButton).click();
     cy.get(ss.accountInitializationMsg).should('not.exist');
@@ -211,6 +229,8 @@ describe('Send', () => {
   it('It\'s not allowed to make a transfer if not enough funds', () => {
     cy.autologin(accounts['empty account'].passphrase, networks.devnet.node);
     cy.visit(urls.send);
+    cy.get(ss.termsOfUse).click();
+    cy.visit(urls.send);
     cy.get(ss.recipientInput).type(randomAddress);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).should('be.disabled');
@@ -226,6 +246,8 @@ describe('Send', () => {
     cy.route('POST', '/api/transactions', { message: 'Test error' });
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.send);
+    cy.get(ss.termsOfUse).click();
+    cy.visit(urls.send);
     cy.get(ss.recipientInput).type(randomAddress);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).click();
@@ -236,6 +258,8 @@ describe('Send', () => {
 
   it('Add to bookmarks after transfer tx (when recipient is not in followers)', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.send);
+    cy.get(ss.termsOfUse).click();
     cy.visit(urls.send);
     cy.get(ss.recipientInput).type(accounts.delegate.address);
     cy.get(ss.amountInput).click().type(randomAmount);
@@ -255,6 +279,8 @@ describe('Send', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node)
       .then(() => window.localStorage.setItem('followedAccounts', `[{"title":"Alice","address":"${accounts.genesis.address}","balance":101}]`));
     cy.visit(urls.send);
+    cy.get(ss.termsOfUse).click();
+    cy.visit(urls.send);
     cy.get(ss.recipientInput).type(accounts.genesis.address);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).click();
@@ -271,6 +297,8 @@ describe('Send: Bookmarks', () => {
   it('Bookmarks are not present if there is no followers', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node)
       .then(() => window.localStorage.removeItem('followedAccounts'));
+    cy.visit(urls.send);
+    cy.get(ss.termsOfUse).click();
     cy.visit(urls.send);
     cy.get(ss.recipientInput).click();
     cy.get(ss.bookmarkInput).should('not.exist');
@@ -289,6 +317,8 @@ describe('Send: Bookmarks', () => {
       {"title":"Alice","address":"${accounts.delegate.address}","balance":101}
     ]`);
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.send);
+    cy.get(ss.termsOfUse).click();
     cy.visit(urls.send);
     cy.get(ss.recipientInput).click();
     cy.get(ss.bookmarkInput);
@@ -317,6 +347,8 @@ describe('Send: Bookmarks', () => {
       {"title":"Bob","address":"${accounts.genesis.address}","balance":101}
     ]`);
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.send);
+    cy.get(ss.termsOfUse).click();
     cy.visit(urls.send);
     cy.get(ss.recipientInput).click().type('Bob');
     cy.get(ss.bookmarkList).eq(0).contains('Bob');
