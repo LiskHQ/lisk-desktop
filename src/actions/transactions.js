@@ -27,7 +27,7 @@ export const testExtensions = () => ({
 });
 
 export const transactionsFilterSet = ({
-  address, limit, filter,
+  address, limit, filter, customFilters = {},
 }) => (dispatch, getState) => {
   const liskAPIClient = getState().peers.liskAPIClient;
 
@@ -38,12 +38,14 @@ export const transactionsFilterSet = ({
     address,
     limit,
     filter,
+    customFilters,
   }).then((response) => {
     dispatch({
       data: {
         confirmed: response.data,
         count: parseInt(response.meta.count, 10),
         filter,
+        customFilters,
       },
       type: actionTypes.transactionsFiltered,
     });
@@ -198,12 +200,12 @@ export const loadTransaction = ({ id }) =>
   };
 
 export const transactionsUpdated = ({
-  address, limit, filter, pendingTransactions,
+  address, limit, filter, pendingTransactions, customFilters,
 }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     getTransactions({
-      liskAPIClient, address, limit, filter,
+      liskAPIClient, address, limit, filter, customFilters,
     })
       .then((response) => {
         dispatch({

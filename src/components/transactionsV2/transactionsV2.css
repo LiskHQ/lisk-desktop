@@ -16,7 +16,6 @@
 
 .txFilters {
   background-color: var(--color-background-menu);
-  border-bottom: 1px solid var(--color-light-gray);
   display: flex;
   height: 50px;
   list-style: none;
@@ -35,7 +34,7 @@
     font-size: var(--paragraph-font-size-s);
     font-weight: var(--font-weight-bold);
     justify-content: center;
-    margin-bottom: -1px;
+    margin-bottom: -2px;
     padding: 16px;
     position: relative;
 
@@ -69,6 +68,10 @@
   }
 }
 
+.topHeader {
+  display: flex;
+}
+
 .txDetails {
   word-break: break-word;
 
@@ -100,4 +103,24 @@
   &.greenLabel {
     color: #00b262;
   }
+}
+
+.container {
+  display: flex;
+  background: var(--color-background-menu);
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-light-gray);
+}
+
+.item {
+  color: var(--color-content-grayblue);
+  cursor: pointer;
+  font-family: var(--heading-font);
+  font-size: var(--paragraph-font-size-s);
+  font-weight: var(--font-weight-bold);
+  background: var(--color-white);
+  margin: 8px 10px;
+  border: none;
+  border-radius: var(--border-radius-standard);
+  box-shadow: 0 3px 3px -1px rgba(10, 22, 70, 0.1), 0 0 1px 0 rgba(10, 22, 70, 0.06);
 }

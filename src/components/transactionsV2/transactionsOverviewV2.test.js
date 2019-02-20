@@ -52,6 +52,13 @@ describe('TransactionsOverview V2', () => {
     history: {
       push: spy(),
     },
+    customFilters: {
+      dateFrom: '',
+      dateTo: '',
+      amountFrom: '',
+      amountTo: '',
+      message: '',
+    },
   };
 
   const options = {

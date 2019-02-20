@@ -21,7 +21,7 @@ export const send = (
 
 export const getTransactions = ({
   liskAPIClient, address, limit = 20, offset = 0,
-  sort = 'timestamp:desc', filter = txFilters.all,
+  sort = 'timestamp:desc', filter = txFilters.all, customFilters = {},
 }) => {
   const params = {
     limit,
@@ -29,6 +29,7 @@ export const getTransactions = ({
     sort,
   };
 
+  if (customFilters.message) params.data = `%${customFilters.message}%`;
   if (filter === txFilters.incoming) params.recipientId = address;
   if (filter === txFilters.outgoing) params.senderId = address;
   if (filter === txFilters.all) params.senderIdOrRecipientId = address;

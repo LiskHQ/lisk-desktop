@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import txFilters from '../../constants/transactionFilters';
 import Piwik from '../../utils/piwik';
+import FilterButton from './filterButton';
+import FilterBar from './filterBar';
 import TransactionsListV2 from './transactionsListV2';
 import styles from './transactionsV2.css';
 
@@ -54,14 +56,26 @@ class TransactionsOverviewV2 extends React.Component {
 
     return (
       <div className={`${styles.transactions} transactions`}>
-        <ul className={`${styles.txFilters}`}>
-          {filters.map((filter, i) => (
-            <li key={i} className={`transaction-filter-item ${filter.className} ${this.isActiveFilter(filter.value) ? styles.active : ''}`}
-              onClick={() => this.setTransactionsFilter(filter.value)}>
-              {filter.name}
-            </li>
-          ))}
-        </ul>
+        <div className={styles.container}>
+          <ul className={`${styles.txFilters}`}>
+            {filters.map((filter, i) => (
+              <li key={i} className={`transaction-filter-item ${filter.className} ${this.isActiveFilter(filter.value) ? styles.active : ''}`}
+                onClick={() => this.setTransactionsFilter(filter.value)}>
+                {filter.name}
+              </li>
+            ))}
+          </ul>
+          <FilterButton
+            saveFilters={this.props.saveFilters}
+            customFilters={this.props.customFilters}
+            t={this.props.t} />
+        </div>
+        {this.props.customFilters &&
+          Object.values(this.props.customFilters).find(filter => filter) ? <FilterBar
+          clearFilter={this.props.clearFilter}
+          clearAllFilters={this.props.clearAllFilters}
+          customFilters={this.props.customFilters}
+          t={this.props.t} /> : null}
         <TransactionsListV2
           followedAccounts={this.props.followedAccounts}
           canLoadMore={this.props.canLoadMore}
