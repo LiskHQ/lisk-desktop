@@ -88,9 +88,11 @@
   }
 
   & button {
-    min-height: 40px;
     height: 40px;
-    width: 180px;
+    min-height: 40px;
+    min-width: 180px;
+    padding: 0 42px;
+    width: auto;
   }
 }
 

@@ -3,6 +3,7 @@ import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import RequestV2 from '../../requestV2/requestV2';
+import { getIndexOfFollowedAccount } from '../../../utils/followedAccounts';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import HeaderAccountInfo from './headerAccountInfo';
 import styles from './transactionsOverviewHeader.css';
@@ -46,7 +47,8 @@ class transactionsHeader extends React.Component {
       followedAccounts, address, t, delegate = {},
     } = this.props;
 
-    const isMyWallet = address === this.props.account.address;
+    const isFollowing = getIndexOfFollowedAccount(followedAccounts, { address }) !== -1;
+    const isWalletRoute = this.props.match.url === routes.wallet.path;
 
     return (
       <header className={`${styles.wrapper}`}>
@@ -57,23 +59,45 @@ class transactionsHeader extends React.Component {
           account={this.props.account}
           />
         <div className={`${styles.buttonsHolder}`}>
-        { isMyWallet ?
-          <span
-            ref={this.setRequestDropdownRef}
-            className={`${styles.requestContainer} help-onboarding tx-receive-bt`}>
-            <SecondaryButtonV2 onClick={this.toggleRequestDropdown}>
-              {t('Request LSK')}
-            </SecondaryButtonV2>
-            <DropdownV2 showDropdown={this.state.showRequestDropdown} className={`${styles.requestDropdown} request-dropdown`}>
-              <RequestV2 address={address} />
-            </DropdownV2>
-          </span>
-        : null }
-          <Link to={`${routes.send.path}?wallet&recipient=${address}`} className={'tx-send-bt'}>
-            <PrimaryButtonV2>
-              {t('Send LSK')}
-            </PrimaryButtonV2>
-          </Link>
+        { isWalletRoute ? (
+          <React.Fragment>
+            <span
+              ref={this.setRequestDropdownRef}
+              className={`${styles.requestContainer} help-onboarding tx-receive-bt`}>
+              <SecondaryButtonV2 onClick={this.toggleRequestDropdown}>
+                {t('Request LSK')}
+              </SecondaryButtonV2>
+              <DropdownV2 showDropdown={this.state.showRequestDropdown} className={`${styles.requestDropdown} request-dropdown`}>
+                <RequestV2 address={address} />
+              </DropdownV2>
+            </span>
+            <Link to={`${routes.send.path}?wallet`} className={'tx-send-bt'}>
+              <PrimaryButtonV2>
+                {t('Send LSK')}
+              </PrimaryButtonV2>
+            </Link>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <Link to={`${routes.send.path}?wallet&recipient=${address}`}
+              className={'send-to-address'}>
+                <SecondaryButtonV2>
+                  {t('Send LSK to this Wallet')}
+                </SecondaryButtonV2>
+            </Link>
+            <span>
+            { isFollowing ? (
+              <PrimaryButtonV2>
+                {t('Follow')}
+              </PrimaryButtonV2>
+            ) : (
+              <SecondaryButtonV2>
+                {t('Following')}
+              </SecondaryButtonV2>
+            )}
+            </span>
+          </React.Fragment>
+        )}
         </div>
       </header>
     );
