@@ -11,7 +11,7 @@ import styles from './splashscreen.css';
 class Splashscreen extends React.Component {
   componentDidMount() {
     // istanbul ignore else
-    if (this.props.settings.areTermsOfUseAccepted) {
+    if (!this.props.settings.areTermsOfUseAccepted) {
       this.props.history.push(routes.termsOfUse.path);
     }
   }

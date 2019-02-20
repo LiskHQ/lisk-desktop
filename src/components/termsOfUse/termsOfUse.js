@@ -22,7 +22,7 @@ class TermsOfUse extends React.Component {
 
   onTermsOfUseAlreadyAccepted() {
     // istanbul ignore else
-    if (!this.props.settings.areTermsOfUseAccepted) {
+    if (this.props.settings.areTermsOfUseAccepted) {
       this.props.history.push(routes.splashscreen.path);
     }
   }
