@@ -66,7 +66,6 @@ describe('Help', () => {
      */
     it('pops up on clean login, go through onboarding', () => {
       cy.visit('/');
-      cy.get(ss.termsOfUse).click();
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.reload();
       cy.get(ss.onBoardingHeader).should('have.text', 'Welcome to Lisk Hub')
