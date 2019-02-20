@@ -7,7 +7,6 @@ import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 import i18n from '../../../i18n';
 import TransactionHeader from './transactionsOverviewHeader';
-import routes from '../../../constants/routes';
 import accounts from '../../../../test/constants/accounts';
 
 describe('Transactions Overview Header', () => {
@@ -34,7 +33,6 @@ describe('Transactions Overview Header', () => {
   const props = {
     account: accounts.genesis,
     followedAccounts: [],
-    match: { url: routes.wallet.path },
     address: accounts.genesis.address,
   };
 
@@ -71,25 +69,6 @@ describe('Transactions Overview Header', () => {
       expect(wrapper.find('.requestContainer')).to.have.descendants('.show');
       wrapper.find('.requestContainer button').first().simulate('click');
       expect(wrapper.find('.requestContainer')).to.not.have.descendants('.show');
-    });
-  });
-
-  describe('Not current user walelt', () => {
-    const anotherProps = {
-      ...props,
-      address: accounts['empty account'].address,
-    };
-
-    beforeEach(() => {
-      wrapper = mount(<MemoryRouter>
-        <TransactionHeader {...anotherProps} />
-      </MemoryRouter>, options);
-    });
-
-    it('Should render only account info and send button if not my wallet', () => {
-      expect(wrapper).to.have.descendants('.accountInfo');
-      expect(wrapper.find('.accountInfo')).to.not.have.descendants('.my-account');
-      expect(wrapper).to.not.have.descendants('.tx-receive-bt');
     });
   });
 });

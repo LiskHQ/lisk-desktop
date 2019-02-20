@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import TabsContainer from './tabsContainer';
 
+// Unskip to use Jest matchers and assertions
 describe.skip('TabsContainer Component', () => {
   let wrapper;
   const children = [0, 1, 2].map((tab, key) => <div key={key} tabName={`tab-${tab}`}>{`tab-${tab}`}</div>);
@@ -38,6 +39,7 @@ describe.skip('TabsContainer Component', () => {
   });
 });
 
+// Remove when Jest is set
 describe('TabsContainer Component', () => {
   let wrapper;
   const children = [0, 1, 2].map((tab, key) => <div key={key} tabName={`tab-${tab}`}>{`tab-${tab}`}</div>);
