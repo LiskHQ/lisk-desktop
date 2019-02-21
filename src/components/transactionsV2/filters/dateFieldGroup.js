@@ -27,6 +27,25 @@ class DateFieldGroup extends React.Component {
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
+  shouldComponentUpdate(nextProps) {
+    const { fields } = this.state;
+    const { filters } = nextProps;
+    const diffFields = Object.keys(fields)
+      .filter(name => filters[name] !== fields[name].value);
+    if (diffFields.length > 0) {
+      const newFields = diffFields.reduce((acc, field) => ({
+        ...acc,
+        [field]: {
+          ...acc[field],
+          value: filters[field],
+        },
+      }), fields);
+      this.setState({ fields: newFields });
+      return false;
+    }
+    return true;
+  }
+
   validateDates(fieldsObj) {
     const { t } = this.props;
     let feedback = '';
