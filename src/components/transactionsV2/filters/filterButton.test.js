@@ -3,9 +3,9 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { spy } from 'sinon';
 import Input from 'react-toolbox/lib/input';
-import { PrimaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
 import FilterButton from './filterButton';
-import keyCodes from './../../constants/keyCodes';
+import keyCodes from '../../../constants/keyCodes';
 
 describe('FilterButton', () => {
   it('should call saveFilters with expected Output', () => {

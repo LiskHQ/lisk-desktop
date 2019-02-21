@@ -1,5 +1,5 @@
 import React from 'react';
-import { FontIcon } from '../fontIcon';
+import { FontIcon } from '../../fontIcon';
 
 import styles from './filterBar.css';
 

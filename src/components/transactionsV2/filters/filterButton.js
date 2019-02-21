@@ -4,12 +4,12 @@ import moment from 'moment';
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
-import keyCodes from './../../constants/keyCodes';
-import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
-import { PrimaryButtonV2 } from '../toolbox/buttons/button';
+import keyCodes from '../../../constants/keyCodes';
+import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
+import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
 
 import styles from './filterButton.css';
-import transactionsStyles from './transactionsV2.css';
+import transactionsStyles from '../transactionsV2.css';
 
 class FilterButton extends React.Component {
   constructor(props) {
@@ -99,8 +99,9 @@ class FilterButton extends React.Component {
   saveFilters() {
     const customFilters = this.state.customFilters;
     ['dateFrom', 'dateTo'].forEach((param) => {
-      const date = moment(customFilters[param], 'MM-DD-YYYY');
-      customFilters[param] = (date.isValid() && date.format('MM-DD-YYYY')) || '';
+      const dateFormat = 'MM-DD-YYYY';
+      const date = moment(customFilters[param], dateFormat);
+      customFilters[param] = (date.isValid() && date.format(dateFormat)) || '';
     });
 
     this.toggleFilters();
