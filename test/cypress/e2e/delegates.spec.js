@@ -17,9 +17,6 @@ describe('Delegates', () => {
   it(`opens by url ${urls.delegates}`, () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
-    cy.get(ss.termsOfUse).click();
-    cy.reload();
-    cy.visit(urls.delegates);
     cy.url().should('contain', urls.delegates);
     cy.get(ss.votesConfirmSidebar).find(ss.nextBtn);
   });
@@ -45,8 +42,6 @@ describe('Delegates', () => {
   it('Become a delegate link absent if I am a delegate', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
-    cy.get(ss.termsOfUse).click();
-    cy.reload();
     cy.get(ss.becomeDelegateLink).should('not.exist');
   });
 
@@ -57,8 +52,6 @@ describe('Delegates', () => {
    */
   it('Become a delegate link -> Delegate register page', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.delegates);
-    cy.get(ss.termsOfUse).click();
     cy.visit(urls.delegates);
     cy.get(ss.becomeDelegateLink).click();
     cy.url().should('contain', urls.registerDelegate);
@@ -72,8 +65,6 @@ describe('Delegates', () => {
   it('Displays 100 delegates and loads more as I scroll to bottom', () => {
     cy.autologin(accounts.genesis.passphrase, networks.testnet.node);
     cy.visit(urls.delegates);
-    cy.get(ss.termsOfUse).click();
-    cy.visit(urls.delegates);
     cy.get(ss.delegateName);
     cy.get(ss.delegateList).scrollTo('bottom');
     cy.get(ss.delegateRow).should('have.length', 200);
@@ -85,8 +76,6 @@ describe('Delegates', () => {
    */
   it('Vote, Rank, Name, Lisk ID, Productivity columns show corresponding data', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.delegates);
-    cy.get(ss.termsOfUse).click();
     cy.visit(urls.delegates);
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.delegateRank).should('have.text', '1');
@@ -102,8 +91,6 @@ describe('Delegates', () => {
    */
   it('Search for a delegate', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.delegates);
-    cy.get(ss.termsOfUse).click();
     cy.visit(urls.delegates);
     cy.get(ss.searchDelegateInput).click().type('doesntexist');
     cy.get(ss.delegateRow).should('not.exist');
@@ -125,8 +112,6 @@ describe('Delegates', () => {
   /* eslint-disable max-statements */
   it('Unvote and Vote + Header balance is affected', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.delegates);
-    cy.get(ss.termsOfUse).click();
     cy.visit(urls.delegates);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     cy.get(ss.nextBtn).should('be.disabled');
@@ -190,8 +175,6 @@ describe('Delegates', () => {
   it('Vote with second passphrase', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
-    cy.get(ss.termsOfUse).click();
-    cy.visit(urls.delegates);
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.voteCheckbox).click();
     cy.get(ss.nextBtn).click();
@@ -235,8 +218,6 @@ describe('Delegates', () => {
    */
   it('Filter voted/not voted delegates', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
-    cy.visit(urls.delegates);
-    cy.get(ss.termsOfUse).click();
     cy.visit(urls.delegates);
     // Filter Voted
     cy.get(ss.filterVoted).click();

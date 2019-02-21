@@ -26,10 +26,8 @@ describe('Help', () => {
    * @expect some specific to page element is present on it
    */
   it('opens by sidebar button', () => {
-    cy.visit('/');
-    cy.get(ss.termsOfUse).click();
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.reload();
+    cy.visit('/');
     cy.get(ss.sidebarMenuHelpBtn).should('have.css', 'opacity', '1').click();
     cy.url().should('contain', urls.help);
     checkHelpPageLoaded();
@@ -65,10 +63,8 @@ describe('Help', () => {
      * @expect onBoarding is set to false
      */
     it('pops up on clean login, go through onboarding', () => {
-      cy.visit('/');
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-      cy.get(ss.termsOfUse).click();
-      cy.reload();
+      cy.visit('/');
       cy.get(ss.onBoardingHeader).should('have.text', 'Welcome to Lisk Hub')
         .and(() => expect(getSettingsObjFromLS().onBoarding).to.equal(true));
       cy.get(ss.onBoardingTooltipPrimaryBtn).click();
@@ -136,8 +132,6 @@ describe('Help', () => {
       cy.addObjectToLocalStorage('settings', 'onBoarding', true);
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit('/');
-      cy.get(ss.termsOfUse).click();
-      cy.visit('/dashboard');
       cy.get(ss.onBoardingHeader).should('have.text', 'Welcome to Lisk Hub');
       cy.get(ss.onBoardingTooltipPrimaryBtn).click();
       cy.get(ss.onBoardingHeader).should('have.text', 'Lisk ID');
