@@ -93,7 +93,7 @@ class WalletTransactionsV2 extends React.Component {
   saveFilters(customFilters) {
     this.props.transactionsFilterSet({
       address: this.props.address,
-      limit: 25,
+      limit: 30,
       filter: this.props.activeFilter,
       customFilters,
     });
@@ -110,7 +110,8 @@ class WalletTransactionsV2 extends React.Component {
 
   /* istanbul ignore next */
   clearAllFilters() {
-    this.saveFilters({});
+    const customFilters = Object.keys(this.state.customFilters).reduce((acc, key) => ({ ...acc, [key]: '' }), {});
+    this.saveFilters(customFilters);
   }
 
   /* istanbul ignore next */

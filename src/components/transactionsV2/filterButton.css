@@ -41,13 +41,16 @@
 }
 
 .row {
+  align-items: flex-start;
   display: flex;
   margin: 14px 0 24px;
 }
 
 .dash {
-  vertical-align: middle;
+  align-items: center;
+  display: flex;
   font-size: 12px;
+  height: 36px;
 }
 
 .button {
@@ -60,11 +63,12 @@
 }
 
 .filterTransactions {
+  align-items: center;
   display: flex;
   justify-content: center;
   font-size: var(--button-font-size-s);
-  padding: 10px 20px 0;
-  height: 25px;
+  padding: 0 20px;
+  height: 100%;
 }
 
 .error {

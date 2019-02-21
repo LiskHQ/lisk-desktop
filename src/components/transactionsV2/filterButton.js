@@ -1,5 +1,6 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
+import moment from 'moment';
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 // import 'react-datepicker/dist/react-datepicker-cssmodules.css';
@@ -23,12 +24,18 @@ class FilterButton extends React.Component {
         amountTo: '',
         message: '',
       },
-      amountToValidity: '',
-      amountFromValidity: '',
-      messageValidity: '',
+      errors: {
+        dateFromValidity: '',
+        dateToValidity: '',
+        amountToValidity: '',
+        amountFromValidity: '',
+        messageValidity: '',
+      },
     };
     this.toggleFilters = this.toggleFilters.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.validateDate = this.validateDate.bind(this);
+    this.shouldDisableButton = this.shouldDisableButton.bind(this);
   }
 
   /* istanbul ignore next */
@@ -38,8 +45,41 @@ class FilterButton extends React.Component {
     }
   }
 
+  shouldDisableButton() {
+    const { errors } = this.state;
+    return !!Object.keys(errors).filter(error => errors[error] !== '').length;
+  }
+
+  validateDate(value, name) {
+    const { t } = this.props;
+    const { customFilters } = this.state;
+    const momentFormats = ['MM-DD-YY', 'MM-DD-YYYY'];
+
+    return (value !== '' && !moment(value, momentFormats).isValid() && t('Invalid Date'))
+      || (name === 'dateFrom'
+        && moment(value, momentFormats) > moment(customFilters.dateTo, momentFormats)
+        && t('Must be less than end date'))
+      || (name === 'dateTo'
+        && moment(value, momentFormats) < moment(customFilters.dateFrom, momentFormats)
+        && t('Must be greater than start date'))
+      || '';
+  }
+
   changeFilters(name, value) {
-    let errors = {};
+    const { t } = this.props;
+    let errors = this.state.errors;
+    if (name === 'dateFrom' || name === 'dateTo') {
+      value = value.replace(/\D/g, '').split('').reduce((acc, digit, idx) => {
+        const dashCounter = acc.split('-').length;
+        return ((idx !== 0 && idx % 2 === 0) && dashCounter < 3) ? `${acc}-${digit}` : `${acc}${digit}`;
+      }, '').substring(0, 10);
+      const error = this.validateDate(value, name);
+
+      errors = {
+        [`${name}Validity`]: error,
+      };
+    }
+
     // if (name === 'amountTo') {
     //   errors = { amountToValidity: Number.isNaN(Number(value)) ? 'Invalid number' : '' };
     // }
@@ -48,16 +88,21 @@ class FilterButton extends React.Component {
     //   errors = { amountFromValidity: Number.isNaN(Number(value)) ? 'Invalid number' : '' };
     // }
 
-    // if (name === 'message') {
-    const byteCount = encodeURI(value).split(/%..|./).length - 1;
-    errors = { messageValidity: byteCount > 62 ? 'Maximum length exceeded' : '' };
-    // }
+    if (name === 'message') {
+      const byteCount = encodeURI(value).split(/%..|./).length - 1;
+      errors = { messageValidity: byteCount > 62 ? t('Maximum length exceeded') : '' };
+    }
 
-    this.setState({ customFilters: { ...this.state.customFilters, [name]: value }, ...errors });
+    this.setState({ customFilters: { ...this.state.customFilters, [name]: value }, errors });
   }
 
   saveFilters() {
     const customFilters = this.state.customFilters;
+    ['dateFrom', 'dateTo'].forEach((param) => {
+      const date = moment(customFilters[param], 'MM-DD-YYYY');
+      customFilters[param] = (date.isValid() && date.format('MM-DD-YYYY')) || '';
+    });
+
     this.toggleFilters();
 
     this.props.saveFilters(customFilters);
@@ -82,6 +127,7 @@ class FilterButton extends React.Component {
   handleKey(event) {
     switch (event.keyCode) {
       case keyCodes.enter:
+        if (this.shouldDisableButton()) return false;
         this.saveFilters();
         break;
       /* istanbul ignore next */
@@ -109,7 +155,7 @@ class FilterButton extends React.Component {
               ref={(node) => { this.dropdownRef = node; }}>
               {/* <div className={styles.triangleBorder}></div>
               <div className={styles.triangle}></div> */}
-              {/* <div className={styles.label}>{this.props.t('Date')}</div>
+              <div className={styles.label}>{this.props.t('Date')}</div>
               <div className={styles.row}>
                 <Input
                   type='text'
@@ -117,25 +163,21 @@ class FilterButton extends React.Component {
                   name='dateFrom'
                   placeholder='MM-DD-YY'
                   theme={styles}
+                  error={this.state.errors.dateFromValidity}
                   value={this.state.customFilters.dateFrom}
                   onChange={(val) => { this.changeFilters('dateFrom', val); }}/>
-                TODO <DatePicker
-                  dateFormat="MM-dd-yy"
-                  placeholderText="MM-DD-YY"
-                  selected={this.state.filters.dateFrom}
-                  onChange={(val) => { this.changeFilters('dateFrom', val); }}
-                />
-                <div className={styles.dash}>—</div>
+                <span className={styles.dash}>—</span>
                 <Input
                   type='text'
                   id='filter-date-to'
                   name='dateTo'
                   placeholder='MM-DD-YY'
                   theme={styles}
+                  error={this.state.errors.dateToValidity}
                   value={this.state.customFilters.dateTo}
                   onChange={(val) => { this.changeFilters('dateTo', val); }}/>
               </div>
-              <div className={styles.label}>{this.props.t('Amount')}</div>
+              {/* <div className={styles.label}>{this.props.t('Amount')}</div>
               <div className={styles.row}>
                 <Input
                   type='text'
@@ -144,7 +186,7 @@ class FilterButton extends React.Component {
                   placeholder='Min'
                   theme={styles}
                   value={this.state.customFilters.dateFrom}
-                  error={this.state.amountFromValidity}
+                  error={this.state.errors.amountFromValidity}
                   onChange={(val) => { this.changeFilters('amountFrom', val); }}/>
                 <div className={styles.dash}>—</div>
                 <Input
@@ -152,7 +194,7 @@ class FilterButton extends React.Component {
                   id='filter-amount-to'
                   name='amountTo'
                   placeholder='Max'
-                  error={this.state.amountToValidity}
+                  error={this.state.errors.amountToValidity}
                   theme={styles}
                   value={this.state.customFilters.amountTo}
                   onChange={(val) => { this.changeFilters('amountTo', val); }}/>
@@ -165,14 +207,14 @@ class FilterButton extends React.Component {
                   name='message'
                   placeholder={this.props.t('Write message')}
                   theme={styles}
-                  error={this.state.messageValidity}
+                  error={this.state.errors.messageValidity}
                   value={message || ''}
                   onKeyDown={this.handleKey.bind(this)}
                   onChange={(val) => { this.changeFilters('message', val); }}/>
               </div>
               <div className={styles.buttonContainer}>
                 <PrimaryButtonV2
-                  disabled={this.state.messageValidity}
+                  disabled={this.shouldDisableButton()}
                   theme={styles}
                   className='saveButton'
                   onClick={this.saveFilters.bind(this)}>{this.props.t('Apply Filters')}</PrimaryButtonV2>
