@@ -1,0 +1,56 @@
+@import '../../app/variablesV2.css';
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+
+  & .fieldLabel {
+    color: var(--color-content-light);
+    font-family: var(--heading-font);
+    font-size: var(--paragraph-font-size-l);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 8px;
+  }
+
+  & .fieldRow {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+
+    & > span {
+      color: var(--color-dark-gray);
+      font-family: var(--content-font);
+      font-size: var(--button-font-size-s);
+      font-weight: var(--font-weight-semi-bold);
+      letter-spacing: 0.04px;
+      line-height: 22px;
+      margin: 0 15px;
+    }
+
+    & .input {
+      font-size: var(--button-font-size-s);
+      height: 36px;
+      line-height: 1.83;
+    }
+  }
+
+  & .feedback {
+    color: var(--color-error);
+    display: block;
+    font-family: var(--content-font);
+    font-size: var(--button-font-size-s);
+    font-weight: var(--font-weight-semi-bold);
+    line-height: 1.83;
+    margin-top: 8px;
+    max-height: 0;
+    opacity: 0;
+    text-align: right;
+    transition: opacity var(--animation-speed-fast) linear;
+    width: 100%;
+
+    &.show {
+      max-height: 100%;
+      opacity: 1;
+    }
+  }
+}

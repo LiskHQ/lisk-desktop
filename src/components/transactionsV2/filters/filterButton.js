@@ -7,6 +7,7 @@ import moment from 'moment';
 import keyCodes from '../../../constants/keyCodes';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
+import DateFieldGroup from './dateFieldGroup';
 
 import styles from './filterButton.css';
 import transactionsStyles from '../transactionsV2.css';
@@ -140,22 +141,21 @@ class FilterButton extends React.Component {
 
   render() {
     const message = this.state.customFilters.message;
+    const { t } = this.props;
 
     return (
-      <div className={`${transactionsStyles.filters} ${transactionsStyles.item}`}>
+      <div className={`${transactionsStyles.item}`}>
         <div
           className={`${styles.filterTransactions} filterTransactions`}
-          onClick={() => { this.toggleFilters(); }}>
-            {this.props.t('Filter Transactions')}
-              <div className={styles.triangleDown}>▾</div>
+          onClick={this.toggleFilters}>
+            {t('Filter Transactions')}
         </div>
         <div className={styles.dropdownContainer}>
           <DropdownV2 className={styles.bigDropdown} showDropdown={this.state.showFilters}>
             <div
               className={`${styles.container} container`}
               ref={(node) => { this.dropdownRef = node; }}>
-              {/* <div className={styles.triangleBorder}></div>
-              <div className={styles.triangle}></div> */}
+              <DateFieldGroup />
               <div className={styles.label}>{this.props.t('Date')}</div>
               <div className={styles.row}>
                 <Input
