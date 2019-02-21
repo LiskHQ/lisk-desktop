@@ -33,25 +33,29 @@ class DateFieldGroup extends React.Component {
     const fields = Object.keys(fieldsObj).reduce((acc, field) => {
       const { value } = fieldsObj[field];
       const date = moment(value, this.dateFormat);
+      let error = false;
 
       if (value !== '' && !date.isValid()) {
         feedback = t(`Date must be in ${this.dateFormat} format`);
+        error = true;
       } else if (
         (field === 'dateFrom' && date > moment(fieldsObj.dateTo.value, this.dateFormat))
         || (field === 'dateTo' && date < moment(fieldsObj.dateFrom.value, this.dateFormat))
       ) {
         feedback = t('Invalid Dates');
+        error = true;
       }
 
       return {
         ...acc,
         [field]: {
           ...fieldsObj[field],
-          error: feedback !== '',
+          error,
         },
       };
     }, {});
 
+    this.props.updateCustomFilters(fields);
     this.setState({ fields, feedback });
   }
 
@@ -73,7 +77,7 @@ class DateFieldGroup extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { handleKeyPress, t } = this.props;
     const { fields } = this.state;
 
     return (
@@ -86,6 +90,7 @@ class DateFieldGroup extends React.Component {
             name='dateFrom'
             value={fields.dateFrom.value}
             placeholder={this.dateFormat}
+            onKeyDown={handleKeyPress}
             className={`${styles.input} ${fields.dateFrom.error ? 'error' : ''}`} />
           <span>-</span>
           <InputV2
@@ -94,6 +99,7 @@ class DateFieldGroup extends React.Component {
             name='dateTo'
             value={fields.dateTo.value}
             placeholder={this.dateFormat}
+            onKeyDown={handleKeyPress}
             className={`${styles.input} ${fields.dateTo.error ? 'error' : ''}`} />
         </div>
         <span className={`${styles.feedback} ${this.state.feedback ? styles.show : ''}`}>
