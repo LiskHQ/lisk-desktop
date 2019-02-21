@@ -1,5 +1,5 @@
-@import '../app/variables.css';
-@import '../app/variablesV2.css';
+@import '../../app/variables.css';
+@import '../../app/variablesV2.css';
 
 .container {
   background-color: var(--color-white);
