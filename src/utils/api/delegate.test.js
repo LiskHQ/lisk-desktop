@@ -43,7 +43,7 @@ describe('Utils: Delegate', () => {
     liskAPIClientMockDelegates = sinon.mock(liskAPIClient.delegates);
     liskAPIClientMockVotes = sinon.mock(liskAPIClient.votes);
     liskAPIClientMockVoters = sinon.mock(liskAPIClient.voters);
-    liskAPIClientMockTransations = sinon.stub(liskAPIClient.transactions, 'broadcast').returnsPromise().resolves({ id: '1234' });
+    liskAPIClientMockTransations = sinon.stub(liskAPIClient.transactions, 'broadcast').resolves({ id: '1234' });
   });
 
   afterEach(() => {
@@ -74,7 +74,7 @@ describe('Utils: Delegate', () => {
     it('should return getDelegate(liskAPIClient, options) if options = {}', () => {
       const options = {};
       const response = { data: [] };
-      liskAPIClientMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
+      liskAPIClientMockDelegates.expects('get').withArgs(options).resolves(response);
 
       const returnedPromise = listDelegates(liskAPIClient, options);
       expect(returnedPromise).to.eventually.equal(response);
@@ -83,7 +83,7 @@ describe('Utils: Delegate', () => {
     it('should return getDelegate(liskAPIClient, options) if options.q is set', () => {
       const options = { q: 'genesis_1' };
       const response = { data: [] };
-      liskAPIClientMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
+      liskAPIClientMockDelegates.expects('get').withArgs(options).resolves(response);
 
       const returnedPromise = listDelegates(liskAPIClient, options);
       return expect(returnedPromise).to.eventually.equal(response);
@@ -94,7 +94,7 @@ describe('Utils: Delegate', () => {
     it('should return getDelegate(liskAPIClient, options)', () => {
       const options = { publicKey: `"${accounts.delegate.publicKey}"` };
       const response = { data: [] };
-      liskAPIClientMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
+      liskAPIClientMockDelegates.expects('get').withArgs(options).resolves(response);
 
       const returnedPromise = getDelegate(liskAPIClient, options);
       return expect(returnedPromise).to.eventually.equal(response);
@@ -148,9 +148,9 @@ describe('Utils: Delegate', () => {
     it('should get all votes for an address with no parameters > 100', () => {
       const address = '123L';
       liskAPIClientMockVotes.expects('get').withArgs({ address, offset: 0, limit: 100 })
-        .returnsPromise().resolves({ data: { votes: [1, 2, 3], votesUsed: 101 } });
+        .resolves({ data: { votes: [1, 2, 3], votesUsed: 101 } });
       liskAPIClientMockVotes.expects('get').withArgs({ address, offset: 100, limit: 1 })
-        .returnsPromise().resolves({ data: { votes: [4], votesUsed: 101 } });
+        .resolves({ data: { votes: [4], votesUsed: 101 } });
       const returnedPromise = getAllVotes(liskAPIClient, address);
       expect(returnedPromise).to.eventually.equal([1, 2, 3, 4]);
     });
@@ -158,7 +158,7 @@ describe('Utils: Delegate', () => {
     it('should get all votes for an address with no parameters < 100', () => {
       const address = '123L';
       liskAPIClientMockVotes.expects('get').withArgs({ address, offset: 0, limit: 100 })
-        .returnsPromise().resolves({ data: { votes: [1], votesUsed: 1 } });
+        .resolves({ data: { votes: [1], votesUsed: 1 } });
       const returnedPromise = getAllVotes(liskAPIClient, address);
       expect(returnedPromise).to.eventually.equal([1]);
     });
@@ -168,7 +168,7 @@ describe('Utils: Delegate', () => {
     it('should return getVoters(liskAPIClient, { publicKey, offset: 0, limit: 100 })', () => {
       const publicKey = '';
       liskAPIClientMockVoters.expects('get').withArgs({ publicKey, offset: 0, limit: 100 })
-        .returnsPromise().resolves('resolved promise');
+        .resolves('resolved promise');
 
       const returnedPromise = getVoters(liskAPIClient, { publicKey, offset: 0, limit: 100 });
       expect(returnedPromise).to.eventually.equal('resolved promise');
@@ -179,7 +179,7 @@ describe('Utils: Delegate', () => {
     it('should return getVoters(liskAPIClient, { publicKey })', () => {
       const publicKey = '';
       liskAPIClientMockVoters.expects('get').withArgs({ publicKey, offset: 0, limit: 100 })
-        .returnsPromise().resolves('resolved promise');
+        .resolves('resolved promise');
 
       const returnedPromise = getVoters(liskAPIClient, { publicKey });
       expect(returnedPromise).to.eventually.equal('resolved promise');

@@ -53,7 +53,7 @@ describe('@integration RegisterDelegate', () => {
 
   beforeEach(() => {
     transactionsApiStub = sinon.stub(transactionsApi, 'getTransactions');
-    transactionsApiStub.returnsPromise().resolves({ data: [] });
+    transactionsApiStub.resolves({ data: [] });
   });
 
   afterEach(() => {
@@ -84,7 +84,7 @@ describe('@integration RegisterDelegate', () => {
   describe('Scenario: does not allow to register as delegate with a duplicate username', () => {
     step('Given I am in "register-delegate" page', () => {
       setupStep(normalAccount);
-      delegateApiMock.expects('getDelegate').returnsPromise().resolves({ data: [{ username: 'peter' }] });
+      delegateApiMock.expects('getDelegate').resolves({ data: [{ username: 'peter' }] });
       clock = sinon.useFakeTimers({
         toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
       });

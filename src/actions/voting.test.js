@@ -127,7 +127,7 @@ describe('actions: voting', () => {
     });
 
     it('should dispatch transactionAdded action if resolved', async () => {
-      delegateApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
+      delegateApiMock.resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
         senderPublicKey: account.publicKey,
@@ -143,7 +143,7 @@ describe('actions: voting', () => {
     });
 
     it('should call goToNextStep with "success: false" if caught an error', async () => {
-      delegateApiMock.returnsPromise().rejects({ message: 'sample message' });
+      delegateApiMock.rejects({ message: 'sample message' });
 
       await actionFunction(dispatch, getState);
       const expectedAction = { success: false, text: 'sample message.' };
@@ -151,7 +151,7 @@ describe('actions: voting', () => {
     });
 
     it('should call goToNextStep with "success: false" and default message if caught an error but no message returned', async () => {
-      delegateApiMock.returnsPromise().rejects({});
+      delegateApiMock.rejects({});
 
       await actionFunction(dispatch, getState);
       const expectedAction = { success: false, text: 'An error occurred while placing your vote.' };
@@ -244,7 +244,7 @@ describe('actions: voting', () => {
         },
       });
 
-      delegateApiMock.returnsPromise().resolves({ data: delegates });
+      delegateApiMock.resolves({ data: delegates });
       const expectedAction = { list: delegates, totalDelegates: delegates.length, refresh: true };
 
       actionFunction(dispatch, getState);

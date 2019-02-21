@@ -11,7 +11,7 @@ describe('Utils: Transactions API', () => {
   const liskAPIClient = {
     transactions: {
       get: stub().returnsPromise(),
-      broadcast: stub().returnsPromise().resolves({ recipientId, amount, id }),
+      broadcast: stub().resolves({ recipientId, amount, id }),
     },
     node: {
       getTransactions: stub().returnsPromise(),

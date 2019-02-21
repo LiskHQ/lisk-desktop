@@ -123,9 +123,9 @@ const loginProcess = (votes = []) => {
     peerMiddleware,
   ]);
 
-  accountAPIStub.withArgs(match.any).returnsPromise().resolves({ data: [account] });
+  accountAPIStub.withArgs(match.any).resolves({ data: [account] });
   store.dispatch(liskAPIClientSet({ network: getNetwork(networks.mainnet.code) }));
-  accountAPIStub.withArgs(match.any).returnsPromise().resolves({ data: [account] });
+  accountAPIStub.withArgs(match.any).resolves({ data: [account] });
   store.dispatch(accountLoggedIn(account));
 
   listDelegatesApiStub.returnsPromise()

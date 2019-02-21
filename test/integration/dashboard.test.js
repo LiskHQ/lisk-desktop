@@ -84,10 +84,10 @@ describe('@integration: Dashboard', () => {
       match.defined,
       match.defined,
       '',
-    ).returnsPromise().resolves({ data: [] });
+    ).resolves({ data: [] });
     // transactionsFilterSet do pass filter
     getTransactionsStub.withArgs(match.any)
-      .returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
+      .resolves({ data: generateTransactions(25), meta: { count: 1000 } });
 
     // rest of accounts send request
     sendTransactionsStub.withArgs(
@@ -97,7 +97,7 @@ describe('@integration: Dashboard', () => {
       match.defined,
       null,
       '',
-    ).returnsPromise().resolves({ data: [] });
+    ).resolves({ data: [] });
   });
 
   afterEach(() => {
@@ -134,7 +134,7 @@ describe('@integration: Dashboard', () => {
       unconfirmedBalance: '0',
       passphrase,
     };
-    accountAPIStub.withArgs(match.any).returnsPromise().resolves({ data: [...account] });
+    accountAPIStub.withArgs(match.any).resolves({ data: [...account] });
     store.dispatch(liskAPIClientSet({ network: getNetwork(networks.mainnet.code) }));
     delegateAPIStub.withArgs(match.any).returnsPromise()
       .resolves({ delegate: { ...accounts['delegate candidate'] } });

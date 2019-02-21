@@ -24,7 +24,7 @@ describe('actions: search', () => {
     });
 
     searchAllStub = stub(searchAPI, 'default');
-    searchAllStub.withArgs(match.any).returnsPromise().resolves({});
+    searchAllStub.withArgs(match.any).resolves({});
   });
 
   afterEach(() => {

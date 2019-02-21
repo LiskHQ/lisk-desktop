@@ -52,15 +52,15 @@ describe('Utils: Search', () => {
     getSingleTransactionStub = stub(transactionsAPI, 'getSingleTransaction');
 
     // address match
-    getAccountStub.withArgs(undefined, '1337L').returnsPromise().resolves(accountsResponse);
+    getAccountStub.withArgs(undefined, '1337L').resolves(accountsResponse);
     listDelegatesStub.withArgs(undefined, delegatesUrlParams)
-      .returnsPromise().resolves(delegatesResponse);
-    getSingleTransactionStub.returnsPromise().resolves(transactionsResponse);
+      .resolves(delegatesResponse);
+    getSingleTransactionStub.resolves(transactionsResponse);
 
     // txSearch match
-    getAccountStub.withArgs(undefined, '1337').returnsPromise().resolves(accountsResponse);
+    getAccountStub.withArgs(undefined, '1337').resolves(accountsResponse);
     listDelegatesStub.withArgs(undefined, delegatesUrlParamsTxMatch)
-      .returnsPromise().resolves(delegatesResponse);
+      .resolves(delegatesResponse);
   });
 
   afterEach(() => {
@@ -85,7 +85,7 @@ describe('Utils: Search', () => {
 
   it('should still search for {addresses} when failing {delegates} request', () => {
     listDelegatesStub.withArgs(undefined, delegatesUrlParams)
-      .returnsPromise().rejects({ success: false });
+      .rejects({ success: false });
     return expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
       { addresses: [accountsResponse] },
       { transactions: [] },
@@ -94,7 +94,7 @@ describe('Utils: Search', () => {
   });
 
   it('should still search for {delegates} when failing {addresses} request', () => {
-    getAccountStub.withArgs(undefined, '1337L').returnsPromise().rejects({ success: false });
+    getAccountStub.withArgs(undefined, '1337L').rejects({ success: false });
     return expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
       { addresses: [] },
       { transactions: [] },
@@ -103,7 +103,7 @@ describe('Utils: Search', () => {
   });
 
   it('should still search for {delegates} when failing {transactions} request', () => {
-    getSingleTransactionStub.returnsPromise().rejects({ success: false });
+    getSingleTransactionStub.rejects({ success: false });
     return expect(searchAll({ searchTerm: '1337' })).to.eventually.deep.equal([
       { addresses: [] },
       { transactions: [] },

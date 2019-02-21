@@ -99,9 +99,9 @@ describe('@integration: Single Transaction', () => {
       unconfirmedBalance: '0',
     };
 
-    accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
+    accountAPIStub.withArgs(match.any).resolves({ ...account });
     store.dispatch(liskAPIClientSet({ network: getNetwork(networks.mainnet.code) }));
-    accountAPIStub.withArgs(match.any).returnsPromise().resolves({ ...account });
+    accountAPIStub.withArgs(match.any).resolves({ ...account });
     if (accountType) { store.dispatch(accountLoggedIn(account)); }
     wrapper = mount(renderWithRouter(
       SingleTransaction, store,

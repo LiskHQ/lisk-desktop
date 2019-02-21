@@ -86,7 +86,7 @@ describe('actions: account', () => {
     });
 
     it('should dispatch transactionAdded action if resolved', () => {
-      accountApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
+      accountApiMock.resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
         senderPublicKey: accounts['second passphrase account'].publicKey,
@@ -102,7 +102,7 @@ describe('actions: account', () => {
     });
 
     it('should dispatch secondPassphraseRegisteredFailure action if caught', () => {
-      accountApiMock.returnsPromise().rejects({ message: 'sample message' });
+      accountApiMock.rejects({ message: 'sample message' });
 
       actionFunction(dispatch, getState);
       const expectedAction = secondPassphraseRegisteredFailure({ text: 'sample message' });
@@ -110,7 +110,7 @@ describe('actions: account', () => {
     });
 
     it('should dispatch secondPassphraseRegisteredFailure action if caught but no message returned', () => {
-      accountApiMock.returnsPromise().rejects({});
+      accountApiMock.rejects({});
 
       actionFunction(dispatch, getState);
       const expectedAction = secondPassphraseRegisteredFailure({ text: 'An error occurred while registering your second passphrase. Please try again.' });
@@ -151,7 +151,7 @@ describe('actions: account', () => {
     });
 
     it('should dispatch transactionAdded action if resolved', () => {
-      delegateApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
+      delegateApiMock.resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
         senderPublicKey: accounts['second passphrase account'].publicKey,
@@ -167,16 +167,16 @@ describe('actions: account', () => {
         .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
     });
 
-    it('should dispatch delegateRegisteredFailure action if caught', () => {
-      delegateApiMock.returnsPromise().rejects({ message: 'sample message.' });
+    it('should dispatch delegateRegisteredFailure action if caught', async () => {
+      delegateApiMock.rejects({ message: 'sample message.' });
 
-      actionFunction(dispatch, getState);
+      await actionFunction(dispatch, getState);
       const delegateRegisteredFailureAction = delegateRegisteredFailure({ message: 'sample message.' });
       expect(dispatch).to.have.been.calledWith(delegateRegisteredFailureAction);
     });
 
     it('should dispatch passphraseUsed action always', () => {
-      delegateApiMock.returnsPromise().rejects({ message: 'sample message.' });
+      delegateApiMock.rejects({ message: 'sample message.' });
 
       actionFunction(dispatch, getState);
       const passphraseUsedAction = passphraseUsed(accounts.genesis.passphrase);
@@ -208,7 +208,7 @@ describe('actions: account', () => {
 
     it('should dispatch updateDelegate with delegate response', () => {
       const delegateResponse = { delegate: { ...accounts['delegate candidate'] } };
-      delegateApiMock.returnsPromise().resolves(delegateResponse);
+      delegateApiMock.resolves(delegateResponse);
 
       actionFunction(dispatch, getState);
       const updateDelegateAction = {
@@ -244,7 +244,7 @@ describe('actions: account', () => {
     const dispatch = spy();
 
     beforeEach(() => {
-      getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
+      getAccountStub = stub(accountApi, 'getAccount');
       transactionsActionsStub = spy(transactionsActions, 'loadTransactionsFinish');
       getState = () => ({
         peers: { liskAPIClient: {} },
@@ -304,30 +304,27 @@ describe('actions: account', () => {
   });
 
   describe('accountDataUpdated', () => {
-    let peersActionsStub;
-    let getAccountStub;
-    let transactionsActionsStub;
     let getState;
 
     const dispatch = spy();
 
     beforeEach(() => {
-      peersActionsStub = spy(peersActions, 'liskAPIClientUpdate');
-      getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
-      transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
+      stub(accountApi, 'getAccount');
+      spy(peersActions, 'liskAPIClientUpdate');
+      spy(transactionsActions, 'transactionsUpdated');
       getState = () => ({
         peers: { liskAPIClient: {} },
       });
     });
 
     afterEach(() => {
-      getAccountStub.restore();
-      peersActionsStub.restore();
-      transactionsActionsStub.restore();
+      accountApi.getAccount.restore();
+      peersActions.liskAPIClientUpdate.restore();
+      transactionsActions.transactionsUpdated.restore();
     });
 
-    it(`should call account API methods on ${actionTypes.newBlockCreated} action when online`, () => {
-      getAccountStub.resolves({ balance: 10e8 });
+    it(`should call account API methods on ${actionTypes.newBlockCreated} action when online`, async () => {
+      accountApi.getAccount.resolves({ balance: 10e8 });
 
       const data = {
         windowIsFocused: false,
@@ -341,13 +338,13 @@ describe('actions: account', () => {
         account: { address: accounts.genesis.address, balance: 0 },
       };
 
-      accountDataUpdated(data)(dispatch, getState);
+      await accountDataUpdated(data)(dispatch, getState);
       expect(dispatch).to.have.callCount(3);
-      expect(peersActionsStub).to.have.not.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
+      expect(peersActions.liskAPIClientUpdate).to.have.not.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
     });
 
-    it(`should call account API methods on ${actionTypes.newBlockCreated} action when offline`, () => {
-      getAccountStub.rejects({ error: { code: 'EUNAVAILABLE' } });
+    it(`should call account API methods on ${actionTypes.newBlockCreated} action when offline`, async () => {
+      accountApi.getAccount.rejects({ error: { code: 'EUNAVAILABLE' } });
 
       const data = {
         windowIsFocused: true,
@@ -359,8 +356,9 @@ describe('actions: account', () => {
         account: { address: accounts.genesis.address },
       };
 
-      accountDataUpdated(data)(dispatch, getState);
-      expect(peersActionsStub).to.have.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
+      await accountDataUpdated(data)(dispatch, getState);
+      expect(peersActions.liskAPIClientUpdate).to.have.been.calledOnce();
+      expect(peersActions.liskAPIClientUpdate).to.have.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
     });
   });
 
@@ -407,7 +405,7 @@ describe('actions: account', () => {
     let getState;
 
     beforeEach(() => {
-      stub(delegateApi, 'getDelegate').returnsPromise();
+      stub(delegateApi, 'getDelegate');
       getState = () => ({
         peers: { liskAPIClient: {} },
       });
@@ -417,13 +415,13 @@ describe('actions: account', () => {
       delegateApi.getDelegate.restore();
     });
 
-    it('should fetch delegate and update account', () => {
+    it('should fetch delegate and update account', async () => {
       delegateApi.getDelegate.resolves({ data: [{ account: 'delegate data' }] });
       const data = {
         publicKey: accounts.genesis.publicKey,
       };
 
-      updateDelegateAccount(data)(dispatch, getState);
+      await updateDelegateAccount(data)(dispatch, getState);
 
       const accountUpdatedAction = accountUpdated(Object.assign({}, { delegate: { account: 'delegate data' }, isDelegate: true }));
       expect(dispatch).to.have.been.calledWith(accountUpdatedAction);

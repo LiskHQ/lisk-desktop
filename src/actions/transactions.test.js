@@ -36,7 +36,7 @@ describe('actions: transactions', () => {
     });
 
     it('should dispatch transactionsUpdated action if resolved', () => {
-      transactionsApiMock.returnsPromise().resolves({ data: [], meta: { count: '0' } });
+      transactionsApiMock.resolves({ data: [], meta: { count: '0' } });
       const expectedAction = {
         count: 0,
         confirmed: [],
@@ -75,7 +75,7 @@ describe('actions: transactions', () => {
     });
 
     it('should dispatch transactionsLoaded action if resolved', () => {
-      transactionsApiMock.returnsPromise().resolves({ data: [], meta: { count: '0' } });
+      transactionsApiMock.resolves({ data: [], meta: { count: '0' } });
       const expectedAction = {
         count: 0,
         confirmed: [],
@@ -141,8 +141,8 @@ describe('actions: transactions', () => {
           votes: [`+${accounts.delegate.publicKey}`],
         },
       };
-      transactionApiMock.returnsPromise().resolves({ data: [transactionResponse] });
-      delegateApiMock.returnsPromise().resolves({ data: delegateResponse });
+      transactionApiMock.resolves({ data: [transactionResponse] });
+      delegateApiMock.resolves({ data: delegateResponse });
       const expectedActionPayload = {
         ...delegateResponse,
         voteArrayName: 'added',
@@ -158,8 +158,8 @@ describe('actions: transactions', () => {
     it.skip('should dispatch one transactionAddDelegateName action when transaction contains one vote deleted', () => {
       const delegateResponse = { delegate: { username: 'peterpan' } };
       const transactionResponse = { transaction: { votes: { deleted: [accounts.delegate.publicKey] }, count: '0' } };
-      transactionApiMock.returnsPromise().resolves(transactionResponse);
-      delegateApiMock.returnsPromise().resolves(delegateResponse);
+      transactionApiMock.resolves(transactionResponse);
+      delegateApiMock.resolves(delegateResponse);
       const expectedActionPayload = {
         ...delegateResponse,
         voteArrayName: 'deleted',
@@ -209,7 +209,7 @@ describe('actions: transactions', () => {
     });
 
     it('should dispatch transactionAdded action if resolved', async () => {
-      transactionsApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
+      transactionsApiMock.resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
         senderPublicKey: 'test_public-key',
@@ -225,7 +225,7 @@ describe('actions: transactions', () => {
     });
 
     it('should dispatch transactionFailed action if caught', async () => {
-      transactionsApiMock.returnsPromise().rejects({ message: 'sample message' });
+      transactionsApiMock.rejects({ message: 'sample message' });
 
       await actionFunction(dispatch, getState);
       const expectedAction = {
@@ -239,7 +239,7 @@ describe('actions: transactions', () => {
 
     it('should dispatch transactionFailed action if caught but no message returned', async () => {
       const errorMessage = 'An error occurred while creating the transaction';
-      transactionsApiMock.returnsPromise().rejects({ message: errorMessage });
+      transactionsApiMock.rejects({ message: errorMessage });
 
       await actionFunction(dispatch, getState);
       const expectedErrorMessage = errorMessage + '.'; // eslint-disable-line

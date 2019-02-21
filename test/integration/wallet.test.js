@@ -123,7 +123,7 @@ describe('@integration: Wallet', () => {
       delete account.serverPublicKey;
     }
 
-    accountAPIStub.withArgs(match.any).returnsPromise().resolves({ data: [...account] });
+    accountAPIStub.withArgs(match.any).resolves({ data: [...account] });
     store.dispatch(liskAPIClientSet({ network: getNetwork(networks.mainnet.code) }));
     delegateAPIStub.withArgs(match.any).returnsPromise()
       .resolves({ data: [{ ...accounts['delegate candidate'] }] });
@@ -151,7 +151,7 @@ describe('@integration: Wallet', () => {
     delegateAPIStub = stub(delegateAPI, 'getDelegate');
     localStorageStub = stub(localStorage, 'getItem');
     liskServiceStub = stub(liskServiceApi, 'getPriceTicker');
-    liskServiceStub.withArgs(match.any).returnsPromise().resolves({ tickers: {} });
+    liskServiceStub.withArgs(match.any).resolves({ tickers: {} });
   });
 
   afterEach(() => {
@@ -172,14 +172,14 @@ describe('@integration: Wallet', () => {
         address: match.defined,
         limit: 25,
         filter: txFilters.all,
-      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
+      }).resolves({ data: generateTransactions(25), meta: { count: 1000 } });
 
       // loadTransactions does not pass filter
       getTransactionsStub.withArgs({
         liskAPIClient: match.defined,
         address: match.defined,
         limit: 25,
-      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 1000 } });
+      }).resolves({ data: generateTransactions(25), meta: { count: 1000 } });
 
       // second passphrase send request
       sendTransactionsStub.withArgs(
@@ -189,7 +189,7 @@ describe('@integration: Wallet', () => {
         match.defined,
         match.defined,
         '',
-      ).returnsPromise().resolves({ data: [] });
+      ).resolves({ data: [] });
 
       // rest of accounts send request
       sendTransactionsStub.withArgs(
@@ -199,7 +199,7 @@ describe('@integration: Wallet', () => {
         match.defined,
         null,
         '',
-      ).returnsPromise().resolves({ data: [] });
+      ).resolves({ data: [] });
 
 
       // account initialisation send request (no reference field)
@@ -210,7 +210,7 @@ describe('@integration: Wallet', () => {
         match.defined,
         null,
         'Account initialization',
-      ).returnsPromise().resolves({ data: [] });
+      ).resolves({ data: [] });
     });
 
     afterEach(() => {
@@ -236,7 +236,7 @@ describe('@integration: Wallet', () => {
       step('And I fill in "537318935439898807L" to "recipient" field', () => helper.fillInputField('537318935439898807L', 'recipient'));
       step('And I click "send next button"', () => helper.clickOnElement('button.send-next-button'));
       step('When I click "send button"', () => {
-        sendTransactionsStub.withArgs(match.any, '537318935439898807L', match.any, accounts.genesis.passphrase, match.any, match.any).returnsPromise().rejects({});
+        sendTransactionsStub.withArgs(match.any, '537318935439898807L', match.any, accounts.genesis.passphrase, match.any, match.any).rejects({});
         helper.clickOnElement('.send-button button');
       });
       step(`Then I should see text ${errorMessage} in "result box message" element`, () => helper.haveTextOf('.result-box-message', errorMessage));
@@ -321,14 +321,14 @@ describe('@integration: Wallet', () => {
         address: match.defined,
         limit: 25,
         filter: txFilters.all,
-      }).returnsPromise().resolves({ data: generateTransactions(25, true), meta: { count: 50 } });
+      }).resolves({ data: generateTransactions(25, true), meta: { count: 50 } });
 
       // loadTransactions does not pass filter
       getTransactionsStub.withArgs({
         liskAPIClient: match.defined,
         address: match.defined,
         limit: 25,
-      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 50 } });
+      }).resolves({ data: generateTransactions(25), meta: { count: 50 } });
 
       // transactionsRequested does pass filter, offset
       getTransactionsStub.withArgs({
@@ -337,7 +337,7 @@ describe('@integration: Wallet', () => {
         limit: 25,
         offset: match.defined,
         filter: txFilters.all,
-      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 50 } });
+      }).resolves({ data: generateTransactions(25), meta: { count: 50 } });
 
 
       // // NOTE: transactionsFilterSet does not use offset
@@ -346,14 +346,14 @@ describe('@integration: Wallet', () => {
         address: match.defined,
         limit: 25,
         filter: txFilters.outgoing,
-      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 25 } });
+      }).resolves({ data: generateTransactions(25), meta: { count: 25 } });
 
       getTransactionsStub.withArgs({
         liskAPIClient: match.defined,
         address: match.defined,
         limit: 25,
         filter: txFilters.incoming,
-      }).returnsPromise().resolves({ data: generateTransactions(25), meta: { count: 25 } });
+      }).resolves({ data: generateTransactions(25), meta: { count: 25 } });
     });
 
     afterEach(() => {

@@ -26,7 +26,7 @@ describe('Utils: Account API', () => {
       const account = { address, balance: 0, publicKey: 'sample_key' };
       const response = { data: [{ ...account }] };
 
-      liskAPIClientMock.expects('get').withArgs({ address }).returnsPromise().resolves(response);
+      liskAPIClientMock.expects('get').withArgs({ address }).resolves(response);
       const requestPromise = getAccount(liskAPIClient, address);
       return expect(requestPromise).to.eventually.eql({ ...account, serverPublicKey: 'sample_key' });
     });
@@ -34,7 +34,7 @@ describe('Utils: Account API', () => {
     it('should return a promise that is resolved even when liskAPIClient.getAccount() calls its callback with data.success == false and "Account not found"', () => {
       const account = { address, balance: 0 };
 
-      liskAPIClientMock.expects('get').withArgs({ address }).returnsPromise().resolves({ data: [] });
+      liskAPIClientMock.expects('get').withArgs({ address }).resolves({ data: [] });
       const requestPromise = getAccount(liskAPIClient, address);
       return expect(requestPromise).to.eventually.eql(account);
     });
@@ -42,7 +42,7 @@ describe('Utils: Account API', () => {
     it('should otherwise return a promise that is rejected', () => {
       const response = { success: false };
 
-      liskAPIClientMock.expects('get').withArgs({ address }).returnsPromise().rejects(response);
+      liskAPIClientMock.expects('get').withArgs({ address }).rejects(response);
       const requestPromise = getAccount(liskAPIClient, address);
       return expect(requestPromise).to.eventually.be.rejectedWith(response);
     });

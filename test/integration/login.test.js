@@ -85,8 +85,8 @@ describe('@integration: Login', () => {
   const stubApisDefaultScenario = () => {
     accountAPIStub = stub(accountAPI, 'getAccount');
     transactionsAPIStub = stub(transactionsAPI, 'getTransactions');
-    transactionsAPIStub.returnsPromise().resolves({ data: [] });
-    accountAPIStub.returnsPromise().resolves({
+    transactionsAPIStub.resolves({ data: [] });
+    accountAPIStub.resolves({
       address: '6307319849853921018L',
       unconfirmedBalance: '10190054753073',
       balance: '10190054753073',
@@ -98,13 +98,13 @@ describe('@integration: Login', () => {
       network: networks.mainnet.code,
       u_multisignatures: [],
     });
-    delegateAPIStub = stub(delegateAPI, 'getDelegate').returnsPromise().rejects();
+    delegateAPIStub = stub(delegateAPI, 'getDelegate').rejects();
     errorToastDisplayedSpy = spy(toasterActions, 'errorToastDisplayed');
   };
 
   const stubApisScenarioInvalidNode = () => {
-    accountAPIStub = stub(accountAPI, 'getAccount').returnsPromise().rejects();
-    delegateAPIStub = stub(delegateAPI, 'getDelegate').returnsPromise().rejects();
+    accountAPIStub = stub(accountAPI, 'getAccount').rejects();
+    delegateAPIStub = stub(delegateAPI, 'getDelegate').rejects();
     errorToastDisplayedSpy = spy(toasterActions, 'errorToastDisplayed');
   };
 

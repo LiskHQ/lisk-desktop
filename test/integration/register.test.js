@@ -50,11 +50,11 @@ describe('@integration: Register', () => {
     localStorageStub = stub(localStorage, 'getItem');
     liskAPIClientSetSpy = spy(peersActions, 'liskAPIClientSet');
     accountAPIStub = stub(accountAPI, 'getAccount');
-    accountAPIStub.returnsPromise().resolves({
+    accountAPIStub.resolves({
       success: false,
       error: 'Account not found',
     });
-    delegateAPIStub = stub(delegateAPI, 'getDelegate').returnsPromise().rejects();
+    delegateAPIStub = stub(delegateAPI, 'getDelegate').rejects();
     clock = useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
     });

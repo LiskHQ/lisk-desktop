@@ -76,7 +76,7 @@ module.exports = merge(baseConfig, {
         default: {
           minChunks: 2,
           priority: -20,
-          reuseExistingChunk: true,
+          reuseExistingChunk: false,
         },
       },
     },

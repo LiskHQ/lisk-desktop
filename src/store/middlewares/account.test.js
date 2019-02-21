@@ -82,7 +82,7 @@ describe('Account middleware', () => {
     spy(accountActions, 'updateDelegateAccount');
     stubGetAccount = stub(accountApi, 'getAccount').returnsPromise();
     transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
-    stubTransactions = stub(transactionsApi, 'getTransactions').returnsPromise().resolves(true);
+    stubTransactions = stub(transactionsApi, 'getTransactions').resolves(true);
     getAutoLogInDataMock = stub(accountUtils, 'getAutoLogInData');
     getAutoLogInDataMock.withArgs().returns({ });
     liskAPIClientSetMock = stub(peersActions, 'liskAPIClientSet').returns(liskAPIClientMock);

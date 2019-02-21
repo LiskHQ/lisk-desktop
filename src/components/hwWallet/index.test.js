@@ -50,7 +50,7 @@ describe('HwWalletHOC', () => {
 
   describe('account with publicKey', () => {
     beforeEach(() => {
-      getAccountFromLedgerIndexStub = stub(ledgerUtils, 'getAccountFromLedgerIndex').returnsPromise().resolves({
+      getAccountFromLedgerIndexStub = stub(ledgerUtils, 'getAccountFromLedgerIndex').resolves({
         balance: 10e8,
         isDelegate: false,
         publicKey: '123112',
@@ -104,7 +104,7 @@ describe('HwWalletHOC', () => {
     let props;
 
     beforeEach(() => {
-      getAccountFromLedgerIndexStub = stub(ledgerUtils, 'getAccountFromLedgerIndex').returnsPromise().resolves({
+      getAccountFromLedgerIndexStub = stub(ledgerUtils, 'getAccountFromLedgerIndex').resolves({
         balance: 10e8,
         isDelegate: false,
       });

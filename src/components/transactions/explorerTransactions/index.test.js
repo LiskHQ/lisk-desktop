@@ -56,12 +56,12 @@ describe('ExplorerTransactions Component', () => {
     delegateVotesStub = stub(delegateAPI, 'getVotes');
     delegateVotersStub = stub(delegateAPI, 'getVoters');
 
-    delegateStub.returnsPromise().resolves({ data: [{ ...accounts['delegate candidate'], isDelegate: true }] });
-    accountStub.returnsPromise().resolves({ data: [...accounts.genesis] });
-    delegateVotesStub.returnsPromise().resolves({ data: [accounts['delegate candidate']] });
-    delegateVotersStub.returnsPromise().resolves({ data: [accounts['empty account']] });
+    delegateStub.resolves({ data: [{ ...accounts['delegate candidate'], isDelegate: true }] });
+    accountStub.resolves({ data: [...accounts.genesis] });
+    delegateVotesStub.resolves({ data: [accounts['delegate candidate']] });
+    delegateVotersStub.resolves({ data: [accounts['empty account']] });
 
-    transactionActionStub.returnsPromise().resolves({ data: [{ id: 'Some ID', type: txTypes.send }] });
+    transactionActionStub.resolves({ data: [{ id: 'Some ID', type: txTypes.send }] });
 
     props = {
       match: { params: { address: accounts.genesis.address } },
@@ -77,14 +77,14 @@ describe('ExplorerTransactions Component', () => {
       address: accounts.genesis.address,
       limit: 25,
       filter: undefined,
-    }).returnsPromise().resolves({ data: [{ id: 'Some ID', type: txTypes.vote }], meta: { count: 1000 } });
+    }).resolves({ data: [{ id: 'Some ID', type: txTypes.vote }], meta: { count: 1000 } });
 
     transactionsActionStub.withArgs({
       liskAPIClient: match.any,
       address: accounts.genesis.address,
       limit: 25,
       filter: txFilters.all,
-    }).returnsPromise().resolves({ data: [{ id: 'Some ID', type: txTypes.vote }], meta: { count: 1000 } });
+    }).resolves({ data: [{ id: 'Some ID', type: txTypes.vote }], meta: { count: 1000 } });
 
     store.dispatch(liskAPIClientSet({ network: getNetwork(networks.mainnet.code) }));
 

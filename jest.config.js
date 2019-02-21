@@ -20,14 +20,16 @@ module.exports = {
     'src/store/middlewares/login.test.js',
     'src/store/reducers/liskService.test.js',
   ],
-  verbose: false,
+  verbose: true,
   cache: false,
+  clearMocks: true,
   moduleFileExtensions: ['js'],
   moduleDirectories: ['node_modules'],
   moduleNameMapper: {
     '^.+\\.css$': 'identity-obj-proxy',
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/__mocks__/fileMock.js',
   },
+  transformIgnorePatterns: ['<rootDir>/node_modules/'],
   collectCoverage: true,
   coverageDirectory: '<rootDir>/coverage/jest',
   collectCoverageFrom: [

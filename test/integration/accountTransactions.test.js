@@ -153,21 +153,21 @@ describe('@integration: Account Transactions', () => {
       address: match.defined,
       limit: 25,
       filter: txFilters.all,
-    }).returnsPromise().resolves({ data: transactions, meta: { count: 40 } });
+    }).resolves({ data: transactions, meta: { count: 40 } });
 
     getTransactionsStub.withArgs({
       liskAPIClient: match.defined,
       address: match.defined,
       limit: 25,
       filter: txFilters.outgoing,
-    }).returnsPromise().resolves({ data: [...transactions].slice(0, 5), meta: { count: 5 } });
+    }).resolves({ data: [...transactions].slice(0, 5), meta: { count: 5 } });
 
     getTransactionsStub.withArgs({
       liskAPIClient: match.defined,
       address: match.defined,
       limit: 25,
       filter: txFilters.incoming,
-    }).returnsPromise().resolves({ data: [...transactions].slice(0, 15), meta: { count: 15 } });
+    }).resolves({ data: [...transactions].slice(0, 15), meta: { count: 15 } });
 
     getTransactionsStub.withArgs({
       liskAPIClient: match.defined,
@@ -175,9 +175,9 @@ describe('@integration: Account Transactions', () => {
       limit: 25,
       filter: txFilters.all,
       offset: match.defined,
-    }).returnsPromise().resolves({ data: transactions, meta: { count: 40 } });
+    }).resolves({ data: transactions, meta: { count: 40 } });
 
-    transactionAPIStub.returnsPromise().resolves({
+    transactionAPIStub.resolves({
       data: [{
         id: '123456789', senderId: '123l', recipientId: '456l', votes: { added: [], deleted: [] },
       }],
@@ -227,13 +227,13 @@ describe('@integration: Account Transactions', () => {
       .resolves({ data: { voters } });
 
     accountAPIStub.withArgs(match.any, '123L')
-      .returnsPromise().resolves({
+      .resolves({
         ...accounts['delegate candidate'],
         ...delegateProductivity,
         address: '123L',
       });
     accountAPIStub.withArgs(match.any)
-      .returnsPromise().resolves({ ...account });
+      .resolves({ ...account });
 
     store.dispatch(liskAPIClientSet({ network: getNetwork(networks.mainnet.code) }));
     if (accountType) { store.dispatch(accountLoggedIn(account)); }

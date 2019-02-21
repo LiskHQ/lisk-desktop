@@ -25,7 +25,7 @@ describe('LedgerLogin', () => {
   let getAccountFromLedgerIndexStub;
 
   beforeEach(() => {
-    getAccountFromLedgerIndexStub = stub(ledgerUtils, 'getAccountFromLedgerIndex').returnsPromise().resolves({
+    getAccountFromLedgerIndexStub = stub(ledgerUtils, 'getAccountFromLedgerIndex').resolves({
       balance: 10e8,
       isDelegate: false,
     });
