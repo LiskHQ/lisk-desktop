@@ -3,29 +3,7 @@
 
 .container {
   background-color: var(--color-white);
-  top: 40px;
-
-  & .triangle {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    position: absolute;
-    top: -3%;
-    left: 70%;
-    border-width: 0 20px 10px;
-    border-color: transparent transparent var(--color-white);
-  }
-
-  & .triangleBorder {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    position: absolute;
-    top: -3.2%;
-    left: 70%;
-    border-width: 0 20px 10px;
-    border-color: transparent transparent rgba(8, 24, 49, 0.1);
-  }
+  padding: 0 24px;
 }
 
 .label {
@@ -33,11 +11,6 @@
   font-family: var(--heading-font);
   font-size: var(--paragraph-font-size-l);
   font-weight: var(--font-weight-bold);
-  margin-left: 20px;
-}
-
-.buttonContainer {
-  padding: 0px 20px;
 }
 
 .row {
@@ -64,11 +37,20 @@
 
 .filterTransactions {
   align-items: center;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   font-size: var(--button-font-size-s);
   padding: 0 20px;
   height: 100%;
+
+  &::after {
+    border: 4px solid transparent;
+    border-top-color: var(--color-content-grayblue);
+    content: '';
+    margin-left: 8px;
+    margin-top: 2px;
+  }
 }
 
 .error {
@@ -97,7 +79,6 @@
 }
 
 .input {
-  margin: 0 20px;
   padding: 1px;
   height: 36px;
   background-color: var(--color-white);
@@ -151,18 +132,8 @@
 
 .bigDropdown {
   width: 368px;
-  position: absolute;
-}
-
-.triangleDown {
-  font-size: 15px;
-  margin-top: -3px;
-  margin-left: 10px;
 }
 
 .dropdownContainer {
   position: relative;
-  max-width: 1400px;
-  width: 100%;
-  height: 0px;
 }
