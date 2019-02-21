@@ -32,8 +32,9 @@
       height: 2px;
       left: 0;
       position: absolute;
-      transform: scaleX(0);
-      transition: transform var(--animation-speed-fast) linear;
+      transform-origin: bottom;
+      transform: scaleY(0);
+      transition: transform var(--animation-speed-standard) linear;
       width: 100%;
     }
   }
@@ -42,7 +43,7 @@
     color: var(--color-content-light);
 
     &::after {
-      transform: scaleX(1);
+      transform: scaleY(1);
     }
   }
 }

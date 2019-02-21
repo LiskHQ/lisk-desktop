@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './tabsContainer.css';
 
 class TabsContainer extends React.Component {
@@ -20,7 +21,7 @@ class TabsContainer extends React.Component {
     const { children } = this.props;
     const { activeTab } = this.state;
 
-    return activeTab !== '' ? (
+    return (activeTab !== '' ? (
       <div className={styles.wrapper}>
         <ul className={styles.tabs}>
           {children.filter(tab => !!tab.props.tabName).map((tab, key) => (
@@ -38,8 +39,16 @@ class TabsContainer extends React.Component {
           ))}
         </div>
       </div>
-    ) : children;
+    ) : children) || null;
   }
 }
+
+TabsContainer.propTypes = {
+  activeTab: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]).isRequired,
+};
 
 export default TabsContainer;
