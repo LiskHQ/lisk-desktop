@@ -87,13 +87,13 @@ class transactionsHeader extends React.Component {
             </Link>
             <span>
             { isFollowing ? (
-              <PrimaryButtonV2>
-                {t('Follow')}
-              </PrimaryButtonV2>
-            ) : (
               <SecondaryButtonV2>
                 {t('Following')}
               </SecondaryButtonV2>
+            ) : (
+              <PrimaryButtonV2>
+                {t('Follow')}
+              </PrimaryButtonV2>
             )}
             </span>
           </React.Fragment>
