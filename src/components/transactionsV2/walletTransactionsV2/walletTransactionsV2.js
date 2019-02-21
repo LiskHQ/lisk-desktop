@@ -110,7 +110,8 @@ class WalletTransactionsV2 extends React.Component {
 
   /* istanbul ignore next */
   clearAllFilters() {
-    this.saveFilters({});
+    const customFilters = Object.keys(this.state.customFilters).reduce((acc, key) => ({ ...acc, [key]: '' }), {});
+    this.saveFilters(customFilters);
   }
 
   /* istanbul ignore next */
