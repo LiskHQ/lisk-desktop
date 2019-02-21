@@ -94,6 +94,18 @@
     padding: 0 42px;
     width: auto;
   }
+
+  & .followingButton {
+    display: flex;
+
+    &::after {
+      border: 4px solid transparent;
+      border-top-color: currentColor;
+      content: '';
+      margin-left: 8px;
+      margin-top: 4px;
+    }
+  }
 }
 
 @media (--medium-viewport) {

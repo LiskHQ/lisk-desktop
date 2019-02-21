@@ -14,32 +14,42 @@ class transactionsHeader extends React.Component {
     super();
 
     this.state = {
-      showRequestDropdown: false,
+      shownDropdown: '',
     };
 
-    this.toggleRequestDropdown = this.toggleRequestDropdown.bind(this);
-    this.handleClickOutsideRequest = this.handleClickOutsideRequest.bind(this);
-    this.setRequestDropdownRef = this.setRequestDropdownRef.bind(this);
+    this.dropdownRefs = {};
+
+    this.toggleDropdown = this.toggleDropdown.bind(this);
+    this.handleClickOutsideDropdown = this.handleClickOutsideDropdown.bind(this);
+    this.setDropownRefs = this.setDropownRefs.bind(this);
   }
 
-  toggleRequestDropdown() {
-    if (!this.state.showRequestDropdown) {
-      document.addEventListener('click', this.handleClickOutsideRequest);
+  toggleDropdown(dropdownName) {
+    if (!(this.state.shownDropdown === dropdownName)) {
+      document.addEventListener('click', this.handleClickOutsideDropdown);
     } else {
-      document.removeEventListener('click', this.handleClickOutsideRequest);
+      document.removeEventListener('click', this.handleClickOutsideDropdown);
     }
 
-    this.setState(prevState => ({ showRequestDropdown: !prevState.showRequestDropdown }));
+    this.setState(prevState => ({
+      shownDropdown: prevState.shownDropdown === dropdownName ? '' : dropdownName,
+    }));
   }
 
   // istanbul ignore next
-  handleClickOutsideRequest(e) {
-    if (this.requestDropdownRef && this.requestDropdownRef.contains(e.target)) return;
-    this.toggleRequestDropdown();
+  handleClickOutsideDropdown(e) {
+    const dropdownName = this.state.shownDropdown;
+    const ref = this.dropdownRefs[dropdownName];
+    if (ref && ref.contains(e.target)) return;
+    this.toggleDropdown(dropdownName);
   }
 
-  setRequestDropdownRef(node) {
-    this.requestDropdownRef = node;
+  setDropownRefs(node) {
+    const dropdownName = node && node.dataset && node.dataset.name;
+    this.dropdownRefs = dropdownName ? {
+      ...this.dropdownRefs,
+      [dropdownName]: node,
+    } : this.dropdownRefs;
   }
 
   render() {
@@ -62,12 +72,15 @@ class transactionsHeader extends React.Component {
         { isWalletRoute ? (
           <React.Fragment>
             <span
-              ref={this.setRequestDropdownRef}
+              ref={this.setDropownRefs}
+              data-name={'requestDropdown'}
               className={`${styles.requestContainer} help-onboarding tx-receive-bt`}>
-              <SecondaryButtonV2 onClick={this.toggleRequestDropdown}>
+              <SecondaryButtonV2 onClick={() => this.toggleDropdown('requestDropdown')}>
                 {t('Request LSK')}
               </SecondaryButtonV2>
-              <DropdownV2 showDropdown={this.state.showRequestDropdown} className={`${styles.requestDropdown} request-dropdown`}>
+              <DropdownV2
+                showDropdown={this.state.shownDropdown === 'requestDropdown'}
+                className={`${styles.requestDropdown} request-dropdown`}>
                 <RequestV2 address={address} />
               </DropdownV2>
             </span>
@@ -85,16 +98,24 @@ class transactionsHeader extends React.Component {
                   {t('Send LSK to this Wallet')}
                 </SecondaryButtonV2>
             </Link>
-            <span>
+            <span
+              ref={this.setDropownRefs}
+              data-name={'followDropdown'}
+              className={'follow-account'}>
             { isFollowing ? (
-              <SecondaryButtonV2>
+              <SecondaryButtonV2
+                className={`${styles.followingButton}`}
+                onClick={() => this.toggleDropdown('followDropdown')}>
                 {t('Following')}
               </SecondaryButtonV2>
             ) : (
-              <PrimaryButtonV2>
+              <PrimaryButtonV2 onClick={() => this.toggleDropdown('followDropdown')}>
                 {t('Follow')}
               </PrimaryButtonV2>
             )}
+            <DropdownV2
+              showDropdown={this.state.shownDropdown === 'followDropdown'}
+              className={'follow-dropdown'}></DropdownV2>
             </span>
           </React.Fragment>
         )}
