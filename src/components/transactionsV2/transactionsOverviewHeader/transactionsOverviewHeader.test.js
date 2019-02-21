@@ -73,4 +73,26 @@ describe('Transactions Overview Header', () => {
       expect(wrapper.find('.requestContainer')).to.not.have.descendants('.show');
     });
   });
+
+  describe('Another user wallet', () => {
+    const anotherUserProps = {
+      ...props,
+      address: accounts.delegate.address,
+      match: { urls: `${routes.accounts.pathPrefix}${routes.accounts.path}/${accounts.delegate.address}` },
+    };
+
+    beforeEach(() => {
+      wrapper = mount(<MemoryRouter>
+        <TransactionHeader {...anotherUserProps} />
+      </MemoryRouter>, options);
+    });
+
+    it('Should toggle bookmark dropdown', () => {
+      expect(wrapper.find('.follow-account')).to.not.have.descendants('.show');
+      wrapper.find('.follow-account button').first().simulate('click');
+      expect(wrapper.find('.follow-account')).to.have.descendants('.show');
+      wrapper.find('.follow-account button').first().simulate('click');
+      expect(wrapper.find('.follow-account')).to.not.have.descendants('.show');
+    });
+  });
 });
