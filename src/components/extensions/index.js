@@ -1,12 +1,7 @@
 /* istanbul ignore file */
-import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
 import Extensions from './extensions';
 
-const mapStateToProps = () => {};
-
-const mapDispatchToProps = {
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Extensions));
+export default translate()(withRouter(Extensions));
 

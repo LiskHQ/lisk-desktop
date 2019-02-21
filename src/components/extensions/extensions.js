@@ -5,6 +5,7 @@ import Box from '../box';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import localJSONStorage from './../../utils/localJSONStorage';
 import loadRemoteComponent from './../../utils/extensions';
+import routes from '../../constants/routes';
 
 import styles from './extensions.css';
 
@@ -35,6 +36,7 @@ class Extensions extends React.Component {
     // urls.push(this.state.url);
     localJSONStorage.set('url', this.state.url);
     loadRemoteComponent(this.state.url);
+    this.props.history.push(`${routes.dashboard.path}`);
   }
 
   render() {
@@ -58,7 +60,6 @@ class Extensions extends React.Component {
               onClick={() => this.removeExtension()} />
 
             <PrimaryButtonV2
-              disabled={this.state.url.length === 0}
               label={this.props.t('Add Extension')}
               onClick={() => this.addExtension()} />
           </div>

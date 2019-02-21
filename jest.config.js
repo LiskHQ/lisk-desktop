@@ -111,6 +111,12 @@ module.exports = {
     'src/store/middlewares/account.js',
     'src/store/reducers/transactions.js',
     'src/store/reducers/search.js',
+    'src/components/extensions/extensions.js',
+    'src/utils/extensions.js',
+    'src/store/reducers/extensions.js',
+    'src/actions/extensions.js',
+    'src/utils/liskHubExtensions.js',
+    'src/components/extensionPoint/extensionPoint.js',
   ],
   coverageThreshold: {
     global: {
