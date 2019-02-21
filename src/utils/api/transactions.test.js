@@ -48,6 +48,24 @@ describe('Utils: Transactions API', () => {
         limit: 20, offset: 0, senderId: '123L', sort: 'timestamp:desc',
       });
     });
+
+    it('should call transactions.get with custom filters', () => {
+      const params = {
+        liskAPIClient,
+        address: '123L',
+        filter: txFilters.outgoing,
+        customFilters: {
+          message: 'test',
+          dateFrom: '01.01.18',
+          dateTo: '01.02.18',
+        },
+      };
+      getTransactions(params);
+
+      expect(liskAPIClient.transactions.get).to.have.been.calledWith({
+        limit: 20, offset: 0, senderId: '123L', sort: 'timestamp:desc', data: '%test%', fromTimestamp: 50659200, toTimestamp: 53337600,
+      });
+    });
   });
 
   describe('unconfirmedTransactions', () => {
