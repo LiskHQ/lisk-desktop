@@ -33,6 +33,7 @@ class filterContainer extends React.Component {
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.handleKey = this.handleKey.bind(this);
     this.updateCustomFilters = this.updateCustomFilters.bind(this);
+    this.saveFilters = this.saveFilters.bind(this);
   }
 
   updateCustomFilters(fields) {
@@ -125,7 +126,7 @@ class filterContainer extends React.Component {
                   name='amountFrom'
                   placeholder='Min'
                   theme={styles}
-                  value={this.state.customFilters.dateFrom}
+                  value={this.props.customFilters.dateFrom}
                   error={this.state.errors.amountFromValidity}
                   onChange={(val) => { this.changeFilters('amountFrom', val); }}/>
                 <div className={styles.dash}>—</div>
@@ -136,7 +137,7 @@ class filterContainer extends React.Component {
                   placeholder='Max'
                   error={this.state.errors.amountToValidity}
                   theme={styles}
-                  value={this.state.customFilters.amountTo}
+                  value={this.props.customFilters.amountTo}
                   onChange={(val) => { this.changeFilters('amountTo', val); }}/>
               </div> */}
               <div className={styles.buttonContainer}>
@@ -144,7 +145,7 @@ class filterContainer extends React.Component {
                   disabled={this.state.hasErrors}
                   theme={styles}
                   className='saveButton'
-                  onClick={this.saveFilters.bind(this)}>{this.props.t('Apply Filters')}</PrimaryButtonV2>
+                  onClick={this.saveFilters}>{this.props.t('Apply Filters')}</PrimaryButtonV2>
               </div>
             </div>
           </DropdownV2>

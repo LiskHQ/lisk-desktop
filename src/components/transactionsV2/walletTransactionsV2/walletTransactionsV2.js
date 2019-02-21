@@ -26,7 +26,6 @@ class WalletTransactionsV2 extends React.Component {
     this.saveFilters = this.saveFilters.bind(this);
     this.clearFilter = this.clearFilter.bind(this);
     this.clearAllFilters = this.clearAllFilters.bind(this);
-    this.changeFilters = this.changeFilters.bind(this);
     this.onInit = this.onInit.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onFilterSet = this.onFilterSet.bind(this);
@@ -58,6 +57,7 @@ class WalletTransactionsV2 extends React.Component {
       limit: 30,
       offset: this.props.transactions.length,
       filter: this.props.activeFilter,
+      customFilters: this.state.customFilters,
     });
   }
   /*
@@ -114,11 +114,6 @@ class WalletTransactionsV2 extends React.Component {
     this.saveFilters(customFilters);
   }
 
-  /* istanbul ignore next */
-  changeFilters(name, value) {
-    this.setState({ customFilters: { ...this.state.customFilters, [name]: value } });
-  }
-
   onCopy() {
     clearTimeout(this.copyTimeout);
     this.setState({
@@ -139,6 +134,7 @@ class WalletTransactionsV2 extends React.Component {
   render() {
     const overviewProps = {
       ...this.props,
+      customFilters: this.state.customFilters,
       canLoadMore: this.props.transactions.length < this.props.count,
       onInit: this.onInit,
       onLoadMore: this.onLoadMore,
@@ -147,8 +143,6 @@ class WalletTransactionsV2 extends React.Component {
       saveFilters: this.saveFilters,
       clearFilter: this.clearFilter,
       clearAllFilters: this.clearAllFilters,
-      changeFilters: this.changeFilters,
-      customFilters: this.state.customFilters,
     };
 
     const { t, account } = this.props;
@@ -159,7 +153,6 @@ class WalletTransactionsV2 extends React.Component {
           followedAccounts={this.props.followedAccounts}
           address={this.props.address}
           match={this.props.match}
-          t={t}
           account={account}
         />
         { account.balance === 0 && localJSONStorage.get('closedWalletOnboarding') !== 'true' ?
