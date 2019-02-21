@@ -146,7 +146,7 @@
   "Filter": "Filter",
   "Filter Transactions": "Filter Transactions",
   "Filter votes": "Filter votes",
-  "Filtered results": "Filtered results",
+  "Filtered results: {{results}}": "Filtered results: {{results}}",
   "Final confirmation": "Final confirmation",
   "Follow": "Follow",
   "Followed Account": "Followed Account",
