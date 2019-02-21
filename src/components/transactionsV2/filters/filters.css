@@ -3,6 +3,7 @@
 .fieldGroup {
   display: flex;
   flex-direction: column;
+  margin-bottom: 24px;
 
   & .fieldLabel {
     color: var(--color-content-light);

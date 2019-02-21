@@ -36,11 +36,11 @@ export const getTransactions = ({
 
   if (customFilters.message) params.data = `%${customFilters.message}%`;
   if (customFilters.dateFrom && customFilters.dateFrom !== '') {
-    const timestamp = moment(customFilters.dateFrom, 'MM-DD-YYYY').format('x');
+    const timestamp = moment(customFilters.dateFrom, 'DD.MM.YY').format('x');
     params.fromTimestamp = _convertTimeFromFirstBlock(timestamp);
   }
   if (customFilters.dateTo && customFilters.dateTo !== '') {
-    const timestamp = moment(customFilters.dateTo, 'MM-DD-YYYY').format('x');
+    const timestamp = moment(customFilters.dateTo, 'DD.MM.YY').format('x');
     params.toTimestamp = _convertTimeFromFirstBlock(timestamp);
   }
   if (filter === txFilters.incoming) params.recipientId = address;
