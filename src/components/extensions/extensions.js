@@ -6,6 +6,7 @@ import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import localJSONStorage from './../../utils/localJSONStorage';
 import loadRemoteComponent from './../../utils/extensions';
 import routes from '../../constants/routes';
+import feedbackLinks from '../../constants/feedbackLinks';
 
 import styles from './extensions.css';
 
@@ -46,6 +47,19 @@ class Extensions extends React.Component {
           <header className={styles.headerWrapper}>
             <h2>{this.props.t('Add Extension')}</h2>
           </header>
+          <div className={styles.feedbackWrapper}>
+            <div
+              className={styles.label}>
+              {this.props.t('Beta: in order to see changes fully please reload the app when removing extension')}
+            </div>
+            <a
+              className={styles.link}
+              target='_blank'
+              href={feedbackLinks.extensions}
+              rel='noopener noreferrer'>
+              {this.props.t('Give feedback about this feature')}
+            </a>
+          </div>
           <div className={styles.extentionsWrapper}>
             <ToolBoxInput
               label={this.props.t('Enter URL of the *.js file with the extension')}

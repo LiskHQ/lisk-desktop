@@ -1,6 +1,12 @@
+@import '../app/variablesV2.css';
+
 .headerWrapper {
   display: flex;
-  padding: 0 32px 200px;
+  padding: 0 32px 20px;
+}
+
+.feedbackWrapper {
+  padding: 0 32px 160px;
 }
 
 .header {
@@ -27,4 +33,26 @@
   & button {
     margin: 10px;
   }
+}
+
+.link {
+  color: var(--color-link);
+  cursor: pointer;
+  display: inline-block;
+  font-family: var(--heading-font);
+  font-size: var(--paragraph-font-size-l);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.47;
+  margin-bottom: 20px;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.label {
+  color: var(--color-content-light);
+  font-family: var(--content-font);
+  font-size: var(--paragraph-font-size-l);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 1.47;
+  margin-bottom: 8px;
 }
