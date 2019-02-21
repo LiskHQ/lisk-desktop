@@ -169,6 +169,8 @@
     "identity-obj-proxy": "3.0.0",
     "imports-loader": "0.8.0",
     "jest": "23.6.0",
+    "jest-environment-enzyme": "7.0.1",
+    "jest-enzyme": "7.0.1",
     "jest-junit": "5.2.0",
     "jest-localstorage-mock": "2.3.0",
     "jsdom": "11.11.0",
