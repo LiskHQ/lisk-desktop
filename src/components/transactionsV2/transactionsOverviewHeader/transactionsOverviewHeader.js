@@ -101,7 +101,7 @@ class transactionsHeader extends React.Component {
             <span
               ref={this.setDropownRefs}
               data-name={'followDropdown'}
-              className={'follow-account'}>
+              className={`${styles.bookmarkContainer} follow-account`}>
             { isFollowing ? (
               <SecondaryButtonV2
                 className={`${styles.followingButton}`}

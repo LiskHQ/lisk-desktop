@@ -58,6 +58,10 @@
   }
 }
 
+.bookmarkContainer {
+  position: relative;
+}
+
 .requestContainer {
   position: relative;
 
