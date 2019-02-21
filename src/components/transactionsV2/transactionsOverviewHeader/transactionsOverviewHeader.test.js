@@ -8,6 +8,7 @@ import { MemoryRouter } from 'react-router-dom';
 import i18n from '../../../i18n';
 import TransactionHeader from './transactionsOverviewHeader';
 import accounts from '../../../../test/constants/accounts';
+import routes from '../../../constants/routes';
 
 describe('Transactions Overview Header', () => {
   let wrapper;
@@ -34,6 +35,7 @@ describe('Transactions Overview Header', () => {
     account: accounts.genesis,
     followedAccounts: [],
     address: accounts.genesis.address,
+    match: { url: routes.wallet.path },
   };
 
   describe('Current user wallet', () => {
