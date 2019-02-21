@@ -1,32 +1,28 @@
 import React from 'react';
-import { FontIcon } from '../../fontIcon';
-
+import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import styles from './filterBar.css';
 
 const FilterBar = props => (
   <div className={`${styles.container} filterBar`}>
-    <div className={styles.label}>{props.t('Filtered results')}:</div>
+    <span className={styles.label}>
+      {props.t('Filtered results: {{results}}', { results: props.results })}
+    </span>
     {Object.keys(props.customFilters).map((filter, index) =>
       (props.customFilters[filter] ?
         <div
           className={`${styles.filter}`}
           key={filter + index}>
-            <p>{props.customFilters[filter]}</p>
-            <div
-              className='clearFilter'
-              onClick={() => {
-              props.clearFilter(filter);
-            }}>
-              <FontIcon className={styles.icon} value='close' />
-            </div>
+            <p className={styles.label}>{props.customFilters[filter]}</p>
+            <span
+              className={styles.closeBtn}
+              onClick={() => props.clearFilter(filter)} />
         </div> :
         null))}
-    <div className={`${styles.filter} ${styles.clearAll}`}>
-      <div>
-        <p
-          className='clearAll'
-          onClick={props.clearAllFilters}>{props.t('Clear All filters')}</p>
-      </div>
+    <div className={`${styles.clearAll}`}>
+      <SecondaryButtonV2
+        className={styles.clearAllButton}
+        onClick={props.clearAllFilters}>{props.t('Clear All filters')}
+        </SecondaryButtonV2>
     </div>
   </div>);
 
