@@ -41,8 +41,8 @@ class DateFieldGroup extends React.Component {
         feedback = t(`Date must be in ${this.dateFormat} format`);
         error = true;
       } else if (
-        (field === 'dateFrom' && date > moment(fieldsObj.dateTo, this.dateFormat))
-        || (field === 'dateTo' && date < moment(fieldsObj.dateFrom, this.dateFormat))
+        (field === 'dateFrom' && date > moment(fieldsObj.dateTo.value, this.dateFormat))
+        || (field === 'dateTo' && date < moment(fieldsObj.dateFrom.value, this.dateFormat))
       ) {
         feedback = t('Invalid Dates');
         error = true;
@@ -72,10 +72,10 @@ class DateFieldGroup extends React.Component {
   handleFieldChange({ target }) {
     const { filters } = this.props;
     const value = target.value.replace(/\D/g, '').split('').reduce((acc, digit, idx) => {
-      const dashCounter = acc.split('.').length;
+      const separatorCounter = acc.split('.').length;
       const shouldAddSeparator = idx !== 0 && idx % 2 === 0;
       const separator = '.';
-      return (shouldAddSeparator && dashCounter < 3)
+      return (shouldAddSeparator && separatorCounter < 3)
         ? `${acc}${separator}${digit}`
         : `${acc}${digit}`;
     }, '').substring(0, 8);
@@ -85,7 +85,7 @@ class DateFieldGroup extends React.Component {
 
     this.validateDates({
       ...fieldsObj,
-      [target.name]: { ...fieldsObj[target.name], value },
+      [target.name]: { value },
     });
   }
 
