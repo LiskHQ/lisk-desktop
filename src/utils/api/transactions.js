@@ -1,5 +1,5 @@
 import Lisk from 'lisk-elements';
-import moment from 'moment';
+import { getTimestampFromFirstBlock } from '../datetime';
 import txFilters from './../../constants/transactionFilters';
 
 export const send = (
@@ -31,17 +31,12 @@ export const getTransactions = ({
     sort,
   };
 
-  const _convertTimeFromFirstBlock = value =>
-    (value - moment(new Date(2016, 4, 24, 17, 0, 0, 0)).format('x')) / 1000;
-
   if (customFilters.message) params.data = `%${customFilters.message}%`;
   if (customFilters.dateFrom && customFilters.dateFrom !== '') {
-    const timestamp = moment(customFilters.dateFrom, 'DD.MM.YY').format('x');
-    params.fromTimestamp = _convertTimeFromFirstBlock(timestamp);
+    params.fromTimestamp = getTimestampFromFirstBlock(customFilters.dateFrom, 'DD.MM.YY');
   }
   if (customFilters.dateTo && customFilters.dateTo !== '') {
-    const timestamp = moment(customFilters.dateTo, 'DD.MM.YY').format('x');
-    params.toTimestamp = _convertTimeFromFirstBlock(timestamp);
+    params.toTimestamp = getTimestampFromFirstBlock(customFilters.dateTo, 'DD.MM.YY');
   }
   if (filter === txFilters.incoming) params.recipientId = address;
   if (filter === txFilters.outgoing) params.senderId = address;
