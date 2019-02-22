@@ -49,7 +49,7 @@ class filterContainer extends React.Component {
     ['dateFrom', 'dateTo'].forEach((param) => {
       const dateFormat = this.props.t('DD.MM.YY');
       const date = moment(customFilters[param], dateFormat);
-      customFilters[param] = (date.isValid() && date.format(dateFormat)) || '';
+      customFilters[param] = (date.isValid() && date.format(dateFormat)) || customFilters[param];
     });
 
     this.toggleFilters();

@@ -33,7 +33,7 @@ class DateFieldGroup extends React.Component {
     let feedback = '';
     // eslint-disable-next-line max-statements
     const fields = Object.keys(fieldsObj).reduce((acc, field) => {
-      const { value } = fieldsObj[field];
+      const value = fieldsObj[field].value || '';
       const date = moment(value, this.dateFormat);
       let error = false;
 
@@ -41,8 +41,8 @@ class DateFieldGroup extends React.Component {
         feedback = t(`Date must be in ${this.dateFormat} format`);
         error = true;
       } else if (
-        (field === 'dateFrom' && date > moment(fieldsObj.dateTo.value, this.dateFormat))
-        || (field === 'dateTo' && date < moment(fieldsObj.dateFrom.value, this.dateFormat))
+        (field === 'dateFrom' && date > moment(fieldsObj.dateTo, this.dateFormat))
+        || (field === 'dateTo' && date < moment(fieldsObj.dateFrom, this.dateFormat))
       ) {
         feedback = t('Invalid Dates');
         error = true;
@@ -70,7 +70,7 @@ class DateFieldGroup extends React.Component {
   }
 
   handleFieldChange({ target }) {
-    const { fields } = this.state;
+    const { filters } = this.props;
     const value = target.value.replace(/\D/g, '').split('').reduce((acc, digit, idx) => {
       const dashCounter = acc.split('.').length;
       const shouldAddSeparator = idx !== 0 && idx % 2 === 0;
@@ -80,9 +80,12 @@ class DateFieldGroup extends React.Component {
         : `${acc}${digit}`;
     }, '').substring(0, 8);
 
+    const fieldsObj = Object.keys(filters).reduce((acc, filter) =>
+      ({ ...acc, [filter]: { value: filters[filter] } }), {});
+
     this.validateDates({
-      ...fields,
-      [target.name]: { ...fields[target.name], value },
+      ...fieldsObj,
+      [target.name]: { ...fieldsObj[target.name], value },
     });
   }
 
