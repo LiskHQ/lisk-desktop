@@ -10,8 +10,8 @@ class MessageFieldGroup extends React.Component {
     this.state = {
       fields: {
         message: {
-          error: false,
           value: '',
+          error: false,
         },
       },
       feedback: '',
@@ -19,25 +19,6 @@ class MessageFieldGroup extends React.Component {
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
-
-  // shouldComponentUpdate(nextProps) {
-  //   const { fields } = this.state;
-  //   const { filters } = nextProps;
-  //   const diffFields = Object.keys(fields)
-  //     .filter(name => filters[name] !== fields[name].value);
-  //   if (diffFields.length > 0) {
-  //     const newFields = diffFields.reduce((acc, field) => ({
-  //       ...acc,
-  //       [field]: {
-  //         ...acc[field],
-  //         value: filters[field],
-  //       },
-  //     }), fields);
-  //     this.setState({ fields: newFields });
-  //     return false;
-  //   }
-  //   return true;
-  // }
 
   handleFieldChange({ target }) {
     const { t } = this.props;
@@ -63,7 +44,7 @@ class MessageFieldGroup extends React.Component {
   }
 
   render() {
-    const { handleKeyPress, t } = this.props;
+    const { handleKeyPress, t, filters } = this.props;
     const { fields } = this.state;
 
     return (
@@ -74,7 +55,7 @@ class MessageFieldGroup extends React.Component {
             autoComplete={'off'}
             onChange={this.handleFieldChange}
             name='message'
-            value={fields.message.value}
+            value={filters.message}
             placeholder={t('Write message')}
             maxLength={100}
             onKeyDown={handleKeyPress}

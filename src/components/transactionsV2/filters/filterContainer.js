@@ -19,13 +19,6 @@ class filterContainer extends React.Component {
 
     this.state = {
       showFilters: false,
-      customFilters: {
-        dateFrom: '',
-        dateTo: '',
-        amountFrom: '',
-        amountTo: '',
-        message: '',
-      },
       hasErrors: false,
     };
 
@@ -37,7 +30,7 @@ class filterContainer extends React.Component {
   }
 
   updateCustomFilters(fields) {
-    const { customFilters } = this.state;
+    const { customFilters } = this.props;
     let hasErrors = false;
     const filters = Object.keys(fields).reduce((acc, field) => {
       hasErrors = hasErrors || fields[field].error;
@@ -47,14 +40,12 @@ class filterContainer extends React.Component {
       };
     }, customFilters);
 
-    this.setState({
-      customFilters: filters,
-      hasErrors,
-    });
+    this.props.updateCustomFilters(filters);
+    this.setState({ hasErrors });
   }
 
   saveFilters() {
-    const customFilters = this.state.customFilters;
+    const { customFilters } = this.props;
     ['dateFrom', 'dateTo'].forEach((param) => {
       const dateFormat = this.props.t('DD.MM.YY');
       const date = moment(customFilters[param], dateFormat);
@@ -111,11 +102,11 @@ class filterContainer extends React.Component {
               className={`${styles.container} container`}
               ref={(node) => { this.dropdownRef = node; }}>
               <DateFieldGroup
-                filters={this.state.customFilters}
+                filters={this.props.customFilters}
                 updateCustomFilters={this.updateCustomFilters}
                 handleKeyPress={this.handleKey} />
               <MessageFieldGroup
-                filters={this.state.customFilters}
+                filters={this.props.customFilters}
                 updateCustomFilters={this.updateCustomFilters}
                 handleKeyPress={this.handleKey} />
               {/* <div className={styles.label}>{this.props.t('Amount')}</div>

@@ -16,7 +16,14 @@ class WalletTransactionsV2 extends React.Component {
 
     this.state = {
       filter: {},
-      customFilters: {},
+      customFilters: {
+        dateFrom: '',
+        dateTo: '',
+        amountFrom: '',
+        amountTo: '',
+        message: '',
+      },
+      activeFilter: {},
       copied: false,
       closedOnboarding: false,
     };
@@ -32,6 +39,7 @@ class WalletTransactionsV2 extends React.Component {
     this.onTransactionRowClick = this.onTransactionRowClick.bind(this);
     this.onCopy = this.onCopy.bind(this);
     this.closeOnboarding = this.closeOnboarding.bind(this);
+    this.updateCustomFilters = this.updateCustomFilters.bind(this);
   }
 
   componentWillUnmount() {
@@ -57,7 +65,7 @@ class WalletTransactionsV2 extends React.Component {
       limit: 30,
       offset: this.props.transactions.length,
       filter: this.props.activeFilter,
-      customFilters: this.state.customFilters,
+      customFilters: this.state.activeFilter,
     });
   }
   /*
@@ -73,13 +81,13 @@ class WalletTransactionsV2 extends React.Component {
         address: this.props.address,
         limit: 30,
         filter,
-        customFilters: this.state.customFilters,
+        customFilters: this.state.activeFilter,
       });
     } else {
       this.props.addFilter({
         filterName: 'wallet',
         value: filter,
-        customFilters: this.state.customFilters,
+        customFilters: this.state.activeFilter,
       });
     }
   }
@@ -97,7 +105,7 @@ class WalletTransactionsV2 extends React.Component {
       filter: this.props.activeFilter,
       customFilters,
     });
-    this.setState({ customFilters });
+    this.setState({ activeFilter: customFilters, customFilters });
   }
 
   /* istanbul ignore next */
@@ -112,6 +120,10 @@ class WalletTransactionsV2 extends React.Component {
   clearAllFilters() {
     const customFilters = Object.keys(this.state.customFilters).reduce((acc, key) => ({ ...acc, [key]: '' }), {});
     this.saveFilters(customFilters);
+  }
+
+  updateCustomFilters(customFilters) {
+    this.setState({ customFilters });
   }
 
   onCopy() {
@@ -134,6 +146,7 @@ class WalletTransactionsV2 extends React.Component {
   render() {
     const overviewProps = {
       ...this.props,
+      activeFilter: this.state.activeFilter,
       customFilters: this.state.customFilters,
       canLoadMore: this.props.transactions.length < this.props.count,
       onInit: this.onInit,
@@ -143,6 +156,7 @@ class WalletTransactionsV2 extends React.Component {
       saveFilters: this.saveFilters,
       clearFilter: this.clearFilter,
       clearAllFilters: this.clearAllFilters,
+      updateCustomFilters: this.updateCustomFilters,
     };
 
     const { t, account } = this.props;
