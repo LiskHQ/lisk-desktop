@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { stub } from 'sinon';
 import { send, getTransactions, unconfirmedTransactions, getSingleTransaction } from './transactions';
+import { getTimestampFromFirstBlock } from '../datetime';
 import txFilters from './../../constants/transactionFilters';
 import accounts from '../../../test/constants/accounts';
 
@@ -56,13 +57,23 @@ describe('Utils: Transactions API', () => {
         filter: txFilters.outgoing,
         customFilters: {
           message: 'test',
+          dateTo: '16.12.16',
+          dateFrom: '16.10.16',
         },
       };
       getTransactions(params);
 
-      expect(liskAPIClient.transactions.get).to.have.been.calledWith({
-        limit: 20, offset: 0, senderId: '123L', sort: 'timestamp:desc', data: '%test%',
-      });
+      const expected = {
+        limit: 20,
+        offset: 0,
+        senderId: '123L',
+        sort: 'timestamp:desc',
+        data: '%test%',
+        fromTimestamp: getTimestampFromFirstBlock('16.10.16', 'DD.MM.YY'),
+        toTimestamp: getTimestampFromFirstBlock('16.12.16', 'DD.MM.YY'),
+      };
+
+      expect(liskAPIClient.transactions.get).to.have.been.calledWith(expected);
     });
   });
 
