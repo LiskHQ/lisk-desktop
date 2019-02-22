@@ -35,10 +35,10 @@ describe('DateFieldGroup', () => {
       },
       dateFrom: {
         error: false,
-        value: '12.12.12',
+        value: '12.12.16',
       },
     };
-    wrapper.find('.dateFromInput input').simulate('change', { target: { name: 'dateFrom', value: '121212' } });
+    wrapper.find('.dateFromInput input').simulate('change', { target: { name: 'dateFrom', value: '121216' } });
     expect(props.updateCustomFilters).toBeCalledWith(expected);
   });
 
@@ -47,6 +47,12 @@ describe('DateFieldGroup', () => {
       wrapper.find('.dateFromInput input').simulate('change', { target: { name: 'dateFrom', value: '131212' } });
       wrapper.find('.dateToInput input').simulate('change', { target: { name: 'dateTo', value: '121212' } });
       expect(wrapper).toContainMatchingElements(2, '.error input');
+      expect(wrapper).toContainMatchingElement('.feedback.show');
+    });
+
+    it('Should show error if date before first block', () => {
+      wrapper.find('.dateFromInput input').simulate('change', { target: { name: 'dateFrom', value: '111111' } });
+      expect(wrapper).toContainMatchingElement('.error input');
       expect(wrapper).toContainMatchingElement('.feedback.show');
     });
 
