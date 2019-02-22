@@ -1,17 +1,17 @@
 import React from 'react';
 import thunk from 'redux-thunk';
-import { spy, useFakeTimers } from 'sinon';
+import { spy } from 'sinon';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import { MemoryRouter as Router } from 'react-router-dom';
-import WalletTransactionsV2 from './walletTransactionsV2';
+import ExplorerTransactionsV2 from './explorerTransactionsV2';
 import i18n from '../../../i18n';
 import accounts from '../../../../test/constants/accounts';
 import routes from '../../../constants/routes';
 
-describe('WalletTransactions V2 Component', () => {
+describe('ExplorerTransactions V2 Component', () => {
   let wrapper;
   let props;
 
@@ -55,30 +55,32 @@ describe('WalletTransactions V2 Component', () => {
 
   beforeEach(() => {
     props = {
+      accounts: {
+        [accounts.genesis.address]: accounts.genesis,
+      },
       address: accounts.genesis.address,
-      account: accounts.genesis,
+      account: accounts['empty account'],
       match: { params: { address: accounts.genesis.address } },
       history: { push: spy(), location: { search: ' ' } },
       followedAccounts: [],
-      transactionsCount: 1000,
-      transaction: transactions[0],
+      count: 1000,
       transactions,
-      transactionsRequested: spy(),
+      searchAccount: spy(),
+      searchTransactions: spy(),
       transactionsFilterSet: spy(),
-      loadLastTransaction: spy(),
+      searchMoreTransactions: spy(),
       addFilter: spy(),
       loading: [],
-      wallets: {},
       t: key => key,
     };
 
     wrapper = mount(<Router>
-        <WalletTransactionsV2 {...props} />
+        <ExplorerTransactionsV2 {...props} />
       </Router>, options);
   });
 
-  it('renders WalletTransactionV2 Component and loads account transactions', () => {
-    const renderedWalletTransactions = wrapper.find(WalletTransactionsV2);
+  it('renders ExplorerTransactionsV2 Component and loads account transactions', () => {
+    const renderedWalletTransactions = wrapper.find(ExplorerTransactionsV2);
     expect(renderedWalletTransactions).to.be.present();
     expect(wrapper).to.have.exactly(1).descendants('.transactions-row');
   });
@@ -89,42 +91,15 @@ describe('WalletTransactions V2 Component', () => {
     expect(props.history.push).to.have.been.calledWith(transactionPath);
   });
 
-  describe('Onboarding Banner', () => {
-    let clock;
+  it('click on load more', () => {
+    expect(wrapper).to.have.descendants('.show-more-button');
+    wrapper.find('.show-more-button').simulate('click');
+    expect(props.searchMoreTransactions).to.have.been.calledWith();
+  });
 
-    beforeEach(() => {
-      const newProps = {
-        ...props,
-        account: accounts['empty account'],
-      };
-
-      clock = useFakeTimers({
-        now: new Date(2018, 1, 1),
-        toFake: ['setTimeout', 'clearTimeout'],
-      });
-
-      wrapper = mount(<Router>
-        <WalletTransactionsV2 {...newProps} />
-      </Router>, options);
-    });
-
-    afterEach(() => {
-      clock.restore();
-    });
-
-    it('should copy address on click on banner copy and setTimeout', () => {
-      const copyBtn = wrapper.find('.onboarding .copyAddress button');
-      expect(copyBtn).to.have.text('Copy');
-      copyBtn.simulate('click');
-      expect(copyBtn).to.have.text('Copied');
-      clock.tick(3000);
-      expect(copyBtn).to.have.text('Copy');
-    });
-
-    it('should render onboarding banner and hide when close is clicked', () => {
-      expect(wrapper).to.have.descendants('.onboarding');
-      wrapper.find('.onboarding .closeBtn').simulate('click');
-      expect(wrapper).to.not.have.descendants('.onboarding');
-    });
+  it('Should change filters on click', () => {
+    expect(wrapper).to.have.descendants('.transaction-filter-item');
+    wrapper.find('.transaction-filter-item').at(1).simulate('click');
+    expect(props.addFilter).to.have.been.calledWith();
   });
 });

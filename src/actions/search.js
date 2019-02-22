@@ -92,14 +92,14 @@ export const searchAccount = ({ address }) =>
   };
 
 export const searchTransactions = ({
-  address, limit, filter, showLoading = true,
+  address, limit, filter, showLoading = true, customFilters = {},
 }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     if (showLoading) dispatch(loadingStarted(actionTypes.searchTransactions));
     if (liskAPIClient) {
       getTransactions({
-        liskAPIClient, address, limit, filter,
+        liskAPIClient, address, limit, filter, customFilters,
       })
         .then((transactionsResponse) => {
           dispatch({
@@ -108,6 +108,7 @@ export const searchTransactions = ({
               transactions: transactionsResponse.data,
               count: parseInt(transactionsResponse.meta.count, 10) || 0,
               filter,
+              customFilters,
             },
             type: actionTypes.searchTransactions,
           });
@@ -126,12 +127,13 @@ export const searchTransactions = ({
   };
 
 export const searchMoreTransactions = ({
-  address, limit, offset, filter,
+  address, limit, offset, filter, customFilters = {},
 }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
+    dispatch(loadingStarted(actionTypes.searchMoreTransactions));
     getTransactions({
-      liskAPIClient, address, limit, offset, filter,
+      liskAPIClient, address, limit, offset, filter, customFilters,
     })
       .then((transactionsResponse) => {
         dispatch({
@@ -140,9 +142,11 @@ export const searchMoreTransactions = ({
             transactions: transactionsResponse.data,
             count: parseInt(transactionsResponse.meta.count, 10),
             filter,
+            customFilters,
           },
           type: actionTypes.searchMoreTransactions,
         });
+        dispatch(loadingFinished(actionTypes.searchMoreTransactions));
       });
   };
 

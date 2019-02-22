@@ -195,6 +195,7 @@ describe('Delegates', () => {
    */
   it('Bulk vote/unvote delegates by URL', () => {
     cy.autologin(accounts['delegate candidate'].passphrase, networks.devnet.node);
+    cy.visit(urls.dashboard);
     cy.visit(`${urls.delegatesVote}?votes=genesis_12,genesis_14,genesis_16`);
     cy.get(ss.votesPreselection).contains('genesis_12, genesis_14, genesis_16');
     cy.get(ss.nextBtn).should('be.enabled').click();

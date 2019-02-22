@@ -14,12 +14,6 @@ describe('Dropdown V2', () => {
     expect(wrapper).to.not.have.className('show');
   });
 
-  it('Should open without content', () => {
-    wrapper.setProps({ showDropdown: true });
-    expect(wrapper).to.have.className('show');
-    expect(wrapper.find('.optionsHolder')).to.be.blank();
-  });
-
   it('Should open with passed children props', () => {
     const options = ['Option 1', 'Option 2', 'Option 3'];
     wrapper.setProps({

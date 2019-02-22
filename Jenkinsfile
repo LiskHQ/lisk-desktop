@@ -36,6 +36,7 @@ pipeline {
 								npm run --silent bundlesize
 
 								npm install
+								npm run install-electron-dependencies
 								USE_SYSTEM_XORRISO=true npm run dist:linux
 								'''
 							}
