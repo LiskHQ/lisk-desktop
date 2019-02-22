@@ -20,24 +20,24 @@ class MessageFieldGroup extends React.Component {
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
-    const { fields } = this.state;
-    const { filters } = nextProps;
-    const diffFields = Object.keys(fields)
-      .filter(name => filters[name] !== fields[name].value);
-    if (diffFields.length > 0) {
-      const newFields = diffFields.reduce((acc, field) => ({
-        ...acc,
-        [field]: {
-          ...acc[field],
-          value: filters[field],
-        },
-      }), fields);
-      this.setState({ fields: newFields });
-      return false;
-    }
-    return true;
-  }
+  // shouldComponentUpdate(nextProps) {
+  //   const { fields } = this.state;
+  //   const { filters } = nextProps;
+  //   const diffFields = Object.keys(fields)
+  //     .filter(name => filters[name] !== fields[name].value);
+  //   if (diffFields.length > 0) {
+  //     const newFields = diffFields.reduce((acc, field) => ({
+  //       ...acc,
+  //       [field]: {
+  //         ...acc[field],
+  //         value: filters[field],
+  //       },
+  //     }), fields);
+  //     this.setState({ fields: newFields });
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
   handleFieldChange({ target }) {
     const { t } = this.props;
@@ -67,7 +67,7 @@ class MessageFieldGroup extends React.Component {
     const { fields } = this.state;
 
     return (
-      <label className={styles.fieldGroup}>
+      <label className={`${styles.fieldGroup} message-field`}>
         <span className={styles.fieldLabel}>{t('Message')}</span>
         <div className={styles.fieldRow}>
           <InputV2
