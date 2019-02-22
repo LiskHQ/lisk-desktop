@@ -1,27 +1,18 @@
 import React from 'react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
-import localJSONStorage from '../../../utils/localJSONStorage';
 import TransactionsOverviewV2 from '../transactionsOverviewV2';
 import txFilters from '../../../constants/transactionFilters';
-import Banner from '../../toolbox/banner/banner';
 import TransactionsOverviewHeader from '../transactionsOverviewHeader/transactionsOverviewHeader';
 import routes from '../../../constants/routes';
-import styles from './walletTransactionsV2.css';
+import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 
-class WalletTransactionsV2 extends React.Component {
-  // eslint-disable-next-line max-statements
+class ExplorerTransactions extends React.Component {
   constructor() {
     super();
 
     this.state = {
       filter: {},
       customFilters: {},
-      copied: false,
-      closedOnboarding: false,
     };
-
-    this.copyTimeout = null;
 
     this.saveFilters = this.saveFilters.bind(this);
     this.clearFilter = this.clearFilter.bind(this);
@@ -31,33 +22,42 @@ class WalletTransactionsV2 extends React.Component {
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onFilterSet = this.onFilterSet.bind(this);
     this.onTransactionRowClick = this.onTransactionRowClick.bind(this);
-    this.onCopy = this.onCopy.bind(this);
-    this.closeOnboarding = this.closeOnboarding.bind(this);
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.copyTimeout);
+    // searchMoreVoters will be used when adding delegate and votes tab
+    // this.searchMoreVoters = this.searchMoreVoters.bind(this);
   }
 
   onInit() {
-    this.props.transactionsFilterSet({
-      address: this.props.account.address,
+    this.props.searchAccount({
+      address: this.props.address,
+    });
+
+    this.props.searchTransactions({
+      address: this.props.address,
       limit: 30,
       filter: txFilters.all,
     });
 
     this.props.addFilter({
-      filterName: 'wallet',
+      filterName: 'transactions',
       value: txFilters.all,
     });
   }
-  /* istanbul ignore next */
+
+  // searchMoreVoters will be used when adding delegate and votes tab
+  // searchMoreVoters(offset) {
+  //   this.props.searchMoreVoters({
+  //     address: this.props.address,
+  //     offset,
+  //   });
+  // }
+
   onLoadMore() {
-    this.props.transactionsRequested({
+    this.props.searchMoreTransactions({
       address: this.props.address,
       limit: 30,
-      offset: this.props.transactions.length,
+      offset: this.props.offset,
       filter: this.props.activeFilter,
+      customFilters: this.state.customFilters,
     });
   }
   /*
@@ -65,23 +65,13 @@ class WalletTransactionsV2 extends React.Component {
     It applys to All, Incoming and Outgoing
     for other tabs that are not using transactions there is no need to call API
   */
-  /* istanbul ignore next */
   onFilterSet(filter) {
-    this.setState({ filter });
-    if (filter <= 2) {
-      this.props.transactionsFilterSet({
-        address: this.props.address,
-        limit: 30,
-        filter,
-        customFilters: this.state.customFilters,
-      });
-    } else {
-      this.props.addFilter({
-        filterName: 'wallet',
-        value: filter,
-        customFilters: this.state.customFilters,
-      });
-    }
+    this.props.searchTransactions({
+      address: this.props.address,
+      limit: 30,
+      filter,
+      customFilters: this.state.customFilters,
+    });
   }
 
   onTransactionRowClick(props) {
@@ -91,7 +81,7 @@ class WalletTransactionsV2 extends React.Component {
 
   /* istanbul ignore next */
   saveFilters(customFilters) {
-    this.props.transactionsFilterSet({
+    this.props.searchTransactions({
       address: this.props.address,
       limit: 30,
       filter: this.props.activeFilter,
@@ -118,23 +108,6 @@ class WalletTransactionsV2 extends React.Component {
     this.setState({ customFilters: { ...this.state.customFilters, [name]: value } });
   }
 
-  onCopy() {
-    clearTimeout(this.copyTimeout);
-    this.setState({
-      copied: true,
-    });
-
-    this.copyTimeout = setTimeout(() =>
-      this.setState({
-        copied: false,
-      }), 3000);
-  }
-
-  closeOnboarding() {
-    localJSONStorage.set('closedWalletOnboarding', 'true');
-    this.setState({ closedOnboarding: true });
-  }
-
   render() {
     const overviewProps = {
       ...this.props,
@@ -148,43 +121,28 @@ class WalletTransactionsV2 extends React.Component {
       clearAllFilters: this.clearAllFilters,
       changeFilters: this.changeFilters,
       customFilters: this.state.customFilters,
+      // searchMoreVoters will be used when adding delegate and votes tab
+      // searchMoreVoters: this.searchMoreVoters,
     };
-
-    const { t, account } = this.props;
 
     return (
       <React.Fragment>
         <TransactionsOverviewHeader
+          delegate={this.props.delegate}
           followedAccounts={this.props.followedAccounts}
           address={this.props.address}
           match={this.props.match}
-          t={t}
-          account={account}
+          t={this.props.t}
+          account={this.props.account}
         />
-        { account.balance === 0 && localJSONStorage.get('closedWalletOnboarding') !== 'true' ?
-          <Banner
-            className={`${styles.onboarding} wallet-onboarding`}
-            onClose={this.closeOnboarding}
-            title={t('Add some LSK to your Lisk Hub account now!')}
-            footer={(
-              <div className={styles.copyAddress}>
-                <span className={styles.address}>{account.address}</span>
-                <CopyToClipboard
-                  text={account.address}
-                  onCopy={this.onCopy}>
-                    <SecondaryButtonV2 disabled={this.state.copied}>
-                      <span>{this.state.copied ? t('Copied') : t('Copy')}</span>
-                    </SecondaryButtonV2>
-                </CopyToClipboard>
-              </div>
-            )}>
-            <p>{t('You can find the LSK token on all of the worlds top exchanges and send them to your unique Lisk address:')}</p>
-          </Banner> : null
-        }
-        <TransactionsOverviewV2 {...overviewProps} />
+        <TabsContainer>
+          <TransactionsOverviewV2
+            tabName={'Wallet'}
+            {...overviewProps} />
+        </TabsContainer>
       </React.Fragment>
     );
   }
 }
 
-export default WalletTransactionsV2;
+export default ExplorerTransactions;

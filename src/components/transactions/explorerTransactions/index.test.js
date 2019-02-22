@@ -77,6 +77,7 @@ describe('ExplorerTransactions Component', () => {
       address: accounts.genesis.address,
       limit: 25,
       filter: undefined,
+      customFilters: {},
     }).returnsPromise().resolves({ data: [{ id: 'Some ID', type: txTypes.vote }], meta: { count: 1000 } });
 
     transactionsActionStub.withArgs({
@@ -84,6 +85,7 @@ describe('ExplorerTransactions Component', () => {
       address: accounts.genesis.address,
       limit: 25,
       filter: txFilters.all,
+      customFilters: {},
     }).returnsPromise().resolves({ data: [{ id: 'Some ID', type: txTypes.vote }], meta: { count: 1000 } });
 
     store.dispatch(liskAPIClientSet({ network: getNetwork(networks.mainnet.code) }));

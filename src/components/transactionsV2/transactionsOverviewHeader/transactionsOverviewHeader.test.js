@@ -6,11 +6,11 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 import i18n from '../../../i18n';
-import WalletHeader from './walletHeader';
-import routes from '../../../constants/routes';
+import TransactionHeader from './transactionsOverviewHeader';
 import accounts from '../../../../test/constants/accounts';
+import routes from '../../../constants/routes';
 
-describe('Wallet Header', () => {
+describe('Transactions Overview Header', () => {
   let wrapper;
   const store = configureMockStore([thunk])({
     settings: { currency: 'USD' },
@@ -34,14 +34,14 @@ describe('Wallet Header', () => {
   const props = {
     account: accounts.genesis,
     followedAccounts: [],
-    match: { url: routes.wallet.path },
     address: accounts.genesis.address,
+    match: { url: routes.wallet.path },
   };
 
   describe('Current user wallet', () => {
     beforeEach(() => {
       wrapper = mount(<MemoryRouter>
-        <WalletHeader {...props} />
+        <TransactionHeader {...props} />
       </MemoryRouter>, options);
     });
 
@@ -74,22 +74,25 @@ describe('Wallet Header', () => {
     });
   });
 
-  describe('Not current user walelt', () => {
-    const anotherProps = {
+  describe('Another user wallet', () => {
+    const anotherUserProps = {
       ...props,
-      match: { url: '' },
+      address: accounts.delegate.address,
+      match: { urls: `${routes.accounts.pathPrefix}${routes.accounts.path}/${accounts.delegate.address}` },
     };
 
     beforeEach(() => {
       wrapper = mount(<MemoryRouter>
-        <WalletHeader {...anotherProps} />
+        <TransactionHeader {...anotherUserProps} />
       </MemoryRouter>, options);
     });
 
-    it('Should render only account info it not my wallet', () => {
-      expect(wrapper).to.have.descendants('.accountInfo');
-      expect(wrapper.find('.accountInfo')).to.not.have.descendants('.my-account');
-      expect(wrapper).to.not.have.descendants('.buttonsHolder');
+    it('Should toggle bookmark dropdown', () => {
+      expect(wrapper.find('.follow-account')).to.not.have.descendants('.show');
+      wrapper.find('.follow-account button').first().simulate('click');
+      expect(wrapper.find('.follow-account')).to.have.descendants('.show');
+      wrapper.find('.follow-account button').first().simulate('click');
+      expect(wrapper.find('.follow-account')).to.not.have.descendants('.show');
     });
   });
 });
