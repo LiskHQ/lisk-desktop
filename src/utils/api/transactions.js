@@ -1,4 +1,5 @@
 import Lisk from 'lisk-elements';
+import { toRawLsk } from '../../utils/lsk';
 import { getTimestampFromFirstBlock } from '../datetime';
 import txFilters from './../../constants/transactionFilters';
 
@@ -39,6 +40,12 @@ export const getTransactions = ({
   if (customFilters.dateTo && customFilters.dateTo !== '') {
     params.toTimestamp = getTimestampFromFirstBlock(customFilters.dateTo, 'DD.MM.YY');
     params.toTimestamp = params.toTimestamp > 1 ? params.toTimestamp : 1;
+  }
+  if (customFilters.amountFrom && customFilters.amountFrom !== '') {
+    params.minAmount = toRawLsk(customFilters.amountFrom);
+  }
+  if (customFilters.amountTo && customFilters.amountTo !== '') {
+    params.maxAmount = toRawLsk(customFilters.amountTo);
   }
   if (filter === txFilters.incoming) params.recipientId = address;
   if (filter === txFilters.outgoing) params.senderId = address;

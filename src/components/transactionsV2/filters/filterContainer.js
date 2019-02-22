@@ -12,6 +12,7 @@ import MessageFieldGroup from './messageFieldGroup';
 
 import styles from './filterContainer.css';
 import transactionsStyles from '../transactionsV2.css';
+import AmountFieldGroup from './amountFieldGroup';
 
 class filterContainer extends React.Component {
   constructor(props) {
@@ -105,32 +106,14 @@ class filterContainer extends React.Component {
                 filters={this.props.customFilters}
                 updateCustomFilters={this.updateCustomFilters}
                 handleKeyPress={this.handleKey} />
+              <AmountFieldGroup
+                filters={this.props.customFilters}
+                updateCustomFilters={this.updateCustomFilters}
+                handleKeyPress={this.handleKey} />
               <MessageFieldGroup
                 filters={this.props.customFilters}
                 updateCustomFilters={this.updateCustomFilters}
                 handleKeyPress={this.handleKey} />
-              {/* <div className={styles.label}>{this.props.t('Amount')}</div>
-              <div className={styles.row}>
-                <Input
-                  type='text'
-                  id='filter-amount-from'
-                  name='amountFrom'
-                  placeholder='Min'
-                  theme={styles}
-                  value={this.props.customFilters.dateFrom}
-                  error={this.state.errors.amountFromValidity}
-                  onChange={(val) => { this.changeFilters('amountFrom', val); }}/>
-                <div className={styles.dash}>—</div>
-                <Input
-                  type='text'
-                  id='filter-amount-to'
-                  name='amountTo'
-                  placeholder='Max'
-                  error={this.state.errors.amountToValidity}
-                  theme={styles}
-                  value={this.props.customFilters.amountTo}
-                  onChange={(val) => { this.changeFilters('amountTo', val); }}/>
-              </div> */}
               <div className={styles.buttonContainer}>
                 <PrimaryButtonV2
                   disabled={this.state.hasErrors}
