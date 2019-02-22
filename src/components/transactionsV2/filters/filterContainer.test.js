@@ -19,23 +19,18 @@ describe('filterContainer', () => {
     saveFilters: jest.fn(),
     t: v => v,
     customFilters: {},
+    updateCustomFilters: jest.fn(),
   };
 
   beforeEach(() => {
     wrapper = mount(<FilterContainer {...props} />, options);
   });
 
-  it('should call saveFilters with expected Output', () => {
-    const expectedValue = {
-      dateFrom: '',
-      dateTo: '',
-      amountFrom: '',
-      amountTo: '',
-      message: 'test',
-    };
+  it('should call saveFilters', () => {
     wrapper.find('.message-field input').simulate('change', { target: { name: 'message', value: 'test' } });
+    expect(props.updateCustomFilters).toBeCalledWith({ message: 'test' });
     wrapper.find(PrimaryButtonV2).simulate('click');
-    expect(props.saveFilters).toBeCalledWith(expectedValue);
+    expect(props.saveFilters).toBeCalled();
   });
 
   it('should toggle Filters dropdown', () => {
@@ -46,15 +41,8 @@ describe('filterContainer', () => {
     expect(wrapper).not.toContainMatchingElement('.dropdown.show');
   });
 
-  it('should call saveFilters with expected Output', () => {
-    const expectedValue = {
-      dateFrom: '',
-      dateTo: '',
-      amountFrom: '',
-      amountTo: '',
-      message: '',
-    };
+  it('should call saveFilters on enter pressed', () => {
     wrapper.find('.message-field input').simulate('keyDown', { keyCode: keyCodes.enter });
-    expect(props.saveFilters).toBeCalledWith(expectedValue);
+    expect(props.saveFilters).toBeCalled();
   });
 });
