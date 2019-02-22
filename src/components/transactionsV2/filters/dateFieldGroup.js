@@ -27,24 +27,24 @@ class DateFieldGroup extends React.Component {
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
-    const { fields } = this.state;
-    const { filters } = nextProps;
-    const diffFields = Object.keys(fields)
-      .filter(name => filters[name] !== fields[name].value);
-    if (diffFields.length > 0) {
-      const newFields = diffFields.reduce((acc, field) => ({
-        ...acc,
-        [field]: {
-          ...acc[field],
-          value: filters[field],
-        },
-      }), fields);
-      this.setState({ fields: newFields });
-      return false;
-    }
-    return true;
-  }
+  // shouldComponentUpdate(nextProps) {
+  //   const { fields } = this.state;
+  //   const { filters } = nextProps;
+  //   const diffFields = Object.keys(fields)
+  //     .filter(name => filters[name] !== fields[name].value);
+  //   if (diffFields.length > 0) {
+  //     const newFields = diffFields.reduce((acc, field) => ({
+  //       ...acc,
+  //       [field]: {
+  //         ...acc[field],
+  //         value: filters[field],
+  //       },
+  //     }), fields);
+  //     this.setState({ fields: newFields });
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
   validateDates(fieldsObj) {
     const { t } = this.props;
@@ -91,7 +91,7 @@ class DateFieldGroup extends React.Component {
 
     this.validateDates({
       ...fields,
-      [target.name]: { ...[target.name], value },
+      [target.name]: { ...fields[target.name], value },
     });
   }
 
@@ -109,8 +109,9 @@ class DateFieldGroup extends React.Component {
             name='dateFrom'
             value={fields.dateFrom.value}
             placeholder={this.dateFormat}
+            onFocus={this.handleFocus}
             onKeyDown={handleKeyPress}
-            className={`${styles.input} ${fields.dateFrom.error ? 'error' : ''}`} />
+            className={`${styles.input} ${fields.dateFrom.error ? 'error' : ''} dateFromInput`} />
           <span>-</span>
           <InputV2
             autoComplete={'off'}
@@ -118,8 +119,9 @@ class DateFieldGroup extends React.Component {
             name='dateTo'
             value={fields.dateTo.value}
             placeholder={this.dateFormat}
+            onFocus={this.handleFocus}
             onKeyDown={handleKeyPress}
-            className={`${styles.input} ${fields.dateTo.error ? 'error' : ''}`} />
+            className={`${styles.input} ${fields.dateTo.error ? 'error' : ''} dateToInput`} />
         </div>
         <span className={`${styles.feedback} ${this.state.feedback ? styles.show : ''}`}>
           {this.state.feedback}
