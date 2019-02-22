@@ -55,6 +55,9 @@
   & > .label {
     color: inherit;
     margin: 0;
+    max-width: 245px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
