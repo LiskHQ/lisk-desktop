@@ -20,7 +20,7 @@ export const send = (
     }).catch(reject);
   });
 
-// eslint-disable-next-line max-statements
+// eslint-disable-next-line max-statements, complexity
 export const getTransactions = ({
   liskAPIClient, address, limit = 20, offset = 0,
   sort = 'timestamp:desc', filter = txFilters.all, customFilters = {},
@@ -34,9 +34,11 @@ export const getTransactions = ({
   if (customFilters.message) params.data = `%${customFilters.message}%`;
   if (customFilters.dateFrom && customFilters.dateFrom !== '') {
     params.fromTimestamp = getTimestampFromFirstBlock(customFilters.dateFrom, 'DD.MM.YY');
+    params.fromTimestamp = params.fromTimestamp > 0 ? params.fromTimestamp : 0;
   }
   if (customFilters.dateTo && customFilters.dateTo !== '') {
     params.toTimestamp = getTimestampFromFirstBlock(customFilters.dateTo, 'DD.MM.YY');
+    params.toTimestamp = params.toTimestamp > 1 ? params.toTimestamp : 1;
   }
   if (filter === txFilters.incoming) params.recipientId = address;
   if (filter === txFilters.outgoing) params.senderId = address;
