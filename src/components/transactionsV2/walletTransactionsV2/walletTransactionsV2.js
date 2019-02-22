@@ -106,7 +106,7 @@ class WalletTransactionsV2 extends React.Component {
       filter: this.props.activeFilter,
       customFilters,
     });
-    this.setState({ activeFilter: customFilters, customFilters });
+    this.setState({ activeFilters: customFilters, customFilters });
   }
 
   /* istanbul ignore next */
