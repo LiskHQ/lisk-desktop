@@ -22,6 +22,7 @@ class ExplorerTransactions extends React.Component {
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onFilterSet = this.onFilterSet.bind(this);
     this.onTransactionRowClick = this.onTransactionRowClick.bind(this);
+    // searchMoreVoters will be used when adding delegate and votes tab
     // this.searchMoreVoters = this.searchMoreVoters.bind(this);
   }
 
@@ -42,6 +43,7 @@ class ExplorerTransactions extends React.Component {
     });
   }
 
+  // searchMoreVoters will be used when adding delegate and votes tab
   // searchMoreVoters(offset) {
   //   this.props.searchMoreVoters({
   //     address: this.props.address,
@@ -119,6 +121,7 @@ class ExplorerTransactions extends React.Component {
       clearAllFilters: this.clearAllFilters,
       changeFilters: this.changeFilters,
       customFilters: this.state.customFilters,
+      // searchMoreVoters will be used when adding delegate and votes tab
       // searchMoreVoters: this.searchMoreVoters,
     };
 
