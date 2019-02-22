@@ -42,6 +42,7 @@ class WalletTransactionsV2 extends React.Component {
     this.updateCustomFilters = this.updateCustomFilters.bind(this);
   }
 
+  /* istanbul ignore next */
   componentWillUnmount() {
     clearTimeout(this.copyTimeout);
   }
@@ -122,6 +123,7 @@ class WalletTransactionsV2 extends React.Component {
     this.saveFilters(customFilters);
   }
 
+  /* istanbul ignore next */
   updateCustomFilters(customFilters) {
     this.setState({ customFilters });
   }
