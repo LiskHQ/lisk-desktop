@@ -1,19 +1,31 @@
 import React from 'react';
-import { expect } from 'chai';
-import { shallow } from 'enzyme';
-import { spy } from 'sinon';
-import Input from 'react-toolbox/lib/input';
+import { mount } from 'enzyme';
+import PropTypes from 'prop-types';
 import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
-import filterContainer from './filterContainer';
+import FilterContainer from './filterContainer';
+import i18n from '../../../i18n';
 import keyCodes from '../../../constants/keyCodes';
 
 describe('filterContainer', () => {
+  let wrapper;
+  const options = {
+    context: { i18n },
+    childContextTypes: {
+      i18n: PropTypes.object.isRequired,
+    },
+  };
+
+  const props = {
+    saveFilters: jest.fn(),
+    t: v => v,
+    customFilters: {},
+  };
+
+  beforeEach(() => {
+    wrapper = mount(<FilterContainer {...props} />, options);
+  });
+
   it('should call saveFilters with expected Output', () => {
-    const props = {
-      saveFilters: spy(),
-      t: spy(),
-      customFilters: {},
-    };
     const expectedValue = {
       dateFrom: '',
       dateTo: '',
@@ -21,32 +33,20 @@ describe('filterContainer', () => {
       amountTo: '',
       message: 'test',
     };
-    const wrapper = shallow(<filterContainer {...props} />);
-    wrapper.find(Input).props().onChange('test');
-    wrapper.find(PrimaryButtonV2).props().onClick();
-    expect(props.saveFilters).to.be.calledWith(expectedValue);
+    wrapper.find('.message-field input').simulate('change', { target: { name: 'message', value: 'test' } });
+    wrapper.find(PrimaryButtonV2).simulate('click');
+    expect(props.saveFilters).toBeCalledWith(expectedValue);
   });
 
   it('should toggle Filters dropdown', () => {
-    const props = {
-      t: spy(),
-      customFilters: {},
-    };
-
-    const wrapper = shallow(<filterContainer {...props} />);
-    expect(wrapper.state('showFilters')).to.be.been.equal(false);
+    expect(wrapper).not.toContainMatchingElement('.dropdown.show');
     wrapper.find('.filterTransactions').simulate('click');
-    expect(wrapper.state('showFilters')).to.be.been.equal(true);
+    expect(wrapper).toContainMatchingElement('.dropdown.show');
     wrapper.find('.filterTransactions').simulate('click');
-    expect(wrapper.state('showFilters')).to.be.been.equal(false);
+    expect(wrapper).not.toContainMatchingElement('.dropdown.show');
   });
 
   it('should call saveFilters with expected Output', () => {
-    const props = {
-      saveFilters: spy(),
-      t: spy(),
-      customFilters: {},
-    };
     const expectedValue = {
       dateFrom: '',
       dateTo: '',
@@ -54,8 +54,7 @@ describe('filterContainer', () => {
       amountTo: '',
       message: '',
     };
-    const wrapper = shallow(<filterContainer {...props} />);
-    wrapper.find(Input).props().onKeyDown({ keyCode: keyCodes.enter });
-    expect(props.saveFilters).to.be.calledWith(expectedValue);
+    wrapper.find('.message-field input').simulate('keyDown', { keyCode: keyCodes.enter });
+    expect(props.saveFilters).toBeCalledWith(expectedValue);
   });
 });
