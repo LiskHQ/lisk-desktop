@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { translate } from 'react-i18next';
+import { getDateTimestampFromFirstBlock } from '../../../utils/datetime';
 import { InputV2 } from '../../toolbox/inputsV2';
 import styles from './filters.css';
 
@@ -30,6 +31,7 @@ class DateFieldGroup extends React.Component {
   validateDates(fieldsObj) {
     const { t } = this.props;
     let feedback = '';
+    // eslint-disable-next-line max-statements
     const fields = Object.keys(fieldsObj).reduce((acc, field) => {
       const { value } = fieldsObj[field];
       const date = moment(value, this.dateFormat);
@@ -46,10 +48,18 @@ class DateFieldGroup extends React.Component {
         error = true;
       }
 
+      if (date.isValid() && getDateTimestampFromFirstBlock(value, this.dateFormat) < 0) {
+        feedback = t('Date must be after {{firstBlock}}', {
+          firstBlock: moment(new Date(2016, 4, 24)).format(this.dateFormat),
+        });
+        error = true;
+      }
+
       return {
         ...acc,
         [field]: {
           ...fieldsObj[field],
+          value,
           error,
         },
       };
