@@ -75,6 +75,7 @@ class TransactionsOverviewV2 extends React.Component {
           clearFilter={this.props.clearFilter}
           clearAllFilters={this.props.clearAllFilters}
           customFilters={this.props.activeFilter}
+          results={this.props.count}
           t={this.props.t} /> : null}
         <TransactionsListV2
           followedAccounts={this.props.followedAccounts}
