@@ -9,6 +9,7 @@ import MessageFieldGroup from './messageFieldGroup';
 
 import styles from './filterContainer.css';
 import transactionsStyles from '../transactionsV2.css';
+import AmountFieldGroup from './amountFieldGroup';
 
 class filterContainer extends React.Component {
   constructor(props) {
@@ -99,6 +100,10 @@ class filterContainer extends React.Component {
               className={`${styles.container} container`}
               ref={(node) => { this.dropdownRef = node; }}>
               <DateFieldGroup
+                filters={this.props.customFilters}
+                updateCustomFilters={this.updateCustomFilters}
+                handleKeyPress={this.handleKey} />
+              <AmountFieldGroup
                 filters={this.props.customFilters}
                 updateCustomFilters={this.updateCustomFilters}
                 handleKeyPress={this.handleKey} />
