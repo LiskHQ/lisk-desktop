@@ -14,7 +14,7 @@ const FilterBar = props => (
           key={filter + index}>
             <p className={styles.label}>{props.customFilters[filter]}</p>
             <span
-              className={styles.closeBtn}
+              className={styles.clearBtn}
               onClick={() => props.clearFilter(filter)} />
         </div> :
         null))}

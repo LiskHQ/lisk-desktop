@@ -22,7 +22,7 @@
   margin-right: 16px;
   padding: 0 15px;
 
-  & > .closeBtn {
+  & > .clearBtn {
     align-items: flex-start;
     cursor: pointer;
     display: flex;
