@@ -23,7 +23,7 @@ class WalletTransactionsV2 extends React.Component {
         amountTo: '',
         message: '',
       },
-      activeFilter: {},
+      activeFilters: {},
       copied: false,
       closedOnboarding: false,
     };
@@ -148,7 +148,7 @@ class WalletTransactionsV2 extends React.Component {
   render() {
     const overviewProps = {
       ...this.props,
-      activeFilter: this.state.activeFilter,
+      activeFilters: this.state.activeFilters,
       customFilters: this.state.customFilters,
       canLoadMore: this.props.transactions.length < this.props.count,
       onInit: this.onInit,
