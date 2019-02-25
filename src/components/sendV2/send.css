@@ -1,0 +1,20 @@
+@import '../app/variables';
+
+:global .offlineWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  width: 100%;
+  max-width: 670px;
+  height: auto;
+}

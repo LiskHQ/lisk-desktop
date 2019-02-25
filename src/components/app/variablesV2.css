@@ -58,6 +58,7 @@ or "warn/action" ineastd of "red/green"
   --paragraph-font-size-s: 14px;
   --button-font-size: var(--paragraph-font-size-s);
   --button-font-size-s: 12px;
+  --font-size-title: 18px;
 
   /*************************
         Sizes
