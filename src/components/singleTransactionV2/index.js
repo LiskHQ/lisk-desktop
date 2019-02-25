@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import { loadTransaction } from '../../actions/transactions';
 import SingleTransactionV2 from './singleTransactionV2';
