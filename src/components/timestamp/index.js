@@ -73,7 +73,7 @@ export const TooltipTime = translate()((props) => {
 export const DateTimeFromTimestamp = translate()((props) => {
   moment.locale(i18n.language);
   const datetime = moment(_convertTimeFromFirstBlock(props.time));
-  return (<span>{datetime.calendar(null, {
+  return (<span className={`${props.className || ''}`}>{datetime.calendar(null, {
     lastDay: props.t('[Yesterday], LT'),
     sameDay: props.t('[Today], LT'),
     nextDay: props.t('[Tomorrow], LT'),
