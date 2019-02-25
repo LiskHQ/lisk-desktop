@@ -4,6 +4,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { translate } from 'react-i18next';
 import { DateTimeFromTimestamp } from '../timestamp';
 import LiskAmount from '../liskAmount';
+import EmptyState from '../emptyState';
 import svg from '../../utils/svgIcons';
 import BoxV2 from '../boxV2';
 import TransactionDetailViewV2 from '../transactionsV2/transactionDetailViewV2/transactionDetailViewV2';
@@ -49,6 +50,7 @@ class SingleTransactionV2 extends React.Component {
     this.setState({ [`${name}Copied`]: true });
   }
 
+  // eslint-disable-next-line complexity
   render() {
     const { t, transaction } = this.props;
     let title = t('Transfer Transaction');
@@ -72,6 +74,7 @@ class SingleTransactionV2 extends React.Component {
 
     return (
       <div className={`${grid.row} ${grid['center-xs']}`}>
+      { this.props.transaction.id && !this.props.transaction.error ? (
         <BoxV2 className={`${grid['col-sm-7']} ${styles.wrapper}`}>
           <header className={`${styles.detailsHeader} tx-header`}>
             <h1>{title}</h1>
@@ -102,7 +105,7 @@ class SingleTransactionV2 extends React.Component {
                 </p>
               </div>
               <div>
-                <p className={styles.value}><span className={styles.label}>{t('Confirmation')} </span> {transaction.confirmations}</p>
+                <p className={styles.value}><span className={styles.label}>{t('Confirmation')} </span> {transaction.confirmations || 0}</p>
                 <p className={`${styles.value} ${styles.link} ${this.state.linkCopied ? styles.copied : ''}`}>
                   <CopyToClipboard
                     text={this.props.match.url}
@@ -116,6 +119,12 @@ class SingleTransactionV2 extends React.Component {
             </footer>
           </main>
         </BoxV2>
+      ) : (
+        <BoxV2>
+          <EmptyState title={this.props.t('No results')}
+            message={this.props.t('Search for Lisk ID, Delegate or Transaction ID')} />
+        </BoxV2>
+      )}
       </div>
     );
   }
