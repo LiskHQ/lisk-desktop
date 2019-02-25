@@ -2,7 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { translate } from 'react-i18next';
-import { DateTimeFromTimestamp } from './../timestamp/index';
+import { DateTimeFromTimestamp } from '../timestamp';
 import LiskAmount from '../liskAmount';
 import svg from '../../utils/svgIcons';
 import BoxV2 from '../boxV2';
@@ -52,7 +52,7 @@ class SingleTransactionV2 extends React.Component {
   render() {
     const { t, transaction } = this.props;
     let title = t('Transfer Transaction');
-    let icon = svg.txIncoming;
+    let icon = svg.txDefault;
     switch (transaction.type) {
       case 1:
         title = t('2nd Passphrase Registration');
@@ -76,12 +76,13 @@ class SingleTransactionV2 extends React.Component {
           <header className={`${styles.detailsHeader} tx-header`}>
             <h1>{title}</h1>
             <img className={styles.txIcon} src={icon} />
-            <DateTimeFromTimestamp
-              className={styles.date}
-              time={transaction.timestamp} />
+            <span className={styles.date}>
+              <DateTimeFromTimestamp
+                time={transaction.timestamp}
+                showSeconds={true} />
+            </span>
           </header>
           <main className={styles.mainContent}>
-
             <footer className={styles.detailsFooter}>
               <div>
                 <p className={styles.value}>
@@ -93,7 +94,9 @@ class SingleTransactionV2 extends React.Component {
                     className={`${styles.clickable} ${this.state.idCopied ? styles.copied : ''}`}
                     text={transaction.id}
                     onCopy={() => this.handleCopy('id')}>
-                    <span>{transaction.id} <FontIcon>copy-to-clipboard</FontIcon></span>
+                    {this.state.idCopied
+                      ? <span>{t('Copied!')}</span>
+                      : <span>{transaction.id} <FontIcon>copy-to-clipboard</FontIcon></span>}
                   </CopyToClipboard>
                 </p>
               </div>

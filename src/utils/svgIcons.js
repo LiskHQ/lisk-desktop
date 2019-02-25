@@ -21,6 +21,7 @@ import txOutgoing from '../assets/images/icons-v2/tx-outgoing.svg';
 import txDelegate from '../assets/images/icons-v2/tx-delegate.svg';
 import txVote from '../assets/images/icons-v2/tx-vote.svg';
 import tx2ndPassphrase from '../assets/images/icons-v2/tx-2nd-passphrase.svg';
+import txDefault from '../assets/images/icons-v2/tx-default.svg';
 import icoLink from '../assets/images/icons-v2/link.svg';
 
 export default {
@@ -47,5 +48,6 @@ export default {
   txDelegate,
   txVote,
   tx2ndPassphrase,
+  txDefault,
   icoLink,
 };
