@@ -25,26 +25,25 @@ import txDefault from '../assets/images/icons-v2/tx-default.svg';
 import txSendArrow from '../assets/images/icons-v2/tx-send-arrow.svg';
 import icoLink from '../assets/images/icons-v2/link.svg';
 import copy from '../assets/images/icons-v2/copy.svg';
+import questionMark from '../assets/images/icons-v2/question.svg';
 
 export default {
   avatar_icon: Avatar,
   check_icon: Check,
   circleLock_icon: CircleLock,
+  dashboard_active_icon: dashboardActiveIcon,
+  dashboard_icon: dashboardIcon,
+  delegates_active_icon: delegatesActiveIcon,
+  delegates_icon: delegatesIcon,
   feedback_icon: Feedback,
   help_icon: Help,
   key_icon: Key,
   lock_icon: Lock,
-  pdf_icon: Pdf,
-  dashboard_icon: dashboardIcon,
-  dashboard_active_icon: dashboardActiveIcon,
-  wallet_icon: walletIcon,
-  wallet_active_icon: walletActiveIcon,
-  delegates_icon: delegatesIcon,
-  delegates_active_icon: delegatesActiveIcon,
-  settings_icon: settingsIcon,
-  settings_active_icon: settingsActiveIcon,
-  logout_icon: logoutIcon,
   logout_active_icon: logoutActiveIcon,
+  logout_icon: logoutIcon,
+  pdf_icon: Pdf,
+  question_icon: questionMark,
+  settings_active_icon: settingsActiveIcon,
   txIncoming,
   txOutgoing,
   txDelegate,
@@ -54,4 +53,7 @@ export default {
   icoLink,
   txSendArrow,
   copy,
+  settings_icon: settingsIcon,
+  wallet_active_icon: walletActiveIcon,
+  wallet_icon: walletIcon,
 };

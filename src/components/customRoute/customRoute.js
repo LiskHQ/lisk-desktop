@@ -16,7 +16,7 @@ const CustomRoute = ({
   Piwik.tracking(rest.history, settings);
 
   return ((isPrivate && isAuthenticated) || !isPrivate ?
-    <main className={isPrivate ? offlineStyle.disableWhenOffline : null}>
+    <main className={`${isPrivate ? offlineStyle.disableWhenOffline : null} offlineWrapper`}>
       <ErrorBoundary errorMessage={t('An error occoured while rendering this page')}>
         <Route path={fullPath} component={component} exact={exact} />
       </ErrorBoundary>

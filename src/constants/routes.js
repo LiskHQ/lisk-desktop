@@ -13,7 +13,7 @@ import SingleTransaction from '../components/singleTransactionV2';
 import HwWallet from '../components/hwWallet';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
-import Send from '../components/send';
+import Send from '../components/sendV2';
 import Splashscreen from '../components/splashscreen';
 import RegistrationV2 from '../components/registerV2/registerV2';
 import LoginV2 from '../components/loginV2';
