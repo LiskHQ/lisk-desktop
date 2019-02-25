@@ -22,7 +22,9 @@ import txDelegate from '../assets/images/icons-v2/tx-delegate.svg';
 import txVote from '../assets/images/icons-v2/tx-vote.svg';
 import tx2ndPassphrase from '../assets/images/icons-v2/tx-2nd-passphrase.svg';
 import txDefault from '../assets/images/icons-v2/tx-default.svg';
+import txSendArrow from '../assets/images/icons-v2/tx-send-arrow.svg';
 import icoLink from '../assets/images/icons-v2/link.svg';
+import copy from '../assets/images/icons-v2/copy.svg';
 
 export default {
   avatar_icon: Avatar,
@@ -50,4 +52,6 @@ export default {
   tx2ndPassphrase,
   txDefault,
   icoLink,
+  txSendArrow,
+  copy,
 };
