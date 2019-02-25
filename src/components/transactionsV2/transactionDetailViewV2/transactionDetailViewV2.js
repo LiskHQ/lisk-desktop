@@ -6,7 +6,6 @@ import TransactionVotes from './transactionVotes';
 import styles from './transactionDetailViewV2.css';
 import svg from '../../../utils/svgIcons';
 
-// eslint-disable-next-line complexity
 class TransactionDetailViewV2 extends React.Component {
   // eslint-disable-next-line complexity
   render() {
