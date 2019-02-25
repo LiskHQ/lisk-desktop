@@ -108,7 +108,7 @@ class SingleTransactionV2 extends React.Component {
                 <p className={styles.value}><span className={styles.label}>{t('Confirmation')} </span> {transaction.confirmations || 0}</p>
                 <p className={`${styles.value} ${styles.link} ${this.state.linkCopied ? styles.copied : ''}`}>
                   <CopyToClipboard
-                    text={this.props.match.url}
+                    text={`lisk:/${this.props.match.url}`}
                     onCopy={() => this.handleCopy('link')}>
                     {this.state.linkCopied
                       ? <span>{t('Copied!')}</span>
