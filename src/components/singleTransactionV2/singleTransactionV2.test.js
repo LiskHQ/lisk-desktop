@@ -113,7 +113,7 @@ describe('Single Transaction V2 Component', () => {
     const transaction = {
       senderId: accounts.genesis.address,
       confirmation: 1,
-      type: 2,
+      type: 3,
       id: 123,
       fee: fees.vote,
       timestamp: Date.now(),
@@ -127,7 +127,7 @@ describe('Single Transaction V2 Component', () => {
 
     it('Should render votes transaction', () => {
       wrapper = mount(<SingleTransactionV2 {...props} />, options);
-      expect(wrapper.find('.detailsHeader h1')).toHaveText('Delegate Registration');
+      expect(wrapper.find('.detailsHeader h1')).toHaveText('Vote Transaction');
     });
   });
 });
