@@ -28,15 +28,18 @@ class SingleTransactionV2 extends React.Component {
     this.handleCopy = this.handleCopy.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  shouldComponentUpdate(nextProps) {
     if (nextProps.peers.liskAPIClient !== this.props.peers.liskAPIClient
       || nextProps.match.params.id !== this.props.match.params.id) {
       this.props.loadTransaction({
         id: nextProps.match.params.id,
       });
+      return false;
     }
+    return true;
   }
 
+  // istanbul skip next
   componentWillUnmount() {
     clearTimeout(this.idTimeout);
     clearTimeout(this.linkTimeout);
@@ -92,10 +95,10 @@ class SingleTransactionV2 extends React.Component {
                 <p className={styles.value}>
                   <span className={styles.label}>{t('Fee')} </span><LiskAmount val={transaction.fee} /> {t('LSK')}
                 </p>
-                <p className={styles.value}>
+                <p className={`${styles.value} tx-id`}>
                   <span className={styles.label}>{t('Transaction ID')} </span>
                   <CopyToClipboard
-                    className={`${styles.clickable} ${this.state.idCopied ? styles.copied : ''}`}
+                    className={`${styles.clickable} ${this.state.idCopied ? styles.copied : ''} transaction-id`}
                     text={transaction.id}
                     onCopy={() => this.handleCopy('id')}>
                     {this.state.idCopied
@@ -108,6 +111,7 @@ class SingleTransactionV2 extends React.Component {
                 <p className={styles.value}><span className={styles.label}>{t('Confirmation')} </span> {transaction.confirmations || 0}</p>
                 <p className={`${styles.value} ${styles.link} ${this.state.linkCopied ? styles.copied : ''}`}>
                   <CopyToClipboard
+                    className={'tx-link'}
                     text={`lisk:/${this.props.match.url}`}
                     onCopy={() => this.handleCopy('link')}>
                     {this.state.linkCopied
