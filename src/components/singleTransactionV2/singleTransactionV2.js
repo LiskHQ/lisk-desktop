@@ -6,8 +6,8 @@ import { DateTimeFromTimestamp } from '../timestamp';
 import LiskAmount from '../liskAmount';
 import svg from '../../utils/svgIcons';
 import BoxV2 from '../boxV2';
+import TransactionDetailViewV2 from '../transactionsV2/transactionDetailViewV2/transactionDetailViewV2';
 import styles from './singleTransactionV2.css';
-import { FontIcon } from '../fontIcon';
 
 class SingleTransactionV2 extends React.Component {
   constructor(props) {
@@ -72,7 +72,7 @@ class SingleTransactionV2 extends React.Component {
 
     return (
       <div className={`${grid.row} ${grid['center-xs']}`}>
-        <BoxV2 className={`${grid['col-sm-8']} ${styles.wrapper}`}>
+        <BoxV2 className={`${grid['col-sm-7']} ${styles.wrapper}`}>
           <header className={`${styles.detailsHeader} tx-header`}>
             <h1>{title}</h1>
             <img className={styles.txIcon} src={icon} />
@@ -83,6 +83,7 @@ class SingleTransactionV2 extends React.Component {
             </span>
           </header>
           <main className={styles.mainContent}>
+            <TransactionDetailViewV2 transaction={transaction} />
             <footer className={styles.detailsFooter}>
               <div>
                 <p className={styles.value}>
@@ -96,7 +97,7 @@ class SingleTransactionV2 extends React.Component {
                     onCopy={() => this.handleCopy('id')}>
                     {this.state.idCopied
                       ? <span>{t('Copied!')}</span>
-                      : <span>{transaction.id} <FontIcon>copy-to-clipboard</FontIcon></span>}
+                      : <span>{transaction.id} <img src={svg.copy}/></span>}
                   </CopyToClipboard>
                 </p>
               </div>
