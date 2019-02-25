@@ -9,7 +9,8 @@ import SearchResult from '../components/searchResult';
 import TransactionDashboard from '../components/transactionDashboard';
 import AccountTransactions from '../components/accountTransactions';
 import Voting from '../components/voting';
-import SingleTransaction from '../components/singleTransaction';
+// import SingleTransaction from '../components/singleTransaction';
+import SingleTransactionV2 from '../components/singleTransactionV2';
 import HwWallet from '../components/hwWallet';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
@@ -113,7 +114,7 @@ export default {
     pathPrefix: '/explorer',
     path: '/transactions',
     pathSuffix: '/:id?',
-    component: SingleTransaction,
+    component: SingleTransactionV2,
     isPrivate: false,
   },
   hwWallet: {
