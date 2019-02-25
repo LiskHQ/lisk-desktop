@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { translate } from 'react-i18next';
-import { getDateTimestampFromFirstBlock } from '../../../utils/datetime';
+import { getDateTimestampFromFirstBlock, formatInputToDate } from '../../../utils/datetime';
 import { InputV2 } from '../../toolbox/inputsV2';
 import styles from './filters.css';
 
@@ -71,14 +71,7 @@ class DateFieldGroup extends React.Component {
 
   handleFieldChange({ target }) {
     const { filters } = this.props;
-    const value = target.value.replace(/\D/g, '').split('').reduce((acc, digit, idx) => {
-      const separatorCounter = acc.split('.').length;
-      const shouldAddSeparator = idx !== 0 && idx % 2 === 0;
-      const separator = '.';
-      return (shouldAddSeparator && separatorCounter < 3)
-        ? `${acc}${separator}${digit}`
-        : `${acc}${digit}`;
-    }, '').substring(0, 8);
+    const value = formatInputToDate(target.value, '.');
 
     const fieldsObj = Object.keys(filters).reduce((acc, filter) =>
       ({ ...acc, [filter]: { value: filters[filter] } }), {});

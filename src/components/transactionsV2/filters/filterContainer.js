@@ -1,9 +1,6 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import moment from 'moment';
-// import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
-// import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 import keyCodes from '../../../constants/keyCodes';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
@@ -109,28 +106,6 @@ class filterContainer extends React.Component {
                 filters={this.props.customFilters}
                 updateCustomFilters={this.updateCustomFilters}
                 handleKeyPress={this.handleKey} />
-              {/* <div className={styles.label}>{this.props.t('Amount')}</div>
-              <div className={styles.row}>
-                <Input
-                  type='text'
-                  id='filter-amount-from'
-                  name='amountFrom'
-                  placeholder='Min'
-                  theme={styles}
-                  value={this.props.customFilters.dateFrom}
-                  error={this.state.errors.amountFromValidity}
-                  onChange={(val) => { this.changeFilters('amountFrom', val); }}/>
-                <div className={styles.dash}>—</div>
-                <Input
-                  type='text'
-                  id='filter-amount-to'
-                  name='amountTo'
-                  placeholder='Max'
-                  error={this.state.errors.amountToValidity}
-                  theme={styles}
-                  value={this.props.customFilters.amountTo}
-                  onChange={(val) => { this.changeFilters('amountTo', val); }}/>
-              </div> */}
               <div className={styles.buttonContainer}>
                 <PrimaryButtonV2
                   disabled={this.state.hasErrors}
