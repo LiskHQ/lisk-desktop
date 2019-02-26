@@ -1,9 +1,9 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import LiskAmount from '../../liskAmount';
 import AccountInfo from './accountInfo';
 import TransactionVotes from './transactionVotes';
 import styles from './transactionDetailViewV2.css';
+import AmountV2 from '../amountV2';
 import svg from '../../../utils/svgIcons';
 
 class TransactionDetailViewV2 extends React.Component {
@@ -38,20 +38,29 @@ class TransactionDetailViewV2 extends React.Component {
             <h1>{title}</h1>
             <p>
             {transaction.type === 0 ? (
-              <React.Fragment>
-                <LiskAmount val={value} /> <span>{t('LSK')}</span>
-              </React.Fragment>
+              <span className={'tx-amount'}>
+                <AmountV2
+                  className={styles.txAmount}
+                  address={this.props.address}
+                  value={transaction} />
+              </span>
               ) : value
             }
             </p>
           </div>
         ) : null}
         <div className={styles.accountWrapper}>
-          <AccountInfo address={transaction.senderId} label={label} />
+          <AccountInfo
+            address={transaction.senderId}
+            addressClass={'sender-address'}
+            label={label} />
           {transaction.type === 0 ? (
             <React.Fragment>
               <span className={styles.separator}><img src={svg.txSendArrow} /></span>
-              <AccountInfo address={transaction.recipientId} label={'recipient'} />
+              <AccountInfo
+                address={transaction.recipientId}
+                addressClass={'receiver-address'}
+                label={'recipient'} />
             </React.Fragment>) : null
           }
         </div>
@@ -60,7 +69,7 @@ class TransactionDetailViewV2 extends React.Component {
           { transaction.type === 0 && (transaction.asset && transaction.asset.data) ? (
             <div className={styles.detailsWrapper}>
               <span className={styles.label}>{t('Message')}</span>
-              <div className={styles.message}>
+              <div className={`${styles.message} tx-reference`}>
                 {transaction.asset.data}
               </div>
             </div>

@@ -1,5 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { MemoryRouter as Router } from 'react-router-dom';
+import { mount } from 'enzyme';
 import AccountInfo from './accountInfo';
 import accounts from '../../../../test/constants/accounts';
 
@@ -9,8 +10,8 @@ describe('TxDetail AccountInfo', () => {
       label: 'Label test',
       address: accounts.genesis.address,
     };
-    const wrapper = shallow(<AccountInfo {...props} />);
+    const wrapper = mount(<Router><AccountInfo {...props} /></Router>);
     expect(wrapper.find('.label').text()).toEqual(props.label);
-    expect(wrapper.find('.address').text()).toEqual(props.address);
+    expect(wrapper.find('.address').first().text()).toEqual(props.address);
   });
 });

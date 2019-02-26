@@ -1,4 +1,5 @@
 import React from 'react';
+import { MemoryRouter as Router } from 'react-router-dom';
 import { mount } from 'enzyme';
 import i18n from '../../../i18n';
 import TransactionVotes from './transactionVotes';
@@ -10,14 +11,14 @@ describe('Transaction Votes', () => {
   };
   const props = {
     votes: {
-      added: [{ username: 'delegate1', rank: '1' }],
-      deleted: [{ username: 'delegate2', rank: '2' }],
+      added: [{ username: 'delegate1', rank: '1', account: { address: '123L' } }],
+      deleted: [{ username: 'delegate2', rank: '2', account: { address: '12345L' } }],
     },
     t: v => v,
   };
 
   it('Should render with added and deleted Votes', () => {
-    wrapper = mount(<TransactionVotes {...props} />, options);
+    wrapper = mount(<Router><TransactionVotes {...props} /></Router>, options);
     expect(wrapper).toContainMatchingElements(2, '.votesContainer');
     expect(wrapper.find('.rank').first().text()).toEqual(props.votes.added[0].rank);
     expect(wrapper.find('.username').first().text()).toEqual(props.votes.added[0].username);
@@ -27,22 +28,28 @@ describe('Transaction Votes', () => {
     const addedProps = {
       ...props,
       votes: {
-        added: [{ username: 'delegate2', rank: '2' }, { username: 'delegate1', rank: '1' }],
+        added: [
+          { username: 'delegate2', rank: '2', account: { address: '12345L' } },
+          { username: 'delegate1', rank: '1', account: { address: '123L' } },
+        ],
       },
     };
-    wrapper = mount(<TransactionVotes {...addedProps} />, options);
+    wrapper = mount(<Router><TransactionVotes {...addedProps} /></Router>, options);
     expect(wrapper).toContainMatchingElements(1, '.votesContainer.added');
-    expect(wrapper.find('.rank').at(1).text()).toBe('2');
+    expect(wrapper.find('.rank').at(1).text()).toBe(addedProps.votes.added[0].rank);
   });
 
   it('Should only render removed votes', () => {
     const deleteProps = {
       ...props,
       votes: {
-        deleted: [{ username: 'delegate2', rank: '2' }, { username: 'delegate1', rank: '1' }],
+        deleted: [
+          { username: 'delegate2', rank: '2', account: { address: '12345L' } },
+          { username: 'delegate1', rank: '1', account: { address: '123L' } },
+        ],
       },
     };
-    wrapper = mount(<TransactionVotes {...deleteProps} />, options);
+    wrapper = mount(<Router><TransactionVotes {...deleteProps} /></Router>, options);
     expect(wrapper).toContainMatchingElements(1, '.votesContainer.deleted');
   });
 });
