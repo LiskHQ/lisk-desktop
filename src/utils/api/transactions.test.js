@@ -70,7 +70,7 @@ describe('Utils: Transactions API', () => {
         sort: 'timestamp:desc',
         data: '%test%',
         fromTimestamp: getTimestampFromFirstBlock('16.10.16', 'DD.MM.YY'),
-        toTimestamp: getTimestampFromFirstBlock('16.12.16', 'DD.MM.YY'),
+        toTimestamp: getTimestampFromFirstBlock('16.12.16', 'DD.MM.YY', { inclusive: true }),
       };
 
       expect(liskAPIClient.transactions.get).to.have.been.calledWith(expected);

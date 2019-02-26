@@ -3,6 +3,7 @@ import moment from 'moment';
 import { translate } from 'react-i18next';
 import { getDateTimestampFromFirstBlock, formatInputToDate } from '../../../utils/datetime';
 import { InputV2 } from '../../toolbox/inputsV2';
+import { getInputSelection, setInputSelection } from '../../../utils/selection';
 import styles from './filters.css';
 
 class DateFieldGroup extends React.Component {
@@ -23,12 +24,22 @@ class DateFieldGroup extends React.Component {
       feedback: '',
     };
 
+    this.inputRefs = {
+      dateTo: null,
+      dateFrom: null,
+    };
+
     this.dateFormat = props.t('DD.MM.YY');
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
+    this.setRefs = this.setRefs.bind(this);
   }
 
-  validateDates(fieldsObj) {
+  setRefs(node) {
+    this.inputRefs[node.name] = node;
+  }
+
+  validateDates(fieldsObj, selectionObj) {
     const { t } = this.props;
     let feedback = '';
     // eslint-disable-next-line max-statements
@@ -50,7 +61,7 @@ class DateFieldGroup extends React.Component {
 
       if (date.isValid() && getDateTimestampFromFirstBlock(value, this.dateFormat) < 0) {
         feedback = t('Date must be after {{firstBlock}}', {
-          firstBlock: moment(new Date(2016, 4, 24)).format(this.dateFormat),
+          firstBlock: moment(new Date(2016, 4, 24, 17)).format(this.dateFormat),
         });
         error = true;
       }
@@ -66,7 +77,9 @@ class DateFieldGroup extends React.Component {
     }, {});
 
     this.props.updateCustomFilters(fields);
-    this.setState({ fields, feedback });
+    this.setState({ fields, feedback }, () => {
+      setInputSelection(this.inputRefs[selectionObj.name], selectionObj.start, selectionObj.end);
+    });
   }
 
   handleFieldChange({ target }) {
@@ -76,10 +89,15 @@ class DateFieldGroup extends React.Component {
     const fieldsObj = Object.keys(filters).reduce((acc, filter) =>
       ({ ...acc, [filter]: { value: filters[filter] } }), {});
 
+    const selectionObj = {
+      name: target.name,
+      ...getInputSelection(this.inputRefs[target.name]),
+    };
+
     this.validateDates({
       ...fieldsObj,
       [target.name]: { value },
-    });
+    }, selectionObj);
   }
 
   render() {
@@ -91,6 +109,7 @@ class DateFieldGroup extends React.Component {
         <span className={styles.fieldLabel}>{t('Date')}</span>
         <div className={styles.fieldRow}>
           <InputV2
+            setRef={this.setRefs}
             autoComplete={'off'}
             onChange={this.handleFieldChange}
             name='dateFrom'
@@ -101,6 +120,7 @@ class DateFieldGroup extends React.Component {
             className={`${styles.input} ${fields.dateFrom.error ? 'error' : ''} dateFromInput`} />
           <span>-</span>
           <InputV2
+            setRef={this.setRefs}
             autoComplete={'off'}
             onChange={this.handleFieldChange}
             name='dateTo'

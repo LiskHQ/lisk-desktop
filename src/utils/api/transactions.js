@@ -37,7 +37,7 @@ export const getTransactions = ({
     params.fromTimestamp = params.fromTimestamp > 0 ? params.fromTimestamp : 0;
   }
   if (customFilters.dateTo && customFilters.dateTo !== '') {
-    params.toTimestamp = getTimestampFromFirstBlock(customFilters.dateTo, 'DD.MM.YY');
+    params.toTimestamp = getTimestampFromFirstBlock(customFilters.dateTo, 'DD.MM.YY', { inclusive: true });
     params.toTimestamp = params.toTimestamp > 1 ? params.toTimestamp : 1;
   }
   if (filter === txFilters.incoming) params.recipientId = address;
