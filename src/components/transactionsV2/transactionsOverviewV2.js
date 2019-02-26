@@ -70,11 +70,11 @@ class TransactionsOverviewV2 extends React.Component {
             saveFilters={this.props.saveFilters}
             customFilters={this.props.customFilters} />
         </div>
-        {this.props.activeFilters &&
-          Object.values(this.props.activeFilters).find(filter => filter) ? <FilterBar
+        {this.props.activeCustomFIlters &&
+          Object.values(this.props.activeCustomFIlters).find(filter => filter) ? <FilterBar
           clearFilter={this.props.clearFilter}
           clearAllFilters={this.props.clearAllFilters}
-          customFilters={this.props.activeFilters}
+          customFilters={this.props.activeCustomFIlters}
           results={this.props.count}
           t={this.props.t} /> : null}
         <TransactionsListV2

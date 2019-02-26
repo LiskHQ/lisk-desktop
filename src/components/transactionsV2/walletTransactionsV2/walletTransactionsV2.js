@@ -23,7 +23,7 @@ class WalletTransactionsV2 extends React.Component {
         amountTo: '',
         message: '',
       },
-      activeFilters: {},
+      activeCustomFIlters: {},
       copied: false,
       closedOnboarding: false,
     };
@@ -66,7 +66,7 @@ class WalletTransactionsV2 extends React.Component {
       limit: 30,
       offset: this.props.transactions.length,
       filter: this.props.activeFilter,
-      customFilters: this.state.activeFilter,
+      customFilters: this.state.activeCustomFIlters,
     });
   }
   /*
@@ -82,13 +82,13 @@ class WalletTransactionsV2 extends React.Component {
         address: this.props.address,
         limit: 30,
         filter,
-        customFilters: this.state.activeFilter,
+        customFilters: this.state.activeCustomFIlters,
       });
     } else {
       this.props.addFilter({
         filterName: 'wallet',
         value: filter,
-        customFilters: this.state.activeFilter,
+        customFilters: this.state.activeCustomFIlters,
       });
     }
   }
@@ -106,7 +106,7 @@ class WalletTransactionsV2 extends React.Component {
       filter: this.props.activeFilter,
       customFilters,
     });
-    this.setState({ activeFilters: customFilters, customFilters });
+    this.setState({ activeCustomFIlters: customFilters, customFilters });
   }
 
   /* istanbul ignore next */
@@ -148,7 +148,7 @@ class WalletTransactionsV2 extends React.Component {
   render() {
     const overviewProps = {
       ...this.props,
-      activeFilters: this.state.activeFilters,
+      activeCustomFIlters: this.state.activeCustomFIlters,
       customFilters: this.state.customFilters,
       canLoadMore: this.props.transactions.length < this.props.count,
       onInit: this.onInit,
