@@ -16,11 +16,17 @@ class Extensions extends React.Component {
 
     this.state = {
       url: localJSONStorage.get('url', ''),
+      error: '',
     };
   }
 
   handleInput(value, key) {
-    this.setState({ [key]: value });
+    const regex = /^(https:\/\/github\.com\/michaeltomasik\/extensions-lisk\/)/g;
+    let error = '';
+    if (!value.match(regex)) {
+      error = this.props.t('Use extensions from https://github.com/michaeltomasik/extensions-lisk/');
+    }
+    this.setState({ [key]: value, error });
   }
 
   removeExtension() {
@@ -62,6 +68,7 @@ class Extensions extends React.Component {
           </div>
           <div className={styles.extentionsWrapper}>
             <ToolBoxInput
+              error={this.state.error}
               label={this.props.t('Enter URL of the *.js file with the extension')}
               value={this.state.url}
               onChange={val => this.handleInput(val, 'url')} >
@@ -74,6 +81,7 @@ class Extensions extends React.Component {
               onClick={() => this.removeExtension()} />
 
             <PrimaryButtonV2
+              disabled={this.state.error}
               label={this.props.t('Add Extension')}
               onClick={() => this.addExtension()} />
           </div>
