@@ -21,10 +21,10 @@ class Extensions extends React.Component {
   }
 
   handleInput(value, key) {
-    const regex = /^(https:\/\/github\.com\/michaeltomasik\/extensions-lisk\/)/g;
+    const regex = /^(https:\/\/raw.githubusercontent.com\/michaeltomasik\/extensions-lisk\/master\/latestBlock.js)/g;
     let error = '';
     if (!value.match(regex)) {
-      error = this.props.t('Use extensions from https://github.com/michaeltomasik/extensions-lisk/');
+      error = this.props.t('Use extensions from https://raw.githubusercontent.com/michaeltomasik/extensions-lisk/');
     }
     this.setState({ [key]: value, error });
   }
