@@ -5,6 +5,7 @@ import { getDateTimestampFromFirstBlock, formatInputToDate } from '../../../util
 import { InputV2 } from '../../toolbox/inputsV2';
 import { getInputSelection, setInputSelection } from '../../../utils/selection';
 import styles from './filters.css';
+import keyCodes from '../../../constants/keyCodes';
 
 class DateFieldGroup extends React.Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class DateFieldGroup extends React.Component {
     this.dateFormat = props.t('DD.MM.YY');
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
+    this.handleKey = this.handleKey.bind(this);
     this.setRefs = this.setRefs.bind(this);
   }
 
@@ -82,16 +84,38 @@ class DateFieldGroup extends React.Component {
     });
   }
 
+  handleKey(evt) {
+    const { keyCode, target } = evt;
+    switch (keyCode) {
+      case keyCodes.delete: {
+        const selection = getInputSelection(this.inputRefs[target.name]);
+        if (target.value.charAt(selection.start - 1) === '.') {
+          setInputSelection(this.inputRefs[target.name], selection.start - 1, selection.end - 1);
+        }
+        break;
+      }
+      default: break;
+    }
+    this.props.handleKeyPress(evt);
+  }
+
+  // eslint-disable-next-line max-statements
   handleFieldChange({ target }) {
     const { filters } = this.props;
+    const selection = getInputSelection(this.inputRefs[target.name]);
+
     const value = formatInputToDate(target.value, '.');
+    if (target.value.length < value.length) {
+      selection.start += 1;
+      selection.end += 1;
+    }
 
     const fieldsObj = Object.keys(filters).reduce((acc, filter) =>
       ({ ...acc, [filter]: { value: filters[filter] } }), {});
 
     const selectionObj = {
       name: target.name,
-      ...getInputSelection(this.inputRefs[target.name]),
+      ...selection,
     };
 
     this.validateDates({
@@ -101,7 +125,7 @@ class DateFieldGroup extends React.Component {
   }
 
   render() {
-    const { filters, handleKeyPress, t } = this.props;
+    const { filters, t } = this.props;
     const { fields } = this.state;
 
     return (
@@ -116,7 +140,7 @@ class DateFieldGroup extends React.Component {
             value={filters.dateFrom}
             placeholder={this.dateFormat}
             onFocus={this.handleFocus}
-            onKeyDown={handleKeyPress}
+            onKeyDown={this.handleKey}
             className={`${styles.input} ${fields.dateFrom.error ? 'error' : ''} dateFromInput`} />
           <span>-</span>
           <InputV2
@@ -127,7 +151,7 @@ class DateFieldGroup extends React.Component {
             value={filters.dateTo}
             placeholder={this.dateFormat}
             onFocus={this.handleFocus}
-            onKeyDown={handleKeyPress}
+            onKeyDown={this.handleKey}
             className={`${styles.input} ${fields.dateTo.error ? 'error' : ''} dateToInput`} />
         </div>
         <span className={`${styles.feedback} ${this.state.feedback ? styles.show : ''}`}>
