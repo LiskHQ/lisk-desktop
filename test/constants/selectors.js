@@ -44,7 +44,7 @@ const ss = {
   confirmDelegateRegBtn: '.confirm-delegate-registration',
   spinner: '.spinner',
   transactionReference: '.transaction-reference',
-  transactionAmount: '.transactionAmount span',
+  transactionAmount: '.transactionAmount .amount span',
   transactionAmountPlaceholder: '.transactionAmount',
   delegateDuplicateNameError: '.error-name-duplicate',
   headerBalance: '.balance span',
