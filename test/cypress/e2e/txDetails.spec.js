@@ -16,7 +16,7 @@ describe('Tx details', () => {
    * @expect transfer details are correct for pending state
    * @expect transfer details are correct for confirmed state
    */
-  xit('Transfer details while pending and then confirmed', () => {
+  it('Transfer details while pending and then confirmed', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.send}?recipient=${accounts.delegate.address}&amount=5&reference=test-details`);
     cy.get(ss.nextTransferBtn).click();
@@ -52,7 +52,7 @@ describe('Tx details', () => {
    * Delegate transaction details are shown and correct when tx is confirmed
    * @expect transfer details are correct for confirmed state
    */
-  xit('Vote', () => {
+  it('Vote', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(`${urls.transactions}/${delegateVoteTxId}`);
     cy.get(ss.txHeader).contains('Vote Transaction');
@@ -100,7 +100,7 @@ describe('Tx details', () => {
    * Register second passphrase transaction details are shown and correct when tx is confirmed
    * @expect transfer details are correct for confirmed state
    */
-  xit('Second passphrase registration', () => {
+  it('Second passphrase registration', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(`${urls.transactions}/${secondPassphraseRegTxId}`);
     cy.get(ss.txHeader).contains('2nd Passphrase Registration');
