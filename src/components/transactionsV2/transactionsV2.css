@@ -34,7 +34,7 @@
     font-size: var(--paragraph-font-size-s);
     font-weight: var(--font-weight-bold);
     justify-content: center;
-    margin-bottom: -2px;
+    margin-bottom: -1px;
     padding: 16px;
     position: relative;
 
@@ -106,6 +106,7 @@
 }
 
 .container {
+  align-items: center;
   display: flex;
   background: var(--color-background-menu);
   justify-content: space-between;
@@ -113,14 +114,14 @@
 }
 
 .item {
+  background: var(--color-white);
+  border-radius: var(--border-radius-standard);
+  border: none;
+  box-shadow: var(--box-shadow-button);
   color: var(--color-content-grayblue);
-  cursor: pointer;
   font-family: var(--heading-font);
   font-size: var(--paragraph-font-size-s);
   font-weight: var(--font-weight-bold);
-  background: var(--color-white);
-  margin: 8px 10px;
-  border: none;
-  border-radius: var(--border-radius-standard);
-  box-shadow: 0 3px 3px -1px rgba(10, 22, 70, 0.1), 0 0 1px 0 rgba(10, 22, 70, 0.06);
+  height: 32px;
+  margin: 0px 10px;
 }
