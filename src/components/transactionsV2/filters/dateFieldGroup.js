@@ -38,7 +38,9 @@ class DateFieldGroup extends React.Component {
   }
 
   setRefs(node) {
-    this.inputRefs[node.name] = node;
+    if (node && node.name) {
+      this.inputRefs[node.name] = node;
+    }
   }
 
   validateDates(fieldsObj, selectionObj) {
@@ -50,7 +52,7 @@ class DateFieldGroup extends React.Component {
       const date = moment(value, this.dateFormat);
       let error = false;
 
-      if (value !== '' && !date.isValid()) {
+      if (value && !date.isValid()) {
         feedback = t(`Date must be in ${this.dateFormat} format`);
         error = true;
       } else if (
@@ -110,7 +112,7 @@ class DateFieldGroup extends React.Component {
       selection.end += 1;
     }
 
-    const fieldsObj = Object.keys(filters).reduce((acc, filter) =>
+    const fieldsObj = Object.keys(filters).filter(f => f.includes('date')).reduce((acc, filter) =>
       ({ ...acc, [filter]: { value: filters[filter] } }), {});
 
     const selectionObj = {
