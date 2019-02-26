@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { MemoryRouter as Router } from 'react-router-dom';
 import i18n from '../../../i18n';
 import TransactionDetailViewV2 from './transactionDetailViewV2';
 import accounts from '../../../../test/constants/accounts';
@@ -28,17 +29,17 @@ describe('Transaction Detail View V2', () => {
     };
 
     it('Should render transfer transaction with message', () => {
-      wrapper = mount(<TransactionDetailViewV2 {...props} />, options);
+      wrapper = mount(<Router><TransactionDetailViewV2 {...props} /></Router>, options);
       expect(wrapper).toContainMatchingElement('.summaryHeader');
       expect(wrapper).toContainMatchingElements(2, '.accountInfo');
-      expect(wrapper.find('.accountInfo .address').first().text()).toBe(transaction.senderId);
-      expect(wrapper.find('.accountInfo .address').at(1).text()).toBe(transaction.recipientId);
+      expect(wrapper.find('.accountInfo .sender-address').first().text()).toBe(transaction.senderId);
+      expect(wrapper.find('.accountInfo .receiver-address').at(1).text()).toBe(transaction.recipientId);
       expect(wrapper).toContainExactlyOneMatchingElement('.message');
     });
 
     it('Should render transfer transaction without message', () => {
       props.transaction.asset = {};
-      wrapper = mount(<TransactionDetailViewV2 {...props} />, options);
+      wrapper = mount(<Router><TransactionDetailViewV2 {...props} /></Router>, options);
       expect(wrapper).not.toContainMatchingElement('.message');
     });
   });
@@ -57,7 +58,7 @@ describe('Transaction Detail View V2', () => {
     };
 
     it('Should render register 2nd passphrase details', () => {
-      wrapper = mount(<TransactionDetailViewV2 {...props} />, options);
+      wrapper = mount(<Router><TransactionDetailViewV2 {...props} /></Router>, options);
       expect(wrapper).toContainExactlyOneMatchingElement('.accountInfo');
       expect(wrapper.find('.accountInfo .label').text()).toBe('Registrant');
     });
@@ -78,7 +79,7 @@ describe('Transaction Detail View V2', () => {
     };
 
     it('Should render register delegate details', () => {
-      wrapper = mount(<TransactionDetailViewV2 {...props} />, options);
+      wrapper = mount(<Router><TransactionDetailViewV2 {...props} /></Router>, options);
       expect(wrapper).toContainExactlyOneMatchingElement('.accountInfo');
       expect(wrapper.find('.summaryHeader p').text()).toBe(transaction.asset.delegate.username);
     });

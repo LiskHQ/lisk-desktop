@@ -82,18 +82,23 @@ class SingleTransactionV2 extends React.Component {
           <header className={`${styles.detailsHeader} tx-header`}>
             <h1>{title}</h1>
             <img className={styles.txIcon} src={icon} />
-            <span className={styles.date}>
+            <span className={`${styles.date} tx-date`}>
               <DateTimeFromTimestamp
+                fulltime={true}
+                className={'date'}
                 time={transaction.timestamp}
                 showSeconds={true} />
             </span>
           </header>
           <main className={styles.mainContent}>
-            <TransactionDetailViewV2 transaction={transaction} />
+            <TransactionDetailViewV2 address={this.props.address} transaction={transaction} />
             <footer className={styles.detailsFooter}>
               <div>
                 <p className={styles.value}>
-                  <span className={styles.label}>{t('Fee')} </span><LiskAmount val={transaction.fee} /> {t('LSK')}
+                  <span className={styles.label}>{t('Fee')} </span>
+                  <span className={'tx-fee'}>
+                    <LiskAmount val={transaction.fee} /> {t('LSK')}
+                  </span>
                 </p>
                 <p className={`${styles.value} tx-id`}>
                   <span className={styles.label}>{t('Transaction ID')} </span>
@@ -101,14 +106,21 @@ class SingleTransactionV2 extends React.Component {
                     className={`${styles.clickable} ${this.state.idCopied ? styles.copied : ''} transaction-id`}
                     text={transaction.id}
                     onCopy={() => this.handleCopy('id')}>
+                    <span>
                     {this.state.idCopied
-                      ? <span>{t('Copied!')}</span>
-                      : <span>{transaction.id} <img src={svg.copy}/></span>}
+                      ? t('Copied!')
+                      : <React.Fragment><span className={'copy-title'}>{transaction.id}</span> <img src={svg.copy}/></React.Fragment>}
+                    </span>
                   </CopyToClipboard>
                 </p>
               </div>
               <div>
-                <p className={styles.value}><span className={styles.label}>{t('Confirmation')} </span> {transaction.confirmations || 0}</p>
+                <p className={`${styles.value}`}>
+                  <span className={styles.label}>{t('Confirmation')} </span>
+                  <span className={'tx-confirmation'}>
+                    {transaction.confirmations || 0}
+                  </span>
+                </p>
                 <p className={`${styles.value} ${styles.link} ${this.state.linkCopied ? styles.copied : ''}`}>
                   <CopyToClipboard
                     className={'tx-link'}

@@ -1,7 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import thunk from 'redux-thunk';
+import PropTypes from 'prop-types';
+import configureMockStore from 'redux-mock-store';
+import { MemoryRouter as Router } from 'react-router-dom';
 import i18n from '../../i18n';
-import SingleTransactionV2 from './singleTransactionV2';
+import SingleTransactionV2 from './index';
 import accounts from '../../../test/constants/accounts';
 import fees from '../../constants/fees';
 
@@ -9,18 +13,11 @@ jest.useFakeTimers();
 
 describe('Single Transaction V2 Component', () => {
   let wrapper;
-  const commonProps = {
-    address: accounts.genesis.address,
-    peers: { liskAPIClient: {} },
-    match: {
-      params: {
-        id: 123,
-      },
-    },
-    loadTransaction: jest.fn(),
-  };
-  const options = {
-    context: { i18n },
+  const peers = { liskAPIClient: {} };
+
+  const props = {
+    match: { params: { id: 123 } },
+    t: v => v,
   };
 
   describe('Transfer transactions', () => {
@@ -37,19 +34,29 @@ describe('Single Transaction V2 Component', () => {
       fee: fees.send,
       timestamp: Date.now(),
     };
-    const props = {
-      ...commonProps,
+
+    const store = configureMockStore([thunk])({
+      account: accounts.genesis,
       transaction,
-      t: v => v,
+      peers,
+      loadTransaction: jest.fn(),
+    });
+
+    const options = {
+      context: { i18n, store },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
     };
 
     beforeEach(() => {
-      wrapper = mount(<SingleTransactionV2 {...props} />, options);
+      wrapper = mount(<Router><SingleTransactionV2 {...props} /></Router>, options);
     });
 
     it('Should render transfer transaction', () => {
-      expect(wrapper.find('.detailsHeader h1').text()).toBe('Transfer Transaction');
-      expect(wrapper.find('.transaction-id').first().text().trim()).toBe(`${transaction.id}`);
+      expect(wrapper.find('.detailsHeader h1')).toHaveText('Transfer Transaction');
+      expect(wrapper.find('.transaction-id .copy-title').first().text().trim()).toBe(`${transaction.id}`);
     });
 
     it('Should copy ID on clicking on transaction ID', () => {
@@ -76,14 +83,23 @@ describe('Single Transaction V2 Component', () => {
       fee: fees.setSecondPassphrase,
       timestamp: Date.now(),
     };
-    const props = {
-      ...commonProps,
+    const store = configureMockStore([thunk])({
+      account: accounts.genesis,
       transaction,
-      t: v => v,
+      peers,
+      loadTransaction: jest.fn(),
+    });
+
+    const options = {
+      context: { i18n, store },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
     };
 
     it('Should render 2nd passphrase transaction', () => {
-      wrapper = mount(<SingleTransactionV2 {...props} />, options);
+      wrapper = mount(<Router><SingleTransactionV2 {...props} /></Router>, options);
       expect(wrapper.find('.detailsHeader h1')).toHaveText('2nd Passphrase Registration');
     });
   });
@@ -97,14 +113,23 @@ describe('Single Transaction V2 Component', () => {
       fee: fees.registerDelegate,
       timestamp: Date.now(),
     };
-    const props = {
-      ...commonProps,
+    const store = configureMockStore([thunk])({
+      account: accounts.genesis,
       transaction,
-      t: v => v,
+      peers,
+      loadTransaction: jest.fn(),
+    });
+
+    const options = {
+      context: { i18n, store },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
     };
 
     it('Should render delegate registration transaction', () => {
-      wrapper = mount(<SingleTransactionV2 {...props} />, options);
+      wrapper = mount(<Router><SingleTransactionV2 {...props} /></Router>, options);
       expect(wrapper.find('.detailsHeader h1')).toHaveText('Delegate Registration');
     });
   });
@@ -119,14 +144,23 @@ describe('Single Transaction V2 Component', () => {
       timestamp: Date.now(),
       voteNames: { added: [{ username: 'test', rank: 1 }] },
     };
-    const props = {
-      ...commonProps,
+    const store = configureMockStore([thunk])({
+      account: accounts.genesis,
       transaction,
-      t: v => v,
+      peers,
+      loadTransaction: jest.fn(),
+    });
+
+    const options = {
+      context: { i18n, store },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
     };
 
     it('Should render votes transaction', () => {
-      wrapper = mount(<SingleTransactionV2 {...props} />, options);
+      wrapper = mount(<Router><SingleTransactionV2 {...props} /></Router>, options);
       expect(wrapper.find('.detailsHeader h1')).toHaveText('Vote Transaction');
     });
   });

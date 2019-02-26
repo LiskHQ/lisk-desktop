@@ -14,7 +14,8 @@
     margin: 0 0 8px;
   }
 
-  & > p {
+  & > p,
+  & .txAmount {
     color: var(--color-content-light);
     font-family: var(--heading-font);
     font-size: var(--font-size-h2);
@@ -55,7 +56,8 @@
       margin-left: 22px;
     }
 
-    & p {
+    & p,
+    & a {
       font-family: var(--content-font);
       font-weight: var(--font-weight-bold);
       margin: 0;
@@ -70,6 +72,7 @@
     & .address {
       color: var(--color-content-light);
       font-size: var(--paragraph-font-size-l);
+      text-decoration: none;
     }
   }
 }
@@ -147,6 +150,7 @@
       margin-bottom: 8px;
       margin-right: 24px;
       padding: 3px;
+      text-decoration: none;
     }
 
     & .rank {
