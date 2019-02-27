@@ -24,7 +24,8 @@ class MessageFieldGroup extends React.Component {
     const { t } = this.props;
     const { fields } = this.state;
     const messageMaxLength = 62;
-    const error = encodeURI(target.value).split(/%..|./).length - 1 > messageMaxLength;
+    const byteCount = encodeURI(target.value).split(/%..|./).length - 1;
+    const error = byteCount > messageMaxLength;
     const feedback = error
       ? t('Maximum length exceeded')
       : '';
