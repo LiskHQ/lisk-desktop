@@ -36,7 +36,7 @@ class walletDetails extends React.Component {
     const networkIdentifier = getNetworkIdentifier(peers);
     const networkWallet = wallets[networkIdentifier] && wallets[networkIdentifier][address];
     const lastBalance = networkWallet && networkWallet.lastBalance;
-    const lastVisitDifference = lastBalance
+    const lastVisitDifference = !Number.isNaN(parseInt(lastBalance, 10))
       ? parseInt(balance, 10) - parseInt(lastBalance, 10)
       : '-';
 

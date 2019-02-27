@@ -316,7 +316,7 @@ describe('actions: account', () => {
       getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
       transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
       getState = () => ({
-        peers: { liskAPIClient: {} },
+        peers: { liskAPIClient: {}, options: { code: 0 } },
       });
     });
 

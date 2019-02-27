@@ -69,6 +69,7 @@ describe('WalletTransactions V2 Component', () => {
       addFilter: spy(),
       loading: [],
       wallets: {},
+      peers: { options: { code: 0 } },
       t: key => key,
     };
 

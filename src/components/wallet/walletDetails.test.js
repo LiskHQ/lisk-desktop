@@ -35,6 +35,7 @@ describe('Wallet Details Module', () => {
     lastTransaction: transaction,
     wallets: {},
     loadLastTransaction: jest.fn(),
+    peers: { options: { code: 0 } },
     t: key => key,
   };
 
@@ -58,7 +59,7 @@ describe('Wallet Details Module', () => {
           recipientId: '12345L',
         },
       });
-      const expectedLastTx = '-695.5 LSK';
+      const expectedLastTx = '-695.6 LSK';
       expect(wrapper.find('.last-transaction .value')).toHaveText(expectedLastTx);
     });
 
@@ -69,13 +70,13 @@ describe('Wallet Details Module', () => {
           senderId: accounts.genesis.address,
         },
       });
-      const expectedLastTx = '695.5 LSK';
+      const expectedLastTx = '695.6 LSK';
       expect(wrapper.find('.last-transaction .value')).toHaveText(expectedLastTx);
     });
 
-    it('If no last transaction render as 0 LSK', () => {
+    it('If no last transaction render as "-"', () => {
       wrapper.setProps({ lastTransaction: {} });
-      const expectedLastTx = '0 LSK';
+      const expectedLastTx = '-';
       expect(wrapper.find('.last-transaction .value')).toHaveText(expectedLastTx);
     });
 
@@ -87,11 +88,11 @@ describe('Wallet Details Module', () => {
   });
 
   describe('Since last visit', () => {
-    it('Should render 0 if no last balance saved or empty localStorage wallets item', () => {
-      const expectedDifference = '0 LSK';
+    it('Should render "-" if no last balance saved or empty localStorage wallets item', () => {
+      const expectedDifference = '-';
       const walletProps = {
         ...props,
-        wallets: { [accounts.genesis.address]: { balance: 0 } },
+        wallets: { mainnet: { [accounts.genesis.address]: { balance: 0 } } },
       };
       expect(wrapper.find('.last-visit .value')).toHaveText(expectedDifference);
       wrapper = mount(<WalletDetails {...walletProps} />, options);
@@ -102,17 +103,16 @@ describe('Wallet Details Module', () => {
       let walletProps = {
         ...props,
         balance: 0,
-        wallets: { [accounts.genesis.address]: { lastBalance: 1000000000 } },
+        wallets: { mainnet: { [accounts.genesis.address]: { lastBalance: 1000000000 } } },
       };
       let expectedDifference = '-10 LSK';
       wrapper = mount(<WalletDetails {...walletProps} />, options);
-      wrapper.setProps(walletProps);
       expect(wrapper.find('.last-visit .value')).toHaveText(expectedDifference);
 
       walletProps = {
         ...props,
         balance: 1000000000,
-        wallets: { [accounts.genesis.address]: { lastBalance: 0 } },
+        wallets: { mainnet: { [accounts.genesis.address]: { lastBalance: 0 } } },
       };
       expectedDifference = '+10 LSK';
       wrapper = mount(<WalletDetails {...walletProps} />, options);
