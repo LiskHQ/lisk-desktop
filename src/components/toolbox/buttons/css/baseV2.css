@@ -21,6 +21,7 @@
     color: var(--color-white) !important;
   }
 
+  &:focus,
   &:hover {
     background: #004aff !important;
   }
@@ -34,6 +35,7 @@
     opacity: 0.8;
   }
 
+  &:focus,
   &:hover {
     background-color: var(--color-primary-standard) !important;
     color: var(--color-white) !important;

@@ -44,6 +44,7 @@ describe('App', () => {
       settings: {
         autoLog: true,
         advancedMode: true,
+        areTermsOfUseAccepted: true,
       },
       search: {
         suggestions: {

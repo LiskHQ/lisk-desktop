@@ -1,0 +1,69 @@
+@import '../app/variablesV2.css';
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  border: 1px solid;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: var(--color-background-wrapper);
+  box-sizing: border-box;
+}
+
+.header {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100px;
+  padding: 10px 20px;
+}
+
+.content {
+  box-sizing: border-box;
+  width: 651px;
+  height: calc(100% - 100px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 100px;
+
+  & > h1 {
+    color: var(--color-content);
+    font-family: var(--heading-font);
+    font-size: var(--font-size-h2);
+    line-height: 50px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.18;
+    margin: 0;
+  }
+
+  & > p {
+    color: var(--color-content-light);
+    font-family: var(--content-font);
+    font-size: var(--paragraph-font-size-l);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.47;
+    margin: 16px 0 40px;
+
+    & > a {
+      color: var(--color-link);
+      display: inline-block;
+      font-family: var(--heading-font);
+      font-size: var(--paragraph-font-size-l);
+      font-weight: var(--font-weight-bold);
+      line-height: 1.47;
+      margin: 0 5px;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  & > button {
+    width: 100%;
+  }
+}

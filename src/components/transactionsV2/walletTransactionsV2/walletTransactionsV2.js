@@ -17,7 +17,14 @@ class WalletTransactionsV2 extends React.Component {
 
     this.state = {
       filter: {},
-      customFilters: {},
+      customFilters: {
+        dateFrom: '',
+        dateTo: '',
+        amountFrom: '',
+        amountTo: '',
+        message: '',
+      },
+      activeCustomFilters: {},
       copied: false,
       closedOnboarding: false,
     };
@@ -27,15 +34,16 @@ class WalletTransactionsV2 extends React.Component {
     this.saveFilters = this.saveFilters.bind(this);
     this.clearFilter = this.clearFilter.bind(this);
     this.clearAllFilters = this.clearAllFilters.bind(this);
-    this.changeFilters = this.changeFilters.bind(this);
     this.onInit = this.onInit.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onFilterSet = this.onFilterSet.bind(this);
     this.onTransactionRowClick = this.onTransactionRowClick.bind(this);
     this.onCopy = this.onCopy.bind(this);
     this.closeOnboarding = this.closeOnboarding.bind(this);
+    this.updateCustomFilters = this.updateCustomFilters.bind(this);
   }
 
+  /* istanbul ignore next */
   componentWillUnmount() {
     clearTimeout(this.copyTimeout);
   }
@@ -61,6 +69,7 @@ class WalletTransactionsV2 extends React.Component {
       limit: 30,
       offset: this.props.transactions.length,
       filter: this.props.activeFilter,
+      customFilters: this.state.activeCustomFilters,
     });
   }
   /*
@@ -76,13 +85,13 @@ class WalletTransactionsV2 extends React.Component {
         address: this.props.address,
         limit: 30,
         filter,
-        customFilters: this.state.customFilters,
+        customFilters: this.state.activeCustomFilters,
       });
     } else {
       this.props.addFilter({
         filterName: 'wallet',
         value: filter,
-        customFilters: this.state.customFilters,
+        customFilters: this.state.activeCustomFilters,
       });
     }
   }
@@ -100,7 +109,7 @@ class WalletTransactionsV2 extends React.Component {
       filter: this.props.activeFilter,
       customFilters,
     });
-    this.setState({ customFilters });
+    this.setState({ activeCustomFilters: customFilters, customFilters });
   }
 
   /* istanbul ignore next */
@@ -113,12 +122,13 @@ class WalletTransactionsV2 extends React.Component {
 
   /* istanbul ignore next */
   clearAllFilters() {
-    this.saveFilters({});
+    const customFilters = Object.keys(this.state.customFilters).reduce((acc, key) => ({ ...acc, [key]: '' }), {});
+    this.saveFilters(customFilters);
   }
 
   /* istanbul ignore next */
-  changeFilters(name, value) {
-    this.setState({ customFilters: { ...this.state.customFilters, [name]: value } });
+  updateCustomFilters(customFilters) {
+    this.setState({ customFilters });
   }
 
   onCopy() {
@@ -141,6 +151,8 @@ class WalletTransactionsV2 extends React.Component {
   render() {
     const overviewProps = {
       ...this.props,
+      activeCustomFilters: this.state.activeCustomFilters,
+      customFilters: this.state.customFilters,
       canLoadMore: this.props.transactions.length < this.props.count,
       onInit: this.onInit,
       onLoadMore: this.onLoadMore,
@@ -152,6 +164,7 @@ class WalletTransactionsV2 extends React.Component {
       changeFilters: this.changeFilters,
       customFilters: this.state.customFilters,
       detailAccount: this.props.account,
+      updateCustomFilters: this.updateCustomFilters,
     };
 
     const { t, account } = this.props;
@@ -162,7 +175,6 @@ class WalletTransactionsV2 extends React.Component {
           followedAccounts={this.props.followedAccounts}
           address={this.props.address}
           match={this.props.match}
-          t={t}
           account={account}
         />
         { account.balance === 0 && localJSONStorage.get('closedWalletOnboarding') !== 'true' ?
