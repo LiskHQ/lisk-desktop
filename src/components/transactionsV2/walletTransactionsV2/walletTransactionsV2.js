@@ -162,7 +162,6 @@ class WalletTransactionsV2 extends React.Component {
       clearFilter: this.clearFilter,
       clearAllFilters: this.clearAllFilters,
       changeFilters: this.changeFilters,
-      customFilters: this.state.customFilters,
       detailAccount: this.props.account,
       updateCustomFilters: this.updateCustomFilters,
     };
