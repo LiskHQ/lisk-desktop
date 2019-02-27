@@ -21,10 +21,15 @@ describe('LoginV2', () => {
     data: {},
     options: {},
   };
+
+  const settings = {
+    areTermsOfUseAccepted: false,
+  };
+
   const store = configureMockStore([])({
     peers,
     account,
-    settings: {},
+    settings,
   });
   const history = {
     location: {
@@ -44,6 +49,7 @@ describe('LoginV2', () => {
     onAccountUpdated: () => {},
     liskAPIClientSet: spy(),
     settingsUpdated: spy(),
+    settings,
   };
 
   const options = {
@@ -75,6 +81,10 @@ describe('LoginV2', () => {
   });
 
   describe('Generals', () => {
+    it('redirect to Terms of Use page', () => {
+      expect(props.history.push).to.have.been.calledWith(`${routes.termsOfUse.path}`);
+    });
+
     it('should show error about passphrase length if passphrase have wrong length', () => {
       const expectedError = 'Passphrase should have 12 words, entered passphrase has 11';
       const lastIndex = passphrase.lastIndexOf(' ');

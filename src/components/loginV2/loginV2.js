@@ -34,7 +34,7 @@ class LoginV2 extends React.Component {
       loginNetwork = loginNetwork.slice(-1).shift();
     } else if (!loginNetwork) {
       loginNetwork = liskCoreUrl ? networks.customNode : networks.default;
-      address = liskCoreUrl;
+      address = liskCoreUrl || '';
     }
 
     this.state = {
@@ -57,6 +57,11 @@ class LoginV2 extends React.Component {
   }
 
   componentDidMount() {
+    // istanbul ignore else
+    if (!this.props.settings.areTermsOfUseAccepted) {
+      this.props.history.push(routes.termsOfUse.path);
+    }
+
     i18next.on('languageChanged', this.getNetworksList);
   }
 
@@ -244,7 +249,7 @@ class LoginV2 extends React.Component {
                           {t('Read More')}
                       </a>}>
                     <p className={`${styles.tooltipText}`}>
-                      {t('Your passphrase is both  ')}
+                      {t('Your passphrase is both ')}
                       <strong>{t('your login and passphrase ')}</strong>
                       {t('to your Lisk Hub. It is provided during account registration.')}
                     </p>
@@ -253,11 +258,17 @@ class LoginV2 extends React.Component {
                       <strong>{t('tab or space ')}</strong>
                       {t('to go to the next field.')}
                     </p>
+                    <p className={`${styles.tooltupText}`}>
+                      {t('For ')}
+                      <strong>{t('longer passphrases')}</strong>
+                      {t(', simply paste it in the first input field.')}
+                    </p>
                   </Tooltip>
                 </h2>
 
                 <PassphraseInputV2
                   inputsLength={12}
+                  maxInputsLength={24}
                   onFill={this.checkPassphrase} />
 
                   <div className={`${styles.hardwareHolder} ${(this.props.settings && this.props.settings.isHarwareWalletConnected) ? styles.show : ''}`}>

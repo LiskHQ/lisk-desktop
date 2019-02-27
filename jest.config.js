@@ -162,4 +162,6 @@ module.exports = {
     'default',
     ['jest-junit', { suiteName: 'jest tests', outputDirectory: '<rootDir>/coverage/jest' }],
   ],
+  setupTestFrameworkScriptFile: 'jest-enzyme',
+  testEnvironment: 'enzyme',
 };

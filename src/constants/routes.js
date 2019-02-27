@@ -18,6 +18,7 @@ import Splashscreen from '../components/splashscreen';
 import RegistrationV2 from '../components/registerV2/registerV2';
 import LoginV2 from '../components/loginV2';
 import Extensions from '../components/extensions';
+import TermsOfUse from '../components/termsOfUse';
 
 export default {
   accountVisualDemo: {
@@ -108,6 +109,13 @@ export default {
     component: AccountTransactions,
     isPrivate: false,
   },
+  accountsV2: {
+    pathPrefix: '/explorer',
+    path: '/accountsV2',
+    pathSuffix: '/:address?',
+    component: AccountTransactions,
+    isPrivate: false,
+  },
   transactions: {
     pathPrefix: '/explorer',
     path: '/transactions',
@@ -145,6 +153,12 @@ export default {
   loginV2: {
     path: '/login',
     component: LoginV2,
+    isPrivate: false,
+    isV2Layout: true,
+  },
+  termsOfUse: {
+    path: '/terms-of-use',
+    component: TermsOfUse,
     isPrivate: false,
     isV2Layout: true,
   },

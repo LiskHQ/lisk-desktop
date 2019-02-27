@@ -172,6 +172,7 @@ const ss = {
   walletOnboarding: '.wallet-onboarding',
   walletOnboardingClose: '.wallet-onboarding .banner-close',
   requestDropdown: '.request-dropdown',
+  termsOfUse: '.accept-terms',
 };
 
 export default ss;
