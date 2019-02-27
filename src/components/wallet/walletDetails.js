@@ -15,6 +15,7 @@ class walletDetails extends React.Component {
     return true;
   }
 
+  // eslint-disable-next-line complexity
   render() {
     const {
       balance, t, address, wallets, className = '',
@@ -22,8 +23,11 @@ class walletDetails extends React.Component {
     } = this.props;
 
     const lastTx = {
-      tx: { amount: 0, ...lastTransaction },
+      tx: { ...lastTransaction },
       pre: lastTransaction.senderId && lastTransaction.senderId !== address ? '+' : '',
+      totalAmount: lastTransaction.senderId && lastTransaction.senderId !== address
+        ? lastTransaction.amount || 0
+        : parseInt(lastTransaction.amount, 10) + parseInt(lastTransaction.fee, 10),
     };
     lastTx.pre = lastTransaction.type === transactionTypes.send
       && lastTransaction.recipientId !== address ? '-' : lastTx.pre;
@@ -53,8 +57,12 @@ class walletDetails extends React.Component {
             <div className={`${styles.info}`}>
               <span className={`${styles.label}`}>{t('Last Transaction')}</span>
               <span className={`${styles.value}`}>
-                {lastTx.pre}<LiskAmount val={lastTx.tx.amount} />
-                <span className={`${styles.currency}`}> {t('LSK')}</span>
+              {lastTx.tx && lastTx.tx.id ? (
+                <React.Fragment>
+                  {lastTx.pre}<LiskAmount val={lastTx.totalAmount} />
+                  <span className={`${styles.currency}`}> {t('LSK')}</span>
+                </React.Fragment>
+              ) : '-'}
               </span>
             </div>
           </div>
