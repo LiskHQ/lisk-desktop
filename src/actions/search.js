@@ -4,6 +4,7 @@ import { getAccount } from '../utils/api/account';
 import { getTransactions } from '../utils/api/transactions';
 import { getDelegate, getVoters, getAllVotes } from '../utils/api/delegate';
 import searchAll from '../utils/api/search';
+import { updateWallet } from './wallets';
 
 const searchDelegate = ({ publicKey, address }) =>
   (dispatch, getState) => {
@@ -87,6 +88,7 @@ export const searchAccount = ({ address }) =>
           dispatch(searchVoters({ address, publicKey: accountData.publicKey }));
         }
         dispatch({ data: accountData, type: actionTypes.searchAccount });
+        dispatch(updateWallet(response, getState().peers));
       });
     }
   };

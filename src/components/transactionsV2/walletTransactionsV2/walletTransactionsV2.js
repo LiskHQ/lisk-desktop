@@ -1,15 +1,14 @@
 import React from 'react';
-// import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import localJSONStorage from '../../../utils/localJSONStorage';
-import TransactionsOverviewV2 from '../transactionsOverviewV2';
 import txFilters from '../../../constants/transactionFilters';
 import Banner from '../../toolbox/banner/banner';
-import WalletDetails from '../../wallet/walletDetails';
 import TransactionsOverviewHeader from '../transactionsOverviewHeader/transactionsOverviewHeader';
 import routes from '../../../constants/routes';
 import styles from './walletTransactionsV2.css';
+import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
+import WalletTab from '../../wallet/walletTab';
 
 class WalletTransactionsV2 extends React.Component {
   // eslint-disable-next-line max-statements
@@ -152,6 +151,7 @@ class WalletTransactionsV2 extends React.Component {
       clearAllFilters: this.clearAllFilters,
       changeFilters: this.changeFilters,
       customFilters: this.state.customFilters,
+      detailAccount: this.props.account,
     };
 
     const { t, account } = this.props;
@@ -186,18 +186,10 @@ class WalletTransactionsV2 extends React.Component {
           </Banner> : null
         }
 
-        <WalletDetails
-          // Uncomment after adding Graph module
-          // className={`${grid['col-md-4']} ${grid['col-lg-3']}`}
-          peers={this.props.peers}
-          lastTransaction={this.props.transaction}
-          loadLastTransaction={this.props.loadLastTransaction}
-          balance={this.props.balance}
-          address={this.props.address}
-          wallets={this.props.wallets}
-          />
-
-        <TransactionsOverviewV2 {...overviewProps} />
+        <TabsContainer>
+          <WalletTab tabName={this.props.t('Wallet')}
+            {...overviewProps}/>
+        </TabsContainer>
       </React.Fragment>
     );
   }
