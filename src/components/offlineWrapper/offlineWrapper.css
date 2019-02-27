@@ -2,3 +2,7 @@
   opacity: 0.5;
   pointer-events: none;
 }
+
+.setHight {
+  height: 100%;
+}

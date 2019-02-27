@@ -1,9 +1,11 @@
+// eslint-disable-line max-lines
 import React from 'react';
 import ConverterV2 from '../../converterV2';
 import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
 import { InputV2, AutoresizeTextarea } from '../../toolbox/inputsV2';
+import Bookmark from '../../bookmarkV2';
+import regex from '../../../utils/regex';
 import svg from '../../../utils/svgIcons';
-import inputRegex from '../../../utils/regex';
 import styles from './form.css';
 // import fees from '../../../constants/fees';
 // import regex from '../../../utils/regex';
@@ -23,9 +25,15 @@ class Form extends React.Component {
       linkCopied: false,
       fields: {
         recipient: {
+          address: '',
+          balance: '',
           error: false,
-          value: '',
           feedback: '',
+          name: 'recipient',
+          selected: false,
+          title: '',
+          value: '',
+          showSuggestions: false,
         },
         amount: {
           error: false,
@@ -41,6 +49,117 @@ class Form extends React.Component {
     };
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
+    this.onSelectedAccount = this.onSelectedAccount.bind(this);
+    this.onBookmarkChange = this.onBookmarkChange.bind(this);
+    this.onSelectedAccount = this.onSelectedAccount.bind(this);
+    this.onBookmarkBlur = this.onBookmarkBlur.bind(this);
+  }
+
+  // eslint-disable-next-line max-statements
+  onBookmarkChange({ target }) {
+    const { followedAccounts } = this.props;
+    let recipient = this.state.recipient;
+    let isAccountValid = '';
+    let isAddressValid = '';
+    const newValue = target.value;
+
+    if (followedAccounts.length && newValue !== '') {
+      isAccountValid = followedAccounts
+        .find(account => account.title.toLowerCase() === newValue.toLowerCase()) || false;
+      isAddressValid = regex.address.test(newValue);
+    } else {
+      isAddressValid = newValue.match(regex.address);
+    }
+
+    if (isAddressValid) {
+      recipient = {
+        ...this.state.recipient,
+        address: newValue,
+        selected: false,
+        error: false,
+        feedback: '',
+        showSuggestions: false,
+      };
+    }
+
+    if (isAccountValid) {
+      recipient = {
+        ...this.state.recipient,
+        address: isAccountValid.address,
+        title: isAccountValid.title,
+        balance: isAccountValid.balance,
+        selected: true,
+        error: false,
+        feedback: '',
+        showSuggestions: false,
+      };
+    }
+
+    if (!isAccountValid && !isAddressValid && newValue) {
+      recipient = {
+        ...this.state.recipient,
+        address: '',
+        balance: '',
+        error: true,
+        feedback: 'Provide a correct wallet address or a name of a followed account',
+        selected: false,
+        title: '',
+        showSuggestions: true,
+      };
+    }
+
+    if (newValue === '') {
+      recipient = {
+        ...this.state.recipient,
+        address: '',
+        balance: '',
+        error: false,
+        feedback: '',
+        selected: false,
+        title: '',
+        showSuggestions: false,
+      };
+    }
+
+    this.setState({
+      fields: {
+        ...this.state.fields,
+        recipient: {
+          ...this.state.fields.recipient,
+          ...recipient,
+          value: newValue,
+        },
+      },
+    });
+  }
+
+  onSelectedAccount(account) {
+    this.setState({
+      fields: {
+        ...this.state.fields,
+        recipient: {
+          ...this.state.fields.recipient,
+          ...account,
+          value: account.address,
+          selected: true,
+          error: '',
+          feedback: '',
+          showSuggestions: false,
+        },
+      },
+    });
+  }
+
+  onBookmarkBlur() {
+    this.setState({
+      fields: {
+        ...this.state.fields,
+        recipient: {
+          ...this.state.fields.recipient,
+          showSuggestions: false,
+        },
+      },
+    });
   }
 
   validateAmountField(value) {
@@ -50,13 +169,23 @@ class Form extends React.Component {
   }
 
   setInputValues(target, error, feedback) {
-    const field = {
-      [target.name]: {
-        error: !!error,
-        value: target.value,
-        feedback,
-      },
-    };
+    let field = '';
+
+    if (target.name === 'recipient') {
+      field = {
+        [target.name]: {
+          ...target,
+        },
+      };
+    } else {
+      field = {
+        [target.name]: {
+          error: !!error,
+          value: target.value,
+          feedback,
+        },
+      };
+    }
 
     this.setState(prevState => ({
       fields: {
@@ -72,13 +201,6 @@ class Form extends React.Component {
     const messageMaxLength = 64;
     let feedback = '';
     let error = '';
-
-    if (target.name === 'recipient') {
-      error = !inputRegex.address.test(target.value);
-      feedback = error
-        ? t('Provide a correct wallet address or a name of a followed account')
-        : feedback;
-    }
 
     if (target.name === 'amount') {
       target.value = /^\./.test(target.value) ? `0${target.value}` : target.value;
@@ -101,9 +223,12 @@ class Form extends React.Component {
 
   // eslint-disable-next-line complexity
   render() {
-    const { t } = this.props;
+    const { t, followedAccounts } = this.props;
     const { fields } = this.state;
     const messageMaxLength = 64;
+    const btnDisabled =
+      fields.recipient.error || fields.amount.error || fields.reference.error ||
+      fields.recipient.value === '' || fields.amount.value === '';
 
     return (
       <div className={`${styles.wrapper}`}>
@@ -114,19 +239,15 @@ class Form extends React.Component {
         <div className={styles.formSection}>
           <label className={`${styles.fieldGroup}`}>
             <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
-            <span className={`${styles.amountField} recipient`}>
-            <InputV2
-              autoComplete={'off'}
-              onChange={this.handleFieldChange}
-              name='recipient'
-              value={fields.recipient.value}
-              placeholder={t('e.g. 12345.6')}
-              className={`${styles.input} ${fields.recipient.error ? 'error' : ''} recipient`}
+            <Bookmark
+              t={t}
+              followedAccounts={followedAccounts}
+              onChange={this.onBookmarkChange}
+              placeholder={'e.g. 1234523423L or John Doe'}
+              recipient={fields.recipient}
+              showSuggestions={fields.recipient.showSuggestions}
+              onSelectedAccount={this.onSelectedAccount}
             />
-            </span>
-            <span className={`${styles.feedback} ${fields.recipient.error ? 'error' : ''} ${fields.recipient.feedback ? styles.show : ''}`}>
-              {fields.recipient.feedback}
-            </span>
           </label>
 
           <label className={`${styles.fieldGroup}`}>
@@ -143,6 +264,14 @@ class Form extends React.Component {
                 className={styles.converter}
                 value={fields.amount.value}
                 error={fields.amount.error} />
+              {
+                fields.amount.value
+                ? <img
+                    className={styles.status}
+                    src={fields.amount.error ? svg.alert_icon : svg.ok_icon}
+                  />
+                : null
+              }
             </span>
             <span className={`${styles.feedback} ${fields.amount.error ? 'error' : ''} ${fields.amount.feedback ? styles.show : ''}`}>
               {fields.amount.feedback}
@@ -163,6 +292,14 @@ class Form extends React.Component {
               value={fields.reference.value}
               placeholder={t('Write message')}
               className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
+            {
+              fields.reference.value
+              ? <img
+                  className={styles.status}
+                  src={fields.reference.error ? svg.alert_icon : svg.ok_icon}
+                />
+              : null
+            }
             <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - fields.reference.value.length < 10 ? 'error' : ''} ${fields.reference.feedback ? styles.show : ''}`}>
               {fields.reference.feedback}
             </span>
@@ -170,7 +307,9 @@ class Form extends React.Component {
         </div>
 
         <footer>
-          <PrimaryButtonV2 className={styles.confirmButton}>{t('Go to Confirmation')}</PrimaryButtonV2>
+          <PrimaryButtonV2 className={styles.confirmButton} disabled={btnDisabled}>
+            {t('Go to Confirmation')}
+          </PrimaryButtonV2>
         </footer>
       </div>
     );

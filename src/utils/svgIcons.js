@@ -17,6 +17,8 @@ import settingsActiveIcon from '../assets/images/icons-v2/settings-active.svg';
 import logoutIcon from '../assets/images/icons-v2/logout.svg';
 import logoutActiveIcon from '../assets/images/icons-v2/logout-active.svg';
 import questionMark from '../assets/images/icons-v2/question.svg';
+import alertIcon from '../assets/images/icons-v2/icon-alert.svg';
+import okIcon from '../assets/images/icons-v2/icon-checkmark.svg';
 
 export default {
   avatar_icon: Avatar,
@@ -38,4 +40,6 @@ export default {
   settings_icon: settingsIcon,
   wallet_active_icon: walletActiveIcon,
   wallet_icon: walletIcon,
+  ok_icon: okIcon,
+  alert_icon: alertIcon,
 };
