@@ -189,6 +189,7 @@ class WalletTransactionsV2 extends React.Component {
         <WalletDetails
           // Uncomment after adding Graph module
           // className={`${grid['col-md-4']} ${grid['col-lg-3']}`}
+          peers={this.props.peers}
           lastTransaction={this.props.transaction}
           loadLastTransaction={this.props.loadLastTransaction}
           balance={this.props.balance}

@@ -21,6 +21,7 @@ const mapStateToProps = state => ({
   loading: state.loading,
   followedAccounts: state.followedAccounts.accounts,
   wallets: state.wallets,
+  peers: state.peers,
 });
 
 const mapDispatchToProps = {

@@ -4,6 +4,7 @@ import BoxV2 from '../boxV2';
 import styles from './walletDetails.css';
 import LiskAmount from '../liskAmount';
 import svg from '../../utils/svgIcons';
+import { getNetworkIdentifier } from '../../utils/getNetwork';
 import transactionTypes from '../../constants/transactionTypes';
 
 class walletDetails extends React.Component {
@@ -19,7 +20,7 @@ class walletDetails extends React.Component {
   render() {
     const {
       balance, t, address, wallets, className = '',
-      lastTransaction,
+      peers, lastTransaction,
     } = this.props;
 
     const lastTx = {
@@ -32,9 +33,12 @@ class walletDetails extends React.Component {
     lastTx.pre = lastTransaction.type === transactionTypes.send
       && lastTransaction.recipientId !== address ? '-' : lastTx.pre;
 
-    const lastVisitDifference = balance -
-      (wallets[address] && wallets[address].lastBalance !== undefined
-        ? wallets[address].lastBalance : balance);
+    const networkIdentifier = getNetworkIdentifier(peers);
+    const networkWallet = wallets[networkIdentifier] && wallets[networkIdentifier][address];
+    const lastBalance = networkWallet && networkWallet.lastBalance;
+    const lastVisitDifference = lastBalance
+      ? parseInt(balance, 10) - parseInt(lastBalance, 10)
+      : '-';
 
     return (
       <BoxV2 className={`${className} ${styles.wrapper}`}>
@@ -71,8 +75,12 @@ class walletDetails extends React.Component {
             <div className={`${styles.info}`}>
               <span className={`${styles.label}`}>{t('Since Last Visit')}</span>
               <span className={`${styles.value}`}>
-                {lastVisitDifference > 0 ? '+' : ''}<LiskAmount val={lastVisitDifference} />
-                <span className={`${styles.currency}`}> {t('LSK')}</span>
+              {lastVisitDifference !== '-' ? (
+                <React.Fragment>
+                  {lastVisitDifference > 0 ? '+' : ''}<LiskAmount val={lastVisitDifference} />
+                  <span className={`${styles.currency}`}> {t('LSK')}</span>
+                </React.Fragment>
+              ) : '-'}
               </span>
             </div>
           </div>

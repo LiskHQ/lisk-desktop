@@ -1,15 +1,21 @@
 import actionTypes from '../constants/actions';
+import { getNetworkIdentifier } from '../utils/getNetwork';
 import { getWalletsFromLocalStorage } from '../utils/wallets';
 
 window.getWalletsFromLocalStorage = getWalletsFromLocalStorage;
 
-export const updateWallet = (account) => {
+export const updateWallet = (account, peers) => {
+  const networkIdentifier = getNetworkIdentifier(peers);
   const wallets = getWalletsFromLocalStorage();
+  const networkWallets = wallets[networkIdentifier] || {};
   const data = {
     ...wallets,
-    [account.address]: {
-      ...wallets[account.address],
-      balance: account.balance,
+    [networkIdentifier]: {
+      ...networkWallets,
+      [account.address]: {
+        ...networkWallets[account.address],
+        balance: account.balance,
+      },
     },
   };
 
@@ -21,14 +27,19 @@ export const updateWallet = (account) => {
 
 export const setWalletsLastBalance = () => {
   const wallets = getWalletsFromLocalStorage();
-  const addresses = Object.keys(wallets);
-  const data = addresses.reduce((acc, address) => ({
-    ...acc,
-    [address]: {
-      ...wallets[address],
-      lastBalance: wallets[address].balance,
+  const data = Object.keys(wallets).reduce((network, identifier) => ({
+    ...network,
+    [identifier]: {
+      ...Object.keys(wallets[identifier]).reduce((addresses, address) => ({
+        ...addresses,
+        [address]: {
+          ...wallets[identifier][address],
+          lastBalance: wallets[identifier][address].balance,
+        },
+      }), {}),
     },
   }), {});
+
   return ({
     type: actionTypes.walletUpdated,
     data,

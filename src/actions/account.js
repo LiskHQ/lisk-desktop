@@ -242,7 +242,7 @@ export const accountDataUpdated = ({
         ));
       }
       dispatch(accountUpdated(result));
-      dispatch(updateWallet(result));
+      dispatch(updateWallet(result, getState().peers));
       dispatch(liskAPIClientUpdate({ online: true }));
     }).catch((res) => {
       dispatch(liskAPIClientUpdate({ online: false, code: res.error.code }));
