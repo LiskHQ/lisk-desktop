@@ -61,7 +61,7 @@ class AmountFieldGroup extends React.Component {
     let value = /^\./.test(target.value) ? `0${target.value}` : target.value;
     value = value.replace(/[^\d.]/g, '');
 
-    const fieldsObj = Object.keys(filters).reduce((acc, filter) =>
+    const fieldsObj = Object.keys(filters).filter(f => f.includes('amount')).reduce((acc, filter) =>
       ({ ...acc, [filter]: { value: filters[filter] } }), {});
 
     this.validateAmountField({
