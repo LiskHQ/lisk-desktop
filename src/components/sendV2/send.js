@@ -38,24 +38,26 @@ class Send extends React.Component {
     const { recipient, amount, reference } = this.getSearchParams();
 
     return (
-      <div className={`${styles.wrapper} send-box `}>
-        <MultiStep
-          key='send'
-          finalCallback={this.goToWallet.bind(this)}
-          className={styles.wrapper}>
-          <AccountInitialization
-            history={this.props.history}
-            address={recipient}/>
-          <Form
-            autoFocus={this.state.isActiveOnMobile || window.innerWidth > breakpoints.m}
-            address={recipient}
-            amount={amount}
-            reference={reference}
-            settingsUpdated={this.props.settingsUpdated}
-            settings={this.props.settings}
-            goToWallet={this.goToWallet.bind(this)}
-          />
-        </MultiStep>
+      <div className={styles.container}>
+        <div className={`${styles.wrapper} send-box `}>
+          <MultiStep
+            key='send'
+            finalCallback={this.goToWallet.bind(this)}
+            className={styles.wrapper}>
+            <AccountInitialization
+              history={this.props.history}
+              address={recipient}/>
+            <Form
+              autoFocus={this.state.isActiveOnMobile || window.innerWidth > breakpoints.m}
+              address={recipient}
+              amount={amount}
+              reference={reference}
+              settingsUpdated={this.props.settingsUpdated}
+              settings={this.props.settings}
+              goToWallet={this.goToWallet.bind(this)}
+            />
+          </MultiStep>
+        </div>
       </div>
     );
   }

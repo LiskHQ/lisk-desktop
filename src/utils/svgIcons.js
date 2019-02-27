@@ -26,6 +26,8 @@ import txSendArrow from '../assets/images/icons-v2/tx-send-arrow.svg';
 import icoLink from '../assets/images/icons-v2/link.svg';
 import copy from '../assets/images/icons-v2/copy.svg';
 import questionMark from '../assets/images/icons-v2/question.svg';
+import alertIcon from '../assets/images/icons-v2/icon-alert.svg';
+import okIcon from '../assets/images/icons-v2/icon-checkmark.svg';
 
 export default {
   avatar_icon: Avatar,
@@ -56,4 +58,6 @@ export default {
   settings_icon: settingsIcon,
   wallet_active_icon: walletActiveIcon,
   wallet_icon: walletIcon,
+  ok_icon: okIcon,
+  alert_icon: alertIcon,
 };

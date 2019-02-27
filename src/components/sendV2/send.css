@@ -1,11 +1,16 @@
 @import '../app/variables';
 
-:global .offlineWrapper {
+.container {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 100%;
   align-items: center;
   width: 100%;
+
+  & > div {
+    padding-bottom: 70px;
+  }
 }
 
 .wrapper {
