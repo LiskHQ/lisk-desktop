@@ -15,6 +15,7 @@ class Calendar extends React.Component {
       || moment();
     this.state = {
       showingDate,
+      selectedDate: showingDate.clone(),
     };
 
     this.previousMonth = this.previousMonth.bind(this);
@@ -24,7 +25,7 @@ class Calendar extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   generatePlaceholder(count, day) {
-    return [...Array(count)].map((x, d) => {
+    return [...Array(count)].map((_, d) => {
       const result = <button key={d} disabled={true} className={styles.day}>{day.format('DD')}</button>;
       day.add(1, 'days');
       return result;
@@ -32,14 +33,14 @@ class Calendar extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const showingDate =
+    const selectedDate =
       (moment(nextProps.date, nextProps.dateFormat).isValid()
         && moment(nextProps.date, nextProps.dateFormat))
-      || this.state.showingDate;
+      || this.state.selectedDate.clone();
 
-    if (showingDate.format(nextProps.dateFormat)
-      !== this.state.showingDate.format(nextProps.dateFormat)) {
-      this.setState({ showingDate });
+    if (selectedDate.format(nextProps.dateFormat)
+      !== this.state.selectedDate.format(nextProps.dateFormat)) {
+      this.setState({ selectedDate });
       return false;
     }
     return true;
@@ -61,7 +62,9 @@ class Calendar extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   handleSelectDate({ target }) {
-    console.log(target.value);
+    const selectedDate = moment(target.value, this.props.dateFormat);
+    this.setState({ selectedDate });
+    this.props.onDateSelected(target.value);
   }
 
   render() {
@@ -69,7 +72,6 @@ class Calendar extends React.Component {
     moment.locale([...locale, 'en']);
     const { dateFormat } = this.props;
     const { showingDate } = this.state;
-    const today = moment();
     const day = moment(showingDate).startOf('month');
 
     return (
@@ -86,12 +88,17 @@ class Calendar extends React.Component {
           </div>
           <div className={styles.month}>
           { this.generatePlaceholder(day.weekday(), day.subtract(day.weekday(), 'days')) }
-          { [...Array(day.daysInMonth())].map((x, d) => {
-            const isToday = today.format(dateFormat) === day.date(d + 1).format(dateFormat);
+          { [...Array(day.daysInMonth())].map((_, d) => {
+            day.date(d + 1);
+            const minDate = moment(this.props.minDate, dateFormat);
+            const maxDate = moment(this.props.maxDate, dateFormat);
+            const isDisabled = (minDate.isValid() && day < minDate)
+            || (maxDate.isValid() && day > maxDate) || false;
             return <button key={d}
               onClick={this.handleSelectDate}
-              value={day.date(d + 1).format(dateFormat)}
-              className={`${isToday ? 'today' : ''} ${styles.day}`}>
+              value={day.format(dateFormat)}
+              disabled={isDisabled}
+              className={`${styles.day}`}>
                 {day.format('DD')}
               </button>;
           })}
@@ -110,12 +117,17 @@ Calendar.propTypes = {
   ]).isRequired,
   date: PropTypes.string.isRequired,
   dateFormat: PropTypes.string.isRequired,
+  onDateSelected: PropTypes.func.isRequired,
+  minDate: PropTypes.string,
+  maxDate: PropTypes.string,
 };
 
 Calendar.defaultProps = {
   locale: 'en',
   date: moment().format('DD.MM.YY'),
   dateFormat: 'DD.MM.YY',
+  minDate: '',
+  maxDate: '',
 };
 
 export default Calendar;

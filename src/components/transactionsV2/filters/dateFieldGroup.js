@@ -45,6 +45,7 @@ class DateFieldGroup extends React.Component {
     this.setDropownRefs = this.setDropownRefs.bind(this);
     this.handleClickOutsideDropdown = this.handleClickOutsideDropdown.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
+    this.dateSelected = this.dateSelected.bind(this);
   }
 
   setInputRefs(node) {
@@ -86,6 +87,15 @@ class DateFieldGroup extends React.Component {
     const ref = this.dropdownRefs[dropdownName];
     if (ref && ref.contains(e.target)) return;
     this.toggleDropdown(dropdownName);
+  }
+
+  dateSelected(date, fieldName) {
+    this.handleFieldChange({
+      target: {
+        name: fieldName,
+        value: date,
+      },
+    });
   }
 
   validateDates(fieldsObj, selectionObj) {
@@ -198,7 +208,10 @@ class DateFieldGroup extends React.Component {
                 className={styles.calendarDropdown}
                 showDropdown={shownDropdown === 'dateFromDropdown'}>
                 <Calendar
+                  onDateSelected={date => this.dateSelected(date, 'dateFrom')}
                   dateFormat={this.dateFormat}
+                  minDate={moment(new Date(2016, 4, 24, 17)).format(this.dateFormat)}
+                  maxDate={filters.dateTo}
                   date={filters.dateFrom} />
               </DropdownV2>
           </label>
@@ -222,7 +235,10 @@ class DateFieldGroup extends React.Component {
               className={styles.calendarDropdown}
               showDropdown={shownDropdown === 'dateToDropdown'}>
             <Calendar
+              onDateSelected={date => this.dateSelected(date, 'dateTo')}
               dateFormat={this.dateFormat}
+              minDate={filters.dateFrom
+                || moment(new Date(2016, 4, 24, 17)).format(this.dateFormat)}
               date={filters.dateTo} />
           </DropdownV2>
           </label>
