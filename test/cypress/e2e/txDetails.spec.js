@@ -4,19 +4,16 @@ import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
 import regex from '../../../src/utils/regex';
 
-const txConfirmationTimeout = 12000;
-
 const delegateVoteTxId = '7150719741601338678';
 const delegateRegTxId = '2697129531259680873';
 const secondPassphraseRegTxId = '18129432350589863394';
 
 describe('Tx details', () => {
   /**
-   * Transfer transaction details are shown and correct when tx is pending and confirmed
-   * @expect transfer details are correct for pending state
-   * @expect transfer details are correct for confirmed state
+   * Transfer transaction details are shown and correct
+   * @expect transfer details are correct
    */
-  it('Transfer details while pending and then confirmed', () => {
+  it('Transfer Transaction details ', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.send}?recipient=${accounts.delegate.address}&amount=5&reference=test-details`);
     cy.get(ss.nextTransferBtn).click();
@@ -25,7 +22,6 @@ describe('Tx details', () => {
     cy.get(ss.transactionRow).first()
       .find(ss.spinner).should('be.visible')
       .click();
-    // Before confirmation
     cy.get(ss.txHeader, { timeout: 10000 }).contains('Transfer Transaction');
     cy.get(ss.txSenderAddress).should('have.text', accounts.genesis.address)
       .click();
@@ -35,24 +31,21 @@ describe('Tx details', () => {
       .click();
     cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', accounts.delegate.address);
     cy.go('back');
-    cy.wait(txConfirmationTimeout);
-    cy.reload();
     cy.get(ss.txAddedVotes).should('not.exist');
     cy.get(ss.txRemovedVotes).should('not.exist');
     cy.get(ss.txAmount).should('have.text', '-5 LSK');
     cy.get(ss.txFee).should('have.text', '0.1');
     cy.get(ss.txId).contains(regex.transactionId);
     cy.get(ss.txReference).should('have.text', 'test-details');
-    // After confirmation
     cy.get(ss.txDate).contains(new Date().getFullYear());
-    cy.get(ss.txConfirmations).should('not.have.text', '');
+    cy.get(ss.txConfirmations).contains(/^\d/);
   });
 
   /**
-   * Delegate transaction details are shown and correct when tx is confirmed
-   * @expect transfer details are correct for confirmed state
+   * Delegate transaction details are shown and correct
+   * @expect transfer details are correct
    */
-  it('Vote', () => {
+  it('Vote details', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(`${urls.transactions}/${delegateVoteTxId}`);
     cy.get(ss.txHeader).contains('Vote Transaction');
@@ -72,35 +65,37 @@ describe('Tx details', () => {
     cy.get(ss.txConfirmations).contains(/^\d/);
     cy.get(ss.txId).contains(regex.transactionId);
     cy.get(ss.txReference).should('not.exist');
+    cy.get(ss.txConfirmations).contains(/^\d/);
   });
 
-  // TODO update after bugfix #1424
-  // - direct url doesn't work
-  // - some values are undefined for tx from snapshot
   /**
-   * Delegate registration transaction details are shown and correct when tx is confirmed
-   * @expect transfer details are correct for confirmed state
+   * Delegate registration transaction details are shown and correct
+   * @expect transfer details are correct
    */
-  it('Delegate registration', () => {
+  it('Delegate reg details', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(`${urls.transactions}/${delegateRegTxId}`);
     cy.get(ss.txHeader).contains('Delegate Registration');
-    cy.get(ss.txSenderAddress).should('have.text', accounts.delegate.address);
+    cy.get(ss.txSenderAddress).should('have.text', accounts.delegate.address)
+      .click();
+    cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', accounts.delegate.address);
+    cy.go('back');
     cy.get(ss.txRecipientAddress).should('not.exist');
     cy.get(ss.txDate).contains(/20\d\d/);
     cy.get(ss.txAddedVotes).should('not.exist');
     cy.get(ss.txRemovedVotes).should('not.exist');
-    // cy.get(ss.txFee).should('have.text', '25');
+    // cy.get(ss.txFee).should('have.text', '25'); // TODO uncomment after bugfix #1424
     cy.get(ss.txConfirmations).contains(/^\d/);
     cy.get(ss.txId).contains(regex.transactionId);
     cy.get(ss.txReference).should('not.exist');
+    cy.get(ss.txConfirmations).contains(/^\d/);
   });
 
   /**
-   * Register second passphrase transaction details are shown and correct when tx is confirmed
-   * @expect transfer details are correct for confirmed state
+   * Register second passphrase transaction details are shown and correct
+   * @expect transfer details are correct
    */
-  it('Second passphrase registration', () => {
+  it('2nd passphrase reg details', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(`${urls.transactions}/${secondPassphraseRegTxId}`);
     cy.get(ss.txHeader).contains('2nd Passphrase Registration');
@@ -116,5 +111,6 @@ describe('Tx details', () => {
     cy.get(ss.txConfirmations).contains(/^\d/);
     cy.get(ss.txId).contains(regex.transactionId);
     cy.get(ss.txReference).should('not.exist');
+    cy.get(ss.txConfirmations).contains(/^\d/);
   });
 });
