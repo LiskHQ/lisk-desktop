@@ -9,4 +9,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(translate()(Send));
-

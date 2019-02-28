@@ -5,15 +5,10 @@ import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
 import { InputV2, AutoresizeTextarea } from '../../toolbox/inputsV2';
 import Bookmark from '../../bookmarkV2';
 import regex from '../../../utils/regex';
+import SpinnerV2 from '../../spinnerV2/spinnerV2';
 import svg from '../../../utils/svgIcons';
 import styles from './form.css';
-// import fees from '../../../constants/fees';
-// import regex from '../../../utils/regex';
-// import { fromRawLsk } from '../../../utils/lsk';
-// import { authStatePrefill } from '../../../utils/form';
-// import AddressInput from '../../addressInput';
-// import ReferenceInput from '../../referenceInput';
-// import Piwik from '../../../utils/piwik';
+import Piwik from '../../../utils/piwik';
 
 class Form extends React.Component {
   constructor(props) {
@@ -23,6 +18,7 @@ class Form extends React.Component {
       showQRCode: false,
       shareLink: `lisk://wallet/send?recipient=${props.address}`,
       linkCopied: false,
+      isLoading: false,
       fields: {
         recipient: {
           address: '',
@@ -48,33 +44,48 @@ class Form extends React.Component {
       },
     };
 
-    this.handleFieldChange = this.handleFieldChange.bind(this);
+    this.loaderTimeout = null;
+
+    this.validateAmountAndReference = this.validateAmountAndReference.bind(this);
+    this.onAmountOrReferenceChange = this.onAmountOrReferenceChange.bind(this);
     this.onSelectedAccount = this.onSelectedAccount.bind(this);
-    this.onBookmarkChange = this.onBookmarkChange.bind(this);
-    this.onSelectedAccount = this.onSelectedAccount.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
     this.onBookmarkBlur = this.onBookmarkBlur.bind(this);
+    this.validateBookmark = this.validateBookmark.bind(this);
+    this.onGoNext = this.onGoNext.bind(this);
+  }
+
+  onInputChange({ target }) {
+    this.setState({
+      fields: {
+        ...this.state.fields,
+        [target.name]: {
+          ...this.state.fields[target.name],
+          value: target.value,
+        },
+      },
+    });
   }
 
   // eslint-disable-next-line max-statements
-  onBookmarkChange({ target }) {
+  validateBookmark() {
     const { followedAccounts } = this.props;
-    let recipient = this.state.recipient;
+    let recipient = this.state.fields.recipient;
     let isAccountValid = '';
     let isAddressValid = '';
-    const newValue = target.value;
 
-    if (followedAccounts.length && newValue !== '') {
+    if (followedAccounts.length && recipient.value !== '') {
       isAccountValid = followedAccounts
-        .find(account => account.title.toLowerCase() === newValue.toLowerCase()) || false;
-      isAddressValid = regex.address.test(newValue);
+        .find(account => account.title.toLowerCase() === recipient.value.toLowerCase()) || false;
+      isAddressValid = regex.address.test(recipient.value);
     } else {
-      isAddressValid = newValue.match(regex.address);
+      isAddressValid = recipient.value.match(regex.address);
     }
 
     if (isAddressValid) {
       recipient = {
         ...this.state.recipient,
-        address: newValue,
+        address: recipient.value,
         selected: false,
         error: false,
         feedback: '',
@@ -95,7 +106,7 @@ class Form extends React.Component {
       };
     }
 
-    if (!isAccountValid && !isAddressValid && newValue) {
+    if (!isAccountValid && !isAddressValid && recipient.value) {
       recipient = {
         ...this.state.recipient,
         address: '',
@@ -108,7 +119,7 @@ class Form extends React.Component {
       };
     }
 
-    if (newValue === '') {
+    if (recipient.value === '') {
       recipient = {
         ...this.state.recipient,
         address: '',
@@ -127,7 +138,6 @@ class Form extends React.Component {
         recipient: {
           ...this.state.fields.recipient,
           ...recipient,
-          value: newValue,
         },
       },
     });
@@ -168,57 +178,58 @@ class Form extends React.Component {
     return false;
   }
 
-  setInputValues(target, error, feedback) {
-    let field = '';
-
-    if (target.name === 'recipient') {
-      field = {
-        [target.name]: {
-          ...target,
-        },
-      };
-    } else {
-      field = {
-        [target.name]: {
-          error: !!error,
-          value: target.value,
-          feedback,
-        },
-      };
-    }
-
-    this.setState(prevState => ({
-      fields: {
-        ...prevState.fields,
-        ...field,
-      },
-    }));
-  }
-
   // eslint-disable-next-line max-statements
-  handleFieldChange({ target }) {
+  validateAmountAndReference(name, value) {
     const { t } = this.props;
     const messageMaxLength = 64;
     let feedback = '';
     let error = '';
 
-    if (target.name === 'amount') {
-      target.value = /^\./.test(target.value) ? `0${target.value}` : target.value;
-      error = this.validateAmountField(target.value);
+    if (name === 'amount') {
+      value = /^\./.test(value) ? `0${value}` : value;
+      error = this.validateAmountField(value);
       feedback = error || feedback;
     }
 
-    if (target.name === 'reference' && target.value.length > 0) {
-      error = target.value.length > messageMaxLength;
+    if (name === 'reference' && value.length > 0) {
+      const byteCount = encodeURI(value).split(/%..|./).length - 1;
+      error = byteCount > messageMaxLength;
       feedback = error
-        ? t('{{length}} extra characters', { length: target.value.length - messageMaxLength })
+        ? t('{{length}} extra characters', { length: byteCount - messageMaxLength })
         : t('{{length}} out of {{total}} characters left', {
-          length: messageMaxLength - target.value.length,
+          length: messageMaxLength - value.length,
           total: messageMaxLength,
         });
     }
 
-    this.setInputValues(target, error, feedback);
+    this.setState(prevState => ({
+      fields: {
+        ...prevState.fields,
+        [name]: {
+          error: !!error,
+          value,
+          feedback,
+        },
+      },
+    }));
+  }
+
+  onAmountOrReferenceChange({ target }) {
+    clearTimeout(this.loaderTimeout);
+
+    this.setState({ isLoading: true });
+
+    this.loaderTimeout = setTimeout(() => {
+      this.setState({ isLoading: false });
+      this.validateAmountAndReference(target.name, target.value);
+    }, 300);
+
+    this.onInputChange({ target });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  onGoNext() {
+    Piwik.trackingEvent('Send_Form', 'button', 'Next step');
   }
 
   // eslint-disable-next-line complexity
@@ -226,6 +237,7 @@ class Form extends React.Component {
     const { t, followedAccounts } = this.props;
     const { fields } = this.state;
     const messageMaxLength = 64;
+    const byteCount = encodeURI(fields.reference.value).split(/%..|./).length - 1;
     const btnDisabled =
       fields.recipient.error || fields.amount.error || fields.reference.error ||
       fields.recipient.value === '' || fields.amount.value === '';
@@ -240,10 +252,10 @@ class Form extends React.Component {
           <label className={`${styles.fieldGroup}`}>
             <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
             <Bookmark
-              t={t}
+              validateBookmark={this.validateBookmark}
               followedAccounts={followedAccounts}
-              onChange={this.onBookmarkChange}
-              placeholder={'e.g. 1234523423L or John Doe'}
+              onChange={this.onInputChange}
+              placeholder={t('e.g. 1234523423L or John Doe')}
               recipient={fields.recipient}
               showSuggestions={fields.recipient.showSuggestions}
               onSelectedAccount={this.onSelectedAccount}
@@ -255,7 +267,7 @@ class Form extends React.Component {
             <span className={`${styles.amountField} amount`}>
               <InputV2
                 autoComplete={'off'}
-                onChange={this.handleFieldChange}
+                onChange={this.onAmountOrReferenceChange}
                 name='amount'
                 value={fields.amount.value}
                 placeholder={t('e.g. 12345.6')}
@@ -264,14 +276,11 @@ class Form extends React.Component {
                 className={styles.converter}
                 value={fields.amount.value}
                 error={fields.amount.error} />
-              {
-                fields.amount.value
-                ? <img
-                    className={styles.status}
-                    src={fields.amount.error ? svg.alert_icon : svg.ok_icon}
-                  />
-                : null
-              }
+              <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}/>
+              <img
+                className={`${styles.status} ${!this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}
+                src={ fields.amount.error ? svg.alert_icon : svg.ok_icon}
+              />
             </span>
             <span className={`${styles.feedback} ${fields.amount.error ? 'error' : ''} ${fields.amount.feedback ? styles.show : ''}`}>
               {fields.amount.feedback}
@@ -284,30 +293,31 @@ class Form extends React.Component {
 
           <label className={`${styles.fieldGroup} reference`}>
             <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
-            <AutoresizeTextarea
-              maxLength={100}
-              spellCheck={false}
-              onChange={this.handleFieldChange}
-              name='reference'
-              value={fields.reference.value}
-              placeholder={t('Write message')}
-              className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
-            {
-              fields.reference.value
-              ? <img
-                  className={styles.status}
-                  src={fields.reference.error ? svg.alert_icon : svg.ok_icon}
-                />
-              : null
-            }
-            <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - fields.reference.value.length < 10 ? 'error' : ''} ${fields.reference.feedback ? styles.show : ''}`}>
+            <span className={styles.referenceField}>
+              <AutoresizeTextarea
+                maxLength={100}
+                spellCheck={false}
+                onChange={this.onAmountOrReferenceChange}
+                name='reference'
+                value={fields.reference.value}
+                placeholder={t('Write message')}
+                className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
+              <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && fields.reference.value ? styles.show : styles.hide}`}/>
+              <img
+                className={`${styles.status} ${!this.state.isLoading && fields.reference.value ? styles.show : styles.hide}`}
+                src={ fields.reference.error ? svg.alert_icon : svg.ok_icon} />
+            </span>
+            <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${fields.reference.feedback ? styles.show : ''}`}>
               {fields.reference.feedback}
             </span>
           </label>
         </div>
 
         <footer>
-          <PrimaryButtonV2 className={styles.confirmButton} disabled={btnDisabled}>
+          <PrimaryButtonV2
+            className={styles.confirmButton} disabled={btnDisabled}
+            onClick={this.onGoNext}
+          >
             {t('Go to Confirmation')}
           </PrimaryButtonV2>
         </footer>
