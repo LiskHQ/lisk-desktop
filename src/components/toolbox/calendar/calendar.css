@@ -1,0 +1,61 @@
+@import '../../app/variablesV2.css';
+
+.calendarWrapper {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  float: left;
+  margin: 8px;
+  min-width: 250px;
+  width: 250px;
+
+  & .calendarHeader {
+    border-bottom: 1px solid black;
+    padding: 10px;
+  }
+}
+
+.contentWrapper {
+  padding: 10px;
+
+  & .weekday {
+    color: var(--color-primary-standard);
+    text-align: center;
+    font-family: var(--content-font);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-semi-bold);
+    height: 16px;
+    text-transform: uppercase;
+  }
+
+  & .monthHeader {
+    box-sizing: border-box;
+    display: flex;
+    flex-basis: 100%;
+    flex-grow: 1;
+    flex-wrap: nowrap;
+
+    & > div {
+      box-sizing: border-box;
+      flex-grow: 1;
+      flex-basis: calc(100% / 7);
+      padding: 4px;
+    }
+  }
+
+  & .month {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  & .day {
+    background: transparent;
+    box-sizing: border-box;
+    border: 0;
+    display: block;
+    flex-basis: calc(100% / 7);
+    padding: 4px;
+  }
+}
