@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment/min/moment-with-locales';
+import moment from 'moment';
+import 'moment/min/locales';
 import styles from './calendar.css';
 
 class Calendar extends React.Component {
@@ -21,6 +22,7 @@ class Calendar extends React.Component {
     this.previousMonth = this.previousMonth.bind(this);
     this.nextMonth = this.nextMonth.bind(this);
     this.handleSelectDate = this.handleSelectDate.bind(this);
+    this.shouldSetShowing = this.shouldSetShowing.bind(this);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -32,18 +34,33 @@ class Calendar extends React.Component {
     });
   }
 
-  shouldComponentUpdate(nextProps) {
-    const selectedDate =
-      (moment(nextProps.date, nextProps.dateFormat).isValid()
-        && moment(nextProps.date, nextProps.dateFormat))
-      || this.state.selectedDate.clone();
-
-    if (selectedDate.format(nextProps.dateFormat)
-      !== this.state.selectedDate.format(nextProps.dateFormat)) {
-      this.setState({ selectedDate, showingDate: selectedDate });
+  shouldSetShowing(nextProps) {
+    const { dateFormat } = nextProps;
+    const minDate = moment(nextProps.minDate, dateFormat);
+    const maxDate = moment(nextProps.maxDate, dateFormat);
+    const updateTo = (minDate.isValid() && this.state.showingDate < minDate && 'min')
+      || (maxDate.isValid() && this.state.showingDate > maxDate && 'max')
+      || false;
+    if (updateTo) {
+      const showingDate = moment(nextProps[`${updateTo}Date`], dateFormat);
+      this.setState({ showingDate });
       return false;
     }
     return true;
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const { dateFormat } = nextProps;
+    const selectedDate =
+      (moment(nextProps.date, dateFormat).isValid()
+        && moment(nextProps.date, dateFormat))
+      || this.state.selectedDate.clone();
+
+    if (selectedDate.format(dateFormat)
+      !== this.state.selectedDate.format(dateFormat)) {
+      this.setState({ selectedDate, showingDate: selectedDate.clone() });
+    }
+    return this.shouldSetShowing(nextProps);
   }
 
   previousMonth() {
