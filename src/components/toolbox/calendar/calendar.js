@@ -40,7 +40,7 @@ class Calendar extends React.Component {
 
     if (selectedDate.format(nextProps.dateFormat)
       !== this.state.selectedDate.format(nextProps.dateFormat)) {
-      this.setState({ selectedDate });
+      this.setState({ selectedDate, showingDate: selectedDate });
       return false;
     }
     return true;
