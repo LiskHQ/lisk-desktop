@@ -123,12 +123,24 @@
   & .textarea {
     resize: none;
     overflow: hidden;
+    padding-right: 30px;
   }
 
   & .status {
     position: absolute;
-    top: 10px;
     right: 10px;
+  }
+
+  & .referenceStatus {
+    position: absolute;
+    right: 10px;
+  }
+
+  & .referenceField {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
   }
 }
 
@@ -140,4 +152,19 @@ footer {
   & > .confirmButton {
     width: 100%;
   }
+}
+
+.spinner {
+  position: absolute;
+  right: 11px;
+}
+
+.show {
+  opacity: 1;
+  transition: opacity var(--animation-speed-fast) linear var(--animation-delay-standard);
+}
+
+.hide {
+  opacity: 0;
+  transition: opacity var(--animation-speed-fast) linear;
 }

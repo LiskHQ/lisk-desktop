@@ -3,6 +3,7 @@ import AccountVisual from '../accountVisual/index';
 import { InputV2 } from '../toolbox/inputsV2';
 import keyCodes from './../../constants/keyCodes';
 import svg from '../../utils/svgIcons';
+import SpinnerV2 from '../spinnerV2/spinnerV2';
 import styles from './bookmark.css';
 
 // eslint-disable-next-line complexity
@@ -12,13 +13,18 @@ class Bookmark extends React.Component {
 
     this.state = {
       dropdownIndex: -1,
+      isLoading: false,
     };
+
+    this.loaderTimeout = null;
 
     this.onHandleKeyPress = this.onHandleKeyPress.bind(this);
     this.getFilterList = this.getFilterList.bind(this);
     this.onKeyPressDown = this.onKeyPressDown.bind(this);
     this.onKeyPressUp = this.onKeyPressUp.bind(this);
     this.onKeyPressEnter = this.onKeyPressEnter.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSelectedAccount = this.onSelectedAccount.bind(this);
   }
 
   componentDidMount() {
@@ -36,12 +42,17 @@ class Bookmark extends React.Component {
         account.address.toLowerCase().includes(recipient.value.toLowerCase()));
   }
 
+  onSelectedAccount(account) {
+    this.setState({ isLoading: false });
+    this.props.onSelectedAccount(account);
+  }
+
   onKeyPressDown() {
-    const accountsLength = this.getFilterList().length();
+    const accountsLength = this.getFilterList().length;
     const { dropdownIndex } = this.state;
 
-    if (dropdownIndex < accountsLength) {
-      this.setState({ dropdownIndex: this.state.dropdownIndex + 1 });
+    if (dropdownIndex < accountsLength - 1) {
+      this.setState({ dropdownIndex: dropdownIndex + 1 });
     }
   }
 
@@ -56,41 +67,47 @@ class Bookmark extends React.Component {
   onKeyPressEnter() {
     const { dropdownIndex } = this.state;
     const account = this.getFilterList()[dropdownIndex];
-    this.props.selectedAccount(account);
+    this.onSelectedAccount(account);
   }
 
   onHandleKeyPress(e) {
-    e.preventDefault();
     if (this.props.showSuggestions) {
       switch (e.keyCode) {
         case keyCodes.arrowDown:
           this.onKeyPressDown();
           break;
-
         case keyCodes.arrowUp:
           this.onKeyPressUp();
           break;
-
         case keyCodes.enter:
           this.onKeyPressEnter();
           break;
-
         default:
           break;
       }
     }
   }
 
+  onChange(e) {
+    clearTimeout(this.loaderTimeout);
+    this.setState({ isLoading: true });
+    this.loaderTimeout = setTimeout(() => {
+      if (this.getFilterList().length === 0) {
+        this.setState({ isLoading: false });
+      }
+      this.props.validateBookmark();
+    }, 300);
+    this.props.onChange(e);
+  }
+
   // eslint-disable-next-line complexity
   render() {
     const {
-      onChange,
-      onSelectedAccount,
-      placeholder,
       recipient,
+      placeholder,
       showSuggestions,
-      t,
     } = this.props;
+
     const { dropdownIndex } = this.state;
 
     const showAccountVisual = recipient.address.length && !recipient.error;
@@ -110,29 +127,26 @@ class Bookmark extends React.Component {
           }
           <InputV2
             autoComplete={'off'}
-            onChange={onChange}
+            className={`${styles.input} ${recipient.error ? 'error' : ''} ${showAccountVisual ? styles.moveTextToRight : null} recipient bookmark`}
             name={'recipient'}
             value={selectedAccount}
-            placeholder={t(placeholder)}
-            // onKeyDown={this.onHandleKeyPress}
-            className={`${styles.input} ${recipient.error ? 'error' : ''} ${showAccountVisual ? styles.moveTextToRight : null} recipient bookmark`}
+            placeholder={placeholder}
+            onKeyDown={this.onHandleKeyPress}
+            onChange={this.onChange}
+          />
+          <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && recipient.value ? styles.show : styles.hide}`}/>
+          <img
+            className={`${styles.status} ${!this.state.isLoading && recipient.value ? styles.show : styles.hide}`}
+            src={ recipient.error ? svg.alert_icon : svg.ok_icon}
           />
           {
-            recipient.value || recipient.error
-            ? <img
-                className={styles.status}
-                src={ recipient.error ? svg.alert_icon : svg.ok_icon}
-              />
-            : null
-          }
-          {
-            showSuggestions
+            showSuggestions && recipient.value !== ''
             ? <div className={styles.bookmarkContainer}>
                 <ul className={styles.bookmarkList}>
                   {
                     this.getFilterList()
                     .map((account, index) =>
-                      <li key={index} onClick={() => onSelectedAccount(account)} className={dropdownIndex === index ? styles.active : ''}>
+                      <li key={index} onClick={() => this.onSelectedAccount(account)} className={dropdownIndex === index ? styles.active : ''}>
                         <AccountVisual address={account.address} size={25} />
                         <span>{account.title}</span>
                         <span>{account.address}</span>

@@ -123,3 +123,18 @@
     opacity: 1;
   }
 }
+
+.spinner {
+  position: absolute;
+  right: 11px;
+}
+
+.show {
+  opacity: 1;
+  transition: opacity var(--animation-speed-fast) linear var(--animation-delay-standard);
+}
+
+.hide {
+  opacity: 0;
+  transition: opacity var(--animation-speed-fast) linear;
+}
