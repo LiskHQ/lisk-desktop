@@ -88,19 +88,19 @@ class Calendar extends React.Component {
     const locale = Array.isArray(this.props.locale) ? [...this.props.locale] : [this.props.locale];
     moment.locale([...locale, 'en']);
     const { dateFormat } = this.props;
-    const { showingDate } = this.state;
+    const { showingDate, selectedDate } = this.state;
     const day = moment(showingDate).startOf('month');
 
     return (
       <section className={styles.calendarWrapper}>
         <header className={styles.calendarHeader}>
-          <button onClick={this.previousMonth}>{'<<<<<'}</button>
-          {showingDate.format('MMMM')}
-          <button onClick={this.nextMonth}>{'>>>>>'}</button>
+          <span className={styles.navigationButton} onClick={this.previousMonth} />
+          <span className={styles.monthName}>{showingDate.format('MMMM')}</span>
+          <span className={styles.navigationButton} onClick={this.nextMonth} />
         </header>
         <div className={styles.contentWrapper}>
           <div className={styles.monthHeader}>
-            {moment.weekdaysMin(true).map((weekday, key) =>
+            {moment.weekdaysShort(true).map((weekday, key) =>
               <div className={styles.weekday} key={key}>{weekday}</div>)}
           </div>
           <div className={styles.month}>
@@ -109,14 +109,15 @@ class Calendar extends React.Component {
             day.date(d + 1);
             const minDate = moment(this.props.minDate, dateFormat);
             const maxDate = moment(this.props.maxDate, dateFormat);
+            const selected = day.format(dateFormat) === selectedDate.format('DD.MM.YY');
             const isDisabled = (minDate.isValid() && day < minDate)
             || (maxDate.isValid() && day > maxDate) || false;
             return <button key={d}
               onClick={this.handleSelectDate}
               value={day.format(dateFormat)}
               disabled={isDisabled}
-              className={`${styles.day}`}>
-                {day.format('DD')}
+              className={`${styles.day} ${selected ? styles.selected : ''}`}>
+                {day.format('D')}
               </button>;
           })}
           { this.generatePlaceholder(6 - day.weekday(), day.add(1, 'days')) }
