@@ -16,6 +16,15 @@ import settingsIcon from '../assets/images/icons-v2/settings.svg';
 import settingsActiveIcon from '../assets/images/icons-v2/settings-active.svg';
 import logoutIcon from '../assets/images/icons-v2/logout.svg';
 import logoutActiveIcon from '../assets/images/icons-v2/logout-active.svg';
+import txIncoming from '../assets/images/icons-v2/tx-incoming.svg';
+import txOutgoing from '../assets/images/icons-v2/tx-outgoing.svg';
+import txDelegate from '../assets/images/icons-v2/tx-delegate.svg';
+import txVote from '../assets/images/icons-v2/tx-vote.svg';
+import tx2ndPassphrase from '../assets/images/icons-v2/tx-2nd-passphrase.svg';
+import txDefault from '../assets/images/icons-v2/tx-default.svg';
+import txSendArrow from '../assets/images/icons-v2/tx-send-arrow.svg';
+import icoLink from '../assets/images/icons-v2/link.svg';
+import copy from '../assets/images/icons-v2/copy.svg';
 
 export default {
   avatar_icon: Avatar,
@@ -36,4 +45,13 @@ export default {
   settings_active_icon: settingsActiveIcon,
   logout_icon: logoutIcon,
   logout_active_icon: logoutActiveIcon,
+  txIncoming,
+  txOutgoing,
+  txDelegate,
+  txVote,
+  tx2ndPassphrase,
+  txDefault,
+  icoLink,
+  txSendArrow,
+  copy,
 };
