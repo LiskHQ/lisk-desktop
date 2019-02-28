@@ -26,6 +26,21 @@ class Calendar extends React.Component {
     this.setCurrentView = this.setCurrentView.bind(this);
   }
 
+  shouldSetShowing(nextProps) {
+    const { dateFormat } = nextProps;
+    const minDate = moment(nextProps.minDate, dateFormat);
+    const maxDate = moment(nextProps.maxDate, dateFormat);
+    const updateTo = (minDate.isValid() && this.state.showingDate < minDate && 'min')
+      || (maxDate.isValid() && this.state.showingDate > maxDate && 'max')
+      || false;
+    if (updateTo) {
+      const showingDate = moment(nextProps[`${updateTo}Date`], dateFormat);
+      this.setState({ showingDate });
+      return false;
+    }
+    return true;
+  }
+
   shouldComponentUpdate(nextProps) {
     const { dateFormat } = this.props;
     const prevDate = moment(this.props.date, dateFormat);
@@ -35,7 +50,7 @@ class Calendar extends React.Component {
       this.setState({ showingDate: newDate });
       return false;
     }
-    return true;
+    return this.shouldSetShowing(nextProps);
   }
 
   setCurrentView(view) {
