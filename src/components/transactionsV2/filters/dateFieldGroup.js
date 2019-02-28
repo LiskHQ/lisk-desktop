@@ -5,9 +5,12 @@ import { getDateTimestampFromFirstBlock, formatInputToDate } from '../../../util
 import { InputV2 } from '../../toolbox/inputsV2';
 import { getInputSelection, setInputSelection } from '../../../utils/selection';
 import styles from './filters.css';
+import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
+import Calendar from '../../toolbox/calendar/calendar';
 import keyCodes from '../../../constants/keyCodes';
 
 class DateFieldGroup extends React.Component {
+  // eslint-disable-next-line max-statements
   constructor(props) {
     super();
 
@@ -23,6 +26,7 @@ class DateFieldGroup extends React.Component {
         },
       },
       feedback: '',
+      shownDropdown: '',
     };
 
     this.inputRefs = {
@@ -30,17 +34,58 @@ class DateFieldGroup extends React.Component {
       dateFrom: null,
     };
 
+    this.dropdownRefs = {};
+
     this.dateFormat = props.t('DD.MM.YY');
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.handleKey = this.handleKey.bind(this);
-    this.setRefs = this.setRefs.bind(this);
+    this.setInputRefs = this.setInputRefs.bind(this);
+    this.toggleDropdown = this.toggleDropdown.bind(this);
+    this.setDropownRefs = this.setDropownRefs.bind(this);
+    this.handleClickOutsideDropdown = this.handleClickOutsideDropdown.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
   }
 
-  setRefs(node) {
+  setInputRefs(node) {
     if (node && node.name) {
       this.inputRefs[node.name] = node;
     }
+  }
+
+  setDropownRefs(node) {
+    const dropdownName = node && node.dataset && node.dataset.name;
+    this.dropdownRefs = dropdownName ? {
+      ...this.dropdownRefs,
+      [dropdownName]: node,
+    } : this.dropdownRefs;
+  }
+
+  handleFocus({ target }) {
+    const dropdownName = `${target.name}Dropdown`;
+    if (this.state.shownDropdown !== dropdownName) {
+      this.toggleDropdown(dropdownName);
+    }
+  }
+
+  toggleDropdown(dropdownName) {
+    if (!(this.state.shownDropdown === dropdownName)) {
+      document.addEventListener('click', this.handleClickOutsideDropdown);
+    } else {
+      document.removeEventListener('click', this.handleClickOutsideDropdown);
+    }
+
+    this.setState(prevState => ({
+      shownDropdown: prevState.shownDropdown === dropdownName ? '' : dropdownName,
+    }));
+  }
+
+  // istanbul ignore next
+  handleClickOutsideDropdown(e) {
+    const dropdownName = this.state.shownDropdown;
+    const ref = this.dropdownRefs[dropdownName];
+    if (ref && ref.contains(e.target)) return;
+    this.toggleDropdown(dropdownName);
   }
 
   validateDates(fieldsObj, selectionObj) {
@@ -128,33 +173,59 @@ class DateFieldGroup extends React.Component {
 
   render() {
     const { filters, t } = this.props;
-    const { fields } = this.state;
+    const { fields, shownDropdown } = this.state;
 
     return (
       <div className={styles.fieldGroup}>
         <span className={styles.fieldLabel}>{t('Date')}</span>
         <div className={styles.fieldRow}>
-          <InputV2
-            setRef={this.setRefs}
-            autoComplete={'off'}
-            onChange={this.handleFieldChange}
-            name='dateFrom'
-            value={filters.dateFrom}
-            placeholder={this.dateFormat}
-            onFocus={this.handleFocus}
-            onKeyDown={this.handleKey}
-            className={`${styles.input} ${fields.dateFrom.error ? 'error' : ''} dateFromInput`} />
+          <label
+            className={styles.dropdownWrapper}
+            ref={this.setDropownRefs}
+            data-name={'dateFromDropdown'}>
+            <InputV2
+              setRef={this.setInputRefs}
+              autoComplete={'off'}
+              onChange={this.handleFieldChange}
+              name='dateFrom'
+              value={filters.dateFrom}
+              placeholder={this.dateFormat}
+              onFocus={this.handleFocus}
+              onClick={this.handleFocus}
+              onKeyDown={this.handleKey}
+              className={`${styles.input} ${fields.dateFrom.error ? 'error' : ''} dateFromInput`} />
+              <DropdownV2
+                className={styles.calendarDropdown}
+                showDropdown={shownDropdown === 'dateFromDropdown'}>
+                <Calendar
+                  dateFormat={this.dateFormat}
+                  date={filters.dateFrom} />
+              </DropdownV2>
+          </label>
           <span>-</span>
-          <InputV2
-            setRef={this.setRefs}
-            autoComplete={'off'}
-            onChange={this.handleFieldChange}
-            name='dateTo'
-            value={filters.dateTo}
-            placeholder={this.dateFormat}
-            onFocus={this.handleFocus}
-            onKeyDown={this.handleKey}
-            className={`${styles.input} ${fields.dateTo.error ? 'error' : ''} dateToInput`} />
+          <label
+            className={styles.dropdownWrapper}
+            ref={this.setDropownRefs}
+            data-name={'dateToDropdown'}>
+            <InputV2
+              setRef={this.setInputRefs}
+              autoComplete={'off'}
+              onChange={this.handleFieldChange}
+              name='dateTo'
+              value={filters.dateTo}
+              placeholder={this.dateFormat}
+              onFocus={this.handleFocus}
+              onClick={this.handleFocus}
+              onKeyDown={this.handleKey}
+              className={`${styles.input} ${fields.dateTo.error ? 'error' : ''} dateToInput`} />
+            <DropdownV2
+              className={styles.calendarDropdown}
+              showDropdown={shownDropdown === 'dateToDropdown'}>
+            <Calendar
+              dateFormat={this.dateFormat}
+              date={filters.dateTo} />
+          </DropdownV2>
+          </label>
         </div>
         <span className={`${styles.feedback} ${this.state.feedback ? styles.show : ''}`}>
           {this.state.feedback}

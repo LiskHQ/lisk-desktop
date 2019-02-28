@@ -55,3 +55,12 @@
     }
   }
 }
+
+.dropdownWrapper {
+  position: relative;
+  width: 100%;
+
+  & .calendarDropdown {
+    width: auto;
+  }
+}
