@@ -15,9 +15,6 @@ class Form extends React.Component {
     super(props);
 
     this.state = {
-      showQRCode: false,
-      shareLink: `lisk://wallet/send?recipient=${props.address}`,
-      linkCopied: false,
       isLoading: false,
       fields: {
         recipient: {
@@ -238,7 +235,7 @@ class Form extends React.Component {
     const { fields } = this.state;
     const messageMaxLength = 64;
     const byteCount = encodeURI(fields.reference.value).split(/%..|./).length - 1;
-    const btnDisabled =
+    const isBtnDisabled =
       fields.recipient.error || fields.amount.error || fields.reference.error ||
       fields.recipient.value === '' || fields.amount.value === '';
 
@@ -249,7 +246,7 @@ class Form extends React.Component {
         </header>
 
         <div className={styles.formSection}>
-          <label className={`${styles.fieldGroup}`}>
+          <label className={`${styles.fieldGroup} recipient`}>
             <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
             <Bookmark
               validateBookmark={this.validateBookmark}
@@ -315,7 +312,8 @@ class Form extends React.Component {
 
         <footer>
           <PrimaryButtonV2
-            className={styles.confirmButton} disabled={btnDisabled}
+            className={`${styles.confirmButton} btn-submit`}
+            disabled={isBtnDisabled}
             onClick={this.onGoNext}
           >
             {t('Go to Confirmation')}

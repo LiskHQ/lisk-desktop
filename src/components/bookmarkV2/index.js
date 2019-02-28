@@ -12,7 +12,7 @@ class Bookmark extends React.Component {
     super(props);
 
     this.state = {
-      dropdownIndex: -1,
+      dropdownIndex: 0,
       isLoading: false,
     };
 
@@ -25,12 +25,6 @@ class Bookmark extends React.Component {
     this.onKeyPressEnter = this.onKeyPressEnter.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSelectedAccount = this.onSelectedAccount.bind(this);
-  }
-
-  componentDidMount() {
-    if (this.props.followedAccounts.length) {
-      this.setState({ dropdownIndex: 0 });
-    }
   }
 
   getFilterList() {
@@ -142,11 +136,14 @@ class Bookmark extends React.Component {
           {
             showSuggestions && recipient.value !== ''
             ? <div className={styles.bookmarkContainer}>
-                <ul className={styles.bookmarkList}>
+                <ul className={`${styles.bookmarkList} bookmark-list`}>
                   {
                     this.getFilterList()
                     .map((account, index) =>
-                      <li key={index} onClick={() => this.onSelectedAccount(account)} className={dropdownIndex === index ? styles.active : ''}>
+                      <li
+                        key={index}
+                        onClick={() => this.onSelectedAccount(account)}
+                        className={`${dropdownIndex === index ? styles.active : ''} bookmark-${index}`}>
                         <AccountVisual address={account.address} size={25} />
                         <span>{account.title}</span>
                         <span>{account.address}</span>

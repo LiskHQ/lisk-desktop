@@ -5,8 +5,6 @@ import { translate } from 'react-i18next';
 import Form from './form';
 
 const mapStateToProps = state => ({
-  account: state.account,
-  pendingTransactions: state.transactions.pending,
   followedAccounts: state.followedAccounts.accounts,
 });
 
