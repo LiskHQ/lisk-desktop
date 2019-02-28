@@ -103,13 +103,13 @@ export const loadTransactions = ({ publicKey, address }) =>
   };
 
 export const transactionsRequested = ({
-  address, limit, offset, filter,
+  address, limit, offset, filter, customFilters = {},
 }) =>
   (dispatch, getState) => {
     dispatch(loadingStarted(actionTypes.transactionsRequested));
     const liskAPIClient = getState().peers.liskAPIClient;
     getTransactions({
-      liskAPIClient, address, limit, offset, filter,
+      liskAPIClient, address, limit, offset, filter, customFilters,
     })
       .then((response) => {
         dispatch(loadingFinished(actionTypes.transactionsRequested));
