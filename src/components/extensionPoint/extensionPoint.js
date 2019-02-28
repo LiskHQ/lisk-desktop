@@ -9,6 +9,11 @@ export default class ExtensionPoint extends React.Component {
 
   render() {
     const modules = this.props.modules[this.props.identifier] || [];
+    const {
+      testExtensions,
+      loadTransactions,
+      sent,
+    } = this.props;
 
     // TODO implement a way to highlight all extension points on a page
     // for easier discover by extension developers
@@ -22,7 +27,13 @@ export default class ExtensionPoint extends React.Component {
           return <Component
             data = {{
               latestBlocks: this.props.blocks && this.props.blocks.latestBlocks,
+              transactions: this.props.transactions,
               time: this.props.test,
+            }}
+            actions={{
+              testExtensions,
+              loadTransactions,
+              sent,
             }}
             onClickHandle={() => { this.props.testExtensions(); }}
             t={this.props.t}
