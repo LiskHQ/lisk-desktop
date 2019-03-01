@@ -19,6 +19,15 @@ import logoutActiveIcon from '../assets/images/icons-v2/logout-active.svg';
 import iconChart from '../assets/images/icons-v2/icon-chart.svg';
 import iconCal from '../assets/images/icons-v2/icon-calendar.svg';
 import iconLastTx from '../assets/images/icons-v2/icon-last-tx.svg';
+import txIncoming from '../assets/images/icons-v2/tx-incoming.svg';
+import txOutgoing from '../assets/images/icons-v2/tx-outgoing.svg';
+import txDelegate from '../assets/images/icons-v2/tx-delegate.svg';
+import txVote from '../assets/images/icons-v2/tx-vote.svg';
+import tx2ndPassphrase from '../assets/images/icons-v2/tx-2nd-passphrase.svg';
+import txDefault from '../assets/images/icons-v2/tx-default.svg';
+import txSendArrow from '../assets/images/icons-v2/tx-send-arrow.svg';
+import icoLink from '../assets/images/icons-v2/link.svg';
+import copy from '../assets/images/icons-v2/copy.svg';
 
 export default {
   avatar_icon: Avatar,
@@ -42,4 +51,13 @@ export default {
   icon_chart: iconChart,
   icon_cal: iconCal,
   icon_last_tx: iconLastTx,
+  txIncoming,
+  txOutgoing,
+  txDelegate,
+  txVote,
+  tx2ndPassphrase,
+  txDefault,
+  icoLink,
+  txSendArrow,
+  copy,
 };
