@@ -9,10 +9,14 @@ For building Your Component You can use ES6 and babel plugin in our app will han
 #### LiskHubExtensions
 | Properties          |                    Description                 |
 | --------------- |---------------------------------------------|
-| `addModule({ identifier, component })` | identifier:                 |
-| `components`            | `liskServiceApi.getNewsFeed()`            |
+| `addModule({ identifier, component })` | identifier: `String`, component: `Component` <br/> Adds new component to the place we specify               |
+| `components`            | Contains shared styled components that We use in our app.             |
+| `identifiers`            | Identifier you pass to addModule() `dashboardColumn1, dashboardColumn2, dashboardColumn3`. It will add your component below dashboard components in specific column          |
 
 ![Alt text](./assets/create_extension_3.png?raw=true "Github File with extension")
+
+#### Props
+Data from our store is accessible via `this.props.data` and actions to modify our store are in `this.props.actions`. Keep in mind that We are not sharing all data and actions. In case You want to access sth that is unavaliable let us know by creating a feature proposal/ticket in our repo.
 ## How to add new extension?
 
 1. Open our [repository](https://github.com/michaeltomasik/extensions-lisk) with all extensions.
