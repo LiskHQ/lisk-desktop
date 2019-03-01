@@ -13,6 +13,13 @@ export default class ExtensionPoint extends React.Component {
       testExtensions,
       loadTransactions,
       sent,
+      loadTransaction,
+      transactionsFilterSet,
+      searchDelegate,
+      searchVotes,
+      searchVoters,
+      searchAccount,
+      searchTransactions,
     } = this.props;
 
     // TODO implement a way to highlight all extension points on a page
@@ -29,11 +36,20 @@ export default class ExtensionPoint extends React.Component {
               latestBlocks: this.props.blocks && this.props.blocks.latestBlocks,
               transactions: this.props.transactions,
               time: this.props.test,
+              accountAddress: this.props.account && this.props.account.address,
+              search: this.props.search,
             }}
             actions={{
               testExtensions,
               loadTransactions,
               sent,
+              loadTransaction,
+              transactionsFilterSet,
+              searchDelegate,
+              searchVotes,
+              searchVoters,
+              searchAccount,
+              searchTransactions,
             }}
             onClickHandle={() => { this.props.testExtensions(); }}
             t={this.props.t}
