@@ -209,7 +209,6 @@ class DateFieldGroup extends React.Component {
                 className={styles.calendarDropdown}
                 showDropdown={shownDropdown === 'dateFromDropdown'}>
                 <Calendar
-                  locale={'ja'}
                   onDateSelected={date => this.dateSelected(date, 'dateFrom')}
                   dateFormat={this.dateFormat}
                   minDate={moment(new Date(2016, 4, 24, 17)).format(this.dateFormat)}
