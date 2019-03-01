@@ -2,8 +2,11 @@
 
 ## How to create new extension?
 In your extension you will have access to `React` and `LiskHubExtensions` that allows to add Your extension to specified ares in our code.
+
 ![Alt text](./assets/create_extension_1.png?raw=true "Github File with extension")
+
 For building Your Component You can use ES6 and babel plugin in our app will handle everything else for You.
+
 ![Alt text](./assets/create_extension_2.png?raw=true "Github File with extension")
 
 #### LiskHubExtensions
@@ -17,6 +20,7 @@ For building Your Component You can use ES6 and babel plugin in our app will han
 
 #### Props
 Data from our store is accessible via `this.props.data` and actions to modify our store are in `this.props.actions`. Keep in mind that We are not sharing all data and actions. In case You want to access sth that is unavaliable let us know by creating a feature proposal/ticket in our repo.
+
 ## How to add new extension?
 
 1. Open our [repository](https://github.com/michaeltomasik/extensions-lisk) with all extensions.
