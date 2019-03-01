@@ -44,18 +44,14 @@ class Bookmark extends React.Component {
   onKeyPressDown() {
     const accountsLength = this.getFilterList().length;
     const { dropdownIndex } = this.state;
-
-    if (dropdownIndex < accountsLength - 1) {
-      this.setState({ dropdownIndex: dropdownIndex + 1 });
-    }
+    // istanbul ignore else
+    if (dropdownIndex < accountsLength - 1) this.setState({ dropdownIndex: dropdownIndex + 1 });
   }
 
   onKeyPressUp() {
     const { dropdownIndex } = this.state;
-
-    if (dropdownIndex > 0) {
-      this.setState({ dropdownIndex: this.state.dropdownIndex - 1 });
-    }
+    // istanbul ignore else
+    if (dropdownIndex > 0) this.setState({ dropdownIndex: this.state.dropdownIndex - 1 });
   }
 
   onKeyPressEnter() {
@@ -65,6 +61,7 @@ class Bookmark extends React.Component {
   }
 
   onHandleKeyPress(e) {
+    // istanbul ignore else
     if (this.props.showSuggestions) {
       switch (e.keyCode) {
         case keyCodes.arrowDown:
@@ -76,6 +73,7 @@ class Bookmark extends React.Component {
         case keyCodes.enter:
           this.onKeyPressEnter();
           break;
+        // istanbul ignore next
         default:
           break;
       }
@@ -86,9 +84,8 @@ class Bookmark extends React.Component {
     clearTimeout(this.loaderTimeout);
     this.setState({ isLoading: true });
     this.loaderTimeout = setTimeout(() => {
-      if (this.getFilterList().length === 0) {
-        this.setState({ isLoading: false });
-      }
+      // istanbul ignore else
+      if (this.getFilterList().length === 0) this.setState({ isLoading: false });
       this.props.validateBookmark();
     }, 300);
     this.props.onChange(e);

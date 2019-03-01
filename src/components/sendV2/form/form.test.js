@@ -89,6 +89,7 @@ describe('Form', () => {
       let amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField).not.toContainMatchingElement('.converted-price');
       amountField.find('InputV2').simulate('change', evt);
+      jest.advanceTimersByTime(300);
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField).toContainMatchingElement('.converted-price');
@@ -96,35 +97,45 @@ describe('Form', () => {
 
     it('Should add leading 0 if . is inserted as first character', () => {
       const evt = { target: { name: 'amount', value: '.1' } };
-      const input = wrapper.find('.fieldGroup').at(1).find('InputV2');
-      input.simulate('change', evt);
+      let amountField = wrapper.find('.fieldGroup').at(1);
+      amountField.find('InputV2').simulate('change', evt);
+      jest.advanceTimersByTime(300);
       wrapper.update();
-      // expect(input.prop('value')).toEqual('0.1');
+      amountField = wrapper.find('.fieldGroup').at(1);
+      expect(amountField.find('InputV2').prop('value')).toEqual('0.1');
     });
 
     it('Should show error feedback if letters inserted', () => {
       const evt = { target: { name: 'amount', value: 'abc' } };
-      const amountField = wrapper.find('.fieldGroup').at(1);
+      let amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField.find('.feedback')).not.toHaveClassName('error');
       amountField.find('InputV2').simulate('change', evt);
+      jest.advanceTimersByTime(300);
       wrapper.update();
-      // expect(amountField.find('.feedback')).toHaveClassName('error');
+      amountField = wrapper.find('.fieldGroup').at(1);
+      expect(amountField.find('.feedback')).toHaveClassName('error');
     });
 
     it('Should show error feedback if ending in . or multiples .', () => {
       const evt = { target: { name: 'amount', value: 1 } };
       const multipleDotsEvt = { target: { name: 'amount', value: '1.2.3' } };
       const endingDotEvt = { target: { name: 'amount', value: '12.' } };
-      const amountField = wrapper.find('.fieldGroup').at(1);
+      let amountField = wrapper.find('.fieldGroup').at(1);
       amountField.find('InputV2').simulate('change', endingDotEvt);
+      jest.advanceTimersByTime(300);
       wrapper.update();
-      // expect(amountField.find('.feedback')).toHaveClassName('error');
+      amountField = wrapper.find('.fieldGroup').at(1);
+      expect(amountField.find('.feedback')).toHaveClassName('error');
       amountField.find('InputV2').simulate('change', evt);
+      jest.advanceTimersByTime(300);
       wrapper.update();
+      amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField.find('.feedback')).not.toHaveClassName('error');
       amountField.find('InputV2').simulate('change', multipleDotsEvt);
+      jest.advanceTimersByTime(300);
       wrapper.update();
-      // expect(amountField.find('.feedback')).toHaveClassName('error');
+      amountField = wrapper.find('.fieldGroup').at(1);
+      expect(amountField.find('.feedback')).toHaveClassName('error');
     });
   });
 

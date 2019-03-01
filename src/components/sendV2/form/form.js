@@ -47,7 +47,6 @@ class Form extends React.Component {
     this.onAmountOrReferenceChange = this.onAmountOrReferenceChange.bind(this);
     this.onSelectedAccount = this.onSelectedAccount.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
-    this.onBookmarkBlur = this.onBookmarkBlur.bind(this);
     this.validateBookmark = this.validateBookmark.bind(this);
     this.onGoNext = this.onGoNext.bind(this);
   }
@@ -79,6 +78,7 @@ class Form extends React.Component {
       isAddressValid = recipient.value.match(regex.address);
     }
 
+    // istanbul ignore else
     if (isAddressValid) {
       recipient = {
         ...this.state.recipient,
@@ -90,6 +90,7 @@ class Form extends React.Component {
       };
     }
 
+    // istanbul ignore else
     if (isAccountValid) {
       recipient = {
         ...this.state.recipient,
@@ -103,6 +104,7 @@ class Form extends React.Component {
       };
     }
 
+    // istanbul ignore else
     if (!isAccountValid && !isAddressValid && recipient.value) {
       recipient = {
         ...this.state.recipient,
@@ -116,6 +118,7 @@ class Form extends React.Component {
       };
     }
 
+    // istanbul ignore else
     if (recipient.value === '') {
       recipient = {
         ...this.state.recipient,
@@ -157,18 +160,6 @@ class Form extends React.Component {
     });
   }
 
-  onBookmarkBlur() {
-    this.setState({
-      fields: {
-        ...this.state.fields,
-        recipient: {
-          ...this.state.fields.recipient,
-          showSuggestions: false,
-        },
-      },
-    });
-  }
-
   validateAmountField(value) {
     if (/([^\d.])/g.test(value)) return this.props.t('Please use only digits and dots');
     if (/(\.)(.*\1){1}/g.test(value) || /\.$/.test(value)) return this.props.t('Invalid amount');
@@ -182,12 +173,14 @@ class Form extends React.Component {
     let feedback = '';
     let error = '';
 
+    // istanbul ignore else
     if (name === 'amount') {
       value = /^\./.test(value) ? `0${value}` : value;
       error = this.validateAmountField(value);
       feedback = error || feedback;
     }
 
+    // istanbul ignore else
     if (name === 'reference' && value.length > 0) {
       const byteCount = encodeURI(value).split(/%..|./).length - 1;
       error = byteCount > messageMaxLength;

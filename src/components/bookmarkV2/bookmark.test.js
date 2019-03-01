@@ -65,8 +65,17 @@ describe('BookmarkV2', () => {
   it('should validate bookmark', () => {
     const evt = { target: { name: 'recipient', value: '123456L' } };
     wrapper.find('input.recipient').simulate('change', evt);
+    wrapper.update();
     jest.advanceTimersByTime(300);
     expect(props.validateBookmark).toBeCalled();
+  });
+
+  it('render properly when bookmard is selected', () => {
+    props.recipient.address = '12345L';
+    props.recipient.title = 'John Cena';
+    props.recipient.balance = '10';
+    wrapper = mount(<Bookmark {...props} />, options);
+    expect(wrapper).toContainMatchingElement('AccountVisual');
   });
 
   it('should select an account from the available list', () => {
