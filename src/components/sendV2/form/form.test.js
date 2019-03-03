@@ -47,6 +47,10 @@ describe('Form', () => {
 
   const props = {
     t: v => v,
+    fields: {},
+    prevState: {
+      fields: {},
+    },
     followedAccounts: [
       {
         title: 'ABC',
@@ -78,6 +82,14 @@ describe('Form', () => {
   });
 
   it('should validate bookmark', () => {
+    const evt = { target: { name: 'recipient', value: '123456L' } };
+    wrapper.find('input.recipient').simulate('change', evt);
+    // expect(props.validateBookmark).toBeCalled();
+  });
+
+  it('should validate address', () => {
+    props.followedAccounts = [];
+    wrapper = mount(<Form {...props} />, options);
     const evt = { target: { name: 'recipient', value: '123456L' } };
     wrapper.find('input.recipient').simulate('change', evt);
     // expect(props.validateBookmark).toBeCalled();

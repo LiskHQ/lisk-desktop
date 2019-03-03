@@ -1,0 +1,143 @@
+@import '../../app/variablesV2.css';
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.header {
+  width: 100%;
+  height: 63px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+
+  & > h1 {
+    font-size: var(--subtitle-font-size);
+    font-family: var(--content-font);
+    font-weight: var(--font-weight-bold);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.content {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  & .row {
+    width: 100%;
+    height: 88px;
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border-top: 1px solid rgba(111, 114, 118, 0.1);
+    box-sizing: border-box;
+
+    & > label:first-child {
+      font-size: var(--paragraph-font-size-l);
+      font-family: var(--content-font);
+      font-weight: var(--font-weight-semi-bold);
+      color: var(--color-dark-gray);
+      margin-bottom: 10px;
+    }
+
+    & .account {
+      width: 100%;
+      height: 27px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      box-sizing: border-box;
+
+      & > label {
+        margin-left: 15px;
+      }
+    }
+
+    & .amount {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: flex-end;
+    }
+  }
+}
+
+.information {
+  color: var(--color-content-light);
+  font-size: var(--paragraph-font-size-l);
+  font-weight: var(--font-weight-semi-bold);
+  margin: 0;
+}
+
+.secondText {
+  color: var(--color-dark-gray);
+  font-size: var(--button-font-size-s);
+  font-family: var(--content-font);
+  margin-left: 10px;
+}
+
+.accountSecondText {
+  margin: 5px 0 0 27px;
+}
+
+.amountSecondText {
+  margin-left: 10px;
+}
+
+.footer {
+  width: 100%;
+  min-width: 572px;
+  margin: 36px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+
+  & > .btn {
+    width: 209px;
+  }
+
+  & .feeMessage {
+    width: calc(100% - 440px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    box-sizing: border-box;
+    font-family: var(--content-font);
+    font-size: var(--paragraph-font-size-l);
+
+    & > label {
+      color: var(--color-dark-gray);
+      display: flex;
+      justify-content: center;
+
+      & > img {
+        margin-left: 10px;
+        cursor: pointer;
+      }
+    }
+
+    & > span {
+      color: var(--color-content-light);
+    }
+  }
+}

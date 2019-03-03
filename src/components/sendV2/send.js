@@ -1,6 +1,7 @@
 import React from 'react';
 import MultiStep from './../multiStep';
 import Form from './form';
+import Summary from './summary';
 import { parseSearchParams } from './../../utils/searchParams';
 import styles from './send.css';
 
@@ -8,15 +9,28 @@ class Send extends React.Component {
   constructor(props) {
     super(props);
 
-    this.getSearchParams = this.getSearchParams.bind(this);
+    this.state = {
+      fields: {},
+    };
   }
 
-  getSearchParams() {
-    return parseSearchParams(this.props.history.location.search);
+  componentDidMount() {
+    const { recipient, amount, reference } = parseSearchParams(this.props.history.location.search);
+
+    // istanbul ignore else
+    if (recipient && amount) {
+      this.setState({
+        fields: {
+          recipient: { address: recipient },
+          amount: { value: amount },
+          reference: { value: reference },
+        },
+      });
+    }
   }
 
   render() {
-    const { recipient, amount, reference } = this.getSearchParams();
+    const { fields } = this.state;
 
     return (
       <div className={styles.container}>
@@ -24,12 +38,8 @@ class Send extends React.Component {
           <MultiStep
             key='send'
             className={styles.wrapper}>
-            <Form
-              address={recipient}
-              amount={amount}
-              reference={reference}
-            />
-            <div>this should remove after another component be added</div>
+            <Form fields={fields} />
+            <Summary />
           </MultiStep>
         </div>
       </div>

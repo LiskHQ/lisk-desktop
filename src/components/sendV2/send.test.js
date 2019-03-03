@@ -18,9 +18,14 @@ describe('Form', () => {
         USD: 1,
       },
     },
+    prevState: {
+      fields: {},
+    },
+    fields: {},
     history: {
       location: {
-        search: '',
+        path: '/wallet/sendV2/send',
+        search: '?recipient=16313739661670634666L&amount=10&reference=test',
       },
     },
     followedAccounts: {
@@ -62,6 +67,10 @@ describe('Form', () => {
       },
     },
     t: v => v,
+    prevState: {
+      fields: {},
+    },
+    fields: {},
     followedAccounts: [
       {
         title: 'ABC',
@@ -81,7 +90,8 @@ describe('Form', () => {
     ],
     history: {
       location: {
-        search: '',
+        path: '/wallet/sendV2/send',
+        search: '?recipient=16313739661670634666L&amount=10&reference=test',
       },
     },
   };

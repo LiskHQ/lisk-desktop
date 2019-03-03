@@ -11,6 +11,7 @@ import styles from './form.css';
 import Piwik from '../../../utils/piwik';
 
 class Form extends React.Component {
+  // eslint-disable-next-line max-statements
   constructor(props) {
     super(props);
 
@@ -48,7 +49,46 @@ class Form extends React.Component {
     this.onSelectedAccount = this.onSelectedAccount.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.validateBookmark = this.validateBookmark.bind(this);
+    this.ifDataFromPrevState = this.ifDataFromPrevState.bind(this);
+    this.ifDataFromUrl = this.ifDataFromUrl.bind(this);
     this.onGoNext = this.onGoNext.bind(this);
+  }
+
+  componentDidMount() {
+    this.ifDataFromPrevState();
+    this.ifDataFromUrl();
+  }
+
+  ifDataFromPrevState() {
+    const { prevState } = this.props;
+
+    if (prevState.fields && Object.entries(prevState.fields).length > 0) {
+      this.setState({ fields: { ...prevState.fields } });
+    }
+  }
+
+  ifDataFromUrl() {
+    const { fields = {} } = this.props;
+
+    if (Object.entries(fields).length > 0) {
+      this.setState({
+        fields: {
+          ...this.state.fields,
+          recipient: {
+            ...this.state.fields.recipient,
+            address: fields.recipient.address,
+          },
+          amount: {
+            ...this.state.fields.amount,
+            value: fields.amount.value,
+          },
+          reference: {
+            ...this.state.fields.reference,
+            value: fields.reference.value,
+          },
+        },
+      });
+    }
   }
 
   onInputChange({ target }) {
@@ -217,9 +257,12 @@ class Form extends React.Component {
     this.onInputChange({ target });
   }
 
-  // eslint-disable-next-line class-methods-use-this
+  // istanbul ignore next
   onGoNext() {
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
+    this.props.nextStep({
+      fields: { ...this.state.fields },
+    });
   }
 
   // eslint-disable-next-line complexity

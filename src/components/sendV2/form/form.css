@@ -94,6 +94,7 @@
 
     & > img {
       margin-left: 5px;
+      cursor: pointer;
     }
   }
 
