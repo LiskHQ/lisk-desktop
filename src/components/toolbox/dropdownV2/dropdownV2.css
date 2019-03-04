@@ -44,6 +44,19 @@
       display: block;
     }
   }
+
+  &:global(.showLeft) {
+    right: calc(100% + 5px);
+    transform-origin: calc(100% + 5px) 5px;
+    top: -1px;
+
+    & .dropdownArrow {
+      right: -18px;
+      transform-origin: bottom;
+      transform: rotate(90deg);
+      top: 9px;
+    }
+  }
 }
 
 .optionsHolder {

@@ -64,6 +64,10 @@
 }
 
 .contentWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 200px;
+
   & .monthHeader {
     box-sizing: border-box;
     display: flex;
@@ -134,6 +138,7 @@
 
     &:disabled {
       color: var(--color-dark-gray);
+      opacity: 0.6;
     }
 
     &.monthItem {
@@ -149,6 +154,7 @@
     &.dayItem {
       flex-basis: calc(100% / 7);
       height: 24px;
+      margin: 2px 0;
 
       &::before {
         height: 24px;
@@ -158,8 +164,10 @@
   }
 
   & .itemsContent {
+    align-items: center;
     box-sizing: border-box;
     display: flex;
+    flex-grow: 1;
     flex-wrap: wrap;
   }
 }
