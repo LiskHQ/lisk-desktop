@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import 'moment/min/locales';
 import { validations } from './calendarUtils';
@@ -47,7 +47,7 @@ class YearView extends Component {
     const selectedDate = moment(this.props.selectedDate, dateFormat);
 
     return (
-      <div className={`${!isShown ? styles.hidden : ''}`}>
+      <div className={`${!isShown ? styles.hidden : ''} yearView`}>
         <header className={styles.calendarHeader}>
           <span className={styles.navigationButton} onClick={this.previousYear} />
           <span className={styles.viewName}>{showingDate.format('YYYY')}</span>
@@ -82,6 +82,32 @@ class YearView extends Component {
   }
 }
 
-// YearView.propTypes
+YearView.propTypes = {
+  isShown: PropTypes.bool.isRequired,
+  setCurrentView: PropTypes.func.isRequired,
+  setShowingDate: PropTypes.func.isRequired,
+  selectedDate: PropTypes.string.isRequired,
+  dateFormat: PropTypes.string.isRequired,
+  minDate: PropTypes.string,
+  maxDate: PropTypes.string,
+  locale: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]).isRequired,
+  showingDate: PropTypes.instanceOf(moment).isRequired,
+};
+
+/* istanbul ignore next */
+YearView.defaultProps = {
+  isShown: false,
+  setCurrentView: () => null,
+  setShowingDate: () => null,
+  selectedDate: moment().format('DD.MM.YY'),
+  dateFormat: 'DD.MM.YY',
+  minDate: '',
+  maxDate: '',
+  locale: 'en',
+  showingDate: moment(),
+};
 
 export default YearView;

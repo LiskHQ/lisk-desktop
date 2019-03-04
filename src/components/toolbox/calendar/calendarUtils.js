@@ -7,6 +7,11 @@ const defaultOptions = {
   amount: 'day',
 };
 
+const setLocale = (locale) => {
+  const _locale = Array.isArray(locale) ? [...locale, 'en'] : [locale, 'en'];
+  moment.locale(_locale);
+};
+
 /**
  * Returs if current Date is greater than min Date, based on amount passed on options
  * @param {String|Date} current Value that should be validated
@@ -16,10 +21,10 @@ const defaultOptions = {
  */
 export const canGoToPrevious = (current, min, options = {}) => {
   const _options = { ...defaultOptions, ...options };
-  const locale = Array.isArray(_options.locale) ? [..._options.locale, 'en'] : [_options.locale, 'en'];
-  moment.locale(locale);
+  setLocale(_options.locale);
   const minDate = moment(min, _options.dateFormat).startOf('day');
-  const newDate = moment(current).subtract(1, _options.amount).endOf(_options.amount);
+  const newDate = moment(current, _options.dateFormat)
+    .subtract(1, _options.amount).endOf(_options.amount);
   return !minDate.isValid() || (newDate.isValid() && newDate > minDate);
 };
 
@@ -32,10 +37,10 @@ export const canGoToPrevious = (current, min, options = {}) => {
  */
 export const canGoToNext = (current, max, options = {}) => {
   const _options = { ...defaultOptions, ...options };
-  const locale = Array.isArray(_options.locale) ? [..._options.locale, 'en'] : [_options.locale, 'en'];
-  moment.locale(locale);
+  setLocale(_options.locale);
   const maxDate = moment(max, _options.dateFormat).endOf('day');
-  const newDate = moment(current).add(1, _options.amount).startOf(_options.amount);
+  const newDate = moment(current, _options.dateFormat)
+    .add(1, _options.amount).startOf(_options.amount);
   return !maxDate.isValid() || (newDate.isValid() && newDate < maxDate);
 };
 
@@ -49,8 +54,7 @@ export const canGoToNext = (current, max, options = {}) => {
  */
 export const shouldBeDisabled = (date, min, max, options = {}) => {
   const _options = { ...defaultOptions, ...options };
-  const locale = Array.isArray(_options.locale) ? [..._options.locale, 'en'] : [_options.locale, 'en'];
-  moment.locale(locale);
+  setLocale(_options.locale);
   const minDate = moment(min, _options.dateFormat).startOf('day');
   const maxDate = moment(max, _options.dateFormat).endOf('day');
   const currentDate = moment(date, _options.dateFormat);
@@ -62,15 +66,21 @@ export const shouldBeDisabled = (date, min, max, options = {}) => {
 /**
  * Generate disabled placeholder of days
  * @param {Int} count How many placeholder to add
- * @param {Strong|Date} day Initial date to use
- * @param {*} className className to add to placeholder items
+ * @param {String|Date} day Initial date to use
+ * @param {String} className className to add to placeholder items
+ * @param {Object} options Options to use when parsing date.
+ * - defaults to: {dateFormat: 'DD.MM.YY', locale: ['en']}
  */
-export const generateDayPlaceholder = (count, day, className) =>
-  [...Array(count)].map((_, d) => {
-    const result = <button key={d} disabled={true} className={className}>{day.format('D')}</button>;
-    day.add(1, 'days');
+export const generateDayPlaceholder = (count = 0, day, className = '', options = {}) => {
+  const _options = { ...defaultOptions, ...options };
+  setLocale(_options.locale);
+  const _day = moment(day, _options.dateFormat);
+  return _day.isValid() ? [...Array(count)].map((_, d) => {
+    const result = <button key={d} disabled={true} className={className}>{_day.format('D')}</button>;
+    _day.add(1, 'days');
     return result;
-  });
+  }) : null;
+};
 
 export const validations = {
   canGoToPrevious,
