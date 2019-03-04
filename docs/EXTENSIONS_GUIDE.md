@@ -1,4 +1,5 @@
 # Lisk Hub Extension Guideline
+``` ⚠️ Extension System is only avaliable in development mode ⚠️```
 
 ## How to create a new extension?
 In your extension, you will have access to `React` and `LiskHubExtensions` that allows adding Your extension to specified areas in our code.
