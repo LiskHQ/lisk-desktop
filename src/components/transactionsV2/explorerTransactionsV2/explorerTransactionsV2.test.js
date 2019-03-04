@@ -65,6 +65,7 @@ describe('ExplorerTransactions V2 Component', () => {
       followedAccounts: [],
       count: 1000,
       transactions,
+      transaction: transactions[0],
       searchAccount: spy(),
       searchTransactions: spy(),
       transactionsFilterSet: spy(),
@@ -72,6 +73,11 @@ describe('ExplorerTransactions V2 Component', () => {
       addFilter: spy(),
       loading: [],
       t: key => key,
+      loadLastTransaction: spy(),
+      wallets: {},
+      peers: { options: { code: 0 } },
+      balance: accounts.genesis.balance,
+      anotherAccount: accounts.genesis,
     };
 
     wrapper = mount(<Router>

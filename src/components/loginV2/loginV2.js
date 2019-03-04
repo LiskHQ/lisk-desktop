@@ -192,15 +192,17 @@ class LoginV2 extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, match } = this.props;
     return (
       <React.Fragment>
+        { match.url === routes.loginV2.path ? (
         <HeaderV2
           networkList={this.networks}
           selectedNetwork={this.state.network}
           handleNetworkSelect={this.changeNetwork}
           showSettings={true}
           showNetwork={this.showNetworkOptions()} />
+        ) : null }
         <div className={`${styles.login} ${grid.row}`}>
           <div
             className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}>

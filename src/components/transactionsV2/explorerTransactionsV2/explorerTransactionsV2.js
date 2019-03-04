@@ -1,9 +1,9 @@
 import React from 'react';
-import TransactionsOverviewV2 from '../transactionsOverviewV2';
 import txFilters from '../../../constants/transactionFilters';
 import TransactionsOverviewHeader from '../transactionsOverviewHeader/transactionsOverviewHeader';
 import routes from '../../../constants/routes';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
+import WalletTab from '../../wallet/walletTab';
 
 class ExplorerTransactions extends React.Component {
   // eslint-disable-next-line max-statements
@@ -35,6 +35,8 @@ class ExplorerTransactions extends React.Component {
   }
 
   onInit() {
+    this.props.loadLastTransaction(this.props.address);
+
     this.props.searchAccount({
       address: this.props.address,
     });
@@ -146,9 +148,8 @@ class ExplorerTransactions extends React.Component {
           account={this.props.account}
         />
         <TabsContainer>
-          <TransactionsOverviewV2
-            tabName={'Wallet'}
-            {...overviewProps} />
+          <WalletTab tabName={this.props.t('Wallet')}
+            {...overviewProps}/>
         </TabsContainer>
       </React.Fragment>
     );
