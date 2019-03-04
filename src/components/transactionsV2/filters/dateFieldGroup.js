@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { translate } from 'react-i18next';
+import { firstBlockTime } from '../../../constants/datetime';
 import { getDateTimestampFromFirstBlock, formatInputToDate } from '../../../utils/datetime';
 import { InputV2 } from '../../toolbox/inputsV2';
 import { getInputSelection, setInputSelection } from '../../../utils/selection';
@@ -46,6 +47,10 @@ class DateFieldGroup extends React.Component {
     this.handleClickOutsideDropdown = this.handleClickOutsideDropdown.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.dateSelected = this.dateSelected.bind(this);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleClickOutsideDropdown);
   }
 
   setInputRefs(node) {
@@ -120,7 +125,7 @@ class DateFieldGroup extends React.Component {
 
       if (date.isValid() && getDateTimestampFromFirstBlock(value, this.dateFormat) < 0) {
         feedback = t('Date must be after {{firstBlock}}', {
-          firstBlock: moment(new Date(2016, 4, 24, 17)).format(this.dateFormat),
+          firstBlock: moment(firstBlockTime).format(this.dateFormat),
         });
         error = true;
       }
@@ -206,12 +211,12 @@ class DateFieldGroup extends React.Component {
               onKeyDown={this.handleKey}
               className={`${styles.input} ${fields.dateFrom.error ? 'error' : ''} dateFromInput`} />
               <DropdownV2
-                className={styles.calendarDropdown}
+                className={`showLeft ${styles.calendarDropdown}`}
                 showDropdown={shownDropdown === 'dateFromDropdown'}>
                 <Calendar
                   onDateSelected={date => this.dateSelected(date, 'dateFrom')}
                   dateFormat={this.dateFormat}
-                  minDate={moment(new Date(2016, 4, 24, 17)).format(this.dateFormat)}
+                  minDate={moment(firstBlockTime).format(this.dateFormat)}
                   maxDate={filters.dateTo}
                   date={filters.dateFrom} />
               </DropdownV2>
@@ -233,13 +238,13 @@ class DateFieldGroup extends React.Component {
               onKeyDown={this.handleKey}
               className={`${styles.input} ${fields.dateTo.error ? 'error' : ''} dateToInput`} />
             <DropdownV2
-              className={styles.calendarDropdown}
+              className={`showLeft ${styles.calendarDropdown}`}
               showDropdown={shownDropdown === 'dateToDropdown'}>
             <Calendar
               onDateSelected={date => this.dateSelected(date, 'dateTo')}
               dateFormat={this.dateFormat}
               minDate={filters.dateFrom
-                || moment(new Date(2016, 4, 24, 17)).format(this.dateFormat)}
+                || moment(firstBlockTime).format(this.dateFormat)}
               date={filters.dateTo} />
           </DropdownV2>
           </label>
