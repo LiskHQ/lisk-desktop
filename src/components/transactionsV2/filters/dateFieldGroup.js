@@ -49,6 +49,7 @@ class DateFieldGroup extends React.Component {
     this.dateSelected = this.dateSelected.bind(this);
   }
 
+  /* instanbul ignore next */
   componentWillUnmount() {
     document.removeEventListener('click', this.handleClickOutsideDropdown);
   }
