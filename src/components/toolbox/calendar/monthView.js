@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import 'moment/min/locales';
 import { validations, generateDayPlaceholder } from './calendarUtils';
@@ -23,14 +23,14 @@ class MonthView extends Component {
 
   previousMonth() {
     if (validations.canGoToPrevious(this.props.showingDate, this.props.minDate, this.options)) {
-      const showingDate = moment(this.props.showingDate).subtract(1, 'month');
+      const showingDate = moment(this.props.showingDate, this.props.dateFormat).subtract(1, 'month');
       this.props.setShowingDate(showingDate);
     }
   }
 
   nextMonth() {
     if (validations.canGoToNext(this.props.showingDate, this.props.maxDate, this.options)) {
-      const showingDate = moment(this.props.showingDate).add(1, 'month');
+      const showingDate = moment(this.props.showingDate, this.props.dateFormat).add(1, 'month');
       this.props.setShowingDate(showingDate);
     }
   }
@@ -47,11 +47,11 @@ class MonthView extends Component {
     const { locale, dateFormat, isShown } = this.props;
     moment.locale(locale);
     const selectedDate = moment(this.props.selectedDate, dateFormat);
-    const showingDate = moment(this.props.showingDate).startOf('month');
+    const showingDate = moment(this.props.showingDate, dateFormat).startOf('month');
     const day = moment(showingDate);
 
     return (
-      <div className={`${!isShown ? styles.hidden : ''}`}>
+      <div className={`${!isShown ? styles.hidden : ''} monthView`}>
         <header className={styles.calendarHeader}>
           <span className={styles.navigationButton} onClick={this.previousMonth} />
           <span
@@ -86,7 +86,7 @@ class MonthView extends Component {
                   {day.format('D')}
                 </button>;
             })}
-            { generateDayPlaceholder(6 - day.weekday(), day.add(1, 'days'), `${styles.item} ${styles.dayItem}`) }
+            { generateDayPlaceholder(6 - day.weekday(), moment(day).add(1, 'days'), `${styles.item} ${styles.dayItem}`) }
           </div>
         </div>
       </div>
@@ -94,6 +94,37 @@ class MonthView extends Component {
   }
 }
 
-// YearView.propTypes
+MonthView.propTypes = {
+  isShown: PropTypes.bool.isRequired,
+  setCurrentView: PropTypes.func.isRequired,
+  onDateSelected: PropTypes.func.isRequired,
+  setShowingDate: PropTypes.func.isRequired,
+  selectedDate: PropTypes.string.isRequired,
+  dateFormat: PropTypes.string.isRequired,
+  minDate: PropTypes.string,
+  maxDate: PropTypes.string,
+  locale: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]).isRequired,
+  showingDate: PropTypes.oneOfType([
+    PropTypes.instanceOf(moment).isRequired,
+    PropTypes.string,
+  ]).isRequired,
+};
+
+/* istanbul ignore next */
+MonthView.defaultProps = {
+  isShown: false,
+  setCurrentView: () => null,
+  onDateSelected: () => null,
+  setShowingDate: () => null,
+  selectedDate: moment().format('DD.MM.YY'),
+  dateFormat: 'DD.MM.YY',
+  minDate: '',
+  maxDate: '',
+  locale: 'en',
+  showingDate: moment(),
+};
 
 export default MonthView;
