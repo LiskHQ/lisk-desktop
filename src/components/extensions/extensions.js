@@ -21,11 +21,12 @@ class Extensions extends React.Component {
   }
 
   handleInput(value, key) {
-    const regex = /^(https:\/\/raw.githubusercontent.com\/michaeltomasik\/extensions-lisk\/master\/)/g;
-    let error = '';
-    if (!value.match(regex)) {
-      error = this.props.t('Use extensions from https://raw.githubusercontent.com/michaeltomasik/extensions-lisk/master/');
-    }
+    // const regex = /^(https:\/\/raw.githubusercontent.
+    // com\/michaeltomasik\/extensions-lisk\/master\/)/g;
+    const error = '';
+    // if (!value.match(regex)) {
+    //   error = this.props.t('Use extensions from https://raw.githubusercontent.com/michaeltomasik/extensions-lisk/master/');
+    // }
     this.setState({ [key]: value, error });
   }
 
