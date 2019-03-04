@@ -76,6 +76,10 @@
       align-items: flex-end;
     }
   }
+
+  & .passphrase {
+    height: auto;
+  }
 }
 
 .information {

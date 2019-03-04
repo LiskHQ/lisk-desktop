@@ -9,6 +9,23 @@
 
 .tooltipWrapper {
   position: relative;
+
+  &:global(.showOnTop) {
+    & .tooltip {
+      bottom: calc(100% + 10px);
+      left: 50%;
+      right: auto;
+      transform: translateY(0) scale(1) translateX(-50%);
+      top: auto;
+
+      & .tooltipArrow {
+        bottom: -16px;
+        left: 50%;
+        transform: rotate(-90deg);
+        top: auto;
+      }
+    }
+  }
 }
 
 .infoIcon {
@@ -47,13 +64,17 @@
   top: 50%;
   transform: translateY(-50%) scale(0);
   transform-origin: left center;
-  transition: transform var(--animation-speed-fast) linear, opacity var(--animation-speed-fast) linear;
+  transition:
+    transform var(--animation-speed-fast) linear,
+    visibility var(--animation-speed-fast) linear,
+    opacity var(--animation-speed-fast) linear;
+  visibility: hidden;
   width: 45vw; /* stylelint-disable-line */
   z-index: var(--overlay-index);
 
   & .tooltipArrow {
     color: var(--background-color-tooltip);
-    height: auto;
+    height: 27px;
     left: -var(--tooltip-arrow-size);
     position: absolute;
     top: 50%;
@@ -63,6 +84,7 @@
 
   &.shownTooltip {
     opacity: 1;
+    visibility: visible;
     transform: translateY(-50%) scale(1);
   }
 
