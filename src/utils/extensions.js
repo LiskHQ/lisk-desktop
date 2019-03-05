@@ -5,7 +5,8 @@ import * as Babel from 'babel-standalone';
 import { development } from '../constants/env';
 
 const loadRemoteComponent = url => {
-  if (development) {
+  console.log(PRODUCTION, TEST, development, url);
+  if (!PRODUCTION && !TEST) {
     fetch(url)
       .then(res => res.text())
       .then(source => {
