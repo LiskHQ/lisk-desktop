@@ -45,10 +45,34 @@ describe('DateFieldGroup', () => {
     expect(props.updateCustomFilters).toBeCalledWith(expected);
   });
 
+  describe('Datepicker', () => {
+    it('Should toggle datepicker on click', () => {
+      expect(wrapper.find('.calendarDropdown').first()).not.toContainMatchingElement('.show');
+      wrapper.find('.dropdownWrapper input').first().simulate('click');
+      expect(wrapper.find('.calendarDropdown').first()).toContainMatchingElement('.show');
+      wrapper.find('.dropdownWrapper input').last().simulate('focus');
+      expect(wrapper.find('.calendarDropdown').first()).not.toContainMatchingElement('.show');
+      expect(wrapper.find('.calendarDropdown').last()).toContainMatchingElement('.show');
+    });
+
+    it('Should handle selectDate on datepicker', () => {
+      const newProps = {
+        ...props,
+        filter: {
+          ...props.filters,
+          dateFrom: '11.03.19',
+        },
+      };
+      wrapper = mount(<DateFieldGroup {...newProps}/>, options);
+      wrapper.find('.dropdownWrapper input').first().simulate('click');
+      wrapper.find('Calendar .dayItem').filter('[value="12.03.19"]').first().simulate('click', { target: { value: '12.03.19' } });
+      expect(props.updateCustomFilters).toBeCalled();
+    });
+  });
+
   describe('Error handling', () => {
     it('Should handle dateFrom greater than dateTo', () => {
-      wrapper.find('.dateFromInput input').simulate('change', { target: { name: 'dateFrom', value: '13.12.16' } });
-      wrapper.setProps({ filters: { dateFrom: '13.12.16' } });
+      wrapper.setProps({ filters: { dateFrom: '13.12.16', dateTo: '12.12.16' } });
       wrapper.find('.dateToInput input').simulate('change', { target: { name: 'dateTo', value: '12.12.16' } });
       expect(wrapper).toContainMatchingElements(2, '.error input');
       expect(wrapper).toContainMatchingElement('.feedback.show');

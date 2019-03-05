@@ -17,6 +17,9 @@ import networks from '../../constants/networks';
 import settings from '../../constants/settings';
 import txFilters from '../../constants/transactionFilters';
 
+import { setWalletsLastBalance } from '../../actions/wallets';
+import { setWalletsInLocalStorage } from '../../utils/wallets';
+
 const { lockDuration } = accountConfig;
 
 const updateAccountData = (store, action) => {
@@ -144,12 +147,14 @@ const accountMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
     case actionTypes.storeCreated:
+      store.dispatch(setWalletsLastBalance());
       autoLogInIfNecessary(store, next, action);
       break;
     // update on login because the 'save account' button
     // depends on a rerendering of the page
     // TODO: fix the 'save account' path problem, so we can remove this
     case actionTypes.accountLoggedIn:
+      store.dispatch(setWalletsLastBalance());
       updateAccountData(store, action);
       break;
     case actionTypes.newBlockCreated:
@@ -163,6 +168,7 @@ const accountMiddleware = store => next => (action) => {
       passphraseUsed(store, action);
       break;
     case actionTypes.accountLoggedOut:
+      setWalletsInLocalStorage(store.getState().wallets);
       store.dispatch(cleanTransactions());
       localStorage.removeItem('accounts');
       localStorage.removeItem('isHarwareWalletConnected');

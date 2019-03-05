@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
+import { loadLastTransaction } from '../../../actions/transactions';
 import { searchTransactions, searchMoreTransactions, searchAccount, searchMoreVoters } from '../../../actions/search';
 import actionTypes from '../../../constants/actions';
 import ExplorerTransactionsV2 from './explorerTransactionsV2';
@@ -24,6 +25,11 @@ const mapStateToProps = (state, ownProps) => ({
   loading: state.loading,
   account: state.account,
   followedAccounts: state.followedAccounts.accounts,
+  wallets: state.wallets,
+  peers: state.peers,
+  detailAccount: state.search.accounts[state.search.lastSearch],
+  balance: state.search.accounts[state.search.lastSearch]
+    && state.search.accounts[state.search.lastSearch].balance,
 });
 
 /* istanbul ignore next */
@@ -34,6 +40,7 @@ const mapDispatchToProps = {
   addFilter: data => ({ type: actionTypes.addFilter, data }),
   searchUpdateLast: data => ({ data, type: actionTypes.searchUpdateLast }),
   searchMoreVoters,
+  loadLastTransaction,
 };
 
 export default withRouter(connect(

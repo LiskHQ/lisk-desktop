@@ -87,7 +87,7 @@ describe('BookmarkV2', () => {
     wrapper.find('InputV2.input').simulate('keyDown', { keyCode: keyCodes.arrowDown });
     wrapper.find('InputV2.input').simulate('keyDown', { keyCode: keyCodes.arrowUp });
     wrapper.find('InputV2.input').simulate('keyDown', { keyCode: keyCodes.enter });
-    wrapper.find('.bookmark-0').simulate('click');
+    wrapper.find('.bookmark-list li').at(0).simulate('click');
     expect(props.onSelectedAccount).toBeCalled();
   });
 });
