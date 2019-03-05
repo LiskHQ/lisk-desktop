@@ -112,16 +112,4 @@ describe('ExplorerTransactions Component', () => {
     expect(renderedExplorerTransactions).to.be.present();
     expect(wrapper).to.have.exactly(1).descendants('.transactions-row');
   });
-
-  it('allows to view details of a transaction and cachees last searched account transactions', () => {
-    /* eslint-disable no-unused-expressions */
-    expect(wrapper).to.have.exactly(1).descendants('.transactions-row');
-    wrapper.find('.transactions-row').simulate('click');
-    wrapper.update();
-    const transactionDetailsBackBtn = wrapper.find('.transaction-details-back-button').first();
-    expect(transactionDetailsBackBtn).to.be.present();
-    transactionDetailsBackBtn.simulate('click');
-    expect(wrapper).to.have.exactly(1).descendants('.transactions-row');
-    /* eslint-enable no-unused-expressions */
-  });
 });

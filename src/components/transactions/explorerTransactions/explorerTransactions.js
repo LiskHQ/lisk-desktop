@@ -1,8 +1,6 @@
 import React from 'react';
-import MultiStep from './../../multiStep';
 import styles from './../transactions.css';
 import TransactionsOverview from '../transactionsOverview';
-import TransactionDetailView from './../transactionDetailView';
 import Box from './../../box';
 import txFilters from './../../../constants/transactionFilters';
 import routes from './../../../constants/routes';
@@ -61,9 +59,8 @@ class ExplorerTransactions extends React.Component {
   }
 
   onTransactionRowClick(props) {
-    const explorerBasePath = `${routes.accounts.pathPrefix}${routes.accounts.path}`;
-    const accountPath = `${explorerBasePath}/${this.props.address}`;
-    const transactionDetailPath = `${accountPath}?id=${props.value.id}`;
+    const explorerBasePath = `${routes.transactions.pathPrefix}${routes.transactions.path}`;
+    const transactionDetailPath = `${explorerBasePath}/${props.value.id}`;
     this.props.history.push(transactionDetailPath);
   }
 
@@ -78,11 +75,8 @@ class ExplorerTransactions extends React.Component {
     };
 
     return (
-      <Box className={styles.wrapper}>
-        <MultiStep className={styles.transactions}>
-          <TransactionsOverview {...overviewProps} />
-          <TransactionDetailView {...this.props} />
-        </MultiStep>
+      <Box className={`${styles.wrapper} ${styles.transactions}`}>
+        <TransactionsOverview {...overviewProps} />
       </Box>
     );
   }

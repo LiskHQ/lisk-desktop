@@ -78,6 +78,7 @@ const actionTypes = {
   addPriceTicker: 'ADD_PRICE_TICKER',
   cleanTransactions: 'CLEAN_TRANSACTIONS',
   moduleAdded: 'MODULE_ADDED',
+  walletUpdated: 'WALLET_UPDATED',
 };
 
 export default actionTypes;

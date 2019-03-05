@@ -1,32 +1,42 @@
 import React from 'react';
-import TransactionsOverviewV2 from '../transactionsOverviewV2';
 import txFilters from '../../../constants/transactionFilters';
 import TransactionsOverviewHeader from '../transactionsOverviewHeader/transactionsOverviewHeader';
 import routes from '../../../constants/routes';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
+import WalletTab from '../../wallet/walletTab';
 
 class ExplorerTransactions extends React.Component {
+  // eslint-disable-next-line max-statements
   constructor() {
     super();
 
     this.state = {
       filter: {},
-      customFilters: {},
+      customFilters: {
+        dateFrom: '',
+        dateTo: '',
+        amountFrom: '',
+        amountTo: '',
+        message: '',
+      },
+      activeCustomFilters: {},
     };
 
     this.saveFilters = this.saveFilters.bind(this);
     this.clearFilter = this.clearFilter.bind(this);
     this.clearAllFilters = this.clearAllFilters.bind(this);
-    this.changeFilters = this.changeFilters.bind(this);
     this.onInit = this.onInit.bind(this);
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onFilterSet = this.onFilterSet.bind(this);
     this.onTransactionRowClick = this.onTransactionRowClick.bind(this);
+    this.updateCustomFilters = this.updateCustomFilters.bind(this);
     // searchMoreVoters will be used when adding delegate and votes tab
     // this.searchMoreVoters = this.searchMoreVoters.bind(this);
   }
 
   onInit() {
+    this.props.loadLastTransaction(this.props.address);
+
     this.props.searchAccount({
       address: this.props.address,
     });
@@ -57,7 +67,7 @@ class ExplorerTransactions extends React.Component {
       limit: 30,
       offset: this.props.offset,
       filter: this.props.activeFilter,
-      customFilters: this.state.customFilters,
+      customFilters: this.state.activeCustomFilters,
     });
   }
   /*
@@ -70,7 +80,7 @@ class ExplorerTransactions extends React.Component {
       address: this.props.address,
       limit: 30,
       filter,
-      customFilters: this.state.customFilters,
+      customFilters: this.state.activeCustomFilters,
     });
   }
 
@@ -87,25 +97,26 @@ class ExplorerTransactions extends React.Component {
       filter: this.props.activeFilter,
       customFilters,
     });
-    this.setState({ customFilters });
+    this.setState({ activeCustomFilters: customFilters, customFilters });
   }
 
   /* istanbul ignore next */
   clearFilter(filterName) {
     this.saveFilters({
-      ...this.state.customFilters,
+      ...this.state.activeCustomFilters,
       [filterName]: '',
     });
   }
 
   /* istanbul ignore next */
   clearAllFilters() {
-    this.saveFilters({});
+    const customFilters = Object.keys(this.state.customFilters).reduce((acc, key) => ({ ...acc, [key]: '' }), {});
+    this.saveFilters(customFilters);
   }
 
   /* istanbul ignore next */
-  changeFilters(name, value) {
-    this.setState({ customFilters: { ...this.state.customFilters, [name]: value } });
+  updateCustomFilters(customFilters) {
+    this.setState({ customFilters });
   }
 
   render() {
@@ -119,8 +130,9 @@ class ExplorerTransactions extends React.Component {
       saveFilters: this.saveFilters,
       clearFilter: this.clearFilter,
       clearAllFilters: this.clearAllFilters,
-      changeFilters: this.changeFilters,
+      activeCustomFilters: this.state.activeCustomFilters,
       customFilters: this.state.customFilters,
+      updateCustomFilters: this.updateCustomFilters,
       // searchMoreVoters will be used when adding delegate and votes tab
       // searchMoreVoters: this.searchMoreVoters,
     };
@@ -136,9 +148,8 @@ class ExplorerTransactions extends React.Component {
           account={this.props.account}
         />
         <TabsContainer>
-          <TransactionsOverviewV2
-            tabName={'Wallet'}
-            {...overviewProps} />
+          <WalletTab tabName={this.props.t('Wallet')}
+            {...overviewProps}/>
         </TabsContainer>
       </React.Fragment>
     );

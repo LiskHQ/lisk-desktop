@@ -4,7 +4,7 @@ import styles from './transactionsV2.css';
 import LiskAmount from '../liskAmount';
 import transactionTypes from '../../constants/transactionTypes';
 
-const AmountV2 = (props) => {
+const AmountV2 = ({ className = '', ...props }) => {
   const params = {
     pos: props.t('LSK'),
     pre: '',
@@ -18,8 +18,13 @@ const AmountV2 = (props) => {
     params.pre = '-';
   }
   const amount = props.value.type !== transactionTypes.send ? '-' : <LiskAmount val={props.value.amount} />;
-  return <span className={`${styles.amountLabel} ${styles[params.className]} transactionAmount`}>
-    { params.pre }{amount}{ amount !== '-' && ` ${params.pos}` }
+  return <span className={`${styles.amountLabel} ${styles[params.className]} ${className} transactionAmount`}>
+    <span className={'amount'}>
+      { params.pre }{amount}
+    </span>
+    <span className={'currency'}>
+      { amount !== '-' && ` ${params.pos}` }
+    </span>
   </span>;
 };
 export default translate()(AmountV2);

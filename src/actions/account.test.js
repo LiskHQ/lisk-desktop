@@ -316,7 +316,7 @@ describe('actions: account', () => {
       getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
       transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
       getState = () => ({
-        peers: { liskAPIClient: {} },
+        peers: { liskAPIClient: {}, options: { code: 0 } },
       });
     });
 
@@ -342,7 +342,7 @@ describe('actions: account', () => {
       };
 
       accountDataUpdated(data)(dispatch, getState);
-      expect(dispatch).to.have.callCount(3);
+      expect(dispatch).to.have.callCount(4);
       expect(peersActionsStub).to.have.not.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
     });
 
