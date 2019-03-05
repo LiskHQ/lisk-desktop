@@ -23,8 +23,8 @@ describe('MessageFieldGroup', () => {
     wrapper = mount(<MessageFieldGroup {...props} />, options);
   });
 
-  it('Should render only one input', () => {
-    expect(wrapper).toContainMatchingElements(1, 'input');
+  it('Should render only one textarea', () => {
+    expect(wrapper).toContainExactlyOneMatchingElement('textarea');
   });
 
   it('Should call updateCustomFilters onChange', () => {
@@ -35,15 +35,15 @@ describe('MessageFieldGroup', () => {
         value,
       },
     };
-    wrapper.find('input').simulate('change', { target: { name: 'message', value } });
+    wrapper.find('textarea').simulate('change', { target: { name: 'message', value } });
     expect(props.updateCustomFilters).toBeCalledWith(expected);
   });
 
   describe('Error handling', () => {
     it('Should show error if message too long', () => {
       const value = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.';
-      wrapper.find('input').simulate('change', { target: { name: 'message', value } });
-      expect(wrapper).toContainMatchingElement('.error input');
+      wrapper.find('textarea').simulate('change', { target: { name: 'message', value } });
+      expect(wrapper).toContainMatchingElement('.error textarea');
       expect(wrapper).toContainMatchingElement('.feedback.show');
     });
   });

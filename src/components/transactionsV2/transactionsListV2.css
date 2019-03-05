@@ -18,7 +18,7 @@
   flex-direction: column;
   flex-grow: 1;
   margin: 0;
-  overflow-y: initial;
+  overflow: hidden;
   position: relative;
 
   &.hasMore {

@@ -27,6 +27,11 @@ class filterContainer extends React.Component {
     this.saveFilters = this.saveFilters.bind(this);
   }
 
+  componentWillUnmount() {
+    /* istanbul ignore next */
+    document.removeEventListener('click', this.handleClickOutside, false);
+  }
+
   updateCustomFilters(fields) {
     const { customFilters } = this.props;
     let hasErrors = false;
