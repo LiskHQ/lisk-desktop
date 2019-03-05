@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './dropdownV2.css';
 
 const DropdownV2 = ({ children, showDropdown, className }) => (
@@ -15,5 +16,19 @@ const DropdownV2 = ({ children, showDropdown, className }) => (
     </div>
   </div>
 );
+
+DropdownV2.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]).isRequired,
+  showDropdown: PropTypes.bool.isRequired,
+  className: PropTypes.string.isRequired,
+};
+
+DropdownV2.defaultProps = {
+  showDropdown: false,
+  className: '',
+};
 
 export default DropdownV2;

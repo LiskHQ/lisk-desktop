@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { firstBlockTime } from '../constants/datetime';
 
 /**
  * Considers time
@@ -8,7 +9,7 @@ import moment from 'moment';
  */
 export const getTimestampFromFirstBlock = (value, format, options = { inclusive: false }) => {
   const timestamp = options.inclusive ? moment(value, format).endOf('day').format('x') : moment(value, format).format('x');
-  return Math.floor((timestamp - moment(new Date.UTC(2016, 4, 24, 17, 0, 0, 0)).format('x')) / 1000);
+  return Math.floor((timestamp - moment(firstBlockTime).format('x')) / 1000);
 };
 
 /**
@@ -26,7 +27,7 @@ export const getUnixTimestampFromFirstBlock = value =>
  * @returns {Number} - Timestamp from first block
  */
 export const getDateTimestampFromFirstBlock = (value, format) =>
-  (moment(value, format).format('x') - moment(new Date.UTC(2016, 4, 24)).format('x')) / 1000;
+  (moment(value, format).format('x') - moment(firstBlockTime).startOf('day').format('x')) / 1000
 
 /**
  * Function to format an input to Date format 99.99.99
@@ -52,4 +53,5 @@ export default {
   getTimestampFromFirstBlock,
   getDateTimestampFromFirstBlock,
   formatInputToDate,
+  firstBlockTime,
 };

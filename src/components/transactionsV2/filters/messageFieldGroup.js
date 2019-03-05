@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import { InputV2 } from '../../toolbox/inputsV2';
+import { AutoresizeTextarea } from '../../toolbox/inputsV2';
 import styles from './filters.css';
 
 class MessageFieldGroup extends React.Component {
@@ -52,7 +52,7 @@ class MessageFieldGroup extends React.Component {
       <label className={`${styles.fieldGroup} message-field`}>
         <span className={styles.fieldLabel}>{t('Message')}</span>
         <div className={styles.fieldRow}>
-          <InputV2
+          <AutoresizeTextarea
             autoComplete={'off'}
             onChange={this.handleFieldChange}
             name='message'
