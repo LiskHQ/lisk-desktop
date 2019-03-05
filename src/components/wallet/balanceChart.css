@@ -1,0 +1,18 @@
+@import '../app/variablesV2.css';
+
+.wrapper {
+  display: flex;
+  height: 330px;
+  margin-bottom: 12px;
+  overflow: initial;
+  padding: 0;
+}
+
+.content {
+  flex-grow: 1;
+  position: relative;
+
+  & .tooltip {
+    position: absolute;
+  }
+}
