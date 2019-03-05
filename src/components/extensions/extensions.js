@@ -27,6 +27,7 @@ class Extensions extends React.Component {
     // if (!value.match(regex)) {
     //   error = this.props.t('Use extensions from https://raw.githubusercontent.com/michaeltomasik/extensions-lisk/master/');
     // }
+
     this.setState({ [key]: value, error });
   }
 
@@ -82,7 +83,8 @@ class Extensions extends React.Component {
               onClick={() => this.removeExtension()} />
 
             <PrimaryButtonV2
-              disabled={this.state.error}
+              disabled={this.state.error !== '' ||
+                this.state.url === localJSONStorage.get('url', '')}
               label={this.props.t('Add Extension')}
               onClick={() => this.addExtension()} />
           </div>
