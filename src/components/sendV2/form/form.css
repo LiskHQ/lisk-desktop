@@ -10,8 +10,8 @@
   max-width: 443px;
   height: auto;
   background-color: var(--color-white);
-  box-shadow: 0 1px 5px 0 rgba(30, 25, 77, 0.12);
-  border-radius: 6px;
+  box-shadow: var(--box-shadow-standar2);
+  border-radius: var(--border-radius-box);
 }
 
 .header {
@@ -29,10 +29,7 @@
     font-family: var(--heading-font);
     font-size: var(--font-size-title);
     font-weight: var(--font-weight-bold);
-    font-style: normal;
-    font-stretch: normal;
     line-height: 0.83;
-    letter-spacing: normal;
     margin: 5px 0 0;
   }
 }
@@ -94,6 +91,7 @@
 
     & > img {
       margin-left: 5px;
+      cursor: pointer;
     }
   }
 

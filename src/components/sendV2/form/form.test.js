@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import i18n from '../../../i18n';
+import accounts from '../../../../test/constants/accounts';
 import Form from './form';
 
 describe('Form', () => {
@@ -47,6 +48,13 @@ describe('Form', () => {
 
   const props = {
     t: v => v,
+    fields: {},
+    prevState: {
+      fields: {},
+    },
+    account: {
+      balance: accounts.genesis.balance,
+    },
     followedAccounts: [
       {
         title: 'ABC',
@@ -80,7 +88,15 @@ describe('Form', () => {
   it('should validate bookmark', () => {
     const evt = { target: { name: 'recipient', value: '123456L' } };
     wrapper.find('input.recipient').simulate('change', evt);
-    // expect(props.validateBookmark).toBeCalled();
+    expect(wrapper.find('.fieldGroup').at(0)).not.toHaveClassName('error');
+  });
+
+  it('should validate address', () => {
+    props.followedAccounts = [];
+    wrapper = mount(<Form {...props} />, options);
+    const evt = { target: { name: 'recipient', value: '123456L' } };
+    wrapper.find('input.recipient').simulate('change', evt);
+    expect(wrapper.find('.fieldGroup').at(0)).not.toHaveClassName('error');
   });
 
   describe('Amount field', () => {
@@ -156,7 +172,7 @@ describe('Form', () => {
     });
 
     it('Should show error feedback over limit of characters', () => {
-      const referenceField = wrapper.find('.fieldGroup').at(2);
+      let referenceField = wrapper.find('.fieldGroup').at(2);
       const evt = {
         target: {
           name: 'reference',
@@ -164,9 +180,10 @@ describe('Form', () => {
         },
       };
       referenceField.find('AutoresizeTextarea').simulate('change', evt);
+      jest.advanceTimersByTime(300);
       wrapper.update();
-      // expect(referenceField.find('.feedback')).toHaveClassName('show');
-      // expect(referenceField.find('.feedback')).toHaveClassName('error');
+      referenceField = wrapper.find('.fieldGroup').at(2);
+      expect(referenceField.find('.feedback')).toHaveClassName('show error');
     });
   });
 });

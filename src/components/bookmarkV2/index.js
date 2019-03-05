@@ -20,8 +20,7 @@ class Bookmark extends React.Component {
 
     this.onHandleKeyPress = this.onHandleKeyPress.bind(this);
     this.getFilterList = this.getFilterList.bind(this);
-    this.onKeyPressDown = this.onKeyPressDown.bind(this);
-    this.onKeyPressUp = this.onKeyPressUp.bind(this);
+    this.onKeyPressDownOrUp = this.onKeyPressDownOrUp.bind(this);
     this.onKeyPressEnter = this.onKeyPressEnter.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSelectedAccount = this.onSelectedAccount.bind(this);
@@ -41,17 +40,16 @@ class Bookmark extends React.Component {
     this.props.onSelectedAccount(account);
   }
 
-  onKeyPressDown() {
+  onKeyPressDownOrUp(action) {
+    const { dropdownIndex } = this.state;
     const accountsLength = this.getFilterList().length;
-    const { dropdownIndex } = this.state;
-    // istanbul ignore else
-    if (dropdownIndex < accountsLength - 1) this.setState({ dropdownIndex: dropdownIndex + 1 });
-  }
 
-  onKeyPressUp() {
-    const { dropdownIndex } = this.state;
     // istanbul ignore else
-    if (dropdownIndex > 0) this.setState({ dropdownIndex: this.state.dropdownIndex - 1 });
+    if (action === 'down' && dropdownIndex < accountsLength - 1) this.setState({ dropdownIndex: dropdownIndex + 1 });
+
+
+    // istanbul ignore else
+    if (action === 'up' && dropdownIndex > 0) this.setState({ dropdownIndex: this.state.dropdownIndex - 1 });
   }
 
   onKeyPressEnter() {
@@ -65,10 +63,10 @@ class Bookmark extends React.Component {
     if (this.props.showSuggestions) {
       switch (e.keyCode) {
         case keyCodes.arrowDown:
-          this.onKeyPressDown();
+          this.onKeyPressDownOrUp('down');
           break;
         case keyCodes.arrowUp:
-          this.onKeyPressUp();
+          this.onKeyPressDownOrUp('up');
           break;
         case keyCodes.enter:
           this.onKeyPressEnter();
@@ -118,7 +116,7 @@ class Bookmark extends React.Component {
           }
           <InputV2
             autoComplete={'off'}
-            className={`${styles.input} ${recipient.error ? 'error' : ''} ${showAccountVisual ? styles.moveTextToRight : null} recipient bookmark`}
+            className={`${styles.input} ${recipient.error ? 'error' : ''} ${showAccountVisual ? styles.moveTextToRight : ''} recipient bookmark`}
             name={'recipient'}
             value={selectedAccount}
             placeholder={placeholder}
@@ -140,7 +138,7 @@ class Bookmark extends React.Component {
                       <li
                         key={index}
                         onClick={() => this.onSelectedAccount(account)}
-                        className={`${dropdownIndex === index ? styles.active : ''} bookmark-${index}`}>
+                        className={`${dropdownIndex === index ? styles.active : ''}`}>
                         <AccountVisual address={account.address} size={25} />
                         <span>{account.title}</span>
                         <span>{account.address}</span>
