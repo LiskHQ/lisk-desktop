@@ -2,12 +2,13 @@ import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import localJSONStorage from '../../../utils/localJSONStorage';
-import TransactionsOverviewV2 from '../transactionsOverviewV2';
 import txFilters from '../../../constants/transactionFilters';
 import Banner from '../../toolbox/banner/banner';
 import TransactionsOverviewHeader from '../transactionsOverviewHeader/transactionsOverviewHeader';
 import routes from '../../../constants/routes';
 import styles from './walletTransactionsV2.css';
+import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
+import WalletTab from '../../wallet/walletTab';
 
 class WalletTransactionsV2 extends React.Component {
   // eslint-disable-next-line max-statements
@@ -48,6 +49,8 @@ class WalletTransactionsV2 extends React.Component {
   }
 
   onInit() {
+    this.props.loadLastTransaction(this.props.account.address);
+
     this.props.transactionsFilterSet({
       address: this.props.account.address,
       limit: 30,
@@ -158,6 +161,8 @@ class WalletTransactionsV2 extends React.Component {
       saveFilters: this.saveFilters,
       clearFilter: this.clearFilter,
       clearAllFilters: this.clearAllFilters,
+      changeFilters: this.changeFilters,
+      detailAccount: this.props.account,
       updateCustomFilters: this.updateCustomFilters,
     };
 
@@ -191,7 +196,11 @@ class WalletTransactionsV2 extends React.Component {
             <p>{t('You can find the LSK token on all of the worlds top exchanges and send them to your unique Lisk address:')}</p>
           </Banner> : null
         }
-        <TransactionsOverviewV2 {...overviewProps} />
+
+        <TabsContainer>
+          <WalletTab tabName={this.props.t('Wallet')}
+            {...overviewProps}/>
+        </TabsContainer>
       </React.Fragment>
     );
   }

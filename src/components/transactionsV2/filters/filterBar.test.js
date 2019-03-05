@@ -7,13 +7,12 @@ describe('FilterBar', () => {
   const props = {
     clearFilter: jest.fn(),
     clearAllFilters: jest.fn(),
-    saveFilters: jest.fn(),
     t: v => v,
     customFilters: {
-      dateFrom: '',
-      dateTo: '12-12-12',
-      amountFrom: '',
-      amountTo: '',
+      dateFrom: '11.12.16',
+      dateTo: '12.12.16',
+      amountFrom: '0.6',
+      amountTo: '1',
       message: 'test',
     },
   };
@@ -22,14 +21,14 @@ describe('FilterBar', () => {
     wrapper = shallow(<FilterBar {...props} />);
   });
 
-  it('Shows 2 filters and clearAll', () => {
-    expect(wrapper).toContainMatchingElements(2, '.filter');
+  it('Shows 5 filters and clearAll', () => {
+    expect(wrapper).toContainMatchingElements(5, '.filter');
     expect(wrapper).toContainMatchingElement('.clearAllButton');
   });
 
   it('Call clearFilter on clearFilter click', () => {
     wrapper.find('.clearBtn').first().simulate('click');
-    expect(props.clearFilter).toBeCalledWith('dateTo');
+    expect(props.clearFilter).toBeCalledWith('dateFrom');
   });
 
   it('Call clearAllFilters on clearAll click', () => {

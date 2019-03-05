@@ -40,8 +40,13 @@ describe('LoginV2', () => {
     replace: spy(),
   };
 
+  const match = {
+    url: routes.loginV2.path,
+  };
+
   const props = {
     peers,
+    match,
     account,
     history,
     accountsRetrieved: spy(),
@@ -123,6 +128,15 @@ describe('LoginV2', () => {
       expect(wrapper).to.have.exactly(1).descendants('.hardwareHolder');
       wrapper.find('.hardwareWalletLink').simulate('click');
       expect(props.history.push).to.have.been.calledWith(`${routes.hwWallet.path}`);
+    });
+
+    it('Should not render header if route is not /login', () => {
+      wrapper.setProps({
+        children: React.cloneElement(wrapper.props().children, {
+          match: { url: routes.addAccount.path },
+        }),
+      });
+      expect(wrapper).to.not.have.descendants('HeaderV2');
     });
   });
 
