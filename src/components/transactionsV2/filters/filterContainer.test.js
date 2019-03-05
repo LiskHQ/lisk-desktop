@@ -27,7 +27,7 @@ describe('filterContainer', () => {
   });
 
   it('should call saveFilters', () => {
-    wrapper.find('.message-field input').simulate('change', { target: { name: 'message', value: 'test' } });
+    wrapper.find('.message-field textarea').simulate('change', { target: { name: 'message', value: 'test' } });
     expect(props.updateCustomFilters).toBeCalledWith({ message: 'test' });
     wrapper.find(PrimaryButtonV2).simulate('click');
     expect(props.saveFilters).toBeCalled();
@@ -42,7 +42,7 @@ describe('filterContainer', () => {
   });
 
   it('should call saveFilters on enter pressed', () => {
-    wrapper.find('.message-field input').simulate('keyDown', { keyCode: keyCodes.enter });
+    wrapper.find('.message-field textarea').simulate('keyDown', { keyCode: keyCodes.enter });
     expect(props.saveFilters).toBeCalled();
   });
 });

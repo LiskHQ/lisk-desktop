@@ -28,10 +28,15 @@
       margin: 0 15px;
     }
 
+    & textarea {
+      overflow: hidden;
+    }
+
     & .input {
       font-size: var(--button-font-size-s);
       height: 36px;
       line-height: 1.83;
+      resize: none;
     }
   }
 
@@ -52,6 +57,23 @@
     &.show {
       max-height: 100%;
       opacity: 1;
+    }
+  }
+}
+
+.dropdownWrapper {
+  position: relative;
+  width: 100%;
+
+  & .calendarDropdown {
+    padding: 16px;
+    right: calc(100% + 15px);
+    top: -110px;
+    transform-origin: calc(100% + 9px) 50%;
+    width: auto;
+
+    & :global(.dropdown-arrow) {
+      top: calc(50% - 18px);
     }
   }
 }
