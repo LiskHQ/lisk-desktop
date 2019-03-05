@@ -18,6 +18,7 @@ class YearView extends Component {
     this.nextYear = this.nextYear.bind(this);
     this.previousYear = this.previousYear.bind(this);
     this.selectMonth = this.selectMonth.bind(this);
+    this.generateMonths = this.generateMonths.bind(this);
   }
 
   previousYear() {
@@ -40,11 +41,31 @@ class YearView extends Component {
     this.props.setShowingDate(showingDate);
   }
 
+  generateMonths(month) {
+    const { dateFormat, minDate, maxDate } = this.props;
+    const selectedDate = moment(this.props.selectedDate, dateFormat);
+    const showingDate = moment(this.props.showingDate, dateFormat);
+    const options = { ...this.options, amount: 'month' };
+    const day = moment(showingDate).month(month);
+    const selected = selectedDate.isValid()
+      && day.format('MM.YYYY') === selectedDate.format('MM.YYYY');
+    const isDisabled = validations
+      .shouldBeDisabled(day, minDate, maxDate, options);
+    return (
+      <button key={`button-${day.format('MM.YYYY')}`}
+        disabled={isDisabled}
+        value={month}
+        onClick={this.selectMonth}
+        className={`${styles.item} ${styles.monthItem} ${selected ? styles.selected : ''}`}>
+          {month}
+      </button>
+    );
+  }
+
   render() {
     const { locale, dateFormat, isShown } = this.props;
     moment.locale(locale);
     const showingDate = moment(this.props.showingDate, dateFormat);
-    const selectedDate = moment(this.props.selectedDate, dateFormat);
 
     return (
       <div className={`${!isShown ? styles.hidden : ''} yearView`}>
@@ -55,26 +76,9 @@ class YearView extends Component {
         </header>
         <div className={styles.contentWrapper}>
           <div className={styles.itemsContent}>
-            {moment.monthsShort(true).map((month, key) => {
-              const options = {
-                ...this.options,
-                amount: 'month',
-              };
-              const day = moment(showingDate).month(month);
-              const selected = selectedDate.isValid()
-                && day.format('MM.YYYY') === selectedDate.format('MM.YYYY');
-              const isDisabled = validations
-                .shouldBeDisabled(day, this.props.minDate, this.props.maxDate, options);
-              return (
-                <button key={key}
-                  disabled={isDisabled}
-                  value={month}
-                  onClick={this.selectMonth}
-                  className={`${styles.item} ${styles.monthItem} ${selected ? styles.selected : ''}`}>
-                    {month}
-                </button>
-              );
-            })}
+
+            {moment.monthsShort(true).map(this.generateMonths)}
+
           </div>
         </div>
       </div>

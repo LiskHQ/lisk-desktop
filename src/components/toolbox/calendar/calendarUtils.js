@@ -76,7 +76,9 @@ export const generateDayPlaceholder = (count = 0, day, className = '', options =
   setLocale(_options.locale);
   const _day = moment(day, _options.dateFormat);
   return _day.isValid() ? [...Array(count)].map((_, d) => {
-    const result = <button key={d} disabled={true} className={className}>{_day.format('D')}</button>;
+    const result = <button key={`button-${d}`} disabled={true} className={className}>
+      {_day.format('D')}
+    </button>;
     _day.add(1, 'days');
     return result;
   }) : null;

@@ -28,6 +28,10 @@
       margin: 0 15px;
     }
 
+    & textarea {
+      overflow: hidden;
+    }
+
     & .input {
       font-size: var(--button-font-size-s);
       height: 36px;

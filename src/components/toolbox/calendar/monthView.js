@@ -19,6 +19,7 @@ class MonthView extends Component {
     this.previousMonth = this.previousMonth.bind(this);
     this.showYearView = this.showYearView.bind(this);
     this.handleSelectDate = this.handleSelectDate.bind(this);
+    this.generateDays = this.generateDays.bind(this);
   }
 
   previousMonth() {
@@ -43,12 +44,29 @@ class MonthView extends Component {
     this.props.onDateSelected(target.value);
   }
 
+  generateDays(_, d) {
+    const { dateFormat, minDate, maxDate } = this.props;
+    const options = { ...this.options, amount: 'day' };
+    const selectedDate = moment(this.props.selectedDate, dateFormat);
+    const day = moment(this.props.showingDate, dateFormat).date(d + 1);
+    const selected = selectedDate.isValid()
+      && day.format(dateFormat) === selectedDate.format(dateFormat);
+    const isDisabled = validations.shouldBeDisabled(day, minDate, maxDate, options);
+
+    return <button key={`button-${day.format(dateFormat)}`}
+      onClick={this.handleSelectDate}
+      value={day.format(dateFormat)}
+      disabled={isDisabled}
+      className={`${styles.item} ${styles.dayItem} ${selected ? styles.selected : ''}`}>
+        {day.format('D')}
+      </button>;
+  }
+
   render() {
     const { locale, dateFormat, isShown } = this.props;
     moment.locale(locale);
-    const selectedDate = moment(this.props.selectedDate, dateFormat);
     const showingDate = moment(this.props.showingDate, dateFormat).startOf('month');
-    const day = moment(showingDate);
+    const daysInMonth = [...Array(showingDate.daysInMonth())];
 
     return (
       <div className={`${!isShown ? styles.hidden : ''} monthView`}>
@@ -67,26 +85,19 @@ class MonthView extends Component {
               <div className={styles.weekday} key={key}>{weekday}</div>)}
           </div>
           <div className={styles.itemsContent}>
-            { generateDayPlaceholder(day.weekday(), moment(day).subtract(day.weekday(), 'days'), `${styles.item} ${styles.dayItem}`) }
-            { [...Array(day.daysInMonth())].map((_, d) => {
-              day.date(d + 1);
-              const options = {
-                ...this.options,
-                amount: 'day',
-              };
-              const selected = selectedDate.isValid()
-                && day.format(dateFormat) === selectedDate.format(dateFormat);
-              const isDisabled = validations
-                .shouldBeDisabled(day, this.props.minDate, this.props.maxDate, options);
-              return <button key={d}
-                onClick={this.handleSelectDate}
-                value={day.format(dateFormat)}
-                disabled={isDisabled}
-                className={`${styles.item} ${styles.dayItem} ${selected ? styles.selected : ''}`}>
-                  {day.format('D')}
-                </button>;
-            })}
-            { generateDayPlaceholder(6 - day.weekday(), moment(day).add(1, 'days'), `${styles.item} ${styles.dayItem}`) }
+            {generateDayPlaceholder(
+              showingDate.weekday(),
+              moment(showingDate).subtract(showingDate.weekday(), 'days'),
+              `${styles.item} ${styles.dayItem}`,
+            )}
+
+            {daysInMonth.map(this.generateDays)}
+
+            {generateDayPlaceholder(
+              6 - moment(showingDate).endOf('month').weekday(),
+              moment(showingDate).add(1, 'days'),
+              `${styles.item} ${styles.dayItem}`,
+            )}
           </div>
         </div>
       </div>
