@@ -88,6 +88,8 @@ describe('Form', () => {
   it('should validate bookmark', () => {
     const evt = { target: { name: 'recipient', value: '123456L' } };
     wrapper.find('input.recipient').simulate('change', evt);
+    jest.advanceTimersByTime(300);
+    wrapper.update();
     expect(wrapper.find('.fieldGroup').at(0)).not.toHaveClassName('error');
   });
 
@@ -96,6 +98,8 @@ describe('Form', () => {
     wrapper = mount(<Form {...props} />, options);
     const evt = { target: { name: 'recipient', value: '123456L' } };
     wrapper.find('input.recipient').simulate('change', evt);
+    jest.advanceTimersByTime(300);
+    wrapper.update();
     expect(wrapper.find('.fieldGroup').at(0)).not.toHaveClassName('error');
   });
 

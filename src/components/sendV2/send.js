@@ -9,21 +9,15 @@ class Send extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      fields: {},
-    };
-  }
-
-  componentDidMount() {
     const { recipient, amount, reference } = parseSearchParams(this.props.history.location.search);
 
-    this.setState({
+    this.state = {
       fields: {
         recipient: { address: recipient || '' },
         amount: { value: amount || '' },
         reference: { value: reference || '' },
       },
-    });
+    };
   }
 
   render() {
