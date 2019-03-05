@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import i18n from '../../../i18n';
+import accounts from '../../../../test/constants/accounts';
 import Summary from './summary';
 
-describe('Form', () => {
+describe('Summary', () => {
   let wrapper;
 
   const store = configureMockStore([thunk])({
@@ -48,7 +49,7 @@ describe('Form', () => {
   const props = {
     t: v => v,
     account: {
-      secondPublicKey: 'ec057d8816b18b83a2baac387eebf8af707f8fb565c963476a0e4533e8481eaf',
+      secondPublicKey: accounts['second passphrase account'].secondPublicKey,
     },
     fields: {
       recipient: {
@@ -66,6 +67,7 @@ describe('Form', () => {
     },
     prevStep: jest.fn(),
     nextStep: jest.fn(),
+    sent: jest.fn(),
   };
 
   beforeEach(() => {
@@ -88,7 +90,7 @@ describe('Form', () => {
 
   it('should goind to next page if everyting is successfull', () => {
     const clipboardData = {
-      getData: () => 'forest around decrease farm vanish permit hotel clay senior matter endorse domain',
+      getData: () => accounts['second passphrase account'].secondPassphrase,
     };
     wrapper.find('passphraseInputV2 input').first().simulate('paste', { clipboardData });
     wrapper.update();

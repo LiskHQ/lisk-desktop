@@ -3,7 +3,7 @@ import ConverterV2 from '../../converterV2';
 import AccountVisual from '../../accountVisual/index';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import fees from '../../../constants/fees';
-import LiskAmount from '../../liskAmount';
+import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
 import PassphraseInputV2 from '../../passphraseInputV2/passphraseInputV2';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
@@ -18,14 +18,16 @@ class Summary extends React.Component {
     this.state = {
       secondPassphrase: {
         hasSecondPassphrase: false,
-        isValid: '',
+        isValid: false,
         feedback: '',
+        value: null,
       },
     };
 
     this.prevStep = this.prevStep.bind(this);
     this.nextStep = this.nextStep.bind(this);
     this.checkSecondPassphrase = this.checkSecondPassphrase.bind(this);
+    this.amountAndFee = this.amountAndFee.bind(this);
   }
 
   componentDidMount() {
@@ -37,7 +39,6 @@ class Summary extends React.Component {
         secondPassphrase: {
           ...this.state.secondPassphrase,
           hasSecondPassphrase: true,
-          isValid: false,
         },
       });
     }
@@ -46,9 +47,8 @@ class Summary extends React.Component {
   checkSecondPassphrase(passphrase, error) {
     // istanbul ignore else
     if (!error) {
-      const { account, t } = this.props;
       const expectedPublicKey = extractPublicKey(passphrase);
-      const isPassphraseValid = account.secondPublicKey === expectedPublicKey;
+      const isPassphraseValid = this.props.account.secondPublicKey === expectedPublicKey;
 
       if (isPassphraseValid) {
         this.setState({
@@ -56,6 +56,7 @@ class Summary extends React.Component {
             ...this.state.secondPassphrase,
             isValid: true,
             feedback: '',
+            value: passphrase,
           },
         });
       } else {
@@ -63,11 +64,15 @@ class Summary extends React.Component {
           secondPassphrase: {
             ...this.state.secondPassphrase,
             isValid: false,
-            feedback: t('Oops! Wrong passphrase'),
+            feedback: this.props.t('Oops! Wrong passphrase'),
           },
         });
       }
     }
+  }
+
+  amountAndFee() {
+    return fromRawLsk(toRawLsk(this.props.fields.amount.value) + fees.send);
   }
 
   prevStep() {
@@ -77,51 +82,60 @@ class Summary extends React.Component {
 
   nextStep() {
     Piwik.trackingEvent('Send_Summary', 'button', 'Next step');
+    this.props.sent({
+      account: this.props.account,
+      recipientId: this.props.fields.recipient.address,
+      amount: this.amountAndFee(),
+      data: this.props.fields.reference.value,
+      passphrase: this.props.account.passphrase,
+      secondPassphrase: this.state.secondPassphrase.value,
+    });
     this.props.nextStep({ fields: { ...this.props.fields } });
   }
 
   render() {
-    const { t, fields } = this.props;
     const { secondPassphrase } = this.state;
-    const isBtnDisabled = secondPassphrase.isValid !== '' && !secondPassphrase.isValid;
+    const isBtnDisabled = secondPassphrase.hasSecondPassphrase
+      ? secondPassphrase.isValid !== '' && !secondPassphrase.isValid
+      : false;
 
     return (
       <div className={`${styles.wrapper} summary`}>
         <header className={`${styles.header} summary-header`}>
-          <h1>{t('Transaction summary')}</h1>
+          <h1>{this.props.t('Transaction summary')}</h1>
         </header>
 
         <div className={`${styles.content} summary-content`}>
           <div className={styles.row}>
-            <label>{t('Recipient')}</label>
+            <label>{this.props.t('Recipient')}</label>
             <div className={styles.account}>
-              <AccountVisual address={fields.recipient.address} size={25} />
+              <AccountVisual address={this.props.fields.recipient.address} size={25} />
               <label className={styles.information}>
-                {fields.recipient.title || fields.recipient.address}
+                {this.props.fields.recipient.title || this.props.fields.recipient.address}
               </label>
               <span className={`${styles.secondText} ${styles.accountSecondText}`}>
-                {fields.recipient.addres}
+                {this.props.fields.recipient.addres}
               </span>
             </div>
           </div>
 
           <div className={styles.row}>
-            <label>{t('Amount of transaction')}</label>
+            <label>{this.props.t('Amount of transaction')}</label>
             <label className={`${styles.information} ${styles.amount}`}>
-              {`${fields.amount.value} ${t('LSK')}`}
-              <ConverterV2 className={`${styles.secondText} ${styles.amountSecondText}`} value={fields.amount.value} />
+              {`${this.amountAndFee()} ${this.props.t('LSK')}`}
+              <ConverterV2 className={`${styles.secondText} ${styles.amountSecondText}`} value={this.amountAndFee()} />
             </label>
           </div>
 
           <div className={styles.row}>
-            <label>{t('Message')}</label>
-            <p className={styles.information}>{t(fields.reference.value)}</p>
+            <label>{this.props.t('Message')}</label>
+            <p className={styles.information}>{this.props.fields.reference.value}</p>
           </div>
 
           {
             secondPassphrase.hasSecondPassphrase
             ? <div className={`${styles.row} ${styles.passphrase} summary-second-passphrase`}>
-                <label>{t('Second passphrase')}</label>
+                <label>{this.props.t('Second passphrase')}</label>
                 <PassphraseInputV2
                   isSecondPassphrase={secondPassphrase.hasSecondPassphrase}
                   secondPPFeedback={secondPassphrase.feedback}
@@ -135,39 +149,39 @@ class Summary extends React.Component {
 
         <footer className={`${styles.footer} summary-footer`}>
           <SecondaryButtonV2 className={`${styles.btn} on-prevStep`} onClick={this.prevStep}>
-            {t('Edit transaction')}
+            {this.props.t('Edit transaction')}
           </SecondaryButtonV2>
 
           <div className={styles.feeMessage}>
             <label>
-              {t('Transaction fee')}
+              {this.props.t('Transaction fee')}
               <Tooltip
                 className={'showOnTop'}
-                title={'Transaction fee'}
+                title={this.props.t('Transaction fee')}
                 footer={
                   <a href={links.transactionFee}
                     rel="noopener noreferrer"
                     target="_blank">
-                      {t('Read More')}
+                      {this.props.t('Read More')}
                   </a>
                 }
               >
                 <p>
                 {
-                  t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
+                  this.props.t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
                   Such operations require hardware resources and because of that we ask for a small fee for processing those.`)
                 }
                 </p>
               </Tooltip>
             </label>
-            <span><LiskAmount val={fees.send}/> {t('LSK')}</span>
+            <span>{this.props.t('+{{fee}} LSK', { fee: fromRawLsk(fees.send) })}</span>
           </div>
 
           <PrimaryButtonV2
             className={`${styles.btn} on-nextStep`}
             onClick={this.nextStep}
             disabled={isBtnDisabled}>
-            {t('Send {{value}} LSK', { value: fields.amount.value })}
+            {this.props.t('Send {{value}} LSK', { value: this.props.fields.amount.value })}
           </PrimaryButtonV2>
         </footer>
       </div>

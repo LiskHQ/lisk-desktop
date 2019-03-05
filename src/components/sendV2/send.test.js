@@ -100,7 +100,17 @@ describe('Form', () => {
     wrapper = mount(<Send {...props} />, options);
   });
 
-  it('should render properly', () => {
+  it('should render properly getting data from URL', () => {
+    expect(wrapper).toContainMatchingElement('.send-box');
+    expect(wrapper).toContainMatchingElement('MultiStep');
+    expect(wrapper).toContainMatchingElement('Form');
+  });
+
+  it('should render properly without getting data from URL', () => {
+    props.history.location.path = '';
+    props.history.location.search = '';
+    wrapper = mount(<Send {...props} />, options);
+    wrapper.update();
     expect(wrapper).toContainMatchingElement('.send-box');
     expect(wrapper).toContainMatchingElement('MultiStep');
     expect(wrapper).toContainMatchingElement('Form');

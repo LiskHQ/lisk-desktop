@@ -17,16 +17,13 @@ class Send extends React.Component {
   componentDidMount() {
     const { recipient, amount, reference } = parseSearchParams(this.props.history.location.search);
 
-    // istanbul ignore else
-    if (recipient && amount) {
-      this.setState({
-        fields: {
-          recipient: { address: recipient },
-          amount: { value: amount },
-          reference: { value: reference },
-        },
-      });
-    }
+    this.setState({
+      fields: {
+        recipient: { address: recipient || '' },
+        amount: { value: amount || '' },
+        reference: { value: reference || '' },
+      },
+    });
   }
 
   render() {

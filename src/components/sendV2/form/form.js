@@ -7,6 +7,10 @@ import Bookmark from '../../bookmarkV2';
 import regex from '../../../utils/regex';
 import SpinnerV2 from '../../spinnerV2/spinnerV2';
 import svg from '../../../utils/svgIcons';
+import Tooltip from '../../toolbox/tooltip/tooltip';
+import links from '../../../constants/externalLinks';
+import { fromRawLsk } from '../../../utils/lsk';
+import fees from '../../../constants/fees';
 import styles from './form.css';
 import Piwik from '../../../utils/piwik';
 
@@ -44,14 +48,15 @@ class Form extends React.Component {
 
     this.loaderTimeout = null;
 
-    this.validateAmountAndReference = this.validateAmountAndReference.bind(this);
-    this.onAmountOrReferenceChange = this.onAmountOrReferenceChange.bind(this);
-    this.onSelectedAccount = this.onSelectedAccount.bind(this);
-    this.onInputChange = this.onInputChange.bind(this);
-    this.validateBookmark = this.validateBookmark.bind(this);
+    this.getMaxAmount = this.getMaxAmount.bind(this);
     this.ifDataFromPrevState = this.ifDataFromPrevState.bind(this);
     this.ifDataFromUrl = this.ifDataFromUrl.bind(this);
+    this.onAmountOrReferenceChange = this.onAmountOrReferenceChange.bind(this);
     this.onGoNext = this.onGoNext.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onSelectedAccount = this.onSelectedAccount.bind(this);
+    this.validateAmountAndReference = this.validateAmountAndReference.bind(this);
+    this.validateBookmark = this.validateBookmark.bind(this);
   }
 
   componentDidMount() {
@@ -200,9 +205,14 @@ class Form extends React.Component {
     });
   }
 
+  getMaxAmount() {
+    return fromRawLsk(Math.max(0, this.props.account.balance - fees.send));
+  }
+
   validateAmountField(value) {
-    if (/([^\d.])/g.test(value)) return this.props.t('Please use only digits and dots');
+    if (/([^\d.])/g.test(value)) return this.props.t('Provide a correct amount of LSK');
     if (/(\.)(.*\1){1}/g.test(value) || /\.$/.test(value)) return this.props.t('Invalid amount');
+    if (value > this.getMaxAmount()) return this.props.t('Amount is higher of the current balance.');
     return false;
   }
 
@@ -267,7 +277,6 @@ class Form extends React.Component {
 
   // eslint-disable-next-line complexity
   render() {
-    const { t, followedAccounts } = this.props;
     const { fields } = this.state;
     const messageMaxLength = 64;
     const byteCount = encodeURI(fields.reference.value).split(/%..|./).length - 1;
@@ -283,12 +292,12 @@ class Form extends React.Component {
 
         <div className={styles.formSection}>
           <label className={`${styles.fieldGroup} recipient`}>
-            <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
+            <span className={`${styles.fieldLabel}`}>{this.props.t('Recipient')}</span>
             <Bookmark
               validateBookmark={this.validateBookmark}
-              followedAccounts={followedAccounts}
+              followedAccounts={this.props.followedAccounts}
               onChange={this.onInputChange}
-              placeholder={t('e.g. 1234523423L or John Doe')}
+              placeholder={this.props.t('e.g. 1234523423L or John Doe')}
               recipient={fields.recipient}
               showSuggestions={fields.recipient.showSuggestions}
               onSelectedAccount={this.onSelectedAccount}
@@ -296,14 +305,14 @@ class Form extends React.Component {
           </label>
 
           <label className={`${styles.fieldGroup}`}>
-            <span className={`${styles.fieldLabel}`}>{t('Amount of trasaction')}</span>
+            <span className={`${styles.fieldLabel}`}>{this.props.t('Amount of trasaction')}</span>
             <span className={`${styles.amountField} amount`}>
               <InputV2
                 autoComplete={'off'}
                 onChange={this.onAmountOrReferenceChange}
                 name='amount'
                 value={fields.amount.value}
-                placeholder={t('e.g. 12345.6')}
+                placeholder={this.props.t('e.g. 12345.6')}
                 className={`${styles.input} ${fields.amount.error ? 'error' : ''}`} />
               <ConverterV2
                 className={styles.converter}
@@ -319,13 +328,30 @@ class Form extends React.Component {
               {fields.amount.feedback}
             </span>
             <span className={styles.amountHint}>
-              {t('+0.1 LSK transaction fee')}
-              <img src={svg.question_icon} />
+              {this.props.t('+{{fee}} LSK transaction fee', { fee: fromRawLsk(fees.send) })}
+              <Tooltip
+                className={'showOnTop'}
+                title={this.props.t('Transaction fee')}
+                footer={
+                  <a href={links.transactionFee}
+                    rel="noopener noreferrer"
+                    target="_blank">
+                      {this.props.t('Read More')}
+                  </a>
+                }
+              >
+                <p>
+                {
+                  this.props.t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
+                  Such operations require hardware resources and because of that we ask for a small fee for processing those.`)
+                }
+                </p>
+              </Tooltip>
             </span>
           </label>
 
           <label className={`${styles.fieldGroup} reference`}>
-            <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
+            <span className={`${styles.fieldLabel}`}>{this.props.t('Message (optional)')}</span>
             <span className={styles.referenceField}>
               <AutoresizeTextarea
                 maxLength={100}
@@ -333,7 +359,7 @@ class Form extends React.Component {
                 onChange={this.onAmountOrReferenceChange}
                 name='reference'
                 value={fields.reference.value}
-                placeholder={t('Write message')}
+                placeholder={this.props.t('Write message')}
                 className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
               <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && fields.reference.value ? styles.show : styles.hide}`}/>
               <img
@@ -352,7 +378,7 @@ class Form extends React.Component {
             disabled={isBtnDisabled}
             onClick={this.onGoNext}
           >
-            {t('Go to Confirmation')}
+            {this.props.t('Go to Confirmation')}
           </PrimaryButtonV2>
         </footer>
       </div>
