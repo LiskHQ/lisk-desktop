@@ -42,8 +42,8 @@ export const graphOptions = {
     padding: {
       left: 0,
       right: 8,
-      top: 80,
-      bottom: 15,
+      top: 20,
+      bottom: 0,
     },
   },
   elements: {

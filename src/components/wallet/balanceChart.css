@@ -11,8 +11,11 @@
 .content {
   flex-grow: 1;
   position: relative;
+}
 
-  & .tooltip {
-    position: absolute;
-  }
+.graphHolder {
+  height: 100%;
+  left: -23px;
+  position: absolute;
+  width: calc(100% + 23px);
 }
