@@ -51,7 +51,7 @@ export const graphOptions = {
       backgroundColor: '#C80039',
       radius: 0,
       hoverRadius: 8,
-      hitRadius: 40,
+      hitRadius: 20,
     },
     line: {
       tension: 0,
@@ -64,9 +64,10 @@ export const graphOptions = {
       },
       label(tooltipItem) {
         return moment(tooltipItem.xLabel, 'MMMM DD YYYY h:mm:ss A')
-          .format('DD MMM YYYY');
+          .format('MMMM DD YYYY h:mm:ss');
       },
     },
+    mode: 'index',
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
     titleFontSize: 18,
     titleFontColor: '#0000',
@@ -118,7 +119,7 @@ export const getBalanceDataByTx = (transactions, balance, address, canvas) => {
 
   const data = transactions.reduce((balances, tx) => {
     const txValue = getTxValue(tx, address);
-    const txDate = moment(getUnixTimestampFromFirstBlock(tx.timestamp)).toDate();
+    const txDate = new Date(getUnixTimestampFromFirstBlock(tx.timestamp));
     const lastBalance = balances.slice(-1)[0];
     return [
       ...balances,

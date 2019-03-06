@@ -10,8 +10,9 @@ class BalanceGraph extends React.Component {
     const {
       t, transactions, balance, address,
     } = this.props;
-    const chartData = ChartUtils
-      .getBalanceDataByTx.bind(null, transactions.slice(0, 30), balance, address);
+    const txs = transactions.length > 30
+      ? transactions.slice(0, 30)
+      : transactions;
 
     return (
       <BoxV2 className={`${styles.wrapper}`}>
@@ -22,7 +23,7 @@ class BalanceGraph extends React.Component {
           <div className={`${styles.graphHolder}`}>
             <LineChart
               options={ChartUtils.graphOptions}
-              data={chartData} />
+              data={ChartUtils.getBalanceDataByTx.bind(null, txs, balance, address)} />
           </div>
         </main>
       </BoxV2>

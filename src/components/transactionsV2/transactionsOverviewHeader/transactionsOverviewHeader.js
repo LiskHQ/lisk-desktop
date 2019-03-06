@@ -115,7 +115,9 @@ class transactionsHeader extends React.Component {
             )}
             <DropdownV2
               showDropdown={this.state.shownDropdown === 'followDropdown'}
-              className={'follow-dropdown'}></DropdownV2>
+              className={'follow-dropdown'}>
+                <div></div>
+              </DropdownV2>
             </span>
           </React.Fragment>
         )}
