@@ -142,7 +142,7 @@ class FollowAccount extends React.Component {
             <FontIcon className={`${styles.icon}`}>checkmark</FontIcon>
           </span>
           <div className={`${styles.checkboxInfo}`}>
-            <span className={`${styles.label}`}>{t('On you dashboard')}</span>
+            <span className={`${styles.label}`}>{t('On your dashboard')}</span>
             <span className={`${styles.note}`}>{t('Show this account\'s transactions on the dashboard.')}</span>
           </div>
         </label>
