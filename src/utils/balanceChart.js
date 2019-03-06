@@ -22,7 +22,7 @@ export const graphOptions = {
       ticks: {
         fontColor: '#7383a7',
         fontSize: 12,
-        fontFamily: 'gilroy',
+        fontFamily: '\'gilroy\', sans-serif',
       },
       gridLines: {
         display: false,
@@ -34,7 +34,7 @@ export const graphOptions = {
         maxTicksLimit: 5,
         fontColor: '#7383a7',
         fontSize: 12,
-        fontFamily: 'gilroy, sans-serif',
+        fontFamily: '\'gilroy\', sans-serif',
       },
     }],
   },
@@ -83,6 +83,11 @@ export const graphOptions = {
   },
 };
 
+/**
+ * Returns value in interger format of the amount that was added or subtracted from the balance
+ * @param {Object} tx Transaction Object
+ * @param {String} address Account address
+ */
 const getTxValue = (tx, address) => {
   const txValue = tx.senderId && tx.senderId !== address
     ? tx.amount || 0
@@ -90,6 +95,10 @@ const getTxValue = (tx, address) => {
   return tx.type === transactionTypes.send && tx.recipientId !== address ? txValue : -txValue;
 };
 
+/**
+ * Returns a gradient to be used on the graph
+ * @param {Object} ctx Context2D of a canvas element
+ */
 const getGradient = (ctx) => {
   const gradient = ctx.createLinearGradient(0, 100, 0, 250);
   gradient.addColorStop(0, '#e9f3ff');

@@ -19,7 +19,7 @@ class BalanceGraph extends React.Component {
         <main id={'balanceChart'} className={`${styles.content}`}>
           <LineChart
             options={ChartUtils.graphOptions}
-            data={ChartUtils.getBalanceDataByTx.bind(null, transactions, balance, address)} />
+            data={ChartUtils.getBalanceDataByTx.bind(null, transactions.slice(0, 30), balance, address)} />
         </main>
       </BoxV2>
     );
