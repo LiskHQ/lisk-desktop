@@ -1,0 +1,80 @@
+@import '../../app/variablesV2.css';
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+
+.footer,
+.header {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 24px 0;
+
+  & > h1,
+  & > p {
+    font-family: var(--content-font);
+    margin: 0;
+    padding: 5px 0;
+  }
+
+  & > h1 {
+    font-size: var(--font-size-large);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-background-dark);
+  }
+
+  & > p {
+    font-size: var(--paragraph-font-size-l);
+    font-weight: var(--font-weight-semi-bold);
+    color: var(--color-content-light);
+  }
+}
+
+.footer {
+  height: auto;
+  padding: 0 16px;
+  flex-direction: column;
+}
+
+.errorReport {
+  width: 100%;
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & > span,
+  & > a {
+    font-family: var(--content-font);
+    font-size: var(--font-size-small-secondary);
+    color: var(--color-dark-gray);
+    margin: 2px 0;
+  }
+
+  & > a {
+    text-decoration: none;
+    color: var(--color-primary-standard);
+  }
+}
