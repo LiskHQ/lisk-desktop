@@ -43,6 +43,8 @@ module.exports = {
     'src/components/accountInitialization/index.js',
     'src/components/backgroundMaker/index.js',
     'src/components/dashboard/currencyGraph.js', // This should be unskipped in issue #1499
+    'src/components/wallet/balanceChart.js', // This should be unskipped in issue #1499
+    'src/utils/balanceChart.js', // This should be unskipped in issue #1499
     'src/components/dialog/stories.js',
     'src/components/errorBoundary/index.js',
     'src/components/feedbackForm/',
