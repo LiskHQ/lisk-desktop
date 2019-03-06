@@ -49,7 +49,7 @@ export const graphOptions = {
   elements: {
     point: {
       backgroundColor: '#C80039',
-      radius: 0,
+      radius: 1,
       hoverRadius: 8,
       hitRadius: 20,
     },
