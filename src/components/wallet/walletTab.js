@@ -19,10 +19,12 @@ const WalletTab = ({ ...props }) => (
             />
         </div>
         <div className={`${grid['col-sm-8']} ${grid['col-lg-9']}`}>
+        { !props.hideChart ?
           <BalanceChart
             balance={props.balance}
             address={props.address}
             transactions={props.transactions} />
+        : null }
         </div>
       </div>
     ) : null}
