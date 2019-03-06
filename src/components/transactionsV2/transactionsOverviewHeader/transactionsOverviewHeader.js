@@ -6,6 +6,7 @@ import RequestV2 from '../../requestV2/requestV2';
 import { getIndexOfFollowedAccount } from '../../../utils/followedAccounts';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import HeaderAccountInfo from './headerAccountInfo';
+import FollowAccount from '../../followAccount';
 import styles from './transactionsOverviewHeader.css';
 import routes from '../../../constants/routes';
 
@@ -115,7 +116,12 @@ class transactionsHeader extends React.Component {
             )}
             <DropdownV2
               showDropdown={this.state.shownDropdown === 'followDropdown'}
-              className={'follow-dropdown'}></DropdownV2>
+              className={`${styles.followDropdown}`}>
+                <FollowAccount
+                  balance={this.props.balance}
+                  address={address}
+                  isFollowing={isFollowing} />
+              </DropdownV2>
             </span>
           </React.Fragment>
         )}
