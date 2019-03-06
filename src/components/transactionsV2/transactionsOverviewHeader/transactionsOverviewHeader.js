@@ -25,6 +25,10 @@ class transactionsHeader extends React.Component {
     this.setDropownRefs = this.setDropownRefs.bind(this);
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleClickOutsideDropdown);
+  }
+
   toggleDropdown(dropdownName) {
     if (!(this.state.shownDropdown === dropdownName)) {
       document.addEventListener('click', this.handleClickOutsideDropdown);

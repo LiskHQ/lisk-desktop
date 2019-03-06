@@ -34,6 +34,10 @@ class FollowAccount extends React.Component {
     this.handleFollow = this.handleFollow.bind(this);
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
+
   componentDidMount() {
     if (this.props.isFollowing) {
       const { accounts, address } = this.props;
