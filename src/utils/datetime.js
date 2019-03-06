@@ -27,7 +27,7 @@ export const getUnixTimestampFromFirstBlock = value =>
  * @returns {Number} - Timestamp from first block
  */
 export const getDateTimestampFromFirstBlock = (value, format) =>
-  (moment(value, format).format('x') - moment(firstBlockTime).startOf('day').format('x')) / 1000
+  (moment(value, format).format('x') - moment(firstBlockTime).startOf('day').format('x')) / 1000;
 
 /**
  * Function to format an input to Date format 99.99.99
