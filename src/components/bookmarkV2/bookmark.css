@@ -1,0 +1,132 @@
+@import '../app/variablesV2.css';
+
+.recipientField {
+  align-items: center;
+  display: flex;
+  position: relative;
+  width: 100%;
+
+  & .input {
+    padding-right: 30px;
+    width: 100%;
+    font-size: var(--paragraph-font-size-l);
+    height: 36px;
+    line-height: 1.83;
+  }
+}
+
+.moveTextToRight {
+  padding-left: 50px;
+}
+
+.accountVisual {
+  position: absolute;
+  left: 16px;
+}
+
+.bookmarkContainer {
+  position: absolute;
+  top: 38px;
+  width: 100%;
+  display: flex;
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-box);
+  border: solid 1px rgba(8, 24, 49, 0.1);
+  box-shadow: var(--box-shadow-search);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  max-height: 176px;
+  overflow: scroll;
+}
+
+.status {
+  position: absolute;
+  right: 10px;
+}
+
+.bookmarkList {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-family: var(--content-font);
+  font-weight: var(--font-weight-semi-bold);
+  margin: 0;
+  padding: 0;
+  width: 100%;
+
+  & li {
+    box-sizing: border-box;
+    padding: 0 16px;
+    width: 100%;
+    height: 44px;
+    min-height: 44px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    border-bottom: 1px solid #e9ebed;
+
+    & > span {
+      margin-left: 10px;
+      color: var(--color-content-light);
+    }
+
+    & > span:last-child {
+      color: var(--color-dark-gray);
+    }
+
+    &:hover,
+    &.active {
+      background-color: var(--color-dark-gray);
+
+      & > span {
+        color: var(--color-white);
+      }
+    }
+  }
+}
+
+.feedback {
+  color: var(--color-dark-gray);
+  display: block;
+  font-family: var(--content-font);
+  font-size: var(--button-font-size-s);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 1.83;
+  margin-top: 8px;
+  max-height: 0;
+  opacity: 0;
+  text-align: right;
+  transition: opacity var(--animation-speed-fast) linear;
+  width: 100%;
+
+  &:global(.error) {
+    color: var(--color-error);
+  }
+
+  &.show {
+    max-height: 22px;
+    opacity: 1;
+  }
+}
+
+.spinner {
+  position: absolute;
+  right: 11px;
+}
+
+.show {
+  opacity: 1;
+  transition: opacity var(--animation-speed-fast) linear var(--animation-delay-standard);
+}
+
+.hide {
+  opacity: 0;
+  transition: opacity var(--animation-speed-fast) linear;
+}
