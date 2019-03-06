@@ -3,13 +3,11 @@ import PropTypes from 'prop-types';
 import styles from './tabsContainer.css';
 
 class TabsContainer extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
 
     this.state = {
-      activeTab: (Array.isArray(props.children)
-        && (props.activeTab || props.children[0].props.tabName))
-        || '',
+      activeTab: '',
     };
   }
 
@@ -17,8 +15,34 @@ class TabsContainer extends React.Component {
     this.setState({ activeTab });
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  filterChildren(children) {
+    return (Array.isArray(children) && children.filter(c => c)) || [children];
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const nextTabs = this.filterChildren(nextProps.children);
+    const currentTabs = this.filterChildren(this.props.children);
+    if (nextTabs.length !== currentTabs.length) {
+      const activeTab = nextTabs.length > 1 && (this.props.activeTab || nextTabs[0].props.tabName);
+      this.setState({ activeTab });
+      return false;
+    }
+    return nextState.active !== this.state.activeTab;
+  }
+
+  componentDidMount() {
+    const children = this.filterChildren(this.props.children);
+
+    this.setState({
+      activeTab: (children.length > 1
+        && (this.props.activeTab || children[0].props.tabName))
+        || '',
+    });
+  }
+
   render() {
-    const { children } = this.props;
+    const children = this.filterChildren(this.props.children);
     const { activeTab } = this.state;
 
     return (activeTab !== '' ? (

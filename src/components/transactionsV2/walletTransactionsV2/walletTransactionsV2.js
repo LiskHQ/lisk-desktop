@@ -9,6 +9,7 @@ import routes from '../../../constants/routes';
 import styles from './walletTransactionsV2.css';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import WalletTab from '../../wallet/walletTab';
+import DelegateTab from '../../delegate/delegateTab';
 
 class WalletTransactionsV2 extends React.Component {
   // eslint-disable-next-line max-statements
@@ -200,6 +201,8 @@ class WalletTransactionsV2 extends React.Component {
         <TabsContainer>
           <WalletTab tabName={this.props.t('Wallet')}
             {...overviewProps}/>
+          {this.props.accountisDelegate && (<DelegateTab tabName={this.props.t('Delegate')}
+            delegate={this.props.delegate} />)}
         </TabsContainer>
       </React.Fragment>
     );

@@ -1,0 +1,46 @@
+@import '../app/variablesV2.css';
+
+.wrapper {
+  display: flex;
+  padding: 32px 16px;
+}
+
+.delegateStats {
+  align-content: stretch;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 60px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+
+  & > li {
+    align-items: center;
+    color: var(--color-content-light);
+    display: flex;
+    font-family: var(--content-font);
+    font-size: var(--paragraph-font-size-l);
+    height: calc(100% / 2);
+  }
+
+  & span.label {
+    color: var(--color-dark-gray);
+    font-size: var(--paragraph-font-size-s);
+    margin-right: 8px;
+    white-space: nowrap;
+  }
+}
+
+@media (--medium-viewport) {
+  .delegateStats {
+    height: 90px;
+
+    & > li {
+      height: calc(100% / 3);
+      min-width: calc(100% / 3);
+    }
+  }
+}
