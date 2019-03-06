@@ -10,9 +10,20 @@ class BalanceGraph extends React.Component {
     const {
       t, transactions, balance, address,
     } = this.props;
-    const txs = transactions.length > 30
-      ? transactions.slice(0, 30)
-      : transactions;
+    let format = 'MMMM DD YYYY h:mm:ss';
+    if (transactions.length >= 120) {
+      format = 'MMMM DD YYYY';
+    }
+    if (transactions.length >= 600) {
+      format = 'MMMM YYYY';
+    }
+
+    const data = ChartUtils.getBalanceData.bind(null, {
+      transactions,
+      balance,
+      address,
+      format,
+    });
 
     return (
       <BoxV2 className={`${styles.wrapper}`}>
@@ -22,8 +33,8 @@ class BalanceGraph extends React.Component {
         <main className={`${styles.content}`}>
           <div className={`${styles.graphHolder}`}>
             <LineChart
-              options={ChartUtils.graphOptions}
-              data={ChartUtils.getBalanceDataByTx.bind(null, txs, balance, address)} />
+              options={ChartUtils.graphOptions(format)}
+              data={data} />
           </div>
         </main>
       </BoxV2>

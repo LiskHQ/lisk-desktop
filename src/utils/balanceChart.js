@@ -3,7 +3,7 @@ import transactionTypes from '../constants/transactionTypes';
 import { fromRawLsk } from './lsk';
 import { getUnixTimestampFromFirstBlock } from './datetime';
 
-export const graphOptions = {
+export const graphOptions = format => ({
   maintainAspectRatio: false,
   gridLines: {
     display: true,
@@ -64,7 +64,7 @@ export const graphOptions = {
       },
       label(tooltipItem) {
         return moment(tooltipItem.xLabel, 'MMMM DD YYYY h:mm:ss A')
-          .format('MMMM DD YYYY h:mm:ss');
+          .format(format);
       },
     },
     mode: 'index',
@@ -82,7 +82,7 @@ export const graphOptions = {
     cornerRadius: 0,
     caretSize: 15,
   },
-};
+});
 
 /**
  * Returns value in interger format of the amount that was added or subtracted from the balance
@@ -108,12 +108,18 @@ const getGradient = (ctx) => {
 };
 
 /**
- * Returns an Array with balance as y and tx.timestamp as x in HH:mm:ss format.
- * @param {Object[]} transactions Array of transactions
- * @param {Number} balance Current account balance
- * @param {String} address Account Address
+ * Returs balance data grouped by an specific amount
+ * @param {Object} param Object containing {
+ *  @param {Object[]} transactions,
+ *  @param {String} data,
+ *  @param {Number} balance,
+ *  @param {String} address,
+ * }
+ * @param {Node} canvas Canvas element to be used
  */
-export const getBalanceDataByTx = (transactions, balance, address, canvas) => {
+export const getBalanceData = ({
+  format, transactions, balance, address,
+}, canvas) => {
   const ctx = canvas.getContext('2d');
   const gradient = getGradient(ctx);
 
@@ -121,8 +127,10 @@ export const getBalanceDataByTx = (transactions, balance, address, canvas) => {
     const txValue = getTxValue(tx, address);
     const txDate = new Date(getUnixTimestampFromFirstBlock(tx.timestamp));
     const lastBalance = balances.slice(-1)[0];
+    const tmpBalances = moment(lastBalance.x).format(format) === moment(txDate).format(format)
+      ? balances.slice(0, -1) : balances;
     return [
-      ...balances,
+      ...tmpBalances,
       { x: txDate, y: (+lastBalance.y + +txValue) },
     ];
   }, [{ x: new Date(), y: +balance }]).reverse().map(d => ({ ...d, y: +fromRawLsk(d.y) }));
@@ -139,5 +147,4 @@ export const getBalanceDataByTx = (transactions, balance, address, canvas) => {
 
 export default {
   graphOptions,
-  getBalanceDataByTx,
 };
