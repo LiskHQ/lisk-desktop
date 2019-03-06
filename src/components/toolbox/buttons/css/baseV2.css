@@ -13,17 +13,30 @@
 }
 
 @define-mixin buttonPrimaryV2 {
-  background-color: var(--color-primary-standard);
+  background-color: var(--color-primary-standard) !important;
   color: var(--color-white) !important;
 
   &:disabled {
-    background-color: var(--color-primary-light) !important;
-    color: var(--color-white) !important;
+    opacity: 0.8;
   }
 
   &:focus,
   &:hover {
     background: #004aff !important;
+  }
+}
+
+@define-mixin buttonDangerV2 {
+  background-color: var(--color-danger) !important;
+  color: var(--color-white) !important;
+
+  &:disabled {
+    opacity: 0.8;
+  }
+
+  &:focus,
+  &:hover {
+    background: #ff6300 !important;
   }
 }
 

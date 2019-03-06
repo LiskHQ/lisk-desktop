@@ -58,6 +58,7 @@ or "warn/action" ineastd of "red/green"
   --paragraph-font-size-s: 14px;
   --button-font-size: var(--paragraph-font-size-s);
   --button-font-size-s: 12px;
+  --footnote-font-size: 12px;
 
   /*************************
         Sizes
@@ -86,7 +87,8 @@ or "warn/action" ineastd of "red/green"
   --color-primary-standard: #4e80f7;
   --color-primary-light: #9db8fa;
   --color-white: #fff;
-  --color-error: #ff7721;
+  --color-danger: #ff7721;
+  --color-error: var(--color-danger);
   --color-content: #19224d;
   --color-content-light: #2e2c3b;
   --color-primary-very-light: #e8f0fa;
