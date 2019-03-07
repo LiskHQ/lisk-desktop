@@ -87,21 +87,6 @@ class FollowAccount extends React.Component {
   handleAccountNameChange({ target }) {
     const { fields } = this.state;
     const maxLength = 20;
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-      this.setState({
-        fields: {
-          ...fields,
-          [target.name]: {
-            ...fields[target.name],
-            value: target.value,
-            loading: false,
-          },
-        },
-        isValid: target.value.length <= maxLength && target.value.length > 0,
-      });
-    }, 300);
-
     const feedback = target.value.length <= maxLength
       ? this.props.t('{{length}} out of {{maxLength}} characters left', {
         length: maxLength - target.value.length,
@@ -109,17 +94,36 @@ class FollowAccount extends React.Component {
       })
       : this.props.t('{{length}} extra characters', { length: target.value.length - maxLength });
 
+    const field = {
+      ...fields[target.name],
+      value: target.value,
+      error: target.value.length > maxLength,
+      feedback,
+    };
+
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.setState({
+        fields: {
+          ...fields,
+          [target.name]: {
+            ...field,
+            loading: false,
+          },
+        },
+        isValid: target.value.length <= maxLength && target.value.length > 0,
+      });
+    }, 300);
+
     this.setState({
       fields: {
         ...fields,
         [target.name]: {
-          ...fields[target.name],
-          value: target.value,
+          ...field,
           loading: target.value.length <= maxLength,
-          error: target.value.length > maxLength,
-          feedback,
         },
       },
+      isValid: false,
     });
   }
 
