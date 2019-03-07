@@ -21,6 +21,7 @@ class FollowAccount extends React.Component {
           error: false,
           feedback: '',
           loading: false,
+          isReadOnly: false,
         },
         dashboard: {
           value: true,
@@ -42,17 +43,38 @@ class FollowAccount extends React.Component {
     clearTimeout(this.timeout);
   }
 
-  componentDidMount() {
-    if (this.props.isFollowing) {
-      const { accounts, address } = this.props;
-      const { fields } = this.state;
-      const index = getIndexOfFollowedAccount(accounts, { address });
+  componentDidUpdate() {
+    const { delegate } = this.props;
+    const { fields } = this.state;
+
+    if (delegate.username && delegate.username !== fields.accountName.value) {
       this.setState({
         fields: {
           ...fields,
           accountName: {
             ...fields.accountName,
-            value: accounts[index].title,
+            value: delegate.username || '',
+            isReadOnly: true,
+          },
+        },
+        isValid: true,
+      });
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.isFollowing) {
+      const { accounts, address, delegate } = this.props;
+      const { fields } = this.state;
+      const index = getIndexOfFollowedAccount(accounts, { address });
+      const value = delegate.username || accounts[index].title;
+      this.setState({
+        fields: {
+          ...fields,
+          accountName: {
+            ...fields.accountName,
+            value,
+            isReadOnly: true,
           },
         },
         followIndex: index,
@@ -79,6 +101,7 @@ class FollowAccount extends React.Component {
         accountName: {
           ...fields.accountName,
           value: '',
+          isReadOnly: false,
         },
       },
     });
@@ -144,7 +167,7 @@ class FollowAccount extends React.Component {
               name='accountName'
               value={fields.accountName.value}
               placeholder={t('Account Name')}
-              readOnly={isFollowing}
+              readOnly={fields.accountName.isReadOnly}
               className={`${styles.input} ${fields.accountName.error ? 'error' : ''}`} />
             {!isFollowing ?
               <React.Fragment>
@@ -185,6 +208,7 @@ FollowAccount.propTypes = {
   isFollowing: PropTypes.bool.isRequired,
   addAccount: PropTypes.func.isRequired,
   removeAccount: PropTypes.func.isRequired,
+  delegate: PropTypes.object.isRequired,
 };
 
 /* istanbul ignore next */
@@ -195,6 +219,7 @@ FollowAccount.defaultProps = {
   isFollowing: false,
   addAccount: () => null,
   removeAccount: () => null,
+  delegate: {},
 };
 
 export default translate()(FollowAccount);

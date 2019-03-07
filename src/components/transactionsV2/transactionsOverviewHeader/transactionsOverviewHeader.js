@@ -126,6 +126,7 @@ class transactionsHeader extends React.Component {
               showDropdown={this.state.shownDropdown === 'followDropdown'}
               className={`${styles.followDropdown}`}>
                 <FollowAccount
+                  delegate={delegate}
                   balance={this.props.balance}
                   address={address}
                   isFollowing={isFollowing} />
