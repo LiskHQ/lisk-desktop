@@ -19,8 +19,8 @@ describe('Follow Account Component', () => {
     accounts: [],
     balance: accounts.genesis.balance,
     isFollowing: false,
-    addAccount: jest.fn(),
-    removeAccount: jest.fn(),
+    followedAccountAdded: jest.fn(),
+    followedAccountRemoved: jest.fn(),
   };
 
   beforeEach(() => {
@@ -39,7 +39,7 @@ describe('Follow Account Component', () => {
       expect(wrapper.find('input[name="accountName"]')).toHaveValue(account.title);
       expect(wrapper.find('button').last()).toHaveText('Unfollow');
       wrapper.find('button').last().simulate('click');
-      expect(props.removeAccount).toBeCalledWith(account);
+      expect(props.followedAccountRemoved).toBeCalledWith(account);
     });
 
     it('Should render in follow state', () => {
@@ -64,7 +64,7 @@ describe('Follow Account Component', () => {
       expect(wrapper.find('.fieldInput')).toContainMatchingElement('img.show');
       expect(wrapper.find('button').last()).not.toBeDisabled();
       wrapper.find('button').last().simulate('click');
-      expect(props.addAccount).toBeCalledWith(expected);
+      expect(props.followedAccountAdded).toBeCalledWith(expected);
     });
 
     it('Should show error if account name to long', () => {

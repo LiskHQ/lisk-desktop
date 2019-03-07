@@ -87,14 +87,14 @@ class FollowAccount extends React.Component {
     const title = this.state.fields.accountName.value;
     const account = { address, title, balance };
     const followIndex = accounts.length;
-    this.props.addAccount(account);
+    this.props.followedAccountAdded(account);
     this.setState({ account, followIndex });
   }
 
   handleUnfollow() {
     const { fields, followIndex } = this.state;
     const { accounts } = this.props;
-    this.props.removeAccount(accounts[followIndex]);
+    this.props.followedAccountRemoved(accounts[followIndex]);
     this.setState({
       fields: {
         ...fields,
@@ -206,8 +206,8 @@ FollowAccount.propTypes = {
   balance: PropTypes.string.isRequired,
   accounts: PropTypes.arrayOf(PropTypes.object).isRequired,
   isFollowing: PropTypes.bool.isRequired,
-  addAccount: PropTypes.func.isRequired,
-  removeAccount: PropTypes.func.isRequired,
+  followedAccountAdded: PropTypes.func.isRequired,
+  followedAccountRemoved: PropTypes.func.isRequired,
   delegate: PropTypes.object.isRequired,
 };
 
@@ -217,8 +217,8 @@ FollowAccount.defaultProps = {
   accounts: [],
   balance: '0',
   isFollowing: false,
-  addAccount: () => null,
-  removeAccount: () => null,
+  followedAccountAdded: () => null,
+  followedAccountRemoved: () => null,
   delegate: {},
 };
 
