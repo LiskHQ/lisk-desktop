@@ -16,7 +16,6 @@
   "Account Info": "Account Info",
   "Account Name": "Account Name",
   "Account initialization": "Account initialization",
-  "Account name too long!": "Account name too long!",
   "Accounts on Ledger": "Accounts on Ledger",
   "Action Denied by User": "Action Denied by User",
   "Active": "Active",
@@ -572,6 +571,7 @@
   "{{count}} delegate(s) selected to vote": "{{count}} delegate selected to vote",
   "{{count}} delegate(s) selected to vote_plural": "{{count}} delegates selected to vote",
   "{{length}} extra characters": "{{length}} extra characters",
+  "{{length}} out of {{maxLength}} characters left": "{{length}} out of {{maxLength}} characters left",
   "{{length}} out of {{total}} characters left": "{{length}} out of {{total}} characters left",
   "{{title}} has been added to your Dashboard.": "{{title}} has been added to your Dashboard."
 }

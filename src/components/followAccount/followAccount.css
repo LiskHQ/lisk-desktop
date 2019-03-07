@@ -55,10 +55,13 @@
       opacity var(--animation-speed-fast) linear;
     width: 100%;
 
-    &:global(.error) {
-      color: var(--color-error);
+    &.show {
       max-height: 22px;
       opacity: 1;
+    }
+
+    &:global(.error) {
+      color: var(--color-error);
     }
   }
 

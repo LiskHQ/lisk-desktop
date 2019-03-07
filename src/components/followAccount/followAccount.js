@@ -33,7 +33,6 @@ class FollowAccount extends React.Component {
     this.timeout = null;
 
     this.handleAccountNameChange = this.handleAccountNameChange.bind(this);
-    this.validateAccountName = this.validateAccountName.bind(this);
     this.handleUnfollow = this.handleUnfollow.bind(this);
     this.handleFollow = this.handleFollow.bind(this);
   }
@@ -85,31 +84,30 @@ class FollowAccount extends React.Component {
     });
   }
 
-  validateAccountName(value) {
-    const { fields } = this.state;
-    const accountNameTooLong = !(value.length <= 20);
-    const feedback = (accountNameTooLong && this.props.t('Account name too long!')) || '';
-
-    this.setState({
-      fields: {
-        ...fields,
-        accountName: {
-          ...fields.accountName,
-          error: accountNameTooLong,
-          feedback,
-          loading: false,
-        },
-      },
-      isValid: (value !== '' && !accountNameTooLong),
-    });
-  }
-
   handleAccountNameChange({ target }) {
     const { fields } = this.state;
+    const maxLength = 20;
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
-      this.validateAccountName(target.value);
+      this.setState({
+        fields: {
+          ...fields,
+          [target.name]: {
+            ...fields[target.name],
+            value: target.value,
+            loading: false,
+          },
+        },
+        isValid: target.value.length <= maxLength && target.value.length > 0,
+      });
     }, 300);
+
+    const feedback = target.value.length <= maxLength
+      ? this.props.t('{{length}} out of {{maxLength}} characters left', {
+        length: maxLength - target.value.length,
+        maxLength,
+      })
+      : this.props.t('{{length}} extra characters', { length: target.value.length - maxLength });
 
     this.setState({
       fields: {
@@ -117,12 +115,15 @@ class FollowAccount extends React.Component {
         [target.name]: {
           ...fields[target.name],
           value: target.value,
-          loading: true,
+          loading: target.value.length <= maxLength,
+          error: target.value.length > maxLength,
+          feedback,
         },
       },
     });
   }
 
+  // eslint-disable-next-line complexity
   render() {
     const { t, isFollowing } = this.props;
     const { isValid, fields } = this.state;
@@ -133,6 +134,7 @@ class FollowAccount extends React.Component {
           <span className={`${styles.fieldLabel}`}>{t('Account Name')}</span>
           <span className={`${styles.fieldInput}`}>
             <InputV2
+              maxLength={40}
               autoComplete={'off'}
               onChange={this.handleAccountNameChange}
               name='accountName'
@@ -149,7 +151,7 @@ class FollowAccount extends React.Component {
               </React.Fragment>
             : null}
           </span>
-          <span className={`${styles.feedback} ${fields.accountName.error ? 'error' : ''}`}>
+          <span className={`${styles.feedback} ${fields.accountName.error || fields.accountName.value.length >= 15 ? 'error' : ''} ${fields.accountName.value ? styles.show : ''}`}>
             {fields.accountName.feedback}
           </span>
         </label>
