@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
+import SpinnerV2 from '../spinnerV2/spinnerV2';
+import svg from '../../utils/svgIcons';
 import { FontIcon } from '../fontIcon';
 import { InputV2 } from '../toolbox/inputsV2';
 import { PrimaryButtonV2, DangerButtonV2 } from '../toolbox/buttons/button';
@@ -12,11 +14,13 @@ class FollowAccount extends React.Component {
     super();
 
     this.state = {
+      account: {},
       fields: {
         accountName: {
           value: '',
           error: false,
           feedback: '',
+          loading: false,
         },
         dashboard: {
           value: true,
@@ -34,6 +38,7 @@ class FollowAccount extends React.Component {
     this.handleFollow = this.handleFollow.bind(this);
   }
 
+  /* istanbul ignore next */
   componentWillUnmount() {
     clearTimeout(this.timeout);
   }
@@ -57,10 +62,12 @@ class FollowAccount extends React.Component {
   }
 
   handleFollow() {
-    const { address, balance } = this.props;
+    const { address, balance, accounts } = this.props;
     const title = this.state.fields.accountName.value;
     const account = { address, title, balance };
+    const followIndex = accounts.length;
     this.props.addAccount(account);
+    this.setState({ account, followIndex });
   }
 
   handleUnfollow() {
@@ -92,6 +99,7 @@ class FollowAccount extends React.Component {
           ...fields.accountName,
           error: accountNameExists || accountNameTooLong,
           feedback,
+          loading: false,
         },
       },
       isValid: (value !== '' && !accountNameExists && !accountNameTooLong),
@@ -111,6 +119,7 @@ class FollowAccount extends React.Component {
         [target.name]: {
           ...fields[target.name],
           value: target.value,
+          loading: true,
         },
       },
     });
@@ -124,14 +133,24 @@ class FollowAccount extends React.Component {
       <section className={`${styles.wrapper}`}>
         <label className={`${styles.fieldGroup}`}>
           <span className={`${styles.fieldLabel}`}>{t('Account Name')}</span>
-          <InputV2
-            autoComplete={'off'}
-            onChange={this.handleAccountNameChange}
-            name='accountName'
-            value={fields.accountName.value}
-            placeholder={t('Account Name')}
-            readOnly={isFollowing}
-            className={`${styles.input} ${fields.accountName.error ? 'error' : ''}`} />
+          <span className={`${styles.fieldInput}`}>
+            <InputV2
+              autoComplete={'off'}
+              onChange={this.handleAccountNameChange}
+              name='accountName'
+              value={fields.accountName.value}
+              placeholder={t('Account Name')}
+              readOnly={isFollowing}
+              className={`${styles.input} ${fields.accountName.error ? 'error' : ''}`} />
+            {!isFollowing ?
+              <React.Fragment>
+                <SpinnerV2 className={`${styles.status} ${fields.accountName.loading && fields.accountName.value ? styles.show : ''}`}/>
+                <img
+                  className={`${styles.status} ${!fields.accountName.loading && fields.accountName.value ? styles.show : ''}`}
+                  src={ fields.accountName.error ? svg.alert_icon : svg.ok_icon} />
+              </React.Fragment>
+            : null}
+          </span>
           <span className={`${styles.feedback} ${fields.accountName.error ? 'error' : ''}`}>
             {fields.accountName.feedback}
           </span>
@@ -164,6 +183,7 @@ FollowAccount.propTypes = {
   removeAccount: PropTypes.func.isRequired,
 };
 
+/* istanbul ignore next */
 FollowAccount.defaultProps = {
   address: '',
   accounts: [],
