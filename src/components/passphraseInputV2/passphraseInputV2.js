@@ -3,6 +3,7 @@ import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { FontIcon } from '../fontIcon';
 import { isValidPassphrase, getPassphraseValidationErrors } from '../../utils/passphrase';
+import InputV2 from '../toolbox/inputsV2/inputV2';
 import keyCodes from './../../constants/keyCodes';
 import styles from './passphraseInputV2.css';
 
@@ -77,6 +78,7 @@ class passphraseInputV2 extends React.Component {
     this.validatePassphrase({ values, focus: index });
   }
 
+  // eslint-disable-next-line max-statements
   validatePassphrase({ values, inputsLength = this.state.inputsLength, focus = null }) {
     let errorState = { validationError: '', partialPassphraseError: [], passphraseIsInvalid: false };
     const passphrase = values.join(' ').trim();
@@ -123,6 +125,7 @@ class passphraseInputV2 extends React.Component {
 
   render() {
     const { t } = this.props;
+    const secondPPFeedback = (this.props.isSecondPassphrase && this.props.secondPPFeedback) || '';
     const { values, inputsLength } = this.state;
 
     return (
@@ -130,10 +133,10 @@ class passphraseInputV2 extends React.Component {
         <div className={`${styles.inputs} ${grid.row} passphrase`}>
           {[...Array(inputsLength)].map((x, i) => (
             <span key={i} className={`${grid['col-xs-2']}`}>
-              <input
-                ref={ref => ref !== null && this.state.focus === i && ref.focus() }
+              <InputV2
+                setRef={ref => ref !== null && this.state.focus === i && ref.focus() }
                 placeholder={this.state.focus === i ? '' : i + 1 }
-                className={`${this.state.partialPassphraseError[i] || this.state.passphraseIsInvalid ? 'error' : ''} ${this.state.focus === i ? 'selected' : ''}`}
+                className={`${this.state.partialPassphraseError[i] || this.state.passphraseIsInvalid || secondPPFeedback !== '' ? 'error' : ''} ${this.state.focus === i ? 'selected' : ''}`}
                 value={values[i] || ''}
                 type={this.state.showPassphrase ? 'text' : 'password'}
                 autoComplete='off'
@@ -148,8 +151,8 @@ class passphraseInputV2 extends React.Component {
           ))}
         </div>
 
-        <span className={`${styles.errorMessage} ${this.state.validationError ? styles.showError : ''}`}>
-          { this.state.validationError }
+        <span className={`${styles.errorMessage} ${this.state.validationError || secondPPFeedback !== '' ? styles.showError : ''}`}>
+          { secondPPFeedback || this.state.validationError }
         </span>
 
         <label className={`${styles.showPassphrase}`}>
