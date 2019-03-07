@@ -142,6 +142,7 @@ class ExplorerTransactions extends React.Component {
         <TransactionsOverviewHeader
           delegate={this.props.delegate}
           followedAccounts={this.props.followedAccounts}
+          balance={this.props.balance}
           address={this.props.address}
           match={this.props.match}
           t={this.props.t}
