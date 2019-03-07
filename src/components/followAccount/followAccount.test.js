@@ -49,7 +49,7 @@ describe('Follow Account Component', () => {
   });
 
   describe('Handle account name input changes', () => {
-    it('Should validate to true if name is not on bookmark already', () => {
+    it('Should validate to true if name is valid', () => {
       const evt = { target: { name: 'accountName', value: 'test name' } };
       const expected = {
         address: props.address,
@@ -71,21 +71,6 @@ describe('Follow Account Component', () => {
       const evt = { target: { name: 'accountName', value: 'following name too long' } };
       wrapper.find('input[name="accountName"]').simulate('change', evt);
       wrapper.update();
-      jest.advanceTimersByTime(300);
-      wrapper.update();
-      expect(wrapper.find('button').last()).toBeDisabled();
-      expect(wrapper.find('.feedback')).toHaveClassName('error');
-    });
-
-    it('Should show error if account name already registered', () => {
-      const account = { ...accounts.delegate, title: 'follow test' };
-      const evt = { target: { name: 'accountName', value: 'follow test' } };
-      const followingProps = {
-        ...props,
-        accounts: [account],
-      };
-      wrapper = mount(<FollowAccount {...followingProps} />, options);
-      wrapper.find('input[name="accountName"]').simulate('change', evt);
       jest.advanceTimersByTime(300);
       wrapper.update();
       expect(wrapper.find('button').last()).toBeDisabled();

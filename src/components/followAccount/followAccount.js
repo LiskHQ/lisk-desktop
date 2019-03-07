@@ -87,22 +87,20 @@ class FollowAccount extends React.Component {
 
   validateAccountName(value) {
     const { fields } = this.state;
-    const accountNameExists = this.props.accounts.filter(acc => acc.title === value).length > 0;
     const accountNameTooLong = !(value.length <= 20);
-    const feedback = (accountNameExists && this.props.t('Account name already registered!'))
-      || (accountNameTooLong && this.props.t('Account name too long!')) || '';
+    const feedback = (accountNameTooLong && this.props.t('Account name too long!')) || '';
 
     this.setState({
       fields: {
         ...fields,
         accountName: {
           ...fields.accountName,
-          error: accountNameExists || accountNameTooLong,
+          error: accountNameTooLong,
           feedback,
           loading: false,
         },
       },
-      isValid: (value !== '' && !accountNameExists && !accountNameTooLong),
+      isValid: (value !== '' && !accountNameTooLong),
     });
   }
 
