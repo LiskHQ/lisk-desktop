@@ -60,23 +60,25 @@ export const graphOptions = format => ({
   tooltips: {
     callbacks: {
       title(tooltipItem) {
-        return `${tooltipItem[0].yLabel} LSK`;
+        return moment(tooltipItem[0].xLabel, 'MMMM DD YYYY h:mm:ss A')
+          .format(format);
       },
       label(tooltipItem) {
-        return moment(tooltipItem.xLabel, 'MMMM DD YYYY h:mm:ss A')
-          .format(format);
+        return `Account Balance:          ${tooltipItem.yLabel} LSK`;
       },
     },
     mode: 'index',
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    titleFontSize: 18,
-    titleFontColor: '#0000',
-    bodyFontColor: '#74869B',
+    bodyFontColor: '#2e2c3b',
+    bodyFontFamily: 'gilroy',
     bodyFontSize: 12,
+    bodyFontStyle: 'bold',
+    titleFontColor: '#868ba1',
+    titleFontFamily: 'gilroy',
+    titleFontSize: 12,
     displayColors: false,
     xPadding: 16,
     yPadding: 18,
-    titleFontFamily: 'gilroy',
     titleSpacing: 12,
     titleMarginBottom: 12,
     cornerRadius: 0,
