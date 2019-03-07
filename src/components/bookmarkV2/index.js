@@ -8,6 +8,7 @@ import styles from './bookmark.css';
 
 // eslint-disable-next-line complexity
 class Bookmark extends React.Component {
+  // eslint-disable-next-line max-statements
   constructor(props) {
     super(props);
 
@@ -17,6 +18,7 @@ class Bookmark extends React.Component {
     };
 
     this.loaderTimeout = null;
+    this.listContainerRef = null;
 
     this.onHandleKeyPress = this.onHandleKeyPress.bind(this);
     this.getFilterList = this.getFilterList.bind(this);
@@ -24,6 +26,7 @@ class Bookmark extends React.Component {
     this.onKeyPressEnter = this.onKeyPressEnter.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSelectedAccount = this.onSelectedAccount.bind(this);
+    this.resetListIndex = this.resetListIndex.bind(this);
   }
 
   getFilterList() {
@@ -35,8 +38,13 @@ class Bookmark extends React.Component {
         account.address.toLowerCase().includes(recipient.value.toLowerCase()));
   }
 
+  resetListIndex() {
+    this.setState({ dropdownIndex: 0 });
+  }
+
   onSelectedAccount(account) {
     this.setState({ isLoading: false });
+    this.resetListIndex();
     this.props.onSelectedAccount(account);
   }
 
@@ -45,11 +53,21 @@ class Bookmark extends React.Component {
     const accountsLength = this.getFilterList().length;
 
     // istanbul ignore else
-    if (action === 'down' && dropdownIndex < accountsLength - 1) this.setState({ dropdownIndex: dropdownIndex + 1 });
-
+    if (action === 'down' && dropdownIndex < accountsLength - 1) {
+      if (dropdownIndex + 1 >= 4) {
+        this.listContainerRef.scrollTop = this.listContainerRef.scrollTop + 44;
+      }
+      this.setState({ dropdownIndex: dropdownIndex + 1 });
+    }
 
     // istanbul ignore else
-    if (action === 'up' && dropdownIndex > 0) this.setState({ dropdownIndex: this.state.dropdownIndex - 1 });
+    if (action === 'up' && dropdownIndex > 0) {
+      this.listContainerRef.scrollTop = this.listContainerRef.scrollTop > 0
+        && (dropdownIndex - 1) * 44 < this.listContainerRef.scrollTop
+        ? this.listContainerRef.scrollTop - 44
+        : this.listContainerRef.scrollTop;
+      this.setState({ dropdownIndex: this.state.dropdownIndex - 1 });
+    }
   }
 
   onKeyPressEnter() {
@@ -86,6 +104,8 @@ class Bookmark extends React.Component {
       if (this.getFilterList().length === 0) this.setState({ isLoading: false });
       this.props.validateBookmark();
     }, 300);
+
+    if (e && e.target.value === '') this.resetListIndex();
     this.props.onChange(e);
   }
 
@@ -96,9 +116,7 @@ class Bookmark extends React.Component {
       placeholder,
       showSuggestions,
     } = this.props;
-
     const { dropdownIndex } = this.state;
-
     const showAccountVisual = recipient.address.length && !recipient.error;
     const selectedAccount = recipient.selected ? recipient.title : recipient.value;
 
@@ -131,7 +149,8 @@ class Bookmark extends React.Component {
           {
             showSuggestions && recipient.value !== ''
             ? <div className={styles.bookmarkContainer}>
-                <ul className={`${styles.bookmarkList} bookmark-list`}>
+                <div ref={(node) => { this.listContainerRef = node; }}>
+                  <ul className={`${styles.bookmarkList} bookmark-list`}>
                   {
                     this.getFilterList()
                     .map((account, index) =>
@@ -145,6 +164,7 @@ class Bookmark extends React.Component {
                       </li>)
                   }
                   </ul>
+                </div>
               </div>
             : null
           }
