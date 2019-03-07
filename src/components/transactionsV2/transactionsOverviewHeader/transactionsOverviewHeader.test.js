@@ -13,6 +13,9 @@ import routes from '../../../constants/routes';
 describe('Transactions Overview Header', () => {
   let wrapper;
   const store = configureMockStore([thunk])({
+    followedAccounts: {
+      accounts: [],
+    },
     settings: { currency: 'USD' },
     settingsUpdated: () => {},
     liskService: {
@@ -36,6 +39,7 @@ describe('Transactions Overview Header', () => {
     followedAccounts: [],
     address: accounts.genesis.address,
     match: { url: routes.wallet.path },
+    balance: accounts.genesis.balance,
   };
 
   describe('Current user wallet', () => {
@@ -78,7 +82,8 @@ describe('Transactions Overview Header', () => {
     const anotherUserProps = {
       ...props,
       address: accounts.delegate.address,
-      match: { urls: `${routes.accounts.pathPrefix}${routes.accounts.path}/${accounts.delegate.address}` },
+      balance: accounts.delegate.balance,
+      match: { urls: `${routes.accounts.pathPrefix}${routes.accounts.path}V2/${accounts.delegate.address}` },
     };
 
     beforeEach(() => {

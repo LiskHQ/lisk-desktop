@@ -25,6 +25,7 @@ class transactionsHeader extends React.Component {
     this.setDropownRefs = this.setDropownRefs.bind(this);
   }
 
+  /* istanbul ignore next */
   componentWillUnmount() {
     document.removeEventListener('click', this.handleClickOutsideDropdown);
   }
@@ -110,7 +111,10 @@ class transactionsHeader extends React.Component {
             { isFollowing ? (
               <SecondaryButtonV2
                 className={`${styles.followingButton}`}
-                onClick={() => this.toggleDropdown('followDropdown')}>
+                onClick={
+                  /* istanbul ignore next */
+                  () => this.toggleDropdown('followDropdown')
+                }>
                 {t('Following')}
               </SecondaryButtonV2>
             ) : (

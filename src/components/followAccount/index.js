@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import { followedAccountAdded, followedAccountRemoved } from '../../actions/followedAccounts';
 import FollowAccount from './followAccount';
