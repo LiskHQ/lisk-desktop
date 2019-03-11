@@ -36,6 +36,7 @@ class FollowAccount extends React.Component {
     this.handleAccountNameChange = this.handleAccountNameChange.bind(this);
     this.handleUnfollow = this.handleUnfollow.bind(this);
     this.handleFollow = this.handleFollow.bind(this);
+    this.setFollowed = this.setFollowed.bind(this);
   }
 
   /* istanbul ignore next */
@@ -43,31 +44,28 @@ class FollowAccount extends React.Component {
     clearTimeout(this.timeout);
   }
 
+  // eslint-disable-next-line max-statements
   componentDidUpdate() {
-    const { delegate } = this.props;
-    const { fields } = this.state;
-
-    if (delegate.username && delegate.username !== fields.accountName.value) {
-      this.setState({
-        fields: {
-          ...fields,
-          accountName: {
-            ...fields.accountName,
-            value: delegate.username || '',
-            isReadOnly: true,
-          },
-        },
-        isValid: true,
-      });
+    if (this.props.delegate.username || this.props.isFollowing) {
+      this.setFollowed();
     }
   }
 
   componentDidMount() {
     if (this.props.isFollowing) {
-      const { accounts, address, delegate } = this.props;
-      const { fields } = this.state;
-      const index = getIndexOfFollowedAccount(accounts, { address });
-      const value = delegate.username || accounts[index].title;
+      this.setFollowed();
+    }
+  }
+
+  setFollowed() {
+    const { accounts, address, delegate } = this.props;
+    const { fields } = this.state;
+    const index = getIndexOfFollowedAccount(accounts, { address });
+    const followedTitle = accounts[index] && accounts[index].title;
+    const delegateTitle = delegate.account && delegate.account.address === address
+      ? delegate.username : undefined;
+    const value = delegateTitle || followedTitle || '';
+    if (value !== fields.accountName.value) {
       this.setState({
         fields: {
           ...fields,
@@ -77,6 +75,7 @@ class FollowAccount extends React.Component {
             isReadOnly: true,
           },
         },
+        isValid: true,
         followIndex: index,
       });
     }
@@ -88,7 +87,17 @@ class FollowAccount extends React.Component {
     const account = { address, title, balance };
     const followIndex = accounts.length;
     this.props.followedAccountAdded(account);
-    this.setState({ account, followIndex });
+    this.setState({
+      account,
+      followIndex,
+      fields: {
+        ...this.state.fields,
+        accountName: {
+          ...this.state.fields.accountName,
+          isReadOnly: true,
+        },
+      },
+    });
   }
 
   handleUnfollow() {
