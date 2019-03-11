@@ -29,6 +29,7 @@
     }
 
     & textarea {
+      min-height: 36px;
       overflow: hidden;
     }
 
@@ -36,6 +37,7 @@
       font-size: var(--button-font-size-s);
       height: 36px;
       line-height: 1.83;
+      min-height: 36px;
       resize: none;
     }
   }
