@@ -212,7 +212,10 @@ class FollowAccount extends React.Component {
 
 FollowAccount.propTypes = {
   address: PropTypes.string.isRequired,
-  balance: PropTypes.string.isRequired,
+  balance: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
   accounts: PropTypes.arrayOf(PropTypes.object).isRequired,
   isFollowing: PropTypes.bool.isRequired,
   followedAccountAdded: PropTypes.func.isRequired,

@@ -1,8 +1,6 @@
 import React from 'react';
 import thunk from 'redux-thunk';
-import { spy } from 'sinon';
 import { mount } from 'enzyme';
-import { expect } from 'chai';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import { MemoryRouter as Router } from 'react-router-dom';
@@ -13,8 +11,6 @@ import routes from '../../../constants/routes';
 
 describe('ExplorerTransactions V2 Component', () => {
   let wrapper;
-  let props;
-
   const peers = {
     data: {},
     options: {},
@@ -53,59 +49,99 @@ describe('ExplorerTransactions V2 Component', () => {
     },
   };
 
-  beforeEach(() => {
-    props = {
+  const props = {
+    accounts: {
+      [accounts.genesis.address]: accounts.genesis,
+    },
+    address: accounts.genesis.address,
+    account: accounts['empty account'],
+    match: { params: { address: accounts.genesis.address } },
+    history: { push: jest.fn(), location: { search: ' ' } },
+    followedAccounts: [],
+    count: 1000,
+    transactions,
+    transaction: transactions[0],
+    searchAccount: jest.fn(),
+    searchTransactions: jest.fn(),
+    transactionsFilterSet: jest.fn(),
+    searchMoreTransactions: jest.fn(),
+    addFilter: jest.fn(),
+    loading: [],
+    t: key => key,
+    loadLastTransaction: jest.fn(),
+    wallets: {},
+    peers: { options: { code: 0 } },
+    balance: accounts.genesis.balance,
+    detailAccount: accounts.genesis,
+  };
+
+  describe('Another account', () => {
+    beforeEach(() => {
+      wrapper = mount(<Router>
+          <ExplorerTransactionsV2 {...props} />
+        </Router>, options);
+    });
+
+    it('renders ExplorerTransactionsV2 Component and loads account transactions', () => {
+      const renderedWalletTransactions = wrapper.find(ExplorerTransactionsV2);
+      expect(renderedWalletTransactions).toExist();
+      expect(wrapper).toContainExactlyOneMatchingElement('.transactions-row');
+    });
+
+    it('click on row transaction', () => {
+      const transactionPath = `${routes.transactions.pathPrefix}${routes.transactions.path}/${transactions[0].id}`;
+      wrapper.find('.transactions-row').first().simulate('click');
+      expect(props.history.push).toBeCalledWith(transactionPath);
+    });
+
+    it('click on load more', () => {
+      expect(wrapper).toContainMatchingElement('.show-more-button');
+      wrapper.find('.show-more-button').simulate('click');
+      expect(props.searchMoreTransactions).toBeCalled();
+    });
+
+    it('Should change filters on click', () => {
+      expect(wrapper).toContainMatchingElement('.transaction-filter-item');
+      wrapper.find('.transaction-filter-item').at(1).simulate('click');
+      expect(props.addFilter).toBeCalled();
+    });
+  });
+
+  describe('Delegate account', () => {
+    const delegateProps = {
+      ...props,
       accounts: {
-        [accounts.genesis.address]: accounts.genesis,
+        [accounts.delegate.address]: accounts.delegate,
       },
-      address: accounts.genesis.address,
-      account: accounts['empty account'],
-      match: { params: { address: accounts.genesis.address } },
-      history: { push: spy(), location: { search: ' ' } },
-      followedAccounts: [],
-      count: 1000,
-      transactions,
-      transaction: transactions[0],
-      searchAccount: spy(),
-      searchTransactions: spy(),
-      transactionsFilterSet: spy(),
-      searchMoreTransactions: spy(),
-      addFilter: spy(),
-      loading: [],
-      t: key => key,
-      loadLastTransaction: spy(),
-      wallets: {},
-      peers: { options: { code: 0 } },
-      balance: accounts.genesis.balance,
-      anotherAccount: accounts.genesis,
+      address: accounts.delegate.address,
+      account: accounts.genesis,
+      match: { params: { address: accounts.delegate.address } },
+      balance: accounts.delegate.balance,
+      detailAccount: accounts.delegate,
+      delegate: {
+        account: accounts.delegate,
+        approval: 98.63,
+        missedBlocks: 10,
+        producedBlocks: 304,
+        productivity: 96.82,
+        rank: 1,
+        rewards: '140500000000',
+        username: accounts.delegate.username,
+        vote: '9876965713168313',
+        lastBlock: { timestamp: 0 },
+        txDelegateRegister: { timestamp: 0 },
+      },
     };
 
-    wrapper = mount(<Router>
-        <ExplorerTransactionsV2 {...props} />
+    beforeEach(() => {
+      wrapper = mount(<Router>
+        <ExplorerTransactionsV2 {...delegateProps} />
       </Router>, options);
-  });
+    });
 
-  it('renders ExplorerTransactionsV2 Component and loads account transactions', () => {
-    const renderedWalletTransactions = wrapper.find(ExplorerTransactionsV2);
-    expect(renderedWalletTransactions).to.be.present();
-    expect(wrapper).to.have.exactly(1).descendants('.transactions-row');
-  });
-
-  it('click on row transaction', () => {
-    const transactionPath = `${routes.transactions.pathPrefix}${routes.transactions.path}/${transactions[0].id}`;
-    wrapper.find('.transactions-row').first().simulate('click');
-    expect(props.history.push).to.have.been.calledWith(transactionPath);
-  });
-
-  it('click on load more', () => {
-    expect(wrapper).to.have.descendants('.show-more-button');
-    wrapper.find('.show-more-button').simulate('click');
-    expect(props.searchMoreTransactions).to.have.been.calledWith();
-  });
-
-  it('Should change filters on click', () => {
-    expect(wrapper).to.have.descendants('.transaction-filter-item');
-    wrapper.find('.transaction-filter-item').at(1).simulate('click');
-    expect(props.addFilter).to.have.been.calledWith();
+    it('Should render delegate Tab', () => {
+      expect(wrapper).toContainExactlyOneMatchingElement('TabsContainer');
+      expect(wrapper.find('TabsContainer')).toContainMatchingElement('.delegateStats');
+    });
   });
 });

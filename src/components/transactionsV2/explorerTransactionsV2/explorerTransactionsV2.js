@@ -6,7 +6,7 @@ import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import WalletTab from '../../wallet/walletTab';
 import DelegateTab from '../../delegate/delegateTab';
 
-class ExplorerTransactions extends React.Component {
+class ExplorerTransactionsV2 extends React.Component {
   // eslint-disable-next-line max-statements
   constructor() {
     super();
@@ -152,7 +152,7 @@ class ExplorerTransactions extends React.Component {
           t={this.props.t}
           account={this.props.account}
         />
-        <TabsContainer activeTab={'Delegate'}>
+        <TabsContainer>
           <WalletTab tabName={this.props.t('Wallet')}
             {...overviewProps}/>
           {isDelegate
@@ -165,4 +165,4 @@ class ExplorerTransactions extends React.Component {
   }
 }
 
-export default ExplorerTransactions;
+export default ExplorerTransactionsV2;
