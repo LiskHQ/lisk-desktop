@@ -49,6 +49,12 @@ class WalletTransactionsV2 extends React.Component {
     clearTimeout(this.copyTimeout);
   }
 
+  componentDidMount() {
+    if (this.props.account.isDelegate) {
+      this.props.updateAccountDelegateStats(this.props.account);
+    }
+  }
+
   onInit() {
     this.props.loadLastTransaction(this.props.account.address);
 
@@ -169,6 +175,10 @@ class WalletTransactionsV2 extends React.Component {
 
     const { t, account } = this.props;
 
+    const delegate = account.isDelegate
+      ? { account, ...account.delegate }
+      : {};
+
     return (
       <React.Fragment>
         <TransactionsOverviewHeader
@@ -199,10 +209,12 @@ class WalletTransactionsV2 extends React.Component {
         }
 
         <TabsContainer>
-          <WalletTab tabName={this.props.t('Wallet')}
+          <WalletTab tabName={t('Wallet')}
             {...overviewProps}/>
-          {this.props.accountisDelegate && (<DelegateTab tabName={this.props.t('Delegate')}
-            delegate={this.props.delegate} />)}
+          {account.isDelegate && delegate.txDelegateRegister
+            ? (<DelegateTab tabName={t('Delegate')}
+              delegate={delegate} />)
+            : null}
         </TabsContainer>
       </React.Fragment>
     );

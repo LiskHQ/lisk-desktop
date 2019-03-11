@@ -2,6 +2,8 @@ import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { setSecondPassphrase, getAccount } from '../utils/api/account';
 import { registerDelegate, getDelegate, getAllVotes, getVoters } from '../utils/api/delegate';
+import { getTransactions } from '../utils/api/transactions';
+import { getBlocks } from '../utils/api/blocks';
 import { loadTransactionsFinish, transactionsUpdated } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { secondPassphraseRegisteredFailure } from './secondPassphrase';
@@ -62,6 +64,11 @@ export const accountLoading = () => ({
 
 export const passphraseUsed = data => ({
   type: actionTypes.passphraseUsed,
+  data,
+});
+
+export const delegateStatsLoaded = data => ({
+  type: actionTypes.delegateStatsLoaded,
   data,
 });
 
@@ -246,5 +253,21 @@ export const accountDataUpdated = ({
       dispatch(liskAPIClientUpdate({ online: true }));
     }).catch((res) => {
       dispatch(liskAPIClientUpdate({ online: false, code: res.error.code }));
+    });
+  };
+
+export const updateAccountDelegateStats = account =>
+  (dispatch, getState) => {
+    const liskAPIClient = getState().peers.liskAPIClient;
+    const { address, publicKey } = account;
+    getTransactions({
+      liskAPIClient, address, limit: 1, type: transactionTypes.registerDelegate,
+    }).then((transactions) => {
+      getBlocks(liskAPIClient, { publicKey, limit: 1 }).then((block) => {
+        dispatch(delegateStatsLoaded({
+          lastBlock: block.data[0],
+          txDelegateRegister: transactions.data[0],
+        }));
+      });
     });
   };
