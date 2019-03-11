@@ -383,7 +383,6 @@
   "Send to Address": "Send to Address",
   "Send to address": "Send to address",
   "Send to this address": "Send to this address",
-  "Send {{value}} LSK": "Send {{value}} LSK",
   "Sender": "Sender",
   "Session timeout": "Session timeout",
   "Session timeout in": "Session timeout in",
@@ -578,5 +577,6 @@
   "{{length}} out of {{total}} characters left": "{{length}} out of {{total}} characters left",
   "{{paragraph}}": "{{paragraph}}",
   "{{title}}": "{{title}}",
-  "{{title}} has been added to your Dashboard.": "{{title}} has been added to your Dashboard."
+  "{{title}} has been added to your Dashboard.": "{{title}} has been added to your Dashboard.",
+  "{{value}}": "{{value}}"
 }

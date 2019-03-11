@@ -49,8 +49,11 @@ describe('Summary', () => {
   const props = {
     t: v => v,
     account: {
+      address: '12345L',
       secondPublicKey: accounts['second passphrase account'].secondPublicKey,
     },
+    failedTransactions: '',
+    pendingTransactions: [],
     fields: {
       recipient: {
         address: '123123L',
@@ -61,6 +64,8 @@ describe('Summary', () => {
       reference: {
         value: 1,
       },
+      isLoading: false,
+      isHardwareWalletConnected: false,
     },
     prevState: {
       fields: {},
@@ -68,6 +73,8 @@ describe('Summary', () => {
     prevStep: jest.fn(),
     nextStep: jest.fn(),
     sent: jest.fn(),
+    isLoading: false,
+    isHardwareWalletConnected: false,
   };
 
   beforeEach(() => {
@@ -95,6 +102,32 @@ describe('Summary', () => {
     wrapper.find('passphraseInputV2 input').first().simulate('paste', { clipboardData });
     wrapper.update();
     wrapper.find('.on-nextStep').at(0).simulate('click');
+    wrapper.update();
+    expect(props.nextStep).toBeCalled();
+  });
+
+  it('should goind to next page if everyting is successfull by Hardware Wallet', () => {
+    const newProps = { ...props };
+    newProps.account = {
+      ...props.account,
+      hwInfo: {
+        deviceId: '123123sdf',
+      },
+    };
+    wrapper = mount(<Summary {...newProps} />, options);
+    wrapper.update();
+    wrapper.setProps({
+      ...props,
+      pendingTransactions: [{
+        senderId: '12345L',
+        recipientId: '123123L',
+        amount: 1,
+      }],
+      fields: {
+        ...props.fields,
+        isLoading: true,
+      },
+    });
     wrapper.update();
     expect(props.nextStep).toBeCalled();
   });
