@@ -37,12 +37,12 @@ export default {
     isPrivate: true,
     exact: true,
   },
-  sendV2: {
+  send: {
     path: '/wallet/send',
     component: Send,
     isPrivate: true,
   },
-  send: {
+  sendV2: {
     path: '/wallet/sendV2',
     component: SendV2,
     isPrivate: true,
