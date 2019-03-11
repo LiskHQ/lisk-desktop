@@ -3,6 +3,7 @@ import { loadingStarted, loadingFinished } from '../actions/loading';
 import { getAccount } from '../utils/api/account';
 import { getTransactions } from '../utils/api/transactions';
 import { getDelegate, getVoters, getAllVotes } from '../utils/api/delegate';
+import { getBlocks } from '../utils/api/blocks';
 import searchAll from '../utils/api/search';
 import { updateWallet } from './wallets';
 
@@ -10,12 +11,17 @@ const searchDelegate = ({ publicKey, address }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     getDelegate(liskAPIClient, { publicKey }).then((response) => {
-      dispatch({
-        data: {
-          delegate: response.data[0],
-          address,
-        },
-        type: actionTypes.searchDelegate,
+      getBlocks(liskAPIClient, { publicKey, limit: 1 }).then((block) => {
+        dispatch({
+          data: {
+            delegate: {
+              ...response.data[0],
+              lastBlock: block.data[0],
+            },
+            address,
+          },
+          type: actionTypes.searchDelegate,
+        });
       });
     });
   };

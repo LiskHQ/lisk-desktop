@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import voting from '../../constants/voting';
 import BoxV2 from '../boxV2';
+import { getUnixTimestampFromValue } from '../../utils/datetime';
 import LiskAmount from '../liskAmount';
 import styles from './delegateTab.css';
 
 const DelegateTab = ({ delegate, t }) => {
   const status = delegate && delegate.rank && delegate.rank <= voting.maxCountOfVotes ? t('Active') : t('Standby');
+  const timeFromLastBlock = getUnixTimestampFromValue(delegate.lastBlock.timestamp);
 
   return (<BoxV2>
     <header>
@@ -41,7 +44,7 @@ const DelegateTab = ({ delegate, t }) => {
           <LiskAmount val={delegate.rewards}/> {t('LSK')}</span>
         </li>
         <li>
-          <span className={styles.label}>{t('Last Forged Block')}</span> {status}
+          <span className={styles.label}>{t('Last Forged Block')}</span> {moment(timeFromLastBlock).fromNow(true)}
         </li>
       </ul>
     </main>
@@ -61,6 +64,9 @@ DelegateTab.propTypes = {
     rewards: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
     vote: PropTypes.string.isRequired,
+    lastBlock: PropTypes.shape({
+      timestamp: PropTypes.number.isRequired,
+    }).isRequired,
   }).isRequired,
   t: PropTypes.func.isRequired,
 };
@@ -78,6 +84,9 @@ DelegateTab.defaultProps = {
     rewards: '',
     username: '',
     vote: '',
+    lastBlock: {
+      timestamp: '0',
+    },
   },
   t: v => v,
 };
