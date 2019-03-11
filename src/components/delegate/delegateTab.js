@@ -10,6 +10,7 @@ import styles from './delegateTab.css';
 const DelegateTab = ({ delegate, t }) => {
   const status = delegate && delegate.rank && delegate.rank <= voting.maxCountOfVotes ? t('Active') : t('Standby');
   const timeFromLastBlock = getUnixTimestampFromValue(delegate.lastBlock.timestamp);
+  const delegateSince = getUnixTimestampFromValue(delegate.txDelegateRegister.timestamp);
 
   return (<BoxV2>
     <header>
@@ -24,7 +25,7 @@ const DelegateTab = ({ delegate, t }) => {
           <span className={styles.label}>{t('Status')}</span> {status}
         </li>
         <li>
-          <span className={styles.label}>{t('Delegate since')}</span> {status}
+          <span className={styles.label}>{t('Delegate since')}</span> {moment(delegateSince).format('DD MMM YYYY')}
         </li>
         <li>
           <span className={styles.label}>{t('Vote weight')}</span> <span>

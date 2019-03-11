@@ -23,7 +23,7 @@ export const send = (
 
 // eslint-disable-next-line max-statements, complexity
 export const getTransactions = ({
-  liskAPIClient, address, limit = 20, offset = 0,
+  liskAPIClient, address, limit = 20, offset = 0, type = undefined,
   sort = 'timestamp:desc', filter = txFilters.all, customFilters = {},
 }) => {
   const params = {
@@ -32,6 +32,7 @@ export const getTransactions = ({
     sort,
   };
 
+  if (type !== undefined) params.type = type;
   if (customFilters.message) params.data = `%${encodeURIComponent(customFilters.message)}%`;
   if (customFilters.dateFrom && customFilters.dateFrom !== '') {
     params.fromTimestamp = getTimestampFromFirstBlock(customFilters.dateFrom, 'DD.MM.YY');

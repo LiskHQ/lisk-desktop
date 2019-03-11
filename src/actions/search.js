@@ -5,22 +5,28 @@ import { getTransactions } from '../utils/api/transactions';
 import { getDelegate, getVoters, getAllVotes } from '../utils/api/delegate';
 import { getBlocks } from '../utils/api/blocks';
 import searchAll from '../utils/api/search';
+import transactionTypes from '../constants/transactionTypes';
 import { updateWallet } from './wallets';
 
 const searchDelegate = ({ publicKey, address }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     getDelegate(liskAPIClient, { publicKey }).then((response) => {
-      getBlocks(liskAPIClient, { publicKey, limit: 1 }).then((block) => {
-        dispatch({
-          data: {
-            delegate: {
-              ...response.data[0],
-              lastBlock: block.data[0],
+      getTransactions({
+        liskAPIClient, address, limit: 1, type: transactionTypes.registerDelegate,
+      }).then((transactions) => {
+        getBlocks(liskAPIClient, { publicKey, limit: 1 }).then((block) => {
+          dispatch({
+            data: {
+              delegate: {
+                ...response.data[0],
+                lastBlock: block.data[0],
+                txDelegateRegister: transactions.data[0],
+              },
+              address,
             },
-            address,
-          },
-          type: actionTypes.searchDelegate,
+            type: actionTypes.searchDelegate,
+          });
         });
       });
     });
