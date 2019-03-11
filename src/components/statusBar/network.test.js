@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { mount } from 'enzyme';
 import Network from './network';
 
@@ -27,24 +26,18 @@ describe('Network', () => {
     wrapper = setup(data);
   });
 
-  it('renders <Network /> component', () => {
-    expect(wrapper.find('.wrapper')).to.have.length(1);
-  });
-
   it('renders status ONLINE', () => {
-    expect(wrapper.find('.online')).to.have.length(1);
-    expect(wrapper.find('.offline')).to.have.length(0);
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders status OFFLINE', () => {
     data.peers.status.online = false;
     wrapper = setup(data);
-    expect(wrapper.find('.online')).to.have.length(0);
-    expect(wrapper.find('.offline')).to.have.length(1);
+    expect(wrapper).toMatchSnapshot();
   });
 
-  it('renders nethash option as DEVENET', () => {
-    expect(wrapper.find('span').at(1)).to.have.text('devnet');
+  it('renders nethash option as DEVNET', () => {
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders nethash option as MAINNET', () => {
@@ -52,21 +45,20 @@ describe('Network', () => {
     data.peers.status.online = true;
     data.peers.options.nethash = mainnet;
     wrapper = setup(data);
-    expect(wrapper.find('span').at(1)).to.have.text('mainnet');
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders nethash option as TESTNET', () => {
     const testnet = 'da3ed6a45429278bac2666961289ca17ad86595d33b31037615d4b8e8f158bba';
     data.peers.options.nethash = testnet;
     wrapper = setup(data);
-    expect(wrapper.find('span').at(1)).to.have.text('testnet');
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('not render a network', () => {
     data.showNetworkIndicator = false;
     data.peers.options.code = 0;
     wrapper = setup(data);
-    expect(wrapper.find('.wrapper')).to.have.length(1);
-    expect(wrapper.find('.status')).to.have.length(1);
+    expect(wrapper).toMatchSnapshot();
   });
 });
