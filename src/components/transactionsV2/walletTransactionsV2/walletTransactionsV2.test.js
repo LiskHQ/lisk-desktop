@@ -1,8 +1,6 @@
 import React from 'react';
 import thunk from 'redux-thunk';
-import { spy, useFakeTimers } from 'sinon';
 import { mount } from 'enzyme';
-import { expect } from 'chai';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import { MemoryRouter as Router } from 'react-router-dom';
@@ -13,8 +11,6 @@ import routes from '../../../constants/routes';
 
 describe('WalletTransactions V2 Component', () => {
   let wrapper;
-  let props;
-
   const peers = {
     data: {},
     options: {},
@@ -53,26 +49,27 @@ describe('WalletTransactions V2 Component', () => {
     },
   };
 
-  beforeEach(() => {
-    props = {
-      address: accounts.genesis.address,
-      account: accounts.genesis,
-      match: { params: { address: accounts.genesis.address } },
-      history: { push: spy(), location: { search: ' ' } },
-      followedAccounts: [],
-      transactionsCount: 1000,
-      transaction: transactions[0],
-      transactions,
-      transactionsRequested: spy(),
-      transactionsFilterSet: spy(),
-      loadLastTransaction: spy(),
-      addFilter: spy(),
-      loading: [],
-      wallets: {},
-      peers: { options: { code: 0 } },
-      t: key => key,
-    };
+  const props = {
+    address: accounts.genesis.address,
+    account: accounts.genesis,
+    match: { params: { address: accounts.genesis.address } },
+    history: { push: jest.fn(), location: { search: ' ' } },
+    followedAccounts: [],
+    transactionsCount: 1000,
+    transaction: transactions[0],
+    transactions,
+    transactionsRequested: jest.fn(),
+    transactionsFilterSet: jest.fn(),
+    loadLastTransaction: jest.fn(),
+    updateAccountDelegateStats: jest.fn(),
+    addFilter: jest.fn(),
+    loading: [],
+    wallets: {},
+    peers: { options: { code: 0 } },
+    t: key => key,
+  };
 
+  beforeEach(() => {
     wrapper = mount(<Router>
         <WalletTransactionsV2 {...props} />
       </Router>, options);
@@ -80,52 +77,75 @@ describe('WalletTransactions V2 Component', () => {
 
   it('renders WalletTransactionV2 Component and loads account transactions', () => {
     const renderedWalletTransactions = wrapper.find(WalletTransactionsV2);
-    expect(renderedWalletTransactions).to.be.present();
-    expect(wrapper).to.have.exactly(1).descendants('.transactions-row');
+    expect(renderedWalletTransactions).toExist();
+    expect(wrapper).toContainExactlyOneMatchingElement('.transactions-row');
   });
 
   it('click on row transaction', () => {
     const transactionPath = `${routes.transactions.pathPrefix}${routes.transactions.path}/${transactions[0].id}`;
     wrapper.find('.transactions-row').first().simulate('click');
-    expect(props.history.push).to.have.been.calledWith(transactionPath);
+    expect(props.history.push).toBeCalledWith(transactionPath);
   });
 
   describe('Onboarding Banner', () => {
-    let clock;
-
     beforeEach(() => {
       const newProps = {
         ...props,
         account: accounts['empty account'],
       };
 
-      clock = useFakeTimers({
-        now: new Date(2018, 1, 1),
-        toFake: ['setTimeout', 'clearTimeout'],
-      });
-
       wrapper = mount(<Router>
         <WalletTransactionsV2 {...newProps} />
       </Router>, options);
     });
 
-    afterEach(() => {
-      clock.restore();
-    });
-
     it('should copy address on click on banner copy and setTimeout', () => {
       const copyBtn = wrapper.find('.onboarding .copyAddress button');
-      expect(copyBtn).to.have.text('Copy');
+      expect(copyBtn).toHaveText('Copy');
       copyBtn.simulate('click');
-      expect(copyBtn).to.have.text('Copied');
-      clock.tick(3000);
-      expect(copyBtn).to.have.text('Copy');
+      expect(copyBtn).toHaveText('Copied');
+      jest.advanceTimersByTime(3000);
+      expect(copyBtn).toHaveText('Copy');
     });
 
     it('should render onboarding banner and hide when close is clicked', () => {
-      expect(wrapper).to.have.descendants('.onboarding');
+      expect(wrapper).toContainMatchingElement('.onboarding');
       wrapper.find('.onboarding .closeBtn').simulate('click');
-      expect(wrapper).to.not.have.descendants('.onboarding');
+      expect(wrapper).not.toContainMatchingElement('.onboarding');
+    });
+  });
+
+  describe('Delegate Account', () => {
+    const delegateProps = {
+      ...props,
+      account: {
+        ...accounts.delegate,
+        isDelegate: true,
+        delegate: {
+          account: accounts.delegate,
+          approval: 98.63,
+          missedBlocks: 10,
+          producedBlocks: 304,
+          productivity: 96.82,
+          rank: 1,
+          rewards: '140500000000',
+          username: accounts.delegate.username,
+          vote: '9876965713168313',
+          lastBlock: { timestamp: 0 },
+          txDelegateRegister: { timestamp: 0 },
+        },
+      },
+    };
+
+    beforeEach(() => {
+      wrapper = mount(<Router>
+        <WalletTransactionsV2 {...delegateProps} />
+      </Router>, options);
+    });
+
+    it('Should render delegate Tab', () => {
+      expect(wrapper).toContainExactlyOneMatchingElement('TabsContainer');
+      expect(wrapper.find('TabsContainer')).toContainMatchingElement('.delegateStats');
     });
   });
 });

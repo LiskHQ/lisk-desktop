@@ -29,8 +29,9 @@ class TabsContainer extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     const nextTabs = this.filterChildren(nextProps.children);
     const currentTabs = this.filterChildren(this.props.children);
-    const activeTab = nextTabs.length > 1 && (this.props.activeTab || nextTabs[0].props.tabName);
-    if (nextTabs.length !== currentTabs.length || activeTab !== this.state.activeTab) {
+    /* istanbul ignore next */
+    if (nextTabs.length !== currentTabs.length) {
+      const activeTab = (nextTabs.length > 1 && (this.props.activeTab || nextTabs[0].props.tabName)) || '';
       this.setState({ activeTab });
       return false;
     }

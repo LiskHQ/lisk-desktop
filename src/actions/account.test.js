@@ -14,11 +14,15 @@ import {
   accountDataUpdated,
   updateTransactionsIfNeeded,
   updateDelegateAccount,
+  delegateStatsLoaded,
+  updateAccountDelegateStats,
 } from './account';
 import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { delegateRegisteredFailure } from './delegate';
 import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegate';
+import * as transactionsApi from '../utils/api/transactions';
+import * as blocksApi from '../utils/api/blocks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import networks from '../constants/networks';
@@ -427,6 +431,38 @@ describe('actions: account', () => {
 
       const accountUpdatedAction = accountUpdated(Object.assign({}, { delegate: { account: 'delegate data' }, isDelegate: true }));
       expect(dispatch).to.have.been.calledWith(accountUpdatedAction);
+    });
+  });
+
+  describe('updateAccountDelegateStats', () => {
+    const dispatch = spy();
+    let getState;
+
+    beforeEach(() => {
+      stub(blocksApi, 'getBlocks').returnsPromise();
+      stub(transactionsApi, 'getTransactions').returnsPromise();
+      getState = () => ({
+        peers: { liskAPIClient: {} },
+      });
+    });
+
+    afterEach(() => {
+      blocksApi.getBlocks.restore();
+      transactionsApi.getTransactions.restore();
+    });
+
+    it('should fetch delegate stats and update account', () => {
+      blocksApi.getBlocks.resolves({ data: [{ timestamp: 1 }] });
+      transactionsApi.getTransactions.resolves({ data: [{ timestamp: 2 }] });
+
+      updateAccountDelegateStats(accounts.genesis)(dispatch, getState);
+
+      const delegateStatsLoadedAction = delegateStatsLoaded({
+        lastBlock: { timestamp: 1 },
+        txDelegateRegister: { timestamp: 2 },
+      });
+
+      expect(dispatch).to.have.been.calledWith(delegateStatsLoadedAction);
     });
   });
 });
