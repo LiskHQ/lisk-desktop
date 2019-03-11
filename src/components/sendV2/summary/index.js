@@ -6,6 +6,8 @@ import Summary from './summary';
 
 const mapStateToProps = state => ({
   account: state.account,
+  failedTransactions: state.transactions.failed,
+  pendingTransactions: state.transactions.pending,
 });
 
 const mapDispatchToProps = {

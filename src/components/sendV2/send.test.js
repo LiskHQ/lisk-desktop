@@ -32,7 +32,9 @@ describe('Form', () => {
     },
     transactions: {
       failed: undefined,
+      pending: [],
     },
+    failedTransactions: '',
     account: {
       balance: accounts.genesis.balance,
     },
@@ -81,7 +83,6 @@ describe('Form', () => {
     prevState: {
       fields: {},
     },
-    fields: {},
     followedAccounts: [
       {
         title: 'ABC',

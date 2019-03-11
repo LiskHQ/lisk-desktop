@@ -3,7 +3,7 @@ import ConverterV2 from '../../converterV2';
 import AccountVisual from '../../accountVisual/index';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import fees from '../../../constants/fees';
-import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
+import { fromRawLsk } from '../../../utils/lsk';
 import PassphraseInputV2 from '../../passphraseInputV2/passphraseInputV2';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
@@ -16,6 +16,8 @@ class Summary extends React.Component {
     super(props);
 
     this.state = {
+      isLoading: false,
+      isHardwareWalletConnected: false,
       secondPassphrase: {
         hasSecondPassphrase: false,
         isValid: false,
@@ -24,21 +26,75 @@ class Summary extends React.Component {
       },
     };
 
-    this.prevStep = this.prevStep.bind(this);
-    this.nextStep = this.nextStep.bind(this);
+    this.checkForHardwareWallet = this.checkForHardwareWallet.bind(this);
     this.checkSecondPassphrase = this.checkSecondPassphrase.bind(this);
-    this.amountAndFee = this.amountAndFee.bind(this);
+    this.nextStep = this.nextStep.bind(this);
+    this.prevStep = this.prevStep.bind(this);
+    this.submitTransaction = this.submitTransaction.bind(this);
   }
 
   componentDidMount() {
     const { account } = this.props;
+    let newState = {};
 
     // istanbul ignore else
     if (account && account.secondPublicKey) {
-      this.setState({
+      newState = {
+        ...this.state,
         secondPassphrase: {
           ...this.state.secondPassphrase,
           hasSecondPassphrase: true,
+        },
+      };
+    }
+
+    // istanbul ignore else
+    if (account.hwInfo && account.hwInfo.deviceId) {
+      newState = {
+        ...this.state,
+        isHardwareWalletConnected: true,
+        isLoading: true,
+      };
+      this.submitTransaction();
+    }
+
+    this.setState({ ...newState });
+  }
+
+  componentDidUpdate() {
+    this.checkForHardwareWallet();
+  }
+
+  submitTransaction() {
+    this.props.sent({
+      account: this.props.account,
+      recipientId: this.props.fields.recipient.address,
+      amount: this.props.fields.amount.value,
+      data: this.props.fields.reference.value,
+      passphrase: this.props.account.passphrase,
+      secondPassphrase: this.state.secondPassphrase.value,
+    });
+  }
+
+  checkForHardwareWallet() {
+    const { failedTransactions, pendingTransactions } = this.props;
+    const { isHardwareWalletConnected, isLoading } = this.state;
+
+    const isATransactionPending = isHardwareWalletConnected
+      ? pendingTransactions.find(transaction => (
+        transaction.senderId === this.props.account.address &&
+        transaction.recipientId === this.props.fields.recipient.address &&
+        fromRawLsk(transaction.amount) === this.props.fields.amount.value
+      ))
+      : pendingTransactions.length;
+
+    // istanbul ignore else
+    if (isLoading && (isATransactionPending || failedTransactions)) {
+      this.props.nextStep({
+        fields: {
+          ...this.props.fields,
+          hwTransactionStatus: isATransactionPending ? 'success' : 'error',
+          isHardwareWalletConnected: this.state.isHardwareWalletConnected,
         },
       });
     }
@@ -71,10 +127,6 @@ class Summary extends React.Component {
     }
   }
 
-  amountAndFee() {
-    return fromRawLsk(toRawLsk(this.props.fields.amount.value) + fees.send);
-  }
-
   prevStep() {
     Piwik.trackingEvent('Send_Summary', 'button', 'Previous step');
     this.props.prevStep({ fields: { ...this.props.fields } });
@@ -82,27 +134,34 @@ class Summary extends React.Component {
 
   nextStep() {
     Piwik.trackingEvent('Send_Summary', 'button', 'Next step');
-    this.props.sent({
-      account: this.props.account,
-      recipientId: this.props.fields.recipient.address,
-      amount: this.amountAndFee(),
-      data: this.props.fields.reference.value,
-      passphrase: this.props.account.passphrase,
-      secondPassphrase: this.state.secondPassphrase.value,
+    this.submitTransaction();
+    this.props.nextStep({
+      fields: {
+        ...this.props.fields,
+        hwTransactionStatus: false,
+        isHardwareWalletConnected: false,
+      },
     });
-    this.props.nextStep({ fields: { ...this.props.fields } });
   }
 
   render() {
-    const { secondPassphrase } = this.state;
-    const isBtnDisabled = secondPassphrase.hasSecondPassphrase
+    const { secondPassphrase, isHardwareWalletConnected } = this.state;
+    let isBtnDisabled = secondPassphrase.hasSecondPassphrase
       ? secondPassphrase.isValid !== '' && !secondPassphrase.isValid
       : false;
+    isBtnDisabled = !isBtnDisabled && isHardwareWalletConnected;
+
+    const confirmBtnMessage = isHardwareWalletConnected
+      ? 'Confirm on Ledger'
+      : `Send ${this.props.fields.amount.value} LSK`;
+
+    const title = isHardwareWalletConnected ? 'Confirm transaction on Ledger Nano S' : 'Transaction summary';
+
 
     return (
       <div className={`${styles.wrapper} summary`}>
         <header className={`${styles.header} summary-header`}>
-          <h1>{this.props.t('Transaction summary')}</h1>
+          <h1>{this.props.t('{{title}}', { title: `${title}` })}</h1>
         </header>
 
         <div className={`${styles.content} summary-content`}>
@@ -122,8 +181,8 @@ class Summary extends React.Component {
           <div className={styles.row}>
             <label>{this.props.t('Amount of transaction')}</label>
             <label className={`${styles.information} ${styles.amount}`}>
-              {`${this.amountAndFee()} ${this.props.t('LSK')}`}
-              <ConverterV2 className={`${styles.secondText} ${styles.amountSecondText}`} value={this.amountAndFee()} />
+              {`${this.props.fields.amount.value} ${this.props.t('LSK')}`}
+              <ConverterV2 className={`${styles.secondText} ${styles.amountSecondText}`} value={this.props.fields.amount.value} />
             </label>
           </div>
 
@@ -181,7 +240,7 @@ class Summary extends React.Component {
             className={`${styles.btn} on-nextStep`}
             onClick={this.nextStep}
             disabled={isBtnDisabled}>
-            {this.props.t('Send {{value}} LSK', { value: this.props.fields.amount.value })}
+            {this.props.t('{{value}}', { value: `${confirmBtnMessage}` })}
           </PrimaryButtonV2>
         </footer>
       </div>
