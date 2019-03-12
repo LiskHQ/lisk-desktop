@@ -63,7 +63,7 @@ class TransactionStatus extends React.Component {
                 />)
               : null
             }
-            <PrimaryButtonV2 className={` ${styles.btn} on-goToWallet`} onClick={this.backToWallet}>{this.props.t('Back to wallet')}</PrimaryButtonV2>
+            <PrimaryButtonV2 className={`${styles.btn} on-goToWallet okay-button`} onClick={this.backToWallet}>{this.props.t('Back to wallet')}</PrimaryButtonV2>
           </div>
           {
             !isTransactionSuccess
