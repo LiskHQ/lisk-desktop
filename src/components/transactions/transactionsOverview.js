@@ -73,7 +73,7 @@ class TransactionsOverview extends React.Component {
       },
     ];
 
-    if (this.props.delegate && Object.keys(this.props.delegate).length > 0) {
+    if (this.props.delegate && this.props.delegate.username) {
       filters[txFilters.statistics] = {
         name: this.isSmallScreen() ? this.props.t('Stats') : this.props.t('Delegate statistics'),
         value: txFilters.statistics,
