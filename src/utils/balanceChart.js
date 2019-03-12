@@ -1,5 +1,4 @@
 import moment from 'moment';
-import transactionTypes from '../constants/transactionTypes';
 import { fromRawLsk } from './lsk';
 import { getUnixTimestampFromFirstBlock } from './datetime';
 
@@ -43,7 +42,7 @@ export const graphOptions = format => ({
       left: 0,
       right: 8,
       top: 20,
-      bottom: 0,
+      bottom: 8,
     },
   },
   elements: {
@@ -93,9 +92,9 @@ export const graphOptions = format => ({
  */
 const getTxValue = (tx, address) => {
   const txValue = tx.senderId && tx.senderId !== address
-    ? tx.amount || 0
-    : +tx.amount + +tx.fee;
-  return tx.type === transactionTypes.send && tx.recipientId !== address ? txValue : -txValue;
+    ? parseInt(tx.amount, 10) || 0
+    : parseInt(tx.amount, 10) + parseInt(tx.fee, 10);
+  return tx.recipientId !== address ? txValue : -txValue;
 };
 
 /**
@@ -133,7 +132,7 @@ export const getBalanceData = ({
       ? balances.slice(0, -1) : balances;
     return [
       ...tmpBalances,
-      { x: txDate, y: (+lastBalance.y + +txValue) },
+      { x: txDate, y: (parseInt(lastBalance.y, 10) + txValue) },
     ];
   }, [{ x: new Date(), y: +balance }]).reverse().map(d => ({ ...d, y: +fromRawLsk(d.y) }));
 
