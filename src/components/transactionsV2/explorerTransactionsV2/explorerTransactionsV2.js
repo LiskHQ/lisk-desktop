@@ -156,7 +156,9 @@ class ExplorerTransactionsV2 extends React.Component {
           <WalletTab tabName={this.props.t('Wallet')}
             {...overviewProps}/>
           {isDelegate
-            ? (<DelegateTab tabName={this.props.t('Delegate')}
+            ? (<DelegateTab
+              tabClassName={'delegate-statistics'}
+              tabName={this.props.t('Delegate')}
               delegate={this.props.delegate} />)
             : null}
         </TabsContainer>

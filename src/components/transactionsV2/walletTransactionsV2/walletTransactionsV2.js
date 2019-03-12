@@ -212,7 +212,9 @@ class WalletTransactionsV2 extends React.Component {
           <WalletTab tabName={t('Wallet')}
             {...overviewProps}/>
           {account.isDelegate && delegate.txDelegateRegister
-            ? (<DelegateTab tabName={t('Delegate')}
+            ? (<DelegateTab
+              tabClassName={'delegate-statistics'}
+              tabName={t('Delegate')}
               delegate={delegate} />)
             : null}
         </TabsContainer>

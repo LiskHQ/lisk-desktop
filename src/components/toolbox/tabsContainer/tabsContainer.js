@@ -55,13 +55,16 @@ class TabsContainer extends React.Component {
     return (activeTab !== '' ? (
       <div className={styles.wrapper}>
         <ul className={styles.tabs}>
-          {children.map((tab, key) => (
-            <li className={`${tab.props.tabName === activeTab ? styles.active : ''}`}
-              data-tabname={tab.props.tabName}
-              onClick={this.setTab}
-              key={key}
-            >{tab.props.tabName}</li>
-          ))}
+          {children.map((tab, key) => {
+            const tabClassName = tab.props.tabClassName || '';
+            return (
+              <li className={`${tab.props.tabName === activeTab ? styles.active : ''} ${tabClassName}`}
+                data-tabname={tab.props.tabName}
+                onClick={this.setTab}
+                key={key}
+              >{tab.props.tabName}</li>
+            );
+          })}
         </ul>
         <div className={styles.contentHolder}>
           {children.map((tab, key) => (
