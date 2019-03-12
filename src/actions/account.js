@@ -202,7 +202,7 @@ export const loadAccount = ({
           dispatch(loadDelegate({
             publicKey: response.publicKey,
           }));
-        } else if (isSameAccount && response.isDelegate) {
+        } else if (isSameAccount && response.delegate && response.delegate.username) {
           accountDataUpdated = {
             ...accountDataUpdated,
             delegate: response.delegate,
@@ -263,7 +263,7 @@ export const updateAccountDelegateStats = account =>
     getTransactions({
       liskAPIClient, address, limit: 1, type: transactionTypes.registerDelegate,
     }).then((transactions) => {
-      getBlocks(liskAPIClient, { publicKey, limit: 1 }).then((block) => {
+      getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 }).then((block) => {
         dispatch(delegateStatsLoaded({
           lastBlock: block.data[0],
           txDelegateRegister: transactions.data[0],
