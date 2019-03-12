@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './tooltip.css';
 
 class Tooltip extends React.Component {
@@ -50,7 +51,6 @@ class Tooltip extends React.Component {
       showTooltip: true,
     });
   }
-
   handleClose(event) {
     if (this.wrapperRef && (event && !this.wrapperRef.contains(event.target))) {
       document.removeEventListener('click', this.handleClose);
@@ -75,8 +75,7 @@ class Tooltip extends React.Component {
           className={styles.infoIcon}
           onClick={this.handleClick}
           />
-        <div className={`${styles.tooltip} tooltip-window
-          ${this.state.showTooltip && styles.shownTooltip}`}>
+        <div className={`${styles.tooltip} ${this.state.showTooltip ? styles.shownTooltip : ''} tooltip-window`}>
           <span className={`${styles.tooltipArrow}`}>
             <svg fill="currentColor" viewBox="0 0 8 36"><path d="M8 0C7 11 0 13 0 18s7 9 8 18z"/></svg>
           </span>
@@ -94,5 +93,17 @@ class Tooltip extends React.Component {
     );
   }
 }
+
+Tooltip.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  footer: PropTypes.node,
+  className: PropTypes.string,
+};
+
+Tooltip.defaultProps = {
+  title: '',
+  children: <React.Fragment />,
+};
 
 export default Tooltip;

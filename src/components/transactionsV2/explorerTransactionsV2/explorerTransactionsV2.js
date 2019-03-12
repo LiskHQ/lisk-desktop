@@ -5,6 +5,7 @@ import routes from '../../../constants/routes';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import WalletTab from '../../wallet/walletTab';
 import DelegateTab from '../../delegate/delegateTab';
+import VotesTab from '../../votes/VotesTab';
 
 class ExplorerTransactionsV2 extends React.Component {
   // eslint-disable-next-line max-statements
@@ -155,6 +156,8 @@ class ExplorerTransactionsV2 extends React.Component {
         <TabsContainer>
           <WalletTab tabName={this.props.t('Wallet')}
             {...overviewProps}/>
+          <VotesTab
+            tabName={this.props.t('Votes')} />
           {isDelegate
             ? (<DelegateTab
               tabClassName={'delegate-statistics'}
