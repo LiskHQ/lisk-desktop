@@ -15,12 +15,12 @@ const searchDelegate = ({ publicKey, address }) =>
       getTransactions({
         liskAPIClient, address, limit: 1, type: transactionTypes.registerDelegate,
       }).then((transactions) => {
-        getBlocks(liskAPIClient, { publicKey, limit: 1 }).then((block) => {
+        getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 }).then((block) => {
           dispatch({
             data: {
               delegate: {
                 ...response.data[0],
-                lastBlock: block.data[0],
+                lastBlock: (block.data[0] && block.data[0].timestamp) || '-',
                 txDelegateRegister: transactions.data[0],
               },
               address,

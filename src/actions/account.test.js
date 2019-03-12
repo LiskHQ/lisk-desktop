@@ -286,8 +286,7 @@ describe('actions: account', () => {
       getAccountStub.resolves({
         balance: 10e8,
         publicKey: accounts.genesis.publicKey,
-        isDelegate: true,
-        delegate: 'delegate information',
+        delegate: { username: 'delegate information' },
       });
 
       const data = {
@@ -302,7 +301,7 @@ describe('actions: account', () => {
         count: 0,
         balance: 10e8,
         address: accounts.genesis.address,
-        delegate: 'delegate information',
+        delegate: { username: 'delegate information' },
       });
     });
   });
@@ -458,7 +457,7 @@ describe('actions: account', () => {
       updateAccountDelegateStats(accounts.genesis)(dispatch, getState);
 
       const delegateStatsLoadedAction = delegateStatsLoaded({
-        lastBlock: { timestamp: 1 },
+        lastBlock: 1,
         txDelegateRegister: { timestamp: 2 },
       });
 

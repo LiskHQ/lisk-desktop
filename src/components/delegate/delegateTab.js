@@ -11,7 +11,9 @@ import styles from './delegateTab.css';
 const DelegateTab = ({ delegate, t }) => {
   moment.locale(i18n.language);
   const status = delegate && delegate.rank && delegate.rank <= voting.maxCountOfVotes ? t('Active') : t('Standby');
-  const timeFromLastBlock = getUnixTimestampFromValue(delegate.lastBlock.timestamp);
+  const timeFromLastBlock = delegate.lastBlock !== '-'
+    ? moment(getUnixTimestampFromValue(delegate.lastBlock)).format(t('DD MMM YY, HH:mm'))
+    : '-';
   const delegateSince = getUnixTimestampFromValue(delegate.txDelegateRegister.timestamp);
 
   return (<BoxV2>
@@ -47,9 +49,7 @@ const DelegateTab = ({ delegate, t }) => {
           <LiskAmount val={delegate.rewards}/> {t('LSK')}</span>
         </li>
         <li className={'last-forged'}>
-          <span className={styles.label}>{t('Last Forged Block')}</span> {
-            moment(timeFromLastBlock).format(t('DD MMM YY, HH:mm'))
-          }
+          <span className={styles.label}>{t('Last Forged Block')}</span> {timeFromLastBlock}
         </li>
       </ul>
     </main>
@@ -69,9 +69,10 @@ DelegateTab.propTypes = {
     rewards: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
     vote: PropTypes.string.isRequired,
-    lastBlock: PropTypes.shape({
-      timestamp: PropTypes.number.isRequired,
-    }).isRequired,
+    lastBlock: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]).isRequired,
     txDelegateRegister: PropTypes.shape({
       timestamp: PropTypes.number.isRequired,
     }).isRequired,
@@ -92,7 +93,7 @@ DelegateTab.defaultProps = {
     rewards: '',
     username: '',
     vote: '',
-    lastBlock: { timestamp: 0 },
+    lastBlock: '-',
     txDelegateRegister: { timestamp: 0 },
   },
   t: v => v,

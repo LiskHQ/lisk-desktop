@@ -265,7 +265,7 @@ export const updateAccountDelegateStats = account =>
     }).then((transactions) => {
       getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 }).then((block) => {
         dispatch(delegateStatsLoaded({
-          lastBlock: block.data[0],
+          lastBlock: (block.data[0] && block.data[0].timestamp) || '-',
           txDelegateRegister: transactions.data[0],
         }));
       });

@@ -18,7 +18,7 @@ describe('Delegate Tab', () => {
       rewards: '140500000000',
       username: delegate.username,
       vote: '9876965713168313',
-      lastBlock: { timestamp: 0 },
+      lastBlock: 0,
       txDelegateRegister: { timestamp: 0 },
     },
     t: v => v,
@@ -46,7 +46,7 @@ describe('Delegate Tab', () => {
     expect(wrapper.find('.productivity')).toIncludeText(`${props.delegate.productivity}%`);
     expect(wrapper.find('.blocks')).toIncludeText(`${props.delegate.producedBlocks} (${props.delegate.missedBlocks})`);
     expect(wrapper.find('.forged')).toIncludeText('1,405 LSK');
-    expect(wrapper.find('.last-forged')).toIncludeText('3 years');
+    expect(wrapper.find('.last-forged')).toIncludeText('24 May 16');
   });
 
   it('Should render inactive delegate', () => {
