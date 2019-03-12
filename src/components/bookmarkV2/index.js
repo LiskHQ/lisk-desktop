@@ -49,13 +49,14 @@ class Bookmark extends React.Component {
   }
 
   onKeyPressDownOrUp(action) {
+    const rowHeight = 44;
     const { dropdownIndex } = this.state;
     const accountsLength = this.getFilterList().length;
 
     // istanbul ignore else
     if (action === 'down' && dropdownIndex < accountsLength - 1) {
       if (dropdownIndex + 1 >= 4) {
-        this.listContainerRef.scrollTop = this.listContainerRef.scrollTop + 44;
+        this.listContainerRef.scrollTop = this.listContainerRef.scrollTop + rowHeight;
       }
       this.setState({ dropdownIndex: dropdownIndex + 1 });
     }
@@ -63,10 +64,10 @@ class Bookmark extends React.Component {
     // istanbul ignore else
     if (action === 'up' && dropdownIndex > 0) {
       this.listContainerRef.scrollTop = this.listContainerRef.scrollTop > 0
-        && (dropdownIndex - 1) * 44 < this.listContainerRef.scrollTop
-        ? this.listContainerRef.scrollTop - 44
+        && (dropdownIndex - 1) * rowHeight < this.listContainerRef.scrollTop
+        ? this.listContainerRef.scrollTop - rowHeight
         : this.listContainerRef.scrollTop;
-      this.setState({ dropdownIndex: this.state.dropdownIndex - 1 });
+      this.setState({ dropdownIndex: dropdownIndex - 1 });
     }
   }
 
@@ -105,7 +106,7 @@ class Bookmark extends React.Component {
       this.props.validateBookmark();
     }, 300);
 
-    if (e && e.target.value === '') this.resetListIndex();
+    if (e && e.target && e.target.value === '') this.resetListIndex();
     this.props.onChange(e);
   }
 

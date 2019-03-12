@@ -62,12 +62,12 @@ class TransactionStatus extends React.Component {
           {
             !isTransactionSuccess
             ? <div className={`${styles.errorReport} transaction-status-error`}>
-                <span>{this.props.t('Is the problem presisting?')}</span>
+                <span>{this.props.t('Does the problem still persist?')}</span>
                 <a
                   href={this.onErrorReport()}
                   target='_top'
                   rel='noopener noreferrer'>
-                {this.props.t('Report the error via email')}
+                {this.props.t('Report the error via E-Mail')}
                 </a>
               </div>
             : null

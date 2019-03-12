@@ -132,15 +132,11 @@ describe('Form', () => {
   });
 
   it('should call finallCallback after submit a transaction', () => {
-    const bkm = { target: { name: 'recipient', value: '12345L' } };
-    const amount = { target: { name: 'amount', value: '.1' } };
-
-    wrapper.find('input.recipient').simulate('change', bkm);
+    wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: '12345L' } });
     const amountField = wrapper.find('.fieldGroup').at(1);
-    amountField.find('InputV2').simulate('change', amount);
+    amountField.find('InputV2').simulate('change', { target: { name: 'amount', value: '.1' } });
     jest.advanceTimersByTime(300);
     wrapper.update();
-
     wrapper.find('.btn-submit').at(0).simulate('click');
     wrapper.update();
     expect(wrapper).toContainMatchingElement('Summary');
