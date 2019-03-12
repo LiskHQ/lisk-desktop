@@ -29,6 +29,7 @@ export const graphOptions = format => ({
     }],
     yAxes: [{
       position: 'right',
+      type: 'linear',
       ticks: {
         maxTicksLimit: 5,
         fontColor: '#7383a7',
@@ -42,7 +43,7 @@ export const graphOptions = format => ({
       left: 0,
       right: 8,
       top: 20,
-      bottom: 8,
+      bottom: 15,
     },
   },
   elements: {
