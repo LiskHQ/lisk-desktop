@@ -13,6 +13,7 @@ import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import { toRawLsk } from '../utils/lsk';
 import { sendWithLedger } from '../utils/api/ledger';
+import { loginType } from '../constants/hwConstants';
 
 export const cleanTransactions = () => ({
   type: actionTypes.cleanTransactions,
@@ -243,10 +244,10 @@ export const transactionsUpdated = ({
 const handleSentError = ({ error, account, dispatch }) => {
   let text;
   switch (account.loginType) {
-    case 0:
+    case loginType.normal:
       text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
       break;
-    case 1:
+    case loginType.ledger:
       text = i18next.t('You have cancelled the transaction on your hardware wallet. You can either continue or retry.');
       break;
     default:
@@ -268,11 +269,11 @@ export const sent = ({
     const liskAPIClient = getState().peers.liskAPIClient;
     const timeOffset = getTimeOffset(getState());
     switch (account.loginType) {
-      case 0:
+      case loginType.normal:
         // eslint-disable-next-line
         [error, callResult] = await to(send(liskAPIClient, recipientId, toRawLsk(amount), passphrase, secondPassphrase, data, timeOffset));
         break;
-      case 1:
+      case loginType.ledger:
         // eslint-disable-next-line
         [error, callResult] = await to(sendWithLedger(liskAPIClient, account, recipientId, toRawLsk(amount), secondPassphrase, data, timeOffset));
         break;
