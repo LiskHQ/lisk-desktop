@@ -169,7 +169,7 @@ class Summary extends React.Component {
             <label>{this.props.t('Recipient')}</label>
             <div className={styles.account}>
               <AccountVisual address={this.props.fields.recipient.address} size={25} />
-              <label className={styles.information}>
+              <label className={`${styles.information} recipient-confirm`}>
                 {this.props.fields.recipient.title || this.props.fields.recipient.address}
               </label>
               <span className={`${styles.secondText} ${styles.accountSecondText}`}>
@@ -180,7 +180,7 @@ class Summary extends React.Component {
 
           <div className={styles.row}>
             <label>{this.props.t('Amount of transaction')}</label>
-            <label className={`${styles.information} ${styles.amount}`}>
+            <label className={`${styles.information} ${styles.amount} amount-summary`}>
               {`${this.props.fields.amount.value} ${this.props.t('LSK')}`}
               <ConverterV2 className={`${styles.secondText} ${styles.amountSecondText}`} value={this.props.fields.amount.value} />
             </label>
@@ -188,7 +188,7 @@ class Summary extends React.Component {
 
           <div className={styles.row}>
             <label>{this.props.t('Message')}</label>
-            <p className={styles.information}>{this.props.fields.reference.value}</p>
+            <p className={`${styles.information} reference`}>{this.props.fields.reference.value}</p>
           </div>
 
           {
@@ -237,7 +237,7 @@ class Summary extends React.Component {
           </div>
 
           <PrimaryButtonV2
-            className={`${styles.btn} on-nextStep`}
+            className={`${styles.btn} on-nextStep send-button`}
             onClick={this.nextStep}
             disabled={isBtnDisabled}>
             {this.props.t('{{value}}', { value: `${confirmBtnMessage}` })}
