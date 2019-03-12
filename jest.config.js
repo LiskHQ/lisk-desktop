@@ -145,6 +145,7 @@ module.exports = {
   globals: {
     PRODUCTION: true,
     TEST: true,
+    VERSION: '',
   },
   coverageReporters: [
     'text',
