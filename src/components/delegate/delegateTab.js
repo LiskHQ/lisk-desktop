@@ -47,7 +47,9 @@ const DelegateTab = ({ delegate, t }) => {
           <LiskAmount val={delegate.rewards}/> {t('LSK')}</span>
         </li>
         <li className={'last-forged'}>
-          <span className={styles.label}>{t('Last Forged Block')}</span> {moment(timeFromLastBlock).fromNow(true)}
+          <span className={styles.label}>{t('Last Forged Block')}</span> {
+            moment(timeFromLastBlock).format(t('DD MMM YY, HH:mm'))
+          }
         </li>
       </ul>
     </main>
