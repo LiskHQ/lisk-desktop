@@ -115,7 +115,7 @@ describe('WalletTransactions V2 Component', () => {
     });
   });
 
-  describe('Delegate Account', () => {
+  describe.skip('Delegate Account', () => {
     const delegateProps = {
       ...props,
       account: {
