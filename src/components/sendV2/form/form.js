@@ -82,6 +82,7 @@ class Form extends React.Component {
           recipient: {
             ...this.state.fields.recipient,
             address: fields.recipient.address,
+            value: fields.recipient.address,
           },
           amount: {
             ...this.state.fields.amount,
@@ -324,7 +325,7 @@ class Form extends React.Component {
                 src={ fields.amount.error ? svg.alert_icon : svg.ok_icon}
               />
             </span>
-            <span className={`${styles.feedback} ${fields.amount.error ? 'error' : ''} ${fields.amount.feedback ? styles.show : ''}`}>
+            <span className={`${styles.feedback} ${fields.amount.error ? 'error' : ''} ${fields.amount.feedback ? styles.show : ''} amount-feedback`}>
               {fields.amount.feedback}
             </span>
             <span className={styles.amountHint}>
@@ -360,7 +361,7 @@ class Form extends React.Component {
                 name='reference'
                 value={fields.reference.value}
                 placeholder={this.props.t('Write message')}
-                className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
+                className={`${styles.textarea} ${fields.reference.error ? 'error' : ''} message`} />
               <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && fields.reference.value ? styles.show : styles.hide}`}/>
               <img
                 className={`${styles.status} ${!this.state.isLoading && fields.reference.value ? styles.show : styles.hide}`}
@@ -374,7 +375,7 @@ class Form extends React.Component {
 
         <footer>
           <PrimaryButtonV2
-            className={`${styles.confirmButton} btn-submit`}
+            className={`${styles.confirmButton} btn-submit send-next-button`}
             disabled={isBtnDisabled}
             onClick={this.onGoNext}
           >

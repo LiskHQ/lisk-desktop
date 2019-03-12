@@ -48,8 +48,8 @@ class TransactionStatus extends React.Component {
           <img src={transactionStatus.headerIcon}/>
         </header>
         <div className={`${styles.content} transaction-status-content`}>
-          <h1>{this.props.t('{{title}}', { title: transactionStatus.bodyText.title })}</h1>
-          <p>{this.props.t('{{paragraph}}', { paragraph: transactionStatus.bodyText.paragraph })}</p>
+          <h1 className={'header-message'}>{this.props.t('{{title}}', { title: transactionStatus.bodyText.title })}</h1>
+          <p className={'body-message'}>{this.props.t('{{paragraph}}', { paragraph: transactionStatus.bodyText.paragraph })}</p>
         </div>
         <footer className={`${styles.footer} transaction-status-footer`}>
           <div>
@@ -62,7 +62,7 @@ class TransactionStatus extends React.Component {
                 />)
               : null
             }
-            <PrimaryButtonV2 className={` ${styles.btn} on-goToWallet`} onClick={this.backToWallet}>{this.props.t('Back to wallet')}</PrimaryButtonV2>
+            <PrimaryButtonV2 className={`${styles.btn} on-goToWallet okay-button`} onClick={this.backToWallet}>{this.props.t('Back to wallet')}</PrimaryButtonV2>
           </div>
           {
             !isTransactionSuccess

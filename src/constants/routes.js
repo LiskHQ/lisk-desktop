@@ -14,7 +14,6 @@ import HwWallet from '../components/hwWallet';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
 import SendV2 from '../components/sendV2';
-import Send from '../components/send';
 import Splashscreen from '../components/splashscreen';
 import RegistrationV2 from '../components/registerV2/registerV2';
 import LoginV2 from '../components/loginV2';
@@ -39,11 +38,6 @@ export default {
   },
   send: {
     path: '/wallet/send',
-    component: Send,
-    isPrivate: true,
-  },
-  sendV2: {
-    path: '/wallet/sendV2',
     component: SendV2,
     isPrivate: true,
   },
