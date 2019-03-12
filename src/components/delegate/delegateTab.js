@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { translate } from 'react-i18next';
 import voting from '../../constants/voting';
 import BoxV2 from '../boxV2';
 import { getUnixTimestampFromValue } from '../../utils/datetime';
@@ -77,7 +78,6 @@ DelegateTab.propTypes = {
       timestamp: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired,
-  t: PropTypes.func.isRequired,
 };
 
 DelegateTab.defaultProps = {
@@ -96,7 +96,6 @@ DelegateTab.defaultProps = {
     lastBlock: '-',
     txDelegateRegister: { timestamp: 0 },
   },
-  t: v => v,
 };
 
-export default DelegateTab;
+export default translate()(DelegateTab);
