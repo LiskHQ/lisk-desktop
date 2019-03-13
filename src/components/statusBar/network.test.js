@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import renderer from 'react-test-renderer';
 import Network from './network';
 
 describe('Network', () => {
@@ -20,7 +20,7 @@ describe('Network', () => {
     },
   };
 
-  const setup = props => mount(<Network {...props} />);
+  const setup = props => renderer.create(<Network {...props} />).toJSON();
 
   beforeEach(() => {
     wrapper = setup(data);
