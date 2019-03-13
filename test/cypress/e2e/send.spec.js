@@ -6,8 +6,6 @@ import { enterSecondPassphraseOnSend } from '../utils/enterSecondPassphrase';
 import compareBalances from '../utils/compareBalances';
 import loginUI from '../utils/loginUI';
 
-const getFollowedAccountObjFromLS = () => JSON.parse(localStorage.getItem('followedAccounts'));
-
 const msg = {
   transferTxSuccess: 'You will find it in My Transactions in a matter of minutes',
   accountInitializatoinAddress: 'Account initialization',
