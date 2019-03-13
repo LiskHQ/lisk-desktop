@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { loadLastTransaction } from '../../../actions/transactions';
-import { searchTransactions, searchMoreTransactions, searchAccount, searchMoreVoters } from '../../../actions/search';
+import { searchTransactions, searchMoreTransactions, searchAccount } from '../../../actions/search';
+import { votesFetched } from '../../../actions/voting';
 import actionTypes from '../../../constants/actions';
 import ExplorerTransactionsV2 from './explorerTransactionsV2';
 import txFilters from '../../../constants/transactionFilters';
@@ -13,10 +14,6 @@ const mapStateToProps = (state, ownProps) => ({
   transaction: state.transaction,
   transactions: state.search.searchResults,
   votes: state.search.votes[state.search.lastSearch],
-  voters: state.search.voters[state.search.lastSearch],
-  votersSize: state.search.votersSize &&
-    state.search.votersSize[state.search.lastSearch] ?
-    state.search.votersSize[state.search.lastSearch] : 0,
   count: state.search.transactions[state.search.lastSearch] &&
     (state.search.transactions[state.search.lastSearch].count || 0),
   offset: state.search.searchResults.length,
@@ -37,9 +34,9 @@ const mapDispatchToProps = {
   searchAccount,
   searchTransactions,
   searchMoreTransactions,
+  votesFetched,
   addFilter: data => ({ type: actionTypes.addFilter, data }),
   searchUpdateLast: data => ({ data, type: actionTypes.searchUpdateLast }),
-  searchMoreVoters,
   loadLastTransaction,
 };
 
