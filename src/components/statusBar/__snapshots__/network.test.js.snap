@@ -1,115 +1,67 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Network not render a network 1`] = `
-<section
-  className="wrapper network-status"
->
-  <span
-    className="status online"
-  />
+"<section class=\\"wrapper network-status\\">
+  <span class=\\"status online\\" />
   <p>
-    Connected to:
-    <span>
-      mainnet
-    </span>
-    <span
-      className="peer"
-    />
+    Connected to:<span>mainnet</span>
+    <span class=\\"peer\\" />
   </p>
-</section>
+</section>;
+"
 `;
 
 exports[`Network renders nethash option as DEVNET 1`] = `
-<section
-  className="wrapper network-status"
->
-  <span
-    className="status offline"
-  />
+"<section class=\\"wrapper network-status\\">
+  <span class=\\"status offline\\" />
   <p>
-    Connected to:
-    <span>
-      devnet
-    </span>
-    <span
-      className="peer"
-    />
+    Connected to:<span>devnet</span>
+    <span class=\\"peer\\" />
   </p>
-</section>
+</section>;
+"
 `;
 
 exports[`Network renders nethash option as MAINNET 1`] = `
-<section
-  className="wrapper network-status"
->
-  <span
-    className="status online"
-  />
+"<section class=\\"wrapper network-status\\">
+  <span class=\\"status online\\" />
   <p>
-    Connected to:
-    <span>
-      mainnet
-    </span>
-    <span
-      className="peer"
-    />
+    Connected to:<span>mainnet</span>
+    <span class=\\"peer\\" />
   </p>
-</section>
+</section>;
+"
 `;
 
 exports[`Network renders nethash option as TESTNET 1`] = `
-<section
-  className="wrapper network-status"
->
-  <span
-    className="status online"
-  />
+"<section class=\\"wrapper network-status\\">
+  <span class=\\"status online\\" />
   <p>
-    Connected to:
-    <span>
-      testnet
-    </span>
-    <span
-      className="peer"
-    />
+    Connected to:<span>testnet</span>
+    <span class=\\"peer\\" />
   </p>
-</section>
+</section>;
+"
 `;
 
 exports[`Network renders status OFFLINE 1`] = `
-<section
-  className="wrapper network-status"
->
-  <span
-    className="status offline"
-  />
+"<section class=\\"wrapper network-status\\">
+  <span class=\\"status offline\\" />
   <p>
-    Connected to:
-    <span>
-      devnet
-    </span>
-    <span
-      className="peer"
-    />
+    Connected to:<span>devnet</span>
+    <span class=\\"peer\\" />
   </p>
-</section>
+</section>;
+"
 `;
 
 exports[`Network renders status ONLINE 1`] = `
-<section
-  className="wrapper network-status"
->
-  <span
-    className="status online"
-  />
+"<section class=\\"wrapper network-status\\">
+  <span class=\\"status online\\" />
   <p>
-    Connected to:
-    <span>
-      devnet
-    </span>
-    <span
-      className="peer"
-    />
+    Connected to:<span>devnet</span>
+    <span class=\\"peer\\" />
   </p>
-</section>
+</section>;
+"
 `;
