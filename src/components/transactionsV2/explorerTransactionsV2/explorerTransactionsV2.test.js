@@ -85,7 +85,7 @@ describe('ExplorerTransactions V2 Component', () => {
     it('renders ExplorerTransactionsV2 Component and loads account transactions', () => {
       const renderedWalletTransactions = wrapper.find(ExplorerTransactionsV2);
       expect(renderedWalletTransactions).toExist();
-      expect(wrapper).toContainExactlyOneMatchingElement('.transactions-row');
+      expect(wrapper).toContainExactlyOneMatchingElement('div.transactions-row');
     });
 
     it('click on row transaction', () => {

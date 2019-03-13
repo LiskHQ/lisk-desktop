@@ -1,0 +1,38 @@
+@import '../../app/variablesV2.css';
+
+.row {
+  align-items: center;
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 0 0.5em; /* stylelint-disable-line */
+
+  &:nth-child(2n+3) {
+    background-color: var(--color-background-menu);
+  }
+
+  & > * {
+    box-sizing: border-box;
+    color: var(--color-dark-gray);
+    font-family: var(--content-font);
+    font-size: var(--button-font-size-s);
+    font-weight: var(--font-weight-semi-bold);
+    line-height: 1.33;
+    padding: 22px 16px;
+    text-align: left;
+
+    &:last-child {
+      text-align: right;
+    }
+  }
+}
+
+.header {
+  & > * {
+    color: var(--color-content-grayblue);
+    font-family: var(--heading-font);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.2px;
+    line-height: 1;
+    padding: 14px 16px;
+  }
+}
