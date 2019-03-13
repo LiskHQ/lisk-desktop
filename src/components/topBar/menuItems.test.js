@@ -5,7 +5,7 @@ import { MemoryRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import MenuItems from './menuItems';
-import { menuLinks } from './constants';
+import menuLinks from './constants';
 import routes from '../../constants/routes';
 
 describe('MenuItems', () => {
@@ -13,7 +13,7 @@ describe('MenuItems', () => {
 
   const myProps = {
     isUserLogout: false,
-    items: menuLinks,
+    items: menuLinks(v => v),
     location: {
       pathname: routes.dashboard.path,
     },
