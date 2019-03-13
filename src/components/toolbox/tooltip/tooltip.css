@@ -15,7 +15,7 @@
     & .tooltip {
       left: 50%;
       right: auto;
-      transform: translateY(0) scale(1) translateX(-50%);
+      transform: translateY(0) translateX(-50%);
 
       & .tooltipArrow {
         left: 50%;
@@ -83,10 +83,8 @@
   position: absolute;
   text-align: left;
   top: 50%;
-  transform: translateY(-50%) scale(0);
-  transform-origin: left center;
+  transform: translateY(-50%);
   transition:
-    transform var(--animation-speed-fast) linear,
     visibility var(--animation-speed-fast) linear,
     opacity var(--animation-speed-fast) linear;
   visibility: hidden;
@@ -103,7 +101,7 @@
     width: var(--tooltip-arrow-size);
   }
 
-  &.shownTooltip {
+  &:global(.shownTooltip) {
     opacity: 1;
     visibility: visible;
     transform: translateY(-50%) scale(1);
