@@ -10,18 +10,39 @@
 .tooltipWrapper {
   position: relative;
 
+  &:global(.showOnBottom),
   &:global(.showOnTop) {
     & .tooltip {
-      bottom: calc(100% + 10px);
       left: 50%;
       right: auto;
       transform: translateY(0) scale(1) translateX(-50%);
+
+      & .tooltipArrow {
+        left: 50%;
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  &:global(.showOnBottom) {
+    & .tooltip {
+      bottom: auto;
+      top: calc(100% + 10px);
+
+      & .tooltipArrow {
+        bottom: auto;
+        top: -16px;
+      }
+    }
+  }
+
+  &:global(.showOnTop) {
+    & .tooltip {
+      bottom: calc(100% + 10px);
       top: auto;
 
       & .tooltipArrow {
         bottom: -16px;
-        left: 50%;
-        transform: rotate(-90deg);
         top: auto;
       }
     }
