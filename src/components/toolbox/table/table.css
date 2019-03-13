@@ -2,6 +2,7 @@
 
 .row {
   align-items: center;
+  background-color: var(--color-white);
   display: flex;
   flex-wrap: nowrap;
   padding: 0 0.5em; /* stylelint-disable-line */
@@ -11,22 +12,28 @@
   }
 
   & > * {
+    align-items: center;
     box-sizing: border-box;
     color: var(--color-dark-gray);
+    display: flex;
     font-family: var(--content-font);
     font-size: var(--button-font-size-s);
     font-weight: var(--font-weight-semi-bold);
+    justify-content: flex-start;
     line-height: 1.33;
     padding: 22px 16px;
     text-align: left;
 
     &:last-child {
+      justify-content: flex-end;
       text-align: right;
     }
   }
 }
 
 .header {
+  background-color: var(--color-white);
+
   & > * {
     color: var(--color-content-grayblue);
     font-family: var(--heading-font);
