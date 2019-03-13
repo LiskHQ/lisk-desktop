@@ -19,6 +19,10 @@ class Help extends React.Component {
     win.focus();
   }
 
+  checkTermsAndConditions() {
+    Piwik.trackingEvent('Help', 'button', 'Terms and Conditions');
+  }
+
   render() {
     const fAQIcon = () => (<span className={styles.inlineIcon}><FontIcon>info</FontIcon><b>{this.props.t(' FAQ')}</b></span>);
     const chatIcon = () => (<span className={styles.inlineIcon}><FontIcon>conversation</FontIcon><b>{this.props.t(' Chat')}</b></span>);
@@ -34,6 +38,17 @@ class Help extends React.Component {
                 <FontIcon>arrow-right</FontIcon>
               </a> : null
             }
+
+            <a
+              className={'terms-of-use'}
+              onClick={this.checkTermsAndConditions}
+              href={'https://lisk.io/terms-conditions'}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              {this.props.t('Terms of Use')}
+              <FontIcon>arrow-right</FontIcon>
+            </a>
           </header>
         </aside>
 

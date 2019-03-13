@@ -87,6 +87,6 @@ describe('Header', () => {
   it('should redirect to dashboard after 10 min', () => {
     wrapper = mountWithRouter(<Header {...mockInputProps} />, options);
     wrapper.find('Countdown').props().onComplete();
-    expect(mockInputProps.history.replace).to.have.been.calledWith(`${routes.login.path}`);
+    expect(mockInputProps.history.replace).to.have.been.calledWith(`${routes.loginV2.path}`);
   });
 });

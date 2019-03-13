@@ -43,6 +43,8 @@ module.exports = {
     'src/components/accountInitialization/index.js',
     'src/components/backgroundMaker/index.js',
     'src/components/dashboard/currencyGraph.js', // This should be unskipped in issue #1499
+    'src/components/wallet/balanceChart.js', // This should be unskipped in issue #1499
+    'src/utils/balanceChart.js', // This should be unskipped in issue #1499
     'src/components/dialog/stories.js',
     'src/components/errorBoundary/index.js',
     'src/components/feedbackForm/',
@@ -80,6 +82,37 @@ module.exports = {
     'src/utils/applyDeviceClass.js',
     'src/utils/ledger.js',
     'src/utils/proxyLogin.js',
+    'src/actions/peers.js',
+    'src/components/transactions/delegateStatistics.js',
+    'src/components/followedAccounts/index.js',
+    'src/utils/transactions.js',
+    'src/components/registerDelegate/registerDelegate.js',
+    'src/components/registerDelegate/steps/choose/choose.js',
+    'src/components/registerDelegate/steps/confirm/index.js',
+    'src/components/registerDelegate/steps/confirm/confirm.js',
+    'src/components/passphrase/confirm/index.js',
+    'src/actions/search.js',
+    'src/components/transactions/explorerTransactions/explorerTransactions.js',
+    'src/components/transactions/transactionsOverview.js',
+    'src/components/voting/voting.js',
+    'src/components/delegateSidebar/index.js',
+    'src/components/confirmVotes/confirmVotes.js',
+    'src/components/votesPreview/index.js',
+    'src/components/votingListView/votingListView.js',
+    'src/components/votingListView/votingHeader.js',
+    'src/components/votingListView/listLabels.js',
+    'src/components/votingListView/voteList.js',
+    'src/components/singleTransaction/index.js',
+    'src/store/middlewares/account.js',
+    'src/store/reducers/transactions.js',
+    'src/store/reducers/search.js',
+    'src/components/passphrase/create/movableShape.js',
+    'src/components/passphrase/create/shapes.js',
+    'src/components/passphrase/create/index.js',
+    'src/components/toolbox/dropdown/toolBoxDropdown.js',
+    'src/store/middlewares/account.js',
+    'src/store/reducers/transactions.js',
+    'src/store/reducers/search.js',
   ],
   coverageThreshold: {
     global: {
@@ -114,6 +147,7 @@ module.exports = {
   globals: {
     PRODUCTION: true,
     TEST: true,
+    VERSION: '',
   },
   coverageReporters: [
     'text',
@@ -125,4 +159,6 @@ module.exports = {
     'default',
     ['jest-junit', { suiteName: 'jest tests', outputDirectory: '<rootDir>/coverage/jest' }],
   ],
+  setupTestFrameworkScriptFile: 'jest-enzyme',
+  testEnvironment: 'enzyme',
 };

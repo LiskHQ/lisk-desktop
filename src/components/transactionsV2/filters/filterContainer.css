@@ -1,0 +1,139 @@
+@import '../../app/variables.css';
+@import '../../app/variablesV2.css';
+
+.container {
+  background-color: var(--color-white);
+  padding: 0 24px;
+}
+
+.label {
+  color: var(--color-content-light);
+  font-family: var(--heading-font);
+  font-size: var(--paragraph-font-size-l);
+  font-weight: var(--font-weight-bold);
+}
+
+.row {
+  align-items: flex-start;
+  display: flex;
+  margin: 14px 0 24px;
+}
+
+.dash {
+  align-items: center;
+  display: flex;
+  font-size: 12px;
+  height: 36px;
+}
+
+.button {
+  width: 100%;
+}
+
+.bar::before,
+.bar::after {
+  height: 0px;
+}
+
+.filterTransactions {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  font-size: var(--button-font-size-s);
+  padding: 0 20px;
+  height: 100%;
+
+  &::after {
+    border: 4px solid transparent;
+    border-top-color: var(--color-content-grayblue);
+    content: '';
+    margin-left: 8px;
+    margin-top: 2px;
+  }
+}
+
+.error {
+  color: var(--color-error);
+  font-size: var(--button-font-size-s);
+  font-weight: var(--font-weight-semi-bold);
+  text-align: right;
+  width: 100%;
+  position: absolute;
+  top: 40px;
+}
+
+.errored {
+  border-color: var(--color-error) !important;
+  margin-bottom: 20px !important;
+}
+
+.errored > .inputElement,
+.errored > .inputElement:focus {
+  color: var(--color-error);
+  border-color: var(--color-error);
+  outline-color: #eaa604;
+  outline-style: auto;
+  outline-width: 3px;
+  outline-offset: -1px;
+}
+
+.input {
+  padding: 1px;
+  height: 36px;
+  background-color: var(--color-white);
+  border: 0.5px solid #a6adbd;
+  border-radius: 4px;
+  width: 100%;
+
+  & input {
+    background-color: var(--color-white);
+    font-size: 12px;
+    color: var(--color-grayscale-medium);
+    width: 100%;
+    padding: 8px 0 8px 14px;
+    border-radius: 3px;
+    border: none;
+    transition: background-color 300ms linear;
+    margin-top: 0px !important;
+
+    &::selection {
+      color: var(--color-white);
+      background: var(--color-primary-light);
+    }
+
+    &::placeholder {
+      color: var(--color-grayscale-medium);
+      font-weight: 200;
+      letter-spacing: 0;
+    }
+
+    &:focus {
+      border-color: var(--color-primary-standard);
+      outline-color: var(--color-primary-standard);
+      outline-style: auto;
+      outline-width: 5px;
+      outline-offset: -2px;
+    }
+  }
+
+  & span:nth-child(2) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    &::before,
+    &::after {
+      background-color: var(--color-grayscale-light);
+    }
+  }
+}
+
+.bigDropdown {
+  width: 368px;
+}
+
+.dropdownContainer {
+  position: relative;
+}

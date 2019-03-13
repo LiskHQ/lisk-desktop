@@ -46,6 +46,7 @@ or "warn/action" ineastd of "red/green"
   --font-size-h5: 20px;
   --font-size-h6: 16px;
   --font-size-small: 10px;
+  --font-size-large: 24px;
   --heading-font: 'gilroy', 'Open Sans', sans-serif;
   --content-font: 'gilroy-regular', 'Open Sans', sans-serif;
   --font-weight-normal: 400;
@@ -58,6 +59,9 @@ or "warn/action" ineastd of "red/green"
   --paragraph-font-size-s: 14px;
   --button-font-size: var(--paragraph-font-size-s);
   --button-font-size-s: 12px;
+  --footnote-font-size: 12px;
+  --font-size-title: 18px;
+  --font-size-small-secondary: 13px;
 
   /*************************
         Sizes
@@ -86,7 +90,8 @@ or "warn/action" ineastd of "red/green"
   --color-primary-standard: #4e80f7;
   --color-primary-light: #9db8fa;
   --color-white: #fff;
-  --color-error: #ff7721;
+  --color-danger: #ff7721;
+  --color-error: var(--color-danger);
   --color-content: #19224d;
   --color-content-light: #2e2c3b;
   --color-primary-very-light: #e8f0fa;
@@ -107,11 +112,10 @@ or "warn/action" ineastd of "red/green"
         Box
   *************************/
   --box-shadow-standard: 0 4px 8px 0 rgba(72, 77, 97, 0.1);
-  --box-shadow-button: var(--box-shadow-standard);
+  --box-shadow-button: var(--box-shadow-standard), 0px 0px 12px 0 rgba(72, 77, 97, 0.05);
   --box-shadow-header: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
   --box-shadow-avatar: var(--box-shadow-standard);
   --box-shadow-search: 0 2px 4px 0 rgba(8, 24, 49, 0.06);
-  --box-shadow-standar2: 0 1px 5px 0 rgba(30, 25, 77, 0.12);
   --box-shadow-graph-selector: 0 1px 5px 0 rgba(30, 25, 77, 0.06);
   --box-shadow-top: 0 -2px 8px 0 rgba(72, 77, 97, 0.1);
 

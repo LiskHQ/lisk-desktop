@@ -9,6 +9,7 @@ class ReferenceInput extends React.Component {
       <Input
         className="reference"
         innerRef={(ref) => {
+          // istanbul ignore next
           if (context) {
             context.referenceInput = ref;
           }

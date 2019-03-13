@@ -3,7 +3,7 @@ import React from 'react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { mountWithContext } from '../../../test/utils/mountHelpers';
+import { mountWithContext } from '../../../test/unit-test-utils/mountHelpers';
 import Converter from './index';
 
 describe('Converter', () => {

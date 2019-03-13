@@ -3,6 +3,7 @@ import { Redirect, Route } from 'react-router-dom';
 import ErrorBoundary from '../errorBoundary';
 import offlineStyle from '../offlineWrapper/offlineWrapper.css';
 import Piwik from '../../utils/piwik';
+import routes from '../../constants/routes';
 
 const CustomRoute = ({
   path, component, isPrivate, exact,
@@ -15,12 +16,12 @@ const CustomRoute = ({
   Piwik.tracking(rest.history, settings);
 
   return ((isPrivate && isAuthenticated) || !isPrivate ?
-    <main className={isPrivate ? offlineStyle.disableWhenOffline : null}>
+    <main className={`${isPrivate ? offlineStyle.disableWhenOffline : ''} offlineWrapper`}>
       <ErrorBoundary errorMessage={t('An error occoured while rendering this page')}>
         <Route path={fullPath} component={component} exact={exact} />
       </ErrorBoundary>
     </main>
-    : <Redirect to={`/?referrer=${pathname}${encodeURIComponent(search)}`} />
+    : <Redirect to={`${routes.loginV2.path}?referrer=${pathname}${encodeURIComponent(search)}`} />
   );
 };
 

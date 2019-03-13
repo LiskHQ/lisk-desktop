@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { mountWithContext } from '../../../test/utils/mountHelpers';
+import { mountWithContext } from '../../../test/unit-test-utils/mountHelpers';
 import TransactionsOverview from './transactionsOverview';
 import store from '../../store';
 import accounts from '../../../test/constants/accounts';
@@ -27,7 +27,7 @@ describe('TransactionsOverview', () => {
       onInit: () => {},
       onLoadMore: () => {},
       onFilterSet: () => {},
-      match: { url: '/wallet' },
+      match: { url: '' },
     };
     store.getState = () => ({
       followedAccounts: { accounts: [] },

@@ -29,10 +29,14 @@ describe('V2 SplashScreen', () => {
 
   const account = accounts.genesis;
 
+  const settings = {
+    areTermsOfUseAccepted: false,
+  };
+
   const store = configureMockStore([])({
     peers,
     account,
-    settings: {},
+    settings,
   });
 
   const options = {
@@ -48,6 +52,7 @@ describe('V2 SplashScreen', () => {
     peers,
     account,
     history,
+    settings,
   };
 
   beforeEach(() => {
@@ -81,6 +86,20 @@ describe('V2 SplashScreen', () => {
         }),
       });
       expect(props.history.replace).to.have.been.calledWith(`${routes.delegates.path}`);
+    });
+  });
+
+  describe('Terms of Use', () => {
+    beforeEach(() => {
+      wrapper = mount(<MemoryRouter><SplashScreen {...props} /></MemoryRouter>, options);
+    });
+
+    it('redirect to terms of use page', () => {
+      wrapper.setProps({
+        settings: { areTermsOfUseAccepted: false },
+      });
+      wrapper.update();
+      expect(props.history.push).to.have.been.calledWith(`${routes.termsOfUse.path}`);
     });
   });
 });

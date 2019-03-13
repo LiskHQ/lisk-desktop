@@ -77,6 +77,7 @@ const actionTypes = {
   showEmptyNewsFeed: 'SHOW_EMPTY_NEWS_FEED',
   addPriceTicker: 'ADD_PRICE_TICKER',
   cleanTransactions: 'CLEAN_TRANSACTIONS',
+  walletUpdated: 'WALLET_UPDATED',
 };
 
 export default actionTypes;

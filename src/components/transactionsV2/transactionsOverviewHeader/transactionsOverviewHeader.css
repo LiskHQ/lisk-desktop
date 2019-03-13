@@ -1,0 +1,140 @@
+@import '../../app/variablesV2.css';
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.account {
+  align-items: center;
+  display: flex;
+  height: 48px;
+  justify-content: flex-start;
+  padding: 0 14px;
+
+  & .accountInfo {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-evenly;
+    margin-left: 10px;
+
+    & > div {
+      align-items: bottom;
+      display: flex;
+    }
+  }
+
+  & .title {
+    color: var(--color-content-light);
+    font-family: var(--heading-font);
+    font-size: var(--subtitle-font-size);
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+  }
+
+  & .label {
+    align-items: center;
+    background-color: #ffe5bb;
+    border-radius: var(--border-radius-standard);
+    color: #e48e00;
+    display: flex;
+    font-family: var(--heading-font);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-bold);
+    height: 17px;
+    margin: 0 5px;
+    padding: 0 8px;
+    white-space: nowrap;
+  }
+
+  & .address {
+    color: var(--color-dark-gray);
+    font-family: var(--content-font);
+    font-size: var(--button-font-size-s);
+    font-weight: var(--font-weight-semi-bold);
+  }
+}
+
+.bookmarkContainer {
+  position: relative;
+
+  & .followDropdown {
+    padding: 0;
+    width: 380px;
+  }
+}
+
+.requestContainer {
+  position: relative;
+
+  & .requestDropdown {
+    left: auto;
+    right: -110px;
+    transform-origin: calc(100% - 196px) -5px;
+    top: calc(100% + 10px);
+    width: auto;
+
+    & :global(.dropdown-arrow) {
+      right: 196px;
+      transform: translateX(50%);
+    }
+  }
+}
+
+.buttonsHolder {
+  display: flex;
+  justify-content: space-between;
+
+  & > * {
+    margin-left: 10px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  & button {
+    height: 40px;
+    min-height: 40px;
+    min-width: 180px;
+    padding: 0 42px;
+    width: auto;
+  }
+
+  & .followingButton {
+    display: flex;
+
+    &::after {
+      border: 4px solid transparent;
+      border-top-color: currentColor;
+      content: '';
+      margin-left: 8px;
+      margin-top: 4px;
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .requestContainer {
+    & .requestDropdown {
+      right: -160px;
+      transform-origin: calc(100% - 246px) -5px;
+
+      & :global(.dropdown-arrow) {
+        right: 246px;
+      }
+    }
+  }
+}
+
+@media (--small-viewport) {
+  .buttonsHolder {
+    & button {
+      padding: 0 24px;
+      width: auto;
+    }
+  }
+}

@@ -42,9 +42,7 @@ class App extends React.Component {
 
     const routesOutsideMainWrapper = [
       'registerDelegate',
-      'register',
       'addAccount',
-      'login',
     ];
 
     const { location } = this.props;

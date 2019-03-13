@@ -3,6 +3,7 @@ import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { FontIcon } from '../fontIcon';
 import { isValidPassphrase, getPassphraseValidationErrors } from '../../utils/passphrase';
+import InputV2 from '../toolbox/inputsV2/inputV2';
 import keyCodes from './../../constants/keyCodes';
 import styles from './passphraseInputV2.css';
 
@@ -17,6 +18,7 @@ class passphraseInputV2 extends React.Component {
       focus: 0,
       validationError: '',
       passphraseIsInvalid: false,
+      inputsLength: props.inputsLength,
     };
 
     this.handleToggleShowPassphrase = this.handleToggleShowPassphrase.bind(this);
@@ -28,22 +30,25 @@ class passphraseInputV2 extends React.Component {
   }
 
   keyAction(event) {
-    let { focus } = this.state;
+    let { focus, inputsLength } = this.state;
     const index = parseInt(event.target.dataset.index, 10);
-    const value = this.state.values[focus];
-    if (event.which === keyCodes.space || event.which === keyCodes.arrowRight) {
-      focus = index + 1 > this.props.inputsLength - 1 ? index : index + 1;
+    if (event.which === keyCodes.space
+      || event.which === keyCodes.arrowRight
+      || event.which === keyCodes.tab) {
+      inputsLength = index + 1 > inputsLength - 1 ? this.props.maxInputsLength : inputsLength;
+      focus = index + 1 > inputsLength - 1 ? index : index + 1;
       event.preventDefault();
     }
-    if ((event.which === keyCodes.delete && !value) || event.which === keyCodes.arrowLeft) {
+    if ((event.which === keyCodes.delete && !this.state.values[focus])
+      || event.which === keyCodes.arrowLeft) {
       focus = index - 1 < 0 ? index : index - 1;
       event.preventDefault();
     }
-    this.setState({ focus });
+    this.setState({ focus, inputsLength });
   }
 
   handlePaste({ clipboardData, target }) {
-    let { values } = this.state;
+    let { values, inputsLength } = this.state;
     const index = parseInt(target.dataset.index, 10);
     const pastedValue = clipboardData.getData('Text').trim().replace(/\W+/g, ' ').split(/\s/);
     if (pastedValue.length <= 1) {
@@ -53,12 +58,14 @@ class passphraseInputV2 extends React.Component {
         ...Array(index),
         ...pastedValue,
       ];
+      inputsLength = insertedValue.length > inputsLength
+        ? this.props.maxInputsLength : inputsLength;
       values = insertedValue
         .map((value, key) => value || values[key])
-        .splice(0, this.props.inputsLength);
+        .splice(0, inputsLength);
     }
 
-    this.validatePassphrase({ values });
+    this.validatePassphrase({ values, inputsLength });
   }
 
   handleValueChange({ target }) {
@@ -71,7 +78,8 @@ class passphraseInputV2 extends React.Component {
     this.validatePassphrase({ values, focus: index });
   }
 
-  validatePassphrase({ values, focus = null }) {
+  // eslint-disable-next-line max-statements
+  validatePassphrase({ values, inputsLength = this.state.inputsLength, focus = null }) {
     let errorState = { validationError: '', partialPassphraseError: [], passphraseIsInvalid: false };
     const passphrase = values.join(' ').trim();
     if (!isValidPassphrase(passphrase)) {
@@ -90,6 +98,7 @@ class passphraseInputV2 extends React.Component {
 
     this.setState({
       values,
+      inputsLength,
       focus,
       ...errorState,
     });
@@ -103,6 +112,9 @@ class passphraseInputV2 extends React.Component {
 
   setFocusedField({ target }) {
     const focus = parseInt(target.dataset.index, 10);
+    const value = target.value;
+    target.value = '';
+    target.value = value;
     this.setState({ focus });
   }
 
@@ -112,18 +124,19 @@ class passphraseInputV2 extends React.Component {
   }
 
   render() {
-    const { t, inputsLength } = this.props;
-    const { values } = this.state;
+    const { t } = this.props;
+    const secondPPFeedback = (this.props.isSecondPassphrase && this.props.secondPPFeedback) || '';
+    const { values, inputsLength } = this.state;
 
     return (
       <React.Fragment>
         <div className={`${styles.inputs} ${grid.row} passphrase`}>
           {[...Array(inputsLength)].map((x, i) => (
             <span key={i} className={`${grid['col-xs-2']}`}>
-              <input
-                ref={ref => ref !== null && this.state.focus === i && ref.focus() }
+              <InputV2
+                setRef={ref => ref !== null && this.state.focus === i && ref.focus() }
                 placeholder={this.state.focus === i ? '' : i + 1 }
-                className={`${this.state.partialPassphraseError[i] || this.state.passphraseIsInvalid ? 'error' : ''} ${this.state.focus === i ? 'selected' : ''}`}
+                className={`${this.state.partialPassphraseError[i] || this.state.passphraseIsInvalid || secondPPFeedback !== '' ? 'error' : ''} ${this.state.focus === i ? 'selected' : ''}`}
                 value={values[i] || ''}
                 type={this.state.showPassphrase ? 'text' : 'password'}
                 autoComplete='off'
@@ -138,8 +151,8 @@ class passphraseInputV2 extends React.Component {
           ))}
         </div>
 
-        <span className={`${styles.errorMessage} ${this.state.validationError ? styles.showError : ''}`}>
-          { this.state.validationError }
+        <span className={`${styles.errorMessage} ${this.state.validationError || secondPPFeedback !== '' ? styles.showError : ''}`}>
+          { secondPPFeedback || this.state.validationError }
         </span>
 
         <label className={`${styles.showPassphrase}`}>

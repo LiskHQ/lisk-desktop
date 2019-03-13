@@ -36,6 +36,7 @@ describe('Help', () => {
   describe('Onboarding', () => {
     beforeEach(() => {
       cy.clearLocalStorage(); // To remove onBoarding: false
+      cy.addObjectToLocalStorage('settings', 'areTermsOfUseAccepted', true);
     });
 
     /**
@@ -63,6 +64,7 @@ describe('Help', () => {
      * @expect onBoarding is set to false
      */
     it('pops up on clean login, go through onboarding', () => {
+      cy.addObjectToLocalStorage('settings', 'onBoarding', true); // TODO Remove when 1797 is fixed
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit('/');
       cy.get(ss.onBoardingHeader).should('have.text', 'Welcome to Lisk Hub')

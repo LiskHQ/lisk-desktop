@@ -5,7 +5,7 @@ import { mount } from 'enzyme';
 import { expect } from 'chai';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { prepareStore } from '../../../../test/utils/applicationInit';
+import { prepareStore } from '../../../../test/unit-test-utils/applicationInit';
 import * as accountAPI from '../../../../src/utils/api/account';
 import * as delegateAPI from '../../../../src/utils/api/delegate';
 import * as transactionsAPI from '../../../../src/utils/api/transactions';
@@ -77,6 +77,7 @@ describe('ExplorerTransactions Component', () => {
       address: accounts.genesis.address,
       limit: 25,
       filter: undefined,
+      customFilters: {},
     }).returnsPromise().resolves({ data: [{ id: 'Some ID', type: txTypes.vote }], meta: { count: 1000 } });
 
     transactionsActionStub.withArgs({
@@ -84,6 +85,7 @@ describe('ExplorerTransactions Component', () => {
       address: accounts.genesis.address,
       limit: 25,
       filter: txFilters.all,
+      customFilters: {},
     }).returnsPromise().resolves({ data: [{ id: 'Some ID', type: txTypes.vote }], meta: { count: 1000 } });
 
     store.dispatch(liskAPIClientSet({ network: getNetwork(networks.mainnet.code) }));
@@ -109,17 +111,5 @@ describe('ExplorerTransactions Component', () => {
     const renderedExplorerTransactions = wrapper.find(ExplorerTransactions);
     expect(renderedExplorerTransactions).to.be.present();
     expect(wrapper).to.have.exactly(1).descendants('.transactions-row');
-  });
-
-  it('allows to view details of a transaction and cachees last searched account transactions', () => {
-    /* eslint-disable no-unused-expressions */
-    expect(wrapper).to.have.exactly(1).descendants('.transactions-row');
-    wrapper.find('.transactions-row').simulate('click');
-    wrapper.update();
-    const transactionDetailsBackBtn = wrapper.find('.transaction-details-back-button').first();
-    expect(transactionDetailsBackBtn).to.be.present();
-    transactionDetailsBackBtn.simulate('click');
-    expect(wrapper).to.have.exactly(1).descendants('.transactions-row');
-    /* eslint-enable no-unused-expressions */
   });
 });

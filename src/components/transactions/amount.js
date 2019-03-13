@@ -20,7 +20,9 @@ const Amount = (props) => {
   }
   const amount = props.value.type !== transactionTypes.send ? '-' : <LiskAmount val={props.value.amount} />;
   return <span className={`${styles[params.className]} transactionAmount`}>
-    { params.pre }{amount}
+    <span className={'amount'}>
+      { params.pre }{amount}
+    </span>
   </span>;
 };
 export default translate()(Amount);

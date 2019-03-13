@@ -16,7 +16,7 @@ const ss = {
   requestSpecificAmountBtn: '.specify-request',
   confirmRequestBtn: '.confirm-request',
   qrCode: '.qr-code',
-  emailLink: '.email-link',
+  requestQrCode: '.qrcode-section',
   confirmRequestBlock: '.confirm-request-step',
   requestLink: '.request-link',
   backButton: '.back',
@@ -44,7 +44,7 @@ const ss = {
   confirmDelegateRegBtn: '.confirm-delegate-registration',
   spinner: '.spinner',
   transactionReference: '.transaction-reference',
-  transactionAmount: '.transactionAmount span',
+  transactionAmount: '.transactionAmount .amount span',
   transactionAmountPlaceholder: '.transactionAmount',
   delegateDuplicateNameError: '.error-name-duplicate',
   headerBalance: '.balance span',
@@ -91,6 +91,7 @@ const ss = {
   resulteBtn: '.result',
   sidebarMenuWalletBtn: '#transactions',
   referenceInput: '.reference input',
+  referenceTextarea: '.reference textarea',
   referenceConfirmLabel: '.reference',
   convertorElement: '.convertor',
   convertedPrice: '.converted-price',
@@ -170,6 +171,8 @@ const ss = {
   exploreAsGuestBtn: '.explore-as-guest-button',
   walletOnboarding: '.wallet-onboarding',
   walletOnboardingClose: '.wallet-onboarding .banner-close',
+  requestDropdown: '.request-dropdown',
+  termsOfUse: '.accept-terms',
 };
 
 export default ss;

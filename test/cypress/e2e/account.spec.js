@@ -14,24 +14,31 @@ describe('Account', () => {
   it('Opens by url + Address & Balance are correct', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.accounts}/16313739661666666666L`);
+    // Timeout to avoid Cypress bug
+    // https://github.com/cypress-io/cypress/issues/695
+    cy.wait(1000);
     cy.url().should('contain', '16313739661666666666L');
-    cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).contains('16313739661666666666L');
-    cy.get(ss.leftBlockAccountExplorer).find(ss.accountBalance).contains('0');
+    cy.get(ss.accountAddress).eq(1).contains('16313739661666666666L');
+    cy.get(ss.accountBalance).eq(1).contains('0');
   });
 
   it('Username is shown if registered', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.accounts}/${accounts.genesis.address}`);
-    cy.get(ss.leftBlockAccountExplorer).find(ss.delegateName).should('not.exist');
+    cy.get(ss.delegateName).should('not.exist');
     cy.visit(`${urls.accounts}/${accounts.delegate.address}`);
-    cy.wait(1000); // Avoid failing on jenkins
-    cy.get(ss.leftBlockAccountExplorer).find(ss.delegateName).contains(accounts.delegate.username);
+    // Timeout to avoid Cypress bug
+    // https://github.com/cypress-io/cypress/issues/695
+    cy.wait(1000);
+    cy.get(ss.delegateName).contains(accounts.delegate.username);
   });
 
   it('Add / Remove bookmark', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.accounts}/${accounts.delegate.address}`);
-    cy.wait(1000); // Avoid failing on jenkins
+    // Timeout to avoid Cypress bug
+    // https://github.com/cypress-io/cypress/issues/695
+    cy.wait(1000);
     cy.get(ss.followAccountBtn).contains('Add to bookmark');
     cy.get(ss.followAccountBtn).click();
     cy.get(ss.titleInput).type('Bob');

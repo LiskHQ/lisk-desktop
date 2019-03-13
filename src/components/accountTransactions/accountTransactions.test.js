@@ -5,7 +5,7 @@ import { mount } from 'enzyme';
 import { expect } from 'chai';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { prepareStore } from '../../../test/utils/applicationInit';
+import { prepareStore } from '../../../test/unit-test-utils/applicationInit';
 import * as search from '../../actions/search';
 import peersReducer from '../../store/reducers/peers';
 import accountReducer from '../../store/reducers/account';
@@ -21,6 +21,9 @@ import getNetwork from './../../../src/utils/getNetwork';
 import AccountTransactions from './index';
 import i18n from '../../i18n';
 import accounts from '../../../test/constants/accounts';
+import routes from '../../constants/routes';
+
+import ExplorerTransactionsV2 from '../transactionsV2/explorerTransactionsV2';
 
 describe('AccountTransaction Component', () => {
   let wrapper;
@@ -42,7 +45,10 @@ describe('AccountTransaction Component', () => {
     searchAccountSpy = spy(search, 'searchAccount');
 
     props = {
-      match: { params: { address: accounts.genesis.address } },
+      match: {
+        url: `${routes.accounts.pathPrefix}${routes.accounts.path}/${accounts.genesis.address}`,
+        params: { address: accounts.genesis.address },
+      },
       history: { push: spy(), location: { search: ' ' } },
       t: key => key,
     };
@@ -64,5 +70,23 @@ describe('AccountTransaction Component', () => {
   it('renders AccountTransaction Component and loads account transactions', () => {
     const renderedAccountTransactions = wrapper.find(AccountTransactions);
     expect(renderedAccountTransactions).to.be.present();
+  });
+
+  it('renders ExplorerTransactionsV2 if is accountsV2 route', () => {
+    props = {
+      ...props,
+      match: {
+        url: `${routes.accountsV2.pathPrefix}${routes.accountsV2.path}/${accounts.genesis.address}`,
+        params: { address: accounts.genesis.address },
+      },
+    };
+
+    wrapper = mount(<Provider store={store}>
+      <Router>
+        <AccountTransactions {...props} i18n={i18n}/>
+      </Router>
+    </Provider>);
+
+    expect(wrapper).to.have.descendants(ExplorerTransactionsV2);
   });
 });

@@ -31,8 +31,7 @@ function testActivity(open) {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     open();
     cy.get(ss.transactionRow).eq(0).click();
-    cy.url().should('contain', '?id=');
-    cy.get(ss.txDetailsBackButton);
+    cy.url().should('contain', urls.transactions);
   });
 
   /**
@@ -292,4 +291,3 @@ describe.skip('Wallet Activity for delegate', () => {
 describe('Account Activity opened from search for delegate', () => {
   testDelegateActivity(() => cy.get(ss.searchInput).click().type(`${accounts.delegate.address}{enter}`));
 });
-

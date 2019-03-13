@@ -16,24 +16,58 @@ import settingsIcon from '../assets/images/icons-v2/settings.svg';
 import settingsActiveIcon from '../assets/images/icons-v2/settings-active.svg';
 import logoutIcon from '../assets/images/icons-v2/logout.svg';
 import logoutActiveIcon from '../assets/images/icons-v2/logout-active.svg';
+import iconChart from '../assets/images/icons-v2/icon-chart.svg';
+import iconCal from '../assets/images/icons-v2/icon-calendar.svg';
+import iconLastTx from '../assets/images/icons-v2/icon-last-tx.svg';
+import txIncoming from '../assets/images/icons-v2/tx-incoming.svg';
+import txOutgoing from '../assets/images/icons-v2/tx-outgoing.svg';
+import txDelegate from '../assets/images/icons-v2/tx-delegate.svg';
+import txVote from '../assets/images/icons-v2/tx-vote.svg';
+import tx2ndPassphrase from '../assets/images/icons-v2/tx-2nd-passphrase.svg';
+import txDefault from '../assets/images/icons-v2/tx-default.svg';
+import txSendArrow from '../assets/images/icons-v2/tx-send-arrow.svg';
+import icoLink from '../assets/images/icons-v2/link.svg';
+import copy from '../assets/images/icons-v2/copy.svg';
+import questionMark from '../assets/images/icons-v2/question.svg';
+import alertIcon from '../assets/images/icons-v2/icon-alert.svg';
+import okIcon from '../assets/images/icons-v2/icon-checkmark.svg';
+import transactionSuccess from '../assets/images/icons-v2/transactionSuccess.svg';
+import transactionError from '../assets/images/icons-v2/transactionError.svg';
 
 export default {
+  alert_icon: alertIcon,
   avatar_icon: Avatar,
   check_icon: Check,
   circleLock_icon: CircleLock,
+  copy,
+  dashboard_active_icon: dashboardActiveIcon,
+  dashboard_icon: dashboardIcon,
+  delegates_active_icon: delegatesActiveIcon,
+  delegates_icon: delegatesIcon,
   feedback_icon: Feedback,
   help_icon: Help,
+  icoLink,
+  icon_cal: iconCal,
+  icon_chart: iconChart,
+  icon_last_tx: iconLastTx,
   key_icon: Key,
   lock_icon: Lock,
-  pdf_icon: Pdf,
-  dashboard_icon: dashboardIcon,
-  dashboard_active_icon: dashboardActiveIcon,
-  wallet_icon: walletIcon,
-  wallet_active_icon: walletActiveIcon,
-  delegates_icon: delegatesIcon,
-  delegates_active_icon: delegatesActiveIcon,
-  settings_icon: settingsIcon,
-  settings_active_icon: settingsActiveIcon,
-  logout_icon: logoutIcon,
   logout_active_icon: logoutActiveIcon,
+  logout_icon: logoutIcon,
+  ok_icon: okIcon,
+  pdf_icon: Pdf,
+  question_icon: questionMark,
+  settings_active_icon: settingsActiveIcon,
+  settings_icon: settingsIcon,
+  transactionError,
+  transactionSuccess,
+  tx2ndPassphrase,
+  txDefault,
+  txDelegate,
+  txIncoming,
+  txOutgoing,
+  txSendArrow,
+  txVote,
+  wallet_active_icon: walletActiveIcon,
+  wallet_icon: walletIcon,
 };

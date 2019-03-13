@@ -9,6 +9,7 @@ import { liskAPIClientUpdate } from './peers';
 import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
+import { updateWallet } from './wallets';
 
 /**
  * Trigger this action to remove passphrase from account object
@@ -212,7 +213,7 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
     );
 
     if (windowFocus || hasRecentTransactions(transactions)) {
-      const { filter } = transactions;
+      const { filter, customFilters } = transactions;
       const address = transactions.account ? transactions.account.address : account.address;
 
       dispatch(transactionsUpdated({
@@ -220,6 +221,7 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
         address,
         limit: 25,
         filter,
+        customFilters,
       }));
     }
   };
@@ -240,6 +242,7 @@ export const accountDataUpdated = ({
         ));
       }
       dispatch(accountUpdated(result));
+      dispatch(updateWallet(result, getState().peers));
       dispatch(liskAPIClientUpdate({ online: true }));
     }).catch((res) => {
       dispatch(liskAPIClientUpdate({ online: false, code: res.error.code }));

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import i18next from 'i18next';
 import to from 'await-to-js';
 import actionTypes from '../constants/actions';
@@ -23,7 +24,7 @@ export const transactionAdded = data => ({
 });
 
 export const transactionsFilterSet = ({
-  address, limit, filter,
+  address, limit, filter, customFilters = {},
 }) => (dispatch, getState) => {
   const liskAPIClient = getState().peers.liskAPIClient;
 
@@ -34,12 +35,14 @@ export const transactionsFilterSet = ({
     address,
     limit,
     filter,
+    customFilters,
   }).then((response) => {
     dispatch({
       data: {
         confirmed: response.data,
         count: parseInt(response.meta.count, 10),
         filter,
+        customFilters,
       },
       type: actionTypes.transactionsFiltered,
     });
@@ -101,13 +104,13 @@ export const loadTransactions = ({ publicKey, address }) =>
   };
 
 export const transactionsRequested = ({
-  address, limit, offset, filter,
+  address, limit, offset, filter, customFilters = {},
 }) =>
   (dispatch, getState) => {
     dispatch(loadingStarted(actionTypes.transactionsRequested));
     const liskAPIClient = getState().peers.liskAPIClient;
     getTransactions({
-      liskAPIClient, address, limit, offset, filter,
+      liskAPIClient, address, limit, offset, filter, customFilters,
     })
       .then((response) => {
         dispatch(loadingFinished(actionTypes.transactionsRequested));
@@ -122,6 +125,16 @@ export const transactionsRequested = ({
         });
       });
   };
+
+export const loadLastTransaction = address => (dispatch, getState) => {
+  const { liskAPIClient } = getState().peers;
+  if (liskAPIClient) {
+    dispatch({ type: actionTypes.transactionCleared });
+    getTransactions({
+      liskAPIClient, address, limit: 1, offset: 0,
+    }).then(response => dispatch({ data: response.data[0], type: actionTypes.transactionLoaded }));
+  }
+};
 
 export const loadTransaction = ({ id }) =>
   (dispatch, getState) => {
@@ -194,12 +207,12 @@ export const loadTransaction = ({ id }) =>
   };
 
 export const transactionsUpdated = ({
-  address, limit, filter, pendingTransactions,
+  address, limit, filter, pendingTransactions, customFilters,
 }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     getTransactions({
-      liskAPIClient, address, limit, filter,
+      liskAPIClient, address, limit, filter, customFilters,
     })
       .then((response) => {
         dispatch({
