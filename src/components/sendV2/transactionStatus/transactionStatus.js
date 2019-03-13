@@ -1,7 +1,7 @@
 import React from 'react';
-import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
+import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import Piwik from '../../../utils/piwik';
-import svg from '../../../utils/svgIcons';
+import statusMessage from './statusMessages';
 import styles from './transactionStatus.css';
 
 class TransactionStatus extends React.Component {
@@ -10,6 +10,7 @@ class TransactionStatus extends React.Component {
 
     this.backToWallet = this.backToWallet.bind(this);
     this.onErrorReport = this.onErrorReport.bind(this);
+    this.onPrevStep = this.onPrevStep.bind(this);
   }
 
   backToWallet() {
@@ -26,26 +27,20 @@ class TransactionStatus extends React.Component {
     return `mailto:${recipient}?&subject=${subject}`;
   }
 
+  onPrevStep() {
+    this.props.transactionFailedClear();
+    this.props.prevStep({ fields: { ...this.props.fields } });
+  }
+
   render() {
     const isTransactionSuccess = this.props.failedTransactions === undefined;
-
-    let transactionStatus = {
-      headerIcon: svg.transactionSuccess,
-      bodyText: {
-        title: 'Transaction submitted',
-        paragraph: 'You will find it in My Transactions in a matter of minutes',
-      },
-    };
+    const hwTransactionError = this.props.fields.isHardwareWalletConnected && this.props.fields.hwTransactionStatus === 'error';
+    const messages = statusMessage(this.props.t);
+    let transactionStatus = isTransactionSuccess ? messages.success : messages.error;
 
     // istanbul ignore else
-    if (!isTransactionSuccess) {
-      transactionStatus = {
-        headerIcon: svg.transactionError,
-        bodyText: {
-          title: 'Transaction failed',
-          paragraph: 'Oops, looks like something went wrong. Please try again.',
-        },
-      };
+    if (this.props.fields.isHardwareWalletConnected) {
+      transactionStatus = hwTransactionError ? messages.hw : messages.success;
     }
 
     return (
@@ -54,11 +49,22 @@ class TransactionStatus extends React.Component {
           <img src={transactionStatus.headerIcon}/>
         </header>
         <div className={`${styles.content} transaction-status-content`}>
-          <h1>{this.props.t('{{title}}', { title: transactionStatus.bodyText.title })}</h1>
-          <p>{this.props.t('{{paragraph}}', { paragraph: transactionStatus.bodyText.paragraph })}</p>
+          <h1>{transactionStatus.bodyText.title}</h1>
+          <p>{transactionStatus.bodyText.paragraph}</p>
         </div>
         <footer className={`${styles.footer} transaction-status-footer`}>
-          <PrimaryButtonV2 className={'on-goToWallet'} onClick={this.backToWallet}>{this.props.t('Back to wallet')}</PrimaryButtonV2>
+          <div>
+            {
+              hwTransactionError
+              ? (<SecondaryButtonV2
+                  label={this.props.t('Retry')}
+                  className={`${styles.btn} retry`}
+                  onClick={() => this.onPrevStep()}
+                />)
+              : null
+            }
+            <PrimaryButtonV2 className={` ${styles.btn} on-goToWallet`} onClick={this.backToWallet}>{this.props.t('Back to wallet')}</PrimaryButtonV2>
+          </div>
           {
             !isTransactionSuccess
             ? <div className={`${styles.errorReport} transaction-status-error`}>

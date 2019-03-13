@@ -48,7 +48,11 @@ describe('Form', () => {
 
   const props = {
     t: v => v,
-    fields: {},
+    fields: {
+      recipient: { address: '' },
+      amount: { value: '' },
+      reference: { value: '' },
+    },
     prevState: {
       fields: {},
     },

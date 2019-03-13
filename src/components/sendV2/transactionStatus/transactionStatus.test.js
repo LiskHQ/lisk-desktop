@@ -35,6 +35,20 @@ describe('TransactionStatus', () => {
     finalCallback: jest.fn(),
     failedTransactions: undefined,
     transactionFailedClear: jest.fn(),
+    prevStep: jest.fn(),
+    fields: {
+      recipient: {
+        address: '123123L',
+      },
+      amount: {
+        value: 1,
+      },
+      reference: {
+        value: 1,
+      },
+      isLoading: false,
+      isHardwareWalletConnected: false,
+    },
   };
 
   beforeEach(() => {
@@ -62,5 +76,16 @@ describe('TransactionStatus', () => {
     wrapper.find('.on-goToWallet').at(0).simulate('click');
     wrapper.update();
     expect(props.finalCallback).toBeCalled();
+  });
+
+  it('should call onPrevStep function', () => {
+    const newProps = { ...props };
+    newProps.fields.isHardwareWalletConnected = true;
+    newProps.fields.hwTransactionStatus = 'error';
+    newProps.failedTransactions = [{ recipient: '123L', amount: 1, reference: 'test' }];
+    wrapper = mount(<TransactionStatus {...newProps} />, options);
+    expect(wrapper).toContainMatchingElement('.transaction-status-error');
+    wrapper.find('.retry').at(0).simulate('click');
+    expect(props.prevStep).toBeCalled();
   });
 });
