@@ -51,6 +51,7 @@ class Tooltip extends React.Component {
       showTooltip: true,
     });
   }
+
   handleClose(event) {
     if (this.wrapperRef && (event && !this.wrapperRef.contains(event.target))) {
       document.removeEventListener('click', this.handleClose);
@@ -65,7 +66,7 @@ class Tooltip extends React.Component {
     const {
       title, children, footer, className,
     } = this.props;
-    return (
+    return React.isValidElement(children) && (
       <div
         className={`${styles.tooltipWrapper} ${className}`}
         onMouseLeave={this.handleMouseLeave}
@@ -84,11 +85,9 @@ class Tooltip extends React.Component {
               <p className={`${styles.title}`}>{title}</p>
             </header>
           )}
-          <main>
-            { children }
-          </main>
+          <main>{children}</main>
           {React.isValidElement(footer) &&
-            <footer>{ footer }</footer>}
+            <footer>{footer}</footer>}
         </div>
       </div>
     );
