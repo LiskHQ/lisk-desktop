@@ -2,7 +2,8 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
 import BoxV2 from '../boxV2';
-import VotesTableHeader from './VotesTableHeader';
+import AccountVisual from '../accountVisual';
+import VotesTableHeader from './votesTableHeader';
 import TableRow from '../toolbox/table/tableRow';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
 import styles from './votesTab.css';
@@ -50,7 +51,16 @@ class VotesTab extends React.Component {
 
                 </div>
                 <div className={`${grid['col-sm-3']} ${grid['col-lg-6']}`}>
-                  {vote.address}
+                  <div className={`${styles.info}`}>
+                    <AccountVisual
+                      className={`${styles.avatar}`}
+                      address={vote.address}
+                      size={36} />
+                    <div className={styles.accountInfo}>
+                      <span className={`${styles.title}`}>{vote.username}</span>
+                      <span>{vote.address}</span>
+                    </div>
+                  </div>
                 </div>
                 <div className={`${grid['col-sm-3']} ${grid['col-lg-2']}`}>
 

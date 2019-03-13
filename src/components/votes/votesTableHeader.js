@@ -5,7 +5,7 @@ import TableRow from '../toolbox/table/tableRow';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import styles from './votesTab.css';
 
-const VotesTableHeader = ({ t }) => (
+const VotesTableHeader = ({ t }) =>
   <TableRow isHeader={true}>
     <div className={`${grid['col-sm-1']} ${grid['col-lg-1']}`}>{t('Rank')}</div>
     <div className={`${grid['col-sm-3']} ${grid['col-lg-6']}`}>{t('Delegate')}</div>
@@ -27,7 +27,6 @@ const VotesTableHeader = ({ t }) => (
         <p>{t('Sum of LSK balance of all accounts who voted for this delegate.')}</p>
       </Tooltip>
     </div>
-  </TableRow>
-);
+  </TableRow>;
 
 export default translate()(VotesTableHeader);

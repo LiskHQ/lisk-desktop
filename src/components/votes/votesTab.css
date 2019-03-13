@@ -102,3 +102,26 @@
     width: 100%;
   }
 }
+
+.info {
+  display: flex;
+
+  & > .avatar {
+    margin-right: 24px;
+  }
+
+  & > .accountInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  & .title {
+    color: var(--color-content-light);
+    display: block;
+    font-family: var(--heading-font);
+    font-size: var(--paragraph-font-size-l);
+    font-weight: var(--font-weight-bold);
+  }
+}
+
