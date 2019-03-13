@@ -5,7 +5,7 @@ import routes from '../../../constants/routes';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import WalletTab from '../../wallet/walletTab';
 import DelegateTab from '../../delegate/delegateTab';
-import VotesTab from '../../votes/VotesTab';
+import VotesTab from '../../votes/votesTab';
 
 class ExplorerTransactionsV2 extends React.Component {
   // eslint-disable-next-line max-statements
