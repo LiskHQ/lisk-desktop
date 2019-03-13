@@ -8,6 +8,7 @@ import AmountV2 from './amountV2';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
 import LiskAmount from '../liskAmount';
 import { DateTimeFromTimestamp } from './../timestamp/index';
+import TableRow from '../toolbox/table/tableRow';
 
 class TransactionRowV2 extends React.Component {
   constructor() {
@@ -53,7 +54,7 @@ class TransactionRowV2 extends React.Component {
     const hasConfirmations = props.value.confirmations && props.value.confirmations > 0;
     const { isConfirmed } = this.state;
     return (
-      <div className={`${grid.row} ${styles.row} ${!hasConfirmations ? styles.pending : ''} transactions-row`} onClick={() => onClick(props)}>
+      <TableRow className={`${grid.row} ${styles.row} ${!hasConfirmations ? styles.pending : ''} transactions-row`} onClick={() => onClick(props)}>
         <div className={`${grid['col-xs-6']} ${grid['col-sm-4']} ${grid['col-lg-3']} transactions-cell`}>
           <TransactionTypeV2 {...props.value}
             followedAccounts={props.followedAccounts}
@@ -76,7 +77,7 @@ class TransactionRowV2 extends React.Component {
         <div className={`${grid['col-xs-6']} ${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
           <AmountV2 {...props}/>
         </div>
-      </div>
+      </TableRow>
     );
   }
 }
