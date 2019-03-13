@@ -86,7 +86,6 @@ describe('TransactionStatus', () => {
     wrapper = mount(<TransactionStatus {...newProps} />, options);
     expect(wrapper).toContainMatchingElement('.transaction-status-error');
     wrapper.find('.retry').at(0).simulate('click');
-    wrapper.update();
     expect(props.prevStep).toBeCalled();
   });
 });

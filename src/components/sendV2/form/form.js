@@ -68,20 +68,27 @@ class Form extends React.Component {
     const { prevState } = this.props;
 
     if (prevState.fields && Object.entries(prevState.fields).length > 0) {
-      this.setState({ fields: { ...prevState.fields } });
+      this.setState({
+        ...this.state,
+        fields: {
+          ...this.state.fields,
+          ...prevState.fields,
+        },
+      });
     }
   }
 
   ifDataFromUrl() {
     const { fields = {} } = this.props;
 
-    if (Object.entries(fields).length > 0) {
+    if (fields.recipient.address !== '' || fields.amount.value !== '' || fields.reference.value !== '') {
       this.setState({
         fields: {
           ...this.state.fields,
           recipient: {
             ...this.state.fields.recipient,
             address: fields.recipient.address,
+            value: fields.recipient.address,
           },
           amount: {
             ...this.state.fields.amount,

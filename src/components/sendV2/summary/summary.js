@@ -58,7 +58,7 @@ class Summary extends React.Component {
       this.submitTransaction();
     }
 
-    this.setState({ ...newState });
+    this.setState(newState);
   }
 
   componentDidUpdate() {
@@ -80,7 +80,7 @@ class Summary extends React.Component {
     const { failedTransactions, pendingTransactions } = this.props;
     const { isHardwareWalletConnected, isLoading } = this.state;
 
-    const isATransactionPending = isHardwareWalletConnected
+    const hasPendingTransaction = isHardwareWalletConnected
       ? pendingTransactions.find(transaction => (
         transaction.senderId === this.props.account.address &&
         transaction.recipientId === this.props.fields.recipient.address &&
@@ -89,11 +89,11 @@ class Summary extends React.Component {
       : pendingTransactions.length;
 
     // istanbul ignore else
-    if (isLoading && (isATransactionPending || failedTransactions)) {
+    if (isLoading && (hasPendingTransaction || failedTransactions)) {
       this.props.nextStep({
         fields: {
           ...this.props.fields,
-          hwTransactionStatus: isATransactionPending ? 'success' : 'error',
+          hwTransactionStatus: hasPendingTransaction ? 'success' : 'error',
           isHardwareWalletConnected: this.state.isHardwareWalletConnected,
         },
       });
@@ -129,7 +129,7 @@ class Summary extends React.Component {
 
   prevStep() {
     Piwik.trackingEvent('Send_Summary', 'button', 'Previous step');
-    this.props.prevStep({ fields: { ...this.props.fields } });
+    this.props.prevStep({ ...this.props.fields });
   }
 
   nextStep() {
@@ -152,16 +152,18 @@ class Summary extends React.Component {
     isBtnDisabled = !isBtnDisabled && isHardwareWalletConnected;
 
     const confirmBtnMessage = isHardwareWalletConnected
-      ? 'Confirm on Ledger'
-      : `Send ${this.props.fields.amount.value} LSK`;
+      ? this.props.t('Confirm on Ledger')
+      : this.props.t('Send {{amount}} LSK', { amount: this.props.fields.amount.value });
 
-    const title = isHardwareWalletConnected ? 'Confirm transaction on Ledger Nano S' : 'Transaction summary';
+    const title = isHardwareWalletConnected
+      ? this.props.t('Confirm transaction on Ledger Nano S')
+      : this.props.t('Transaction summary');
 
 
     return (
       <div className={`${styles.wrapper} summary`}>
         <header className={`${styles.header} summary-header`}>
-          <h1>{this.props.t('{{title}}', { title: `${title}` })}</h1>
+          <h1>{title}</h1>
         </header>
 
         <div className={`${styles.content} summary-content`}>
@@ -240,7 +242,7 @@ class Summary extends React.Component {
             className={`${styles.btn} on-nextStep`}
             onClick={this.nextStep}
             disabled={isBtnDisabled}>
-            {this.props.t('{{value}}', { value: `${confirmBtnMessage}` })}
+            {confirmBtnMessage}
           </PrimaryButtonV2>
         </footer>
       </div>
