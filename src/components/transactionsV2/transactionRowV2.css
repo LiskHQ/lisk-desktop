@@ -61,6 +61,7 @@
 .status {
   display: flex;
   position: relative;
+  width: 100%;
 
   & > span {
     opacity: 0;
