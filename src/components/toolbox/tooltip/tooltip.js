@@ -76,18 +76,19 @@ class Tooltip extends React.Component {
           onClick={this.handleClick}
           />
         <div className={`${styles.tooltip} ${this.state.showTooltip ? styles.shownTooltip : ''} tooltip-window`}>
-          <span className={`${styles.tooltipArrow}`}>
+          <span className={`${styles.tooltipArrow} tooltip-arrow`}>
             <svg fill="currentColor" viewBox="0 0 8 36"><path d="M8 0C7 11 0 13 0 18s7 9 8 18z"/></svg>
           </span>
-          <header>
-            <p className={`${styles.title}`}>{title}</p>
-          </header>
+          {title !== '' && (
+            <header>
+              <p className={`${styles.title}`}>{title}</p>
+            </header>
+          )}
           <main>
             { children }
           </main>
-          <footer>
-            { footer }
-          </footer>
+          {React.isValidElement(footer) &&
+            <footer>{ footer }</footer>}
         </div>
       </div>
     );
@@ -95,7 +96,7 @@ class Tooltip extends React.Component {
 }
 
 Tooltip.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   children: PropTypes.node.isRequired,
   footer: PropTypes.node,
   className: PropTypes.string,
@@ -104,6 +105,7 @@ Tooltip.propTypes = {
 Tooltip.defaultProps = {
   title: '',
   children: <React.Fragment />,
+  className: '',
 };
 
 export default Tooltip;
