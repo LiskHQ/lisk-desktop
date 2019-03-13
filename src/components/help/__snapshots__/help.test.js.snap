@@ -12,6 +12,14 @@ exports[`Help Page renders three help article sections with proper btn callbacks
       <a class=\\"help-onboarding\\">
         New to Hub? Take a tour<span class=\\"icon arrow-right \\" />
       </a>
+      <a
+        class=\\"terms-of-use\\"
+        href=\\"https://lisk.io/terms-conditions\\"
+        target=\\"_blank\\"
+        rel=\\"noopener noreferrer\\"
+      >
+        Terms of Use<span class=\\"icon arrow-right \\" />
+      </a>
     </header>
   </aside>
   <section class=\\"col-sm-12 col-md-8 helpSection help-articles\\">
@@ -134,6 +142,14 @@ exports[`Help Page renders three help article sections with proper btn callbacks
         Browse through our tutorials, check out the FAQ or connect with our
         knowledgeable community.
       </p>
+      <a
+        class=\\"terms-of-use\\"
+        href=\\"https://lisk.io/terms-conditions\\"
+        target=\\"_blank\\"
+        rel=\\"noopener noreferrer\\"
+      >
+        Terms of Use<span class=\\"icon arrow-right \\" />
+      </a>
     </header>
   </aside>
   <section class=\\"col-sm-12 col-md-8 helpSection help-articles\\">
