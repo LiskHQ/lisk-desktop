@@ -5,7 +5,7 @@ import MenuItems from './menuItems';
 import SearchBar from '../searchBar';
 import UserAccount from './userAccount';
 import Piwik from '../../utils/piwik';
-import { menuLinks } from './constants';
+import menuLinks from './constants';
 import styles from './topBar.css';
 
 import liskLogo from '../../assets/images/lisk-logo-v2.svg';
@@ -53,9 +53,11 @@ class TopBar extends React.Component {
   render() {
     const { t, showDelegate, account } = this.props;
 
+    const menuItems = menuLinks(t);
+
     const items = showDelegate
-      ? menuLinks
-      : menuLinks.filter(item => item.id !== 'delegates');
+      ? menuItems
+      : menuItems.filter(item => item.id !== 'delegates');
 
     const isUserLogout = Object.keys(account).length === 0 || account.afterLogout;
 
