@@ -2,16 +2,15 @@
 
 .wrapper {
   display: flex;
+  height: 330px;
   margin-bottom: 12px;
   padding: 0;
 }
 
 .content {
   display: flex;
-
-  /* flex-direction: column; */
+  flex-direction: column;
   justify-content: space-evenly;
-  max-width: 100%; /* TODO: Remove after adding graph module */
   padding: 16px;
 
   & .icon {
@@ -61,36 +60,34 @@
       margin-bottom: 0;
     }
 
-    /* TODO: Uncomment after adding graph module
-    ** &:first-child { */
-    flex-direction: column;
+    &:first-child {
+      flex-direction: column;
 
-    & .icon {
-      height: auto;
-      width: auto;
+      & .icon {
+        height: auto;
+        width: auto;
+      }
+
+      & .info {
+        margin: 0;
+        text-align: center;
+      }
+
+      & .label {
+        font-size: var(--paragraph-font-size-s);
+        line-height: 1.79;
+        order: 2;
+      }
+
+      & .value {
+        font-size: var(--subtitle-font-size);
+        margin-top: 20px;
+        order: 1;
+      }
+
+      & .currency {
+        font-size: var(--paragraph-font-size-s);
+      }
     }
-
-    & .info {
-      margin: 0;
-      text-align: center;
-    }
-
-    & .label {
-      font-size: var(--paragraph-font-size-s);
-      line-height: 1.79;
-      order: 2;
-    }
-
-    & .value {
-      font-size: var(--subtitle-font-size);
-      margin-top: 20px;
-      order: 1;
-    }
-
-    & .currency {
-      font-size: var(--paragraph-font-size-s);
-    }
-
-    /* } */
   }
 }
