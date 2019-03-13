@@ -49,7 +49,7 @@ describe('Summary', () => {
   const props = {
     t: v => v,
     account: {
-      address: '12345L',
+      address: accounts['second passphrase account'].address,
       secondPublicKey: accounts['second passphrase account'].secondPublicKey,
     },
     failedTransactions: '',
@@ -115,11 +115,10 @@ describe('Summary', () => {
       },
     };
     wrapper = mount(<Summary {...newProps} />, options);
-    wrapper.update();
     wrapper.setProps({
       ...props,
       pendingTransactions: [{
-        senderId: '12345L',
+        senderId: accounts['second passphrase account'].address,
         recipientId: '123123L',
         amount: 1,
       }],

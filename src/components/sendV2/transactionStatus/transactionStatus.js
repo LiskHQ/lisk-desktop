@@ -35,11 +35,12 @@ class TransactionStatus extends React.Component {
   render() {
     const isTransactionSuccess = this.props.failedTransactions === undefined;
     const hwTransactionError = this.props.fields.isHardwareWalletConnected && this.props.fields.hwTransactionStatus === 'error';
-    let transactionStatus = isTransactionSuccess ? statusMessage.success : statusMessage.error;
+    const messages = statusMessage(this.props.t);
+    let transactionStatus = isTransactionSuccess ? messages.success : messages.error;
 
     // istanbul ignore else
     if (this.props.fields.isHardwareWalletConnected) {
-      transactionStatus = hwTransactionError ? statusMessage.hw : statusMessage.success;
+      transactionStatus = hwTransactionError ? messages.hw : messages.success;
     }
 
     return (
