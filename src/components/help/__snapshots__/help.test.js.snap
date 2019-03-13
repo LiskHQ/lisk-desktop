@@ -1,141 +1,87 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Help Page renders three help article sections with proper btn callbacks 1`] = `
-<div
-  className="wrapper wrapper"
->
-  <aside
-    className="col-sm-12 col-md-4 sideBar"
-  >
+"<div class=\\"wrapper wrapper\\">
+  <aside class=\\"col-sm-12 col-md-4 sideBar\\">
     <header>
-      <h2>
-        Help
-      </h2>
+      <h2>Help</h2>
       <p>
-        Browse through our tutorials, check out the FAQ or connect with our knowledgeable community.
+        Browse through our tutorials, check out the FAQ or connect with our
+        knowledgeable community.
       </p>
-      <a
-        className="help-onboarding"
-        onClick={[Function]}
-      >
-        New to Hub? Take a tour
-        <span
-          className="icon arrow-right "
-        />
+      <a class=\\"help-onboarding\\">
+        New to Hub? Take a tour<span class=\\"icon arrow-right \\" />
       </a>
     </header>
   </aside>
-  <section
-    className="col-sm-12 col-md-8 helpSection help-articles"
-  >
+  <section class=\\"col-sm-12 col-md-8 helpSection help-articles\\">
     <article>
       <h2>
-        <span
-          className="icon logo-icon headerIcon"
-        />
-        Help Center
+        <span class=\\"icon logo-icon headerIcon\\" />Help Center
       </h2>
-      <div
-        className="articleContainer"
-      >
+      <div class=\\"articleContainer\\">
         <div>
           <p>
-            Search for answers in our extensive 
-            <span
-              className="inlineIcon"
-            >
-              <span
-                className="icon info "
-              />
-              <b>
-                 FAQ
-              </b>
-            </span>
-             or get in touch in via 
-            <span
-              className="inlineIcon"
-            >
-              <span
-                className="icon conversation "
-              />
-              <b>
-                 Chat
-              </b>
+            Search for answers in our extensive{\\" \\"}
+            <span class=\\"inlineIcon\\">
+              <span class=\\"icon info \\" />
+              <b> FAQ</b>
+            </span>{\\" \\"}
+            or get in touch in via{\\" \\"}
+            <span class=\\"inlineIcon\\">
+              <span class=\\"icon conversation \\" />
+              <b> Chat</b>
             </span>
             .
           </p>
         </div>
         <div>
           <button
-            className="help-visit-center"
-            data-react-toolbox="button"
-            disabled={false}
-            onClick={[Function]}
-            onMouseDown={[Function]}
-            onMouseLeave={[Function]}
-            onMouseUp={[Function]}
-            onTouchStart={[Function]}
-            type="button"
+            class=\\"help-visit-center\\"
+            type=\\"button\\"
+            data-react-toolbox=\\"button\\"
           >
-            Visit Help Center
-            <span
-              className="icon arrow-right "
-            />
+            Visit Help Center<span class=\\"icon arrow-right \\" />
           </button>
         </div>
       </div>
     </article>
     <article>
       <h2>
-        <span
-          className="icon academy headerIcon"
-        />
-        Academy
+        <span class=\\"icon academy headerIcon\\" />Academy
       </h2>
-      <div
-        className="articleContainer"
-      >
+      <div class=\\"articleContainer\\">
         <div>
-          <p>
-            Learn about blockchain with our comprehensive knowledge base.
-          </p>
+          <p>Learn about blockchain with our comprehensive knowledge base.</p>
         </div>
         <div>
           <ul>
             <li>
               <a
-                href="https://lisk.io/academy/blockchain-basics/what-is-blockchain/eli5-blockchain"
-                rel="noopener noreferrer"
-                target="_blank"
+                target=\\"_blank\\"
+                href=\\"https://lisk.io/academy/blockchain-basics/what-is-blockchain/eli5-blockchain\\"
+                rel=\\"noopener noreferrer\\"
               >
-                Explain Blockchain Like I'm 5
-                <span
-                  className="icon arrow-right "
-                />
+                Explain Blockchain Like I&#x27;m 5
+                <span class=\\"icon arrow-right \\" />
               </a>
             </li>
             <li>
               <a
-                href="https://lisk.io/academy/blockchain-basics/benefits-of-blockchain/blockchain-security"
-                rel="noopener noreferrer"
-                target="_blank"
+                target=\\"_blank\\"
+                href=\\"https://lisk.io/academy/blockchain-basics/benefits-of-blockchain/blockchain-security\\"
+                rel=\\"noopener noreferrer\\"
               >
-                Is Blockchain Secure?
-                <span
-                  className="icon arrow-right "
-                />
+                Is Blockchain Secure?<span class=\\"icon arrow-right \\" />
               </a>
             </li>
             <li>
               <a
-                href="https://lisk.io/academy/blockchain-basics/how-does-blockchain-work"
-                rel="noopener noreferrer"
-                target="_blank"
+                target=\\"_blank\\"
+                href=\\"https://lisk.io/academy/blockchain-basics/how-does-blockchain-work\\"
+                rel=\\"noopener noreferrer\\"
               >
-                See more
-                <span
-                  className="icon arrow-right "
-                />
+                See more<span class=\\"icon arrow-right \\" />
               </a>
             </li>
           </ul>
@@ -144,43 +90,30 @@ exports[`Help Page renders three help article sections with proper btn callbacks
     </article>
     <article>
       <h2>
-        <span
-          className="icon lisk-chat headerIcon"
-        />
-        Lisk.Chat
+        <span class=\\"icon lisk-chat headerIcon\\" />Lisk.Chat
       </h2>
-      <div
-        className="articleContainer"
-      >
+      <div class=\\"articleContainer\\">
         <div>
-          <p>
-            Don’t be a stranger! Connect with our worldwide community.
-          </p>
+          <p>Don’t be a stranger! Connect with our worldwide community.</p>
         </div>
         <div>
           <ul>
             <li>
               <a
-                href="https://lisk.chat/home"
-                rel="noopener noreferrer"
-                target="_blank"
+                target=\\"_blank\\"
+                href=\\"https://lisk.chat/home\\"
+                rel=\\"noopener noreferrer\\"
               >
-                Visit Lisk.Chat
-                <span
-                  className="icon arrow-right "
-                />
+                Visit Lisk.Chat<span class=\\"icon arrow-right \\" />
               </a>
             </li>
             <li>
               <a
-                href="https://lisk.chat/channel/help-desk"
-                rel="noopener noreferrer"
-                target="_blank"
+                target=\\"_blank\\"
+                href=\\"https://lisk.chat/channel/help-desk\\"
+                rel=\\"noopener noreferrer\\"
               >
-                See #help-desk channel
-                <span
-                  className="icon arrow-right "
-                />
+                See #help-desk channel<span class=\\"icon arrow-right \\" />
               </a>
             </li>
           </ul>
@@ -188,145 +121,89 @@ exports[`Help Page renders three help article sections with proper btn callbacks
       </div>
     </article>
   </section>
-</div>
+</div>;
+"
 `;
 
 exports[`Help Page renders three help article sections with proper btn callbacks 2`] = `
-<div
-  className="wrapper wrapper"
->
-  <aside
-    className="col-sm-12 col-md-4 sideBar"
-  >
+"<div class=\\"wrapper wrapper\\">
+  <aside class=\\"col-sm-12 col-md-4 sideBar\\">
     <header>
-      <h2>
-        Help
-      </h2>
+      <h2>Help</h2>
       <p>
-        Browse through our tutorials, check out the FAQ or connect with our knowledgeable community.
+        Browse through our tutorials, check out the FAQ or connect with our
+        knowledgeable community.
       </p>
-      <a
-        className="help-onboarding"
-        onClick={[Function]}
-      >
-        New to Hub? Take a tour
-        <span
-          className="icon arrow-right "
-        />
-      </a>
     </header>
   </aside>
-  <section
-    className="col-sm-12 col-md-8 helpSection help-articles"
-  >
+  <section class=\\"col-sm-12 col-md-8 helpSection help-articles\\">
     <article>
       <h2>
-        <span
-          className="icon logo-icon headerIcon"
-        />
-        Help Center
+        <span class=\\"icon logo-icon headerIcon\\" />Help Center
       </h2>
-      <div
-        className="articleContainer"
-      >
+      <div class=\\"articleContainer\\">
         <div>
           <p>
-            Search for answers in our extensive 
-            <span
-              className="inlineIcon"
-            >
-              <span
-                className="icon info "
-              />
-              <b>
-                 FAQ
-              </b>
-            </span>
-             or get in touch in via 
-            <span
-              className="inlineIcon"
-            >
-              <span
-                className="icon conversation "
-              />
-              <b>
-                 Chat
-              </b>
+            Search for answers in our extensive{\\" \\"}
+            <span class=\\"inlineIcon\\">
+              <span class=\\"icon info \\" />
+              <b> FAQ</b>
+            </span>{\\" \\"}
+            or get in touch in via{\\" \\"}
+            <span class=\\"inlineIcon\\">
+              <span class=\\"icon conversation \\" />
+              <b> Chat</b>
             </span>
             .
           </p>
         </div>
         <div>
           <button
-            className="help-visit-center"
-            data-react-toolbox="button"
-            disabled={false}
-            onClick={[Function]}
-            onMouseDown={[Function]}
-            onMouseLeave={[Function]}
-            onMouseUp={[Function]}
-            onTouchStart={[Function]}
-            type="button"
+            class=\\"help-visit-center\\"
+            type=\\"button\\"
+            data-react-toolbox=\\"button\\"
           >
-            Visit Help Center
-            <span
-              className="icon arrow-right "
-            />
+            Visit Help Center<span class=\\"icon arrow-right \\" />
           </button>
         </div>
       </div>
     </article>
     <article>
       <h2>
-        <span
-          className="icon academy headerIcon"
-        />
-        Academy
+        <span class=\\"icon academy headerIcon\\" />Academy
       </h2>
-      <div
-        className="articleContainer"
-      >
+      <div class=\\"articleContainer\\">
         <div>
-          <p>
-            Learn about blockchain with our comprehensive knowledge base.
-          </p>
+          <p>Learn about blockchain with our comprehensive knowledge base.</p>
         </div>
         <div>
           <ul>
             <li>
               <a
-                href="https://lisk.io/academy/blockchain-basics/what-is-blockchain/eli5-blockchain"
-                rel="noopener noreferrer"
-                target="_blank"
+                target=\\"_blank\\"
+                href=\\"https://lisk.io/academy/blockchain-basics/what-is-blockchain/eli5-blockchain\\"
+                rel=\\"noopener noreferrer\\"
               >
-                Explain Blockchain Like I'm 5
-                <span
-                  className="icon arrow-right "
-                />
+                Explain Blockchain Like I&#x27;m 5
+                <span class=\\"icon arrow-right \\" />
               </a>
             </li>
             <li>
               <a
-                href="https://lisk.io/academy/blockchain-basics/benefits-of-blockchain/blockchain-security"
-                rel="noopener noreferrer"
-                target="_blank"
+                target=\\"_blank\\"
+                href=\\"https://lisk.io/academy/blockchain-basics/benefits-of-blockchain/blockchain-security\\"
+                rel=\\"noopener noreferrer\\"
               >
-                Is Blockchain Secure?
-                <span
-                  className="icon arrow-right "
-                />
+                Is Blockchain Secure?<span class=\\"icon arrow-right \\" />
               </a>
             </li>
             <li>
               <a
-                href="https://lisk.io/academy/blockchain-basics/how-does-blockchain-work"
-                rel="noopener noreferrer"
-                target="_blank"
+                target=\\"_blank\\"
+                href=\\"https://lisk.io/academy/blockchain-basics/how-does-blockchain-work\\"
+                rel=\\"noopener noreferrer\\"
               >
-                See more
-                <span
-                  className="icon arrow-right "
-                />
+                See more<span class=\\"icon arrow-right \\" />
               </a>
             </li>
           </ul>
@@ -335,43 +212,30 @@ exports[`Help Page renders three help article sections with proper btn callbacks
     </article>
     <article>
       <h2>
-        <span
-          className="icon lisk-chat headerIcon"
-        />
-        Lisk.Chat
+        <span class=\\"icon lisk-chat headerIcon\\" />Lisk.Chat
       </h2>
-      <div
-        className="articleContainer"
-      >
+      <div class=\\"articleContainer\\">
         <div>
-          <p>
-            Don’t be a stranger! Connect with our worldwide community.
-          </p>
+          <p>Don’t be a stranger! Connect with our worldwide community.</p>
         </div>
         <div>
           <ul>
             <li>
               <a
-                href="https://lisk.chat/home"
-                rel="noopener noreferrer"
-                target="_blank"
+                target=\\"_blank\\"
+                href=\\"https://lisk.chat/home\\"
+                rel=\\"noopener noreferrer\\"
               >
-                Visit Lisk.Chat
-                <span
-                  className="icon arrow-right "
-                />
+                Visit Lisk.Chat<span class=\\"icon arrow-right \\" />
               </a>
             </li>
             <li>
               <a
-                href="https://lisk.chat/channel/help-desk"
-                rel="noopener noreferrer"
-                target="_blank"
+                target=\\"_blank\\"
+                href=\\"https://lisk.chat/channel/help-desk\\"
+                rel=\\"noopener noreferrer\\"
               >
-                See #help-desk channel
-                <span
-                  className="icon arrow-right "
-                />
+                See #help-desk channel<span class=\\"icon arrow-right \\" />
               </a>
             </li>
           </ul>
@@ -379,5 +243,6 @@ exports[`Help Page renders three help article sections with proper btn callbacks
       </div>
     </article>
   </section>
-</div>
+</div>;
+"
 `;

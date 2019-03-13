@@ -1,13 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import renderer from 'react-test-renderer';
+import prettier from 'prettier';
 import Help from './help';
 import links from './../../constants/externalLinks';
+
+const toHtml = wrapper => prettier.format(wrapper.html());
 
 describe('Help Page', () => {
   let wrapper;
   let props;
-  let rendered;
 
   beforeEach(() => {
     props = {
@@ -21,11 +22,10 @@ describe('Help Page', () => {
     window.open = jest.fn();
     window.open.mockReturnValue({ focus: jest.fn() });
     wrapper = shallow(<Help {...props} />);
-    rendered = renderer.create(<Help {...props} />).toJSON();
   });
 
   it('renders three help article sections with proper btn callbacks', () => {
-    expect(rendered).toMatchSnapshot();
+    expect(toHtml(wrapper)).toMatchSnapshot();
 
     wrapper.find('.help-onboarding').simulate('click');
     expect(props.settingsUpdated).toHaveBeenCalledWith({ onBoarding: true });
@@ -39,6 +39,6 @@ describe('Help Page', () => {
     delete propsNotLoggedIn.account.address;
     wrapper.setProps(propsNotLoggedIn);
     wrapper.update();
-    expect(rendered).toMatchSnapshot();
+    expect(toHtml(wrapper)).toMatchSnapshot();
   });
 });
