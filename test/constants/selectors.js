@@ -166,6 +166,7 @@ const ss = {
   delegateStatsLastBlock: '.last-forged',
   delegateStatsSince: '.delegate-since',
   followAccountBtn: '.follow-account',
+  bookmarkedAccountTitle: '.transactions .account-title',
   showMoreButton: '.show-more-button',
   chooseAvatar: '.choose-avatar span',
   copyPassphrase: '.option-value',
@@ -191,6 +192,16 @@ const ss = {
   summaryAmount: '.amount-summary',
   sendFormAmountFeedback: '.amount-feedback',
   sendBookmarkList: '.bookmark-list',
+  filterTransactionsBtn: '.filterTransactions',
+  dateFromInput: '.dateFromInput',
+  dateToInput: '.dateToInput',
+  amountFromInput: '.amountFromInput',
+  amountToInput: '.amountToInput',
+  messageField: '.message-field span',
+  applyFilters: '.saveButton',
+  filterBar: '.filterBar',
+  filter: '.filter',
+  clearFilterBtn: '.clear-filter',
 };
 
 export default ss;
