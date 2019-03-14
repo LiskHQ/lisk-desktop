@@ -60,3 +60,40 @@ describe('Wallet', () => {
     cy.get(ss.requestDropdown).should('be.visible');
   });
 });
+
+describe('Transaction list filtering', () => {
+  it('Filter by Date', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.wallet);
+    cy.get(ss.filterTransactionsBtn).click();
+    cy.get(ss.dateFromInput).type('23.10.18');
+    cy.get(ss.dateToInput).type('24.10.18');
+    cy.get(ss.applyFilters).click();
+    cy.get(ss.transactionRow).should('have.length', 0);
+    cy.get(ss.filter).contains('23').parent().find(ss.clearFilterBtn)
+      .click();
+    cy.get(ss.transactionRow).should('not.have.length', 0);
+  });
+
+  it('Date validation error', () => {
+
+  });
+
+  it('Filter by Amount', () => {
+  });
+
+  it('Amount validation error', () => {
+  });
+
+  it('Filter by Message', () => {
+  });
+
+  it('Message validation error', () => {
+  });
+
+  it('Filter by all filters combined', () => {
+  });
+
+  it('Incoming/Outgoing applies to filter results', () => {
+  });
+});
