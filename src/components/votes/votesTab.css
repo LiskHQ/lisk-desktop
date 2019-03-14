@@ -4,6 +4,20 @@
   margin-bottom: 40px;
   overflow: initial;
 
+  & header {
+    justify-content: space-between;
+  }
+
+  & .filterHolder {
+    height: 32px;
+    width: 200px;
+
+    & input {
+      font-size: var(--button-font-size-s);
+      height: 100%;
+    }
+  }
+
   & .lastHeading {
     & :global(.tooltip-window) {
       left: auto;
@@ -124,4 +138,3 @@
     font-weight: var(--font-weight-bold);
   }
 }
-
