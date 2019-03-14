@@ -257,17 +257,15 @@ export const accountDataUpdated = ({
   };
 
 export const updateAccountDelegateStats = account =>
-  (dispatch, getState) => {
+  async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     const { address, publicKey } = account;
-    getTransactions({
+    const transaction = await getTransactions({
       liskAPIClient, address, limit: 1, type: transactionTypes.registerDelegate,
-    }).then((transactions) => {
-      getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 }).then((block) => {
-        dispatch(delegateStatsLoaded({
-          lastBlock: (block.data[0] && block.data[0].timestamp) || '-',
-          txDelegateRegister: transactions.data[0],
-        }));
-      });
     });
+    const block = await getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 });
+    dispatch(delegateStatsLoaded({
+      lastBlock: (block.data[0] && block.data[0].timestamp) || '-',
+      txDelegateRegister: transaction.data[0],
+    }));
   };

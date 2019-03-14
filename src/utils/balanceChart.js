@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { fromRawLsk } from './lsk';
-import { getUnixTimestampFromFirstBlock } from './datetime';
+import { getUnixTimestampFromValue } from './datetime';
 
 export const graphOptions = format => ({
   maintainAspectRatio: false,
@@ -127,7 +127,7 @@ export const getBalanceData = ({
 
   const data = transactions.reduce((balances, tx) => {
     const txValue = getTxValue(tx, address);
-    const txDate = new Date(getUnixTimestampFromFirstBlock(tx.timestamp));
+    const txDate = new Date(getUnixTimestampFromValue(tx.timestamp));
     const lastBalance = balances.slice(-1)[0];
     const tmpBalances = moment(lastBalance.x).format(format) === moment(txDate).format(format)
       ? balances.slice(0, -1) : balances;
