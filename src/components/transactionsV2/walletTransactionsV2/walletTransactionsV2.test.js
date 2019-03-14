@@ -67,6 +67,7 @@ describe('WalletTransactions V2 Component', () => {
     wallets: {},
     peers: { options: { code: 0 } },
     t: key => key,
+    hideChart: true, // Props to hide chart on tests, due to no canvas support
   };
 
   beforeEach(() => {

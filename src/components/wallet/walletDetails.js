@@ -19,8 +19,7 @@ class walletDetails extends React.Component {
   // eslint-disable-next-line complexity
   render() {
     const {
-      balance, t, address, wallets, className = '',
-      peers, lastTransaction,
+      balance, t, address, wallets, peers, lastTransaction,
     } = this.props;
 
     const lastTx = {
@@ -41,7 +40,7 @@ class walletDetails extends React.Component {
       : '-';
 
     return (
-      <BoxV2 className={`${className} ${styles.wrapper}`}>
+      <BoxV2 className={`${styles.wrapper}`}>
         <header>
           <h1>{t('Wallet overview')}</h1>
         </header>

@@ -2,7 +2,9 @@ import React from 'react';
 import MultiStep from './../multiStep';
 import Form from './form';
 import Summary from './summary';
+import TransactionStatus from './transactionStatus';
 import { parseSearchParams } from './../../utils/searchParams';
+import routes from '../../constants/routes';
 import styles from './send.css';
 
 class Send extends React.Component {
@@ -18,6 +20,12 @@ class Send extends React.Component {
         reference: { value: reference || '' },
       },
     };
+
+    this.backToWallet = this.backToWallet.bind(this);
+  }
+
+  backToWallet() {
+    this.props.history.push(routes.wallet.path);
   }
 
   render() {
@@ -28,9 +36,11 @@ class Send extends React.Component {
         <div className={`${styles.wrapper} send-box`}>
           <MultiStep
             key='send'
+            finalCallback={this.backToWallet}
             className={styles.wrapper}>
             <Form fields={fields} />
             <Summary />
+            <TransactionStatus history={this.props.history}/>
           </MultiStep>
         </div>
       </div>

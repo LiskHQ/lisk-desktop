@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import Send from './send';
 
@@ -27,6 +28,13 @@ describe('Form', () => {
         path: '/wallet/sendV2/send',
         search: '?recipient=16313739661670634666L&amount=10&reference=test',
       },
+      push: jest.fn(),
+    },
+    transactions: {
+      failed: undefined,
+    },
+    account: {
+      balance: accounts.genesis.balance,
     },
     followedAccounts: {
       accounts: [
@@ -66,6 +74,9 @@ describe('Form', () => {
         USD: 1,
       },
     },
+    account: {
+      balance: accounts.genesis.balance,
+    },
     t: v => v,
     prevState: {
       fields: {},
@@ -93,6 +104,7 @@ describe('Form', () => {
         path: '/wallet/sendV2/send',
         search: '?recipient=16313739661670634666L&amount=10&reference=test',
       },
+      push: jest.fn(),
     },
   };
 
@@ -104,15 +116,35 @@ describe('Form', () => {
     expect(wrapper).toContainMatchingElement('.send-box');
     expect(wrapper).toContainMatchingElement('MultiStep');
     expect(wrapper).toContainMatchingElement('Form');
+    expect(wrapper).not.toContainMatchingElement('Summary');
+    expect(wrapper).not.toContainMatchingElement('TransactionStatus');
   });
 
   it('should render properly without getting data from URL', () => {
-    props.history.location.path = '';
-    props.history.location.search = '';
-    wrapper = mount(<Send {...props} />, options);
+    const newProps = { ...props };
+    newProps.history.location.path = '';
+    newProps.history.location.search = '';
+    wrapper = mount(<Send {...newProps} />, options);
     wrapper.update();
     expect(wrapper).toContainMatchingElement('.send-box');
     expect(wrapper).toContainMatchingElement('MultiStep');
     expect(wrapper).toContainMatchingElement('Form');
+  });
+
+  it('should call finallCallback after submit a transaction', () => {
+    wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: '12345L' } });
+    const amountField = wrapper.find('.fieldGroup').at(1);
+    amountField.find('InputV2').simulate('change', { target: { name: 'amount', value: '.1' } });
+    jest.advanceTimersByTime(300);
+    wrapper.update();
+    wrapper.find('.btn-submit').at(0).simulate('click');
+    wrapper.update();
+    expect(wrapper).toContainMatchingElement('Summary');
+    wrapper.find('.on-nextStep').at(0).simulate('click');
+    wrapper.update();
+    expect(wrapper).toContainMatchingElement('TransactionStatus');
+    wrapper.find('.on-goToWallet').at(0).simulate('click');
+    wrapper.update();
+    expect(props.history.push).toBeCalled();
   });
 });

@@ -46,6 +46,7 @@ or "warn/action" ineastd of "red/green"
   --font-size-h5: 20px;
   --font-size-h6: 16px;
   --font-size-small: 10px;
+  --font-size-large: 24px;
   --heading-font: 'gilroy', 'Open Sans', sans-serif;
   --content-font: 'gilroy-regular', 'Open Sans', sans-serif;
   --font-weight-normal: 400;
@@ -60,6 +61,7 @@ or "warn/action" ineastd of "red/green"
   --button-font-size-s: 12px;
   --footnote-font-size: 12px;
   --font-size-title: 18px;
+  --font-size-small-secondary: 13px;
 
   /*************************
         Sizes
