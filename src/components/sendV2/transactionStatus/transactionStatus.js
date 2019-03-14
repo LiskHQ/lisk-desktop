@@ -49,8 +49,8 @@ class TransactionStatus extends React.Component {
           <img src={transactionStatus.headerIcon}/>
         </header>
         <div className={`${styles.content} transaction-status-content`}>
-          <h1 className={'header-message'}>{this.props.t('{{title}}', { title: transactionStatus.bodyText.title })}</h1>
-          <p className={'body-message'}>{this.props.t('{{paragraph}}', { paragraph: transactionStatus.bodyText.paragraph })}</p>
+          <h1>{transactionStatus.bodyText.title}</h1>
+          <p className={'body-message'}>{transactionStatus.bodyText.paragraph}</p>
         </div>
         <footer className={`${styles.footer} transaction-status-footer`}>
           <div>
