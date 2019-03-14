@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
 import BoxV2 from '../boxV2';
@@ -47,6 +48,7 @@ class VotesTab extends React.Component {
           <h1>{t('Voted delegates')}</h1>
           <div className={`${styles.filterHolder}`}>
             <InputV2
+              disabled={votes && votes.length === 0}
               name={'filter'}
               value={filterValue}
               placeholder={t('Filter by name')}
@@ -107,5 +109,20 @@ class VotesTab extends React.Component {
     );
   }
 }
+
+VotesTab.propTypes = {
+  votes: PropTypes.arrayOf(PropTypes.shape({
+    username: PropTypes.string,
+    address: PropTypes.string,
+  })),
+  loading: PropTypes.array,
+  t: PropTypes.func,
+};
+
+VotesTab.defaultProps = {
+  votes: [],
+  loading: [],
+  t: v => v,
+};
 
 export default translate()(VotesTab);
