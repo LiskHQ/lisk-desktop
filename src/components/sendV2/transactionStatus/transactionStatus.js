@@ -50,7 +50,7 @@ class TransactionStatus extends React.Component {
         </header>
         <div className={`${styles.content} transaction-status-content`}>
           <h1>{transactionStatus.bodyText.title}</h1>
-          <p>{transactionStatus.bodyText.paragraph}</p>
+          <p className={'body-message'}>{transactionStatus.bodyText.paragraph}</p>
         </div>
         <footer className={`${styles.footer} transaction-status-footer`}>
           <div>
