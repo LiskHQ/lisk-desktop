@@ -42,6 +42,7 @@ class VotesTab extends React.Component {
     const filteredVotes = votes ? votes.filter(vote => RegExp(filterValue, 'i').test(vote.username)) : [];
     const canLoadMore = filteredVotes.length > this.state.showing;
     const isLoading = loading.length > 0;
+    console.log(loading);
 
     return (
       <BoxV2 className={`${styles.wrapper}`}>
@@ -69,7 +70,7 @@ class VotesTab extends React.Component {
             ? filteredVotes.slice(0, this.state.showing).map((vote, key) => (
               <TableRow key={`row-${key}`}>
                 <div className={`${grid['col-sm-1']} ${grid['col-lg-1']}`}>
-                  {(vote.rank && vote.rank < 10 ? `${vote.rank}`.substring(-2) : vote.rank) || '-'}
+                  {(vote.rank && +vote.rank < 10 ? `0${vote.rank}` : vote.rank) || '-'}
                 </div>
                 <div className={`${grid['col-sm-3']} ${grid['col-lg-6']}`}>
                   <div className={`${styles.info}`}>
@@ -89,7 +90,7 @@ class VotesTab extends React.Component {
                     : '-'}
                 </div>
                 <div className={`${grid['col-sm-2']} ${grid['col-lg-1']}`}>
-                  {vote.productivity ? `${vote.productivity}%` : '-'}
+                  {vote.productivity !== undefined ? `${vote.productivity}%` : '-'}
                 </div>
                 <div className={`${grid['col-sm-3']} ${grid['col-lg-2']}`}>
                   {vote.vote

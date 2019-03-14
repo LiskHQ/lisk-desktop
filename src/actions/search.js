@@ -36,27 +36,29 @@ const searchVotes = ({ address }) =>
   async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     /* istanbul ignore else */
-    if (liskAPIClient) {
-      const fetchedVotes = await getVotes(liskAPIClient, { address, offset: 0, limit: 101 });
-      const delegates = await listDelegates(liskAPIClient, { limit: 101 });
-      const votes = fetchedVotes.data.votes.map((vote) => {
-        const username = vote.username;
-        let delegate = delegates.data.filter(d => d.username === username);
-        delegate = delegate[0] || {};
-        return {
-          ...vote,
-          ...delegate,
-        };
-      }).sort((a, b) => (a.rank || -1) - (b.rank || -1));
+    if (!liskAPIClient) return;
+    dispatch(loadingStarted(actionTypes.searchVotes));
+    const fetchedVotes = await getVotes(liskAPIClient, { address, offset: 0, limit: 101 });
+    const delegates = await listDelegates(liskAPIClient, { limit: 101 });
 
-      dispatch({
-        type: actionTypes.searchVotes,
-        data: {
-          votes,
-          address,
-        },
-      });
-    }
+    const asyncVotes = fetchedVotes.data.votes.map(async (vote) => {
+      const delegate = delegates.data.find(d => d.username === vote.username)
+        || await getDelegate(liskAPIClient, { username: vote.username }).then(d => d.data[0]);
+
+      return ({ ...vote, ...delegate });
+    });
+
+    const votes = await Promise.all(asyncVotes);
+    votes.sort((a, b) => {
+      if (+a.rank > +b.rank) return 1;
+      return -1;
+    });
+
+    dispatch({
+      type: actionTypes.searchVotes,
+      data: { votes, address },
+    });
+    dispatch(loadingFinished(actionTypes.searchVotes));
   };
 
 const searchVoters = ({
@@ -101,7 +103,6 @@ export const searchAccount = ({ address }) =>
     const liskAPIClient = getState().peers.liskAPIClient;
     /* istanbul ignore else */
     if (liskAPIClient) {
-      dispatch(searchVotes({ address }));
       getAccount(liskAPIClient, address).then((response) => {
         const accountData = {
           ...response,
@@ -113,6 +114,7 @@ export const searchAccount = ({ address }) =>
         dispatch({ data: accountData, type: actionTypes.searchAccount });
         dispatch(updateWallet(response, getState().peers));
       });
+      dispatch(searchVotes({ address }));
     }
   };
 
