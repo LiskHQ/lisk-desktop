@@ -8,6 +8,7 @@ import VotesTableHeader from './votesTableHeader';
 import TableRow from '../toolbox/table/tableRow';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
 import { InputV2 } from '../toolbox/inputsV2';
+import LiskAmount from '../liskAmount';
 import styles from './votesTab.css';
 
 class VotesTab extends React.Component {
@@ -68,7 +69,7 @@ class VotesTab extends React.Component {
             ? filteredVotes.slice(0, this.state.showing).map((vote, key) => (
               <TableRow key={`row-${key}`}>
                 <div className={`${grid['col-sm-1']} ${grid['col-lg-1']}`}>
-
+                  {(vote.rank && vote.rank < 10 ? `${vote.rank}`.substring(-2) : vote.rank) || '-'}
                 </div>
                 <div className={`${grid['col-sm-3']} ${grid['col-lg-6']}`}>
                   <div className={`${styles.info}`}>
@@ -83,13 +84,17 @@ class VotesTab extends React.Component {
                   </div>
                 </div>
                 <div className={`${grid['col-sm-3']} ${grid['col-lg-2']}`}>
-
+                  {vote.rewards
+                    ? <span><LiskAmount val={vote.rewards}/> {t('LSK')}</span>
+                    : '-'}
                 </div>
                 <div className={`${grid['col-sm-2']} ${grid['col-lg-1']}`}>
-
+                  {vote.productivity ? `${vote.productivity}%` : '-'}
                 </div>
                 <div className={`${grid['col-sm-3']} ${grid['col-lg-2']}`}>
-
+                  {vote.vote
+                    ? <span><LiskAmount val={vote.vote}/> {t('LSK')}</span>
+                    : '-'}
                 </div>
               </TableRow>
             )) : (

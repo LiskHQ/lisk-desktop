@@ -1,7 +1,7 @@
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
 import { getAccount } from '../utils/api/account';
-import { getDelegate, getVoters, getAllVotes } from '../utils/api/delegate';
+import { getDelegate, getVoters, getVotes, listDelegates } from '../utils/api/delegate';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import searchAll from '../utils/api/search';
@@ -33,18 +33,29 @@ const searchDelegate = ({ publicKey, address }) =>
   };
 
 const searchVotes = ({ address }) =>
-  (dispatch, getState) => {
+  async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     /* istanbul ignore else */
     if (liskAPIClient) {
-      getAllVotes(liskAPIClient, address).then(response =>
-        dispatch({
-          type: actionTypes.searchVotes,
-          data: {
-            votes: response.data.votes,
-            address,
-          },
-        }));
+      const fetchedVotes = await getVotes(liskAPIClient, { address, offset: 0, limit: 101 });
+      const delegates = await listDelegates(liskAPIClient, { limit: 101 });
+      const votes = fetchedVotes.data.votes.map((vote) => {
+        const username = vote.username;
+        let delegate = delegates.data.filter(d => d.username === username);
+        delegate = delegate[0] || {};
+        return {
+          ...vote,
+          ...delegate,
+        };
+      }).sort((a, b) => (a.rank || -1) - (b.rank || -1));
+
+      dispatch({
+        type: actionTypes.searchVotes,
+        data: {
+          votes,
+          address,
+        },
+      });
     }
   };
 
