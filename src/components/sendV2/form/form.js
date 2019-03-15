@@ -133,6 +133,20 @@ class Form extends React.Component {
     }
 
     // istanbul ignore else
+    if (!isAccountValid && !isAddressValid && recipient.value) {
+      recipient = {
+        ...this.state.recipient,
+        address: '',
+        balance: '',
+        error: true,
+        feedback: 'Provide a correct wallet address or a name of a followed account',
+        selected: false,
+        title: '',
+        showSuggestions: true,
+      };
+    }
+
+    // istanbul ignore else
     if (isAddressValid) {
       recipient = {
         ...this.state.recipient,
@@ -157,20 +171,6 @@ class Form extends React.Component {
         feedback: '',
         showSuggestions: false,
         following: true,
-      };
-    }
-
-    // istanbul ignore else
-    if (!isAccountValid && !isAddressValid && recipient.value) {
-      recipient = {
-        ...this.state.recipient,
-        address: '',
-        balance: '',
-        error: true,
-        feedback: 'Provide a correct wallet address or a name of a followed account',
-        selected: false,
-        title: '',
-        showSuggestions: true,
       };
     }
 
