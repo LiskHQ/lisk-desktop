@@ -32,32 +32,56 @@ const searchDelegate = ({ publicKey, address }) =>
     });
   };
 
-const searchVotes = ({ address }) =>
+
+export const searchVotesDelegate = (votes, {
+  showingVotes = 30, address, offset = 0, limit = 101,
+}) =>
+  // eslint-disable-next-line max-statements
+  async (dispatch, getState) => {
+    const liskAPIClient = getState().peers.liskAPIClient;
+    if (!liskAPIClient) return;
+    dispatch(loadingStarted(actionTypes.searchVotes));
+    const delegates = await listDelegates(liskAPIClient, { limit, offset });
+    const mergedVotes = votes.map((vote) => {
+      const delegate = delegates.data.find(d => d.username === vote.username) || {};
+      return { ...vote, ...delegate };
+    }).sort((a, b) => {
+      if (!a.rank && !b.rank) return 0;
+      if (!a.rank || +a.rank > +b.rank) return 1;
+      return -1;
+    });
+
+    const lastIndex = showingVotes > mergedVotes.length ?
+      mergedVotes.length : showingVotes;
+    if (mergedVotes.length && !mergedVotes[lastIndex - 1].rank) {
+      dispatch(searchVotesDelegate(mergedVotes, {
+        offset: offset + limit,
+        address,
+        showingVotes,
+      }));
+    } else {
+      dispatch({
+        type: actionTypes.searchVotes,
+        data: { votes: mergedVotes, address },
+      });
+      dispatch(loadingFinished(actionTypes.searchVotes));
+    }
+  };
+
+const searchVotes = ({ address, offset, limit }) =>
   async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     /* istanbul ignore else */
     if (!liskAPIClient) return;
     dispatch(loadingStarted(actionTypes.searchVotes));
-    const fetchedVotes = await getVotes(liskAPIClient, { address, offset: 0, limit: 101 });
-    const delegates = await listDelegates(liskAPIClient, { limit: 101 });
-
-    const asyncVotes = fetchedVotes.data.votes.map(async (vote) => {
-      const delegate = delegates.data.find(d => d.username === vote.username)
-        || await getDelegate(liskAPIClient, { username: vote.username }).then(d => d.data[0]);
-
-      return ({ ...vote, ...delegate });
-    });
-
-    const votes = await Promise.all(asyncVotes);
-    votes.sort((a, b) => {
-      if (+a.rank > +b.rank) return 1;
-      return -1;
-    });
+    const votes = await getVotes(liskAPIClient, { address, offset, limit })
+      .then(res => res.data.votes);
 
     dispatch({
       type: actionTypes.searchVotes,
       data: { votes, address },
     });
+    dispatch(searchVotesDelegate(votes, { address, limit: 30 }));
     dispatch(loadingFinished(actionTypes.searchVotes));
   };
 
@@ -114,7 +138,7 @@ export const searchAccount = ({ address }) =>
         dispatch({ data: accountData, type: actionTypes.searchAccount });
         dispatch(updateWallet(response, getState().peers));
       });
-      dispatch(searchVotes({ address }));
+      dispatch(searchVotes({ address, offset: 0, limit: 101 }));
     }
   };
 

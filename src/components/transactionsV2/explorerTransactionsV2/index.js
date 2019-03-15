@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { loadLastTransaction } from '../../../actions/transactions';
-import { searchTransactions, searchMoreTransactions, searchAccount } from '../../../actions/search';
+import { searchTransactions, searchMoreTransactions, searchAccount, searchVotesDelegate } from '../../../actions/search';
 import { votesFetched } from '../../../actions/voting';
 import actionTypes from '../../../constants/actions';
 import ExplorerTransactionsV2 from './explorerTransactionsV2';
@@ -31,6 +31,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 /* istanbul ignore next */
 const mapDispatchToProps = {
+  searchVotesDelegate,
   searchAccount,
   searchTransactions,
   searchMoreTransactions,

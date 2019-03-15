@@ -28,6 +28,10 @@ class VotesTab extends React.Component {
     const max = this.props.votes.length;
     const showing = (this.state.showing + 30 > max) ? max : this.state.showing + 30;
     this.setState({ showing });
+    this.props.searchVotesDelegate(this.props.votes, {
+      address: this.props.address,
+      showingVotes: showing,
+    });
   }
 
   handleFilter({ target }) {
@@ -42,7 +46,6 @@ class VotesTab extends React.Component {
     const filteredVotes = votes ? votes.filter(vote => RegExp(filterValue, 'i').test(vote.username)) : [];
     const canLoadMore = filteredVotes.length > this.state.showing;
     const isLoading = loading.length > 0;
-    console.log(loading);
 
     return (
       <BoxV2 className={`${styles.wrapper}`}>
