@@ -60,6 +60,11 @@
 
 .bookmarkContainer {
   position: relative;
+
+  & .followDropdown {
+    padding: 0;
+    width: 380px;
+  }
 }
 
 .requestContainer {

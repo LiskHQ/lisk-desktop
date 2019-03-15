@@ -32,6 +32,7 @@ class Form extends React.Component {
           title: '',
           value: '',
           showSuggestions: false,
+          following: false,
         },
         amount: {
           error: false,
@@ -124,10 +125,25 @@ class Form extends React.Component {
 
     if (followedAccounts.length && recipient.value !== '') {
       isAccountValid = followedAccounts
-        .find(account => account.title.toLowerCase() === recipient.value.toLowerCase()) || false;
+        .find(account => (account.title.toLowerCase() === recipient.value.toLowerCase()) ||
+          account.address.toLowerCase() === recipient.value.toLowerCase()) || false;
       isAddressValid = regex.address.test(recipient.value);
     } else {
       isAddressValid = recipient.value.match(regex.address);
+    }
+
+    // istanbul ignore else
+    if (!isAccountValid && !isAddressValid && recipient.value) {
+      recipient = {
+        ...this.state.recipient,
+        address: '',
+        balance: '',
+        error: true,
+        feedback: 'Provide a correct wallet address or a name of a followed account',
+        selected: false,
+        title: '',
+        showSuggestions: true,
+      };
     }
 
     // istanbul ignore else
@@ -139,6 +155,7 @@ class Form extends React.Component {
         error: false,
         feedback: '',
         showSuggestions: false,
+        following: false,
       };
     }
 
@@ -153,20 +170,7 @@ class Form extends React.Component {
         error: false,
         feedback: '',
         showSuggestions: false,
-      };
-    }
-
-    // istanbul ignore else
-    if (!isAccountValid && !isAddressValid && recipient.value) {
-      recipient = {
-        ...this.state.recipient,
-        address: '',
-        balance: '',
-        error: true,
-        feedback: 'Provide a correct wallet address or a name of a followed account',
-        selected: false,
-        title: '',
-        showSuggestions: true,
+        following: true,
       };
     }
 
@@ -207,6 +211,7 @@ class Form extends React.Component {
           error: '',
           feedback: '',
           showSuggestions: false,
+          following: true,
         },
       },
     });

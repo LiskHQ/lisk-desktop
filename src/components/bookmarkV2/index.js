@@ -102,7 +102,7 @@ class Bookmark extends React.Component {
     this.setState({ isLoading: true });
     this.loaderTimeout = setTimeout(() => {
       // istanbul ignore else
-      if (this.getFilterList().length === 0) this.setState({ isLoading: false });
+      if (this.getFilterList().length >= 0) this.setState({ isLoading: false });
       this.props.validateBookmark();
     }, 300);
 

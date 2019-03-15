@@ -211,7 +211,7 @@ describe('Send', () => {
 });
 
 // this should be enable after bookmark be add to the send components at the end of transactions
-describe.skip('Send: Bookmarks', () => {
+describe('Send: Bookmarks', () => {
   /**
    * Bookmarks suggestions are not present if there is no followers
    * @expect bookmarks components are not present
@@ -221,8 +221,7 @@ describe.skip('Send: Bookmarks', () => {
       .then(() => window.localStorage.removeItem('followedAccounts'));
     cy.visit(urls.send);
     cy.get(ss.recipientInput).click();
-    cy.get(ss.bookmarkInput).should('not.exist');
-    cy.get(ss.bookmarkList).should('not.exist');
+    cy.get(ss.sendBookmarkList).should('not.exist');
   });
 
   /**
@@ -239,11 +238,12 @@ describe.skip('Send: Bookmarks', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.send);
     cy.get(ss.recipientInput).click();
-    cy.get(ss.bookmarkInput);
-    cy.get(ss.bookmarkList).eq(0).contains('Alice');
-    cy.get(ss.bookmarkList).eq(0).contains(accounts.delegate.address);
-    cy.get(ss.bookmarkList).eq(0).click();
-    cy.get(ss.recipientInput).should('have.value', accounts.delegate.address);
+    cy.get(ss.recipientInput).type('l');
+    cy.get(ss.sendBookmarkList);
+    cy.get(ss.sendBookmarkList).eq(0).contains('Alice');
+    cy.get(ss.sendBookmarkList).eq(0).contains(accounts.delegate.address);
+    cy.get(ss.sendBookmarkList).eq(0).click();
+    cy.get(ss.recipientInput).should('have.value', 'Alice');
     cy.get(ss.amountInput).click().type(1);
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
@@ -266,15 +266,13 @@ describe.skip('Send: Bookmarks', () => {
     ]`);
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.send);
-    cy.get(ss.recipientInput).click().type('Bob');
-    cy.get(ss.bookmarkList).eq(0).contains('Bob');
-    cy.get(ss.recipientInput).clear();
-    cy.get(ss.recipientInput).click().type('Merkel');
-    cy.get(ss.bookmarkList).should('not.exist');
+    cy.get(ss.recipientInput).click();
+    cy.get(ss.recipientInput).click().type('Bo');
+    cy.get(ss.sendBookmarkList).eq(0).contains('Bob');
     cy.get(ss.recipientInput).clear();
     cy.get(ss.recipientInput).click().type(accounts.delegate.address);
-    cy.get(ss.bookmarkList).eq(0).contains(accounts.delegate.address);
-    cy.get(ss.bookmarkList).eq(0).click();
-    cy.get(ss.recipientInput).should('have.value', accounts.delegate.address);
+    cy.get(ss.sendBookmarkList).eq(0).contains(accounts.delegate.address);
+    cy.get(ss.sendBookmarkList).eq(0).click();
+    cy.get(ss.recipientInput).should('have.value', 'Alice');
   });
 });

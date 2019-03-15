@@ -177,6 +177,7 @@ const ss = {
   sendReferenceText: '.message',
   summaryAmount: '.amount-summary',
   sendFormAmountFeedback: '.amount-feedback',
+  sendBookmarkList: '.bookmark-list',
 };
 
 export default ss;

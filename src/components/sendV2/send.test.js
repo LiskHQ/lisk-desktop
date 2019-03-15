@@ -13,6 +13,7 @@ describe('Form', () => {
   const store = configureMockStore([thunk])({
     settings: { currency: 'USD' },
     settingsUpdated: () => {},
+    peers: { liskAPIClient: {} },
     liskService: {
       success: true,
       LSK: {
@@ -56,6 +57,9 @@ describe('Form', () => {
           balance: 7,
         },
       ],
+    },
+    search: {
+      delegates: {},
     },
   });
 

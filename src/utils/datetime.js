@@ -13,6 +13,14 @@ export const getTimestampFromFirstBlock = (value, format, options = { inclusive:
 };
 
 /**
+ * Returns new Date object after adding first block timestamp
+ * @param {Number} value - Date value
+ * @param {String} format - Format in which the date is provided e.g. MM.DD.YY
+ */
+export const getUnixTimestampFromFirstBlock = value =>
+  new Date((((Date.UTC(2016, 4, 24, 17, 0, 0, 0) / 1000) + value) * 1000));
+
+/**
  * Without considering time
  * @param {Number} value - Date value
  * @param {String} format - Format in which the date is provided e.g. MM.DD.YY
