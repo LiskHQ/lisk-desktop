@@ -42,7 +42,7 @@ class TabsContainer extends React.Component {
     const children = this.filterChildren(this.props.children);
 
     this.setState({
-      activeTab: (children.length > 1
+      activeTab: (React.Children.count(children) > 1
         && (this.props.activeTab || children[0].props.tabName))
         || '',
     });
@@ -52,25 +52,23 @@ class TabsContainer extends React.Component {
     const children = this.filterChildren(this.props.children);
     const { activeTab } = this.state;
 
-    return (activeTab !== '' ? (
+    return (React.Children.count(children) > 1 ? (
       <div className={styles.wrapper}>
         <ul className={styles.tabs}>
-          {children.map((tab, key) => {
-            const tabClassName = tab.props.tabClassName || '';
-            return (
-              <li className={`${tab.props.tabName === activeTab ? styles.active : ''} ${tabClassName}`}
-                data-tabname={tab.props.tabName}
-                onClick={this.setTab}
-                key={key}
-              >{tab.props.tabName}</li>
-            );
-          })}
+          {React.Children.map(children, tab => (
+            React.isValidElement(tab) &&
+            <li className={`${tab.props.tabName === activeTab ? styles.active : ''} ${tab.props.tabClassName || ''}`}
+              data-tabname={tab.props.tabName}
+              onClick={this.setTab}
+            >{tab.props.tabName}</li>
+          ))}
         </ul>
         <div className={styles.contentHolder}>
-          {children.map((tab, key) => (
-            <div
-              className={`${tab.props.tabName === activeTab ? styles.active : ''}`}
-              key={key}>{ tab }</div>
+          {React.Children.map(children, tab => (
+            React.isValidElement(tab) &&
+            <div className={`${tab.props.tabName === activeTab ? styles.active : ''}`}>
+              { tab }
+            </div>
           ))}
         </div>
       </div>

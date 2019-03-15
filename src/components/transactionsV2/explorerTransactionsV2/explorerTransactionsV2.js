@@ -5,6 +5,7 @@ import routes from '../../../constants/routes';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import WalletTab from '../../wallet/walletTab';
 import DelegateTab from '../../delegate/delegateTab';
+import VotesTab from '../../votes/votesTab';
 
 class ExplorerTransactionsV2 extends React.Component {
   // eslint-disable-next-line max-statements
@@ -31,8 +32,6 @@ class ExplorerTransactionsV2 extends React.Component {
     this.onFilterSet = this.onFilterSet.bind(this);
     this.onTransactionRowClick = this.onTransactionRowClick.bind(this);
     this.updateCustomFilters = this.updateCustomFilters.bind(this);
-    // searchMoreVoters will be used when adding delegate and votes tab
-    // this.searchMoreVoters = this.searchMoreVoters.bind(this);
   }
 
   onInit() {
@@ -53,14 +52,6 @@ class ExplorerTransactionsV2 extends React.Component {
       value: txFilters.all,
     });
   }
-
-  // searchMoreVoters will be used when adding delegate and votes tab
-  // searchMoreVoters(offset) {
-  //   this.props.searchMoreVoters({
-  //     address: this.props.address,
-  //     offset,
-  //   });
-  // }
 
   onLoadMore() {
     this.props.searchMoreTransactions({
@@ -134,8 +125,6 @@ class ExplorerTransactionsV2 extends React.Component {
       activeCustomFilters: this.state.activeCustomFilters,
       customFilters: this.state.customFilters,
       updateCustomFilters: this.updateCustomFilters,
-      // searchMoreVoters will be used when adding delegate and votes tab
-      // searchMoreVoters: this.searchMoreVoters,
     };
 
     const isDelegate = (this.props.delegate
@@ -155,6 +144,10 @@ class ExplorerTransactionsV2 extends React.Component {
         <TabsContainer>
           <WalletTab tabName={this.props.t('Wallet')}
             {...overviewProps}/>
+          <VotesTab
+            loading={this.props.loading}
+            votes={this.props.votes}
+            tabName={this.props.t('Votes')} />
           {isDelegate
             ? (<DelegateTab
               tabClassName={'delegate-statistics'}

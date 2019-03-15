@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './tooltip.css';
 
 class Tooltip extends React.Component {
@@ -65,7 +66,7 @@ class Tooltip extends React.Component {
     const {
       title, children, footer, className,
     } = this.props;
-    return (
+    return React.isValidElement(children) && (
       <div
         className={`${styles.tooltipWrapper} ${className}`}
         onMouseLeave={this.handleMouseLeave}
@@ -75,24 +76,35 @@ class Tooltip extends React.Component {
           className={styles.infoIcon}
           onClick={this.handleClick}
           />
-        <div className={`${styles.tooltip} tooltip-window
-          ${this.state.showTooltip && styles.shownTooltip}`}>
-          <span className={`${styles.tooltipArrow}`}>
+        <div className={`${styles.tooltip} ${this.state.showTooltip ? 'shownTooltip' : ''} tooltip-window`}>
+          <span className={`${styles.tooltipArrow} tooltip-arrow`}>
             <svg fill="currentColor" viewBox="0 0 8 36"><path d="M8 0C7 11 0 13 0 18s7 9 8 18z"/></svg>
           </span>
-          <header>
-            <p className={`${styles.title}`}>{title}</p>
-          </header>
-          <main>
-            { children }
-          </main>
-          <footer>
-            { footer }
-          </footer>
+          {title !== '' && (
+            <header>
+              <p className={`${styles.title}`}>{title}</p>
+            </header>
+          )}
+          <main>{children}</main>
+          {React.isValidElement(footer) &&
+            <footer>{footer}</footer>}
         </div>
       </div>
     );
   }
 }
+
+Tooltip.propTypes = {
+  title: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  footer: PropTypes.node,
+  className: PropTypes.string,
+};
+
+Tooltip.defaultProps = {
+  title: '',
+  children: <React.Fragment />,
+  className: '',
+};
 
 export default Tooltip;
