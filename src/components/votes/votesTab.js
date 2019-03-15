@@ -62,7 +62,7 @@ class VotesTab extends React.Component {
               <SpinnerV2 className={`${styles.loadingSpinner}`} />
             </div>
           ) : null}
-          {!filteredVotes.length
+          {filteredVotes.length
             ? filteredVotes.slice(0, this.state.showing).map((vote, key) => (
               <TableRow key={`row-${key}`}>
                 <div className={`${grid['col-sm-1']} ${grid['col-lg-1']}`}>

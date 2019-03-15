@@ -21,7 +21,7 @@ describe('Votes Tab Component', () => {
 
   it('Should render with empty state', () => {
     wrapper = setup(props);
-    expect(wrapper).toIncludeText('This wallet doesn’t have any votes');
+    expect(wrapper.find('.empty-message')).toIncludeText('This wallet doesn’t have any votes');
   });
 
   it('Should show loading state', () => {
@@ -43,6 +43,6 @@ describe('Votes Tab Component', () => {
     wrapper.find('.filterHolder input').simulate('change', { target: { value: 'user_100' } });
     expect(wrapper).toContainMatchingElements(2, 'TableRow');
     wrapper.find('.filterHolder input').simulate('change', { target: { value: 'not user name' } });
-    expect(wrapper).toIncludeText('There are no results matching this filter');
+    expect(wrapper.find('.empty-message')).toIncludeText('There are no results matching this filter');
   });
 });
