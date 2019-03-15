@@ -32,6 +32,7 @@ class Form extends React.Component {
           title: '',
           value: '',
           showSuggestions: false,
+          following: false,
         },
         amount: {
           error: false,
@@ -124,7 +125,8 @@ class Form extends React.Component {
 
     if (followedAccounts.length && recipient.value !== '') {
       isAccountValid = followedAccounts
-        .find(account => account.title.toLowerCase() === recipient.value.toLowerCase()) || false;
+        .find(account => (account.title.toLowerCase() === recipient.value.toLowerCase()) ||
+          account.address.toLowerCase() === recipient.value.toLowerCase()) || false;
       isAddressValid = regex.address.test(recipient.value);
     } else {
       isAddressValid = recipient.value.match(regex.address);
@@ -139,6 +141,7 @@ class Form extends React.Component {
         error: false,
         feedback: '',
         showSuggestions: false,
+        following: false,
       };
     }
 
@@ -153,6 +156,7 @@ class Form extends React.Component {
         error: false,
         feedback: '',
         showSuggestions: false,
+        following: true,
       };
     }
 
@@ -207,6 +211,7 @@ class Form extends React.Component {
           error: '',
           feedback: '',
           showSuggestions: false,
+          following: true,
         },
       },
     });
