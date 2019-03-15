@@ -450,11 +450,11 @@ describe('actions: account', () => {
       transactionsApi.getTransactions.restore();
     });
 
-    it('should fetch delegate stats and update account', () => {
+    it('should fetch delegate stats and update account', async () => {
       blocksApi.getBlocks.resolves({ data: [{ timestamp: 1 }] });
       transactionsApi.getTransactions.resolves({ data: [{ timestamp: 2 }] });
 
-      updateAccountDelegateStats(accounts.genesis)(dispatch, getState);
+      await updateAccountDelegateStats(accounts.genesis)(dispatch, getState);
 
       const delegateStatsLoadedAction = delegateStatsLoaded({
         lastBlock: 1,
