@@ -40,7 +40,6 @@ class Summary extends React.Component {
     // istanbul ignore else
     if (account && account.secondPublicKey) {
       newState = {
-        ...this.state,
         secondPassphrase: {
           ...this.state.secondPassphrase,
           hasSecondPassphrase: true,
@@ -146,9 +145,7 @@ class Summary extends React.Component {
 
   render() {
     const { secondPassphrase, isHardwareWalletConnected } = this.state;
-    let isBtnDisabled = secondPassphrase.hasSecondPassphrase
-      ? secondPassphrase.isValid !== '' && !secondPassphrase.isValid
-      : false;
+    let isBtnDisabled = secondPassphrase.hasSecondPassphrase && secondPassphrase.isValid !== '' && !secondPassphrase.isValid;
     isBtnDisabled = !isBtnDisabled && isHardwareWalletConnected;
 
     const confirmBtnMessage = isHardwareWalletConnected

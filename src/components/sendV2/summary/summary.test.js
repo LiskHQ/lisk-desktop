@@ -106,7 +106,7 @@ describe('Summary', () => {
     expect(props.nextStep).toBeCalled();
   });
 
-  it('should goind to next page if everyting is successfull by Hardware Wallet', () => {
+  it('should goind to next page if everything is successfull with Hardware Wallet', () => {
     const newProps = { ...props };
     newProps.account = {
       ...props.account,
