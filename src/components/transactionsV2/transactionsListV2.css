@@ -68,7 +68,7 @@
     align-items: center;
     bottom: 0;
     background: var(--color-white);
-    box-shadow: 0 -1px 5px 0 rgba(30, 25, 77, 0.06);
+    box-shadow: var(--box-shadow-top);
     color: var(--color-primary-standard);
     cursor: pointer;
     display: flex;

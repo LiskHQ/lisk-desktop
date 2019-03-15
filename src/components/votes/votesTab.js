@@ -48,7 +48,7 @@ class VotesTab extends React.Component {
           <h1>{t('Voted delegates')}</h1>
           <div className={`${styles.filterHolder}`}>
             <InputV2
-              disabled={votes && votes.length === 0}
+              disabled={votes && !votes.length}
               name={'filter'}
               value={filterValue}
               placeholder={t('Filter by name')}
@@ -57,14 +57,12 @@ class VotesTab extends React.Component {
         </header>
         <main className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} ${isLoading ? styles.isLoading : ''}`}>
           <VotesTableHeader />
-          {
-            isLoading ? (
-              <div className={styles.loadingOverlay}>
-                <SpinnerV2 className={`${styles.loadingSpinner}`} />
-              </div>
-            ) : null
-          }
-          {filteredVotes.length > 0
+          {isLoading ? (
+            <div className={styles.loadingOverlay}>
+              <SpinnerV2 className={`${styles.loadingSpinner}`} />
+            </div>
+          ) : null}
+          {!filteredVotes.length
             ? filteredVotes.slice(0, this.state.showing).map((vote, key) => (
               <TableRow key={`row-${key}`}>
                 <div className={`${grid['col-sm-1']} ${grid['col-lg-1']}`}>
@@ -94,13 +92,13 @@ class VotesTab extends React.Component {
               </TableRow>
             )) : (
               <p className={`${styles.empty} empty-message`}>
-                { filterValue === ''
+                {filterValue === ''
                   ? t('This wallet doesn’t have any votes')
                   : t('There are no results matching this filter')
                 }
               </p>
             )}
-          { canLoadMore && <span
+          {canLoadMore && <span
             onClick={this.onShowMore}
             className={`${styles.showMore} show-more-button`}>{t('Show More')}</span>
           }
