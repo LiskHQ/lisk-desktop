@@ -1,22 +1,31 @@
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
 import { getAccount } from '../utils/api/account';
-import { getTransactions } from '../utils/api/transactions';
 import { getDelegate, getVoters, getAllVotes } from '../utils/api/delegate';
+import { getTransactions } from '../utils/api/transactions';
+import { getBlocks } from '../utils/api/blocks';
 import searchAll from '../utils/api/search';
+import transactionTypes from '../constants/transactionTypes';
 import { updateWallet } from './wallets';
 
 const searchDelegate = ({ publicKey, address }) =>
-  (dispatch, getState) => {
+  async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    getDelegate(liskAPIClient, { publicKey }).then((response) => {
-      dispatch({
-        data: {
-          delegate: response.data[0],
-          address,
+    const delegates = await getDelegate(liskAPIClient, { publicKey });
+    const transactions = await getTransactions({
+      liskAPIClient, address, limit: 1, type: transactionTypes.registerDelegate,
+    });
+    const block = await getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 });
+    dispatch({
+      data: {
+        delegate: {
+          ...delegates.data[0],
+          lastBlock: (block.data[0] && block.data[0].timestamp) || '-',
+          txDelegateRegister: transactions.data[0],
         },
-        type: actionTypes.searchDelegate,
-      });
+        address,
+      },
+      type: actionTypes.searchDelegate,
     });
   };
 

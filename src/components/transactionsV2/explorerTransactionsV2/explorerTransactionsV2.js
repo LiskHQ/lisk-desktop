@@ -4,8 +4,9 @@ import TransactionsOverviewHeader from '../transactionsOverviewHeader/transactio
 import routes from '../../../constants/routes';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import WalletTab from '../../wallet/walletTab';
+import DelegateTab from '../../delegate/delegateTab';
 
-class ExplorerTransactions extends React.Component {
+class ExplorerTransactionsV2 extends React.Component {
   // eslint-disable-next-line max-statements
   constructor() {
     super();
@@ -137,6 +138,9 @@ class ExplorerTransactions extends React.Component {
       // searchMoreVoters: this.searchMoreVoters,
     };
 
+    const isDelegate = (this.props.delegate
+      && this.props.delegate.account && this.props.delegate.account.address === this.props.address);
+
     return (
       <React.Fragment>
         <TransactionsOverviewHeader
@@ -151,10 +155,16 @@ class ExplorerTransactions extends React.Component {
         <TabsContainer>
           <WalletTab tabName={this.props.t('Wallet')}
             {...overviewProps}/>
+          {isDelegate
+            ? (<DelegateTab
+              tabClassName={'delegate-statistics'}
+              tabName={this.props.t('Delegate')}
+              delegate={this.props.delegate} />)
+            : null}
         </TabsContainer>
       </React.Fragment>
     );
   }
 }
 
-export default ExplorerTransactions;
+export default ExplorerTransactionsV2;
