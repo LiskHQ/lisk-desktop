@@ -44,7 +44,7 @@ class TermsOfUse extends React.Component {
           <img src={logo} />
         </header>
         <div className={styles.content}>
-          <h1>{this.props.t('Lisk Terms if Use')}</h1>
+          <h1>{this.props.t('Lisk Terms of Use')}</h1>
           <p>
             {this.props.t('Before you continue using Lisk Hub, please read and accept the')}
             <a
