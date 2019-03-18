@@ -68,12 +68,6 @@ describe('AccountTransaction Component', () => {
   });
 
   it('renders ExplorerTransactionsV2', () => {
-    wrapper = mount(<Provider store={store}>
-      <Router>
-        <AccountTransactions {...props} i18n={i18n}/>
-      </Router>
-    </Provider>);
-
     expect(wrapper).to.have.descendants(ExplorerTransactionsV2);
   });
 });
