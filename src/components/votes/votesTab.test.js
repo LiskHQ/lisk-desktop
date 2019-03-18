@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
 import i18n from '../../i18n';
 import accounts from '../../../test/constants/accounts';
+import routes from '../../constants/routes';
 import VotesTab from './votesTab';
 
 describe('Votes Tab Component', () => {
@@ -12,6 +13,7 @@ describe('Votes Tab Component', () => {
     loading: [],
     votes: [],
     fetchVotedDelegateInfo: jest.fn(),
+    history: { push: jest.fn() },
   };
 
   const options = {
@@ -68,7 +70,21 @@ describe('Votes Tab Component', () => {
     expect(wrapper).toContainMatchingElements(61, 'TableRow');
   });
 
-  it('Should Filter votes per username and show error message if no results found', () => {
+  it('Should go to account page on clicking row', () => {
+    const votes = [...Array(101)].map((_, i) => ({
+      username: `user_${i}`,
+      address: `${i}L`,
+      rank: i + 1,
+      rewards: '40500000000',
+      productivity: Math.random() * 100,
+      vote: '9999988456732672',
+    }));
+    wrapper = setup({ ...props, votes });
+    wrapper.find('TableRow').at(1).simulate('click');
+    expect(props.history.push).toBeCalledWith(`${routes.accounts.pathPrefix}${routes.accounts.path}/0L`);
+  });
+
+  it('Should filter votes per username and show error message if no results found', () => {
     const votes = [...Array(101)].map((_, i) => ({
       username: `user_${i}`,
       address: `${i}L`,

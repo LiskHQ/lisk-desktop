@@ -54,6 +54,10 @@
   overflow: hidden;
   position: relative;
 
+  & .row {
+    cursor: pointer;
+  }
+
   &.hasMore {
     padding-bottom: 30px;
   }

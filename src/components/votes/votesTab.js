@@ -9,6 +9,7 @@ import TableRow from '../toolbox/table/tableRow';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
 import { InputV2 } from '../toolbox/inputsV2';
 import LiskAmount from '../liskAmount';
+import routes from '../../constants/routes';
 import styles from './votesTab.css';
 
 class VotesTab extends React.Component {
@@ -25,6 +26,7 @@ class VotesTab extends React.Component {
     this.timeout = null;
     this.onShowMore = this.onShowMore.bind(this);
     this.handleFilter = this.handleFilter.bind(this);
+    this.onRowClick = this.onRowClick.bind(this);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -70,6 +72,11 @@ class VotesTab extends React.Component {
     }, 300);
   }
 
+  onRowClick(address) {
+    const accountAddress = `${routes.accounts.pathPrefix}${routes.accounts.path}/${address}`;
+    this.props.history.push(accountAddress);
+  }
+
   /* istanbul ignore next */
   componentWillUnmount() {
     clearTimeout(this.timeout);
@@ -106,7 +113,7 @@ class VotesTab extends React.Component {
           }
           {filteredVotes.length
             ? filteredVotes.slice(0, this.state.showing).map((vote, key) => (
-              <TableRow key={`row-${key}`}>
+              <TableRow className={styles.row} onClick={() => this.onRowClick(vote.address)} key={`row-${key}`}>
                 <div className={`${grid['col-sm-1']} ${grid['col-lg-1']}`}>
                   {(vote.rank && +vote.rank < 10 ? `0${vote.rank}` : vote.rank) || '-'}
                 </div>
@@ -164,8 +171,11 @@ VotesTab.propTypes = {
     rewards: PropTypes.string,
     vote: PropTypes.string,
   })),
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
   loading: PropTypes.array,
-  t: PropTypes.func,
+  t: PropTypes.func.isRequired,
   fetchVotedDelegateInfo: PropTypes.func,
 };
 
@@ -173,7 +183,6 @@ VotesTab.propTypes = {
 VotesTab.defaultProps = {
   votes: [],
   loading: [],
-  t: v => v,
 };
 
 export default translate()(VotesTab);

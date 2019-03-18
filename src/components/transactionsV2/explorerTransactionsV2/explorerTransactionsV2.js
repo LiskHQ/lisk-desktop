@@ -145,6 +145,7 @@ class ExplorerTransactionsV2 extends React.Component {
           <WalletTab tabName={this.props.t('Wallet')}
             {...overviewProps}/>
           <VotesTab
+            history={this.props.history}
             address={this.props.address}
             fetchVotedDelegateInfo={this.props.fetchVotedDelegateInfo}
             loading={this.props.loading}
