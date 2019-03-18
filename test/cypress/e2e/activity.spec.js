@@ -16,6 +16,7 @@ function testActivity(open) {
    */
   it('30 tx are shown, clicking show more loads more transactions', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit('/dashboard');
     open();
     cy.get(ss.transactionRow).should('have.length', 30);
     cy.get(ss.showMoreButton).click();
@@ -92,9 +93,9 @@ function testActivity(open) {
      * @expect corresponding delegate name is shown on account's page
      */
     it('Click on voted delegate leads to account page', () => {
+      cy.get(ss.searchDelegateInput).click().type('genesis_17');
       cy.get(ss.voteRow).eq(0).click();
-      cy.wait(3000);
-      cy.get(ss.delegateName).should('have.text', 'genesis_17');
+      cy.get(ss.accountName).should('have.text', 'genesis_17');
     });
   });
 }

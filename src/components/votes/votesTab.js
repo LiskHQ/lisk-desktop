@@ -128,7 +128,7 @@ class VotesTab extends React.Component {
                       address={vote.address}
                       size={36} />
                     <div className={styles.accountInfo}>
-                      <span className={`${styles.title}`}>{vote.username}</span>
+                      <span className={`${styles.title} vote-username`}>{vote.username}</span>
                       <span>{vote.address}</span>
                     </div>
                   </div>

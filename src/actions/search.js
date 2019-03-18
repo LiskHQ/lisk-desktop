@@ -135,8 +135,8 @@ export const searchAccount = ({ address }) =>
         }
         dispatch({ data: accountData, type: actionTypes.searchAccount });
         dispatch(updateWallet(response, getState().peers));
+        dispatch(searchVotes({ address, offset: 0, limit: 101 }));
       });
-      dispatch(searchVotes({ address, offset: 0, limit: 101 }));
     }
   };
 

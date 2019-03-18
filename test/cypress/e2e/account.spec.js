@@ -23,13 +23,11 @@ describe('Account', () => {
 
   it('Username is shown if registered', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(`${urls.accounts}/${accounts.genesis.address}`);
-    cy.get(ss.delegateName).should('not.exist');
     cy.visit(`${urls.accounts}/${accounts.delegate.address}`);
     // Timeout to avoid Cypress bug
     // https://github.com/cypress-io/cypress/issues/695
-    cy.wait(1000);
-    cy.get(ss.delegateName).contains(accounts.delegate.username);
+    cy.wait(2000);
+    cy.get(ss.accountName).contains(accounts.delegate.username);
   });
 
   it('Add / Remove bookmark', () => {
@@ -46,13 +44,13 @@ describe('Account', () => {
         expect(getFollowedAccountObjFromLS()[0].address).to.equal(accounts.genesis.address);
         expect(getFollowedAccountObjFromLS()[0].title).to.equal('Bob');
       });
-    cy.get(ss.bookmarkedAccountTitle).contains('Bob');
+    cy.get(ss.accountName).contains('Bob');
     cy.get(ss.followAccountBtn).contains('Following');
     cy.get(ss.followAccountBtn).click();
     cy.get(ss.confirmAddToBookmarks).click()
       .should(() => {
         expect(getFollowedAccountObjFromLS().length).to.equal(0);
       });
-    cy.get(ss.bookmarkedAccountTitle).contains('Wallet');
+    cy.get(ss.accountName).contains('Wallet');
   });
 });
