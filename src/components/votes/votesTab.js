@@ -37,10 +37,9 @@ class VotesTab extends React.Component {
         showingVotes: this.state.showing,
       });
       this.setState({ isLoading: true });
+      this.timeout = setTimeout(() => this.setState({ isLoading: false }), 300);
       return false;
     }
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => this.setState({ isLoading: false }), 300);
     return true;
   }
 
