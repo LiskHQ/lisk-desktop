@@ -27,11 +27,15 @@ class VotesTab extends React.Component {
     this.handleFilter = this.handleFilter.bind(this);
   }
 
-  componentDidMount() {
-    this.props.fetchVotedDelegateInfo(this.props.votes, {
-      address: this.props.address,
-      showingVotes: this.state.showing,
-    });
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.votes && nextProps.votes.length !== this.props.votes.length) {
+      this.props.fetchVotedDelegateInfo(nextProps.votes, {
+        address: this.props.address,
+        showingVotes: this.state.showing,
+      });
+      return false;
+    }
+    return true;
   }
 
   onShowMore() {
@@ -151,6 +155,7 @@ class VotesTab extends React.Component {
 }
 
 VotesTab.propTypes = {
+  address: PropTypes.string,
   votes: PropTypes.arrayOf(PropTypes.shape({
     username: PropTypes.string,
     address: PropTypes.string,
