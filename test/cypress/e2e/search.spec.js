@@ -29,7 +29,7 @@ describe('Search', () => {
 
   function assertDelegatePage(delegateName, delegateId) {
     cy.wait(3000);
-    cy.get(ss.delegateName).should('have.text', delegateName)
+    cy.get(ss.accountName).should('have.text', delegateName)
       .and(() => {
         expect(getSearchesObjFromLS()[0].id).to.equal(delegateId);
         expect(getSearchesObjFromLS()[0].searchTerm).to.equal(delegateName);
@@ -128,7 +128,7 @@ describe('Search', () => {
   it('Search without signing in - happens in mainnet', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.searchInput).click().type(`${accounts['mainnet delegate'].address}{enter}`);
-    cy.get(ss.delegateName).should('have.text', accounts['mainnet delegate'].username);
+    cy.get(ss.accountName).should('have.text', accounts['mainnet delegate'].username);
   });
 
   /**
@@ -139,7 +139,7 @@ describe('Search', () => {
     cy.autologin(accounts.genesis.passphrase, networks.mainnet.node);
     cy.visit(urls.dashboard);
     cy.get(ss.searchInput).click().type(`${accounts['mainnet delegate'].address}{enter}`);
-    cy.get(ss.delegateName).should('have.text', accounts['mainnet delegate'].username);
+    cy.get(ss.accountName).should('have.text', accounts['mainnet delegate'].username);
   });
 
   /**
@@ -162,7 +162,7 @@ describe('Search', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
     cy.get(ss.searchInput).click().type(`${accounts.delegate.address}{enter}`);
-    cy.get(ss.delegateName).should('have.text', accounts.delegate.username);
+    cy.get(ss.accountName).should('have.text', accounts.delegate.username);
   });
 
   /**
@@ -176,7 +176,7 @@ describe('Search', () => {
     cy.get(ss.logoutBtn).click();
     cy.get(ss.searchInput).click().type(`${accounts.delegate.username}`);
     cy.get(ss.delegateResults).eq(0).click();
-    cy.get(ss.delegateName).should('have.text', accounts.delegate.username);
+    cy.get(ss.accountName).should('have.text', accounts.delegate.username);
   });
 
   /**

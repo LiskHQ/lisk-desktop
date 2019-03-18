@@ -110,6 +110,7 @@ const ss = {
   delegateRow: '.delegate-row',
   delegateList: '.delegate-list',
   delegateRank: '.delegate-rank',
+  delegateName: '.delegate-name',
   accountName: '.account-name',
   delegateId: '.delegate-id',
   delegateProductivity: '.delegate-productivity',
