@@ -18,15 +18,21 @@ class VotesTab extends React.Component {
     this.state = {
       showing: 30,
       filterValue: '',
+      isLoading: false,
+      spinnerClass: '',
     };
 
+    this.timeout = null;
     this.onShowMore = this.onShowMore.bind(this);
     this.handleFilter = this.handleFilter.bind(this);
   }
 
   onShowMore() {
     const showing = this.state.showing + 30;
-    this.setState({ showing });
+    this.setState({
+      showing,
+      spinnerClass: styles.bottom,
+    });
     this.props.searchVotesDelegate(this.props.votes, {
       address: this.props.address,
       showingVotes: showing,
@@ -34,14 +40,28 @@ class VotesTab extends React.Component {
   }
 
   handleFilter({ target }) {
-    this.props.searchVotesDelegate(this.props.votes, {
-      address: this.props.address,
-      filter: target.value,
-      showingVotes: this.state.showing,
-    });
+    clearTimeout(this.timeout);
     this.setState({
       filterValue: target.value,
+      isLoading: true,
+      spinnerClass: styles.top,
     });
+
+    this.timeout = setTimeout(() => {
+      this.props.searchVotesDelegate(this.props.votes, {
+        address: this.props.address,
+        filter: target.value,
+        showingVotes: this.state.showing,
+      });
+      this.setState({
+        isLoading: false,
+      });
+    }, 300);
+  }
+
+  /* istanbul ignore next */
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
   }
 
   render() {
@@ -49,7 +69,7 @@ class VotesTab extends React.Component {
     const { filterValue } = this.state;
     const filteredVotes = votes.filter(vote => RegExp(filterValue, 'i').test(vote.username));
     const canLoadMore = filteredVotes.length > this.state.showing;
-    const isLoading = loading.length > 0;
+    const isLoading = loading.length > 0 || this.state.isLoading;
 
     return (
       <BoxV2 className={`${styles.wrapper}`}>
@@ -69,7 +89,7 @@ class VotesTab extends React.Component {
           {
             isLoading ? (
               <div className={styles.loadingOverlay}>
-                <SpinnerV2 className={`${styles.loadingSpinner}`} />
+                <SpinnerV2 className={`${styles.loadingSpinner} ${this.state.spinnerClass}`} />
               </div>
             ) : null
           }
