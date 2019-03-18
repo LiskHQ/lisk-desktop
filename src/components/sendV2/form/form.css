@@ -12,6 +12,16 @@
   background-color: var(--color-white);
   box-shadow: var(--box-shadow-standar2);
   border-radius: var(--border-radius-box);
+
+  footer {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 24px 16px;
+
+    & > .confirmButton {
+      width: 100%;
+    }
+  }
 }
 
 .header {
@@ -139,16 +149,6 @@
     align-items: center;
     width: 100%;
     position: relative;
-  }
-}
-
-footer {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 24px 16px;
-
-  & > .confirmButton {
-    width: 100%;
   }
 }
 
