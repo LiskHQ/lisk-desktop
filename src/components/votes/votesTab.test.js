@@ -9,7 +9,7 @@ describe('Votes Tab Component', () => {
   const props = {
     loading: [],
     votes: [],
-    searchVotesDelegate: jest.fn(),
+    fetchVotedDelegateInfo: jest.fn(),
   };
 
   const options = {
@@ -41,7 +41,7 @@ describe('Votes Tab Component', () => {
     wrapper = setup({ ...props, votes });
     expect(wrapper).toContainMatchingElements(31, 'TableRow');
     wrapper.find('.show-more-button').simulate('click');
-    expect(props.searchVotesDelegate).toHaveBeenCalled();
+    expect(props.fetchVotedDelegateInfo).toHaveBeenCalled();
     expect(wrapper).toContainMatchingElements(61, 'TableRow');
   });
 
@@ -57,7 +57,7 @@ describe('Votes Tab Component', () => {
     wrapper = setup({ ...props, votes });
     wrapper.find('.filterHolder input').simulate('change', { target: { value: 'user_100' } });
     jest.advanceTimersByTime(300);
-    expect(props.searchVotesDelegate).toHaveBeenCalled();
+    expect(props.fetchVotedDelegateInfo).toHaveBeenCalled();
     expect(wrapper).toContainMatchingElements(2, 'TableRow');
     wrapper.find('.filterHolder input').simulate('change', { target: { value: 'not user name' } });
     expect(wrapper.find('.empty-message')).toIncludeText('There are no results matching this filter');
