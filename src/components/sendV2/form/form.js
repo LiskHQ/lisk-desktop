@@ -305,7 +305,7 @@ class Form extends React.Component {
           </label>
 
           <label className={`${styles.fieldGroup}`}>
-            <span className={`${styles.fieldLabel}`}>{this.props.t('Amount of trasaction')}</span>
+            <span className={`${styles.fieldLabel}`}>{this.props.t('Amount of transaction')}</span>
             <span className={`${styles.amountField} amount`}>
               <InputV2
                 autoComplete={'off'}

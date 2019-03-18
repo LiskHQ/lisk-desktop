@@ -9,26 +9,23 @@ import transactionTypes from '../constants/transactionTypes';
 import { updateWallet } from './wallets';
 
 const searchDelegate = ({ publicKey, address }) =>
-  (dispatch, getState) => {
+  async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    getDelegate(liskAPIClient, { publicKey }).then((response) => {
-      getTransactions({
-        liskAPIClient, address, limit: 1, type: transactionTypes.registerDelegate,
-      }).then((transactions) => {
-        getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 }).then((block) => {
-          dispatch({
-            data: {
-              delegate: {
-                ...response.data[0],
-                lastBlock: (block.data[0] && block.data[0].timestamp) || '-',
-                txDelegateRegister: transactions.data[0],
-              },
-              address,
-            },
-            type: actionTypes.searchDelegate,
-          });
-        });
-      });
+    const delegates = await getDelegate(liskAPIClient, { publicKey });
+    const transactions = await getTransactions({
+      liskAPIClient, address, limit: 1, type: transactionTypes.registerDelegate,
+    });
+    const block = await getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 });
+    dispatch({
+      data: {
+        delegate: {
+          ...delegates.data[0],
+          lastBlock: (block.data[0] && block.data[0].timestamp) || '-',
+          txDelegateRegister: transactions.data[0],
+        },
+        address,
+      },
+      type: actionTypes.searchDelegate,
     });
   };
 

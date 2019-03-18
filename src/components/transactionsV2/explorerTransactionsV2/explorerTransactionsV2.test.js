@@ -73,6 +73,7 @@ describe('ExplorerTransactions V2 Component', () => {
     peers: { options: { code: 0 } },
     balance: accounts.genesis.balance,
     detailAccount: accounts.genesis,
+    hideChart: true, // Props to hide chart on tests, due to no canvas support
   };
 
   describe('Another account', () => {

@@ -23,6 +23,7 @@ const mapStateToProps = state => ({
   followedAccounts: state.followedAccounts.accounts,
   wallets: state.wallets,
   peers: state.peers,
+  balance: state.account.balance,
 });
 
 const mapDispatchToProps = {

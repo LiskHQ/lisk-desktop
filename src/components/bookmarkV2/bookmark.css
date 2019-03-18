@@ -35,10 +35,16 @@
   box-shadow: var(--box-shadow-search);
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   z-index: 3;
   max-height: 176px;
-  overflow: scroll;
+  overflow: hidden;
+
+  & > div:first-child {
+    overflow: auto;
+    max-height: 176px;
+    width: calc(100% + 20px);
+  }
 }
 
 .status {
