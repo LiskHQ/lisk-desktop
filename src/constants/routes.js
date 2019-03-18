@@ -109,13 +109,6 @@ export default {
     component: AccountTransactions,
     isPrivate: false,
   },
-  accountsV2: {
-    pathPrefix: '/explorer',
-    path: '/accountsV2',
-    pathSuffix: '/:address?',
-    component: AccountTransactions,
-    isPrivate: false,
-  },
   transactions: {
     pathPrefix: '/explorer',
     path: '/transactions',
