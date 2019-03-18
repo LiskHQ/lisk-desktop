@@ -107,5 +107,6 @@
 
   & footer {
     margin-top: var(--tooltip-spacing-inside);
+    padding: 0;
   }
 }

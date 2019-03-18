@@ -20,7 +20,8 @@ class Form extends React.Component {
     super(props);
 
     this.state = {
-      isLoading: false,
+      isAmountLoading: false,
+      isReferenceLoading: false,
       fields: {
         recipient: {
           address: '',
@@ -70,7 +71,6 @@ class Form extends React.Component {
 
     if (prevState.fields && Object.entries(prevState.fields).length > 0) {
       this.setState({
-        ...this.state,
         fields: {
           ...this.state.fields,
           ...prevState.fields,
@@ -224,7 +224,7 @@ class Form extends React.Component {
   validateAmountField(value) {
     if (/([^\d.])/g.test(value)) return this.props.t('Provide a correct amount of LSK');
     if (/(\.)(.*\1){1}/g.test(value) || /\.$/.test(value)) return this.props.t('Invalid amount');
-    if (value > this.getMaxAmount()) return this.props.t('Provided amount is higher than your current balance.');
+    if (parseFloat(this.getMaxAmount()) < value) return this.props.t('Provided amount is higher than your current balance.');
     return false;
   }
 
@@ -247,8 +247,8 @@ class Form extends React.Component {
       const byteCount = encodeURI(value).split(/%..|./).length - 1;
       error = byteCount > messageMaxLength;
       feedback = error
-        ? t('{{length}} extra characters', { length: byteCount - messageMaxLength })
-        : t('{{length}} out of {{total}} characters left', {
+        ? t('{{length}} extra bytes', { length: byteCount - messageMaxLength })
+        : t('{{length}} out of {{total}} bytes left', {
           length: messageMaxLength - value.length,
           total: messageMaxLength,
         });
@@ -258,6 +258,7 @@ class Form extends React.Component {
       fields: {
         ...prevState.fields,
         [name]: {
+          ...prevState.fields[name],
           error: !!error,
           value,
           feedback,
@@ -269,10 +270,11 @@ class Form extends React.Component {
   onAmountOrReferenceChange({ target }) {
     clearTimeout(this.loaderTimeout);
 
-    this.setState({ isLoading: true });
+    if (target.name === 'amount') this.setState({ isAmountLoading: true });
+    if (target.name === 'reference') this.setState({ isReferenceLoading: true });
 
     this.loaderTimeout = setTimeout(() => {
-      this.setState({ isLoading: false });
+      this.setState({ isAmountLoading: false, isReferenceLoading: false });
       this.validateAmountAndReference(target.name, target.value);
     }, 300);
 
@@ -330,9 +332,9 @@ class Form extends React.Component {
                 className={styles.converter}
                 value={fields.amount.value}
                 error={fields.amount.error} />
-              <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}/>
+              <SpinnerV2 className={`${styles.spinner} ${this.state.isAmountLoading && fields.amount.value ? styles.show : styles.hide}`}/>
               <img
-                className={`${styles.status} ${!this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}
+                className={`${styles.status} ${!this.state.isAmountLoading && fields.amount.value ? styles.show : styles.hide}`}
                 src={ fields.amount.error ? svg.alert_icon : svg.ok_icon}
               />
             </span>
@@ -373,9 +375,9 @@ class Form extends React.Component {
                 value={fields.reference.value}
                 placeholder={this.props.t('Write message')}
                 className={`${styles.textarea} ${fields.reference.error ? 'error' : ''} message`} />
-              <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && fields.reference.value ? styles.show : styles.hide}`}/>
+              <SpinnerV2 className={`${styles.spinner} ${this.state.isReferenceLoading && fields.reference.value ? styles.show : styles.hide}`}/>
               <img
-                className={`${styles.status} ${!this.state.isLoading && fields.reference.value ? styles.show : styles.hide}`}
+                className={`${styles.status} ${!this.state.isReferenceLoading && fields.reference.value ? styles.show : styles.hide}`}
                 src={ fields.reference.error ? svg.alert_icon : svg.ok_icon} />
             </span>
             <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${fields.reference.feedback ? styles.show : ''}`}>
