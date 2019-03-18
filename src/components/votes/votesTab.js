@@ -99,6 +99,7 @@ class VotesTab extends React.Component {
           <h1>{t('Voted delegates')}</h1>
           <div className={`${styles.filterHolder}`}>
             <InputV2
+              className={'search'}
               disabled={votes && !votes.length}
               name={'filter'}
               value={filterValue}
@@ -117,7 +118,7 @@ class VotesTab extends React.Component {
           }
           {filteredVotes.length
             ? filteredVotes.slice(0, this.state.showing).map((vote, key) => (
-              <TableRow className={styles.row} onClick={() => this.onRowClick(vote.address)} key={`row-${key}`}>
+              <TableRow className={`${styles.row} votes-row`} onClick={() => this.onRowClick(vote.address)} key={`row-${key}`}>
                 <div className={`${grid['col-sm-1']} ${grid['col-lg-1']}`}>
                   {(vote.rank && +vote.rank < 10 ? `0${vote.rank}` : vote.rank) || '-'}
                 </div>
@@ -157,7 +158,7 @@ class VotesTab extends React.Component {
             )}
           {canLoadMore && <span
             onClick={this.onShowMore}
-            className={`${styles.showMore} show-more-button`}>{t('Show More')}</span>
+            className={`${styles.showMore} show-votes`}>{t('Show More')}</span>
           }
         </main>
       </BoxV2>

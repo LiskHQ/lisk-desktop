@@ -150,6 +150,7 @@ class ExplorerTransactionsV2 extends React.Component {
             fetchVotedDelegateInfo={this.props.fetchVotedDelegateInfo}
             loading={this.props.loading}
             votes={this.props.votes}
+            tabClassName={'account-info'}
             tabName={this.props.t('Votes')} />
           {isDelegate
             ? (<DelegateTab
