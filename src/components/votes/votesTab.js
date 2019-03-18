@@ -27,6 +27,13 @@ class VotesTab extends React.Component {
     this.handleFilter = this.handleFilter.bind(this);
   }
 
+  componentDidMount() {
+    this.props.searchVotesDelegate(this.props.votes, {
+      address: this.props.address,
+      showingVotes: this.state.showing,
+    });
+  }
+
   onShowMore() {
     const showing = this.state.showing + 30;
     this.setState({

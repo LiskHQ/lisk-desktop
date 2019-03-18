@@ -80,7 +80,6 @@ const searchVotes = ({ address, offset, limit }) =>
       type: actionTypes.searchVotes,
       data: { votes, address },
     });
-    dispatch(searchVotesDelegate(votes, { address, limit: 30 }));
     dispatch(loadingFinished(actionTypes.searchVotes));
   };
 
