@@ -92,7 +92,6 @@ function testActivity(open) {
      * @expect corresponding delegate name is shown on account's page
      */
     it('Click on voted delegate leads to account page', () => {
-      cy.scrollTo('top');
       cy.get(ss.voteRow).eq(0).click();
       cy.wait(3000);
       cy.get(ss.delegateName).should('have.text', 'genesis_17');
@@ -114,7 +113,7 @@ function testDelegateActivity(open) {
      * list if the account is a delegate
      * @expect voters nickname shown
      */
-    it('Shows voters nickname if it is delegate', () => {
+    xit('Shows voters nickname if it is delegate', () => {
       cy.get(ss.voterAddress).eq(0).should('have.text', 'genesis_1 ');
     });
 
