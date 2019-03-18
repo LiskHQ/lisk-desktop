@@ -27,3 +27,9 @@
     margin-left: 25px;
   }
 }
+
+@media (--medium-viewport) {
+  .wrapper {
+    display: none;
+  }
+}

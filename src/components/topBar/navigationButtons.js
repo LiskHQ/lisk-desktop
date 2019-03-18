@@ -7,8 +7,9 @@ class NavigationButtons extends React.Component {
     super(props);
 
     this.state = {
-      initialPage: 0,
+      initPathChecker: 0,
       currentPage: 0,
+      isUserLogedIn: false,
     };
 
     this.onGoBack = this.onGoBack.bind(this);
@@ -16,38 +17,52 @@ class NavigationButtons extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      initialPage: this.props.history.length,
-      currentPage: this.props.history.length,
-    });
+    this.setState(prevState => ({
+      ...prevState,
+      initPathChecker: this.props.history.length,
+      isUserLogedIn: this.props.account.address || false,
+    }));
   }
 
-  onGoBack() {
-    const { initialPage, currentPage } = this.state;
-    const { history } = this.props;
-
-    if (history.length > initialPage && currentPage > initialPage) {
-      this.setState({ ...this.state, currentPage: this.state.currentPage - 1 });
-      this.props.history.goBack();
+  shouldComponentUpdate(nextProps) {
+    if (this.props !== nextProps) {
+      this.setState(prevState => ({
+        ...prevState,
+        isUserLogedIn: this.props.account.address || false,
+      }));
+      return true;
     }
+
+    return false;
   }
 
-  onGoForward() {
-    const { initialPage, currentPage } = this.state;
-    const { history } = this.props;
-
-    if (history.length >= initialPage && currentPage <= history.length) {
-      this.setState({ ...this.state, currentPage: this.state.currentPage + 1 });
-      this.props.history.goForward();
-    }
+  onGoBack(e) {
+    e.preventDefault();
+    this.props.history.goBack();
   }
 
-  // eslint-disable-next-line class-methods-use-this
+  onGoForward(e) {
+    e.preventDefault();
+    this.props.history.goForward();
+  }
+
   render() {
+    const { isUserLogedIn } = this.state;
+
     return (
       <div className={styles.wrapper}>
-        <button onClick={this.onGoBack}><img src={svg.back_arrow_inactive_icon}/></button>
-        <button onClick={this.onGoForward}><img src={svg.foward_arrow_inactive_icon}/></button>
+        <button
+          disabled={isUserLogedIn}
+          onClick={this.onGoBack}
+        >
+          <img src={svg.back_arrow_inactive_icon}/>
+        </button>
+        <button
+          disabled={isUserLogedIn}
+          onClick={this.onGoForward}
+        >
+          <img src={svg.foward_arrow_inactive_icon}/>
+        </button>
       </div>
     );
   }

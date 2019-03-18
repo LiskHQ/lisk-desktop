@@ -67,7 +67,10 @@ class TopBar extends React.Component {
         <div className={styles.elements}>
           <img src={liskLogo} />
 
-          <NavigationButton history={this.props.history}/>
+          <NavigationButton
+            account={this.props.account}
+            history={this.props.history}
+          />
 
           <MenuItems
             isUserLogout={isUserLogout}
