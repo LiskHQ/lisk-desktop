@@ -168,7 +168,7 @@ class FollowAccount extends React.Component {
       <section className={`${styles.wrapper}`}>
         <label className={`${styles.fieldGroup}`}>
           <span className={`${styles.fieldLabel}`}>{t('Account Name')}</span>
-          <span className={`${styles.fieldInput}`}>
+          <span className={`${styles.fieldInput} account-title`}>
             <InputV2
               maxLength={40}
               autoComplete={'off'}
@@ -202,8 +202,20 @@ class FollowAccount extends React.Component {
           </div>
         </label>
         {isFollowing
-          ? <DangerButtonV2 onClick={this.handleUnfollow}>{t('Unfollow')}</DangerButtonV2>
-          : <PrimaryButtonV2 onClick={this.handleFollow} disabled={!isValid}>{t('Confirm')}</PrimaryButtonV2>
+          ? (
+            <DangerButtonV2
+              className={'follow-account-button'}
+              onClick={this.handleUnfollow}>
+              {t('Unfollow')}
+            </DangerButtonV2>
+          ) : (
+            <PrimaryButtonV2
+              className={'follow-account-button'}
+              onClick={this.handleFollow}
+              disabled={!isValid}>
+              {t('Confirm')}
+            </PrimaryButtonV2>
+          )
         }
       </section>
     );

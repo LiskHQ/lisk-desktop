@@ -30,14 +30,14 @@ const headerAccountInfo = ({
         />
       <div className={styles.accountInfo}>
         <div>
-          <h2 className={`${styles.title} ${accountTitle === delegate.username ? 'delegate-name' : ''}`}>
+          <h2 className={`${styles.title} ${accountTitle === delegate.username ? 'delegate-name' : 'account-name'}`}>
             { accountTitle || t('Wallet') }
           </h2>
           { label
             ? <span className={`${styles.label}`}>{label}</span>
             : null }
         </div>
-        <span className={styles.address}>
+        <span className={`${styles.address} account-address`}>
           {address}
         </span>
       </div>

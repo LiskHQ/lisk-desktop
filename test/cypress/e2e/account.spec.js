@@ -18,8 +18,7 @@ describe('Account', () => {
     // https://github.com/cypress-io/cypress/issues/695
     cy.wait(1000);
     cy.url().should('contain', '16313739661666666666L');
-    cy.get(ss.accountAddress).eq(1).contains('16313739661666666666L');
-    cy.get(ss.accountBalance).eq(1).contains('0');
+    cy.get(ss.accountAddress).contains('16313739661666666666L');
   });
 
   it('Username is shown if registered', () => {
@@ -35,24 +34,25 @@ describe('Account', () => {
 
   it('Add / Remove bookmark', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(`${urls.accounts}/${accounts.delegate.address}`);
+    cy.visit(`${urls.accounts}/${accounts.genesis.address}`);
     // Timeout to avoid Cypress bug
     // https://github.com/cypress-io/cypress/issues/695
     cy.wait(1000);
-    cy.get(ss.followAccountBtn).contains('Add to bookmark');
+    cy.get(ss.followAccountBtn).contains('Follow');
     cy.get(ss.followAccountBtn).click();
     cy.get(ss.titleInput).type('Bob');
     cy.get(ss.confirmAddToBookmarks).click()
       .should(() => {
-        expect(getFollowedAccountObjFromLS()[0].address).to.equal(accounts.delegate.address);
+        expect(getFollowedAccountObjFromLS()[0].address).to.equal(accounts.genesis.address);
         expect(getFollowedAccountObjFromLS()[0].title).to.equal('Bob');
       });
     cy.get(ss.bookmarkedAccountTitle).contains('Bob');
-    cy.get(ss.followAccountBtn).contains('Remove from bookmark');
-    cy.get(ss.followAccountBtn).click()
+    cy.get(ss.followAccountBtn).contains('Following');
+    cy.get(ss.followAccountBtn).click();
+    cy.get(ss.confirmAddToBookmarks).click()
       .should(() => {
         expect(getFollowedAccountObjFromLS().length).to.equal(0);
       });
-    cy.get(ss.bookmarkedAccountTitle).should('not.exist');
+    cy.get(ss.bookmarkedAccountTitle).contains('Wallet');
   });
 });
