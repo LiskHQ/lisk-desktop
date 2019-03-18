@@ -9,7 +9,7 @@ describe('Votes Tab Component', () => {
   const props = {
     loading: [],
     votes: [],
-    t: v => v,
+    searchVotesDelegate: jest.fn(),
   };
 
   const options = {
@@ -30,10 +30,18 @@ describe('Votes Tab Component', () => {
   });
 
   it('Should render only 30 visible and clicking show more shows 30 more', () => {
-    const votes = [...Array(101)].map((_, i) => ({ username: `user_${i}`, address: `${i}L` }));
+    const votes = [...Array(101)].map((_, i) => ({
+      username: `user_${i}`,
+      address: `${i}L`,
+      rank: i + 1,
+      rewards: '40500000000',
+      productivity: Math.random() * 100,
+      vote: '9999988456732672',
+    }));
     wrapper = setup({ ...props, votes });
     expect(wrapper).toContainMatchingElements(31, 'TableRow');
     wrapper.find('.show-more-button').simulate('click');
+    expect(props.searchVotesDelegate).toHaveBeenCalled();
     expect(wrapper).toContainMatchingElements(61, 'TableRow');
   });
 
