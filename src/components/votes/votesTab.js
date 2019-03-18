@@ -25,8 +25,7 @@ class VotesTab extends React.Component {
   }
 
   onShowMore() {
-    const max = this.props.votes.length;
-    const showing = (this.state.showing + 30 > max) ? max : this.state.showing + 30;
+    const showing = this.state.showing + 30;
     this.setState({ showing });
     this.props.searchVotesDelegate(this.props.votes, {
       address: this.props.address,
@@ -35,6 +34,11 @@ class VotesTab extends React.Component {
   }
 
   handleFilter({ target }) {
+    this.props.searchVotesDelegate(this.props.votes, {
+      address: this.props.address,
+      filter: target.value,
+      showingVotes: this.state.showing,
+    });
     this.setState({
       filterValue: target.value,
     });
@@ -43,7 +47,7 @@ class VotesTab extends React.Component {
   render() {
     const { t, votes, loading } = this.props;
     const { filterValue } = this.state;
-    const filteredVotes = votes ? votes.filter(vote => RegExp(filterValue, 'i').test(vote.username)) : [];
+    const filteredVotes = votes.filter(vote => RegExp(filterValue, 'i').test(vote.username));
     const canLoadMore = filteredVotes.length > this.state.showing;
     const isLoading = loading.length > 0;
 
@@ -123,11 +127,17 @@ VotesTab.propTypes = {
   votes: PropTypes.arrayOf(PropTypes.shape({
     username: PropTypes.string,
     address: PropTypes.string,
+    rank: PropTypes.number,
+    productivity: PropTypes.number,
+    rewards: PropTypes.string,
+    vote: PropTypes.string,
   })),
   loading: PropTypes.array,
   t: PropTypes.func,
+  searchVotesDelegate: PropTypes.func,
 };
 
+/* istanbul ignore next */
 VotesTab.defaultProps = {
   votes: [],
   loading: [],

@@ -34,7 +34,7 @@ const searchDelegate = ({ publicKey, address }) =>
 
 
 export const searchVotesDelegate = (votes, {
-  showingVotes = 30, address, offset = 0, limit = 101,
+  showingVotes = 30, address, offset = 0, limit = 101, filter = '',
 }) =>
   // eslint-disable-next-line max-statements
   async (dispatch, getState) => {
@@ -42,7 +42,7 @@ export const searchVotesDelegate = (votes, {
     if (!liskAPIClient) return;
     dispatch(loadingStarted(actionTypes.searchVotes));
     const delegates = await listDelegates(liskAPIClient, { limit, offset });
-    const mergedVotes = votes.map((vote) => {
+    const votesWithDelegateInfo = votes.map((vote) => {
       const delegate = delegates.data.find(d => d.username === vote.username) || {};
       return { ...vote, ...delegate };
     }).sort((a, b) => {
@@ -51,18 +51,20 @@ export const searchVotesDelegate = (votes, {
       return -1;
     });
 
-    const lastIndex = showingVotes > mergedVotes.length ?
-      mergedVotes.length : showingVotes;
-    if (mergedVotes.length && !mergedVotes[lastIndex - 1].rank) {
-      dispatch(searchVotesDelegate(mergedVotes, {
+    const filteredVotes = votesWithDelegateInfo.filter(vote => RegExp(filter, 'i').test(vote.username));
+    const lastIndex = showingVotes > filteredVotes.length ?
+      filteredVotes.length : showingVotes;
+    if (filteredVotes.length && !filteredVotes[lastIndex - 1].rank) {
+      dispatch(searchVotesDelegate(votesWithDelegateInfo, {
         offset: offset + limit,
         address,
         showingVotes,
+        filter,
       }));
     } else {
       dispatch({
         type: actionTypes.searchVotes,
-        data: { votes: mergedVotes, address },
+        data: { votes: votesWithDelegateInfo, address },
       });
       dispatch(loadingFinished(actionTypes.searchVotes));
     }
