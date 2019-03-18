@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { loadLastTransaction, transactionsRequested, transactionsFilterSet } from '../../../actions/transactions';
+import { searchAccount, fetchVotedDelegateInfo } from '../../../actions/search';
 import { updateAccountDelegateStats } from '../../../actions/account';
 import WalletTransactionsV2 from './walletTransactionsV2';
 import actionTypes from '../../../constants/actions';
 import txFilters from './../../../constants/transactionFilters';
 import removeDuplicateTransactions from '../../../utils/transactions';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
   account: state.account,
   transaction: state.transaction,
   transactions:
@@ -24,6 +25,7 @@ const mapStateToProps = state => ({
   wallets: state.wallets,
   peers: state.peers,
   balance: state.account.balance,
+  votes: state.search.votes[ownProps.account.address],
 });
 
 const mapDispatchToProps = {
@@ -31,6 +33,8 @@ const mapDispatchToProps = {
   transactionsFilterSet,
   loadLastTransaction,
   updateAccountDelegateStats,
+  searchAccount,
+  fetchVotedDelegateInfo,
   addFilter: data => ({ type: actionTypes.addFilter, data }),
 };
 

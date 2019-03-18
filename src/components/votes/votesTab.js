@@ -30,13 +30,17 @@ class VotesTab extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (nextProps.votes && nextProps.votes.length !== this.props.votes.length) {
+    const nextVotes = nextProps.votes.slice(0, this.state.showing).slice(-1);
+    if (nextVotes[0] && !nextVotes[0].rank && !this.state.isLoading) {
       this.props.fetchVotedDelegateInfo(nextProps.votes, {
         address: this.props.address,
         showingVotes: this.state.showing,
       });
+      this.setState({ isLoading: true });
       return false;
     }
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => this.setState({ isLoading: false }), 300);
     return true;
   }
 
