@@ -28,7 +28,7 @@ class VotesTab extends React.Component {
   }
 
   componentDidMount() {
-    this.props.searchVotesDelegate(this.props.votes, {
+    this.props.fetchVotedDelegateInfo(this.props.votes, {
       address: this.props.address,
       showingVotes: this.state.showing,
     });
@@ -40,7 +40,7 @@ class VotesTab extends React.Component {
       showing,
       spinnerClass: styles.bottom,
     });
-    this.props.searchVotesDelegate(this.props.votes, {
+    this.props.fetchVotedDelegateInfo(this.props.votes, {
       address: this.props.address,
       showingVotes: showing,
     });
@@ -55,7 +55,7 @@ class VotesTab extends React.Component {
     });
 
     this.timeout = setTimeout(() => {
-      this.props.searchVotesDelegate(this.props.votes, {
+      this.props.fetchVotedDelegateInfo(this.props.votes, {
         address: this.props.address,
         filter: target.value,
         showingVotes: this.state.showing,
@@ -161,7 +161,7 @@ VotesTab.propTypes = {
   })),
   loading: PropTypes.array,
   t: PropTypes.func,
-  searchVotesDelegate: PropTypes.func,
+  fetchVotedDelegateInfo: PropTypes.func,
 };
 
 /* istanbul ignore next */

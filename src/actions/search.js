@@ -30,7 +30,7 @@ const searchDelegate = ({ publicKey, address }) =>
   };
 
 
-export const searchVotesDelegate = (votes, {
+export const fetchVotedDelegateInfo = (votes, {
   showingVotes = 30, address, offset = 0, limit = 101, filter = '',
 }) =>
   // eslint-disable-next-line max-statements
@@ -52,7 +52,7 @@ export const searchVotesDelegate = (votes, {
     const lastIndex = showingVotes > filteredVotes.length ?
       filteredVotes.length : showingVotes;
     if (filteredVotes.length && !filteredVotes[lastIndex - 1].rank) {
-      dispatch(searchVotesDelegate(votesWithDelegateInfo, {
+      dispatch(fetchVotedDelegateInfo(votesWithDelegateInfo, {
         offset: offset + limit,
         address,
         showingVotes,

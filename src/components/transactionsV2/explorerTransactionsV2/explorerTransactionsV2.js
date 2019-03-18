@@ -146,7 +146,7 @@ class ExplorerTransactionsV2 extends React.Component {
             {...overviewProps}/>
           <VotesTab
             address={this.props.address}
-            searchVotesDelegate={this.props.searchVotesDelegate}
+            fetchVotedDelegateInfo={this.props.fetchVotedDelegateInfo}
             loading={this.props.loading}
             votes={this.props.votes}
             tabName={this.props.t('Votes')} />
