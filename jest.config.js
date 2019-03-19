@@ -91,7 +91,6 @@ module.exports = {
     'src/components/registerDelegate/steps/confirm/index.js',
     'src/components/registerDelegate/steps/confirm/confirm.js',
     'src/components/passphrase/confirm/index.js',
-    'src/actions/search.js',
     'src/components/transactions/explorerTransactions/explorerTransactions.js',
     'src/components/transactions/transactionsOverview.js',
     'src/components/voting/voting.js',
