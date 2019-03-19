@@ -7,8 +7,9 @@ class NavigationButtons extends React.Component {
     super(props);
 
     this.state = {
-      initPathChecker: 0,
-      currentPage: 0,
+      firstPageIndex: 0,
+      currentPageIndex: 0,
+      historyLength: 0,
       isUserLogedIn: false,
     };
 
@@ -19,46 +20,58 @@ class NavigationButtons extends React.Component {
   componentDidMount() {
     this.setState(prevState => ({
       ...prevState,
-      initPathChecker: this.props.history.length,
-      isUserLogedIn: this.props.account.address || false,
+      firstPageIndex: this.props.history.length,
+      historyLength: this.props.history.length,
     }));
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props !== nextProps) {
+    if (this.props.history.length !== nextProps.history.length) {
       this.setState(prevState => ({
         ...prevState,
-        isUserLogedIn: this.props.account.address || false,
+        currentPageIndex: prevState.currentPageIndex + 1,
       }));
-      return true;
+      return false;
     }
-
-    return false;
+    return true;
   }
 
   onGoBack(e) {
     e.preventDefault();
-    this.props.history.goBack();
+    const { firstPageIndex, currentPageIndex } = this.state;
+    if (firstPageIndex < currentPageIndex) {
+      this.setState(prevState => ({
+        ...prevState,
+        currentPageIndex: currentPageIndex - 1,
+      }));
+      this.props.history.goBack();
+    }
   }
 
   onGoForward(e) {
     e.preventDefault();
+    const { currentPageIndex } = this.state;
+    this.setState(prevState => ({
+      ...prevState,
+      currentPageIndex: currentPageIndex + 1,
+    }));
     this.props.history.goForward();
   }
 
   render() {
-    const { isUserLogedIn } = this.state;
+    const { account } = this.props;
+    const isButtonDisabled = !(!!account.address && true);
 
     return (
       <div className={styles.wrapper}>
         <button
-          disabled={isUserLogedIn}
+          disabled={isButtonDisabled}
           onClick={this.onGoBack}
         >
           <img src={svg.back_arrow_inactive_icon}/>
         </button>
         <button
-          disabled={isUserLogedIn}
+          disabled={isButtonDisabled}
           onClick={this.onGoForward}
         >
           <img src={svg.foward_arrow_inactive_icon}/>
