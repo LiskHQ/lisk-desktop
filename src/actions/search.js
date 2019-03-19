@@ -1,39 +1,86 @@
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
 import { getAccount } from '../utils/api/account';
+import { getDelegate, getVoters, getVotes, listDelegates } from '../utils/api/delegate';
 import { getTransactions } from '../utils/api/transactions';
-import { getDelegate, getVoters, getAllVotes } from '../utils/api/delegate';
+import { getBlocks } from '../utils/api/blocks';
 import searchAll from '../utils/api/search';
+import transactionTypes from '../constants/transactionTypes';
 import { updateWallet } from './wallets';
 
 const searchDelegate = ({ publicKey, address }) =>
-  (dispatch, getState) => {
+  async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    getDelegate(liskAPIClient, { publicKey }).then((response) => {
-      dispatch({
-        data: {
-          delegate: response.data[0],
-          address,
+    const delegates = await getDelegate(liskAPIClient, { publicKey });
+    const transactions = await getTransactions({
+      liskAPIClient, address, limit: 1, type: transactionTypes.registerDelegate,
+    });
+    const block = await getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 });
+    dispatch({
+      data: {
+        delegate: {
+          ...delegates.data[0],
+          lastBlock: (block.data[0] && block.data[0].timestamp) || '-',
+          txDelegateRegister: transactions.data[0],
         },
-        type: actionTypes.searchDelegate,
-      });
+        address,
+      },
+      type: actionTypes.searchDelegate,
     });
   };
 
-const searchVotes = ({ address }) =>
-  (dispatch, getState) => {
+
+export const fetchVotedDelegateInfo = (votes, {
+  showingVotes = 30, address, offset = 0, limit = 101, filter = '',
+}) =>
+  // eslint-disable-next-line max-statements
+  async (dispatch, getState) => {
+    const liskAPIClient = getState().peers.liskAPIClient;
+    if (!liskAPIClient) return;
+    dispatch(loadingStarted(actionTypes.searchVotes));
+    const delegates = await listDelegates(liskAPIClient, { limit, offset });
+    const votesWithDelegateInfo = votes.map((vote) => {
+      const delegate = delegates.data.find(d => d.username === vote.username) || {};
+      return { ...vote, ...delegate };
+    }).sort((a, b) => {
+      if (!a.rank && !b.rank) return 0;
+      if (!a.rank || +a.rank > +b.rank) return 1;
+      return -1;
+    });
+
+    const filteredVotes = votesWithDelegateInfo.filter(vote => RegExp(filter, 'i').test(vote.username));
+    const lastIndex = showingVotes > filteredVotes.length ?
+      filteredVotes.length : showingVotes;
+    if (filteredVotes.length && !filteredVotes[lastIndex - 1].rank) {
+      dispatch(fetchVotedDelegateInfo(votesWithDelegateInfo, {
+        offset: offset + limit,
+        address,
+        showingVotes,
+        filter,
+      }));
+    } else {
+      dispatch({
+        type: actionTypes.searchVotes,
+        data: { votes: votesWithDelegateInfo, address },
+      });
+      dispatch(loadingFinished(actionTypes.searchVotes));
+    }
+  };
+
+const searchVotes = ({ address, offset, limit }) =>
+  async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     /* istanbul ignore else */
-    if (liskAPIClient) {
-      getAllVotes(liskAPIClient, address).then(response =>
-        dispatch({
-          type: actionTypes.searchVotes,
-          data: {
-            votes: response.data.votes,
-            address,
-          },
-        }));
-    }
+    if (!liskAPIClient) return;
+    dispatch(loadingStarted(actionTypes.searchVotes));
+    const votes = await getVotes(liskAPIClient, { address, offset, limit })
+      .then(res => res.data.votes);
+
+    dispatch({
+      type: actionTypes.searchVotes,
+      data: { votes, address },
+    });
+    dispatch(loadingFinished(actionTypes.searchVotes));
   };
 
 const searchVoters = ({
@@ -78,7 +125,6 @@ export const searchAccount = ({ address }) =>
     const liskAPIClient = getState().peers.liskAPIClient;
     /* istanbul ignore else */
     if (liskAPIClient) {
-      dispatch(searchVotes({ address }));
       getAccount(liskAPIClient, address).then((response) => {
         const accountData = {
           ...response,
@@ -90,6 +136,7 @@ export const searchAccount = ({ address }) =>
         dispatch({ data: accountData, type: actionTypes.searchAccount });
         dispatch(updateWallet(response, getState().peers));
       });
+      dispatch(searchVotes({ address, offset: 0, limit: 101 }));
     }
   };
 
