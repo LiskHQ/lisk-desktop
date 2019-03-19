@@ -6,7 +6,7 @@ const statusMessages = t => ({
     headerIcon: svg.transactionSuccess,
     bodyText: {
       title: t('Transaction submitted'),
-      paragraph: t('You will find it in My Transactions in a matter of minutes'),
+      paragraph: t("You'll find it in your Wallet and it will be confirmed in a matter of minutes."),
     },
   },
   error: {

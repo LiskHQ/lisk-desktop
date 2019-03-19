@@ -101,7 +101,7 @@ describe('TransactionStatus', () => {
   it('should show dropdown follow account', () => {
     expect(wrapper).toContainMatchingElement('.following-container');
     expect(wrapper).toContainMatchingElement('.following-btn');
-    expect(wrapper.find('.following-btn').at(0).text()).toEqual('Follow recipient');
+    expect(wrapper.find('.following-btn').at(0).text()).toEqual('Bookmark recipient');
     wrapper.find('.following-btn').at(0).simulate('click');
     wrapper.find('input[name="accountName"]').simulate('change', { target: { name: 'accountName', value: 'ABC' } });
     wrapper.find('button').last().simulate('click');
@@ -112,7 +112,7 @@ describe('TransactionStatus', () => {
       }],
     });
     wrapper.update();
-    expect(wrapper.find('.following-btn').at(0).text()).toEqual('Following');
+    expect(wrapper.find('.following-btn').at(0).text()).toEqual('Bookmarked');
     wrapper.find('.following-btn').at(0).simulate('click');
   });
 });

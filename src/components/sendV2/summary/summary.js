@@ -178,7 +178,7 @@ class Summary extends React.Component {
           </div>
 
           <div className={styles.row}>
-            <label>{this.props.t('Amount of transaction')}</label>
+            <label>{this.props.t('Amount')}</label>
             <label className={`${styles.information} ${styles.amount} amount-summary`}>
               {`${this.props.fields.amount.value} ${this.props.t('LSK')}`}
               <ConverterV2 className={`${styles.secondText} ${styles.amountSecondText}`} value={this.props.fields.amount.value} />
@@ -227,7 +227,7 @@ class Summary extends React.Component {
                 <p>
                 {
                   this.props.t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
-                  Such operations require hardware resources and because of that we ask for a small fee for processing those.`)
+                  Such operations require hardware resources and because of that there is a small fee for processing those.`)
                 }
                 </p>
               </Tooltip>

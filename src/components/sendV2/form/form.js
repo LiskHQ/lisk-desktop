@@ -184,7 +184,7 @@ class Form extends React.Component {
         feedback: '',
         selected: false,
         title: '',
-        showSuggestions: false,
+        showSuggestions: true,
       };
     }
 
@@ -305,7 +305,7 @@ class Form extends React.Component {
         </header>
 
         <div className={styles.formSection}>
-          <label className={`${styles.fieldGroup} recipient`}>
+          <span className={`${styles.fieldGroup} recipient`}>
             <span className={`${styles.fieldLabel}`}>{this.props.t('Recipient')}</span>
             <Bookmark
               validateBookmark={this.validateBookmark}
@@ -316,10 +316,10 @@ class Form extends React.Component {
               showSuggestions={fields.recipient.showSuggestions}
               onSelectedAccount={this.onSelectedAccount}
             />
-          </label>
+          </span>
 
           <label className={`${styles.fieldGroup}`}>
-            <span className={`${styles.fieldLabel}`}>{this.props.t('Amount of transaction')}</span>
+            <span className={`${styles.fieldLabel}`}>{this.props.t('Amount')}</span>
             <span className={`${styles.amountField} amount`}>
               <InputV2
                 autoComplete={'off'}
@@ -357,7 +357,7 @@ class Form extends React.Component {
                 <p>
                 {
                   this.props.t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
-                  Such operations require hardware resources and because of that we ask for a small fee for processing those.`)
+                  Such operations require hardware resources and because of that there is a small fee for processing those.`)
                 }
                 </p>
               </Tooltip>

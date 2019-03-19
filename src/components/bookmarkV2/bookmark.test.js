@@ -59,7 +59,7 @@ describe('BookmarkV2', () => {
     expect(wrapper).toContainMatchingElement('.recipient');
     expect(wrapper).toContainMatchingElement('InputV2.input');
     expect(wrapper).toContainMatchingElement('SpinnerV2.spinner');
-    expect(wrapper).not.toContainMatchingElement('.bookmark-list');
+    expect(wrapper).toContainMatchingElement('.bookmark-list');
   });
 
   it('should validate bookmark', () => {

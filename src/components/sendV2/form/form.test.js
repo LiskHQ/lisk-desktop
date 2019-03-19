@@ -83,7 +83,7 @@ describe('Form', () => {
   });
 
   it('should render properly', () => {
-    expect(wrapper).toContainMatchingElement('label.recipient');
+    expect(wrapper).toContainMatchingElement('span.recipient');
     expect(wrapper).toContainMatchingElement('span.amount');
     expect(wrapper).toContainMatchingElement('label.reference');
     expect(wrapper).not.toContainMatchingElement('PrimaryButtonV2.btn-submit');
