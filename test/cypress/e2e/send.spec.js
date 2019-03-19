@@ -7,7 +7,7 @@ import compareBalances from '../utils/compareBalances';
 import loginUI from '../utils/loginUI';
 
 const msg = {
-  transferTxSuccess: 'You will find it in My Transactions in a matter of minutes',
+  transferTxSuccess: "You'll find it in your Wallet and it will be confirmed in a matter of minutes.",
   accountInitializatoinAddress: 'Account initialization',
 };
 
@@ -221,7 +221,7 @@ describe('Send: Bookmarks', () => {
       .then(() => window.localStorage.removeItem('followedAccounts'));
     cy.visit(urls.send);
     cy.get(ss.recipientInput).click();
-    cy.get(ss.sendBookmarkList).should('not.exist');
+    cy.get(ss.sendBookmarkList).should('exist');
   });
 
   /**
