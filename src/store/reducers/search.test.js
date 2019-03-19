@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import search from './search';
 import actionTypes from '../../constants/actions';
 
@@ -19,7 +18,7 @@ describe('Reducer: search', () => {
       data: {},
     };
     const stateWithClearedSuggestions = search(state, action);
-    expect(stateWithClearedSuggestions).to.deep.equal({
+    expect(stateWithClearedSuggestions).toEqual({
       suggestions: {
         delegates: [],
         addresses: [],
@@ -51,7 +50,7 @@ describe('Reducer: search', () => {
     // responses come as array from promise all,
     // reducer transform results to Object with keys
     const stateWithReducedSuggestions = search(state, action);
-    expect(stateWithReducedSuggestions).to.deep.equal({
+    expect(stateWithReducedSuggestions).toEqual({
       suggestions: {
         addresses: mockData,
         delegates: mockData,
