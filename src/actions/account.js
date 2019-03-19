@@ -2,6 +2,8 @@ import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { setSecondPassphrase, getAccount } from '../utils/api/account';
 import { registerDelegate, getDelegate, getAllVotes, getVoters } from '../utils/api/delegate';
+import { getTransactions } from '../utils/api/transactions';
+import { getBlocks } from '../utils/api/blocks';
 import { loadTransactionsFinish, transactionsUpdated } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { secondPassphraseRegisteredFailure } from './secondPassphrase';
@@ -62,6 +64,11 @@ export const accountLoading = () => ({
 
 export const passphraseUsed = data => ({
   type: actionTypes.passphraseUsed,
+  data,
+});
+
+export const delegateStatsLoaded = data => ({
+  type: actionTypes.delegateStatsLoaded,
   data,
 });
 
@@ -195,7 +202,7 @@ export const loadAccount = ({
           dispatch(loadDelegate({
             publicKey: response.publicKey,
           }));
-        } else if (isSameAccount && response.isDelegate) {
+        } else if (isSameAccount && response.delegate && response.delegate.username) {
           accountDataUpdated = {
             ...accountDataUpdated,
             delegate: response.delegate,
@@ -247,4 +254,18 @@ export const accountDataUpdated = ({
     }).catch((res) => {
       dispatch(liskAPIClientUpdate({ online: false, code: res.error.code }));
     });
+  };
+
+export const updateAccountDelegateStats = account =>
+  async (dispatch, getState) => {
+    const liskAPIClient = getState().peers.liskAPIClient;
+    const { address, publicKey } = account;
+    const transaction = await getTransactions({
+      liskAPIClient, address, limit: 1, type: transactionTypes.registerDelegate,
+    });
+    const block = await getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 });
+    dispatch(delegateStatsLoaded({
+      lastBlock: (block.data[0] && block.data[0].timestamp) || '-',
+      txDelegateRegister: transaction.data[0],
+    }));
   };

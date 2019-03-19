@@ -23,10 +23,6 @@
   width: 100%;
   height: 100%;
 
-  & > div {
-    margin-bottom: 100px;
-  }
-
   & .header {
     position: relative;
   }
@@ -51,8 +47,6 @@
   & footer {
     padding: 0px;
     display: flex;
-    justify-content: space-between;
-    position: absolute;
     bottom: 58px;
 
     & > div > button {

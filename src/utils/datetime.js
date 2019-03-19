@@ -2,9 +2,19 @@ import moment from 'moment';
 import { firstBlockTime } from '../constants/datetime';
 
 /**
- * Considers time
+ * Returns unix timestamp from value
  * @param {Number} value - Date value
- * @param {String} format - Format in which the date is provided e.g. MM.DD.YY
+ * @param {String} [format] - Format in which the date is provided e.g. MM.DD.YY
+ * @returns {Number} - timestamp in Unix timestamp format
+ */
+export const getUnixTimestampFromValue = (value, format) =>
+  ((moment(firstBlockTime).format('x') / 1000) + +moment(value, format).format('x')) * 1000;
+
+/**
+ * returns timestamp from first block considering time
+ * @param {Number} value - Date value
+ * @param {String} [format] - Format in which the date is provided e.g. MM.DD.YY
+ * @param {Object} [options={ inclusive: false }] - set to true to get end of day timestamp
  * @returns {Number} - Timestamp from first block
  */
 export const getTimestampFromFirstBlock = (value, format, options = { inclusive: false }) => {
@@ -13,17 +23,9 @@ export const getTimestampFromFirstBlock = (value, format, options = { inclusive:
 };
 
 /**
- * Returns new Date object after adding first block timestamp
+ * returns timestamp from first block not considering time
  * @param {Number} value - Date value
- * @param {String} format - Format in which the date is provided e.g. MM.DD.YY
- */
-export const getUnixTimestampFromFirstBlock = value =>
-  new Date((((Date.UTC(2016, 4, 24, 17, 0, 0, 0) / 1000) + value) * 1000));
-
-/**
- * Without considering time
- * @param {Number} value - Date value
- * @param {String} format - Format in which the date is provided e.g. MM.DD.YY
+ * @param {String} [format] - Format in which the date is provided e.g. MM.DD.YY
  * @returns {Number} - Timestamp from first block
  */
 export const getDateTimestampFromFirstBlock = (value, format) =>

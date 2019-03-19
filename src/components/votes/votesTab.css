@@ -1,5 +1,37 @@
 @import '../app/variablesV2.css';
 
+.wrapper {
+  margin-bottom: 40px;
+  overflow: initial;
+
+  & header {
+    justify-content: space-between;
+  }
+
+  & .filterHolder {
+    height: 32px;
+    width: 200px;
+
+    & input {
+      font-size: var(--button-font-size-s);
+      height: 100%;
+    }
+  }
+
+  & .lastHeading {
+    & :global(.tooltip-window) {
+      left: auto;
+      right: -12px;
+      transform: translateX(0);
+
+      & :global(.tooltip-arrow) {
+        right: 16px;
+        left: auto;
+      }
+    }
+  }
+}
+
 .empty {
   align-items: center;
   display: flex;
@@ -18,8 +50,13 @@
   flex-direction: column;
   flex-grow: 1;
   margin: 0;
+  min-height: 300px;
   overflow: hidden;
   position: relative;
+
+  & .row {
+    cursor: pointer;
+  }
 
   &.hasMore {
     padding-bottom: 30px;
@@ -46,15 +83,16 @@
         display: flex;
         justify-content: center;
         height: 100%;
-        padding: 235px 0;
         width: 100%;
 
         &.bottom {
           align-items: flex-end;
+          padding-bottom: 235px;
         }
 
         &.top {
           align-items: flex-start;
+          padding-top: 235px;
         }
       }
     }
@@ -80,5 +118,27 @@
     justify-content: center;
     position: absolute;
     width: 100%;
+  }
+}
+
+.info {
+  display: flex;
+
+  & > .avatar {
+    margin-right: 24px;
+  }
+
+  & > .accountInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  & .title {
+    color: var(--color-content-light);
+    display: block;
+    font-family: var(--heading-font);
+    font-size: var(--paragraph-font-size-l);
+    font-weight: var(--font-weight-bold);
   }
 }
