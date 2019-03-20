@@ -21,6 +21,10 @@
     border: none;
     cursor: pointer;
     outline: none;
+
+    &:disabled {
+      cursor: default;
+    }
   }
 
   & > button:last-child {

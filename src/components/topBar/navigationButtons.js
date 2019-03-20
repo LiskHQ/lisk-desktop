@@ -11,22 +11,40 @@ class NavigationButtons extends React.Component {
       currentPageIndex: 0,
       historyLength: 0,
       action: '',
+      userLogout: false,
     };
 
     this.onGoBack = this.onGoBack.bind(this);
     this.onGoForward = this.onGoForward.bind(this);
+    this.resetNavigationValues = this.resetNavigationValues.bind(this);
   }
 
   componentDidMount() {
     this.setState({
+      ...this.state,
       firstPageIndex: this.props.history.length,
       historyLength: this.props.history.length,
       currentPageIndex: this.props.history.length,
     });
   }
 
+  resetNavigationValues() {
+    this.setState({
+      ...this.state,
+      firstPageIndex: this.props.history.length,
+      historyLength: this.props.history.length,
+      currentPageIndex: this.props.history.length,
+      userLogout: true,
+    });
+  }
+
   // eslint-disable-next-line max-statements
   shouldComponentUpdate(nextProps, nextState) {
+    if (!!nextProps.account.afterLogout !== nextState.userLogout) {
+      this.resetNavigationValues();
+      return false;
+    }
+
     if (nextProps.history.length !== nextState.historyLength && nextState.action === '') {
       this.setState({
         ...nextState,
@@ -82,21 +100,28 @@ class NavigationButtons extends React.Component {
     const { firstPageIndex, currentPageIndex, historyLength } = this.state;
     const isBackActive = firstPageIndex < currentPageIndex;
     const isForwardActive = firstPageIndex <= currentPageIndex && currentPageIndex < historyLength;
+    const backArrow = isBackActive
+      ? svg.back_arrow_active_icon
+      : svg.back_arrow_inactive_icon;
+    const forwardArrow = isForwardActive
+      ? svg.foward_arrow_active_icon
+      : svg.foward_arrow_inactive_icon;
 
     return (
-      <div className={styles.wrapper}>
+      <div className={`${styles.wrapper} navigation-buttons`}>
         <button
+          className={'go-back'}
           disabled={!isBackActive}
           onClick={this.onGoBack}
         >
-          <img src={isBackActive ? svg.back_arrow_active_icon : svg.back_arrow_inactive_icon}/>
+          <img src={backArrow}/>
         </button>
         <button
+          className={'go-forward'}
           disabled={!isForwardActive}
           onClick={this.onGoForward}
         >
-          <img src={isForwardActive
-            ? svg.foward_arrow_active_icon : svg.foward_arrow_inactive_icon}/>
+          <img src={forwardArrow}/>
         </button>
       </div>
     );
