@@ -21,7 +21,6 @@ class NavigationButtons extends React.Component {
 
   componentDidMount() {
     this.setState({
-      ...this.state,
       firstPageIndex: this.props.history.length,
       historyLength: this.props.history.length,
       currentPageIndex: this.props.history.length,
@@ -30,7 +29,6 @@ class NavigationButtons extends React.Component {
 
   resetNavigationValues() {
     this.setState({
-      ...this.state,
       firstPageIndex: this.props.history.length,
       historyLength: this.props.history.length,
       currentPageIndex: this.props.history.length,
@@ -47,7 +45,6 @@ class NavigationButtons extends React.Component {
 
     if (nextProps.history.length !== nextState.historyLength && nextState.action === '') {
       this.setState({
-        ...nextState,
         historyLength: nextProps.history.length,
         currentPageIndex: nextProps.history.length,
         action: '',
@@ -57,7 +54,6 @@ class NavigationButtons extends React.Component {
 
     if (nextState.action === 'back' && nextState.currentPageIndex > nextState.firstPageIndex) {
       this.setState({
-        ...nextState,
         currentPageIndex: nextState.currentPageIndex - 1,
         action: '',
       });
@@ -67,7 +63,6 @@ class NavigationButtons extends React.Component {
 
     if (nextState.action === 'forward' && nextState.currentPageIndex < nextProps.history.length) {
       this.setState({
-        ...nextState,
         currentPageIndex: nextState.currentPageIndex + 1,
         action: '',
       });
@@ -81,19 +76,13 @@ class NavigationButtons extends React.Component {
   onGoBack(e) {
     e.preventDefault();
 
-    this.setState({
-      ...this.state,
-      action: 'back',
-    });
+    this.setState({ action: 'back' });
   }
 
   onGoForward(e) {
     e.preventDefault();
 
-    this.setState({
-      ...this.state,
-      action: 'forward',
-    });
+    this.setState({ action: 'forward' });
   }
 
   render() {
