@@ -19,7 +19,6 @@
 
       & .tooltipArrow {
         left: 50%;
-        transform: rotate(90deg);
       }
     }
   }
@@ -32,6 +31,7 @@
       & .tooltipArrow {
         bottom: auto;
         top: -16px;
+        transform: rotate(90deg);
       }
     }
   }
@@ -44,6 +44,7 @@
       & .tooltipArrow {
         bottom: -16px;
         top: auto;
+        transform: rotate(-90deg);
       }
     }
   }

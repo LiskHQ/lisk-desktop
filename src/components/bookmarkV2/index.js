@@ -28,6 +28,7 @@ class Bookmark extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onSelectedAccount = this.onSelectedAccount.bind(this);
     this.resetListIndex = this.resetListIndex.bind(this);
+    this.handleUpdateIndex = this.handleUpdateIndex.bind(this);
   }
 
   getFilterList() {
@@ -72,6 +73,10 @@ class Bookmark extends React.Component {
         : this.listContainerRef.scrollTop;
       this.setState({ dropdownIndex: dropdownIndex - 1 });
     }
+  }
+
+  handleUpdateIndex(dropdownIndex) {
+    this.setState({ dropdownIndex });
   }
 
   onKeyPressEnter() {
@@ -157,6 +162,7 @@ class Bookmark extends React.Component {
                 .map((account, index) =>
                   <li
                     key={index}
+                    onMouseEnter={() => this.handleUpdateIndex(index)}
                     onClick={() => this.onSelectedAccount(account)}
                     className={`${dropdownIndex === index ? styles.active : ''}`}>
                     <AccountVisual address={account.address} size={25} />

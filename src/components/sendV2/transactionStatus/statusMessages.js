@@ -20,7 +20,7 @@ const statusMessages = t => ({
     headerIcon: svg.transactionError,
     bodyText: {
       title: t('Transaction aborted on device'),
-      paragraph: t('You have cancelled the transaction on your harware wallet.'),
+      paragraph: t('You have cancelled the transaction on your hardware wallet.'),
     },
   },
 });

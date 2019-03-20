@@ -139,7 +139,7 @@ class Form extends React.Component {
         address: '',
         balance: '',
         error: true,
-        feedback: 'Provide a correct wallet address or a name of a followed account',
+        feedback: 'Provide a correct wallet address or a name of a bookmark account',
         selected: false,
         title: '',
         showSuggestions: true,
@@ -249,7 +249,7 @@ class Form extends React.Component {
       feedback = error
         ? t('{{length}} extra bytes', { length: byteCount - messageMaxLength })
         : t('{{length}} out of {{total}} bytes left', {
-          length: messageMaxLength - value.length,
+          length: messageMaxLength - byteCount,
           total: messageMaxLength,
         });
     }

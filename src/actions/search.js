@@ -129,7 +129,7 @@ export const searchAccount = ({ address }) =>
         const accountData = {
           ...response,
         };
-        if (accountData.publicKey) {
+        if (accountData.delegate && accountData.delegate.username) {
           dispatch(searchDelegate({ publicKey: accountData.publicKey, address }));
           dispatch(searchVoters({ address, publicKey: accountData.publicKey }));
         }
