@@ -1,7 +1,6 @@
 import search from './search';
 import actionTypes from '../../constants/actions';
 
-
 const mockData = ['1', '2'];
 
 describe('Reducer: search', () => {
@@ -56,6 +55,218 @@ describe('Reducer: search', () => {
         delegates: mockData,
         transactions: mockData,
       },
+    });
+  });
+
+  it('should reduce delegates', () => {
+    const state = {
+      delegates: {
+        '1L': {
+          username: 'Alice',
+        },
+      },
+    };
+
+    const action = {
+      type: actionTypes.searchDelegate,
+      data: {
+        address: '2L',
+        delegate: {
+          username: 'Bob',
+        },
+      },
+    };
+
+    const changedState = search(state, action);
+    expect(changedState).toEqual({
+      delegates: {
+        '1L': {
+          username: 'Alice',
+        },
+        '2L': {
+          username: 'Bob',
+        },
+      },
+    });
+  });
+
+  it('should reduce votes', () => {
+    const state = {
+      votes: {
+        '0L': [
+          {
+            address: '1L',
+          },
+        ],
+      },
+    };
+
+    const action = {
+      type: actionTypes.searchVotes,
+      data: {
+        votes: [
+          {
+            address: '2L',
+          },
+        ],
+        address: '0L',
+      },
+    };
+
+    const changedState = search(state, action);
+    expect(changedState).toEqual({
+      votes: {
+        '0L': [
+          {
+            address: '2L',
+          },
+        ],
+      },
+    });
+  });
+
+  it('should reduce voters with append = false', () => {
+    const state = {
+      voters: {
+        '0L': [
+          {
+            address: '1L',
+          },
+        ],
+      },
+      votersSize: {
+        '0L': 0,
+      },
+    };
+
+    const action = {
+      type: actionTypes.searchVoters,
+      data: {
+        append: false,
+        voters: [
+          {
+            address: '2L',
+          },
+        ],
+        votersSize: 1,
+        address: '0L',
+      },
+    };
+
+    const changedState = search(state, action);
+    expect(changedState).toEqual({
+      voters: {
+        '0L': [
+          {
+            address: '2L',
+          },
+        ],
+      },
+      votersSize: {
+        '0L': 1,
+      },
+    });
+  });
+
+  it('should reduce voters with append = true', () => {
+    const state = {
+      voters: {
+        '0L': [
+          {
+            address: '1L',
+          },
+        ],
+      },
+      votersSize: {
+        '0L': 0,
+      },
+    };
+
+    const action = {
+      type: actionTypes.searchVoters,
+      data: {
+        append: true,
+        voters: [
+          {
+            address: '2L',
+          },
+        ],
+        votersSize: 1,
+        address: '0L',
+      },
+    };
+
+    const changedState = search(state, action);
+    expect(changedState).toEqual({
+      voters: {
+        '0L': [
+          {
+            address: '1L',
+          },
+          {
+            address: '2L',
+          },
+        ],
+      },
+      votersSize: {
+        '0L': 1,
+      },
+    });
+  });
+
+  it('should reduce more transactions loaded', () => {
+    const state = {
+      transactions: {
+        '0L': {
+          transactions: [
+            {
+              id: '1',
+            },
+          ],
+        },
+      },
+    };
+
+    const action = {
+      type: actionTypes.searchMoreTransactions,
+      data: {
+        address: '0L',
+        transactions: [
+          {
+            id: '2',
+          },
+        ],
+        count: 2,
+        filter: 0,
+      },
+    };
+
+    const changedState = search(state, action);
+    expect(changedState).toEqual({
+      transactions: {
+        '0L': {
+          address: '0L',
+          transactions: [
+            {
+              id: '1',
+            },
+            {
+              id: '2',
+            },
+          ],
+          count: 2,
+          filter: 0,
+        },
+      },
+      lastSearch: '0L',
+      searchResults: [
+        {
+          id: '1',
+        },
+        {
+          id: '2',
+        },
+      ],
     });
   });
 });
