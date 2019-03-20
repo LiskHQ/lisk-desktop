@@ -117,7 +117,7 @@ class VotesTab extends React.Component {
           }
           {filteredVotes.length
             ? filteredVotes.slice(0, this.state.showing).map((vote, key) => (
-              <TableRow className={`${styles.row} votes-row`} onClick={() => this.onRowClick(vote.address)} key={`row-${key}`}>
+              <TableRow className={`${styles.row} vote-row`} onClick={() => this.onRowClick(vote.address)} key={`row-${key}`}>
                 <div className={`${grid['col-sm-1']} ${grid['col-lg-1']}`}>
                   {(vote.rank && +vote.rank < 10 ? `0${vote.rank}` : vote.rank) || '-'}
                 </div>

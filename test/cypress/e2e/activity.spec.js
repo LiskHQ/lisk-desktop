@@ -16,7 +16,7 @@ function testActivity(open) {
    */
   it('30 tx are shown, clicking show more loads more transactions', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit('/dashboard');
+    cy.visit(urls.dashboard);
     open();
     cy.get(ss.transactionRow).should('have.length', 30);
     cy.get(ss.showMoreButton).click();
@@ -60,7 +60,6 @@ function testActivity(open) {
   describe('Account info tab', () => {
     beforeEach(() => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-      cy.visit('/dashboard');
       open();
       waitBeforeChangeTabAfterLoading();
       cy.get(ss.accountInfoTab).click();
@@ -122,7 +121,7 @@ function testDelegateActivity(open) {
       cy.get(ss.delegateStatsUptime).contains('100%');
       cy.get(ss.delegateStatsUptime).contains('1');
       cy.get(ss.delegateStatsApproval).contains('100%');
-      // cy.get(ss.delegateStatsWeight).contains('100,000,000');
+      cy.get(ss.delegateStatsWeight).contains('100,000,000');
       cy.get(ss.delegateStatsForged).contains('0');
       cy.get(ss.delegateStatsBlocks).contains(/\d/);
       cy.get(ss.delegateStatsSince).contains(/\d{2}\s\w{3}\s\d{2}/);

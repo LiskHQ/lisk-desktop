@@ -24,7 +24,7 @@ const ss = {
   delegateStatisticsTab: '.delegate-statistics ',
   votedAddress: '.votes .voter-address',
   voterAddress: '.voters .voter-address',
-  voteRow: '.votes-row',
+  voteRow: '.vote-row',
   accountAddress: '.account-address',
   selectionVotingNumber: '.selection h4',
   totalVotingNumber: '.total h4',

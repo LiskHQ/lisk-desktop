@@ -13,12 +13,12 @@ describe('Account', () => {
    */
   it('Opens by url + Address & Balance are correct', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(`${urls.accounts}/16313739661666666666L`);
+    cy.visit(`${urls.accounts}/${accounts.genesis.address}`);
     // Timeout to avoid Cypress bug
     // https://github.com/cypress-io/cypress/issues/695
     cy.wait(1000);
-    cy.url().should('contain', '16313739661666666666L');
-    cy.get(ss.accountAddress).contains('16313739661666666666L');
+    cy.url().should('contain', accounts.genesis.address);
+    cy.get(ss.accountAddress).contains(accounts.genesis.address);
   });
 
   it('Username is shown if registered', () => {
