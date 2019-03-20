@@ -10,7 +10,7 @@ class NavigationButtons extends React.Component {
       firstPageIndex: 0,
       currentPageIndex: 0,
       historyLength: 0,
-      isUserLogedIn: false,
+      action: '',
     };
 
     this.onGoBack = this.onGoBack.bind(this);
@@ -18,63 +18,85 @@ class NavigationButtons extends React.Component {
   }
 
   componentDidMount() {
-    this.setState(prevState => ({
-      ...prevState,
+    this.setState({
       firstPageIndex: this.props.history.length,
       historyLength: this.props.history.length,
-    }));
+      currentPageIndex: this.props.history.length,
+    });
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (this.props.history.length !== nextProps.history.length) {
-      this.setState(prevState => ({
-        ...prevState,
-        currentPageIndex: prevState.currentPageIndex + 1,
-      }));
+  // eslint-disable-next-line max-statements
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.history.length !== nextState.historyLength && nextState.action === '') {
+      this.setState({
+        ...nextState,
+        historyLength: nextProps.history.length,
+        currentPageIndex: nextProps.history.length,
+        action: '',
+      });
       return false;
     }
+
+    if (nextState.action === 'back' && nextState.currentPageIndex > nextState.firstPageIndex) {
+      this.setState({
+        ...nextState,
+        currentPageIndex: nextState.currentPageIndex - 1,
+        action: '',
+      });
+      this.props.history.goBack();
+      return false;
+    }
+
+    if (nextState.action === 'forward' && nextState.currentPageIndex < nextProps.history.length) {
+      this.setState({
+        ...nextState,
+        currentPageIndex: nextState.currentPageIndex + 1,
+        action: '',
+      });
+      this.props.history.goForward();
+      return false;
+    }
+
     return true;
   }
 
   onGoBack(e) {
     e.preventDefault();
-    const { firstPageIndex, currentPageIndex } = this.state;
-    if (firstPageIndex < currentPageIndex) {
-      this.setState(prevState => ({
-        ...prevState,
-        currentPageIndex: currentPageIndex - 1,
-      }));
-      this.props.history.goBack();
-    }
+
+    this.setState({
+      ...this.state,
+      action: 'back',
+    });
   }
 
   onGoForward(e) {
     e.preventDefault();
-    const { currentPageIndex } = this.state;
-    this.setState(prevState => ({
-      ...prevState,
-      currentPageIndex: currentPageIndex + 1,
-    }));
-    this.props.history.goForward();
+
+    this.setState({
+      ...this.state,
+      action: 'forward',
+    });
   }
 
   render() {
-    const { account } = this.props;
-    const isButtonDisabled = !(!!account.address && true);
+    const { firstPageIndex, currentPageIndex, historyLength } = this.state;
+    const isBackActive = firstPageIndex < currentPageIndex;
+    const isForwardActive = firstPageIndex <= currentPageIndex && currentPageIndex < historyLength;
 
     return (
       <div className={styles.wrapper}>
         <button
-          disabled={isButtonDisabled}
+          disabled={!isBackActive}
           onClick={this.onGoBack}
         >
-          <img src={svg.back_arrow_inactive_icon}/>
+          <img src={isBackActive ? svg.back_arrow_active_icon : svg.back_arrow_inactive_icon}/>
         </button>
         <button
-          disabled={isButtonDisabled}
+          disabled={!isForwardActive}
           onClick={this.onGoForward}
         >
-          <img src={svg.foward_arrow_inactive_icon}/>
+          <img src={isForwardActive
+            ? svg.foward_arrow_active_icon : svg.foward_arrow_inactive_icon}/>
         </button>
       </div>
     );
