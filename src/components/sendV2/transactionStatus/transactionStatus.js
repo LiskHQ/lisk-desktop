@@ -81,8 +81,8 @@ class TransactionStatus extends React.Component {
     ) !== -1;
 
     const followBtnLabel = isFollowing
-      ? this.props.t('Bookmarked')
-      : this.props.t('Bookmark recipient');
+      ? this.props.t('Account bookmarked')
+      : this.props.t('Bookmark account');
 
     const delegate = Object.entries(this.props.delegates).length
       ? this.props.delegates[this.props.fields.recipient.address]
