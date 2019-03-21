@@ -138,7 +138,7 @@ describe('actions: peers', () => {
         testnet: true,
       };
 
-      liskAPIClientSet({ passphrase, network, hwInfo: {} })(dispatch, getState);
+      liskAPIClientSet({ network, hwInfo: {} })(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes', networks.testnet.nodes));
     });
 
