@@ -35,6 +35,11 @@
   }
 }
 
+.error {
+  color: var(--color-error);
+  padding-bottom: 20px;
+}
+
 .link {
   color: var(--color-link);
   cursor: pointer;
