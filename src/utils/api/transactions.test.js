@@ -50,6 +50,27 @@ describe('Utils: Transactions API', () => {
       });
     });
 
+    it('should call transactions.get with type', () => {
+      const params = {
+        liskAPIClient,
+        address: '123L',
+        filter: txFilters.incoming,
+        type: 2,
+      };
+
+      getTransactions(params);
+
+      const expected = {
+        limit: 20,
+        offset: 0,
+        recipientId: '123L',
+        sort: 'timestamp:desc',
+        type: 2,
+      };
+
+      expect(liskAPIClient.transactions.get).to.have.been.calledWith(expected);
+    });
+
     it('should call transactions.get with custom filters', () => {
       const params = {
         liskAPIClient,

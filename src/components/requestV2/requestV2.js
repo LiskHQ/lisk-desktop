@@ -70,19 +70,20 @@ class RequestV2 extends React.Component {
   handleFieldChange({ target }) {
     const { t } = this.props;
     const messageMaxLength = 64;
+    const byteCount = encodeURI(target.value).split(/%..|./).length - 1;
     const error = target.name === 'amount'
       ? this.validateAmountField(target.value)
-      : target.value.length > messageMaxLength;
+      : byteCount > messageMaxLength;
     let feedback = '';
 
     if (target.name === 'amount') {
       target.value = /^\./.test(target.value) ? `0${target.value}` : target.value;
       feedback = error || feedback;
-    } else if (target.name === 'reference' && target.value.length > 0) {
+    } else if (target.name === 'reference' && byteCount > 0) {
       feedback = error
-        ? t('{{length}} extra characters', { length: target.value.length - messageMaxLength })
+        ? t('{{length}} extra characters', { length: byteCount - messageMaxLength })
         : t('{{length}} out of {{total}} characters left', {
-          length: messageMaxLength - target.value.length,
+          length: messageMaxLength - byteCount,
           total: messageMaxLength,
         });
     }
@@ -124,6 +125,7 @@ class RequestV2 extends React.Component {
   render() {
     const { t } = this.props;
     const { fields, shareLink, showQRCode } = this.state;
+    const byteCount = encodeURI(fields.reference.value).split(/%..|./).length - 1;
     const messageMaxLength = 64;
     return (
       <div className={`${styles.container}`}>
@@ -160,7 +162,7 @@ class RequestV2 extends React.Component {
               value={fields.reference.value}
               placeholder={t('Write message')}
               className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
-            <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - fields.reference.value.length < 10 ? 'error' : ''} ${fields.reference.feedback ? styles.show : ''}`}>
+            <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${fields.reference.feedback ? styles.show : ''}`}>
               {fields.reference.feedback}
             </span>
           </label>

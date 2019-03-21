@@ -6,6 +6,7 @@ import RequestV2 from '../../requestV2/requestV2';
 import { getIndexOfFollowedAccount } from '../../../utils/followedAccounts';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import HeaderAccountInfo from './headerAccountInfo';
+import FollowAccount from '../../followAccount';
 import styles from './transactionsOverviewHeader.css';
 import routes from '../../../constants/routes';
 
@@ -22,6 +23,11 @@ class transactionsHeader extends React.Component {
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.handleClickOutsideDropdown = this.handleClickOutsideDropdown.bind(this);
     this.setDropownRefs = this.setDropownRefs.bind(this);
+  }
+
+  /* istanbul ignore next */
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleClickOutsideDropdown);
   }
 
   toggleDropdown(dropdownName) {
@@ -105,7 +111,10 @@ class transactionsHeader extends React.Component {
             { isFollowing ? (
               <SecondaryButtonV2
                 className={`${styles.followingButton}`}
-                onClick={() => this.toggleDropdown('followDropdown')}>
+                onClick={
+                  /* istanbul ignore next */
+                  () => this.toggleDropdown('followDropdown')
+                }>
                 {t('Following')}
               </SecondaryButtonV2>
             ) : (
@@ -115,7 +124,13 @@ class transactionsHeader extends React.Component {
             )}
             <DropdownV2
               showDropdown={this.state.shownDropdown === 'followDropdown'}
-              className={'follow-dropdown'}></DropdownV2>
+              className={`${styles.followDropdown}`}>
+                <FollowAccount
+                  delegate={delegate}
+                  balance={this.props.balance}
+                  address={address}
+                  isFollowing={isFollowing} />
+              </DropdownV2>
             </span>
           </React.Fragment>
         )}

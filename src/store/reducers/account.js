@@ -51,6 +51,7 @@ const merge = (account, info) => {
  * @param {Array} state
  * @param {Object} action
  */
+// eslint-disable-next-line complexity
 const account = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.removePassphrase:
@@ -82,6 +83,14 @@ const account = (state = {}, action) => {
       return {
         ...state,
         ...action.data,
+      };
+    case actionTypes.delegateStatsLoaded:
+      return {
+        ...state,
+        delegate: {
+          ...state.delegate,
+          ...action.data,
+        },
       };
     default:
       return state;

@@ -7,6 +7,7 @@ const actionTypes = {
   accountLoading: 'ACCOUNT_LOADING',
   accountAddVotes: 'ACCOUNT_ADD_VOTES',
   accountAddVoters: 'ACCOUNT_ADD_VOTERS',
+  delegateStatsLoaded: 'ACCOUNT_DELEGATE_STATS',
   liskAPIClientSet: 'LISK_API_CLIENT_SET',
   liskAPIClientUpdate: 'LISK_API_CLIENT_UPDATE',
   liskAPIClientReset: 'LISK_API_CLIENT_RESET',

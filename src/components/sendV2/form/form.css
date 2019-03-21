@@ -1,0 +1,168 @@
+@import '../../app/variablesV2.css';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 443px;
+  height: auto;
+  background-color: var(--color-white);
+  box-shadow: var(--box-shadow-standar2);
+  border-radius: var(--border-radius-box);
+}
+
+.header {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 65px;
+  border-bottom: 1px solid var(--color-light-gray);
+  margin: 0;
+  padding: 0 16px;
+
+  & > h1 {
+    font-family: var(--heading-font);
+    font-size: var(--font-size-title);
+    font-weight: var(--font-weight-bold);
+    line-height: 0.83;
+    margin: 5px 0 0;
+  }
+}
+
+.formSection {
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+
+  & .fieldGroup {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+  }
+
+  & .fieldLabel {
+    color: var(--color-content-light);
+    font-family: var(--heading-font);
+    font-size: var(--paragraph-font-size-l);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 8px;
+  }
+
+  & .feedback {
+    color: var(--color-dark-gray);
+    display: block;
+    font-family: var(--content-font);
+    font-size: var(--button-font-size-s);
+    font-weight: var(--font-weight-semi-bold);
+    line-height: 1.83;
+    margin-top: 8px;
+    max-height: 0;
+    opacity: 0;
+    text-align: right;
+    transition: opacity var(--animation-speed-fast) linear;
+    width: 100%;
+
+    &:global(.error) {
+      color: var(--color-error);
+    }
+
+    &.show {
+      max-height: 22px;
+      opacity: 1;
+    }
+  }
+
+  & .amountHint {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: var(--color-dark-gray);
+    font-family: var(--content-font);
+    font-size: var(--button-font-size-s);
+    font-weight: var(--font-weight-semi-bold);
+    line-height: 1.83;
+    width: 100%;
+
+    & > img {
+      margin-left: 5px;
+      cursor: pointer;
+    }
+  }
+
+  & .amountField {
+    align-items: center;
+    display: flex;
+    position: relative;
+    width: 100%;
+
+    & .converter {
+      position: absolute;
+      right: 35px;
+    }
+
+    & .input {
+      padding-right: 120px;
+      width: 100%;
+    }
+  }
+
+  & .input,
+  & .textarea {
+    font-size: var(--paragraph-font-size-l);
+    height: 36px;
+  }
+
+  & .textarea {
+    resize: none;
+    overflow: hidden;
+    padding-right: 30px;
+  }
+
+  & .status {
+    position: absolute;
+    right: 10px;
+  }
+
+  & .referenceStatus {
+    position: absolute;
+    right: 10px;
+  }
+
+  & .referenceField {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+  }
+}
+
+footer {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24px 16px;
+
+  & > .confirmButton {
+    width: 100%;
+  }
+}
+
+.spinner {
+  position: absolute;
+  right: 11px;
+}
+
+.show {
+  opacity: 1;
+  transition: opacity var(--animation-speed-fast) linear var(--animation-delay-standard);
+}
+
+.hide {
+  opacity: 0;
+  transition: opacity var(--animation-speed-fast) linear;
+}
