@@ -139,7 +139,7 @@ class Form extends React.Component {
         address: '',
         balance: '',
         error: true,
-        feedback: 'Provide a correct wallet address or a name of a bookmark account',
+        feedback: 'Provide a correct wallet address or a name of a bookmarked account',
         selected: false,
         title: '',
         showSuggestions: true,
