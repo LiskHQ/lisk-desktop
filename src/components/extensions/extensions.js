@@ -83,7 +83,7 @@ class Extensions extends React.Component {
               onClick={() => this.removeExtension()} />
 
             <PrimaryButtonV2
-              disabled={ PRODUCTION && (this.state.error !== '' ||
+              disabled={ PRODUCTION || (this.state.error !== '' ||
                 this.state.url === localJSONStorage.get('url', ''))}
               label={this.props.t('Add Extension')}
               onClick={() => this.addExtension()} />
