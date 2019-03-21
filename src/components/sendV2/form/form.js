@@ -59,11 +59,13 @@ class Form extends React.Component {
     this.onSelectedAccount = this.onSelectedAccount.bind(this);
     this.validateAmountAndReference = this.validateAmountAndReference.bind(this);
     this.validateBookmark = this.validateBookmark.bind(this);
+    this.checkIfBoormakedAccount = this.checkIfBoormakedAccount.bind(this);
   }
 
   componentDidMount() {
     this.ifDataFromPrevState();
     this.ifDataFromUrl();
+    this.checkIfBoormakedAccount();
   }
 
   ifDataFromPrevState() {
@@ -102,6 +104,15 @@ class Form extends React.Component {
         },
       });
     }
+  }
+
+  checkIfBoormakedAccount() {
+    const { followedAccounts, fields } = this.props;
+    const account = followedAccounts.length
+      ? followedAccounts.find(acc => acc.address === fields.recipient.address)
+      : false;
+
+    if (account) this.onSelectedAccount(account);
   }
 
   onInputChange({ target }) {
