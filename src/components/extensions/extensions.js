@@ -89,7 +89,7 @@ class Extensions extends React.Component {
               onClick={() => this.addExtension()} />
           </div>
           <div className={`${styles.footer} ${styles.error}`}>
-            {(PRODUCTION) ? this.props.t('In production mode these buttons are disabled') : ''}
+            {(PRODUCTION) ? this.props.t('Adding extensions is currently disabled in production version of Lisk Hub') : ''}
           </div>
         </div>
       </Box>
