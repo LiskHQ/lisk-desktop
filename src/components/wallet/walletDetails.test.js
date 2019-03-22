@@ -87,7 +87,7 @@ describe('Wallet Details Module', () => {
     });
   });
 
-  describe('Since last visit', () => {
+  describe('Since last Login', () => {
     it('Should render "-" if no last balance saved or empty localStorage wallets item', () => {
       const expectedDifference = '-';
       const walletProps = {
