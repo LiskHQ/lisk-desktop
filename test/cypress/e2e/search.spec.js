@@ -10,7 +10,8 @@ describe('Search', () => {
   const mainnetTransaction = '881002485778658401';
 
   function assertAccountPage(accountsAddress) {
-    cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', accountsAddress)
+    cy.wait(3000);
+    cy.get(ss.accountAddress).should('have.text', accountsAddress)
       .and(() => {
         expect(getSearchesObjFromLS()[0].id).to.equal(accountsAddress);
         expect(getSearchesObjFromLS()[0].searchTerm).to.equal(accountsAddress);
@@ -18,6 +19,7 @@ describe('Search', () => {
   }
 
   function assertTransactionPage(transactionId) {
+    cy.wait(3000);
     cy.get(ss.transactionId).should('have.text', transactionId)
       .and(() => {
         expect(getSearchesObjFromLS()[0].id).to.equal(transactionId);
@@ -26,7 +28,8 @@ describe('Search', () => {
   }
 
   function assertDelegatePage(delegateName, delegateId) {
-    cy.get(ss.leftBlockAccountExplorer).find(ss.delegateName).should('have.text', delegateName)
+    cy.wait(3000);
+    cy.get(ss.accountName).should('have.text', delegateName)
       .and(() => {
         expect(getSearchesObjFromLS()[0].id).to.equal(delegateId);
         expect(getSearchesObjFromLS()[0].searchTerm).to.equal(delegateName);
@@ -125,7 +128,7 @@ describe('Search', () => {
   it('Search without signing in - happens in mainnet', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.searchInput).click().type(`${accounts['mainnet delegate'].address}{enter}`);
-    cy.get(ss.leftBlockAccountExplorer).find(ss.delegateName).should('have.text', accounts['mainnet delegate'].username);
+    cy.get(ss.accountName).should('have.text', accounts['mainnet delegate'].username);
   });
 
   /**
@@ -136,7 +139,7 @@ describe('Search', () => {
     cy.autologin(accounts.genesis.passphrase, networks.mainnet.node);
     cy.visit(urls.dashboard);
     cy.get(ss.searchInput).click().type(`${accounts['mainnet delegate'].address}{enter}`);
-    cy.get(ss.leftBlockAccountExplorer).find(ss.delegateName).should('have.text', accounts['mainnet delegate'].username);
+    cy.get(ss.accountName).should('have.text', accounts['mainnet delegate'].username);
   });
 
   /**
@@ -159,7 +162,7 @@ describe('Search', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
     cy.get(ss.searchInput).click().type(`${accounts.delegate.address}{enter}`);
-    cy.get(ss.leftBlockAccountExplorer).find(ss.delegateName).should('have.text', accounts.delegate.username);
+    cy.get(ss.accountName).should('have.text', accounts.delegate.username);
   });
 
   /**
@@ -173,7 +176,7 @@ describe('Search', () => {
     cy.get(ss.logoutBtn).click();
     cy.get(ss.searchInput).click().type(`${accounts.delegate.username}`);
     cy.get(ss.delegateResults).eq(0).click();
-    cy.get(ss.leftBlockAccountExplorer).find(ss.delegateName).should('have.text', accounts.delegate.username);
+    cy.get(ss.accountName).should('have.text', accounts.delegate.username);
   });
 
   /**
@@ -189,7 +192,7 @@ describe('Search', () => {
     cy.visit(urls.wallet);
     cy.get(ss.searchInput).click();
     cy.get(ss.recentSearches).eq(0).click();
-    cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', accounts.genesis.address);
+    cy.get(ss.accountAddress).should('have.text', accounts.genesis.address);
   });
 
   /**

@@ -41,7 +41,7 @@ describe('Delegate Tab', () => {
     expect(wrapper.find('.rank')).toIncludeText(props.delegate.rank);
     expect(wrapper.find('.status')).toIncludeText('Active');
     expect(wrapper.find('.delegate-since')).toIncludeText('24 May 2016');
-    expect(wrapper.find('.vote-weight')).toIncludeText('98,769,657.13168313 LSK');
+    expect(wrapper.find('.vote')).toIncludeText('98,769,657.13168313 LSK');
     expect(wrapper.find('.approval')).toIncludeText(`${props.delegate.approval}%`);
     expect(wrapper.find('.productivity')).toIncludeText(`${props.delegate.productivity}%`);
     expect(wrapper.find('.blocks')).toIncludeText(`${props.delegate.producedBlocks} (${props.delegate.missedBlocks})`);

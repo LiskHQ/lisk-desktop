@@ -150,15 +150,13 @@ const steps = [
 ];
 
 class CurrencyGraph extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       step: steps[0],
     };
-  }
 
-  componentWillMount() {
-    this.props.getCurrencyGraphData(this.state.step);
+    props.getCurrencyGraphData(steps[0]);
   }
 
   setStep(step) {
@@ -167,8 +165,10 @@ class CurrencyGraph extends React.Component {
     this.props.getCurrencyGraphData(step);
   }
 
-  render() {
+  // eslint-disable-next-line class-methods-use-this
+  componentDidMount() {
     Chart.pluginService.register({
+      id: 'hideAxisX',
       afterDraw(chartInstance) {
         drawGradientRectangle(chartInstance, {
           bottomPosition: bottomPadding + 32,
@@ -176,7 +176,9 @@ class CurrencyGraph extends React.Component {
         });
       },
     });
+  }
 
+  render() {
     return (
       <Box className={`${styles.wrapper}`} >
         <header>

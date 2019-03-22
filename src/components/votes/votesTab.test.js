@@ -23,9 +23,13 @@ describe('Votes Tab Component', () => {
 
   const setup = data => mount(<VotesTab {...data} />, options);
 
+  afterEach(() => {
+    props.fetchVotedDelegateInfo.mockReset();
+  });
+
   it('Should render with empty state', () => {
     wrapper = setup(props);
-    expect(wrapper.find('.empty-message')).toIncludeText('This wallet doesn’t have any votes');
+    expect(wrapper.find('.empty-message')).toIncludeText('This account doesn’t have any votes');
   });
 
   it('Should show loading state', () => {
@@ -37,14 +41,10 @@ describe('Votes Tab Component', () => {
     const votes = [...Array(101)].map((_, i) => ({
       username: `user_${i}`,
       address: `${i}L`,
-      rank: i + 1,
-      rewards: '40500000000',
-      productivity: Math.random() * 100,
-      vote: '9999988456732672',
     }));
     wrapper = setup(props);
-    wrapper.setProps({ votes });
-    wrapper.update();
+    wrapper.setProps({ votes }).update();
+    jest.advanceTimersByTime(300);
     expect(props.fetchVotedDelegateInfo).toBeCalledWith(votes, {
       address: props.address,
       showingVotes: 30,
@@ -62,7 +62,7 @@ describe('Votes Tab Component', () => {
     }));
     wrapper = setup({ ...props, votes });
     expect(wrapper).toContainMatchingElements(31, 'TableRow');
-    wrapper.find('.show-more-button').simulate('click');
+    wrapper.find('.show-votes').simulate('click');
     expect(props.fetchVotedDelegateInfo).toBeCalledWith(votes, {
       address: props.address,
       showingVotes: 60,

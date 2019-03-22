@@ -30,11 +30,14 @@ class VotesTab extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (nextProps.votes && nextProps.votes.length !== this.props.votes.length) {
+    const nextVotes = nextProps.votes.slice(0, this.state.showing).slice(-1);
+    if (nextVotes[0] && !nextVotes[0].rank && !this.state.isLoading) {
       this.props.fetchVotedDelegateInfo(nextProps.votes, {
         address: this.props.address,
         showingVotes: this.state.showing,
       });
+      this.setState({ isLoading: true });
+      this.timeout = setTimeout(() => this.setState({ isLoading: false }), 300);
       return false;
     }
     return true;
@@ -95,6 +98,7 @@ class VotesTab extends React.Component {
           <h1>{t('Voted delegates')}</h1>
           <div className={`${styles.filterHolder}`}>
             <InputV2
+              className={'search'}
               disabled={votes && !votes.length}
               name={'filter'}
               value={filterValue}
@@ -113,7 +117,7 @@ class VotesTab extends React.Component {
           }
           {filteredVotes.length
             ? filteredVotes.slice(0, this.state.showing).map((vote, key) => (
-              <TableRow className={styles.row} onClick={() => this.onRowClick(vote.address)} key={`row-${key}`}>
+              <TableRow className={`${styles.row} vote-row`} onClick={() => this.onRowClick(vote.address)} key={`row-${key}`}>
                 <div className={`${grid['col-sm-1']} ${grid['col-lg-1']}`}>
                   {(vote.rank && +vote.rank < 10 ? `0${vote.rank}` : vote.rank) || '-'}
                 </div>
@@ -124,7 +128,7 @@ class VotesTab extends React.Component {
                       address={vote.address}
                       size={36} />
                     <div className={styles.accountInfo}>
-                      <span className={`${styles.title}`}>{vote.username}</span>
+                      <span className={`${styles.title} vote-username`}>{vote.username}</span>
                       <span>{vote.address}</span>
                     </div>
                   </div>
@@ -146,14 +150,14 @@ class VotesTab extends React.Component {
             )) : (
               <p className={`${styles.empty} empty-message`}>
                 {filterValue === ''
-                  ? t('This wallet doesn’t have any votes')
+                  ? t('This account doesn’t have any votes')
                   : t('There are no results matching this filter')
                 }
               </p>
             )}
           {canLoadMore && <span
             onClick={this.onShowMore}
-            className={`${styles.showMore} show-more-button`}>{t('Show More')}</span>
+            className={`${styles.showMore} show-votes`}>{t('Show More')}</span>
           }
         </main>
       </BoxV2>

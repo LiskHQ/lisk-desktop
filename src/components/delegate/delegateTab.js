@@ -32,7 +32,7 @@ const DelegateTab = ({ delegate, t }) => {
         <li className={'delegate-since'}>
           <span className={styles.label}>{t('Delegate since')}</span> {moment(delegateSince).format(t('DD MMM YYYY'))}
         </li>
-        <li className={'vote-weight'}>
+        <li className={'vote'}>
           <span className={styles.label}>{t('Vote weight')}</span> <span>
             <LiskAmount val={delegate.vote}/> {t('LSK')}</span>
         </li>

@@ -168,7 +168,7 @@ class FollowAccount extends React.Component {
       <section className={`${styles.wrapper}`}>
         <label className={`${styles.fieldGroup}`}>
           <span className={`${styles.fieldLabel}`}>{t('Account Name')}</span>
-          <span className={`${styles.fieldInput}`}>
+          <span className={`${styles.fieldInput} account-title`}>
             <InputV2
               maxLength={40}
               autoComplete={'off'}
@@ -178,7 +178,7 @@ class FollowAccount extends React.Component {
               placeholder={t('Account Name')}
               readOnly={fields.accountName.isReadOnly}
               className={`${styles.input} ${fields.accountName.error ? 'error' : ''}`} />
-            {!isFollowing ?
+            {!fields.accountName.isReadOnly ?
               <React.Fragment>
                 <SpinnerV2 className={`${styles.status} ${fields.accountName.loading && fields.accountName.value ? styles.show : ''}`}/>
                 <img
@@ -199,12 +199,25 @@ class FollowAccount extends React.Component {
           <div className={`${styles.checkboxInfo}`}>
             <span className={`${styles.label}`}>{t('On your dashboard')}</span>
             <span className={`${styles.note}`}>
-            {t('Show this account\'s transactions on the dashboard.')}</span>
+              {t('Show this account\'s transactions on the dashboard.')}
+            </span>
           </div>
-        </label> */}
+          </label> */}
         {isFollowing
-          ? <DangerButtonV2 onClick={this.handleUnfollow}>{t('Unfollow')}</DangerButtonV2>
-          : <PrimaryButtonV2 onClick={this.handleFollow} disabled={!isValid}>{t('Confirm')}</PrimaryButtonV2>
+          ? (
+            <DangerButtonV2
+              className={'follow-account-button'}
+              onClick={this.handleUnfollow}>
+              {t('Remove from bookmarks')}
+            </DangerButtonV2>
+          ) : (
+            <PrimaryButtonV2
+              className={'follow-account-button'}
+              onClick={this.handleFollow}
+              disabled={!isValid}>
+              {t('Confirm')}
+            </PrimaryButtonV2>
+          )
         }
       </section>
     );
