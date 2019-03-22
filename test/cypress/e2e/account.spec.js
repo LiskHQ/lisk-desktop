@@ -36,7 +36,7 @@ describe('Account', () => {
     // Timeout to avoid Cypress bug
     // https://github.com/cypress-io/cypress/issues/695
     cy.wait(1000);
-    cy.get(ss.followAccountBtn).contains('Follow');
+    cy.get(ss.followAccountBtn).contains('Bookmark account');
     cy.get(ss.followAccountBtn).click();
     cy.get(ss.titleInput).type('Bob');
     cy.get(ss.confirmAddToBookmarks).click()
@@ -45,12 +45,12 @@ describe('Account', () => {
         expect(getFollowedAccountObjFromLS()[0].title).to.equal('Bob');
       });
     cy.get(ss.accountName).contains('Bob');
-    cy.get(ss.followAccountBtn).contains('Following');
+    cy.get(ss.followAccountBtn).contains('Account bookmarked');
     cy.get(ss.followAccountBtn).click();
     cy.get(ss.confirmAddToBookmarks).click()
       .should(() => {
         expect(getFollowedAccountObjFromLS().length).to.equal(0);
       });
-    cy.get(ss.accountName).contains('Wallet');
+    cy.get(ss.accountName).contains('Account');
   });
 });

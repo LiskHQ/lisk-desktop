@@ -37,7 +37,7 @@ describe('Follow Account Component', () => {
       };
       wrapper = mount(<FollowAccount {...followingProps} />, options);
       expect(wrapper.find('input[name="accountName"]')).toHaveValue(account.title);
-      expect(wrapper.find('button').last()).toHaveText('Unfollow');
+      expect(wrapper.find('button').last()).toHaveText('Remove from bookmarks');
       wrapper.find('button').last().simulate('click');
       expect(props.followedAccountRemoved).toBeCalledWith(account);
     });

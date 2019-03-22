@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { mount } from 'enzyme';
 import accounts from '../../../../test/constants/accounts';
 import HeaderAccountInfo from './headerAccountInfo';
@@ -16,10 +15,10 @@ describe('HeaderAccountInfo Component', () => {
   it('Should show information for own account', () => {
     const props = { ...defaultProps };
     const wrapper = mount(<HeaderAccountInfo {...props} />);
-    expect(wrapper).to.have.exactly(1).descendants('.label');
-    expect(wrapper.find('.title')).to.have.text('Wallet');
-    expect(wrapper.find('.label')).to.have.text('My Account');
-    expect(wrapper.find('.address')).to.have.text(props.address);
+    expect(wrapper).toContainExactlyOneMatchingElement('.label');
+    expect(wrapper.find('.title')).toHaveText('Account');
+    expect(wrapper.find('.label')).toHaveText('My Account');
+    expect(wrapper.find('.address')).toHaveText(props.address);
   });
 
   it('Should show information for followed account', () => {
@@ -32,9 +31,9 @@ describe('HeaderAccountInfo Component', () => {
       address: accounts['empty account'].address,
     };
     const wrapper = mount(<HeaderAccountInfo {...props} />);
-    expect(wrapper).to.have.exactly(1).descendants('.label');
-    expect(wrapper.find('.title')).to.have.text('following-test');
-    expect(wrapper.find('.label')).to.have.text('Followed Account');
+    expect(wrapper).toContainExactlyOneMatchingElement('.label');
+    expect(wrapper.find('.title')).toHaveText('following-test');
+    expect(wrapper.find('.label')).toHaveText('Followed Account');
   });
 
   it('Should show information for delegate account', () => {
@@ -44,9 +43,9 @@ describe('HeaderAccountInfo Component', () => {
       delegate: accounts.delegate,
     };
     const wrapper = mount(<HeaderAccountInfo {...props} />);
-    expect(wrapper).to.have.exactly(1).descendants('.label');
-    expect(wrapper.find('.title')).to.have.text(props.delegate.username);
-    expect(wrapper.find('.label')).to.have.text('Delegate #{{rank}}');
+    expect(wrapper).toContainExactlyOneMatchingElement('.label');
+    expect(wrapper.find('.title')).toHaveText(props.delegate.username);
+    expect(wrapper.find('.label')).toHaveText('Delegate #{{rank}}');
   });
 
   it('Should show information for not followed account', () => {
@@ -55,7 +54,7 @@ describe('HeaderAccountInfo Component', () => {
       address: accounts['empty account'].address,
     };
     const wrapper = mount(<HeaderAccountInfo {...props} />);
-    expect(wrapper).to.not.have.descendants('.label');
-    expect(wrapper.find('.title')).to.have.text('Wallet');
+    expect(wrapper).not.toContainMatchingElement('.label');
+    expect(wrapper.find('.title')).toHaveText('Account');
   });
 });
