@@ -31,7 +31,7 @@ const headerAccountInfo = ({
       <div className={styles.accountInfo}>
         <div>
           <h2 className={`${styles.title} account-name`}>
-            { accountTitle || t('Wallet') }
+            { accountTitle || t('Account') }
           </h2>
           { label
             ? <span className={`${styles.label}`}>{label}</span>

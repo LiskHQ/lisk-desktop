@@ -101,7 +101,7 @@ class transactionsHeader extends React.Component {
             <Link to={`${routes.send.path}?wallet&recipient=${address}`}
               className={'send-to-address'}>
                 <SecondaryButtonV2>
-                  {t('Send LSK to this Wallet')}
+                  {t('Send LSK to this Account')}
                 </SecondaryButtonV2>
             </Link>
             <span
@@ -115,11 +115,11 @@ class transactionsHeader extends React.Component {
                   /* istanbul ignore next */
                   () => this.toggleDropdown('followDropdown')
                 }>
-                {t('Following')}
+                {t('Account bookmarked')}
               </SecondaryButtonV2>
             ) : (
               <PrimaryButtonV2 onClick={() => this.toggleDropdown('followDropdown')}>
-                {t('Follow')}
+                {t('Bookmark account')}
               </PrimaryButtonV2>
             )}
             <DropdownV2
