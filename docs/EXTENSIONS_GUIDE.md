@@ -1,5 +1,5 @@
 # Lisk Hub Extension Guideline
-``` ⚠️ Extension System is only avaliable in development mode ⚠️```
+``` ⚠️ Extension System is not avaliable on Production build so please use 'npm run dev' command ⚠️```
 
 ## How to create a new extension?
 In your extension, you will have access to `React` and `LiskHubExtensions` that allows adding Your extension to specified areas in our code.
@@ -21,6 +21,27 @@ For building Your Component, You can use es6 and our wrapper will transpaile it 
 
 #### Props
 Data from our store is accessible via `this.props.data` and actions to modify our store are in `this.props.actions`. Keep in mind that We are not sharing all data and actions. In case You want to access sth that is unavailable let us know by creating a feature proposal/ticket in our repo.
+```
+data = {
+  latestBlocks,
+  transactions,
+  time,
+  accountAddress,
+  search,
+}
+actions={
+  testExtensions,
+  loadTransactions,
+  sent,
+  loadTransaction,
+  transactionsFilterSet,
+  searchDelegate,
+  searchVotes,
+  searchVoters,
+  searchAccount,
+  searchTransactions,
+}
+```
 
 #### How to Share Your extension with others?
 Once Your component was created You need to add it our [repository](https://github.com/michaeltomasik/extensions-lisk). In order to do it 
