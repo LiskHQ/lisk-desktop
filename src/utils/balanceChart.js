@@ -3,6 +3,9 @@ import { fromRawLsk } from './lsk';
 import { getUnixTimestampFromValue } from './datetime';
 
 export const graphOptions = format => ({
+  plugins: {
+    hideAxisX: false,
+  },
   maintainAspectRatio: false,
   gridLines: {
     display: true,
@@ -21,7 +24,7 @@ export const graphOptions = format => ({
       ticks: {
         fontColor: '#7383a7',
         fontSize: 12,
-        fontFamily: '\'gilroy\', sans-serif',
+        fontFamily: '\'gilroy-regular\', sans-serif',
       },
       gridLines: {
         display: false,
@@ -34,16 +37,14 @@ export const graphOptions = format => ({
         maxTicksLimit: 5,
         fontColor: '#7383a7',
         fontSize: 12,
-        fontFamily: '\'gilroy\', sans-serif',
+        fontFamily: '\'gilroy-regular\', sans-serif',
       },
     }],
   },
   layout: {
     padding: {
-      left: 0,
       right: 8,
       top: 20,
-      bottom: 15,
     },
   },
   elements: {
