@@ -10,7 +10,7 @@
   max-width: 443px;
   height: auto;
   background-color: var(--color-white);
-  box-shadow: var(--box-shadow-standar2);
+  box-shadow: var(--box-shadow-graph-selector);
   border-radius: var(--border-radius-box);
 }
 

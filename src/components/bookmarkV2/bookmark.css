@@ -12,6 +12,16 @@
     font-size: var(--paragraph-font-size-l);
     height: 36px;
     line-height: 1.83;
+
+    & ~ .bookmarkContainer {
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+
+    &:focus ~ .bookmarkContainer {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
   }
 }
 
@@ -39,6 +49,7 @@
   z-index: 3;
   max-height: 176px;
   overflow: hidden;
+  transition: visibility var(--animation-speed-fast) linear, opacity var(--animation-speed-fast) linear;
 
   & > div:first-child {
     overflow: auto;

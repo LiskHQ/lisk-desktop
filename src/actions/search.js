@@ -74,7 +74,8 @@ const searchVotes = ({ address, offset, limit }) =>
     if (!liskAPIClient) return;
     dispatch(loadingStarted(actionTypes.searchVotes));
     const votes = await getVotes(liskAPIClient, { address, offset, limit })
-      .then(res => res.data.votes);
+      .then(res => res.data.votes || [])
+      .catch(() => dispatch(loadingFinished(actionTypes.searchVotes)));
 
     dispatch({
       type: actionTypes.searchVotes,
@@ -129,7 +130,7 @@ export const searchAccount = ({ address }) =>
         const accountData = {
           ...response,
         };
-        if (accountData.publicKey) {
+        if (accountData.delegate && accountData.delegate.username) {
           dispatch(searchDelegate({ publicKey: accountData.publicKey, address }));
           dispatch(searchVoters({ address, publicKey: accountData.publicKey }));
         }

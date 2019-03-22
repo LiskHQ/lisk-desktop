@@ -14,10 +14,10 @@ import HwWallet from '../components/hwWallet';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
 import SendV2 from '../components/sendV2';
-import Send from '../components/send';
 import Splashscreen from '../components/splashscreen';
 import RegistrationV2 from '../components/registerV2/registerV2';
 import LoginV2 from '../components/loginV2';
+import Extensions from '../components/extensions';
 import TermsOfUse from '../components/termsOfUse';
 
 export default {
@@ -39,11 +39,6 @@ export default {
   },
   send: {
     path: '/wallet/send',
-    component: Send,
-    isPrivate: true,
-  },
-  sendV2: {
-    path: '/wallet/sendV2',
     component: SendV2,
     isPrivate: true,
   },
@@ -87,6 +82,11 @@ export default {
     path: '/add-account',
     component: LoginV2,
     isLoaded: true,
+    isPrivate: false,
+  },
+  extensions: {
+    path: '/extensions',
+    component: Extensions,
     isPrivate: false,
   },
   // notFound: {

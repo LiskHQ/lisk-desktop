@@ -20,6 +20,12 @@ describe('TransactionStatus', () => {
     transactions: {
       failed: undefined,
     },
+    followedAccounts: {
+      accounts: [],
+    },
+    search: {
+      delegates: {},
+    },
   });
 
   const options = {
@@ -35,6 +41,23 @@ describe('TransactionStatus', () => {
     finalCallback: jest.fn(),
     failedTransactions: undefined,
     transactionFailedClear: jest.fn(),
+    followedAccounts: [],
+    delegates: {},
+    searchAccount: jest.fn(),
+    prevStep: jest.fn(),
+    fields: {
+      recipient: {
+        address: '123123L',
+      },
+      amount: {
+        value: 1,
+      },
+      reference: {
+        value: 1,
+      },
+      isLoading: false,
+      isHardwareWalletConnected: false,
+    },
   };
 
   beforeEach(() => {
@@ -62,5 +85,34 @@ describe('TransactionStatus', () => {
     wrapper.find('.on-goToWallet').at(0).simulate('click');
     wrapper.update();
     expect(props.finalCallback).toBeCalled();
+  });
+
+  it('should call onPrevStep function', () => {
+    const newProps = { ...props };
+    newProps.fields.isHardwareWalletConnected = true;
+    newProps.fields.hwTransactionStatus = 'error';
+    newProps.failedTransactions = [{ recipient: '123L', amount: 1, reference: 'test' }];
+    wrapper = mount(<TransactionStatus {...newProps} />, options);
+    expect(wrapper).toContainMatchingElement('.transaction-status-error');
+    wrapper.find('.retry').at(0).simulate('click');
+    expect(props.prevStep).toBeCalled();
+  });
+
+  it('should show dropdown follow account', () => {
+    expect(wrapper).toContainMatchingElement('.following-container');
+    expect(wrapper).toContainMatchingElement('.following-btn');
+    expect(wrapper.find('.following-btn').at(0).text()).toEqual('Bookmark account');
+    wrapper.find('.following-btn').at(0).simulate('click');
+    wrapper.find('input[name="accountName"]').simulate('change', { target: { name: 'accountName', value: 'ABC' } });
+    wrapper.find('button').last().simulate('click');
+    wrapper.setProps({
+      ...props,
+      followedAccounts: [{
+        address: '123123L',
+      }],
+    });
+    wrapper.update();
+    expect(wrapper.find('.following-btn').at(0).text()).toEqual('Account bookmarked');
+    wrapper.find('.following-btn').at(0).simulate('click');
   });
 });

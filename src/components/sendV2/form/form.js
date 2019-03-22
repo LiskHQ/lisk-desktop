@@ -20,7 +20,8 @@ class Form extends React.Component {
     super(props);
 
     this.state = {
-      isLoading: false,
+      isAmountLoading: false,
+      isReferenceLoading: false,
       fields: {
         recipient: {
           address: '',
@@ -32,6 +33,7 @@ class Form extends React.Component {
           title: '',
           value: '',
           showSuggestions: false,
+          following: false,
         },
         amount: {
           error: false,
@@ -57,31 +59,39 @@ class Form extends React.Component {
     this.onSelectedAccount = this.onSelectedAccount.bind(this);
     this.validateAmountAndReference = this.validateAmountAndReference.bind(this);
     this.validateBookmark = this.validateBookmark.bind(this);
+    this.checkIfBoormakedAccount = this.checkIfBoormakedAccount.bind(this);
   }
 
   componentDidMount() {
     this.ifDataFromPrevState();
     this.ifDataFromUrl();
+    this.checkIfBoormakedAccount();
   }
 
   ifDataFromPrevState() {
     const { prevState } = this.props;
 
     if (prevState.fields && Object.entries(prevState.fields).length > 0) {
-      this.setState({ fields: { ...prevState.fields } });
+      this.setState({
+        fields: {
+          ...this.state.fields,
+          ...prevState.fields,
+        },
+      });
     }
   }
 
   ifDataFromUrl() {
     const { fields = {} } = this.props;
 
-    if (Object.entries(fields).length > 0) {
+    if (fields.recipient.address !== '' || fields.amount.value !== '' || fields.reference.value !== '') {
       this.setState({
         fields: {
           ...this.state.fields,
           recipient: {
             ...this.state.fields.recipient,
             address: fields.recipient.address,
+            value: fields.recipient.address,
           },
           amount: {
             ...this.state.fields.amount,
@@ -94,6 +104,15 @@ class Form extends React.Component {
         },
       });
     }
+  }
+
+  checkIfBoormakedAccount() {
+    const { followedAccounts, fields } = this.props;
+    const account = followedAccounts.length
+      ? followedAccounts.find(acc => acc.address === fields.recipient.address)
+      : false;
+
+    if (account) this.onSelectedAccount(account);
   }
 
   onInputChange({ target }) {
@@ -117,10 +136,25 @@ class Form extends React.Component {
 
     if (followedAccounts.length && recipient.value !== '') {
       isAccountValid = followedAccounts
-        .find(account => account.title.toLowerCase() === recipient.value.toLowerCase()) || false;
+        .find(account => (account.title.toLowerCase() === recipient.value.toLowerCase()) ||
+          account.address.toLowerCase() === recipient.value.toLowerCase()) || false;
       isAddressValid = regex.address.test(recipient.value);
     } else {
       isAddressValid = recipient.value.match(regex.address);
+    }
+
+    // istanbul ignore else
+    if (!isAccountValid && !isAddressValid && recipient.value) {
+      recipient = {
+        ...this.state.recipient,
+        address: '',
+        balance: '',
+        error: true,
+        feedback: 'Provide a correct wallet address or a name of a bookmarked account',
+        selected: false,
+        title: '',
+        showSuggestions: true,
+      };
     }
 
     // istanbul ignore else
@@ -132,6 +166,7 @@ class Form extends React.Component {
         error: false,
         feedback: '',
         showSuggestions: false,
+        following: false,
       };
     }
 
@@ -146,20 +181,7 @@ class Form extends React.Component {
         error: false,
         feedback: '',
         showSuggestions: false,
-      };
-    }
-
-    // istanbul ignore else
-    if (!isAccountValid && !isAddressValid && recipient.value) {
-      recipient = {
-        ...this.state.recipient,
-        address: '',
-        balance: '',
-        error: true,
-        feedback: 'Provide a correct wallet address or a name of a followed account',
-        selected: false,
-        title: '',
-        showSuggestions: true,
+        following: true,
       };
     }
 
@@ -173,7 +195,7 @@ class Form extends React.Component {
         feedback: '',
         selected: false,
         title: '',
-        showSuggestions: false,
+        showSuggestions: true,
       };
     }
 
@@ -200,6 +222,7 @@ class Form extends React.Component {
           error: '',
           feedback: '',
           showSuggestions: false,
+          following: true,
         },
       },
     });
@@ -212,7 +235,7 @@ class Form extends React.Component {
   validateAmountField(value) {
     if (/([^\d.])/g.test(value)) return this.props.t('Provide a correct amount of LSK');
     if (/(\.)(.*\1){1}/g.test(value) || /\.$/.test(value)) return this.props.t('Invalid amount');
-    if (value > this.getMaxAmount()) return this.props.t('Provided amount is higher than your current balance.');
+    if (parseFloat(this.getMaxAmount()) < value) return this.props.t('Provided amount is higher than your current balance.');
     return false;
   }
 
@@ -235,9 +258,9 @@ class Form extends React.Component {
       const byteCount = encodeURI(value).split(/%..|./).length - 1;
       error = byteCount > messageMaxLength;
       feedback = error
-        ? t('{{length}} extra characters', { length: byteCount - messageMaxLength })
-        : t('{{length}} out of {{total}} characters left', {
-          length: messageMaxLength - value.length,
+        ? t('{{length}} extra bytes', { length: byteCount - messageMaxLength })
+        : t('{{length}} out of {{total}} bytes left', {
+          length: messageMaxLength - byteCount,
           total: messageMaxLength,
         });
     }
@@ -246,6 +269,7 @@ class Form extends React.Component {
       fields: {
         ...prevState.fields,
         [name]: {
+          ...prevState.fields[name],
           error: !!error,
           value,
           feedback,
@@ -257,10 +281,11 @@ class Form extends React.Component {
   onAmountOrReferenceChange({ target }) {
     clearTimeout(this.loaderTimeout);
 
-    this.setState({ isLoading: true });
+    if (target.name === 'amount') this.setState({ isAmountLoading: true });
+    if (target.name === 'reference') this.setState({ isReferenceLoading: true });
 
     this.loaderTimeout = setTimeout(() => {
-      this.setState({ isLoading: false });
+      this.setState({ isAmountLoading: false, isReferenceLoading: false });
       this.validateAmountAndReference(target.name, target.value);
     }, 300);
 
@@ -291,7 +316,7 @@ class Form extends React.Component {
         </header>
 
         <div className={styles.formSection}>
-          <label className={`${styles.fieldGroup} recipient`}>
+          <span className={`${styles.fieldGroup} recipient`}>
             <span className={`${styles.fieldLabel}`}>{this.props.t('Recipient')}</span>
             <Bookmark
               validateBookmark={this.validateBookmark}
@@ -302,10 +327,10 @@ class Form extends React.Component {
               showSuggestions={fields.recipient.showSuggestions}
               onSelectedAccount={this.onSelectedAccount}
             />
-          </label>
+          </span>
 
           <label className={`${styles.fieldGroup}`}>
-            <span className={`${styles.fieldLabel}`}>{this.props.t('Amount of transaction')}</span>
+            <span className={`${styles.fieldLabel}`}>{this.props.t('Amount')}</span>
             <span className={`${styles.amountField} amount`}>
               <InputV2
                 autoComplete={'off'}
@@ -318,13 +343,13 @@ class Form extends React.Component {
                 className={styles.converter}
                 value={fields.amount.value}
                 error={fields.amount.error} />
-              <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}/>
+              <SpinnerV2 className={`${styles.spinner} ${this.state.isAmountLoading && fields.amount.value ? styles.show : styles.hide}`}/>
               <img
-                className={`${styles.status} ${!this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}
+                className={`${styles.status} ${!this.state.isAmountLoading && fields.amount.value ? styles.show : styles.hide}`}
                 src={ fields.amount.error ? svg.alert_icon : svg.ok_icon}
               />
             </span>
-            <span className={`${styles.feedback} ${fields.amount.error ? 'error' : ''} ${fields.amount.feedback ? styles.show : ''}`}>
+            <span className={`${styles.feedback} ${fields.amount.error ? 'error' : ''} ${fields.amount.feedback ? styles.show : ''} amount-feedback`}>
               {fields.amount.feedback}
             </span>
             <span className={styles.amountHint}>
@@ -343,7 +368,7 @@ class Form extends React.Component {
                 <p>
                 {
                   this.props.t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
-                  Such operations require hardware resources and because of that we ask for a small fee for processing those.`)
+                  Such operations require hardware resources and because of that there is a small fee for processing those.`)
                 }
                 </p>
               </Tooltip>
@@ -360,10 +385,10 @@ class Form extends React.Component {
                 name='reference'
                 value={fields.reference.value}
                 placeholder={this.props.t('Write message')}
-                className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
-              <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && fields.reference.value ? styles.show : styles.hide}`}/>
+                className={`${styles.textarea} ${fields.reference.error ? 'error' : ''} message`} />
+              <SpinnerV2 className={`${styles.spinner} ${this.state.isReferenceLoading && fields.reference.value ? styles.show : styles.hide}`}/>
               <img
-                className={`${styles.status} ${!this.state.isLoading && fields.reference.value ? styles.show : styles.hide}`}
+                className={`${styles.status} ${!this.state.isReferenceLoading && fields.reference.value ? styles.show : styles.hide}`}
                 src={ fields.reference.error ? svg.alert_icon : svg.ok_icon} />
             </span>
             <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${fields.reference.feedback ? styles.show : ''}`}>
@@ -374,7 +399,7 @@ class Form extends React.Component {
 
         <footer>
           <PrimaryButtonV2
-            className={`${styles.confirmButton} btn-submit`}
+            className={`${styles.confirmButton} btn-submit send-next-button`}
             disabled={isBtnDisabled}
             onClick={this.onGoNext}
           >

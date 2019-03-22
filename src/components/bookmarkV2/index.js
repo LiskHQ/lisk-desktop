@@ -19,6 +19,7 @@ class Bookmark extends React.Component {
 
     this.loaderTimeout = null;
     this.listContainerRef = null;
+    this.input = null;
 
     this.onHandleKeyPress = this.onHandleKeyPress.bind(this);
     this.getFilterList = this.getFilterList.bind(this);
@@ -27,10 +28,13 @@ class Bookmark extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onSelectedAccount = this.onSelectedAccount.bind(this);
     this.resetListIndex = this.resetListIndex.bind(this);
+    this.handleUpdateIndex = this.handleUpdateIndex.bind(this);
   }
 
   getFilterList() {
     const { followedAccounts, recipient } = this.props;
+
+    if (recipient.value === '') return followedAccounts;
 
     return followedAccounts
       .filter(account =>
@@ -71,6 +75,10 @@ class Bookmark extends React.Component {
     }
   }
 
+  handleUpdateIndex(dropdownIndex) {
+    this.setState({ dropdownIndex });
+  }
+
   onKeyPressEnter() {
     const { dropdownIndex } = this.state;
     const account = this.getFilterList()[dropdownIndex];
@@ -102,7 +110,7 @@ class Bookmark extends React.Component {
     this.setState({ isLoading: true });
     this.loaderTimeout = setTimeout(() => {
       // istanbul ignore else
-      if (this.getFilterList().length === 0) this.setState({ isLoading: false });
+      if (this.getFilterList().length >= 0) this.setState({ isLoading: false });
       this.props.validateBookmark();
     }, 300);
 
@@ -115,7 +123,6 @@ class Bookmark extends React.Component {
     const {
       recipient,
       placeholder,
-      showSuggestions,
     } = this.props;
     const { dropdownIndex } = this.state;
     const showAccountVisual = recipient.address.length && !recipient.error;
@@ -147,28 +154,25 @@ class Bookmark extends React.Component {
             className={`${styles.status} ${!this.state.isLoading && recipient.value ? styles.show : styles.hide}`}
             src={ recipient.error ? svg.alert_icon : svg.ok_icon}
           />
-          {
-            showSuggestions && recipient.value !== ''
-            ? <div className={styles.bookmarkContainer}>
-                <div ref={(node) => { this.listContainerRef = node; }}>
-                  <ul className={`${styles.bookmarkList} bookmark-list`}>
-                  {
-                    this.getFilterList()
-                    .map((account, index) =>
-                      <li
-                        key={index}
-                        onClick={() => this.onSelectedAccount(account)}
-                        className={`${dropdownIndex === index ? styles.active : ''}`}>
-                        <AccountVisual address={account.address} size={25} />
-                        <span>{account.title}</span>
-                        <span>{account.address}</span>
-                      </li>)
-                  }
-                  </ul>
-                </div>
-              </div>
-            : null
-          }
+          <div className={`${styles.bookmarkContainer}`}>
+            <div ref={(node) => { this.listContainerRef = node; }}>
+              <ul className={`${styles.bookmarkList} bookmark-list`}>
+              {
+                this.getFilterList()
+                .map((account, index) =>
+                  <li
+                    key={index}
+                    onMouseEnter={() => this.handleUpdateIndex(index)}
+                    onClick={() => this.onSelectedAccount(account)}
+                    className={`${dropdownIndex === index ? styles.active : ''}`}>
+                    <AccountVisual address={account.address} size={25} />
+                    <span>{account.title}</span>
+                    <span>{account.address}</span>
+                  </li>)
+              }
+              </ul>
+            </div>
+          </div>
         </span>
         <span className={`${styles.feedback} ${recipient.error ? 'error' : ''} ${recipient.feedback ? styles.show : ''}`}>
           {recipient.feedback}
