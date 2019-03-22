@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
 import MenuItems from './menuItems';
-import SearchBar from '../searchBar';
 import UserAccount from './userAccount';
 import Piwik from '../../utils/piwik';
 import { menuLinks } from './constants';
+import svg from '../../utils/svgIcons';
 import styles from './topBar.css';
 
 import liskLogo from '../../assets/images/lisk-logo-v2.svg';
@@ -71,11 +71,11 @@ class TopBar extends React.Component {
             location={this.props.location}
             t={t}
           />
-          <SearchBar />
 
           {
             isUserDataFetched ?
               <UserAccount
+                className={styles.userAccount}
                 account={this.props.account}
                 isDropdownEnable={this.state.isDropdownEnable}
                 onDropdownToggle={this.handleClick}
@@ -96,6 +96,10 @@ class TopBar extends React.Component {
                 </span>
               </div>
           }
+
+          <div className={styles.searchButton}>
+            <img src={svg.search_icon} />
+          </div>
         </div>
       </div>
     );

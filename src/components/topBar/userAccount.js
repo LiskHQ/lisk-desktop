@@ -8,7 +8,7 @@ import { dropdownLinks } from './constants';
 import styles from './userAccount.css';
 
 const UserAccount = props => (
-  <div className={`${styles.wrapper} user-account`}>
+  <div className={`${styles.wrapper} ${props.className} user-account`}>
     <div className={styles.information}>
       <CopyToClipboard
         value={props.account.address}

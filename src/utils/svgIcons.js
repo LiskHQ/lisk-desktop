@@ -33,6 +33,7 @@ import alertIcon from '../assets/images/icons-v2/icon-alert.svg';
 import okIcon from '../assets/images/icons-v2/icon-checkmark.svg';
 import transactionSuccess from '../assets/images/icons-v2/transactionSuccess.svg';
 import transactionError from '../assets/images/icons-v2/transactionError.svg';
+import searchIcond from '../assets/images/icons-v2/search-icon.svg';
 
 export default {
   alert_icon: alertIcon,
@@ -59,6 +60,7 @@ export default {
   question_icon: questionMark,
   settings_active_icon: settingsActiveIcon,
   settings_icon: settingsIcon,
+  search_icon: searchIcond,
   transactionError,
   transactionSuccess,
   tx2ndPassphrase,
