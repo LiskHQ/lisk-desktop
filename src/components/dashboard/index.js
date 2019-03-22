@@ -92,7 +92,7 @@ class Dashboard extends React.Component {
               title={t('Initialize Lisk ID')}
               footer={(
                 <Fragment>
-                  <Link to={`${routes.send.path}?initializeAccount`}>
+                  <Link to={`${routes.send.path}?recipient=${account.address}&amount=0.1&reference=Account initialization`}>
                     <SecondaryButtonV2>{t('Create First Transaction')}</SecondaryButtonV2>
                   </Link>
                   <a
