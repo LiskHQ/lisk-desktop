@@ -50,6 +50,9 @@ Once Your component was created You need to add it our [repository](https://gith
 3. Create Pull Request.
 
 First We need to verify Your code and then We will merge Your extension.
+
+In the future we will aim to create extension manager so users can easily add extension they want to their app.
+
 ## How to add a new extension?
 
 1. Open our [repository](https://github.com/michaeltomasik/extensions-lisk) with all extensions.
@@ -66,6 +69,7 @@ First We need to verify Your code and then We will merge Your extension.
 6. Paste Your url to input field and press Add Extension.
 
 ![Alt text](./assets/add_extension_page.png?raw=true "Extension page")
+ The url is stored locally and The code from the repository will be transpiled, executed and added to the place you declared.
 
 7. Open page where You targeted Your component to be in lisk-hub.
 
