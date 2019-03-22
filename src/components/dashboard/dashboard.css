@@ -55,6 +55,12 @@
   }
 }
 
+.initLink {
+  margin-left: 25px;
+  color: var(--color-link-active);
+  font-size: var(--paragraph-font-size-l);
+}
+
 .following {
   height: auto;
   padding: 0;
