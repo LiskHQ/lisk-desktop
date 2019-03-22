@@ -4,6 +4,7 @@ import routes from '../../constants/routes';
 import MenuItems from './menuItems';
 import SearchBar from '../searchBar';
 import UserAccount from './userAccount';
+import NavigationButton from './navigationButtons';
 import Piwik from '../../utils/piwik';
 import { menuLinks } from './constants';
 import styles from './topBar.css';
@@ -65,12 +66,19 @@ class TopBar extends React.Component {
       <div className={styles.wrapper}>
         <div className={styles.elements}>
           <img src={liskLogo} />
+
+          <NavigationButton
+            account={this.props.account}
+            history={this.props.history}
+          />
+
           <MenuItems
             isUserLogout={isUserLogout}
             items={items}
             location={this.props.location}
             t={t}
           />
+
           <SearchBar />
 
           {
