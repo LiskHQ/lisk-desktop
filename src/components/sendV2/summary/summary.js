@@ -3,7 +3,7 @@ import ConverterV2 from '../../converterV2';
 import AccountVisual from '../../accountVisual/index';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import fees from '../../../constants/fees';
-import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
+import { fromRawLsk } from '../../../utils/lsk';
 import PassphraseInputV2 from '../../passphraseInputV2/passphraseInputV2';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
@@ -16,6 +16,8 @@ class Summary extends React.Component {
     super(props);
 
     this.state = {
+      isLoading: false,
+      isHardwareWalletConnected: false,
       secondPassphrase: {
         hasSecondPassphrase: false,
         isValid: false,
@@ -24,21 +26,74 @@ class Summary extends React.Component {
       },
     };
 
-    this.prevStep = this.prevStep.bind(this);
-    this.nextStep = this.nextStep.bind(this);
+    this.checkForHardwareWallet = this.checkForHardwareWallet.bind(this);
     this.checkSecondPassphrase = this.checkSecondPassphrase.bind(this);
-    this.amountAndFee = this.amountAndFee.bind(this);
+    this.nextStep = this.nextStep.bind(this);
+    this.prevStep = this.prevStep.bind(this);
+    this.submitTransaction = this.submitTransaction.bind(this);
   }
 
   componentDidMount() {
     const { account } = this.props;
+    let newState = {};
 
     // istanbul ignore else
     if (account && account.secondPublicKey) {
-      this.setState({
+      newState = {
         secondPassphrase: {
           ...this.state.secondPassphrase,
           hasSecondPassphrase: true,
+        },
+      };
+    }
+
+    // istanbul ignore else
+    if (account.hwInfo && account.hwInfo.deviceId) {
+      newState = {
+        ...this.state,
+        isHardwareWalletConnected: true,
+        isLoading: true,
+      };
+      this.submitTransaction();
+    }
+
+    this.setState(newState);
+  }
+
+  componentDidUpdate() {
+    this.checkForHardwareWallet();
+  }
+
+  submitTransaction() {
+    this.props.sent({
+      account: this.props.account,
+      recipientId: this.props.fields.recipient.address,
+      amount: this.props.fields.amount.value,
+      data: this.props.fields.reference.value,
+      passphrase: this.props.account.passphrase,
+      secondPassphrase: this.state.secondPassphrase.value,
+    });
+  }
+
+  checkForHardwareWallet() {
+    const { failedTransactions, pendingTransactions } = this.props;
+    const { isHardwareWalletConnected, isLoading } = this.state;
+
+    const hasPendingTransaction = isHardwareWalletConnected
+      ? pendingTransactions.find(transaction => (
+        transaction.senderId === this.props.account.address &&
+        transaction.recipientId === this.props.fields.recipient.address &&
+        fromRawLsk(transaction.amount) === this.props.fields.amount.value
+      ))
+      : pendingTransactions.length;
+
+    // istanbul ignore else
+    if (isLoading && (hasPendingTransaction || failedTransactions)) {
+      this.props.nextStep({
+        fields: {
+          ...this.props.fields,
+          hwTransactionStatus: hasPendingTransaction ? 'success' : 'error',
+          isHardwareWalletConnected: this.state.isHardwareWalletConnected,
         },
       });
     }
@@ -71,38 +126,40 @@ class Summary extends React.Component {
     }
   }
 
-  amountAndFee() {
-    return fromRawLsk(toRawLsk(this.props.fields.amount.value) + fees.send);
-  }
-
   prevStep() {
     Piwik.trackingEvent('Send_Summary', 'button', 'Previous step');
-    this.props.prevStep({ fields: { ...this.props.fields } });
+    this.props.prevStep({ ...this.props.fields });
   }
 
   nextStep() {
     Piwik.trackingEvent('Send_Summary', 'button', 'Next step');
-    this.props.sent({
-      account: this.props.account,
-      recipientId: this.props.fields.recipient.address,
-      amount: this.amountAndFee(),
-      data: this.props.fields.reference.value,
-      passphrase: this.props.account.passphrase,
-      secondPassphrase: this.state.secondPassphrase.value,
+    this.submitTransaction();
+    this.props.nextStep({
+      fields: {
+        ...this.props.fields,
+        hwTransactionStatus: false,
+        isHardwareWalletConnected: false,
+      },
     });
-    this.props.nextStep({ fields: { ...this.props.fields } });
   }
 
   render() {
-    const { secondPassphrase } = this.state;
-    const isBtnDisabled = secondPassphrase.hasSecondPassphrase
-      ? secondPassphrase.isValid !== '' && !secondPassphrase.isValid
-      : false;
+    const { secondPassphrase, isHardwareWalletConnected } = this.state;
+    let isBtnDisabled = secondPassphrase.hasSecondPassphrase && secondPassphrase.isValid !== '' && !secondPassphrase.isValid;
+    isBtnDisabled = !isBtnDisabled && isHardwareWalletConnected;
+
+    const confirmBtnMessage = isHardwareWalletConnected
+      ? this.props.t('Confirm on Ledger')
+      : this.props.t('Send {{amount}} LSK', { amount: this.props.fields.amount.value });
+
+    const title = isHardwareWalletConnected
+      ? this.props.t('Confirm transaction on Ledger Nano S')
+      : this.props.t('Transaction summary');
 
     return (
       <div className={`${styles.wrapper} summary`}>
         <header className={`${styles.header} summary-header`}>
-          <h1>{this.props.t('Transaction summary')}</h1>
+          <h1>{title}</h1>
         </header>
 
         <div className={`${styles.content} summary-content`}>
@@ -110,7 +167,7 @@ class Summary extends React.Component {
             <label>{this.props.t('Recipient')}</label>
             <div className={styles.account}>
               <AccountVisual address={this.props.fields.recipient.address} size={25} />
-              <label className={styles.information}>
+              <label className={`${styles.information} recipient-confirm`}>
                 {this.props.fields.recipient.title || this.props.fields.recipient.address}
               </label>
               <span className={`${styles.secondText} ${styles.accountSecondText}`}>
@@ -120,16 +177,16 @@ class Summary extends React.Component {
           </div>
 
           <div className={styles.row}>
-            <label>{this.props.t('Amount of transaction')}</label>
-            <label className={`${styles.information} ${styles.amount}`}>
-              {`${this.amountAndFee()} ${this.props.t('LSK')}`}
-              <ConverterV2 className={`${styles.secondText} ${styles.amountSecondText}`} value={this.amountAndFee()} />
+            <label>{this.props.t('Amount')}</label>
+            <label className={`${styles.information} ${styles.amount} amount-summary`}>
+              {`${this.props.fields.amount.value} ${this.props.t('LSK')}`}
+              <ConverterV2 className={`${styles.secondText} ${styles.amountSecondText}`} value={this.props.fields.amount.value} />
             </label>
           </div>
 
           <div className={styles.row}>
             <label>{this.props.t('Message')}</label>
-            <p className={styles.information}>{this.props.fields.reference.value}</p>
+            <p className={`${styles.information} reference`}>{this.props.fields.reference.value}</p>
           </div>
 
           {
@@ -169,7 +226,7 @@ class Summary extends React.Component {
                 <p>
                 {
                   this.props.t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
-                  Such operations require hardware resources and because of that we ask for a small fee for processing those.`)
+                  Such operations require hardware resources and because of that there is a small fee for processing those.`)
                 }
                 </p>
               </Tooltip>
@@ -178,10 +235,10 @@ class Summary extends React.Component {
           </div>
 
           <PrimaryButtonV2
-            className={`${styles.btn} on-nextStep`}
+            className={`${styles.btn} on-nextStep send-button`}
             onClick={this.nextStep}
             disabled={isBtnDisabled}>
-            {this.props.t('Send {{value}} LSK', { value: this.props.fields.amount.value })}
+            {confirmBtnMessage}
           </PrimaryButtonV2>
         </footer>
       </div>

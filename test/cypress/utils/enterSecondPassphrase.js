@@ -1,12 +1,22 @@
-const ss = {
+import ss from '../../constants/selectors';
+
+const secondPassphraseSS = {
   secondPassphraseInput: '.second-passphrase input',
   secondPassphraseNextBtn: '.second-passphrase-next',
 };
 
 export default function enterSecondPassphrase(passphrase) {
-  cy.get(ss.secondPassphraseInput).each(($el, index) => {
+  cy.get(secondPassphraseSS.secondPassphraseInput).each(($el, index) => {
     const passphraseWordsArray = passphrase.split(' ');
     cy.wrap($el).type(passphraseWordsArray[index]);
   });
-  cy.get(ss.secondPassphraseNextBtn).click();
+  cy.get(secondPassphraseSS.secondPassphraseNextBtn).click();
+}
+
+export function enterSecondPassphraseOnSend(passphrase) {
+  cy.get(ss.passphraseInput).first().click();
+  cy.get(ss.passphraseInput).each(($el, index) => {
+    const passphraseWordsArray = passphrase.split(' ');
+    cy.wrap($el).type(passphraseWordsArray[index]);
+  });
 }

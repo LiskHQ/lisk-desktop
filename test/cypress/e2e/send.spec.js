@@ -2,18 +2,15 @@ import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
 import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
-import enterSecondPassphrase from '../utils/enterSecondPassphrase';
+import { enterSecondPassphraseOnSend } from '../utils/enterSecondPassphrase';
 import compareBalances from '../utils/compareBalances';
 import loginUI from '../utils/loginUI';
 
-const getFollowedAccountObjFromLS = () => JSON.parse(localStorage.getItem('followedAccounts'));
-
 const msg = {
-  transferTxSuccess: 'Transaction is being processed and will be confirmed. It may take up to 15 minutes to be secured in the blockchain.',
+  transferTxSuccess: "You'll find it in your Wallet and it will be confirmed in a matter of minutes.",
   accountInitializatoinAddress: 'Account initialization',
 };
 
-const txSendCost = 0.1;
 const txConfirmationTimeout = 12000;
 
 const getRandomAddress = () => `23495548666${Math.floor((Math.random() * 8990000) + 1000000)}L`;
@@ -62,7 +59,7 @@ describe('Send', () => {
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
-    cy.get(ss.resultMessage).should('have.text', msg.transferTxSuccess);
+    cy.get(ss.submittedTransactionMessage).should('have.text', msg.transferTxSuccess);
     cy.get(ss.okayBtn).click();
     cy.get(ss.transactionRow).eq(0).as('tx');
     cy.get('@tx').find(ss.spinner).should('be.visible');
@@ -86,14 +83,13 @@ describe('Send', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.send);
     cy.get(ss.recipientInput).type(randomAddress);
-    cy.get(ss.referenceInput).click().type(randomReference);
+    cy.get(ss.sendReferenceText).click().type(randomReference);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.recipientConfirmLabel).last().contains(randomAddress);
     cy.get(ss.referenceConfirmLabel).contains(randomReference);
-    cy.get(ss.amountInput).invoke('val').should('equal', (randomAmount + txSendCost).toString());
     cy.get(ss.sendBtn).click();
-    cy.get(ss.resultMessage).should('have.text', msg.transferTxSuccess);
+    cy.get(ss.submittedTransactionMessage).should('have.text', msg.transferTxSuccess);
     cy.visit(urls.dashboard);
     cy.get(ss.transactionRow).eq(0).as('tx');
     cy.get('@tx').find(ss.spinner).should('be.visible');
@@ -114,12 +110,12 @@ describe('Send', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(urls.send);
     cy.get(ss.recipientInput).type(randomAddress);
-    cy.get(ss.referenceInput).click().type(randomReference);
+    cy.get(ss.sendReferenceText).click().type(randomReference);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).click();
-    enterSecondPassphrase(accounts['second passphrase account'].secondPassphrase);
+    enterSecondPassphraseOnSend(accounts['second passphrase account'].secondPassphrase);
     cy.get(ss.sendBtn).click();
-    cy.get(ss.resultMessage).should('have.text', msg.transferTxSuccess);
+    cy.get(ss.submittedTransactionMessage).should('have.text', msg.transferTxSuccess);
     cy.get(ss.okayBtn).click();
     cy.get(ss.transactionRow).eq(0).as('tx');
     cy.get('@tx').find(ss.spinner).should('be.visible');
@@ -135,7 +131,7 @@ describe('Send', () => {
     cy.visit(`${urls.send}/?recipient=4995063339468361088L&amount=5&reference=test`);
     cy.get(ss.recipientInput).should('have.value', '4995063339468361088L');
     cy.get(ss.amountInput).should('have.value', '5');
-    cy.get(ss.referenceInput).should('have.value', 'test');
+    cy.get(ss.sendReferenceText).should('have.value', 'test');
   });
 
   /**
@@ -147,7 +143,7 @@ describe('Send', () => {
     loginUI(accounts.genesis.passphrase);
     cy.get(ss.recipientInput).should('have.value', '4995063339468361088L');
     cy.get(ss.amountInput).should('have.value', '5');
-    cy.get(ss.referenceInput).should('have.value', 'test');
+    cy.get(ss.sendReferenceText).should('have.value', 'test');
   });
 
   /**
@@ -158,7 +154,7 @@ describe('Send', () => {
     cy.addObjectToLocalStorage('settings', 'currency', 'USD');
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.send}?recipient=4995063339468361088L&amount=5`);
-    cy.get(ss.convertedPrice).contains(/^\d{1,100}(\.\d{1,2})? USD$/);
+    cy.get(ss.convertedPrice).contains(/\d{1,100}(\.\d{1,2})? USD$/);
   });
 
   /**
@@ -169,38 +165,7 @@ describe('Send', () => {
     cy.addObjectToLocalStorage('settings', 'currency', 'EUR');
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.send}?recipient=4995063339468361088L&amount=5`);
-    cy.get(ss.convertedPrice).contains(/^\d{1,100}(\.\d{1,2})? EUR$/);
-  });
-
-  /**
-   * Initialization banner should appear on dashboard with account not initialized.
-   * @expect initialization dialogue is shown
-   * @expect successfully go through initialization
-   * @expect transfer transaction appear with correct data
-   * @expect initialization dialogue is not shown anymore
-   */
-  it('Should show initialize banner with account not initialized', () => {
-    cy.autologin(accounts['without initialization'].passphrase, networks.devnet.node);
-    cy.reload();
-    cy.visit(urls.wallet);
-    cy.get(ss.transactionSendButton).click();
-    cy.get(ss.accountInitializationMsg).should('not.exist');
-    cy.get(ss.recipientInput).should('exist');
-    cy.visit(urls.dashboard);
-    cy.get(ss.initializeBanner).should('exist');
-    cy.get(ss.initializeBanner).find('a').click();
-    cy.get(ss.backButton).click();
-    cy.get(ss.accountInitializationMsg).get(ss.accountInitializationBtn).click();
-    cy.get(ss.sendBtn).click();
-    cy.get(ss.resultMessage).should('have.text', msg.transferTxSuccess);
-    cy.get(ss.accountInitializationMsg).should('not.exist');
-    cy.wait(txConfirmationTimeout);
-    cy.reload();
-    cy.visit(urls.wallet);
-    cy.get(ss.transactionRow).eq(0).as('tx');
-    cy.get('@tx').find(ss.transactionAddress).should('have.text', accounts['without initialization'].address);
-    cy.visit(urls.dashboard);
-    cy.get(ss.initializeBanner).should('not.exist');
+    cy.get(ss.convertedPrice).contains(/\d{1,100}(\.\d{1,2})? EUR$/);
   });
 
   /**
@@ -214,7 +179,7 @@ describe('Send', () => {
     cy.get(ss.recipientInput).type(randomAddress);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).should('be.disabled');
-    cy.get(ss.amountInput).parent().contains('Not enough LSK');
+    cy.get(ss.sendFormAmountFeedback).contains('Provided amount is higher than your current balance.');
   });
 
   /**
@@ -230,25 +195,7 @@ describe('Send', () => {
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
-    cy.get(ss.resultMessage).contains('Status 409 : Test error');
-  });
-
-
-  it('Add to bookmarks after transfer tx (when recipient is not in followers)', () => {
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.send);
-    cy.get(ss.recipientInput).type(accounts.delegate.address);
-    cy.get(ss.amountInput).click().type(randomAmount);
-    cy.get(ss.nextTransferBtn).click();
-    cy.get(ss.sendBtn).click();
-    cy.get(ss.addToBookmarks).click();
-    cy.get(ss.titleInput).type('Bob');
-    cy.get(ss.confirmAddToBookmarks).click()
-      .should(() => {
-        expect(getFollowedAccountObjFromLS()[0].address).to.equal(accounts.delegate.address);
-        expect(getFollowedAccountObjFromLS()[0].title).to.equal('Bob');
-      });
-    cy.get(ss.resultMessage).contains('has been added to your Dashboard');
+    cy.get(ss.submittedTransactionMessage).contains('Oops, looks like something went wrong. Please try again.');
   });
 
   it('Add to bookmarks button doesn’t exist if recipient is in followers', () => {
@@ -263,6 +210,7 @@ describe('Send', () => {
   });
 });
 
+// this should be enable after bookmark be add to the send components at the end of transactions
 describe('Send: Bookmarks', () => {
   /**
    * Bookmarks suggestions are not present if there is no followers
@@ -273,8 +221,7 @@ describe('Send: Bookmarks', () => {
       .then(() => window.localStorage.removeItem('followedAccounts'));
     cy.visit(urls.send);
     cy.get(ss.recipientInput).click();
-    cy.get(ss.bookmarkInput).should('not.exist');
-    cy.get(ss.bookmarkList).should('not.exist');
+    cy.get(ss.sendBookmarkList).should('exist');
   });
 
   /**
@@ -291,11 +238,12 @@ describe('Send: Bookmarks', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.send);
     cy.get(ss.recipientInput).click();
-    cy.get(ss.bookmarkInput);
-    cy.get(ss.bookmarkList).eq(0).contains('Alice');
-    cy.get(ss.bookmarkList).eq(0).contains(accounts.delegate.address);
-    cy.get(ss.bookmarkList).eq(0).click();
-    cy.get(ss.recipientInput).should('have.value', accounts.delegate.address);
+    cy.get(ss.recipientInput).type('l');
+    cy.get(ss.sendBookmarkList);
+    cy.get(ss.sendBookmarkList).eq(0).contains('Alice');
+    cy.get(ss.sendBookmarkList).eq(0).contains(accounts.delegate.address);
+    cy.get(ss.sendBookmarkList).eq(0).click();
+    cy.get(ss.recipientInput).should('have.value', 'Alice');
     cy.get(ss.amountInput).click().type(1);
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
@@ -318,15 +266,13 @@ describe('Send: Bookmarks', () => {
     ]`);
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.send);
-    cy.get(ss.recipientInput).click().type('Bob');
-    cy.get(ss.bookmarkList).eq(0).contains('Bob');
-    cy.get(ss.recipientInput).clear();
-    cy.get(ss.recipientInput).click().type('Merkel');
-    cy.get(ss.bookmarkList).should('not.exist');
+    cy.get(ss.recipientInput).click();
+    cy.get(ss.recipientInput).click().type('Bo');
+    cy.get(ss.sendBookmarkList).eq(0).contains('Bob');
     cy.get(ss.recipientInput).clear();
     cy.get(ss.recipientInput).click().type(accounts.delegate.address);
-    cy.get(ss.bookmarkList).eq(0).contains(accounts.delegate.address);
-    cy.get(ss.bookmarkList).eq(0).click();
-    cy.get(ss.recipientInput).should('have.value', accounts.delegate.address);
+    cy.get(ss.sendBookmarkList).eq(0).contains(accounts.delegate.address);
+    cy.get(ss.sendBookmarkList).eq(0).click();
+    cy.get(ss.recipientInput).should('have.value', 'Alice');
   });
 });

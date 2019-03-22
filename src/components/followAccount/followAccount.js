@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
 import svg from '../../utils/svgIcons';
-import { FontIcon } from '../fontIcon';
+// import { FontIcon } from '../fontIcon';
 import { InputV2 } from '../toolbox/inputsV2';
 import { PrimaryButtonV2, DangerButtonV2 } from '../toolbox/buttons/button';
 import styles from './followAccount.css';
@@ -191,16 +191,17 @@ class FollowAccount extends React.Component {
             {fields.accountName.feedback}
           </span>
         </label>
-        <label className={`${styles.fieldGroup} ${styles.checkboxGroup}`}>
+        {/* <label className={`${styles.fieldGroup} ${styles.checkboxGroup}`}>
           <input checked={fields.dashboard.value} type='checkbox' readOnly />
           <span className={`${styles.fakeCheckbox}`}>
             <FontIcon className={`${styles.icon}`}>checkmark</FontIcon>
           </span>
           <div className={`${styles.checkboxInfo}`}>
             <span className={`${styles.label}`}>{t('On your dashboard')}</span>
-            <span className={`${styles.note}`}>{t('Show this account\'s transactions on the dashboard.')}</span>
+            <span className={`${styles.note}`}>
+            {t('Show this account\'s transactions on the dashboard.')}</span>
           </div>
-        </label>
+        </label> */}
         {isFollowing
           ? <DangerButtonV2 onClick={this.handleUnfollow}>{t('Unfollow')}</DangerButtonV2>
           : <PrimaryButtonV2 onClick={this.handleFollow} disabled={!isValid}>{t('Confirm')}</PrimaryButtonV2>

@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
-import React from 'react';
+import React, { Fragment } from 'react';
 import throttle from 'lodash.throttle';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import BoxV2 from '../boxV2';
@@ -14,6 +14,8 @@ import FollowedAccounts from '../followedAccounts/index';
 import QuickTips from '../quickTips';
 import NewsFeed from '../newsFeed';
 import removeDuplicateTransactions from '../../utils/transactions';
+import Piwik from '../../utils/piwik';
+import links from '../../constants/externalLinks';
 import { fromRawLsk } from '../../utils/lsk';
 import breakpoints from './../../constants/breakpoints';
 import fees from './../../constants/fees';
@@ -91,9 +93,21 @@ class Dashboard extends React.Component {
               className={`${grid['col-xs-12']} initialize-banner`}
               title={t('Initialize Lisk ID')}
               footer={(
-                <Link to={`${routes.send.path}?initializeAccount`}>
-                  <SecondaryButtonV2>{t('Create First Transaction')}</SecondaryButtonV2>
-                </Link>)}>
+                <Fragment>
+                  <Link to={`${routes.send.path}?recipient=${account.address}&amount=0.1&reference=Account initialization`}>
+                    <SecondaryButtonV2>{t('Create First Transaction')}</SecondaryButtonV2>
+                  </Link>
+                  <a
+                    className={styles.initLink}
+                    target='_blank'
+                    href={links.accountInitialization}
+                    /* istanbul ignore next */
+                    onClick={() => Piwik.trackingEvent('AccountInit', 'link', 'Initialize my lisk account')}
+                    rel='noopener noreferrer'
+                  >
+                    {this.props.t('Learn more about Lisk ID initialization')}
+                  </a>
+                </Fragment>)}>
               <p>{t('It is recommended that you initialize your Lisk ID.')}</p>
               <p>{t('The easiest way to do this is to send LSK to yourself by clicking this button.')}</p>
               <p>{t('It will cost you only the usual {{fee}} LSK transaction fee.', { fee: fromRawLsk(fees.send) })}</p>

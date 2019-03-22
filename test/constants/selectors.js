@@ -173,6 +173,11 @@ const ss = {
   walletOnboardingClose: '.wallet-onboarding .banner-close',
   requestDropdown: '.request-dropdown',
   termsOfUse: '.accept-terms',
+  submittedTransactionMessage: '.body-message',
+  sendReferenceText: '.message',
+  summaryAmount: '.amount-summary',
+  sendFormAmountFeedback: '.amount-feedback',
+  sendBookmarkList: '.bookmark-list',
 };
 
 export default ss;
