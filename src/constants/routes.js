@@ -18,6 +18,7 @@ import Send from '../components/send';
 import Splashscreen from '../components/splashscreen';
 import RegistrationV2 from '../components/registerV2/registerV2';
 import LoginV2 from '../components/loginV2';
+import Extensions from '../components/extensions';
 import TermsOfUse from '../components/termsOfUse';
 
 export default {
@@ -87,6 +88,11 @@ export default {
     path: '/add-account',
     component: LoginV2,
     isLoaded: true,
+    isPrivate: false,
+  },
+  extensions: {
+    path: '/extensions',
+    component: Extensions,
     isPrivate: false,
   },
   // notFound: {
