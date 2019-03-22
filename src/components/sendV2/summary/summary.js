@@ -156,7 +156,6 @@ class Summary extends React.Component {
       ? this.props.t('Confirm transaction on Ledger Nano S')
       : this.props.t('Transaction summary');
 
-
     return (
       <div className={`${styles.wrapper} summary`}>
         <header className={`${styles.header} summary-header`}>

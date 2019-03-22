@@ -89,7 +89,7 @@ class Dashboard extends React.Component {
               className={`${grid['col-xs-12']} initialize-banner`}
               title={t('Initialize Lisk ID')}
               footer={(
-                <Link to={`${routes.send.path}?initializeAccount`}>
+                <Link to={`${routes.send.path}?recipient=${account.address}&amount=0.1&reference=Account initialization`}>
                   <SecondaryButtonV2>{t('Create First Transaction')}</SecondaryButtonV2>
                 </Link>)}>
               <p>{t('It is recommended that you initialize your Lisk ID.')}</p>
