@@ -59,6 +59,7 @@
   margin-left: 25px;
   color: var(--color-link-active);
   font-size: var(--paragraph-font-size-l);
+  text-decoration: none;
 }
 
 .following {
