@@ -1,0 +1,65 @@
+@import './variablesV2.css';
+
+@define-mixin contentSmallest {
+  font-family: var(--content-font);
+  font-size: 11px;
+  font-weight: var(--font-weight-semi-bold);
+  letter-spacing: 0;
+  line-height: 18px;
+}
+
+@define-mixin contentSmall $weight: normal {
+  font-family: var(--content-font);
+  font-size: 12px;
+  font-weight: var(--font-weight-$(weight));
+  letter-spacing: 0;
+  line-height: 20px;
+}
+
+@define-mixin contentNormal $weight: normal {
+  font-family: var(--content-font);
+  font-size: 13px;
+  font-weight: var(--font-weight-$(weight));
+  letter-spacing: 0.2px;
+  line-height: 20px;
+}
+
+@define-mixin contentLarge $weight: normal {
+  font-family: var(--content-font);
+  font-size: 14px;
+  font-weight: var(--font-weight-$(weight));
+  letter-spacing: 0.2px;
+  line-height: 20px;
+}
+
+@define-mixin contentLargest {
+  font-family: var(--content-font);
+  font-size: 15px;
+  font-weight: var(--font-weight-normal);
+  letter-spacing: 0;
+  line-height: 18px;
+}
+
+@define-mixin headingSmall {
+  font-family: var(--heading-font);
+  font-size: 15px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.2px;
+  line-height: 18px;
+}
+
+@define-mixin headingNormal $weight: bold {
+  font-family: var(--heading-font);
+  font-size: 18px;
+  font-weight: var(--font-weight-$(weight));
+  letter-spacing: 0;
+  line-height: 25px;
+}
+
+@define-mixin headingLarge {
+  font-family: var(--heading-font);
+  font-size: 30px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.25px;
+  line-height: 40px;
+}
