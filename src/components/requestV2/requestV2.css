@@ -81,6 +81,8 @@
     }
 
     &.referenceFeedback {
+      @mixin contentSmallest;
+
       justify-content: flex-end;
     }
   }
