@@ -122,7 +122,7 @@ class RequestV2 extends React.Component {
         shareLink,
         fields: {
           ...this.state.fields,
-          field,
+          ...field,
         },
       });
     }, 300);
