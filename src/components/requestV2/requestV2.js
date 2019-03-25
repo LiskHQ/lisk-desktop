@@ -3,8 +3,11 @@ import QRCode from 'qrcode.react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { translate } from 'react-i18next';
 import { PrimaryButtonV2 } from '../toolbox/buttons/button';
+import SpinnerV2 from '../spinnerV2/spinnerV2';
 import { InputV2, AutoresizeTextarea } from '../toolbox/inputsV2';
 import ConverterV2 from '../converterV2';
+import ByteCounter from '../toolbox/byteCounter/byteCounter';
+import svg from '../../utils/svgIcons';
 import styles from './requestV2.css';
 
 class RequestV2 extends React.Component {
@@ -19,14 +22,22 @@ class RequestV2 extends React.Component {
         amount: {
           error: false,
           value: '',
+          loading: false,
           feedback: '',
         },
         reference: {
           error: false,
           value: '',
+          loading: false,
           feedback: '',
         },
       },
+    };
+
+    this.timeout = {
+      amount: null,
+      reference: null,
+      copy: null,
     };
 
     this.toggleQRCode = this.toggleQRCode.bind(this);
@@ -36,8 +47,8 @@ class RequestV2 extends React.Component {
   }
 
   onCopy() {
-    clearTimeout(this.timeout);
-    setTimeout(() => this.setState({
+    clearTimeout(this.timeout.copy);
+    this.timeout.copy = setTimeout(() => this.setState({
       linkCopied: false,
     }), 3000);
 
@@ -48,7 +59,9 @@ class RequestV2 extends React.Component {
 
   /* istanbul ignore next */
   componentWillUnmount() {
-    clearTimeout(this.timeout);
+    clearTimeout(this.timeout.amount);
+    clearTimeout(this.timeout.reference);
+    clearTimeout(this.timeout.copy);
   }
 
   toggleQRCode() {
@@ -80,12 +93,7 @@ class RequestV2 extends React.Component {
       target.value = /^\./.test(target.value) ? `0${target.value}` : target.value;
       feedback = error || feedback;
     } else if (target.name === 'reference' && byteCount > 0) {
-      feedback = error
-        ? t('{{length}} extra characters', { length: byteCount - messageMaxLength })
-        : t('{{length}} out of {{total}} characters left', {
-          length: messageMaxLength - byteCount,
-          total: messageMaxLength,
-        });
+      feedback = t('{{length}} bytes left', { length: messageMaxLength - byteCount });
     }
 
     const field = {
@@ -93,18 +101,31 @@ class RequestV2 extends React.Component {
         error: !!error,
         value: target.value,
         feedback,
+        loading: true,
       },
     };
 
     const shareLink = this.updateShareLink(field);
 
-    this.setState(prevState => ({
+    this.setState({
       shareLink,
       fields: {
-        ...prevState.fields,
+        ...this.state.fields,
         ...field,
       },
-    }));
+    });
+
+    clearTimeout(this.timeout[target.name]);
+    this.timeout[target.name] = setTimeout(() => {
+      field[target.name].loading = false;
+      this.setState({
+        shareLink,
+        fields: {
+          ...this.state.fields,
+          field,
+        },
+      });
+    }, 300);
   }
 
   updateShareLink(newField) {
@@ -145,6 +166,12 @@ class RequestV2 extends React.Component {
                 className={styles.converter}
                 value={fields.amount.value}
                 error={fields.amount.error} />
+              <React.Fragment>
+                <SpinnerV2 className={`${styles.status} ${fields.amount.loading && fields.amount.value ? styles.show : ''}`}/>
+                <img
+                  className={`${styles.status} ${!fields.amount.loading && fields.amount.value ? styles.show : ''}`}
+                  src={ fields.amount.error ? svg.alert_icon : svg.ok_icon} />
+              </React.Fragment>
             </span>
             <span className={`${styles.feedback} ${fields.amount.error ? 'error' : ''} ${fields.amount.feedback ? styles.show : ''}`}>
               {fields.amount.feedback}
@@ -152,14 +179,21 @@ class RequestV2 extends React.Component {
           </label>
           <label className={`${styles.fieldGroup} reference`}>
             <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
-            <AutoresizeTextarea
-              maxLength={100}
-              spellCheck={false}
-              onChange={this.handleFieldChange}
-              name='reference'
-              value={fields.reference.value}
-              placeholder={t('Write message')}
-              className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
+            <span className={`${styles.referenceField}`}>
+              <AutoresizeTextarea
+                maxLength={100}
+                spellCheck={false}
+                onChange={this.handleFieldChange}
+                name='reference'
+                value={fields.reference.value}
+                placeholder={t('Write message')}
+                className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
+              <ByteCounter className={styles.byteCounter}
+                max={64} value={fields.reference.value} />
+            </span>
+            <span className={`${styles.feedback} ${styles.referenceFeedback} ${fields.reference.error ? 'error' : ''} ${fields.reference.feedback ? styles.show : ''}`}>
+              {fields.reference.feedback}
+            </span>
           </label>
           <label className={`${styles.fieldGroup}`}>
             <span className={`${styles.fieldLabel}`}>{t('Sharing link')}</span>
