@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import { SecondaryButtonV2 } from '../toolbox/buttons/button';
-import logo from '../../assets/images/lisk-logo-v2.svg';
+import darkLogo from '../../assets/images/logo/lisk-logo-dark.svg';
 import whiteLogo from '../../assets/images/logo/lisk-logo-white.svg';
 import routes from '../../constants/routes';
 import styles from './headerV2.css';
@@ -33,7 +33,7 @@ class HeaderV2 extends React.Component {
     return (
       <header className={`${styles.wrapper} mainHeader ${dark ? 'dark' : ''}`}>
         <div className={`${styles.logo}`}>
-          <img src={dark ? whiteLogo : logo} />
+          <img src={dark ? whiteLogo : darkLogo} />
         </div>
         <div className={`${styles.buttonsHolder}`}>
           {showSettings
