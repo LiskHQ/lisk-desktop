@@ -5,7 +5,6 @@ const ByteCounter = ({ max, value, className = '' }) => {
   const byteCount = encodeURI(value).split(/%..|./).length - 1;
   let percentage = (byteCount * 100) / max;
   percentage = percentage > 100 ? 100 : percentage;
-  percentage = percentage < 0 ? 0 : percentage;
   const error = byteCount >= max;
   const radius = 7;
   const circunference = Math.PI * (radius * 2);
