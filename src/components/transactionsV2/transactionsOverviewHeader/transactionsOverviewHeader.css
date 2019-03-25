@@ -22,7 +22,7 @@
     margin-left: 10px;
 
     & > div {
-      align-items: bottom;
+      align-items: center;
       display: flex;
     }
   }
@@ -37,21 +37,21 @@
 
   & .label {
     align-items: center;
-    background-color: #ffe5bb;
+    background-color: var(--color-white);
     border-radius: var(--border-radius-standard);
-    color: #e48e00;
+    color: var(--color-slate-gray);
     display: flex;
     font-family: var(--heading-font);
-    font-size: var(--font-size-small);
+    font-size: var(--button-font-size-s);
     font-weight: var(--font-weight-bold);
-    height: 17px;
+    height: 16px;
     margin: 0 5px;
-    padding: 0 8px;
+    padding: 0 5px;
     white-space: nowrap;
   }
 
   & .address {
-    color: var(--color-dark-gray);
+    color: var(--color-slate-gray);
     font-family: var(--content-font);
     font-size: var(--button-font-size-s);
     font-weight: var(--font-weight-semi-bold);
