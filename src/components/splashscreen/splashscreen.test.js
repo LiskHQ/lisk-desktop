@@ -61,7 +61,7 @@ describe('V2 SplashScreen', () => {
 
   it('Should render all links, Sign in, Create an Account and Explre as Guest', () => {
     const buttons = wrapper.find('.wrapper').children('.button');
-    expect(buttons.at(0).text()).to.equal('Sign in');
+    expect(buttons.at(0).text()).to.equal('Login');
     expect(buttons.at(1).text()).to.equal('Create an Account');
     expect(wrapper.find('.link').at(0).text()).to.equal('Explore as a Guest');
   });
