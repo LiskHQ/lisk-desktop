@@ -66,7 +66,7 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Sizes
   *************************/
-  --border-radius-standard: 4px;
+  --border-radius-standard: 3px;
   --header-height-m: 100px;
   --header-height-s: 72px;
   --header-height-xs: 60px;
@@ -87,20 +87,30 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Colors
   *************************/
-  --color-primary-standard: #4e80f7;
+  --color-ultramarine-blue: #4070f4;
+  --color-maastricht-blue: #0c152e;
+  --color-slate-gray: #70778b;
+  --color-blue-gray: #8a8ca2;
+  --color-ghost: #bec1cd;
+  --color-platinum: #e1e3eb;
+  --color-mystic: #edf0f5;
+  --color-white-smoke: #f5f7fa;
+  --color-burnt-sienna: #ec6868;
+  --color-ufo-green: #2bd67b;
+  --color-primary-standard: var(--color-ultramarine-blue);
   --color-primary-light: #9db8fa;
   --color-white: #fff;
   --color-danger: #ff7721;
   --color-error: var(--color-danger);
   --color-content: #19224d;
-  --color-content-light: #2e2c3b;
+  --color-content-light: #0c152e;
   --color-primary-very-light: #e8f0fa;
   --color-content-lighter: rgba(46, 44, 59, 0.6);
   --color-background-dark: #1e194d;
   --color-dark-gray: #868ba1;
   --color-light-gray: #e6e6e6;
   --color-content-grayblue: #7383a7;
-  --color-background-wrapper: linear-gradient(120deg, #f7f9fb, #fbfcfd);
+  --color-background-wrapper: #edf0f5;
   --color-background-header: #fbfcfd;
   --color-background-menu: #f8f9fb;
   --color-link-active: #4070f4;
@@ -132,7 +142,10 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Transitions
   *************************/
-  --transition-button: background-color var(--animation-speed-fast) ease-in-out, color var(--animation-speed-fast) ease-in-out;
+  --transition-button:
+    background-color var(--animation-speed-fast) ease-in-out,
+    box-shadow var(--animation-speed-fast) ease-in-out,
+    color var(--animation-speed-fast) ease-in-out;
 
   /*************************
         Z-Indexes
