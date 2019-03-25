@@ -1,4 +1,5 @@
 @import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
 .splashscreen {
   align-items: center;
@@ -33,23 +34,17 @@
   max-width: 430px;
 
   & > h1 {
+    @mixin headingLarge;
+
     color: var(--color-white);
-    font-family: var(--heading-font);
-    font-size: var(--font-size-h2);
-    letter-spacing: 0.3px;
-    line-height: 1.33;
-    font-weight: var(--font-weight-bold);
     margin: 0;
     text-align: center;
   }
 
   & > p {
+    @mixin contentLarge;
+
     color: var(--color-slate-gray);
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-l);
-    font-weight: var(--font-weight-normal);
-    letter-spacing: 0.2px;
-    line-height: 1.43;
     margin: 35px 0 65px;
     text-align: center;
   }
@@ -63,9 +58,9 @@
   width: 100%;
 
   & > span {
+    @mixin contentSmallest;
+
     color: var(--color-slate-gray);
-    font-family: var(--content-font);
-    font-size: var(--button-font-size-s);
     margin: 0 12px;
     text-transform: uppercase;
   }
@@ -80,13 +75,10 @@
 }
 
 .link {
+  @mixin contentSmall bold;
+
   color: var(--color-link);
   display: flex;
-  font-family: var(--content-font);
-  font-size: var(--button-font-size-s);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: 0.3px;
-  line-height: 1.33;
   margin-bottom: 20px;
   text-align: center;
   text-decoration: none;

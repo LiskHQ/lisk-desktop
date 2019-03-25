@@ -1,4 +1,5 @@
 @import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
 .wrapper {
   align-items: center;
@@ -35,10 +36,8 @@
 }
 
 .settingButton > button {
-  font-size: var(--button-font-size-s);
+  @mixin contentSmall bold;
   height: var(--header-elements-height);
-  letter-spacing: 0.5px;
-  line-height: var(--header-elements-height);
   min-height: var(--header-elements-height);
   width: 144px;
 }
