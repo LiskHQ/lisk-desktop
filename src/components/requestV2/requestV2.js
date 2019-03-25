@@ -125,8 +125,6 @@ class RequestV2 extends React.Component {
   render() {
     const { t } = this.props;
     const { fields, shareLink, showQRCode } = this.state;
-    const byteCount = encodeURI(fields.reference.value).split(/%..|./).length - 1;
-    const messageMaxLength = 64;
     return (
       <div className={`${styles.container}`}>
         <section className={`${styles.formSection}`}>
@@ -134,7 +132,7 @@ class RequestV2 extends React.Component {
             {t('Use the sharing link to easily request any amount of LSK from Lisk Hub or Lisk Mobile users.')}
           </span>
           <label className={`${styles.fieldGroup}`}>
-            <span className={`${styles.fieldLabel}`}>{t('Amount (LSK)')}</span>
+            <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
             <span className={`${styles.amountField} amount`}>
               <InputV2
                 autoComplete={'off'}
@@ -162,9 +160,6 @@ class RequestV2 extends React.Component {
               value={fields.reference.value}
               placeholder={t('Write message')}
               className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
-            <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${fields.reference.feedback ? styles.show : ''}`}>
-              {fields.reference.feedback}
-            </span>
           </label>
           <label className={`${styles.fieldGroup}`}>
             <span className={`${styles.fieldLabel}`}>{t('Sharing link')}</span>
@@ -199,7 +194,7 @@ class RequestV2 extends React.Component {
             {t('Simply scan the QR code using the Lisk Mobile app or any other QR code reader')}
           </span>
           <div className={`${styles.qrCodeContainer}`}>
-            <QRCode value={shareLink} size={200} />
+            <QRCode value={shareLink} size={235} />
           </div>
           <footer className={`${styles.sectionFooter}`}>
             <span

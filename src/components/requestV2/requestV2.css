@@ -1,4 +1,5 @@
 @import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
 .container {
   display: flex;
@@ -12,20 +13,16 @@
   }
 
   & .label {
-    color: var(--color-dark-gray);
-    font-family: var(--content-font);
-    font-size: var(--button-font-size-s);
-    font-weight: var(--font-weight-semi-bold);
-    line-height: 1.83;
+    @mixin contentLarge;
+
+    color: var(--color-slate-gray);
   }
 
   & .footerContent {
-    color: var(--color-dark-gray);
+    @mixin contentSmall;
+
+    color: var(--color-slate-gray);
     display: block;
-    font-family: var(--content-font);
-    font-size: var(--button-font-size-s);
-    font-weight: var(--font-weight-semi-bold);
-    line-height: 1.83;
     margin-top: 12px;
     transition: opacity var(--animation-speed-fast) linear;
 
@@ -34,14 +31,20 @@
     }
   }
 
+  & .sectionFooter {
+    margin: 0;
+    padding: 0;
+  }
+
   & .footerActionable {
     color: var(--color-primary-standard);
     cursor: pointer;
+    font-weight: var(--font-weight-bold);
   }
 }
 
 .formSection {
-  width: 320px;
+  width: 300px;
 
   & .fieldGroup {
     align-items: flex-start;
@@ -51,34 +54,30 @@
   }
 
   & .fieldLabel {
-    color: var(--color-content-light);
-    font-family: var(--heading-font);
-    font-size: var(--paragraph-font-size-l);
-    font-weight: var(--font-weight-bold);
+    @mixin contentNormal bold;
+
+    color: var(--color-maastricht-blue);
     margin-bottom: 8px;
   }
 
   & .feedback {
-    color: var(--color-dark-gray);
-    display: block;
-    font-family: var(--content-font);
-    font-size: var(--button-font-size-s);
-    font-weight: var(--font-weight-semi-bold);
-    line-height: 1.83;
-    margin-top: 8px;
-    max-height: 0;
-    opacity: 0;
-    text-align: right;
-    transition: opacity var(--animation-speed-fast) linear;
+    @mixin contentNormal;
+
+    box-sizing: border-box;
+    color: var(--color-slate-gray);
+    display: none;
+    margin-top: 10px;
+    padding: 6px 10px;
+    text-align: left;
     width: 100%;
 
     &:global(.error) {
-      color: var(--color-error);
+      background-color: var(--error-background-color);
+      color: var(--color-burnt-sienna);
     }
 
     &.show {
-      max-height: 22px;
-      opacity: 1;
+      display: flex;
     }
   }
 
@@ -101,9 +100,9 @@
 
   & .input,
   & .textarea {
-    font-size: var(--button-font-size-s);
+    @mixin contentNormal;
+
     height: 36px;
-    line-height: 1.83;
   }
 
   & .textarea {
@@ -121,7 +120,7 @@
 }
 
 .qrSection {
-  width: 305px;
+  width: 300px;
   display: block;
 
   &.hide {
@@ -130,7 +129,7 @@
 
   & .qrCodeContainer {
     align-items: center;
-    border: 1px solid var(--color-light-gray);
+    border: 1px solid var(--color-platinum);
     box-sizing: border-box;
     display: flex;
     justify-content: center;
