@@ -43,8 +43,19 @@
 
 @define-mixin buttonSecondaryV2 {
   background-color: transparent !important;
-  border: solid 1px rgba(0, 0, 0, 0.08);
+  border: solid 1px rgba(0, 0, 0, 0.08) !important;
   color: var(--color-maastricht-blue) !important;
+
+  &:global(.light) {
+    color: var(--color-white) !important;
+    border-color: var(--light-border-color) !important;
+
+    &:focus,
+    &:hover {
+      border-color: color(var(--light-border-color) a(58%)) !important;
+      color: var(--color-white) !important;
+    }
+  }
 
   &:focus,
   &:hover {

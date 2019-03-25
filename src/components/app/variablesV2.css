@@ -85,7 +85,7 @@ or "warn/action" ineastd of "red/green"
   --header-padding: 0 32px;
 
   /*************************
-        Colors
+      Base Colors
   *************************/
   --color-ultramarine-blue: #4070f4;
   --color-maastricht-blue: #0c152e;
@@ -97,6 +97,11 @@ or "warn/action" ineastd of "red/green"
   --color-white-smoke: #f5f7fa;
   --color-burnt-sienna: #ec6868;
   --color-ufo-green: #2bd67b;
+
+  /*************************
+      Other Colors
+  *************************/
+  --light-border-color: rgba(255, 255, 255, 0.24);
   --color-primary-standard: var(--color-ultramarine-blue);
   --color-primary-light: #9db8fa;
   --color-white: #fff;
@@ -144,6 +149,7 @@ or "warn/action" ineastd of "red/green"
   *************************/
   --transition-button:
     background-color var(--animation-speed-fast) ease-in-out,
+    border-color var(--animation-speed-fast) ease-in-out,
     box-shadow var(--animation-speed-fast) ease-in-out,
     color var(--animation-speed-fast) ease-in-out;
 
