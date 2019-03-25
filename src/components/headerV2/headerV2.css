@@ -37,6 +37,7 @@
 
 .settingButton > button {
   @mixin contentSmall bold;
+
   height: var(--header-elements-height);
   min-height: var(--header-elements-height);
   width: 144px;
