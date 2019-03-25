@@ -41,7 +41,7 @@
     border-radius: var(--border-radius-standard);
     color: var(--color-slate-gray);
     display: flex;
-    font-family: var(--heading-font);
+    font-family: var(--content-font);
     font-size: var(--button-font-size-s);
     font-weight: var(--font-weight-bold);
     height: 16px;

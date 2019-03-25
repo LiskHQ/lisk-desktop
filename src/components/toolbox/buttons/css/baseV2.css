@@ -8,7 +8,12 @@
   font-weight: var(--font-weight-bold);
   font-family: var(--content-font) !important;
   font-size: var(--button-font-size);
+  outline: none;
   transition: var(--transition-button) !important;
+
+  & .ripple {
+    display: none;
+  }
 
   &:disabled {
     opacity: 0.58;
