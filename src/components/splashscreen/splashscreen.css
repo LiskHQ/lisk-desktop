@@ -3,6 +3,8 @@
 .splashscreen {
   align-items: center;
   background-color: var(--color-maastricht-blue);
+  background-image: url('../../assets/images/illustrations/illustration-splash-dark.svg');
+  background-size: cover;
   display: flex;
   margin: 0;
   min-height: 100%;
@@ -78,7 +80,6 @@
 }
 
 .link {
-  align-items: center;
   color: var(--color-link);
   display: flex;
   font-family: var(--content-font);
