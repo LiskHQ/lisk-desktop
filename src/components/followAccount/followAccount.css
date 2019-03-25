@@ -27,6 +27,7 @@
     width: 100%;
 
     & .status {
+      color: var(--color-ultramarine-blue);
       opacity: 0;
       position: absolute;
       right: 10px;
