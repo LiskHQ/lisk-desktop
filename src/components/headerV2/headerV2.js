@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import { SecondaryButtonV2 } from '../toolbox/buttons/button';
 import logo from '../../assets/images/lisk-logo-v2.svg';
+import whiteLogo from '../../assets/images/logo/lisk-logo-white.svg';
 import routes from '../../constants/routes';
 import styles from './headerV2.css';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
@@ -27,16 +28,19 @@ class HeaderV2 extends React.Component {
     const {
       t, showSettings, showNetwork, networkList,
       selectedNetwork, handleNetworkSelect,
+      dark,
     } = this.props;
     return (
-      <header className={`${styles.wrapper} mainHeader`}>
+      <header className={`${styles.wrapper} mainHeader ${dark ? 'dark' : ''}`}>
         <div className={`${styles.logo}`}>
-          <img src={logo} />
+          <img src={dark ? whiteLogo : logo} />
         </div>
         <div className={`${styles.buttonsHolder}`}>
           {showSettings
             && <Link className={styles.settingButton} to={routes.setting.path}>
-              <SecondaryButtonV2>{t('Settings')}</SecondaryButtonV2>
+              <SecondaryButtonV2 className={`${dark ? 'light' : ''}`}>
+                {t('Settings')}
+              </SecondaryButtonV2>
             </Link>
           }
           {showNetwork

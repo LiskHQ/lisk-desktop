@@ -7,6 +7,7 @@ import { parseSearchParams } from './../../utils/searchParams';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import HeaderV2 from '../headerV2/headerV2';
 import styles from './splashscreen.css';
+import svgIcons from '../../utils/svgIcons';
 
 class Splashscreen extends React.Component {
   componentDidMount() {
@@ -48,17 +49,17 @@ class Splashscreen extends React.Component {
     const { t } = this.props;
     return (
       <React.Fragment>
-        <HeaderV2 showSettings={true} />
+        <HeaderV2 dark={true} showSettings={true} />
         <div className={`${styles.splashscreen} ${grid.row}`}>
           <div className={`${styles.wrapper} ${grid['col-sm-6']}`}>
             <div className={`${styles.titleHolder}`}>
               <h1>{t('Welcome to the Lisk Hub!')}</h1>
               <p>{
-                t('Create an account, sign in to manage your LSK tokens, become a delegate or vote for other delegates.')
+                t('Create an Account or Sign in to manage your LSK Tokens, become a Delegate or vote for another Delegates.')
               }</p>
             </div>
             <Link className={`${styles.button} login-button`} to={routes.loginV2.path}>
-              <SecondaryButtonV2>{t('Sign in')}</SecondaryButtonV2>
+              <SecondaryButtonV2 className={'light'}>{t('Login')}</SecondaryButtonV2>
             </Link>
             <Link className={`${styles.button} new-account-button`} to={routes.registerV2.path}>
               <PrimaryButtonV2>{t('Create an Account')}</PrimaryButtonV2>
@@ -68,6 +69,7 @@ class Splashscreen extends React.Component {
             </span>
             <Link className={`${styles.link} explore-as-guest-button`} to={routes.dashboard.path}>
               {t('Explore as a Guest')}
+              <img src={svgIcons.questionIcon}/>
             </Link>
           </div>
         </div>

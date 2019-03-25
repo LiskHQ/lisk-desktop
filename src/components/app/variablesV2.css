@@ -85,7 +85,7 @@ or "warn/action" ineastd of "red/green"
   --header-padding: 0 32px;
 
   /*************************
-        Colors
+      Base Colors
   *************************/
   --color-ultramarine-blue: #4070f4;
   --color-maastricht-blue: #0c152e;
@@ -151,6 +151,7 @@ or "warn/action" ineastd of "red/green"
   *************************/
   --transition-button:
     background-color var(--animation-speed-fast) ease-in-out,
+    border-color var(--animation-speed-fast) ease-in-out,
     box-shadow var(--animation-speed-fast) ease-in-out,
     color var(--animation-speed-fast) ease-in-out;
 

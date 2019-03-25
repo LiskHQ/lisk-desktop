@@ -46,6 +46,17 @@
   border: solid 1px var(--dark-border-color);
   color: var(--color-maastricht-blue) !important;
 
+  &:global(.light) {
+    color: var(--color-white) !important;
+    border-color: var(--light-border-color) !important;
+
+    &:focus,
+    &:hover {
+      border-color: color(var(--light-border-color) a(58%)) !important;
+      color: var(--color-white) !important;
+    }
+  }
+
   &:focus,
   &:hover {
     color: var(--color-ultramarine-blue) !important;
