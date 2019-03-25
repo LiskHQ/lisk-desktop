@@ -4,35 +4,31 @@
   width: 250px;
   max-width: 100%;
   border-radius: var(--border-radius-standard);
-  box-shadow: var(--box-shadow-button);
   text-transform: none;
   font-weight: var(--font-weight-bold);
   font-family: var(--content-font) !important;
   font-size: var(--button-font-size);
   transition: var(--transition-button) !important;
+
+  &:disabled {
+    opacity: 0.58;
+  }
 }
 
 @define-mixin buttonPrimaryV2 {
-  background-color: var(--color-primary-standard) !important;
+  background-color: var(--color-ultramarine-blue) !important;
   color: var(--color-white) !important;
-
-  &:disabled {
-    opacity: 0.8;
-  }
 
   &:focus,
   &:hover {
-    background: #004aff !important;
+    background: color(var(--color-ultramarine-blue) + rgba(255, 255, 255, 0.08)) !important;
+    box-shadow: 3px 3px 10px 0 rgba(61, 113, 255, 0.36) !important;
   }
 }
 
 @define-mixin buttonDangerV2 {
   background-color: var(--color-danger) !important;
   color: var(--color-white) !important;
-
-  &:disabled {
-    opacity: 0.8;
-  }
 
   &:focus,
   &:hover {
@@ -41,16 +37,12 @@
 }
 
 @define-mixin buttonSecondaryV2 {
-  background-color: var(--color-white) !important;
-  color: var(--color-primary-standard) !important;
-
-  &:disabled {
-    opacity: 0.8;
-  }
+  background-color: transparent !important;
+  border: solid 1px rgba(0, 0, 0, 0.08);
+  color: var(--color-maastricht-blue) !important;
 
   &:focus,
   &:hover {
-    background-color: var(--color-primary-standard) !important;
-    color: var(--color-white) !important;
+    color: var(--color-ultramarine-blue) !important;
   }
 }
