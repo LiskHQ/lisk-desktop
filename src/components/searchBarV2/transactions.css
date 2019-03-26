@@ -1,0 +1,80 @@
+@import '../app/variablesV2.css';
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 20px 0;
+}
+
+.header {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  & > label {
+    font-family: var(--content-font);
+    font-size: var(--font-size-small-secondary);
+  }
+}
+
+.subTitles {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+
+  & > label {
+    font-family: var(--content-font);
+    font-size: var(--font-size-small-secondary);
+    color: var(--color-text-blue-gray);
+  }
+}
+
+.content {
+  width: 100%;
+  height: auto;
+  max-height: 100px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 5px 0;
+
+  & .transactionRow {
+    width: 100%;
+    height: 25px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  & .transactionId {
+    font-size: var(--paragraph-font-size-l);
+    font-family: var(--content-font);
+    color: var(--color-text-mastricht-blue);
+    font-weight: var(--font-weight-bold);
+    margin-left: 20px;
+  }
+
+  & .transactionMessage {
+    font-size: var(--footnote-font-size);
+    font-family: var(--content-font);
+    color: var(--color-text-mastricht-blue);
+    margin-left: auto;
+  }
+}

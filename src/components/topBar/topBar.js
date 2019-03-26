@@ -6,6 +6,8 @@ import UserAccount from './userAccount';
 import Piwik from '../../utils/piwik';
 import { menuLinks } from './constants';
 import svg from '../../utils/svgIcons';
+import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
+import SearchBarV2 from '../searchBarV2';
 import styles from './topBar.css';
 
 import liskLogo from '../../assets/images/lisk-logo-v2.svg';
@@ -16,12 +18,14 @@ class TopBar extends React.Component {
 
     this.state = {
       isDropdownEnable: false,
+      isSearchDropdownEnable: false,
     };
 
     this.onLogout = this.onLogout.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.setDropdownRef = this.setDropdownRef.bind(this);
+    this.onSearchClick = this.onSearchClick.bind(this);
   }
 
   onLogout() {
@@ -50,15 +54,19 @@ class TopBar extends React.Component {
     this.dropdownRef = node;
   }
 
+  onSearchClick() {
+    this.setState(prevState => ({ isSearchDropdownEnable: !prevState.isSearchDropdownEnable }));
+  }
+
   render() {
     const { t, showDelegate, account } = this.props;
+    const { isSearchDropdownEnable } = this.state;
 
     const items = showDelegate
       ? menuLinks
       : menuLinks.filter(item => item.id !== 'delegates');
 
     const isUserLogout = Object.keys(account).length === 0 || account.afterLogout;
-
     const isUserDataFetched = (account.balance) || account.balance === 0;
 
     return (
@@ -98,7 +106,16 @@ class TopBar extends React.Component {
           }
 
           <div className={styles.searchButton}>
-            <img src={svg.search_icon} />
+            <img
+              onClick={this.onSearchClick}
+              src={isSearchDropdownEnable ? svg.search_icon_active : svg.search_icon_inactive}
+            />
+
+            <DropdownV2
+              showDropdown={this.state.isSearchDropdownEnable}
+              className={`${styles.searchDropdown}`}>
+              <SearchBarV2 />
+            </DropdownV2>
           </div>
         </div>
       </div>

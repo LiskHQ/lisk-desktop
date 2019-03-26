@@ -105,6 +105,8 @@ or "warn/action" ineastd of "red/green"
   --color-background-menu: #f8f9fb;
   --color-link-active: #4070f4;
   --color-title-header-box: #4c4c4c;
+  --color-text-blue-gray: #8a8ca2;
+  --color-text-mastricht-blue: #0c152e;
   --color-link: var(--color-primary-standard);
   --color-rows-hover: rgba(157, 184, 250, 0.2);
 

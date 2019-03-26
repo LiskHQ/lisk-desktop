@@ -77,6 +77,14 @@
   }
 }
 
+.searchDropdown {
+  right: 10px;
+  top: calc(100% + 25px);
+  width: 500px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
 @media (--small-viewport) {
   .wrapper {
     height: var(--header-height-s);
