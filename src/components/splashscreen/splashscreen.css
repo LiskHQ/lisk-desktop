@@ -6,6 +6,7 @@
   background-color: var(--color-maastricht-blue);
   background-image: url('../../assets/images/illustrations/illustration-splash-dark.svg');
   background-size: cover;
+  box-sizing: border-box;
   display: flex;
   margin: 0;
   min-height: 100%;
@@ -19,10 +20,15 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  max-width: 430px;
 
   & .button {
     margin-top: 12px;
     width: 100%;
+
+    &:first-child {
+      margin-top: 0;
+    }
 
     & > button {
       width: 100%;
@@ -45,7 +51,7 @@
     @mixin contentLarge;
 
     color: var(--color-slate-gray);
-    margin: 35px 0 65px;
+    margin: 35px 0 55px;
     text-align: center;
   }
 }
@@ -54,7 +60,7 @@
   align-items: center;
   display: flex;
   justify-content: space-between;
-  margin: 30px 0;
+  margin: 20px 0;
   width: 100%;
 
   & > span {

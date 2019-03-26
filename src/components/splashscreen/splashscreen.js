@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
 import routes from '../../constants/routes';
 import { parseSearchParams } from './../../utils/searchParams';
@@ -50,8 +49,8 @@ class Splashscreen extends React.Component {
     return (
       <React.Fragment>
         <HeaderV2 dark={true} showSettings={true} />
-        <div className={`${styles.splashscreen} ${grid.row}`}>
-          <div className={`${styles.wrapper} ${grid['col-sm-6']}`}>
+        <div className={`${styles.splashscreen}`}>
+          <div className={`${styles.wrapper}`}>
             <div className={`${styles.titleHolder}`}>
               <h1>{t('Welcome to the Lisk Hub!')}</h1>
               <p>{
