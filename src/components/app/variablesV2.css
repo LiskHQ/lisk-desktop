@@ -118,7 +118,7 @@ or "warn/action" ineastd of "red/green"
   --color-dark-gray: #868ba1;
   --color-light-gray: #e6e6e6;
   --color-content-grayblue: #7383a7;
-  --color-background-wrapper: #edf0f5;
+  --color-background-wrapper: var(--color-mystic);
   --color-background-header: #fbfcfd;
   --color-background-menu: #f8f9fb;
   --color-link-active: #4070f4;
