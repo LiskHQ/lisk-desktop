@@ -165,7 +165,7 @@ class passphraseInputV2 extends React.Component {
           <Feedback
             className={styles.errorMessage}
             show={!!(this.state.validationError || secondPPFeedback !== '')}
-            status={(this.state.validationError || secondPPFeedback !== '') && 'error'}
+            status={(this.state.validationError || secondPPFeedback !== '') ? 'error' : ''}
             showIcon={true}>
             { secondPPFeedback || this.state.validationError }
           </Feedback>
