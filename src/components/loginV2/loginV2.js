@@ -1,4 +1,4 @@
-// eslint-disable-line
+/* eslint-disable max-lines */
 import React from 'react';
 import i18next from 'i18next';
 import Lisk from 'lisk-elements';
@@ -7,19 +7,17 @@ import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
-import { FontIcon } from '../fontIcon';
 import { parseSearchParams } from './../../utils/searchParams';
 import { extractAddress } from '../../utils/account';
 import { validateUrl, addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import getNetwork from '../../utils/getNetwork';
 import networks from '../../constants/networks';
-import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
 import feedbackLinks from '../../constants/feedbackLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import HeaderV2 from '../headerV2/headerV2';
 import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
-import lock from '../../assets/images/icons-v2/lock.svg';
 import styles from './loginV2.css';
 import Piwik from '../../utils/piwik';
 
@@ -208,8 +206,10 @@ class LoginV2 extends React.Component {
             className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}>
 
             <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
+              <span className={styles.stepsLabel}>
+                {t('Sign in')}
+              </span>
               <h1>
-                <img src={lock} />
                 {t('Sign in with a Passphrase')}
               </h1>
               <p>
@@ -222,7 +222,6 @@ class LoginV2 extends React.Component {
             </div>
 
             <form onSubmit={this.onFormSubmit}>
-
               <div className={`${styles.inputsHolder}`}>
                 <div className={`${styles.customNode} ${this.state.network === networks.customNode.code ? styles.showInput : ''}`}>
                   <h2 className={`${styles.inputLabel}`}>{t('Enter the IP or domain address of your node.')}</h2>
@@ -292,25 +291,21 @@ class LoginV2 extends React.Component {
 
               </div>
 
-              <div className={`${styles.buttonsHolder} ${grid.row}`}>
-                <Link className={`${styles.button} ${grid['col-xs-4']}`} to={routes.splashscreen.path}>
-                  <SecondaryButtonV2>
-                    <FontIcon className={`${styles.icon}`}>arrow-left</FontIcon>
+              <div className={`${styles.buttonsHolder}`}>
+                <PrimaryButtonV2
+                  className={`${styles.button} login-button`}
+                  type='submit'
+                  disabled={(this.state.network === networks.customNode.code
+                    && !!this.state.addressValidity)
+                    || !this.state.isValid
+                    || this.state.passphrase === ''}>
+                  {t('Confirm')}
+                </PrimaryButtonV2>
+                <Link to={routes.splashscreen.path} className={styles.link}>
+                  <TertiaryButtonV2 className={`${styles.button} ${styles.backButton}`}>
                     {t('Go Back')}
-                  </SecondaryButtonV2>
+                  </TertiaryButtonV2>
                 </Link>
-                <span className={`${styles.button} ${grid['col-xs-4']}`}>
-                  <PrimaryButtonV2
-                    className={'login-button'}
-                    type='submit'
-                    disabled={(this.state.network === networks.customNode.code
-                      && !!this.state.addressValidity)
-                      || !this.state.isValid
-                      || this.state.passphrase === ''}>
-                    {t('Confirm')}
-                    <FontIcon className={`${styles.icon}`}>arrow-right</FontIcon>
-                  </PrimaryButtonV2>
-                </span>
               </div>
             </form>
           </div>
