@@ -3,7 +3,7 @@
 
 .dropdown {
   background-color: var(--color-white);
-  border: 1px solid var(--color-light-gray);
+  border: 1px solid var(--color-platinum);
   border-radius: var(--border-radius-standard);
   box-shadow: var(--box-shadow-standard);
   box-sizing: border-box;
@@ -34,7 +34,7 @@
     font-size: 0;
     position: absolute;
     right: 10px;
-    stroke: var(--color-light-gray);
+    stroke: var(--color-platinum);
     top: -9px;
     width: 36px;
 
