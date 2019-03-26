@@ -17,7 +17,9 @@ import links from '../../constants/externalLinks';
 import feedbackLinks from '../../constants/feedbackLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import HeaderV2 from '../headerV2/headerV2';
+import { InputV2 } from '../toolbox/inputsV2';
 import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
+import Feedback from '../toolbox/feedback/feedback';
 import styles from './loginV2.css';
 import Piwik from '../../utils/piwik';
 
@@ -224,16 +226,19 @@ class LoginV2 extends React.Component {
             <form onSubmit={this.onFormSubmit}>
               <div className={`${styles.inputsHolder}`}>
                 <div className={`${styles.customNode} ${this.state.network === networks.customNode.code ? styles.showInput : ''}`}>
-                  <h2 className={`${styles.inputLabel}`}>{t('Enter the IP or domain address of your node.')}</h2>
+                  <h2 className={`${styles.inputLabel}`}>{t('IP or domain address of a node')}</h2>
                   <div className={`${styles.addressInput} address`}>
-                    <input
+                    <InputV2
                       className={`${this.state.addressValidity ? 'error' : ''}`}
                       type="text"
                       value={this.state.address}
                       onChange={this.changeAddress} />
-                    <span className={`${styles.errorMessage} ${this.state.addressValidity ? styles.showError : ''}`}>
+                    <Feedback
+                      show={!!this.state.addressValidity}
+                      status={this.state.addressValidity ? 'error' : ''}
+                      showIcon={true}>
                       { this.state.addressValidity }
-                    </span>
+                    </Feedback>
                   </div>
                 </div>
 
