@@ -122,7 +122,7 @@ class RequestV2 extends React.Component {
         shareLink,
         fields: {
           ...this.state.fields,
-          field,
+          ...field,
         },
       });
     }, 300);
@@ -166,12 +166,10 @@ class RequestV2 extends React.Component {
                 className={styles.converter}
                 value={fields.amount.value}
                 error={fields.amount.error} />
-              <React.Fragment>
-                <SpinnerV2 className={`${styles.status} ${fields.amount.loading && fields.amount.value ? styles.show : ''}`}/>
-                <img
-                  className={`${styles.status} ${!fields.amount.loading && fields.amount.value ? styles.show : ''}`}
-                  src={ fields.amount.error ? svg.alert_icon : svg.ok_icon} />
-              </React.Fragment>
+              <SpinnerV2 className={`${styles.status} ${fields.amount.loading && fields.amount.value ? styles.show : ''}`}/>
+              <img
+                className={`${styles.status} ${!fields.amount.loading && fields.amount.value ? styles.show : ''}`}
+                src={ fields.amount.error ? svg.alert_icon : svg.ok_icon} />
             </span>
             <span className={`${styles.feedback} ${fields.amount.error ? 'error' : ''} ${fields.amount.feedback ? styles.show : ''}`}>
               {fields.amount.feedback}
@@ -188,8 +186,11 @@ class RequestV2 extends React.Component {
                 value={fields.reference.value}
                 placeholder={t('Write message')}
                 className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
-              <ByteCounter className={styles.byteCounter}
-                max={64} value={fields.reference.value} />
+              <ByteCounter max={64} value={fields.reference.value}
+                className={styles.byteCounter} />
+              <img
+                className={`${styles.status} ${!fields.reference.loading && fields.reference.value ? styles.show : ''}`}
+                src={ fields.reference.error ? svg.alert_icon : svg.ok_icon} />
             </span>
             <span className={`${styles.feedback} ${styles.referenceFeedback} ${fields.reference.error ? 'error' : ''} ${fields.reference.feedback ? styles.show : ''}`}>
               {fields.reference.feedback}

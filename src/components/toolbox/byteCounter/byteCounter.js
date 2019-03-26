@@ -12,7 +12,7 @@ const ByteCounter = ({ max, value, className = '' }) => {
 
   return (
     <div className={className}>
-      <svg width="20" height="20" viewPort="0 0 20 20">
+      <svg width="20" height="20" viewBox="0 0 20 20">
         <circle r={radius} cx="10" cy="10" fill="transparent"
           strokeDasharray={circunference} strokeWidth="1" strokeDashoffset="0"
           className={styles.track} />

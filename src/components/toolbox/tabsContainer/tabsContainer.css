@@ -13,6 +13,7 @@
   display: flex;
   height: 34px;
   margin: 0;
+  overflow: hidden;
   padding: 0;
 
   & > li {
