@@ -75,7 +75,7 @@
   &::after {
     border: 3px solid transparent;
     border-bottom: 0;
-    border-top-color:  var(--color-slate-gray);
+    border-top-color: var(--color-slate-gray);
     content: '';
   }
 }
