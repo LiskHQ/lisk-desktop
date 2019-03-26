@@ -36,13 +36,6 @@ class HeaderV2 extends React.Component {
           <img src={dark ? whiteLogo : darkLogo} />
         </div>
         <div className={`${styles.buttonsHolder}`}>
-          {showSettings
-            && <Link className={styles.settingButton} to={routes.setting.path}>
-              <SecondaryButtonV2 className={`${dark ? 'light' : ''}`}>
-                {t('Settings')}
-              </SecondaryButtonV2>
-            </Link>
-          }
           {showNetwork
             && <span className={`${styles.dropdownHandler} network`}
               onClick={this.toggleDropdown}>
@@ -55,6 +48,13 @@ class HeaderV2 extends React.Component {
                 ))}
               </DropdownV2>
             </span>
+          }
+          {showSettings
+            && <Link className={styles.settingButton} to={routes.setting.path}>
+              <SecondaryButtonV2 className={`${dark ? 'light' : ''}`}>
+                {t('Settings')}
+              </SecondaryButtonV2>
+            </Link>
           }
         </div>
       </header>
