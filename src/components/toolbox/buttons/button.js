@@ -8,6 +8,7 @@ import primaryButtonV2Theme from './css/primaryButtonV2.css';
 import dangerButtonV2Theme from './css/dangerButtonV2.css';
 import secondaryButtonV2Theme from './css/secondaryButtonV2.css';
 import tertiaryButtonTheme from './css/tertiaryButton.css';
+import tertiaryButtonV2Theme from './css/tertiaryButtonV2.css';
 import actionButtonTheme from './css/actionButton.css';
 
 class TBSecondaryBlueButton extends React.Component {
@@ -46,6 +47,7 @@ const PrimaryButtonV2 = themr('dangerButton', primaryButtonV2Theme)(TBPrimaryBut
 const SecondaryLightButton = themr('lightButton', secondaryLightButtonTheme)(TBSecondaryLightButton);
 const SecondaryButtonV2 = themr('lightButton', secondaryButtonV2Theme)(TBSecondaryLightButton);
 const TertiaryButton = themr('tertiaryButton', tertiaryButtonTheme)(TBTertiaryButton);
+const TertiaryButtonV2 = themr('tertiaryButton', tertiaryButtonV2Theme)(TBTertiaryButton);
 const ActionButton = themr('actionButton', actionButtonTheme)(TBActionButton);
 const Button = themr('button', secondaryBlueButtonTheme)(TBSecondaryBlueButton);
 
@@ -53,6 +55,6 @@ export {
   Button, PrimaryButton, SecondaryLightButton,
   TertiaryButton, ActionButton,
   PrimaryButtonV2, SecondaryButtonV2,
-  DangerButtonV2,
+  DangerButtonV2, TertiaryButtonV2,
 };
 export default Button;

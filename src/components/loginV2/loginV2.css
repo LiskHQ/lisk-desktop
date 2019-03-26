@@ -1,4 +1,5 @@
 @import './../app/variablesV2.css';
+@import './../app/mixins.css';
 
 :root {
   --login-title-font-size: 24px;
@@ -25,48 +26,59 @@
   }
 
   & .button {
-    margin-top: 12px;
+    @mixin contentLarge bold;
     width: 100%;
+  }
 
-    & > button {
-      width: 100%;
-    }
+  & .backButton {
+    @mixin contentSmall bold;
   }
 }
 
 .titleHolder {
-  color: var(--color-content);
-  font-family: var(--heading-font);
   text-align: center;
 
-  & > h1 {
-    display: flex;
-    font-size: var(--login-title-font-size);
-    font-weight: var(--font-weight-bold);
-    justify-content: center;
-    letter-spacing: 0.1px;
-    line-height: 50px;
-    margin: 0;
+  & > .stepsLabel {
+    @mixin contentSmallest;
 
-    & > img {
-      margin-right: 16px;
-    }
+    color: var(--color-slate-gray);
+    display: block;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  & > h1 {
+    @mixin headingLarge;
+
+    display: flex;
+    justify-content: center;
+    margin: 0 0 20px;
   }
 
   & > p {
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-l);
+    @mixin contentLarge;
+
+    color: var(--color-slate-gray);
     margin: 0;
+
+    & > a {
+      margin: 0;
+    }
   }
 }
 
 .buttonsHolder {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  margin: 0 auto;
+  max-width: 430px;
   width: 100%;
 
-  & .icon {
-    font-size: var(--paragraph-font-size-s);
-    font-weight: bold;
+  & .link {
+    margin-top: 12px;
+    width: 100%;
   }
 }
 
@@ -207,16 +219,18 @@
 }
 
 .link {
+  @mixin contentLarge bold;
+
   color: var(--color-link);
   cursor: pointer;
   display: inline-block;
-  font-family: var(--heading-font);
-  font-size: var(--paragraph-font-size-l);
-  font-weight: var(--font-weight-bold);
-  line-height: 1.47;
   margin-bottom: 20px;
   text-align: center;
-  text-decoration: underline;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .tooltip {
