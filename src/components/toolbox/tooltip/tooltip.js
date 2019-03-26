@@ -78,7 +78,7 @@ class Tooltip extends React.Component {
           />
         <div className={`${styles.tooltip} ${this.state.showTooltip ? 'shownTooltip' : ''} tooltip-window`}>
           <span className={`${styles.tooltipArrow} tooltip-arrow`}>
-            <svg fill="currentColor" viewBox="0 0 8 36"><path d="M8 0C7 11 0 13 0 18s7 9 8 18z"/></svg>
+            <svg stroke="inherit" fill="currentColor" viewBox="0 0 8 36"><path d="M8 0C7 11 0 13 0 18s7 9 8 18"/></svg>
           </span>
           {title !== '' && (
             <header>
