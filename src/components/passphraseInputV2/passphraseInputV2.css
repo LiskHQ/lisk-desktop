@@ -2,10 +2,9 @@
 
 .inputs {
   flex-wrap: wrap;
-  margin-top: 12px;
 
   & > span {
-    margin: 12px 0;
+    margin: 10px 0;
 
     & input {
       text-align: center;
@@ -14,7 +13,9 @@
 }
 
 .footerContent {
+  align-items: center;
   display: flex;
+  height: 40px;
   justify-content: space-between;
   width: 100%;
 }
@@ -30,38 +31,36 @@
     display: none;
 
     &:checked + .fakeCheckbox {
-      background-color: var(--color-primary-standard);
-      border-color: var(--color-primary-standard);
+      background-color: var(--color-ultramarine-blue);
+      border-color: var(--color-ultramarine-blue);
     }
   }
 
   & .fakeCheckbox {
     align-items: center;
     background-color: var(--color-white);
-    border: 1px solid var(--color-dark-gray);
+    border: 1px solid var(--dark-border-color);
     border-radius: var(--border-radius-standard);
     box-sizing: border-box;
     color: var(--color-white);
     display: flex;
     justify-content: center;
-    height: 24px;
+    height: 16px;
     transition:
       background var(--animation-speed-fast) linear,
       border var(--animation-speed-fast) linear,
       color var(--animation-speed-fast) linear;
-    width: 24px;
+    width: 16px;
 
     & > .icon {
-      font-size: var(--paragraph-font-size-s);
+      font-size: 12px;
     }
   }
 
   & .label {
-    color: var(--color-content-light);
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-l);
-    font-weight: var(--font-weight-semi-bold);
-    line-height: 1.47;
+    @mixin contentNormal;
+
+    color: var(--color-slate-gray);
     margin-left: 8px;
   }
 }
