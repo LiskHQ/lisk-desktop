@@ -501,6 +501,7 @@
   "Visit Help Center": "Visit Help Center",
   "Visit Lisk.Chat": "Visit Lisk.Chat",
   "Vote Transaction": "Vote Transaction",
+  "Vote Weights": "Vote Weights",
   "Vote weight": "Vote weight",
   "Vote_verb": "Vote",
   "Voted": "Voted",
@@ -588,7 +589,6 @@
   "to your Lisk Hub. It is provided during account registration.": "to your Lisk Hub. It is provided during account registration.",
   "with a second passphrase": "with a second passphrase",
   "your login and passphrase ": "your login and passphrase ",
-  "{{balance}} LSK": "{{balance}} LSK",
   "{{count}} delegate(s) selected to unvote": "{{count}} delegate selected to unvote",
   "{{count}} delegate(s) selected to unvote_plural": "{{count}} delegates selected to unvote",
   "{{count}} delegate(s) selected to vote": "{{count}} delegate selected to vote",
@@ -597,6 +597,7 @@
   "{{length}} out of {{maxLength}} characters left": "{{length}} out of {{maxLength}} characters left",
   "{{length}} out of {{total}} characters left": "{{length}} out of {{total}} characters left",
   "{{paragraph}}": "{{paragraph}}",
+  "{{rewards}} LSK": "{{rewards}} LSK",
   "{{title}}": "{{title}}",
   "{{title}} has been added to your Dashboard.": "{{title}} has been added to your Dashboard."
 }

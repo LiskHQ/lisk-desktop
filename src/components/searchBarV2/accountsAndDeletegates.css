@@ -2,13 +2,13 @@
 
 .wrapper {
   width: 100%;
-  height: 100%;
+  height: auto;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  margin: 20px 0;
+  margin-top: 20px;
 }
 
 .header {
@@ -45,20 +45,27 @@
 .content {
   width: 100%;
   height: auto;
+  max-height: 184px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 5px 0;
 
   & .accountRow {
     width: 100%;
-    height: 36px;
+    height: auto;
+    padding: 5px 0;
     box-sizing: border-box;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--color-rows-hover);
+      border-radius: 3px;
+    }
   }
 
   & .accountInformation {
@@ -66,15 +73,39 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     margin-left: 20px;
+
+    & > div {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
   }
 
-  & .transactionAddress {
+  & .tag {
+    background: var(--color-text-slate-gray);
+    color: var(--color-white);
+    font-size: var(--footnote-font-size);
+    font-weight: var(--font-weight-bold);
+    padding: 3px;
+    box-sizing: border-box;
+    margin-left: 7px;
+    border-radius: 5px;
+  }
+
+  & .accountTitle {
     font-family: var(--content-font);
     font-size: var(--paragraph-font-size-l);
     color: var(--color-text-mastricht-blue);
     font-weight: var(--font-weight-bold);
+  }
+
+  & .accountSubtitle {
+    font-family: var(--content-font);
+    font-size: var(--font-size-extra-small);
+    color: var(--color-text-slate-gray);
+    padding-top: 8px;
   }
 
   & .accountBalance {

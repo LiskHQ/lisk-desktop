@@ -2,13 +2,13 @@
 
 .wrapper {
   width: 100%;
-  height: 100%;
+  height: auto;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  margin: 20px 0;
+  margin-top: 20px;
 }
 
 .header {
@@ -45,7 +45,7 @@
 .content {
   width: 100%;
   height: auto;
-  max-height: 100px;
+  max-height: 184px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -56,11 +56,22 @@
   & .transactionRow {
     width: 100%;
     height: 25px;
+    padding: 5px 0;
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--color-rows-hover);
+      border-radius: 3px;
+    }
+  }
+
+  & .transactionRow > img {
+    width: 24px;
   }
 
   & .transactionId {

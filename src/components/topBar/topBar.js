@@ -25,7 +25,9 @@ class TopBar extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.setDropdownRef = this.setDropdownRef.bind(this);
+    this.setSearchBarRef = this.setSearchBarRef.bind(this);
     this.onSearchClick = this.onSearchClick.bind(this);
+    this.onSearchClickOutside = this.onSearchClickOutside.bind(this);
   }
 
   onLogout() {
@@ -54,8 +56,23 @@ class TopBar extends React.Component {
     this.dropdownRef = node;
   }
 
+  setSearchBarRef(node) {
+    this.searchBarRef = node;
+  }
+
   onSearchClick() {
+    if (!this.state.isSearchDropdownEnable) {
+      document.addEventListener('click', this.onSearchClickOutside, false);
+    } else {
+      document.removeEventListener('click', this.onSearchClickOutside, false);
+    }
+
     this.setState(prevState => ({ isSearchDropdownEnable: !prevState.isSearchDropdownEnable }));
+  }
+
+  onSearchClickOutside(e) {
+    if (this.searchBarRef && this.searchBarRef.contains(e.target)) return;
+    this.onSearchClick();
   }
 
   render() {
@@ -70,7 +87,7 @@ class TopBar extends React.Component {
     const isUserDataFetched = (account.balance) || account.balance === 0;
 
     return (
-      <div className={styles.wrapper}>
+      <div className={`${styles.wrapper} top-bar`}>
         <div className={styles.elements}>
           <img src={liskLogo} />
           <MenuItems
@@ -114,7 +131,10 @@ class TopBar extends React.Component {
             <DropdownV2
               showDropdown={this.state.isSearchDropdownEnable}
               className={`${styles.searchDropdown}`}>
-              <SearchBarV2 />
+              <SearchBarV2
+                history={this.props.history}
+                setSearchBarRef={this.setSearchBarRef}
+              />
             </DropdownV2>
           </div>
         </div>

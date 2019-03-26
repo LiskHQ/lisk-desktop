@@ -24,11 +24,21 @@ describe('TopBar', () => {
     history: {
       replace: () => {},
     },
+    suggestions: {
+      addresses: [],
+      transactions: [],
+      delegates: [],
+    },
+    transactions: [],
+    searchSuggestions: jest.fn(),
+    clearSearchSuggestions: jest.fn(),
   };
 
   const history = {
     location: { pathname: routes.dashboard.path },
     createHref: () => {},
+    push: () => {},
+    replace: () => {},
   };
 
   const store = configureStore({
@@ -37,6 +47,16 @@ describe('TopBar', () => {
       balance: 120,
     },
     showDelegate: false,
+    history,
+    search: {
+      suggestions: {
+        addresses: [],
+        transactions: [],
+        delegates: [],
+      },
+    },
+    searchSuggestions: jest.fn(),
+    clearSearchSuggestions: jest.fn(),
   });
 
   const myOptions = {
@@ -58,7 +78,7 @@ describe('TopBar', () => {
   });
 
   it('renders <TopBar /> component', () => {
-    expect(wrapper.find('.wrapper').at(0)).to.have.length(1);
+    expect(wrapper.find('.top-bar').at(0)).to.have.length(1);
   });
 
   it('renders <TopBar /> component with user log in', () => {
@@ -78,8 +98,9 @@ describe('TopBar', () => {
   });
 
   it('renders 3 menu items including delegates', () => {
-    myProps.showDelegate = true;
-    wrapper = mountWithRouter(<TopBar {...myProps} />, myOptions);
+    const newProps = { ...myProps };
+    newProps.showDelegate = true;
+    wrapper = mountWithRouter(<TopBar {...newProps} />, myOptions);
     expect(wrapper.find('a.item')).to.have.length(3);
   });
 

@@ -3,40 +3,44 @@ import svg from '../../utils/svgIcons';
 import styles from './transactions.css';
 
 const Transactions = (props) => {
-  function selectTransactionType(value) {
-    let transactionIconType = '';
-
-    switch (value) {
-      case 0:
-        transactionIconType = svg.transaction_send_icon;
-        break;
-
+  function selectTransactionType(type) {
+    let icon = svg.txDefault;
+    switch (type) {
       case 1:
-        transactionIconType = svg.transaction_delegate_vote;
+        icon = svg.tx2ndPassphrase;
         break;
-
+      case 2:
+        icon = svg.txDelegate;
+        break;
+      case 3:
+        icon = svg.txVote;
+        break;
       default:
         break;
     }
 
-    return transactionIconType;
+    return icon;
   }
 
   return (
-    <div className={styles.wrapper}>
-      <header className={styles.header}>
+    <div className={`${styles.wrapper} transactions`}>
+      <header className={`${styles.header} transactions-header`}>
         <label>{props.t('Transactions')}</label>
-        <div className={styles.subTitles}>
+        <div className={`${styles.subTitles} transactions-subtitle`}>
           <label>{props.t('Type')}</label>
           <label>{props.t('Message')}</label>
         </div>
       </header>
-      <div className={styles.content}>
+      <div className={`${styles.content} transactions-content`}>
       {
         props.transactions.map(transaction => (
-          <div key={transaction.id} className={styles.transactionRow}>
+          <div
+            key={transaction.id}
+            className={`${styles.transactionRow} transactions-row`}
+            onClick={() => props.onSelectedRow(transaction.id, 'transaction')}
+          >
             <img src={selectTransactionType(transaction.type)} />
-            <label className={styles.transactionId}>{transaction.id}</label>
+            <span className={styles.transactionId}>{transaction.id}</span>
             <span className={styles.transactionMessage}>{Object.entries(transaction.asset).length ? transaction.asset.data : ''}</span>
           </div>
         ))
