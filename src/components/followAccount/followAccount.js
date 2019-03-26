@@ -206,13 +206,13 @@ class FollowAccount extends React.Component {
         {isFollowing
           ? (
             <DangerButtonV2
-              className={'follow-account-button'}
+              className={'follow-account-button extra-small'}
               onClick={this.handleUnfollow}>
               {t('Remove from bookmarks')}
             </DangerButtonV2>
           ) : (
             <PrimaryButtonV2
-              className={'follow-account-button'}
+              className={'follow-account-button extra-small'}
               onClick={this.handleFollow}
               disabled={!isValid}>
               {t('Confirm')}

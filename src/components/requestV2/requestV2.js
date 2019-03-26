@@ -209,6 +209,7 @@ class RequestV2 extends React.Component {
               onCopy={this.onCopy}
               text={shareLink}>
                 <PrimaryButtonV2
+                  className={'extra-small'}
                   disabled={this.state.linkCopied}>
                   {this.state.linkCopied
                     ? t('Link copied')

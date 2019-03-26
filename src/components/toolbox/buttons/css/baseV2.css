@@ -14,18 +14,21 @@
 
   &:global(.medium) {
     height: 40px;
+    padding: 0 24px;
   }
 
   &:global(.small) {
     @mixin contentSmall bold;
 
     height: 46px;
+    padding: 0 20px;
   }
 
   &:global(.extra-small) {
     @mixin contentSmall bold;
 
     height: 32px;
+    padding: 0 16px;
   }
 
   & .ripple {
