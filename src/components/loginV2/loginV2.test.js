@@ -97,7 +97,7 @@ describe('LoginV2', () => {
         getData: () => passphrase.substring(0, lastIndex),
       };
       wrapper.find('passphraseInputV2 input').first().simulate('paste', { clipboardData });
-      expect(wrapper.find('passphraseInputV2 .errorMessage')).to.contain(expectedError);
+      expect(wrapper.find('passphraseInputV2 Feedback')).to.contain(expectedError);
     });
 
     it('Should show the address input when custom node is selected', () => {
@@ -112,11 +112,11 @@ describe('LoginV2', () => {
       history.location.search = '?showNetwork=true';
       wrapper.setProps({ history });
       wrapper.find('HeaderV2 .option').at(2).simulate('click');
-      expect(customNode.find('.errorMessage')).to.not.have.className('showError');
+      expect(customNode.find('Feedback')).to.not.have.className('show');
       customNode.find('input').simulate('change', { target: { value: 'localhost' } });
-      expect(customNode.find('.errorMessage')).to.have.className('showError');
+      expect(customNode.find('Feedback')).to.have.className('show');
       customNode.find('input').simulate('change', { target: { value: 'localhost:4000' } });
-      expect(customNode.find('.errorMessage')).to.not.have.className('showError');
+      expect(customNode.find('Feedback')).to.not.have.className('show');
     });
 
     it('Should show hardware login if hardware is connected and should go to hwWallet on click', () => {

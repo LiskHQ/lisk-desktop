@@ -1,4 +1,5 @@
 @import './../app/variablesV2.css';
+@import './../app/mixin.css';
 
 .inputs {
   flex-wrap: wrap;
