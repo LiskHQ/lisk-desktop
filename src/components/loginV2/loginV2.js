@@ -300,7 +300,7 @@ class LoginV2 extends React.Component {
                     && !!this.state.addressValidity)
                     || !this.state.isValid
                     || this.state.passphrase === ''}>
-                  {t('Confirm')}
+                  {t('Sign In')}
                 </PrimaryButtonV2>
                 <Link to={routes.splashscreen.path}>
                   <TertiaryButtonV2 className={`${styles.button} ${styles.backButton}`}>
