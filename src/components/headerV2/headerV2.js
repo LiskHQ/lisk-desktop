@@ -41,7 +41,9 @@ class HeaderV2 extends React.Component {
               && <span className={`${styles.dropdownHandler} network`}
                 onClick={this.toggleDropdown}>
                 { networkList[selectedNetwork].label }
-                <DropdownV2 showDropdown={this.state.showDropdown}>
+                <DropdownV2
+                  showArrow={false}
+                  showDropdown={this.state.showDropdown}>
                   {networkList && networkList.map((network, key) => (
                     <span
                       onClick={() => handleNetworkSelect(network.value)}
