@@ -2,14 +2,31 @@
 @import '../../../app/mixins.css';
 
 @define-mixin buttonBasics {
-  @mixin contentNormal bold;
+  @mixin contentLarge bold;
 
-  width: 250px;
-  max-width: 100%;
   border-radius: var(--border-radius-standard);
-  text-transform: none;
+  height: 48px;
+  max-width: 100%;
   outline: none;
+  padding: 0 32px;
+  text-transform: none;
   transition: var(--transition-button) !important;
+
+  &:global(.medium) {
+    height: 40px;
+  }
+
+  &:global(.small) {
+    @mixin contentSmall bold;
+
+    height: 46px;
+  }
+
+  &:global(.extra-small) {
+    @mixin contentSmall bold;
+
+    height: 32px;
+  }
 
   & .ripple {
     display: none;
