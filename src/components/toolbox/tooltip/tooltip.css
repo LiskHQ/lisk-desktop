@@ -2,7 +2,6 @@
 @import '../../app/mixins.css';
 
 :root {
-  --tooltip-arrow-size: 6px;
   --info-icon-size: 14px;
   --info-icon-font-size: 9px;
   --tooltip-spacing-inside: 10px;
@@ -19,7 +18,7 @@
       transform: translateY(0) translateX(-50%);
 
       & .tooltipArrow {
-        left: 50%;
+        left: calc(50% - 6px);
       }
     }
   }
@@ -27,11 +26,11 @@
   &:global(.showOnBottom) {
     & .tooltip {
       bottom: auto;
-      top: calc(100% + 10px);
+      top: calc(100% + 16px);
 
       & .tooltipArrow {
         bottom: auto;
-        top: -16px;
+        top: -20px;
         transform: rotate(90deg);
       }
     }
@@ -39,11 +38,11 @@
 
   &:global(.showOnTop) {
     & .tooltip {
-      bottom: calc(100% + 10px);
+      bottom: calc(100% + 16px);
       top: auto;
 
       & .tooltipArrow {
-        bottom: -16px;
+        bottom: -20px;
         top: auto;
         transform: rotate(-90deg);
       }
@@ -81,10 +80,10 @@
   box-shadow: var(--box-shadow-standard);
   box-sizing: border-box;
   color: var(--color-slate-gray);
-  left: calc(var(--info-icon-size) * 2);
+  left: calc(100% + 15px);
   max-width: 380px;
   opacity: 0;
-  padding: 24px;
+  padding: 20px;
   position: absolute;
   text-align: left;
   top: 50%;
@@ -98,13 +97,13 @@
 
   & .tooltipArrow {
     color: var(--color-white);
-    height: 27px;
-    left: -var(--tooltip-arrow-size);
+    height: 28px;
+    left: -12px;
     position: absolute;
     stroke: var(--color-platinum);
     top: 50%;
     transform: translateY(-50%);
-    width: var(--tooltip-arrow-size);
+    width: 13px;
   }
 
   &:global(.shownTooltip) {
