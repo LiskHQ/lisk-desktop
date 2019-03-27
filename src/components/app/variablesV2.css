@@ -67,17 +67,13 @@ or "warn/action" ineastd of "red/green"
         Sizes
   *************************/
   --border-radius-standard: 3px;
+  --border-radius-box: 6px;
   --header-height-m: 100px;
   --header-height-s: 72px;
   --header-height-xs: 60px;
   --header-elements-height: 32px;
   --header-logo-size: 56px;
   --search-box-width-l: 597px;
-
-  /*************************
-        Radious
-  *************************/
-  --border-radius-box: 6px;
 
   /*************************
         Padding

@@ -15,8 +15,8 @@
 
   & .icon {
     display: block;
-    height: 24px;
-    width: 24px;
+    height: 48px;
+    width: 48px;
   }
 
   & .value {
@@ -58,36 +58,6 @@
 
     &:last-child {
       margin-bottom: 0;
-    }
-
-    &:first-child {
-      flex-direction: column;
-
-      & .icon {
-        height: auto;
-        width: auto;
-      }
-
-      & .info {
-        margin: 0;
-        text-align: center;
-      }
-
-      & .label {
-        font-size: var(--paragraph-font-size-s);
-        line-height: 1.79;
-        order: 2;
-      }
-
-      & .value {
-        font-size: var(--subtitle-font-size);
-        margin-top: 20px;
-        order: 1;
-      }
-
-      & .currency {
-        font-size: var(--paragraph-font-size-s);
-      }
     }
   }
 }
