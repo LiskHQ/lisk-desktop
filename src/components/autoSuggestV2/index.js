@@ -64,7 +64,9 @@ class AutoSuggest extends React.Component {
       default:
         break;
     }
-    saveSearch(value, id);
+
+    // istanbul ignore else
+    if (this.props.account.address) saveSearch(value, id);
 
     if (!value && [searchEntities.addresses, searchEntities.transactions].filter(entity =>
       entity === type).length > 0) {
@@ -224,6 +226,7 @@ class AutoSuggest extends React.Component {
     this.setState({ show: false });
   }
 
+  // istanbul ignore next
   selectInput() {
     Piwik.trackingEvent('AutoSuggest', 'button', 'Select Input');
     this.inputRef.inputNode.select();
