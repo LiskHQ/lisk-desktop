@@ -44,6 +44,7 @@ class AddAccountTitle extends React.Component {
     const { title } = this.state;
     const { account } = nextProps;
     const username = account && account.delegate && account.delegate.username;
+    /* istanbul ignore next */
     if (username && username !== title.value) {
       this.setState({
         title: {

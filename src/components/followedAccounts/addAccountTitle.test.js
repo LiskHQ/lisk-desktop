@@ -14,10 +14,15 @@ const fakeStore = configureStore();
 describe('Add Account Title Component', () => {
   let wrapper;
   let props;
+  let options;
 
   beforeEach(() => {
     const store = fakeStore({
-      search: { accounts: { [accounts.genesis.address]: {} } },
+      search: {
+        accounts: {
+          [accounts.delegate.address]: { delegate: accounts.delegate.address },
+        },
+      },
       followedAccounts: { acounts: [] },
     });
 
@@ -25,18 +30,19 @@ describe('Add Account Title Component', () => {
 
     props = {
       address: accounts.genesis.address,
-      account: {},
       prevStep: spy(),
       t: key => key,
     };
 
-    wrapper = mount(<AddAccountTitle {...props} />, {
+    options = {
       context: { store, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,
         i18n: PropTypes.object.isRequired,
       },
-    });
+    };
+
+    wrapper = mount(<AddAccountTitle {...props} />, options);
   });
 
   afterEach(() => {
@@ -49,6 +55,15 @@ describe('Add Account Title Component', () => {
 
   it('renders two Button component', () => {
     expect(wrapper.find('Button')).to.have.length(2);
+  });
+
+  it('renders Input with delegate name if account is delegate', () => {
+    props = {
+      address: accounts.delegate.address,
+    };
+    wrapper.setProps(props);
+    wrapper.update();
+    expect(wrapper.find('Input.account-title')).to.have.prop('disabled');
   });
 
   it('accepts empty field', () => {
