@@ -7,6 +7,7 @@ import { hwConstants, LEDGER_COMMANDS, loginType as loginTypesConst } from '../c
 // import { loadingStarted, loadingFinished } from './loading';
 // import signPrefix from '../constants/signPrefix';
 import { getLedgerAccountInfo } from './api/ledger';
+import { getHWAccountInfo } from './api/hwWallet';
 import { getBufferToHex, getTransactionBytes, calculateTxId } from './rawTransactionWrapper';
 
 export const LEDGER_MSG = {
@@ -98,21 +99,22 @@ export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t,
   let accountInfo;
 
   const accounts = [];
+  console.log('loginType', loginType);
   do {
     try {
       switch (loginType) { // eslint-disable-line
         case loginTypesConst.ledger:
           accountInfo = await getLedgerAccountInfo(liskAPIClient, index);
           break;
-        // case loginTypes.trezor:
-        //   this.props.errorToastDisplayed({
-        //   text: this.props.t('Not Yet Implemented. Sorry.'),
-        // });
-        //   break;
-        // default:
-        //   this.props.errorToastDisplayed({
-        //   text: this.props.t('Login Type not recognized.')
-        // });
+        case loginTypesConst.trezor:
+          console.log('WESZLO');
+          accountInfo = await getHWAccountInfo(liskAPIClient, 'deviceId', loginTypesConst.trezor, index);
+
+          break;
+        default:
+          this.props.errorToastDisplayed({
+          text: this.props.t('Login Type not recognized.')
+        });
       }
     } catch (error) {
       return;

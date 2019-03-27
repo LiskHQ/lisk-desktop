@@ -108,6 +108,8 @@
     "snyk": "1.117.1",
     "snyk-nodejs-lockfile-parser": "1.9.1",
     "socket.io-client": "2.2.0",
+    "trezor-connect": "^5.0.33",
+    "trezor.js": "^6.18.2",
     "webpack-merge": "=4.1.5"
   },
   "devDependencies": {

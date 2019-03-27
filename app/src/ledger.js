@@ -3,6 +3,13 @@ import Lisk from 'lisk-elements'; // eslint-disable-line import/no-extraneous-de
 import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api'; // eslint-disable-line import/no-extraneous-dependencies
 import TransportNodeHid from '@ledgerhq/hw-transport-node-hid'; // eslint-disable-line import/no-extraneous-dependencies
 
+import {
+  HWDevice,
+  addConnectedDevices,
+  removeConnectedDeviceByPath,
+  getDeviceByPath,
+} from './hwManager';
+
 import win from './modules/win';
 
 // mock transportnodehid, todo fix this to work also on windows and linux
@@ -45,12 +52,40 @@ const isInsideLedgerApp = async (path) => {
     return false;
   }
 };
+
+const createLedgerHWDevice = (liskAccount, path) =>
+  new HWDevice(
+    liskAccount.publicKey.substring(0, 10),
+    null,
+    'Ledger Nano S',
+    path,
+  );
+
+const getLiskAccount = async (path) => {
+  let transport;
+  try {
+    transport = await TransportNodeHid.open(path);
+    const liskLedger = new DposLedger(transport);
+    const ledgerAccount = getLedgerAccount(0);
+    const liskAccount = await liskLedger.getPubKey(ledgerAccount);
+    transport.close();
+    return liskAccount;
+  } catch (e) {
+    if (transport) transport.close();
+    return null;
+  }
+};
+
 const ledgerObserver = {
   next: async ({ device, type }) => {
     if (device) {
       if (type === 'add') {
         if (process.platform !== 'linux' || await isInsideLedgerApp(device.path)) {
-          ledgerPath = device.path;
+          const liskAccount = await getLiskAccount(device.path);
+          const ledgerDevice = createLedgerHWDevice(liskAccount, device.path);
+          addConnectedDevices(ledgerDevice);
+
+          // ledgerPath = device.path;
           win.send({ event: 'ledgerConnected', value: null });
         }
       } else if (type === 'remove') {
