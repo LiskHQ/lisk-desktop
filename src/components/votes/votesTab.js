@@ -10,6 +10,7 @@ import SpinnerV2 from '../spinnerV2/spinnerV2';
 import { InputV2 } from '../toolbox/inputsV2';
 import LiskAmount from '../liskAmount';
 import routes from '../../constants/routes';
+import actionTypes from '../../constants/actions';
 import styles from './votesTab.css';
 
 class VotesTab extends React.Component {
@@ -90,7 +91,8 @@ class VotesTab extends React.Component {
     const { filterValue } = this.state;
     const filteredVotes = votes.filter(vote => RegExp(filterValue, 'i').test(vote.username));
     const canLoadMore = filteredVotes.length > this.state.showing;
-    const isLoading = loading.length > 0 || this.state.isLoading;
+    const isLoading = loading.filter(type => actionTypes.searchVotes === type).length > 0
+      || this.state.isLoading;
 
     return (
       <BoxV2 className={`${styles.wrapper}`}>
