@@ -26,7 +26,7 @@
 
   &:focus,
   &:hover {
-    background: color(var(--color-ultramarine-blue) + l(+4%)) !important;
+    background: color(var(--color-ultramarine-blue) l(+4%)) !important;
     box-shadow: 3px 3px 10px 0 rgba(61, 113, 255, 0.36) !important;
   }
 }
@@ -45,6 +45,17 @@
   background-color: transparent !important;
   border: solid 1px var(--dark-border-color);
   color: var(--color-maastricht-blue) !important;
+
+  &:global(.light) {
+    color: var(--color-white) !important;
+    border-color: var(--light-border-color) !important;
+
+    &:focus,
+    &:hover {
+      border-color: color(var(--light-border-color) a(58%)) !important;
+      color: var(--color-white) !important;
+    }
+  }
 
   &:focus,
   &:hover {

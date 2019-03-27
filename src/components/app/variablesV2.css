@@ -67,10 +67,11 @@ or "warn/action" ineastd of "red/green"
         Sizes
   *************************/
   --border-radius-standard: 3px;
-  --header-height-m: 100px;
-  --header-height-s: 72px;
-  --header-height-xs: 60px;
-  --header-elements-height: 32px;
+  --header-height: 72px;
+  --header-height-m: var(--header-height);
+  --header-height-s: var(--header-height);
+  --header-height-xs: var(--header-height);
+  --header-elements-height: 36px;
   --header-logo-size: 56px;
   --search-box-width-l: 597px;
 
@@ -85,7 +86,7 @@ or "warn/action" ineastd of "red/green"
   --header-padding: 0 32px;
 
   /*************************
-        Colors
+      Base Colors
   *************************/
   --color-ultramarine-blue: #4070f4;
   --color-maastricht-blue: #0c152e;
@@ -151,6 +152,7 @@ or "warn/action" ineastd of "red/green"
   *************************/
   --transition-button:
     background-color var(--animation-speed-fast) ease-in-out,
+    border-color var(--animation-speed-fast) ease-in-out,
     box-shadow var(--animation-speed-fast) ease-in-out,
     color var(--animation-speed-fast) ease-in-out;
 
