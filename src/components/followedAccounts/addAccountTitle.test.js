@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import AddAccountTitle from './addAccountTitle';
 import * as followedAccounts from '../../actions/followedAccounts';
+import accounts from '../../../test/constants/accounts';
 
 const fakeStore = configureStore();
 
@@ -15,12 +16,16 @@ describe('Add Account Title Component', () => {
   let props;
 
   beforeEach(() => {
-    const store = fakeStore({});
+    const store = fakeStore({
+      search: { accounts: { [accounts.genesis.address]: {} } },
+      followedAccounts: { acounts: [] },
+    });
 
     spy(followedAccounts, 'followedAccountAdded');
 
     props = {
-      address: '16313739661670634666L',
+      address: accounts.genesis.address,
+      account: {},
       prevStep: spy(),
       t: key => key,
     };
@@ -65,8 +70,9 @@ describe('Add Account Title Component', () => {
     wrapper.find('.account-title input').simulate('change', { target: { value: 'some title' } });
     wrapper.find('.next').first().simulate('click');
     expect(followedAccounts.followedAccountAdded).to.have.been.calledWith({
-      address: '16313739661670634666L',
+      address: accounts.genesis.address,
       title: 'some title',
+      isDelegate: false,
     });
   });
 });

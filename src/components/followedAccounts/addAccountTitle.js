@@ -99,8 +99,8 @@ const mapStateToProps = (state, ownProps) => ({
   accounts: state.followedAccounts.accounts,
 });
 
-const mapDispatchToProps = {
-  addAccount: followedAccountAdded,
-};
+const mapDispatchToProps = dispatch => ({
+  addAccount: data => dispatch(followedAccountAdded(data)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(AddAccountTitle));
