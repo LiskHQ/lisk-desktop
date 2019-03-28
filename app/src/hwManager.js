@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import win from './modules/win';
 import { createCommand } from './utils';
 import { executeLedgerCommand } from './ledger';

@@ -1,4 +1,6 @@
 /* eslint-disable no-bitwise */
+/* eslint-disable */
+
 import { ipcMain } from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
 import win from './modules/win';
 import {

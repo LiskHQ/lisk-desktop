@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { isBrowser } from 'browser-or-node';
 import isElectron from 'is-electron';
 import TransportU2F from '@ledgerhq/hw-transport-u2f';

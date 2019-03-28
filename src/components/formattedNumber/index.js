@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from 'react';
 // import numeral from 'numeral';
 // import * as locales from 'numeral/locales'; // eslint-disable-line
