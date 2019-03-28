@@ -62,36 +62,93 @@ describe('Wallet', () => {
 });
 
 describe('Transaction list filtering', () => {
-  it('Filter by Date', () => {
+  it('Filter by 2 Dates, clear 1 filter to filter by 1 Date', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.wallet);
     cy.get(ss.filterTransactionsBtn).click();
-    cy.get(ss.dateFromInput).type('23.10.18');
-    cy.get(ss.dateToInput).type('24.10.18');
+    cy.get(ss.dateFromInputFilter).type('25.05.16');
+    cy.get(ss.dateToInputFilter).type('26.05.16');
     cy.get(ss.applyFilters).click();
     cy.get(ss.transactionRow).should('have.length', 0);
-    cy.get(ss.filter).contains('23').parent().find(ss.clearFilterBtn)
+    cy.get(ss.filter).contains('25').parent().find(ss.clearFilterBtn)
       .click();
-    cy.get(ss.transactionRow).should('not.have.length', 0);
+    cy.get(ss.transactionRow).should('have.length', 2);
   });
 
   it('Date validation error', () => {
-
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.wallet);
+    cy.get(ss.filterTransactionsBtn).click();
+    cy.get(ss.dateFromInputFilter).type('45.43.54');
+    cy.get(ss.filterDropdown).contains('Date must be in DD.MM.YY format');
+    cy.get(ss.applyFilters).should('be.disabled');
   });
 
-  it('Filter by Amount', () => {
+  it('Filter by 1 Amount, add second filter by 1 Amount', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.wallet);
+    cy.get(ss.filterTransactionsBtn).click();
+    cy.get(ss.amountFromInputFilter).type('4800');
+    cy.get(ss.applyFilters).click();
+    cy.get(ss.transactionRow).should('have.length', 4);
+    cy.get(ss.filterTransactionsBtn).click();
+    cy.get(ss.amountToInputFilter).type('4900');
+    cy.get(ss.applyFilters).click();
+    cy.get(ss.transactionRow).should('have.length', 2);
   });
 
   it('Amount validation error', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.wallet);
+    cy.get(ss.filterTransactionsBtn).click();
+    cy.get(ss.amountFromInputFilter).type('2');
+    cy.get(ss.amountToInputFilter).type('1');
+    cy.get(ss.filterDropdown).contains('Max amount must be greater than Min amount');
+    cy.get(ss.applyFilters).should('be.disabled');
   });
 
   it('Filter by Message', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.send);
+    cy.get(ss.recipientInput).type(accounts.genesis.address);
+    cy.get(ss.referenceInput).click().type('filter');
+    cy.get(ss.amountInput).click().type('1');
+    cy.get(ss.nextTransferBtn).click();
+    cy.get(ss.sendBtn).click();
+    cy.get(ss.okayBtn).click();
+    // TODO Update blockchain snapshot to use pre-created tx with message
+    cy.get(ss.filterTransactionsBtn).click();
+    cy.get(ss.messageInputFilter).type('filter');
+    cy.get(ss.applyFilters).click();
+    cy.get(ss.transactionRow).should('have.length', 1);
   });
 
   it('Message validation error', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.wallet);
+    cy.get(ss.filterTransactionsBtn).click();
+    cy.get(ss.messageInputFilter).type(new Array(66).join('a'));
+    cy.get(ss.filterDropdown).contains('Maximum length exceeded');
+    cy.get(ss.applyFilters).should('be.disabled');
   });
 
-  it('Filter by all filters combined', () => {
+  xit('Filter by all filters combined, clear all filters', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.send);
+    cy.get(ss.recipientInput).type(accounts.genesis.address);
+    cy.get(ss.referenceInput).click().type('catch');
+    cy.get(ss.amountInput).click().type('33');
+    cy.get(ss.nextTransferBtn).click();
+    cy.get(ss.sendBtn).click();
+    cy.get(ss.okayBtn).click();
+    // TODO Update blockchain snapshot to use pre-created tx with message
+    cy.get(ss.filterTransactionsBtn).click();
+    cy.get(ss.dateFromInputFilter).type('25.05.16');
+    cy.get(ss.dateToInputFilter).type('26.05.16');
+    cy.get(ss.amountFromInputFilter).type('33');
+    cy.get(ss.amountToInputFilter).type('33');
+    cy.get(ss.applyFilters).click();
+    cy.get(ss.transactionRow).should('have.length', 1);
   });
 
   it('Incoming/Outgoing applies to filter results', () => {
