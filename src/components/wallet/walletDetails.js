@@ -45,19 +45,18 @@ class walletDetails extends React.Component {
           <h1>{t('My Wallet Details')}</h1>
         </header>
         <div className={`${styles.content}`}>
-          <div className={`${styles.details} account-balance`}>
+          <div>
             <img className={`${styles.icon}`} src={svg.iconWalletDetails} />
-            <div className={`${styles.info}`}>
-              <span className={`${styles.label}`}>{t('Account Balance')}</span>
-              <span className={`${styles.value}`}>
-                <LiskAmount val={balance} />
-                <span className={`${styles.currency}`}> {t('LSK')}</span>
-              </span>
-            </div>
           </div>
-          <div className={`${styles.details} last-transaction`}>
-            <div className={`${styles.info}`}>
-              <span className={`${styles.label}`}>{t('Last Transaction')}</span>
+          <div className={`${styles.info} account-balance`}>
+            <span className={`${styles.value}`}>
+              <LiskAmount val={balance} />
+              <span className={`${styles.currency}`}> {t('LSK')}</span>
+            </span>
+            <span className={`${styles.label}`}>{t('Account Balance')}</span>
+          </div>
+          <div>
+            <div className={`${styles.info} last-transaction`}>
               <span className={`${styles.value}`}>
               {lastTx.tx && lastTx.tx.id ? (
                 <React.Fragment>
@@ -66,11 +65,9 @@ class walletDetails extends React.Component {
                 </React.Fragment>
               ) : '-'}
               </span>
+              <span className={`${styles.label}`}>{t('Last Transaction')}</span>
             </div>
-          </div>
-          <div className={`${styles.details} last-visit`}>
-            <div className={`${styles.info}`}>
-              <span className={`${styles.label}`}>{t('Since Last Login')}</span>
+            <div className={`${styles.info} last-visit`}>
               <span className={`${styles.value}`}>
               {lastVisitDifference !== '-' ? (
                 <React.Fragment>
@@ -79,6 +76,7 @@ class walletDetails extends React.Component {
                 </React.Fragment>
               ) : '-'}
               </span>
+              <span className={`${styles.label}`}>{t('Since Last Login')}</span>
             </div>
           </div>
         </div>

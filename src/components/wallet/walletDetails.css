@@ -1,8 +1,8 @@
 @import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
 .wrapper {
   display: flex;
-  height: 330px;
   margin-bottom: 12px;
   padding: 0;
 }
@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  padding: 16px;
+  padding: 0 10px;
 
   & .icon {
     display: block;
@@ -19,45 +19,51 @@
     width: 48px;
   }
 
-  & .value {
-    color: var(--color-content-light);
-    font-family: var(--heading-font);
-    font-size: var(--paragraph-font-size-s);
-    font-weight: var(--font-weight-bold);
-    order: 2;
+  & > div {
+    border-bottom: 1px solid var(--color-platinum);
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
 
-    & .currency {
-      color: var(--color-dark-gray);
-      font-family: var(--heading-font);
-      font-size: var(--button-font-size-s);
-      font-weight: var(--font-weight-bold);
+    &:last-child {
+      border-bottom: 0 none;
     }
-  }
-
-  & .label {
-    color: var(--color-dark-gray);
-    font-family: var(--content-font);
-    font-size: var(--button-font-size-s);
-    font-weight: var(--font-weight-semi-bold);
-    letter-spacing: 0.2px;
-    margin: 2px 0;
-    order: 1;
   }
 
   & .info {
+    align-items: center;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    margin-left: 10px;
+    position: relative;
+
+    &:global(.account-balance) {
+      &:after {
+        background-color: var(--color-ultramarine-blue);
+        border-radius: 1px;
+        bottom: 0;
+        content: '';
+        height: 2px;
+        left: calc(50% - 22px);
+        position: absolute;
+        width: 44px;
+      }
+    }
+
+    & + .info {
+      border-left: 1px solid var(--color-platinum);
+    }
   }
 
-  & .details {
-    align-items: center;
-    display: flex;
-    margin: 12px 0;
+  & .value {
+    @mixin headingSmall;
 
-    &:last-child {
-      margin-bottom: 0;
-    }
+    color: var(--color-maastricht-blue);
+  }
+
+  & .label {
+    @mixin contentSmall;
+
+    color: var(--color-slate-gray)
   }
 }
