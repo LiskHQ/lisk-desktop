@@ -20,11 +20,12 @@ export const graphOptions = format => ({
       time: {
         minUnit: 'day',
       },
-      distribution: 'series',
+      distribution: 'linear',
       ticks: {
         fontColor: '#7383a7',
         fontSize: 12,
         fontFamily: '\'gilroy-regular\', sans-serif',
+        maxRotation: 0,
       },
       gridLines: {
         display: false,
