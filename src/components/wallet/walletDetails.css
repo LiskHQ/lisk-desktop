@@ -38,7 +38,7 @@
     position: relative;
 
     &:global(.account-balance) {
-      &:after {
+      &::after {
         background-color: var(--color-ultramarine-blue);
         border-radius: 1px;
         bottom: 0;
@@ -64,6 +64,6 @@
   & .label {
     @mixin contentSmall;
 
-    color: var(--color-slate-gray)
+    color: var(--color-slate-gray);
   }
 }
