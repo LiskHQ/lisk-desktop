@@ -32,7 +32,9 @@ describe('SearchBar', () => {
       push: spy(),
     };
     props = {
-      account: {},
+      account: {
+        afterLogout: false,
+      },
       history,
       t: () => {},
       searchSuggestions: () => {},

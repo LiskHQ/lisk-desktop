@@ -25,7 +25,12 @@ class AutoSuggest extends React.Component {
       selectedIdx: -1,
       resultsLength: 0,
       placeholder: '',
+      cleared: true,
     };
+  }
+
+  componentDidMount() {
+    this.resetSearch();
   }
 
   componentDidUpdate() {
@@ -35,6 +40,7 @@ class AutoSuggest extends React.Component {
     }
   }
 
+  // eslint-disable-next-line max-statements
   componentWillReceiveProps(nextProps) {
     this.selectedRow = null;
     const resultsLength = Object.keys(searchEntities).reduce((total, resultKey) =>
@@ -46,6 +52,11 @@ class AutoSuggest extends React.Component {
       selectedIdx = 0;
     }
     this.setState({ resultsLength, selectedIdx, placeholder });
+
+    if (nextProps.account && nextProps.account.afterLogout === this.state.cleared) {
+      this.resetSearch();
+      this.setState({ cleared: false });
+    }
   }
 
   // eslint-disable-next-line max-statements
@@ -65,8 +76,7 @@ class AutoSuggest extends React.Component {
         break;
     }
 
-    // istanbul ignore else
-    if (this.props.account.address) saveSearch(value, id);
+    saveSearch(value, id);
 
     if (!value && [searchEntities.addresses, searchEntities.transactions].filter(entity =>
       entity === type).length > 0) {

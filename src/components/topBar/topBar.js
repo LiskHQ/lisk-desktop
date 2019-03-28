@@ -7,7 +7,6 @@ import UserAccount from './userAccount';
 import NavigationButton from './navigationButtons';
 import Piwik from '../../utils/piwik';
 import menuLinks from './constants';
-import localJSONStorage from './../../utils/localJSONStorage';
 import styles from './topBar.css';
 
 import liskLogo from '../../assets/images/lisk-logo-v2.svg';
@@ -28,7 +27,6 @@ class TopBar extends React.Component {
 
   onLogout() {
     Piwik.trackingEvent('Header', 'button', 'Open logout dialog');
-    localJSONStorage.set('searches', []);
     this.props.logOut();
     this.props.history.replace(`${routes.dashboard.path}`);
   }
