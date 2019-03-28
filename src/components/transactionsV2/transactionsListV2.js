@@ -32,7 +32,9 @@ class TransactionsListV2 extends React.Component {
       return !(isFilterIncoming && (isTypeNonSend || isAccountInit));
     };
 
-    const isLoading = loading.length > 0;
+    const isLoading = loading.filter(type =>
+      [actionTypes.transactionsRequested, actionTypes.transactionsFilterSet]
+        .includes(type)).length > 0;
     const spinnerClass = loading.includes(actionTypes.transactionsRequested)
       ? styles.bottom : styles.top;
 
