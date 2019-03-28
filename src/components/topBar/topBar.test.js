@@ -1,4 +1,5 @@
 import React from 'react';
+import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
@@ -23,6 +24,7 @@ describe('TopBar', () => {
     logOut: sinon.spy(),
     history: {
       replace: () => {},
+      push: sinon.spy(),
     },
     suggestions: {
       addresses: [],
@@ -30,8 +32,8 @@ describe('TopBar', () => {
       delegates: [],
     },
     transactions: [],
-    searchSuggestions: jest.fn(),
-    clearSearchSuggestions: jest.fn(),
+    searchSuggestions: sinon.spy(),
+    clearSearchSuggestions: sinon.spy(),
   };
 
   const history = {
@@ -41,7 +43,7 @@ describe('TopBar', () => {
     replace: () => {},
   };
 
-  const store = configureStore({
+  const store = configureStore([thunk])({
     account: {
       address: '12345L',
       balance: 120,
@@ -55,8 +57,6 @@ describe('TopBar', () => {
         delegates: [],
       },
     },
-    searchSuggestions: jest.fn(),
-    clearSearchSuggestions: jest.fn(),
   });
 
   const myOptions = {
@@ -116,5 +116,15 @@ describe('TopBar', () => {
     myProps.account = {};
     wrapper = mountWithRouter(<TopBar {...myProps} />, myOptions);
     expect(wrapper.find('.signIn')).to.have.length(1);
+  });
+
+  it('renders the search component when user do click in the search icon', () => {
+    expect(wrapper.find('.search-icon')).to.have.length(1);
+    expect(wrapper.find('DropdownV2').at(0)).not.have.className('show');
+    wrapper.find('.search-icon').simulate('click');
+    expect(wrapper.find('DropdownV2').at(0)).to.have.className('show');
+    wrapper.find('.search-icon').simulate('click');
+    expect(wrapper.find('DropdownV2').at(0)).not.have.className('show');
+    wrapper.find('.topbar-logo').simulate('click');
   });
 });

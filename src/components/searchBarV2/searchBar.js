@@ -5,7 +5,6 @@ import Delegates from './delegates';
 import Transactions from './transactions';
 import ProgressBar from '../toolbox/progressBar/progressBar';
 import routes from './../../constants/routes';
-import regex from './../../utils/regex';
 import styles from './searchBar.css';
 
 class SearchBar extends React.Component {

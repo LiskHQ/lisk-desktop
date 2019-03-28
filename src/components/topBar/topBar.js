@@ -89,7 +89,7 @@ class TopBar extends React.Component {
     return (
       <div className={`${styles.wrapper} top-bar`}>
         <div className={styles.elements}>
-          <img src={liskLogo} />
+          <img src={liskLogo} className={'topbar-logo'}/>
           <MenuItems
             isUserLogout={isUserLogout}
             items={items}
@@ -124,6 +124,7 @@ class TopBar extends React.Component {
 
           <div className={styles.searchButton}>
             <img
+              className={'search-icon'}
               onClick={this.onSearchClick}
               src={isSearchDropdownEnable ? svg.search_icon_active : svg.search_icon_inactive}
             />
