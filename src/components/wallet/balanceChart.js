@@ -10,7 +10,7 @@ class BalanceGraph extends React.Component {
     const {
       t, transactions, balance, address,
     } = this.props;
-    const format = 'MMMM DD YYYY';
+    const format = ChartUtils.getChartDateFormat(transactions);
 
     const data = ChartUtils.getBalanceData.bind(null, {
       transactions,

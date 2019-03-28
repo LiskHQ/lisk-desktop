@@ -2,6 +2,17 @@ import moment from 'moment';
 import { fromRawLsk } from './lsk';
 import { getUnixTimestampFromValue } from './datetime';
 
+const formats = {
+  second: 'MMM DD YYYY hh:mm:ss',
+  minute: 'MMM DD YYYY hh:mm',
+  hour: 'MMM DD YYYY hh',
+  day: 'MMM DD YYYY',
+  month: 'MMM YYYY',
+};
+
+const getUnitFromFormat = format =>
+  Object.keys(formats).find(key => formats[key] === format);
+
 export const graphOptions = format => ({
   plugins: {
     hideAxisX: false,
@@ -18,9 +29,9 @@ export const graphOptions = format => ({
       display: true,
       type: 'time',
       time: {
-        minUnit: 'day',
+        unit: getUnitFromFormat(format),
       },
-      distribution: 'linear',
+      distribution: 'series',
       ticks: {
         fontColor: '#7383a7',
         fontSize: 12,
@@ -87,6 +98,20 @@ export const graphOptions = format => ({
     caretSize: 15,
   },
 });
+
+export const getChartDateFormat = (transactions) => {
+  const last = transactions.length
+    && moment(getUnixTimestampFromValue(transactions.slice(-1)[0].timestamp));
+  const first = transactions.length
+    && moment(getUnixTimestampFromValue(transactions[0].timestamp));
+  if (!first || !last) return '';
+  let format = formats.month;
+  if (last.format(format) === first.format(format)) format = formats.day;
+  if (last.format(format) === first.format(format)) format = formats.hour;
+  if (last.format(format) === first.format(format)) format = formats.minute;
+  if (last.format(format) === first.format(format)) format = formats.second;
+  return format;
+};
 
 /**
  * Returns value in interger format of the amount that was added or subtracted from the balance
