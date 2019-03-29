@@ -102,7 +102,7 @@ export const graphOptions = format => ({
 export const getChartDateFormat = (transactions) => {
   const last = moment();
   const first = transactions.length
-    && moment(getUnixTimestampFromValue(transactions[0].timestamp));
+    && moment(getUnixTimestampFromValue(transactions.slice(-1)[0].timestamp));
   if (!first || !last) return '';
   let format = formats.month;
   if (last.format(format) === first.format(format)) format = formats.day;
