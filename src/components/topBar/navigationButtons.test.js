@@ -44,6 +44,8 @@ describe('Form', () => {
       },
     });
     wrapper.update();
+    wrapper.find('.go-forward').simulate('click');
+    expect(props.history.goForward).toBeCalled();
     wrapper.find('.go-back').simulate('click');
     expect(props.history.goBack).toBeCalled();
   });
@@ -60,19 +62,15 @@ describe('Form', () => {
       },
     });
     wrapper.update();
-    wrapper.find('.go-back').simulate('click');
-    expect(props.history.goBack).toBeCalled();
     wrapper.find('.go-forward').simulate('click');
     expect(props.history.goForward).toBeCalled();
   });
 
   it('should reset the navigation if user logout', () => {
-    wrapper.find('.go-back').simulate('click');
-    expect(props.history.goBack).not.toBeCalled();
-    wrapper.find('.go-forward').simulate('click');
-    expect(props.history.goForward).not.toBeCalled();
-
     wrapper.setProps({
+      account: {
+        afterLogout: true,
+      },
       history: {
         ...props.history,
         length: 3,
@@ -80,28 +78,9 @@ describe('Form', () => {
     });
     wrapper.update();
 
-    wrapper.find('.go-back').simulate('click');
-    expect(props.history.goBack).toBeCalled();
     wrapper.find('.go-forward').simulate('click');
     expect(props.history.goForward).toBeCalled();
-
-    props.history.goBack.mockReset();
-    props.history.goForward.mockReset();
-
-    wrapper.setProps({
-      account: {
-        afterLogout: true,
-      },
-      history: {
-        ...props.history,
-        length: 1,
-      },
-    });
-    wrapper.update();
-
     wrapper.find('.go-back').simulate('click');
-    expect(props.history.goBack).not.toBeCalled();
-    wrapper.find('.go-forward').simulate('click');
-    expect(props.history.goForward).not.toBeCalled();
+    expect(props.history.goBack).toBeCalled();
   });
 });

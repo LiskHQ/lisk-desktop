@@ -55,6 +55,7 @@ describe('Follow Account Component', () => {
         address: props.address,
         balance: props.balance,
         title: evt.target.value,
+        isDelegate: false,
       };
       wrapper.find('input[name="accountName"]').simulate('change', evt);
       expect(wrapper.find('.fieldInput')).toContainMatchingElement('SpinnerV2.show');

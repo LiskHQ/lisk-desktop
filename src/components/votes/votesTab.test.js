@@ -5,6 +5,7 @@ import i18n from '../../i18n';
 import accounts from '../../../test/constants/accounts';
 import routes from '../../constants/routes';
 import VotesTab from './votesTab';
+import actionTypes from '../../constants/actions';
 
 describe('Votes Tab Component', () => {
   let wrapper;
@@ -33,7 +34,7 @@ describe('Votes Tab Component', () => {
   });
 
   it('Should show loading state', () => {
-    wrapper = setup({ ...props, loading: ['loading'] });
+    wrapper = setup({ ...props, loading: [actionTypes.searchVotes] });
     expect(wrapper).toContainMatchingElement('.loadingSpinner');
   });
 
