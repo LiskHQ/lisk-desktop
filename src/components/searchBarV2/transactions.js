@@ -40,7 +40,7 @@ const Transactions = (props) => {
             onClick={() => props.onSelectedRow(transaction.id, 'transaction')}
           >
             <img src={selectTransactionType(transaction.type)} />
-            <span className={styles.transactionId}>{transaction.id}</span>
+            <span className={`${styles.transactionId} transaction-id`}>{transaction.id}</span>
             <span className={styles.transactionMessage}>{Object.entries(transaction.asset).length ? transaction.asset.data : ''}</span>
           </div>
         ))

@@ -67,7 +67,7 @@ class TopBar extends React.Component {
       document.removeEventListener('click', this.onSearchClickOutside, false);
     }
 
-    this.setState(prevState => ({ isSearchDropdownEnable: !prevState.isSearchDropdownEnable }));
+    this.setState({ isSearchDropdownEnable: !this.state.isSearchDropdownEnable });
   }
 
   onSearchClickOutside(e) {

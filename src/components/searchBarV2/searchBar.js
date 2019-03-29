@@ -63,7 +63,7 @@ class SearchBar extends React.Component {
     const { searchTextValue, isLoading } = this.state;
     const { t, suggestions, setSearchBarRef } = this.props;
     const isSearchTextError = searchTextValue.length && searchTextValue.length < 3;
-    const isEmptyResults = !suggestions.addresses.length
+    const isEmptyResults = !isLoading && !suggestions.addresses.length
     && !suggestions.delegates.length
     && !suggestions.transactions.length
     && searchTextValue.length
@@ -83,12 +83,12 @@ class SearchBar extends React.Component {
         <div className={`${styles.searchMessage} ${(isSearchTextError || isEmptyResults) && styles.searchMessageError} search-message`}>
           <span className={styles.errorMessage}>
             {isSearchTextError ? t('Type at least 3 characters') : null}
-            {(isEmptyResults && !isLoading) ? t('No results found.') : null}
+            {(isEmptyResults) ? t('No results found.') : null}
           </span>
         </div>
 
         {
-          suggestions.addresses.length
+          suggestions.addresses.length && !isLoading
           ? (<Accounts
               accounts={suggestions.addresses}
               onSelectedRow={this.onSelectedRow}
@@ -96,7 +96,7 @@ class SearchBar extends React.Component {
           : null
         }
         {
-          suggestions.delegates.length
+          suggestions.delegates.length && !isLoading
           ? (<Delegates
               delegates={suggestions.delegates}
               onSelectedRow={this.onSelectedRow}
@@ -104,7 +104,7 @@ class SearchBar extends React.Component {
           : null
         }
         {
-          suggestions.transactions.length
+          suggestions.transactions.length && !isLoading
           ? (<Transactions
               transactions={suggestions.transactions}
               onSelectedRow={this.onSelectedRow}

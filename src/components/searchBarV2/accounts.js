@@ -22,12 +22,12 @@ const Accounts = props => (
         >
           <AccountVisual address={account.address} size={30} />
           <div className={styles.accountInformation}>
-            <span className={styles.accountTitle}>
+            <span className={`${styles.accountTitle} account-title`}>
               {account.title ? account.title : account.address}
             </span>
             {
               account.title
-              ? <span className={styles.accountTitle}>{account.address}</span>
+              ? <span className={`${styles.accountTitle} account-subtitle`}>{account.address}</span>
               : null
             }
           </div>

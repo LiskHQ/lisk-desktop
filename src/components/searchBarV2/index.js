@@ -2,8 +2,7 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import SeaarchBar from './searchBar';
-import { searchSuggestions } from './../../actions/search';
-import actionTypes from './../../constants/actions';
+import { searchSuggestions, clearSearchSuggestions } from './../../actions/search';
 
 const mapStateToProps = state => ({
   suggestions: state.search.suggestions,
@@ -11,10 +10,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   searchSuggestions,
-  clearSearchSuggestions: data => ({
-    data,
-    type: actionTypes.searchClearSuggestions,
-  }),
+  clearSearchSuggestions,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)((translate()(SeaarchBar)));

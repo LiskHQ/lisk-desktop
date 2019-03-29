@@ -22,7 +22,7 @@ const Delegates = props => (
           <AccountVisual address={delegate.account.address} size={30} />
           <div className={styles.accountInformation}>
             <div>
-              <span className={styles.accountTitle}>{delegate.username}</span>
+              <span className={`${styles.accountTitle} delegate-name`}>{delegate.username}</span>
               <span className={styles.tag}>{`#${delegate.rank} ${props.t('Delegate')}`}</span>
             </div>
             <span className={styles.accountSubtitle}>{delegate.rewards}</span>

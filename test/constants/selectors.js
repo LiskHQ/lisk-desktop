@@ -27,7 +27,7 @@ const ss = {
   accountAddress: '.copy-title',
   selectionVotingNumber: '.selection h4',
   totalVotingNumber: '.total h4',
-  searchInput: '#autosuggest-input',
+  // searchInput: '#autosuggest-input',
   showMoreVotesBtn: '.show-votes',
   leftBlockAccountExplorer: '.explorer-account-left-block',
   amountInput: '.amount input',
@@ -173,6 +173,8 @@ const ss = {
   walletOnboardingClose: '.wallet-onboarding .banner-close',
   requestDropdown: '.request-dropdown',
   termsOfUse: '.accept-terms',
+  searchIcon: '.search-icon',
+  searchInput: '.search-input',
 };
 
 export default ss;
