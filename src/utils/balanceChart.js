@@ -153,7 +153,7 @@ export const getBalanceData = ({
 
   const data = transactions.reduce((balances, tx) => {
     const txValue = getTxValue(tx, address);
-    const txDate = new Date(getUnixTimestampFromValue(tx.timestamp));
+    const txDate = tx.timestamp ? new Date(getUnixTimestampFromValue(tx.timestamp)) : new Date();
     const lastBalance = balances.slice(-1)[0];
     const tmpBalances = moment(lastBalance.x).format(format) === moment(txDate).format(format)
       ? balances.slice(0, -1) : balances;
