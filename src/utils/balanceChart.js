@@ -31,7 +31,7 @@ export const graphOptions = format => ({
       time: {
         unit: getUnitFromFormat(format),
       },
-      distribution: 'series',
+      distribution: 'linear',
       ticks: {
         fontColor: '#7383a7',
         fontSize: 12,
@@ -100,8 +100,7 @@ export const graphOptions = format => ({
 });
 
 export const getChartDateFormat = (transactions) => {
-  const last = transactions.length
-    && moment(getUnixTimestampFromValue(transactions.slice(-1)[0].timestamp));
+  const last = moment();
   const first = transactions.length
     && moment(getUnixTimestampFromValue(transactions[0].timestamp));
   if (!first || !last) return '';
@@ -139,8 +138,8 @@ const getGradient = (ctx) => {
 /**
  * Returs balance data grouped by an specific amount
  * @param {Object} param Object containing {
+ *  @param {String} format,
  *  @param {Object[]} transactions,
- *  @param {String} data,
  *  @param {Number} balance,
  *  @param {String} address,
  * }
