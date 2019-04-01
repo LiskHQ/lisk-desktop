@@ -103,7 +103,7 @@ describe('Search', () => {
     cy.get(ss.searchIcon).click();
     cy.get(ss.searchInput).type(`${accounts.delegate.username}`);
     cy.get(ss.searchDelegatesRow).eq(0).click();
-    cy.get(ss.leftBlockAccountExplorer).find(ss.delegateName).should('have.text', accounts.delegate.username);
+    cy.get(ss.accountName).should('have.text', accounts.delegate.username);
   });
 
   /**
@@ -115,7 +115,7 @@ describe('Search', () => {
     cy.get(ss.searchIcon).click();
     cy.get(ss.searchInput).type(`${accounts['mainnet delegate'].address}`);
     cy.get(ss.searchAccountRow).eq(0).click();
-    cy.get(ss.leftBlockAccountExplorer).find(ss.delegateName).should('have.text', accounts['mainnet delegate'].username);
+    cy.get(ss.accountName).should('have.text', accounts['mainnet delegate'].username);
   });
 
   /**
@@ -126,10 +126,9 @@ describe('Search', () => {
     cy.autologin(accounts.genesis.passphrase, networks.mainnet.node);
     cy.visit(urls.dashboard);
     cy.get(ss.searchIcon).click();
-    cy.get(ss.searchInput).type(`${accounts['mainnet delegate'].address}{enter}`);
+    cy.get(ss.searchInput).type(`${accounts['mainnet delegate'].address}`);
     cy.get(ss.searchAccountResults).eq(0).click();
-    cy.wait(2000);
-    cy.get(ss.leftBlockAccountExplorer).find(ss.delegateName).should('have.text', accounts['mainnet delegate'].username);
+    cy.get(ss.accountName).should('have.text', accounts['mainnet delegate'].username);
   });
 
   /**
@@ -155,7 +154,7 @@ describe('Search', () => {
     cy.get(ss.searchIcon).click();
     cy.get(ss.searchInput).type(`${accounts.delegate.address}{enter}`);
     cy.get(ss.searchAccountRow).eq(0).click();
-    cy.get(ss.leftBlockAccountExplorer).find(ss.delegateName).should('have.text', accounts.delegate.username);
+    cy.get(ss.accountName).should('have.text', accounts.delegate.username);
   });
 
   /**
@@ -170,7 +169,7 @@ describe('Search', () => {
     cy.get(ss.searchIcon).click();
     cy.get(ss.searchInput).type(`${accounts.delegate.username}`);
     cy.get(ss.searchDelegetesResults).eq(0).click();
-    cy.get(ss.leftBlockAccountExplorer).find(ss.delegateName).should('have.text', accounts.delegate.username);
+    cy.get(ss.accountName).should('have.text', accounts.delegate.username);
   });
 
   /**

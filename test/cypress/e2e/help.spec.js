@@ -63,7 +63,7 @@ describe('Help', () => {
      * Go through tutorial
      * @expect onBoarding is set to false
      */
-    it('pops up on clean login, go through onboarding', () => {
+    it.skip('pops up on clean login, go through onboarding', () => {
       cy.addObjectToLocalStorage('settings', 'onBoarding', true); // TODO Remove when 1797 is fixed
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit('/');
@@ -101,7 +101,7 @@ describe('Help', () => {
      * Go through tutorial
      * @expect onBoarding is set to false
      */
-    it('link is there if logged in, go through onboarding', () => {
+    it.skip('link is there if logged in, go through onboarding', () => {
       cy.addObjectToLocalStorage('settings', 'onBoarding', false);
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit(urls.help);
@@ -130,7 +130,7 @@ describe('Help', () => {
      * Skip tutorial in the middle
      * @expect onBoarding is set to false
      */
-    it('skip onboarding in the process', () => {
+    it.skip('skip onboarding in the process', () => {
       cy.addObjectToLocalStorage('settings', 'onBoarding', true);
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit('/');
