@@ -58,7 +58,7 @@ describe('DateFieldGroup', () => {
     it('Should handle selectDate on datepicker', () => {
       const newProps = {
         ...props,
-        filter: {
+        filters: {
           ...props.filters,
           dateFrom: '11.03.19',
         },

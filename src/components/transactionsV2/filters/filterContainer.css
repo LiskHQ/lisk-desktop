@@ -3,7 +3,7 @@
 
 .container {
   background-color: var(--color-white);
-  padding: 0 24px;
+  padding: 10px 20px;
 }
 
 .label {

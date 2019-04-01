@@ -62,3 +62,15 @@
     color: var(--color-ultramarine-blue) !important;
   }
 }
+
+@define-mixin buttonTertiaryV2 {
+  background-color: transparent !important;
+  border: none !important;
+  color: var(--color-ultramarine-blue) !important;
+  text-decoration: none;
+
+  &:focus,
+  &:hover {
+    text-decoration: underline;
+  }
+}
