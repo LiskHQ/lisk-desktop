@@ -108,17 +108,8 @@ describe('Transaction list filtering', () => {
   });
 
   it('Filter by Message', () => {
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.send);
-    cy.get(ss.recipientInput).type(accounts.genesis.address);
-    cy.get(ss.referenceInput).click().type('filter');
-    cy.get(ss.amountInput).click().type('1');
-    cy.get(ss.nextTransferBtn).click();
-    cy.get(ss.sendBtn).click();
-    cy.get(ss.okayBtn).click();
-    // TODO Update blockchain snapshot to use pre-created tx with message
     cy.get(ss.filterTransactionsBtn).click();
-    cy.get(ss.messageInputFilter).type('filter');
+    cy.get(ss.messageInputFilter).type('without-initialization');
     cy.get(ss.applyFilters).click();
     cy.get(ss.transactionRow).should('have.length', 1);
   });
@@ -133,20 +124,12 @@ describe('Transaction list filtering', () => {
   });
 
   xit('Filter by all filters combined, clear all filters', () => {
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.send);
-    cy.get(ss.recipientInput).type(accounts.genesis.address);
-    cy.get(ss.referenceInput).click().type('catch');
-    cy.get(ss.amountInput).click().type('33');
-    cy.get(ss.nextTransferBtn).click();
-    cy.get(ss.sendBtn).click();
-    cy.get(ss.okayBtn).click();
-    // TODO Update blockchain snapshot to use pre-created tx with message
     cy.get(ss.filterTransactionsBtn).click();
-    cy.get(ss.dateFromInputFilter).type('25.05.16');
-    cy.get(ss.dateToInputFilter).type('26.05.16');
-    cy.get(ss.amountFromInputFilter).type('33');
-    cy.get(ss.amountToInputFilter).type('33');
+    cy.get(ss.dateFromInputFilter).type('01.04.19');
+    cy.get(ss.dateToInputFilter).type('01.04.19');
+    cy.get(ss.amountFromInputFilter).type('80');
+    cy.get(ss.amountToInputFilter).type('80');
+    cy.get(ss.messageInputFilter).type('second');
     cy.get(ss.applyFilters).click();
     cy.get(ss.transactionRow).should('have.length', 1);
   });
