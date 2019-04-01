@@ -10,8 +10,11 @@ import store from './store';
 import i18n from './i18n'; // initialized i18next instance
 import proxyLogin from './utils/proxyLogin';
 import externalLinks from './utils/externalLinks';
+import localJSONStorage from './utils/localJSONStorage';
+import loadRemoteComponent from './utils/extensions';
 import env from './constants/env';
 import ipcLocale from './utils/ipcLocale';
+import LiskHubExtensions from './utils/liskHubExtensions';
 
 if (env.production) {
   proxyLogin.init();
@@ -42,3 +45,13 @@ if (module.hot) {
 
 applyDeviceClass(document.getElementsByTagName('html')[0], navigator);
 
+window.LiskHubExtensions = LiskHubExtensions;
+
+// TODO multiple URLS
+const url = localJSONStorage.get('url', '');
+
+// urls.forEach((url) => {
+if (url) {
+  loadRemoteComponent(url);
+}
+// });

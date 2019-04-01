@@ -11,15 +11,16 @@ const waitBeforeChangeTabAfterLoading = () => cy.wait(2000); // TODO Update when
 
 function testActivity(open) {
   /**
-   * Scrolling down triggers loading another portion of txs
+   * Clicking show more button triggers loading another portion of txs
    * @expect more txs are present
    */
-  it('25 tx are shown, scrolling loads another 25', () => {
+  it('30 tx are shown, clicking show more loads more transactions', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.dashboard);
     open();
-    cy.get(ss.transactionRow).should('have.length', 25);
-    cy.get(ss.transactoinsTable).scrollTo('bottom');
-    cy.get(ss.transactionRow).should('have.length', 50);
+    cy.get(ss.transactionRow).should('have.length', 30);
+    cy.get(ss.showMoreButton).click();
+    cy.get(ss.transactionRow).should('have.length.greaterThan', 30);
   });
 
   /**
@@ -73,23 +74,17 @@ function testActivity(open) {
 
     /**
      * Maximum possible number of voted accounts is shown
-     * @expect 101 are shown
-     */
-    it('Shows 101 votes', () => {
+     * @expect more votes are present
+   */
+    it('30 votes are shown, clicking show more loads more votes', () => {
+      cy.get(ss.voteRow).should('have.length', 30);
       cy.get(ss.showMoreVotesBtn).click();
-      cy.get(ss.votedAddress).should('have.length', 101);
+      cy.get(ss.voteRow).should('have.length.greaterThan', 30);
     });
 
     it('Filtering votes works', () => {
       cy.get(ss.searchDelegateInput).click().type('genesis_17');
-      cy.get(ss.votedAddress).should('have.length', 1);
-    });
-    /**
-     * Shows voted delegate's nickname, not address
-     * @expect delegate's nickname shown
-     */
-    it('Shows voted delegate nickname instead of address', () => {
-      cy.get(ss.votedAddress).eq(0).should('have.text', 'genesis_1 ');
+      cy.get(ss.voteRow).should('have.length', 1);
     });
 
     /**
@@ -97,8 +92,9 @@ function testActivity(open) {
      * @expect corresponding delegate name is shown on account's page
      */
     it('Click on voted delegate leads to account page', () => {
-      cy.get(ss.votedAddress).eq(0).click();
-      cy.get(ss.delegateName).should('have.text', 'genesis_1');
+      cy.get(ss.searchDelegateInput).click().type('genesis_17');
+      cy.get(ss.voteRow).eq(0).click();
+      cy.get(ss.accountName).should('have.text', 'genesis_17');
     });
   });
 }
@@ -111,35 +107,6 @@ function testDelegateActivity(open) {
     cy.get(ss.delegateStatisticsTab).click();
   });
   describe('Delegate statistics tab', () => {
-    /**
-     * Account info tab is not present for delegate
-     */
-    it('No account info tab is present', () => {
-      cy.get(ss.accountInfoTab).should('not.exist');
-    });
-    /**
-     * Shows voted delegate's nickname not addresses
-     * @expect delegate's nickname shown
-     */
-    it('Shows voted delegate nickname instead of address', () => {
-      cy.get(ss.votedAddress).eq(0).should('have.text', 'genesis_17 ');
-    });
-
-    it('Filtering votes works', () => {
-      cy.get(ss.searchDelegateInput).click().type('genesis_17');
-      cy.get(ss.votedAddress).should('have.length', 1);
-    });
-
-    /**
-     * Click on voted delegate leads to account page
-     * @expect corresponding delegate name is shown on account's page
-     */
-    it('Click on voted delegate leads to account page', () => {
-      cy.get(ss.votedAddress).eq(0).click();
-      cy.get(ss.delegateName).should('have.text', 'genesis_17');
-    });
-
-
     // TODO Unskip after corresponding bugfix
     /**
      * Shows nickname of account on "Who voted for this delegate?"
@@ -150,24 +117,6 @@ function testDelegateActivity(open) {
       cy.get(ss.voterAddress).eq(0).should('have.text', 'genesis_1 ');
     });
 
-    /**
-     * Shows address of account on "Who voted for this delegate?"
-     * list if the account is not a delegate
-     * @expect voters address shown
-     */
-    it('Shows voters address if it is not delegate', () => {
-      cy.get(ss.voterAddress).eq(1).should('have.text', '16313739661670634666L ');
-    });
-
-    /**
-     * Click on voter leads to account page
-     * @expect according delegate name is shown on account's page
-     */
-    it('Click on voter leads to account page', () => {
-      cy.get(ss.voterAddress).eq(1).click();
-      cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', '16313739661670634666L');
-    });
-
     it('Shows statistics', () => {
       cy.get(ss.delegateStatsUptime).contains('100%');
       cy.get(ss.delegateStatsUptime).contains('1');
@@ -175,6 +124,8 @@ function testDelegateActivity(open) {
       cy.get(ss.delegateStatsWeight).contains('100,000,000');
       cy.get(ss.delegateStatsForged).contains('0');
       cy.get(ss.delegateStatsBlocks).contains(/\d/);
+      cy.get(ss.delegateStatsSince).contains(/\d{2}\s\w{3}\s\d{2}/);
+      cy.get(ss.delegateStatsLastBlock).contains(/\d{2}\s\w{3}\s\d{2}/);
     });
   });
 }
@@ -284,7 +235,7 @@ describe('Account Activity opened from search', () => {
   testActivity(() => cy.get(ss.searchInput).click().type(`${accounts.genesis.address}{enter}`));
 });
 
-describe.skip('Wallet Activity for delegate', () => {
+describe('Wallet Activity for delegate', () => {
   testWalletV2(() => cy.visit(urls.wallet), accounts.delegate);
 });
 

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
 import MenuItems from './menuItems';
 import UserAccount from './userAccount';
+import NavigationButton from './navigationButtons';
 import Piwik from '../../utils/piwik';
 import { menuLinks } from './constants';
 import svg from '../../utils/svgIcons';
@@ -79,9 +80,11 @@ class TopBar extends React.Component {
     const { t, showDelegate, account } = this.props;
     const { isSearchDropdownEnable } = this.state;
 
+    const menuItems = menuLinks(t);
+
     const items = showDelegate
-      ? menuLinks
-      : menuLinks.filter(item => item.id !== 'delegates');
+      ? menuItems
+      : menuItems.filter(item => item.id !== 'delegates');
 
     const isUserLogout = Object.keys(account).length === 0 || account.afterLogout;
     const isUserDataFetched = (account.balance) || account.balance === 0;
@@ -90,6 +93,12 @@ class TopBar extends React.Component {
       <div className={`${styles.wrapper} top-bar`}>
         <div className={styles.elements}>
           <img src={liskLogo} className={'topbar-logo'}/>
+
+          <NavigationButton
+            account={this.props.account}
+            history={this.props.history}
+          />
+
           <MenuItems
             isUserLogout={isUserLogout}
             items={items}

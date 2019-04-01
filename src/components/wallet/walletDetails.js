@@ -72,7 +72,7 @@ class walletDetails extends React.Component {
           <div className={`${styles.details} last-visit`}>
             <img className={`${styles.icon}`} src={svg.icon_cal} />
             <div className={`${styles.info}`}>
-              <span className={`${styles.label}`}>{t('Since Last Visit')}</span>
+              <span className={`${styles.label}`}>{t('Since Last Login')}</span>
               <span className={`${styles.value}`}>
               {lastVisitDifference !== '-' ? (
                 <React.Fragment>

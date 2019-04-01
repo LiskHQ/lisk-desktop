@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
 import svg from '../../utils/svgIcons';
-import { FontIcon } from '../fontIcon';
+// import { FontIcon } from '../fontIcon';
 import { InputV2 } from '../toolbox/inputsV2';
 import { PrimaryButtonV2, DangerButtonV2 } from '../toolbox/buttons/button';
 import styles from './followAccount.css';
@@ -82,9 +82,16 @@ class FollowAccount extends React.Component {
   }
 
   handleFollow() {
-    const { address, balance, accounts } = this.props;
+    const {
+      address, balance, accounts, delegate,
+    } = this.props;
     const title = this.state.fields.accountName.value;
-    const account = { address, title, balance };
+    const account = {
+      address,
+      title,
+      balance,
+      isDelegate: !!(delegate && delegate.username),
+    };
     const followIndex = accounts.length;
     this.props.followedAccountAdded(account);
     this.setState({
@@ -168,7 +175,7 @@ class FollowAccount extends React.Component {
       <section className={`${styles.wrapper}`}>
         <label className={`${styles.fieldGroup}`}>
           <span className={`${styles.fieldLabel}`}>{t('Account Name')}</span>
-          <span className={`${styles.fieldInput}`}>
+          <span className={`${styles.fieldInput} account-title`}>
             <InputV2
               maxLength={40}
               autoComplete={'off'}
@@ -178,7 +185,7 @@ class FollowAccount extends React.Component {
               placeholder={t('Account Name')}
               readOnly={fields.accountName.isReadOnly}
               className={`${styles.input} ${fields.accountName.error ? 'error' : ''}`} />
-            {!isFollowing ?
+            {!fields.accountName.isReadOnly ?
               <React.Fragment>
                 <SpinnerV2 className={`${styles.status} ${fields.accountName.loading && fields.accountName.value ? styles.show : ''}`}/>
                 <img
@@ -191,19 +198,33 @@ class FollowAccount extends React.Component {
             {fields.accountName.feedback}
           </span>
         </label>
-        <label className={`${styles.fieldGroup} ${styles.checkboxGroup}`}>
+        {/* <label className={`${styles.fieldGroup} ${styles.checkboxGroup}`}>
           <input checked={fields.dashboard.value} type='checkbox' readOnly />
           <span className={`${styles.fakeCheckbox}`}>
             <FontIcon className={`${styles.icon}`}>checkmark</FontIcon>
           </span>
           <div className={`${styles.checkboxInfo}`}>
             <span className={`${styles.label}`}>{t('On your dashboard')}</span>
-            <span className={`${styles.note}`}>{t('Show this account\'s transactions on the dashboard.')}</span>
+            <span className={`${styles.note}`}>
+              {t('Show this account\'s transactions on the dashboard.')}
+            </span>
           </div>
-        </label>
+          </label> */}
         {isFollowing
-          ? <DangerButtonV2 onClick={this.handleUnfollow}>{t('Unfollow')}</DangerButtonV2>
-          : <PrimaryButtonV2 onClick={this.handleFollow} disabled={!isValid}>{t('Confirm')}</PrimaryButtonV2>
+          ? (
+            <DangerButtonV2
+              className={'follow-account-button'}
+              onClick={this.handleUnfollow}>
+              {t('Remove from bookmarks')}
+            </DangerButtonV2>
+          ) : (
+            <PrimaryButtonV2
+              className={'follow-account-button'}
+              onClick={this.handleFollow}
+              disabled={!isValid}>
+              {t('Confirm')}
+            </PrimaryButtonV2>
+          )
         }
       </section>
     );

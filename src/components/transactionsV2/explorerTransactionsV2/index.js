@@ -3,7 +3,6 @@ import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { loadLastTransaction } from '../../../actions/transactions';
 import { searchTransactions, searchMoreTransactions, searchAccount, fetchVotedDelegateInfo } from '../../../actions/search';
-import { votesFetched } from '../../../actions/voting';
 import actionTypes from '../../../constants/actions';
 import ExplorerTransactionsV2 from './explorerTransactionsV2';
 import txFilters from '../../../constants/transactionFilters';
@@ -35,7 +34,6 @@ const mapDispatchToProps = {
   searchAccount,
   searchTransactions,
   searchMoreTransactions,
-  votesFetched,
   addFilter: data => ({ type: actionTypes.addFilter, data }),
   searchUpdateLast: data => ({ data, type: actionTypes.searchUpdateLast }),
   loadLastTransaction,

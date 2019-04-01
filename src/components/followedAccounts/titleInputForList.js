@@ -38,7 +38,7 @@ class TitleInputForList extends React.Component {
     return <TitleInput
       className={styles.title}
       title={this.state.title}
-      disabled={!this.props.edit}
+      disabled={!this.props.edit || this.props.account.isDelegate}
       hideLabel={true}
       onChange={this.handleChange.bind(this)}
     />;

@@ -1,4 +1,5 @@
 import React from 'react';
+import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
@@ -9,7 +10,7 @@ import ViewAccounts from './viewAccounts';
 import routes from '../../constants/routes';
 import * as followedAccounts from '../../actions/followedAccounts';
 
-const fakeStore = configureStore();
+const fakeStore = configureStore([thunk]);
 
 describe('Followed accounts list Component', () => {
   let wrapper;
@@ -22,7 +23,9 @@ describe('Followed accounts list Component', () => {
 
   describe('Without followed accounts', () => {
     beforeEach(() => {
-      const store = fakeStore({ followedAccounts: { accounts: [] } });
+      const store = fakeStore({
+        followedAccounts: { accounts: [] },
+      });
 
       wrapper = mount(<ViewAccounts {...props} />, {
         context: { store, i18n },
@@ -53,12 +56,19 @@ describe('Followed accounts list Component', () => {
       const store = fakeStore({
         followedAccounts: {
           accounts: [
-            { address: '123L', balance: 0, title: 'bob' },
-            { address: '567L', balance: 100000, title: '' },
-            { address: '23467L', balance: 30000, title: '' },
-            { address: '23464567L', balance: 3000, title: '' },
-            { address: '2346456347L', balance: 3000, title: '' },
-            { address: '234645634347L', balance: 3000, title: '' },
+            {
+              address: '123L', balance: 0, title: 'bob', isDelegate: false,
+            }, {
+              address: '567L', balance: 100000, title: '', isDelegate: false,
+            }, {
+              address: '23467L', balance: 30000, title: '', isDelegate: false,
+            }, {
+              address: '23464567L', balance: 3000, title: '', isDelegate: false,
+            }, {
+              address: '2346456347L', balance: 3000, title: '', isDelegate: false,
+            }, {
+              address: '234645634347L', balance: 3000, title: '', isDelegate: false,
+            },
           ],
         },
       });
@@ -105,7 +115,7 @@ describe('Followed accounts list Component', () => {
       wrapper.find('.remove-account').at(0).simulate('click');
 
       expect(followedAccounts.followedAccountRemoved).to.have.been.calledWith({
-        address: '123L', balance: 0, title: 'bob',
+        address: '123L', balance: 0, title: 'bob', isDelegate: false,
       });
     });
 
@@ -139,7 +149,7 @@ describe('Followed accounts list Component', () => {
 
       expect(wrapper.find('.account-title input').at(1)).to.have.value('my friend');
       expect(followedAccounts.followedAccountUpdated).to.have.been.calledWith({
-        address: '567L', balance: 100000, title: 'my friend',
+        address: '567L', balance: 100000, title: 'my friend', isDelegate: false,
       });
     });
 

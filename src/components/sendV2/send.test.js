@@ -13,6 +13,7 @@ describe('Form', () => {
   const store = configureMockStore([thunk])({
     settings: { currency: 'USD' },
     settingsUpdated: () => {},
+    peers: { liskAPIClient: {} },
     liskService: {
       success: true,
       LSK: {
@@ -32,7 +33,9 @@ describe('Form', () => {
     },
     transactions: {
       failed: undefined,
+      pending: [],
     },
+    failedTransactions: '',
     account: {
       balance: accounts.genesis.balance,
     },
@@ -54,6 +57,9 @@ describe('Form', () => {
           balance: 7,
         },
       ],
+    },
+    search: {
+      delegates: {},
     },
   });
 
@@ -81,7 +87,6 @@ describe('Form', () => {
     prevState: {
       fields: {},
     },
-    fields: {},
     followedAccounts: [
       {
         title: 'ABC',

@@ -26,6 +26,9 @@ describe('AutoSuggest', () => {
     localStorageStub.withArgs('searches', []).returns([]);
     results = { ...mockSearchResults };
     props = {
+      account: {
+        address: '123L',
+      },
       t: key => key,
       history: {
         push: spy(),

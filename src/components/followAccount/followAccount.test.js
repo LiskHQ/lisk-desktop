@@ -37,7 +37,7 @@ describe('Follow Account Component', () => {
       };
       wrapper = mount(<FollowAccount {...followingProps} />, options);
       expect(wrapper.find('input[name="accountName"]')).toHaveValue(account.title);
-      expect(wrapper.find('button').last()).toHaveText('Unfollow');
+      expect(wrapper.find('button').last()).toHaveText('Remove from bookmarks');
       wrapper.find('button').last().simulate('click');
       expect(props.followedAccountRemoved).toBeCalledWith(account);
     });
@@ -55,6 +55,7 @@ describe('Follow Account Component', () => {
         address: props.address,
         balance: props.balance,
         title: evt.target.value,
+        isDelegate: false,
       };
       wrapper.find('input[name="accountName"]').simulate('change', evt);
       expect(wrapper.find('.fieldInput')).toContainMatchingElement('SpinnerV2.show');

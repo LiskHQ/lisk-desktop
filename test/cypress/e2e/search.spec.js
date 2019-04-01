@@ -206,7 +206,7 @@ describe('Search', () => {
     cy.get(ss.searchIcon).click();
     cy.get(ss.searchInput).click();
     cy.get(ss.recentSearches).eq(0).click();
-    cy.get(ss.leftBlockAccountExplorer).find(ss.accountAddress).should('have.text', accounts.genesis.address);
+    cy.get(ss.accountAddress).should('have.text', accounts.genesis.address);
   });
 
   /**

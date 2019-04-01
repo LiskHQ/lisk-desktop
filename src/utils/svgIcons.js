@@ -37,6 +37,18 @@ import txSendArrow from '../assets/images/icons-v2/tx-send-arrow.svg';
 import txVote from '../assets/images/icons-v2/tx-vote.svg';
 import walletActiveIcon from '../assets/images/icons-v2/wallet-active.svg';
 import walletIcon from '../assets/images/icons-v2/wallet.svg';
+import icoLink from '../assets/images/icons-v2/link.svg';
+import copy from '../assets/images/icons-v2/copy.svg';
+import questionMark from '../assets/images/icons-v2/question.svg';
+import alertIcon from '../assets/images/icons-v2/icon-alert.svg';
+import okIcon from '../assets/images/icons-v2/icon-checkmark.svg';
+import transactionSuccess from '../assets/images/icons-v2/transactionSuccess.svg';
+import transactionError from '../assets/images/icons-v2/transactionError.svg';
+import backArrowActiveIcon from '../assets/images/icons-v2/arrow-left-active.svg';
+import backArrowInactiveIcon from '../assets/images/icons-v2/arrow-left-inactive.svg';
+import fowardArrowActiveIcon from '../assets/images/icons-v2/arrow-right-active.svg';
+import fowardArrowInactiveIcon from '../assets/images/icons-v2/arrow-right-inactive.svg';
+import questionIcon from '../assets/images/icons-v2/ico-question.svg';
 
 export default {
   alert_icon: alertIcon,
@@ -67,6 +79,10 @@ export default {
   settings_icon: settingsIcon,
   transaction_delegate_vote: transactionsDelegateIcon,
   transaction_send_icon: transactionsSendIcon,
+  back_arrow_active_icon: backArrowActiveIcon,
+  back_arrow_inactive_icon: backArrowInactiveIcon,
+  foward_arrow_active_icon: fowardArrowActiveIcon,
+  foward_arrow_inactive_icon: fowardArrowInactiveIcon,
   transactionError,
   transactionSuccess,
   tx2ndPassphrase,
@@ -78,4 +94,5 @@ export default {
   txVote,
   wallet_active_icon: walletActiveIcon,
   wallet_icon: walletIcon,
+  questionIcon,
 };

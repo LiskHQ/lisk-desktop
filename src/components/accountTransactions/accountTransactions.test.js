@@ -67,26 +67,7 @@ describe('AccountTransaction Component', () => {
     searchAccountSpy.restore();
   });
 
-  it('renders AccountTransaction Component and loads account transactions', () => {
-    const renderedAccountTransactions = wrapper.find(AccountTransactions);
-    expect(renderedAccountTransactions).to.be.present();
-  });
-
-  it('renders ExplorerTransactionsV2 if is accountsV2 route', () => {
-    props = {
-      ...props,
-      match: {
-        url: `${routes.accountsV2.pathPrefix}${routes.accountsV2.path}/${accounts.genesis.address}`,
-        params: { address: accounts.genesis.address },
-      },
-    };
-
-    wrapper = mount(<Provider store={store}>
-      <Router>
-        <AccountTransactions {...props} i18n={i18n}/>
-      </Router>
-    </Provider>);
-
+  it('renders ExplorerTransactionsV2', () => {
     expect(wrapper).to.have.descendants(ExplorerTransactionsV2);
   });
 });

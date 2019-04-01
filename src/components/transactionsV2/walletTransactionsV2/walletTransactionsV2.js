@@ -9,7 +9,8 @@ import routes from '../../../constants/routes';
 import styles from './walletTransactionsV2.css';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import WalletTab from '../../wallet/walletTab';
-// import DelegateTab from '../../delegate/delegateTab';
+import DelegateTab from '../../delegate/delegateTab';
+import VotesTab from '../../votes/votesTab';
 
 class WalletTransactionsV2 extends React.Component {
   // eslint-disable-next-line max-statements
@@ -53,6 +54,9 @@ class WalletTransactionsV2 extends React.Component {
     if (this.props.account.isDelegate) {
       this.props.updateAccountDelegateStats(this.props.account);
     }
+    this.props.searchAccount({
+      address: this.props.account.address,
+    });
   }
 
   onInit() {
@@ -175,9 +179,9 @@ class WalletTransactionsV2 extends React.Component {
 
     const { t, account } = this.props;
 
-    // const delegate = account.isDelegate
-    //   ? { account, ...account.delegate }
-    //   : {};
+    const delegate = account.isDelegate
+      ? { account, ...account.delegate }
+      : {};
 
     return (
       <React.Fragment>
@@ -211,12 +215,19 @@ class WalletTransactionsV2 extends React.Component {
         <TabsContainer>
           <WalletTab tabName={t('Wallet')}
             {...overviewProps}/>
-          {/* account.isDelegate && delegate.txDelegateRegister
+          <VotesTab
+            history={this.props.history}
+            address={this.props.account.address}
+            fetchVotedDelegateInfo={this.props.fetchVotedDelegateInfo}
+            loading={this.props.loading}
+            votes={this.props.votes}
+            tabName={this.props.t('Votes')} />
+          {account.isDelegate && delegate.txDelegateRegister
             ? (<DelegateTab
               tabClassName={'delegate-statistics'}
               tabName={t('Delegate')}
               delegate={delegate} />)
-            : null */}
+            : null}
         </TabsContainer>
       </React.Fragment>
     );

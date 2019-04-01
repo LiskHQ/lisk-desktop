@@ -14,4 +14,5 @@ export { default as delegate } from './delegate';
 export { default as liskService } from './liskService';
 export { default as filters } from './filters';
 export { default as secondPassphrase } from './secondPassphrase';
+export { default as extensions } from './extensions';
 export { default as wallets } from './wallets';
