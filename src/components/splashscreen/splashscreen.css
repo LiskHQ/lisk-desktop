@@ -1,7 +1,12 @@
 @import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
 .splashscreen {
   align-items: center;
+  background-color: var(--color-maastricht-blue);
+  background-image: url('../../assets/images/illustrations/illustration-splash-dark.svg');
+  background-size: cover;
+  box-sizing: border-box;
   display: flex;
   margin: 0;
   min-height: 100%;
@@ -15,10 +20,15 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  max-width: 430px;
 
   & .button {
     margin-top: 12px;
     width: 100%;
+
+    &:first-child {
+      margin-top: 0;
+    }
 
     & > button {
       width: 100%;
@@ -27,25 +37,21 @@
 }
 
 .titleHolder {
-  max-width: 400px;
+  max-width: 430px;
 
   & > h1 {
-    color: var(--color-content);
-    font-family: var(--heading-font);
-    font-size: var(--font-size-h2);
-    line-height: 1.56;
-    font-weight: var(--font-weight-bold);
+    @mixin headingLarge;
+
+    color: var(--color-white);
     margin: 0;
     text-align: center;
   }
 
   & > p {
-    color: var(--color-content-light);
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-l);
-    font-weight: var(--font-weight-normal);
-    line-height: 1.47;
-    margin: 5px 0 50px;
+    @mixin contentLarge;
+
+    color: var(--color-slate-gray);
+    margin: 35px 0 55px;
     text-align: center;
   }
 }
@@ -54,33 +60,40 @@
   align-items: center;
   display: flex;
   justify-content: space-between;
-  margin: 30px 0;
+  margin: 20px 0;
   width: 100%;
 
   & > span {
-    color: var(--color-content-light);
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-l);
+    @mixin contentSmallest;
+
+    color: var(--color-slate-gray);
     margin: 0 12px;
+    text-transform: uppercase;
   }
 
   &::after,
   &::before {
-    background: var(--color-content-light);
+    background: var(--light-border-color);
     content: '';
     height: 1px;
-    opacity: 0.2;
     width: 100%;
   }
 }
 
 .link {
+  @mixin contentSmall bold;
+
   color: var(--color-link);
-  display: inline-block;
-  font-family: var(--heading-font);
-  font-size: var(--paragraph-font-size-l);
-  font-weight: var(--font-weight-bold);
-  line-height: 1.47;
+  display: flex;
   margin-bottom: 20px;
   text-align: center;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  & > img {
+    margin-left: 5px;
+  }
 }

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { spy } from 'sinon';
 import configureMockStore from 'redux-mock-store';
 import { MemoryRouter } from 'react-router-dom';
 import i18n from '../../i18n';
@@ -23,8 +21,8 @@ describe('V2 SplashScreen', () => {
       pathname: '',
       search: '',
     },
-    push: spy(),
-    replace: spy(),
+    push: jest.fn(),
+    replace: jest.fn(),
   };
 
   const account = accounts.genesis;
@@ -60,10 +58,9 @@ describe('V2 SplashScreen', () => {
   });
 
   it('Should render all links, Sign in, Create an Account and Explre as Guest', () => {
-    const buttons = wrapper.find('.wrapper').children('.button');
-    expect(buttons.at(0).text()).to.equal('Sign in');
-    expect(buttons.at(1).text()).to.equal('Create an Account');
-    expect(wrapper.find('.link').at(0).text()).to.equal('Explore as a Guest');
+    expect(wrapper.find('.login-button button').text()).toEqual('Login');
+    expect(wrapper.find('.new-account-button button').text()).toEqual('Create an Account');
+    expect(wrapper.find('.link').at(0).text()).toEqual('Explore as a Guest');
   });
 
   describe('History management', () => {
@@ -74,18 +71,18 @@ describe('V2 SplashScreen', () => {
           account: { address: 'dummy' },
         }),
       });
-      expect(props.history.replace).to.have.been.calledWith(`${routes.dashboard.path}`);
+      expect(props.history.replace).toBeCalledWith(`${routes.dashboard.path}`);
     });
 
     it('calls this.props.history.replace with referrer address', () => {
-      props.history.replace.reset();
+      props.history.replace.mockReset();
       history.location.search = `?referrer=${routes.delegates.path}`;
       wrapper.setProps({
         children: React.cloneElement(wrapper.props().children, {
           history, account: { address: 'dummy' },
         }),
       });
-      expect(props.history.replace).to.have.been.calledWith(`${routes.delegates.path}`);
+      expect(props.history.replace).toBeCalledWith(`${routes.delegates.path}`);
     });
   });
 
@@ -99,7 +96,7 @@ describe('V2 SplashScreen', () => {
         settings: { areTermsOfUseAccepted: false },
       });
       wrapper.update();
-      expect(props.history.push).to.have.been.calledWith(`${routes.termsOfUse.path}`);
+      expect(props.history.push).toBeCalledWith(`${routes.termsOfUse.path}`);
     });
   });
 });

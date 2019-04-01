@@ -1,11 +1,11 @@
 @import './../app/variablesV2.css';
+@import './../app/mixins.css';
 
 .inputs {
   flex-wrap: wrap;
-  margin-top: 12px;
 
   & > span {
-    margin: 12px 0;
+    margin: 10px 0;
 
     & input {
       text-align: center;
@@ -13,63 +13,55 @@
   }
 }
 
-.errorMessage {
-  color: var(--color-error);
-  display: block;
-  font-family: var(--content-font);
-  font-size: var(--paragraph-font-size-l);
-  font-weight: var(--font-weight-semi-bold);
-  line-height: 1.47;
-  min-height: 22px;
-  opacity: 0;
-  text-align: right;
-  transition: opacity var(--animation-speed-fast) linear;
+.footerContent {
+  align-items: center;
+  display: flex;
+  height: 40px;
+  justify-content: space-between;
   width: 100%;
+}
 
-  &.showError {
-    opacity: 1;
-  }
+.errorMessage {
+  width: auto;
 }
 
 .showPassphrase {
+  @mixin contentNormal;
+
   display: flex;
 
   & > input {
     display: none;
 
     &:checked + .fakeCheckbox {
-      background-color: var(--color-primary-standard);
-      border-color: var(--color-primary-standard);
+      background-color: var(--color-ultramarine-blue);
+      border-color: var(--color-ultramarine-blue);
     }
   }
 
   & .fakeCheckbox {
     align-items: center;
     background-color: var(--color-white);
-    border: 1px solid var(--color-dark-gray);
+    border: 1px solid var(--dark-border-color);
     border-radius: var(--border-radius-standard);
     box-sizing: border-box;
     color: var(--color-white);
     display: flex;
     justify-content: center;
-    height: 24px;
+    height: 16px;
     transition:
       background var(--animation-speed-fast) linear,
       border var(--animation-speed-fast) linear,
       color var(--animation-speed-fast) linear;
-    width: 24px;
+    width: 16px;
 
     & > .icon {
-      font-size: var(--paragraph-font-size-s);
+      font-size: inherit;
     }
   }
 
   & .label {
-    color: var(--color-content-light);
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-l);
-    font-weight: var(--font-weight-semi-bold);
-    line-height: 1.47;
+    color: var(--color-slate-gray);
     margin-left: 8px;
   }
 }

@@ -6,7 +6,7 @@ import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
 import { InputV2, AutoresizeTextarea } from '../toolbox/inputsV2';
 import ConverterV2 from '../converterV2';
-import ByteCounter from '../toolbox/byteCounter/byteCounter';
+import CircularProgress from '../toolbox/circularProgress/circularProgress';
 import svg from '../../utils/svgIcons';
 import styles from './requestV2.css';
 
@@ -146,6 +146,8 @@ class RequestV2 extends React.Component {
   render() {
     const { t } = this.props;
     const { fields, shareLink, showQRCode } = this.state;
+    const byteCount = encodeURI(fields.reference.value).split(/%..|./).length - 1;
+
     return (
       <div className={`${styles.container}`}>
         <section className={`${styles.formSection}`}>
@@ -186,7 +188,7 @@ class RequestV2 extends React.Component {
                 value={fields.reference.value}
                 placeholder={t('Write message')}
                 className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
-              <ByteCounter max={64} value={fields.reference.value}
+              <CircularProgress max={64} value={byteCount}
                 className={styles.byteCounter} />
               <img
                 className={`${styles.status} ${!fields.reference.loading && fields.reference.value ? styles.show : ''}`}

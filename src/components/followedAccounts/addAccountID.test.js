@@ -1,4 +1,5 @@
 import React from 'react';
+import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
@@ -7,7 +8,7 @@ import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import AddAccountID from './addAccountID';
 
-const fakeStore = configureStore();
+const fakeStore = configureStore([thunk]);
 
 describe('Add Account ID Component', () => {
   let wrapper;
@@ -16,6 +17,7 @@ describe('Add Account ID Component', () => {
   beforeEach(() => {
     const store = fakeStore({
       followedAccounts: { accounts: [{ address: '16313739661670634666L', balance: 0 }] },
+      peers: { liskAPIClient: {} },
     });
 
     props = {

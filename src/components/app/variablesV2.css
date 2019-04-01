@@ -68,10 +68,11 @@ or "warn/action" ineastd of "red/green"
   *************************/
   --border-radius-standard: 3px;
   --border-radius-box: 6px;
-  --header-height-m: 100px;
-  --header-height-s: 72px;
-  --header-height-xs: 60px;
-  --header-elements-height: 32px;
+  --header-height: 72px;
+  --header-height-m: var(--header-height);
+  --header-height-s: var(--header-height);
+  --header-height-xs: var(--header-height);
+  --header-elements-height: 36px;
   --header-logo-size: 56px;
   --search-box-width-l: 597px;
 
@@ -81,7 +82,7 @@ or "warn/action" ineastd of "red/green"
   --header-padding: 0 32px;
 
   /*************************
-        Colors
+      Base Colors
   *************************/
   --color-ultramarine-blue: #4070f4;
   --color-maastricht-blue: #0c152e;
@@ -99,6 +100,7 @@ or "warn/action" ineastd of "red/green"
   *************************/
   --light-border-color: rgba(255, 255, 255, 0.24);
   --dark-border-color: rgba(0, 0, 0, 0.08);
+  --primary-background-color: color(var(--color-ultramarine-blue) a(8%));
   --error-background-color: color(var(--color-burnt-sienna) a(8%));
   --color-primary-standard: var(--color-ultramarine-blue);
   --color-primary-light: #9db8fa;
@@ -113,7 +115,7 @@ or "warn/action" ineastd of "red/green"
   --color-dark-gray: #868ba1;
   --color-light-gray: #e6e6e6;
   --color-content-grayblue: #7383a7;
-  --color-background-wrapper: #edf0f5;
+  --color-background-wrapper: var(--color-mystic);
   --color-background-header: #fbfcfd;
   --color-background-menu: #f8f9fb;
   --color-link-active: #4070f4;
@@ -147,6 +149,7 @@ or "warn/action" ineastd of "red/green"
   *************************/
   --transition-button:
     background-color var(--animation-speed-fast) ease-in-out,
+    border-color var(--animation-speed-fast) ease-in-out,
     box-shadow var(--animation-speed-fast) ease-in-out,
     color var(--animation-speed-fast) ease-in-out;
 

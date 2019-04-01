@@ -36,6 +36,7 @@ import backArrowInactiveIcon from '../assets/images/icons-v2/arrow-left-inactive
 import fowardArrowActiveIcon from '../assets/images/icons-v2/arrow-right-active.svg';
 import fowardArrowInactiveIcon from '../assets/images/icons-v2/arrow-right-inactive.svg';
 import iconFilter from '../assets/images/icons-v2/icon-filter.svg';
+import questionIcon from '../assets/images/icons-v2/ico-question.svg';
 
 export default {
   alert_icon: alertIcon,
@@ -76,4 +77,5 @@ export default {
   wallet_active_icon: walletActiveIcon,
   wallet_icon: walletIcon,
   iconFilter,
+  questionIcon,
 };
