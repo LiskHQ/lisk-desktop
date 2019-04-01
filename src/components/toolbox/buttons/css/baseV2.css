@@ -20,7 +20,7 @@
   &:global(.small) {
     @mixin contentSmall bold;
 
-    height: 46px;
+    height: 36px;
     padding: 0 20px;
   }
 
@@ -29,6 +29,13 @@
 
     height: 32px;
     padding: 0 16px;
+  }
+
+  & > :global(.button-icon) {
+    display: block;
+    height: 1.2em; /* stylelint-disable-line */
+    margin-left: 0.42em; /* stylelint-disable-line */
+    width: 1.2em; /* stylelint-disable-line */
   }
 
   & .ripple {
@@ -48,16 +55,6 @@
   &:hover {
     background: color(var(--color-ultramarine-blue) + l(+4%)) !important;
     box-shadow: 3px 3px 10px 0 rgba(61, 113, 255, 0.36) !important;
-  }
-}
-
-@define-mixin buttonDangerV2 {
-  background-color: var(--color-danger) !important;
-  color: var(--color-white) !important;
-
-  &:focus,
-  &:hover {
-    background: #ff6300 !important;
   }
 }
 
