@@ -14,6 +14,7 @@
 }
 
 .results {
+  border-radius: 0 0 var(--border-radius-box) var(--border-radius-box);
   display: flex;
   flex-direction: column;
   flex-grow: 1;
