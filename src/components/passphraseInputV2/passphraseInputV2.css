@@ -26,6 +26,8 @@
 }
 
 .showPassphrase {
+  @mixin contentNormal;
+
   display: flex;
 
   & > input {
@@ -54,13 +56,11 @@
     width: 16px;
 
     & > .icon {
-      font-size: 12px;
+      font-size: inherit;
     }
   }
 
   & .label {
-    @mixin contentNormal;
-
     color: var(--color-slate-gray);
     margin-left: 8px;
   }
