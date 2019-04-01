@@ -1,6 +1,7 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import { InputV2 } from '../../toolbox/inputsV2';
+import Feedback from '../../toolbox/feedback/feedback';
 import styles from './filters.css';
 
 class AmountFieldGroup extends React.Component {
@@ -96,9 +97,13 @@ class AmountFieldGroup extends React.Component {
             onKeyDown={handleKeyPress}
             className={`${styles.input} ${fields.amountTo.error ? 'error' : ''} amountToInput`} />
         </div>
-        <span className={`${styles.feedback} ${this.state.feedback ? styles.show : ''}`}>
-          {this.state.feedback}
-        </span>
+        <Feedback
+          className={styles.feedback}
+          show={!!this.state.feedback}
+          status={this.state.feedback ? 'error' : ''}
+          showIcon={false}>
+          { this.state.feedback }
+        </Feedback>
       </div>
     );
   }

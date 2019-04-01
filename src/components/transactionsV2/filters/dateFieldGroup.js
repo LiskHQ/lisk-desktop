@@ -8,6 +8,7 @@ import { getInputSelection, setInputSelection } from '../../../utils/selection';
 import styles from './filters.css';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import Calendar from '../../toolbox/calendar/calendar';
+import Feedback from '../../toolbox/feedback/feedback';
 import keyCodes from '../../../constants/keyCodes';
 
 class DateFieldGroup extends React.Component {
@@ -250,9 +251,13 @@ class DateFieldGroup extends React.Component {
           </DropdownV2>
           </label>
         </div>
-        <span className={`${styles.feedback} ${this.state.feedback ? styles.show : ''}`}>
-          {this.state.feedback}
-        </span>
+        <Feedback
+          className={styles.feedback}
+          show={!!this.state.feedback}
+          status={this.state.feedback ? 'error' : ''}
+          showIcon={false}>
+          { this.state.feedback }
+        </Feedback>
       </div>
     );
   }

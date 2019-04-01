@@ -1,6 +1,9 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import { AutoresizeTextarea } from '../../toolbox/inputsV2';
+import Feedback from '../../toolbox/feedback/feedback';
+import CircularProgress from '../../toolbox/circularProgress/circularProgress';
+import svg from '../../../utils/svgIcons';
 import styles from './filters.css';
 
 class MessageFieldGroup extends React.Component {
@@ -12,6 +15,7 @@ class MessageFieldGroup extends React.Component {
         message: {
           value: '',
           error: false,
+          isLoading: false,
         },
       },
       feedback: '',
@@ -47,11 +51,12 @@ class MessageFieldGroup extends React.Component {
   render() {
     const { handleKeyPress, t, filters } = this.props;
     const { fields } = this.state;
+    const byteCount = encodeURI(filters.message).split(/%..|./).length - 1;
 
     return (
       <label className={`${styles.fieldGroup} message-field`}>
         <span className={styles.fieldLabel}>{t('Message')}</span>
-        <div className={styles.fieldRow}>
+        <div className={`${styles.fieldRow} ${styles.fieldHolder} reference-field`}>
           <AutoresizeTextarea
             autoComplete={'off'}
             onChange={this.handleFieldChange}
@@ -61,10 +66,19 @@ class MessageFieldGroup extends React.Component {
             maxLength={100}
             onKeyDown={handleKeyPress}
             className={`${styles.input} ${fields.message.error ? 'error' : ''}`} />
+          <CircularProgress max={62} value={byteCount}
+            className={styles.byteCounter} />
+          <img
+            className={`${styles.status} ${!fields.message.loading && fields.message.value ? styles.show : ''}`}
+            src={ fields.message.error ? svg.alert_icon : svg.ok_icon} />
         </div>
-        <span className={`${styles.feedback} ${this.state.feedback ? styles.show : ''}`}>
-          {this.state.feedback}
-        </span>
+        <Feedback
+          className={styles.feedback}
+          show={!!this.state.feedback}
+          status={fields.message.error ? 'error' : ''}
+          showIcon={false}>
+          { this.state.feedback }
+        </Feedback>
       </label>
     );
   }
