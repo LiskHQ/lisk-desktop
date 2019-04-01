@@ -5,7 +5,7 @@ import MenuItems from './menuItems';
 import UserAccount from './userAccount';
 import NavigationButton from './navigationButtons';
 import Piwik from '../../utils/piwik';
-import { menuLinks } from './constants';
+import menuLinks from './constants';
 import svg from '../../utils/svgIcons';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
 import SearchBarV2 from '../searchBarV2';

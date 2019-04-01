@@ -84,7 +84,7 @@ describe('SearchBar', () => {
         ],
       },
     });
-    wrapper.find('.transactions-row').at(0).simulate('click');
+    wrapper.find('.transaction-row').at(0).simulate('click');
     expect(props.history.push).toBeCalled();
     expect(props.clearSearchSuggestions).toBeCalled();
   });

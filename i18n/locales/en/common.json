@@ -610,10 +610,7 @@
   "{{length}} extra bytes": "{{length}} extra bytes",
   "{{length}} extra characters": "{{length}} extra characters",
   "{{length}} out of {{maxLength}} characters left": "{{length}} out of {{maxLength}} characters left",
-  "{{length}} out of {{total}} characters left": "{{length}} out of {{total}} characters left",
-  "{{paragraph}}": "{{paragraph}}",
-  "{{rewards}} LSK": "{{rewards}} LSK",
-  "{{title}}": "{{title}}",
   "{{length}} out of {{total}} bytes left": "{{length}} out of {{total}} bytes left",
+  "{{rewards}} LSK": "{{rewards}} LSK",
   "{{title}} has been added to your Dashboard.": "{{title}} has been added to your Dashboard."
 }
