@@ -1,4 +1,5 @@
 @import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
 
 .fieldGroup {
   display: flex;
@@ -6,10 +7,9 @@
   margin-bottom: 24px;
 
   & .fieldLabel {
-    color: var(--color-content-light);
-    font-family: var(--heading-font);
-    font-size: var(--paragraph-font-size-l);
-    font-weight: var(--font-weight-bold);
+    @mixin contentNormal bold;
+
+    color: var(--color-maastricht-blue);
     margin-bottom: 8px;
   }
 
@@ -18,26 +18,25 @@
     display: flex;
     flex-wrap: nowrap;
 
-    & > span {
-      color: var(--color-dark-gray);
-      font-family: var(--content-font);
-      font-size: var(--button-font-size-s);
-      font-weight: var(--font-weight-semi-bold);
-      letter-spacing: 0.04px;
-      line-height: 22px;
+    & > .separator {
+      background-color: var(--color-platinum);
+      display: block;
+      flex-shrink: 0;
+      height: 1px;
       margin: 0 15px;
+      width: 10px;
     }
 
     & textarea {
-      min-height: 36px;
+      min-height: 32px;
       overflow: hidden;
     }
 
     & .input {
-      font-size: var(--button-font-size-s);
-      height: 36px;
-      line-height: 1.83;
-      min-height: 36px;
+      @mixin contentNormal;
+
+      height: 32px;
+      min-height: 32px;
       resize: none;
     }
   }

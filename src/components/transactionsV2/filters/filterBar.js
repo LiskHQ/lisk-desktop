@@ -15,14 +15,14 @@ const FilterBar = props => (
       switch (filter) {
         case 'dateFrom':
         case 'dateTo': {
-          const prefix = filter === 'dateFrom' ? props.t('from') : props.t('to');
-          label = `${prefix} ${moment(label, 'DD.MM.YY').format('DD MMM YYYY')}`;
+          const prefix = filter === 'dateFrom' ? props.t('from') : props.t('till');
+          label = `${prefix} ${moment(label, 'DD.MM.YY').format('Do MMM YYYY')}`;
           break;
         }
         case 'amountFrom':
         case 'amountTo': {
           const prefix = filter === 'amountFrom' ? '>' : '<';
-          label = `${prefix}${label} ${props.t('LSK')}`;
+          label = `${prefix} ${label} ${props.t('LSK')}`;
           break;
         }
         default:
@@ -40,12 +40,11 @@ const FilterBar = props => (
         </div>);
       })
     }
-    <div className={`${styles.clearAll}`}>
-      <SecondaryButtonV2
-        className={styles.clearAllButton}
-        onClick={props.clearAllFilters}>{props.t('Clear All filters')}
-        </SecondaryButtonV2>
-    </div>
+    <SecondaryButtonV2
+      className={'extra-small'}
+      onClick={props.clearAllFilters}>
+      {props.t('Clear All filters')}
+    </SecondaryButtonV2>
   </div>);
 
 export default FilterBar;

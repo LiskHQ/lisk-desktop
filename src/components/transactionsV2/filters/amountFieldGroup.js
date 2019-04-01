@@ -86,7 +86,7 @@ class AmountFieldGroup extends React.Component {
             placeholder={t('Min')}
             onKeyDown={handleKeyPress}
             className={`${styles.input} ${fields.amountFrom.error ? 'error' : ''} amountFromInput`} />
-          <span>-</span>
+          <span className={styles.separator} />
           <InputV2
             autoComplete={'off'}
             onChange={this.handleFieldChange}

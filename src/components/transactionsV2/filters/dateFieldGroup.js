@@ -222,7 +222,7 @@ class DateFieldGroup extends React.Component {
                   date={filters.dateFrom} />
               </DropdownV2>
           </label>
-          <span>-</span>
+          <span className={styles.separator} />
           <label
             className={styles.dropdownWrapper}
             ref={this.setDropownRefs}
