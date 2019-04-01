@@ -45,7 +45,7 @@ class walletDetails extends React.Component {
           <h1>{t('My Wallet Details')}</h1>
         </header>
         <div className={`${styles.content}`}>
-          <div>
+          <div className={`${styles.iconHolder}`}>
             <img className={`${styles.icon}`} src={svg.iconWalletDetails} />
           </div>
           <div className={`${styles.info} account-balance`}>
@@ -55,7 +55,7 @@ class walletDetails extends React.Component {
             </span>
             <span className={`${styles.label}`}>{t('Account Balance')}</span>
           </div>
-          <div>
+          <div className={`${styles.moreInfoHolder}`}>
             <div className={`${styles.info} last-transaction`}>
               <span className={`${styles.value}`}>
               {lastTx.tx && lastTx.tx.id ? (

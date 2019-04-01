@@ -24,9 +24,22 @@
     display: flex;
     justify-content: center;
     padding: 20px 0;
+  }
 
-    &:last-child {
-      border-bottom: 0 none;
+  & .moreInfoHolder {
+    border-bottom: 0 none;
+    padding: 0;
+
+    & .value {
+      @mixin contentNormal bold;
+    }
+
+    & .info {
+      padding: 20px 0;
+
+      &:last-child {
+        border-left: 1px solid var(--color-platinum);
+      }
     }
   }
 
@@ -49,14 +62,10 @@
         width: 44px;
       }
     }
-
-    & + .info {
-      border-left: 1px solid var(--color-platinum);
-    }
   }
 
   & .value {
-    @mixin headingSmall;
+    @mixin headingNormal;
 
     color: var(--color-maastricht-blue);
   }
@@ -65,5 +74,25 @@
     @mixin contentSmall;
 
     color: var(--color-slate-gray);
+  }
+}
+
+@media (--medium-viewport) {
+  .content {
+    & .iconHolder {
+      display: none;
+    }
+
+    & .moreInfoHolder {
+      display: flex;
+      flex-direction: column;
+
+      & .info {
+        &:last-child {
+          border-left: 0 none;
+          border-top: 1px solid var(--color-platinum);
+        }
+      }
+    }
   }
 }
