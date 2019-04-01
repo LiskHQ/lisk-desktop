@@ -15,9 +15,6 @@
   font-size: var(--font-size-small-secondary);
 }
 
-/**
-* Search Message, could be because and error or no data found
-*/
 .wrapper > .searchMessage {
   width: 100%;
   max-height: 0px;
@@ -28,10 +25,10 @@
   opacity: 0;
 
   & .errorMessage {
-    font-family: var(--content-font);
-    font-size: var(--button-font-size-s);
+    @mixin contentSmall;
+
     margin: 25px 0 3px;
-    color: var(--color-text-slate-gray);
+    color: var(--color-slate-gray);
   }
 }
 
@@ -41,9 +38,6 @@
   opacity: 1;
 }
 
-/**
-* Loading bar style
-*/
 .linear {
   background: transparent;
   height: 3px;

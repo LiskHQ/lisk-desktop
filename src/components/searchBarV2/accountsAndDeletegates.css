@@ -21,8 +21,7 @@
   align-items: flex-start;
 
   & > label {
-    font-family: var(--content-font);
-    font-size: var(--font-size-small-secondary);
+    @mixin contentNormal bold;
   }
 }
 
@@ -36,16 +35,16 @@
   padding: 10px 0;
 
   & > label {
-    font-family: var(--content-font);
-    font-size: var(--font-size-small-secondary);
-    color: var(--color-text-blue-gray);
+    @mixin contentNormal bold;
+
+    color: var(--color-blue-gray);
   }
 }
 
 .content {
   width: 100%;
   height: auto;
-  max-height: 184px;
+  max-height: 220px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -54,8 +53,8 @@
 
   & .accountRow {
     width: 100%;
-    height: auto;
-    padding: 5px 0;
+    height: 45px;
+    margin: 5px 0;
     box-sizing: border-box;
     display: flex;
     justify-content: flex-start;
@@ -64,12 +63,13 @@
   }
 
   & .accountInformation {
-    height: 36px;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     margin-left: 20px;
+    box-sizing: border-box;
 
     & > div {
       display: flex;
@@ -79,34 +79,35 @@
   }
 
   & .tag {
-    background: var(--color-text-slate-gray);
+    @mixin contentSmall bold;
+
+    background: var(--color-slate-gray);
     color: var(--color-white);
-    font-size: var(--footnote-font-size);
-    font-weight: var(--font-weight-bold);
     padding: 3px;
     box-sizing: border-box;
     margin-left: 7px;
-    border-radius: 5px;
+    border-radius: 3px;
+    line-height: unset;
   }
 
   & .accountTitle {
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-l);
-    color: var(--color-text-mastricht-blue);
+    @mixin contentLargest;
+
+    color: var(--color-maastricht-blue);
     font-weight: var(--font-weight-bold);
   }
 
   & .accountSubtitle {
-    font-family: var(--content-font);
-    font-size: var(--font-size-extra-small);
+    @mixin contentSmallest;
+
     color: var(--color-text-slate-gray);
     padding-top: 8px;
   }
 
   & .accountBalance {
-    font-size: var(--footnote-font-size);
-    font-family: var(--content-font);
-    color: var(--color-text-mastricht-blue);
+    @mixin contentSmall;
+
+    color: var(--color-maastricht-blue);
     margin-left: auto;
   }
 }

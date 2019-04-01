@@ -28,7 +28,6 @@ const ss = {
   accountAddress: '.account-address',
   selectionVotingNumber: '.selection h4',
   totalVotingNumber: '.total h4',
-  // searchInput: '#autosuggest-input',
   showMoreVotesBtn: '.show-votes',
   leftBlockAccountExplorer: '.explorer-account-left-block',
   amountInput: '.amount input',

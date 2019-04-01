@@ -95,7 +95,7 @@ class SearchBar extends React.Component {
           </span>
         </div>
         {
-          suggestions.addresses.length && !isLoading
+          suggestions.addresses.length
           ? (<Accounts
               accounts={suggestions.addresses}
               onSelectedRow={this.onSelectedRow}
@@ -103,7 +103,7 @@ class SearchBar extends React.Component {
           : null
         }
         {
-          suggestions.delegates.length && !isLoading
+          suggestions.delegates.length
           ? (<Delegates
               delegates={suggestions.delegates}
               onSelectedRow={this.onSelectedRow}
@@ -111,7 +111,7 @@ class SearchBar extends React.Component {
           : null
         }
         {
-          suggestions.transactions.length && !isLoading
+          suggestions.transactions.length
           ? (<Transactions
               transactions={suggestions.transactions}
               onSelectedRow={this.onSelectedRow}

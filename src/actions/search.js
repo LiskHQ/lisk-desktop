@@ -208,7 +208,6 @@ export const clearSearchSuggestions = () => ({
 export const searchSuggestions = ({ searchTerm }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    // dispatch(clearSearchSuggestions);
     searchAll({ liskAPIClient, searchTerm }).then(response => dispatch({
       data: response,
       type: actionTypes.searchSuggestions,

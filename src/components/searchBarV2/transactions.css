@@ -21,8 +21,7 @@
   align-items: flex-start;
 
   & > label {
-    font-family: var(--content-font);
-    font-size: var(--font-size-small-secondary);
+    @mixin contentNormal bold;
   }
 }
 
@@ -36,16 +35,16 @@
   padding: 10px 0;
 
   & > label {
-    font-family: var(--content-font);
-    font-size: var(--font-size-small-secondary);
-    color: var(--color-text-blue-gray);
+    @mixin contentNormal bold;
+
+    color: var(--color-blue-gray);
   }
 }
 
 .content {
   width: 100%;
   height: auto;
-  max-height: 184px;
+  max-height: 220px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -55,8 +54,8 @@
 
   & .transactionRow {
     width: 100%;
-    height: 25px;
-    padding: 5px 0;
+    height: 45px;
+    margin: 5px 0;
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
@@ -70,17 +69,16 @@
   }
 
   & .transactionId {
-    font-size: var(--paragraph-font-size-l);
-    font-family: var(--content-font);
-    color: var(--color-text-mastricht-blue);
-    font-weight: var(--font-weight-bold);
+    @mixin contentLargest bold;
+
+    color: var(--color-maastricht-blue);
     margin-left: 20px;
   }
 
   & .transactionMessage {
-    font-size: var(--footnote-font-size);
-    font-family: var(--content-font);
-    color: var(--color-text-mastricht-blue);
+    @mixin contentSmall;
+
+    color: var(--color-maastricht-blue);
     margin-left: auto;
   }
 }

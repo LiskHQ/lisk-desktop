@@ -3,8 +3,6 @@ import networks from '../../constants/networks';
 import ss from '../../constants/selectors';
 import urls from '../../constants/urls';
 
-// const getSearchesObjFromLS = () => JSON.parse(localStorage.getItem('searches'));
-
 describe('Search', () => {
   const testnetTransaction = '755251579479131174';
   const mainnetTransaction = '881002485778658401';
@@ -12,27 +10,11 @@ describe('Search', () => {
 
   function assertAccountPage(accountsAddress) {
     cy.get(ss.searchAccountRow).find('.account-title').should('have.text', accountsAddress);
-  // .and(() => {
-  //   expect(getSearchesObjFromLS()[0].id).to.equal(accountsAddress);
-  //   expect(getSearchesObjFromLS()[0].searchTerm).to.equal(accountsAddress);
-  // });
   }
 
   function assertTransactionPage(transactionId) {
     cy.get(ss.searchTransactionRow).find(ss.searchTransactionRowId).should('have.text', transactionId);
-    // .and(() => {
-    //   expect(getSearchesObjFromLS()[0].id).to.equal(transactionId);
-    //   expect(getSearchesObjFromLS()[0].searchTerm).to.equal(transactionId);
-    // });
   }
-
-  // function assertDelegatePage(delegateName, delegateId) {
-  //   cy.get(ss.searchDelegatesRow).find(ss.delegateName).should('have.text', delegateName);
-  //   .and(() => {
-  //     expect(getSearchesObjFromLS()[0].id).to.equal(delegateId);
-  //     expect(getSearchesObjFromLS()[0].searchTerm).to.equal(delegateName);
-  //   });
-  // }
 
   /**
    * Search for Lisk ID using keyboard Enter, signed out
