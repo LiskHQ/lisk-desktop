@@ -25,7 +25,6 @@ class SearchBar extends React.Component {
     if (!this.state.searchTextValue.length) this.props.clearSearchSuggestions();
   }
 
-  // eslint-disable-next-line max-statements
   onChangeSearchTextValue(e) {
     const { searchSuggestions, clearSearchSuggestions } = this.props;
     const searchTextValue = e.target.value;
@@ -81,7 +80,7 @@ class SearchBar extends React.Component {
         />
 
         <div className={`${styles.searchMessage} ${(isSearchTextError || isEmptyResults) && styles.searchMessageError} search-message`}>
-          <span className={styles.errorMessage}>
+          <span className={`${styles.errorMessage} search-message`}>
             {isSearchTextError ? t('Type at least 3 characters') : null}
             {(isEmptyResults) ? t('No results found.') : null}
           </span>

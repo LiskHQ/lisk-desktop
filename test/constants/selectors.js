@@ -175,6 +175,15 @@ const ss = {
   termsOfUse: '.accept-terms',
   searchIcon: '.search-icon',
   searchInput: '.search-input',
+  searchAccountRow: '.account-row',
+  searchAccountRowTitle: '.account-title',
+  searchTransactionRowId: '.transaction-id',
+  searchDelegatesRow: '.delegates-row',
+  searchMessage: '.search-message',
+  searchDelegetesResults: '.delegates-content',
+  searchAccountResults: '.account-content',
+  searchTransactionRow: '.transaction-row',
+  transactionDetailsID: '.copy-title',
 };
 
 export default ss;

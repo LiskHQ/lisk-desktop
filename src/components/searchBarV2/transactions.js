@@ -36,7 +36,7 @@ const Transactions = (props) => {
         props.transactions.map(transaction => (
           <div
             key={transaction.id}
-            className={`${styles.transactionRow} transactions-row`}
+            className={`${styles.transactionRow} transaction-row`}
             onClick={() => props.onSelectedRow(transaction.id, 'transaction')}
           >
             <img src={selectTransactionType(transaction.type)} />

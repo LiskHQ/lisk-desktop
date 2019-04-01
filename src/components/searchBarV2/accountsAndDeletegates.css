@@ -61,11 +61,6 @@
     justify-content: flex-start;
     align-items: center;
     cursor: pointer;
-
-    &:hover {
-      background: var(--color-rows-hover);
-      border-radius: 3px;
-    }
   }
 
   & .accountInformation {
