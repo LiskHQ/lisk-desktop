@@ -11,6 +11,9 @@ import { getTransactionBytes, calculateTxId, getBufferToHex } from '../rawTransa
 import { PLATFORM_TYPES, getPlatformType } from '../platform';
 import store from '../../store';
 
+import { getAccount } from './account';
+import { extractAddress } from '../account';
+
 import loginTypes from '../../constants/loginTypes';
 
 const util = require('util');
@@ -36,47 +39,47 @@ export const HW_MSG = {
   TREZOR_MODELT_OLD_FIRMWARE: i18next.t('Your Trezor Model T has an old Firmware. Please update it.'),
 };
 
-const { ipc } = window;
+// const { ipc } = window;
 
-if (ipc) { // On browser-mode is undefined
-  ipc.on('ledgerConnected', () => {
-    store.dispatch(infoToastDisplayed({ label: HW_MSG.LEDGER_CONNECTED }));
-  });
+// if (ipc) { // On browser-mode is undefined
+//   ipc.on('ledgerConnected', () => {
+//     store.dispatch(infoToastDisplayed({ label: HW_MSG.LEDGER_CONNECTED }));
+//   });
 
-  ipc.on('ledgerDisconnected', () => {
-    store.dispatch(errorToastDisplayed({ label: HW_MSG.LEDGER_DISCONNECTED }));
-  });
+//   ipc.on('ledgerDisconnected', () => {
+//     store.dispatch(errorToastDisplayed({ label: HW_MSG.LEDGER_DISCONNECTED }));
+//   });
 
-  ipc.on('ledgerButtonCallback', () => {
-    store.dispatch(infoToastDisplayed({ label: HW_MSG.LEDGER_ASK_FOR_CONFIRMATION }));
-  });
+//   ipc.on('ledgerButtonCallback', () => {
+//     store.dispatch(infoToastDisplayed({ label: HW_MSG.LEDGER_ASK_FOR_CONFIRMATION }));
+//   });
 
-  ipc.on('trezorConnected', (event, data) => {
-    store.dispatch(infoToastDisplayed({
-      label: util.format(HW_MSG.TREZOR_CONNECTED, data.model, data.label),
-    }));
-  });
+//   ipc.on('trezorConnected', (event, data) => {
+//     store.dispatch(infoToastDisplayed({
+//       label: util.format(HW_MSG.TREZOR_CONNECTED, data.model, data.label),
+//     }));
+//   });
 
-  ipc.on('trezorDisconnected', (event, data) => {
-    store.dispatch(errorToastDisplayed({
-      label: util.format(HW_MSG.TREZOR_DISCONNECTED, data.model, data.label),
-    }));
-  });
+//   ipc.on('trezorDisconnected', (event, data) => {
+//     store.dispatch(errorToastDisplayed({
+//       label: util.format(HW_MSG.TREZOR_DISCONNECTED, data.model, data.label),
+//     }));
+//   });
 
-  ipc.on('trezorButtonCallback', (event, data) => {
-    store.dispatch(infoToastDisplayed({
-      label: util.format(HW_MSG.TREZOR_ASK_FOR_CONFIRMATION, data),
-    }));
-  });
+//   ipc.on('trezorButtonCallback', (event, data) => {
+//     store.dispatch(infoToastDisplayed({
+//       label: util.format(HW_MSG.TREZOR_ASK_FOR_CONFIRMATION, data),
+//     }));
+//   });
 
-  ipc.on('trezorParamMessage', (event, data) => {
-    store.dispatch(errorToastDisplayed({ label: HW_MSG[data] }));
-  });
+//   ipc.on('trezorParamMessage', (event, data) => {
+//     store.dispatch(errorToastDisplayed({ label: HW_MSG[data] }));
+//   });
 
-  ipc.on('trezorError', () => {
-    store.dispatch(errorToastDisplayed({ label: HW_MSG.ERROR_OR_DEVICE_IS_NOT_CONNECTED }));
-  });
-}
+//   ipc.on('trezorError', () => {
+//     store.dispatch(errorToastDisplayed({ label: HW_MSG.ERROR_OR_DEVICE_IS_NOT_CONNECTED }));
+//   });
+// }
 
 const getLedgerTransportU2F = async () => TransportU2F.create();
 
@@ -200,7 +203,6 @@ const executeTrezorCommandForWeb = async (command) => {
 };
 
 const platformHendler = async (command) => {
-  console.log('PLATFORM', command)
   const platform = getPlatformType();
 
   if (platform === PLATFORM_TYPES.ELECTRON) {
@@ -323,7 +325,7 @@ export const signTransactionWithHW = async (tx, account, pin) => {
 export const getHWAccountInfo = async (activePeer, deviceId, loginType, accountIndex) => {
   let error;
   let publicKey;
-  console.log(activePeer, deviceId, loginType, accountIndex);
+
   [error, publicKey] = await to(getHWPublicKeyFromIndex(deviceId, loginType, accountIndex));
   if (error) {
     throw error;

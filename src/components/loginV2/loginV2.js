@@ -22,6 +22,7 @@ import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
 import lock from '../../assets/images/icons-v2/lock.svg';
 import styles from './loginV2.css';
 import Piwik from '../../utils/piwik';
+import { getDeviceList } from '../../utils/hwWallet';
 
 class LoginV2 extends React.Component {
   constructor() { // eslint-disable-line max-statements
@@ -42,6 +43,7 @@ class LoginV2 extends React.Component {
       passphrase: '',
       network: loginNetwork.code,
       address,
+      devices: [],
     };
 
     this.secondIteration = false;
@@ -56,7 +58,11 @@ class LoginV2 extends React.Component {
     this.validateCorrectNode = this.validateCorrectNode.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    this.setState({
+      devices: await getDeviceList(),
+    });
+
     // istanbul ignore else
     if (!this.props.settings.areTermsOfUseAccepted) {
       this.props.history.push(routes.termsOfUse.path);
@@ -193,6 +199,7 @@ class LoginV2 extends React.Component {
 
   render() {
     const { t, match } = this.props;
+
     return (
       <React.Fragment>
         { match.url === routes.loginV2.path ? (
@@ -273,12 +280,12 @@ class LoginV2 extends React.Component {
                   maxInputsLength={24}
                   onFill={this.checkPassphrase} />
 
-                  {/* <div className={`${styles.hardwareHolder} ${(this.props.settings && this.props.settings.isHarwareWalletConnected) ? styles.show : ''}`}> */}
+                  <div className={`${styles.hardwareHolder} ${this.state.devices.length > 0 ? styles.show : ''}`}>
                     <div className={`${styles.label}`}>
                       {t('Hardware login (beta): ')}
                       <span className={`${styles.link} hardwareWalletLink`}
                         onClick={() => this.validateCorrectNode(routes.hwWallet.path)}>
-                        Ledger Nano S
+                        {this.state.devices[0] && this.state.devices[0].model}
                       </span>
                     </div>
                     <a
@@ -288,8 +295,7 @@ class LoginV2 extends React.Component {
                       rel='noopener noreferrer'>
                       {t('Give feedback about this feature')}
                     </a>
-                  {/* </div> */}
-
+                  </div>
               </div>
 
               <div className={`${styles.buttonsHolder} ${grid.row}`}>

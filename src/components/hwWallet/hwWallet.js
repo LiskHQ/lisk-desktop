@@ -1,12 +1,16 @@
+/* eslint-disable */
+
 import React from 'react';
 import to from 'await-to-js';
 import Box from '../box';
 
 import UnlockWallet from './unlockWallet';
 import LedgerLogin from './ledgerLoginHOC';
+import TrezorLogin from './trezorLoginHOC';
 import getNetwork from '../../utils/getNetwork';
 import { getAccountFromLedgerIndex } from '../../utils/ledger';
 import Piwik from '../../utils/piwik';
+import { getDeviceList } from '../../utils/hwWallet';
 
 import { loginType } from '../../constants/hwConstants';
 import routes from '../../constants/routes';
@@ -17,11 +21,16 @@ class HwWallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLedgerLogin: true,
+      isLedgerLogin: false,
+      isTrezorLogin: true,
+      devices: [],
     };
   }
 
   async componentDidMount() {
+    this.setState({ 
+      devices: await getDeviceList(),
+    });
     this.ledgerLogin();
   }
 
@@ -65,10 +74,21 @@ class HwWallet extends React.Component {
   }
 
   render() {
-    if (this.state.isLedgerLogin) {
+    if (this.state.isLedgerLogin && (this.state.devices[0] && this.state.devices[0].model === 'Ledger')) {
       return (
         <Box>
           <LedgerLogin
+            account={this.props.account}
+            loginType={loginType.trezor}
+            network={getNetwork(this.props.network)}
+            cancelLedgerLogin={this.cancelLedgerLogin.bind(this)} />
+        </Box>);
+    }
+
+    if (this.state.isTrezorLogin && (this.state.devices[0] && this.state.devices[0].model !== 'Ledger')) {
+      return (
+        <Box>
+          <TrezorLogin
             account={this.props.account}
             loginType={loginType.trezor}
             network={getNetwork(this.props.network)}

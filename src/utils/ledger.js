@@ -95,12 +95,12 @@ export const getAccountFromLedgerIndex = (index = 0) => {
 };
 
 /* eslint-disable no-await-in-loop */
-export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t, unInitializedAdded = false, }) => { // eslint-disable-line
+export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t, unInitializedAdded = false, device }) => { // eslint-disable-line
   let index = unInitializedAdded ? hwAccounts.length : 0;
   let accountInfo;
+  const deviceId = device.deviceId;
 
   const accounts = [];
-  console.log('loginType', loginType);
   do {
     try {
       switch (loginType) { // eslint-disable-line
@@ -108,8 +108,7 @@ export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t,
           accountInfo = await getLedgerAccountInfo(liskAPIClient, index);
           break;
         case loginTypesConst.trezor:
-          console.log('WESZLO');
-          accountInfo = await getHWAccountInfo(liskAPIClient, 'deviceId', loginTypesConst.trezor, index);
+          accountInfo = await getHWAccountInfo(liskAPIClient, deviceId, loginTypesConst.trezor, index);
 
           break;
         default:

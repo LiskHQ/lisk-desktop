@@ -143,6 +143,7 @@ list.on('connect', (device) => {
 
   logDebug(`Adding Device ${device.features.label} to connected devices.`);
   const trezorDevice = createTrezorHWDevice(device.features);
+  console.log('trezorDevice', trezorDevice);
   addConnectedDevices(trezorDevice);
   win.send({ event: 'trezorConnected', value: trezorDevice });
 });
@@ -230,6 +231,18 @@ export const executeTrezorCommand = (device, command) => {
   return tDevice.waitForSessionAndRun(async (session) => {
     try {
       let res;
+
+      if (command.action === 'GET_PUBLICKEY') {
+        const resTrezor = await session.typedCall(
+          'LiskGetPublicKey',
+          'LiskPublicKey',
+          {
+            address_n: getHardenedPath(command.data.index),
+            show_display: command.data.showOnDevice,
+          });
+        res = resTrezor.message.public_key;
+      }
+
       if (command.action === 'GET_ACCOUNT') {
         const resTrezor = await session.typedCall(
           'LiskGetPublicKey',

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import TransportU2F from '@ledgerhq/hw-transport-u2f';
 import TrezorConnect from 'trezor-connect';
 import i18next from 'i18next';
