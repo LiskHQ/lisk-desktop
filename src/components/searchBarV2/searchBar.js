@@ -5,6 +5,7 @@ import Delegates from './delegates';
 import Transactions from './transactions';
 import ProgressBar from '../toolbox/progressBar/progressBar';
 import routes from './../../constants/routes';
+import regex from '../../utils/regex';
 import styles from './searchBar.css';
 
 class SearchBar extends React.Component {
@@ -19,19 +20,28 @@ class SearchBar extends React.Component {
     this.onChangeSearchTextValue = this.onChangeSearchTextValue.bind(this);
     this.onSelectedRow = this.onSelectedRow.bind(this);
     this.clearSearch = this.clearSearch.bind(this);
+    this.isSubmittedStringValid = this.isSubmittedStringValid.bind(this);
   }
 
   componentDidMount() {
     if (!this.state.searchTextValue.length) this.props.clearSearchSuggestions();
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  isSubmittedStringValid(text) {
+    return text.match(regex.address)
+    || text.match(regex.transactionId)
+    || text.match(regex.delegateName);
+  }
+
   onChangeSearchTextValue(e) {
     const { searchSuggestions, clearSearchSuggestions } = this.props;
     const searchTextValue = e.target.value;
+    const isTextValid = this.isSubmittedStringValid(searchTextValue);
 
-    if (searchTextValue.length > 20) return;
-    if (searchTextValue.length <= 20) this.setState({ searchTextValue });
-    if (searchTextValue.length >= 3) {
+    if (!isTextValid) return;
+    if (isTextValid) this.setState({ searchTextValue });
+    if (searchTextValue.length > 2 && isTextValid) {
       this.setState({ isLoading: true });
       setTimeout(() => {
         this.setState({ isLoading: false });
@@ -78,14 +88,12 @@ class SearchBar extends React.Component {
           placeholder={t('Search for Address, Transaction ID or message')}
           className={`${styles.input} search-input`}
         />
-
         <div className={`${styles.searchMessage} ${(isSearchTextError || isEmptyResults) && styles.searchMessageError} search-message`}>
           <span className={`${styles.errorMessage} search-message`}>
             {isSearchTextError ? t('Type at least 3 characters') : null}
             {(isEmptyResults) ? t('No results found.') : null}
           </span>
         </div>
-
         {
           suggestions.addresses.length && !isLoading
           ? (<Accounts
@@ -111,7 +119,6 @@ class SearchBar extends React.Component {
             />)
           : null
         }
-
         {
           isLoading
           ? <ProgressBar type="linear" mode="indeterminate" theme={styles} className={'loading'}/>
