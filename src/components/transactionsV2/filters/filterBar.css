@@ -2,11 +2,21 @@
 @import '../../app/mixins.css';
 
 .container {
-  align-items: center;
+  align-items: flex-start;
+  box-sizing: border-box;
   display: flex;
   justify-content: flex-start;
-  padding: 8px 20px;
+  padding: 4px 20px;
   width: 100%;
+}
+
+.labelsHolder {
+  display: flex;
+  flex-wrap: wrap;
+
+  & > button {
+    margin: 4px 0;
+  }
 }
 
 .filter {
@@ -19,7 +29,7 @@
   color: var(--color-maastricht-blue);
   display: flex;
   height: 32px;
-  margin-right: 10px;
+  margin: 4px 10px 4px 0;
   padding: 0 15px;
 
   & > .clearBtn {
@@ -58,13 +68,16 @@
     max-width: 245px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
   }
 }
 
 .label {
   @mixin contentSmallest;
 
+  align-items: center;
   color: var(--color-maastricht-blue);
-  margin-right: 15px;
+  display: flex;
+  height: 32px;
+  margin: 4px 15px 4px 0;
+  white-space: nowrap;
 }
