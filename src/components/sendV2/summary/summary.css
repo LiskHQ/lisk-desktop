@@ -19,9 +19,8 @@
   box-sizing: border-box;
 
   & > h1 {
-    font-size: var(--subtitle-font-size);
-    font-family: var(--content-font);
-    font-weight: var(--font-weight-bold);
+    @mixin headingNormal bold;
+
     width: 100%;
     margin: 0;
     padding: 0;
@@ -48,10 +47,9 @@
     box-sizing: border-box;
 
     & > label:first-child {
-      font-size: var(--paragraph-font-size-l);
-      font-family: var(--content-font);
-      font-weight: var(--font-weight-semi-bold);
-      color: var(--color-dark-gray);
+      @mixin contentNormal bold;
+
+      color: var(--color-maastricht-blue);
       margin-bottom: 10px;
     }
 
@@ -83,25 +81,37 @@
 }
 
 .information {
+  @mixin contentLargest;
+
   color: var(--color-content-light);
-  font-size: var(--paragraph-font-size-l);
-  font-weight: var(--font-weight-semi-bold);
   margin: 0;
 }
 
 .secondText {
-  color: var(--color-dark-gray);
-  font-size: var(--button-font-size-s);
-  font-family: var(--content-font);
-  margin-left: 10px;
-}
+  @mixin contentLargest;
 
-.accountSecondText {
-  margin: 5px 0 0 27px;
+  color: var(--color-dark-gray);
+  margin-left: 10px;
 }
 
 .amountSecondText {
   margin-left: 10px;
+}
+
+.transactionFee {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  & > span:last-child {
+    @mixin contentLargest;
+
+    color: var(--color-maastricht-blue);
+  }
+}
+
+.tooltipText {
+  @mixin contentLarge;
 }
 
 .footer {
@@ -110,38 +120,16 @@
   margin: 36px 0 0;
   padding: 0;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
 
-  & > .btn {
-    width: 209px;
+  & > .confirmBtn {
+    width: 431px;
   }
 
-  & .feeMessage {
-    width: calc(100% - 440px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;
-    box-sizing: border-box;
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-l);
-
-    & > label {
-      color: var(--color-dark-gray);
-      display: flex;
-      justify-content: center;
-
-      & > img {
-        margin-left: 10px;
-        cursor: pointer;
-      }
-    }
-
-    & > span {
-      color: var(--color-content-light);
-    }
+  & > .editBtn {
+    width: 100px !important;
   }
 }

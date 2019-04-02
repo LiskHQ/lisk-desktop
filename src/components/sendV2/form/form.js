@@ -11,6 +11,8 @@ import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
 import { fromRawLsk } from '../../../utils/lsk';
 import fees from '../../../constants/fees';
+import Feedback from '../../toolbox/feedback/feedback';
+import CircularProgress from '../../toolbox/circularProgress/circularProgress';
 import styles from './form.css';
 import Piwik from '../../../utils/piwik';
 
@@ -259,10 +261,7 @@ class Form extends React.Component {
       error = byteCount > messageMaxLength;
       feedback = error
         ? t('{{length}} extra bytes', { length: byteCount - messageMaxLength })
-        : t('{{length}} out of {{total}} bytes left', {
-          length: messageMaxLength - byteCount,
-          total: messageMaxLength,
-        });
+        : t('{{length}} bytes left', { length: messageMaxLength - byteCount });
     }
 
     this.setState(prevState => ({
@@ -322,7 +321,7 @@ class Form extends React.Component {
               validateBookmark={this.validateBookmark}
               followedAccounts={this.props.followedAccounts}
               onChange={this.onInputChange}
-              placeholder={this.props.t('e.g. 1234523423L or John Doe')}
+              placeholder={this.props.t('Insert public address or a name')}
               recipient={fields.recipient}
               showSuggestions={fields.recipient.showSuggestions}
               onSelectedAccount={this.onSelectedAccount}
@@ -337,7 +336,7 @@ class Form extends React.Component {
                 onChange={this.onAmountOrReferenceChange}
                 name='amount'
                 value={fields.amount.value}
-                placeholder={this.props.t('e.g. 12345.6')}
+                placeholder={this.props.t('Amount LSK')}
                 className={`${styles.input} ${fields.amount.error ? 'error' : ''}`} />
               <ConverterV2
                 className={styles.converter}
@@ -349,11 +348,17 @@ class Form extends React.Component {
                 src={ fields.amount.error ? svg.alert_icon : svg.ok_icon}
               />
             </span>
-            <span className={`${styles.feedback} ${fields.amount.error ? 'error' : ''} ${fields.amount.feedback ? styles.show : ''} amount-feedback`}>
+
+            <Feedback
+              show={fields.amount.error}
+              status={'error'}
+              className={styles.feedbackMessage}
+              showIcon={false}>
               {fields.amount.feedback}
-            </span>
+            </Feedback>
+
             <span className={styles.amountHint}>
-              {this.props.t('+{{fee}} LSK transaction fee', { fee: fromRawLsk(fees.send) })}
+              {this.props.t('+ Transaction fee {{fee}} LSK', { fee: fromRawLsk(fees.send) })}
               <Tooltip
                 className={'showOnTop'}
                 title={this.props.t('Transaction fee')}
@@ -365,7 +370,7 @@ class Form extends React.Component {
                   </a>
                 }
               >
-                <p>
+                <p className={styles.tooltipText}>
                 {
                   this.props.t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
                   Such operations require hardware resources and because of that there is a small fee for processing those.`)
@@ -386,13 +391,29 @@ class Form extends React.Component {
                 value={fields.reference.value}
                 placeholder={this.props.t('Write message')}
                 className={`${styles.textarea} ${fields.reference.error ? 'error' : ''} message`} />
-              <SpinnerV2 className={`${styles.spinner} ${this.state.isReferenceLoading && fields.reference.value ? styles.show : styles.hide}`}/>
-              <img
-                className={`${styles.status} ${!this.state.isReferenceLoading && fields.reference.value ? styles.show : styles.hide}`}
-                src={ fields.reference.error ? svg.alert_icon : svg.ok_icon} />
+              <CircularProgress max={64} value={byteCount} className={`${styles.byteCounter} ${fields.reference.value ? styles.show : styles.hide}`} />
             </span>
             <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${fields.reference.feedback ? styles.show : ''}`}>
               {fields.reference.feedback}
+              <Tooltip
+                className={'showOnTop'}
+                title={this.props.t('Bytes counter')}
+                footer={
+                  <a href={links.transactionFee}
+                    rel="noopener noreferrer"
+                    target="_blank">
+                      {this.props.t('Read More')}
+                  </a>
+                }
+              >
+                <p className={styles.tooltipText}>
+                {
+                  this.props.t(`LISK Hub counts your message by bytes so keep in mind 
+                  that the length on your message may vary in different languages. 
+                  Different characters may consume different amount of bytes space.`)
+                }
+                </p>
+              </Tooltip>
             </span>
           </label>
         </div>
