@@ -23,42 +23,44 @@ class MessageFieldGroup extends React.Component {
     this.timeout = null;
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
-    this.validateReference = this.validateReference.bind(this);
   }
 
-  validateReference(value) {
+  handleFieldChange({ target }) {
     const { t } = this.props;
     const messageMaxLength = 62;
-    const byteCount = encodeURI(value).split(/%..|./).length - 1;
+    const byteCount = encodeURI(target.value).split(/%..|./).length - 1;
     const error = byteCount > messageMaxLength;
     const feedback = error
       ? t('Maximum length exceeded')
       : '';
-
-    const message = {
-      value,
-      error,
-    };
-
-    this.setState({
-      fields: {
-        message,
-      },
-      feedback,
-    });
-  }
-
-  handleFieldChange({ target }) {
     const fields = {
       message: {
         value: target.value,
+        error,
+        loading: true,
       },
     };
 
     this.props.updateCustomFilters(fields);
 
+    this.setState({ fields, feedback });
     clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => this.validateReference(target.value), 300);
+    this.timeout = setTimeout(() => {
+      this.props.updateCustomFilters({
+        message: {
+          ...fields.message,
+          loading: false,
+        },
+      });
+      this.setState({
+        fields: {
+          message: {
+            ...fields.message,
+            loading: false,
+          },
+        },
+      });
+    }, 300);
   }
 
   componentWillUnmount() {
@@ -82,7 +84,8 @@ class MessageFieldGroup extends React.Component {
             placeholder={t('Write message')}
             maxLength={100}
             onKeyDown={handleKeyPress}
-            className={`${styles.input} ${fields.message.error ? 'error' : ''}`} />
+            className={`${styles.input} ${fields.message.error ? 'error' : ''}`}
+          />
           <CircularProgress max={62} value={byteCount}
             className={styles.byteCounter} />
           <img

@@ -17,8 +17,6 @@ import settingsActiveIcon from '../assets/images/icons-v2/settings-active.svg';
 import logoutIcon from '../assets/images/icons-v2/logout.svg';
 import logoutActiveIcon from '../assets/images/icons-v2/logout-active.svg';
 import iconWalletDetails from '../assets/images/icons-v2/icon-wallet-details.svg';
-import txIncoming from '../assets/images/icons-v2/tx-incoming.svg';
-import txOutgoing from '../assets/images/icons-v2/tx-outgoing.svg';
 import txDelegate from '../assets/images/icons-v2/tx-delegate.svg';
 import txVote from '../assets/images/icons-v2/tx-vote.svg';
 import tx2ndPassphrase from '../assets/images/icons-v2/tx-2nd-passphrase.svg';

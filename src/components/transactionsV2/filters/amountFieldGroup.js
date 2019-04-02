@@ -55,7 +55,7 @@ class AmountFieldGroup extends React.Component {
         [field]: {
           value,
           error,
-          loding: false,
+          loading: false,
         },
       };
     }, {});

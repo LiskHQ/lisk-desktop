@@ -42,7 +42,7 @@ const FilterBar = props => (
         })
       }
       <SecondaryButtonV2
-        className={'extra-small'}
+        className={'extra-small clearAllButton'}
         onClick={props.clearAllFilters}>
         {props.t('Clear All filters')}
       </SecondaryButtonV2>
