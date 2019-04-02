@@ -96,10 +96,11 @@ export const getAccountFromLedgerIndex = (index = 0) => {
 
 /* eslint-disable no-await-in-loop */
 export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t, unInitializedAdded = false, device }) => { // eslint-disable-line
+  console.log('displayAccounts')
   let index = unInitializedAdded ? hwAccounts.length : 0;
   let accountInfo;
   const deviceId = device.deviceId;
-
+  console.log(index, deviceId);
   const accounts = [];
   do {
     try {
@@ -109,7 +110,7 @@ export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t,
           break;
         case loginTypesConst.trezor:
           accountInfo = await getHWAccountInfo(liskAPIClient, deviceId, loginTypesConst.trezor, index);
-
+          console.log('accountInfo', accountInfo);
           break;
         default:
           this.props.errorToastDisplayed({

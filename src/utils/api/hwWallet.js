@@ -13,6 +13,8 @@ import store from '../../store';
 
 import { getAccount } from './account';
 import { extractAddress } from '../account';
+import { getVotes } from './delegate';
+import { getTransactions } from './transactions';
 
 import loginTypes from '../../constants/loginTypes';
 
@@ -175,7 +177,6 @@ const executeTrezorCommandForWeb = async (command) => {
     if (command.action === HW_CMD.GET_PUBLICKEY) {
       params.showOnTrezor = command.data.showOnDevice;
       cmdRes = await TrezorConnect.liskGetPublicKey(params);
-      console.log('GET_PUBLICKEY', cmdRes);
       cmdRes = throwIfNotSuccess(cmdRes).payload.publicKey;
     }
     if (command.action === HW_CMD.GET_ADDRESS) {
@@ -214,12 +215,10 @@ const platformHendler = async (command) => {
     if (command.hwType === 1) {
       resCommand = await executeLedgerCommandForWeb(command);
     } else if (command.hwType === 2) {
-      console.log('resCommand')
       resCommand = await executeTrezorCommandForWeb(command);
     } else {
       throw new Error(i18next.t('Hardware Wallet Type not recognized'));
     }
-    console.log(resCommand);
     return resCommand;
   }
   throw new Error(HW_MSG.NO_TRANSPORT_AVAILABLE);
@@ -235,7 +234,6 @@ export const getLoginTypeFromDevice = (device) => {
 };
 
 export const getHWPublicKeyFromIndex = async (deviceId, loginType, index, showOnDevice = false) => {
-  console.log(deviceId, loginType, index, HW_CMD);
   const command = {
     action: HW_CMD.GET_PUBLICKEY,
     hwType: loginType,
@@ -330,6 +328,7 @@ export const getHWAccountInfo = async (activePeer, deviceId, loginType, accountI
   if (error) {
     throw error;
   }
+
   const address = extractAddress(publicKey);
   let resAccount = await getAccount(activePeer, address);
 
@@ -338,13 +337,16 @@ export const getHWAccountInfo = async (activePeer, deviceId, loginType, accountI
   Object.assign(resAccount, { isInitialized, publicKey });
 
   // TODO Detach this from main process
-  if (isInitialized) {
-    const txAccount = await getTransactions(activePeer, address);
-    Object.assign(resAccount, { txCount: txAccount.meta.count });
+  // if (isInitialized) {
+  //   console.log('address', address);
+  //   const txAccount = await getTransactions(activePeer, address);
+  //   console.log('txAccount 2', txAccount);
+  //   Object.assign(resAccount, { txCount: txAccount.meta.count });
 
-    const votesAccount = await getVotes(activePeer, address);
-    Object.assign(resAccount, { votesCount: votesAccount.data.votesUsed });
-  }
+  //   const votesAccount = await getVotes(activePeer, address);
+  //   Object.assign(resAccount, { votesCount: votesAccount.data.votesUsed });
+  // }
+  console.log(resAccount, 'Output resAccount2');
 
   return resAccount;
 };

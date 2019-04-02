@@ -54,6 +54,7 @@ class TrezorLogin extends React.Component {
   async componentWillMount() {
     // this.keyboardHandler = this.keyboardHandler.bind(this);
     // window.addEventListener('keydown', this.keyboardHandler, false);
+    console.log('componentWillMount');
     const devices = await getDeviceList();
     const loginType = getLoginTypeFromDevice(devices[0]);
     const deviceId = devices[0].deviceId;
@@ -102,9 +103,11 @@ class TrezorLogin extends React.Component {
 
 
   async componentDidMount() {
+    console.log('componentDidMount');
+
     this.setState({ isLoading: true });
     const devices = await getDeviceList();
-    console.log(this.state.hwAccounts, await getDeviceList());
+    console.log('devices', devices, this.props);
     setTimeout(async () => {
       const output = await displayAccounts({
         liskAPIClient: this.props.liskAPIClient,
