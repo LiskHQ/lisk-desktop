@@ -70,8 +70,6 @@ export default {
   tx2ndPassphrase,
   txDefault,
   txDelegate,
-  txIncoming,
-  txOutgoing,
   txSendArrow,
   txVote,
   wallet_active_icon: walletActiveIcon,
