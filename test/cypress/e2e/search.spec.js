@@ -128,6 +128,7 @@ describe('Search', () => {
     cy.get(ss.searchIcon).click();
     cy.get(ss.searchInput).type(`${accounts['mainnet delegate'].address}`);
     cy.get(ss.searchAccountResults).eq(0).click();
+    cy.wait(2000);
     cy.get(ss.accountName).should('have.text', accounts['mainnet delegate'].username);
   });
 
