@@ -89,7 +89,14 @@ class filterContainer extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, customFilters } = this.props;
+    const {
+      dateFrom,
+      dateTo,
+      amountFrom,
+      amountTo,
+      message,
+    } = customFilters;
 
     return (
       <React.Fragment>
@@ -105,15 +112,15 @@ class filterContainer extends React.Component {
               className={`${styles.container} container`}
               ref={(node) => { this.dropdownRef = node; }}>
               <DateFieldGroup
-                filters={this.props.customFilters}
+                filters={{ dateFrom, dateTo }}
                 updateCustomFilters={this.updateCustomFilters}
                 handleKeyPress={this.handleKey} />
               <AmountFieldGroup
-                filters={this.props.customFilters}
+                filters={{ amountFrom, amountTo }}
                 updateCustomFilters={this.updateCustomFilters}
                 handleKeyPress={this.handleKey} />
               <MessageFieldGroup
-                filters={this.props.customFilters}
+                filters={{ message }}
                 updateCustomFilters={this.updateCustomFilters}
                 handleKeyPress={this.handleKey} />
               <PrimaryButtonV2

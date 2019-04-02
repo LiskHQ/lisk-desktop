@@ -15,37 +15,54 @@ class MessageFieldGroup extends React.Component {
         message: {
           value: '',
           error: false,
-          isLoading: false,
         },
       },
       feedback: '',
     };
 
+    this.timeout = null;
+
     this.handleFieldChange = this.handleFieldChange.bind(this);
+    this.validateReference = this.validateReference.bind(this);
   }
 
-  handleFieldChange({ target }) {
+  validateReference(value) {
     const { t } = this.props;
-    const { fields } = this.state;
     const messageMaxLength = 62;
-    const byteCount = encodeURI(target.value).split(/%..|./).length - 1;
+    const byteCount = encodeURI(value).split(/%..|./).length - 1;
     const error = byteCount > messageMaxLength;
     const feedback = error
       ? t('Maximum length exceeded')
       : '';
-    const newState = {
-      fields: {
-        ...fields,
-        [target.name]: {
-          value: target.value,
-          error,
-        },
-      },
-      feedback: target.value !== '' ? feedback : '',
+
+    const message = {
+      value,
+      error,
     };
 
-    this.props.updateCustomFilters(newState.fields);
-    this.setState(newState);
+    this.setState({
+      fields: {
+        message,
+      },
+      feedback,
+    });
+  }
+
+  handleFieldChange({ target }) {
+    const fields = {
+      message: {
+        value: target.value,
+      },
+    };
+
+    this.props.updateCustomFilters(fields);
+
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => this.validateReference(target.value), 300);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
   }
 
   render() {
@@ -69,7 +86,7 @@ class MessageFieldGroup extends React.Component {
           <CircularProgress max={62} value={byteCount}
             className={styles.byteCounter} />
           <img
-            className={`${styles.status} ${!fields.message.loading && fields.message.value ? styles.show : ''}`}
+            className={`${styles.status} ${!fields.message.loading && filters.message ? styles.show : ''}`}
             src={ fields.message.error ? svg.alert_icon : svg.ok_icon} />
         </div>
         <Feedback
