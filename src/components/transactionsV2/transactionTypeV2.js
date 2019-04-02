@@ -70,7 +70,7 @@ const TransactionTypeV2 = (props) => { // eslint-disable-line complexity
               <span className={`${styles.title}`}>{
                 hasTitle ? accountTitle : address
               }</span>
-              { hasTitle && <span>{address}</span> }
+              { hasTitle && <span className={styles.address}>{address}</span> }
             </div>
           </React.Fragment>
           )}

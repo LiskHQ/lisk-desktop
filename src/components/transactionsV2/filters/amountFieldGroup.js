@@ -107,10 +107,10 @@ class AmountFieldGroup extends React.Component {
           className={`${styles.input} ${fields[data.name].error ? 'error' : ''} ${data.name}Input`}
         />
         <SpinnerV2
-          className={`${styles.status} ${fields[data.name].loading && fields[data.name].value ? styles.show : ''}`}
+          className={`${styles.status} ${fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
         />
         <img
-          className={`${styles.status} ${!fields[data.name].loading && fields[data.name].value ? styles.show : ''}`}
+          className={`${styles.status} ${!fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
           src={ fields[data.name].error ? svg.alert_icon : svg.ok_icon}
         />
       </label>
