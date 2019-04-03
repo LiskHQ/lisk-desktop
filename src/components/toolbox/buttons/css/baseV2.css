@@ -31,7 +31,11 @@
     padding: 0 16px;
   }
 
-  & > :global(.button-icon) {
+  & * {
+    line-height: inherit !important;
+  }
+
+  & :global(.button-icon) {
     display: block;
     height: 1.2em; /* stylelint-disable-line */
     margin-left: 0.42em; /* stylelint-disable-line */

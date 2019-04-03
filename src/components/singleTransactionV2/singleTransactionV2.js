@@ -7,6 +7,7 @@ import LiskAmount from '../liskAmount';
 import EmptyState from '../emptyState';
 import svg from '../../utils/svgIcons';
 import BoxV2 from '../boxV2';
+import { SecondaryButtonV2 } from '../toolbox/buttons/button';
 import TransactionDetailViewV2 from '../transactionsV2/transactionDetailViewV2/transactionDetailViewV2';
 import styles from './singleTransactionV2.css';
 
@@ -78,19 +79,25 @@ class SingleTransactionV2 extends React.Component {
     return (
       <div className={`${grid.row} ${grid['center-xs']}`}>
       { this.props.transaction.id && !this.props.transaction.error ? (
-        <BoxV2 className={`${grid['col-sm-7']} ${styles.wrapper}`}>
+        <BoxV2 className={`${grid['col-sm-8']} ${grid['col-md-4']} ${styles.wrapper}`}>
           <header className={`${styles.detailsHeader} tx-header`}>
             <h1>{title}</h1>
-            <img className={styles.txIcon} src={icon} />
-            <span className={`${styles.date} tx-date`}>
-              <DateTimeFromTimestamp
-                fulltime={true}
-                className={'date'}
-                time={transaction.timestamp}
-                showSeconds={true} />
-            </span>
+              <CopyToClipboard
+                text={`lisk:/${this.props.match.url}`}
+                onCopy={() => this.handleCopy('link')}>
+                <SecondaryButtonV2 className={'extra-small'} disabled={this.state.linkCopied}>
+                  {this.state.linkCopied
+                    ? <span className={`${styles.txLink} tx-link`}>{t('Copied!')}</span>
+                    : (<span className={`${styles.txLink} tx-link`}>
+                        {t('Copy link')}
+                        <img className={'button-icon'} src={svg.icoLink} />
+                      </span>)
+                  }
+                </SecondaryButtonV2>
+              </CopyToClipboard>
           </header>
           <main className={styles.mainContent}>
+            <img className={styles.txIcon} src={icon} />
             <TransactionDetailViewV2 address={this.props.address} transaction={transaction} />
             <footer className={styles.detailsFooter}>
               <div>
@@ -115,28 +122,28 @@ class SingleTransactionV2 extends React.Component {
                 </p>
               </div>
               <div>
+                <p>
+                  <span className={styles.label}>{t('Date')} </span>
+                  <span className={`${styles.date} tx-date`}>
+                    <DateTimeFromTimestamp
+                      fulltime={true}
+                      className={'date'}
+                      time={transaction.timestamp}
+                      showSeconds={true} />
+                  </span>
+                </p>
                 <p className={`${styles.value}`}>
                   <span className={styles.label}>{t('Confirmation')} </span>
                   <span className={'tx-confirmation'}>
                     {transaction.confirmations || 0}
                   </span>
                 </p>
-                <p className={`${styles.value} ${styles.link} ${this.state.linkCopied ? styles.copied : ''}`}>
-                  <CopyToClipboard
-                    className={'tx-link'}
-                    text={`lisk:/${this.props.match.url}`}
-                    onCopy={() => this.handleCopy('link')}>
-                    {this.state.linkCopied
-                      ? <span>{t('Copied!')}</span>
-                      : <span>{t('Copy transaction link')} <img src={svg.icoLink} /></span>}
-                  </CopyToClipboard>
-                </p>
               </div>
             </footer>
           </main>
         </BoxV2>
       ) : (
-        <BoxV2>
+        <BoxV2 className={`${grid['col-sm-8']} ${grid['col-md-4']}`}>
           <EmptyState title={this.props.t('No results')}
             message={this.props.t('Search for Lisk ID, Delegate or Transaction ID')} />
         </BoxV2>
