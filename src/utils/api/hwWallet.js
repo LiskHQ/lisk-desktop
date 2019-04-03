@@ -7,7 +7,7 @@ import to from 'await-to-js';
 import { HW_CMD, calculateSecondPassphraseIndex } from '../../constants/hwConstants';
 import { loadingStarted, loadingFinished } from '../loading';
 import { infoToastDisplayed, errorToastDisplayed } from '../../actions/toaster';
-import { getTransactionBytes, calculateTxId, getBufferToHex, createSendTX } from '../rawTransactionWrapper';
+import { getTransactionBytes, calculateTxId, getBufferToHex, createSendTX, createRawVoteTX } from '../rawTransactionWrapper';
 import { PLATFORM_TYPES, getPlatformType } from '../platform';
 import store from '../../store';
 
@@ -374,6 +374,26 @@ export const sendWithHW = (activePeer, account, recipientId, amount,
       activePeer.transactions.broadcast(signedTx).then(() => {
         console.log('signedTx', signedTx);
 
+        resolve(signedTx);
+      }).catch(reject);
+    }
+  });
+
+/**
+ * Trigger this action to sign and broadcast a VoteTX with Ledger Account
+ * NOTE: secondPassphrase for ledger is a PIN (numeric)
+ * @returns Promise - Action Vote with Ledger
+ */
+export const voteWithHW = (activePeer, account, votedList, unvotedList, pin = null) =>
+  new Promise(async (resolve, reject) => {
+    const rawTx = createRawVoteTX(account.publicKey, account.address, votedList, unvotedList);
+    let error;
+    let signedTx;
+    [error, signedTx] = await to(signTransactionWithHW(rawTx, account, pin));
+    if (error) {
+      reject(error);
+    } else {
+      activePeer.transactions.broadcast(signedTx).then(() => {
         resolve(signedTx);
       }).catch(reject);
     }
