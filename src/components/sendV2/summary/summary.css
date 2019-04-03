@@ -83,14 +83,14 @@
 .information {
   @mixin contentLargest;
 
-  color: var(--color-content-light);
+  color: var(--color-maastricht-blue);
   margin: 0;
 }
 
 .secondText {
   @mixin contentLargest;
 
-  color: var(--color-dark-gray);
+  color: var(--color-blue-gray);
   margin-left: 10px;
 }
 

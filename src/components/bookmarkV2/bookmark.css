@@ -88,11 +88,11 @@
 
     & > span {
       margin-left: 10px;
-      color: var(--color-content-light);
+      color: var(--color-maastricht-blue);
     }
 
     & > span:last-child {
-      color: var(--color-dark-gray) !important;
+      color: var(--color-blue-gray) !important;
     }
 
     &:hover,

@@ -10,7 +10,6 @@
   max-width: 431px;
   height: auto;
   background-color: var(--color-white);
-  box-shadow: var(--box-shadow-graph-selector);
   border-radius: var(--border-radius-box);
 }
 
@@ -23,7 +22,7 @@
   align-items: center;
   margin: 0;
   padding: 0 16px;
-  border-bottom: 1px solid var(--color-light-gray);
+  border-bottom: 1px solid var(--color-platinum);
   background: var(--color-white-smoke);
   border-top-left-radius: var(--border-radius-box);
   border-top-right-radius: var(--border-radius-box);
@@ -50,7 +49,7 @@
   & .fieldLabel {
     @mixin contentNormal bold;
 
-    color: var(--color-content-light);
+    color: var(--color-maastricht-blue);
     margin-bottom: 8px;
   }
 
@@ -60,7 +59,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    color: var(--color-dark-gray);
+    color: var(--color-slate-gray);
     width: 100%;
 
     & > img {
@@ -89,7 +88,8 @@
 
   & .input,
   & .textarea {
-    font-size: var(--paragraph-font-size-l);
+    @mixin contentLargest;
+
     height: 48px;
     padding: 14px;
   }
@@ -151,8 +151,6 @@
 
   &.referenceFeedback {
     @mixin contentSmallest;
-
-    justify-content: flex-end;
   }
 }
 

@@ -140,29 +140,6 @@ describe('Form', () => {
       expect(amountField.find('.feedback')).toHaveClassName('error');
     });
 
-    it.skip('Should show error feedback if ending in . or multiples .', () => {
-      const evt = { target: { name: 'amount', value: 1 } };
-      const multipleDotsEvt = { target: { name: 'amount', value: '1.2.3' } };
-      const endingDotEvt = { target: { name: 'amount', value: '12.' } };
-      let amountField = wrapper.find('.fieldGroup').at(1);
-      amountField.find('InputV2').simulate('change', endingDotEvt);
-      jest.advanceTimersByTime(300);
-      wrapper.update();
-      amountField = wrapper.find('.fieldGroup').at(1);
-      expect(amountField.find('.feedback')).toHaveClassName('error');
-      amountField.find('InputV2').simulate('change', evt);
-      jest.advanceTimersByTime(300);
-      wrapper.update();
-      amountField = wrapper.find('.fieldGroup').at(1);
-      expect(amountField.find('.feedback')).not.toHaveClassName('error');
-      amountField.find('InputV2').simulate('change', multipleDotsEvt);
-      jest.advanceTimersByTime(300);
-      wrapper.update();
-      amountField = wrapper.find('.fieldGroup').at(1);
-      expect(amountField.find('.feedback')).toHaveClassName('error');
-    });
-  });
-
   describe('Reference field', () => {
     it('Should show feedback if some text inserted and hide if empty', () => {
       const referenceField = wrapper.find('.fieldGroup').at(2);
