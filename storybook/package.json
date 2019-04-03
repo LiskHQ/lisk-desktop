@@ -12,7 +12,9 @@
     "name": "Lisk Foundation",
     "email": "admin@lisk.io"
   },
-  "dependencies": {},
+  "dependencies": {
+    "prop-types": "^15.7.2"
+  },
   "devDependencies": {
     "@babel/core": "^7.4.0",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
