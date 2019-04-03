@@ -139,6 +139,7 @@ describe('Form', () => {
       amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField.find('.feedback')).toHaveClassName('error');
     });
+  });
 
   describe('Reference field', () => {
     it('Should show feedback if some text inserted and hide if empty', () => {
