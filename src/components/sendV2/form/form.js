@@ -352,7 +352,7 @@ class Form extends React.Component {
             <Feedback
               show={fields.amount.error}
               status={'error'}
-              className={styles.feedbackMessage}
+              className={`${styles.feedbackMessage} amount-feedback`}
               showIcon={false}>
               {fields.amount.feedback}
             </Feedback>
