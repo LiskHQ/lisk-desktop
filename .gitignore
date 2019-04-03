@@ -19,3 +19,5 @@ reports
 test/cypress/screenshots/
 test/cypress/videos/
 .history/
+.history
+package-lock.json
