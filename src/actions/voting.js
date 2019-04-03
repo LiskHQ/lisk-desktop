@@ -7,7 +7,6 @@ import {
 } from '../utils/api/delegate';
 import { getTimeOffset } from '../utils/hacks';
 import { updateDelegateCache } from '../utils/delegates';
-// import { voteWithLedger } from '../utils/api/ledger';
 import { voteWithHW } from '../utils/api/hwWallet';
 import { passphraseUsed } from './account';
 import { transactionAdded } from './transactions';

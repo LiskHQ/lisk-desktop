@@ -86,7 +86,6 @@ const ledgerObserver = {
           const liskAccount = await getLiskAccount(device.path);
           const ledgerDevice = createLedgerHWDevice(liskAccount, device.path);
           addConnectedDevices(ledgerDevice);
-
           // ledgerPath = device.path;
           win.send({ event: 'ledgerConnected', value: null });
         }

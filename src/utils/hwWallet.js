@@ -6,45 +6,27 @@ import i18next from 'i18next';
 import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api';
 import { HW_CMD, calculateSecondPassphraseIndex } from '../constants/hwConstants';
 import { loadingStarted, loadingFinished } from './loading';
+// import { accountLoggedOut } from '../actions/account';
 import { infoToastDisplayed, errorToastDisplayed } from '../actions/toaster';
 import { getTransactionBytes, calculateTxId, getBufferToHex } from './rawTransactionWrapper';
 import { PLATFORM_TYPES, getPlatformType } from './platform';
 import store from '../store';
 import loginTypes from '../constants/loginTypes';
+import { HW_MSG } from '../constants/hwConstants';
 
 const util = require('util');
-
-export const HW_MSG = {
-  ERROR_OR_DEVICE_IS_NOT_CONNECTED: i18next.t('Error or Device Not Connected.'),
-  NO_TRANSPORT_AVAILABLE: i18next.t('Unable to detect the communication layer with your Hardware Wallet'),
-
-  LEDGER_CONNECTED: i18next.t('Ledger Nano S Connected.'),
-  LEDGER_DISCONNECTED: i18next.t('Ledger Nano S Disconnected.'),
-  LEDGER_NO_TRANSPORT_AVAILABLE_U2F: i18next.t('Unable to detect the communication layer. Is ledger connected? Is Fido U2F Extension Installed?'),
-  LEDGER_ERR_DURING_CONNECTION: i18next.t('Error on Ledger Connection. Be sure your device is connected properly'),
-  LEDGER_ACTION_DENIED_BY_USER: i18next.t('Action Denied by User'),
-  LEDGER_ASK_FOR_CONFIRMATION: i18next.t('Look at your Ledger for confirmation'),
-
-  TREZOR_CONNECTED: i18next.t('%s Connected. Welcome %s!'),
-  TREZOR_DISCONNECTED: i18next.t('%s Disconnected. See you %s!'),
-  TREZOR_ASK_FOR_CONFIRMATION: i18next.t('Look at your Trezor %s for completing the action'),
-  TREZOR_ACTION_DENIED_BY_USER: i18next.t('Action Denied by User'),
-  TREZOR_IS_IN_BOOTLOADER_MODE: i18next.t('Your Trezor Device is in bootloader mode, please re-connected it.'),
-  TREZOR_IS_NOT_INITIALIZED: i18next.t('Your Trezor Device is not initialized. Please do it with trezor software.'),
-  TREZOR_ONE_OLD_FIRMWARE: i18next.t('Your Trezor One has an old Firmware. Please update it.'),
-  TREZOR_MODELT_OLD_FIRMWARE: i18next.t('Your Trezor Model T has an old Firmware. Please update it.'),
-};
 
 const { ipc } = window;
 
 if (ipc) { // On browser-mode is undefined
-  ipc.on('ledgerConnected', () => {
-    store.dispatch(infoToastDisplayed({ label: HW_MSG.LEDGER_CONNECTED }));
-  });
+  // ipc.on('ledgerConnected', () => {
+  //   store.dispatch(infoToastDisplayed({ label: HW_MSG.LEDGER_CONNECTED }));
+  // });
 
-  ipc.on('ledgerDisconnected', () => {
-    store.dispatch(errorToastDisplayed({ label: HW_MSG.LEDGER_DISCONNECTED }));
-  });
+  // ipc.on('ledgerDisconnected', () => {
+  //   console.log('ledgerDisconnected');
+  //   store.dispatch(errorToastDisplayed({ label: HW_MSG.LEDGER_DISCONNECTED }));
+  // });
 
   ipc.on('ledgerButtonCallback', () => {
     // store.dispatch(infoToastDisplayed({ label: HW_MSG.LEDGER_ASK_FOR_CONFIRMATION }));
