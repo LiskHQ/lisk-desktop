@@ -42,7 +42,6 @@
   width: 100%;
   display: flex;
   background-color: var(--color-white);
-  box-shadow: var(--box-shadow-search);
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
