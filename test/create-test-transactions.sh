@@ -27,4 +27,11 @@ lisk transaction:broadcast $(lisk transaction:create:vote \
 --passphrase="pass:recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit" \
 --votes 86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19)
 
+sleep 10
+
+lisk transaction:broadcast $(lisk transaction:create:vote \
+--passphrase="pass:recipe bomb asset salon coil symbol tiger engine assist pact pumpkin visit" \
+--votes 01389197bbaf1afb0acd47bbfeabb34aca80fb372a8f694a1c0716b3398db746 \
+--unvotes 86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19)
+
 # docker exec -t docker_db_1 pg_dump -U lisk lisk > ./dev_blockchain.db

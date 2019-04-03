@@ -107,10 +107,10 @@ class transactionsHeader extends React.Component {
             <span
               ref={this.setDropownRefs}
               data-name={'followDropdown'}
-              className={`${styles.bookmarkContainer} follow-account`}>
+              className={`${styles.bookmarkContainer}`}>
             { isFollowing ? (
               <SecondaryButtonV2
-                className={`${styles.followingButton}`}
+                className={`${styles.followingButton} follow-account`}
                 onClick={
                   /* istanbul ignore next */
                   () => this.toggleDropdown('followDropdown')
@@ -118,7 +118,9 @@ class transactionsHeader extends React.Component {
                 {t('Account bookmarked')}
               </SecondaryButtonV2>
             ) : (
-              <PrimaryButtonV2 onClick={() => this.toggleDropdown('followDropdown')}>
+              <PrimaryButtonV2
+                className={`${styles.followingButton} follow-account`}
+                onClick={() => this.toggleDropdown('followDropdown')}>
                 {t('Bookmark account')}
               </PrimaryButtonV2>
             )}
