@@ -38,7 +38,6 @@ export const calculateSecondPassphraseIndex =
 const sendIpcCommand = command =>
   new Promise((resolve, reject) => {
     ipc.once('ledgerCommand.result', (event, res) => {
-      console.log('PLIZZZ', res);
       if (res.success) {
         return resolve(res.data);
       }
@@ -156,7 +155,6 @@ export const signTransactionWithLedger = async (tx, account, pin) => {
   //  loadingStarted('ledgerUserAction');
   // store.dispatch(infoToastDisplayed({ label: LEDGER_MSG.LEDGER_ASK_FOR_CONFIRMATION }));
   let signature;
-  console.log('KURWAA');
   try {
     signature = await ledgerPlatformHendler(command);
   } catch (err) {

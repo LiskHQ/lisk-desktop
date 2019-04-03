@@ -280,13 +280,11 @@ export const sent = ({
         [error, callResult] = await to(send(liskAPIClient, recipientId, toRawLsk(amount), passphrase, secondPassphrase, data, timeOffset));
         break;
       case loginType.ledger:
-        console.log('ledger');
         // eslint-disable-next-line
         // const output = await sendWithHW(liskAPIClient, account, recipientId, toRawLsk(amount), secondPassphrase, data);
 
         // eslint-disable-next-line
         [error, callResult] = await to(sendWithHW(liskAPIClient, account, recipientId, toRawLsk(amount), secondPassphrase, data));
-        console.log('Trolollool', callResult);
 
         // [error, callResult] = await to(sendWithLedger(liskAPIClient,
         // account, recipientId, toRawLsk(amount), secondPassphrase, data, timeOffset));

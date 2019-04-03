@@ -65,7 +65,6 @@ class Summary extends React.Component {
   }
 
   submitTransaction() {
-    console.log('SUBMIT', this.props);
     this.props.sent({
       account: this.props.account,
       recipientId: this.props.fields.recipient.address,

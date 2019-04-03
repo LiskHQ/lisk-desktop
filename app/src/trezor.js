@@ -143,7 +143,6 @@ list.on('connect', (device) => {
 
   logDebug(`Adding Device ${device.features.label} to connected devices.`);
   const trezorDevice = createTrezorHWDevice(device.features);
-  console.log('trezorDevice', trezorDevice);
   addConnectedDevices(trezorDevice);
   win.send({ event: 'trezorConnected', value: trezorDevice });
 });

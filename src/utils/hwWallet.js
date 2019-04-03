@@ -47,7 +47,6 @@ if (ipc) { // On browser-mode is undefined
   });
 
   ipc.on('ledgerButtonCallback', () => {
-    console.log('CONFIRMATION');
     // store.dispatch(infoToastDisplayed({ label: HW_MSG.LEDGER_ASK_FOR_CONFIRMATION }));
   });
 
