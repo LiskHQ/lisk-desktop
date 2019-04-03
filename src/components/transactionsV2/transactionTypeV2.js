@@ -46,7 +46,7 @@ const TransactionTypeV2 = (props) => { // eslint-disable-line complexity
   );
   const accountTitle = props.followedAccounts[index]
     && props.followedAccounts[index].title;
-  const hasTitle = index !== -1 && accountTitle !== props.address;
+  const hasTitle = index !== -1;
 
   return (
     <div className={`${styles.transactionType} transaction-address`}>
