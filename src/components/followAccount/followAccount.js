@@ -112,6 +112,7 @@ class FollowAccount extends React.Component {
     const { accounts } = this.props;
     this.props.followedAccountRemoved(accounts[followIndex]);
     this.setState({
+      isValid: false,
       fields: {
         ...fields,
         accountName: {
@@ -194,7 +195,7 @@ class FollowAccount extends React.Component {
               </React.Fragment>
             : null}
           </span>
-          <span className={`${styles.feedback} ${fields.accountName.error || fields.accountName.value.length >= 15 ? 'error' : ''} ${fields.accountName.value ? styles.show : ''}`}>
+          <span className={`${styles.feedback} ${fields.accountName.error || fields.accountName.value.length >= 15 ? 'error' : ''} ${fields.accountName.value && !isFollowing ? styles.show : ''}`}>
             {fields.accountName.feedback}
           </span>
         </label>
