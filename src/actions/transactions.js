@@ -281,13 +281,7 @@ export const sent = ({
         break;
       case loginType.ledger:
         // eslint-disable-next-line
-        // const output = await sendWithHW(liskAPIClient, account, recipientId, toRawLsk(amount), secondPassphrase, data);
-
-        // eslint-disable-next-line
         [error, callResult] = await to(sendWithHW(liskAPIClient, account, recipientId, toRawLsk(amount), secondPassphrase, data));
-
-        // [error, callResult] = await to(sendWithLedger(liskAPIClient,
-        // account, recipientId, toRawLsk(amount), secondPassphrase, data, timeOffset));
         break;
       // case 2:
       //   errorMessage = i18next.t('Not Yet Implemented. Sorry.');

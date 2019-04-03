@@ -129,8 +129,6 @@ export const votePlaced = ({
       case loginType.ledger:
         [error, callResult] =
           await to(voteWithHW(liskAPIClient, account, votedList, unvotedList, secondPassphrase));
-        // [error, callResult] =
-        //   await to(voteWithLedger(liskAPIClient, account, votedList, unvotedList));
         break;
       /* istanbul ignore next */
       default:
