@@ -40,7 +40,7 @@ class SingleTransactionV2 extends React.Component {
     return true;
   }
 
-  // istanbul skip next
+  // istanbul ignore next
   componentWillUnmount() {
     clearTimeout(this.idTimeout);
     clearTimeout(this.linkTimeout);
@@ -134,10 +134,10 @@ class SingleTransactionV2 extends React.Component {
                       {t('Transaction ID')}
                       <img src={svg.icoLink} />
                     </span>
-                    <span>
+                    <span className={'transaction-id'}>
                       {this.state.idCopied
                         ? t('Copied!')
-                        : <span className={'copy-title transaction-id'}>{transaction.id}</span>
+                        : <span className={'copy-title'}>{transaction.id}</span>
                       }
                     </span>
                   </p>

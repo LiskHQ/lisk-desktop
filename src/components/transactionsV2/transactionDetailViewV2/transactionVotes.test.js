@@ -20,7 +20,7 @@ describe('Transaction Votes', () => {
   it('Should render with added and deleted Votes', () => {
     wrapper = mount(<Router><TransactionVotes {...props} /></Router>, options);
     expect(wrapper).toContainMatchingElements(2, '.votesContainer');
-    expect(wrapper.find('.rank').first().text()).toEqual(props.votes.added[0].rank);
+    expect(wrapper.find('.rank').first().text()).toEqual(`#${props.votes.added[0].rank}`);
     expect(wrapper.find('.username').first().text()).toEqual(props.votes.added[0].username);
   });
 
@@ -36,7 +36,7 @@ describe('Transaction Votes', () => {
     };
     wrapper = mount(<Router><TransactionVotes {...addedProps} /></Router>, options);
     expect(wrapper).toContainMatchingElements(1, '.votesContainer.added');
-    expect(wrapper.find('.rank').at(1).text()).toBe(addedProps.votes.added[0].rank);
+    expect(wrapper.find('.rank').at(1).text()).toBe(`#${addedProps.votes.added[0].rank}`);
   });
 
   it('Should only render removed votes', () => {
