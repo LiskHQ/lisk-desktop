@@ -35,7 +35,6 @@ class TransactionDetailViewV2 extends React.Component {
       <React.Fragment>
         {transaction.type === 0 || transaction.type === 2 ? (
           <div className={styles.summaryHeader}>
-            <h1>{title}</h1>
             <p>
             {transaction.type === 0 ? (
               <span className={'tx-amount'}>
@@ -47,6 +46,7 @@ class TransactionDetailViewV2 extends React.Component {
               ) : value
             }
             </p>
+            <h1>{title}</h1>
           </div>
         ) : null}
         <div className={styles.accountWrapper}>
@@ -60,7 +60,7 @@ class TransactionDetailViewV2 extends React.Component {
               <AccountInfo
                 address={transaction.recipientId}
                 addressClass={'receiver-address'}
-                label={'recipient'} />
+                label={'Recipient'} />
             </React.Fragment>) : null
           }
         </div>

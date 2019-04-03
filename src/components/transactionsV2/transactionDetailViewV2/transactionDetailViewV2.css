@@ -1,93 +1,88 @@
 @import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
 
 .summaryHeader {
   align-items: center;
   display: flex;
   flex-direction: column;
-  margin-bottom: 40px;
+  margin: 20px 0;
 
   & > h1 {
-    color: var(--color-dark-gray);
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-s);
-    font-weight: var(--font-weight-bold);
-    margin: 0 0 8px;
+    @mixin contentSmall;
+
+    color: var(--color-slate-gray);
+    margin: 0;
   }
 
   & > p,
   & .txAmount {
-    color: var(--color-content-light);
-    font-family: var(--heading-font);
-    font-size: var(--font-size-h2);
-    font-weight: var(--font-weight-bold);
-    letter-spacing: 0.1px;
-    margin: 0;
+    @mixin headingNormal;
 
-    & > span:last-child {
-      color: var(--color-dark-gray);
-      font-size: var(--subtitle-font-size);
-    }
+    color: var(--color-maastricht-blue);
+    margin: 0;
   }
 }
 
 .accountWrapper {
   align-items: center;
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+  justify-content: space-evenly;
+  margin: 20px 0;
 
   & .separator {
     flex-grow: 0;
     flex-shrink: 0;
     height: 14px;
+    margin: 0 auto;
     width: 7px;
   }
 
   & .accountInfo {
     align-items: center;
     display: flex;
-    height: 42px;
+    flex-basis: 40%;
+    flex-direction: column;
+
+    & .avatar {
+      margin-bottom: 20px;
+    }
 
     & > div:last-child {
+      align-items: center;
       display: flex;
       flex-direction: column;
       height: 100%;
       justify-content: space-between;
-      margin-left: 22px;
-    }
-
-    & p,
-    & a {
-      font-family: var(--content-font);
-      font-weight: var(--font-weight-bold);
-      margin: 0;
-      text-align: left;
     }
 
     & .label {
-      color: var(--color-dark-gray);
-      font-size: var(--paragraph-font-size-s);
+      @mixin contentSmall;
+
+      color: var(--color-slate-gray);
+      margin: 0;
     }
 
     & .address {
-      color: var(--color-content-light);
-      font-size: var(--paragraph-font-size-l);
+      @mixin headingSmall;
+
+      color: var(--color-maastricht-blue);
       text-decoration: none;
     }
   }
 }
 
 .detailsWrapper {
+  border-top: 1px solid var(--color-platinum);
   display: flex;
   flex-direction: column;
-  margin-top: 24px;
+  margin-top: 20px;
+  padding: 20px 0;
 
   & .label {
-    color: var(--color-dark-gray);
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-s);
-    font-weight: var(--font-weight-bold);
-    margin-bottom: 8px;
+    @mixin contentSmall;
+
+    color: var(--color-slate-gray);
+    margin-bottom: 10px;
     text-align: left;
 
     & .count {
@@ -97,15 +92,9 @@
   }
 
   & .message {
-    border-radius: var(--border-radius-box);
-    border: solid 1px var(--color-light-gray);
-    background-color: var(--color-background-menu);
-    color: var(--color-content-light);
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-l);
-    font-weight: var(--font-weight-semi-bold);
-    font-style: italic;
-    padding: 24px;
+    @mixin contentLargest;
+
+    color: var(--color-maastricht-blue);
     text-align: left;
   }
 
@@ -118,52 +107,34 @@
       margin-bottom: 0;
     }
 
-    &.added {
-      & .voteTag {
-        background-color: rgba(0, 178, 98, 0.8);
-      }
-
-      & .rank {
-        color: rgba(0, 178, 98, 0.8);
-      }
-    }
-
-    &.deleted {
-      & .voteTag {
-        background-color: var(--color-dark-gray);
-      }
-
-      & .rank {
-        color: var(--color-dark-gray);
-      }
-    }
-
     & .voteTag {
+      @mixin contentSmall bold;
+
+      align-items: center;
+      border: 1px solid var(--dark-border-color);
       border-radius: var(--border-radius-standard);
       box-sizing: border-box;
-      color: var(--color-white);
+      color: var(--color-maastricht-blue);
       display: flex;
-      font-family: var(--content-font);
-      font-size: var(--paragraph-font-size-l);
-      font-weight: var(--font-weight-semi-bold);
-      height: 24px;
+      height: 32px;
       margin-bottom: 8px;
-      margin-right: 24px;
-      padding: 3px;
+      margin-right: 8px;
+      padding: 7px 10px;
       text-decoration: none;
     }
 
     & .rank {
-      background-color: var(--color-white);
-      border-radius: var(--border-radius-standard);
-      height: 18px;
-      margin-right: 3px;
-      padding: 0 6px;
-      text-align: center;
-    }
+      @mixin contentSmall bold;
 
-    & .username {
+      align-items: center;
+      background-color: var(--color-slate-gray);
+      border-radius: var(--border-radius-standard);
+      color: var(--color-white);
+      display: flex;
+      height: 18px;
+      margin-right: 10px;
       padding: 0 5px;
+      text-align: center;
     }
   }
 }
