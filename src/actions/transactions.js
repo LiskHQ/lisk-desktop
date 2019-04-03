@@ -12,7 +12,8 @@ import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import { toRawLsk } from '../utils/lsk';
-import { sendWithLedger } from '../utils/api/ledger';
+// import { sendWithLedger } from '../utils/api/ledger';
+import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
 
 export const cleanTransactions = () => ({
@@ -266,6 +267,7 @@ const handleSentError = ({ error, account, dispatch }) => {
 export const sent = ({
   account, recipientId, amount, passphrase, secondPassphrase, data,
 }) =>
+// eslint-disable-next-line max-statements
   async (dispatch, getState) => {
     // account.loginType = 1;
     let error;
@@ -278,8 +280,16 @@ export const sent = ({
         [error, callResult] = await to(send(liskAPIClient, recipientId, toRawLsk(amount), passphrase, secondPassphrase, data, timeOffset));
         break;
       case loginType.ledger:
+        console.log('ledger');
         // eslint-disable-next-line
-        [error, callResult] = await to(sendWithLedger(liskAPIClient, account, recipientId, toRawLsk(amount), secondPassphrase, data, timeOffset));
+        // const output = await sendWithHW(liskAPIClient, account, recipientId, toRawLsk(amount), secondPassphrase, data);
+
+        // eslint-disable-next-line
+        [error, callResult] = await to(sendWithHW(liskAPIClient, account, recipientId, toRawLsk(amount), secondPassphrase, data));
+        console.log('Trolollool', callResult);
+
+        // [error, callResult] = await to(sendWithLedger(liskAPIClient,
+        // account, recipientId, toRawLsk(amount), secondPassphrase, data, timeOffset));
         break;
       // case 2:
       //   errorMessage = i18next.t('Not Yet Implemented. Sorry.');

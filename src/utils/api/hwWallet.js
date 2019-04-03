@@ -7,7 +7,7 @@ import to from 'await-to-js';
 import { HW_CMD, calculateSecondPassphraseIndex } from '../../constants/hwConstants';
 import { loadingStarted, loadingFinished } from '../loading';
 import { infoToastDisplayed, errorToastDisplayed } from '../../actions/toaster';
-import { getTransactionBytes, calculateTxId, getBufferToHex } from '../rawTransactionWrapper';
+import { getTransactionBytes, calculateTxId, getBufferToHex, createSendTX } from '../rawTransactionWrapper';
 import { PLATFORM_TYPES, getPlatformType } from '../platform';
 import store from '../../store';
 
@@ -350,3 +350,31 @@ export const getHWAccountInfo = async (activePeer, deviceId, loginType, accountI
 
   return resAccount;
 };
+
+
+/**
+ * Trigger this action to sign and broadcast a SendTX with Ledger Account
+ * NOTE: secondPassphrase for ledger is a PIN (numeric)
+ * @returns Promise - Action Send with Ledger
+ */
+/* eslint-disable prefer-const */
+export const sendWithHW = (activePeer, account, recipientId, amount,
+  pin = null, data = null) =>
+  new Promise(async (resolve, reject) => {
+    console.log(account.publicKey, recipientId, amount, data);
+    const rawTx = createSendTX(account.publicKey, recipientId, amount, data);
+    let error;
+    let signedTx;
+    console.log('signTransactionWithHW', rawTx);
+    [error, signedTx] = await to(signTransactionWithHW(rawTx, account, pin));
+
+    if (error) {
+      reject(error);
+    } else {
+      activePeer.transactions.broadcast(signedTx).then(() => {
+        console.log('signedTx', signedTx);
+
+        resolve(signedTx);
+      }).catch(reject);
+    }
+  });

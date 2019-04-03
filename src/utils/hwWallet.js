@@ -47,7 +47,8 @@ if (ipc) { // On browser-mode is undefined
   });
 
   ipc.on('ledgerButtonCallback', () => {
-    store.dispatch(infoToastDisplayed({ label: HW_MSG.LEDGER_ASK_FOR_CONFIRMATION }));
+    console.log('CONFIRMATION');
+    // store.dispatch(infoToastDisplayed({ label: HW_MSG.LEDGER_ASK_FOR_CONFIRMATION }));
   });
 
   ipc.on('trezorConnected', (event, data) => {

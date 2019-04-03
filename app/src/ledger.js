@@ -12,6 +12,7 @@ import {
 } from './hwManager';
 
 import win from './modules/win';
+import { getTransactionBytes, calculateTxId } from '../../src/utils/rawTransactionWrapper';
 
 // mock transportnodehid, todo fix this to work also on windows and linux
 // const TransportNodeHid = {
@@ -125,7 +126,58 @@ const createCommand = (k, fn) => {
       .then(r => event.sender.send(`${k}.result`, r));
   });
 };
-// eslint-disable-next-line arrow-body-style
+
+
+// eslint-disable-next-line import/prefer-default-export
+export const executeLedgerCommand = (device, command) =>
+  TransportNodeHid.open(device.path)
+    .then(async (transport) => {
+      busy = true;
+
+      try {
+        const liskLedger = new DposLedger(transport);
+        const ledgerAccount = getLedgerAccount(command.data.index);
+        let res;
+
+        if (command.action === 'GET_PUBLICKEY') {
+          res = await liskLedger.getPubKey(ledgerAccount, command.data.showOnDevice);
+          res = res.publicKey;
+        }
+        if (command.action === 'GET_ADDRESS') {
+          res = await liskLedger.getPubKey(ledgerAccount, command.data.showOnDevice);
+          res = res.address;
+        }
+        if (command.action === 'SIGN_MSG') {
+          win.send({ event: 'ledgerButtonCallback', value: null });
+          const signature = await liskLedger.signMSG(ledgerAccount, command.data.message);
+          res = getBufferToHex(signature.slice(0, 64));
+        }
+        if (command.action === 'SIGN_TX') {
+          win.send({ event: 'ledgerButtonCallback', value: null });
+          const signature = await liskLedger.signTX(ledgerAccount,
+            getTransactionBytes(command.data.tx), false);
+          res = getBufferToHex(signature);
+        }
+        transport.close();
+        busy = false;
+        return Promise.resolve(res);
+      } catch (err) {
+        transport.close();
+        busy = false;
+        if (err.statusText && err.statusText === 'CONDITIONS_OF_USE_NOT_SATISFIED') {
+          return Promise.reject('LEDGER_ACTION_DENIED_BY_USER');
+        }
+        return Promise.reject('LEDGER_ERR_DURING_CONNECTION');
+      }
+    })
+    .catch((e) => {
+      if (typeof e === 'string') {
+        return Promise.reject(e);
+      }
+      return Promise.reject('LEDGER_ERR_DURING_CONNECTION');
+    });
+
+// // eslint-disable-next-line arrow-body-style
 createCommand('ledgerCommand', (command) => {
   if (ledgerPath) {
     return TransportNodeHid.open(ledgerPath)

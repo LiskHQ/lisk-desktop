@@ -21,13 +21,18 @@ import { getAccount } from './account';
 export const sendWithLedger =
   (liskAPIClient, account, recipientId, amount, pin = null, data = null) =>
     new Promise(async (resolve, reject) => {
+      console.log('sendWithLedger', account, recipientId, amount, data);
       const rawTx = createSendTX(account.publicKey, recipientId, amount, data);
       let error;
       let signedTx;
       [error, signedTx] = await to(signTransactionWithLedger(rawTx, account, pin));
+
+      console.log('signedTx', error, signedTx);
       if (error) {
         reject(error);
       } else {
+        console.log('signedTx', signedTx);
+
         liskAPIClient.transactions.broadcast(signedTx).then(() => {
           resolve(signedTx);
         }).catch(reject);

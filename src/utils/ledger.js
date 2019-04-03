@@ -38,6 +38,7 @@ export const calculateSecondPassphraseIndex =
 const sendIpcCommand = command =>
   new Promise((resolve, reject) => {
     ipc.once('ledgerCommand.result', (event, res) => {
+      console.log('PLIZZZ', res);
       if (res.success) {
         return resolve(res.data);
       }
@@ -96,21 +97,19 @@ export const getAccountFromLedgerIndex = (index = 0) => {
 
 /* eslint-disable no-await-in-loop */
 export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t, unInitializedAdded = false, device }) => { // eslint-disable-line
-  console.log('displayAccounts')
   let index = unInitializedAdded ? hwAccounts.length : 0;
   let accountInfo;
   const deviceId = device.deviceId;
-  console.log(index, deviceId);
+
   const accounts = [];
   do {
     try {
       switch (loginType) { // eslint-disable-line
         case loginTypesConst.ledger:
-          accountInfo = await getLedgerAccountInfo(liskAPIClient, index);
+          accountInfo = await getHWAccountInfo(liskAPIClient, deviceId, loginTypesConst.ledger, index);
           break;
         case loginTypesConst.trezor:
           accountInfo = await getHWAccountInfo(liskAPIClient, deviceId, loginTypesConst.trezor, index);
-          console.log('accountInfo', accountInfo);
           break;
         default:
           this.props.errorToastDisplayed({
@@ -157,6 +156,7 @@ export const signTransactionWithLedger = async (tx, account, pin) => {
   //  loadingStarted('ledgerUserAction');
   // store.dispatch(infoToastDisplayed({ label: LEDGER_MSG.LEDGER_ASK_FOR_CONFIRMATION }));
   let signature;
+  console.log('KURWAA');
   try {
     signature = await ledgerPlatformHendler(command);
   } catch (err) {
