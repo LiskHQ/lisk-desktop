@@ -125,7 +125,7 @@ class TrezorLogin extends React.Component {
   }
 
   selectAccount(ledgerAccount, index) {
-    Piwik.trackingEvent('LedgerLogin', 'button', 'Select account');
+    Piwik.trackingEvent('TrezorLogin', 'button', 'Select account');
     // set active peer
     this.props.liskAPIClientSet({
       publicKey: ledgerAccount.publicKey,
@@ -138,7 +138,10 @@ class TrezorLogin extends React.Component {
   }
 
   async addAccount() {
-    Piwik.trackingEvent('LedgerLogin', 'button', 'Add account');
+    Piwik.trackingEvent('TrezorLogin', 'button', 'Add account');
+    console.log(this.state.hwAccounts);
+    const devices = await getDeviceList();
+
     if (this.state.hwAccounts[this.state.hwAccounts.length - 1].isInitialized) {
       const output = await displayAccounts({
         liskAPIClient: this.props.liskAPIClient,
@@ -146,6 +149,7 @@ class TrezorLogin extends React.Component {
         hwAccounts: this.state.hwAccounts,
         t: this.props.t,
         unInitializedAdded: true,
+        device: devices[0],
       });
       const hwAccounts = this.state.hwAccounts.concat([output.hwAccounts[0]]);
       this.setState({ hwAccounts });

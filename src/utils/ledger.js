@@ -6,7 +6,7 @@ import { loginType as loginTypesConst } from '../constants/hwConstants';
 export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t, unInitializedAdded = false, device }) => { // eslint-disable-line
   let index = unInitializedAdded ? hwAccounts.length : 0;
   let accountInfo;
-  const deviceId = device.deviceId;
+  const deviceId = device && device.deviceId;
 
   const accounts = [];
   do {

@@ -74,7 +74,7 @@ class HwWallet extends React.Component {
   }
 
   render() {
-    if (this.state.isLedgerLogin && (this.state.devices[0] && this.state.devices[0].model === 'Ledger')) {
+    if (this.state.isLedgerLogin && (this.state.devices[0] && this.state.devices[0].model === 'Trezor')) {
       return (
         <React.Fragment>
           <HeaderV2 showSettings={true} />
