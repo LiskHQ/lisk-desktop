@@ -176,7 +176,7 @@ class RequestV2 extends React.Component {
             </span>
             <Feedback
               className={styles.feedback}
-              show={!!fields.amount.feedback}
+              show={fields.amount.error}
               status={fields.amount.error ? 'error' : ''}
               showIcon={false}>
               { fields.amount.feedback }

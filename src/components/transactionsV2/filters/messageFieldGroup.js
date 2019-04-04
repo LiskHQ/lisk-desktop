@@ -94,7 +94,7 @@ class MessageFieldGroup extends React.Component {
         </div>
         <Feedback
           className={styles.feedback}
-          show={!!this.state.feedback}
+          show={fields.message.error}
           status={fields.message.error ? 'error' : ''}
           showIcon={false}>
           { this.state.feedback }
