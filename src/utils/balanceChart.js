@@ -5,7 +5,7 @@ import { getUnixTimestampFromValue } from './datetime';
 const formats = {
   second: 'MMM DD YYYY hh:mm:ss',
   minute: 'MMM DD YYYY hh:mm',
-  hour: 'MMM DD YYYY hh',
+  hour: 'MMM DD YYYY hh[h]',
   day: 'MMM DD YYYY',
   month: 'MMM YYYY',
 };
@@ -103,12 +103,13 @@ export const getChartDateFormat = (transactions) => {
   const last = moment();
   const first = transactions.length
     && moment(getUnixTimestampFromValue(transactions.slice(-1)[0].timestamp));
+
   if (!first || !last) return '';
   let format = formats.month;
-  if (last.format(format) === first.format(format)) format = formats.day;
-  if (last.format(format) === first.format(format)) format = formats.hour;
-  if (last.format(format) === first.format(format)) format = formats.minute;
-  if (last.format(format) === first.format(format)) format = formats.second;
+  if (last.diff(first, 'days') <= 30) format = formats.day;
+  if (last.isSame(first, 'day')) format = formats.hour;
+  if (last.isSame(first, 'hour')) format = formats.minute;
+  if (last.isSame(first, 'minute')) format = formats.second;
   return format;
 };
 
@@ -150,18 +151,20 @@ export const getBalanceData = ({
 }, canvas) => {
   const ctx = canvas.getContext('2d');
   const gradient = getGradient(ctx);
+  const unit = getUnitFromFormat(format);
 
   const data = transactions.reduce((balances, tx) => {
     const txValue = getTxValue(tx, address);
     const txDate = tx.timestamp ? new Date(getUnixTimestampFromValue(tx.timestamp)) : new Date();
     const lastBalance = balances.slice(-1)[0];
-    const tmpBalances = moment(lastBalance.x).format(format) === moment(txDate).format(format)
-      ? balances.slice(0, -1) : balances;
+    const tmpBalances = balances.length > 1 && moment(lastBalance.x).isSame(txDate, unit)
+      ? balances.slice(0, -1)
+      : balances;
     return [
       ...tmpBalances,
       { x: txDate, y: (parseInt(lastBalance.y, 10) + txValue) },
     ];
-  }, [{ x: new Date(), y: +balance }]).reverse().map(d => ({ ...d, y: +fromRawLsk(d.y) }));
+  }, [{ x: moment(), y: +balance }]).reverse().map(d => ({ ...d, y: +fromRawLsk(d.y) }));
 
   return {
     datasets: [{
