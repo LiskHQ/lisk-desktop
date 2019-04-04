@@ -152,6 +152,7 @@ const getTxValue = (tx, address) => {
 export const getBalanceData = ({
   format, transactions, balance, address,
 }) => {
+  const unit = getUnitFromFormat(format);
   const data = transactions.reduce((balances, tx) => {
     const txValue = getTxValue(tx, address);
     const txDate = tx.timestamp ? new Date(getUnixTimestampFromValue(tx.timestamp)) : new Date();
