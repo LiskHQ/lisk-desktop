@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import { SecondaryButtonV2 } from '../toolbox/buttons/button';
-import logo from '../../assets/images/lisk-logo-v2.svg';
+import darkLogo from '../../assets/images/logo/lisk-logo-dark.svg';
+import whiteLogo from '../../assets/images/logo/lisk-logo-white.svg';
 import routes from '../../constants/routes';
 import styles from './headerV2.css';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
@@ -27,31 +28,38 @@ class HeaderV2 extends React.Component {
     const {
       t, showSettings, showNetwork, networkList,
       selectedNetwork, handleNetworkSelect,
+      dark,
     } = this.props;
     return (
-      <header className={`${styles.wrapper} mainHeader`}>
-        <div className={`${styles.logo}`}>
-          <img src={logo} />
-        </div>
-        <div className={`${styles.buttonsHolder}`}>
-          {showSettings
-            && <Link className={styles.settingButton} to={routes.setting.path}>
-              <SecondaryButtonV2>{t('Settings')}</SecondaryButtonV2>
-            </Link>
-          }
-          {showNetwork
-            && <span className={`${styles.dropdownHandler} network`}
-              onClick={this.toggleDropdown}>
-              { networkList[selectedNetwork].label }
-              <DropdownV2 showDropdown={this.state.showDropdown}>
-                {networkList && networkList.map((network, key) => (
-                  <span
-                    onClick={() => handleNetworkSelect(network.value)}
-                    key={key}>{network.label}</span>
-                ))}
-              </DropdownV2>
-            </span>
-          }
+      <header className={`${styles.wrapper} mainHeader ${dark ? 'dark' : ''}`}>
+        <div className={`${styles.headerContent}`}>
+          <div className={`${styles.logo}`}>
+            <img src={dark ? whiteLogo : darkLogo} />
+          </div>
+          <div className={`${styles.buttonsHolder}`}>
+            {showNetwork
+              && <span className={`${styles.dropdownHandler} network`}
+                onClick={this.toggleDropdown}>
+                { networkList[selectedNetwork].label }
+                <DropdownV2
+                  showArrow={false}
+                  showDropdown={this.state.showDropdown}>
+                  {networkList && networkList.map((network, key) => (
+                    <span
+                      onClick={() => handleNetworkSelect(network.value)}
+                      key={key}>{network.label}</span>
+                  ))}
+                </DropdownV2>
+              </span>
+            }
+            {showSettings
+              && <Link className={styles.settingButton} to={routes.setting.path}>
+                <SecondaryButtonV2 className={`${dark ? 'light' : ''}`}>
+                  {t('Settings')}
+                </SecondaryButtonV2>
+              </Link>
+            }
+          </div>
         </div>
       </header>
     );

@@ -1,4 +1,5 @@
 @import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
 
 .wrapper {
   align-items: center;
@@ -22,39 +23,36 @@
     margin-left: 10px;
 
     & > div {
-      align-items: bottom;
+      align-items: center;
       display: flex;
     }
   }
 
   & .title {
+    @mixin headingNormal;
+
     color: var(--color-content-light);
-    font-family: var(--heading-font);
-    font-size: var(--subtitle-font-size);
-    font-weight: var(--font-weight-bold);
     margin: 0;
   }
 
   & .label {
+    @mixin contentNormal bold;
+
     align-items: center;
-    background-color: #ffe5bb;
+    background-color: var(--color-white);
     border-radius: var(--border-radius-standard);
-    color: #e48e00;
+    color: var(--color-slate-gray);
     display: flex;
-    font-family: var(--heading-font);
-    font-size: var(--font-size-small);
-    font-weight: var(--font-weight-bold);
-    height: 17px;
+    height: 16px;
     margin: 0 5px;
-    padding: 0 8px;
+    padding: 0 5px;
     white-space: nowrap;
   }
 
   & .address {
-    color: var(--color-dark-gray);
-    font-family: var(--content-font);
-    font-size: var(--button-font-size-s);
-    font-weight: var(--font-weight-semi-bold);
+    @mixin contentSmallest semi-bold;
+
+    color: var(--color-slate-gray);
   }
 }
 

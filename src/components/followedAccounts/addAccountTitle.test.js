@@ -7,31 +7,42 @@ import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import AddAccountTitle from './addAccountTitle';
 import * as followedAccounts from '../../actions/followedAccounts';
+import accounts from '../../../test/constants/accounts';
 
 const fakeStore = configureStore();
 
 describe('Add Account Title Component', () => {
   let wrapper;
   let props;
+  let options;
 
   beforeEach(() => {
-    const store = fakeStore({});
+    const store = fakeStore({
+      search: {
+        accounts: {
+          [accounts.delegate.address]: { delegate: accounts.delegate.address },
+        },
+      },
+      followedAccounts: { acounts: [] },
+    });
 
     spy(followedAccounts, 'followedAccountAdded');
 
     props = {
-      address: '16313739661670634666L',
+      address: accounts.genesis.address,
       prevStep: spy(),
       t: key => key,
     };
 
-    wrapper = mount(<AddAccountTitle {...props} />, {
+    options = {
       context: { store, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,
         i18n: PropTypes.object.isRequired,
       },
-    });
+    };
+
+    wrapper = mount(<AddAccountTitle {...props} />, options);
   });
 
   afterEach(() => {
@@ -44,6 +55,15 @@ describe('Add Account Title Component', () => {
 
   it('renders two Button component', () => {
     expect(wrapper.find('Button')).to.have.length(2);
+  });
+
+  it('renders Input with delegate name if account is delegate', () => {
+    props = {
+      address: accounts.delegate.address,
+    };
+    wrapper.setProps(props);
+    wrapper.update();
+    expect(wrapper.find('Input.account-title')).to.have.prop('disabled');
   });
 
   it('accepts empty field', () => {
@@ -65,8 +85,9 @@ describe('Add Account Title Component', () => {
     wrapper.find('.account-title input').simulate('change', { target: { value: 'some title' } });
     wrapper.find('.next').first().simulate('click');
     expect(followedAccounts.followedAccountAdded).to.have.been.calledWith({
-      address: '16313739661670634666L',
+      address: accounts.genesis.address,
       title: 'some title',
+      isDelegate: false,
     });
   });
 });

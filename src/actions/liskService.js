@@ -43,10 +43,8 @@ export const getNewsFeed = () => (dispatch) => {
   liskServiceApi.getNewsFeed().then((newsFeed) => {
     dispatch(addNewsFeed(newsFeed));
   }).catch((error) => {
-    dispatch(addNewsFeed(error));
-  }).finally(() => {
-    // To prevent dispalying empty View before fetching data
     dispatch(showEmptyNewsFeedState({ showNewsFeedEmptyState: true }));
+    throw new Error(error);
   });
 };
 

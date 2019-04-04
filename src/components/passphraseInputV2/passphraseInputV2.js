@@ -4,6 +4,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { FontIcon } from '../fontIcon';
 import { isValidPassphrase, getPassphraseValidationErrors } from '../../utils/passphrase';
 import InputV2 from '../toolbox/inputsV2/inputV2';
+import Feedback from '../toolbox/feedback/feedback';
 import keyCodes from './../../constants/keyCodes';
 import styles from './passphraseInputV2.css';
 
@@ -151,18 +152,24 @@ class passphraseInputV2 extends React.Component {
           ))}
         </div>
 
-        <span className={`${styles.errorMessage} ${this.state.validationError || secondPPFeedback !== '' ? styles.showError : ''}`}>
-          { secondPPFeedback || this.state.validationError }
-        </span>
+        <div className={styles.footerContent}>
+          <label className={`${styles.showPassphrase}`}>
+            <input checked={this.state.showPassphrase}
+              type='checkbox' onChange={this.handleToggleShowPassphrase}/>
+            <span className={`${styles.fakeCheckbox}`}>
+              <FontIcon className={`${styles.icon}`}>checkmark</FontIcon>
+            </span>
+            <span className={`${styles.label}`}>{t('Show passphrase')}</span>
+          </label>
 
-        <label className={`${styles.showPassphrase}`}>
-          <input checked={this.state.showPassphrase}
-            type='checkbox' onChange={this.handleToggleShowPassphrase}/>
-          <span className={`${styles.fakeCheckbox}`}>
-            <FontIcon className={`${styles.icon}`}>checkmark</FontIcon>
-          </span>
-          <span className={`${styles.label}`}>{t('Show passphrase')}</span>
-        </label>
+          <Feedback
+            className={styles.errorMessage}
+            show={!!(this.state.validationError || secondPPFeedback !== '')}
+            status={(this.state.validationError || secondPPFeedback !== '') ? 'error' : ''}
+            showIcon={true}>
+            { secondPPFeedback || this.state.validationError }
+          </Feedback>
+        </div>
       </React.Fragment>
     );
   }

@@ -1,4 +1,5 @@
 @import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
 
 .wrapper {
   display: flex;
@@ -6,45 +7,39 @@
 }
 
 .tabs {
-  border-bottom: 1px solid var(--color-dark-gray);
+  align-self: flex-start;
+  border: 1px solid var(--color-platinum);
+  border-radius: var(--border-radius-standard);
   display: flex;
+  height: 34px;
   margin: 0;
+  overflow: hidden;
   padding: 0;
-  width: 100%;
 
   & > li {
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-l);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-dark-gray);
-    cursor: pointer;
-    letter-spacing: 0.05px;
-    line-height: 1.2;
-    list-style: none;
-    padding: 11px 47px;
-    position: relative;
-    transition: color var(--animation-speed-fast) linear;
+    @mixin contentSmall bold;
 
-    &::after {
-      background: var(--color-content-light);
-      bottom: -1px;
-      content: '';
-      height: 2px;
-      left: 0;
-      position: absolute;
-      transform-origin: bottom;
-      transform: scaleY(0);
-      transition: transform var(--animation-speed-standard) linear;
-      width: 100%;
+    align-items: center;
+    background: var(--color-white-smoke);
+    border-left: 1px solid var(--color-platinum);
+    color: var(--color-slate-gray);
+    cursor: pointer;
+    display: flex;
+    list-style: none;
+    padding: 0px 30px;
+    position: relative;
+    transition:
+      background-color var(--animation-speed-fast) linear,
+      color var(--animation-speed-fast) linear;
+
+    &:first-child {
+      border-left: 0 none;
     }
   }
 
   & > .active {
-    color: var(--color-content-light);
-
-    &::after {
-      transform: scaleY(1);
-    }
+    background-color: var(--color-white);
+    color: var(--color-ultramarine-blue);
   }
 }
 

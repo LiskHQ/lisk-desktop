@@ -119,6 +119,7 @@ export default {
   hwWallet: {
     path: '/hw-walet-login',
     component: HwWallet,
+    isV2Layout: true,
     isPrivate: false,
   },
   // notFoundExplorer: {

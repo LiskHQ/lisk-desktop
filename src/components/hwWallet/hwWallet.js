@@ -2,7 +2,6 @@
 
 import React from 'react';
 import to from 'await-to-js';
-import Box from '../box';
 
 import UnlockWallet from './unlockWallet';
 import LedgerLogin from './ledgerLoginHOC';
@@ -11,6 +10,7 @@ import getNetwork from '../../utils/getNetwork';
 import { getAccountFromLedgerIndex } from '../../utils/ledger';
 import Piwik from '../../utils/piwik';
 import { getDeviceList } from '../../utils/hwWallet';
+import HeaderV2 from '../headerV2/headerV2';
 
 import { loginType } from '../../constants/hwConstants';
 import routes from '../../constants/routes';
@@ -76,32 +76,42 @@ class HwWallet extends React.Component {
   render() {
     if (this.state.isLedgerLogin && (this.state.devices[0] && this.state.devices[0].model === 'Ledger')) {
       return (
-        <Box>
-          <LedgerLogin
-            account={this.props.account}
-            loginType={loginType.trezor}
-            network={getNetwork(this.props.network)}
-            cancelLedgerLogin={this.cancelLedgerLogin.bind(this)} />
-        </Box>);
+        <React.Fragment>
+          <HeaderV2 showSettings={true} />
+          <div className={styles.wrapper}>
+            <LedgerLogin
+              account={this.props.account}
+              loginType={loginType.trezor}
+              network={getNetwork(this.props.network)}
+              cancelLedgerLogin={this.cancelLedgerLogin.bind(this)} />
+          </div>
+        </React.Fragment>);
     }
 
     if (this.state.isTrezorLogin && (this.state.devices[0] && this.state.devices[0].model !== 'Ledger')) {
       return (
-        <Box>
-          <TrezorLogin
-            account={this.props.account}
-            loginType={loginType.trezor}
-            network={getNetwork(this.props.network)}
-            cancelLedgerLogin={this.cancelLedgerLogin.bind(this)} />
-        </Box>);
+        <React.Fragment>
+          <HeaderV2 showSettings={true} />
+          <div className={styles.wrapper}>
+            <TrezorLogin
+              account={this.props.account}
+              loginType={loginType.trezor}
+              network={getNetwork(this.props.network)}
+              cancelLedgerLogin={this.cancelLedgerLogin.bind(this)} />
+          </div>
+        </React.Fragment>);
     }
 
     return (
-      <Box className={styles.unlockWallet}>
-        <UnlockWallet
-          handleOnClick={this.handleOnClick.bind(this)}
-          cancelLedgerLogin={this.cancelLedgerLogin.bind(this)} />
-      </Box>);
+      <React.Fragment>
+        <HeaderV2 showSettings={true} />
+        <div className={`${styles.unlockWallet} ${styles.wrapper}`}>
+          <UnlockWallet
+            handleOnClick={this.handleOnClick.bind(this)}
+            cancelLedgerLogin={this.cancelLedgerLogin.bind(this)} />
+        </div>
+      </React.Fragment>
+    );
   }
 }
 

@@ -3,8 +3,11 @@ import QRCode from 'qrcode.react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { translate } from 'react-i18next';
 import { PrimaryButtonV2 } from '../toolbox/buttons/button';
+import SpinnerV2 from '../spinnerV2/spinnerV2';
 import { InputV2, AutoresizeTextarea } from '../toolbox/inputsV2';
 import ConverterV2 from '../converterV2';
+import CircularProgress from '../toolbox/circularProgress/circularProgress';
+import svg from '../../utils/svgIcons';
 import styles from './requestV2.css';
 
 class RequestV2 extends React.Component {
@@ -19,14 +22,22 @@ class RequestV2 extends React.Component {
         amount: {
           error: false,
           value: '',
+          loading: false,
           feedback: '',
         },
         reference: {
           error: false,
           value: '',
+          loading: false,
           feedback: '',
         },
       },
+    };
+
+    this.timeout = {
+      amount: null,
+      reference: null,
+      copy: null,
     };
 
     this.toggleQRCode = this.toggleQRCode.bind(this);
@@ -36,8 +47,8 @@ class RequestV2 extends React.Component {
   }
 
   onCopy() {
-    clearTimeout(this.timeout);
-    setTimeout(() => this.setState({
+    clearTimeout(this.timeout.copy);
+    this.timeout.copy = setTimeout(() => this.setState({
       linkCopied: false,
     }), 3000);
 
@@ -48,7 +59,9 @@ class RequestV2 extends React.Component {
 
   /* istanbul ignore next */
   componentWillUnmount() {
-    clearTimeout(this.timeout);
+    clearTimeout(this.timeout.amount);
+    clearTimeout(this.timeout.reference);
+    clearTimeout(this.timeout.copy);
   }
 
   toggleQRCode() {
@@ -80,12 +93,7 @@ class RequestV2 extends React.Component {
       target.value = /^\./.test(target.value) ? `0${target.value}` : target.value;
       feedback = error || feedback;
     } else if (target.name === 'reference' && byteCount > 0) {
-      feedback = error
-        ? t('{{length}} extra characters', { length: byteCount - messageMaxLength })
-        : t('{{length}} out of {{total}} characters left', {
-          length: messageMaxLength - byteCount,
-          total: messageMaxLength,
-        });
+      feedback = t('{{length}} bytes left', { length: messageMaxLength - byteCount });
     }
 
     const field = {
@@ -93,18 +101,31 @@ class RequestV2 extends React.Component {
         error: !!error,
         value: target.value,
         feedback,
+        loading: true,
       },
     };
 
     const shareLink = this.updateShareLink(field);
 
-    this.setState(prevState => ({
+    this.setState({
       shareLink,
       fields: {
-        ...prevState.fields,
+        ...this.state.fields,
         ...field,
       },
-    }));
+    });
+
+    clearTimeout(this.timeout[target.name]);
+    this.timeout[target.name] = setTimeout(() => {
+      field[target.name].loading = false;
+      this.setState({
+        shareLink,
+        fields: {
+          ...this.state.fields,
+          ...field,
+        },
+      });
+    }, 300);
   }
 
   updateShareLink(newField) {
@@ -126,7 +147,7 @@ class RequestV2 extends React.Component {
     const { t } = this.props;
     const { fields, shareLink, showQRCode } = this.state;
     const byteCount = encodeURI(fields.reference.value).split(/%..|./).length - 1;
-    const messageMaxLength = 64;
+
     return (
       <div className={`${styles.container}`}>
         <section className={`${styles.formSection}`}>
@@ -134,7 +155,7 @@ class RequestV2 extends React.Component {
             {t('Use the sharing link to easily request any amount of LSK from Lisk Hub or Lisk Mobile users.')}
           </span>
           <label className={`${styles.fieldGroup}`}>
-            <span className={`${styles.fieldLabel}`}>{t('Amount (LSK)')}</span>
+            <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
             <span className={`${styles.amountField} amount`}>
               <InputV2
                 autoComplete={'off'}
@@ -147,6 +168,10 @@ class RequestV2 extends React.Component {
                 className={styles.converter}
                 value={fields.amount.value}
                 error={fields.amount.error} />
+              <SpinnerV2 className={`${styles.status} ${fields.amount.loading && fields.amount.value ? styles.show : ''}`}/>
+              <img
+                className={`${styles.status} ${!fields.amount.loading && fields.amount.value ? styles.show : ''}`}
+                src={ fields.amount.error ? svg.alert_icon : svg.ok_icon} />
             </span>
             <span className={`${styles.feedback} ${fields.amount.error ? 'error' : ''} ${fields.amount.feedback ? styles.show : ''}`}>
               {fields.amount.feedback}
@@ -154,15 +179,22 @@ class RequestV2 extends React.Component {
           </label>
           <label className={`${styles.fieldGroup} reference`}>
             <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
-            <AutoresizeTextarea
-              maxLength={100}
-              spellCheck={false}
-              onChange={this.handleFieldChange}
-              name='reference'
-              value={fields.reference.value}
-              placeholder={t('Write message')}
-              className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
-            <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${fields.reference.feedback ? styles.show : ''}`}>
+            <span className={`${styles.referenceField}`}>
+              <AutoresizeTextarea
+                maxLength={100}
+                spellCheck={false}
+                onChange={this.handleFieldChange}
+                name='reference'
+                value={fields.reference.value}
+                placeholder={t('Write message')}
+                className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
+              <CircularProgress max={64} value={byteCount}
+                className={styles.byteCounter} />
+              <img
+                className={`${styles.status} ${!fields.reference.loading && fields.reference.value ? styles.show : ''}`}
+                src={ fields.reference.error ? svg.alert_icon : svg.ok_icon} />
+            </span>
+            <span className={`${styles.feedback} ${styles.referenceFeedback} ${fields.reference.error ? 'error' : ''} ${fields.reference.feedback ? styles.show : ''}`}>
               {fields.reference.feedback}
             </span>
           </label>
@@ -199,7 +231,7 @@ class RequestV2 extends React.Component {
             {t('Simply scan the QR code using the Lisk Mobile app or any other QR code reader')}
           </span>
           <div className={`${styles.qrCodeContainer}`}>
-            <QRCode value={shareLink} size={200} />
+            <QRCode value={shareLink} size={235} />
           </div>
           <footer className={`${styles.sectionFooter}`}>
             <span

@@ -1,0 +1,20 @@
+@import '../../app/variablesV2.css';
+
+.track,
+.bar {
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+.track {
+  stroke: var(--dark-border-color);
+}
+
+.bar {
+  stroke: var(--color-ultramarine-blue);
+  transition: stroke-dashoffset var(--animation-speed-fast) linear;
+
+  &.error {
+    stroke: var(--color-burnt-sienna);
+  }
+}

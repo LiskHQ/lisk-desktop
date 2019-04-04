@@ -33,7 +33,7 @@ export const getTransactions = ({
   };
 
   if (type !== undefined) params.type = type;
-  if (customFilters.message) params.data = `%${encodeURIComponent(customFilters.message)}%`;
+  if (customFilters.message) params.data = `%${customFilters.message}%`;
   if (customFilters.dateFrom && customFilters.dateFrom !== '') {
     params.fromTimestamp = getTimestampFromFirstBlock(customFilters.dateFrom, 'DD.MM.YY');
     params.fromTimestamp = params.fromTimestamp > 0 ? params.fromTimestamp : 0;

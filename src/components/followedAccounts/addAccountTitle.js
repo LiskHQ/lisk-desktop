@@ -19,6 +19,7 @@ class AddAccountTitle extends React.Component {
       title: {
         value,
         error: validateInput(value),
+        isDelegate: false,
       },
     });
   }
@@ -33,13 +34,33 @@ class AddAccountTitle extends React.Component {
 
     const { addAccount, address, prevStep } = this.props;
     const title = this.state.title.value;
+    const isDelegate = this.state.title.isDelegate;
 
-    addAccount({ title, address });
+    addAccount({ title, address, isDelegate });
     prevStep({ reset: true });
   }
 
+  shouldComponentUpdate(nextProps) {
+    const { title } = this.state;
+    const { account } = nextProps;
+    const username = account && account.delegate && account.delegate.username;
+    /* istanbul ignore next */
+    if (username && username !== title.value) {
+      this.setState({
+        title: {
+          value: username,
+          error: false,
+          isDelegate: true,
+        },
+      });
+      return false;
+    }
+    return true;
+  }
+
   render() {
-    const { t } = this.props;
+    const { t, account } = this.props;
+    const isDelegate = !!(account && account.delegate && account.delegate.username);
 
     return (
       <BoxV2 className={styles.addAccount}>
@@ -49,6 +70,7 @@ class AddAccountTitle extends React.Component {
         <div>
           <TitleInput
             title={this.state.title}
+            disabled={isDelegate}
             onChange={this.handleChange.bind(this)} />
         </div>
         <footer>
@@ -73,8 +95,13 @@ class AddAccountTitle extends React.Component {
   }
 }
 
+const mapStateToProps = (state, ownProps) => ({
+  account: state.search.accounts[ownProps.address],
+  accounts: state.followedAccounts.accounts,
+});
+
 const mapDispatchToProps = dispatch => ({
   addAccount: data => dispatch(followedAccountAdded(data)),
 });
 
-export default connect(null, mapDispatchToProps)(translate()(AddAccountTitle));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(AddAccountTitle));

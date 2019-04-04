@@ -16,6 +16,7 @@ class SearchBar extends React.Component {
   render() {
     return (<div className={`${styles.searchBar} searchBar search-bar-input ${this.shouldShowSearchBarOnMobile() ? styles.show : ''}`}>
       <AutoSuggest
+        account={this.props.account}
         history={this.props.history}
         t={this.props.t}
         results={this.props.suggestions}
@@ -27,6 +28,7 @@ class SearchBar extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  account: state.account,
   suggestions: state.search.suggestions,
 });
 /* istanbul ignore next */

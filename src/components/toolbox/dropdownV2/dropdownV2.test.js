@@ -21,6 +21,6 @@ describe('Dropdown V2', () => {
       children: options.map((option, key) => <span key={key}>{option}</span>),
     });
     expect(wrapper).to.have.className('show');
-    expect(wrapper.find('.optionsHolder')).to.have.exactly(3).descendants('span');
+    expect(wrapper.find('.dropdown-content')).to.have.exactly(3).descendants('span');
   });
 });
