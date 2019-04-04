@@ -102,6 +102,7 @@ describe('Wallet', () => {
 
     it('Send LSK to this account', () => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+      cy.visit(urls.dashboard);
       cy.visit(`${urls.accounts}/${accounts.delegate.address}`);
       cy.get(ss.sendToThisAccountBtn).click();
       cy.url().should('contain', urls.send);
@@ -110,6 +111,7 @@ describe('Wallet', () => {
 
     it('Add / Remove bookmark', () => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+      cy.visit(urls.dashboard);
       cy.visit(`${urls.accounts}/${accounts.genesis.address}`);
       cy.get(ss.followAccountBtn).contains('Bookmark account');
       cy.get(ss.followAccountBtn).click();
@@ -146,9 +148,67 @@ describe('Wallet', () => {
   });
 
   describe('Votes tab', () => {
+    beforeEach(() => {
+      cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+      cy.get(ss.accountInfoTab).click();
+    });
+
+    /**
+     * Delegate statistics tab is not present for not-delegate
+     */
+    it('No delegate statistics tab is present', () => {
+      cy.get(ss.delegateStatisticsTab).should('not.exist');
+    });
+
+    /**
+     * Maximum possible number of voted accounts is shown
+     * @expect more votes are present
+     */
+    it('30 votes are shown, clicking show more loads more votes', () => {
+      cy.get(ss.voteRow).should('have.length', 30);
+      cy.get(ss.showMoreVotesBtn).click();
+      cy.get(ss.voteRow).should('have.length.greaterThan', 30);
+    });
+
+    it('Filtering votes works', () => {
+      cy.get(ss.searchDelegateInput).click().type('genesis_17');
+      cy.get(ss.voteRow).should('have.length', 1);
+    });
+
+    /**
+     * Click on voted delegate leads to account page
+     * @expect corresponding delegate name is shown on account's page
+     */
+    it('Click on voted delegate leads to account page', () => {
+      cy.get(ss.searchDelegateInput).click().type('genesis_17');
+      cy.get(ss.voteRow).eq(0).click();
+      cy.get(ss.accountName).should('have.text', 'genesis_17');
+    });
+    xit('Shows voters nickname if it is delegate', () => {
+      cy.get(ss.voterAddress).eq(0).should('have.text', 'genesis_1 ');
+    });
   });
 
   describe('Delegate tab', () => {
+    it('Shows statistics', () => {
+      cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
+      cy.get(urls.wallet);
+      cy.get(ss.delegateStatisticsTab).click();
+      cy.get(ss.delegateStatsUptime).contains('100%');
+      cy.get(ss.delegateStatsUptime).contains('1');
+      cy.get(ss.delegateStatsApproval).contains('100%');
+      cy.get(ss.delegateStatsWeight).contains('100,000,000');
+      cy.get(ss.delegateStatsForged).contains('0');
+      cy.get(ss.delegateStatsBlocks).contains(/\d/);
+      cy.get(ss.delegateStatsSince).contains(/\d{2}\s\w{3}\s\d{2}/);
+      cy.get(ss.delegateStatsLastBlock).contains(/\d{2}\s\w{3}\s\d{2}/);
+    });
+
+    it('Not there in case of non-delegate', () => {
+      cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+      cy.get(urls.wallet);
+      cy.get(ss.delegateStatisticsTab).should('not.exist');
+    });
   });
 });
 
