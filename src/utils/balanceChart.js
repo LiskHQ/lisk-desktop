@@ -120,10 +120,10 @@ export const getChartDateFormat = (transactions) => {
 
   if (!first || !last) return '';
   let format = formats.month;
-  if (last.diff(first, 'days') <= 30) format = formats.day;
-  if (last.isSame(first, 'day')) format = formats.hour;
-  if (last.isSame(first, 'hour')) format = formats.minute;
-  if (last.isSame(first, 'minute')) format = formats.second;
+  if (last.diff(first, 'months') <= 1) format = formats.day;
+  if (last.diff(first, 'days') <= 7) format = formats.hour;
+  if (last.diff(first, 'hours') <= 24) format = formats.minute;
+  if (last.diff(first, 'minutes') < 180) format = formats.second;
   return format;
 };
 
