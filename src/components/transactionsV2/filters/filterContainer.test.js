@@ -35,9 +35,9 @@ describe('filterContainer', () => {
 
   it('should toggle Filters dropdown', () => {
     expect(wrapper).not.toContainMatchingElement('.dropdown.show');
-    wrapper.find('.filterTransactions').simulate('click');
+    wrapper.find('.filterTransactions').first().simulate('click');
     expect(wrapper).toContainMatchingElement('.dropdown.show');
-    wrapper.find('.filterTransactions').simulate('click');
+    wrapper.find('.filterTransactions').first().simulate('click');
     expect(wrapper).not.toContainMatchingElement('.dropdown.show');
   });
 

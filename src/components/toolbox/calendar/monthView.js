@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import 'moment/min/locales';
 import { validations, generateDayPlaceholder } from './calendarUtils';
+import svg from '../../../utils/svgIcons';
 import styles from './calendar.css';
 
 class MonthView extends Component {
@@ -63,25 +64,35 @@ class MonthView extends Component {
   }
 
   render() {
-    const { locale, dateFormat, isShown } = this.props;
+    const {
+      locale, dateFormat, isShown, minDate, maxDate,
+    } = this.props;
     moment.locale(locale);
     const showingDate = moment(this.props.showingDate, dateFormat).startOf('month');
     const daysInMonth = [...Array(showingDate.daysInMonth())];
+    const prevIcon = validations.canGoToPrevious(showingDate, minDate, this.options)
+      ? svg.back_arrow_active_icon : svg.back_arrow_inactive_icon;
+    const nextIcon = validations.canGoToNext(showingDate, maxDate, this.options)
+      ? svg.foward_arrow_active_icon : svg.foward_arrow_inactive_icon;
 
     return (
       <div className={`${!isShown ? styles.hidden : ''} monthView`}>
         <header className={styles.calendarHeader}>
-          <span className={styles.navigationButton} onClick={this.previousMonth} />
+          <span className={styles.navigationButton} onClick={this.previousMonth}>
+            <img src={prevIcon}/>
+          </span>
           <span
             onClick={this.showYearView}
             className={`${styles.viewName} ${styles.clickable}`}>
             {showingDate.format('MMMM YYYY')}
           </span>
-          <span className={styles.navigationButton} onClick={this.nextMonth} />
+          <span className={styles.navigationButton} onClick={this.nextMonth}>
+            <img src={nextIcon}/>
+          </span>
         </header>
         <div className={styles.contentWrapper}>
           <div className={styles.monthHeader}>
-            {moment.weekdaysShort(true).map((weekday, key) =>
+            {moment.weekdaysMin(true).map((weekday, key) =>
               <div className={styles.weekday} key={key}>{weekday}</div>)}
           </div>
           <div className={styles.itemsContent}>

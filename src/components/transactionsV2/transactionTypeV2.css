@@ -1,4 +1,5 @@
 @import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
 .transactionType {
   align-items: center;
@@ -26,11 +27,16 @@
   }
 
   & .title {
-    color: var(--color-content-light);
+    @mixin headingSmall;
+
+    color: var(--color-maastricht-blue);
     display: block;
-    font-family: var(--heading-font);
-    font-size: var(--paragraph-font-size-l);
-    font-weight: var(--font-weight-bold);
+  }
+
+  & .address {
+    @mixin contentSmallest;
+
+    color: var(--color-slate-gray);
   }
 }
 

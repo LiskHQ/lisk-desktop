@@ -5,7 +5,7 @@
   align-items: center;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 }
 
 .account {
@@ -13,7 +13,6 @@
   display: flex;
   height: 48px;
   justify-content: flex-start;
-  padding: 0 14px;
 
   & .accountInfo {
     display: flex;
@@ -36,7 +35,7 @@
   }
 
   & .label {
-    @mixin contentNormal bold;
+    @mixin contentSmall bold;
 
     align-items: center;
     background-color: var(--color-white);
@@ -92,14 +91,6 @@
     &:first-child {
       margin-left: 0;
     }
-  }
-
-  & button {
-    height: 40px;
-    min-height: 40px;
-    min-width: 180px;
-    padding: 0 42px;
-    width: auto;
   }
 
   & .followingButton {
