@@ -198,6 +198,8 @@ const ss = {
   clearAllFiltersBtn: '.clear-all-filters',
   sendToThisAccountBtn: '.send-to-address',
   balanceChart: 'chartjs-render-monitor',
+  navigationBtnBack: '.go-back',
+  navigationBtnForward: '.go-forward',
 };
 
 export default ss;

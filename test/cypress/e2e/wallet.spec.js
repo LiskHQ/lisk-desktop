@@ -182,10 +182,10 @@ describe('Wallet', () => {
       cy.visit(urls.wallet);
       cy.get(ss.delegateStatisticsTab).click();
       cy.get(ss.delegateStatsRank).contains(/\d/);
-      cy.get(ss.delegateStatsUptime).contains('100%');
+      cy.get(ss.delegateStatsUptime).contains(/\d%/);
       cy.get(ss.delegateStatsApproval).contains(/\d%/);
       cy.get(ss.delegateStatsWeight).contains(/\d LSK/);
-      cy.get(ss.delegateStatsForged).contains('0');
+      cy.get(ss.delegateStatsForged).contains(/\d LSK/);
       cy.get(ss.delegateStatsBlocks).contains(/\d/);
       cy.get(ss.delegateStatsSince).contains(/\d{2}\s\w{3}\s\d{2}/);
       cy.get(ss.delegateStatsLastBlock).contains(/\d{2}\s\w{3}\s\d{2}/);
@@ -196,7 +196,7 @@ describe('Wallet', () => {
       cy.visit(`${urls.accounts}/${accounts.delegate.address}`);
       cy.get(ss.delegateStatisticsTab).should('be.visible');
       cy.get(ss.delegateStatisticsTab).click();
-      cy.get(ss.delegateStatsUptime).contains('100%');
+      cy.get(ss.delegateStatsUptime).contains(/\d%/);
     });
 
     it('Not there for non-delegate himself', () => {
