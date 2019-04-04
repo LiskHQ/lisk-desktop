@@ -35,7 +35,7 @@ describe('Votes Tab Component', () => {
 
   it('Should show loading state', () => {
     wrapper = setup({ ...props, loading: [actionTypes.searchVotes] });
-    expect(wrapper).toContainMatchingElement('.loadingSpinner');
+    expect(wrapper).toContainMatchingElement('.loading');
   });
 
   it('Should call fetchVotedDelegateInfo when updating votes', () => {
