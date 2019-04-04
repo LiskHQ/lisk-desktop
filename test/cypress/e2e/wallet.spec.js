@@ -71,7 +71,6 @@ describe('Wallet', () => {
     it('Delegate -> Address, Name & Label are correct', () => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit(`${urls.accounts}/${topDelegate.address}`);
-      cy.wait(1000);
       cy.url().should('contain', topDelegate.address);
       cy.get(ss.accountAddress).contains(topDelegate.address);
       cy.get(ss.accountName).contains(topDelegate.username);
@@ -121,6 +120,7 @@ describe('Wallet', () => {
           expect(getFollowedAccountObjFromLS()[0].address).to.equal(accounts.genesis.address);
           expect(getFollowedAccountObjFromLS()[0].title).to.equal('Bob');
         });
+      cy.reload();
       cy.get(ss.accountName).contains('Bob');
       cy.get(ss.followAccountBtn).contains('Account bookmarked');
       cy.get(ss.followAccountBtn).click();
@@ -133,6 +133,7 @@ describe('Wallet', () => {
 
     it('Cant change bookmark name for bookmarked delegate', () => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+      cy.visit(urls.dashboard);
       cy.visit(`${urls.accounts}/${accounts.delegate.address}`);
       cy.get(ss.followAccountBtn).contains('Bookmark account');
       cy.get(ss.followAccountBtn).click();
@@ -141,25 +142,15 @@ describe('Wallet', () => {
     });
   });
 
-  describe('Wallet overview', () => {
-  });
-
-  describe('Balance details', () => {
+  describe.skip('Wallet overview', () => {
   });
 
   describe('Votes tab', () => {
     beforeEach(() => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-      cy.get(ss.accountInfoTab).click();
+      cy.visit(urls.wallet);
+      cy.get(ss.votesTab).click();
     });
-
-    /**
-     * Delegate statistics tab is not present for not-delegate
-     */
-    it('No delegate statistics tab is present', () => {
-      cy.get(ss.delegateStatisticsTab).should('not.exist');
-    });
-
     /**
      * Maximum possible number of voted accounts is shown
      * @expect more votes are present
@@ -180,33 +171,43 @@ describe('Wallet', () => {
      * @expect corresponding delegate name is shown on account's page
      */
     it('Click on voted delegate leads to account page', () => {
-      cy.get(ss.searchDelegateInput).click().type('genesis_17');
       cy.get(ss.voteRow).eq(0).click();
-      cy.get(ss.accountName).should('have.text', 'genesis_17');
-    });
-    xit('Shows voters nickname if it is delegate', () => {
-      cy.get(ss.voterAddress).eq(0).should('have.text', 'genesis_1 ');
+      cy.get(ss.accountName).contains('genesis');
     });
   });
 
   describe('Delegate tab', () => {
-    it('Shows statistics', () => {
+    it('Shows delegate statistics for himself', () => {
       cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
-      cy.get(urls.wallet);
+      cy.visit(urls.wallet);
       cy.get(ss.delegateStatisticsTab).click();
+      cy.get(ss.delegateStatsRank).contains(/\d/);
       cy.get(ss.delegateStatsUptime).contains('100%');
-      cy.get(ss.delegateStatsUptime).contains('1');
-      cy.get(ss.delegateStatsApproval).contains('100%');
-      cy.get(ss.delegateStatsWeight).contains('100,000,000');
+      cy.get(ss.delegateStatsApproval).contains(/\d%/);
+      cy.get(ss.delegateStatsWeight).contains(/\d LSK/);
       cy.get(ss.delegateStatsForged).contains('0');
       cy.get(ss.delegateStatsBlocks).contains(/\d/);
       cy.get(ss.delegateStatsSince).contains(/\d{2}\s\w{3}\s\d{2}/);
       cy.get(ss.delegateStatsLastBlock).contains(/\d{2}\s\w{3}\s\d{2}/);
     });
 
-    it('Not there in case of non-delegate', () => {
+    it('Shows delegate statistics for other', () => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-      cy.get(urls.wallet);
+      cy.visit(`${urls.accounts}/${accounts.delegate.address}`);
+      cy.get(ss.delegateStatisticsTab).should('be.visible');
+      cy.get(ss.delegateStatisticsTab).click();
+      cy.get(ss.delegateStatsUptime).contains('100%');
+    });
+
+    it('Not there for non-delegate himself', () => {
+      cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+      cy.visit(urls.wallet);
+      cy.get(ss.delegateStatisticsTab).should('not.exist');
+    });
+
+    it('Not there for non-delegate for other', () => {
+      cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
+      cy.visit(`${urls.accounts}/${accounts.genesis.address}`);
       cy.get(ss.delegateStatisticsTab).should('not.exist');
     });
   });

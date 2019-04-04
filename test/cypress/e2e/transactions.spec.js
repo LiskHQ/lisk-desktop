@@ -60,7 +60,7 @@ describe('Transactions', () => {
    */
   it('30 tx are shown, clicking show more loads more transactions', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.dashboard);
+    cy.visit(urls.wallet);
     cy.get(ss.transactionRow).should('have.length', 30);
     cy.get(ss.showMoreButton).click();
     cy.get(ss.transactionRow).should('have.length.greaterThan', 30);
@@ -73,12 +73,13 @@ describe('Transactions', () => {
    */
   it('Click leads to tx details', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.wallet);
     cy.get(ss.transactionRow).eq(0).click();
     cy.url().should('contain', urls.transactions);
   });
 
   /**
-   * Transaction filtering tabs show filtered transaction lists
+   * Transaction tabs show filtered transaction lists
    * @expect incoming txs on Incoming tab
    * @expect outgoing txs on Outgoing tab
    * @expect all txs on All tab

@@ -20,7 +20,8 @@ const ss = {
   confirmRequestBlock: '.confirm-request-step',
   requestLink: '.request-link',
   backButton: '.back',
-  accountInfoTab: '.account-info',
+  walletTab: 'li[data-tabname=\'Wallet\']',
+  votesTab: 'li[data-tabname=\'Votes\']',
   delegateStatisticsTab: '.delegate-statistics ',
   votedAddress: '.votes .voter-address',
   voterAddress: '.voters .voter-address',
@@ -196,6 +197,7 @@ const ss = {
   clearFilterBtn: '.clear-filter',
   clearAllFiltersBtn: '.clear-all-filters',
   sendToThisAccountBtn: '.send-to-address',
+  balanceChart: 'chartjs-render-monitor',
 };
 
 export default ss;
