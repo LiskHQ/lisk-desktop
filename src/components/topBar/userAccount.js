@@ -37,7 +37,8 @@ const UserAccount = (props) => {
           />
         </span>
 
-        <DropdownV2 showDropdown={props.isDropdownEnable}>
+        <DropdownV2 showArrow={false}
+          className={styles.dropdown} showDropdown={props.isDropdownEnable}>
           <Link
             id={dropdownOptions.settings.id}
             to={dropdownOptions.settings.path}

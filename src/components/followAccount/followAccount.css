@@ -1,4 +1,5 @@
 @import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
 .wrapper {
   box-sizing: border-box;
@@ -9,14 +10,13 @@
     align-items: flex-start;
     display: flex;
     flex-direction: column;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
 
   & .fieldLabel {
-    color: var(--color-content-light);
-    font-family: var(--heading-font);
-    font-size: var(--paragraph-font-size-l);
-    font-weight: var(--font-weight-bold);
+    @mixin contentNormal bold;
+
+    color: var(--color-maastricht-blue);
     margin-bottom: 8px;
   }
 
@@ -27,6 +27,7 @@
     width: 100%;
 
     & .status {
+      color: var(--color-ultramarine-blue);
       opacity: 0;
       position: absolute;
       right: 10px;
@@ -40,38 +41,36 @@
   }
 
   & .feedback {
-    color: var(--color-dark-gray);
-    display: block;
-    font-family: var(--content-font);
-    font-size: var(--button-font-size-s);
-    font-weight: var(--font-weight-semi-bold);
-    line-height: 1.83;
-    margin-top: 8px;
-    max-height: 0;
-    opacity: 0;
-    text-align: right;
-    transition:
-      max-height var(--animation-speed-fast) linear,
-      opacity var(--animation-speed-fast) linear;
+    @mixin contentNormal;
+
+    box-sizing: border-box;
+    color: var(--color-slate-gray);
+    display: none;
+    margin-top: 10px;
+    padding: 6px 10px;
+    text-align: left;
     width: 100%;
 
-    &.show {
-      max-height: 22px;
-      opacity: 1;
+    &:global(.error) {
+      background-color: var(--error-background-color);
+      color: var(--color-burnt-sienna);
     }
 
-    &:global(.error) {
-      color: var(--color-error);
+    &.show {
+      display: flex;
     }
   }
 
   & .input {
-    font-size: var(--button-font-size-s);
+    @mixin contentNormal;
+
     height: 36px;
-    line-height: 1.83;
+    padding-left: 10px;
+    padding-right: 30px;
   }
 
   & button {
+    height: 36px;
     width: 100%;
   }
 

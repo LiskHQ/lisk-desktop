@@ -65,10 +65,12 @@ class TransactionsOverviewV2 extends React.Component {
               </li>
             ))}
           </ul>
-          <FilterContainer
-            updateCustomFilters={this.props.updateCustomFilters}
-            saveFilters={this.props.saveFilters}
-            customFilters={this.props.customFilters} />
+          <div className={styles.items}>
+            <FilterContainer
+              updateCustomFilters={this.props.updateCustomFilters}
+              saveFilters={this.props.saveFilters}
+              customFilters={this.props.customFilters} />
+          </div>
         </div>
         {this.props.activeCustomFilters &&
           Object.values(this.props.activeCustomFilters).find(filter => filter) ? <FilterBar

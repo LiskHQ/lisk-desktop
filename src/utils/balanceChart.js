@@ -13,6 +13,18 @@ const formats = {
 const getUnitFromFormat = format =>
   Object.keys(formats).find(key => formats[key] === format);
 
+const styles = {
+  borderColor: 'rgba(15, 126, 255, 0.5)',
+  whiteColor: '#ffffff',
+  platinumColor: '#e1e3eb',
+  slateGray: '#70778b',
+  whiteSmoke: '#f5f7fa80',
+  maastrichtBlue: '#0c152e',
+  ultramarineBlue: '#4070f4',
+  contentFontFamily: '\'basier-circle\', sans-serif',
+  fontSize: 12,
+};
+
 export const graphOptions = format => ({
   plugins: {
     hideAxisX: false,
@@ -33,9 +45,9 @@ export const graphOptions = format => ({
       },
       distribution: 'linear',
       ticks: {
-        fontColor: '#7383a7',
-        fontSize: 12,
-        fontFamily: '\'gilroy-regular\', sans-serif',
+        fontColor: styles.slateGray,
+        fontSize: styles.fontSize,
+        fontFamily: styles.contentFontFamily,
         maxRotation: 0,
       },
       gridLines: {
@@ -47,23 +59,23 @@ export const graphOptions = format => ({
       type: 'linear',
       ticks: {
         maxTicksLimit: 5,
-        fontColor: '#7383a7',
-        fontSize: 12,
-        fontFamily: '\'gilroy-regular\', sans-serif',
+        fontColor: styles.slateGray,
+        fontSize: styles.fontSize,
+        fontFamily: styles.contentFontFamily,
       },
     }],
   },
   layout: {
     padding: {
+      left: 20,
       right: 8,
       top: 20,
     },
   },
   elements: {
     point: {
-      backgroundColor: '#C80039',
       radius: 1,
-      hoverRadius: 8,
+      hoverRadius: 6,
       hitRadius: 20,
     },
     line: {
@@ -81,18 +93,20 @@ export const graphOptions = format => ({
       },
     },
     mode: 'index',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    bodyFontColor: '#2e2c3b',
-    bodyFontFamily: 'gilroy',
-    bodyFontSize: 12,
+    backgroundColor: styles.whiteColor,
+    bodyFontColor: styles.maastrichtBlue,
+    bodyFontFamily: styles.contentFontFamily,
+    bodyFontSize: 13,
     bodyFontStyle: 'bold',
-    titleFontColor: '#868ba1',
-    titleFontFamily: 'gilroy',
-    titleFontSize: 12,
+    borderColor: styles.platinumColor,
+    borderWidth: 1,
+    titleFontColor: styles.slateGray,
+    titleFontFamily: styles.contentFontFamily,
+    titleFontSize: 11,
+    titleFontStyle: 'semi-bold',
     displayColors: false,
-    xPadding: 16,
-    yPadding: 18,
-    titleSpacing: 12,
+    xPadding: 20,
+    yPadding: 20,
     titleMarginBottom: 12,
     cornerRadius: 0,
     caretSize: 15,
@@ -126,17 +140,6 @@ const getTxValue = (tx, address) => {
 };
 
 /**
- * Returns a gradient to be used on the graph
- * @param {Object} ctx Context2D of a canvas element
- */
-const getGradient = (ctx) => {
-  const gradient = ctx.createLinearGradient(0, 100, 0, 250);
-  gradient.addColorStop(0, '#e9f3ff');
-  gradient.addColorStop(1, 'white');
-  return gradient;
-};
-
-/**
  * Returs balance data grouped by an specific amount
  * @param {Object} param Object containing {
  *  @param {String} format,
@@ -148,11 +151,7 @@ const getGradient = (ctx) => {
  */
 export const getBalanceData = ({
   format, transactions, balance, address,
-}, canvas) => {
-  const ctx = canvas.getContext('2d');
-  const gradient = getGradient(ctx);
-  const unit = getUnitFromFormat(format);
-
+}) => {
   const data = transactions.reduce((balances, tx) => {
     const txValue = getTxValue(tx, address);
     const txDate = tx.timestamp ? new Date(getUnixTimestampFromValue(tx.timestamp)) : new Date();
@@ -169,8 +168,13 @@ export const getBalanceData = ({
   return {
     datasets: [{
       data,
-      backgroundColor: gradient,
-      borderColor: '#7ab7ff',
+      backgroundColor: styles.whiteSmoke,
+      borderColor: styles.borderColor,
+      pointBorderColor: styles.borderColor,
+      pointBackgroundColor: styles.whiteColor,
+      pointHoverBackgroundColor: styles.whiteColor,
+      pointHoverBorderColor: styles.ultramarineBlue,
+      pointHoverBorderWidth: 4,
       borderWidth: 2,
     }],
   };

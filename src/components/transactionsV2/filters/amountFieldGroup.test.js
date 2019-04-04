@@ -34,14 +34,17 @@ describe('AmountFieldGroup', () => {
     const expected = {
       amountTo: {
         error: false,
+        loading: false,
         value: '',
       },
       amountFrom: {
         error: false,
+        loading: false,
         value: '123',
       },
     };
     wrapper.find('.amountFromInput input').simulate('change', { target: { name: 'amountFrom', value: '123' } });
+    jest.advanceTimersByTime(300);
     expect(props.updateCustomFilters).toBeCalledWith(expected);
   });
 
@@ -50,13 +53,15 @@ describe('AmountFieldGroup', () => {
       wrapper.find('.amountFromInput input').simulate('change', { target: { name: 'amountFrom', value: '99.9' } });
       wrapper.setProps({ filters: { amountFrom: '99.9' } });
       wrapper.find('.amountToInput input').simulate('change', { target: { name: 'amountTo', value: '99' } });
-      expect(wrapper).toContainMatchingElements(2, '.error input');
+      jest.advanceTimersByTime(300);
+      wrapper.update();
       expect(wrapper).toContainMatchingElement('.feedback.show');
     });
 
     it('Should show error if invalid amount value', () => {
       wrapper.find('.amountFromInput input').simulate('change', { target: { name: 'amountFrom', value: '123.123.' } });
-      expect(wrapper).toContainMatchingElements(1, '.error input');
+      jest.advanceTimersByTime(300);
+      wrapper.update();
       expect(wrapper).toContainMatchingElement('.feedback.show');
     });
   });

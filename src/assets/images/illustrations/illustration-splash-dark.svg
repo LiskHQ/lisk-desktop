@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1366" height="646">
+  <g fill="none">
+    <g transform="translate(-190 78)">
+      <path stroke="#0D1733" stroke-opacity="1" d="M530.193 131v13a8 8 0 0 0 8 8H621a8 8 0 0 1 8 8v53a8 8 0 0 1-8 8H459.675a8 8 0 0 0-8 8v88.923a8 8 0 0 1-8 8h-89.894a8 8 0 0 0-8 8V367a8 8 0 0 1-8 8h-178.72a8 8 0 0 1-8-8V166a8 8 0 0 0-8-8H85a8 8 0 0 1-8-8V14"/>
+      <path stroke="#0D1733" stroke-opacity="1" d="M7 13v61.115a8 8 0 0 0 8 8h353a8 8 0 0 1 8 8V126a8 8 0 0 0 8 8h24a8 8 0 0 0 8-8V90.667a8 8 0 0 1 8-8h61a8 8 0 0 0 8-8V38.824M692 0v16.483a8 8 0 0 1-8 8H538a8 8 0 0 0-8 8V133M.61 401h692.314a8 8 0 0 1 8 8v32a8 8 0 0 0 8 8H732"/>
+      <circle cx="345" cy="350" r="3" fill="#3D71FF"/>
+      <path fill="#101C3D" stroke="#3D71FF" stroke-linejoin="round" stroke-width="2" d="M746 433.845l12.258 7.078v14.154L746 462.155l-12.258-7.078v-14.154L746 433.845zM492 16.764l13.54 9.837-5.172 15.916h-16.736l-5.171-15.916L492 16.764z"/>
+      <circle cx="479" cy="401" r="3" fill="#3D71FF"/>
+      <circle cx="453" cy="82" r="3" fill="#3D71FF"/>
+      <circle cx="575" cy="24" r="3" fill="#3D71FF"/>
+    </g>
+    <g transform="matrix(-1 0 0 1 1556 -3)">
+      <path fill="#101C3D" stroke="#3D71FF" stroke-linejoin="round" stroke-width="2" d="M583 455.15l13.832 21.517h-27.664L583 455.15z"/>
+      <path stroke="#0D1733" stroke-opacity="1" d="M523 649V312a8 8 0 0 1 8-8h337M123.154 157H514.6a8 8 0 0 1 8 8v16a8 8 0 0 0 8 8H614a8 8 0 0 1 8 8v43a8 8 0 0 1-8 8H452.675a8 8 0 0 0-8 8v48.923a8 8 0 0 1-8 8h-89.894a8 8 0 0 0-8 8V354a8 8 0 0 1-8 8h-178.72a8 8 0 0 1-8-8V203a8 8 0 0 0-8-8H78a8 8 0 0 1-8-8V51"/>
+      <path stroke="#0D1733" stroke-opacity="1" d="M0 0v61.115a8 8 0 0 0 8 8h353a8 8 0 0 1 8 8V113a8 8 0 0 0 8 8h24a8 8 0 0 0 8-8V77.667a8 8 0 0 1 8-8h61a8 8 0 0 0 8-8V25.824"/>
+      <path fill="#101C3D" stroke="#3D71FF" stroke-linejoin="round" stroke-width="2" d="M485 3.764l13.54 9.837-5.172 15.916h-16.736l-5.171-15.916L485 3.764z"/>
+      <path stroke="#0D1733" stroke-opacity="1" d="M74 20.387h225a8 8 0 0 1 8 8v400.265a8 8 0 0 0 8 8h260a8 8 0 0 1 8 8V456"/>
+      <circle cx="339" cy="337" r="3" fill="#3D71FF"/>
+      <circle cx="523" cy="437" r="3" fill="#3D71FF"/>
+      <circle cx="446" cy="69" r="3" fill="#3D71FF"/>
+    </g>
+  </g>
+</svg>

@@ -1,19 +1,19 @@
 @import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
 .empty {
+  @mixin contentSmall;
+
   align-items: center;
   display: flex;
   flex-grow: 1;
-  font-family: var(--heading-font);
-  font-size: var(--paragraph-font-size-s);
-  font-weight: var(--font-weight-bold);
   justify-content: center;
-  line-height: 1.5;
   text-align: center;
-  color: var(--color-content-light);
+  color: var(--color-slate-gray);
 }
 
 .results {
+  border-radius: 0 0 var(--border-radius-box) var(--border-radius-box);
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -22,41 +22,17 @@
   position: relative;
 
   &.hasMore {
-    padding-bottom: 30px;
+    padding-bottom: 36px;
   }
 
   &.isLoading {
     & .loadingOverlay {
       background: rgba(255, 255, 255, 0.8);
       bottom: 0;
-      color: var(--color-primary-standard);
       position: absolute;
-      top: 40px;
+      top: 0;
       width: 100%;
       z-index: 1;
-
-      & :global(.spinner) {
-        border-width: 4px;
-        height: 36px;
-        width: 36px;
-      }
-
-      & .loadingSpinner {
-        box-sizing: border-box;
-        display: flex;
-        justify-content: center;
-        height: 100%;
-        padding: 235px 0;
-        width: 100%;
-
-        &.bottom {
-          align-items: flex-end;
-        }
-
-        &.top {
-          align-items: flex-start;
-        }
-      }
     }
 
     & :global(.empty-message) {
@@ -65,20 +41,30 @@
   }
 
   & .showMore {
+    @mixin contentSmall bold;
+
     align-items: center;
+    background: var(--color-white-smoke);
+    border-top: 1px solid var(--color-platinum);
     bottom: 0;
-    background: var(--color-white);
-    box-shadow: var(--box-shadow-top);
-    color: var(--color-primary-standard);
+    color: var(--color-maastricht-blue);
     cursor: pointer;
     display: flex;
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-s);
-    font-weight: var(--font-weight-bold);
-    height: 28px;
-    line-height: 1.57;
+    height: 36px;
     justify-content: center;
     position: absolute;
     width: 100%;
+  }
+}
+
+.linear {
+  background: transparent !important;
+  height: 3px;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  & .value {
+    height: 3px;
   }
 }

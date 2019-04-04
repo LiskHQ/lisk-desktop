@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import 'moment/min/locales';
 import { validations } from './calendarUtils';
+import svg from '../../../utils/svgIcons';
 import styles from './calendar.css';
 
 class YearView extends Component {
@@ -51,6 +52,7 @@ class YearView extends Component {
       && day.format('MM.YYYY') === selectedDate.format('MM.YYYY');
     const isDisabled = validations
       .shouldBeDisabled(day, minDate, maxDate, options);
+
     return (
       <button key={`button-${day.format('MM.YYYY')}`}
         disabled={isDisabled}
@@ -63,16 +65,26 @@ class YearView extends Component {
   }
 
   render() {
-    const { locale, dateFormat, isShown } = this.props;
+    const {
+      locale, dateFormat, isShown, minDate, maxDate,
+    } = this.props;
     moment.locale(locale);
     const showingDate = moment(this.props.showingDate, dateFormat);
+    const prevIcon = validations.canGoToPrevious(showingDate, minDate, this.options)
+      ? svg.back_arrow_active_icon : svg.back_arrow_inactive_icon;
+    const nextIcon = validations.canGoToNext(showingDate, maxDate, this.options)
+      ? svg.foward_arrow_active_icon : svg.foward_arrow_inactive_icon;
 
     return (
       <div className={`${!isShown ? styles.hidden : ''} yearView`}>
         <header className={styles.calendarHeader}>
-          <span className={styles.navigationButton} onClick={this.previousYear} />
+          <span className={styles.navigationButton} onClick={this.previousYear}>
+            <img src={prevIcon}/>
+          </span>
           <span className={styles.viewName}>{showingDate.format('YYYY')}</span>
-          <span className={styles.navigationButton} onClick={this.nextYear} />
+          <span className={styles.navigationButton} onClick={this.nextYear}>
+            <img src={nextIcon}/>
+          </span>
         </header>
         <div className={styles.contentWrapper}>
           <div className={styles.itemsContent}>

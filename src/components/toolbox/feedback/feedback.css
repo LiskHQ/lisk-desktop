@@ -1,0 +1,36 @@
+@import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
+
+.feedback {
+  @mixin contentNormal;
+
+  align-items: center;
+  box-sizing: border-box;
+  color: var(--color-slate-gray);
+  display: flex;
+  justify-content: flex-start;
+  max-height: 0px;
+  opacity: 0;
+  padding: 0 20px;
+  transition:
+    max-height var(--animation-speed-fast) linear,
+    opacity var(--animation-speed-fast) linear,
+    padding var(--animation-speed-fast) linear;
+  width: 100%;
+
+  &:global(.error) {
+    color: var(--color-burnt-sienna);
+    background: var(--error-background-color);
+  }
+
+  &.show {
+    max-height: 40px;
+    opacity: 1;
+    padding-bottom: 8px;
+    padding-top: 8px;
+  }
+
+  & > img {
+    margin-right: 10px;
+  }
+}

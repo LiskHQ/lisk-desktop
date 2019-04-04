@@ -1,10 +1,10 @@
 @import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
 
 :root {
-  --background-color-tooltip: var(--color-content-light);
-  --tooltip-arrow-size: 6px;
-  --info-icon-size: 16px;
-  --tooltip-spacing-inside: 8px;
+  --info-icon-size: 14px;
+  --info-icon-font-size: 9px;
+  --tooltip-spacing-inside: 10px;
 }
 
 .tooltipWrapper {
@@ -18,7 +18,7 @@
       transform: translateY(0) translateX(-50%);
 
       & .tooltipArrow {
-        left: 50%;
+        left: calc(50% - 6px);
       }
     }
   }
@@ -26,11 +26,11 @@
   &:global(.showOnBottom) {
     & .tooltip {
       bottom: auto;
-      top: calc(100% + 10px);
+      top: calc(100% + 16px);
 
       & .tooltipArrow {
         bottom: auto;
-        top: -16px;
+        top: -20px;
         transform: rotate(90deg);
       }
     }
@@ -38,11 +38,11 @@
 
   &:global(.showOnTop) {
     & .tooltip {
-      bottom: calc(100% + 10px);
+      bottom: calc(100% + 16px);
       top: auto;
 
       & .tooltipArrow {
-        bottom: -16px;
+        bottom: -20px;
         top: auto;
         transform: rotate(-90deg);
       }
@@ -52,35 +52,38 @@
 
 .infoIcon {
   align-items: center;
-  background: var(--color-dark-gray);
-  border-radius: 50%;
+  border: 1px solid var(--color-blue-gray);
+  border-radius: var(--border-radius-standard);
+  box-sizing: border-box;
   cursor: pointer;
   display: flex;
   height: var(--info-icon-size);
   justify-content: center;
-  margin-left: calc(var(--info-icon-size) / 2);
+  margin-left: 5px;
   width: var(--info-icon-size);
 
   &::before {
+    @mixin contentSmallest;
+
     content: '?';
-    color: var(--color-white);
-    font-size: var(--font-size-small);
+    color: var(--color-blue-gray);
+    font-size: var(--info-icon-font-size);
   }
 }
 
 .tooltip {
-  background-color: var(--background-color-tooltip);
+  @mixin contentLarge;
+
+  background-color: var(--color-white);
+  border: 1px solid var(--color-platinum);
   border-radius: var(--border-radius-standard);
   box-shadow: var(--box-shadow-standard);
   box-sizing: border-box;
-  color: var(--color-white);
-  font-family: var(--content-font);
-  font-size: var(--paragraph-font-size-l);
-  left: calc(var(--info-icon-size) * 2);
-  line-height: 1.47;
+  color: var(--color-slate-gray);
+  left: calc(100% + 15px);
   max-width: 380px;
   opacity: 0;
-  padding: 24px;
+  padding: 20px;
   position: absolute;
   text-align: left;
   top: 50%;
@@ -93,13 +96,14 @@
   z-index: var(--overlay-index);
 
   & .tooltipArrow {
-    color: var(--background-color-tooltip);
-    height: 27px;
-    left: -var(--tooltip-arrow-size);
+    color: var(--color-white);
+    height: 28px;
+    left: -12px;
     position: absolute;
+    stroke: var(--color-platinum);
     top: 50%;
     transform: translateY(-50%);
-    width: var(--tooltip-arrow-size);
+    width: 13px;
   }
 
   &:global(.shownTooltip) {
@@ -113,19 +117,28 @@
   }
 
   & .title {
-    font-family: var(--heading-font);
-    font-weight: var(--font-weight-bold);
+    @mixin contentNormal bold;
+
+    color: var(--color-maastricht-blue);
   }
 
   & a {
-    color: var(--color-primary-light);
+    @mixin contentLarge bold;
+
+    color: var(--color-ultramarine-blue);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
-  & header {
+  & > header {
     margin-bottom: var(--tooltip-spacing-inside);
   }
 
-  & footer {
+  & > footer {
+    margin: 0;
     margin-top: var(--tooltip-spacing-inside);
     padding: 0;
   }

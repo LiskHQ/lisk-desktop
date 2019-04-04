@@ -1,9 +1,10 @@
 @import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
 .transactions {
   background: var(--color-white);
-  border-radius: var(--border-radius-standard);
-  box-shadow: var(--box-shadow-standard), var(--box-shadow-top);
+  border: 1px solid var(--color-platinum);
+  border-radius: var(--border-radius-box);
   display: flex;
   flex-direction: column;
   height: auto;
@@ -12,56 +13,53 @@
   padding: 0;
 }
 
-.txFilters {
-  background-color: var(--color-background-menu);
+.container {
+  align-items: center;
+  border-radius: var(--border-radius-box) var(--border-radius-box) 0 0;
   display: flex;
-  height: 50px;
+  background: var(--color-white-smoke);
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-platinum);
+
+  & .items {
+    padding: 0px 10px;
+  }
+}
+
+.txFilters {
+  border-radius: inherit;
+  background-color: var(--color-white-smoke);
+  display: flex;
   list-style: none;
-  margin: 0 -1px;
+  margin: 0;
   padding: 0;
 
   & > li {
+    @mixin contentSmallest;
+
     align-items: center;
-    border-bottom: 1px solid var(--color-light-gray);
-    border-left: 1px solid var(--color-background-menu);
-    border-right: 1px solid var(--color-background-menu);
-    color: var(--color-content-grayblue);
+    border-bottom: 1px solid var(--color-platinum);
+    border-right: 1px solid var(--color-platinum);
+    color: var(--color-slate-gray);
     cursor: pointer;
     display: flex;
-    font-family: var(--heading-font);
-    font-size: var(--paragraph-font-size-s);
-    font-weight: var(--font-weight-bold);
     justify-content: center;
     margin-bottom: -1px;
-    padding: 16px;
+    padding: 14px 20px;
     position: relative;
 
-    &::before {
-      background-color: var(--color-light-gray);
-      content: '';
-      height: 16px;
-      left: -1px;
-      position: absolute;
-      width: 1px;
+    &:first-child {
+      border-top-left-radius: var(--border-radius-box);
     }
 
-    &:first-child,
-    &.active {
-      &::before {
-        display: none;
-      }
+    &:last-child:not(.active) {
+      border-right: 0 none;
     }
 
     &.active {
       background: var(--color-white);
       border-bottom: 1px solid var(--color-white);
-      border-left: 1px solid var(--color-light-gray);
-      border-right: 1px solid var(--color-light-gray);
-      color: #4c4c4c;
-
-      & + li::before {
-        display: none;
-      }
+      color: var(--color-ultramarine-blue);
     }
   }
 }
@@ -90,9 +88,7 @@
 }
 
 .amountLabel {
-  font-family: var(--heading-font);
-  font-size: var(--paragraph-font-size-l);
-  font-weight: var(--font-weight-bold);
+  @mixin contentNormal bold;
 
   &.greyLabel {
     color: var(--color-content-light);
@@ -101,25 +97,4 @@
   &.greenLabel {
     color: #00b262;
   }
-}
-
-.container {
-  align-items: center;
-  display: flex;
-  background: var(--color-background-menu);
-  justify-content: space-between;
-  border-bottom: 1px solid var(--color-light-gray);
-}
-
-.item {
-  background: var(--color-white);
-  border-radius: var(--border-radius-standard);
-  border: none;
-  box-shadow: var(--box-shadow-button);
-  color: var(--color-content-grayblue);
-  font-family: var(--heading-font);
-  font-size: var(--paragraph-font-size-s);
-  font-weight: var(--font-weight-bold);
-  height: 32px;
-  margin: 0px 10px;
 }

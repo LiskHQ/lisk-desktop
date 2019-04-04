@@ -8,10 +8,8 @@ class NavigationButtons extends React.Component {
 
     this.state = {
       firstPageIndex: 0,
-      currentPageIndex: 0,
-      historyLength: 0,
-      action: '',
       userLogout: false,
+      counter: 0,
     };
 
     this.onGoBack = this.onGoBack.bind(this);
@@ -22,51 +20,29 @@ class NavigationButtons extends React.Component {
   componentDidMount() {
     this.setState({
       firstPageIndex: this.props.history.length,
-      historyLength: this.props.history.length,
-      currentPageIndex: this.props.history.length,
+      counter: this.props.history.length,
     });
   }
 
   resetNavigationValues() {
     this.setState({
       firstPageIndex: this.props.history.length,
-      historyLength: this.props.history.length,
-      currentPageIndex: this.props.history.length,
+      counter: this.props.history.length,
       userLogout: true,
     });
   }
 
-  // eslint-disable-next-line max-statements
   shouldComponentUpdate(nextProps, nextState) {
     if (!!nextProps.account.afterLogout !== nextState.userLogout) {
       this.resetNavigationValues();
       return false;
     }
 
-    if (nextProps.history.length !== nextState.historyLength && nextState.action === '') {
+    if (this.props.history.action === 'PUSH') {
+      this.props.history.action = '';
       this.setState({
-        historyLength: nextProps.history.length,
-        currentPageIndex: nextProps.history.length,
-        action: '',
+        counter: this.state.counter + 1,
       });
-      return false;
-    }
-
-    if (nextState.action === 'back' && nextState.currentPageIndex > nextState.firstPageIndex) {
-      this.setState({
-        currentPageIndex: nextState.currentPageIndex - 1,
-        action: '',
-      });
-      this.props.history.goBack();
-      return false;
-    }
-
-    if (nextState.action === 'forward' && nextState.currentPageIndex < nextProps.history.length) {
-      this.setState({
-        currentPageIndex: nextState.currentPageIndex + 1,
-        action: '',
-      });
-      this.props.history.goForward();
       return false;
     }
 
@@ -75,20 +51,20 @@ class NavigationButtons extends React.Component {
 
   onGoBack(e) {
     e.preventDefault();
-
-    this.setState({ action: 'back' });
+    this.setState({ counter: this.state.counter - 1 });
+    this.props.history.goBack();
   }
 
   onGoForward(e) {
     e.preventDefault();
-
-    this.setState({ action: 'forward' });
+    this.setState({ counter: this.state.counter + 1 });
+    this.props.history.goForward();
   }
 
   render() {
-    const { firstPageIndex, currentPageIndex, historyLength } = this.state;
-    const isBackActive = firstPageIndex < currentPageIndex;
-    const isForwardActive = firstPageIndex <= currentPageIndex && currentPageIndex < historyLength;
+    const { counter, firstPageIndex } = this.state;
+    const isBackActive = counter > firstPageIndex;
+    const isForwardActive = counter < this.props.history.length;
     const backArrow = isBackActive
       ? svg.back_arrow_active_icon
       : svg.back_arrow_inactive_icon;

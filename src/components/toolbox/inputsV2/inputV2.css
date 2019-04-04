@@ -1,49 +1,40 @@
 @import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
 
 .input {
+  @mixin contentLargest;
+
   background-color: var(--color-white);
-  border: 1px solid var(--color-dark-gray);
+  border: 1px solid var(--dark-border-color);
   border-radius: var(--border-radius-standard);
   box-sizing: border-box;
-  color: var(--color-content-light);
-  font-family: var(--content-font);
-  font-size: var(--paragraph-font-size-l);
-  font-weight: var(--font-weight-semi-bold);
+  color: var(--color-maastricht-blue);
   height: 46px;
-  line-height: 1.47;
-  padding: 8px 16px;
+  outline: none;
+  padding: 8px 10px;
   text-align: left;
   transition:
     border var(--animation-speed-fast) linear,
-    color var(--animation-speed-fast) linear,
-    outline var(--animation-speed-fast) linear;
+    color var(--animation-speed-fast) linear;
   width: 100%;
-
-  &:global(.error) {
-    border-color: var(--color-error);
-    color: var(--color-error);
-    outline-color: var(--color-error);
-    outline-style: auto;
-    outline-width: 5px;
-    outline-offset: -2px;
-  }
 
   &:focus {
     border-color: var(--color-primary-standard);
-    outline-color: var(--color-primary-standard);
-    outline-style: auto;
-    outline-width: 5px;
-    outline-offset: -2px;
+  }
+
+  &:global(.error) {
+    border-color: var(--color-burnt-sienna);
+    color: var(--color-burnt-sienna);
   }
 
   &::placeholder {
-    color: var(--color-content-lighter);
+    color: var(--color-blue-gray);
   }
 
   &:read-only {
-    background-color: rgba(134, 139, 161, 0.1);
-    border: 1px solid var(--color-dark-gray) !important;
-    color: var(--color-content-grayblue);
+    background-color: var(--color-white);
+    border: 1px solid var(--dark-border-color) !important;
+    color: var(--color-blue-gray);
     outline: none;
   }
 }

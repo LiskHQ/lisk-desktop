@@ -1,9 +1,8 @@
 import React from 'react';
-import { expect } from 'chai';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
-import { MemoryRouter as Router } from 'react-router-dom';
 import TransactionTypeV2 from './transactionTypeV2';
+import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 
 const options = {
@@ -41,34 +40,48 @@ const createTest = (type) => {
       expectedValue = 'Send Lisk from Blockchain Application';
       break;
     default:
-      expectedValue = false;
+      expectedValue = 'Transaction';
       break;
   }
 
   it(`show TransactionType equal to "${expectedValue}" for transaction type ${type}`, () => {
-    const inputValue = {
+    const props = {
       type,
-      senderId: '1085993630748340485L',
+      senderId: accounts.delegate.address,
       showTransaction: true,
       followedAccounts: [],
     };
-    const wrapper = mount(<Router><TransactionTypeV2 {...inputValue} /></Router>, options);
-    expect(wrapper.find('.title')).to.have.text(expectedValue);
+    const wrapper = mount(<TransactionTypeV2 {...props} />, options);
+    expect(wrapper.find('.title')).toIncludeText(expectedValue);
   });
 };
 
 describe('TransactionType V2', () => {
-  for (let i = 1; i < 8; i++) {
+  for (let i = 1; i < 9; i++) {
     createTest(i);
   }
-});
 
-it('sets TransactionType equal the values of "props.senderId"', () => {
-  const inputValue = {
-    type: 0,
-    senderId: '1085993630748340485L',
-    followedAccounts: [],
-  };
-  const wrapper = mount(<Router><TransactionTypeV2 {...inputValue} /></Router>, options);
-  expect(wrapper.text()).to.equal(inputValue.senderId);
+  it('sets TransactionType equal the values of "props.senderId"', () => {
+    const props = {
+      type: 0,
+      senderId: accounts.delegate.address,
+      followedAccounts: [],
+    };
+    const wrapper = mount(<TransactionTypeV2 {...props} />, options);
+    expect(wrapper).toIncludeText(props.senderId);
+  });
+
+  it('Should render followed account name if account is followed', () => {
+    const title = 'Followed test';
+    const props = {
+      type: 0,
+      senderId: accounts.delegate.address,
+      followedAccounts: [{
+        address: accounts.delegate.address,
+        title,
+      }],
+    };
+    const wrapper = mount(<TransactionTypeV2 {...props} />, options);
+    expect(wrapper).toIncludeText(title);
+  });
 });

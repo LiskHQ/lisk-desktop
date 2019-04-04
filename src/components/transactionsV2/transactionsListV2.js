@@ -5,7 +5,7 @@ import TransactionRowV2 from './transactionRowV2';
 import txFilters from '../../constants/transactionFilters';
 import txTypes from '../../constants/transactionTypes';
 import styles from './transactionsListV2.css';
-import SpinnerV2 from '../spinnerV2/spinnerV2';
+import ProgressBar from '../toolbox/progressBar/progressBar';
 import actionTypes from '../../constants/actions';
 
 class TransactionsListV2 extends React.Component {
@@ -32,19 +32,19 @@ class TransactionsListV2 extends React.Component {
       return !(isFilterIncoming && (isTypeNonSend || isAccountInit));
     };
 
-    const isLoading = loading.length > 0;
-    const spinnerClass = loading.includes(actionTypes.transactionsRequested)
-      ? styles.bottom : styles.top;
+    const isLoading = loading.filter(type =>
+      [actionTypes.transactionsRequested, actionTypes.transactionsFilterSet]
+        .includes(type)).length > 0;
 
     return <div className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} ${isLoading ? styles.isLoading : ''} transaction-results`}>
-      <TransactionsHeaderV2 isSmallScreen={isSmallScreen} />
       {
         isLoading ? (
           <div className={styles.loadingOverlay}>
-            <SpinnerV2 className={`${styles.loadingSpinner} ${spinnerClass}`} />
+            <ProgressBar type="linear" mode="indeterminate" theme={styles} className={'loading'}/>
           </div>
         ) : null
       }
+      <TransactionsHeaderV2 isSmallScreen={isSmallScreen} />
       {transactions.length
         ? transactions.filter(fixIncomingFilter)
             .map((transaction, i) =>
