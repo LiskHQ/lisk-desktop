@@ -8,6 +8,7 @@
   "% of successfully forged blocks in relation to total blocks that were available for this particular delegate to forge": "% of successfully forged blocks in relation to total blocks that were available for this particular delegate to forge",
   "+ Transaction fee {{fee}} LSK": "+ Transaction fee {{fee}} LSK",
   "2nd Passphrase Registration": "2nd Passphrase Registration",
+  "64 bytes left": "64 bytes left",
   "About": "About",
   "Academy": "Academy",
   "Access extra features": "Access extra features",
@@ -596,7 +597,6 @@
   "{{count}} delegate(s) selected to vote_plural": "{{count}} delegates selected to vote",
   "{{fee}} LSK": "{{fee}} LSK",
   "{{length}} bytes left": "{{length}} bytes left",
-  "{{length}} extra bytes": "{{length}} extra bytes",
   "{{length}} extra characters": "{{length}} extra characters",
   "{{length}} out of {{maxLength}} characters left": "{{length}} out of {{maxLength}} characters left",
   "{{title}} has been added to your Dashboard.": "{{title}} has been added to your Dashboard."

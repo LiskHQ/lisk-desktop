@@ -45,7 +45,8 @@ class Form extends React.Component {
         reference: {
           error: false,
           value: '',
-          feedback: '',
+          feedback: props.t('64 bytes left'),
+          isActive: false,
         },
       },
     };
@@ -62,6 +63,7 @@ class Form extends React.Component {
     this.validateAmountAndReference = this.validateAmountAndReference.bind(this);
     this.validateBookmark = this.validateBookmark.bind(this);
     this.checkIfBoormakedAccount = this.checkIfBoormakedAccount.bind(this);
+    this.setReferenceActive = this.setReferenceActive.bind(this);
   }
 
   componentDidMount() {
@@ -118,15 +120,15 @@ class Form extends React.Component {
   }
 
   onInputChange({ target }) {
-    this.setState({
+    this.setState(prevState => ({
       fields: {
-        ...this.state.fields,
+        ...prevState.fields,
         [target.name]: {
-          ...this.state.fields[target.name],
+          ...prevState.fields[target.name],
           value: target.value,
         },
       },
-    });
+    }));
   }
 
   // eslint-disable-next-line max-statements
@@ -256,12 +258,10 @@ class Form extends React.Component {
     }
 
     // istanbul ignore else
-    if (name === 'reference' && value.length > 0) {
+    if (name === 'reference') {
       const byteCount = encodeURI(value).split(/%..|./).length - 1;
       error = byteCount > messageMaxLength;
-      feedback = error
-        ? t('{{length}} extra bytes', { length: byteCount - messageMaxLength })
-        : t('{{length}} bytes left', { length: messageMaxLength - byteCount });
+      feedback = t('{{length}} bytes left', { length: messageMaxLength - byteCount });
     }
 
     this.setState(prevState => ({
@@ -280,13 +280,17 @@ class Form extends React.Component {
   onAmountOrReferenceChange({ target }) {
     clearTimeout(this.loaderTimeout);
 
-    if (target.name === 'amount') this.setState({ isAmountLoading: true });
-    if (target.name === 'reference') this.setState({ isReferenceLoading: true });
+    if (target.name === 'amount') {
+      this.setState({ isAmountLoading: true });
+      this.loaderTimeout = setTimeout(() => {
+        this.setState({ isAmountLoading: false });
+        this.validateAmountAndReference(target.name, target.value);
+      }, 300);
+    }
 
-    this.loaderTimeout = setTimeout(() => {
-      this.setState({ isAmountLoading: false, isReferenceLoading: false });
+    if (target.name === 'reference') {
       this.validateAmountAndReference(target.name, target.value);
-    }, 300);
+    }
 
     this.onInputChange({ target });
   }
@@ -297,6 +301,18 @@ class Form extends React.Component {
     this.props.nextStep({
       fields: { ...this.state.fields },
     });
+  }
+
+  setReferenceActive(isActive) {
+    this.setState(prevState => ({
+      fields: {
+        ...prevState.fields,
+        reference: {
+          ...prevState.fields.reference,
+          isActive,
+        },
+      },
+    }));
   }
 
   // eslint-disable-next-line complexity
@@ -387,13 +403,19 @@ class Form extends React.Component {
                 maxLength={100}
                 spellCheck={false}
                 onChange={this.onAmountOrReferenceChange}
+                onFocus={() => this.setReferenceActive(true)}
+                onBlur={() => this.setReferenceActive(false)}
                 name='reference'
                 value={fields.reference.value}
                 placeholder={this.props.t('Write message')}
                 className={`${styles.textarea} ${fields.reference.error ? 'error' : ''} message`} />
-              <CircularProgress max={64} value={byteCount} className={`${styles.byteCounter} ${fields.reference.value ? styles.show : styles.hide}`} />
+              <CircularProgress max={64} value={byteCount} className={`${styles.byteCounter} ${fields.reference.isActive ? styles.show : styles.hide}`} />
+              <img
+                className={`${styles.status} ${styles.referenceStatus} ${fields.reference.isActive || !fields.reference.value ? styles.hide : styles.show}`}
+                src={ fields.reference.error ? svg.alert_icon : svg.ok_icon}
+              />
             </span>
-            <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${fields.reference.feedback ? styles.show : ''}`}>
+            <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${fields.reference.isActive || fields.reference.value ? styles.show : ''}`}>
               {fields.reference.feedback}
               <Tooltip
                 className={'showOnTop'}
