@@ -29,25 +29,24 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 24px 0;
+  margin: 15px 0 25px;
 
   & > h1,
   & > p {
-    font-family: var(--content-font);
     margin: 0;
     padding: 5px 0;
   }
 
   & > h1 {
-    font-size: var(--font-size-large);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-background-dark);
+    @mixin headingLarge;
+
+    color: var(--color-maastricht-blue);
   }
 
   & > p {
-    font-size: var(--paragraph-font-size-l);
-    font-weight: var(--font-weight-semi-bold);
-    color: var(--color-content-light);
+    @mixin contentLarge;
+
+    color: var(--color-slate-gray);
   }
 }
 
@@ -56,12 +55,18 @@
   padding: 0 16px;
   flex-direction: column;
 
+  & > div:first-child {
+    display: flex;
+    flex-direction: column;
+  }
+
   & .btn {
-    width: 227px;
+    width: 354px;
   }
 
   & .followBtn {
     position: relative;
+    margin-bottom: 10px;
   }
 
   & .followDropdown {
@@ -98,14 +103,14 @@
 
   & > span,
   & > a {
-    font-family: var(--content-font);
-    font-size: var(--font-size-small-secondary);
-    color: var(--color-dark-gray);
+    @mixin contentSmall;
+
+    color: var(--color-slate-gray);
     margin: 2px 0;
   }
 
   & > a {
     text-decoration: none;
-    color: var(--color-primary-standard);
+    color: var(--color-ultramarine-blue);
   }
 }

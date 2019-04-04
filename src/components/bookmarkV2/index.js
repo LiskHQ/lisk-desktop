@@ -4,6 +4,7 @@ import { InputV2 } from '../toolbox/inputsV2';
 import keyCodes from './../../constants/keyCodes';
 import svg from '../../utils/svgIcons';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
+import Feedback from '../toolbox/feedback/feedback';
 import styles from './bookmark.css';
 
 // eslint-disable-next-line complexity
@@ -87,7 +88,7 @@ class Bookmark extends React.Component {
 
   onHandleKeyPress(e) {
     // istanbul ignore else
-    if (this.props.showSuggestions) {
+    if (this.getFilterList().length) {
       switch (e.keyCode) {
         case keyCodes.arrowDown:
           this.onKeyPressDownOrUp('down');
@@ -164,6 +165,7 @@ class Bookmark extends React.Component {
                     key={index}
                     onMouseEnter={() => this.handleUpdateIndex(index)}
                     onClick={() => this.onSelectedAccount(account)}
+                    onKeyPress={this.onHandleKeyPress}
                     className={`${dropdownIndex === index ? styles.active : ''}`}>
                     <AccountVisual address={account.address} size={25} />
                     <span>{account.title}</span>
@@ -174,9 +176,14 @@ class Bookmark extends React.Component {
             </div>
           </div>
         </span>
-        <span className={`${styles.feedback} ${recipient.error ? 'error' : ''} ${recipient.feedback ? styles.show : ''}`}>
+
+        <Feedback
+          show={recipient.error}
+          status={'error'}
+          className={styles.feedbackMessage}
+          showIcon={false}>
           {recipient.feedback}
-        </span>
+        </Feedback>
       </Fragment>
     );
   }
