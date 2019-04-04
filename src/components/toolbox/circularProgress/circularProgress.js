@@ -1,11 +1,11 @@
 import React from 'react';
-import styles from './byteCounter.css';
+import PropTypes from 'prop-types';
+import styles from './circularProgress.css';
 
-const ByteCounter = ({ max, value, className = '' }) => {
-  const byteCount = encodeURI(value).split(/%..|./).length - 1;
-  let percentage = (byteCount * 100) / max;
+const CircularProgress = ({ max, value, className }) => {
+  let percentage = (value * 100) / max;
   percentage = percentage > 100 ? 100 : percentage;
-  const error = byteCount >= max;
+  const error = value >= max;
   const radius = 7;
   const circunference = Math.PI * (radius * 2);
   const offset = ((100 - percentage) / 100) * circunference;
@@ -24,4 +24,15 @@ const ByteCounter = ({ max, value, className = '' }) => {
   );
 };
 
-export default ByteCounter;
+CircularProgress.propTypes = {
+  max: PropTypes.number.isRequired,
+  value: PropTypes.number,
+  className: PropTypes.string,
+};
+
+CircularProgress.defaultProps = {
+  value: 0,
+  className: '',
+};
+
+export default CircularProgress;

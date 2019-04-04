@@ -6,7 +6,8 @@ import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
 import { InputV2, AutoresizeTextarea } from '../toolbox/inputsV2';
 import ConverterV2 from '../converterV2';
-import ByteCounter from '../toolbox/byteCounter/byteCounter';
+import CircularProgress from '../toolbox/circularProgress/circularProgress';
+import Feedback from '../toolbox/feedback/feedback';
 import svg from '../../utils/svgIcons';
 import styles from './requestV2.css';
 
@@ -146,6 +147,8 @@ class RequestV2 extends React.Component {
   render() {
     const { t } = this.props;
     const { fields, shareLink, showQRCode } = this.state;
+    const byteCount = encodeURI(fields.reference.value).split(/%..|./).length - 1;
+
     return (
       <div className={`${styles.container}`}>
         <section className={`${styles.formSection}`}>
@@ -171,9 +174,13 @@ class RequestV2 extends React.Component {
                 className={`${styles.status} ${!fields.amount.loading && fields.amount.value ? styles.show : ''}`}
                 src={ fields.amount.error ? svg.alert_icon : svg.ok_icon} />
             </span>
-            <span className={`${styles.feedback} ${fields.amount.error ? 'error' : ''} ${fields.amount.feedback ? styles.show : ''}`}>
-              {fields.amount.feedback}
-            </span>
+            <Feedback
+              className={styles.feedback}
+              show={fields.amount.error}
+              status={fields.amount.error ? 'error' : ''}
+              showIcon={false}>
+              { fields.amount.feedback }
+            </Feedback>
           </label>
           <label className={`${styles.fieldGroup} reference`}>
             <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
@@ -186,15 +193,19 @@ class RequestV2 extends React.Component {
                 value={fields.reference.value}
                 placeholder={t('Write message')}
                 className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
-              <ByteCounter max={64} value={fields.reference.value}
+              <CircularProgress max={64} value={byteCount}
                 className={styles.byteCounter} />
               <img
                 className={`${styles.status} ${!fields.reference.loading && fields.reference.value ? styles.show : ''}`}
                 src={ fields.reference.error ? svg.alert_icon : svg.ok_icon} />
             </span>
-            <span className={`${styles.feedback} ${styles.referenceFeedback} ${fields.reference.error ? 'error' : ''} ${fields.reference.feedback ? styles.show : ''}`}>
-              {fields.reference.feedback}
-            </span>
+            <Feedback
+              className={`${styles.feedback} ${styles.referenceFeedback}`}
+              show={!!fields.reference.feedback}
+              status={fields.reference.error ? 'error' : ''}
+              showIcon={false}>
+              { fields.reference.feedback }
+            </Feedback>
           </label>
           <label className={`${styles.fieldGroup}`}>
             <span className={`${styles.fieldLabel}`}>{t('Sharing link')}</span>
@@ -209,6 +220,7 @@ class RequestV2 extends React.Component {
               onCopy={this.onCopy}
               text={shareLink}>
                 <PrimaryButtonV2
+                  className={'extra-small'}
                   disabled={this.state.linkCopied}>
                   {this.state.linkCopied
                     ? t('Link copied')

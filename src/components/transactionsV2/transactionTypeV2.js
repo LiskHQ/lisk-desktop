@@ -3,30 +3,25 @@ import { translate } from 'react-i18next';
 import AccountVisual from '../accountVisual';
 import styles from './transactionTypeV2.css';
 import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
-import txIncoming from '../../assets/images/icons-v2/tx-incoming.svg';
-import txOutgoing from '../../assets/images/icons-v2/tx-outgoing.svg';
-import txDelegate from '../../assets/images/icons-v2/tx-delegate.svg';
-import txVote from '../../assets/images/icons-v2/tx-vote.svg';
-import tx2ndPassphrase from '../../assets/images/icons-v2/tx-2nd-passphrase.svg';
+import svg from '../../utils/svgIcons';
 
 const TransactionTypeV2 = (props) => { // eslint-disable-line complexity
   const { t } = props;
   const address = props.address !== props.senderId ? props.senderId : props.recipientId;
   let type;
-  let icon = (props.address === props.recipientId
-    && props.address !== props.senderId) ? txIncoming : txOutgoing;
+  let icon = svg.txDefault;
   switch (props.type) {
     case 1:
       type = t('Second passphrase registration');
-      icon = tx2ndPassphrase;
+      icon = svg.tx2ndPassphrase;
       break;
     case 2:
       type = t('Delegate registration');
-      icon = txDelegate;
+      icon = svg.txDelegate;
       break;
     case 3:
       type = t('Delegate vote', { context: 'noun' });
-      icon = txVote;
+      icon = svg.txVote;
       break;
     case 4:
       type = t('Multisignature Creation');
@@ -51,7 +46,7 @@ const TransactionTypeV2 = (props) => { // eslint-disable-line complexity
   );
   const accountTitle = props.followedAccounts[index]
     && props.followedAccounts[index].title;
-  const hasTitle = index !== -1 && accountTitle !== props.address;
+  const hasTitle = index !== -1;
 
   return (
     <div className={`${styles.transactionType} transaction-address`}>
@@ -70,7 +65,7 @@ const TransactionTypeV2 = (props) => { // eslint-disable-line complexity
               <span className={`${styles.title}`}>{
                 hasTitle ? accountTitle : address
               }</span>
-              { hasTitle && <span>{address}</span> }
+              { hasTitle && <span className={styles.address}>{address}</span> }
             </div>
           </React.Fragment>
           )}

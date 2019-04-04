@@ -68,6 +68,7 @@ or "warn/action" ineastd of "red/green"
         Sizes
   *************************/
   --border-radius-standard: 3px;
+  --border-radius-box: 6px;
   --header-height: 72px;
   --header-height-m: var(--header-height);
   --header-height-s: var(--header-height);
@@ -75,11 +76,6 @@ or "warn/action" ineastd of "red/green"
   --header-elements-height: 36px;
   --header-logo-size: 56px;
   --search-box-width-l: 597px;
-
-  /*************************
-        Radious
-  *************************/
-  --border-radius-box: 6px;
 
   /*************************
         Padding
@@ -105,6 +101,7 @@ or "warn/action" ineastd of "red/green"
   *************************/
   --light-border-color: rgba(255, 255, 255, 0.24);
   --dark-border-color: rgba(0, 0, 0, 0.08);
+  --primary-background-color: color(var(--color-ultramarine-blue) a(8%));
   --error-background-color: color(var(--color-burnt-sienna) a(8%));
   --color-primary-standard: var(--color-ultramarine-blue);
   --color-primary-light: #9db8fa;
@@ -119,7 +116,7 @@ or "warn/action" ineastd of "red/green"
   --color-dark-gray: #868ba1;
   --color-light-gray: #e6e6e6;
   --color-content-grayblue: #7383a7;
-  --color-background-wrapper: #edf0f5;
+  --color-background-wrapper: var(--color-mystic);
   --color-background-header: #fbfcfd;
   --color-background-menu: #f8f9fb;
   --color-link-active: #4070f4;
@@ -133,7 +130,7 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Box
   *************************/
-  --box-shadow-standard: 0 4px 8px 0 rgba(72, 77, 97, 0.1);
+  --box-shadow-standard: 0 2px 4px 0 rgba(6, 22, 48, 0.06);
   --box-shadow-button: var(--box-shadow-standard), 0px 0px 12px 0 rgba(72, 77, 97, 0.05);
   --box-shadow-header: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
   --box-shadow-avatar: var(--box-shadow-standard);

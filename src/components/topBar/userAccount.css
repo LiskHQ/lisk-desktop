@@ -58,6 +58,10 @@
   }
 }
 
+.dropdown {
+  width: auto;
+}
+
 .dropdownOption {
   display: flex;
   justify-content: space-evenly;
@@ -65,6 +69,10 @@
   text-decoration: none;
   font-family: var(--content-font) !important;
   cursor: pointer;
+
+  & > img {
+    margin-right: 5px;
+  }
 
   & > img:nth-child(2) {
     display: none;

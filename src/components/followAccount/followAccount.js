@@ -6,7 +6,7 @@ import SpinnerV2 from '../spinnerV2/spinnerV2';
 import svg from '../../utils/svgIcons';
 // import { FontIcon } from '../fontIcon';
 import { InputV2 } from '../toolbox/inputsV2';
-import { PrimaryButtonV2, DangerButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 import styles from './followAccount.css';
 
 class FollowAccount extends React.Component {
@@ -112,6 +112,7 @@ class FollowAccount extends React.Component {
     const { accounts } = this.props;
     this.props.followedAccountRemoved(accounts[followIndex]);
     this.setState({
+      isValid: false,
       fields: {
         ...fields,
         accountName: {
@@ -194,7 +195,7 @@ class FollowAccount extends React.Component {
               </React.Fragment>
             : null}
           </span>
-          <span className={`${styles.feedback} ${fields.accountName.error || fields.accountName.value.length >= 15 ? 'error' : ''} ${fields.accountName.value ? styles.show : ''}`}>
+          <span className={`${styles.feedback} ${fields.accountName.error || fields.accountName.value.length >= 15 ? 'error' : ''} ${fields.accountName.value && !isFollowing ? styles.show : ''}`}>
             {fields.accountName.feedback}
           </span>
         </label>
@@ -212,14 +213,14 @@ class FollowAccount extends React.Component {
           </label> */}
         {isFollowing
           ? (
-            <DangerButtonV2
-              className={'follow-account-button'}
+            <PrimaryButtonV2
+              className={'follow-account-button extra-small'}
               onClick={this.handleUnfollow}>
               {t('Remove from bookmarks')}
-            </DangerButtonV2>
+            </PrimaryButtonV2>
           ) : (
             <PrimaryButtonV2
-              className={'follow-account-button'}
+              className={'follow-account-button extra-small'}
               onClick={this.handleFollow}
               disabled={!isValid}>
               {t('Confirm')}

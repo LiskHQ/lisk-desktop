@@ -1,5 +1,6 @@
 import React from 'react';
 import TextareaV2 from './textareaV2';
+import { deepEquals } from '../../../utils/polyfills';
 
 class AutoresizeTextarea extends React.Component {
   constructor() {
@@ -20,6 +21,8 @@ class AutoresizeTextarea extends React.Component {
   shouldComponentUpdate(nextProps) {
     if (nextProps.value !== this.props.value) {
       this.textRef.style.height = `${this.height}px`;
+      return true;
+    } else if (!deepEquals(this.props, nextProps)) {
       return true;
     }
     return false;

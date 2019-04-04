@@ -57,7 +57,7 @@ describe('V2 Header', () => {
     expect(wrapper.find('.dropdownHandler')).to.be.present();
     wrapper.find('.dropdownHandler').simulate('click');
     expect(wrapper.find('DropdownV2')).to.have.prop('showDropdown', true);
-    wrapper.find('DropdownV2 .optionsHolder').children().at(randomNetwork).simulate('click');
+    wrapper.find('DropdownV2 .dropdown-content').children().at(randomNetwork).simulate('click');
     expect(handleNetworkSelect).to.have.been.calledWith(networkList[randomNetwork].value);
     expect(wrapper.find('DropdownV2')).to.have.prop('showDropdown', false);
   });
