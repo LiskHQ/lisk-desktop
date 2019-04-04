@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { app, ipcMain } from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
 import Lisk from 'lisk-elements'; // eslint-disable-line import/no-extraneous-dependencies
 import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api'; // eslint-disable-line import/no-extraneous-dependencies
@@ -7,12 +6,10 @@ import TransportNodeHid from '@ledgerhq/hw-transport-node-hid'; // eslint-disabl
 import {
   HWDevice,
   addConnectedDevices,
-  removeConnectedDeviceByPath,
-  getDeviceByPath,
 } from './hwManager';
 
 import win from './modules/win';
-import { getTransactionBytes, calculateTxId } from '../../src/utils/rawTransactionWrapper';
+import { getTransactionBytes } from '../../src/utils/rawTransactionWrapper';
 
 // mock transportnodehid, todo fix this to work also on windows and linux
 // const TransportNodeHid = {
@@ -126,10 +123,11 @@ const createCommand = (k, fn) => {
   });
 };
 
-
+/* eslint-disable prefer-promise-reject-errors */
 // eslint-disable-next-line import/prefer-default-export
 export const executeLedgerCommand = (device, command) =>
   TransportNodeHid.open(device.path)
+    // eslint-disable-next-line max-statements
     .then(async (transport) => {
       busy = true;
 
@@ -153,8 +151,11 @@ export const executeLedgerCommand = (device, command) =>
         }
         if (command.action === 'SIGN_TX') {
           win.send({ event: 'ledgerButtonCallback', value: null });
-          const signature = await liskLedger.signTX(ledgerAccount,
-            getTransactionBytes(command.data.tx), false);
+          const signature = await liskLedger.signTX(
+            ledgerAccount,
+            getTransactionBytes(command.data.tx),
+            false,
+          );
           res = getBufferToHex(signature);
         }
         transport.close();

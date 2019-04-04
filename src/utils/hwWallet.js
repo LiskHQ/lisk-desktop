@@ -1,10 +1,9 @@
 /* eslint-disable */
-
 import TransportU2F from '@ledgerhq/hw-transport-u2f';
 import TrezorConnect from 'trezor-connect';
 import i18next from 'i18next';
 import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api';
-import { HW_CMD, calculateSecondPassphraseIndex } from '../constants/hwConstants';
+import { HW_CMD, HW_MSG, calculateSecondPassphraseIndex } from '../constants/hwConstants';
 import { loadingStarted, loadingFinished } from './loading';
 // import { accountLoggedOut } from '../actions/account';
 import { infoToastDisplayed, errorToastDisplayed } from '../actions/toaster';
@@ -12,7 +11,6 @@ import { getTransactionBytes, calculateTxId, getBufferToHex } from './rawTransac
 import { PLATFORM_TYPES, getPlatformType } from './platform';
 import store from '../store';
 import loginTypes from '../constants/loginTypes';
-import { HW_MSG } from '../constants/hwConstants';
 
 const util = require('util');
 
@@ -88,9 +86,15 @@ export const getDeviceList = () =>
     } else {
       // Browser mode, only dev purpose
       const deviceList = [];
-      deviceList.push({ deviceId: 0, label: 'FakeLedger', model: 'Ledger Nano S', path: '/fake/path' });
-      deviceList.push({ deviceId: 1, label: 'FakeTrezorT', model: 'Trezor Model T', path: null });
-      deviceList.push({ deviceId: 2, label: 'FakeTrezor1', model: 'Trezor One', path: null });
+      deviceList.push({
+        deviceId: 0, label: 'FakeLedger', model: 'Ledger Nano S', path: '/fake/path',
+      });
+      deviceList.push({
+        deviceId: 1, label: 'FakeTrezorT', model: 'Trezor Model T', path: null,
+      });
+      deviceList.push({
+        deviceId: 2, label: 'FakeTrezor1', model: 'Trezor One', path: null,
+      });
       resolve(deviceList);
     }
   });
@@ -122,8 +126,11 @@ const executeLedgerCommandForWeb = async (command) => {
       cmdRes = getBufferToHex(signature.slice(0, 64));
     }
     if (command.action === HW_CMD.SIGN_TX) {
-      const signature = await liskLedger.signTX(ledgerAccount,
-        getTransactionBytes(command.data.tx), false);
+      const signature = await liskLedger.signTX(
+        ledgerAccount,
+        getTransactionBytes(command.data.tx),
+        false
+      );
       cmdRes = getBufferToHex(signature);
     }
     transport.close();
