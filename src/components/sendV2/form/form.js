@@ -67,18 +67,16 @@ class Form extends React.Component {
   }
 
   componentDidMount() {
-    this.ifDataFromPrevState();
-    this.ifDataFromUrl();
+    if (!Object.entries(this.props.prevState).length) this.ifDataFromUrl();
+    if (Object.entries(this.props.prevState).length) this.ifDataFromPrevState();
     this.checkIfBoormakedAccount();
   }
 
   ifDataFromPrevState() {
     const { prevState } = this.props;
-
-    if (prevState.fields && Object.entries(prevState.fields).length > 0) {
+    if (prevState.fields && Object.entries(prevState.fields).length) {
       this.setState({
         fields: {
-          ...this.state.fields,
           ...prevState.fields,
         },
       });
@@ -89,24 +87,24 @@ class Form extends React.Component {
     const { fields = {} } = this.props;
 
     if (fields.recipient.address !== '' || fields.amount.value !== '' || fields.reference.value !== '') {
-      this.setState({
+      this.setState(prevState => ({
         fields: {
-          ...this.state.fields,
+          ...prevState.fields,
           recipient: {
-            ...this.state.fields.recipient,
-            address: fields.recipient.address,
-            value: fields.recipient.address,
+            ...prevState.fields.recipient,
+            address: prevState.fields.recipient.address,
+            value: prevState.fields.recipient.address,
           },
           amount: {
-            ...this.state.fields.amount,
-            value: fields.amount.value,
+            ...prevState.fields.amount,
+            value: prevState.fields.amount.value,
           },
           reference: {
-            ...this.state.fields.reference,
-            value: fields.reference.value,
+            ...prevState.fields.reference,
+            value: prevState.fields.reference.value,
           },
         },
-      });
+      }));
     }
   }
 
@@ -215,9 +213,9 @@ class Form extends React.Component {
   }
 
   onSelectedAccount(account) {
-    this.setState({
+    this.setState(prevState => ({
       fields: {
-        ...this.state.fields,
+        ...prevState.fields,
         recipient: {
           ...this.state.fields.recipient,
           ...account,
@@ -229,7 +227,7 @@ class Form extends React.Component {
           following: true,
         },
       },
-    });
+    }));
   }
 
   getMaxAmount() {
@@ -238,7 +236,7 @@ class Form extends React.Component {
 
   validateAmountField(value) {
     if (/([^\d.])/g.test(value)) return this.props.t('Provide a correct amount of LSK');
-    if (/(\.)(.*\1){1}/g.test(value) || /\.$/.test(value)) return this.props.t('Invalid amount');
+    if ((/(\.)(.*\1){1}/g.test(value) || /\.$/.test(value)) || value === '0') return this.props.t('Invalid amount');
     if (parseFloat(this.getMaxAmount()) < value) return this.props.t('Provided amount is higher than your current balance.');
     return false;
   }
