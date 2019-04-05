@@ -60,26 +60,21 @@ class BackupPassphrase extends React.Component {
       t, account, prevStep, nextStep,
     } = this.props;
     const { passphraseCopied } = this.state;
-
+    console.log(account.passphrase);
     return (
       <React.Fragment>
         <span className={`${registerStyles.stepsLabel}`}>{t('Step 2 / 4')}</span>
         <div className={`${registerStyles.titleHolder}`}>
           <h1>
-            <img src={key} />
-            {t('Backup your Passphrase')}
+            {t('Save your Passphrase')}
           </h1>
-          <p>{t('Your passphrase is both your login and password to your Lisk Hub.')}</p>
+          <p>{t('Passphrase is both your login and password combined.')}</p>
           <p>{
-            t('You must keep it safe as it is the only way to access your wallet and cannot be recovered if lost.')
+            t('Keep it safe, your passphrase is the only way to access your wallet.')
           }</p>
         </div>
-
-        <div className={`${styles.optionsHolder} ${grid['col-sm-11']}`}>
+        <div className={`${styles.optionsHolder} ${grid['col-sm-10']}`}>
           <div className={`${styles.option}`}>
-            <div className={`${styles.optionIcon}`}>
-              <img src={lock} />
-            </div>
             <div className={`${styles.optionContent}`}>
               <h2>
                 {t('Passphrase')}
@@ -98,7 +93,12 @@ class BackupPassphrase extends React.Component {
                 </Tooltip>
 
               </h2>
-              <p className='option-value'>{account.passphrase}</p>
+              <div className={styles.passwordRow}>
+                {account.passphrase.split(' ').map((word, index) =>
+                  <div className={styles.passphraseField} key={`passwordField-${index}`}>{word}</div>
+                )}
+              </div>
+              {/* <p className='option-value'>{account.passphrase}</p> */}
               <CopyToClipboard
                 text={account.passphrase}
                 onCopy={() => this.textIsCopied()}>
@@ -109,9 +109,6 @@ class BackupPassphrase extends React.Component {
             </div>
           </div>
           <div className={`${styles.option}`}>
-            <div className={`${styles.optionIcon}`}>
-              <img src={pdf} />
-            </div>
             <div className={`${styles.optionContent}`}>
               <h2>
                 {t('Paper version')}
@@ -137,7 +134,6 @@ class BackupPassphrase extends React.Component {
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
           <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
             <SecondaryButtonV2 onClick={prevStep}>
-              <FontIcon className={registerStyles.icon}>arrow-left</FontIcon>
               {t('Go Back')}
             </SecondaryButtonV2>
           </span>
@@ -146,7 +142,6 @@ class BackupPassphrase extends React.Component {
               className={'yes-its-safe-button'}
               onClick={() => nextStep({ account })}>
               {t('Continue')}
-              <FontIcon className={registerStyles.icon}>arrow-right</FontIcon>
             </PrimaryButtonV2>
           </span>
         </div>

@@ -1,7 +1,9 @@
 @import './../app/variablesV2.css';
+@import './../app/mixins.css';
 
 :root {
   --registration-title-font-size: 24px;
+  --title-color: #0c152e;
 }
 
 .register {
@@ -22,7 +24,7 @@
 
   & .button {
     margin-top: 12px;
-    width: 100%;
+    width: 431px;
 
     & > button {
       width: 100%;
@@ -31,9 +33,9 @@
 }
 
 .stepsLabel {
-  color: var(--color-content-light);
-  font-size: var(--font-size-small);
-  font-weight: var(--font-weight-bold);
+  @mixin contentSmallest;
+
+  color: var(--color-slate-gray);
   height: 18px;
   letter-spacing: 0.4px;
   line-height: 1.8;
@@ -46,13 +48,15 @@
   text-align: center;
 
   & > h1 {
+    @mixin headingLarge;
+
     display: flex;
-    font-size: var(--registration-title-font-size);
-    font-weight: var(--font-weight-bold);
     justify-content: center;
     letter-spacing: 0.1px;
     line-height: 50px;
-    margin: 0;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    color: var(--title-color);
 
     & > img {
       margin-right: 16px;
@@ -60,20 +64,21 @@
   }
 
   & > p {
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-l);
+    @mixin contentLarge;
+
     margin: 0;
+    color: var(--color-slate-gray);
+    width: 480px;
   }
 }
 
 .buttonsHolder {
+  align-items: center;
+  display: flex;
+  flex-direction: column-reverse;
   justify-content: center;
+  margin: 0 auto;
   width: 100%;
-
-  & .icon {
-    font-size: var(--paragraph-font-size-s);
-    font-weight: bold;
-  }
 }
 
 .disabledLink {
