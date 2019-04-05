@@ -122,8 +122,8 @@ export const getChartDateFormat = (transactions) => {
   let format = formats.month;
   if (last.diff(first, 'months') <= 1) format = formats.day;
   if (last.diff(first, 'days') <= 7) format = formats.hour;
-  if (last.diff(first, 'hours') <= 24) format = formats.minute;
-  if (last.diff(first, 'minutes') < 180) format = formats.second;
+  if (last.diff(first, 'hours') <= 12) format = formats.minute;
+  if (last.diff(first, 'minutes') <= 5) format = formats.second;
   return format;
 };
 
