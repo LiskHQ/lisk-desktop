@@ -98,8 +98,10 @@ describe('TopBar', () => {
   });
 
   it('renders 3 menu items including delegates', () => {
-    const newProps = { ...myProps };
-    newProps.showDelegate = true;
+    const newProps = {
+      ...myProps,
+      showDelegate: true,
+    };
     wrapper = mountWithRouter(<TopBar {...newProps} />, myOptions);
     expect(wrapper.find('a.item')).to.have.length(3);
   });

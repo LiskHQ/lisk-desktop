@@ -94,13 +94,12 @@
     @mixin contentLargest;
 
     color: var(--color-maastricht-blue);
-    font-weight: var(--font-weight-bold);
   }
 
   & .accountSubtitle {
     @mixin contentSmallest;
 
-    color: var(--color-text-slate-gray);
+    color: var(--color-slate-gray);
     padding-top: 8px;
   }
 

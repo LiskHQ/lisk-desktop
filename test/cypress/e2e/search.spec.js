@@ -176,24 +176,6 @@ describe('Search', () => {
   });
 
   /**
-   * Recent searches are shown as search proposals and clickable
-   * @expect recent searches are shown
-   * @expect click on proposal leads to corresponding page
-   */
-  it.skip('Recent search is shown as search proposals and clickable', () => {
-    cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
-    cy.visit(urls.dashboard);
-    cy.get(ss.searchIcon).click();
-    cy.get(ss.searchInput).type(`${accounts.genesis.address}{enter}`);
-    cy.get(ss.searchInput).clear();
-    cy.visit(urls.wallet);
-    cy.get(ss.searchIcon).click();
-    cy.get(ss.searchInput).click();
-    cy.get(ss.recentSearches).eq(0).click();
-    cy.get(ss.accountAddress).should('have.text', accounts.genesis.address);
-  });
-
-  /**
    * Type not sufficient amount of chars
    * @expect 'Type at least 3 characters' message
    */

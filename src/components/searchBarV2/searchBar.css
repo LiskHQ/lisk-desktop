@@ -12,8 +12,9 @@
 }
 
 .input {
+  @mixin contentNormal;
+
   height: 30px;
-  font-size: var(--font-size-small-secondary);
 }
 
 .wrapper > .searchMessage {

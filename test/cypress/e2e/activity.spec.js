@@ -102,6 +102,7 @@ function testActivity(open) {
 function testDelegateActivity(open) {
   beforeEach(() => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
+    cy.visit(urls.dashboard);
     open();
     waitBeforeChangeTabAfterLoading();
     cy.get(ss.delegateStatisticsTab).click();
@@ -117,7 +118,7 @@ function testDelegateActivity(open) {
       cy.get(ss.voterAddress).eq(0).should('have.text', 'genesis_1 ');
     });
 
-    it.skip('Shows statistics', () => {
+    it('Shows statistics', () => {
       cy.get(ss.delegateStatsUptime).contains('100%');
       cy.get(ss.delegateStatsUptime).contains('1');
       cy.get(ss.delegateStatsApproval).contains('100%');
@@ -244,5 +245,10 @@ describe('Wallet Activity for delegate', () => {
 });
 
 describe('Account Activity opened from search for delegate', () => {
-  testDelegateActivity(() => cy.get(ss.searchIcon).click().cy.get(ss.searchInput).type(`${accounts.delegate.address}{enter}`));
+  testDelegateActivity(() => {
+    cy.get(ss.searchIcon).click();
+    cy.get(ss.searchInput).type(accounts.delegate.address);
+    cy.wait(2000);
+    cy.get(ss.searchAccountRow).eq(0).click();
+  });
 });

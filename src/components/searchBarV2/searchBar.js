@@ -73,10 +73,10 @@ class SearchBar extends React.Component {
     const { t, suggestions, setSearchBarRef } = this.props;
     const isSearchTextError = searchTextValue.length && searchTextValue.length < 3;
     const isEmptyResults = !isLoading && !suggestions.addresses.length
-    && !suggestions.delegates.length
-    && !suggestions.transactions.length
-    && searchTextValue.length
-    && !isSearchTextError;
+      && !suggestions.delegates.length
+      && !suggestions.transactions.length
+      && searchTextValue.length
+      && !isSearchTextError;
 
     return (
       <div className={`${styles.wrapper} search-bar`} ref={node => setSearchBarRef(node)}>
