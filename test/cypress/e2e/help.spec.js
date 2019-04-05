@@ -25,10 +25,10 @@ describe('Help', () => {
    * @expect url is correct
    * @expect some specific to page element is present on it
    */
-  it('opens by sidebar button', () => {
+  it('opens by help button', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit('/');
-    cy.get(ss.sidebarMenuHelpBtn).should('have.css', 'opacity', '1').click();
+    cy.get(ss.sidebarMenuHelpBtn).click();
     cy.url().should('contain', urls.help);
     checkHelpPageLoaded();
   });

@@ -161,7 +161,7 @@ describe('Delegates', () => {
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.spinner);
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout }).should('have.class', 'checked');
-    cy.get(ss.sidebarMenuWalletBtn).click();
+    cy.get(ss.topBarMenuWalletBtn).click();
     cy.get(ss.transactionRow).eq(0).as('tx');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', 'Delegate vote');
     cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');
@@ -221,17 +221,17 @@ describe('Delegates', () => {
     cy.visit(urls.delegates);
     // Filter Voted
     cy.get(ss.filterVoted).click();
-    cy.get(ss.delegateRow).eq(0).find(ss.delegateName).contains('genesis_17');
+    cy.get(ss.delegateRow).eq(0).find(ss.delegateName).contains('genesis_51');
     cy.get(ss.delegateRow).should('have.length', 1);
     // Filter Not voted
     cy.get(ss.filterNotVoted).click();
-    cy.get(ss.searchDelegateInput).click().type('genesis_17');
+    cy.get(ss.searchDelegateInput).click().type('genesis_51');
     cy.get(ss.delegateRow).should('not.exist');
     cy.get(ss.searchDelegateInput).click().clear();
     // Filter All
     cy.get(ss.filterAll).click();
     cy.get(ss.delegateRow).should('have.length', 100);
-    cy.get(ss.searchDelegateInput).click().type('genesis_17');
+    cy.get(ss.searchDelegateInput).click().type('genesis_51');
     cy.get(ss.delegateRow).should('have.length', 1);
   });
 });
