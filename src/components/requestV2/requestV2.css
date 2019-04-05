@@ -60,24 +60,9 @@
   }
 
   & .feedback {
-    @mixin contentNormal;
-
-    box-sizing: border-box;
-    color: var(--color-slate-gray);
-    display: none;
-    justify-content: flex-start;
-    margin-top: 10px;
-    padding: 6px 10px;
-    width: 100%;
-
-    &:global(.error) {
-      background-color: var(--error-background-color);
-      color: var(--color-burnt-sienna);
-    }
-
-    &.show {
-      display: flex;
-    }
+    margin-top: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
 
     &.referenceFeedback {
       @mixin contentSmallest;
@@ -165,9 +150,10 @@
   }
 
   & .sectionFooter {
-    margin-top: 32px;
+    margin-top: 20px;
 
     & button {
+      height: 36px;
       width: 100%;
     }
   }

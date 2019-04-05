@@ -10,7 +10,7 @@
     align-items: flex-start;
     display: flex;
     flex-direction: column;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
 
   & .fieldLabel {
@@ -62,12 +62,15 @@
   }
 
   & .input {
-    font-size: var(--button-font-size-s);
+    @mixin contentNormal;
+
     height: 36px;
-    line-height: 1.83;
+    padding-left: 10px;
+    padding-right: 30px;
   }
 
   & button {
+    height: 36px;
     width: 100%;
   }
 

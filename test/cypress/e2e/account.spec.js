@@ -46,7 +46,6 @@ describe('Account', () => {
       });
     cy.get(ss.accountName).contains('Bob');
     cy.get(ss.followAccountBtn).contains('Account bookmarked');
-    cy.get(ss.followAccountBtn).click();
     cy.get(ss.confirmAddToBookmarks).click()
       .should(() => {
         expect(getFollowedAccountObjFromLS().length).to.equal(0);

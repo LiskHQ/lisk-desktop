@@ -8,7 +8,10 @@ import { getInputSelection, setInputSelection } from '../../../utils/selection';
 import styles from './filters.css';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import Calendar from '../../toolbox/calendar/calendar';
+import Feedback from '../../toolbox/feedback/feedback';
 import keyCodes from '../../../constants/keyCodes';
+import SpinnerV2 from '../../spinnerV2/spinnerV2';
+import svg from '../../../utils/svgIcons';
 
 class DateFieldGroup extends React.Component {
   // eslint-disable-next-line max-statements
@@ -20,10 +23,12 @@ class DateFieldGroup extends React.Component {
         dateTo: {
           error: false,
           value: '',
+          loading: false,
         },
         dateFrom: {
           error: false,
           value: '',
+          loading: false,
         },
       },
       feedback: '',
@@ -36,6 +41,7 @@ class DateFieldGroup extends React.Component {
     };
 
     this.dropdownRefs = {};
+    this.timeout = null;
 
     this.dateFormat = props.t('DD.MM.YY');
 
@@ -47,11 +53,13 @@ class DateFieldGroup extends React.Component {
     this.handleClickOutsideDropdown = this.handleClickOutsideDropdown.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.dateSelected = this.dateSelected.bind(this);
+    this.generateField = this.generateField.bind(this);
   }
 
   /* instanbul ignore next */
   componentWillUnmount() {
     document.removeEventListener('click', this.handleClickOutsideDropdown);
+    clearTimeout(this.timeout);
   }
 
   setInputRefs(node) {
@@ -134,9 +142,9 @@ class DateFieldGroup extends React.Component {
       return {
         ...acc,
         [field]: {
-          ...fieldsObj[field],
           value,
           error,
+          loading: false,
         },
       };
     }, {});
@@ -173,7 +181,7 @@ class DateFieldGroup extends React.Component {
       selection.end += 1;
     }
 
-    const fieldsObj = Object.keys(filters).filter(f => f.includes('date')).reduce((acc, filter) =>
+    const fieldsObj = Object.keys(filters).reduce((acc, filter) =>
       ({ ...acc, [filter]: { value: filters[filter] } }), {});
 
     const selectionObj = {
@@ -182,15 +190,53 @@ class DateFieldGroup extends React.Component {
     };
 
     this.handleClickOutsideDropdown({ target: null });
-    this.validateDates({
+
+    const fields = {
       ...fieldsObj,
-      [target.name]: { value },
-    }, selectionObj);
+      [target.name]: { value, loading: true },
+    };
+
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.validateDates(fields, selectionObj);
+    }, 300);
+
+    this.setState({ fields });
+    this.props.updateCustomFilters(fields);
+  }
+
+  generateField(data) {
+    const { filters } = this.props;
+    const { fields } = this.state;
+
+    return (
+      <label className={styles.fieldHolder}>
+        <InputV2
+          setRef={this.setInputRefs}
+          autoComplete={'off'}
+          onChange={this.handleFieldChange}
+          name={data.name}
+          value={filters[data.name]}
+          placeholder={this.dateFormat}
+          onFocus={this.handleFocus}
+          onClick={this.handleFocus}
+          onKeyDown={this.handleKey}
+          className={`${styles.input} ${fields[data.name].error ? 'error' : ''} ${data.name}Input`}
+        />
+      <SpinnerV2
+        className={`${styles.status} ${fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
+      />
+      <img
+        className={`${styles.status} ${!fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
+        src={ fields[data.name].error ? svg.alert_icon : svg.ok_icon}
+      />
+      </label>
+    );
   }
 
   render() {
     const { filters, t } = this.props;
-    const { fields, shownDropdown } = this.state;
+    const { shownDropdown } = this.state;
 
     return (
       <div className={styles.fieldGroup}>
@@ -200,17 +246,7 @@ class DateFieldGroup extends React.Component {
             className={styles.dropdownWrapper}
             ref={this.setDropownRefs}
             data-name={'dateFromDropdown'}>
-            <InputV2
-              setRef={this.setInputRefs}
-              autoComplete={'off'}
-              onChange={this.handleFieldChange}
-              name='dateFrom'
-              value={filters.dateFrom}
-              placeholder={this.dateFormat}
-              onFocus={this.handleFocus}
-              onClick={this.handleFocus}
-              onKeyDown={this.handleKey}
-              className={`${styles.input} ${fields.dateFrom.error ? 'error' : ''} dateFromInput`} />
+              { this.generateField({ name: 'dateFrom' }) }
               <DropdownV2
                 className={`showLeft ${styles.calendarDropdown}`}
                 showDropdown={shownDropdown === 'dateFromDropdown'}>
@@ -222,22 +258,12 @@ class DateFieldGroup extends React.Component {
                   date={filters.dateFrom} />
               </DropdownV2>
           </label>
-          <span>-</span>
+          <span className={styles.separator} />
           <label
             className={styles.dropdownWrapper}
             ref={this.setDropownRefs}
             data-name={'dateToDropdown'}>
-            <InputV2
-              setRef={this.setInputRefs}
-              autoComplete={'off'}
-              onChange={this.handleFieldChange}
-              name='dateTo'
-              value={filters.dateTo}
-              placeholder={this.dateFormat}
-              onFocus={this.handleFocus}
-              onClick={this.handleFocus}
-              onKeyDown={this.handleKey}
-              className={`${styles.input} ${fields.dateTo.error ? 'error' : ''} dateToInput`} />
+            { this.generateField({ name: 'dateTo' }) }
             <DropdownV2
               className={`showLeft ${styles.calendarDropdown}`}
               showDropdown={shownDropdown === 'dateToDropdown'}>
@@ -250,9 +276,13 @@ class DateFieldGroup extends React.Component {
           </DropdownV2>
           </label>
         </div>
-        <span className={`${styles.feedback} ${this.state.feedback ? styles.show : ''}`}>
-          {this.state.feedback}
-        </span>
+        <Feedback
+          className={styles.feedback}
+          show={!!this.state.feedback}
+          status={this.state.feedback ? 'error' : ''}
+          showIcon={false}>
+          { this.state.feedback }
+        </Feedback>
       </div>
     );
   }

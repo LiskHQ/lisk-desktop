@@ -1,7 +1,7 @@
 import React from 'react';
 import ConverterV2 from '../../converterV2';
 import AccountVisual from '../../accountVisual/index';
-import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
+import { PrimaryButtonV2, TertiaryButtonV2 } from '../../toolbox/buttons/button';
 import fees from '../../../constants/fees';
 import { fromRawLsk } from '../../../utils/lsk';
 import PassphraseInputV2 from '../../passphraseInputV2/passphraseInputV2';
@@ -171,7 +171,7 @@ class Summary extends React.Component {
                 {this.props.fields.recipient.title || this.props.fields.recipient.address}
               </label>
               <span className={`${styles.secondText} ${styles.accountSecondText}`}>
-                {this.props.fields.recipient.addres}
+                {this.props.fields.recipient.address}
               </span>
             </div>
           </div>
@@ -187,6 +187,31 @@ class Summary extends React.Component {
           <div className={styles.row}>
             <label>{this.props.t('Message')}</label>
             <p className={`${styles.information} reference`}>{this.props.fields.reference.value}</p>
+          </div>
+
+          <div className={styles.row}>
+            <label className={styles.transactionFee}>
+              {this.props.t('Transaction fee')}
+              <Tooltip
+                className={'showOnTop'}
+                title={this.props.t('Transaction fee')}
+                footer={
+                  <a href={links.transactionFee}
+                    rel="noopener noreferrer"
+                    target="_blank">
+                      {this.props.t('Read More')}
+                  </a>
+                }
+              >
+                <p className={styles.tooltipText}>
+                {
+                  this.props.t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
+                  Such operations require hardware resources and because of that there is a small fee for processing those.`)
+                }
+                </p>
+              </Tooltip>
+            </label>
+            <span>{this.props.t('{{fee}} LSK', { fee: fromRawLsk(fees.send) })}</span>
           </div>
 
           {
@@ -205,41 +230,16 @@ class Summary extends React.Component {
         </div>
 
         <footer className={`${styles.footer} summary-footer`}>
-          <SecondaryButtonV2 className={`${styles.btn} on-prevStep`} onClick={this.prevStep}>
-            {this.props.t('Edit transaction')}
-          </SecondaryButtonV2>
-
-          <div className={styles.feeMessage}>
-            <label>
-              {this.props.t('Transaction fee')}
-              <Tooltip
-                className={'showOnTop'}
-                title={this.props.t('Transaction fee')}
-                footer={
-                  <a href={links.transactionFee}
-                    rel="noopener noreferrer"
-                    target="_blank">
-                      {this.props.t('Read More')}
-                  </a>
-                }
-              >
-                <p>
-                {
-                  this.props.t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
-                  Such operations require hardware resources and because of that there is a small fee for processing those.`)
-                }
-                </p>
-              </Tooltip>
-            </label>
-            <span>{this.props.t('+{{fee}} LSK', { fee: fromRawLsk(fees.send) })}</span>
-          </div>
-
           <PrimaryButtonV2
-            className={`${styles.btn} on-nextStep send-button`}
+            className={`${styles.confirmBtn} on-nextStep send-button`}
             onClick={this.nextStep}
             disabled={isBtnDisabled}>
             {confirmBtnMessage}
           </PrimaryButtonV2>
+
+          <TertiaryButtonV2 className={`${styles.editBtn} on-prevStep`} onClick={this.prevStep}>
+            {this.props.t('Edit transaction')}
+          </TertiaryButtonV2>
         </footer>
       </div>
     );

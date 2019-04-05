@@ -2,14 +2,45 @@
 @import '../../../app/mixins.css';
 
 @define-mixin buttonBasics {
-  @mixin contentNormal bold;
+  @mixin contentLarge bold;
 
-  width: 250px;
-  max-width: 100%;
   border-radius: var(--border-radius-standard);
-  text-transform: none;
+  height: 48px;
+  max-width: 100%;
   outline: none;
+  padding: 0 32px;
+  text-transform: none;
   transition: var(--transition-button) !important;
+
+  &:global(.medium) {
+    height: 40px;
+    padding: 0 24px;
+  }
+
+  &:global(.small) {
+    @mixin contentSmall bold;
+
+    height: 36px;
+    padding: 0 20px;
+  }
+
+  &:global(.extra-small) {
+    @mixin contentSmall bold;
+
+    height: 32px;
+    padding: 0 16px;
+  }
+
+  & * {
+    line-height: inherit !important;
+  }
+
+  & :global(.button-icon) {
+    display: block;
+    height: 1.2em; /* stylelint-disable-line */
+    margin-left: 0.42em; /* stylelint-disable-line */
+    width: 1.2em; /* stylelint-disable-line */
+  }
 
   & .ripple {
     display: none;
@@ -28,16 +59,6 @@
   &:hover {
     background: color(var(--color-ultramarine-blue) l(+4%)) !important;
     box-shadow: 3px 3px 10px 0 rgba(61, 113, 255, 0.36) !important;
-  }
-}
-
-@define-mixin buttonDangerV2 {
-  background-color: var(--color-danger) !important;
-  color: var(--color-white) !important;
-
-  &:focus,
-  &:hover {
-    background: #ff6300 !important;
   }
 }
 

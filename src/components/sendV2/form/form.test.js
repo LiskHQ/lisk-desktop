@@ -129,33 +129,21 @@ describe('Form', () => {
       expect(amountField.find('InputV2').prop('value')).toEqual('0.1');
     });
 
-    it('Should show error feedback if letters inserted', () => {
-      const evt = { target: { name: 'amount', value: 'abc' } };
+    it('Should show error feedback if wrong data is inserted', () => {
       let amountField = wrapper.find('.fieldGroup').at(1);
-      expect(amountField.find('.feedback')).not.toHaveClassName('error');
-      amountField.find('InputV2').simulate('change', evt);
+      amountField.find('InputV2').simulate('change', { target: { name: 'amount', value: 'abc' } });
       jest.advanceTimersByTime(300);
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField.find('.feedback')).toHaveClassName('error');
-    });
 
-    it('Should show error feedback if ending in . or multiples .', () => {
-      const evt = { target: { name: 'amount', value: 1 } };
-      const multipleDotsEvt = { target: { name: 'amount', value: '1.2.3' } };
-      const endingDotEvt = { target: { name: 'amount', value: '12.' } };
-      let amountField = wrapper.find('.fieldGroup').at(1);
-      amountField.find('InputV2').simulate('change', endingDotEvt);
+      amountField.find('InputV2').simulate('change', { target: { name: 'amount', value: '1.1.' } });
       jest.advanceTimersByTime(300);
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField.find('.feedback')).toHaveClassName('error');
-      amountField.find('InputV2').simulate('change', evt);
-      jest.advanceTimersByTime(300);
-      wrapper.update();
-      amountField = wrapper.find('.fieldGroup').at(1);
-      expect(amountField.find('.feedback')).not.toHaveClassName('error');
-      amountField.find('InputV2').simulate('change', multipleDotsEvt);
+
+      amountField.find('InputV2').simulate('change', { target: { name: 'amount', value: props.account.balance + 2 } });
       jest.advanceTimersByTime(300);
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
@@ -187,6 +175,7 @@ describe('Form', () => {
           value: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit volutpat.',
         },
       };
+      referenceField.find('AutoresizeTextarea').simulate('focus');
       referenceField.find('AutoresizeTextarea').simulate('change', evt);
       jest.advanceTimersByTime(300);
       wrapper.update();
