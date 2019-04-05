@@ -1,4 +1,5 @@
 @import '../app/variablesV2.css';
+@import './../app/mixins.css';
 
 .optionsHolder {
   justify-content: center;
@@ -27,36 +28,44 @@
   width: 100%;
 
   & > h2 {
+    @mixin contentNormal bold;
+
     align-items: center;
     color: var(--color-content-light);
     display: flex;
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-l);
-    font-weight: var(--font-weight-semi-bold);
-    line-height: 1.47;
     margin: 0;
   }
 
-  & > p {
-    color: var(--color-content);
-    font-family: var(--heading-font);
-    font-size: var(--paragraph-font-size-s);
-    font-weight: var(--font-weight-bold);
-    letter-spacing: 0.1px;
-    margin: 15px 0;
-    text-align: left;
-    word-spacing: 8px;
+  & > .downloadLisk {
+    display: flex;
+
+    & > p {
+      color: var(--color-content);
+      font-family: var(--heading-font);
+      font-size: var(--paragraph-font-size-s);
+      font-weight: var(--font-weight-bold);
+      letter-spacing: 0.1px;
+      margin: 15px 0;
+      text-align: left;
+      word-spacing: 8px;
+    }
+
+    & > img {
+      margin-right: 10px;
+    }
   }
 
   & .action {
-    color: var(--color-primary-standard);
-    cursor: pointer;
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-l);
-    font-weight: var(--font-weight-semi-bold);
-    line-height: 1.47;
-    transition: color var(--animation-speed-fast) linear;
-    text-decoration: underline;
+    @mixin headingExtraSmall;
+
+    width: 136px;
+    height: 32px;
+    border-radius: 3px;
+    border: solid 1px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--color-content-light);
 
     &.copied {
       color: var(--color-primary-light);
@@ -74,12 +83,55 @@
   background-color: #fff;
   margin-right: 8px;
   margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  & div {
+    @mixin contentLargest;
+  }
+}
+
+.hrSection {
+  @mixin contentSmallest;
+
+  display: flex;
+  flex-basis: 100%;
+  align-items: center;
+  margin: 8px 0px;
+  color: var(--color-slate-gray);
+
+  & > p {
+    margin: 20px;
+  }
+}
+
+.hrSection::before,
+.hrSection::after {
+  content: "";
+  flex-grow: 1;
+  background: rgba(0, 0, 0, 0.35);
+  height: 1px;
+  font-size: 0px;
+  line-height: 0px;
 }
 
 .passwordRow {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+
+.inputs {
+  flex-wrap: wrap;
+
+  & > span {
+    margin: 10px 0;
+
+    & input {
+      text-align: center;
+    }
+  }
 }
 
 @media (--medium-viewport) {

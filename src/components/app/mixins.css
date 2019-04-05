@@ -24,6 +24,14 @@
   line-height: 20px;
 }
 
+@define-mixin contentNormal $weight: bold {
+  font-family: var(--content-font);
+  font-size: 13px;
+  font-weight: var(--font-weight-$(weight));
+  letter-spacing: 0.2px;
+  line-height: 20px;
+}
+
 @define-mixin contentLarge $weight: normal {
   font-family: var(--content-font);
   font-size: 14px;
@@ -37,6 +45,14 @@
   font-size: 15px;
   font-weight: var(--font-weight-normal);
   letter-spacing: 0;
+  line-height: 18px;
+}
+
+@define-mixin headingExtraSmall {
+  font-family: var(--heading-font);
+  font-size: 12px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.2px;
   line-height: 18px;
 }
 

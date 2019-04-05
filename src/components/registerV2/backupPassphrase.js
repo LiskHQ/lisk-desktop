@@ -3,14 +3,12 @@ import QRCode from 'qrcode.react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { FontIcon } from '../fontIcon';
-import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
+import { InputV2 } from '../toolbox/inputsV2';
 import renderPaperwallet from '../../utils/paperwallet';
-import key from '../../assets/images/icons-v2/key.svg';
-import lock from '../../assets/images/icons-v2/circle-lock.svg';
-import pdf from '../../assets/images/icons-v2/pdf.svg';
+import fileOutline from '../../assets/images/icons-v2/icon-file-outline.svg';
 import registerStyles from './registerV2.css';
 import styles from './backupPassphrase.css';
 
@@ -60,7 +58,7 @@ class BackupPassphrase extends React.Component {
       t, account, prevStep, nextStep,
     } = this.props;
     const { passphraseCopied } = this.state;
-    console.log(account.passphrase);
+
     return (
       <React.Fragment>
         <span className={`${registerStyles.stepsLabel}`}>{t('Step 2 / 4')}</span>
@@ -93,20 +91,27 @@ class BackupPassphrase extends React.Component {
                 </Tooltip>
 
               </h2>
-              <div className={styles.passwordRow}>
-                {account.passphrase.split(' ').map((word, index) =>
-                  <div className={styles.passphraseField} key={`passwordField-${index}`}>{word}</div>
-                )}
+              <div className={`${styles.inputs} ${grid.row} passphrase`}>
+                {account.passphrase.split(' ').map((value, i) => (
+                  <span key={i} className={`${grid['col-xs-2']}`}>
+                    <InputV2
+                      disabled={true}
+                      value={value}
+                    />
+                  </span>
+                ))}
               </div>
-              {/* <p className='option-value'>{account.passphrase}</p> */}
               <CopyToClipboard
                 text={account.passphrase}
                 onCopy={() => this.textIsCopied()}>
                 <span className={`${styles.action} ${passphraseCopied && styles.copied}`}>
-                  { !passphraseCopied ? t('Copy passphrase') : t('Copied!') }
+                  { !passphraseCopied ? t('Copy to Clipboard') : t('Copied!') }
                 </span>
               </CopyToClipboard>
             </div>
+          </div>
+          <div className={styles.hrSection}>
+            <p>{t('OR')}</p>
           </div>
           <div className={`${styles.option}`}>
             <div className={`${styles.optionContent}`}>
@@ -123,21 +128,24 @@ class BackupPassphrase extends React.Component {
               <div style={{ display: 'none' }} ref={this.setCanvasRef}>
                 <QRCode value={account.passphrase} />
               </div>
-              <p className='option-value'>{'Lisk.pdf'}</p>
+              <div className={styles.downloadLisk}>
+                <img src={fileOutline} />
+                <p className='option-value'>{'Lisk.pdf'}</p>
+              </div>
               <span
                 onClick={this.generatePaperwallet}
-                className={`${styles.action}`}>{t('Download PDF')}</span>
+                className={`${styles.action}`}>{t('Download')}</span>
             </div>
           </div>
         </div>
 
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
-          <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
-            <SecondaryButtonV2 onClick={prevStep}>
+          <span className={`${registerStyles.button}`}>
+            <TertiaryButtonV2 onClick={prevStep}>
               {t('Go Back')}
-            </SecondaryButtonV2>
+            </TertiaryButtonV2>
           </span>
-          <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
+          <span className={`${registerStyles.button}`}>
             <PrimaryButtonV2
               className={'yes-its-safe-button'}
               onClick={() => nextStep({ account })}>
