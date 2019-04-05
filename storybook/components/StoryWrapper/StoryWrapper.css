@@ -1,4 +1,41 @@
+@import '../../../src/components/app/variablesV2.css';
+@import '../../../src/components/app/mixins.css';
+
 .wrapper {
-  background-color: #edf0f5;
+  background-color: var(--color-mystic);
+  color: var(--color-maastricht-blue);
   padding: 20px;
+
+  & :global(.story-title) {
+    @mixin headingNormal;
+
+    margin: 20px 0 10px;
+  }
+
+  & :global(.story-label) {
+    @mixin contentNormal bold;
+
+    margin: 10px 0;
+  }
+
+  & :global(.story-components-holder) {
+    align-items: flex-start;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+
+    &:global(.story-vertical) {
+      flex-direction: column;
+
+      & > div {
+        width: 100%;
+      }
+    }
+  }
+
+  &:global(.dark) {
+    background-color: var(--color-maastricht-blue);
+    color: var(--color-white);
+  }
 }

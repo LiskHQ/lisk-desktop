@@ -5,6 +5,7 @@
   @mixin contentLarge bold;
 
   border-radius: var(--border-radius-standard);
+  display: flex;
   height: 48px;
   max-width: 100%;
   outline: none;

@@ -89,6 +89,7 @@ module.exports = async ({ config }) => {
     resolve: {
       alias: {
         Components: path.resolve(__dirname, '../../src/components'),
+        Utils: path.resolve(__dirname, '../../src/utils'),
       }
     }
   });
