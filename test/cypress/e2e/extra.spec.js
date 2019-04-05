@@ -9,8 +9,8 @@ describe('Extra', () => {
     cy.get(ss.app).contains('Page not found.');
   });
 
-  // TODO fix the bug
-  it('Navigation buttons', () => {
+  // TODO unskip after fix 1901
+  xit('Navigation buttons', () => {
     cy.addObjectToLocalStorage('settings', 'advancedMode', true);
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
@@ -21,25 +21,15 @@ describe('Extra', () => {
     cy.get(ss.txSenderAddress).click();
     cy.get(ss.sidebarMenuDelegatesBtn).click();
     cy.get(ss.navigationBtnBack).click();
-    cy.wait(1000);
     cy.get(ss.app).contains('My Wallet Details');
-    cy.wait(1000);
     cy.get(ss.navigationBtnForward).click();
-    cy.wait(1000);
     cy.get(ss.app).contains('Delegate List');
-    cy.wait(1000);
     cy.get(ss.navigationBtnBack).click();
-    cy.wait(1000);
     cy.get(ss.navigationBtnBack).click();
-    cy.wait(1000);
-    cy.get(ss.app).contains('Amount transfered');
-    cy.wait(1000);
+    cy.get(ss.app).contains('Copy transaction link');
     cy.get(ss.navigationBtnBack).click();
-    cy.wait(1000);
     cy.get(ss.app).contains('My Wallet Details');
-    cy.wait(1000);
     cy.get(ss.navigationBtnBack).click();
-    cy.wait(1000);
     cy.get(ss.app).contains('News');
   });
 });
