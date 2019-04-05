@@ -1,14 +1,13 @@
 @import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
 .wrapper {
   display: flex;
 
   & .price {
-    color: var(--color-content-grayblue);
-    font-family: var(--content-font);
-    font-size: var(--button-font-size-s);
-    font-weight: var(--font-weight-semi-bold);
-    line-height: 1.5;
+    @mixin contentNormal;
+
+    color: var(--color-blue-gray);
     text-align: right;
   }
 }

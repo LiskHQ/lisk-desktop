@@ -48,7 +48,7 @@ or "warn/action" ineastd of "red/green"
   --font-size-small: 10px;
   --font-size-large: 24px;
   --heading-font: 'gilroy', 'Open Sans', sans-serif;
-  --content-font: 'gilroy-regular', 'Open Sans', sans-serif;
+  --content-font: 'basier-circle', sans-serif;
   --font-weight-normal: 400;
   --font-weight-semi-bold: 500;
   --font-weight-bold: 600;
@@ -66,18 +66,15 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Sizes
   *************************/
-  --border-radius-standard: 4px;
-  --header-height-m: 100px;
-  --header-height-s: 72px;
-  --header-height-xs: 60px;
-  --header-elements-height: 32px;
+  --border-radius-standard: 3px;
+  --border-radius-box: 6px;
+  --header-height: 72px;
+  --header-height-m: var(--header-height);
+  --header-height-s: var(--header-height);
+  --header-height-xs: var(--header-height);
+  --header-elements-height: 36px;
   --header-logo-size: 56px;
   --search-box-width-l: 597px;
-
-  /*************************
-        Radious
-  *************************/
-  --border-radius-box: 6px;
 
   /*************************
         Padding
@@ -85,22 +82,40 @@ or "warn/action" ineastd of "red/green"
   --header-padding: 0 32px;
 
   /*************************
-        Colors
+      Base Colors
   *************************/
-  --color-primary-standard: #4e80f7;
+  --color-ultramarine-blue: #4070f4;
+  --color-maastricht-blue: #0c152e;
+  --color-slate-gray: #70778b;
+  --color-blue-gray: #8a8ca2;
+  --color-ghost: #bec1cd;
+  --color-platinum: #e1e3eb;
+  --color-mystic: #edf0f5;
+  --color-white-smoke: #f5f7fa;
+  --color-burnt-sienna: #ec6868;
+  --color-ufo-green: #2bd67b;
+
+  /*************************
+      Other Colors
+  *************************/
+  --light-border-color: rgba(255, 255, 255, 0.24);
+  --dark-border-color: rgba(0, 0, 0, 0.08);
+  --primary-background-color: color(var(--color-ultramarine-blue) a(8%));
+  --error-background-color: color(var(--color-burnt-sienna) a(8%));
+  --color-primary-standard: var(--color-ultramarine-blue);
   --color-primary-light: #9db8fa;
   --color-white: #fff;
   --color-danger: #ff7721;
   --color-error: var(--color-danger);
   --color-content: #19224d;
-  --color-content-light: #2e2c3b;
+  --color-content-light: #0c152e;
   --color-primary-very-light: #e8f0fa;
   --color-content-lighter: rgba(46, 44, 59, 0.6);
   --color-background-dark: #1e194d;
   --color-dark-gray: #868ba1;
   --color-light-gray: #e6e6e6;
   --color-content-grayblue: #7383a7;
-  --color-background-wrapper: linear-gradient(120deg, #f7f9fb, #fbfcfd);
+  --color-background-wrapper: var(--color-mystic);
   --color-background-header: #fbfcfd;
   --color-background-menu: #f8f9fb;
   --color-link-active: #4070f4;
@@ -111,7 +126,7 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Box
   *************************/
-  --box-shadow-standard: 0 4px 8px 0 rgba(72, 77, 97, 0.1);
+  --box-shadow-standard: 0 2px 4px 0 rgba(6, 22, 48, 0.06);
   --box-shadow-button: var(--box-shadow-standard), 0px 0px 12px 0 rgba(72, 77, 97, 0.05);
   --box-shadow-header: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
   --box-shadow-avatar: var(--box-shadow-standard);
@@ -132,7 +147,11 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Transitions
   *************************/
-  --transition-button: background-color var(--animation-speed-fast) ease-in-out, color var(--animation-speed-fast) ease-in-out;
+  --transition-button:
+    background-color var(--animation-speed-fast) ease-in-out,
+    border-color var(--animation-speed-fast) ease-in-out,
+    box-shadow var(--animation-speed-fast) ease-in-out,
+    color var(--animation-speed-fast) ease-in-out;
 
   /*************************
         Z-Indexes

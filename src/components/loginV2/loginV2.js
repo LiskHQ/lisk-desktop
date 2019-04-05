@@ -1,4 +1,4 @@
-// eslint-disable-line
+/* eslint-disable max-lines */
 import React from 'react';
 import i18next from 'i18next';
 import Lisk from 'lisk-elements';
@@ -7,19 +7,19 @@ import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
-import { FontIcon } from '../fontIcon';
 import { parseSearchParams } from './../../utils/searchParams';
 import { extractAddress } from '../../utils/account';
 import { validateUrl, addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import getNetwork from '../../utils/getNetwork';
 import networks from '../../constants/networks';
-import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
 import feedbackLinks from '../../constants/feedbackLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import HeaderV2 from '../headerV2/headerV2';
+import { InputV2 } from '../toolbox/inputsV2';
 import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
-import lock from '../../assets/images/icons-v2/lock.svg';
+import Feedback from '../toolbox/feedback/feedback';
 import styles from './loginV2.css';
 import Piwik from '../../utils/piwik';
 
@@ -208,8 +208,10 @@ class LoginV2 extends React.Component {
             className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}>
 
             <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
+              <span className={styles.stepsLabel}>
+                {t('Sign in')}
+              </span>
               <h1>
-                <img src={lock} />
                 {t('Sign in with a Passphrase')}
               </h1>
               <p>
@@ -222,24 +224,26 @@ class LoginV2 extends React.Component {
             </div>
 
             <form onSubmit={this.onFormSubmit}>
-
               <div className={`${styles.inputsHolder}`}>
                 <div className={`${styles.customNode} ${this.state.network === networks.customNode.code ? styles.showInput : ''}`}>
-                  <h2 className={`${styles.inputLabel}`}>{t('Enter the IP or domain address of your node.')}</h2>
+                  <h2 className={`${styles.inputLabel}`}>{t('IP or domain address of a node')}</h2>
                   <div className={`${styles.addressInput} address`}>
-                    <input
+                    <InputV2
                       className={`${this.state.addressValidity ? 'error' : ''}`}
                       type="text"
                       value={this.state.address}
                       onChange={this.changeAddress} />
-                    <span className={`${styles.errorMessage} ${this.state.addressValidity ? styles.showError : ''}`}>
+                    <Feedback
+                      show={!!this.state.addressValidity}
+                      status={this.state.addressValidity ? 'error' : ''}
+                      showIcon={true}>
                       { this.state.addressValidity }
-                    </span>
+                    </Feedback>
                   </div>
                 </div>
 
                 <h2 className={`${styles.inputLabel}`}>
-                  {t('Type or paste your passphrase here.')}
+                  {t('Passphrase')}
                   <Tooltip
                     className={`${styles.tooltip}`}
                     title={t('What is your passphrase?')}
@@ -250,21 +254,17 @@ class LoginV2 extends React.Component {
                         target="_blank">
                           {t('Read More')}
                       </a>}>
-                    <p className={`${styles.tooltipText}`}>
-                      {t('Your passphrase is both ')}
-                      <strong>{t('your login and passphrase ')}</strong>
-                      {t('to your Lisk Hub. It is provided during account registration.')}
-                    </p>
-                    <p className={`${styles.tooltipText}`}>
-                      {t('You can use ')}
-                      <strong>{t('tab or space ')}</strong>
-                      {t('to go to the next field.')}
-                    </p>
-                    <p className={`${styles.tooltupText}`}>
-                      {t('For ')}
-                      <strong>{t('longer passphrases')}</strong>
-                      {t(', simply paste it in the first input field.')}
-                    </p>
+                    <React.Fragment>
+                      <p className={`${styles.tooltipText}`}>
+                        {t('Your passphrase is both your login and passphrase to your Lisk Hub. It is provided during account registration.')}
+                      </p>
+                      <p className={`${styles.tooltipText}`}>
+                        {t('You can use tab or space to go to the next field.')}
+                      </p>
+                      <p className={`${styles.tooltupText}`}>
+                        {t('For longer passphrases, simply paste it in the first input field.')}
+                      </p>
+                    </React.Fragment>
                   </Tooltip>
                 </h2>
 
@@ -292,25 +292,21 @@ class LoginV2 extends React.Component {
 
               </div>
 
-              <div className={`${styles.buttonsHolder} ${grid.row}`}>
-                <Link className={`${styles.button} ${grid['col-xs-4']}`} to={routes.splashscreen.path}>
-                  <SecondaryButtonV2>
-                    <FontIcon className={`${styles.icon}`}>arrow-left</FontIcon>
+              <div className={`${styles.buttonsHolder}`}>
+                <PrimaryButtonV2
+                  className={`${styles.button} login-button`}
+                  type='submit'
+                  disabled={(this.state.network === networks.customNode.code
+                    && !!this.state.addressValidity)
+                    || !this.state.isValid
+                    || this.state.passphrase === ''}>
+                  {t('Sign In')}
+                </PrimaryButtonV2>
+                <Link to={routes.splashscreen.path}>
+                  <TertiaryButtonV2 className={`${styles.button} ${styles.backButton}`}>
                     {t('Go Back')}
-                  </SecondaryButtonV2>
+                  </TertiaryButtonV2>
                 </Link>
-                <span className={`${styles.button} ${grid['col-xs-4']}`}>
-                  <PrimaryButtonV2
-                    className={'login-button'}
-                    type='submit'
-                    disabled={(this.state.network === networks.customNode.code
-                      && !!this.state.addressValidity)
-                      || !this.state.isValid
-                      || this.state.passphrase === ''}>
-                    {t('Confirm')}
-                    <FontIcon className={`${styles.icon}`}>arrow-right</FontIcon>
-                  </PrimaryButtonV2>
-                </span>
               </div>
             </form>
           </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+import { searchAccount } from '../../actions/search';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import regex from '../../utils/regex';
 import styles from './followedAccounts.css';
@@ -44,6 +45,7 @@ class AddAccountID extends React.Component {
 
   onNextStep() {
     Piwik.trackingEvent('AddAccountID', 'button', 'Next step');
+    this.props.searchAccount({ address: this.state.address.value });
     this.props.nextStep({ address: this.state.address.value });
   }
 
@@ -87,4 +89,8 @@ const mapStateToProps = state => ({
   accounts: state.followedAccounts.accounts,
 });
 
-export default connect(mapStateToProps)(translate()(AddAccountID));
+const mapDispatchToProps = {
+  searchAccount,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(AddAccountID));

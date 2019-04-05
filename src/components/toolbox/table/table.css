@@ -1,4 +1,5 @@
 @import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
 
 .row {
   align-items: center;
@@ -6,22 +7,54 @@
   display: flex;
   flex-wrap: nowrap;
   padding: 0 0.5em; /* stylelint-disable-line */
+  position: relative;
 
-  &:nth-child(2n+3) {
-    background-color: var(--color-background-menu);
+  &:not(.header) {
+    &::before,
+    &::after {
+      background-color: var(--color-platinum);
+      content: '';
+      height: 1px;
+      left: 20px;
+      position: absolute;
+      right: 20px;
+    }
+
+    &::after {
+      bottom: 0;
+    }
+
+    &::before {
+      display: none;
+      left: 0;
+      right: 0;
+      top: -1px;
+    }
+
+    &:hover {
+      background-color: var(--primary-background-color);
+
+      &::before {
+        display: block;
+      }
+
+      &::after {
+        display: block;
+        left: 0;
+        right: 0;
+      }
+    }
   }
 
   & > * {
+    @mixin contentSmall;
+
     align-items: center;
     box-sizing: border-box;
-    color: var(--color-dark-gray);
+    color: var(--color-maastricht-blue);
     display: flex;
-    font-family: var(--content-font);
-    font-size: var(--button-font-size-s);
-    font-weight: var(--font-weight-semi-bold);
     justify-content: flex-start;
-    line-height: 1.33;
-    padding: 22px 16px;
+    padding: 20px;
     text-align: left;
 
     &:last-child {
@@ -35,11 +68,9 @@
   background-color: var(--color-white);
 
   & > * {
-    color: var(--color-content-grayblue);
-    font-family: var(--heading-font);
-    font-weight: var(--font-weight-bold);
-    letter-spacing: 0.2px;
-    line-height: 1;
-    padding: 14px 16px;
+    @mixin contentSmall;
+
+    color: var(--color-slate-gray);
+    padding: 16px 20px;
   }
 }

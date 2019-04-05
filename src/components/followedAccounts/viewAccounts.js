@@ -100,7 +100,7 @@ class ViewAccounts extends React.Component {
                     </div>
 
                     <div className={`${styles.accountInformation}`}>
-                      <div className={this.state.edit ? styles.editMode : null}>
+                      <div className={this.state.edit ? styles.editMode : ''}>
                         <div className={`${styles.balance} followed-account-balance`}>
                           <LiskAmount val={account.balance} /> <span>LSK</span>
                         </div>
@@ -111,6 +111,7 @@ class ViewAccounts extends React.Component {
                             title: account.title || account.address,
                             address: account.address,
                             balance: account.balance,
+                            isDelegate: account.isDelegate,
                           }}
                         />
                       </div>
