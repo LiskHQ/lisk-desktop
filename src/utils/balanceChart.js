@@ -8,6 +8,7 @@ const formats = {
   hour: 'MMM DD YYYY hh[h]',
   day: 'MMM DD YYYY',
   month: 'MMM YYYY',
+  year: 'YYYY',
 };
 
 const getUnitFromFormat = format =>
@@ -119,9 +120,10 @@ export const getChartDateFormat = (transactions) => {
     && moment(getUnixTimestampFromValue(transactions.slice(-1)[0].timestamp));
 
   if (!first || !last) return '';
-  let format = formats.month;
+  let format = formats.year;
+  if (last.diff(first, 'years') <= 1) format = formats.month;
   if (last.diff(first, 'months') <= 1) format = formats.day;
-  if (last.diff(first, 'days') <= 7) format = formats.hour;
+  if (last.diff(first, 'days') <= 3) format = formats.hour;
   if (last.diff(first, 'hours') <= 12) format = formats.minute;
   if (last.diff(first, 'minutes') <= 5) format = formats.second;
   return format;
