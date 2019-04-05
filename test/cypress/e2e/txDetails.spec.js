@@ -80,7 +80,6 @@ describe('Tx details', () => {
     cy.get(ss.txDate).contains(/20\d\d/);
     cy.get(ss.txAddedVotes).should('not.exist');
     cy.get(ss.txRemovedVotes).should('not.exist');
-    // cy.get(ss.txFee).should('have.text', '25'); // TODO uncomment after bugfix #1424
     cy.get(ss.txConfirmations).contains(/^\d/);
     cy.get(ss.txId).contains(regex.transactionId);
     cy.get(ss.txReference).should('not.exist');

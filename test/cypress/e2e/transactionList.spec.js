@@ -141,7 +141,6 @@ describe('Transaction list filtering', () => {
     cy.get(ss.applyFilters).should('be.disabled');
   });
 
-  // TODO fix the bug
   it.skip('Filter by Message', () => {
     cy.get(ss.messageInputFilter).type('without-initialization');
     cy.get(ss.applyFilters).click();
@@ -154,7 +153,6 @@ describe('Transaction list filtering', () => {
     cy.get(ss.applyFilters).should('be.disabled');
   });
 
-  // TODO fix the bug
   it.skip('Filter by all filters combined, clear all filters', () => {
     cy.get(ss.dateFromInputFilter).type('03.04.19');
     cy.get(ss.dateToInputFilter).type('03.04.19');
