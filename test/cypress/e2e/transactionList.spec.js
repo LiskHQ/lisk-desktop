@@ -87,17 +87,17 @@ describe('Transactions', () => {
   it('Incoming/Outgoing/All filtering works', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(urls.wallet);
-    cy.get(ss.transactionRow).should('have.length', 2);
-    cy.get(ss.filterIncoming).click();
-    cy.get(ss.transactionRow).should('have.length', 1);
-    cy.get(ss.transactionRow).eq(0)
-      .find(ss.transactionAddress).contains(accounts.genesis.address);
-    cy.get(ss.filterAll).click();
-    cy.get(ss.transactionRow).should('have.length', 2);
-    cy.get(ss.filterOutgoing).click();
-    cy.get(ss.transactionRow).should('have.length', 1);
-    cy.get(ss.transactionRow).eq(0)
-      .find(ss.transactionAddress).contains('Second passphrase registration');
+    cy.get(ss.transactionRow).contains(accounts.genesis.address);
+    cy.get(ss.transactionsTable).contains('Second passphrase registration');
+    cy.get(ss.filterIncoming).click().should('have.class', 'active');
+    cy.get(ss.transactionsTable).contains(accounts.genesis.address);
+    cy.get(ss.transactionsTable).contains('Second passphrase registration').should('not.exist');
+    cy.get(ss.filterAll).click().should('have.class', 'active');
+    cy.get(ss.transactionsTable).contains(accounts.genesis.address);
+    cy.get(ss.transactionsTable).contains('Second passphrase registration');
+    cy.get(ss.filterOutgoing).click().should('have.class', 'active');
+    cy.get(ss.transactionsTable).contains(accounts.genesis.address).should('not.exist');
+    cy.get(ss.transactionsTable).contains('Second passphrase registration');
   });
 });
 
@@ -141,9 +141,10 @@ describe('Transaction list filtering', () => {
     cy.get(ss.applyFilters).should('be.disabled');
   });
 
-  it.skip('Filter by Message', () => {
+  it('Filter by Message', () => {
     cy.get(ss.messageInputFilter).type('without-initialization');
     cy.get(ss.applyFilters).click();
+    cy.get(ss.filterAll).click().should('have.class', 'active');
     cy.get(ss.transactionRow).should('have.length', 1);
   });
 
@@ -153,7 +154,7 @@ describe('Transaction list filtering', () => {
     cy.get(ss.applyFilters).should('be.disabled');
   });
 
-  it.skip('Filter by all filters combined, clear all filters', () => {
+  it('Filter by all filters combined, clear all filters', () => {
     cy.get(ss.dateFromInputFilter).type('03.04.19');
     cy.get(ss.dateToInputFilter).type('03.04.19');
     cy.get(ss.amountFromInputFilter).type('80');
