@@ -15,13 +15,18 @@ export const loginType = {
   trezor: 2,
 };
 
-
 export const HW_CMD = {
   GET_PUBLICKEY: 'GET_PUBLICKEY',
   GET_ADDRESS: 'GET_ADDRESS',
   SIGN_MSG: 'SIGN_MSG',
   SIGN_TX: 'SIGN_TX',
 };
+
+export const models = {
+  ledgerNanoS: 'Ledger Nano S',
+  trezorOne: 'Trezor One',
+  trezorModelT: 'Trezor Model T',
+}
 
 export const calculateSecondPassphraseIndex =
   (accountIndex, pin) => accountIndex + parseInt(pin, 10) + hwConstants.secondPassphraseOffset;

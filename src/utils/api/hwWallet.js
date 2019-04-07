@@ -17,7 +17,7 @@ import { getVotes } from './delegate';
 import { getTransactions } from './transactions';
 
 import loginTypes from '../../constants/loginTypes';
-import { HW_MSG } from '../../constants/hwConstants';
+import { HW_MSG, models, loginType } from '../../constants/hwConstants';
 
 const util = require('util');
 
@@ -150,9 +150,9 @@ const platformHendler = async (command) => {
 
   if (platform === PLATFORM_TYPES.BROWSER) { // Used only during dev.
     let resCommand;
-    if (command.hwType === 1) {
+    if (command.hwType === loginType.ledger) {
       resCommand = await executeLedgerCommandForWeb(command);
-    } else if (command.hwType === 2) {
+    } else if (command.hwType === loginType.trezor) {
       resCommand = await executeTrezorCommandForWeb(command);
     } else {
       throw new Error(i18next.t('Hardware Wallet Type not recognized'));
@@ -163,9 +163,9 @@ const platformHendler = async (command) => {
 };
 
 export const getLoginTypeFromDevice = (device) => {
-  if (device.model === 'Ledger Nano S') {
+  if (device.model === models.ledgerNanoS) {
     return loginTypes.ledgerNano;
-  } else if (device.model === 'Trezor One' || device.model === 'Trezor Model T') {
+  } else if (device.model === models.trezorOne || device.model === models.trezorModelT) {
     return loginTypes.trezor;
   }
   return null;

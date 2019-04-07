@@ -9,6 +9,8 @@ import {
   removeConnectedDeviceByID,
   getDeviceById } from './hwManager';
 
+import { models } from '../../src/constants/hwConstants';
+
 const trezor = require('trezor.js'); // eslint-disable-line import/no-extraneous-dependencies
 
 // set to true to see messages
@@ -28,7 +30,7 @@ const createTrezorHWDevice = deviceFeatures =>
   new HWDevice(
     deviceFeatures.device_id,
     deviceFeatures.label,
-    (deviceFeatures.model === '1' ? 'Trezor One' : 'Trezor Model T'),
+    (deviceFeatures.model === '1' ? models.trezorOne : models.trezorModelT),
     null,
   );
 
@@ -86,7 +88,7 @@ const passphraseCallback = (deviceId, callback) => {
       callback(null, passphrase);
       // Save passphrase in case of Trezor One (it asks on every action. Pretty annoying)
       const trezorDevice = getDeviceById(deviceId);
-      if (trezorDevice && trezorDevice.model === 'Trezor One') {
+      if (trezorDevice && trezorDevice.model === models.trezorOne) {
         trezorDevice.pp = passphrase;
         removeConnectedDeviceByID(deviceId);
         addConnectedDevices(trezorDevice);
