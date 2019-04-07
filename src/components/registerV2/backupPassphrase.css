@@ -66,9 +66,10 @@
     flex-direction: column;
     justify-content: center;
     color: var(--color-content-light);
+    cursor: pointer;
+    margin-top: 15px;
 
     &.copied {
-      color: var(--color-primary-light);
       cursor: default;
       text-decoration: none;
     }

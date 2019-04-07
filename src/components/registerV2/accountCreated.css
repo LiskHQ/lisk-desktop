@@ -29,7 +29,7 @@
     font-size: var(--subtitle-font-size);
     font-weight: var(--font-weight-bold);
     letter-spacing: 0.1px;
-    margin: 40px 0;
+    margin: 40px 0 0;
     text-align: center;
   }
 }

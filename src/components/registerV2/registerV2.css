@@ -30,6 +30,13 @@
       width: 100%;
     }
   }
+
+  & .backButton {
+    @mixin contentSmall bold;
+
+    border: none;
+    color: var(--color-ultramarine-blue) !important;
+  }
 }
 
 .stepsLabel {

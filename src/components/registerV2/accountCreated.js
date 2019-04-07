@@ -5,7 +5,6 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '../../constants/routes';
 import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 import AccountVisual from '../accountVisual';
-import check from '../../assets/images/icons-v2/check.svg';
 import registerStyles from './registerV2.css';
 import styles from './accountCreated.css';
 
@@ -14,10 +13,9 @@ const AccountCreated = ({ t, account }) => (
     <span className={`${registerStyles.stepsLabel}`}>{t('Step 4 / 4')}</span>
     <div className={`${registerStyles.titleHolder}`}>
       <h1>
-        <img src={check} />
-        {t('Your account has been created!')}
+        {t('Your Account was created!')}
       </h1>
-      <p>{t('You can now securely manage your LSK tokens.')}</p>
+      <p>{t('Here’s your Address – feel free to share it within your whole network and your Lisk friends.')}</p>
     </div>
 
     <div className={`${styles.accountHolder}`}>
@@ -28,11 +26,12 @@ const AccountCreated = ({ t, account }) => (
           />
       </span>
       <p className={`${styles.address}`}>{account.address}</p>
+      <p className={`${styles.titleHolder}`}>{t('Address')}</p>
     </div>
 
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
       <Link
-        className={`${registerStyles.button} ${grid['col-xs-5']} login-button`}
+        className={`${registerStyles.button} login-button`}
         to={routes.loginV2.path}>
         <PrimaryButtonV2>
           {t('Sign In')}

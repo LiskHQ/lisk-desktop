@@ -96,7 +96,7 @@ class ChooseAvatar extends React.Component {
           }
         </div>
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
-          <Link className={`${registerStyles.button}`} to={routes.splashscreen.path}>
+          <Link className={`${registerStyles.button} ${registerStyles.backButton}`} to={routes.splashscreen.path}>
             <TertiaryButtonV2>
               {t('Go Back')}
             </TertiaryButtonV2>

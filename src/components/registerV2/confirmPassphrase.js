@@ -2,11 +2,9 @@ import React from 'react';
 import fillWordsList from 'bitcore-mnemonic/lib/words/english';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { FontIcon } from '../fontIcon';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import registerStyles from './registerV2.css';
 import styles from './confirmPassphrase.css';
-import lock from '../../assets/images/icons-v2/lock.svg';
 import Options from './confirmPassphraseOptions';
 
 class ConfirmPassphrase extends React.Component {
@@ -126,11 +124,9 @@ class ConfirmPassphrase extends React.Component {
         <span className={`${registerStyles.stepsLabel}`}>{t('Step 3 / 4')}</span>
         <div className={`${registerStyles.titleHolder} ${grid['col-xs-10']}`}>
           <h1>
-            <img src={lock} />
             {t('Confirm your passphrase')}
           </h1>
-          <p>{t('Please select the correct words to complete your passphrase.')}</p>
-          <p>{t('These were provided in the previous step.')}</p>
+          <p>{t('Choose the missing words from your passphrase you’ve recieved in the previous step to confirm.')}</p>
         </div>
 
         <div className={`${styles.confirmHolder} passphrase-holder`}>
@@ -158,19 +154,19 @@ class ConfirmPassphrase extends React.Component {
 
 
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
-          <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
-            <SecondaryButtonV2 onClick={prevStep}>
-              <FontIcon className={registerStyles.icon}>arrow-left</FontIcon>
+          <span className={`${registerStyles.button}`}>
+            <SecondaryButtonV2
+              className={registerStyles.backButton}
+              onClick={prevStep}>
               {t('Go Back')}
             </SecondaryButtonV2>
           </span>
-          <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
+          <span className={`${registerStyles.button}`}>
             <PrimaryButtonV2
               className={'passphrase-is-correct-button'}
               onClick={() => this.handleConfirm(this.verifyChoices())}
               disabled={!this.enableConfirmButton()}>
               {t('Confirm')}
-              <FontIcon className={registerStyles.icon}>arrow-right</FontIcon>
             </PrimaryButtonV2>
           </span>
         </div>

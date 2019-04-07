@@ -140,7 +140,7 @@ class BackupPassphrase extends React.Component {
         </div>
 
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
-          <span className={`${registerStyles.button}`}>
+          <span className={`${registerStyles.button} ${registerStyles.backButton}`}>
             <TertiaryButtonV2 onClick={prevStep}>
               {t('Go Back')}
             </TertiaryButtonV2>

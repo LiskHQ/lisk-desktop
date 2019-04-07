@@ -1,8 +1,10 @@
 @import './../app/variablesV2.css';
+@import './../app/mixins.css';
 
 :root {
   --word-choice-height: 36px;
-  --checkmark-size: 24px;
+  --checkmark-size: 16px;
+  --font-size-checkbox: 11px;
 }
 
 @keyframes optionsAppear {
@@ -32,10 +34,9 @@
   width: 100%;
 
   & .word {
-    color: var(--color-content);
-    font-family: var(--heading-font);
-    font-size: inherit;
-    font-weight: var(--font-weight-bold);
+    @mixin headingSmall;
+
+    color: var(--color-maastricht-blue);
     letter-spacing: 0.1px;
     line-height: var(--word-choice-height);
     text-align: center;
@@ -49,11 +50,11 @@
     & .answer {
       height: var(--word-choice-height);
       margin: 8px 0;
-      min-width: 90px;
+      width: 100px;
       position: relative;
 
       &::before {
-        border: 1px dashed var(--color-content);
+        background-color: var(--color-white);
         border-radius: 5px;
         box-sizing: border-box;
         content: '';
@@ -67,31 +68,31 @@
 
     & .checkmark {
       align-items: center;
-      background-color: var(--color-white);
-      border-radius: 50%;
+      background-color: var(--color-ultramarine-blue);
+      color: var(--color-white);
+      border-radius: var(--border-radius-standard);
       box-shadow: var(--box-shadow-standard);
       display: flex;
       height: var(--checkmark-size);
       justify-content: center;
       position: absolute;
-      right: calc(var(--checkmark-size) / -2);
-      top: calc(var(--checkmark-size) / -2);
+      right: -5px;
+      top: -5px;
       transition: transform var(--animation-speed-fast) linear;
       transform: scale(0);
       width: var(--checkmark-size);
 
       & > span {
-        font-size: var(--paragraph-font-size-s);
+        font-size: var(--font-size-checkbox);
       }
     }
 
     & .choice {
       align-items: center;
       background-color: var(--color-white);
-      border-radius: var(--border-radius-standard);
       box-shadow: var(--box-shadow-standard);
       box-sizing: border-box;
-      color: var(--color-content);
+      color: var(--color-ultramarine-blue);
       cursor: pointer;
       display: flex;
       height: 100%;
@@ -126,9 +127,9 @@
 
   & .hasErrors {
     & .choice {
-      background-color: var(--color-error);
+      border: solid 1px var(--color-error);
       box-shadow: var(--box-shadow-standard);
-      color: var(--color-white);
+      color: var(--color-error);
       cursor: initial;
       transition: background var(--animation-speed-fast) linear var(--animation-delay-standard), box-shadow var(--animation-speed-fast) linear var(--animation-delay-standard);
     }
@@ -151,6 +152,7 @@
   }
 
   & .option {
+    width: 100px;
     animation-name: optionsAppear;
     animation-duration: var(--animation-speed-standard);
     animation-fill-mode: forwards;
@@ -161,11 +163,14 @@
     transform: scale(0);
 
     & > button {
-      font-family: var(--heading-font);
-      font-size: inherit;
+      @mixin contentSmall bold;
+
       min-height: var(--word-choice-height);
       height: var(--word-choice-height);
       width: 100%;
+      padding: 0px;
+      background-color: var(--color-white) !important;
+      color: var(--color-ultramarine-blue) !important;
     }
   }
 
