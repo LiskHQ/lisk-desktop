@@ -44,7 +44,7 @@
 }
 
 .contentHolder {
-  margin-top: 24px;
+  margin-top: 30px;
 
   & > div {
     display: none;

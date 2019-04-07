@@ -55,26 +55,26 @@ class TransactionRowV2 extends React.Component {
     const { isConfirmed } = this.state;
     return (
       <TableRow className={`${grid.row} ${styles.row} ${!hasConfirmations ? styles.pending : ''} transactions-row`} onClick={() => onClick(props)}>
-        <div className={`${grid['col-xs-6']} ${grid['col-sm-4']} ${grid['col-lg-3']} transactions-cell`}>
+        <div className={`${grid['col-sm-4']} ${grid['col-lg-3']} transactions-cell`}>
           <TransactionTypeV2 {...props.value}
             followedAccounts={props.followedAccounts}
             address={props.address} />
         </div>
-          <div className={`${styles.hiddenXs} ${grid['col-sm-3']} ${grid['col-lg-3']} transactions-cell`}>
+          <div className={`${grid['col-sm-3']} ${grid['col-lg-3']} transactions-cell`}>
             <TransactionDetailV2
               t={props.t}
               transaction={props.value} />
           </div>
-        <div className={`${styles.hiddenXs} ${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
+        <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
           <div className={`${styles.status} ${!isConfirmed ? styles.showSpinner : styles.showDate}`}>
             <SpinnerV2 completed={hasConfirmations} label={props.t('Pending...')} />
             <DateTimeFromTimestamp time={props.value.timestamp} />
           </div>
         </div>
-        <div className={`${styles.hiddenXs} ${grid['col-sm-1']} ${grid['col-lg-2']} transactions-cell`}>
+        <div className={`${grid['col-sm-1']} ${grid['col-lg-2']} transactions-cell`}>
           <LiskAmount val={props.value.fee}/> {props.t('LSK')}
         </div>
-        <div className={`${grid['col-xs-6']} ${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
+        <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
           <AmountV2 {...props}/>
         </div>
       </TableRow>

@@ -1,6 +1,9 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import { InputV2 } from '../../toolbox/inputsV2';
+import Feedback from '../../toolbox/feedback/feedback';
+import SpinnerV2 from '../../spinnerV2/spinnerV2';
+import svg from '../../../utils/svgIcons';
 import styles from './filters.css';
 
 class AmountFieldGroup extends React.Component {
@@ -12,16 +15,21 @@ class AmountFieldGroup extends React.Component {
         amountTo: {
           error: false,
           value: '',
+          loading: false,
         },
         amountFrom: {
           error: false,
           value: '',
+          loading: false,
         },
       },
       feedback: '',
     };
 
+    this.timeout = null;
+
     this.handleFieldChange = this.handleFieldChange.bind(this);
+    this.generateField = this.generateField.bind(this);
   }
 
   validateAmountField(fieldsObj) {
@@ -45,9 +53,9 @@ class AmountFieldGroup extends React.Component {
       return {
         ...acc,
         [field]: {
-          ...fieldsObj[field],
           value,
           error,
+          loading: false,
         },
       };
     }, {});
@@ -61,44 +69,72 @@ class AmountFieldGroup extends React.Component {
     let value = /^\./.test(target.value) ? `0${target.value}` : target.value;
     value = value.replace(/[^\d.]/g, '');
 
-    const fieldsObj = Object.keys(filters).filter(f => f.includes('amount')).reduce((acc, filter) =>
+    const fieldsObj = Object.keys(filters).reduce((acc, filter) =>
       ({ ...acc, [filter]: { value: filters[filter] } }), {});
 
-    this.validateAmountField({
+    const fields = {
       ...fieldsObj,
-      [target.name]: { value },
-    });
+      [target.name]: { value, loading: true },
+    };
+
+    this.setState({ fields });
+
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.validateAmountField(fields);
+    }, 300);
+
+    this.props.updateCustomFilters(fields);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
+
+  generateField(data) {
+    const { filters, handleKeyPress } = this.props;
+    const { fields } = this.state;
+
+    return (
+      <label className={styles.fieldHolder}>
+        <InputV2
+          autoComplete={'off'}
+          onChange={this.handleFieldChange}
+          name={data.name}
+          value={filters[data.name]}
+          placeholder={data.placeholder}
+          onKeyDown={handleKeyPress}
+          className={`${styles.input} ${fields[data.name].error ? 'error' : ''} ${data.name}Input`}
+        />
+        <SpinnerV2
+          className={`${styles.status} ${fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
+        />
+        <img
+          className={`${styles.status} ${!fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
+          src={ fields[data.name].error ? svg.alert_icon : svg.ok_icon}
+        />
+      </label>
+    );
   }
 
   render() {
-    const { filters, handleKeyPress, t } = this.props;
-    const { fields } = this.state;
+    const { t } = this.props;
 
     return (
       <div className={styles.fieldGroup}>
         <span className={styles.fieldLabel}>{t('Amount')}</span>
         <div className={styles.fieldRow}>
-          <InputV2
-            autoComplete={'off'}
-            onChange={this.handleFieldChange}
-            name='amountFrom'
-            value={filters.amountFrom}
-            placeholder={t('Min')}
-            onKeyDown={handleKeyPress}
-            className={`${styles.input} ${fields.amountFrom.error ? 'error' : ''} amountFromInput`} />
-          <span>-</span>
-          <InputV2
-            autoComplete={'off'}
-            onChange={this.handleFieldChange}
-            name='amountTo'
-            value={filters.amountTo}
-            placeholder={t('Max')}
-            onKeyDown={handleKeyPress}
-            className={`${styles.input} ${fields.amountTo.error ? 'error' : ''} amountToInput`} />
+          { this.generateField({ name: 'amountFrom', placeholder: t('Min') }) }
+          <span className={styles.separator} />
+          { this.generateField({ name: 'amountTo', placeholder: t('Max') }) }
         </div>
-        <span className={`${styles.feedback} ${this.state.feedback ? styles.show : ''}`}>
-          {this.state.feedback}
-        </span>
+        <Feedback
+          className={styles.feedback}
+          show={!!this.state.feedback}
+          status={this.state.feedback ? 'error' : ''}
+          showIcon={false}>
+          { this.state.feedback }
+        </Feedback>
       </div>
     );
   }

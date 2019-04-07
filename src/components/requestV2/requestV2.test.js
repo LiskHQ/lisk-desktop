@@ -78,10 +78,10 @@ describe('RequestV2', () => {
     it('Should show error feedback if letters inserted', () => {
       const evt = { target: { name: 'amount', value: 'abc' } };
       const amountField = wrapper.find('.fieldGroup').at(0);
-      expect(amountField.find('.feedback')).to.not.have.className('error');
+      expect(amountField.find('.feedback').first()).to.not.have.className('error');
       amountField.find('InputV2').simulate('change', evt);
       wrapper.update();
-      expect(amountField.find('.feedback')).to.have.className('error');
+      expect(amountField.find('.feedback').first()).to.have.className('error');
     });
 
     it('Should show error feedback if ending in . or multiples .', () => {
@@ -91,13 +91,13 @@ describe('RequestV2', () => {
       const amountField = wrapper.find('.fieldGroup').at(0);
       amountField.find('InputV2').simulate('change', endingDotEvt);
       wrapper.update();
-      expect(amountField.find('.feedback')).to.have.className('error');
+      expect(amountField.find('.feedback').first()).to.have.className('error');
       amountField.find('InputV2').simulate('change', evt);
       wrapper.update();
-      expect(amountField.find('.feedback')).to.not.have.className('error');
+      expect(amountField.find('.feedback').first()).to.not.have.className('error');
       amountField.find('InputV2').simulate('change', multipleDotsEvt);
       wrapper.update();
-      expect(amountField.find('.feedback')).to.have.className('error');
+      expect(amountField.find('.feedback').first()).to.have.className('error');
     });
   });
 
@@ -105,16 +105,16 @@ describe('RequestV2', () => {
     it('Should show feedback if some text inserted and hide if empty', () => {
       const referenceField = wrapper.find('.fieldGroup').at(1);
       let evt = { target: { name: 'reference', value: 'test' } };
-      expect(referenceField.find('.feedback')).to.not.have.className('show');
+      expect(referenceField.find('.feedback').first()).to.not.have.className('show');
       referenceField.find('AutoresizeTextarea').simulate('change', evt);
       wrapper.update();
-      expect(referenceField.find('.feedback')).to.have.className('show');
-      expect(referenceField.find('.feedback')).to.not.have.className('error');
+      expect(referenceField.find('.feedback').first()).to.have.className('show');
+      expect(referenceField.find('.feedback').first()).to.not.have.className('error');
 
       evt = { target: { name: 'reference', value: '' } };
       referenceField.find('AutoresizeTextarea').simulate('change', evt);
       wrapper.update();
-      expect(referenceField.find('.feedback')).to.not.have.className('show');
+      expect(referenceField.find('.feedback').first()).to.not.have.className('show');
     });
 
     it('Should show error feedback over limit of characters', () => {
@@ -127,8 +127,8 @@ describe('RequestV2', () => {
       };
       referenceField.find('AutoresizeTextarea').simulate('change', evt);
       wrapper.update();
-      expect(referenceField.find('.feedback')).to.have.className('show');
-      expect(referenceField.find('.feedback')).to.have.className('error');
+      expect(referenceField.find('.feedback').first()).to.have.className('show');
+      expect(referenceField.find('.feedback').first()).to.have.className('error');
     });
   });
 

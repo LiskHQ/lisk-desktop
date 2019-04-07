@@ -16,11 +16,7 @@ import settingsIcon from '../assets/images/icons-v2/settings.svg';
 import settingsActiveIcon from '../assets/images/icons-v2/settings-active.svg';
 import logoutIcon from '../assets/images/icons-v2/logout.svg';
 import logoutActiveIcon from '../assets/images/icons-v2/logout-active.svg';
-import iconChart from '../assets/images/icons-v2/icon-chart.svg';
-import iconCal from '../assets/images/icons-v2/icon-calendar.svg';
-import iconLastTx from '../assets/images/icons-v2/icon-last-tx.svg';
-import txIncoming from '../assets/images/icons-v2/tx-incoming.svg';
-import txOutgoing from '../assets/images/icons-v2/tx-outgoing.svg';
+import iconWalletDetails from '../assets/images/icons-v2/icon-wallet-details.svg';
 import txDelegate from '../assets/images/icons-v2/tx-delegate.svg';
 import txVote from '../assets/images/icons-v2/tx-vote.svg';
 import tx2ndPassphrase from '../assets/images/icons-v2/tx-2nd-passphrase.svg';
@@ -37,6 +33,7 @@ import backArrowActiveIcon from '../assets/images/icons-v2/arrow-left-active.svg
 import backArrowInactiveIcon from '../assets/images/icons-v2/arrow-left-inactive.svg';
 import fowardArrowActiveIcon from '../assets/images/icons-v2/arrow-right-active.svg';
 import fowardArrowInactiveIcon from '../assets/images/icons-v2/arrow-right-inactive.svg';
+import iconFilter from '../assets/images/icons-v2/icon-filter.svg';
 import questionIcon from '../assets/images/icons-v2/ico-question.svg';
 
 export default {
@@ -52,9 +49,7 @@ export default {
   feedback_icon: Feedback,
   help_icon: Help,
   icoLink,
-  icon_cal: iconCal,
-  icon_chart: iconChart,
-  icon_last_tx: iconLastTx,
+  iconWalletDetails,
   key_icon: Key,
   lock_icon: Lock,
   logout_active_icon: logoutActiveIcon,
@@ -73,11 +68,10 @@ export default {
   tx2ndPassphrase,
   txDefault,
   txDelegate,
-  txIncoming,
-  txOutgoing,
   txSendArrow,
   txVote,
   wallet_active_icon: walletActiveIcon,
   wallet_icon: walletIcon,
+  iconFilter,
   questionIcon,
 };

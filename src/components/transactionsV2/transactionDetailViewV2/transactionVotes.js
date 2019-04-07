@@ -11,14 +11,14 @@ const transactionVotes = ({ votes, t }) => {
     {votes.added ?
       <React.Fragment>
         <span className={styles.label}>
-          {t('Added Votes')} <span className={styles.count}>{votes.added.length}</span>
+          {t('Added Votes')} ({votes.added.length})
         </span>
         <div className={`${styles.votesContainer} ${styles.added} tx-added-votes`}>
           {votes.added.slice(0).sort((a, b) => a.rank - b.rank).map((vote, voteKey) => (
             <Link key={voteKey}
               to={`${accountPath}/${vote.account.address}`}
               className={`${styles.voteTag} voter-address`}>
-              <span className={styles.rank}>{vote.rank}</span>
+              <span className={styles.rank}>#{vote.rank}</span>
               <span className={styles.username}>{vote.username}</span>
             </Link>
           ))}
@@ -27,14 +27,14 @@ const transactionVotes = ({ votes, t }) => {
     {votes.deleted ?
       <React.Fragment>
         <span className={styles.label}>
-          {t('Removed Votes')} <span className={styles.count}>{votes.deleted.length}</span>
+          {t('Removed Votes')} ({votes.deleted.length})
         </span>
         <div className={`${styles.votesContainer} ${styles.deleted} tx-removed-votes`}>
           {votes.deleted.slice(0).sort((a, b) => a.rank - b.rank).map((vote, voteKey) => (
             <Link key={voteKey}
               to={`${accountPath}/${vote.account.address}`}
               className={`${styles.voteTag} voter-address`}>
-              <span className={styles.rank}>{vote.rank}</span>
+              <span className={styles.rank}>#{vote.rank}</span>
               <span className={styles.username}>{vote.username}</span>
             </Link>
           ))}

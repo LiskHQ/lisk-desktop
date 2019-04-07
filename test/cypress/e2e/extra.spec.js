@@ -1,17 +1,35 @@
-import accounts from '../../constants/accounts';
-import networks from '../../constants/networks';
-import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
+import accounts from '../../constants/accounts';
+import urls from '../../constants/urls';
+import networks from '../../constants/networks';
 
 describe('Extra', () => {
-  it('Sidechains page opens by sidebar button', () => {
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.sidechains);
-    cy.get(ss.app).contains('Coming soon.');
-  });
-
   it('Page not found page', () => {
     cy.visit('/sdk');
     cy.get(ss.app).contains('Page not found.');
+  });
+
+  // TODO unskip after fix 1901
+  xit('Navigation buttons', () => {
+    cy.addObjectToLocalStorage('settings', 'advancedMode', true);
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.dashboard);
+    cy.get(ss.navigationBtnBack).should('be.disabled');
+    cy.get(ss.navigationBtnForward).should('be.disabled');
+    cy.get(ss.topBarMenuWalletBtn).click();
+    cy.get(ss.transactionRow).eq(1).click();
+    cy.get(ss.txSenderAddress).click();
+    cy.get(ss.sidebarMenuDelegatesBtn).click();
+    cy.get(ss.navigationBtnBack).click();
+    cy.get(ss.app).contains('My Wallet Details');
+    cy.get(ss.navigationBtnForward).click();
+    cy.get(ss.app).contains('Delegate List');
+    cy.get(ss.navigationBtnBack).click();
+    cy.get(ss.navigationBtnBack).click();
+    cy.get(ss.app).contains('Copy transaction link');
+    cy.get(ss.navigationBtnBack).click();
+    cy.get(ss.app).contains('My Wallet Details');
+    cy.get(ss.navigationBtnBack).click();
+    cy.get(ss.app).contains('News');
   });
 });

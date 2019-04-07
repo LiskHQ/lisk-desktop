@@ -2,7 +2,7 @@
 
 .wrapper {
   display: flex;
-  height: 330px;
+  height: calc(100% - 12px);
   margin-bottom: 12px;
   overflow: initial;
   padding: 0;

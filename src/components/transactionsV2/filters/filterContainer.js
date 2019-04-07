@@ -3,12 +3,11 @@ import { translate } from 'react-i18next';
 import moment from 'moment';
 import keyCodes from '../../../constants/keyCodes';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
-import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
+import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import DateFieldGroup from './dateFieldGroup';
 import MessageFieldGroup from './messageFieldGroup';
-
+import svg from '../../../utils/svgIcons';
 import styles from './filterContainer.css';
-import transactionsStyles from '../transactionsV2.css';
 import AmountFieldGroup from './amountFieldGroup';
 
 class filterContainer extends React.Component {
@@ -17,7 +16,7 @@ class filterContainer extends React.Component {
 
     this.state = {
       showFilters: false,
-      hasErrors: false,
+      hasErrors: true,
     };
 
     this.toggleFilters = this.toggleFilters.bind(this);
@@ -90,43 +89,49 @@ class filterContainer extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, customFilters } = this.props;
+    const {
+      dateFrom,
+      dateTo,
+      amountFrom,
+      amountTo,
+      message,
+    } = customFilters;
 
     return (
-      <div className={`${transactionsStyles.item}`}>
-        <div
-          className={`${styles.filterTransactions} filterTransactions`}
+      <React.Fragment>
+        <SecondaryButtonV2
+          className={`${styles.filterTransactions} filterTransactions extra-small`}
           onClick={this.toggleFilters}>
             {t('Filter Transactions')}
-        </div>
+            <img className={'button-icon'} src={svg.iconFilter} />
+        </SecondaryButtonV2>
         <div className={styles.dropdownContainer}>
           <DropdownV2 className={styles.bigDropdown} showDropdown={this.state.showFilters}>
             <div
-              className={`${styles.container} container`}
+              className={`${styles.container} filter-container`}
               ref={(node) => { this.dropdownRef = node; }}>
               <DateFieldGroup
-                filters={this.props.customFilters}
+                filters={{ dateFrom, dateTo }}
                 updateCustomFilters={this.updateCustomFilters}
                 handleKeyPress={this.handleKey} />
               <AmountFieldGroup
-                filters={this.props.customFilters}
+                filters={{ amountFrom, amountTo }}
                 updateCustomFilters={this.updateCustomFilters}
                 handleKeyPress={this.handleKey} />
               <MessageFieldGroup
-                filters={this.props.customFilters}
+                filters={{ message }}
                 updateCustomFilters={this.updateCustomFilters}
                 handleKeyPress={this.handleKey} />
-              <div className={styles.buttonContainer}>
-                <PrimaryButtonV2
-                  disabled={this.state.hasErrors}
-                  theme={styles}
-                  className='saveButton'
-                  onClick={this.saveFilters}>{this.props.t('Apply Filters')}</PrimaryButtonV2>
-              </div>
+              <PrimaryButtonV2
+                disabled={this.state.hasErrors}
+                className='saveButton small'
+                onClick={this.saveFilters}>{this.props.t('Apply Filters')}</PrimaryButtonV2>
             </div>
           </DropdownV2>
         </div>
-      </div>);
+      </React.Fragment>
+    );
   }
 }
 

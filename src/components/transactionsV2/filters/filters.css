@@ -1,16 +1,50 @@
 @import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
 
 .fieldGroup {
   display: flex;
   flex-direction: column;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 
   & .fieldLabel {
-    color: var(--color-content-light);
-    font-family: var(--heading-font);
-    font-size: var(--paragraph-font-size-l);
-    font-weight: var(--font-weight-bold);
+    @mixin contentNormal bold;
+
+    color: var(--color-maastricht-blue);
     margin-bottom: 8px;
+  }
+
+  & .fieldHolder {
+    align-items: center;
+    display: flex;
+    position: relative;
+    width: 100%;
+
+    & .byteCounter {
+      bottom: 4px;
+      opacity: 0;
+      position: absolute;
+      right: 8px;
+      transition: opacity var(--animation-speed-fast) linear;
+    }
+
+    &:global(.reference-field) {
+      & .status {
+        bottom: 10px;
+      }
+    }
+
+    & .status {
+      color: var(--color-ultramarine-blue);
+      opacity: 0;
+      position: absolute;
+      right: 10px;
+      transition: opacity var(--animation-speed-fast) linear;
+
+      &.show {
+        opacity: 1;
+        transition: opacity var(--animation-speed-fast) linear var(--animation-delay-standard);
+      }
+    }
   }
 
   & .fieldRow {
@@ -18,48 +52,44 @@
     display: flex;
     flex-wrap: nowrap;
 
-    & > span {
-      color: var(--color-dark-gray);
-      font-family: var(--content-font);
-      font-size: var(--button-font-size-s);
-      font-weight: var(--font-weight-semi-bold);
-      letter-spacing: 0.04px;
-      line-height: 22px;
+    & > .separator {
+      background-color: var(--color-platinum);
+      display: block;
+      flex-shrink: 0;
+      height: 1px;
       margin: 0 15px;
+      width: 10px;
     }
 
     & textarea {
-      min-height: 36px;
+      min-height: 32px;
       overflow: hidden;
     }
+  }
 
-    & .input {
-      font-size: var(--button-font-size-s);
-      height: 36px;
-      line-height: 1.83;
-      min-height: 36px;
-      resize: none;
+  & .input {
+    @mixin contentNormal;
+
+    height: 32px;
+    min-height: 32px;
+    padding-right: 30px;
+    resize: none;
+
+    &:focus {
+      & + .byteCounter {
+        opacity: 1;
+
+        & ~ .status {
+          opacity: 0;
+        }
+      }
     }
   }
 
   & .feedback {
-    color: var(--color-error);
-    display: block;
-    font-family: var(--content-font);
-    font-size: var(--button-font-size-s);
-    font-weight: var(--font-weight-semi-bold);
-    line-height: 1.83;
     margin-top: 8px;
-    max-height: 0;
-    opacity: 0;
-    text-align: right;
-    transition: opacity var(--animation-speed-fast) linear;
-    width: 100%;
-
-    &.show {
-      max-height: 100%;
-      opacity: 1;
-    }
+    padding-left: 8px;
+    padding-right: 8px;
   }
 }
 

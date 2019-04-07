@@ -59,16 +59,18 @@ class TransactionsOverviewV2 extends React.Component {
         <div className={styles.container}>
           <ul className={`${styles.txFilters}`}>
             {filters.map((filter, i) => (
-              <li key={i} className={`transaction-filter-item ${filter.className} ${this.isActiveFilter(filter.value) ? styles.active : ''}`}
+              <li key={i} className={`transaction-filter-item ${filter.className} ${this.isActiveFilter(filter.value) ? `${styles.active} active` : ''}`}
                 onClick={() => this.setTransactionsFilter(filter.value)}>
                 {filter.name}
               </li>
             ))}
           </ul>
-          <FilterContainer
-            updateCustomFilters={this.props.updateCustomFilters}
-            saveFilters={this.props.saveFilters}
-            customFilters={this.props.customFilters} />
+          <div className={styles.items}>
+            <FilterContainer
+              updateCustomFilters={this.props.updateCustomFilters}
+              saveFilters={this.props.saveFilters}
+              customFilters={this.props.customFilters} />
+          </div>
         </div>
         {this.props.activeCustomFilters &&
           Object.values(this.props.activeCustomFilters).find(filter => filter) ? <FilterBar

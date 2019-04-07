@@ -11,6 +11,8 @@ import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
 import { fromRawLsk } from '../../../utils/lsk';
 import fees from '../../../constants/fees';
+import Feedback from '../../toolbox/feedback/feedback';
+import CircularProgress from '../../toolbox/circularProgress/circularProgress';
 import styles from './form.css';
 import Piwik from '../../../utils/piwik';
 
@@ -43,7 +45,8 @@ class Form extends React.Component {
         reference: {
           error: false,
           value: '',
-          feedback: '',
+          feedback: props.t('64 bytes left'),
+          isActive: false,
         },
       },
     };
@@ -60,6 +63,7 @@ class Form extends React.Component {
     this.validateAmountAndReference = this.validateAmountAndReference.bind(this);
     this.validateBookmark = this.validateBookmark.bind(this);
     this.checkIfBoormakedAccount = this.checkIfBoormakedAccount.bind(this);
+    this.setReferenceActive = this.setReferenceActive.bind(this);
   }
 
   componentDidMount() {
@@ -116,15 +120,15 @@ class Form extends React.Component {
   }
 
   onInputChange({ target }) {
-    this.setState({
+    this.setState(prevState => ({
       fields: {
-        ...this.state.fields,
+        ...prevState.fields,
         [target.name]: {
-          ...this.state.fields[target.name],
+          ...prevState.fields[target.name],
           value: target.value,
         },
       },
-    });
+    }));
   }
 
   // eslint-disable-next-line max-statements
@@ -254,15 +258,10 @@ class Form extends React.Component {
     }
 
     // istanbul ignore else
-    if (name === 'reference' && value.length > 0) {
+    if (name === 'reference') {
       const byteCount = encodeURI(value).split(/%..|./).length - 1;
       error = byteCount > messageMaxLength;
-      feedback = error
-        ? t('{{length}} extra bytes', { length: byteCount - messageMaxLength })
-        : t('{{length}} out of {{total}} bytes left', {
-          length: messageMaxLength - byteCount,
-          total: messageMaxLength,
-        });
+      feedback = t('{{length}} bytes left', { length: messageMaxLength - byteCount });
     }
 
     this.setState(prevState => ({
@@ -281,13 +280,17 @@ class Form extends React.Component {
   onAmountOrReferenceChange({ target }) {
     clearTimeout(this.loaderTimeout);
 
-    if (target.name === 'amount') this.setState({ isAmountLoading: true });
-    if (target.name === 'reference') this.setState({ isReferenceLoading: true });
+    if (target.name === 'amount') {
+      this.setState({ isAmountLoading: true });
+      this.loaderTimeout = setTimeout(() => {
+        this.setState({ isAmountLoading: false });
+        this.validateAmountAndReference(target.name, target.value);
+      }, 300);
+    }
 
-    this.loaderTimeout = setTimeout(() => {
-      this.setState({ isAmountLoading: false, isReferenceLoading: false });
+    if (target.name === 'reference') {
       this.validateAmountAndReference(target.name, target.value);
-    }, 300);
+    }
 
     this.onInputChange({ target });
   }
@@ -298,6 +301,18 @@ class Form extends React.Component {
     this.props.nextStep({
       fields: { ...this.state.fields },
     });
+  }
+
+  setReferenceActive(isActive) {
+    this.setState(prevState => ({
+      fields: {
+        ...prevState.fields,
+        reference: {
+          ...prevState.fields.reference,
+          isActive,
+        },
+      },
+    }));
   }
 
   // eslint-disable-next-line complexity
@@ -322,7 +337,7 @@ class Form extends React.Component {
               validateBookmark={this.validateBookmark}
               followedAccounts={this.props.followedAccounts}
               onChange={this.onInputChange}
-              placeholder={this.props.t('e.g. 1234523423L or John Doe')}
+              placeholder={this.props.t('Insert public address or a name')}
               recipient={fields.recipient}
               showSuggestions={fields.recipient.showSuggestions}
               onSelectedAccount={this.onSelectedAccount}
@@ -337,7 +352,7 @@ class Form extends React.Component {
                 onChange={this.onAmountOrReferenceChange}
                 name='amount'
                 value={fields.amount.value}
-                placeholder={this.props.t('e.g. 12345.6')}
+                placeholder={this.props.t('Amount LSK')}
                 className={`${styles.input} ${fields.amount.error ? 'error' : ''}`} />
               <ConverterV2
                 className={styles.converter}
@@ -349,11 +364,17 @@ class Form extends React.Component {
                 src={ fields.amount.error ? svg.alert_icon : svg.ok_icon}
               />
             </span>
-            <span className={`${styles.feedback} ${fields.amount.error ? 'error' : ''} ${fields.amount.feedback ? styles.show : ''} amount-feedback`}>
+
+            <Feedback
+              show={fields.amount.error}
+              status={'error'}
+              className={`${styles.feedbackMessage} amount-feedback`}
+              showIcon={false}>
               {fields.amount.feedback}
-            </span>
+            </Feedback>
+
             <span className={styles.amountHint}>
-              {this.props.t('+{{fee}} LSK transaction fee', { fee: fromRawLsk(fees.send) })}
+              {this.props.t('+ Transaction fee {{fee}} LSK', { fee: fromRawLsk(fees.send) })}
               <Tooltip
                 className={'showOnTop'}
                 title={this.props.t('Transaction fee')}
@@ -365,7 +386,7 @@ class Form extends React.Component {
                   </a>
                 }
               >
-                <p>
+                <p className={styles.tooltipText}>
                 {
                   this.props.t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
                   Such operations require hardware resources and because of that there is a small fee for processing those.`)
@@ -382,17 +403,39 @@ class Form extends React.Component {
                 maxLength={100}
                 spellCheck={false}
                 onChange={this.onAmountOrReferenceChange}
+                onFocus={() => this.setReferenceActive(true)}
+                onBlur={() => this.setReferenceActive(false)}
                 name='reference'
                 value={fields.reference.value}
                 placeholder={this.props.t('Write message')}
                 className={`${styles.textarea} ${fields.reference.error ? 'error' : ''} message`} />
-              <SpinnerV2 className={`${styles.spinner} ${this.state.isReferenceLoading && fields.reference.value ? styles.show : styles.hide}`}/>
+              <CircularProgress max={64} value={byteCount} className={`${styles.byteCounter} ${fields.reference.isActive ? styles.show : styles.hide}`} />
               <img
-                className={`${styles.status} ${!this.state.isReferenceLoading && fields.reference.value ? styles.show : styles.hide}`}
-                src={ fields.reference.error ? svg.alert_icon : svg.ok_icon} />
+                className={`${styles.status} ${styles.referenceStatus} ${fields.reference.isActive || !fields.reference.value ? styles.hide : styles.show}`}
+                src={ fields.reference.error ? svg.alert_icon : svg.ok_icon}
+              />
             </span>
-            <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${fields.reference.feedback ? styles.show : ''}`}>
+            <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${fields.reference.isActive || fields.reference.value ? styles.show : ''}`}>
               {fields.reference.feedback}
+              <Tooltip
+                className={'showOnTop'}
+                title={this.props.t('Bytes counter')}
+                footer={
+                  <a href={links.transactionFee}
+                    rel="noopener noreferrer"
+                    target="_blank">
+                      {this.props.t('Read More')}
+                  </a>
+                }
+              >
+                <p className={styles.tooltipText}>
+                {
+                  this.props.t(`LISK Hub counts your message by bytes so keep in mind 
+                  that the length on your message may vary in different languages. 
+                  Different characters may consume different amount of bytes space.`)
+                }
+                </p>
+              </Tooltip>
             </span>
           </label>
         </div>

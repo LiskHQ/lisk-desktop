@@ -1,9 +1,10 @@
 @import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
 
 .calendarWrapper {
   display: flex;
   flex-direction: column;
-  width: 345px;
+  width: 270px;
 
   & .hidden {
     display: none;
@@ -11,10 +12,9 @@
 
   & .calendarHeader {
     align-content: center;
-    color: var(--color-content-light);
     display: flex;
     justify-content: space-evenly;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
 
     & .navigationButton {
       align-items: center;
@@ -23,32 +23,15 @@
       height: 20px;
       justify-content: center;
       width: 20px;
-
-      &::before {
-        border: 6px solid transparent;
-        content: '';
-      }
-
-      &:first-child::before {
-        border-left: 0;
-        border-right-color: currentColor;
-      }
-
-      &:last-child::before {
-        border-left-color: currentColor;
-        border-right: 0;
-      }
     }
 
     & .viewName {
+      @mixin contentSmall bold;
+
       align-items: center;
-      color: var(--color-content-light);
+      color: var(--color-maastricht-blue);
       display: flex;
-      font-family: var(--content-font);
-      font-size: var(--subtitle-font-size-s);
-      font-weight: var(--font-weight-semi-bold);
       justify-content: center;
-      letter-spacing: -0.1px;
       transition: color var(--animation-speed-fast) linear;
       width: 120px;
 
@@ -66,7 +49,7 @@
 .contentWrapper {
   display: flex;
   flex-direction: column;
-  height: 200px;
+  height: 170px;
 
   & .monthHeader {
     box-sizing: border-box;
@@ -74,15 +57,14 @@
     margin-bottom: 14px;
 
     & .weekday {
+      @mixin contentSmallest;
+
       align-items: center;
       box-sizing: border-box;
-      color: var(--color-primary-standard);
+      color: var(--color-blue-gray);
       display: flex;
       flex-grow: 1;
       flex-basis: calc(100% / 7);
-      font-family: var(--content-font);
-      font-size: var(--font-size-small);
-      font-weight: var(--font-weight-semi-bold);
       height: 16px;
       justify-content: center;
       text-align: center;
@@ -91,16 +73,15 @@
   }
 
   & .item {
+    @mixin contentNormal;
+
     align-items: center;
     background: transparent;
     border: 0;
     box-sizing: border-box;
-    color: var(--color-content-light);
+    color: var(--color-maastricht-blue);
     display: flex;
     flex-grow: 1;
-    font-size: var(--paragraph-font-size-s);
-    font-family: var(--content-font);
-    font-weight: var(--font-weight-semi-bold);
     justify-content: center;
     outline: none;
     padding: 0;
@@ -109,7 +90,7 @@
 
     &::before {
       background: var(--color-primary-standard);
-      border-radius: 50%;
+      border-radius: var(--border-radius-standard);
       content: '';
       opacity: 0;
       position: absolute;
@@ -137,8 +118,7 @@
     }
 
     &:disabled {
-      color: var(--color-dark-gray);
-      opacity: 0.6;
+      color: var(--color-blue-gray);
     }
 
     &.monthItem {
@@ -153,12 +133,12 @@
 
     &.dayItem {
       flex-basis: calc(100% / 7);
-      height: 24px;
+      height: 20px;
       margin: 2px 0;
 
       &::before {
-        height: 24px;
-        width: 24px;
+        height: 20px;
+        width: 20px;
       }
     }
   }
