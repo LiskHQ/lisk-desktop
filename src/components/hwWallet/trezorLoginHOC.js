@@ -10,7 +10,6 @@ import TrezorLogin from './trezorLogin';
 const mapStateToProps = state => ({
   liskAPIClient: state.peers && state.peers.liskAPIClient,
   settings: state.settings,
-  // loginType: state.account.loginType || 1,
 });
 
 const mapDispatchToProps = {

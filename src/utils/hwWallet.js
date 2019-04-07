@@ -5,7 +5,6 @@ import i18next from 'i18next';
 import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api';
 import { HW_CMD, HW_MSG, calculateSecondPassphraseIndex } from '../constants/hwConstants';
 import { loadingStarted, loadingFinished } from './loading';
-// import { accountLoggedOut } from '../actions/account';
 import { infoToastDisplayed, errorToastDisplayed } from '../actions/toaster';
 import { getTransactionBytes, calculateTxId, getBufferToHex } from './rawTransactionWrapper';
 import { PLATFORM_TYPES, getPlatformType } from './platform';

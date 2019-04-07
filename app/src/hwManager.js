@@ -35,6 +35,7 @@ export const addConnectedDevices = (device) => {
 };
 
 export const removeConnectedDeviceByID = (deviceId) => {
+  logDebug('Removing device with id: ', deviceId);
   connectedDevices.some((device, index) =>
     ((connectedDevices[index].deviceId === deviceId) ?
       !!(connectedDevices.splice(index, 1)) : false));
@@ -50,10 +51,10 @@ export const removeConnectedDeviceByPath = (path) => {
 };
 
 export const getDeviceById = deviceId =>
-  connectedDevices[connectedDevices.findIndex(x => x.deviceId === deviceId)];
+  connectedDevices.find(device => device.deviceId === deviceId);
 
 export const getDeviceByPath = path =>
-  connectedDevices[connectedDevices.findIndex(x => x.path === path)];
+  connectedDevices.find(device => device.path === path);
 
 // eslint-disable-next-line arrow-body-style
 createCommand('hwCommand', (command) => {

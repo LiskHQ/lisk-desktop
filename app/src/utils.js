@@ -1,12 +1,12 @@
 import { ipcMain } from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
 import Lisk from 'lisk-elements'; // eslint-disable-line import/no-extraneous-dependencies
 
-export const createCommand = (k, fn) => {
-  ipcMain.on(`${k}.request`, (event, ...args) => {
+export const createCommand = (command, fn) => {
+  ipcMain.on(`${command}.request`, (event, ...args) => {
     fn(...args)
-      .then(r => ({ success: true, data: r }))
-      .catch(e => ({ success: false, errorKey: e }))
-      .then(r => event.sender.send(`${k}.result`, r));
+      .then(result => ({ success: true, data: result }))
+      .catch(error => ({ success: false, errorKey: error }))
+      .then(result => event.sender.send(`${command}.result`, result));
   });
 };
 

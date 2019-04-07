@@ -8,6 +8,7 @@ import {
   addConnectedDevices,
 } from './hwManager';
 
+import { createCommand, isValidAddress } from './utils';
 import win from './modules/win';
 import { getTransactionBytes } from '../../src/utils/rawTransactionWrapper';
 
@@ -38,7 +39,6 @@ const getLedgerAccount = (index = 0) => {
   return ledgerAccount;
 };
 
-const isValidAddress = address => address.length > 2 && address.length < 22 && address[address.length - 1] === 'L';
 const isInsideLedgerApp = async (path) => {
   try {
     const transport = await TransportNodeHid.open(path);
@@ -83,7 +83,6 @@ const ledgerObserver = {
           const liskAccount = await getLiskAccount(device.path);
           const ledgerDevice = createLedgerHWDevice(liskAccount, device.path);
           addConnectedDevices(ledgerDevice);
-          // ledgerPath = device.path;
           win.send({ event: 'ledgerConnected', value: null });
         }
       } else if (type === 'remove') {
@@ -114,14 +113,6 @@ app.on('will-quit', () => {
 });
 
 const getBufferToHex = buffer => Lisk.cryptography.bufferToHex(buffer);
-const createCommand = (k, fn) => {
-  ipcMain.on(`${k}.request`, (event, ...args) => {
-    fn(...args)
-      .then(r => ({ success: true, data: r }))
-      .catch(e => ({ success: false, errorKey: e }))
-      .then(r => event.sender.send(`${k}.result`, r));
-  });
-};
 
 /* eslint-disable prefer-promise-reject-errors */
 // eslint-disable-next-line import/prefer-default-export

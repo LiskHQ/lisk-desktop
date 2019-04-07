@@ -52,8 +52,6 @@ class TrezorLogin extends React.Component {
   }
 
   async componentWillMount() {
-    // this.keyboardHandler = this.keyboardHandler.bind(this);
-    // window.addEventListener('keydown', this.keyboardHandler, false);
     const devices = await getDeviceList();
     const loginType = getLoginTypeFromDevice(devices[0]);
     const deviceId = devices[0].deviceId;

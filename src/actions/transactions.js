@@ -12,7 +12,6 @@ import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import { toRawLsk } from '../utils/lsk';
-// import { sendWithLedger } from '../utils/api/ledger';
 import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
 

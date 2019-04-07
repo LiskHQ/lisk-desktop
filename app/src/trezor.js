@@ -99,8 +99,6 @@ const passphraseCallback = (deviceId, callback) => {
 
 list.on('connect', (device) => {
   logDebug(`Connected device ${device.features.label}`);
-  // logDebug('Connected a device:', device);
-  // logDebug('Devices:', list.asArray());
   const deviceId = device.features.device_id;
   const deviceLabel = device.features.label;
   device.on('button', (code) => { buttonCallback(deviceLabel, code); });

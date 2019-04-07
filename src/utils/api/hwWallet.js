@@ -274,18 +274,6 @@ export const getHWAccountInfo = async (activePeer, deviceId, loginType, accountI
   Object.assign(resAccount, { isInitialized });
   Object.assign(resAccount, { isInitialized, publicKey });
 
-  // TODO Detach this from main process
-  // if (isInitialized) {
-  //   console.log('address', address);
-  //   const txAccount = await getTransactions(activePeer, address);
-  //   console.log('txAccount 2', txAccount);
-  //   Object.assign(resAccount, { txCount: txAccount.meta.count });
-
-  //   const votesAccount = await getVotes(activePeer, address);
-  //   Object.assign(resAccount, { votesCount: votesAccount.data.votesUsed });
-  // }
-  console.log(resAccount, 'Output resAccount2');
-
   return resAccount;
 };
 
