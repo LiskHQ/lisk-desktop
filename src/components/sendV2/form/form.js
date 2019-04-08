@@ -67,9 +67,9 @@ class Form extends React.Component {
   }
 
   componentDidMount() {
+    this.checkIfBoormakedAccount();
     if (!Object.entries(this.props.prevState).length) this.ifDataFromUrl();
     if (Object.entries(this.props.prevState).length) this.ifDataFromPrevState();
-    this.checkIfBoormakedAccount();
   }
 
   ifDataFromPrevState() {
@@ -85,23 +85,22 @@ class Form extends React.Component {
 
   ifDataFromUrl() {
     const { fields = {} } = this.props;
-
     if (fields.recipient.address !== '' || fields.amount.value !== '' || fields.reference.value !== '') {
       this.setState(prevState => ({
         fields: {
           ...prevState.fields,
           recipient: {
             ...prevState.fields.recipient,
-            address: prevState.fields.recipient.address,
-            value: prevState.fields.recipient.address,
+            address: fields.recipient.address,
+            value: fields.recipient.address,
           },
           amount: {
             ...prevState.fields.amount,
-            value: prevState.fields.amount.value,
+            value: fields.amount.value,
           },
           reference: {
             ...prevState.fields.reference,
-            value: prevState.fields.reference.value,
+            value: fields.reference.value,
           },
         },
       }));
