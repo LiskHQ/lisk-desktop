@@ -15,6 +15,7 @@ class NavigationButtons extends React.Component {
     this.onGoBack = this.onGoBack.bind(this);
     this.onGoForward = this.onGoForward.bind(this);
     this.resetNavigationValues = this.resetNavigationValues.bind(this);
+    this.updateCounter = this.updateCounter.bind(this);
   }
 
   componentDidMount() {
@@ -49,16 +50,26 @@ class NavigationButtons extends React.Component {
     return true;
   }
 
+  updateCounter(action) {
+    if (action === 'back') {
+      this.setState({ counter: this.state.counter - 1 });
+      this.props.history.goBack();
+    } else {
+      this.setState({ counter: this.state.counter + 1 });
+      this.props.history.goForward();
+    }
+  }
+
   onGoBack(e) {
     e.preventDefault();
-    this.setState({ counter: this.state.counter - 1 });
-    this.props.history.goBack();
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(this.updateCounter('back'), 300);
   }
 
   onGoForward(e) {
     e.preventDefault();
-    this.setState({ counter: this.state.counter + 1 });
-    this.props.history.goForward();
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(this.updateCounter('forward'), 300);
   }
 
   render() {
