@@ -10,7 +10,7 @@ describe('Extra', () => {
   });
 
   // TODO unskip after fix 1901
-  xit('Navigation buttons', () => {
+  it('Navigation buttons', () => {
     cy.addObjectToLocalStorage('settings', 'advancedMode', true);
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
