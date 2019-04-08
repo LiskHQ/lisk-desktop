@@ -131,7 +131,7 @@ class ExplorerTransactionsV2 extends React.Component {
     const delegate = detailAccount && detailAccount.delegate ? {
       ...detailAccount.delegate,
       ...(this.props.delegate || {}),
-    } : {};
+    } : { ...(this.props.delegate || {}) };
 
     return (
       <React.Fragment>
