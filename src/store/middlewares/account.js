@@ -173,6 +173,7 @@ const accountMiddleware = store => next => (action) => {
       localStorage.removeItem('accounts');
       localStorage.removeItem('isHarwareWalletConnected');
       break;
+    /* istanbul ignore next */
     default: break;
   }
 };
