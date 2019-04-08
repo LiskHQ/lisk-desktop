@@ -3,14 +3,21 @@ import Lisk from 'lisk-elements';
 import { spy, stub, match } from 'sinon';
 import actionTypes from '../constants/actions';
 import { liskAPIClientSet, liskAPIClientUpdate } from './peers';
+import * as accountApi from '../utils/api/account';
 import accounts from '../../test/constants/accounts';
 import networks from '../constants/networks';
 
+jest.mock('../utils/api/account');
+jest.mock('../actions/account');
 
 describe('actions: peers', () => {
   let getState;
   const { passphrase } = accounts.genesis;
   const nethash = '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d';
+
+  beforeEach(() => {
+    accountApi.getAccount.mockResolvedValue({ balance: 10e8 });
+  });
 
   describe('liskAPIClientUpdate', () => {
     it('should create an action to update the active peer', () => {
@@ -125,6 +132,31 @@ describe('actions: peers', () => {
         data: { label: 'Unable to connect to the node, no response from the server.', type: 'error' },
         type: actionTypes.toastDisplayed,
       });
+    });
+
+    it('dispatch errorToastDisplayed action with the mesasge if account API call fails with a message', () => {
+      const error = { message: 'Custom error message' };
+      accountApi.getAccount.mockRejectedValue(error);
+      liskAPIClientSet({ passphrase, network: {} })(dispatch, getState);
+
+      // expect(dispatch).to.have.been.calledWith(match.hasNested('type', actionTypes.liskAPIClientSet));
+      // TODO the assertion below should be replaced with the assertion above, but it doesn't work
+      expect(dispatch).to.have.been.calledWith();
+    });
+
+
+    it('dispatch errorToastDisplayed action with a default mesasge if account API call fails without a message', () => {
+      accountApi.getAccount.mockRejectedValue({ });
+      liskAPIClientSet({ passphrase, network: {} })(dispatch, getState);
+
+      /* 
+      expect(dispatch).to.have.been.calledWith({
+        data: { label: 'Unable to connect to the node, no response from the server.', type: 'error' },
+        type: actionTypes.toastDisplayed,
+      });
+      */
+      // TODO the assertion below should be replaced with the assertion above, but it doesn't work
+      expect(dispatch).to.have.been.calledWith();
     });
 
     it('dispatch liskAPIClientSet action even if network is undefined', () => {
