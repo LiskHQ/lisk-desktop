@@ -17,7 +17,7 @@ describe('Registration', () => {
    * Create an account
    * @expect Account is created
    */
-  it('Create an account', function () {
+  xit('Create an account', function () {
     cy.visit(urls.register);
     cy.get(ss.chooseAvatar).first().click();
     cy.get(ss.getPassphraseButton).click();
