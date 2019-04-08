@@ -1,33 +1,41 @@
 import React from 'react';
 import AccountVisual from '../accountVisual';
+import LiskAmount from '../liskAmount';
 import styles from './accountsAndDeletegates.css';
 
-const Delegates = props => (
+const Delegates = ({ delegates, onSelectedRow, t }) => (
   <div className={`${styles.wrapper} delegates`}>
     <header className={`${styles.header} delegates-header`}>
-      <label>{props.t('Accounts')}</label>
+      <label>{t('Accounts')}</label>
       <div className={`${styles.subTitles} delegates-subtitle`}>
-        <label>{props.t('Address')}</label>
-        <label>{props.t('Vote Weights')}</label>
+        <label>{t('Address')}</label>
+        <label>{t('Vote Weights')}</label>
       </div>
     </header>
     <div className={`${styles.content} delegates-content`}>
     {
-      props.delegates.map((delegate, index) => (
+      delegates.map((delegate, index) => (
         <div
           key={index}
           className={`${styles.accountRow} delegates-row`}
-          onClick={() => props.onSelectedRow(delegate.account.address, 'account')}
+          onClick={() => onSelectedRow(delegate.account.address, 'account')}
         >
           <AccountVisual address={delegate.account.address} size={30} />
           <div className={styles.accountInformation}>
             <div>
-              <span className={`${styles.accountTitle} delegate-name`}>{delegate.username}</span>
-              <span className={styles.tag}>{`#${delegate.rank} ${props.t('Delegate')}`}</span>
+              <span className={`${styles.accountTitle} delegate-name`}>
+                {delegate.username}
+              </span>
+              <span className={styles.tag}>
+                {`#${delegate.rank} ${t('Delegate')}`}
+              </span>
             </div>
-            <span className={styles.accountSubtitle}>{delegate.rewards}</span>
+            <span className={styles.accountSubtitle}>{delegate.account.address}</span>
           </div>
-          <span className={styles.accountBalance}>{props.t('{{rewards}} LSK', { rewards: delegate.vote })}</span>
+          <span className={styles.accountBalance}>
+            <LiskAmount val={delegate.vote} />
+            <span>{t(' LSK')}</span>
+          </span>
         </div>
       ))
     }

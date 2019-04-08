@@ -18,15 +18,15 @@
     align-items: center;
     visibility: hidden;
     opacity: 0;
-  
+
     & .errorMessage {
       @mixin contentSmall;
-  
+
       margin: 25px 0 3px;
       color: var(--color-slate-gray);
     }
   }
-  
+
   & > .searchMessageError {
     max-height: 40px;
     visibility: visible;

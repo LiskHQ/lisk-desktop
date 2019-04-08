@@ -69,14 +69,14 @@
   }
 
   & .transactionId {
-    @mixin contentLargest bold;
+    @mixin headingSmall;
 
     color: var(--color-maastricht-blue);
     margin-left: 20px;
   }
 
   & .transactionMessage {
-    @mixin contentSmall;
+    @mixin contentSmallest;
 
     color: var(--color-maastricht-blue);
     margin-left: auto;

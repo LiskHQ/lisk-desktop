@@ -79,6 +79,10 @@
   width: 500px;
   padding: 20px;
   box-sizing: border-box;
+
+  & > div {
+    padding: 0;
+  }
 }
 
 @media (--small-viewport) {

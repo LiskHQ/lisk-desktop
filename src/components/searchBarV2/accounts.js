@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountVisual from '../accountVisual';
-import { fromRawLsk } from '../../utils/lsk';
+import LiskAmount from '../liskAmount';
 import styles from './accountsAndDeletegates.css';
 
 const Accounts = ({ accounts, onSelectedRow, t }) => (
@@ -31,7 +31,10 @@ const Accounts = ({ accounts, onSelectedRow, t }) => (
               : null
             }
           </div>
-          <span className={styles.accountBalance}>{`${fromRawLsk(account.balance)} LSK`}</span>
+          <span className={styles.accountBalance}>
+            <LiskAmount val={account.balance} />
+            <span>{t(' LSK')}</span>
+          </span>
         </div>
       ))
     }

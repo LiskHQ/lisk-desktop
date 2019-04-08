@@ -91,7 +91,7 @@
   }
 
   & .accountTitle {
-    @mixin contentLargest;
+    @mixin headingSmall;
 
     color: var(--color-maastricht-blue);
   }
@@ -104,7 +104,7 @@
   }
 
   & .accountBalance {
-    @mixin contentSmall;
+    @mixin contentSmallest;
 
     color: var(--color-maastricht-blue);
     margin-left: auto;

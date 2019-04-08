@@ -39,8 +39,7 @@ class SearchBar extends React.Component {
     const searchTextValue = e.target.value;
     const isTextValid = this.isSubmittedStringValid(searchTextValue);
 
-    if (!isTextValid) return;
-    if (isTextValid) this.setState({ searchTextValue });
+    this.setState({ searchTextValue });
     if (searchTextValue.length > 2 && isTextValid) {
       this.setState({ isLoading: true });
       setTimeout(() => {
@@ -79,8 +78,9 @@ class SearchBar extends React.Component {
       && !isSearchTextError;
 
     return (
-      <div className={`${styles.wrapper} search-bar`} ref={node => setSearchBarRef(node)}>
+      <div className={`${styles.wrapper} search-bar`}>
         <InputV2
+          setRef={setSearchBarRef}
           autoComplete={'off'}
           onChange={this.onChangeSearchTextValue}
           name='searchText'

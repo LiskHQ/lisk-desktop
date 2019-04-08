@@ -64,10 +64,10 @@ class TopBar extends React.Component {
   onSearchClick() {
     if (!this.state.isSearchDropdownEnable) {
       document.addEventListener('click', this.onSearchClickOutside, false);
+      setTimeout(() => { this.searchBarRef.focus(); }, 150);
     } else {
       document.removeEventListener('click', this.onSearchClickOutside, false);
     }
-
     this.setState({ isSearchDropdownEnable: !this.state.isSearchDropdownEnable });
   }
 

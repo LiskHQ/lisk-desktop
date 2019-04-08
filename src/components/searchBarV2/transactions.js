@@ -1,5 +1,6 @@
 import React from 'react';
 import svg from '../../utils/svgIcons';
+import LiskAmount from '../liskAmount';
 import styles from './transactions.css';
 
 const Transactions = ({ t, transactions, onSelectedRow }) => {
@@ -41,7 +42,10 @@ const Transactions = ({ t, transactions, onSelectedRow }) => {
           >
             <img src={selectTransactionType(transaction.type)} />
             <span className={`${styles.transactionId} transaction-id`}>{transaction.id}</span>
-            <span className={styles.transactionMessage}>{Object.entries(transaction.asset).length ? transaction.asset.data : ''}</span>
+            <span className={styles.transactionMessage}>
+              <LiskAmount val={transaction.amount} />
+              <span>{t(' LSK')}</span>
+            </span>
           </div>
         ))
       }
