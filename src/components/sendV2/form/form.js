@@ -234,6 +234,7 @@ class Form extends React.Component {
   }
 
   validateAmountField(value) {
+    if (/^0.(0|[a-zA-z])*$/g.test(value)) return this.props.t('Provide a correct amount of LSK');
     if (/([^\d.])/g.test(value)) return this.props.t('Provide a correct amount of LSK');
     if ((/(\.)(.*\1){1}/g.test(value) || /\.$/.test(value)) || value === '0') return this.props.t('Invalid amount');
     if (parseFloat(this.getMaxAmount()) < value) return this.props.t('Provided amount is higher than your current balance.');
