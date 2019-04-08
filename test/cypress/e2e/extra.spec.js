@@ -30,7 +30,7 @@ describe('Extra', () => {
     cy.get(ss.navigationBtnBack).click();
     cy.wait(1000);
     cy.get(ss.navigationBtnBack).click();
-    cy.get(ss.app).contains('Copy transaction link');
+    cy.get(ss.app).contains('Copy link');
     cy.wait(1000);
     cy.get(ss.navigationBtnBack).click();
     cy.get(ss.app).contains('My Wallet Details');

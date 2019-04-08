@@ -12,8 +12,7 @@ class NavigationButtons extends React.Component {
       counter: 0,
     };
 
-    this.onGoBack = this.onGoBack.bind(this);
-    this.onGoForward = this.onGoForward.bind(this);
+    this.onNavigationClick = this.onNavigationClick.bind(this);
     this.resetNavigationValues = this.resetNavigationValues.bind(this);
     this.updateCounter = this.updateCounter.bind(this);
   }
@@ -60,16 +59,10 @@ class NavigationButtons extends React.Component {
     }
   }
 
-  onGoBack(e) {
+  onNavigationClick(e, action) {
     e.preventDefault();
     clearTimeout(this.timeout);
-    this.timeout = setTimeout(this.updateCounter('back'), 300);
-  }
-
-  onGoForward(e) {
-    e.preventDefault();
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(this.updateCounter('forward'), 300);
+    this.timeout = setTimeout(this.updateCounter(action), 300);
   }
 
   render() {
@@ -88,14 +81,14 @@ class NavigationButtons extends React.Component {
         <button
           className={'go-back'}
           disabled={!isBackActive}
-          onClick={this.onGoBack}
+          onClick={e => this.onNavigationClick(e, 'back')}
         >
           <img src={backArrow}/>
         </button>
         <button
           className={'go-forward'}
           disabled={!isForwardActive}
-          onClick={this.onGoForward}
+          onClick={e => this.onNavigationClick(e, 'forward')}
         >
           <img src={forwardArrow}/>
         </button>
