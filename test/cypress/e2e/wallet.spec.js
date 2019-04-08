@@ -71,9 +71,10 @@ describe('Wallet', () => {
     it('Delegate -> Address, Name & Label are correct', () => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit(`${urls.accounts}/${topDelegate.address}`);
+      cy.wait(1);
       cy.url().should('contain', topDelegate.address);
       cy.get(ss.accountAddress).contains(topDelegate.address);
-      // cy.get(ss.accountName).contains(topDelegate.username); TODO: unskip after 1899 fix
+      cy.get(ss.accountName).contains(topDelegate.username);
       cy.get(ss.accountLabel).contains('Delegate #1');
     });
 
@@ -100,18 +101,20 @@ describe('Wallet', () => {
     });
 
     // TODO Unskip after fix 1900
-    xit('Send LSK to this account', () => {
+    it('Send LSK to this account', () => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit(`${urls.accounts}/${accounts.delegate.address}`);
+      cy.wait(1);
       cy.get(ss.sendToThisAccountBtn).click();
       cy.url().should('contain', urls.send);
       cy.get(ss.recipientInput).should('have.value', accounts.delegate.address);
     });
 
     // TODO Unskip after fix 1900
-    xit('Add / Remove bookmark', () => {
+    it('Add / Remove bookmark', () => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit(`${urls.accounts}/${accounts.genesis.address}`);
+      cy.wait(1);
       cy.get(ss.followAccountBtn).contains('Bookmark account');
       cy.get(ss.followAccountBtn).click();
       cy.get(ss.titleInput).type('Bob');
@@ -123,6 +126,7 @@ describe('Wallet', () => {
       cy.reload();
       cy.get(ss.accountName).contains('Bob');
       cy.get(ss.followAccountBtn).contains('Account bookmarked');
+      cy.wait(1);
       cy.get(ss.followAccountBtn).click();
       cy.get(ss.confirmAddToBookmarks).click()
         .should(() => {
@@ -132,9 +136,10 @@ describe('Wallet', () => {
     });
 
     // TODO Unskip after fix 1900
-    xit('Cant change bookmark name for bookmarked delegate', () => {
+    it('Cant change bookmark name for bookmarked delegate', () => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit(`${urls.accounts}/${accounts.delegate.address}`);
+      cy.wait(1);
       cy.get(ss.followAccountBtn).contains('Bookmark account');
       cy.get(ss.followAccountBtn).click();
       cy.get(ss.titleInput).type('Bob');
