@@ -146,7 +146,7 @@ class SingleTransactionV2 extends React.Component {
             </footer>
           </main>
         </BoxV2>
-      ) : (
+      ) : this.props.transaction && this.props.transaction.error && (
         <BoxV2 className={`${grid['col-sm-8']} ${grid['col-md-4']}`}>
           <EmptyState title={this.props.t('No results')}
             message={this.props.t('Search for Lisk ID, Delegate or Transaction ID')} />
