@@ -6,7 +6,6 @@ import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import WalletTab from '../../wallet/walletTab';
 import DelegateTab from '../../delegate/delegateTab';
 import VotesTab from '../../votes/votesTab';
-import actionTypes from '../../../constants/actions';
 
 class ExplorerTransactionsV2 extends React.Component {
   // eslint-disable-next-line max-statements
@@ -69,7 +68,6 @@ class ExplorerTransactionsV2 extends React.Component {
     for other tabs that are not using transactions there is no need to call API
   */
   onFilterSet(filter) {
-    if (this.props.loading.includes(actionTypes.searchTransactions)) return;
     this.props.searchTransactions({
       address: this.props.address,
       limit: 30,

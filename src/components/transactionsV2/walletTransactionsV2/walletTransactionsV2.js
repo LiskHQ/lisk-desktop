@@ -11,7 +11,6 @@ import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import WalletTab from '../../wallet/walletTab';
 import DelegateTab from '../../delegate/delegateTab';
 import VotesTab from '../../votes/votesTab';
-import actionTypes from '../../../constants/actions';
 
 class WalletTransactionsV2 extends React.Component {
   // eslint-disable-next-line max-statements
@@ -91,7 +90,6 @@ class WalletTransactionsV2 extends React.Component {
   */
   /* istanbul ignore next */
   onFilterSet(filter) {
-    if (this.props.loading.includes(actionTypes.transactionsFilterSet)) return;
     this.setState({ filter });
     if (filter <= 2) {
       this.props.transactionsFilterSet({
