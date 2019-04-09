@@ -37,7 +37,6 @@
     @mixin headingSmall;
 
     color: var(--color-maastricht-blue);
-    letter-spacing: 0.1px;
     line-height: var(--word-choice-height);
     text-align: center;
   }
@@ -71,7 +70,6 @@
       background-color: var(--color-ultramarine-blue);
       color: var(--color-white);
       border-radius: var(--border-radius-standard);
-      box-shadow: var(--box-shadow-standard);
       display: flex;
       height: var(--checkmark-size);
       justify-content: center;
@@ -90,6 +88,7 @@
     & .choice {
       align-items: center;
       background-color: var(--color-white);
+      border-radius: var(--border-radius-standard);
       box-shadow: var(--box-shadow-standard);
       box-sizing: border-box;
       color: var(--color-ultramarine-blue);
@@ -163,8 +162,6 @@
     transform: scale(0);
 
     & > button {
-      @mixin contentSmall bold;
-
       min-height: var(--word-choice-height);
       height: var(--word-choice-height);
       width: 100%;

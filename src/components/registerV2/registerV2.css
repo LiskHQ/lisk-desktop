@@ -1,11 +1,6 @@
 @import './../app/variablesV2.css';
 @import './../app/mixins.css';
 
-:root {
-  --registration-title-font-size: 24px;
-  --title-color: #0c152e;
-}
-
 .register {
   align-items: center;
   display: flex;
@@ -53,17 +48,16 @@
   color: var(--color-content);
   font-family: var(--heading-font);
   text-align: center;
+  margin-bottom: 10px;
 
   & > h1 {
     @mixin headingLarge;
 
     display: flex;
     justify-content: center;
-    letter-spacing: 0.1px;
-    line-height: 50px;
     margin-top: 0px;
     margin-bottom: 20px;
-    color: var(--title-color);
+    color: var(--color-maastricht-blue);
 
     & > img {
       margin-right: 16px;

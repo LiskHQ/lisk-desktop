@@ -31,7 +31,7 @@
     @mixin contentNormal bold;
 
     align-items: center;
-    color: var(--color-content-light);
+    color: var(--color-maastricht-blue);
     display: flex;
     margin: 0;
   }
@@ -40,11 +40,9 @@
     display: flex;
 
     & > p {
-      color: var(--color-content);
-      font-family: var(--heading-font);
-      font-size: var(--paragraph-font-size-s);
-      font-weight: var(--font-weight-bold);
-      letter-spacing: 0.1px;
+      @mixin contentLarge bold;
+
+      color: var(--color-dark-blue);
       margin: 15px 0;
       text-align: left;
       word-spacing: 8px;
@@ -111,7 +109,7 @@
 .hrSection::after {
   content: "";
   flex-grow: 1;
-  background: rgba(0, 0, 0, 0.35);
+  background: var(--color-blue-gray);
   height: 1px;
   font-size: 0px;
   line-height: 0px;
@@ -130,6 +128,9 @@
     margin: 10px 0;
 
     & input {
+      @mixin contentLarge;
+
+      color: var(--color-maastricht-blue);
       text-align: center;
     }
   }

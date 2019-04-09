@@ -8,7 +8,7 @@ import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import { InputV2 } from '../toolbox/inputsV2';
 import renderPaperwallet from '../../utils/paperwallet';
-import fileOutline from '../../assets/images/icons-v2/icon-file-outline.svg';
+import { fileOutline } from '../../utils/svgIcons';
 import registerStyles from './registerV2.css';
 import styles from './backupPassphrase.css';
 
@@ -95,7 +95,7 @@ class BackupPassphrase extends React.Component {
                 {account.passphrase.split(' ').map((value, i) => (
                   <span key={i} className={`${grid['col-xs-2']}`}>
                     <InputV2
-                      disabled={true}
+                      readOnly
                       value={value}
                     />
                   </span>

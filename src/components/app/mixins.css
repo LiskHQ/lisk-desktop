@@ -24,14 +24,6 @@
   line-height: 20px;
 }
 
-@define-mixin contentNormal $weight: bold {
-  font-family: var(--content-font);
-  font-size: 13px;
-  font-weight: var(--font-weight-$(weight));
-  letter-spacing: 0.2px;
-  line-height: 20px;
-}
-
 @define-mixin contentLarge $weight: normal {
   font-family: var(--content-font);
   font-size: 14px;
@@ -78,4 +70,11 @@
   font-weight: var(--font-weight-bold);
   letter-spacing: 0.25px;
   line-height: 40px;
+}
+
+@define-mixin addressFont {
+  font-family: var(--heading-font);
+  font-size: var(--subtitle-font-size);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.1px;
 }

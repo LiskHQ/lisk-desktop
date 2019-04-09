@@ -1,4 +1,5 @@
 @import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
 :root {
   --avatar-padding: 3px;
@@ -24,11 +25,9 @@
   }
 
   & .address {
+    @mixin addressFont;
+
     color: var(--color-content);
-    font-family: var(--heading-font);
-    font-size: var(--subtitle-font-size);
-    font-weight: var(--font-weight-bold);
-    letter-spacing: 0.1px;
     margin: 40px 0 0;
     text-align: center;
   }
