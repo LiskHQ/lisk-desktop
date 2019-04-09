@@ -26,7 +26,7 @@ export const models = {
   ledgerNanoS: 'Ledger Nano S',
   trezorOne: 'Trezor One',
   trezorModelT: 'Trezor Model T',
-}
+};
 
 export const calculateSecondPassphraseIndex =
   (accountIndex, pin) => accountIndex + parseInt(pin, 10) + hwConstants.secondPassphraseOffset;
