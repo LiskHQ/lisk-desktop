@@ -101,7 +101,7 @@ describe('actions: search', () => {
         data: actionTypes.searchTransactions,
         type: actionTypes.loadingStarted,
       });
-      // TODO figure out why the assertion below doesn't hold true 
+      // TODO figure out why the assertion below doesn't hold true
       // despite coverage report shows the code was called
       /*
       expect(dispatch).toHaveBeenNthCalledWith(2, {
@@ -133,7 +133,7 @@ describe('actions: search', () => {
         data: actionTypes.searchMoreTransactions,
         type: actionTypes.loadingStarted,
       });
-      // TODO figure out why the assertion below doesn't hold true 
+      // TODO figure out why the assertion below doesn't hold true
       // despite coverage report shows the code was called
       /*
       expect(dispatch).toHaveBeenNthCalledWith(2, {
@@ -160,7 +160,7 @@ describe('actions: search', () => {
       accountAPI.getAccount.mockResolvedValue(account);
       const action = searchAccount({ address: account.address });
       action(dispatch, getState);
-      // TODO figure out why the assertion below doesn't hold true 
+      // TODO figure out why the assertion below doesn't hold true
       // despite coverage report shows the code was called
       /*
       expect(dispatch).toHaveBeenCalledWith({

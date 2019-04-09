@@ -15,6 +15,7 @@ import actionTypes from '../../constants/actions';
 import middleware from './account';
 import transactionTypes from '../../constants/transactionTypes';
 
+/* eslint-disable-next-line max-statements */
 describe('Account middleware', () => {
   const { lockDuration } = accountConfig;
   let store;
@@ -238,6 +239,4 @@ describe('Account middleware', () => {
     middleware(store)(next)(accountLoggedOutAction);
     expect(store.dispatch).to.have.been.calledWith({ type: actionTypes.cleanTransactions });
   });
-
-
 });

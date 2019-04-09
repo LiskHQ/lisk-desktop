@@ -139,7 +139,11 @@ describe('actions: peers', () => {
       accountApi.getAccount.mockRejectedValue(error);
       liskAPIClientSet({ passphrase, network: {} })(dispatch, getState);
 
-      // expect(dispatch).to.have.been.calledWith(match.hasNested('type', actionTypes.liskAPIClientSet));
+      /*
+      expect(dispatch).to.have.been.calledWith(
+        match.hasNested('type', actionTypes.liskAPIClientSet),
+      );
+      */
       // TODO the assertion below should be replaced with the assertion above, but it doesn't work
       expect(dispatch).to.have.been.calledWith();
     });
@@ -149,9 +153,12 @@ describe('actions: peers', () => {
       accountApi.getAccount.mockRejectedValue({ });
       liskAPIClientSet({ passphrase, network: {} })(dispatch, getState);
 
-      /* 
+      /*
       expect(dispatch).to.have.been.calledWith({
-        data: { label: 'Unable to connect to the node, no response from the server.', type: 'error' },
+        data: {
+          label: 'Unable to connect to the node, no response from the server.',
+          type: 'error',
+        },
         type: actionTypes.toastDisplayed,
       });
       */
