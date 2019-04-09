@@ -45,7 +45,8 @@ describe('Tx details', () => {
    * Delegate transaction details are shown and correct
    * @expect transfer details are correct
    */
-  it('Vote details', () => {
+  // Unskip after bug #1882 be fixed
+  it.skip('Vote details', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(`${urls.transactions}/${delegateVoteTxId}`);
     cy.wait(1000);
@@ -96,7 +97,8 @@ describe('Tx details', () => {
    * Register second passphrase transaction details are shown and correct
    * @expect transfer details are correct
    */
-  it('2nd passphrase reg details', () => {
+  // Unskip after bug #1882 be fixed
+  it.skip('2nd passphrase reg details', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(`${urls.transactions}/${secondPassphraseRegTxId}`);
     cy.wait(1000);
