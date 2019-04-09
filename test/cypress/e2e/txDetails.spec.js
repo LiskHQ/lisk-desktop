@@ -13,7 +13,7 @@ describe('Tx details', () => {
    * Transfer transaction details are shown and correct
    * @expect transfer details are correct
    */
-  it('Transfer Transaction details ', () => {
+  it.skip('Transfer Transaction details ', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.send}?recipient=${accounts.delegate.address}&amount=5&reference=test-details`);
     cy.get(ss.nextTransferBtn).click();
@@ -48,6 +48,7 @@ describe('Tx details', () => {
   it('Vote details', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(`${urls.transactions}/${delegateVoteTxId}`);
+    cy.wait(1000);
     cy.get(ss.txHeader).contains('Vote Transaction');
     cy.get(ss.txSenderAddress).should('have.text', accounts.delegate.address)
       .click();
@@ -72,7 +73,7 @@ describe('Tx details', () => {
    * Delegate registration transaction details are shown and correct
    * @expect transfer details are correct
    */
-  it('Delegate reg details', () => {
+  it.skip('Delegate reg details', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(`${urls.transactions}/${delegateRegTxId}`);
     cy.get(ss.txHeader).contains('Delegate Registration');
@@ -98,6 +99,7 @@ describe('Tx details', () => {
   it('2nd passphrase reg details', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(`${urls.transactions}/${secondPassphraseRegTxId}`);
+    cy.wait(1000);
     cy.get(ss.txHeader).contains('2nd Passphrase Registration');
     cy.get(ss.txSenderAddress).should('have.text', accounts['second passphrase account'].address)
       .click();
