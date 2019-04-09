@@ -84,6 +84,8 @@ const searchVotes = ({ address, offset, limit }) =>
     dispatch(loadingFinished(actionTypes.searchVotes));
   };
 
+/* istanbul ignore next */
+/* because it's not used anymore and should be removed in #1911 */
 const searchVoters = ({
   address, publicKey, offset, limit, append,
 }) =>
@@ -106,6 +108,8 @@ const searchVoters = ({
     }
   };
 
+/* istanbul ignore next */
+/* because it's not used anymore and should be removed in #1911 */
 export const searchMoreVoters = ({ address, offset = 0, limit = 100 }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
