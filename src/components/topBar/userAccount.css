@@ -5,6 +5,7 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
+  height: 100%;
 }
 
 .information {
@@ -58,7 +59,18 @@
 }
 
 .dropdown {
-  width: auto;
+  width: 210px;
+}
+
+.space {
+  padding: 0px !important;
+  display: flex !important;
+  justify-content: center;
+
+  & > div {
+    width: 80% !important;
+    border-top: 1px solid !important;
+  }
 }
 
 .dropdownOption {

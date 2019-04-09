@@ -7,6 +7,7 @@
   align-items: center;
   width: auto;
   min-width: 334px;
+  height: 100%;
 }
 
 .item {

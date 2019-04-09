@@ -27,7 +27,7 @@
 
 @media (--large-viewport) {
   .searchBar {
-    margin: 0 64px;
+    margin: 0;
   }
 }
 
