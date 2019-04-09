@@ -22,6 +22,8 @@ const WalletTab = ({ ...props }) => (
         { // istanbul ignore next
           !props.hideChart ?
           <BalanceChart
+            filter={props.activeFilter}
+            customFilters={props.activeCustomFilters}
             balance={props.balance}
             address={props.address}
             transactions={props.transactions} />

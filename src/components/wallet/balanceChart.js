@@ -4,8 +4,22 @@ import { Line as LineChart } from 'react-chartjs-2';
 import BoxV2 from '../boxV2';
 import styles from './balanceChart.css';
 import * as ChartUtils from '../../utils/balanceChart';
+import transactionFilters from '../../constants/transactionFilters';
 
 class BalanceGraph extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    const { customFilters } = nextProps;
+    const hasCustomFilters = Object.keys(customFilters).filter(field => !!customFilters[field]);
+    if (
+      nextProps.filter === transactionFilters.all
+      && !hasCustomFilters.length
+      && nextProps.balance !== this.props.balance
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
     const {
       t, transactions, balance, address,
