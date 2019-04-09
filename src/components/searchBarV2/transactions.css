@@ -42,7 +42,7 @@
 }
 
 .content {
-  width: 100%;
+  width: calc(100% + 40px);
   height: auto;
   max-height: 220px;
   box-sizing: border-box;
@@ -50,12 +50,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  margin: 5px 0;
+  margin: 0 -20px;
 
   & .transactionRow {
     width: 100%;
-    height: 45px;
-    margin: 5px 0;
+    height: auto;
+    min-height: 53px;
+    padding: 5px 20px;
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
@@ -81,4 +82,8 @@
     color: var(--color-maastricht-blue);
     margin-left: auto;
   }
+}
+
+.active {
+  background-color: var(--primary-background-color);
 }

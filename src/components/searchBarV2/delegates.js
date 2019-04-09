@@ -3,7 +3,9 @@ import AccountVisual from '../accountVisual';
 import LiskAmount from '../liskAmount';
 import styles from './accountsAndDeletegates.css';
 
-const Delegates = ({ delegates, onSelectedRow, t }) => (
+const Delegates = ({
+  delegates, onSelectedRow, t, rowItemIndex,
+}) => (
   <div className={`${styles.wrapper} delegates`}>
     <header className={`${styles.header} delegates-header`}>
       <label>{t('Accounts')}</label>
@@ -17,7 +19,7 @@ const Delegates = ({ delegates, onSelectedRow, t }) => (
       delegates.map((delegate, index) => (
         <div
           key={index}
-          className={`${styles.accountRow} delegates-row`}
+          className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} delegates-row`}
           onClick={() => onSelectedRow(delegate.account.address, 'account')}
         >
           <AccountVisual address={delegate.account.address} size={30} />

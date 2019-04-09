@@ -144,6 +144,7 @@ class TopBar extends React.Component {
               <SearchBarV2
                 history={this.props.history}
                 setSearchBarRef={this.setSearchBarRef}
+                onSearchClick={this.onSearchClick}
               />
             </DropdownV2>
           </div>

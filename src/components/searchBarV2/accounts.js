@@ -3,7 +3,9 @@ import AccountVisual from '../accountVisual';
 import LiskAmount from '../liskAmount';
 import styles from './accountsAndDeletegates.css';
 
-const Accounts = ({ accounts, onSelectedRow, t }) => (
+const Accounts = ({
+  accounts, onSelectedRow, t, rowItemIndex,
+}) => (
   <div className={`${styles.wrapper} accounts`}>
     <header className={`${styles.header} accounts-header`}>
       <label>{t('Accounts')}</label>
@@ -17,7 +19,7 @@ const Accounts = ({ accounts, onSelectedRow, t }) => (
       accounts.map((account, index) => (
         <div
           key={index}
-          className={`${styles.accountRow} account-row`}
+          className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} account-row`}
           onClick={() => onSelectedRow(account.address, 'account')}
         >
           <AccountVisual address={account.address} size={30} />

@@ -9,6 +9,7 @@ describe('Delegates', () => {
     t: v => v,
     delegates: [],
     onSelectedRow: jest.fn(),
+    rowItemIndex: 0,
   };
 
   beforeEach(() => {
@@ -34,6 +35,15 @@ describe('Delegates', () => {
         rank: 34,
         rewards: 23423,
         vote: 123,
+      },
+      {
+        account: {
+          address: '123457L',
+        },
+        username: 'Anna',
+        rank: 26,
+        rewards: 23421,
+        vote: 127,
       },
     ];
     wrapper = mount(<Delegates {...newProps} />);

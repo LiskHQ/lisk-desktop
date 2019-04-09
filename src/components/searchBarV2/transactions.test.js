@@ -9,6 +9,7 @@ describe('Transactions', () => {
     t: v => v,
     transactions: [],
     onSelectedRow: jest.fn(),
+    rowItemIndex: 0,
   };
 
   beforeEach(() => {
