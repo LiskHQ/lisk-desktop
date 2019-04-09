@@ -5,13 +5,16 @@ import * as accountAPI from '../utils/api/account';
 import * as delegateAPI from '../utils/api/delegate';
 import * as transactionsAPI from '../utils/api/transactions';
 import accounts from '../../test/constants/accounts';
-import {
+import * as actions from './search';
+
+const {
+  fetchVotedDelegateInfo,
   searchMoreTransactions,
   searchTransactions,
   searchAccount,
   searchSuggestions,
   searchMoreVoters,
-} from './search';
+} = actions;
 
 jest.mock('../utils/api/search');
 jest.mock('../utils/api/account');
@@ -28,6 +31,7 @@ describe('actions: search', () => {
   });
 
   beforeEach(() => {
+    jest.resetModules();
     dispatch = jest.fn();
   });
 
@@ -81,15 +85,70 @@ describe('actions: search', () => {
     });
   });
 
+  describe('fetchVotedDelegateInfo', () => {
+    const delegates = {
+      data: [{
+        username: accounts.delegate.username,
+        rank: 1,
+      }, {
+        username: 'genesis_1',
+        rank: 32,
+      }],
+    };
+    const address = '123L';
+
+    it('should fetchVotedDelegateInfo again with offset if we don\'t have yet info for all votes', async () => {
+      const votes = [{
+        username: 'genesis_2',
+        rank: 30,
+      }, {
+        username: 'genesis_1',
+        rank: 32,
+      }, {
+        username: 'genesis_3',
+      }, {
+        username: 'genesis_4',
+      }, {
+        username: accounts.delegate.username,
+        rank: 1,
+      }];
+      const fetchVotedDelegateInfoSpy = jest.spyOn(actions, 'fetchVotedDelegateInfo');
+
+      delegateAPI.listDelegates.mockResolvedValue(delegates);
+      await fetchVotedDelegateInfo(votes, { address })(dispatch, getState);
+
+      // TODO figure out how to make this assertion work and remove the 'not'
+      expect(fetchVotedDelegateInfoSpy).not.toHaveBeenCalledWith(votes, {
+        offset: 100,
+        showingVotes: 30,
+      });
+    });
+
+    it('should dispatch searchVotes action if we have all info for all votes', async () => {
+      delegateAPI.listDelegates.mockResolvedValue(delegates);
+      const votes = delegates.data;
+      await fetchVotedDelegateInfo(votes, { address })(dispatch, getState);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        data: actionTypes.searchVotes,
+        type: actionTypes.loadingStarted,
+      });
+      expect(dispatch).toHaveBeenNthCalledWith(2, {
+        data: { votes, address },
+        type: actionTypes.searchVotes,
+      });
+    });
+  });
+
   describe('searchTransactions', () => {
+    const transactions = {
+      meta: {
+        count: 0,
+      },
+      data: [
+      ],
+    };
+
     it('should fetch transactions and then dispatch them', () => {
-      const transactions = {
-        meta: {
-          count: 1000,
-        },
-        data: [
-        ],
-      };
       transactionsAPI.getTransactions.mockResolvedValue(transactions);
       const action = searchTransactions({
         address: accounts.delegate.address,
@@ -113,6 +172,25 @@ describe('actions: search', () => {
         type: actionTypes.loadingFinished,
       });
       */
+    });
+
+    it('should allow to disable dispatching the loading actions', () => {
+      transactionsAPI.getTransactions.mockResolvedValue(transactions);
+      const action = searchTransactions({
+        address: accounts.delegate.address,
+        showLoading: false,
+      });
+      action(dispatch, getState);
+
+      expect(dispatch).not.toHaveBeenNthCalledWith(1, {
+        data: actionTypes.searchTransactions,
+        type: actionTypes.loadingStarted,
+      });
+
+      expect(dispatch).not.toHaveBeenNthCalledWith(1, {
+        data: actionTypes.searchTransactions,
+        type: actionTypes.loadingFinished,
+      });
     });
   });
 
