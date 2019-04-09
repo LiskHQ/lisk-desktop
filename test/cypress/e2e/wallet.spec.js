@@ -77,9 +77,10 @@ describe('Wallet', () => {
     it('Delegate -> Address, Name & Label are correct', () => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit(`${urls.accounts}/${topDelegate.address}`);
+      cy.wait('@requestAccountData');
       cy.url().should('contain', topDelegate.address);
       cy.get(ss.accountAddress).contains(topDelegate.address);
-      // cy.get(ss.accountName).contains(topDelegate.username);
+      cy.get(ss.accountName).contains(topDelegate.username);
       cy.get(ss.accountLabel).contains('Delegate #1');
     });
 
