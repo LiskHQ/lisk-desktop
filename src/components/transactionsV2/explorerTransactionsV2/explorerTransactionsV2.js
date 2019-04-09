@@ -126,14 +126,17 @@ class ExplorerTransactionsV2 extends React.Component {
       customFilters: this.state.customFilters,
       updateCustomFilters: this.updateCustomFilters,
     };
+    const { detailAccount } = this.props;
 
-    const isDelegate = (this.props.delegate
-      && this.props.delegate.account && this.props.delegate.account.address === this.props.address);
+    const delegate = detailAccount && detailAccount.delegate ? {
+      ...detailAccount.delegate,
+      ...(this.props.delegate || {}),
+    } : { ...(this.props.delegate || {}) };
 
     return (
       <React.Fragment>
         <TransactionsOverviewHeader
-          delegate={this.props.delegate}
+          delegate={delegate}
           followedAccounts={this.props.followedAccounts}
           balance={this.props.balance}
           address={this.props.address}
@@ -152,7 +155,7 @@ class ExplorerTransactionsV2 extends React.Component {
             votes={this.props.votes}
             tabClassName={'account-info'}
             tabName={this.props.t('Votes')} />
-          {isDelegate
+          {delegate.username
             ? (<DelegateTab
               tabClassName={'delegate-statistics'}
               tabName={this.props.t('Delegate')}
