@@ -8,8 +8,6 @@
   "% of successfully forged blocks in relation to total blocks that were available for this particular delegate to forge": "% of successfully forged blocks in relation to total blocks that were available for this particular delegate to forge",
   "%s Connected. Welcome %s!": "%s Connected. Welcome %s!",
   "%s Disconnected. See you %s!": "%s Disconnected. See you %s!",
-  "+{{fee}} LSK": "+{{fee}} LSK",
-  "+{{fee}} LSK transaction fee": "+{{fee}} LSK transaction fee",
   "+ Transaction fee {{fee}} LSK": "+ Transaction fee {{fee}} LSK",
   "2nd Passphrase Registration": "2nd Passphrase Registration",
   "64 bytes left": "64 bytes left",
