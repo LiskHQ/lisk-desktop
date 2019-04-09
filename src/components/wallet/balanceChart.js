@@ -6,7 +6,6 @@ import styles from './balanceChart.css';
 import * as ChartUtils from '../../utils/balanceChart';
 
 class BalanceGraph extends React.Component {
-  // eslint-disable-next-line class-methods-use-this
   shouldComponentUpdate(nextProps) {
     if (this.props.transactions.length !== nextProps.transactions.length) {
       return true;
