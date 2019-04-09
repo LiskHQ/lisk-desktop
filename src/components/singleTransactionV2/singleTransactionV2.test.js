@@ -164,4 +164,33 @@ describe('Single Transaction V2 Component', () => {
       expect(wrapper.find('.detailsHeader h1')).toHaveText('Vote Transaction');
     });
   });
+
+  describe('No results', () => {
+    const transaction = {
+      error: 'No transction found',
+    };
+
+    const store = configureMockStore([thunk])({
+      account: accounts.genesis,
+      transaction,
+      peers,
+      loadTransaction: jest.fn(),
+    });
+
+    const options = {
+      context: { i18n, store },
+      childContextTypes: {
+        store: PropTypes.object.isRequired,
+        i18n: PropTypes.object.isRequired,
+      },
+    };
+
+    beforeEach(() => {
+      wrapper = mount(<Router><SingleTransactionV2 {...props} /></Router>, options);
+    });
+
+    it('Should render no result screen', () => {
+      expect(wrapper).toContainMatchingElement('EmptyState');
+    });
+  });
 });
