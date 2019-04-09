@@ -13,7 +13,7 @@ describe('Tx details', () => {
    * Transfer transaction details are shown and correct
    * @expect transfer details are correct
    */
-  it.skip('Transfer Transaction details ', () => {
+  it('Transfer Transaction details ', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.send}?recipient=${accounts.delegate.address}&amount=5&reference=test-details`);
     cy.get(ss.nextTransferBtn).click();
@@ -73,7 +73,7 @@ describe('Tx details', () => {
    * Delegate registration transaction details are shown and correct
    * @expect transfer details are correct
    */
-  it.skip('Delegate reg details', () => {
+  it('Delegate reg details', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(`${urls.transactions}/${delegateRegTxId}`);
     cy.get(ss.txHeader).contains('Delegate Registration');
