@@ -134,26 +134,21 @@ describe('actions: peers', () => {
       });
     });
 
-    it('dispatch errorToastDisplayed action with the mesasge if account API call fails with a message', () => {
+    it('dispatch errorToastDisplayed action with the mesasge if account API call fails with a message', async () => {
       const error = { message: 'Custom error message' };
       accountApi.getAccount.mockRejectedValue(error);
-      liskAPIClientSet({ passphrase, network: {} })(dispatch, getState);
+      await liskAPIClientSet({ passphrase, network: {} })(dispatch, getState);
 
-      /*
       expect(dispatch).to.have.been.calledWith(
         match.hasNested('type', actionTypes.liskAPIClientSet),
       );
-      */
-      // TODO the assertion below should be replaced with the assertion above, but it doesn't work
-      expect(dispatch).to.have.been.calledWith();
     });
 
 
-    it('dispatch errorToastDisplayed action with a default mesasge if account API call fails without a message', () => {
+    it('dispatch errorToastDisplayed action with a default mesasge if account API call fails without a message', async () => {
       accountApi.getAccount.mockRejectedValue({ });
-      liskAPIClientSet({ passphrase, network: {} })(dispatch, getState);
+      await liskAPIClientSet({ passphrase, network: {} })(dispatch, getState);
 
-      /*
       expect(dispatch).to.have.been.calledWith({
         data: {
           label: 'Unable to connect to the node, no response from the server.',
@@ -161,9 +156,6 @@ describe('actions: peers', () => {
         },
         type: actionTypes.toastDisplayed,
       });
-      */
-      // TODO the assertion below should be replaced with the assertion above, but it doesn't work
-      expect(dispatch).to.have.been.calledWith();
     });
 
     it('dispatch liskAPIClientSet action even if network is undefined', () => {

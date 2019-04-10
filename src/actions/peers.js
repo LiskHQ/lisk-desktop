@@ -23,7 +23,7 @@ const peerSet = (data, config) => ({
   type: actionTypes.liskAPIClientSet,
 });
 
-export const login = (dispatch, getState, data, config) => { // eslint-disable-line max-statements
+export const login = async (dispatch, getState, data, config) => { // eslint-disable-line max-statements
   if (data.passphrase || data.hwInfo) {
     const store = getState();
     const { lockDuration } = accountConfig;
@@ -46,7 +46,7 @@ export const login = (dispatch, getState, data, config) => { // eslint-disable-l
     dispatch(accountLoading());
 
     // redirect to main/transactions
-    getAccount(liskAPIClient, address).then((accountData) => {
+    await getAccount(liskAPIClient, address).then((accountData) => {
       const duration = (passphrase && store.settings.autoLog) ?
         Date.now() + lockDuration : 0;
       const accountUpdated = {
@@ -79,7 +79,7 @@ export const login = (dispatch, getState, data, config) => { // eslint-disable-l
  * @returns {Object} Action object
  */
 export const liskAPIClientSet = data =>
-  (dispatch, getState) => { // eslint-disable-line max-statements
+  async (dispatch, getState) => { // eslint-disable-line max-statements
     const config = data.network;
 
     if (config.address) {
@@ -110,7 +110,7 @@ export const liskAPIClientSet = data =>
       });
     } else {
       dispatch(peerSet(data, config));
-      login(dispatch, getState, data, config);
+      await login(dispatch, getState, data, config);
     }
   };
 
