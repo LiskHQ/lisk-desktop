@@ -166,9 +166,7 @@ describe('Single Transaction V2 Component', () => {
   });
 
   describe('No results', () => {
-    const transaction = {
-      error: 'No transction found',
-    };
+    const transaction = 'No transction found';
 
     const store = configureMockStore([thunk])({
       account: accounts.genesis,

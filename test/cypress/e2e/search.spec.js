@@ -9,8 +9,15 @@ describe('Search', () => {
   const testnetTransaction = '755251579479131174';
   const mainnetTransaction = '881002485778658401';
 
+  beforeEach(() => {
+    cy.server();
+    cy.route('/api/accounts**').as('requestAccount');
+    cy.route('/api/transactions**').as('requestTransaction');
+    cy.route('/api/delegates**').as('requestDelegate');
+  });
+
   function assertAccountPage(accountsAddress) {
-    cy.wait(3000);
+    cy.wait('@requestAccount');
     cy.get(ss.accountAddress).should('have.text', accountsAddress)
       .and(() => {
         expect(getSearchesObjFromLS()[0].id).to.equal(accountsAddress);
@@ -19,7 +26,7 @@ describe('Search', () => {
   }
 
   function assertTransactionPage(transactionId) {
-    cy.wait(3000);
+    cy.wait('@requestTransaction');
     cy.get(ss.transactionId).should('have.text', transactionId)
       .and(() => {
         expect(getSearchesObjFromLS()[0].id).to.equal(transactionId);
@@ -28,7 +35,7 @@ describe('Search', () => {
   }
 
   function assertDelegatePage(delegateName, delegateId) {
-    cy.wait(3000);
+    cy.wait('@requestDelegate');
     cy.get(ss.accountName).should('have.text', delegateName)
       .and(() => {
         expect(getSearchesObjFromLS()[0].id).to.equal(delegateId);
