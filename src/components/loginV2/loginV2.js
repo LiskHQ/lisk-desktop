@@ -196,10 +196,10 @@ class LoginV2 extends React.Component {
       this.props.history.push(nextPath);
     }
   }
-
+  /* eslint-disable */
   render() {
     const { t, match } = this.props;
-
+    console.log('lol', localStorage.getItem('trezor'));
     return (
       <React.Fragment>
         { match.url === routes.loginV2.path ? (
@@ -280,7 +280,9 @@ class LoginV2 extends React.Component {
                   maxInputsLength={24}
                   onFill={this.checkPassphrase} />
 
-                  <div className={`${styles.hardwareHolder} ${this.state.devices.length > 0 ? styles.show : ''}`}>
+                  <div className={`${styles.hardwareHolder}
+                    ${(localStorage.getItem('trezor') && this.state.devices.length > 0)
+                    ? styles.show : ''}`}>
                     <div className={`${styles.label}`}>
                       {t('Hardware login (beta): ')}
                       <span className={`${styles.link} hardwareWalletLink`}
