@@ -4,7 +4,7 @@ import LiskAmount from '../liskAmount';
 import styles from './accountsAndDeletegates.css';
 
 const Accounts = ({
-  accounts, onSelectedRow, t, rowItemIndex,
+  accounts, onSelectedRow, t, rowItemIndex, updateRowItemIndex,
 }) => (
   <div className={`${styles.wrapper} accounts`}>
     <header className={`${styles.header} accounts-header`}>
@@ -21,6 +21,7 @@ const Accounts = ({
           key={index}
           className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} account-row`}
           onClick={() => onSelectedRow(account.address, 'account')}
+          onMouseEnter={/* istanbul ignore next */ () => updateRowItemIndex(index)}
         >
           <AccountVisual address={account.address} size={30} />
           <div className={styles.accountInformation}>

@@ -63,6 +63,10 @@
     justify-content: flex-start;
     align-items: center;
     cursor: pointer;
+
+    &:hover {
+      background-color: var(--primary-background-color);
+    }
   }
 
   & .transactionRow > img {

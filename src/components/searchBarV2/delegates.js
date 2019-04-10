@@ -4,7 +4,7 @@ import LiskAmount from '../liskAmount';
 import styles from './accountsAndDeletegates.css';
 
 const Delegates = ({
-  delegates, onSelectedRow, t, rowItemIndex,
+  delegates, onSelectedRow, t, rowItemIndex, updateRowItemIndex,
 }) => (
   <div className={`${styles.wrapper} delegates`}>
     <header className={`${styles.header} delegates-header`}>
@@ -21,6 +21,7 @@ const Delegates = ({
           key={index}
           className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} delegates-row`}
           onClick={() => onSelectedRow(delegate.account.address, 'account')}
+          onMouseEnter={/* istanbul ignore next */ () => updateRowItemIndex(index)}
         >
           <AccountVisual address={delegate.account.address} size={30} />
           <div className={styles.accountInformation}>

@@ -10,6 +10,7 @@ describe('Delegates', () => {
     delegates: [],
     onSelectedRow: jest.fn(),
     rowItemIndex: 0,
+    updateRowItemIndex: jest.fn(),
   };
 
   beforeEach(() => {

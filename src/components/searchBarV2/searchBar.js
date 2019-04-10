@@ -26,6 +26,7 @@ class SearchBar extends React.Component {
     this.onHandleKeyPress = this.onHandleKeyPress.bind(this);
     this.onKeyPressDownOrUp = this.onKeyPressDownOrUp.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
+    this.updateRowItemIndex = this.updateRowItemIndex.bind(this);
   }
 
   componentDidMount() {
@@ -126,6 +127,10 @@ class SearchBar extends React.Component {
     }
   }
 
+  updateRowItemIndex(rowItemIndex) {
+    this.setState({ rowItemIndex });
+  }
+
   // eslint-disable-next-line complexity
   render() {
     const { searchTextValue, isLoading, rowItemIndex } = this.state;
@@ -161,6 +166,7 @@ class SearchBar extends React.Component {
               accounts={suggestions.addresses}
               onSelectedRow={this.onSelectedRow}
               rowItemIndex={rowItemIndex}
+              updateRowItemIndex={this.updateRowItemIndex}
               t={t}
             />)
           : null
@@ -171,6 +177,7 @@ class SearchBar extends React.Component {
               delegates={suggestions.delegates}
               onSelectedRow={this.onSelectedRow}
               rowItemIndex={rowItemIndex}
+              updateRowItemIndex={this.updateRowItemIndex}
               t={t}
             />)
           : null
@@ -181,6 +188,7 @@ class SearchBar extends React.Component {
               transactions={suggestions.transactions}
               onSelectedRow={this.onSelectedRow}
               rowItemIndex={rowItemIndex}
+              updateRowItemIndex={this.updateRowItemIndex}
               t={t}
             />)
           : null

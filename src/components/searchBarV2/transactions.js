@@ -4,7 +4,7 @@ import LiskAmount from '../liskAmount';
 import styles from './transactions.css';
 
 const Transactions = ({
-  t, transactions, onSelectedRow, rowItemIndex,
+  t, transactions, onSelectedRow, rowItemIndex, updateRowItemIndex,
 }) => {
   function selectTransactionType(type) {
     let icon = svg.txDefault;
@@ -41,6 +41,7 @@ const Transactions = ({
             key={transaction.id}
             className={`${styles.transactionRow} ${rowItemIndex === index ? styles.active : ''} transaction-row`}
             onClick={() => onSelectedRow(transaction.id, 'transaction')}
+            onMouseEnter={() => updateRowItemIndex(index)}
           >
             <img src={selectTransactionType(transaction.type)} />
             <span className={`${styles.transactionId} transaction-id`}>{transaction.id}</span>

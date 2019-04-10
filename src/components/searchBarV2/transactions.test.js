@@ -10,6 +10,7 @@ describe('Transactions', () => {
     transactions: [],
     onSelectedRow: jest.fn(),
     rowItemIndex: 0,
+    updateRowItemIndex: jest.fn(),
   };
 
   beforeEach(() => {
