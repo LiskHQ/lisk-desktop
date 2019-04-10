@@ -20,7 +20,7 @@ const WalletTab = ({ ...props }) => (
         </div>
         <div className={`${grid['col-sm-8']} ${grid['col-lg-9']}`}>
         { // istanbul ignore next
-          !props.hideChart ?
+          !props.hideChart || props.transactions.length ?
           <BalanceChart
             balance={props.balance}
             address={props.address}

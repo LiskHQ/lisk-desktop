@@ -6,6 +6,13 @@ import styles from './balanceChart.css';
 import * as ChartUtils from '../../utils/balanceChart';
 
 class BalanceGraph extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.balance !== nextProps.balance || this.props.address !== nextProps.address) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
     const {
       t, transactions, balance, address,
