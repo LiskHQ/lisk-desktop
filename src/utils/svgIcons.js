@@ -74,4 +74,7 @@ export default {
   wallet_icon: walletIcon,
   iconFilter,
   questionIcon,
+  delegatesIcon,
+  walletIcon,
+  dashboardIcon,
 };

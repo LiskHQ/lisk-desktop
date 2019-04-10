@@ -45,18 +45,21 @@ class UserDropdown extends React.Component {
     const dropdownOptions = dropdownLinks(this.props.t);
 
     return (
-      <div className={`${grid['col-xs-2']} user-account ${topBarStyles.navItem}`}
+      <div
+        className={`${grid['col-xs-2']} user-account ${topBarStyles.navItem} ${topBarStyles.menuItems}`}
         onClick={() => this.handleClick()}>
         <div className={`${styles.avatar} user-avatar`}>
           <span
-            className={styles.onAvatar}
+            className={`${styles.onAvatar} ${this.state.isDropdownEnable ? styles.selected : ''}`}
             ref={node => this.setDropdownRef(node)}
           >
             <img src={accountIcon}/>
           </span>
 
-          <DropdownV2 showArrow={false}
-            className={styles.dropdown} showDropdown={this.state.isDropdownEnable}>
+          <DropdownV2
+            showArrow
+            className={styles.dropdown}
+            showDropdown={this.state.isDropdownEnable}>
             <a
               target='_blank'
               href={links.helpCenter}

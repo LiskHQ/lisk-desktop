@@ -52,18 +52,18 @@ class TopBar extends React.Component {
         <div className={`${styles.elements} ${grid.row}`}>
 
           <div className={`${grid['col-xs-6']} ${grid.row} ${styles.leftTopBar}`}>
-            <div className={grid['col-xs-2']}>
+            <div className={`${grid['col-xs-2']} ${styles.center}`}>
               <img src={liskLogo} />
             </div>
 
-            <div className={`${grid['col-xs-2']} ${styles.navItem}`}>
+            <div className={`${grid['col-xs-3']} ${styles.navItem}`}>
               <NavigationButton
                 account={this.props.account}
                 history={this.props.history}
               />
             </div>
 
-            <div className={`${grid['col-xs-6']}`}>
+            <div className={`${grid['col-xs-7']} ${styles.menuItems}`}>
               <MenuItems
                 isUserLogout={isUserLogout}
                 items={items}
@@ -75,7 +75,7 @@ class TopBar extends React.Component {
 
           <div className={`${grid['col-xs-6']}  ${grid.row} ${styles.rightTopBar}`}>
 
-          <div className={grid['col-xs-6']}>
+          <div className={`${grid['col-xs-6']} ${styles.center}`}>
             <SearchBar />
           </div>
 

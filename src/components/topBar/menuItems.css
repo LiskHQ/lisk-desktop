@@ -18,7 +18,7 @@
   align-items: center;
   text-decoration: none;
   cursor: pointer;
-  margin-right: 32px;
+  padding: 0px 20px;
 
   &:last-child {
     margin-right: 0;
@@ -43,6 +43,10 @@
 }
 
 .selected {
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-link-active);
+  margin-bottom: 2px;
+
   & > span {
     color: var(--color-link-active);
   }
