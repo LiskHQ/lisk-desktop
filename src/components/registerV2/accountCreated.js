@@ -13,9 +13,9 @@ const AccountCreated = ({ t, account }) => (
     <span className={`${registerStyles.stepsLabel}`}>{t('Step 4 / 4')}</span>
     <div className={`${registerStyles.titleHolder}`}>
       <h1>
-        {t('Your Account was created!')}
+        {t('Your Account is Ready!')}
       </h1>
-      <p>{t('Here’s your Address – feel free to share it within your whole network and your Lisk friends.')}</p>
+      <p>{t('You can now securely store and manage your LSK tokens.')}</p>
     </div>
 
     <div className={`${styles.accountHolder}`}>

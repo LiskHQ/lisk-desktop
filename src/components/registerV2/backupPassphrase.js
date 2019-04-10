@@ -66,9 +66,9 @@ class BackupPassphrase extends React.Component {
           <h1>
             {t('Save your Passphrase')}
           </h1>
-          <p>{t('Passphrase is both your login and password combined.')}</p>
+          <p>{t('Your passphrase is your login and password combined.')}</p>
           <p>{
-            t('Keep it safe, your passphrase is the only way to access your wallet.')
+            t('Keep it safe as it is the only way to access your wallet.')
           }</p>
         </div>
         <div className={`${styles.optionsHolder} ${grid['col-sm-10']}`}>
@@ -86,7 +86,7 @@ class BackupPassphrase extends React.Component {
                         {t('Read More')}
                     </a>}>
                   <p>{
-                    t('We strongly recommend to store your passphrase in a safe place, such as on a password manager or paperwallet.')
+                    t('Store your passphrase in a safe place, possibly having more than one copy. You can use a password manager or a paperwallet. It is very important to ensure you do not lose access to your passphrase.')
                   }</p>
                 </Tooltip>
 
@@ -120,8 +120,8 @@ class BackupPassphrase extends React.Component {
                 <Tooltip
                   title={'Paperwallet'}>
                   <p>
-                    {t('You can print your passphrase to be stored in a safe place. ')}
-                    {t('It is highly recommended to delete the PDF and remove it from your trash after printing.')}
+                    {t('You can print your passphrase to store in a safe place. ')}
+                    {t('It is highly recommended to delete the PDF file and remove it from your Trash Folder too after printing it.')}
                   </p>
                 </Tooltip>
               </h2>

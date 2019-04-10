@@ -66,7 +66,7 @@ class ChooseAvatar extends React.Component {
             {t('Choose your Avatar')}
           </h1>
           <p className={styles.description}>{
-            t('Each Avatar is a visual representation of an Adress, making it unique.')
+            t('An Avatar is a unique visual representation of your Lisk address.')
           }</p>
         </div>
         <div

@@ -126,7 +126,7 @@ class ConfirmPassphrase extends React.Component {
           <h1>
             {t('Confirm your passphrase')}
           </h1>
-          <p>{t('Choose the missing words from your passphrase you’ve recieved in the previous step to confirm.')}</p>
+          <p>{t('Choose the missing word to complete your passphrase. This was provided in the previous step.')}</p>
         </div>
 
         <div className={`${styles.confirmHolder} passphrase-holder`}>
@@ -147,7 +147,7 @@ class ConfirmPassphrase extends React.Component {
           }
           {
             <div className={`${styles.errorMessage} ${outOfTries ? styles.showError : ''}`}>
-              {outOfTries && <span>{t('Please go back and check your passphrase again.')}</span>}
+              {outOfTries && <span>{t('Choose the right words.')}</span>}
             </div>
           }
         </div>
