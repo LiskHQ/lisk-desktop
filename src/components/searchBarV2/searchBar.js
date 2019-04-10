@@ -70,7 +70,7 @@ class SearchBar extends React.Component {
 
     this.props.history.push(toUrl);
     this.clearSearch();
-    this.props.onSearchClick();
+    this.props.onSearchClick('search');
   }
 
   onKeyPressDownOrUp(action, totalRows) {
@@ -145,6 +145,7 @@ class SearchBar extends React.Component {
     return (
       <div className={`${styles.wrapper} search-bar`}>
         <InputV2
+          data-name={'searchInput'}
           setRef={setSearchBarRef}
           autoComplete={'off'}
           onChange={this.onChangeSearchTextValue}

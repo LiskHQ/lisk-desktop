@@ -1,8 +1,8 @@
 // istanbul ignore file
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import SeaarchBar from './searchBar';
 import { searchSuggestions, clearSearchSuggestions } from './../../actions/search';
+import SearchBar from './searchBar';
 
 const mapStateToProps = state => ({
   suggestions: state.search.suggestions,
@@ -13,4 +13,4 @@ const mapDispatchToProps = {
   clearSearchSuggestions,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)((translate()(SeaarchBar)));
+export default connect(mapStateToProps, mapDispatchToProps)((translate()(SearchBar)));
