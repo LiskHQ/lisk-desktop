@@ -9,15 +9,15 @@
 }
 
 .content {
+  display: flex;
   flex-grow: 1;
   position: relative;
 }
 
 .graphHolder {
-  height: 100%;
+  flex-grow: 1;
   overflow: hidden;
   position: relative;
-  width: 100%;
 
   & > * {
     height: 100%;
