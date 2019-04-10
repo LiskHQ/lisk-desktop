@@ -139,9 +139,7 @@ describe('actions: peers', () => {
       accountApi.getAccount.mockRejectedValue(error);
       await liskAPIClientSet({ passphrase, network: {} })(dispatch, getState);
 
-      expect(dispatch).to.have.been.calledWith(
-        match.hasNested('type', actionTypes.liskAPIClientSet),
-      );
+      expect(dispatch).to.have.been.calledWith(match.hasNested('type', actionTypes.liskAPIClientSet));
     });
 
 

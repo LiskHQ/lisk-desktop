@@ -23,12 +23,10 @@ const peerSet = (data, config) => ({
   type: actionTypes.liskAPIClientSet,
 });
 
-export const login = async (dispatch, getState, data, config) => { // eslint-disable-line max-statements
+export const login = async (dispatch, getState, data, config) => {
   if (data.passphrase || data.hwInfo) {
     const store = getState();
-    const { lockDuration } = accountConfig;
     const { passphrase } = data;
-    const { code } = data.network;
     const publicKey = passphrase ? extractPublicKey(passphrase) : data.publicKey;
     const liskAPIClient = store.peers.liskAPIClient ||
       new Lisk.APIClient(config.nodes, { nethash: config.nethash });
@@ -37,7 +35,7 @@ export const login = async (dispatch, getState, data, config) => { // eslint-dis
       passphrase,
       publicKey,
       address,
-      network: code || 0,
+      network: data.network.code || 0,
       loginType: data.hwInfo ? loginType.ledger : loginType.normal,
       peerAddress: data.network.nodes[0],
       hwInfo: data.hwInfo ? data.hwInfo : {},
@@ -48,7 +46,7 @@ export const login = async (dispatch, getState, data, config) => { // eslint-dis
     // redirect to main/transactions
     await getAccount(liskAPIClient, address).then((accountData) => {
       const duration = (passphrase && store.settings.autoLog) ?
-        Date.now() + lockDuration : 0;
+        Date.now() + accountConfig.lockDuration : 0;
       const accountUpdated = {
         ...accountData,
         ...accountBasics,
