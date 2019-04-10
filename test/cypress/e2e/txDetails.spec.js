@@ -4,11 +4,15 @@ import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
 import regex from '../../../src/utils/regex';
 
-const delegateVoteTxId = '7150719741601338678';
+const delegateVoteTxId = '11401359228711336212';
 const delegateRegTxId = '2697129531259680873';
-const secondPassphraseRegTxId = '18129432350589863394';
+const secondPassphraseRegTxId = '16730031459010386209';
 
 describe('Tx details', () => {
+  beforeEach(() => {
+    cy.server();
+    cy.route('/api/transactions**').as('requestTransaction');
+  });
   /**
    * Transfer transaction details are shown and correct
    * @expect transfer details are correct
@@ -45,12 +49,11 @@ describe('Tx details', () => {
    * Delegate transaction details are shown and correct
    * @expect transfer details are correct
    */
-  // Unskip after bug #1882 be fixed
-  it.skip('Vote details', () => {
+  it('Vote details', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(`${urls.transactions}/${delegateVoteTxId}`);
-    cy.wait(1000);
-    cy.get(ss.txHeader).contains('Delegate Registration');
+    cy.wait('@requestTransaction');
+    cy.get(ss.txHeader).contains('Vote Transaction');
     cy.get(ss.txSenderAddress).should('have.text', accounts.delegate.address)
       .click();
     cy.get(ss.accountAddress).should('have.text', accounts.delegate.address);
@@ -97,11 +100,10 @@ describe('Tx details', () => {
    * Register second passphrase transaction details are shown and correct
    * @expect transfer details are correct
    */
-  // Unskip after bug #1882 be fixed
-  it.skip('2nd passphrase reg details', () => {
+  it('2nd passphrase reg details', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(`${urls.transactions}/${secondPassphraseRegTxId}`);
-    cy.wait(1000);
+    cy.wait('@requestTransaction');
     cy.get(ss.txHeader).contains('2nd Passphrase Registration');
     cy.get(ss.txSenderAddress).should('have.text', accounts['second passphrase account'].address)
       .click();
