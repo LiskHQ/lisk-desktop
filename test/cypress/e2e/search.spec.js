@@ -8,11 +8,21 @@ describe('Search', () => {
   const mainnetTransaction = '881002485778658401';
   const testnetTransactionId = '6676752260506338126';
 
+  beforeEach(() => {
+    cy.server();
+    cy.route('/api/accounts**').as('requestAccount');
+    cy.route('/api/transactions**').as('requestTransaction');
+    cy.route('/api/delegates**').as('requestDelegate');
+  });
+
   function assertAccountPage(accountsAddress) {
+    cy.wait('@requestAccount');
+    cy.wait('@requestDelegate');
     cy.get(ss.searchAccountRow).find('.account-title').should('have.text', accountsAddress);
   }
 
   function assertTransactionPage(transactionId) {
+    cy.wait('@requestTransaction');
     cy.get(ss.searchTransactionRow).find(ss.searchTransactionRowId).should('have.text', transactionId);
   }
 
@@ -114,6 +124,7 @@ describe('Search', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.searchIcon).click();
     cy.get(ss.searchInput).type(`${accounts['mainnet delegate'].address}`);
+    cy.wait('@requestAccount');
     cy.get(ss.searchAccountRow).eq(0).click();
     cy.get(ss.accountName).should('have.text', accounts['mainnet delegate'].username);
   });
@@ -124,13 +135,13 @@ describe('Search', () => {
    * This test should be fxied once the transaction details page
    * change the behavior of how to present the data
    */
-  it.skip('Search signed in mainnet - happens in mainnet', () => {
+  it('Search signed in mainnet - happens in mainnet', () => {
     cy.autologin(accounts.genesis.passphrase, networks.mainnet.node);
     cy.visit(urls.dashboard);
     cy.get(ss.searchIcon).click();
     cy.get(ss.searchInput).type(`${accounts['mainnet delegate'].address}`);
     cy.get(ss.searchAccountResults).eq(0).click();
-    cy.wait(5000);
+    cy.wait('@requestAccount');
     cy.get(ss.accountName).should('have.text', accounts['mainnet delegate'].username);
   });
 

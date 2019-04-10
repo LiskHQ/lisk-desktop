@@ -50,7 +50,7 @@ describe('Tx details', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(`${urls.transactions}/${delegateVoteTxId}`);
     cy.wait(1000);
-    cy.get(ss.txHeader).contains('Vote Transaction');
+    cy.get(ss.txHeader).contains('Delegate Registration');
     cy.get(ss.txSenderAddress).should('have.text', accounts.delegate.address)
       .click();
     cy.get(ss.accountAddress).should('have.text', accounts.delegate.address);
