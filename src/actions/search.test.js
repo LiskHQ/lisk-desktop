@@ -1,5 +1,6 @@
 import actionTypes from '../constants/actions';
 import networks from '../constants/networks';
+import txFilters from '../constants/transactionFilters';
 import * as searchAPI from '../utils/api/search';
 import * as accountAPI from '../utils/api/account';
 import * as delegateAPI from '../utils/api/delegate';
@@ -140,38 +141,47 @@ describe('actions: search', () => {
   });
 
   describe('searchTransactions', () => {
+    const count = 0;
     const transactions = {
       meta: {
-        count: 0,
+        count,
       },
       data: [
       ],
     };
 
-    it('should fetch transactions and then dispatch them', () => {
-      transactionsAPI.getTransactions.mockResolvedValue(transactions);
-      const action = searchTransactions({
+    it('should fetch transactions and then dispatch them', async () => {
+      const params = {
         address: accounts.delegate.address,
-        filter: {},
-      });
-      action(dispatch, getState);
+        filter: txFilters.all,
+        customFilters: {},
+      };
+      transactionsAPI.getTransactions.mockResolvedValue(transactions);
+      await searchTransactions(params)(dispatch, getState);
 
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         data: actionTypes.searchTransactions,
         type: actionTypes.loadingStarted,
       });
-      // TODO figure out why the assertion below doesn't hold true
-      // despite coverage report shows the code was called
-      /*
       expect(dispatch).toHaveBeenNthCalledWith(2, {
-        data: {},
-        type: actionTypes.searchMoreTransactions,
+        data: {
+          ...params,
+          count,
+          transactions: transactions.data,
+        },
+        type: actionTypes.searchTransactions,
       });
       expect(dispatch).toHaveBeenNthCalledWith(3, {
-        data: actionTypes.searchMoreTransactions,
+        data: {
+          filterName: 'transactions',
+          value: params.filter,
+        },
+        type: actionTypes.addFilter,
+      });
+      expect(dispatch).toHaveBeenNthCalledWith(4, {
+        data: actionTypes.searchTransactions,
         type: actionTypes.loadingFinished,
       });
-      */
     });
 
     it('should allow to disable dispatching the loading actions', () => {
@@ -195,39 +205,44 @@ describe('actions: search', () => {
   });
 
   describe('searchMoreTransactions', () => {
-    it('should fetch transactions and then dispatch them', () => {
+    it('should fetch transactions and then dispatch them', async () => {
+      const count = 1000;
       const transactions = {
         meta: {
-          count: 1000,
+          count,
         },
         data: [
         ],
       };
+      const params = {
+        address: accounts.delegate.address,
+        filter: txFilters.all,
+        customFilters: {},
+      };
       transactionsAPI.getTransactions.mockResolvedValue(transactions);
-      const action = searchMoreTransactions({ address: accounts.delegate.address });
-      action(dispatch, getState);
+      await searchMoreTransactions(params)(dispatch, getState);
 
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         data: actionTypes.searchMoreTransactions,
         type: actionTypes.loadingStarted,
       });
-      // TODO figure out why the assertion below doesn't hold true
-      // despite coverage report shows the code was called
-      /*
       expect(dispatch).toHaveBeenNthCalledWith(2, {
-        data: {},
+        data: {
+          ...params,
+          count,
+          transactions: transactions.data,
+        },
         type: actionTypes.searchMoreTransactions,
       });
       expect(dispatch).toHaveBeenNthCalledWith(3, {
         data: actionTypes.searchMoreTransactions,
         type: actionTypes.loadingFinished,
       });
-      */
     });
   });
 
   describe('searchAccount', () => {
-    it('should call ', () => {
+    it('should call ', async () => {
       const account = {
         address: accounts.delegate.address,
         publicKey: accounts.delegate.publicKey,
@@ -236,16 +251,12 @@ describe('actions: search', () => {
         },
       };
       accountAPI.getAccount.mockResolvedValue(account);
-      const action = searchAccount({ address: account.address });
-      action(dispatch, getState);
-      // TODO figure out why the assertion below doesn't hold true
-      // despite coverage report shows the code was called
-      /*
+      await searchAccount({ address: account.address })(dispatch, getState);
+
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.searchAccount,
         data: account,
       });
-      */
     });
   });
 });
