@@ -15,6 +15,7 @@ describe('actions: transactions', () => {
   const dispatch = jest.fn();
   let getState = () => ({
     peers: { liskAPIClient: {} },
+    transactions: { filter: txFilters.all },
   });
 
   describe('transactionsUpdated', () => {
@@ -79,6 +80,7 @@ describe('actions: transactions', () => {
           },
         },
       },
+      transactions: { filter: txFilters.all },
     });
     const data = {
       address: '15626650747375562521',
@@ -100,6 +102,7 @@ describe('actions: transactions', () => {
             },
           },
         },
+        transactions: { filter: txFilters.all },
       });
     });
 
@@ -163,6 +166,7 @@ describe('actions: transactions', () => {
   describe('sent', () => {
     getState = () => ({
       peers: { liskAPIClient: {} },
+      transactions: { filter: txFilters.all },
     });
     const data = {
       recipientId: '15833198055097037957L',
@@ -180,6 +184,7 @@ describe('actions: transactions', () => {
     beforeEach(() => {
       getState = () => ({
         peers: { liskAPIClient: {} },
+        transactions: { filter: txFilters.all },
       });
     });
 
