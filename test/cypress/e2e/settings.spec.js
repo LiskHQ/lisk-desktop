@@ -20,13 +20,15 @@ describe('Settings', () => {
   });
 
   /**
-   * Settings page can be opened clicking sidebar button
+   * Settings page can be opened clicking avatar and than settings button
    * @expect url is correct
    * @expect some specific to page element is present on it
    */
-  it.skip('Opens by sidebar button', () => {
+  it('Opens by button', () => {
+    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit('/');
-    cy.get(ss.sidebarMenuSettingsBtn).should('have.css', 'opacity', '1').click();
+    cy.get(ss.userAvatar).click();
+    cy.get(ss.settingsBtn).click();
     cy.url().should('contain', urls.settings);
     checkSettingsPageLoaded();
   });

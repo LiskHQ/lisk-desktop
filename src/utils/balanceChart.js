@@ -2,6 +2,18 @@ import moment from 'moment';
 import { fromRawLsk } from './lsk';
 import { getUnixTimestampFromValue } from './datetime';
 
+const formats = {
+  second: 'MMM DD YYYY hh:mm:ss',
+  minute: 'MMM DD YYYY hh:mm',
+  hour: 'MMM DD YYYY hh[h]',
+  day: 'MMM DD YYYY',
+  month: 'MMM YYYY',
+  year: 'YYYY',
+};
+
+const getUnitFromFormat = format =>
+  Object.keys(formats).find(key => formats[key] === format);
+
 const styles = {
   borderColor: 'rgba(15, 126, 255, 0.5)',
   whiteColor: '#ffffff',
@@ -30,13 +42,14 @@ export const graphOptions = format => ({
       display: true,
       type: 'time',
       time: {
-        minUnit: 'day',
+        unit: getUnitFromFormat(format),
       },
-      distribution: 'series',
+      distribution: 'linear',
       ticks: {
         fontColor: styles.slateGray,
         fontSize: styles.fontSize,
         fontFamily: styles.contentFontFamily,
+        maxRotation: 0,
       },
       gridLines: {
         display: false,
@@ -101,6 +114,21 @@ export const graphOptions = format => ({
   },
 });
 
+export const getChartDateFormat = (transactions) => {
+  const last = moment();
+  const first = transactions.length
+    && moment(getUnixTimestampFromValue(transactions.slice(-1)[0].timestamp));
+
+  if (!first || !last) return '';
+  let format = formats.year;
+  if (last.diff(first, 'years') <= 1) format = formats.month;
+  if (last.diff(first, 'months') <= 1) format = formats.day;
+  if (last.diff(first, 'days') <= 3) format = formats.hour;
+  if (last.diff(first, 'hours') <= 12) format = formats.minute;
+  if (last.diff(first, 'minutes') <= 5) format = formats.second;
+  return format;
+};
+
 /**
  * Returns value in interger format of the amount that was added or subtracted from the balance
  * @param {Object} tx Transaction Object
@@ -116,8 +144,8 @@ const getTxValue = (tx, address) => {
 /**
  * Returs balance data grouped by an specific amount
  * @param {Object} param Object containing {
+ *  @param {String} format,
  *  @param {Object[]} transactions,
- *  @param {String} data,
  *  @param {Number} balance,
  *  @param {String} address,
  * }
@@ -126,17 +154,19 @@ const getTxValue = (tx, address) => {
 export const getBalanceData = ({
   format, transactions, balance, address,
 }) => {
+  const unit = getUnitFromFormat(format);
   const data = transactions.reduce((balances, tx) => {
     const txValue = getTxValue(tx, address);
-    const txDate = new Date(getUnixTimestampFromValue(tx.timestamp));
+    const txDate = tx.timestamp ? new Date(getUnixTimestampFromValue(tx.timestamp)) : new Date();
     const lastBalance = balances.slice(-1)[0];
-    const tmpBalances = moment(lastBalance.x).format(format) === moment(txDate).format(format)
-      ? balances.slice(0, -1) : balances;
+    const tmpBalances = balances.length > 1 && moment(lastBalance.x).isSame(txDate, unit)
+      ? balances.slice(0, -1)
+      : balances;
     return [
       ...tmpBalances,
       { x: txDate, y: (parseInt(lastBalance.y, 10) + txValue) },
     ];
-  }, [{ x: new Date(), y: +balance }]).reverse().map(d => ({ ...d, y: +fromRawLsk(d.y) }));
+  }, [{ x: moment(), y: +balance }]).reverse().map(d => ({ ...d, y: +fromRawLsk(d.y) }));
 
   return {
     datasets: [{
