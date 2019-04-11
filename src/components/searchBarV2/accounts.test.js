@@ -33,7 +33,7 @@ describe('Accounts', () => {
         balance: '120',
         delegate: {
           rank: 34,
-          username: 'genesis_51'
+          username: 'genesis_51',
         },
       },
     ];
