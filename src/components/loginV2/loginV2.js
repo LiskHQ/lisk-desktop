@@ -197,6 +197,7 @@ class LoginV2 extends React.Component {
     }
   }
 
+  // eslint-disable-next-line complexity
   render() {
     const { t, match } = this.props;
 
