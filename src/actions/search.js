@@ -36,6 +36,7 @@ export const fetchVotedDelegateInfo = (votes, {
   // eslint-disable-next-line max-statements
   async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
+    /* istanbul ignore if */
     if (!liskAPIClient) return;
     dispatch(loadingStarted(actionTypes.searchVotes));
     const delegates = await listDelegates(liskAPIClient, { limit, offset });
@@ -70,7 +71,7 @@ export const fetchVotedDelegateInfo = (votes, {
 const searchVotes = ({ address, offset, limit }) =>
   async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    /* istanbul ignore else */
+    /* istanbul ignore if */
     if (!liskAPIClient) return;
     dispatch(loadingStarted(actionTypes.searchVotes));
     const votes = await getVotes(liskAPIClient, { address, offset, limit })
@@ -84,6 +85,8 @@ const searchVotes = ({ address, offset, limit }) =>
     dispatch(loadingFinished(actionTypes.searchVotes));
   };
 
+/* istanbul ignore next */
+/* because it's not used anymore and should be removed in #1911 */
 const searchVoters = ({
   address, publicKey, offset, limit, append,
 }) =>
@@ -106,6 +109,8 @@ const searchVoters = ({
     }
   };
 
+/* istanbul ignore next */
+/* because it's not used anymore and should be removed in #1911 */
 export const searchMoreVoters = ({ address, offset = 0, limit = 100 }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
@@ -147,6 +152,7 @@ export const searchTransactions = ({
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     if (showLoading) dispatch(loadingStarted(actionTypes.searchTransactions));
+    /* istanbul ignore else */
     if (liskAPIClient) {
       getTransactions({
         liskAPIClient, address, limit, filter, customFilters,

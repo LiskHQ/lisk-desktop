@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import transactions from './transactions';
 import actionTypes from '../../constants/actions';
 import txFilter from '../../constants/transactionFilters';
@@ -32,7 +31,7 @@ describe('Reducer: transactions(state, action)', () => {
       data: mockTransactions[0],
     };
     const changedState = transactions(state, action);
-    expect(changedState).to.deep.equal({ ...state, pending: [action.data, ...state.pending] });
+    expect(changedState).toEqual({ ...state, pending: [action.data, ...state.pending] });
   });
 
   it('should add property `failed` with error message if action.type = actionTypes.transactionFailed', () => {
@@ -47,7 +46,21 @@ describe('Reducer: transactions(state, action)', () => {
       type: actionTypes.transactionFailed,
     };
     const changedState = transactions(state, action);
-    expect(changedState).to.deep.equal({ ...state, failed: { errorMessage } });
+    expect(changedState).toEqual({ ...state, failed: { errorMessage } });
+  });
+
+  it('should remove property `failed` if action.type = actionTypes.transactionFailedClear', () => {
+    const errorMessage = 'transaction failed';
+    const state = {
+      ...defaultState,
+      failed: { errorMessage },
+    };
+
+    const action = {
+      type: actionTypes.transactionFailedClear,
+    };
+    const changedState = transactions(state, action);
+    expect(changedState).toEqual({ ...defaultState });
   });
 
   it('should filter out failed transactions from pending', () => {
@@ -64,7 +77,7 @@ describe('Reducer: transactions(state, action)', () => {
     };
     const pendingTransactionsFiltered = transactions(state, action);
     const stateWithNoPendingTransactions = { ...defaultState };
-    expect(pendingTransactionsFiltered).to.deep.equal(stateWithNoPendingTransactions);
+    expect(pendingTransactionsFiltered).toEqual(stateWithNoPendingTransactions);
   });
 
   it('should concat action.data to state.confirmed if action.type = actionTypes.transactionsLoaded', () => {
@@ -82,7 +95,7 @@ describe('Reducer: transactions(state, action)', () => {
       count: action.data.count,
     };
     const changedState = transactions(state, action);
-    expect(changedState).to.deep.equal(expectedState);
+    expect(changedState).toEqual(expectedState);
   });
 
   it('should prepend newer transactions from action.data to state.confirmed and remove from state.pending if action.type = actionTypes.transactionsUpdated', () => {
@@ -100,7 +113,7 @@ describe('Reducer: transactions(state, action)', () => {
       },
     };
     const changedState = transactions(state, action);
-    expect(changedState).to.deep.equal({
+    expect(changedState).toEqual({
       ...defaultState,
       confirmed: mockTransactions,
       count: mockTransactions.length,
@@ -119,7 +132,7 @@ describe('Reducer: transactions(state, action)', () => {
       },
     };
     const changedState = transactions(state, action);
-    expect(changedState).to.deep.equal({
+    expect(changedState).toEqual({
       ...defaultState,
       confirmed: mockTransactions,
       count: mockTransactions.length,
@@ -138,9 +151,33 @@ describe('Reducer: transactions(state, action)', () => {
     };
     const action = { type: actionTypes.accountSwitched };
     const changedState = transactions(state, action);
-    expect(changedState).to.deep.equal({
+    expect(changedState).toEqual({
       ...defaultState,
       count: 0,
+    });
+  });
+
+  it('should reduce transactions when filtered', () => {
+    const state = {
+      ...defaultState,
+    };
+    const data = {
+      confirmed: mockTransactions,
+      count: mockTransactions.length,
+      filter: txFilter.all,
+      customFilters: {
+        dateFrom: '1',
+        dateTo: '2',
+        amountFrom: '3',
+        amountTo: '4',
+        message: '5',
+      },
+    };
+    const action = { type: actionTypes.transactionsFiltered, data };
+    const changedState = transactions(state, action);
+    expect(changedState).toEqual({
+      ...defaultState,
+      ...data,
     });
   });
 
@@ -158,7 +195,7 @@ describe('Reducer: transactions(state, action)', () => {
     const action = { type: actionTypes.transactionsLoadFinish, data };
     const changedState = transactions(state, action);
 
-    expect(changedState).to.deep.equal({
+    expect(changedState).toEqual({
       ...defaultState,
       confirmed: data.confirmed,
       count: data.count,
@@ -169,5 +206,31 @@ describe('Reducer: transactions(state, action)', () => {
       },
       filter: txFilter.all,
     });
+  });
+
+  it('should reset all data if action.type = cleanTransactions', () => {
+    const state = {
+      pending: null,
+      confirmed: null,
+      count: null,
+      customFilters: null,
+    };
+
+    const expectedState = {
+      pending: [],
+      confirmed: [],
+      count: null,
+      customFilters: {
+        dateFrom: '',
+        dateTo: '',
+        amountFrom: '',
+        amountTo: '',
+        message: '',
+      },
+    };
+
+    const action = { type: actionTypes.cleanTransactions };
+    const changedState = transactions(state, action);
+    expect(changedState).toEqual(expectedState);
   });
 });

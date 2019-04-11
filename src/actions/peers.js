@@ -23,12 +23,10 @@ const peerSet = (data, config) => ({
   type: actionTypes.liskAPIClientSet,
 });
 
-const login = (dispatch, getState, data, config) => { // eslint-disable-line max-statements
+export const login = async (dispatch, getState, data, config) => {
   if (data.passphrase || data.hwInfo) {
     const store = getState();
-    const { lockDuration } = accountConfig;
     const { passphrase } = data;
-    const { code } = data.network;
     const publicKey = passphrase ? extractPublicKey(passphrase) : data.publicKey;
     const liskAPIClient = store.peers.liskAPIClient ||
       new Lisk.APIClient(config.nodes, { nethash: config.nethash });
@@ -37,7 +35,7 @@ const login = (dispatch, getState, data, config) => { // eslint-disable-line max
       passphrase,
       publicKey,
       address,
-      network: code || 0,
+      network: data.network.code || 0,
       loginType: data.hwInfo ? loginType.ledger : loginType.normal,
       peerAddress: data.network.nodes[0],
       hwInfo: data.hwInfo ? data.hwInfo : {},
@@ -46,9 +44,9 @@ const login = (dispatch, getState, data, config) => { // eslint-disable-line max
     dispatch(accountLoading());
 
     // redirect to main/transactions
-    getAccount(liskAPIClient, address).then((accountData) => {
+    await getAccount(liskAPIClient, address).then((accountData) => {
       const duration = (passphrase && store.settings.autoLog) ?
-        Date.now() + lockDuration : 0;
+        Date.now() + accountConfig.lockDuration : 0;
       const accountUpdated = {
         ...accountData,
         ...accountBasics,
@@ -79,8 +77,8 @@ const login = (dispatch, getState, data, config) => { // eslint-disable-line max
  * @returns {Object} Action object
  */
 export const liskAPIClientSet = data =>
-  (dispatch, getState) => { // eslint-disable-line max-statements
-    const config = data.network || {};
+  async (dispatch, getState) => { // eslint-disable-line max-statements
+    const config = data.network;
 
     if (config.address) {
       config.nodes = [config.address];
@@ -110,7 +108,7 @@ export const liskAPIClientSet = data =>
       });
     } else {
       dispatch(peerSet(data, config));
-      login(dispatch, getState, data, config);
+      await login(dispatch, getState, data, config);
     }
   };
 
