@@ -1,34 +1,16 @@
 import { tokenMap } from '../../constants/tokens';
-// import * as liskAccount from './lisk/account';
-// import * as liskTransactions from './lisk/transactions';
-// import * as btcAccount from './btc/account';
+import * as btcAccount from './btc/account';
 // import * as btcTransactions from './btc/transactions';
-// import * as liskService from './lisk/service';
 // import * as btcService from './btc/service';
 
 /**
  * Resource oriented mapping from token type to utility functions.
  */
 const resourceMap = {
-  // [tokenMap.LSK.key]: {
-  //   account: liskAccount,
-  //   transactions: liskTransactions,
-  //   service: liskService,
-  // },
-  // [tokenMap.BTC.key]: {
-  //   account: btcAccount,
-  //   transactions: btcTransactions,
-  //   service: btcService,
-  // },
-  [tokenMap.LSK.key]: {
-    account: () => 'liskAccount',
-    transactions: () => 'liskTransactions',
-    service: () => 'liskService',
-  },
   [tokenMap.BTC.key]: {
-    account: () => 'btcAccount',
-    transactions: () => 'btcTransactions',
-    service: () => 'btcService',
+    account: btcAccount,
+    transactions: 'btcTransactions',
+    service: 'btcService',
   },
 };
 

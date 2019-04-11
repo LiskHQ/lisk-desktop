@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
-import { setSecondPassphrase, getAccount } from '../utils/api/account';
+import { setSecondPassphrase, getAccount, btc } from '../utils/api/account';
 import { registerDelegate, getDelegate, getAllVotes, getVoters } from '../utils/api/delegate';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
@@ -237,6 +237,9 @@ export const accountDataUpdated = ({
   account, windowIsFocused, transactions,
 }) =>
   (dispatch, getState) => {
+    const { account: stateAccount, peers } = getState();
+    const btcAddress = btc.extractAddress(stateAccount.passphrase, peers.options.code);
+    btc.getAccount(btcAddress, peers.options.code).then(console.log);
     const liskAPIClient = getState().peers.liskAPIClient;
     getAccount(liskAPIClient, account.address).then((result) => {
       if (result.balance !== account.balance) {

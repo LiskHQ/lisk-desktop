@@ -1,14 +1,17 @@
-import bitcoin from 'bitcoinjs-lib';
+import * as bitcoin from 'bitcoinjs-lib';
 import Lisk from 'lisk-elements';
 import bip32 from 'bip32';
-import config from '../../../../btc.config';
+import * as popsicle from 'popsicle';
+import getBtcConfig from './config';
 
-export const getSummary = address => new Promise(async (resolve, reject) => {
+export const getSummary = (address, netCode = 1) => new Promise(async (resolve, reject) => {
   try {
-    const response = await fetch(`${config.url}/balance?active=${address}`, config.requestOptions);
-    const json = await response.json();
+    const config = getBtcConfig(netCode);
+    const response = await popsicle.get(`${config.url}/balance?active=${address}`)
+      .use(popsicle.plugins.parse('json'));
+    const json = response.body;
 
-    if (response.ok) {
+    if (response) {
       resolve({
         address,
         balance: json[address].final_balance,
@@ -22,14 +25,17 @@ export const getSummary = address => new Promise(async (resolve, reject) => {
   }
 });
 
-export const getDerivedPathFromPassphrase = (passphrase) => {
+export const getDerivedPathFromPassphrase = (passphrase, netCode = 1) => {
+  const config = getBtcConfig(netCode);
   const seed = Lisk.passphrase.Mnemonic.mnemonicToSeed(passphrase);
   return bip32.fromSeed(seed, config.network).derivePath(config.derivationPath);
 };
 
-export const extractPublicKey = passphrase => getDerivedPathFromPassphrase(passphrase).publicKey;
+export const extractPublicKey = (passphrase, netCode = 1) =>
+  getDerivedPathFromPassphrase(passphrase, netCode).publicKey;
 
-export const extractAddress = (passphrase) => {
+export const extractAddress = (passphrase, netCode = 1) => {
+  const config = getBtcConfig(netCode);
   const publicKey = extractPublicKey(passphrase);
   const btc = bitcoin.payments.p2pkh({ pubkey: publicKey, network: config.network });
   return btc.address;

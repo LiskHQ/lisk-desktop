@@ -1,5 +1,6 @@
 // import { requestToActivePeer } from './peers';
 import Lisk from 'lisk-elements';
+import getMappedFunction from './functionMapper';
 
 export const getAccount = (liskAPIClient, address) =>
   new Promise((resolve, reject) => {
@@ -41,3 +42,8 @@ export const setSecondPassphrase = (
     }).catch(reject);
   });
 
+// Temporary btc account utility while we don't normalize the apis calls.
+export const btc = {
+  getAccount: (address, netCode) => getMappedFunction('BTC', 'account', 'getSummary')(address, netCode),
+  extractAddress: (passphrase, netCode) => getMappedFunction('BTC', 'account', 'extractAddress')(passphrase, netCode),
+};
