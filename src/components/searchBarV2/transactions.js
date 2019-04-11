@@ -6,24 +6,44 @@ import styles from './transactions.css';
 const Transactions = ({
   t, transactions, onSelectedRow, rowItemIndex, updateRowItemIndex,
 }) => {
-  function selectTransactionType(type) {
-    let icon = svg.txDefault;
+  function selectTransactionType() {
+    const type = transactions[0].type;
+    let transaction = {
+      icon: svg.txDefault,
+      subTitle: t('Amount'),
+      value: transactions[0].amount,
+    };
+
     switch (type) {
       case 1:
-        icon = svg.tx2ndPassphrase;
+        transaction = {
+          icon: svg.tx2ndPassphrase,
+          subTitle: t('Amount'),
+          value: transactions[0].amount,
+        };
         break;
       case 2:
-        icon = svg.txDelegate;
+        transaction = {
+          icon: svg.txDelegate,
+          subTitle: t('Amount'),
+          value: transactions[0].amount,
+        };
         break;
       case 3:
-        icon = svg.txVote;
+        transaction = {
+          icon: svg.txVote,
+          subTitle: t('Fee'),
+          value: transactions[0].fee,
+        };
         break;
       default:
         break;
     }
 
-    return icon;
+    return transaction;
   }
+
+  const transactionType = selectTransactionType();
 
   return (
     <div className={`${styles.wrapper} transactions`}>
@@ -31,7 +51,7 @@ const Transactions = ({
         <label>{t('Transactions')}</label>
         <div className={`${styles.subTitles} transactions-subtitle`}>
           <label>{t('Type')}</label>
-          <label>{t('Message')}</label>
+          <label>{transactionType.subTitle}</label>
         </div>
       </header>
       <div className={`${styles.content} transactions-content`}>
@@ -43,10 +63,10 @@ const Transactions = ({
             onClick={() => onSelectedRow(transaction.id, 'transaction')}
             onMouseEnter={() => updateRowItemIndex(index)}
           >
-            <img src={selectTransactionType(transaction.type)} />
+            <img src={transactionType.icon} />
             <span className={`${styles.transactionId} transaction-id`}>{transaction.id}</span>
             <span className={styles.transactionMessage}>
-              <LiskAmount val={transaction.amount} />
+              <LiskAmount val={transactionType.value} />
               <span>{t(' LSK')}</span>
             </span>
           </div>

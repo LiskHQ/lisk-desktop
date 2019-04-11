@@ -25,6 +25,26 @@ describe('Accounts', () => {
     expect(wrapper).not.toContainMatchingElement('.account-row');
   });
 
+  it('should render properly delegate accounts', () => {
+    const newProps = { ...props };
+    newProps.accounts = [
+      {
+        address: '12345234236L',
+        balance: '120',
+        delegate: {
+          rank: 34,
+          username: 'genesis_51'
+        },
+      },
+    ];
+    wrapper = mount(<Accounts {...newProps} />);
+    expect(wrapper).toContainMatchingElement('.accounts');
+    expect(wrapper).toContainMatchingElement('.accounts-header');
+    expect(wrapper).toContainMatchingElement('.accounts-subtitle');
+    expect(wrapper).toContainMatchingElement('.account-content');
+    expect(wrapper).toContainMatchingElement('.tag');
+  });
+
   it('should render properly with accounts data', () => {
     const newProps = { ...props };
     newProps.accounts = [
@@ -32,6 +52,11 @@ describe('Accounts', () => {
         address: '123456L',
         title: 'John',
         balance: '120',
+      },
+      {
+        address: '12345234L',
+        title: 'Anna',
+        balance: '110',
       },
     ];
     wrapper = mount(<Accounts {...newProps} />);

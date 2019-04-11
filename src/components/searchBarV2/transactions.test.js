@@ -7,7 +7,15 @@ describe('Transactions', () => {
 
   const props = {
     t: v => v,
-    transactions: [],
+    transactions: [
+      {
+        asset: {
+          data: 'testing',
+        },
+        id: 123,
+        type: 0,
+      },
+    ],
     onSelectedRow: jest.fn(),
     rowItemIndex: 0,
     updateRowItemIndex: jest.fn(),
@@ -22,7 +30,7 @@ describe('Transactions', () => {
     expect(wrapper).toContainMatchingElement('.transactions-header');
     expect(wrapper).toContainMatchingElement('.transactions-subtitle');
     expect(wrapper).toContainMatchingElement('.transactions-content');
-    expect(wrapper).not.toContainMatchingElement('.transaction-row');
+    expect(wrapper).toContainMatchingElement('.transaction-row');
   });
 
   it('should render properly with transactions data', () => {
