@@ -50,7 +50,7 @@ describe('Search', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.searchIcon).click();
     cy.get(ss.searchInput).type(`${accounts.delegate.address}`);
-    assertAccountPage(accounts.delegate.address);
+    assertAccountPage(accounts.delegate.username);
   });
 
   /**
@@ -142,6 +142,7 @@ describe('Search', () => {
     cy.get(ss.searchInput).type(`${accounts['mainnet delegate'].address}`);
     cy.get(ss.searchAccountResults).eq(0).click();
     cy.wait('@requestAccount');
+    cy.wait('@requestDelegate');
     cy.get(ss.accountName).should('have.text', accounts['mainnet delegate'].username);
   });
 
