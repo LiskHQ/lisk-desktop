@@ -3,14 +3,21 @@ import Lisk from 'lisk-elements';
 import { spy, stub, match } from 'sinon';
 import actionTypes from '../constants/actions';
 import { liskAPIClientSet, liskAPIClientUpdate } from './peers';
+import * as accountApi from '../utils/api/account';
 import accounts from '../../test/constants/accounts';
 import networks from '../constants/networks';
 
+jest.mock('../utils/api/account');
+jest.mock('../actions/account');
 
 describe('actions: peers', () => {
   let getState;
   const { passphrase } = accounts.genesis;
   const nethash = '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d';
+
+  beforeEach(() => {
+    accountApi.getAccount.mockResolvedValue({ balance: 10e8 });
+  });
 
   describe('liskAPIClientUpdate', () => {
     it('should create an action to update the active peer', () => {
@@ -127,6 +134,28 @@ describe('actions: peers', () => {
       });
     });
 
+    it('dispatch errorToastDisplayed action with the mesasge if account API call fails with a message', async () => {
+      const error = { message: 'Custom error message' };
+      accountApi.getAccount.mockRejectedValue(error);
+      await liskAPIClientSet({ passphrase, network: {} })(dispatch, getState);
+
+      expect(dispatch).to.have.been.calledWith(match.hasNested('type', actionTypes.liskAPIClientSet));
+    });
+
+
+    it('dispatch errorToastDisplayed action with a default mesasge if account API call fails without a message', async () => {
+      accountApi.getAccount.mockRejectedValue({ });
+      await liskAPIClientSet({ passphrase, network: {} })(dispatch, getState);
+
+      expect(dispatch).to.have.been.calledWith({
+        data: {
+          label: 'Unable to connect to the node, no response from the server.',
+          type: 'error',
+        },
+        type: actionTypes.toastDisplayed,
+      });
+    });
+
     it('dispatch liskAPIClientSet action even if network is undefined', () => {
       liskAPIClientSet({ passphrase, network: {} })(dispatch, getState);
 
@@ -138,7 +167,7 @@ describe('actions: peers', () => {
         testnet: true,
       };
 
-      liskAPIClientSet({ passphrase, network, hwInfo: {} })(dispatch, getState);
+      liskAPIClientSet({ network, hwInfo: {} })(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(match.hasNested('data.options.nodes', networks.testnet.nodes));
     });
 
