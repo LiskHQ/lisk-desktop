@@ -539,7 +539,7 @@
   "Yes! It's safe": "Yes! It's safe",
   "You are looking into a saved account. In order to {{nextAction}} you need to enter your passphrase.": "You are looking into a saved account. In order to {{nextAction}} you need to enter your passphrase.",
   "You are responsible for safekeeping your second passphrase. No one can restore it, not even Lisk.": "You are responsible for safekeeping your second passphrase. No one can restore it, not even Lisk.",
-  "You can explore Lisk network using Hub without logging in.": "You can explore Lisk network using Hub without logging in.",
+  "You can explore Lisk network using Hub without signing in.": "You can explore Lisk network using Hub without signing in.",
   "You can find the LSK token on all of the worlds top exchanges and send them to your unique Lisk address:": "You can find the LSK token on all of the worlds top exchanges and send them to your unique Lisk address:",
   "You can now securely manage your LSK tokens.": "You can now securely manage your LSK tokens.",
   "You can now use Lisk Hub.<br": {

@@ -76,7 +76,7 @@ class Splashscreen extends React.Component {
                 title={t('Guest mode')}>
                 <React.Fragment>
                   <p className={`${styles.tooltipText}`}>
-                    {t('You can explore Lisk network using Hub without logging in.')}
+                    {t('You can explore Lisk network using Hub without signing in.')}
                   </p>
                   <p className={`${styles.tooltupText}`}>
                     {t('You won\'t be able to make any transactions and all the content will be in read-only mode.')}
