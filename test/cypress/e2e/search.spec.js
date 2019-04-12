@@ -171,7 +171,7 @@ describe('Search', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
     cy.get(ss.searchIcon).click();
-    cy.get(ss.searchInput).type(`${accounts.delegate.address}{enter}`);
+    cy.get(ss.searchInput).type(`${accounts.delegate.address}`);
     cy.get(ss.searchAccountRow).eq(0).click();
     cy.get(ss.accountName).should('have.text', accounts.delegate.username);
   });
@@ -210,17 +210,6 @@ describe('Search', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.searchIcon).click();
     cy.get(ss.searchInput).type('43th3j4bt324');
-    cy.get(ss.searchMessage).eq(0).should('have.text', 'No results found.');
-  });
-
-  /**
-   * Search for nonexistent item
-   * @expect no results plug
-   */
-  it('Search for nonexistent item - shows no results plug', () => {
-    cy.visit(urls.dashboard);
-    cy.get(ss.searchIcon).click();
-    cy.get(ss.searchInput).type('321321');
     cy.get(ss.searchMessage).eq(0).should('have.text', 'No results found.');
   });
 });
