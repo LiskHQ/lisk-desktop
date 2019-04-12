@@ -23,7 +23,7 @@ describe('FilterBar', () => {
 
   it('Shows 5 filters and clearAll', () => {
     expect(wrapper).toContainMatchingElements(5, '.filter');
-    expect(wrapper).toContainMatchingElement('.clearAllButton');
+    expect(wrapper).toContainMatchingElement('.clear-all-filters');
   });
 
   it('Call clearFilter on clearFilter click', () => {
@@ -32,7 +32,7 @@ describe('FilterBar', () => {
   });
 
   it('Call clearAllFilters on clearAll click', () => {
-    wrapper.find('.clearAllButton').simulate('click');
+    wrapper.find('.clear-all-filters').simulate('click');
     expect(props.clearAllFilters).toBeCalled();
   });
 });

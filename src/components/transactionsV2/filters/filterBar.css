@@ -11,12 +11,9 @@
 }
 
 .labelsHolder {
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
-
-  & > button {
-    margin: 4px 0;
-  }
 }
 
 .filter {
@@ -64,8 +61,10 @@
 
   & > .label {
     color: inherit;
+    display: block;
+    height: auto;
     margin: 0;
-    max-width: 245px;
+    max-width: 225px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
