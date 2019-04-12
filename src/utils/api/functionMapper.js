@@ -1,7 +1,7 @@
 import { tokenMap } from '../../constants/tokens';
 import * as btcAccount from './btc/account';
-// import * as btcTransactions from './btc/transactions';
-// import * as btcService from './btc/service';
+import * as btcTransactions from './btc/transactions';
+import * as btcService from './btc/service';
 
 /**
  * Resource oriented mapping from token type to utility functions.
@@ -9,8 +9,8 @@ import * as btcAccount from './btc/account';
 const resourceMap = {
   [tokenMap.BTC.key]: {
     account: btcAccount,
-    transactions: 'btcTransactions',
-    service: 'btcService',
+    transactions: btcTransactions,
+    service: btcService,
   },
 };
 

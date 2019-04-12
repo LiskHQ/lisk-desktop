@@ -8,7 +8,7 @@ describe('api/functionMapper', () => {
   });
 
   it('throws error for non-existing functions', () => {
-    expect(() => getMappedFunction(tokenMap.LSK.key, 'account', 'unMappableFunction')).toThrow();
+    expect(() => getMappedFunction(tokenMap.BTC.key, 'account', 'unMappableFunction')).toThrow();
   });
 
   it('throws error for invalid path', () => {
