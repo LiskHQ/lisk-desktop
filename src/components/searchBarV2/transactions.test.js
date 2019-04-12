@@ -30,7 +30,7 @@ describe('Transactions', () => {
     expect(wrapper).toContainMatchingElement('.transactions-header');
     expect(wrapper).toContainMatchingElement('.transactions-subtitle');
     expect(wrapper).toContainMatchingElement('.transactions-content');
-    expect(wrapper).toContainMatchingElement('.transaction-row');
+    expect(wrapper).toContainMatchingElement('.search-transaction-row');
   });
 
   it('should render properly with transactions data', () => {
@@ -50,7 +50,7 @@ describe('Transactions', () => {
     expect(wrapper).toContainMatchingElement('.transactions-header');
     expect(wrapper).toContainMatchingElement('.transactions-subtitle');
     expect(wrapper).toContainMatchingElement('.transactions-content');
-    expect(wrapper).toContainMatchingElement('.transaction-row');
+    expect(wrapper).toContainMatchingElement('.search-transaction-row');
   });
 
   it('should render properly with transactions data type 2', () => {
@@ -70,7 +70,7 @@ describe('Transactions', () => {
     expect(wrapper).toContainMatchingElement('.transactions-header');
     expect(wrapper).toContainMatchingElement('.transactions-subtitle');
     expect(wrapper).toContainMatchingElement('.transactions-content');
-    expect(wrapper).toContainMatchingElement('.transaction-row');
+    expect(wrapper).toContainMatchingElement('.search-transaction-row');
   });
 
   it('should render properly with transactions data type 3', () => {
@@ -90,7 +90,7 @@ describe('Transactions', () => {
     expect(wrapper).toContainMatchingElement('.transactions-header');
     expect(wrapper).toContainMatchingElement('.transactions-subtitle');
     expect(wrapper).toContainMatchingElement('.transactions-content');
-    expect(wrapper).toContainMatchingElement('.transaction-row');
+    expect(wrapper).toContainMatchingElement('.search-transaction-row');
   });
 
   it('should call onClick function on selected row', () => {
@@ -106,7 +106,7 @@ describe('Transactions', () => {
     ];
     wrapper = mount(<Transactions {...newProps} />);
 
-    wrapper.find('.transaction-row').at(0).simulate('click');
+    wrapper.find('.search-transaction-row').at(0).simulate('click');
     expect(props.onSelectedRow).toBeCalled();
   });
 });

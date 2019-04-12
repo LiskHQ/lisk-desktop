@@ -187,7 +187,7 @@ const ss = {
   searchMessage: '.search-message',
   searchDelegetesResults: '.delegates-content',
   searchAccountResults: '.account-content',
-  searchTransactionRow: '.transaction-row',
+  searchTransactionRow: '.search-transaction-row',
   transactionDetailsID: '.copy-title',
   submittedTransactionMessage: '.body-message',
   sendReferenceText: '.message',

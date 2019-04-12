@@ -59,7 +59,7 @@ const Transactions = ({
         transactions.map((transaction, index) => (
           <div
             key={transaction.id}
-            className={`${styles.transactionRow} ${rowItemIndex === index ? styles.active : ''} transaction-row`}
+            className={`${styles.transactionRow} ${rowItemIndex === index ? styles.active : ''} search-transaction-row`}
             onClick={() => onSelectedRow(transaction.id, 'transaction')}
             onMouseEnter={() => updateRowItemIndex(index)}
           >

@@ -6,7 +6,6 @@ import urls from '../../constants/urls';
 describe('Search', () => {
   const testnetTransaction = '755251579479131174';
   const mainnetTransaction = '881002485778658401';
-  const testnetTransactionId = '6676752260506338126';
 
   beforeEach(() => {
     cy.server();
@@ -18,12 +17,12 @@ describe('Search', () => {
   function assertAccountPage(accountsAddress) {
     cy.wait('@requestAccount');
     cy.wait('@requestDelegate');
-    cy.get(ss.searchAccountRow).find('.account-title').should('have.text', accountsAddress);
+    cy.get(ss.accountAddress).should('have.text', accountsAddress);
   }
 
   function assertTransactionPage(transactionId) {
     cy.wait('@requestTransaction');
-    cy.get(ss.searchTransactionRow).find(ss.searchTransactionRowId).should('have.text', transactionId);
+    cy.get(ss.transactionId).should('have.text', transactionId);
   }
 
   /**
@@ -35,7 +34,8 @@ describe('Search', () => {
   it('Search for Lisk ID using keyboard Enter, signed off', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.searchIcon).click();
-    cy.get(ss.searchInput).type(`${accounts.delegate.address}{enter}`);
+    cy.get(ss.searchInput).type(`${accounts.delegate.address}`);
+    cy.get(ss.searchAccountRow).eq(0).click();
     assertAccountPage(accounts.delegate.address);
   });
 
@@ -50,7 +50,8 @@ describe('Search', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.searchIcon).click();
     cy.get(ss.searchInput).type(`${accounts.delegate.address}`);
-    assertAccountPage(accounts.delegate.username);
+    cy.get(ss.searchAccountRow).eq(0).click();
+    assertAccountPage(accounts.delegate.address);
   });
 
   /**
@@ -62,7 +63,8 @@ describe('Search', () => {
   it('Search for Transaction using keyboard Enter, signed off', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.searchIcon).click();
-    cy.get(ss.searchInput).type(`${mainnetTransaction}{enter}`);
+    cy.get(ss.searchInput).type(`${mainnetTransaction}`);
+    cy.get(ss.searchTransactionRow).eq(0).click();
     assertTransactionPage(mainnetTransaction);
   });
 
@@ -77,6 +79,7 @@ describe('Search', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.searchIcon).click();
     cy.get(ss.searchInput).type(`${testnetTransaction}`);
+    cy.get(ss.searchTransactionRow).eq(0).click();
     assertTransactionPage(testnetTransaction);
   });
 
@@ -89,8 +92,9 @@ describe('Search', () => {
   it('Search for Delegate using keyboard Enter, signed off', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.searchIcon).click();
-    cy.get(ss.searchInput).type(`${accounts['mainnet delegate'].username}{enter}`);
-    cy.get(ss.searchDelegatesRow).find(ss.delegateName).eq(0).should('have.text', accounts['mainnet delegate'].username);
+    cy.get(ss.searchInput).type(`${accounts['mainnet delegate'].username}`);
+    cy.get(ss.searchDelegatesRow).eq(0).click();
+    cy.get(ss.accountName).should('have.text', accounts['mainnet delegate'].username);
   });
 
   it('4 search suggestions appears after 3 letters entered', () => {
@@ -155,8 +159,8 @@ describe('Search', () => {
     cy.visit(urls.dashboard);
     cy.get(ss.searchIcon).click();
     cy.get(ss.searchInput).type(`${testnetTransaction}`);
-    cy.get(ss.transactionRow).eq(0).click();
-    cy.get(ss.transactionId).should('have.text', testnetTransactionId);
+    cy.get(ss.searchTransactionRow).eq(0).click();
+    assertTransactionPage(testnetTransaction);
   });
 
   /**
