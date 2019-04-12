@@ -151,7 +151,7 @@ class SearchBar extends React.Component {
           onChange={this.onChangeSearchTextValue}
           name='searchText'
           value={searchTextValue}
-          placeholder={t('Search for Address, Transaction ID or message')}
+          placeholder={t('Search for Address, Transaction ID or Delegate name')}
           className={`${styles.input} search-input`}
           onKeyDown={this.onHandleKeyPress}
         />

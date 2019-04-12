@@ -18,15 +18,15 @@ const Transactions = ({
       case 1:
         transaction = {
           icon: svg.tx2ndPassphrase,
-          subTitle: t('Amount'),
-          value: transactions[0].amount,
+          subTitle: t('Fee'),
+          value: transactions[0].fee,
         };
         break;
       case 2:
         transaction = {
           icon: svg.txDelegate,
-          subTitle: t('Amount'),
-          value: transactions[0].amount,
+          subTitle: t('Fee'),
+          value: transactions[0].fee,
         };
         break;
       case 3:
