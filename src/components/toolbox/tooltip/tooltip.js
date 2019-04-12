@@ -64,7 +64,7 @@ class Tooltip extends React.Component {
 
   render() {
     const {
-      title, children, footer, className,
+      title, children, footer, className, infoIconClassName,
     } = this.props;
     return React.isValidElement(children) && (
       <div
@@ -73,7 +73,7 @@ class Tooltip extends React.Component {
         onMouseMove={this.handleMouseMove}
         ref={this.setWrapperRef}>
         <span
-          className={styles.infoIcon}
+          className={`${styles.infoIcon} ${infoIconClassName}`}
           onClick={this.handleClick}
           />
         <div className={`${styles.tooltip} ${this.state.showTooltip ? 'shownTooltip' : ''} tooltip-window`}>

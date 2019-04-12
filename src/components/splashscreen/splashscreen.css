@@ -84,6 +84,11 @@
   display: flex;
   margin-bottom: 20px;
   text-align: center;
+
+  & .infoIcon {
+    border: 1px solid var(--color-link);
+    color: var(--color-link);
+  }
 }
 
 .link {
