@@ -6,7 +6,7 @@ import { parseSearchParams } from './../../utils/searchParams';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import HeaderV2 from '../headerV2/headerV2';
 import styles from './splashscreen.css';
-import svgIcons from '../../utils/svgIcons';
+import Tooltip from '../toolbox/tooltip/tooltip';
 
 class Splashscreen extends React.Component {
   componentDidMount() {
@@ -66,10 +66,23 @@ class Splashscreen extends React.Component {
             <span className={styles.separator}>
               <span>{t('or')}</span>
             </span>
-            <Link className={`${styles.link} explore-as-guest-button`} to={routes.dashboard.path}>
-              {t('Explore as a Guest')}
-              <img src={svgIcons.questionIcon}/>
-            </Link>
+            <span className={styles.linkWrapper}>
+              <Link className={`${styles.link} explore-as-guest-button`} to={routes.dashboard.path}>
+                {t('Explore as a Guest')}
+              </Link>
+              <Tooltip
+                className={`${styles.tooltip}`}
+                title={t('Guest mode')}>
+                <React.Fragment>
+                  <p className={`${styles.tooltipText}`}>
+                    {t('You can explore Lisk network using Hub without logging in.')}
+                  </p>
+                  <p className={`${styles.tooltupText}`}>
+                    {t('You won\'t be able to make any transactions and all the content will be in read-only mode.')}
+                  </p>
+                </React.Fragment>
+              </Tooltip>
+            </span>
           </div>
         </div>
       </React.Fragment>

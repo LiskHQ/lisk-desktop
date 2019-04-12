@@ -80,13 +80,17 @@
   }
 }
 
-.link {
-  @mixin contentSmall bold;
-
-  color: var(--color-link);
+.linkWrapper {
   display: flex;
   margin-bottom: 20px;
   text-align: center;
+}
+
+.link {
+  @mixin contentSmall bold;
+
+  line-height: 15px;
+  color: var(--color-link);
   text-decoration: none;
 
   &:hover {
