@@ -44,6 +44,7 @@ export const setSecondPassphrase = (
   });
 
 // Temporary btc account utility while we don't normalize the apis calls.
+// istanbul ignore next
 export const btc = {
   getAccount: (address, netCode) => getMappedFunction(tokenMap.BTC.key, 'account', 'getSummary')(address, netCode),
   extractAddress: (passphrase, netCode) => getMappedFunction(tokenMap.BTC.key, 'account', 'extractAddress')(passphrase, netCode),
