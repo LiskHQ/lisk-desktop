@@ -7,14 +7,14 @@ import getBtcConfig from './config';
 export const getSummary = (address, netCode = 1) => new Promise(async (resolve, reject) => {
   try {
     const config = getBtcConfig(netCode);
-    const response = await popsicle.get(`${config.url}/balance?active=${address}`)
+    const response = await popsicle.get(`${config.url}/account/${address}`)
       .use(popsicle.plugins.parse('json'));
     const json = response.body;
 
     if (response) {
       resolve({
         address,
-        balance: json[address].final_balance,
+        balance: json.data.confirmed_balance,
         initialized: true,
       });
     } else {
