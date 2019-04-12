@@ -136,8 +136,6 @@ describe('Search', () => {
   /**
    * Search signed in mainnet
    * @expect happens in mainnet
-   * This test should be fxied once the transaction details page
-   * change the behavior of how to present the data
    */
   it('Search signed in mainnet - happens in mainnet', () => {
     cy.autologin(accounts.genesis.passphrase, networks.mainnet.node);
