@@ -125,7 +125,7 @@ class TopBar extends React.Component {
               </div>
           }
 
-          <div className={styles.searchButton}
+          <div className={`${styles.searchButton} search-section`}
             data-name={'search'}
             ref={this.setElementsRefs}
           >
