@@ -43,9 +43,9 @@ export const setSecondPassphrase = (
     }).catch(reject);
   });
 
-// Temporary btc account utility while we don't normalize the apis calls.
-// istanbul ignore next
-export const btc = {
-  getAccount: (address, netCode) => getMappedFunction(tokenMap.BTC.key, 'account', 'getSummary')(address, netCode),
-  extractAddress: (passphrase, netCode) => getMappedFunction(tokenMap.BTC.key, 'account', 'extractAddress')(passphrase, netCode),
+export const btc = { // Temporary btc account utility while we don't normalize the apis calls.
+  getAccount: /* istanbul ignore next */ (address, netCode) =>
+    getMappedFunction(tokenMap.BTC.key, 'account', 'getSummary')(address, netCode),
+  extractAddress: /* istanbul ignore next */ (passphrase, netCode) =>
+    getMappedFunction(tokenMap.BTC.key, 'account', 'extractAddress')(passphrase, netCode),
 };
