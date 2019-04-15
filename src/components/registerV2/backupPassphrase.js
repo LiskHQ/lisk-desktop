@@ -21,7 +21,7 @@ class BackupPassphrase extends React.Component {
       passphraseCopied: false,
     };
 
-    this.walletName = `${moment().format('YYYY_MM_DD_h_mm')}.pdf`;
+    this.walletName = `lisk_passphrase_${moment().format('YYYY_MM_DD_hh_mm')}.pdf`;
     this.generatePaperwallet = this.generatePaperwallet.bind(this);
     this.setCanvasRef = this.setCanvasRef.bind(this);
   }
