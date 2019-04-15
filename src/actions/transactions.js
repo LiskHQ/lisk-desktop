@@ -220,13 +220,15 @@ export const transactionsUpdated = ({
       liskAPIClient, address, limit, filter, customFilters,
     })
       .then((response) => {
-        dispatch({
-          data: {
-            confirmed: response.data,
-            count: parseInt(response.meta.count, 10),
-          },
-          type: actionTypes.transactionsUpdated,
-        });
+        if (filter === getState().transactions.filter) {
+          dispatch({
+            data: {
+              confirmed: response.data,
+              count: parseInt(response.meta.count, 10),
+            },
+            type: actionTypes.transactionsUpdated,
+          });
+        }
         // eslint-disable-next-line no-constant-condition
         if (pendingTransactions.length) {
           // this was disabled, because this caused pending transactions

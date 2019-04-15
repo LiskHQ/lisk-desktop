@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import transaction from './transaction';
 import actionTypes from '../../constants/actions';
 
@@ -12,6 +11,15 @@ describe('Reducer: transaction(state, action)', () => {
     senderId: '11195820046284152875',
   };
 
+  it('should return empty object if action.type = actionTypes.transactionCleared', () => {
+    const state = [];
+    const action = {
+      type: actionTypes.transactionCleared,
+    };
+    const changedState = transaction(state, action);
+    expect(changedState).toEqual({});
+  });
+
   it('should return transaction if action.type = actionTypes.transactionLoaded', () => {
     const state = [];
     const action = {
@@ -19,7 +27,7 @@ describe('Reducer: transaction(state, action)', () => {
       data: mockTransaction,
     };
     const changedState = transaction(state, action);
-    expect(changedState).to.deep.equal({
+    expect(changedState).toEqual({
       votesName: {},
       ...mockTransaction,
     });
@@ -33,7 +41,7 @@ describe('Reducer: transaction(state, action)', () => {
       data: { error },
     };
     const changedState = transaction(state, action);
-    expect(changedState).to.deep.equal({ ...error });
+    expect(changedState).toEqual({ ...error });
   });
 
   it('should add new Delegate object', () => {
@@ -46,7 +54,7 @@ describe('Reducer: transaction(state, action)', () => {
       },
     };
     let changedState = transaction(state, actionAdd);
-    expect(changedState).to.deep.equal({ votesName: { added: [{ id: 123 }] } });
+    expect(changedState).toEqual({ votesName: { added: [{ id: 123 }] } });
 
     const actionDelete = {
       type: actionTypes.transactionAddDelegateName,
@@ -56,7 +64,7 @@ describe('Reducer: transaction(state, action)', () => {
       },
     };
     changedState = transaction(changedState, actionDelete);
-    expect(changedState).to.deep.equal({
+    expect(changedState).toEqual({
       votesName: {
         added: [{ id: 123 }],
         deleted: [{ id: 123123 }],
