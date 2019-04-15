@@ -57,11 +57,17 @@ Data used by all token types couls be put into a common node or at the root as i
 So the reducers would have to take in account the token type, or if no token is set, consider it as being common data and not putting inside a node, but directly on the root.  
 Something like:
 ```javascript
-{
-  const hasToken = !!action.activeToken || false;
-  const data = hasToken
-    ? { ...state, [action.activeToken]: { ...action.data } }
-    : { ...state, ...action.data, };
-  return data;
+function genericReducer(state = {}, action) {
+  switch(action.type) {
+    case genericType: {
+      const hasToken = !!action.activeToken || false;
+      const data = hasToken
+        ? { ...state, [action.activeToken]: { ...action.data } }
+        : { ...state, ...action.data, };
+      return data;
+    }
+    default:
+      return state;
+  }
 }
 ```
