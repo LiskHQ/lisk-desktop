@@ -2,6 +2,7 @@ import React from 'react';
 import QRCode from 'qrcode.react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { translate } from 'react-i18next';
+import moment from 'moment';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
@@ -20,6 +21,7 @@ class BackupPassphrase extends React.Component {
       passphraseCopied: false,
     };
 
+    this.walletName = `${moment().format('YYYY_MM_DD_h_mm')}.pdf`;
     this.generatePaperwallet = this.generatePaperwallet.bind(this);
     this.setCanvasRef = this.setCanvasRef.bind(this);
   }
@@ -42,7 +44,7 @@ class BackupPassphrase extends React.Component {
       ...this.props,
       qrcode: this.canvasRef.firstChild.toDataURL(),
     };
-    renderPaperwallet(data);
+    renderPaperwallet(data, this.walletName);
   }
 
   componentWillUnmount() {
@@ -130,7 +132,7 @@ class BackupPassphrase extends React.Component {
               </div>
               <div className={styles.downloadLisk}>
                 <img src={fileOutline} />
-                <p className='option-value'>{'Lisk.pdf'}</p>
+                <p className='option-value'>{this.walletName}</p>
               </div>
               <span
                 onClick={this.generatePaperwallet}
