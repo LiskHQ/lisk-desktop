@@ -186,7 +186,7 @@ export const steps = t => ([
   {
     title: t('Explore the network'),
     text: t('Search for delegates, addresses and transactions.'),
-    selector: '#autosuggest-input',
+    selector: '.search-section',
     position: 'bottom',
     style: styles.step,
   },

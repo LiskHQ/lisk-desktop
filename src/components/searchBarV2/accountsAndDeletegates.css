@@ -1,0 +1,122 @@
+@import '../app/variablesV2.css';
+
+.wrapper {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.header {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  & > label {
+    @mixin contentNormal bold;
+  }
+}
+
+.subTitles {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+
+  & > label {
+    @mixin contentNormal bold;
+
+    color: var(--color-blue-gray);
+  }
+}
+
+.content {
+  width: calc(100% + 40px);
+  height: auto;
+  max-height: 220px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 0 -20px;
+
+  & .accountRow {
+    width: 100%;
+    height: auto;
+    min-height: 53px;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--primary-background-color);
+    }
+  }
+
+  & .accountInformation {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 20px;
+    box-sizing: border-box;
+
+    & > div {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+  }
+
+  & .tag {
+    @mixin contentSmall bold;
+
+    background: var(--color-slate-gray);
+    color: var(--color-white);
+    padding: 3px;
+    box-sizing: border-box;
+    margin-left: 7px;
+    border-radius: 3px;
+    line-height: unset;
+  }
+
+  & .accountTitle {
+    @mixin headingSmall;
+
+    color: var(--color-maastricht-blue);
+  }
+
+  & .accountSubtitle {
+    @mixin contentSmallest;
+
+    color: var(--color-slate-gray);
+    padding-top: 5px;
+  }
+
+  & .accountBalance {
+    @mixin contentSmallest;
+
+    color: var(--color-maastricht-blue);
+    margin-left: auto;
+  }
+}
+
+.active {
+  background-color: var(--primary-background-color);
+}
