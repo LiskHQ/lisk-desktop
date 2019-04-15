@@ -1,5 +1,6 @@
 # Redux Multi Currencies Structure
 
+## Store structure
 For being able to store multi currencies data, we should need a store structure more similar to the one at [lisk-mobile](https://github.com/liskHQ/lisk-mobile).
 
 Showing here just the parts related to the multi currencies structure.
@@ -54,20 +55,36 @@ Ideally in the future we should end up with a structure like:
 ```
 Data used by all token types couls be put into a common node or at the root as it's right now, like the `extensions` and `search` node, having `tokenKeys` node inside if needed.
 
-So the reducers would have to take in account the token type, or if no token is set, consider it as being common data and not putting inside a node, but directly on the root.  
+## Reducers
+The reducers would have to take in account the token type, or if no token is set, consider it as being common data and not putting inside a node, but directly on the root.  
 Something like:
 ```javascript
 function genericReducer(state = {}, action) {
   switch(action.type) {
     case genericType: {
-      const hasToken = !!action.activeToken || false;
+      const hasToken = !!action.data.activeToken || false;
       const data = hasToken
-        ? { ...state, [action.activeToken]: { ...action.data } }
-        : { ...state, ...action.data, };
+        ? { ...state, [action.data.activeToken]: { ...action.data.payload } }
+        : { ...state, ...action.data.payload, };
       return data;
     }
     default:
       return state;
   }
+}
+```
+
+## Actions
+Actions should be generic and fetch the active token from the store, so the calls to the actions creators shouldn't be specific per token.
+```javascript
+const genericActionCreator = (payload) => (dispatch, getState) {
+  const activeToken = getState().settings.token.active;
+  dispatch({
+    type: genericType,
+    data: {
+      payload,
+      activeToken,
+    },
+  })
 }
 ```
