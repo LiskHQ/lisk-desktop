@@ -5,19 +5,19 @@ For being able to store multi currencies data, we should need a store structure 
 Showing here just the parts related to the multi currencies structure.
 ```json
 {
-  ...
-  accounts: {
-    passphrase: String,
-    followed: { tokenKey: [follows] },
-    info: { tokenKey: { address, balance, publickey, ... } }
+  "..."
+  "accounts": {
+    "passphrase": "",
+    "followed": { "tokenKey": [{}] },
+    "info": { "tokenKey": { "address": "", "balance": "", "publickey": "", "..." } }
   },
-  service: {},
-  settings: {
-    token: {
-      active: tokenKey,
-      list: { tokenKey: boolean }
-    }
-    ...
+  "service": {},
+  "settings": {
+    "token": {
+      "active": "tokenKey",
+      "list": { "tokenKey": true }
+    },
+    "..."
   }
 }
 ```
@@ -29,12 +29,12 @@ In the case of Lisk-Hub we could have initialy a structure that integrate some o
 To have a new better structure for new currencies, while also keeping the LSK token working without too much work, something like:
 ```json
 {
-  ...
-  account: { LSK account info },
-  accounts: { info: { BTC: {} }, followed: {} },
-  service: {},
-  LSK: {delegate, voting, filters }
-  ...
+  "..."
+  "account": { "LSK account info" },
+  "accounts": { "info": { "BTC": {} }, "followed": {} },
+  "service": {},
+  "LSK": {"delegate": {}, "voting": {}, "filters" },
+  "..."
 }
 ```
 - Rename `liskSercice` to just `service` so we can have all service information centralized in one place.  
@@ -44,12 +44,12 @@ To have a new better structure for new currencies, while also keeping the LSK to
 Ideally in the future we should end up with a structure like:
 ```json
 {
-  accounts: { info: { tokenKey: {} }, followed: {}, passphrase, [pther account common info] },
-  servive: { all service related data },
-  LSK: { LSK specific data },
-  tokenKey: { specific data for token },
-  wallets: { tokenKey: { netCode: [] } },
-  ...
+  "accounts": { "info": { "tokenKey": {} }, "followed": {}, "passphrase": "", "other account common info" },
+  "service": { "all service related data" },
+  "LSK": { "LSK specific data" },
+  "tokenKey": { "specific data for token" },
+  "wallets": { "tokenKey": { "netCode": [] } },
+  "..."
 }
 ```
 Data used by all token types couls be put into a common node or at the root as it's right now, like the `extensions` and `search` node, having `tokenKeys` node inside if needed.
