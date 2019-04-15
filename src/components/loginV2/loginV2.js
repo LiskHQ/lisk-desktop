@@ -59,14 +59,14 @@ class LoginV2 extends React.Component {
   }
 
   async componentDidMount() {
-    this.setState({
-      devices: await getDeviceList(),
-    });
-
     // istanbul ignore else
     if (!this.props.settings.areTermsOfUseAccepted) {
       this.props.history.push(routes.termsOfUse.path);
     }
+
+    this.setState({
+      devices: await getDeviceList(),
+    });
 
     i18next.on('languageChanged', this.getNetworksList);
   }
