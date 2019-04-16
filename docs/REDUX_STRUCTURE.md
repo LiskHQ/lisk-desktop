@@ -38,7 +38,7 @@ To have a new better structure for new currencies, while also keeping the LSK to
   "..."
 }
 ```
-- Rename `liskSercice` to just `service` so we can have all service information centralized in one place.  
+- Rename `liskService` to just `service` so we can have all service information centralized in one place.  
 - New token accounts being already on the `accounts` structure.
 - Group all specific token nodes inside a `tokenKey` node, using `LSK` in the example above.
 
@@ -54,6 +54,7 @@ Ideally in the future we should end up with a structure like:
 }
 ```
 Data used by all token types couls be put into a common node or at the root as it's right now, like the `extensions` and `search` node, having `tokenKeys` node inside if needed.
+Transactions node can keep the same structure given that we use a normalize so all the transactions have the same kind of information so we can display them in a similar way and since we won't show transactions of different tokens at the same time.
 
 ## Reducers
 The reducers would have to take in account the token type, or if no token is set, consider it as being common data and not putting inside a node, but directly on the root.  
@@ -81,10 +82,11 @@ const genericActionCreator = (payload) => (dispatch, getState) {
   const activeToken = getState().settings.token.active;
   dispatch({
     type: genericType,
-    data: {
+    data: {d
       payload,
       activeToken,
     },
   })
 }
 ```
+
