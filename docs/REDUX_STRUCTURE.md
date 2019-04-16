@@ -5,6 +5,7 @@ For being able to store multi currencies data, we should need a store structure 
 
 Showing here just the parts related to the multi currencies structure.
 ```json
+// lisk-mobile store example
 {
   "..."
   "accounts": {
@@ -26,15 +27,18 @@ Where we have the accounts information and the followed accounts separated per t
 On `settings` we have which token is the active one, and also a list with the tokens, of which token is enabled by the user.  
 And also a unified `service` node, not just as liskService as we have right now on Lisk-Hub.  
 
-In the case of Lisk-Hub we could have initialy a structure that integrate some of the changes just for the other currencies, while we don't update the current LSK structure.  
-To have a new better structure for new currencies, while also keeping the LSK token working without too much work, something like:
+In the case of Lisk-Hub we could have initialy a structure that integrate some of the changes just for other currencies, while we don't update the current LSK structure.  
+To have a better structure for new currencies, while also keeping the LSK token working without too much work, something like:
 ```json
+// lisk-hub intermediate store example
 {
   "..."
   "account": { "LSK account info" },
   "accounts": { "info": { "BTC": {} }, "followed": {} },
   "service": {},
-  "LSK": {"delegate": {}, "voting": {}, "filters" },
+  "delegate": {},
+  "voting": {},
+  "filters": {},
   "..."
 }
 ```
@@ -44,6 +48,7 @@ To have a new better structure for new currencies, while also keeping the LSK to
 
 Ideally in the future we should end up with a structure like:
 ```json
+// lisk-hub final store example
 {
   "accounts": { "info": { "tokenKey": {} }, "followed": {}, "passphrase": "", "other account common info" },
   "service": { "all service related data" },
@@ -74,9 +79,11 @@ function genericReducer(state = {}, action) {
   }
 }
 ```
+The token should always be set on the action level, not on the component level.  
+
 
 ## Actions
-Actions should be generic and fetch the active token from the store, so the calls to the actions creators shouldn't be specific per token.
+Actions should be generic and fetch the active token from the store, so the calls to the actions creators shouldn't be specific per token. So the components don't need to know which token is currently being used.
 ```javascript
 const genericActionCreator = (payload) => (dispatch, getState) {
   const activeToken = getState().settings.token.active;
