@@ -3,6 +3,7 @@
 ## Store structure
 For being able to store multi currencies data, we should need a store structure more similar to the one at [lisk-mobile](https://github.com/liskHQ/lisk-mobile).
 
+### Lisk Mobile
 Showing here just the parts related to the multi currencies structure.
 ```json
 // lisk-mobile store example
@@ -27,6 +28,7 @@ Where we have the accounts information and the followed accounts separated per t
 On `settings` we have which token is the active one, and also a list with the tokens, of which token is enabled by the user.  
 And also a unified `service` node, not just as liskService as we have right now on Lisk-Hub.  
 
+### Lisk Hub
 In the case of Lisk-Hub we could have initialy a structure that integrate some of the changes just for other currencies, while we don't update the current LSK structure.  
 To have a better structure for new currencies, while also keeping the LSK token working without too much work, something like:
 ```json
@@ -35,6 +37,7 @@ To have a better structure for new currencies, while also keeping the LSK token 
   "..."
   "account": { "LSK account info" },
   "accounts": { "info": { "BTC": {} }, "followed": {} },
+  "BTC": { "BTC specific data" },
   "service": {},
   "delegate": {},
   "voting": {},
@@ -44,22 +47,22 @@ To have a better structure for new currencies, while also keeping the LSK token 
 ```
 - Rename `liskService` to just `service` so we can have all service information centralized in one place.  
 - New token accounts being already on the `accounts` structure.
-- Group all specific token nodes inside a `tokenKey` node, using `LSK` in the example above.
+- Specific new token data grouped inside a `tokenKey` node.
 
-Ideally in the future we should end up with a structure like:
+Ideally in the future we should end up with a structure similar to:
 ```json
 // lisk-hub final store example
 {
   "accounts": { "info": { "tokenKey": {} }, "followed": {}, "passphrase": "", "other account common info" },
   "service": { "all service related data" },
-  "LSK": { "LSK specific data" },
+  "LSK": { "delegate": {}, "voting": {}, "filters": {}, },
   "tokenKey": { "specific data for token" },
   "wallets": { "tokenKey": { "netCode": [] } },
   "..."
 }
 ```
 Data used by all token types couls be put into a common node or at the root as it's right now, like the `extensions` and `search` node, having `tokenKeys` node inside if needed.
-Transactions node can keep the same structure given that we use a normalize so all the transactions have the same kind of information so we can display them in a similar way and since we won't show transactions of different tokens at the same time.
+Transactions node can keep the same structure given that we use a normalize so all the transactions have the same structure of information so we can display them in a similar way and since we won't show transactions of different tokens at the same time.
 
 ## Reducers
 The reducers would have to take in account the token type, or if no token is set, consider it as being common data and not putting inside a node, but directly on the root.  
@@ -97,3 +100,19 @@ const genericActionCreator = (payload) => (dispatch, getState) {
 }
 ```
 
+## APIs
+APIs should go through the [functionMapper](../src/utils/api/functionMapper.js) function so it's only needed to import the function after the functionMapper, and passing the desired token, resource and function, BTC API have some examples for `account`, we would need to move the `LSK` resources and calls to the same structure, so we can just call the same API function and get the desired result.  
+The function would be something similar to:
+```javascript
+// account API example
+/**
+ * @param {String} tokenKey - Token key. eg. LSK, BTC
+ * @param {Object} data - Data that will be passed to mapped function
+ * @param {String} data.address - Address of the account.
+ * @param {Number} [data.netCode=1] - 0 = mainnet, 1 = testnet
+ */
+export const getAccount = (tokenKey, { address, netCode }) =>
+  getMappedFunction(tokenKey, 'account', 'getAccount')(address, netCode);
+```
+In the example above we have a mapped function `getAccount` that expects a `tokenKey`, and the data that will be passed to the real API call, by normalizing the input and output of the API calls it's possible to have a generic API function that only needs the `tokenKey` and the normalized data.  
+And each token having it's own implementation on how to fetch the data and how to normalize it to save on the store.
