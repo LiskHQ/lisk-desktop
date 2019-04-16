@@ -31,7 +31,7 @@ before(() => {
 });
 
 beforeEach(() => {
-  window.localStorage.setItem('settings', '{"onBoarding": false, "areTermsOfUseAccepted": true}');
+  window.localStorage.setItem('settings', '{"areTermsOfUseAccepted": true}');
 });
 
 Cypress.Commands.add('addToLocalStorage', (item, value) => {
