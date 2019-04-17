@@ -110,6 +110,7 @@ module.exports = {
     'src/actions/extensions.js',
     'src/utils/liskHubExtensions.js',
     'src/components/extensionPoint/extensionPoint.js',
+    'src/components/hwWallet/hwWallet.js',
   ],
   coverageThreshold: {
     global: {

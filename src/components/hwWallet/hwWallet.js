@@ -21,7 +21,7 @@ class HwWallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLedgerLogin: false,
+      isLedgerLogin: true,
       isTrezorLogin: true,
       devices: [],
     };
@@ -74,14 +74,14 @@ class HwWallet extends React.Component {
   }
 
   render() {
-    if (this.state.isLedgerLogin && (this.state.devices[0] && this.state.devices[0].model === 'Trezor')) {
+    if (this.state.isLedgerLogin && (this.state.devices[0] && this.state.devices[0].model === 'Ledger')) {
       return (
         <React.Fragment>
           <HeaderV2 showSettings={true} />
           <div className={styles.wrapper}>
             <LedgerLogin
               account={this.props.account}
-              loginType={loginType.trezor}
+              loginType={loginType.ledger}
               network={getNetwork(this.props.network)}
               cancelLedgerLogin={this.cancelLedgerLogin.bind(this)} />
           </div>
