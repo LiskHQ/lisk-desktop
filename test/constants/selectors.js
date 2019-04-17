@@ -127,10 +127,6 @@ const ss = {
   titleInput: '.account-title input',
   followedAccountBalance: '.followed-account-balance span',
   sidebarMenuHelpBtn: '#help',
-  startOnBoardingLink: '.help-onboarding',
-  onBoardingTooltipPrimaryBtn: '.joyride-tooltip__button--primary',
-  onBoardingSkipBtn: '.joyride-tooltip__button--skip',
-  onBoardingHeader: '.joyride-tooltip__header',
   createLiskIdBtn: '.new-account-button',
   passphraseInput: '.passphrase input',
   loginBtn: '.login-button',
@@ -150,7 +146,6 @@ const ss = {
   removeFollowingAccount: '.remove-account',
   followedAccount: '.followed-account',
   followedAccountTitle: '.account-title input',
-  takeTutorial: '.help-onboarding',
   tutorialTooltip: '.joyride-tooltip__header',
   priceChart: '.chartjs-size-monitor',
   transactionRequestButton: '.tx-receive-bt',
@@ -210,6 +205,7 @@ const ss = {
   balanceChart: 'chartjs-render-monitor',
   navigationBtnBack: '.go-back',
   navigationBtnForward: '.go-forward',
+  termsOfUseLink: '.terms-of-use',
 };
 
 export default ss;
