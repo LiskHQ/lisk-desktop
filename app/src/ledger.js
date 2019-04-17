@@ -6,6 +6,7 @@ import TransportNodeHid from '@ledgerhq/hw-transport-node-hid'; // eslint-disabl
 import {
   HWDevice,
   addConnectedDevices,
+  removeConnectedDeviceByPath,
 } from './hwManager';
 
 import { createCommand, isValidAddress } from './utils';
@@ -76,6 +77,7 @@ const getLiskAccount = async (path) => {
 };
 
 const ledgerObserver = {
+  // eslint-disable-next-line max-statements
   next: async ({ device, type }) => {
     if (device) {
       if (type === 'add') {
@@ -83,10 +85,12 @@ const ledgerObserver = {
           const liskAccount = await getLiskAccount(device.path);
           const ledgerDevice = createLedgerHWDevice(liskAccount, device.path);
           addConnectedDevices(ledgerDevice);
+          ledgerPath = device.path;
           win.send({ event: 'ledgerConnected', value: null });
         }
       } else if (type === 'remove') {
         if (ledgerPath) {
+          removeConnectedDeviceByPath(ledgerPath);
           ledgerPath = null;
           win.send({ event: 'ledgerDisconnected', value: null });
         }
