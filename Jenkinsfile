@@ -94,6 +94,7 @@ pipeline {
 								  userRemoteConfigs: [[url: 'https://github.com/LiskHQ/lisk']]])
 						}
 						withCredentials([string(credentialsId: 'lisk-hub-testnet-passphrase', variable: 'TESTNET_PASSPHRASE')]) {
+						withCredentials([string(credentialsId: 'lisk-hub-cypress-record-key', variable: 'CYPRESS_RECORD_KEY')]) {
 							ansiColor('xterm') {
 								wrap([$class: 'Xvfb', parallelBuild: true, autoDisplayName: true]) {
 									githubNotify context: 'Jenkins e2e tests',
@@ -138,6 +139,7 @@ EOF
 									}
 								}
 							}
+						}
 						}
 					}
 				)
