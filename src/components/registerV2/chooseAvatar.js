@@ -89,7 +89,7 @@ class ChooseAvatar extends React.Component {
                 key={key}>
                 <AccountVisual
                   address={account.address}
-                  size={64}
+                  size={44}
                   />
               </span>
             ))

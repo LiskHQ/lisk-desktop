@@ -3,7 +3,7 @@
 
 .optionsHolder {
   justify-content: center;
-  margin: 50px 0 75px;
+  margin: 50px 0 0;
   width: 100%;
 
   & .option {
@@ -56,7 +56,7 @@
   & .action {
     @mixin headingExtraSmall;
 
-    width: 136px;
+    padding: 0 15px;
     height: 32px;
     border-radius: 3px;
     border: solid 1px rgba(0, 0, 0, 0.15);
@@ -92,8 +92,6 @@
 }
 
 .hrSection {
-  @mixin contentSmallest;
-
   display: flex;
   flex-basis: 100%;
   align-items: center;
@@ -101,6 +99,8 @@
   color: var(--color-slate-gray);
 
   & > p {
+    @mixin contentSmall bold;
+
     margin: 20px;
   }
 }
@@ -128,9 +128,9 @@
     margin: 10px 0;
 
     & input {
-      @mixin contentLarge;
+      @mixin contentLarge bold;
 
-      color: var(--color-maastricht-blue);
+      color: var(--color-maastricht-blue) !important;
       text-align: center;
     }
   }

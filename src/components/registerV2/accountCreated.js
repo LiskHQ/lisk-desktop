@@ -22,7 +22,7 @@ const AccountCreated = ({ t, account }) => (
       <span className={`${styles.avatar}`}>
         <AccountVisual
           address={account.address}
-          size={87}
+          size={67}
           />
       </span>
       <p className={`${styles.address}`}>{account.address}</p>

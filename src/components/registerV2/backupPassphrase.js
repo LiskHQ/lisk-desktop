@@ -21,7 +21,7 @@ class BackupPassphrase extends React.Component {
       passphraseCopied: false,
     };
 
-    this.walletName = `lisk_passphrase_${moment().format('YYYY_MM_DD_hh_mm')}.pdf`;
+    this.walletName = `lisk_passphrase_${moment().format('YYYY_MM_DD_HH_mm')}.pdf`;
     this.generatePaperwallet = this.generatePaperwallet.bind(this);
     this.setCanvasRef = this.setCanvasRef.bind(this);
   }
@@ -118,9 +118,9 @@ class BackupPassphrase extends React.Component {
           <div className={`${styles.option}`}>
             <div className={`${styles.optionContent}`}>
               <h2>
-                {t('Paper version')}
+                {t('Paper Wallet')}
                 <Tooltip
-                  title={'Paperwallet'}>
+                  title={'Paper Wallet'}>
                   <p>
                     {t('You can print your passphrase to store in a safe place. ')}
                     {t('It is highly recommended to delete the PDF file and remove it from your Trash Folder too after printing it.')}

@@ -2,8 +2,8 @@
 @import '../app/mixins.css';
 
 :root {
-  --avatar-padding: 3px;
-  --avatar-size: calc(96px - var(--avatar-padding));
+  --avatar-padding: 13px;
+  --avatar-size: calc(105px - var(--avatar-padding));
 }
 
 .accountHolder {
@@ -28,7 +28,14 @@
     @mixin addressFont;
 
     color: var(--color-content);
-    margin: 40px 0 0;
+    margin: 20px 0 0;
     text-align: center;
   }
+}
+
+.titleHolder {
+  @mixin contentLarge;
+
+  margin: 0;
+  color: var(--color-slate-gray);
 }
