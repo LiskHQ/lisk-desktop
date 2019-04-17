@@ -53,7 +53,8 @@ Ideally in the future we should end up with a structure similar to:
 ```json
 // lisk-hub final store example
 {
-  "accounts": { "info": { "tokenKey": {} }, "followed": {}, "passphrase": "", "other account common info" },
+  "accounts": { "info": { "tokenKey": {} }, "passphrase": "", "other account common info" },
+  "followed": [{ "address": "", "balance": "", "tokenType": "LSK" }],
   "service": { "all service related data" },
   "LSK": { "delegate": {}, "voting": {}, "filters": {}, },
   "tokenKey": { "specific data for token" },
