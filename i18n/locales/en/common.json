@@ -222,7 +222,6 @@
   "It is recommended that you initialize your Lisk ID.": "It is recommended that you initialize your Lisk ID.",
   "It will cost you only the usual {{fee}} LSK transaction fee.": "It will cost you only the usual {{fee}} LSK transaction fee.",
   "Keep it safe as it is the only way to access your wallet.": "Keep it safe as it is the only way to access your wallet.",
-  "Keep the overview": "Keep the overview",
   "Keep this safe, never throw it away or share it with anyone.": "Keep this safe, never throw it away or share it with anyone.",
   "Keep track of any Lisk ID balance. Only you will see who you bookmarked.": "Keep track of any Lisk ID balance. Only you will see who you bookmarked.",
   "LISK Hub counts your message by bytes so keep in mind \n                  that the length on your message may vary in different languages. \n                  Different characters may consume different amount of bytes space.": "LISK Hub counts your message by bytes so keep in mind \n                  that the length on your message may vary in different languages. \n                  Different characters may consume different amount of bytes space.",
@@ -527,11 +526,7 @@
   "You can explore Lisk network using Hub without signing in.": "You can explore Lisk network using Hub without signing in.",
   "You can find the LSK token on all of the worlds top exchanges and send them to your unique Lisk address:": "You can find the LSK token on all of the worlds top exchanges and send them to your unique Lisk address:",
   "You can now securely store and manage your LSK tokens.": "You can now securely store and manage your LSK tokens.",
-  "You can now use Lisk Hub.<br": {
-    " If you want to repeat the onboarding, navigate to \"Help\" on the sidebar.": "You can now use Lisk Hub.<br> If you want to repeat the onboarding, navigate to \"Help\" on the sidebar."
-  },
   "You can print your passphrase to store in a safe place. ": "You can print your passphrase to store in a safe place. ",
-  "You can print your passphrase to be stored in a safe place. ": "You can print your passphrase to be stored in a safe place. ",
   "You can share your Lisk ID with anyone you wish, but never reveal your passphrase to anyone as it would allow full access to your account.": "You can share your Lisk ID with anyone you wish, but never reveal your passphrase to anyone as it would allow full access to your account.",
   "You can use tab or space to go to the next field.": "You can use tab or space to go to the next field.",
   "You can use your passphrase to sign a message. ": "You can use your passphrase to sign a message. ",
