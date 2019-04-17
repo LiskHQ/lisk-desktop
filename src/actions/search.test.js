@@ -43,10 +43,6 @@ describe('actions: search', () => {
     await action(dispatch, getState);
     expect(dispatch).toHaveBeenNthCalledWith(1, {
       data: {},
-      type: actionTypes.searchClearSuggestions,
-    });
-    expect(dispatch).toHaveBeenNthCalledWith(2, {
-      data: {},
       type: actionTypes.searchSuggestions,
     });
   });

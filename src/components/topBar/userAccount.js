@@ -25,11 +25,12 @@ const UserAccount = (props) => {
       </div>
       <div
         className={`${styles.avatar} user-avatar`}
-        onClick={() => props.onDropdownToggle()}
+        onClick={() => props.onDropdownToggle('avatar')}
       >
         <span
           className={styles.onAvatar}
-          ref={node => props.setDropdownRef(node)}
+          data-name={'avatar'}
+          ref={props.setDropdownRef}
         >
           <AccountVisual
             address={props.account.address || ''}

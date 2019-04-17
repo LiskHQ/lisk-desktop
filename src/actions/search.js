@@ -206,13 +206,14 @@ export const searchMoreTransactions = ({
       });
   };
 
+export const clearSearchSuggestions = () => ({
+  data: {},
+  type: actionTypes.searchClearSuggestions,
+});
+
 export const searchSuggestions = ({ searchTerm }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    dispatch({
-      data: {},
-      type: actionTypes.searchClearSuggestions,
-    });
     searchAll({ liskAPIClient, searchTerm }).then(response => dispatch({
       data: response,
       type: actionTypes.searchSuggestions,
