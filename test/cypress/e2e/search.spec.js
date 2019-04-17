@@ -142,7 +142,7 @@ describe('Search', () => {
    * Search signed in mainnet
    * @expect happens in mainnet
    */
-  it('Search signed in mainnet - happens in mainnet', () => {
+  xit('Search signed in mainnet - happens in mainnet', () => {
     cy.autologin(accounts.genesis.passphrase, networks.mainnet.node);
     cy.visit(urls.dashboard);
     cy.get(ss.searchInput).click().type(`${accounts['mainnet delegate'].address}{enter}`);
