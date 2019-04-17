@@ -210,7 +210,6 @@ describe('Send', () => {
   });
 });
 
-// this should be enable after bookmark be add to the send components at the end of transactions
 describe('Send: Bookmarks', () => {
   /**
    * Bookmarks suggestions are not present if there is no followers
@@ -221,7 +220,7 @@ describe('Send: Bookmarks', () => {
       .then(() => window.localStorage.removeItem('followedAccounts'));
     cy.visit(urls.send);
     cy.get(ss.recipientInput).click();
-    cy.get(ss.sendBookmarkList).should('exist');
+    cy.get(ss.sendBookmarkList).should('not.be.visible');
   });
 
   /**
@@ -233,18 +232,18 @@ describe('Send: Bookmarks', () => {
    */
   it('Choose follower from bookmarks and send tx', () => {
     window.localStorage.setItem('followedAccounts', `[
-      {"title":"Alice","address":"${accounts.delegate.address}","balance":101}
+      {"title":"Alice","address":"${accounts.delegate.address}","balance":101},
+      {"title":"Bob","address":"${accounts.genesis.address}","balance":101}
     ]`);
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.send);
     cy.get(ss.recipientInput).click();
-    cy.get(ss.recipientInput).type('l');
-    cy.get(ss.sendBookmarkList);
+    cy.get(ss.sendBookmarkList).should('be.visible');
     cy.get(ss.sendBookmarkList).eq(0).contains('Alice');
     cy.get(ss.sendBookmarkList).eq(0).contains(accounts.delegate.address);
     cy.get(ss.sendBookmarkList).eq(0).click();
     cy.get(ss.recipientInput).should('have.value', 'Alice');
-    cy.get(ss.amountInput).click().type(1);
+    cy.get(ss.amountInput).click().type('1');
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
     cy.get(ss.okayBtn).click();

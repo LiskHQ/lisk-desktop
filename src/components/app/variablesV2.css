@@ -60,6 +60,7 @@ or "warn/action" ineastd of "red/green"
   --button-font-size: var(--paragraph-font-size-s);
   --button-font-size-s: 12px;
   --footnote-font-size: 12px;
+  --font-size-extra-small: 11px;
   --font-size-title: 18px;
   --font-size-small-secondary: 13px;
 

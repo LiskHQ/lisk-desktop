@@ -119,7 +119,12 @@ describe('ExplorerTransactions V2 Component', () => {
       account: accounts.genesis,
       match: { params: { address: accounts.delegate.address } },
       balance: accounts.delegate.balance,
-      detailAccount: accounts.delegate,
+      detailAccount: {
+        ...accounts.delegate,
+        delegate: {
+          username: accounts.genesis.username,
+        },
+      },
       delegate: {
         account: accounts.delegate,
         approval: 98.63,

@@ -6,17 +6,19 @@ import styles from './balanceChart.css';
 import * as ChartUtils from '../../utils/balanceChart';
 
 class BalanceGraph extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    if (this.props.balance !== nextProps.balance || this.props.address !== nextProps.address) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
     const {
       t, transactions, balance, address,
     } = this.props;
-    let format = 'MMMM DD YYYY h:mm:ss';
-    if (transactions.length >= 120) {
-      format = 'MMMM DD YYYY';
-    }
-    if (transactions.length >= 600) {
-      format = 'MMMM YYYY';
-    }
+
+    const format = ChartUtils.getChartDateFormat(transactions);
 
     const data = ChartUtils.getBalanceData.bind(null, {
       transactions,

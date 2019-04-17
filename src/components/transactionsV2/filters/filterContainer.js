@@ -109,7 +109,7 @@ class filterContainer extends React.Component {
         <div className={styles.dropdownContainer}>
           <DropdownV2 className={styles.bigDropdown} showDropdown={this.state.showFilters}>
             <div
-              className={`${styles.container} container`}
+              className={`${styles.container} filter-container`}
               ref={(node) => { this.dropdownRef = node; }}>
               <DateFieldGroup
                 filters={{ dateFrom, dateTo }}

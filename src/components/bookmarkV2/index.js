@@ -178,7 +178,7 @@ class Bookmark extends React.Component {
         </span>
 
         <Feedback
-          show={recipient.error}
+          show={recipient.error || false}
           status={'error'}
           className={styles.feedbackMessage}
           showIcon={false}>

@@ -14,7 +14,7 @@ const urls = {
   delegates: '/delegates',
   delegatesVote: '/delegates/vote',
   signMessage: '/sign-message',
-  sidechains: '/sidechains',
+  splashscreen: '/',
 };
 
 export default urls;

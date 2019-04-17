@@ -8,7 +8,7 @@ const FilterBar = props => (
     <span className={styles.label}>
       {props.t('Filtered results: {{results}}', { results: props.results })}
     </span>
-    <div className={styles.labelsHolder}>
+    <div className={`${styles.labelsHolder}`}>
       {Object.keys(props.customFilters).map((filter, index) => {
         let label = props.customFilters[filter];
         if (label === '') return null;
@@ -16,8 +16,8 @@ const FilterBar = props => (
         switch (filter) {
           case 'dateFrom':
           case 'dateTo': {
-            const prefix = filter === 'dateFrom' ? props.t('from') : props.t('till');
-            label = `${prefix} ${moment(label, 'DD.MM.YY').format('Do MMM YYYY')}`;
+            const prefix = filter === 'dateFrom' ? props.t('from') : props.t('to');
+            label = `${prefix} ${moment(label, 'DD.MM.YY').format('DD MMM YYYY')}`;
             break;
           }
           case 'amountFrom':
@@ -32,22 +32,20 @@ const FilterBar = props => (
 
         return (
           <div
-            className={`${styles.filter}`}
+            className={`${styles.filter} filter`}
             key={filter + index}>
               <p className={styles.label}>{label}</p>
               <span
-                className={styles.clearBtn}
+                className={`${styles.clearBtn} clear-filter`}
                 onClick={() => props.clearFilter(filter)} />
           </div>);
         })
       }
       <SecondaryButtonV2
-        className={'extra-small clearAllButton'}
-        onClick={props.clearAllFilters}>
-        {props.t('Clear All filters')}
+        className={'clear-all-filters extra-small'}
+        onClick={props.clearAllFilters}>{props.t('Clear All filters')}
       </SecondaryButtonV2>
     </div>
-  </div>
-);
+  </div>);
 
 export default FilterBar;
