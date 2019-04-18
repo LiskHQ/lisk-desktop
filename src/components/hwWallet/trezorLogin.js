@@ -67,7 +67,8 @@ class TrezorLogin extends React.Component {
         loginType,
         publicKey,
         address: extractAddress(publicKey),
-        deviceId
+        deviceId,
+        deviceModel: devices[0].model,
       });
 
       // Retrieve Address with verification
@@ -133,6 +134,7 @@ class TrezorLogin extends React.Component {
       hwInfo: {
         deviceId: this.state.deviceId,
         derivationIndex: index,
+        deviceModel: this.state.deviceModel,
       },
     });
   }

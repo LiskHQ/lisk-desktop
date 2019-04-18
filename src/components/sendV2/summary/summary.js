@@ -144,16 +144,17 @@ class Summary extends React.Component {
   }
 
   render() {
+    const { account } = this.props;
     const { secondPassphrase, isHardwareWalletConnected } = this.state;
     let isBtnDisabled = secondPassphrase.hasSecondPassphrase && secondPassphrase.isValid !== '' && !secondPassphrase.isValid;
     isBtnDisabled = !isBtnDisabled && isHardwareWalletConnected;
 
     const confirmBtnMessage = isHardwareWalletConnected
-      ? this.props.t('Confirm on Ledger')
+      ? this.props.t(`Confirm on ${account.hwInfo.deviceModel}`)
       : this.props.t('Send {{amount}} LSK', { amount: this.props.fields.amount.value });
 
     const title = isHardwareWalletConnected
-      ? this.props.t('Confirm transaction on Ledger Nano S')
+      ? this.props.t(`Confirm transaction on ${account.hwInfo.deviceModel}`)
       : this.props.t('Transaction summary');
 
     return (
