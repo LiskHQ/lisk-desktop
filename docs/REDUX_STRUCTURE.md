@@ -38,7 +38,7 @@ To have a better structure for new currencies, while also keeping the LSK token 
   "account": { "LSK account info" },
   "accounts": { "info": { "BTC": {} }, "followed": {} },
   "BTC": { "BTC specific data" },
-  "service": { "BTC": {}, "LSK": {} },
+  "service": { "fee": {"LSK": {}, "BTC": {}}, "priceTicker": {"BTC": {}, "LSK": {}} },
   "delegate": {},
   "voting": {},
   "filters": {},
@@ -55,7 +55,7 @@ Ideally in the future we should end up with a structure similar to:
 {
   "accounts": { "info": { "tokenKey": {} }, "passphrase": "", "other account common info" },
   "followed": [{ "address": "", "balance": "", "tokenType": "LSK" }],
-  "service": { "BTC": {}, "LSK": {} },
+  "service": { "fee": {"LSK": {}, "BTC": {}}, "priceTicker": {"BTC": {}, "LSK": {}} },
   "LSK": { "delegate": {}, "voting": {}, "filters": {}, },
   "tokenKey": { "specific data for token" },
   "wallets": { "tokenKey": { "netCode": [] } },
