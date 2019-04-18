@@ -29,32 +29,20 @@ On `settings` we have which token is the active one, and also a list with the to
 And also a unified `service` node, not just as liskService as we have right now on Lisk-Hub.  
 
 ### Lisk Hub
-In the case of Lisk-Hub we could have initialy a structure that integrate some of the changes just for other currencies, while we don't update the current LSK structure.  
-To have a better structure for new currencies, while also keeping the LSK token working without too much work, something like:
-```json
-// lisk-hub intermediate store example
-{
-  "..."
-  "account": { "LSK account info" },
-  "accounts": { "info": { "BTC": {} }, "followed": {} },
-  "BTC": { "BTC specific data" },
-  "service": { "fee": {"LSK": {}, "BTC": {}}, "priceTicker": {"BTC": {}, "LSK": {}} },
-  "delegate": {},
-  "voting": {},
-  "filters": {},
-  "..."
-}
-```
-- Rename `liskService` to just `service` so we can have all service information centralized in one place.  
-- New token accounts being already on the `accounts` structure.
+- Remove `peers` from the store, and use global instances of desired API client.
+- Rename `liskService` to just `service` so we can have all service information centralized in one place, and splitting necessary data among `tokenKeys`.
+- Accounts being already on the `accounts` structure, separated by `tokenKey` and having common information on the root.
 - Specific new token data grouped inside a `tokenKey` node.
-
-Ideally in the future we should end up with a structure similar to:
+- `followed` split based on `tokenKey`.
+- `wallets` Separated by `tokenKey` and `netCode`.
+- Add one node to `settings` with the a list of tokens and the current `activeToken`.
+- `transactions` and `transaction` being cleaned up once the `activeTokens` is changed.
+Ideally we should end up with a structure similar to:
 ```json
 // lisk-hub final store example
 {
   "accounts": { "info": { "tokenKey": {} }, "passphrase": "", "other account common info" },
-  "followed": {"tokenType": [{ "address": "", "balance": "" }]},
+  "followed": {"tokenKey": [{ "address": "", "balance": "" }]},
   "service": { "fee": {"LSK": {}, "BTC": {}}, "priceTicker": {"BTC": {}, "LSK": {}} },
   "LSK": { "delegate": {}, "voting": {}, "filters": {}, },
   "tokenKey": { "specific data for token" },
@@ -62,8 +50,9 @@ Ideally in the future we should end up with a structure similar to:
   "..."
 }
 ```
-Data used by all token types couls be put into a common node or at the root as it's right now, like the `extensions` and `search` node, having `tokenKeys` node inside if needed.
+Data used by all token types should be put into a common node or at the root as it's right now, like the `extensions` and `search` node, having `tokenKeys` node inside if needed.
 Transactions node can keep the same structure given that we use a normalize so all the transactions have the same structure of information so we can display them in a similar way and since we won't show transactions of different tokens at the same time.
+
 
 ## Actions
 Actions should be generic and fetch the active token from the store, so the calls to the actions creators shouldn't be specific per token. So the components don't need to know which token is currently being used.  
