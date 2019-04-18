@@ -2,15 +2,14 @@ import React from 'react';
 import QRCode from 'qrcode.react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { translate } from 'react-i18next';
+import moment from 'moment';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { FontIcon } from '../fontIcon';
-import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
+import { InputV2 } from '../toolbox/inputsV2';
 import renderPaperwallet from '../../utils/paperwallet';
-import key from '../../assets/images/icons-v2/key.svg';
-import lock from '../../assets/images/icons-v2/circle-lock.svg';
-import pdf from '../../assets/images/icons-v2/pdf.svg';
+import svgIcons from '../../utils/svgIcons';
 import registerStyles from './registerV2.css';
 import styles from './backupPassphrase.css';
 
@@ -22,6 +21,7 @@ class BackupPassphrase extends React.Component {
       passphraseCopied: false,
     };
 
+    this.walletName = `lisk_passphrase_${moment().format('YYYY_MM_DD_HH_mm')}.pdf`;
     this.generatePaperwallet = this.generatePaperwallet.bind(this);
     this.setCanvasRef = this.setCanvasRef.bind(this);
   }
@@ -44,7 +44,7 @@ class BackupPassphrase extends React.Component {
       ...this.props,
       qrcode: this.canvasRef.firstChild.toDataURL(),
     };
-    renderPaperwallet(data);
+    renderPaperwallet(data, this.walletName);
   }
 
   componentWillUnmount() {
@@ -66,20 +66,15 @@ class BackupPassphrase extends React.Component {
         <span className={`${registerStyles.stepsLabel}`}>{t('Step 2 / 4')}</span>
         <div className={`${registerStyles.titleHolder}`}>
           <h1>
-            <img src={key} />
-            {t('Backup your Passphrase')}
+            {t('Save your Passphrase')}
           </h1>
-          <p>{t('Your passphrase is both your login and password to your Lisk Hub.')}</p>
+          <p>{t('Your passphrase is your login and password combined.')}</p>
           <p>{
-            t('You must keep it safe as it is the only way to access your wallet and cannot be recovered if lost.')
+            t('Keep it safe as it is the only way to access your wallet.')
           }</p>
         </div>
-
-        <div className={`${styles.optionsHolder} ${grid['col-sm-11']}`}>
+        <div className={`${styles.optionsHolder} ${grid['col-sm-10']}`}>
           <div className={`${styles.option}`}>
-            <div className={`${styles.optionIcon}`}>
-              <img src={lock} />
-            </div>
             <div className={`${styles.optionContent}`}>
               <h2>
                 {t('Passphrase')}
@@ -93,60 +88,70 @@ class BackupPassphrase extends React.Component {
                         {t('Read More')}
                     </a>}>
                   <p>{
-                    t('We strongly recommend to store your passphrase in a safe place, such as on a password manager or paperwallet.')
+                    t('Store your passphrase in a safe place, possibly having more than one copy. You can use a password manager or a paperwallet. It is very important to ensure you do not lose access to your passphrase.')
                   }</p>
                 </Tooltip>
 
               </h2>
-              <p className='option-value'>{account.passphrase}</p>
+              <div className={`${styles.inputs} ${grid.row} passphrase`}>
+                {account.passphrase.split(' ').map((value, i) => (
+                  <span key={i} className={`${grid['col-xs-2']}`}>
+                    <InputV2
+                      readOnly
+                      value={value}
+                    />
+                  </span>
+                ))}
+              </div>
               <CopyToClipboard
                 text={account.passphrase}
                 onCopy={() => this.textIsCopied()}>
                 <span className={`${styles.action} ${passphraseCopied && styles.copied}`}>
-                  { !passphraseCopied ? t('Copy passphrase') : t('Copied!') }
+                  { !passphraseCopied ? t('Copy to Clipboard') : t('Copied!') }
                 </span>
               </CopyToClipboard>
             </div>
           </div>
+          <div className={styles.hrSection}>
+            <p>{t('OR')}</p>
+          </div>
           <div className={`${styles.option}`}>
-            <div className={`${styles.optionIcon}`}>
-              <img src={pdf} />
-            </div>
             <div className={`${styles.optionContent}`}>
               <h2>
-                {t('Paper version')}
+                {t('Paper Wallet')}
                 <Tooltip
-                  title={'Paperwallet'}>
+                  title={'Paper Wallet'}>
                   <p>
-                    {t('You can print your passphrase to be stored in a safe place. ')}
-                    {t('It is highly recommended to delete the PDF and remove it from your trash after printing.')}
+                    {t('You can print your passphrase to store in a safe place. ')}
+                    {t('It is highly recommended to delete the PDF file and remove it from your Trash Folder too after printing it.')}
                   </p>
                 </Tooltip>
               </h2>
               <div style={{ display: 'none' }} ref={this.setCanvasRef}>
                 <QRCode value={account.passphrase} />
               </div>
-              <p className='option-value'>{'Lisk.pdf'}</p>
+              <div className={styles.downloadLisk}>
+                <img src={svgIcons.fileOutline} />
+                <p className='option-value'>{this.walletName}</p>
+              </div>
               <span
                 onClick={this.generatePaperwallet}
-                className={`${styles.action}`}>{t('Download PDF')}</span>
+                className={`${styles.action}`}>{t('Download')}</span>
             </div>
           </div>
         </div>
 
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
-          <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
-            <SecondaryButtonV2 onClick={prevStep}>
-              <FontIcon className={registerStyles.icon}>arrow-left</FontIcon>
+          <span className={`${registerStyles.button} ${registerStyles.backButton}`}>
+            <TertiaryButtonV2 onClick={prevStep}>
               {t('Go Back')}
-            </SecondaryButtonV2>
+            </TertiaryButtonV2>
           </span>
-          <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
+          <span className={`${registerStyles.button}`}>
             <PrimaryButtonV2
               className={'yes-its-safe-button'}
               onClick={() => nextStep({ account })}>
               {t('Continue')}
-              <FontIcon className={registerStyles.icon}>arrow-right</FontIcon>
             </PrimaryButtonV2>
           </span>
         </div>
