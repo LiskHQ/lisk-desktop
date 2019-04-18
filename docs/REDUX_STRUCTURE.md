@@ -65,9 +65,35 @@ Ideally in the future we should end up with a structure similar to:
 Data used by all token types couls be put into a common node or at the root as it's right now, like the `extensions` and `search` node, having `tokenKeys` node inside if needed.
 Transactions node can keep the same structure given that we use a normalize so all the transactions have the same structure of information so we can display them in a similar way and since we won't show transactions of different tokens at the same time.
 
+## Actions
+Actions should be generic and fetch the active token from the store, so the calls to the actions creators shouldn't be specific per token. So the components don't need to know which token is currently being used.  
+Also there would be some action creators that don't fetch the active token, when they have to share the data among multiple tokens.
+```javascript
+// account - token based
+const login = (payload) => (dispatch, getState) => {
+  const activeToken = getState().settings.token.active;
+  dispatch({
+    type: 'login',
+    data: {
+      payload,
+      activeToken,
+    },
+  });
+}
+// bookmark - no token
+const addBookmark = (payload) => (dispatch, getState) => {
+  dispatch({
+    type: 'add',
+    data: payload
+  });
+}
+```
+Above actions are not real use cases, just examples to illustrate.
+
 ## Reducers
 The reducers would have to take in account the token type, or if no token is set consider it as being common data and not putting inside a node, but directly on the root.  
 Meaning that we should not create specific reducers for each multicurrency, but have a reducer that can handle different tokens.  
+The token should always be set on the action level, not on the component level.  
 Something like:
 ```javascript
 function account(state = {}, action) {
@@ -84,23 +110,7 @@ function account(state = {}, action) {
   }
 }
 ```
-The token should always be set on the action level, not on the component level.  
-
-
-## Actions
-Actions should be generic and fetch the active token from the store, so the calls to the actions creators shouldn't be specific per token. So the components don't need to know which token is currently being used.
-```javascript
-const genericActionCreator = (payload) => (dispatch, getState) {
-  const activeToken = getState().settings.token.active;
-  dispatch({
-    type: genericType,
-    data: {
-      payload,
-      activeToken,
-    },
-  })
-}
-```
+Above actions are not real use cases, just examples to illustrate.
 
 ## APIs
 APIs should go through the [functionMapper](../src/utils/api/functionMapper.js) function so it's only needed to import the function after the functionMapper, and passing the desired token, resource and function, BTC API have some examples for `account`, we would need to move the `LSK` resources and calls to the same structure, so we can just call the same API function and get the desired result.  
