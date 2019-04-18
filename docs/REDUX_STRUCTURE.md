@@ -54,7 +54,7 @@ Ideally in the future we should end up with a structure similar to:
 // lisk-hub final store example
 {
   "accounts": { "info": { "tokenKey": {} }, "passphrase": "", "other account common info" },
-  "followed": [{ "address": "", "balance": "", "tokenType": "LSK" }],
+  "followed": {"tokenType": [{ "address": "", "balance": "" }]},
   "service": { "fee": {"LSK": {}, "BTC": {}}, "priceTicker": {"BTC": {}, "LSK": {}} },
   "LSK": { "delegate": {}, "voting": {}, "filters": {}, },
   "tokenKey": { "specific data for token" },
