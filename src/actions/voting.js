@@ -7,7 +7,7 @@ import {
 } from '../utils/api/delegate';
 import { getTimeOffset } from '../utils/hacks';
 import { updateDelegateCache } from '../utils/delegates';
-import { voteWithLedger } from '../utils/api/ledger';
+import { voteWithHW } from '../utils/api/hwWallet';
 import { passphraseUsed } from './account';
 import { transactionAdded } from './transactions';
 import Fees from '../constants/fees';
@@ -127,7 +127,7 @@ export const votePlaced = ({
       // eslint-disable-next-line no-case-declarations
       case loginType.ledger:
         [error, callResult] =
-          await to(voteWithLedger(liskAPIClient, account, votedList, unvotedList));
+          await to(voteWithHW(liskAPIClient, account, votedList, unvotedList, secondPassphrase));
         break;
       /* istanbul ignore next */
       default:

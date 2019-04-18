@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { liskAPIClientSet } from '../../actions/peers';
 import { settingsUpdated } from '../../actions/settings';
 import { errorToastDisplayed } from '../../actions/toaster';
-import LedgerLogin from './ledgerLogin';
+import TrezorLogin from './trezorLogin';
 
 const mapStateToProps = state => ({
   liskAPIClient: state.peers && state.peers.liskAPIClient,
@@ -21,4 +21,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withRouter(translate()(LedgerLogin)));
+)(withRouter(translate()(TrezorLogin)));
