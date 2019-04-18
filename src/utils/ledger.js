@@ -37,6 +37,7 @@ export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t,
   while (accountInfo.isInitialized || index === 0);
   /* eslint-disable-next-line */
   return {
+    deviceId,
     hwAccounts: accounts,
     isLoading: false,
     showNextAvailable: (index === 1),

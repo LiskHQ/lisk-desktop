@@ -10,35 +10,55 @@ import { getTransactionBytes, calculateTxId, getBufferToHex } from './rawTransac
 import { PLATFORM_TYPES, getPlatformType } from './platform';
 import store from '../store';
 import loginTypes from '../constants/loginTypes';
+import { accountLoggedOut } from '../actions/account';
+import { dialogDisplayed, dialogHidden } from '../actions/dialog';
+import Alert from '../components/dialog/alert';
 
 const util = require('util');
 
 const { ipc } = window;
 
-if (ipc) { // On browser-mode is undefined
-  // ipc.on('ledgerConnected', () => {
-  //   store.dispatch(infoToastDisplayed({ label: HW_MSG.LEDGER_CONNECTED }));
-  // });
+const handleConnect = () => {
+  store.dispatch({
+    type: actionTypes.settingsUpdated,
+    data: { isHarwareWalletConnected: true },
+  });
+  store.dispatch(errorToastDisplayed({ label: HW_MSG.LEDGER_CONNECTED }));
+};
 
-  // ipc.on('ledgerDisconnected', () => {
-  //   console.log('ledgerDisconnected');
-  //   store.dispatch(errorToastDisplayed({ label: HW_MSG.LEDGER_DISCONNECTED }));
-  // });
+const handleDisconnect = (hwName) => {
+  const state = store.getState();
+  const { account } = state;
+  if (account.address) {
+    store.dispatch( // eslint-disable-line
+      dialogDisplayed({
+        childComponent: Alert,
+        childComponentProps: {
+          title: 'You are disconnected',
+          text: `There is no connection to the ${hwName}. Please check the cables if it happened by accident.`,
+          closeDialog: () => {
+            store.dispatch(dialogHidden());
+            location.reload(); // eslint-disable-line
+          },
+        },
+      }));
+    store.dispatch(accountLoggedOut());
+  }
+  store.dispatch({
+    type: actionTypes.settingsUpdated,
+    data: { isHarwareWalletConnected: false },
+  });
+};
+
+if (ipc) { // On browser-mode is undefined
+  ipc.on('ledgerConnected', handleConnect);
+  ipc.on('ledgerDisconnected', () => handleDisconnect('Ledger Nano S'));
+
+  ipc.on('trezorConnected', handleConnect);
+  ipc.on('trezorDisconnected', () => handleDisconnect('Trezor Model T'));
 
   ipc.on('ledgerButtonCallback', () => {
     // store.dispatch(infoToastDisplayed({ label: HW_MSG.LEDGER_ASK_FOR_CONFIRMATION }));
-  });
-
-  ipc.on('trezorConnected', (event, data) => {
-    store.dispatch(infoToastDisplayed({
-      label: util.format(HW_MSG.TREZOR_CONNECTED, data.model, data.label),
-    }));
-  });
-
-  ipc.on('trezorDisconnected', (event, data) => {
-    store.dispatch(errorToastDisplayed({
-      label: util.format(HW_MSG.TREZOR_DISCONNECTED, data.model, data.label),
-    }));
   });
 
   ipc.on('trezorButtonCallback', (event, data) => {
