@@ -21,7 +21,7 @@
   max-width: 1400px;
   height: var(--header-height-xs);
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   box-sizing: border-box;
   padding: 14px 24px;
@@ -35,6 +35,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
+  margin-left: auto;
 
   & > p {
     padding: 0;
@@ -54,6 +55,33 @@
     font-size: var(--button-font-size-s);
     margin-right: 5px;
     color: var(--color-primary-standard);
+  }
+}
+
+.searchButton {
+  width: 87px;
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & > img {
+    cursor: pointer;
+  }
+}
+
+.searchDropdown {
+  right: 10px;
+  top: calc(100% + 25px);
+  width: 500px;
+  padding: 20px;
+  box-sizing: border-box;
+
+  & > div {
+    padding: 0;
   }
 }
 

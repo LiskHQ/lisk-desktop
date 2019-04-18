@@ -129,7 +129,7 @@ EOF
 										npm run serve -- $WORKSPACE/app/build -p 300$N -a 127.0.0.1 &>server.log &
 										set +e
 										set -o pipefail
-										npm run cypress:run -- --record |tee cypress.log
+										npm run cypress:run |tee cypress.log
 										ret=$?
 										grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress_url
 										echo $ret >.cypress_status

@@ -81,6 +81,7 @@ module.exports = {
     'src/tests.js',
     'src/utils/api/ledger.js',
     'src/utils/api/liskService.js',
+    'src/utils/api/btc/',
     'src/utils/applyDeviceClass.js',
     'src/utils/ledger.js',
     'src/utils/proxyLogin.js',

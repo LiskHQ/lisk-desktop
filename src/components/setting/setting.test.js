@@ -100,16 +100,6 @@ describe('Setting', () => {
     expect(wrapper.find('.disabled').length).to.have.equal(3);
   });
 
-  it('should not show the onboarding setting when on mobile', () => {
-    window.innerWidth = breakpoints.m;
-    wrapper = mount(<Router>
-      <Setting
-        {...props}
-      />
-    </Router>, options);
-    expect(wrapper.find('.onBoarding')).to.have.length(0);
-  });
-
   it.skip('should click on .autoLog update the setting', () => {
     wrapper.find('.autoLog input').simulate('click');
     clock.tick(100);
