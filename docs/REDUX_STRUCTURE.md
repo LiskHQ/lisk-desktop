@@ -66,12 +66,13 @@ Data used by all token types couls be put into a common node or at the root as i
 Transactions node can keep the same structure given that we use a normalize so all the transactions have the same structure of information so we can display them in a similar way and since we won't show transactions of different tokens at the same time.
 
 ## Reducers
-The reducers would have to take in account the token type, or if no token is set, consider it as being common data and not putting inside a node, but directly on the root.  
+The reducers would have to take in account the token type, or if no token is set consider it as being common data and not putting inside a node, but directly on the root.  
+Meaning that we should not create specific reducers for each multicurrency, but have a reducer that can handle different tokens.  
 Something like:
 ```javascript
-function genericReducer(state = {}, action) {
+function account(state = {}, action) {
   switch(action.type) {
-    case genericType: {
+    case login: {
       const hasToken = !!action.data.activeToken || false;
       const data = hasToken
         ? { ...state, [action.data.activeToken]: { ...action.data.payload } }
@@ -93,7 +94,7 @@ const genericActionCreator = (payload) => (dispatch, getState) {
   const activeToken = getState().settings.token.active;
   dispatch({
     type: genericType,
-    data: {d
+    data: {
       payload,
       activeToken,
     },
