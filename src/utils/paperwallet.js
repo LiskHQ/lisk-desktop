@@ -116,18 +116,18 @@ class Paperwallet {
     return this;
   }
 
-  save() {
+  save(walletName) {
     this.renderHeader()
       .renderInstructions()
       .renderAccount()
       .renderFooter()
-      .doc.save('Lisk.pdf');
+      .doc.save(`${walletName}.pdf`);
   }
 }
 
-const renderPaperwallet = (data) => {
+const renderPaperwallet = (data, walletName) => {
   const pdf = new Paperwallet(data);
-  pdf.save();
+  pdf.save(walletName);
 };
 
 export default renderPaperwallet;

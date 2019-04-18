@@ -3,12 +3,10 @@ import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '../../constants/routes';
-import { FontIcon } from '../fontIcon';
-import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
 import AccountVisual from '../accountVisual';
 import registerStyles from './registerV2.css';
 import styles from './chooseAvatar.css';
-import avatar from '../../assets/images/icons-v2/avatar.svg';
 
 class ChooseAvatar extends React.Component {
   constructor() {
@@ -64,12 +62,11 @@ class ChooseAvatar extends React.Component {
       <React.Fragment>
         <span className={`${registerStyles.stepsLabel}`}>{t('Step 1 / 4')}</span>
         <div className={`${registerStyles.titleHolder} ${grid['col-xs-10']}`}>
-          <h1>
-            <img src={avatar} />
+          <h1 className={styles.title}>
             {t('Choose your Avatar')}
           </h1>
-          <p>{
-            t('Each Avatar is a unique visual representation of your Lisk address.')
+          <p className={styles.description}>{
+            t('An Avatar is a unique visual representation of your Lisk address.')
           }</p>
         </div>
         <div
@@ -92,25 +89,23 @@ class ChooseAvatar extends React.Component {
                 key={key}>
                 <AccountVisual
                   address={account.address}
-                  size={56}
+                  size={74}
                   />
               </span>
             ))
           }
         </div>
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
-          <Link className={`${registerStyles.button} ${grid['col-xs-4']}`} to={routes.splashscreen.path}>
-            <SecondaryButtonV2>
-              <FontIcon className={registerStyles.icon}>arrow-left</FontIcon>
+          <Link className={`${registerStyles.button} ${registerStyles.backButton}`} to={routes.splashscreen.path}>
+            <TertiaryButtonV2>
               {t('Go Back')}
-            </SecondaryButtonV2>
+            </TertiaryButtonV2>
           </Link>
-          <span className={`${registerStyles.button} ${grid['col-xs-4']}`}>
+          <span className={`${registerStyles.button}`}>
             <PrimaryButtonV2
               className={'get-passphrase-button'}
               onClick={this.handleNextStep}>
-              {t('Confirm')}
-              <FontIcon className={registerStyles.icon}>arrow-right</FontIcon>
+              {t('Continue')}
             </PrimaryButtonV2>
           </span>
         </div>

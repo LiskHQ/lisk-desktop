@@ -47,10 +47,6 @@ describe('V2 Register Process - Backup Passphrase', () => {
     clock.restore();
   });
 
-  it('Should render with passphrase of selected account', () => {
-    expect(wrapper.find('.option p.option-value').at(0)).to.have.text(account.passphrase);
-  });
-
   it('Should copy passphrase when clicking copy passphrase and reset after 3 seconds', () => {
     expect(wrapper.find('CopyToClipboard .action')).not.to.have.className('copied');
     wrapper.find('CopyToClipboard').simulate('click');
