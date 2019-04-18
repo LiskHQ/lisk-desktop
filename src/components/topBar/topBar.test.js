@@ -1,4 +1,5 @@
 import React from 'react';
+import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import configureStore from 'redux-mock-store';
@@ -23,20 +24,39 @@ describe('TopBar', () => {
     logOut: sinon.spy(),
     history: {
       replace: () => {},
+      push: sinon.spy(),
     },
+    suggestions: {
+      addresses: [],
+      transactions: [],
+      delegates: [],
+    },
+    transactions: [],
+    searchSuggestions: sinon.spy(),
+    clearSearchSuggestions: sinon.spy(),
   };
 
   const history = {
     location: { pathname: routes.dashboard.path },
     createHref: () => {},
+    push: () => {},
+    replace: () => {},
   };
 
-  const store = configureStore({
+  const store = configureStore([thunk])({
     account: {
       address: '12345L',
       balance: 120,
     },
     showDelegate: false,
+    history,
+    search: {
+      suggestions: {
+        addresses: [],
+        transactions: [],
+        delegates: [],
+      },
+    },
   });
 
   const myOptions = {
@@ -58,7 +78,7 @@ describe('TopBar', () => {
   });
 
   it('renders <TopBar /> component', () => {
-    expect(wrapper.find('.wrapper').at(0)).to.have.length(1);
+    expect(wrapper.find('.top-bar').at(0)).to.have.length(1);
   });
 
   it('renders <TopBar /> component with user log in', () => {
@@ -78,8 +98,11 @@ describe('TopBar', () => {
   });
 
   it('renders 3 menu items including delegates', () => {
-    myProps.showDelegate = true;
-    wrapper = mountWithRouter(<TopBar {...myProps} />, myOptions);
+    const newProps = {
+      ...myProps,
+      showDelegate: true,
+    };
+    wrapper = mountWithRouter(<TopBar {...newProps} />, myOptions);
     expect(wrapper.find('a.item')).to.have.length(3);
   });
 
@@ -95,5 +118,15 @@ describe('TopBar', () => {
     myProps.account = {};
     wrapper = mountWithRouter(<TopBar {...myProps} />, myOptions);
     expect(wrapper.find('.signIn')).to.have.length(1);
+  });
+
+  it('renders the search component when user do click in the search icon', () => {
+    expect(wrapper.find('.search-icon')).to.have.length(1);
+    expect(wrapper.find('DropdownV2').at(0)).not.have.className('show');
+    wrapper.find('.search-icon').simulate('click');
+    expect(wrapper.find('DropdownV2').at(0)).to.have.className('show');
+    wrapper.find('.search-icon').simulate('click');
+    expect(wrapper.find('DropdownV2').at(0)).not.have.className('show');
+    wrapper.find('.topbar-logo').simulate('click');
   });
 });

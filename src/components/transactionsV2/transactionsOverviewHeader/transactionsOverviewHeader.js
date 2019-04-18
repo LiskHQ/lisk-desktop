@@ -80,7 +80,7 @@ class transactionsHeader extends React.Component {
             <span
               ref={this.setDropownRefs}
               data-name={'requestDropdown'}
-              className={`${styles.requestContainer} help-onboarding tx-receive-bt`}>
+              className={`${styles.requestContainer} tx-receive-bt`}>
               <SecondaryButtonV2 onClick={() => this.toggleDropdown('requestDropdown')}>
                 {t('Request LSK')}
               </SecondaryButtonV2>

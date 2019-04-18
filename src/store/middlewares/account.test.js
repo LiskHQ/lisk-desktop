@@ -15,6 +15,7 @@ import actionTypes from '../../constants/actions';
 import middleware from './account';
 import transactionTypes from '../../constants/transactionTypes';
 
+/* eslint-disable-next-line max-statements */
 describe('Account middleware', () => {
   const { lockDuration } = accountConfig;
   let store;
@@ -219,5 +220,23 @@ describe('Account middleware', () => {
   it(`should do nothing on ${actionTypes.storeCreated} if autologin data NOT found in localStorage`, () => {
     middleware(store)(next)(storeCreatedAction);
     expect(store.dispatch).to.not.have.been.calledWith(liskAPIClientMock);
+  });
+
+  it(`should update account data on ${actionTypes.accountLoggedIn} `, () => {
+    const accountLoggedInAction = {
+      type: actionTypes.accountLoggedIn,
+      data: {
+      },
+    };
+    middleware(store)(next)(accountLoggedInAction);
+    expect(store.dispatch).to.have.been.calledWith({ type: actionTypes.walletUpdated, data: {} });
+  });
+
+  it(`should clean up on ${actionTypes.accountLoggedOut} `, () => {
+    const accountLoggedOutAction = {
+      type: actionTypes.accountLoggedOut,
+    };
+    middleware(store)(next)(accountLoggedOutAction);
+    expect(store.dispatch).to.have.been.calledWith({ type: actionTypes.cleanTransactions });
   });
 });
