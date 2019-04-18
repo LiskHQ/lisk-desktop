@@ -35,7 +35,6 @@ pipeline {
 								npm run --silent build:testnet
 								npm run --silent bundlesize
 
-								npm install
 								npm run install-electron-dependencies
 								USE_SYSTEM_XORRISO=true npm run dist:linux
 								'''
@@ -132,8 +131,16 @@ EOF
 										set -o pipefail
 										npm run cypress:run |tee cypress.log
 										ret=$?
-										grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress_url
-										echo $ret >.cypress_status
+										if [ $ret -eq 0 ]; then
+										  grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress_url
+										  echo $ret >.cypress_status
+										else
+										  FAILED_TESTS="$( awk '/Spec/{f=1}f' cypress.log |grep --only-matching '✖ .*.spec.js' |awk '{ print $2 }' |xargs| tr -s ' ' ',' )"
+										  npm run cypress:run -- --record --spec $FAILED_TESTS |tee cypress.log
+										  ret=$?
+										  grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress_url
+										  echo $ret >.cypress_status
+										fi
 										exit $ret
 										'''
 									}
