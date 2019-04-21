@@ -18,27 +18,27 @@ const util = require('util');
 
 const { ipc } = window;
 
-const handleConnect = () => {
+const handleConnect = (deviceModel) => {
   store.dispatch({
     type: actionTypes.settingsUpdated,
     data: { isHarwareWalletConnected: true },
   });
-  store.dispatch(errorToastDisplayed({ label: HW_MSG.LEDGER_CONNECTED }));
+  store.dispatch(errorToastDisplayed({ label: `${deviceModel} connected` }));
 };
 
-const handleDisconnect = (hwName) => {
+const handleDisconnect = (deviceModel) => {
   const state = store.getState();
   const { account } = state;
   if (account.address) {
-    store.dispatch( // eslint-disable-line
+    store.dispatch(
       dialogDisplayed({
         childComponent: Alert,
         childComponentProps: {
           title: 'You are disconnected',
-          text: `There is no connection to the ${hwName}. Please check the cables if it happened by accident.`,
+          text: `There is no connection to the ${deviceModel}. Please check the cables if it happened by accident.`,
           closeDialog: () => {
             store.dispatch(dialogHidden());
-            location.reload(); // eslint-disable-line
+            location.reload();
           },
         },
       }));
@@ -51,11 +51,8 @@ const handleDisconnect = (hwName) => {
 };
 
 if (ipc) { // On browser-mode is undefined
-  ipc.on('ledgerConnected', handleConnect);
-  ipc.on('ledgerDisconnected', () => handleDisconnect('Ledger Nano S'));
-
-  ipc.on('trezorConnected', handleConnect);
-  ipc.on('trezorDisconnected', () => handleDisconnect('Trezor Model T'));
+  ipc.on('hwConnected', (event, { model }) => handleConnect(model));
+  ipc.on('hwDisconnected', (event, { model }) => handleDisconnect(model));
 
   ipc.on('ledgerButtonCallback', () => {
     // store.dispatch(infoToastDisplayed({ label: HW_MSG.LEDGER_ASK_FOR_CONFIRMATION }));

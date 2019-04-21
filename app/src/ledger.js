@@ -32,7 +32,7 @@ TransportNodeHid.setListenDevicesDebug((msg, ...args) => {
 */
 let busy = false;
 TransportNodeHid.setListenDevicesPollingSkip(() => busy);
-let ledgerPath = null;
+let hwDevice = null;
 const getLedgerAccount = (index = 0) => {
   const ledgerAccount = new LedgerAccount();
   ledgerAccount.coinIndex(SupportedCoin.LISK);
@@ -85,14 +85,14 @@ const ledgerObserver = {
           const liskAccount = await getLiskAccount(device.path);
           const ledgerDevice = createLedgerHWDevice(liskAccount, device.path);
           addConnectedDevices(ledgerDevice);
-          ledgerPath = device.path;
-          win.send({ event: 'ledgerConnected', value: null });
+          hwDevice = device;
+          win.send({ event: 'hwConnected', value: { model: ledgerDevice.model } });
         }
       } else if (type === 'remove') {
-        if (ledgerPath) {
-          removeConnectedDeviceByPath(ledgerPath);
-          ledgerPath = null;
-          win.send({ event: 'ledgerDisconnected', value: null });
+        if (hwDevice) {
+          removeConnectedDeviceByPath(hwDevice.path);
+          win.send({ event: 'hwDisconnected', value: { model: hwDevice.model } });
+          hwDevice = null;
         }
       }
     }
@@ -104,7 +104,7 @@ const syncDevices = () => {
   try {
     observableListen = TransportNodeHid.listen(ledgerObserver);
   } catch (e) {
-    ledgerPath = null;
+    hwDevice = null;
     syncDevices();
   }
 };
@@ -174,8 +174,8 @@ export const executeLedgerCommand = (device, command) =>
 
 // // eslint-disable-next-line arrow-body-style
 createCommand('ledgerCommand', (command) => {
-  if (ledgerPath) {
-    return TransportNodeHid.open(ledgerPath)
+  if (hwDevice) {
+    return TransportNodeHid.open(hwDevice.path)
       .then(async (transport) => { // eslint-disable-line max-statements
         busy = true;
         try {

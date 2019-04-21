@@ -144,18 +144,18 @@ class Summary extends React.Component {
   }
 
   render() {
-    const { account } = this.props;
+    const { account, fields, t } = this.props;
     const { secondPassphrase, isHardwareWalletConnected } = this.state;
     let isBtnDisabled = secondPassphrase.hasSecondPassphrase && secondPassphrase.isValid !== '' && !secondPassphrase.isValid;
     isBtnDisabled = !isBtnDisabled && isHardwareWalletConnected;
 
     const confirmBtnMessage = isHardwareWalletConnected
-      ? this.props.t(`Confirm on ${account.hwInfo.deviceModel}`)
-      : this.props.t('Send {{amount}} LSK', { amount: this.props.fields.amount.value });
+      ? t('Confirm on {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })
+      : t('Send {{amount}} LSK', { amount: fields.amount.value });
 
     const title = isHardwareWalletConnected
-      ? this.props.t(`Confirm transaction on ${account.hwInfo.deviceModel}`)
-      : this.props.t('Transaction summary');
+      ? t('Confirm transaction on {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })
+      : t('Transaction summary');
 
     return (
       <div className={`${styles.wrapper} summary`}>
@@ -165,60 +165,60 @@ class Summary extends React.Component {
 
         <div className={`${styles.content} summary-content`}>
           <div className={styles.row}>
-            <label>{this.props.t('Recipient')}</label>
+            <label>{t('Recipient')}</label>
             <div className={styles.account}>
-              <AccountVisual address={this.props.fields.recipient.address} size={25} />
+              <AccountVisual address={fields.recipient.address} size={25} />
               <label className={`${styles.information} recipient-confirm`}>
-                {this.props.fields.recipient.title || this.props.fields.recipient.address}
+                {fields.recipient.title || fields.recipient.address}
               </label>
               <span className={`${styles.secondText} ${styles.accountSecondText}`}>
-                {this.props.fields.recipient.address}
+                {fields.recipient.address}
               </span>
             </div>
           </div>
 
           <div className={styles.row}>
-            <label>{this.props.t('Amount')}</label>
+            <label>{t('Amount')}</label>
             <label className={`${styles.information} ${styles.amount} amount-summary`}>
-              {`${this.props.fields.amount.value} ${this.props.t('LSK')}`}
-              <ConverterV2 className={`${styles.secondText} ${styles.amountSecondText}`} value={this.props.fields.amount.value} />
+              {`${fields.amount.value} ${t('LSK')}`}
+              <ConverterV2 className={`${styles.secondText} ${styles.amountSecondText}`} value={fields.amount.value} />
             </label>
           </div>
 
           <div className={styles.row}>
-            <label>{this.props.t('Message')}</label>
-            <p className={`${styles.information} reference`}>{this.props.fields.reference.value}</p>
+            <label>{t('Message')}</label>
+            <p className={`${styles.information} reference`}>{fields.reference.value}</p>
           </div>
 
           <div className={styles.row}>
             <label className={styles.transactionFee}>
-              {this.props.t('Transaction fee')}
+              {t('Transaction fee')}
               <Tooltip
                 className={'showOnTop'}
-                title={this.props.t('Transaction fee')}
+                title={t('Transaction fee')}
                 footer={
                   <a href={links.transactionFee}
                     rel="noopener noreferrer"
                     target="_blank">
-                      {this.props.t('Read More')}
+                      {t('Read More')}
                   </a>
                 }
               >
                 <p className={styles.tooltipText}>
                 {
-                  this.props.t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
+                  t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
                   Such operations require hardware resources and because of that there is a small fee for processing those.`)
                 }
                 </p>
               </Tooltip>
             </label>
-            <span>{this.props.t('{{fee}} LSK', { fee: fromRawLsk(fees.send) })}</span>
+            <span>{t('{{fee}} LSK', { fee: fromRawLsk(fees.send) })}</span>
           </div>
 
           {
             secondPassphrase.hasSecondPassphrase
             ? <div className={`${styles.row} ${styles.passphrase} summary-second-passphrase`}>
-                <label>{this.props.t('Second passphrase')}</label>
+                <label>{t('Second passphrase')}</label>
                 <PassphraseInputV2
                   isSecondPassphrase={secondPassphrase.hasSecondPassphrase}
                   secondPPFeedback={secondPassphrase.feedback}
@@ -239,7 +239,7 @@ class Summary extends React.Component {
           </PrimaryButtonV2>
 
           <TertiaryButtonV2 className={`${styles.editBtn} on-prevStep`} onClick={this.prevStep}>
-            {this.props.t('Edit transaction')}
+            {t('Edit transaction')}
           </TertiaryButtonV2>
         </footer>
       </div>
