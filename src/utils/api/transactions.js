@@ -1,7 +1,9 @@
 import Lisk from 'lisk-elements';
-import { toRawLsk } from '../../utils/lsk';
-import { getTimestampFromFirstBlock } from '../datetime';
+import { getTransactions as getLSKTransactions } from './lsk/transactions';
+import { get as getBTCTransactions } from './btc/transactions';
 import txFilters from './../../constants/transactionFilters';
+import { validateAddress } from '../validators';
+import { tokenMap, tokenKeys } from '../../constants/tokens';
 
 export const send = (
   liskAPIClient,
@@ -21,37 +23,23 @@ export const send = (
     }).catch(reject);
   });
 
-// eslint-disable-next-line max-statements, complexity
+const transactionsGetterrs = {
+  [tokenMap.BTC.key]: getBTCTransactions,
+  [tokenMap.LSK.key]: getLSKTransactions,
+};
+
+const getTokenFromAddress = address => (
+  tokenKeys.find(tokenKey => validateAddress(tokenKey, address) === 0) || tokenMap.LSK.key
+);
+
 export const getTransactions = ({
   liskAPIClient, address, limit = 20, offset = 0, type = undefined,
   sort = 'timestamp:desc', filter = txFilters.all, customFilters = {},
 }) => {
-  const params = {
-    limit,
-    offset,
-    sort,
-  };
-
-  if (type !== undefined) params.type = type;
-  if (customFilters.message) params.data = `%${customFilters.message}%`;
-  if (customFilters.dateFrom && customFilters.dateFrom !== '') {
-    params.fromTimestamp = getTimestampFromFirstBlock(customFilters.dateFrom, 'DD.MM.YY');
-    params.fromTimestamp = params.fromTimestamp > 0 ? params.fromTimestamp : 0;
-  }
-  if (customFilters.dateTo && customFilters.dateTo !== '') {
-    params.toTimestamp = getTimestampFromFirstBlock(customFilters.dateTo, 'DD.MM.YY', { inclusive: true });
-    params.toTimestamp = params.toTimestamp > 1 ? params.toTimestamp : 1;
-  }
-  if (customFilters.amountFrom && customFilters.amountFrom !== '') {
-    params.minAmount = toRawLsk(customFilters.amountFrom);
-  }
-  if (customFilters.amountTo && customFilters.amountTo !== '') {
-    params.maxAmount = toRawLsk(customFilters.amountTo);
-  }
-  if (filter === txFilters.incoming) params.recipientId = address;
-  if (filter === txFilters.outgoing) params.senderId = address;
-  if (filter === txFilters.all) params.senderIdOrRecipientId = address;
-  return liskAPIClient.transactions.get(params);
+  const tokenKey = getTokenFromAddress(address);
+  return transactionsGetterrs[tokenKey] && transactionsGetterrs[tokenKey]({
+    liskAPIClient, address, limit, offset, type, sort, filter, customFilters,
+  });
 };
 
 export const getSingleTransaction = ({ liskAPIClient, id }) => new Promise((resolve, reject) => {
