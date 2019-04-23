@@ -16,6 +16,15 @@ const peers = (state = { status: {}, options: {} }, action) => {
         // options are duplicated here because lisk-js later on removes it from the 'data' object
         options: action.data.options,
       });
+
+    // TODO BTC peer reducer should be in a separate file
+    case actionTypes.btcAPIClientSet:
+      return {
+        ...state,
+        btcOptions: {
+          ...action.data.options,
+        },
+      };
     case actionTypes.liskAPIClientUpdate:
       return Object.assign({}, state, { status: action.data });
     default:

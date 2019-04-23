@@ -6,11 +6,19 @@ import { errorToastDisplayed } from './toaster';
 import { loadingStarted, loadingFinished } from '../actions/loading';
 
 import { getAccount } from '../utils/api/account';
+import getBtcConfig from '../utils/api/btc/config';
 import { extractAddress, extractPublicKey } from '../utils/account';
 import { accountLoggedIn, accountLoading, accountLoggedOut } from './account';
 import accountConfig from '../constants/account';
 import settings from '../constants/settings';
 import { loginType } from '../constants/hwConstants';
+
+export const btcAPIClientSet = data => ({
+  data: {
+    options: getBtcConfig(data.network.code),
+  },
+  type: actionTypes.btcAPIClientSet,
+});
 
 const peerSet = (data, config) => ({
   data: Object.assign({
@@ -109,6 +117,10 @@ export const liskAPIClientSet = data =>
     } else {
       dispatch(peerSet(data, config));
       await login(dispatch, getState, data, config);
+    }
+    if (localStorage.getItem('btc')) { // TODO remove this condition when enabling store BTC feature
+      // TODO calling BTC action inside LSK action is hacky, should be refactored
+      dispatch(btcAPIClientSet(data));
     }
   };
 

@@ -11,6 +11,7 @@ const actionTypes = {
   liskAPIClientSet: 'LISK_API_CLIENT_SET',
   liskAPIClientUpdate: 'LISK_API_CLIENT_UPDATE',
   liskAPIClientReset: 'LISK_API_CLIENT_RESET',
+  btcAPIClientSet: 'BTC_API_CLIENT_SET',
   dialogDisplayed: 'DIALOG_DISPLAYED',
   dialogHidden: 'DIALOG_HIDDEN',
   VotePlaced: 'VOTE_PLACED',
