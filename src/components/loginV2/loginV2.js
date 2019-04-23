@@ -192,7 +192,7 @@ class LoginV2 extends React.Component {
   }
 
   render() {
-    const { t, match } = this.props;
+    const { t, match, settingsUpdated } = this.props;
     return (
       <React.Fragment>
         { match.url === routes.loginV2.path ? (
@@ -200,6 +200,7 @@ class LoginV2 extends React.Component {
           networkList={this.networks}
           selectedNetwork={this.state.network}
           handleNetworkSelect={this.changeNetwork}
+          settingsUpdated={settingsUpdated}
           showSettings={true}
           showNetwork={this.showNetworkOptions()} />
         ) : null }

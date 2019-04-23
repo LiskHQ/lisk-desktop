@@ -79,3 +79,17 @@
     content: '';
   }
 }
+
+.button {
+  height: 32px;
+  width: 100%;
+}
+
+.networkInput {
+  height: 32px !important;
+  margin: 10px 0;
+
+  & input {
+    height: 30px !important;
+  }
+}

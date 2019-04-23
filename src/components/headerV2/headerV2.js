@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import { SecondaryButtonV2, PrimaryButtonV2 } from '../toolbox/buttons/button';
 import Input from 'react-toolbox/lib/input';
+import Feedback from '../toolbox/feedback/feedback';
+import { InputV2 } from '../toolbox/inputsV2';
 import { validateUrl, addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 
 import darkLogo from '../../assets/images/logo/lisk-logo-dark.svg';
@@ -12,6 +14,7 @@ import routes from '../../constants/routes';
 import networks from '../../constants/networks';
 import styles from './headerV2.css';
 import autoSuggestInputStyles from '../autoSuggestV2/autoSuggest.css'
+import formStyles from '../sendV2/form/form.css'
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
 
 class HeaderV2 extends React.Component {
@@ -53,12 +56,14 @@ class HeaderV2 extends React.Component {
     const address = target.value;
     this.setState({
       address,
-      ...validateUrl(address),
     });
   }
 
   changeNetwork(network) {
-    this.setState({ network });
+    this.setState({
+      network,
+      ...validateUrl(this.state.address),
+    });
     this.props.settingsUpdated({ network });
   }
 
@@ -131,17 +136,37 @@ class HeaderV2 extends React.Component {
                         {network.label}
                         <Input
                           placeholder={'Title'}
-                          onChange={value => {}}
-                          className={`${autoSuggestInputStyles.input} autosuggest-input`}
+                          onChange={value => {
+                            console.log(value);
+                            this.changeAddress(value);
+                          }}
+                          className={`${styles.networkInput} ${autoSuggestInputStyles.input} autosuggest-input`}
                           theme={autoSuggestInputStyles}
                           onKeyDown={/* istanbul ignore next */(event) => {
                           }}
-                          value={'hardwareAccountName'}/>
-
-                          {!!this.state.isValid ? 'Unable to connect to the node, please check the address and try again' : ''}
+                          value={this.state.address} />
+                        <InputV2
+                          autoComplete={'off'}
+                          onChange={value => {
+                            console.log(value);
+                            this.changeAddress(value);
+                          }}
+                          name='customNetwork'
+                          value={this.state.address}
+                          placeholder={this.props.t('Custom Network')}
+                          className={`${formStyles.input} ${!!this.state.addressValidity ? 'error' : ''}`} />
+                          {/* {!!this.state.addressValidity ? 'Unable to connect to the node, please check the address and try again' : ''} */}
+                          
+                          <Feedback
+                            show={!!this.state.addressValidity}
+                            status={'error'}
+                            className={`${styles.feedbackMessage} amount-feedback`}
+                            showIcon={false}>
+{'Unable to connect to the node, please check the address and try again'}
+                          </Feedback>
                           <div>
                             <PrimaryButtonV2
-                              onClick={() => handleNetworkSelect(network.value)}
+                              onClick={() => this.changeNetwork(network.value)}
                               className={`${styles.button} ${styles.backButton}`}>
                               {t('Connect')}
                             </PrimaryButtonV2>
@@ -149,7 +174,7 @@ class HeaderV2 extends React.Component {
                       </span>
                     }
                     return (<span
-                      onClick={() => handleNetworkSelect(network.value)}
+                      onClick={() => this.changeNetwork(network.value)}
                       key={key}>{network.label}</span>
                     );
                   }
