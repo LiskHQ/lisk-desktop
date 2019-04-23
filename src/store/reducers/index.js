@@ -1,4 +1,5 @@
 export { default as account } from './account';
+// TODO next line should be removed after the new 'network' reducer is used everywhere
 export { default as peers } from './peers';
 export { default as network } from './network';
 export { default as blocks } from './blocks';
