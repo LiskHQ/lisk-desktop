@@ -11,7 +11,6 @@ const actionTypes = {
   liskAPIClientSet: 'LISK_API_CLIENT_SET',
   liskAPIClientUpdate: 'LISK_API_CLIENT_UPDATE',
   liskAPIClientReset: 'LISK_API_CLIENT_RESET',
-  btcAPIClientSet: 'BTC_API_CLIENT_SET',
   networkSet: 'NETWORK_SET',
   networkStatusUpdated: 'NETWORK_STATUS_UPDATED',
   dialogDisplayed: 'DIALOG_DISPLAYED',
