@@ -10,50 +10,12 @@ import { getTransactionBytes, calculateTxId, getBufferToHex } from './rawTransac
 import { PLATFORM_TYPES, getPlatformType } from './platform';
 import store from '../store';
 import loginTypes from '../constants/loginTypes';
-import { accountLoggedOut } from '../actions/account';
-import { dialogDisplayed, dialogHidden } from '../actions/dialog';
-import Alert from '../components/dialog/alert';
 
 const util = require('util');
 
 const { ipc } = window;
 
-const handleConnect = (deviceModel) => {
-  store.dispatch({
-    type: actionTypes.settingsUpdated,
-    data: { isHarwareWalletConnected: true },
-  });
-  store.dispatch(errorToastDisplayed({ label: `${deviceModel} connected` }));
-};
-
-const handleDisconnect = (deviceModel) => {
-  const state = store.getState();
-  const { account } = state;
-  if (account.address) {
-    store.dispatch(
-      dialogDisplayed({
-        childComponent: Alert,
-        childComponentProps: {
-          title: 'You are disconnected',
-          text: `There is no connection to the ${deviceModel}. Please check the cables if it happened by accident.`,
-          closeDialog: () => {
-            store.dispatch(dialogHidden());
-            location.reload();
-          },
-        },
-      }));
-    store.dispatch(accountLoggedOut());
-  }
-  store.dispatch({
-    type: actionTypes.settingsUpdated,
-    data: { isHarwareWalletConnected: false },
-  });
-};
-
 if (ipc) { // On browser-mode is undefined
-  ipc.on('hwConnected', (event, { model }) => handleConnect(model));
-  ipc.on('hwDisconnected', (event, { model }) => handleDisconnect(model));
-
   ipc.on('ledgerButtonCallback', () => {
     // store.dispatch(infoToastDisplayed({ label: HW_MSG.LEDGER_ASK_FOR_CONFIRMATION }));
   });
