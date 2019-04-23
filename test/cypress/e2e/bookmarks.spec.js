@@ -45,7 +45,7 @@ describe('Bookmarks', () => {
       cy.get(ss.editFollowingAccounts).click();
       cy.get(ss.titleInput).clear().type('Bob');
       cy.get(ss.editFollowingAccounts).click();
-      cy.get(ss.followedAccountTitle).should('have.value', 'Bob2');
+      cy.get(ss.followedAccountTitle).should('have.value', 'Bob');
     });
 
     /**
