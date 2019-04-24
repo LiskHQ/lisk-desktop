@@ -15,8 +15,6 @@ const generateAction = (data, config) => ({
   type: actionTypes.networkSet,
 });
 
-const pickRandomArrayItem = a => a[Math.floor(Math.random() * a.length)];
-
 /* eslint-disable-next-line import/prefer-default-export */
 export const networkSet = data =>
   async (dispatch) => {
@@ -33,16 +31,8 @@ export const networkSet = data =>
           dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node, no response from the server.') }));
         }
       });
-    } else if (data.name === networks.testnet.name) {
-      dispatch(generateAction(data, {
-        nethash: Lisk.APIClient.constants.TESTNET_NETHASH,
-        nodeUrl: pickRandomArrayItem(networks.testnet.nodes),
-      }));
-    } else if (data.name === networks.mainnet.name) {
-      dispatch(generateAction(data, {
-        nethash: Lisk.APIClient.constants.MAINNET_NETHASH,
-        nodeUrl: pickRandomArrayItem(networks.mainnet.nodes),
-      }));
+    } else if (data.name === networks.testnet.name || data.name === networks.mainnet.name) {
+      dispatch(generateAction(data, { }));
     }
   };
 

@@ -1,12 +1,13 @@
 import Lisk from 'lisk-elements';
-
 import { expect } from 'chai';
 import { mock } from 'sinon';
-import { getLiskAPIClient } from './network';
+
+import networks from '../../../constants/networks';
+import { getApiClient } from './network';
 import { tokenMap } from '../../../constants/tokens';
 
-describe('Utils: network API', () => {
-  describe('getLiskAPIClient', () => {
+describe('Utils: network LSK API', () => {
+  describe('getApiClient', () => {
     let APIClientBackup;
     let constructorSpy;
 
@@ -28,17 +29,14 @@ describe('Utils: network API', () => {
 
     it('should create a new Lisk APIClient instance', () => {
       const nethash = Lisk.APIClient.constants.MAINNET_NETHASH;
-      const address = 'https://hub23.lisk.io';
       const state = {
         network: {
           [tokenMap.LSK.key]: {
-            nethash,
-            address,
           },
         },
       };
-      getLiskAPIClient(state);
-      expect(constructorSpy).to.have.been.calledWith([address], { nethash });
+      getApiClient(state);
+      expect(constructorSpy).to.have.been.calledWith(networks.mainnet.nodes, { nethash });
     });
   });
 });

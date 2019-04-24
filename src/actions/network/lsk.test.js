@@ -33,33 +33,14 @@ describe('actions: network.lsk', () => {
   });
 
   describe('networkSet', () => {
-    it('should dispatch networkSet action with mainnet name, token, and network', () => {
+    it('should dispatch networkSet action with mainnet name', () => {
       const { name } = networks.mainnet;
       networkSet({ name })(dispatch);
       expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         data: {
           name,
           token: tokenMap.LSK.key,
-          network: {
-            nodeUrl: expect.stringMatching(/https:\/\/hub\d\d.lisk.io/),
-            nethash: Lisk.APIClient.constants.MAINNET_NETHASH,
-          },
-        },
-        type: actionTypes.networkSet,
-      }));
-    });
-
-    it('should dispatch networkSet action with testnet name, token, and network', () => {
-      const { name } = networks.testnet;
-      networkSet({ name })(dispatch);
-      expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
-        data: {
-          name,
-          token: tokenMap.LSK.key,
-          network: {
-            nodeUrl: 'https://testnet.lisk.io',
-            nethash: Lisk.APIClient.constants.TESTNET_NETHASH,
-          },
+          network: {},
         },
         type: actionTypes.networkSet,
       }));
