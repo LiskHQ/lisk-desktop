@@ -4,11 +4,11 @@ import { tokenMap } from '../../constants/tokens';
 
 describe('actions: network.btc', () => {
   describe('networkSet', () => {
-    it('should create networkSet action with code and token', () => {
-      const { code } = networks.testnet;
-      expect(networkSet({ code })).toMatchObject({
+    it('should create networkSet action with name and token', () => {
+      const { name } = networks.testnet;
+      expect(networkSet({ name })).toMatchObject({
         data: {
-          code,
+          name,
           token: tokenMap.BTC.key,
         },
       });

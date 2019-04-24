@@ -12,12 +12,12 @@ describe('actions: network', () => {
   });
 
   describe('networkSet', () => {
-    it('should create networkSet action with code and token', () => {
-      const { code } = networks.testnet;
-      networkSet({ code })(dispatch);
+    it('should create networkSet action with name and token', () => {
+      const { name } = networks.testnet;
+      networkSet({ name })(dispatch);
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         data: {
-          code,
+          name,
           token: tokenMap.BTC.key,
           network: {},
         },

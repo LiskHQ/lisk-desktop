@@ -33,12 +33,12 @@ describe('actions: network.lsk', () => {
   });
 
   describe('networkSet', () => {
-    it('should dispatch networkSet action with mainnet code, token, and network', () => {
-      const { code } = networks.mainnet;
-      networkSet({ code })(dispatch);
+    it('should dispatch networkSet action with mainnet name, token, and network', () => {
+      const { name } = networks.mainnet;
+      networkSet({ name })(dispatch);
       expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         data: {
-          code,
+          name,
           token: tokenMap.LSK.key,
           network: {
             nodeUrl: expect.stringMatching(/https:\/\/hub\d\d.lisk.io/),
@@ -49,12 +49,12 @@ describe('actions: network.lsk', () => {
       }));
     });
 
-    it('should dispatch networkSet action with testnet code, token, and network', () => {
-      const { code } = networks.testnet;
-      networkSet({ code })(dispatch);
+    it('should dispatch networkSet action with testnet name, token, and network', () => {
+      const { name } = networks.testnet;
+      networkSet({ name })(dispatch);
       expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         data: {
-          code,
+          name,
           token: tokenMap.LSK.key,
           network: {
             nodeUrl: 'https://testnet.lisk.io',
@@ -65,13 +65,13 @@ describe('actions: network.lsk', () => {
       }));
     });
 
-    it('should dispatch networkSet action with customNode code, token, and network', async () => {
-      const { code, nodeUrl } = networks.customNode;
+    it('should dispatch networkSet action with customNode name, token, and network', async () => {
+      const { name, nodeUrl } = networks.customNode;
       getConstantsMock.mockResolvedValue({ data: { nethash } });
-      await networkSet({ code, nodeUrl })(dispatch);
+      await networkSet({ name, nodeUrl })(dispatch);
       expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         data: {
-          code,
+          name,
           token: tokenMap.LSK.key,
           network: {
             nodeUrl,
@@ -84,10 +84,10 @@ describe('actions: network.lsk', () => {
 
     // TODO figure out why the expected dispatch is not called
     it.skip('should dispatch error toast if customNode unreachable', async () => {
-      const { code, nodeUrl } = networks.customNode;
+      const { name, nodeUrl } = networks.customNode;
       const error = { message: 'Custom error message' };
       getConstantsMock.mockRejectedValue(error);
-      await networkSet({ code, nodeUrl })(dispatch);
+      await networkSet({ name, nodeUrl })(dispatch);
       expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         data: {
           label: 'Unable to connect to the node, no response from the server.',

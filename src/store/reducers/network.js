@@ -13,7 +13,7 @@ const network = (state = { status: {}, networks: {} }, action) => {
     case actionTypes.networkSet:
       return {
         ...state,
-        code: action.data.code,
+        name: action.data.name,
         networks: {
           ...state.networks,
           [action.data.token]: action.data.network,

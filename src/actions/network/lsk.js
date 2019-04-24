@@ -8,7 +8,7 @@ import { errorToastDisplayed } from '../toaster';
 
 const generateAction = (data, config) => ({
   data: {
-    code: data.code,
+    name: data.name,
     token: tokenMap.LSK.key,
     network: config,
   },
@@ -20,7 +20,7 @@ const pickRandomArrayItem = a => a[Math.floor(Math.random() * a.length)];
 /* eslint-disable-next-line import/prefer-default-export */
 export const networkSet = data =>
   async (dispatch) => {
-    if (data.code === networks.customNode.code) {
+    if (data.name === networks.customNode.name) {
       new Lisk.APIClient([data.nodeUrl], {}).node.getConstants().then((response) => {
         dispatch(generateAction(data, {
           nodeUrl: data.nodeUrl,
@@ -33,12 +33,12 @@ export const networkSet = data =>
           dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node, no response from the server.') }));
         }
       });
-    } else if (data.code === networks.testnet.code) {
+    } else if (data.name === networks.testnet.name) {
       dispatch(generateAction(data, {
         nethash: Lisk.APIClient.constants.TESTNET_NETHASH,
         nodeUrl: pickRandomArrayItem(networks.testnet.nodes),
       }));
-    } else if (data.code === networks.mainnet.code) {
+    } else if (data.name === networks.mainnet.name) {
       dispatch(generateAction(data, {
         nethash: Lisk.APIClient.constants.MAINNET_NETHASH,
         nodeUrl: pickRandomArrayItem(networks.mainnet.nodes),
