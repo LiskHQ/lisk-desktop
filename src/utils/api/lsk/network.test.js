@@ -3,7 +3,7 @@ import Lisk from 'lisk-elements';
 import { expect } from 'chai';
 import { mock } from 'sinon';
 import { getLiskAPIClient } from './network';
-import { tokenMap } from '../../constants/tokens';
+import { tokenMap } from '../../../constants/tokens';
 
 describe('Utils: network API', () => {
   describe('getLiskAPIClient', () => {
