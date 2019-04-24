@@ -16,7 +16,6 @@ module.exports = {
     'src/components/register/register.test.js',
     'src/components/transactions/votedDelegates.test.js',
     'src/components/voteUrlProcessor/index.test.js',
-    'src/store/middlewares/login.test.js',
     'src/store/reducers/liskService.test.js',
     'src/store/middlewares/socket.test.js',
     'src/store/middlewares/peers.test.js',

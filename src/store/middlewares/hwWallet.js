@@ -1,3 +1,4 @@
+// istanbul ignore file
 import actionTypes from '../../constants/actions';
 import { accountLoggedOut } from '../../actions/account';
 import { dialogDisplayed, dialogHidden } from '../../actions/dialog';
