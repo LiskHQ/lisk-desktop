@@ -8,7 +8,8 @@ import { loadTransactionsFinish, transactionsUpdated } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { liskAPIClientUpdate } from './peers';
-import { getLiskAPIClient } from '../utils/api/network';
+import { tokenMap } from '../constants/tokens';
+import { getAPIClient } from '../utils/api/network';
 import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
@@ -192,7 +193,7 @@ export const loadAccount = ({
     // TODO remove the localStorage condition after peers store is removed.
     // This is a show-case of how liskAPIClient should be obtained with the new network store
     const liskAPIClient = localStorage.getItem('btc') ?
-      getLiskAPIClient(getState()) :
+      getAPIClient(tokenMap.LSK.key, getState()) :
       getState().peers.liskAPIClient;
     getAccount(liskAPIClient, address)
       .then((response) => {
