@@ -64,14 +64,28 @@ describe('actions: network.lsk', () => {
     });
 
     // TODO figure out why the expected dispatch is not called
-    it.skip('should dispatch error toast if customNode unreachable', async () => {
+    it('should dispatch error toast if customNode unreachable without error messsage', async () => {
+      const { name, nodeUrl } = networks.customNode;
+      const error = { };
+      getConstantsMock.mockRejectedValue(error);
+      await networkSet({ name, nodeUrl })(dispatch);
+      expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+        data: {
+          label: 'Unable to connect to the node, no response from the server.',
+          type: 'error',
+        },
+        type: actionTypes.toastDisplayed,
+      }));
+    });
+
+    it('should dispatch error toast if customNode unreachable with custom error message', async () => {
       const { name, nodeUrl } = networks.customNode;
       const error = { message: 'Custom error message' };
       getConstantsMock.mockRejectedValue(error);
       await networkSet({ name, nodeUrl })(dispatch);
       expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         data: {
-          label: 'Unable to connect to the node, no response from the server.',
+          label: 'Unable to connect to the node, Error: Custom error message',
           type: 'error',
         },
         type: actionTypes.toastDisplayed,
