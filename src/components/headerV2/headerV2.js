@@ -2,22 +2,24 @@ import React from 'react';
 import i18next from 'i18next';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
+import { withRouter } from 'react-router';
 import { SecondaryButtonV2, PrimaryButtonV2 } from '../toolbox/buttons/button';
-import Input from 'react-toolbox/lib/input';
 import Feedback from '../toolbox/feedback/feedback';
 import { InputV2 } from '../toolbox/inputsV2';
 import { validateUrl, addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
+import getNetwork from '../../utils/getNetwork';
 
 import darkLogo from '../../assets/images/logo/lisk-logo-dark.svg';
 import whiteLogo from '../../assets/images/logo/lisk-logo-white.svg';
 import routes from '../../constants/routes';
 import networks from '../../constants/networks';
 import styles from './headerV2.css';
-import autoSuggestInputStyles from '../autoSuggestV2/autoSuggest.css'
-import formStyles from '../sendV2/form/form.css'
+import autoSuggestInputStyles from '../autoSuggestV2/autoSuggest.css';
+import formStyles from '../sendV2/form/form.css';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
 
 class HeaderV2 extends React.Component {
+  // eslint-disable-next-line max-statements
   constructor() {
     super();
     const { liskCoreUrl } = getAutoLogInData();
@@ -35,7 +37,6 @@ class HeaderV2 extends React.Component {
       address,
       showDropdown: true,
       network: loginNetwork.code,
-      isValid: false,
     };
 
     this.getNetworksList();
@@ -75,33 +76,33 @@ class HeaderV2 extends React.Component {
     return network;
   }
 
-  validateCorrectNode(nextPath) {
-    const { address } = this.state;
-    const nodeURL = address !== '' ? addHttp(address) : address;
-    if (this.state.network === networks.customNode.code) {
-      const liskAPIClient = new Lisk.APIClient([nodeURL], {});
-      liskAPIClient.node.getConstants()
-        .then((res) => {
-          if (res.data) {
-            this.props.liskAPIClientSet({
-              network: {
-                ...this.getNetwork(this.state.network),
-                address: nodeURL,
-              },
-            });
-            this.props.history.push(nextPath);
-          } else {
-            throw new Error();
-          }
-        }).catch(() => {
-          this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
-        });
-    } else {
-      const network = this.getNetwork(this.state.network);
-      this.props.liskAPIClientSet({ network });
-      this.props.history.push(nextPath);
-    }
-  }
+  // validateCorrectNode(nextPath) {
+  //   const { address } = this.state;
+  //   const nodeURL = address !== '' ? addHttp(address) : address;
+  //   if (this.state.network === networks.customNode.code) {
+  //     const liskAPIClient = new Lisk.APIClient([nodeURL], {});
+  //     liskAPIClient.node.getConstants()
+  //       .then((res) => {
+  //         if (res.data) {
+  //           this.props.liskAPIClientSet({
+  //             network: {
+  //               ...this.getNetwork(this.state.network),
+  //               address: nodeURL,
+  //             },
+  //           });
+  //           this.props.history.push(nextPath);
+  //         } else {
+  //           throw new Error();
+  //         }
+  //       }).catch(() => {
+  //         this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
+  //       });
+  //   } else {
+  //     const network = this.getNetwork(this.state.network);
+  //     this.props.liskAPIClientSet({ network });
+  //     this.props.history.push(nextPath);
+  //   }
+  // }
 
   toggleDropdown() {
     const showDropdown = !this.state.showDropdown;
@@ -110,10 +111,10 @@ class HeaderV2 extends React.Component {
 
   render() {
     const {
-      t, showSettings, showNetwork, networkList,
-      selectedNetwork, handleNetworkSelect,
-      dark,
+      t, showSettings, showNetwork, networkList, dark,
     } = this.props;
+    const selectedNetwork = this.state.network;
+
     return (
       <header className={`${styles.wrapper} mainHeader ${dark ? 'dark' : ''}`}>
         <div className={`${styles.headerContent}`}>
@@ -125,60 +126,58 @@ class HeaderV2 extends React.Component {
               && <span className={`${styles.dropdownHandler} network`}
                 // onClick={this.toggleDropdown}
                 >
-                { networkList[selectedNetwork].label }
+                { selectedNetwork !== 2 ? networkList[selectedNetwork].label : this.state.address }
                 <DropdownV2
+                  className={styles.dropdown}
                   showArrow={false}
                   showDropdown={this.state.showDropdown}>
                   {networkList && networkList.map((network, key) => {
                     if (network.value === 2) {
                       return <span
+                      className={styles.networkSpan}
                       key={key}>
                         {network.label}
-                        <Input
-                          placeholder={'Title'}
-                          onChange={value => {
-                            console.log(value);
-                            this.changeAddress(value);
-                          }}
-                          className={`${styles.networkInput} ${autoSuggestInputStyles.input} autosuggest-input`}
-                          theme={autoSuggestInputStyles}
-                          onKeyDown={/* istanbul ignore next */(event) => {
-                          }}
-                          value={this.state.address} />
                         <InputV2
                           autoComplete={'off'}
-                          onChange={value => {
-                            console.log(value);
+                          onChange={(value) => {
                             this.changeAddress(value);
                           }}
                           name='customNetwork'
                           value={this.state.address}
                           placeholder={this.props.t('Custom Network')}
-                          className={`${formStyles.input} ${!!this.state.addressValidity ? 'error' : ''}`} />
-                          {/* {!!this.state.addressValidity ? 'Unable to connect to the node, please check the address and try again' : ''} */}
-                          
+                          className={`
+                            ${formStyles.input}
+                            ${autoSuggestInputStyles.input}
+                            ${this.state.addressValidity ? 'error' : ''}`} />
                           <Feedback
                             show={!!this.state.addressValidity}
                             status={'error'}
-                            className={`${styles.feedbackMessage} amount-feedback`}
+                            className={`${formStyles.feedbackMessage} amount-feedback`}
                             showIcon={false}>
 {'Unable to connect to the node, please check the address and try again'}
                           </Feedback>
                           <div>
                             <PrimaryButtonV2
-                              onClick={() => this.changeNetwork(network.value)}
+                              onClick={() => {
+                                this.changeNetwork(2);
+                                this.props.validateCorrectNode(2, this.state.address);
+                              }}
                               className={`${styles.button} ${styles.backButton}`}>
                               {t('Connect')}
                             </PrimaryButtonV2>
                           </div>
-                      </span>
+                      </span>;
                     }
-                    return (<span
-                      onClick={() => this.changeNetwork(network.value)}
-                      key={key}>{network.label}</span>
+                    return (
+                      <span
+                        onClick={() => {
+                          this.changeNetwork(network.value);
+                          this.props.validateCorrectNode(network.value);
+                        }}
+                        key={key}>{network.label
+                      }</span>
                     );
-                  }
-                )}
+                  })}
                 </DropdownV2>
               </span>
             }
@@ -196,4 +195,4 @@ class HeaderV2 extends React.Component {
   }
 }
 
-export default translate()(HeaderV2);
+export default translate()(withRouter(HeaderV2));

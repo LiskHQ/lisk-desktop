@@ -93,3 +93,8 @@
     height: 30px !important;
   }
 }
+
+.networkSpan {
+  display: flex;
+  flex-direction: column;
+}

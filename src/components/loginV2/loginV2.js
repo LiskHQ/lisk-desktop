@@ -151,7 +151,7 @@ class LoginV2 extends React.Component {
 
   onLoginSubmission(passphrase) {
     Piwik.trackingEvent('Login V2', 'button', 'Login submission');
-    const network = this.getNetwork(this.state.network);
+    const network = this.props.peers.options;
     this.secondIteration = true;
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
       this.redirectToReferrer();
@@ -163,20 +163,21 @@ class LoginV2 extends React.Component {
     }
   }
 
-  validateCorrectNode(nextPath) {
-    const { address } = this.state;
+  validateCorrectNode(network, address, nextPath) {
     const nodeURL = address !== '' ? addHttp(address) : address;
-    if (this.state.network === networks.customNode.code) {
+
+    if (network === networks.customNode.code) {
       const liskAPIClient = new Lisk.APIClient([nodeURL], {});
       liskAPIClient.node.getConstants()
         .then((res) => {
           if (res.data) {
             this.props.liskAPIClientSet({
               network: {
-                ...this.getNetwork(this.state.network),
+                ...this.getNetwork(network),
                 address: nodeURL,
               },
             });
+
             this.props.history.push(nextPath);
           } else {
             throw new Error();
@@ -185,10 +186,11 @@ class LoginV2 extends React.Component {
           this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
         });
     } else {
-      const network = this.getNetwork(this.state.network);
-      this.props.liskAPIClientSet({ network });
+      this.props.liskAPIClientSet({ network: this.getNetwork(network) });
       this.props.history.push(nextPath);
     }
+
+    this.setState({ network });
   }
 
   render() {
@@ -197,6 +199,8 @@ class LoginV2 extends React.Component {
       <React.Fragment>
         { match.url === routes.loginV2.path ? (
         <HeaderV2
+          validateCorrectNode={this.validateCorrectNode}
+          liskAPIClientSet={this.props.liskAPIClientSet}
           networkList={this.networks}
           selectedNetwork={this.state.network}
           handleNetworkSelect={this.changeNetwork}
