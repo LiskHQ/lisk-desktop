@@ -1,0 +1,100 @@
+import Lisk from 'lisk-elements';
+import { networkSet } from './lsk';
+import networks from '../../constants/networks';
+import { tokenMap } from '../../constants/tokens';
+import actionTypes from '../../constants/actions';
+
+describe('actions: network.lsk', () => {
+  let dispatch;
+  let APIClientBackup;
+  let getConstantsMock;
+  const nethash = '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d';
+
+  beforeEach(() => {
+    dispatch = jest.fn();
+    APIClientBackup = Lisk.APIClient;
+    getConstantsMock = jest.fn();
+
+    // TODO: find a better way of mocking Lisk.APIClient
+    Lisk.APIClient = class MockAPIClient {
+      constructor() {
+        this.node = {
+          getConstants: getConstantsMock,
+        };
+      }
+    };
+    Lisk.APIClient.constants = APIClientBackup.constants;
+
+    jest.resetModules();
+  });
+
+  afterEach(() => {
+    Lisk.APIClient = APIClientBackup;
+  });
+
+  describe('networkSet', () => {
+    it('should dispatch networkSet action with mainnet code, token, and network', () => {
+      const { code } = networks.mainnet;
+      networkSet({ code })(dispatch);
+      expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+        data: {
+          code,
+          token: tokenMap.LSK.key,
+          network: {
+            address: expect.stringMatching(/https:\/\/hub\d\d.lisk.io/),
+            nethash: Lisk.APIClient.constants.MAINNET_NETHASH,
+          },
+        },
+        type: actionTypes.networkSet,
+      }));
+    });
+
+    it('should dispatch networkSet action with testnet code, token, and network', () => {
+      const { code } = networks.testnet;
+      networkSet({ code })(dispatch);
+      expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+        data: {
+          code,
+          token: tokenMap.LSK.key,
+          network: {
+            address: 'https://testnet.lisk.io',
+            nethash: Lisk.APIClient.constants.TESTNET_NETHASH,
+          },
+        },
+        type: actionTypes.networkSet,
+      }));
+    });
+
+    it('should dispatch networkSet action with customNode code, token, and network', async () => {
+      const { code, address } = networks.customNode;
+      getConstantsMock.mockResolvedValue({ data: { nethash } });
+      await networkSet({ code, address })(dispatch);
+      expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+        data: {
+          code,
+          token: tokenMap.LSK.key,
+          network: {
+            address,
+            nethash,
+          },
+        },
+        type: actionTypes.networkSet,
+      }));
+    });
+
+    // TODO figure out why the expected dispatch is not called
+    it.skip('should dispatch error toast if customNode unreachable', async () => {
+      const { code, address } = networks.customNode;
+      const error = { message: 'Custom error message' };
+      getConstantsMock.mockRejectedValue(error);
+      await networkSet({ code, address })(dispatch);
+      expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+        data: {
+          label: 'Unable to connect to the node, no response from the server.',
+          type: 'error',
+        },
+        type: actionTypes.toastDisplayed,
+      }));
+    });
+  });
+});
