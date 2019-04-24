@@ -15,21 +15,31 @@ const generateAction = (data, config) => ({
   type: actionTypes.networkSet,
 });
 
+const getNethash = async nodeUrl => (
+  new Promise(async (resolve, reject) => {
+    new Lisk.APIClient([nodeUrl], {}).node.getConstants().then((response) => {
+      resolve(response.data.nethash);
+    }).catch((error) => {
+      if (error && error.message) {
+        reject(i18next.t(`Unable to connect to the node, Error: ${error.message}`));
+      } else {
+        reject(i18next.t('Unable to connect to the node, no response from the server.'));
+      }
+    });
+  })
+);
+
 /* eslint-disable-next-line import/prefer-default-export */
 export const networkSet = data =>
   async (dispatch) => {
     if (data.name === networks.customNode.name) {
-      new Lisk.APIClient([data.nodeUrl], {}).node.getConstants().then((response) => {
+      await getNethash(data.nodeUrl).then((nethash) => {
         dispatch(generateAction(data, {
           nodeUrl: data.nodeUrl,
-          nethash: response.data.nethash,
+          nethash,
         }));
       }).catch((error) => {
-        if (error && error.message) {
-          dispatch(errorToastDisplayed({ label: i18next.t(`Unable to connect to the node, Error: ${error.message}`) }));
-        } else {
-          dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node, no response from the server.') }));
-        }
+        dispatch(errorToastDisplayed({ label: error }));
       });
     } else if (data.name === networks.testnet.name || data.name === networks.mainnet.name) {
       dispatch(generateAction(data, { }));
