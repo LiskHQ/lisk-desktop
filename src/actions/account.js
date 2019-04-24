@@ -192,7 +192,9 @@ export const loadAccount = ({
   (dispatch, getState) => {
     // TODO remove the localStorage condition after peers store is removed.
     // This is a show-case of how liskAPIClient should be obtained with the new network store
+    // test coverage of the show-case branch is ignored because it's only a show-case
     const liskAPIClient = localStorage.getItem('btc') ?
+      /* istanbul ignore next */
       getAPIClient(tokenMap.LSK.key, getState()) :
       getState().peers.liskAPIClient;
     getAccount(liskAPIClient, address)
