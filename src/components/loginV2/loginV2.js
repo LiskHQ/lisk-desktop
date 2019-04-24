@@ -230,23 +230,6 @@ class LoginV2 extends React.Component {
 
             <form onSubmit={this.onFormSubmit}>
               <div className={`${styles.inputsHolder}`}>
-                <div className={`${styles.customNode} ${this.state.network === networks.customNode.code ? styles.showInput : ''}`}>
-                  <h2 className={`${styles.inputLabel}`}>{t('IP or domain address of a node')}</h2>
-                  <div className={`${styles.addressInput} address`}>
-                    <InputV2
-                      className={`${this.state.addressValidity ? 'error' : ''}`}
-                      type="text"
-                      value={this.state.address}
-                      onChange={this.changeAddress} />
-                    <Feedback
-                      show={!!this.state.addressValidity}
-                      status={this.state.addressValidity ? 'error' : ''}
-                      showIcon={true}>
-                      { this.state.addressValidity }
-                    </Feedback>
-                  </div>
-                </div>
-
                 <h2 className={`${styles.inputLabel}`}>
                   {t('Passphrase')}
                   <Tooltip
