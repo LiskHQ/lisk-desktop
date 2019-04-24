@@ -41,7 +41,7 @@ describe('actions: network.lsk', () => {
           code,
           token: tokenMap.LSK.key,
           network: {
-            address: expect.stringMatching(/https:\/\/hub\d\d.lisk.io/),
+            nodeUrl: expect.stringMatching(/https:\/\/hub\d\d.lisk.io/),
             nethash: Lisk.APIClient.constants.MAINNET_NETHASH,
           },
         },
@@ -57,7 +57,7 @@ describe('actions: network.lsk', () => {
           code,
           token: tokenMap.LSK.key,
           network: {
-            address: 'https://testnet.lisk.io',
+            nodeUrl: 'https://testnet.lisk.io',
             nethash: Lisk.APIClient.constants.TESTNET_NETHASH,
           },
         },
@@ -66,15 +66,15 @@ describe('actions: network.lsk', () => {
     });
 
     it('should dispatch networkSet action with customNode code, token, and network', async () => {
-      const { code, address } = networks.customNode;
+      const { code, nodeUrl } = networks.customNode;
       getConstantsMock.mockResolvedValue({ data: { nethash } });
-      await networkSet({ code, address })(dispatch);
+      await networkSet({ code, nodeUrl })(dispatch);
       expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         data: {
           code,
           token: tokenMap.LSK.key,
           network: {
-            address,
+            nodeUrl,
             nethash,
           },
         },
@@ -84,10 +84,10 @@ describe('actions: network.lsk', () => {
 
     // TODO figure out why the expected dispatch is not called
     it.skip('should dispatch error toast if customNode unreachable', async () => {
-      const { code, address } = networks.customNode;
+      const { code, nodeUrl } = networks.customNode;
       const error = { message: 'Custom error message' };
       getConstantsMock.mockRejectedValue(error);
-      await networkSet({ code, address })(dispatch);
+      await networkSet({ code, nodeUrl })(dispatch);
       expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         data: {
           label: 'Unable to connect to the node, no response from the server.',

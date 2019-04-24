@@ -21,9 +21,9 @@ const pickRandomArrayItem = a => a[Math.floor(Math.random() * a.length)];
 export const networkSet = data =>
   async (dispatch) => {
     if (data.code === networks.customNode.code) {
-      new Lisk.APIClient([data.address], {}).node.getConstants().then((response) => {
+      new Lisk.APIClient([data.nodeUrl], {}).node.getConstants().then((response) => {
         dispatch(generateAction(data, {
-          address: data.address,
+          nodeUrl: data.nodeUrl,
           nethash: response.data.nethash,
         }));
       }).catch((error) => {
@@ -36,12 +36,12 @@ export const networkSet = data =>
     } else if (data.code === networks.testnet.code) {
       dispatch(generateAction(data, {
         nethash: Lisk.APIClient.constants.TESTNET_NETHASH,
-        address: pickRandomArrayItem(networks.testnet.nodes),
+        nodeUrl: pickRandomArrayItem(networks.testnet.nodes),
       }));
     } else if (data.code === networks.mainnet.code) {
       dispatch(generateAction(data, {
         nethash: Lisk.APIClient.constants.MAINNET_NETHASH,
-        address: pickRandomArrayItem(networks.mainnet.nodes),
+        nodeUrl: pickRandomArrayItem(networks.mainnet.nodes),
       }));
     }
   };
