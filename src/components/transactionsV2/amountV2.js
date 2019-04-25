@@ -6,7 +6,7 @@ import transactionTypes from '../../constants/transactionTypes';
 
 const AmountV2 = ({ className = '', ...props }) => {
   const params = {
-    pos: props.t('LSK'),
+    pos: props.value.token || props.t('LSK'),
     pre: '',
     className: 'greyLabel',
   };
