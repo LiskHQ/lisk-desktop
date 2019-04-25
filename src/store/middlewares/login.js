@@ -1,7 +1,7 @@
 
-import { LEDGER_MSG } from '../../utils/ledger';
 import { accountLoggedOut } from '../../actions/account';
 import actionTypes from '../../constants/actions';
+import { HW_MSG } from '../../constants/hwConstants';
 import { errorToastDisplayed } from '../../actions/toaster';
 import { dialogDisplayed, dialogHidden } from '../../actions/dialog';
 import Alert from '../../components/dialog/alert';
@@ -22,7 +22,7 @@ const loginMiddleware = store => next => (action) => { // eslint-disable-line ma
             type: actionTypes.settingsUpdated,
             data: { isHarwareWalletConnected: true },
           });
-          store.dispatch(errorToastDisplayed({ label: LEDGER_MSG.LEDGER_CONNECTED }));
+          store.dispatch(errorToastDisplayed({ label: HW_MSG.LEDGER_CONNECTED }));
         });
 
         ipc.on('ledgerDisconnected', () => {

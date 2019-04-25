@@ -32,6 +32,7 @@ class LedgerLogin extends React.Component {
         hwAccounts: this.state.hwAccounts,
         t: this.props.t,
       });
+
       this.props.settingsUpdated({ ledgerAccountAmount: output.hwAccounts.lenght });
       this.setState({ ...output });
     }, 2000);

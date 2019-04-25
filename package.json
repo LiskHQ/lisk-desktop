@@ -1,6 +1,6 @@
 {
   "name": "lisk-hub",
-  "version": "1.15.0-beta.1",
+  "version": "1.16.0-beta.1",
   "description": "Lisk Hub",
   "homepage": "https://github.com/LiskHQ/lisk-hub",
   "bugs": "https://github.com/LiskHQ/lisk-hub/issues",
@@ -52,6 +52,8 @@
     "@ledgerhq/hw-transport-u2f": "4.32.0",
     "await-to-js": "2.1.1",
     "bignumber.js": "8.0.1",
+    "bip32": "1.0.4",
+    "bitcoinjs-lib": "5.0.1",
     "bitcore-mnemonic": "1.7.0",
     "body-parser": "1.18.3",
     "browser-or-node": "1.1.0",
@@ -94,7 +96,6 @@
     "react-css-themr": "=2.1.2",
     "react-dom": "16.2.1",
     "react-i18next": "=6.0.6",
-    "react-joyride": "1.11.4",
     "react-piwik": "1.6.0",
     "react-redux": "5.0.6",
     "react-router": "4.2.0",
@@ -108,6 +109,8 @@
     "snyk": "1.147.3",
     "snyk-nodejs-lockfile-parser": "1.12.0",
     "socket.io-client": "2.2.0",
+    "trezor-connect": "^5.0.33",
+    "trezor.js": "^6.18.2",
     "webpack-merge": "=4.1.5"
   },
   "devDependencies": {
@@ -236,7 +239,7 @@
   "bundlesize": [
     {
       "path": "./app/build/bundle.app.*.js",
-      "maxSize": "2.00 MB"
+      "maxSize": "2.50 MB"
     },
     {
       "path": "./app/build/bundle.vendor.*.js",
@@ -254,6 +257,6 @@
   },
   "snyk": true,
   "engines": {
-    "node": ">=v8.14.0 <v10.0.0"
+    "node": ">=v8.14.0 <=v10.0.0"
   }
 }

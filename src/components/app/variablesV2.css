@@ -60,6 +60,7 @@ or "warn/action" ineastd of "red/green"
   --button-font-size: var(--paragraph-font-size-s);
   --button-font-size-s: 12px;
   --footnote-font-size: 12px;
+  --font-size-extra-small: 11px;
   --font-size-title: 18px;
   --font-size-small-secondary: 13px;
 
@@ -88,6 +89,7 @@ or "warn/action" ineastd of "red/green"
   --color-maastricht-blue: #0c152e;
   --color-slate-gray: #70778b;
   --color-blue-gray: #8a8ca2;
+  --color-dark-blue: #19224d;
   --color-ghost: #bec1cd;
   --color-platinum: #e1e3eb;
   --color-mystic: #edf0f5;
@@ -106,7 +108,7 @@ or "warn/action" ineastd of "red/green"
   --color-primary-light: #9db8fa;
   --color-white: #fff;
   --color-danger: #ff7721;
-  --color-error: var(--color-danger);
+  --color-error: #ec6868;
   --color-content: #19224d;
   --color-content-light: #0c152e;
   --color-primary-very-light: #e8f0fa;

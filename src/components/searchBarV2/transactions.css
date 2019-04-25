@@ -1,0 +1,93 @@
+@import '../app/variablesV2.css';
+
+.wrapper {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.header {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  & > label {
+    @mixin contentNormal bold;
+  }
+}
+
+.subTitles {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+
+  & > label {
+    @mixin contentNormal bold;
+
+    color: var(--color-blue-gray);
+  }
+}
+
+.content {
+  width: calc(100% + 40px);
+  height: auto;
+  max-height: 220px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 0 -20px;
+
+  & .transactionRow {
+    width: 100%;
+    height: auto;
+    min-height: 53px;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--primary-background-color);
+    }
+  }
+
+  & .transactionRow > img {
+    width: 24px;
+  }
+
+  & .transactionId {
+    @mixin headingSmall;
+
+    color: var(--color-maastricht-blue);
+    margin-left: 20px;
+  }
+
+  & .transactionMessage {
+    @mixin contentSmallest;
+
+    color: var(--color-maastricht-blue);
+    margin-left: auto;
+  }
+}
+
+.active {
+  background-color: var(--primary-background-color);
+}

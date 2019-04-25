@@ -6,7 +6,7 @@ describe('Registration', () => {
    * Create an account
    * @expect Account is created
    */
-  it('Create an account', function () {
+  xit('Create an account', function () {
     cy.visit(urls.register);
     cy.url().should('contain', 'register');
     cy.get(ss.chooseAvatar).first().click();

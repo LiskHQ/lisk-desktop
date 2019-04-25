@@ -12,7 +12,7 @@ import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import { toRawLsk } from '../utils/lsk';
-import { sendWithLedger } from '../utils/api/ledger';
+import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
 
 export const cleanTransactions = () => ({
@@ -220,13 +220,15 @@ export const transactionsUpdated = ({
       liskAPIClient, address, limit, filter, customFilters,
     })
       .then((response) => {
-        dispatch({
-          data: {
-            confirmed: response.data,
-            count: parseInt(response.meta.count, 10),
-          },
-          type: actionTypes.transactionsUpdated,
-        });
+        if (filter === getState().transactions.filter) {
+          dispatch({
+            data: {
+              confirmed: response.data,
+              count: parseInt(response.meta.count, 10),
+            },
+            type: actionTypes.transactionsUpdated,
+          });
+        }
         // eslint-disable-next-line no-constant-condition
         if (pendingTransactions.length) {
           // this was disabled, because this caused pending transactions
@@ -266,6 +268,7 @@ const handleSentError = ({ error, account, dispatch }) => {
 export const sent = ({
   account, recipientId, amount, passphrase, secondPassphrase, data,
 }) =>
+// eslint-disable-next-line max-statements
   async (dispatch, getState) => {
     // account.loginType = 1;
     let error;
@@ -279,7 +282,7 @@ export const sent = ({
         break;
       case loginType.ledger:
         // eslint-disable-next-line
-        [error, callResult] = await to(sendWithLedger(liskAPIClient, account, recipientId, toRawLsk(amount), secondPassphrase, data, timeOffset));
+        [error, callResult] = await to(sendWithHW(liskAPIClient, account, recipientId, toRawLsk(amount), secondPassphrase, data));
         break;
       // case 2:
       //   errorMessage = i18next.t('Not Yet Implemented. Sorry.');
