@@ -14,6 +14,12 @@
   &:global(.dark) {
     background: var(--color-maastricht-blue);
     border-bottom: 1px solid var(--light-border-color);
+
+    & .dropdownHandler {
+      background: var(--color-maastricht-blue);
+      color: var(--color-white);
+      border: 1px solid var(--light-border-color);
+    }
   }
 }
 
@@ -105,4 +111,8 @@
 
 .feedbackError {
   max-height: 140px !important;
+}
+
+.activeDropdown {
+  background-color: blue;
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import Lisk from 'lisk-elements';
 import i18next from 'i18next';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
@@ -40,7 +39,6 @@ class Splashscreen extends React.Component {
     this.getNetworksList();
 
     this.changeNetwork = this.changeNetwork.bind(this);
-    this.validateCorrectNode = this.validateCorrectNode.bind(this);
   }
   componentDidMount() {
     // istanbul ignore else
@@ -77,39 +75,6 @@ class Splashscreen extends React.Component {
       this.props.peers.options.address === network.address;
   }
 
-  validateCorrectNode(network, address, nextPath) {
-    const nodeURL = address !== '' ? addHttp(address) : address;
-
-    if (network === networks.customNode.code) {
-      const liskAPIClient = new Lisk.APIClient([nodeURL], {});
-      liskAPIClient.node.getConstants()
-        .then((res) => {
-          if (res.data) {
-            this.props.liskAPIClientSet({
-              network: {
-                ...this.getNetwork(network),
-                address: nodeURL,
-              },
-            });
-
-            this.props.history.push(nextPath);
-            this.setState({ validationError: false });
-          } else {
-            throw new Error();
-          }
-        }).catch(() => {
-          this.setState({ validationError: true });
-          this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
-        });
-    } else {
-      this.props.liskAPIClientSet({ network: this.getNetwork(network) });
-      this.props.history.push(nextPath);
-      this.setState({ validationError: false });
-    }
-
-    this.setState({ network });
-  }
-
   changeNetwork(network) {
     this.setState({ network });
     this.props.settingsUpdated({ network });
@@ -133,7 +98,7 @@ class Splashscreen extends React.Component {
   }
 
   render() {
-    const { t, settingsUpdated } = this.props;
+    const { t, settingsUpdated, peers } = this.props;
 
     return (
       <React.Fragment>
@@ -141,10 +106,9 @@ class Splashscreen extends React.Component {
           dark={true}
           showSettings={true}
           validationError={this.state.validationError}
-          validateCorrectNode={this.validateCorrectNode}
           liskAPIClientSet={this.props.liskAPIClientSet}
           networkList={this.networks}
-          selectedNetwork={this.state.network}
+          selectedNetwork={peers.options.code || 0}
           handleNetworkSelect={this.changeNetwork}
           settingsUpdated={settingsUpdated}
           showNetwork />

@@ -55,6 +55,29 @@
       top: 9px;
     }
   }
+
+  &:global(.dark) {
+    background: var(--color-maastricht-blue);
+    border: 1px solid var(--light-border-color);
+
+    & .option {
+      background: var(--color-maastricht-blue);
+
+      &:hover,
+      &.active {
+        background-color: rgba(64, 112, 244, 0.24);
+        color: #4070f4;
+      }
+
+      & input {
+        @mixin contentSmall bold;
+
+        background-color: var(--color-maastricht-blue);
+        color: var(--color-white);
+        padding: 0 20px;
+      }
+    }
+  }
 }
 
 .dropdownContent {
@@ -74,7 +97,8 @@
     transition: background var(--animation-speed-fast) linear, color var(--animation-speed-fast) linear;
     width: 100%;
 
-    &:hover {
+    &:hover,
+    &.active {
       background-color: var(--primary-background-color);
       color: var(--color-ultramarine-blue);
     }

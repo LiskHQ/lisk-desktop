@@ -1,7 +1,6 @@
 /* eslint-disable max-lines */
 import React from 'react';
 import i18next from 'i18next';
-import Lisk from 'lisk-elements';
 
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
@@ -54,7 +53,6 @@ class LoginV2 extends React.Component {
     this.changeAddress = this.changeAddress.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onLoginSubmission = this.onLoginSubmission.bind(this);
-    this.validateCorrectNode = this.validateCorrectNode.bind(this);
   }
 
   async componentDidMount() {
@@ -168,51 +166,20 @@ class LoginV2 extends React.Component {
     }
   }
 
-  validateCorrectNode(network, address, nextPath) {
-    const nodeURL = address !== '' ? addHttp(address) : address;
-
-    if (network === networks.customNode.code) {
-      const liskAPIClient = new Lisk.APIClient([nodeURL], {});
-      liskAPIClient.node.getConstants()
-        .then((res) => {
-          if (res.data) {
-            this.props.liskAPIClientSet({
-              network: {
-                ...this.getNetwork(network),
-                address: nodeURL,
-              },
-            });
-
-            this.props.history.push(nextPath);
-            this.setState({ validationError: false });
-          } else {
-            throw new Error();
-          }
-        }).catch(() => {
-          this.setState({ validationError: true });
-          this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
-        });
-    } else {
-      this.props.liskAPIClientSet({ network: this.getNetwork(network) });
-      this.props.history.push(nextPath);
-      this.setState({ validationError: false });
-    }
-
-    this.setState({ network });
-  }
-
   // eslint-disable-next-line complexity
   render() {
-    const { t, match, settingsUpdated } = this.props;
+    const {
+      t, match, settingsUpdated, peers,
+    } = this.props;
+
     return (
       <React.Fragment>
         { match.url === routes.loginV2.path ? (
         <HeaderV2
           validationError={this.state.validationError}
-          validateCorrectNode={this.validateCorrectNode}
           liskAPIClientSet={this.props.liskAPIClientSet}
           networkList={this.networks}
-          selectedNetwork={this.state.network}
+          selectedNetwork={peers.options.code || 0}
           handleNetworkSelect={this.changeNetwork}
           settingsUpdated={settingsUpdated}
           showSettings={true}

@@ -481,7 +481,6 @@
   "Try using menu for navigation.": "Try using menu for navigation.",
   "Type": "Type",
   "Type at least 3 characters": "Type at least 3 characters",
-  "Unable to connect to the node": "Unable to connect to the node",
   "Unable to connect to the node, no response from the server.": "Unable to connect to the node, no response from the server.",
   "Unable to detect the communication layer with your Hardware Wallet": "Unable to detect the communication layer with your Hardware Wallet",
   "Unable to detect the communication layer. Is ledger connected? Is Fido U2F Extension Installed?": "Unable to detect the communication layer. Is ledger connected? Is Fido U2F Extension Installed?",

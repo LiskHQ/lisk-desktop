@@ -1,4 +1,5 @@
 import React from 'react';
+import Lisk from 'lisk-elements';
 import i18next from 'i18next';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
@@ -76,44 +77,46 @@ class HeaderV2 extends React.Component {
     return network;
   }
 
-  // validateCorrectNode(nextPath) {
-  //   const { address } = this.state;
-  //   const nodeURL = address !== '' ? addHttp(address) : address;
-  //   if (this.state.network === networks.customNode.code) {
-  //     const liskAPIClient = new Lisk.APIClient([nodeURL], {});
-  //     liskAPIClient.node.getConstants()
-  //       .then((res) => {
-  //         if (res.data) {
-  //           this.props.liskAPIClientSet({
-  //             network: {
-  //               ...this.getNetwork(this.state.network),
-  //               address: nodeURL,
-  //             },
-  //           });
-  //           this.props.history.push(nextPath);
-  //         } else {
-  //           throw new Error();
-  //         }
-  //       }).catch(() => {
-  //         this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
-  //       });
-  //   } else {
-  //     const network = this.getNetwork(this.state.network);
-  //     this.props.liskAPIClientSet({ network });
-  //     this.props.history.push(nextPath);
-  //   }
-  // }
+  validateCorrectNode(network, address, nextPath) {
+    const nodeURL = address !== '' ? addHttp(address) : address;
+
+    if (network === networks.customNode.code) {
+      const liskAPIClient = new Lisk.APIClient([nodeURL], {});
+      liskAPIClient.node.getConstants()
+        .then((res) => {
+          if (res.data) {
+            this.props.liskAPIClientSet({
+              network: {
+                ...this.getNetwork(network),
+                address: nodeURL,
+              },
+            });
+
+            this.props.history.push(nextPath);
+            this.setState({ validationError: false, showDropdown: false });
+          } else {
+            throw new Error();
+          }
+        }).catch(() => {
+          this.setState({ validationError: true, showDropdown: true });
+        });
+    } else {
+      this.props.liskAPIClientSet({ network: this.getNetwork(network) });
+      this.props.history.push(nextPath);
+      this.setState({ validationError: false });
+    }
+
+    this.setState({ network });
+  }
 
   toggleDropdown(value) {
-    // const showDropdown = !this.state.showDropdown;
     this.setState({ showDropdown: value });
   }
 
   render() {
     const {
-      t, showSettings, showNetwork, networkList, dark,
+      t, showSettings, showNetwork, networkList, dark, selectedNetwork,
     } = this.props;
-    const selectedNetwork = this.state.network;
 
     return (
       <header className={`${styles.wrapper} mainHeader ${dark ? 'dark' : ''}`}>
@@ -123,13 +126,14 @@ class HeaderV2 extends React.Component {
           </div>
           <div className={`${styles.buttonsHolder}`}>
             {showNetwork &&
-              <span className={`${this.props.validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
+              <span className={`${this.state.validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
                 onClick={() => this.toggleDropdown(true)}>
                 { selectedNetwork !== 2 ? networkList[selectedNetwork].label : this.state.address }
                 <DropdownV2
-                  className={styles.dropdown}
+                  className={`${styles.dropdown} ${dark ? 'dark' : ''}`}
                   showArrow={false}
-                  showDropdown={this.state.showDropdown}>
+                  showDropdown={this.state.showDropdown}
+                  active={this.state.network}>
                   {networkList && networkList.map((network, key) => {
                     if (network.value === 2) {
                       return <span
@@ -149,22 +153,25 @@ class HeaderV2 extends React.Component {
                             ${autoSuggestInputStyles.input}
                             ${this.state.addressValidity ? 'error' : ''}`} />
                           <Feedback
-                            show={this.props.validationError}
+                            show={this.state.validationError}
                             status={'error'}
-                            className={`${this.props.validationError ? styles.feedbackError : ''} ${styles.feedbackMessage} amount-feedback`}
+                            className={`${this.state.validationError ? styles.feedbackError : ''} ${styles.feedbackMessage} amount-feedback`}
                             showIcon={false}>
 {'Unable to connect to the node, please check the address and try again'}
                           </Feedback>
                           <div>
                             <PrimaryButtonV2
                               onClick={(e) => {
-                                if (this.props.validationError) {
+                                // if (this.state.validationError) {
                                   e.stopPropagation();
-                                } else {
-                                  this.changeNetwork(2);
-                                  this.props.validateCorrectNode(2, this.state.address);
+                                // } else {
+
                                   this.toggleDropdown(false);
-                                }
+                                  this.changeNetwork(networks.customNode.code);
+                                  this.validateCorrectNode(
+                                    networks.customNode.code,
+                                    this.state.address,
+                                  );
                               }}
                               className={`${styles.button} ${styles.backButton}`}>
                               {t('Connect')}
@@ -172,12 +179,13 @@ class HeaderV2 extends React.Component {
                           </div>
                       </span>;
                     }
+
                     return (
                       <span
                         onClick={(e) => {
                           e.stopPropagation();
                           this.changeNetwork(network.value);
-                          this.props.validateCorrectNode(network.value);
+                          this.validateCorrectNode(network.value);
                           this.toggleDropdown(false);
                         }}
                         key={key}>{network.label
