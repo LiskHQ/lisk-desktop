@@ -63,43 +63,18 @@ export const getTransactions = ({
     }).catch(reject);
 });
 
-
-// TODO remove this function once getSingleTransaction that uses apiClient is implemented
-export const get = ({
+export const getSingleTransactions = ({
+  apiClient,
   id,
-  address,
-  limit = 20,
-  offset = 0,
-  // eslint-disable-next-line max-statements
-}, netCode = 1) => new Promise(async (resolve, reject) => {
-  try {
-    let response;
-    const config = getBtcConfig(netCode);
-
-    if (id) {
-      response = await fetch(`${config.url}/transaction/${id}`, config.requestOptions);
-    } else {
-      response = await fetch(`${config.url}/transactions/${address}?limit=${limit}&offset=${offset}&sort=height:desc`, config.requestOptions);
-    }
-
-    const json = await response.json();
-
-    if (response.ok) {
-      const data = normalizeTransactionsResponse({
-        address,
-        list: id ? [json.data] : json.data,
-      });
-
+}) => new Promise(async (resolve, reject) => {
+  await apiClient.get(`transaction/${id}`)
+    .then((response) => {
       resolve({
-        data,
-        meta: json.meta ? { count: json.meta.total } : {},
+        data: normalizeTransactionsResponse({
+          list: [response.body.data],
+        }),
       });
-    } else {
-      reject(json);
-    }
-  } catch (error) {
-    reject(error);
-  }
+    }).catch(reject);
 });
 
 /**
