@@ -107,6 +107,7 @@ class Splashscreen extends React.Component {
           showSettings={true}
           validationError={this.state.validationError}
           liskAPIClientSet={this.props.liskAPIClientSet}
+          address={peers.options.address}
           networkList={this.networks}
           selectedNetwork={peers.options.code || 0}
           handleNetworkSelect={this.changeNetwork}

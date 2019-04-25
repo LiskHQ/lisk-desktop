@@ -103,10 +103,20 @@
 .networkSpan {
   display: flex;
   flex-direction: column;
+
+  & input {
+    margin-top: 10px;
+  }
 }
 
 .feedbackMessage {
-  margin: 5px 0;
+  margin: 10px 0;
+  border-radius: var(--border-radius-standard);
+
+  & .error {
+    color: var(--color-white);
+    background: var(--color-burnt-sienna);
+  }
 }
 
 .feedbackError {
@@ -115,4 +125,29 @@
 
 .activeDropdown {
   background-color: blue;
+}
+
+.spinner {
+  color: var(--color-ultramarine-blue);
+  position: absolute;
+  right: 30px;
+  margin-top: -22px;
+  z-index: 50;
+}
+
+.show {
+  opacity: 1;
+  transition: opacity var(--animation-speed-fast) linear var(--animation-delay-standard);
+}
+
+.hide {
+  opacity: 0;
+  transition: opacity var(--animation-speed-fast) linear;
+}
+
+.icons img {
+  position: absolute;
+  right: 30px;
+  margin-top: -25px;
+  z-index: 50;
 }

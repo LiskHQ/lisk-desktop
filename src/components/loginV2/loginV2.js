@@ -1,5 +1,6 @@
 /* eslint-disable max-lines */
 import React from 'react';
+import Lisk from 'lisk-elements';
 import i18next from 'i18next';
 
 import { translate } from 'react-i18next';
@@ -166,6 +167,34 @@ class LoginV2 extends React.Component {
     }
   }
 
+  validateCorrectNode(nextPath) {
+    const { address } = this.state;
+    const nodeURL = address !== '' ? addHttp(address) : address;
+    if (this.state.network === networks.customNode.code) {
+      const liskAPIClient = new Lisk.APIClient([nodeURL], {});
+      liskAPIClient.node.getConstants()
+        .then((res) => {
+          if (res.data) {
+            this.props.liskAPIClientSet({
+              network: {
+                ...this.getNetwork(this.state.network),
+                address: nodeURL,
+              },
+            });
+            this.props.history.push(nextPath);
+          } else {
+            throw new Error();
+          }
+        }).catch(() => {
+          this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
+        });
+    } else {
+      const network = this.getNetwork(this.state.network);
+      this.props.liskAPIClientSet({ network });
+      this.props.history.push(nextPath);
+    }
+  }
+
   // eslint-disable-next-line complexity
   render() {
     const {
@@ -180,6 +209,7 @@ class LoginV2 extends React.Component {
           liskAPIClientSet={this.props.liskAPIClientSet}
           networkList={this.networks}
           selectedNetwork={peers.options.code || 0}
+          address={peers.options.address}
           handleNetworkSelect={this.changeNetwork}
           settingsUpdated={settingsUpdated}
           showSettings={true}

@@ -18,6 +18,8 @@ import styles from './headerV2.css';
 import autoSuggestInputStyles from '../autoSuggestV2/autoSuggest.css';
 import formStyles from '../sendV2/form/form.css';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
+import SpinnerV2 from '../spinnerV2/spinnerV2';
+import svg from '../../utils/svgIcons';
 
 class HeaderV2 extends React.Component {
   // eslint-disable-next-line max-statements
@@ -38,6 +40,7 @@ class HeaderV2 extends React.Component {
       address,
       showDropdown: false,
       network: loginNetwork.code,
+      isFirstTime: true,
     };
 
     this.getNetworksList();
@@ -100,6 +103,7 @@ class HeaderV2 extends React.Component {
         }).catch(() => {
           this.setState({ validationError: true, showDropdown: true });
         });
+      this.setState({ isValidationLoading: false, isFirstTime: false });
     } else {
       this.props.liskAPIClientSet({ network: this.getNetwork(network) });
       this.props.history.push(nextPath);
@@ -113,9 +117,11 @@ class HeaderV2 extends React.Component {
     this.setState({ showDropdown: value });
   }
 
+  /* eslint-disable complexity */
   render() {
     const {
-      t, showSettings, showNetwork, networkList, dark, selectedNetwork,
+      t, showSettings, showNetwork, networkList,
+      dark, selectedNetwork, address,
     } = this.props;
 
     return (
@@ -128,50 +134,60 @@ class HeaderV2 extends React.Component {
             {showNetwork &&
               <span className={`${this.state.validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
                 onClick={() => this.toggleDropdown(true)}>
-                { selectedNetwork !== 2 ? networkList[selectedNetwork].label : this.state.address }
+                { selectedNetwork !== 2 ? networkList[selectedNetwork].label
+                  : address || this.state.address }
                 <DropdownV2
                   className={`${styles.dropdown} ${dark ? 'dark' : ''}`}
                   showArrow={false}
                   showDropdown={this.state.showDropdown}
-                  active={this.state.network}>
+                  active={selectedNetwork}>
                   {networkList && networkList.map((network, key) => {
                     if (network.value === 2) {
                       return <span
                       className={styles.networkSpan}
                       key={key}>
                         {network.label}
-                        <InputV2
-                          autoComplete={'off'}
-                          onChange={(value) => {
-                            this.changeAddress(value);
-                          }}
-                          name='customNetwork'
-                          value={this.state.address}
-                          placeholder={this.props.t('Custom Network')}
-                          className={`
-                            ${formStyles.input}
-                            ${autoSuggestInputStyles.input}
-                            ${this.state.addressValidity ? 'error' : ''}`} />
+                          <InputV2
+                            autoComplete={'off'}
+                            onChange={(value) => {
+                              this.changeAddress(value);
+                            }}
+                            name='customNetwork'
+                            value={this.state.address || address}
+                            placeholder={this.props.t('Custom Network')}
+                            className={`
+                              ${formStyles.input}
+                              ${autoSuggestInputStyles.input}
+                              ${this.state.validationError ? 'error' : ''}`} />
+                          <div className={styles.icons}>
+                            <SpinnerV2 className={`${styles.spinner} ${this.state.isValidationLoading && this.state.address ? styles.show : styles.hide}`}/>
+                            <img
+                              className={`${styles.status} ${!this.state.isValidationLoading && this.state.address && !this.state.isFirstTime
+                                ? styles.show : styles.hide}`}
+                              src={ this.state.validationError ? svg.alert_icon : svg.ok_icon}
+                            />
+                          </div>
                           <Feedback
                             show={this.state.validationError}
                             status={'error'}
                             className={`${this.state.validationError ? styles.feedbackError : ''} ${styles.feedbackMessage} amount-feedback`}
-                            showIcon={false}>
+                            showIcon={false}
+                            dark={dark}>
 {'Unable to connect to the node, please check the address and try again'}
                           </Feedback>
                           <div>
                             <PrimaryButtonV2
                               onClick={(e) => {
-                                // if (this.state.validationError) {
                                   e.stopPropagation();
-                                // } else {
 
-                                  this.toggleDropdown(false);
-                                  this.changeNetwork(networks.customNode.code);
-                                  this.validateCorrectNode(
-                                    networks.customNode.code,
-                                    this.state.address,
-                                  );
+                                  this.setState({ isValidationLoading: true });
+                                  this.loaderTimeout = setTimeout(() => {
+                                    this.changeNetwork(networks.customNode.code);
+                                    this.validateCorrectNode(
+                                      networks.customNode.code,
+                                      this.state.address,
+                                    );
+                                  }, 300);
                               }}
                               className={`${styles.button} ${styles.backButton}`}>
                               {t('Connect')}
