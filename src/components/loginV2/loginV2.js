@@ -17,9 +17,7 @@ import links from '../../constants/externalLinks';
 import feedbackLinks from '../../constants/feedbackLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import HeaderV2 from '../headerV2/headerV2';
-import { InputV2 } from '../toolbox/inputsV2';
 import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
-import Feedback from '../toolbox/feedback/feedback';
 import styles from './loginV2.css';
 import Piwik from '../../utils/piwik';
 
@@ -42,6 +40,7 @@ class LoginV2 extends React.Component {
       passphrase: '',
       network: loginNetwork.code,
       address,
+      validationError: false,
     };
 
     this.secondIteration = false;
@@ -179,15 +178,18 @@ class LoginV2 extends React.Component {
             });
 
             this.props.history.push(nextPath);
+            this.setState({ validationError: false });
           } else {
             throw new Error();
           }
         }).catch(() => {
+          this.setState({ validationError: true });
           this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
         });
     } else {
       this.props.liskAPIClientSet({ network: this.getNetwork(network) });
       this.props.history.push(nextPath);
+      this.setState({ validationError: false });
     }
 
     this.setState({ network });
@@ -199,6 +201,7 @@ class LoginV2 extends React.Component {
       <React.Fragment>
         { match.url === routes.loginV2.path ? (
         <HeaderV2
+          validationError={this.state.validationError}
           validateCorrectNode={this.validateCorrectNode}
           liskAPIClientSet={this.props.liskAPIClientSet}
           networkList={this.networks}

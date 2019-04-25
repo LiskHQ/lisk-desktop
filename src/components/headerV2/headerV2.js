@@ -35,7 +35,7 @@ class HeaderV2 extends React.Component {
 
     this.state = {
       address,
-      showDropdown: true,
+      showDropdown: false,
       network: loginNetwork.code,
     };
 
@@ -104,9 +104,9 @@ class HeaderV2 extends React.Component {
   //   }
   // }
 
-  toggleDropdown() {
-    const showDropdown = !this.state.showDropdown;
-    this.setState({ showDropdown });
+  toggleDropdown(value) {
+    // const showDropdown = !this.state.showDropdown;
+    this.setState({ showDropdown: value });
   }
 
   render() {
@@ -122,10 +122,9 @@ class HeaderV2 extends React.Component {
             <img src={dark ? whiteLogo : darkLogo} />
           </div>
           <div className={`${styles.buttonsHolder}`}>
-            {showNetwork
-              && <span className={`${styles.dropdownHandler} network`}
-                // onClick={this.toggleDropdown}
-                >
+            {showNetwork &&
+              <span className={`${this.props.validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
+                onClick={() => this.toggleDropdown(true)}>
                 { selectedNetwork !== 2 ? networkList[selectedNetwork].label : this.state.address }
                 <DropdownV2
                   className={styles.dropdown}
@@ -150,17 +149,22 @@ class HeaderV2 extends React.Component {
                             ${autoSuggestInputStyles.input}
                             ${this.state.addressValidity ? 'error' : ''}`} />
                           <Feedback
-                            show={!!this.state.addressValidity}
+                            show={this.props.validationError}
                             status={'error'}
-                            className={`${formStyles.feedbackMessage} amount-feedback`}
+                            className={`${this.props.validationError ? styles.feedbackError : ''} ${styles.feedbackMessage} amount-feedback`}
                             showIcon={false}>
 {'Unable to connect to the node, please check the address and try again'}
                           </Feedback>
                           <div>
                             <PrimaryButtonV2
-                              onClick={() => {
-                                this.changeNetwork(2);
-                                this.props.validateCorrectNode(2, this.state.address);
+                              onClick={(e) => {
+                                if (this.props.validationError) {
+                                  e.stopPropagation();
+                                } else {
+                                  this.changeNetwork(2);
+                                  this.props.validateCorrectNode(2, this.state.address);
+                                  this.toggleDropdown(false);
+                                }
                               }}
                               className={`${styles.button} ${styles.backButton}`}>
                               {t('Connect')}
@@ -170,9 +174,11 @@ class HeaderV2 extends React.Component {
                     }
                     return (
                       <span
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           this.changeNetwork(network.value);
                           this.props.validateCorrectNode(network.value);
+                          this.toggleDropdown(false);
                         }}
                         key={key}>{network.label
                       }</span>

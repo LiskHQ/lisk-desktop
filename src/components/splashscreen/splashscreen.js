@@ -1,14 +1,47 @@
 import React from 'react';
+import Lisk from 'lisk-elements';
+import i18next from 'i18next';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
+
 import routes from '../../constants/routes';
+import { addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import { parseSearchParams } from './../../utils/searchParams';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
+import getNetwork from '../../utils/getNetwork';
+import networks from '../../constants/networks';
 import HeaderV2 from '../headerV2/headerV2';
 import styles from './splashscreen.css';
 import Tooltip from '../toolbox/tooltip/tooltip';
 
 class Splashscreen extends React.Component {
+  constructor() { // eslint-disable-line max-statements
+    super();
+    const { liskCoreUrl } = getAutoLogInData();
+    let loginNetwork = findMatchingLoginNetwork();
+    let address = '';
+
+    if (loginNetwork) {
+      loginNetwork = loginNetwork.slice(-1).shift();
+    } else if (!loginNetwork) {
+      loginNetwork = liskCoreUrl ? networks.customNode : networks.default;
+      address = liskCoreUrl || '';
+    }
+
+    this.state = {
+      isValid: false,
+      passphrase: '',
+      network: loginNetwork.code,
+      address,
+    };
+
+    this.secondIteration = false;
+
+    this.getNetworksList();
+
+    this.changeNetwork = this.changeNetwork.bind(this);
+    this.validateCorrectNode = this.validateCorrectNode.bind(this);
+  }
   componentDidMount() {
     // istanbul ignore else
     if (!this.props.settings.areTermsOfUseAccepted) {
@@ -44,11 +77,77 @@ class Splashscreen extends React.Component {
       this.props.peers.options.address === network.address;
   }
 
+  validateCorrectNode(network, address, nextPath) {
+    const nodeURL = address !== '' ? addHttp(address) : address;
+
+    if (network === networks.customNode.code) {
+      const liskAPIClient = new Lisk.APIClient([nodeURL], {});
+      liskAPIClient.node.getConstants()
+        .then((res) => {
+          if (res.data) {
+            this.props.liskAPIClientSet({
+              network: {
+                ...this.getNetwork(network),
+                address: nodeURL,
+              },
+            });
+
+            this.props.history.push(nextPath);
+            this.setState({ validationError: false });
+          } else {
+            throw new Error();
+          }
+        }).catch(() => {
+          this.setState({ validationError: true });
+          this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
+        });
+    } else {
+      this.props.liskAPIClientSet({ network: this.getNetwork(network) });
+      this.props.history.push(nextPath);
+      this.setState({ validationError: false });
+    }
+
+    this.setState({ network });
+  }
+
+  changeNetwork(network) {
+    this.setState({ network });
+    this.props.settingsUpdated({ network });
+  }
+
+  getNetwork(chosenNetwork) {
+    const network = { ...getNetwork(chosenNetwork) };
+    if (chosenNetwork === networks.customNode.code) {
+      network.address = addHttp(this.state.address);
+    }
+    return network;
+  }
+
+  getNetworksList() {
+    this.networks = Object.keys(networks)
+      .filter(network => network !== 'default')
+      .map((network, index) => ({
+        label: i18next.t(networks[network].name),
+        value: index,
+      }));
+  }
+
   render() {
-    const { t } = this.props;
+    const { t, settingsUpdated } = this.props;
+
     return (
       <React.Fragment>
-        <HeaderV2 dark={true} showSettings={true} />
+        <HeaderV2
+          dark={true}
+          showSettings={true}
+          validationError={this.state.validationError}
+          validateCorrectNode={this.validateCorrectNode}
+          liskAPIClientSet={this.props.liskAPIClientSet}
+          networkList={this.networks}
+          selectedNetwork={this.state.network}
+          handleNetworkSelect={this.changeNetwork}
+          settingsUpdated={settingsUpdated}
+          showNetwork />
         <div className={`${styles.splashscreen}`}>
           <div className={`${styles.wrapper}`}>
             <div className={`${styles.titleHolder}`}>

@@ -98,3 +98,11 @@
   display: flex;
   flex-direction: column;
 }
+
+.feedbackMessage {
+  margin: 5px 0;
+}
+
+.feedbackError {
+  max-height: 140px !important;
+}
