@@ -51,27 +51,20 @@ export const getTransactions = ({
   limit,
   offset,
 }) => new Promise(async (resolve, reject) => {
-  try {
-    const response = await apiClient.get(`transactions/${address}?limit=${limit}&offset=${offset}&sort=height:desc`);
-
-    if (response.status === 200) {
-      const data = normalizeTransactionsResponse({
-        address,
-        list: response.body.data,
-      });
-
+  await apiClient.get(`transactions/${address}?limit=${limit}&offset=${offset}&sort=height:desc`)
+    .then((response) => {
       resolve({
-        data,
+        data: normalizeTransactionsResponse({
+          address,
+          list: response.body.data,
+        }),
         meta: response.body.meta ? { count: response.body.meta.total } : {},
       });
-    } else {
-      reject(response.body);
-    }
-  } catch (error) {
-    reject(error);
-  }
+    }).catch(reject);
 });
 
+
+// TODO remove this function once getSingleTransaction that uses apiClient is implemented
 export const get = ({
   id,
   address,

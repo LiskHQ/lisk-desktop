@@ -10,9 +10,18 @@ export const getAPIClient = (network) => {
     networks.mainnet.code :
     networks.testnet.code);
   return {
-    get: path => (
-      popsicle.get(`${config.url}/${path}`, config.requestOptions).use(popsicle.plugins.parse('json'))
-    ),
+    get: path => (new Promise(async (resolve, reject) => {
+      try {
+        const response = await popsicle.get(`${config.url}/${path}`, config.requestOptions).use(popsicle.plugins.parse('json'));
+        if (response.status === 200) {
+          resolve(response);
+        } else {
+          reject(response);
+        }
+      } catch (error) {
+        reject(error);
+      }
+    })),
     post: (path, body) => (
       popsicle.post(`${config.url}/${path}`, { body: JSON.stringify(body) })
     ),
