@@ -48,9 +48,8 @@ const normalizeTransactionsResponse = ({
 export const getTransactions = ({
   apiClient,
   address,
-  limit = 20,
-  offset = 0,
-  // eslint-disable-next-line max-statements
+  limit,
+  offset,
 }) => new Promise(async (resolve, reject) => {
   try {
     const response = await apiClient.get(`transactions/${address}?limit=${limit}&offset=${offset}&sort=height:desc`);

@@ -4,7 +4,7 @@ import txFilters from '../../../constants/transactionFilters';
 
 // eslint-disable-next-line max-statements, complexity, import/prefer-default-export
 export const getTransactions = ({
-  apiClient, address, limit = 20, offset = 0, type = undefined,
+  apiClient, address, limit, offset, type = undefined,
   sort = 'timestamp:desc', filter = txFilters.all, customFilters = {},
 }) => {
   const params = {

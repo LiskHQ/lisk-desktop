@@ -28,8 +28,12 @@ export const getTokenFromAddress = address => (
     tokenMap.LSK.key
 );
 
-export const getTransactions = params => (
-  getMappedFunction(getTokenFromAddress(params.address), 'transactions', 'getTransactions')(params)
+export const getTransactions = ({ offset = 0, limit = 25, ...params }) => (
+  getMappedFunction(getTokenFromAddress(params.address), 'transactions', 'getTransactions')({
+    offset,
+    limit,
+    ...params,
+  })
 );
 
 export const getSingleTransaction = ({ liskAPIClient, id }) => new Promise((resolve, reject) => {
