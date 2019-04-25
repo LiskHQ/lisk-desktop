@@ -4,7 +4,7 @@ import txFilters from '../../../constants/transactionFilters';
 
 // eslint-disable-next-line max-statements, complexity, import/prefer-default-export
 export const getTransactions = ({
-  liskAPIClient, address, limit = 20, offset = 0, type = undefined,
+  apiClient, address, limit = 20, offset = 0, type = undefined,
   sort = 'timestamp:desc', filter = txFilters.all, customFilters = {},
 }) => {
   const params = {
@@ -32,5 +32,5 @@ export const getTransactions = ({
   if (filter === txFilters.incoming) params.recipientId = address;
   if (filter === txFilters.outgoing) params.senderId = address;
   if (filter === txFilters.all) params.senderIdOrRecipientId = address;
-  return liskAPIClient.transactions.get(params);
+  return apiClient.transactions.get(params);
 };

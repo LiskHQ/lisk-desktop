@@ -4,6 +4,7 @@ import * as btcTransactions from './btc/transactions';
 import * as btcService from './btc/service';
 import * as btcNetwork from './btc/network';
 import * as lskNetwork from './lsk/network';
+import * as lskTransactions from './lsk/transactions';
 
 /**
  * Resource oriented mapping from token type to utility functions.
@@ -17,6 +18,7 @@ const resourceMap = {
   },
   [tokenMap.LSK.key]: {
     network: lskNetwork,
+    transactions: lskTransactions,
   },
 };
 

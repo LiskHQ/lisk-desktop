@@ -1,9 +1,7 @@
 import Lisk from 'lisk-elements';
-import { getTransactions as getLSKTransactions } from './lsk/transactions';
-import { get as getBTCTransactions } from './btc/transactions';
-import txFilters from './../../constants/transactionFilters';
 import { validateAddress } from '../validators';
 import { tokenMap, tokenKeys } from '../../constants/tokens';
+import getMappedFunction from './functionMapper';
 
 export const send = (
   liskAPIClient,
@@ -23,24 +21,13 @@ export const send = (
     }).catch(reject);
   });
 
-const transactionsGetterrs = {
-  [tokenMap.BTC.key]: getBTCTransactions,
-  [tokenMap.LSK.key]: getLSKTransactions,
-};
-
-const getTokenFromAddress = address => (
+export const getTokenFromAddress = address => (
   tokenKeys.find(tokenKey => validateAddress(tokenKey, address) === 0) || tokenMap.LSK.key
 );
 
-export const getTransactions = ({
-  liskAPIClient, address, limit = 20, offset = 0, type = undefined,
-  sort = 'timestamp:desc', filter = txFilters.all, customFilters = {},
-}) => {
-  const tokenKey = getTokenFromAddress(address);
-  return transactionsGetterrs[tokenKey] && transactionsGetterrs[tokenKey]({
-    liskAPIClient, address, limit, offset, type, sort, filter, customFilters,
-  });
-};
+export const getTransactions = params => (
+  getMappedFunction(getTokenFromAddress(params.address), 'transactions', 'getTransactions')(params)
+);
 
 export const getSingleTransaction = ({ liskAPIClient, id }) => new Promise((resolve, reject) => {
   if (!liskAPIClient) {

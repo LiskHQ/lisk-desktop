@@ -45,6 +45,34 @@ const normalizeTransactionsResponse = ({
   return data;
 });
 
+export const getTransactions = ({
+  apiClient,
+  address,
+  limit = 20,
+  offset = 0,
+  // eslint-disable-next-line max-statements
+}) => new Promise(async (resolve, reject) => {
+  try {
+    const response = await apiClient.get(`transactions/${address}?limit=${limit}&offset=${offset}&sort=height:desc`);
+
+    if (response.status === 200) {
+      const data = normalizeTransactionsResponse({
+        address,
+        list: response.body.data,
+      });
+
+      resolve({
+        data,
+        meta: response.body.meta ? { count: response.body.meta.total } : {},
+      });
+    } else {
+      reject(response.body);
+    }
+  } catch (error) {
+    reject(error);
+  }
+});
+
 export const get = ({
   id,
   address,

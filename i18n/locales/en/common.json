@@ -552,7 +552,6 @@
   "Your Trezor Device is not initialized. Please do it with trezor software.": "Your Trezor Device is not initialized. Please do it with trezor software.",
   "Your Trezor Model T has an old Firmware. Please update it.": "Your Trezor Model T has an old Firmware. Please update it.",
   "Your Trezor One has an old Firmware. Please update it.": "Your Trezor One has an old Firmware. Please update it.",
-  "Your account has been created!": "Your account has been created!",
   "Your delegate name is being registered": "Your delegate name is being registered",
   "Your passphrase is both your login and passphrase to your Lisk Hub. It is provided during account registration.": "Your passphrase is both your login and passphrase to your Lisk Hub. It is provided during account registration.",
   "Your passphrase is used to access your Lisk ID.": "Your passphrase is used to access your Lisk ID.",

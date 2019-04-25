@@ -11,7 +11,7 @@ export const getAPIClient = (network) => {
     networks.testnet.code);
   return {
     get: path => (
-      popsicle.get(`${config.url}/${path}`).use(popsicle.plugins.parse('json'))
+      popsicle.get(`${config.url}/${path}`, config.requestOptions).use(popsicle.plugins.parse('json'))
     ),
     post: (path, body) => (
       popsicle.post(`${config.url}/${path}`, { body: JSON.stringify(body) })

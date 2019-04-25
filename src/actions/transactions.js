@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import to from 'await-to-js';
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
-import { send, getTransactions, getSingleTransaction, unconfirmedTransactions } from '../utils/api/transactions';
+import { send, getTransactions, getSingleTransaction, unconfirmedTransactions, getTokenFromAddress } from '../utils/api/transactions';
 import { getDelegate } from '../utils/api/delegate';
 import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
@@ -14,6 +14,7 @@ import transactionTypes from '../constants/transactionTypes';
 import { toRawLsk } from '../utils/lsk';
 import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
+import { getAPIClient } from '../utils/api/network';
 
 export const cleanTransactions = () => ({
   type: actionTypes.cleanTransactions,
@@ -31,12 +32,12 @@ export const testExtensions = () => ({
 export const transactionsFilterSet = ({
   address, limit, filter, customFilters = {},
 }) => (dispatch, getState) => {
-  const liskAPIClient = getState().peers.liskAPIClient;
+  const apiClient = getAPIClient(getTokenFromAddress(address), getState());
 
   dispatch(loadingStarted(actionTypes.transactionsFilterSet));
 
   return getTransactions({
-    liskAPIClient,
+    apiClient,
     address,
     limit,
     filter,
@@ -87,11 +88,11 @@ export const loadTransactionsFinish = accountUpdated =>
 
 export const loadTransactions = ({ publicKey, address }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const apiClient = getAPIClient(getTokenFromAddress(address), getState());
     const lastActiveAddress = publicKey && extractAddress(publicKey);
     const isSameAccount = lastActiveAddress === address;
     dispatch(loadingStarted(actionTypes.transactionsLoad));
-    getTransactions({ liskAPIClient, address, limit: 25 })
+    getTransactions({ apiClient, address, limit: 25 })
       .then((transactionsResponse) => {
         dispatch(loadAccount({
           address,
@@ -113,9 +114,9 @@ export const transactionsRequested = ({
 }) =>
   (dispatch, getState) => {
     dispatch(loadingStarted(actionTypes.transactionsRequested));
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const apiClient = getAPIClient(getTokenFromAddress(address), getState());
     getTransactions({
-      liskAPIClient, address, limit, offset, filter, customFilters,
+      apiClient, address, limit, offset, filter, customFilters,
     })
       .then((response) => {
         dispatch(loadingFinished(actionTypes.transactionsRequested));
@@ -132,11 +133,11 @@ export const transactionsRequested = ({
   };
 
 export const loadLastTransaction = address => (dispatch, getState) => {
-  const { liskAPIClient } = getState().peers;
-  if (liskAPIClient) {
+  const apiClient = getAPIClient(getTokenFromAddress(address), getState());
+  if (apiClient) {
     dispatch({ type: actionTypes.transactionCleared });
     getTransactions({
-      liskAPIClient, address, limit: 1, offset: 0,
+      apiClient, address, limit: 1, offset: 0,
     }).then(response => dispatch({ data: response.data[0], type: actionTypes.transactionLoaded }));
   }
 };
@@ -215,9 +216,10 @@ export const transactionsUpdated = ({
   address, limit, filter, pendingTransactions, customFilters,
 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const apiClient = getAPIClient(getTokenFromAddress(address), getState());
+
     getTransactions({
-      liskAPIClient, address, limit, filter, customFilters,
+      apiClient, address, limit, filter, customFilters,
     })
       .then((response) => {
         if (filter === getState().transactions.filter) {
