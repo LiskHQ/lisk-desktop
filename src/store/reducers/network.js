@@ -16,7 +16,7 @@ const network = (state = { status: {}, networks: {} }, action) => {
         name: action.data.name,
         networks: {
           ...state.networks,
-          [action.data.token]: action.data.network,
+          [action.data.token]: action.data.network || {},
         },
       };
     case actionTypes.networkStatusUpdated:

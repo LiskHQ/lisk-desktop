@@ -7,7 +7,6 @@ export const networkSet = data => ({
   data: {
     name: data.name,
     token: tokenMap.BTC.key,
-    network: {},
   },
   type: actionTypes.networkSet,
 });

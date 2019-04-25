@@ -19,7 +19,6 @@ describe('actions: network', () => {
         data: {
           name,
           token: tokenMap.BTC.key,
-          network: {},
         },
         type: actionTypes.networkSet,
       });
