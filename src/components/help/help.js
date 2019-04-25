@@ -9,11 +9,6 @@ import Piwik from '../../utils/piwik';
 
 /* eslint-disable class-methods-use-this */
 class Help extends React.Component {
-  initOnboarding() {
-    Piwik.trackingEvent('Help', 'button', 'Init onboarding');
-    this.props.settingsUpdated({ onBoarding: true });
-  }
-
   visitHelpCenter() {
     const win = window.open(links.helpCenter, '_blank');
     win.focus();
@@ -32,12 +27,6 @@ class Help extends React.Component {
           <header>
             <h2>{this.props.t('Help')}</h2>
             <p>{this.props.t('Browse through our tutorials, check out the FAQ or connect with our knowledgeable community.')}</p>
-            {
-              this.props.account.address ?
-                <a className='help-onboarding' onClick={() => this.initOnboarding() }>{this.props.t('New to Hub? Take a tour')}
-                <FontIcon>arrow-right</FontIcon>
-              </a> : null
-            }
 
             <a
               className={'terms-of-use'}

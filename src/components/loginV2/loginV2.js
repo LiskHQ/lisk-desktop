@@ -20,6 +20,7 @@ import HeaderV2 from '../headerV2/headerV2';
 import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
 import styles from './loginV2.css';
 import Piwik from '../../utils/piwik';
+import { getDeviceList } from '../../utils/hwWallet';
 
 class LoginV2 extends React.Component {
   constructor() { // eslint-disable-line max-statements
@@ -41,6 +42,7 @@ class LoginV2 extends React.Component {
       network: loginNetwork.code,
       address,
       validationError: false,
+      devices: [],
     };
 
     this.secondIteration = false;
@@ -55,11 +57,15 @@ class LoginV2 extends React.Component {
     this.validateCorrectNode = this.validateCorrectNode.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // istanbul ignore else
     if (!this.props.settings.areTermsOfUseAccepted) {
       this.props.history.push(routes.termsOfUse.path);
     }
+
+    this.setState({
+      devices: await getDeviceList(),
+    });
 
     i18next.on('languageChanged', this.getNetworksList);
   }
@@ -195,6 +201,7 @@ class LoginV2 extends React.Component {
     this.setState({ network });
   }
 
+  // eslint-disable-next-line complexity
   render() {
     const { t, match, settingsUpdated } = this.props;
     return (
@@ -264,12 +271,14 @@ class LoginV2 extends React.Component {
                   maxInputsLength={24}
                   onFill={this.checkPassphrase} />
 
-                  <div className={`${styles.hardwareHolder} ${(this.props.settings && this.props.settings.isHarwareWalletConnected) ? styles.show : ''}`}>
+                  <div className={`${styles.hardwareHolder}
+                    ${(localStorage.getItem('trezor') && this.state.devices.length > 0)
+                    ? styles.show : ''}`}>
                     <div className={`${styles.label}`}>
                       {t('Hardware login (beta): ')}
                       <span className={`${styles.link} hardwareWalletLink`}
                         onClick={() => this.validateCorrectNode(routes.hwWallet.path)}>
-                        Ledger Nano S
+                        {this.state.devices[0] && this.state.devices[0].model}
                       </span>
                     </div>
                     <a
@@ -280,7 +289,6 @@ class LoginV2 extends React.Component {
                       {t('Give feedback about this feature')}
                     </a>
                   </div>
-
               </div>
 
               <div className={`${styles.buttonsHolder}`}>

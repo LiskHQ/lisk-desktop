@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from 'react';
 import { displayAccounts } from '../../utils/ledger';
 import AccountCard from './accountCard';
@@ -5,11 +7,16 @@ import AddAccountCard from './addAccountCard';
 import { FontIcon } from '../fontIcon';
 import routes from '../../constants/routes';
 import Piwik from '../../utils/piwik';
+import { getDeviceList, getLoginTypeFromDevice,
+  getHWPublicKeyFromIndex, getHWAddressFromIndex } from '../../utils/hwWallet';
+import { extractAddress } from '../../utils/api/account';
+
 
 import cubeImage from '../../assets/images/dark-blue-cube.svg';
 import styles from './ledgerLogin.css';
+const { ipc } = window;
 
-class LedgerLogin extends React.Component {
+class TrezorLogin extends React.Component {
   constructor(props) {
     super(props);
 
@@ -20,16 +27,87 @@ class LedgerLogin extends React.Component {
       showNextAvailable: false,
       hardwareAccountsName: props.settings.hardwareAccounts || {},
       displayAccountAmount: props.settings.ledgerAccountAmount || 0,
+      trezorPinRequested: false,
+      trezorPin: '',
+      trezorPasshpraseRequested: false,
+      trezorPassphrase: '',
+      loginType: null,
+      publicKey: null,
+      address: null,
     };
+
+    if (ipc) {
+      ipc.on('trezorPinCallback', () => {
+        this.setState({
+          trezorPinRequested: true,
+        });
+      });
+      ipc.on('trezorPassphraseCallback', () => {
+        this.setState({
+          trezorPasshpraseRequested: true,
+          trezorPinRequested: false,
+        });
+      });
+    }
   }
 
-  componentDidMount() {
+  async componentWillMount() {
+    const devices = await getDeviceList();
+    const loginType = getLoginTypeFromDevice(devices[0]);
+    const deviceId = devices[0].deviceId;
+    // loadingFinished('submitPassphrase');
+    try {
+      // Retrieve Address without verification
+      const publicKey = await getHWPublicKeyFromIndex(deviceId, loginType, /* index */ 0, /* showOnDevice */ false);
+
+      this.setState({
+        trezorPinRequested: false,
+        trezorPasshpraseRequested: false,
+        loginType,
+        publicKey,
+        address: extractAddress(publicKey),
+      });
+
+      // Retrieve Address with verification
+      const address = await getHWAddressFromIndex(deviceId, loginType, /* index */ 0, /* showOnDevice */ true);
+    } catch (error) {
+      this.hwError(error);
+      return;
+    }
+
+    this.ok();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.keyboardHandler, false);
+  }
+
+
+  ok() {
+    // set active peer
+    this.props.activePeerSet({
+      publicKey: this.state.publicKey,
+      loginType: this.state.loginType,
+      network: this.props.network,
+      hwInfo: {
+        device: this.props.device,
+        deviceId: this.props.device.deviceId,
+        derivationIndex: 0,
+      },
+    });
+    this.props.close();
+  }
+
+
+  async componentDidMount() {
     this.setState({ isLoading: true });
+    const devices = await getDeviceList();
     setTimeout(async () => {
       const output = await displayAccounts({
         liskAPIClient: this.props.liskAPIClient,
         loginType: this.props.loginType,
         hwAccounts: this.state.hwAccounts,
+        device: devices[0],
         t: this.props.t,
       });
 
@@ -45,7 +123,7 @@ class LedgerLogin extends React.Component {
   }
 
   selectAccount(ledgerAccount, index) {
-    Piwik.trackingEvent('LedgerLogin', 'button', 'Select account');
+    Piwik.trackingEvent('TrezorLogin', 'button', 'Select account');
     // set active peer
     this.props.liskAPIClientSet({
       publicKey: ledgerAccount.publicKey,
@@ -58,7 +136,10 @@ class LedgerLogin extends React.Component {
   }
 
   async addAccount() {
-    Piwik.trackingEvent('LedgerLogin', 'button', 'Add account');
+    Piwik.trackingEvent('TrezorLogin', 'button', 'Add account');
+    console.log(this.state.hwAccounts);
+    const devices = await getDeviceList();
+
     if (this.state.hwAccounts[this.state.hwAccounts.length - 1].isInitialized) {
       const output = await displayAccounts({
         liskAPIClient: this.props.liskAPIClient,
@@ -66,6 +147,7 @@ class LedgerLogin extends React.Component {
         hwAccounts: this.state.hwAccounts,
         t: this.props.t,
         unInitializedAdded: true,
+        device: devices[0],
       });
       const hwAccounts = this.state.hwAccounts.concat([output.hwAccounts[0]]);
       this.setState({ hwAccounts });
@@ -113,7 +195,7 @@ class LedgerLogin extends React.Component {
             <div className={`${styles.back} back`} onClick={() => { this.props.cancelLedgerLogin(); }}>
               <FontIcon value='arrow-left'/>{this.props.t('Back')}
             </div>
-            <div className={styles.title}><h2>{this.props.t('Accounts on Ledger')}</h2></div>
+            <div className={styles.title}><h2>{this.props.t('Accounts on Trezor')}</h2></div>
             {this.state.isEditMode ?
               <div className={`${styles.edit} saveAccountNames`} onClick={() => this.saveAccountNames()}>
                 {this.props.t('Done')}
@@ -140,4 +222,4 @@ class LedgerLogin extends React.Component {
   }
 }
 
-export default LedgerLogin;
+export default TrezorLogin;

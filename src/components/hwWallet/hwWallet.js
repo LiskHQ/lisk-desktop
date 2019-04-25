@@ -1,11 +1,15 @@
+/* eslint-disable */
+
 import React from 'react';
 import to from 'await-to-js';
 
 import UnlockWallet from './unlockWallet';
 import LedgerLogin from './ledgerLoginHOC';
+import TrezorLogin from './trezorLoginHOC';
 import getNetwork from '../../utils/getNetwork';
 import { getAccountFromLedgerIndex } from '../../utils/ledger';
 import Piwik from '../../utils/piwik';
+import { getDeviceList } from '../../utils/hwWallet';
 import HeaderV2 from '../headerV2/headerV2';
 
 import { loginType } from '../../constants/hwConstants';
@@ -18,10 +22,15 @@ class HwWallet extends React.Component {
     super(props);
     this.state = {
       isLedgerLogin: true,
+      isTrezorLogin: true,
+      devices: [],
     };
   }
 
   async componentDidMount() {
+    this.setState({ 
+      devices: await getDeviceList(),
+    });
     this.ledgerLogin();
   }
 
@@ -65,19 +74,32 @@ class HwWallet extends React.Component {
   }
 
   render() {
-    if (this.state.isLedgerLogin) {
+    if (this.state.isLedgerLogin && (this.state.devices[0] && this.state.devices[0].model === 'Ledger')) {
       return (
         <React.Fragment>
           <HeaderV2 showSettings={true} />
           <div className={styles.wrapper}>
             <LedgerLogin
               account={this.props.account}
-              loginType={loginType.normal}
+              loginType={loginType.ledger}
               network={getNetwork(this.props.network)}
               cancelLedgerLogin={this.cancelLedgerLogin.bind(this)} />
           </div>
-        </React.Fragment>
-      );
+        </React.Fragment>);
+    }
+
+    if (this.state.isTrezorLogin && (this.state.devices[0] && this.state.devices[0].model !== 'Ledger')) {
+      return (
+        <React.Fragment>
+          <HeaderV2 showSettings={true} />
+          <div className={styles.wrapper}>
+            <TrezorLogin
+              account={this.props.account}
+              loginType={loginType.trezor}
+              network={getNetwork(this.props.network)}
+              cancelLedgerLogin={this.cancelLedgerLogin.bind(this)} />
+          </div>
+        </React.Fragment>);
     }
 
     return (
