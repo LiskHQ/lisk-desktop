@@ -1,7 +1,6 @@
 import { getTransactions } from './transactions';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import txFilters from '../../../constants/transactionFilters';
-import accounts from '../../../../test/constants/accounts';
 
 describe('Utils: Transactions API', () => {
   const address = '1212409187243L';
@@ -31,7 +30,7 @@ describe('Utils: Transactions API', () => {
     it('should call transactions.get with type', () => {
       const params = {
         apiClient,
-        address: address,
+        address,
         filter: txFilters.incoming,
         type: 2,
       };
