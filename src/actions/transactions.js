@@ -61,6 +61,7 @@ export const transactionsFilterSet = ({
         type: actionTypes.addFilter,
       });
     }
+  }).finally(() => {
     dispatch(loadingFinished(actionTypes.transactionsFilterSet));
   });
 };
@@ -119,7 +120,6 @@ export const transactionsRequested = ({
       apiClient, address, limit, offset, filter, customFilters,
     })
       .then((response) => {
-        dispatch(loadingFinished(actionTypes.transactionsRequested));
         dispatch({
           data: {
             count: parseInt(response.meta.count, 10),
@@ -129,6 +129,8 @@ export const transactionsRequested = ({
           },
           type: actionTypes.transactionsLoaded,
         });
+      }).finally(() => {
+        dispatch(loadingFinished(actionTypes.transactionsRequested));
       });
   };
 
