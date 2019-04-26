@@ -17,8 +17,8 @@ export const getAPIClient = (network) => {
         nodes: networks.mainnet.nodes,
       },
       [networks.customNode.name]: {
-        nethash: network[tokenMap.LSK.key] && network[tokenMap.LSK.key].nethash,
-        nodes: [network[tokenMap.LSK.key] && network[tokenMap.LSK.key].nodeUrl],
+        nethash: network.networks[tokenMap.LSK.key] && network.networks[tokenMap.LSK.key].nethash,
+        nodes: [network.networks[tokenMap.LSK.key] && network.networks[tokenMap.LSK.key].nodeUrl],
       },
     }[network.name] || {};
     apiClients[network.name] = new Lisk.APIClient(nodes, { nethash });

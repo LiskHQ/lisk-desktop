@@ -31,11 +31,13 @@ describe('Utils: network API', () => {
       const nethash = Lisk.APIClient.constants.MAINNET_NETHASH;
       const nodeUrl = 'https://hub23.lisk.io';
       const state = {
-        name: networks.customNode.name,
         network: {
-          [tokenMap.LSK.key]: {
-            nethash,
-            nodeUrl,
+          name: networks.customNode.name,
+          networks: {
+            [tokenMap.LSK.key]: {
+              nethash,
+              nodeUrl,
+            },
           },
         },
       };
