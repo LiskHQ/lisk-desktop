@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { stub } from 'sinon';
-import { send, unconfirmedTransactions, getSingleTransaction } from './transactions';
+import { stub, match } from 'sinon';
+import { send, getTransactions, unconfirmedTransactions, getSingleTransaction } from './transactions';
 import accounts from '../../../test/constants/accounts';
 
 describe('Utils: Transactions API', () => {
@@ -23,6 +23,20 @@ describe('Utils: Transactions API', () => {
       const promise = send(liskAPIClient, recipientId, amount, accounts.genesis.passphrase);
       expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith();
       expect(typeof promise.then).to.be.equal('function');
+    });
+  });
+
+  describe('getTransactions', () => {
+    it('should resolve getTransactions for specific token (BTC, LSK, ...) based on the address format ', () => {
+      const params = {
+        address: recipientId,
+        apiClient: liskAPIClient,
+      };
+      const promise = getTransactions(params);
+      expect(typeof promise.then).to.be.equal('function');
+      expect(liskAPIClient.transactions.get).to.have.been.calledWith(match({
+        senderIdOrRecipientId: recipientId,
+      }));
     });
   });
 
