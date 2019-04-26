@@ -54,6 +54,21 @@ describe('Utils: Transactions API', () => {
     });
   });
 
+  describe('getSingleTransaction', () => {
+    it('should resolve getSingleTransaction for specific token (BTC, LSK, ...) based on the address format ', () => {
+      const params = {
+        id,
+        apiClient: liskAPIClient,
+      };
+      liskAPIClient.transactions.get.mockResolvedValue({ data: [] });
+      const promise = getSingleTransaction(params);
+      expect(typeof promise.then).toEqual('function');
+      expect(liskAPIClient.transactions.get).toHaveBeenCalledWith(expect.objectContaining({
+        id,
+      }));
+    });
+  });
+
   describe('unconfirmedTransactions', () => {
     it('should return a promise', () => {
       const promise = unconfirmedTransactions(liskAPIClient);

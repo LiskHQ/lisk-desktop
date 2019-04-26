@@ -91,5 +91,9 @@ describe('Utils: Transactions API', () => {
       await getSingleTransaction({ apiClient, id });
       expect(apiClient.node.getTransactions).toHaveBeenCalledWith('unconfirmed', { id });
     });
+
+    it('should reject if apiClient is undefined', async () => {
+      expect(getSingleTransaction({ id })).rejects.toThrow('');
+    });
   });
 });
