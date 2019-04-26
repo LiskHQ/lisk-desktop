@@ -7,7 +7,7 @@ import { withRouter } from 'react-router';
 import { SecondaryButtonV2, PrimaryButtonV2 } from '../toolbox/buttons/button';
 import Feedback from '../toolbox/feedback/feedback';
 import { InputV2 } from '../toolbox/inputsV2';
-import { validateUrl, addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
+import { addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import getNetwork from '../../utils/getNetwork';
 
 import darkLogo from '../../assets/images/logo/lisk-logo-dark.svg';
@@ -67,7 +67,6 @@ class HeaderV2 extends React.Component {
   changeNetwork(network) {
     this.setState({
       network,
-      // ...validateUrl(this.state.address),
     });
     this.props.settingsUpdated({ network });
   }
@@ -95,7 +94,7 @@ class HeaderV2 extends React.Component {
               },
             });
 
-            // this.props.history.push(nextPath);
+            this.props.history.push(nextPath);
             this.setState({ validationError: false, showDropdown: false });
           } else {
             throw new Error();
@@ -106,7 +105,7 @@ class HeaderV2 extends React.Component {
       this.setState({ isValidationLoading: false, isFirstTime: false });
     } else {
       this.props.liskAPIClientSet({ network: this.getNetwork(network) });
-      // this.props.history.push(nextPath);
+      this.props.history.push(nextPath);
       this.setState({ validationError: false });
     }
 
