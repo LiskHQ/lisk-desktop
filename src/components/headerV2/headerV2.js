@@ -134,7 +134,7 @@ class HeaderV2 extends React.Component {
             {showNetwork &&
               <span className={`${this.state.validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
                 onClick={() => this.toggleDropdown(true)}>
-                { selectedNetwork !== 2 ? networkList[selectedNetwork].label
+                { selectedNetwork !== networks.customNode.code ? networkList[selectedNetwork].label
                   : address || this.state.address }
                 <DropdownV2
                   className={`${styles.dropdown} ${dark ? 'dark' : ''}`}
@@ -142,7 +142,7 @@ class HeaderV2 extends React.Component {
                   showDropdown={this.state.showDropdown}
                   active={selectedNetwork}>
                   {networkList && networkList.map((network, key) => {
-                    if (network.value === 2) {
+                    if (network.value === networks.customNode.code) {
                       return <span
                       className={styles.networkSpan}
                       key={key}>
@@ -173,7 +173,7 @@ class HeaderV2 extends React.Component {
                             className={`${this.state.validationError ? styles.feedbackError : ''} ${styles.feedbackMessage} amount-feedback`}
                             showIcon={false}
                             dark={dark}>
-{'Unable to connect to the node, please check the address and try again'}
+{t('Unable to connect to the node, please check the address and try again')}
                           </Feedback>
                           <div>
                             <PrimaryButtonV2
