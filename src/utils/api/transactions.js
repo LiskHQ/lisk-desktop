@@ -25,6 +25,7 @@ export const getTokenFromAddress = address => (
   // TODO remove the localStorage condition after BTC features is enabled.
   localStorage.getItem('btc') ?
     tokenKeys.find(tokenKey => validateAddress(tokenKey, address) === 0) :
+    /* istanbul ignore next */
     tokenMap.LSK.key
 );
 

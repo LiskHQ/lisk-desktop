@@ -19,6 +19,12 @@ describe('Utils: Transactions API', () => {
     };
     liskAPIClient.transactions.broadcast.mockResolvedValue({ recipientId, amount, id });
     liskAPIClient.node.getTransactions.mockResolvedValue({ data: [] });
+
+    localStorage.setItem('btc', true); // TODO remove when enabling BTC
+  });
+
+  afterEach(() => {
+    localStorage.removeItem('btc'); // TODO remove when enabling BTC
   });
 
   // TODO: fix these tests for assert more than just a promise is returned
