@@ -80,6 +80,7 @@ const actionTypes = {
   cleanTransactions: 'CLEAN_TRANSACTIONS',
   moduleAdded: 'MODULE_ADDED',
   walletUpdated: 'WALLET_UPDATED',
+  settingsUpdateToken: 'SETTINGS_UPDATE_TOKEN',
 };
 
 export default actionTypes;
