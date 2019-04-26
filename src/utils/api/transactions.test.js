@@ -60,18 +60,4 @@ describe('Utils: Transactions API', () => {
       expect(typeof promise.then).toEqual('function');
     });
   });
-
-  describe('getSingleTransaction', () => {
-    it('should liskAPIClient.transactions.get and return a promise', () => {
-      const promise = getSingleTransaction({ liskAPIClient, id });
-      expect(liskAPIClient.transactions.get).toHaveBeenCalledWith({ id });
-      expect(typeof promise.then).toEqual('function');
-    });
-
-    it('should liskAPIClient.node.getTransactions if empty response', async () => {
-      liskAPIClient.transactions.get.mockResolvedValue({ data: [] });
-      await getSingleTransaction({ liskAPIClient, id });
-      expect(liskAPIClient.node.getTransactions).toHaveBeenCalledWith('unconfirmed', { id });
-    });
-  });
 });

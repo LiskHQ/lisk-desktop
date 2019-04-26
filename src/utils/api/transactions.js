@@ -29,6 +29,15 @@ export const getTokenFromAddress = address => (
     tokenMap.LSK.key
 );
 
+export const getTokenFromTransactionId = id => (
+  // TODO remove the localStorage condition after BTC features is enabled.
+  // eslint-disable-next-line no-nested-ternary
+  localStorage.getItem('btc') ?
+    (id && id.length === 64 ? tokenMap.BTC.key : tokenMap.LSK.key) :
+    /* istanbul ignore next */
+    tokenMap.LSK.key
+);
+
 export const getTransactions = ({ offset = 0, limit = 25, ...params }) => (
   getMappedFunction(getTokenFromAddress(params.address), 'transactions', 'getTransactions')({
     offset,
@@ -37,20 +46,9 @@ export const getTransactions = ({ offset = 0, limit = 25, ...params }) => (
   })
 );
 
-export const getSingleTransaction = ({ liskAPIClient, id }) => new Promise((resolve, reject) => {
-  if (!liskAPIClient) {
-    reject();
-  } else {
-    liskAPIClient.transactions.get({ id })
-      .then((response) => {
-        if (response.data.length !== 0) {
-          resolve(response);
-        } else {
-          resolve(liskAPIClient.node.getTransactions('unconfirmed', { id }).then(resp => resp));
-        }
-      });
-  }
-});
+export const getSingleTransaction = async params => (
+  getMappedFunction(getTokenFromTransactionId(params.id), 'transactions', 'getSingleTransaction')(params)
+);
 
 export const unconfirmedTransactions = (liskAPIClient, address, limit = 20, offset = 0, sort = 'timestamp:desc') =>
   liskAPIClient.node.getTransactions('unconfirmed', {
