@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import settings from './settings';
 import actionTypes from '../../constants/actions';
 
@@ -48,7 +47,7 @@ describe('Reducer: settings(state, action)', () => {
       data: { autoLog: false },
     };
     const changedState = settings(initializeState, action);
-    expect(changedState).to.deep.equal({ autoLog: false, advancedMode: false });
+    expect(changedState).toEqual({ autoLog: false, advancedMode: false });
   });
 
   it('should return updated initializeState if action.type = actionTypes.settingsReset', () => {
@@ -59,7 +58,7 @@ describe('Reducer: settings(state, action)', () => {
       autoLog: false, advancedMode: true,
     };
     const FinalStep = settings(changedState, action);
-    expect(FinalStep).to.deep.equal(initializeState);
+    expect(FinalStep).toEqual(initializeState);
   });
 
   it('should return updated settings if action.type = actionTypes.switchChannel', () => {
@@ -68,7 +67,7 @@ describe('Reducer: settings(state, action)', () => {
       data: { name: 'twitter', value: true },
     };
     const changedState = settings(initializeState, action);
-    expect(changedState.channels).to.deep.equal({ twitter: true });
+    expect(changedState.channels).toEqual({ twitter: true });
   });
 
   it('should return updated state', () => {
@@ -82,7 +81,7 @@ describe('Reducer: settings(state, action)', () => {
       },
     };
     const changedState = settings(state, action);
-    expect(changedState).to.deep.equal({
+    expect(changedState).toEqual({
       token: defaultTokens,
     });
   });
@@ -98,7 +97,7 @@ describe('Reducer: settings(state, action)', () => {
       },
     };
     const changedState = settings(state, action);
-    expect(changedState).to.deep.equal({
+    expect(changedState).toEqual({
       token: disabledBTC,
     });
   });
@@ -114,7 +113,7 @@ describe('Reducer: settings(state, action)', () => {
       },
     };
     const changedState = settings(state, action);
-    expect(changedState).to.deep.equal({
+    expect(changedState).toEqual({
       token: disabledBTC,
     });
   });
@@ -130,7 +129,7 @@ describe('Reducer: settings(state, action)', () => {
       },
     };
     const changedState = settings(state, action);
-    expect(changedState).to.deep.equal({
+    expect(changedState).toEqual({
       token: disabledBTC,
     });
   });
@@ -148,7 +147,7 @@ describe('Reducer: settings(state, action)', () => {
     };
 
     const changedState = settings(state, action);
-    expect(changedState).to.deep.equal({
+    expect(changedState).toEqual({
       token: enabledBTC,
     });
   });
@@ -164,7 +163,7 @@ describe('Reducer: settings(state, action)', () => {
       },
     };
     const changedState = settings(state, action);
-    expect(changedState).to.deep.equal({
+    expect(changedState).toEqual({
       token: enabledBTC,
     });
   });
