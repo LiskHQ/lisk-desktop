@@ -1,14 +1,22 @@
-import { getTransactions } from './transactions';
+import { getTransactions, getSingleTransaction } from './transactions';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import txFilters from '../../../constants/transactionFilters';
 
 describe('Utils: Transactions API', () => {
   const address = '1212409187243L';
-  const apiClient = {
-    transactions: {
-      get: jest.fn(),
-    },
-  };
+  let apiClient;
+
+  beforeEach(() => {
+    apiClient = {
+      transactions: {
+        get: jest.fn(),
+      },
+      node: {
+        getTransactions: jest.fn(),
+      },
+    };
+    apiClient.node.getTransactions.mockResolvedValue({ data: [] });
+  });
 
   describe('transactions', () => {
     it('should call transactions.get for incoming promise', () => {
@@ -66,6 +74,22 @@ describe('Utils: Transactions API', () => {
       };
 
       expect(apiClient.transactions.get).toHaveBeenCalledWith(expect.objectContaining(expected));
+    });
+  });
+
+  describe('getSingleTransaction', () => {
+    const id = '124701289470';
+
+    it('should apiClient.transactions.get and return a promise', () => {
+      const promise = getSingleTransaction({ apiClient, id });
+      expect(apiClient.transactions.get).toHaveBeenCalledWith({ id });
+      expect(typeof promise.then).toEqual('function');
+    });
+
+    it('should apiClient.node.getTransactions if empty response', async () => {
+      apiClient.transactions.get.mockResolvedValue({ data: [] });
+      await getSingleTransaction({ apiClient, id });
+      expect(apiClient.node.getTransactions).toHaveBeenCalledWith('unconfirmed', { id });
     });
   });
 });

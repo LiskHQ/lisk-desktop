@@ -34,3 +34,18 @@ export const getTransactions = ({
   if (filter === txFilters.all) params.senderIdOrRecipientId = address;
   return apiClient.transactions.get(params);
 };
+
+export const getSingleTransaction = ({ apiClient, id }) => new Promise((resolve, reject) => {
+  if (!apiClient) {
+    reject();
+  } else {
+    apiClient.transactions.get({ id })
+      .then((response) => {
+        if (response.data.length !== 0) {
+          resolve(response);
+        } else {
+          resolve(apiClient.node.getTransactions('unconfirmed', { id }).then(resp => resp));
+        }
+      });
+  }
+});
