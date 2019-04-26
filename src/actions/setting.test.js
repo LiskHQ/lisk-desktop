@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import actionTypes from '../constants/actions';
 import {
   settingsReset,
@@ -16,7 +15,7 @@ describe('actions: setting', () => {
         data,
         type: actionTypes.settingsUpdated,
       };
-      expect(settingsUpdated(data)).to.be.deep.equal(expectedAction);
+      expect(settingsUpdated(data)).toEqual(expectedAction);
     });
   });
 
@@ -25,7 +24,7 @@ describe('actions: setting', () => {
       const expectedAction = {
         type: actionTypes.settingsReset,
       };
-      expect(settingsReset()).to.be.deep.equal(expectedAction);
+      expect(settingsReset()).toEqual(expectedAction);
     });
   });
 
@@ -45,7 +44,7 @@ describe('actions: setting', () => {
         type: actionTypes.settingsUpdateToken,
         data,
       };
-      expect(settingsUpdateToken(data)).to.be.deep.equal(expectedAction);
+      expect(settingsUpdateToken(data)).toEqual(expectedAction);
     });
   });
 });
