@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-import { stub, match } from 'sinon';
 import { send, getTransactions, unconfirmedTransactions, getSingleTransaction } from './transactions';
 import accounts from '../../../test/constants/accounts';
 
@@ -7,22 +5,31 @@ describe('Utils: Transactions API', () => {
   const id = '124701289470';
   const amount = '100000';
   const recipientId = '123L';
-  const liskAPIClient = {
-    transactions: {
-      get: stub().returnsPromise(),
-      broadcast: stub().returnsPromise().resolves({ recipientId, amount, id }),
-    },
-    node: {
-      getTransactions: stub().returnsPromise(),
-    },
-  };
+  let liskAPIClient;
+
+  beforeEach(() => {
+    liskAPIClient = {
+      transactions: {
+        get: jest.fn(),
+        broadcast: jest.fn(),
+      },
+      node: {
+        getTransactions: jest.fn(),
+      },
+    };
+    liskAPIClient.transactions.broadcast.mockResolvedValue({ recipientId, amount, id });
+    liskAPIClient.node.getTransactions.mockResolvedValue({ data: [] });
+  });
 
   // TODO: fix these tests for assert more than just a promise is returned
   describe('send', () => {
     it('should broadcast a transaction and return a promise', () => {
       const promise = send(liskAPIClient, recipientId, amount, accounts.genesis.passphrase);
-      expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith();
-      expect(typeof promise.then).to.be.equal('function');
+      expect(liskAPIClient.transactions.broadcast).toHaveBeenCalledWith(expect.objectContaining({
+        amount,
+        recipientId,
+      }));
+      expect(typeof promise.then).toEqual('function');
     });
   });
 
@@ -32,9 +39,10 @@ describe('Utils: Transactions API', () => {
         address: recipientId,
         apiClient: liskAPIClient,
       };
+      liskAPIClient.transactions.get.mockResolvedValue({ data: [] });
       const promise = getTransactions(params);
-      expect(typeof promise.then).to.be.equal('function');
-      expect(liskAPIClient.transactions.get).to.have.been.calledWith(match({
+      expect(typeof promise.then).toEqual('function');
+      expect(liskAPIClient.transactions.get).toHaveBeenCalledWith(expect.objectContaining({
         senderIdOrRecipientId: recipientId,
       }));
     });
@@ -43,22 +51,21 @@ describe('Utils: Transactions API', () => {
   describe('unconfirmedTransactions', () => {
     it('should return a promise', () => {
       const promise = unconfirmedTransactions(liskAPIClient);
-      expect(typeof promise.then).to.be.equal('function');
+      expect(typeof promise.then).toEqual('function');
     });
   });
 
   describe('getSingleTransaction', () => {
     it('should liskAPIClient.transactions.get and return a promise', () => {
       const promise = getSingleTransaction({ liskAPIClient, id });
-      expect(liskAPIClient.transactions.get).to.have.been.calledWith({ id });
-      expect(typeof promise.then).to.be.equal('function');
+      expect(liskAPIClient.transactions.get).toHaveBeenCalledWith({ id });
+      expect(typeof promise.then).toEqual('function');
     });
 
-    it('should liskAPIClient.node.getTransactions if empty response', () => {
-      liskAPIClient.transactions.get = stub().returnsPromise().resolves({ data: [] });
-      const promise = getSingleTransaction({ liskAPIClient, id });
-      expect(liskAPIClient.node.getTransactions).to.have.been.calledWith('unconfirmed', { id });
-      expect(typeof promise.then).to.be.equal('function');
+    it('should liskAPIClient.node.getTransactions if empty response', async () => {
+      liskAPIClient.transactions.get.mockResolvedValue({ data: [] });
+      await getSingleTransaction({ liskAPIClient, id });
+      expect(liskAPIClient.node.getTransactions).toHaveBeenCalledWith('unconfirmed', { id });
     });
   });
 });
