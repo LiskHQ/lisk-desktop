@@ -1,6 +1,7 @@
 import Lisk from 'lisk-elements';
 
 import { getAPIClient } from './network';
+import networks from '../../constants/networks';
 import { tokenMap } from '../../constants/tokens';
 
 describe('Utils: network API', () => {
@@ -30,6 +31,7 @@ describe('Utils: network API', () => {
       const nethash = Lisk.APIClient.constants.MAINNET_NETHASH;
       const nodeUrl = 'https://hub23.lisk.io';
       const state = {
+        name: networks.customNode.name,
         network: {
           [tokenMap.LSK.key]: {
             nethash,
