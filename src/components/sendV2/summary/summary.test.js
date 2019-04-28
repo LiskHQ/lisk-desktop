@@ -51,6 +51,9 @@ describe('Summary', () => {
     account: {
       address: accounts['second passphrase account'].address,
       secondPublicKey: accounts['second passphrase account'].secondPublicKey,
+      hwInfo: {
+        deviceModel: 'Ledger Nano S',
+      },
     },
     failedTransactions: '',
     pendingTransactions: [],

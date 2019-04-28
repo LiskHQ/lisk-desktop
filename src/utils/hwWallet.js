@@ -5,56 +5,11 @@ import i18next from 'i18next';
 import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api';
 import { HW_CMD, HW_MSG, calculateSecondPassphraseIndex } from '../constants/hwConstants';
 import { loadingStarted, loadingFinished } from './loading';
-import { infoToastDisplayed, errorToastDisplayed } from '../actions/toaster';
 import { getTransactionBytes, calculateTxId, getBufferToHex } from './rawTransactionWrapper';
 import { PLATFORM_TYPES, getPlatformType } from './platform';
-import store from '../store';
 import loginTypes from '../constants/loginTypes';
 
-const util = require('util');
-
 const { ipc } = window;
-
-if (ipc) { // On browser-mode is undefined
-  // ipc.on('ledgerConnected', () => {
-  //   store.dispatch(infoToastDisplayed({ label: HW_MSG.LEDGER_CONNECTED }));
-  // });
-
-  // ipc.on('ledgerDisconnected', () => {
-  //   console.log('ledgerDisconnected');
-  //   store.dispatch(errorToastDisplayed({ label: HW_MSG.LEDGER_DISCONNECTED }));
-  // });
-
-  ipc.on('ledgerButtonCallback', () => {
-    // store.dispatch(infoToastDisplayed({ label: HW_MSG.LEDGER_ASK_FOR_CONFIRMATION }));
-  });
-
-  ipc.on('trezorConnected', (event, data) => {
-    store.dispatch(infoToastDisplayed({
-      label: util.format(HW_MSG.TREZOR_CONNECTED, data.model, data.label),
-    }));
-  });
-
-  ipc.on('trezorDisconnected', (event, data) => {
-    store.dispatch(errorToastDisplayed({
-      label: util.format(HW_MSG.TREZOR_DISCONNECTED, data.model, data.label),
-    }));
-  });
-
-  ipc.on('trezorButtonCallback', (event, data) => {
-    store.dispatch(infoToastDisplayed({
-      label: util.format(HW_MSG.TREZOR_ASK_FOR_CONFIRMATION, data),
-    }));
-  });
-
-  ipc.on('trezorParamMessage', (event, data) => {
-    store.dispatch(errorToastDisplayed({ label: HW_MSG[data] }));
-  });
-
-  ipc.on('trezorError', () => {
-    store.dispatch(errorToastDisplayed({ label: HW_MSG.ERROR_OR_DEVICE_IS_NOT_CONNECTED }));
-  });
-}
 
 const getLedgerTransportU2F = async () => TransportU2F.create();
 

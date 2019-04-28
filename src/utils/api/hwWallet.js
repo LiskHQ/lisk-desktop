@@ -287,19 +287,15 @@ export const getHWAccountInfo = async (activePeer, deviceId, loginType, accountI
 export const sendWithHW = (activePeer, account, recipientId, amount,
   pin = null, data = null) =>
   new Promise(async (resolve, reject) => {
-    console.log(account.publicKey, recipientId, amount, data);
     const rawTx = createSendTX(account.publicKey, recipientId, amount, data);
     let error;
     let signedTx;
-    console.log('signTransactionWithHW', rawTx);
     [error, signedTx] = await to(signTransactionWithHW(rawTx, account, pin));
 
     if (error) {
       reject(error);
     } else {
       activePeer.transactions.broadcast(signedTx).then(() => {
-        console.log('signedTx', signedTx);
-
         resolve(signedTx);
       }).catch(reject);
     }
