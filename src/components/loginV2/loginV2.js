@@ -205,6 +205,7 @@ class LoginV2 extends React.Component {
       <React.Fragment>
         { match.url === routes.loginV2.path ? (
         <HeaderV2
+          showNetwork={true}
           validationError={this.state.validationError}
           liskAPIClientSet={this.props.liskAPIClientSet}
           networkList={this.networks}
@@ -212,8 +213,7 @@ class LoginV2 extends React.Component {
           address={peers.options.address}
           handleNetworkSelect={this.changeNetwork}
           settingsUpdated={settingsUpdated}
-          showSettings={true}
-          showNetwork={this.showNetworkOptions()} />
+          showSettings={true} />
         ) : null }
         <div className={`${styles.login} ${grid.row}`}>
           <div

@@ -61,12 +61,15 @@ class HeaderV2 extends React.Component {
     const address = target.value;
     this.setState({
       address,
+      connected: false,
     });
   }
 
   changeNetwork(network) {
     this.setState({
       network,
+      address: network === networks.mainnet.code || network === networks.testnet.code ?
+        '' : this.state.address,
     });
     this.props.settingsUpdated({ network });
   }
@@ -95,12 +98,12 @@ class HeaderV2 extends React.Component {
             });
 
             this.props.history.push(nextPath);
-            this.setState({ validationError: false, showDropdown: false });
+            this.setState({ validationError: false, connected: true });
           } else {
             throw new Error();
           }
         }).catch(() => {
-          this.setState({ validationError: true, showDropdown: true });
+          this.setState({ validationError: true });
         });
       this.setState({ isValidationLoading: false, isFirstTime: false });
     } else {
@@ -113,6 +116,10 @@ class HeaderV2 extends React.Component {
   }
 
   toggleDropdown(value) {
+    if ((!value && this.state.network !== networks.customNode.code)
+      || this.state.validationError) {
+      this.setState({ address: '', validationError: false, connected: false });
+    }
     this.setState({ showDropdown: value });
   }
 
@@ -131,10 +138,12 @@ class HeaderV2 extends React.Component {
           </div>
           <div className={`${styles.buttonsHolder}`}>
             {showNetwork &&
-              <span className={`${this.state.validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
-                onClick={() => this.toggleDropdown(true)}>
-                { selectedNetwork !== networks.customNode.code ? networkList[selectedNetwork].label
-                  : address || this.state.address }
+              <div>
+                <span className={`${this.state.validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
+                      onClick={() => this.toggleDropdown(!this.state.showDropdown)}>
+                      { selectedNetwork !== networks.customNode.code
+                        ? networkList[selectedNetwork].label
+                        : address || this.state.address }</span>
                 <DropdownV2
                   className={`${styles.dropdown} ${dark ? 'dark' : ''}`}
                   showArrow={false}
@@ -156,7 +165,7 @@ class HeaderV2 extends React.Component {
                               this.changeAddress(value);
                             }}
                             name='customNetwork'
-                            value={this.state.address || address}
+                            value={this.state.address}
                             placeholder={this.props.t('ie. 192.168.0.1')}
                             className={`
                               ${formStyles.input}
@@ -187,15 +196,15 @@ class HeaderV2 extends React.Component {
 
                                     this.setState({ isValidationLoading: true });
                                     this.loaderTimeout = setTimeout(() => {
-                                      this.changeNetwork(networks.customNode.code);
                                       this.validateCorrectNode(
                                         networks.customNode.code,
                                         this.state.address,
                                       );
+                                      this.changeNetwork(networks.customNode.code);
                                     }, 300);
                                 }}
                                 className={`${styles.button} ${styles.backButton}`}>
-                                {t('Connect')}
+                                {this.state.connected ? t('Connected') : t('Connect')}
                               </PrimaryButtonV2>
                             </div> : ''}
                       </span>;
@@ -203,18 +212,16 @@ class HeaderV2 extends React.Component {
 
                     return (
                       <span
-                        onClick={(e) => {
-                          e.stopPropagation();
+                        onClick={() => {
                           this.changeNetwork(network.value);
                           this.validateCorrectNode(network.value);
-                          this.toggleDropdown(false);
                         }}
-                        key={key}>{network.label
-                      }</span>
+                        key={key}>{network.label}
+                      </span>
                     );
                   })}
                 </DropdownV2>
-              </span>
+              </div>
             }
             {showSettings
               && <Link className={styles.settingButton} to={routes.setting.path}>

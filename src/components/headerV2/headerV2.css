@@ -86,6 +86,20 @@
   }
 }
 
+.spanHolder {
+  min-height: var(--header-elements-height);
+  min-width: 241px;
+  padding: 0 20px;
+  position: relative;
+  width: auto;
+}
+
+.dropdown {
+  max-width: 241px;
+  right: auto;
+  top: calc(100% + -10px);
+}
+
 .button {
   @mixin contentSmall bold;
 
@@ -107,6 +121,8 @@
   flex-direction: column;
 
   & input {
+    @mixin contentNormal;
+
     margin-top: 10px;
     padding: 0 10px;
   }

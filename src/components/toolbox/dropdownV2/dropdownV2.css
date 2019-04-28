@@ -63,18 +63,18 @@
     & .option {
       background: var(--color-maastricht-blue);
 
-      &:hover {
+      &.active {
         background-color: var(--color-maastricht-blue);
         color: #4070f4;
       }
 
-      &.active {
+      &:hover {
         background-color: rgba(64, 112, 244, 0.24);
         color: #4070f4;
       }
 
       & input {
-        @mixin contentSmall;
+        @mixin contentNormal;
 
         border: 1px solid var(--light-border-color);
         background-color: var(--color-maastricht-blue);
@@ -102,9 +102,12 @@
     transition: background var(--animation-speed-fast) linear, color var(--animation-speed-fast) linear;
     width: 100%;
 
-    &:hover,
-    &.active {
+    &:hover {
       background-color: var(--primary-background-color);
+      color: var(--color-ultramarine-blue);
+    }
+
+    &.active {
       color: var(--color-ultramarine-blue);
     }
   }
