@@ -4,6 +4,7 @@ module.exports = {
     '<rootDir>/app/src/**/*.test.js',
     '<rootDir>/src/**/*.test.js',
     '<rootDir>/test/integration/*.test.js',
+    // '<rootDir>/src/components/headerV2/*.test.js',
   ],
   testPathIgnorePatterns: [
     '<rootDir>/test/integration/wallet.test.js',
@@ -127,6 +128,7 @@ module.exports = {
     'src/components/hwWallet/trezorLogin.js',
     'src/components/loginV2/loginV2.js',
     'src/utils/hwWallet.js',
+    'src/components/headerV2/headerV2.js',
   ],
   coverageThreshold: {
     global: {

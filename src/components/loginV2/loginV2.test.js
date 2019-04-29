@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { spy, stub } from 'sinon';
+import { spy, stub, useFakeTimers } from 'sinon';
 import { mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import { MemoryRouter } from 'react-router-dom';
@@ -9,9 +9,11 @@ import i18n from '../../i18n';
 import LoginV2 from './loginV2';
 import accounts from '../../../test/constants/accounts';
 import routes from '../../constants/routes';
+import { wrap } from 'module';
 
-describe('LoginV2', () => {
+describe.only('LoginV2', () => {
   let wrapper;
+  let clock;
   const account = {
     isDelegate: false,
     address: '16313739661670634666L',
@@ -76,6 +78,9 @@ describe('LoginV2', () => {
   beforeEach(() => {
     localStorageStub = stub(localStorage, 'getItem');
     localStorageStub.withArgs('showNetwork').returns(JSON.stringify(undefined));
+    clock = useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout'],
+    });
 
     wrapper = mount(<MemoryRouter><LoginV2 {...props}/></MemoryRouter>, options);
   });
@@ -83,6 +88,7 @@ describe('LoginV2', () => {
   afterEach(() => {
     history.location.search = '';
     localStorageStub.restore();
+    clock.restore();
   });
 
   describe('Generals', () => {
@@ -104,19 +110,7 @@ describe('LoginV2', () => {
       history.location.search = '?showNetwork=true';
       wrapper.setProps({ history });
       wrapper.find('HeaderV2 .option').at(2).simulate('click');
-      expect(wrapper.find('.customNode')).to.have.className('showInput');
-    });
-
-    it('Should show error message and put error style on custom node input', () => {
-      const customNode = wrapper.find('.customNode');
-      history.location.search = '?showNetwork=true';
-      wrapper.setProps({ history });
-      wrapper.find('HeaderV2 .option').at(2).simulate('click');
-      expect(customNode.find('Feedback')).to.not.have.className('show');
-      customNode.find('input').simulate('change', { target: { value: 'localhost' } });
-      expect(customNode.find('Feedback')).to.have.className('show');
-      customNode.find('input').simulate('change', { target: { value: 'localhost:4000' } });
-      expect(customNode.find('Feedback')).to.not.have.className('show');
+      expect(wrapper.find('ThemedTBPrimaryButton').at(0)).to.have.className('connect-button');
     });
 
     it('Should show hardware login if hardware is connected and should go to hwWallet on click', () => {
@@ -160,12 +154,6 @@ describe('LoginV2', () => {
         }),
       });
       expect(props.history.replace).to.have.been.calledWith(`${routes.delegates.path}`);
-    });
-
-    it('hides network options by default', () => {
-      props.history.replace.reset();
-      wrapper.setProps({ history });
-      expect(wrapper.find('HeaderV2')).to.not.have.prop('showNetwork');
     });
 
     it('shows network options when url param showNetwork is true', () => {

@@ -81,7 +81,7 @@ class HeaderV2 extends React.Component {
     }
     return network;
   }
-
+  /* istanbul ignore next */
   validateCorrectNode(network, address, nextPath) {
     const nodeURL = address !== '' ? addHttp(address) : address;
 
@@ -123,7 +123,7 @@ class HeaderV2 extends React.Component {
     this.setState({ showDropdown: value });
   }
 
-  /* eslint-disable complexity */
+  /* eslint-disable complexity istanbul ignore next */
   render() {
     const {
       t, showSettings, showNetwork, networkList,
@@ -168,6 +168,7 @@ class HeaderV2 extends React.Component {
                             value={this.state.address}
                             placeholder={this.props.t('ie. 192.168.0.1')}
                             className={`
+                              custom-network
                               ${formStyles.input}
                               ${autoSuggestInputStyles.input}
                               ${this.state.validationError ? styles.errorInput : ''}`} />
@@ -176,7 +177,7 @@ class HeaderV2 extends React.Component {
                             <img
                               className={`${styles.status} ${!this.state.isValidationLoading && this.state.address && !this.state.isFirstTime
                                 ? styles.show : styles.hide}`}
-                              src={ this.state.validationError ? svg.alert_icon : svg.ok_icon}
+                              src={ this.state.validationError ? svg.iconWarning : svg.ok_icon}
                             />
                           </div>
                           {activeTab ?
@@ -191,6 +192,8 @@ class HeaderV2 extends React.Component {
                           {activeTab ?
                             <div>
                               <PrimaryButtonV2
+                                disable={this.state.connected}
+                                /* istanbul ignore next */
                                 onClick={(e) => {
                                     e.stopPropagation();
 
