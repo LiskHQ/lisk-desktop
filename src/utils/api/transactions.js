@@ -21,7 +21,7 @@ export const send = (
     }).catch(reject);
   });
 
-export const getTokenFromAddress = address => (
+const getTokenFromAddress = address => (
   // TODO remove the localStorage condition after BTC features is enabled.
   localStorage.getItem('btc') ?
     tokenKeys.find(tokenKey => validateAddress(tokenKey, address) === 0) :
@@ -29,7 +29,7 @@ export const getTokenFromAddress = address => (
     tokenMap.LSK.key
 );
 
-export const getTokenFromTransactionId = id => (
+const getTokenFromTransactionId = id => (
   // TODO remove the localStorage condition after BTC features is enabled.
   // eslint-disable-next-line no-nested-ternary
   localStorage.getItem('btc') ?
