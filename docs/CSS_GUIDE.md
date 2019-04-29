@@ -12,3 +12,4 @@
 12. Use kebab-case for naming the assets. 
 13. Try to encapsulate global variables with another variable in the component specific stylesheet. 
 14. Use kebab-case to define variables.
+15. We should use cascading css for semantic elements (h1, h2, ul, li,...) but not for generic elements  (`div` and `span`) - if you need to modify their styles, add a new className to them.
