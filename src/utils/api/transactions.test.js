@@ -1,10 +1,14 @@
 import { send, getTransactions, unconfirmedTransactions, getSingleTransaction } from './transactions';
 import accounts from '../../../test/constants/accounts';
+import networks from '../../constants/networks';
 
 describe('Utils: Transactions API', () => {
   const id = '124701289470';
   const amount = '100000';
   const recipientId = '123L';
+  const networkConfig = {
+    name: networks.mainnet.name,
+  };
   let liskAPIClient;
 
   beforeEach(() => {
@@ -43,7 +47,7 @@ describe('Utils: Transactions API', () => {
     it('should resolve getTransactions for specific token (BTC, LSK, ...) based on the address format ', () => {
       const params = {
         address: recipientId,
-        apiClient: liskAPIClient,
+        networkConfig,
       };
       liskAPIClient.transactions.get.mockResolvedValue({ data: [] });
       const promise = getTransactions(params);
@@ -58,7 +62,7 @@ describe('Utils: Transactions API', () => {
     it('should resolve getSingleTransaction for specific token (BTC, LSK, ...) based on the address format ', () => {
       const params = {
         id,
-        apiClient: liskAPIClient,
+        networkConfig,
       };
       liskAPIClient.transactions.get.mockResolvedValue({ data: [] });
       const promise = getSingleTransaction(params);

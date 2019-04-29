@@ -1,10 +1,14 @@
 import { getTransactions, getSingleTransaction } from './transactions';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import txFilters from '../../../constants/transactionFilters';
+import { getAPIClient } from './network';
+
+jest.mock('./network');
 
 describe('Utils: Transactions API', () => {
   const address = '1212409187243L';
   let apiClient;
+  const networkConfig = {};
 
   beforeEach(() => {
     apiClient = {
@@ -16,11 +20,13 @@ describe('Utils: Transactions API', () => {
       },
     };
     apiClient.node.getTransactions.mockResolvedValue({ data: [] });
+
+    getAPIClient.mockReturnValue(apiClient);
   });
 
   describe('transactions', () => {
     it('should call transactions.get for incoming promise', () => {
-      getTransactions({ apiClient, address, filter: txFilters.incoming });
+      getTransactions({ networkConfig, address, filter: txFilters.incoming });
 
       expect(apiClient.transactions.get).toHaveBeenCalledWith(expect.objectContaining({
         recipientId: address,

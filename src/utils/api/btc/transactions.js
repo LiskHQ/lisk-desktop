@@ -3,6 +3,7 @@ import getBtcConfig from './config';
 import { extractAddress, getDerivedPathFromPassphrase } from './account';
 import { validateAddress } from '../../validators';
 import { tokenMap } from '../../../constants/tokens';
+import { getAPIClient } from './network';
 
 /**
  * Normalizes transaction data retrieved from Blockchain.info API
@@ -48,12 +49,12 @@ const normalizeTransactionsResponse = ({
 });
 
 export const getTransactions = ({
-  apiClient,
+  networkConfig,
   address,
   limit,
   offset,
 }) => new Promise(async (resolve, reject) => {
-  await apiClient.get(`transactions/${address}?limit=${limit}&offset=${offset}&sort=height:desc`)
+  await getAPIClient(networkConfig).get(`transactions/${address}?limit=${limit}&offset=${offset}&sort=height:desc`)
     .then((response) => {
       resolve({
         data: normalizeTransactionsResponse({
@@ -66,10 +67,10 @@ export const getTransactions = ({
 });
 
 export const getSingleTransaction = ({
-  apiClient,
+  networkConfig,
   id,
 }) => new Promise(async (resolve, reject) => {
-  await apiClient.get(`transaction/${id}`)
+  await getAPIClient(networkConfig).get(`transaction/${id}`)
     .then((response) => {
       resolve({
         data: normalizeTransactionsResponse({

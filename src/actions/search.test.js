@@ -29,6 +29,9 @@ describe('actions: search', () => {
       liskAPIClient: {},
       options: networks.mainnet,
     },
+    network: {
+      name: networks.mainnet.name,
+    },
   });
 
   beforeEach(() => {

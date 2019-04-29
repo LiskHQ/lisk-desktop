@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import to from 'await-to-js';
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
-import { send, getTransactions, getSingleTransaction, unconfirmedTransactions, getTokenFromAddress, getTokenFromTransactionId } from '../utils/api/transactions';
+import { send, getTransactions, getSingleTransaction, unconfirmedTransactions } from '../utils/api/transactions';
 import { getDelegate } from '../utils/api/delegate';
 import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
@@ -14,7 +14,6 @@ import transactionTypes from '../constants/transactionTypes';
 import { toRawLsk } from '../utils/lsk';
 import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
-import { getAPIClient } from '../utils/api/network';
 
 export const cleanTransactions = () => ({
   type: actionTypes.cleanTransactions,
@@ -32,12 +31,12 @@ export const testExtensions = () => ({
 export const transactionsFilterSet = ({
   address, limit, filter, customFilters = {},
 }) => (dispatch, getState) => {
-  const apiClient = getAPIClient(getTokenFromAddress(address), getState());
+  const networkConfig = getState().network;
 
   dispatch(loadingStarted(actionTypes.transactionsFilterSet));
 
   return getTransactions({
-    apiClient,
+    networkConfig,
     address,
     limit,
     filter,
@@ -88,11 +87,11 @@ export const loadTransactionsFinish = accountUpdated =>
 
 export const loadTransactions = ({ publicKey, address }) =>
   (dispatch, getState) => {
-    const apiClient = getAPIClient(getTokenFromAddress(address), getState());
+    const networkConfig = getState().network;
     const lastActiveAddress = publicKey && extractAddress(publicKey);
     const isSameAccount = lastActiveAddress === address;
     dispatch(loadingStarted(actionTypes.transactionsLoad));
-    getTransactions({ apiClient, address, limit: 25 })
+    getTransactions({ networkConfig, address, limit: 25 })
       .then((transactionsResponse) => {
         dispatch(loadAccount({
           address,
@@ -114,9 +113,9 @@ export const transactionsRequested = ({
 }) =>
   (dispatch, getState) => {
     dispatch(loadingStarted(actionTypes.transactionsRequested));
-    const apiClient = getAPIClient(getTokenFromAddress(address), getState());
+    const networkConfig = getState().network;
     getTransactions({
-      apiClient, address, limit, offset, filter, customFilters,
+      networkConfig, address, limit, offset, filter, customFilters,
     })
       .then((response) => {
         dispatch({
@@ -133,11 +132,11 @@ export const transactionsRequested = ({
   };
 
 export const loadLastTransaction = address => (dispatch, getState) => {
-  const apiClient = getAPIClient(getTokenFromAddress(address), getState());
-  if (apiClient) {
+  const networkConfig = getState().network;
+  if (networkConfig) {
     dispatch({ type: actionTypes.transactionCleared });
     getTransactions({
-      apiClient, address, limit: 1, offset: 0,
+      networkConfig, address, limit: 1, offset: 0,
     }).then(response => dispatch({ data: response.data[0], type: actionTypes.transactionLoaded }));
   }
 };
@@ -145,9 +144,9 @@ export const loadLastTransaction = address => (dispatch, getState) => {
 export const loadTransaction = ({ id }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    const apiClient = getAPIClient(getTokenFromTransactionId(id), getState());
+    const networkConfig = getState().network;
     dispatch({ type: actionTypes.transactionCleared });
-    getSingleTransaction({ apiClient, id })
+    getSingleTransaction({ networkConfig, id })
       .then((response) => { // eslint-disable-line max-statements
         let added = [];
         let deleted = [];
@@ -217,10 +216,10 @@ export const transactionsUpdated = ({
   address, limit, filter, pendingTransactions, customFilters,
 }) =>
   (dispatch, getState) => {
-    const apiClient = getAPIClient(getTokenFromAddress(address), getState());
+    const networkConfig = getState().network;
 
     getTransactions({
-      apiClient, address, limit, filter, customFilters,
+      networkConfig, address, limit, filter, customFilters,
     })
       .then((response) => {
         if (filter === getState().transactions.filter) {

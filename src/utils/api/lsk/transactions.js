@@ -1,10 +1,11 @@
 import { toRawLsk } from '../../../utils/lsk';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import txFilters from '../../../constants/transactionFilters';
+import { getAPIClient } from './network';
 
 // eslint-disable-next-line max-statements, complexity, import/prefer-default-export
 export const getTransactions = ({
-  apiClient, address, limit, offset, type = undefined,
+  networkConfig, address, limit, offset, type = undefined,
   sort = 'timestamp:desc', filter = txFilters.all, customFilters = {},
 }) => {
   const params = {
@@ -32,20 +33,17 @@ export const getTransactions = ({
   if (filter === txFilters.incoming) params.recipientId = address;
   if (filter === txFilters.outgoing) params.senderId = address;
   if (filter === txFilters.all) params.senderIdOrRecipientId = address;
-  return apiClient.transactions.get(params);
+  return getAPIClient(networkConfig).transactions.get(params);
 };
 
-export const getSingleTransaction = ({ apiClient, id }) => new Promise((resolve, reject) => {
-  if (!apiClient) {
-    reject();
-  } else {
-    apiClient.transactions.get({ id })
-      .then((response) => {
-        if (response.data.length !== 0) {
-          resolve(response);
-        } else {
-          resolve(apiClient.node.getTransactions('unconfirmed', { id }).then(resp => resp));
-        }
-      });
-  }
+export const getSingleTransaction = ({ networkConfig, id }) => new Promise((resolve, reject) => {
+  const apiClient = getAPIClient(networkConfig);
+  apiClient.transactions.get({ id })
+    .then((response) => {
+      if (response.data.length !== 0) {
+        resolve(response);
+      } else {
+        apiClient.node.getTransactions('unconfirmed', { id }).then(resolve).catch(reject);
+      }
+    }).catch(reject);
 });

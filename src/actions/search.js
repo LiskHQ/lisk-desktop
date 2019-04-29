@@ -2,20 +2,19 @@ import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
 import { getAccount } from '../utils/api/account';
 import { getDelegate, getVoters, getVotes, listDelegates } from '../utils/api/delegate';
-import { getTransactions, getTokenFromAddress } from '../utils/api/transactions';
+import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import searchAll from '../utils/api/search';
 import transactionTypes from '../constants/transactionTypes';
 import { updateWallet } from './wallets';
-import { getAPIClient } from '../utils/api/network';
 
 const searchDelegate = ({ publicKey, address }) =>
   async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    const apiClient = getAPIClient(getTokenFromAddress(address), getState());
+    const networkConfig = getState().network;
     const delegates = await getDelegate(liskAPIClient, { publicKey });
     const transactions = await getTransactions({
-      apiClient, address, limit: 1, type: transactionTypes.registerDelegate,
+      networkConfig, address, limit: 1, type: transactionTypes.registerDelegate,
     });
     const block = await getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 });
     dispatch({
@@ -152,12 +151,12 @@ export const searchTransactions = ({
   address, limit, filter, showLoading = true, customFilters = {},
 }) =>
   (dispatch, getState) => {
-    const apiClient = getAPIClient(getTokenFromAddress(address), getState());
+    const networkConfig = getState().network;
     if (showLoading) dispatch(loadingStarted(actionTypes.searchTransactions));
     /* istanbul ignore else */
-    if (apiClient) {
+    if (networkConfig) {
       getTransactions({
-        apiClient, address, limit, filter, customFilters,
+        networkConfig, address, limit, filter, customFilters,
       })
         .then((transactionsResponse) => {
           dispatch({
@@ -188,10 +187,10 @@ export const searchMoreTransactions = ({
   address, limit, offset, filter, customFilters = {},
 }) =>
   (dispatch, getState) => {
-    const apiClient = getAPIClient(getTokenFromAddress(address), getState());
+    const networkConfig = getState().network;
     dispatch(loadingStarted(actionTypes.searchMoreTransactions));
     getTransactions({
-      apiClient, address, limit, offset, filter, customFilters,
+      networkConfig, address, limit, offset, filter, customFilters,
     })
       .then((transactionsResponse) => {
         dispatch({
