@@ -66,4 +66,5 @@ Action is sometimes not needed, so the only really mandatory part of a test case
 
 ## What should be mocked in component unit test?
 
-TODO
+In a component unit test, we should insert mocked props into the component. Sometimes it is also needed to mock a dependency the component import, especially of it is computing-intensive, asynchronous, or timedOut.
+
