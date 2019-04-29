@@ -8,8 +8,6 @@ import { loadTransactionsFinish, transactionsUpdated } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { liskAPIClientUpdate } from './peers';
-import { tokenMap } from '../constants/tokens';
-import { getAPIClient } from '../utils/api/network';
 import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
@@ -190,14 +188,11 @@ export const loadAccount = ({
   isSameAccount,
 }) =>
   (dispatch, getState) => {
-    // TODO remove the localStorage condition after peers store is removed.
-    // This is a show-case of how liskAPIClient should be obtained with the new network store
-    // test coverage of the show-case branch is ignored because it's only a show-case
-    const liskAPIClient = localStorage.getItem('btc') ?
-      /* istanbul ignore next */
-      getAPIClient(tokenMap.LSK.key, getState()) :
-      getState().peers.liskAPIClient;
+    const liskAPIClient = getState().peers.liskAPIClient;
     getAccount(liskAPIClient, address)
+    // TODO next line should replace the two above when implementing BTC support
+    // const networkConfig = getState.network();
+    // getAccount(networkConfig, address)
       .then((response) => {
         let accountDataUpdated = {
           confirmed: transactionsResponse.data,
