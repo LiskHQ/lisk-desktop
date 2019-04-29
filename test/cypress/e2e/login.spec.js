@@ -15,7 +15,7 @@ describe('Login Page', () => {
    * @expect url is correct
    * @expect some specific to page element is present on it
    */
-  xit(`Opens by url ${urls.login}`, () => {
+  it(`Opens by url ${urls.login}`, () => {
     cy.visit(urls.login);
     cy.url().should('include', urls.login);
     cy.get(ss.app).contains('Sign in with a Passphrase');
@@ -26,7 +26,7 @@ describe('Login Page', () => {
    * @expect 0 balance - otherwise you've just found free money
    * @expect network status is not shown
    */
-  xit('Log in to Mainnet by default ("Switch Network" is not set)', () => {
+  it('Log in to Mainnet by default ("Switch Network" is not set)', () => {
     cy.visit(urls.login);
     loginUI(accounts.genesis.passphrase);
     cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
@@ -40,7 +40,7 @@ describe('Login Page', () => {
    * @expect 0 balance - otherwise you've just found free money
    * @expect network status is not shown
    */
-  xit('Log in to Mainnet by default ("Switch Network" is false)', () => {
+  it('Log in to Mainnet by default ("Switch Network" is false)', () => {
     cy.addObjectToLocalStorage('settings', 'showNetwork', false);
     cy.visit(urls.login);
     loginUI(accounts.genesis.passphrase);
