@@ -1,7 +1,6 @@
 import { networkSet, networkStatusUpdated } from './index';
+import * as lskNetworkActions from './lsk';
 import networks from '../../constants/networks';
-import { tokenMap } from '../../constants/tokens';
-import actionTypes from '../../constants/actions';
 
 describe('actions: network', () => {
   let dispatch;
@@ -9,19 +8,18 @@ describe('actions: network', () => {
   beforeEach(() => {
     jest.resetModules();
     dispatch = jest.fn();
+    jest.spyOn(lskNetworkActions, 'networkSet');
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   describe('networkSet', () => {
-    it('should create networkSet action with name and token', async () => {
+    it('should call lsk networkSet action', async () => {
       const { name } = networks.testnet;
       await networkSet({ name })(dispatch);
-      expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
-        data: {
-          name,
-          token: tokenMap.LSK.key,
-        },
-        type: actionTypes.networkSet,
-      }));
+      expect(lskNetworkActions.networkSet).toHaveBeenCalled();
     });
   });
 
