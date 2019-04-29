@@ -65,7 +65,6 @@ describe('V2 Header', () => {
 
   it('Should open dropdown on Network switcher click and close and call handler on option click', () => {
     const { networkList } = props;
-    const randomNetwork = Math.floor(Math.random() * networkList.length);
     expect(wrapper.find('.dropdownHandler')).to.be.present();
     wrapper.find('.dropdownHandler').simulate('click');
     expect(wrapper.find('DropdownV2')).to.have.prop('showDropdown', true);
@@ -75,7 +74,6 @@ describe('V2 Header', () => {
 
   it('Should open dropdown on Network switcher click and show Connect button', () => {
     const { networkList } = props;
-    const randomNetwork = Math.floor(Math.random() * networkList.length);
     expect(wrapper.find('.dropdownHandler')).to.be.present();
     wrapper.find('.dropdownHandler').simulate('click');
     expect(wrapper.find('DropdownV2')).to.have.prop('showDropdown', true);
