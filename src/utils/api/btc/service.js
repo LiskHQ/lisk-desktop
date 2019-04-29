@@ -7,17 +7,11 @@ export const getPriceTicker = () => new Promise(async (resolve, reject) => {
   try {
     const response = await popsicle.get(`${liskServiceUrl}/api/getPriceTicker`)
       .use(popsicle.plugins.parse('json'));
-    const json = response.body;
 
     if (response) {
-      const { tickers: { BTC } } = json;
-
-      resolve({
-        EUR: String(BTC.EUR),
-        USD: String(BTC.USD),
-      });
+      resolve(response.body.tickers);
     } else {
-      reject(json);
+      reject(response.body.tickers);
     }
   } catch (error) {
     reject(error);

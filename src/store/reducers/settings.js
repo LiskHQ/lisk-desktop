@@ -29,7 +29,7 @@ export const channels = {
 };
 
 // load setting data from localStorage if it exists
-const initialState = JSON.parse(localStorage.getItem('settings')) || {
+export const initialState = JSON.parse(localStorage.getItem('settings')) || {
   advancedMode: false,
   autoLog: true,
   showNetwork: false,
