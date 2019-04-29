@@ -1,4 +1,3 @@
-import { networkSet as btcNetworkSet } from './btc';
 import { networkSet as lskNetworkSet } from './lsk';
 import actionTypes from '../../constants/actions';
 
@@ -6,7 +5,6 @@ import actionTypes from '../../constants/actions';
 export const networkSet = data =>
   (dispatch) => {
     [
-      btcNetworkSet,
       lskNetworkSet,
       // here is the place to add a new token
     ].map(action => dispatch(action(data)));

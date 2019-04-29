@@ -12,16 +12,16 @@ describe('actions: network', () => {
   });
 
   describe('networkSet', () => {
-    it('should create networkSet action with name and token', () => {
+    it('should create networkSet action with name and token', async () => {
       const { name } = networks.testnet;
-      networkSet({ name })(dispatch);
-      expect(dispatch).toHaveBeenNthCalledWith(1, {
+      await networkSet({ name })(dispatch);
+      expect(dispatch).toHaveBeenNthCalledWith(2, expect.objectContaining({
         data: {
           name,
-          token: tokenMap.BTC.key,
+          token: tokenMap.LSK.key,
         },
         type: actionTypes.networkSet,
-      });
+      }));
     });
   });
 
