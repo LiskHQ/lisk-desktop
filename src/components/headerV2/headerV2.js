@@ -61,6 +61,7 @@ class HeaderV2 extends React.Component {
     const address = target.value;
     this.setState({
       address,
+      isFirstTime: true,
       connected: false,
     });
   }
@@ -81,6 +82,7 @@ class HeaderV2 extends React.Component {
     }
     return network;
   }
+
   /* istanbul ignore next */
   validateCorrectNode(network, address, nextPath) {
     const nodeURL = address !== '' ? addHttp(address) : address;
@@ -99,6 +101,7 @@ class HeaderV2 extends React.Component {
 
             this.props.history.push(nextPath);
             this.setState({ validationError: false, connected: true });
+            this.toggleDropdown(false);
           } else {
             throw new Error();
           }
@@ -122,8 +125,8 @@ class HeaderV2 extends React.Component {
     }
     this.setState({ showDropdown: value });
   }
-
-  /* eslint-disable complexity istanbul ignore next */
+  /* istanbul ignore next */
+  /* eslint-disable complexity */
   render() {
     const {
       t, showSettings, showNetwork, networkList,
@@ -177,7 +180,7 @@ class HeaderV2 extends React.Component {
                             <img
                               className={`${styles.status} ${!this.state.isValidationLoading && this.state.address && !this.state.isFirstTime
                                 ? styles.show : styles.hide}`}
-                              src={ this.state.validationError ? svg.iconWarning : svg.ok_icon}
+                              src={ !this.state.connected ? svg.iconWarning : svg.ok_icon}
                             />
                           </div>
                           {activeTab ?
@@ -192,7 +195,7 @@ class HeaderV2 extends React.Component {
                           {activeTab ?
                             <div>
                               <PrimaryButtonV2
-                                disable={this.state.connected}
+                                disabled={this.state.connected}
                                 /* istanbul ignore next */
                                 onClick={(e) => {
                                     e.stopPropagation();
@@ -219,6 +222,7 @@ class HeaderV2 extends React.Component {
                           this.changeNetwork(network.value);
                           this.validateCorrectNode(network.value);
                           this.toggleDropdown(false);
+                          this.setState({ connected: false, isFirstTime: true });
                         }}
                         key={key}>{network.label}
                       </span>

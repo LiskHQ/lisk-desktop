@@ -75,6 +75,15 @@ class Splashscreen extends React.Component {
       this.props.peers.options.address === network.address;
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  showNetworkOptions() {
+    const showNetwork = this.props.settings && this.props.settings.showNetwork;
+    const params = parseSearchParams(this.props.history.location.search);
+    const showNetworkParam = params.showNetwork || params.shownetwork;
+
+    return showNetworkParam === 'true' || (showNetwork && showNetworkParam !== 'false');
+  }
+
   changeNetwork(network) {
     this.setState({ network });
     this.props.settingsUpdated({ network });
@@ -112,7 +121,7 @@ class Splashscreen extends React.Component {
           selectedNetwork={peers.options.code || 0}
           handleNetworkSelect={this.changeNetwork}
           settingsUpdated={settingsUpdated}
-          showNetwork />
+          showNetwork={this.showNetworkOptions()} />
         <div className={`${styles.splashscreen}`}>
           <div className={`${styles.wrapper}`}>
             <div className={`${styles.titleHolder}`}>

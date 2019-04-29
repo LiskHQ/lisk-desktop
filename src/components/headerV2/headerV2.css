@@ -103,6 +103,7 @@
 .button {
   @mixin contentSmall bold;
 
+  margin-bottom: 5px;
   height: 32px;
   width: 100%;
 }

@@ -205,7 +205,7 @@ class LoginV2 extends React.Component {
       <React.Fragment>
         { match.url === routes.loginV2.path ? (
         <HeaderV2
-          showNetwork={true}
+          showNetwork={this.showNetworkOptions()}
           validationError={this.state.validationError}
           liskAPIClientSet={this.props.liskAPIClientSet}
           networkList={this.networks}
