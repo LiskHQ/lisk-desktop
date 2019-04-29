@@ -18,7 +18,7 @@ describe('V2 Header', () => {
     },
   };
 
-  let props = {
+  const props = {
     showSettings: true,
     showNetwork: true,
     selectedNetwork: 0,
@@ -44,7 +44,7 @@ describe('V2 Header', () => {
 
   afterEach(() => {
     clock.restore();
-  })
+  });
 
   it('Should render Logo, Settings Button and Network Switcher dropdown', () => {
     expect(wrapper.find('.logo')).to.be.present();
@@ -64,7 +64,7 @@ describe('V2 Header', () => {
   });
 
   it('Should open dropdown on Network switcher click and close and call handler on option click', () => {
-    const { networkList, handleNetworkSelect } = props;
+    const { networkList } = props;
     const randomNetwork = Math.floor(Math.random() * networkList.length);
     expect(wrapper.find('.dropdownHandler')).to.be.present();
     wrapper.find('.dropdownHandler').simulate('click');
@@ -74,7 +74,7 @@ describe('V2 Header', () => {
   });
 
   it('Should open dropdown on Network switcher click and show Connect button', () => {
-    const { networkList, handleNetworkSelect } = props;
+    const { networkList } = props;
     const randomNetwork = Math.floor(Math.random() * networkList.length);
     expect(wrapper.find('.dropdownHandler')).to.be.present();
     wrapper.find('.dropdownHandler').simulate('click');
@@ -86,8 +86,7 @@ describe('V2 Header', () => {
   });
 
   it('Should open dropdown on Network switcher click and show Connect button', () => {
-    const { networkList, handleNetworkSelect } = props;
-    const randomNetwork = Math.floor(Math.random() * networkList.length);
+    const { networkList } = props;
     expect(wrapper.find('.dropdownHandler')).to.be.present();
     wrapper.find('.dropdownHandler').simulate('click');
     expect(wrapper.find('DropdownV2')).to.have.prop('showDropdown', true);

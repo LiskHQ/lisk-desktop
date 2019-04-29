@@ -9,9 +9,8 @@ import i18n from '../../i18n';
 import LoginV2 from './loginV2';
 import accounts from '../../../test/constants/accounts';
 import routes from '../../constants/routes';
-import { wrap } from 'module';
 
-describe.only('LoginV2', () => {
+describe('LoginV2', () => {
   let wrapper;
   let clock;
   const account = {
