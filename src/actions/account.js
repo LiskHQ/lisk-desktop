@@ -191,8 +191,9 @@ export const loadAccount = ({
     const liskAPIClient = getState().peers.liskAPIClient;
     getAccount(liskAPIClient, address)
     // TODO next line should replace the two above when implementing BTC support
-    // const networkConfig = getState.network();
-    // getAccount(networkConfig, address)
+    // const networkConfig = getState().network;
+    // const token = getState().settings.token.active;
+    // getAccount({ token, networkConfig, address })
       .then((response) => {
         let accountDataUpdated = {
           confirmed: transactionsResponse.data,
