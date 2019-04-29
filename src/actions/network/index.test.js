@@ -15,7 +15,7 @@ describe('actions: network', () => {
     it('should create networkSet action with name and token', async () => {
       const { name } = networks.testnet;
       await networkSet({ name })(dispatch);
-      expect(dispatch).toHaveBeenNthCalledWith(2, expect.objectContaining({
+      expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         data: {
           name,
           token: tokenMap.LSK.key,
