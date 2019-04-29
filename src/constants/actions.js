@@ -8,9 +8,12 @@ const actionTypes = {
   accountAddVotes: 'ACCOUNT_ADD_VOTES',
   accountAddVoters: 'ACCOUNT_ADD_VOTERS',
   delegateStatsLoaded: 'ACCOUNT_DELEGATE_STATS',
+  // TODO next 3 lines should be removed after the new 'network' actions are used everywhere
   liskAPIClientSet: 'LISK_API_CLIENT_SET',
   liskAPIClientUpdate: 'LISK_API_CLIENT_UPDATE',
   liskAPIClientReset: 'LISK_API_CLIENT_RESET',
+  networkSet: 'NETWORK_SET',
+  networkStatusUpdated: 'NETWORK_STATUS_UPDATED',
   dialogDisplayed: 'DIALOG_DISPLAYED',
   dialogHidden: 'DIALOG_HIDDEN',
   VotePlaced: 'VOTE_PLACED',
