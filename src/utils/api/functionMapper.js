@@ -2,11 +2,19 @@ import { tokenMap } from '../../constants/tokens';
 import * as btcAccount from './btc/account';
 import * as btcTransactions from './btc/transactions';
 import * as btcService from './btc/service';
+import * as lskAccount from './account';
+import * as lskTransactions from './transactions';
+import * as lskService from './liskService';
 
 /**
  * Resource oriented mapping from token type to utility functions.
  */
 const resourceMap = {
+  [tokenMap.LSK.key]: {
+    account: lskAccount,
+    transactions: lskTransactions,
+    service: lskService.default,
+  },
   [tokenMap.BTC.key]: {
     account: btcAccount,
     transactions: btcTransactions,
