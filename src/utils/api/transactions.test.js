@@ -1,6 +1,9 @@
 import { send, getTransactions, unconfirmedTransactions, getSingleTransaction } from './transactions';
 import accounts from '../../../test/constants/accounts';
 import networks from '../../constants/networks';
+import { getAPIClient } from './lsk/network';
+
+jest.mock('./lsk/network');
 
 describe('Utils: Transactions API', () => {
   const id = '124701289470';
@@ -8,6 +11,9 @@ describe('Utils: Transactions API', () => {
   const recipientId = '123L';
   const networkConfig = {
     name: networks.mainnet.name,
+    networks: {
+      LSK: {},
+    },
   };
   let liskAPIClient;
 
@@ -25,6 +31,8 @@ describe('Utils: Transactions API', () => {
     liskAPIClient.node.getTransactions.mockResolvedValue({ data: [] });
 
     localStorage.setItem('btc', true); // TODO remove when enabling BTC
+
+    getAPIClient.mockReturnValue(liskAPIClient);
   });
 
   afterEach(() => {
@@ -44,14 +52,13 @@ describe('Utils: Transactions API', () => {
   });
 
   describe('getTransactions', () => {
-    it('should resolve getTransactions for specific token (BTC, LSK, ...) based on the address format ', () => {
+    it('should resolve getTransactions for specific token (BTC, LSK, ...) based on the address format ', async () => {
       const params = {
         address: recipientId,
         networkConfig,
       };
       liskAPIClient.transactions.get.mockResolvedValue({ data: [] });
-      const promise = getTransactions(params);
-      expect(typeof promise.then).toEqual('function');
+      await getTransactions(params);
       expect(liskAPIClient.transactions.get).toHaveBeenCalledWith(expect.objectContaining({
         senderIdOrRecipientId: recipientId,
       }));
@@ -59,14 +66,13 @@ describe('Utils: Transactions API', () => {
   });
 
   describe('getSingleTransaction', () => {
-    it('should resolve getSingleTransaction for specific token (BTC, LSK, ...) based on the address format ', () => {
+    it('should resolve getSingleTransaction for specific token (BTC, LSK, ...) based on the address format ', async () => {
       const params = {
         id,
         networkConfig,
       };
       liskAPIClient.transactions.get.mockResolvedValue({ data: [] });
-      const promise = getSingleTransaction(params);
-      expect(typeof promise.then).toEqual('function');
+      await getSingleTransaction(params);
       expect(liskAPIClient.transactions.get).toHaveBeenCalledWith(expect.objectContaining({
         id,
       }));
