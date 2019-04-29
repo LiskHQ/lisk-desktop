@@ -145,7 +145,7 @@ class HeaderV2 extends React.Component {
                         ? networkList[selectedNetwork].label
                         : address || this.state.address }</span>
                 <DropdownV2
-                  className={`${styles.dropdown} ${dark ? 'dark' : ''}`}
+                  className={`${styles.dropdown} ${dark ? 'dark' : ''} network-dropdown`}
                   showArrow={false}
                   showDropdown={this.state.showDropdown}
                   active={selectedNetwork}>
@@ -153,7 +153,7 @@ class HeaderV2 extends React.Component {
                     const activeTab = this.state.network === networks.customNode.code;
                     if (network.value === networks.customNode.code) {
                       return <span
-                      className={styles.networkSpan}
+                      className={`${styles.networkSpan} address`}
                       key={key}
                       onClick={() => {
                         this.changeNetwork(network.value);
@@ -203,7 +203,7 @@ class HeaderV2 extends React.Component {
                                       this.changeNetwork(networks.customNode.code);
                                     }, 300);
                                 }}
-                                className={`${styles.button} ${styles.backButton}`}>
+                                className={`${styles.button} ${styles.backButton} connect-button`}>
                                 {this.state.connected ? t('Connected') : t('Connect')}
                               </PrimaryButtonV2>
                             </div> : ''}
@@ -215,6 +215,7 @@ class HeaderV2 extends React.Component {
                         onClick={() => {
                           this.changeNetwork(network.value);
                           this.validateCorrectNode(network.value);
+                          this.toggleDropdown(false);
                         }}
                         key={key}>{network.label}
                       </span>

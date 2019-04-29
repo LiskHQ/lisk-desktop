@@ -26,6 +26,7 @@ describe('V2 Header', () => {
       { label: 'Custom Node', value: 2 },
     ],
     handleNetworkSelect: spy(),
+    settingsUpdated: spy(),
   };
 
   beforeEach(() => {
