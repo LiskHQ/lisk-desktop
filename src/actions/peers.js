@@ -1,3 +1,5 @@
+// TODO this file should be removed after the new 'network' actions are used everywhere
+
 import i18next from 'i18next';
 import Lisk from 'lisk-elements';
 import actionTypes from '../constants/actions';
@@ -11,6 +13,7 @@ import { accountLoggedIn, accountLoading, accountLoggedOut } from './account';
 import accountConfig from '../constants/account';
 import settings from '../constants/settings';
 import { loginType } from '../constants/hwConstants';
+import { networkSet } from './network';
 
 const peerSet = (data, config) => ({
   data: Object.assign({
@@ -109,6 +112,13 @@ export const liskAPIClientSet = data =>
     } else {
       dispatch(peerSet(data, config));
       await login(dispatch, getState, data, config);
+    }
+    if (localStorage.getItem('btc')) { // TODO remove this condition when enabling store BTC feature
+      // TODO calling token-agnostic action inside LSK action is hacky, should be refactored
+      dispatch(networkSet({
+        ...data.network,
+        nodeUrl: data.network.address,
+      }));
     }
   };
 

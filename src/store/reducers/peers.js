@@ -1,4 +1,5 @@
 import actionTypes from '../../constants/actions';
+// TODO this file should be removed after the new 'network' reducer is used everywhere
 
 /**
  * The reducer for maintaining active peer
