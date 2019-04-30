@@ -9,36 +9,8 @@ import SelectAccount from './selectAccount';
 import styles from './hwWalletLogin.css';
 
 class HardwareWalletLogin extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      devices: [],
-    };
-  }
-
-  componentDidMount() {
-    this.setDevices();
-  }
-
-  componentDidUpdate() {
-    this.setDevices();
-  }
-
-  setDevices() {
-    // TODO update this when isHarwareWalletConnected is refactored and we have devices in store
-    const devices = this.props.settings.isHarwareWalletConnected ? [{}] : [];
-
-    if (devices.length !== this.state.devices.length) {
-      this.setState({
-        devices,
-      });
-    }
-  }
-
   render() {
-    const { t } = this.props;
-    const { devices } = this.state;
+    const { devices, t } = this.props;
     return <React.Fragment>
       <HeaderV2 showSettings={true} />
       <div className={`${styles.wrapper} ${grid.row}`}>

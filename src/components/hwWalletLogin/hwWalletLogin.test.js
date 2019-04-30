@@ -6,9 +6,7 @@ import HwWalletLogin from './hwWalletLogin';
 describe('HwWalletLogin', () => {
   let wrapper;
   const props = {
-    settings: {
-      isHarwareWalletConnected: false,
-    },
+    devices: [],
     t: key => key,
   };
 
@@ -40,7 +38,9 @@ describe('HwWalletLogin', () => {
     // expect(wrapper.text()).toContain('Looking for a device...');
     wrapper.setProps({
       ...props,
-      settings: { isHarwareWalletConnected: true },
+      devices: [{
+        id: 'DUMMY',
+      }],
     });
     wrapper.update();
     // TODO figure out why the assertion below doesn't work
