@@ -1,0 +1,11 @@
+.loadingIcon {
+  animation: spin 1s ease-in-out infinite;
+  width: 48px;
+  height: 48px;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}

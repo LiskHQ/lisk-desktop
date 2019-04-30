@@ -40,6 +40,7 @@ import fowardArrowInactiveIcon from '../assets/images/icons-v2/arrow-right-inact
 import iconFilter from '../assets/images/icons-v2/icon-filter.svg';
 import questionIcon from '../assets/images/icons-v2/ico-question.svg';
 import fileOutline from '../assets/images/icons-v2/icon-file-outline.svg';
+import iconLoader from '../assets/images/icons-v2/icon-loader-16.svg';
 
 export default {
   alert_icon: alertIcon,
@@ -84,4 +85,5 @@ export default {
   iconFilter,
   questionIcon,
   fileOutline,
+  iconLoader,
 };
