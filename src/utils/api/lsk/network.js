@@ -6,7 +6,7 @@ const apiClients = {};
 
 // eslint-disable-next-line import/prefer-default-export
 export const getAPIClient = (network) => {
-  if (!apiClients[network.name] || network.name === networks.customNode.name) {
+  if (network.name && (!apiClients[network.name] || network.name === networks.customNode.name)) {
     const { nethash, nodes } = {
       [networks.testnet.name]: {
         nethash: Lisk.APIClient.constants.TESTNET_NETHASH,
