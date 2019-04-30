@@ -2,6 +2,12 @@ import { validateAddress } from '../validators';
 import { tokenMap, tokenKeys } from '../../constants/tokens';
 import getMappedFunction from './functionMapper';
 
+// TODO these imports are temporary until getMappedFunction is implemented for them
+import { send as ss, unconfirmedTransactions as ut } from './lsk/transactions';
+
+export const send = ss;
+export const unconfirmedTransactions = ut;
+
 const getTokenFromAddress = address => (
   // TODO remove the localStorage condition after BTC features is enabled.
   localStorage.getItem('btc') ?

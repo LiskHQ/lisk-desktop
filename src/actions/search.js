@@ -2,7 +2,7 @@ import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
 import { getAccount } from '../utils/api/lsk/account';
 import { getDelegate, getVoters, getVotes, listDelegates } from '../utils/api/delegate';
-import { getTransactions } from '../utils/api/lsk/transactions';
+import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import searchAll from '../utils/api/search';
 import transactionTypes from '../constants/transactionTypes';
