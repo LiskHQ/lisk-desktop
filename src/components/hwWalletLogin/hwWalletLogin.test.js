@@ -34,8 +34,9 @@ describe('HwWalletLogin', () => {
   it('should show "looking for device" at first and "SelectDevice" after device conneted', () => {
     wrapper = mount(<HwWalletLogin {...props}/>, options);
     wrapper.update();
-    // TODO figure out why the assertion below doesn't work
-    // expect(wrapper.text()).toContain('Looking for a device...');
+    // TODO figure out why the assertion below doesn't work.
+    // I guess something with MultiStep using React.cloneElement
+    // expect(wrapper.text()).toEqual(expect.stringContaining('Looking for a device...'));
     wrapper.setProps({
       ...props,
       devices: [{
@@ -43,7 +44,8 @@ describe('HwWalletLogin', () => {
       }],
     });
     wrapper.update();
-    // TODO figure out why the assertion below doesn't work
-    // expect(wrapper.text()).toContain('SelectDevice');
+    // TODO figure out why the assertion below doesn't work.
+    // I guess something with MultiStep using React.cloneElement
+    // expect(wrapper.text()).toEqual(expect.stringContaining('SelectDevice'));
   });
 });
