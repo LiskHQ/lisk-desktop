@@ -146,7 +146,8 @@ export const loadTransaction = ({ id }) =>
     const liskAPIClient = getState().peers.liskAPIClient;
     const networkConfig = getState().network;
     dispatch({ type: actionTypes.transactionCleared });
-    getSingleTransaction({ networkConfig, id })
+    // TODO remove the btc condition
+    getSingleTransaction(localStorage.getItem('btc') ? { networkConfig, id } : { liskAPIClient, id })
       .then((response) => { // eslint-disable-line max-statements
         let added = [];
         let deleted = [];

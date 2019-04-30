@@ -36,8 +36,11 @@ export const getTransactions = ({
   return getAPIClient(networkConfig).transactions.get(params);
 };
 
-export const getSingleTransaction = ({ networkConfig, id }) => new Promise((resolve, reject) => {
-  const apiClient = getAPIClient(networkConfig);
+export const getSingleTransaction = ({
+  networkConfig, id, liskAPIClient,
+}) => new Promise((resolve, reject) => {
+  // TODO remove liskAPIClient after all code that uses is is removed
+  const apiClient = liskAPIClient || getAPIClient(networkConfig);
   apiClient.transactions.get({ id })
     .then((response) => {
       if (response.data.length !== 0) {

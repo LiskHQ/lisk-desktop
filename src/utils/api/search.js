@@ -35,7 +35,7 @@ const searchDelegates = ({ liskAPIClient, searchTerm }) => new Promise(resolve =
 
 const searchTransactions = ({ liskAPIClient, searchTerm }) => new Promise((resolve, reject) =>
   getSingleTransaction({
-    apiClient: liskAPIClient,
+    liskAPIClient,
     id: searchTerm,
   }).then(response => resolve({ transactions: response.data }))
     .catch(() => reject({ transactions: [] })));
