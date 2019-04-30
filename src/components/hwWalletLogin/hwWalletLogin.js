@@ -10,7 +10,7 @@ import styles from './hwWalletLogin.css';
 
 class HardwareWalletLogin extends React.Component {
   render() {
-    const { devices, t } = this.props;
+    const { isAppOpen, devices, t } = this.props;
     return <React.Fragment>
       <HeaderV2 showSettings={true} />
       <div className={`${styles.wrapper} ${grid.row}`}>
@@ -18,7 +18,7 @@ class HardwareWalletLogin extends React.Component {
           className={`${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}>
           <Loading t={t} devices={devices} />
           <SelectDevice t={t} />
-          <UnlockDevice t={t} />
+          <UnlockDevice isAppOpen={isAppOpen} t={t} />
           <SelectAccount t={t} />
         </MultiStep>
       </div>
