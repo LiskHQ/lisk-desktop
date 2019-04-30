@@ -1,3 +1,6 @@
+@import './../app/mixins.css';
+@import './../app/variablesV2.css';
+
 .wrapper {
   align-items: center;
   display: flex;
@@ -6,4 +9,14 @@
   justify-content: center;
   text-align: center;
   width: 100%;
+
+  & h1 {
+    @mixin headingLarge;
+  }
+
+  & p {
+    @mixin contentLarge;
+
+    color: var(--color-slate-gray);
+  }
 }

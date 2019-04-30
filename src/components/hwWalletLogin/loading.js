@@ -23,7 +23,7 @@ class Loading extends React.Component {
   render() {
     const { t } = this.props;
     return <React.Fragment>
-      <h2>{t('Connect your Hardware Wallet')}</h2>
+      <h1>{t('Connect your Hardware Wallet')}</h1>
       <p>{t('Lisk Hub currently supports Ledger Nano S and Trezor wallets')}</p>
       <img src={svgIcons.iconLoader} className={styles.loadingIcon} />
       <p>{t('Looking for a device…')}</p>
