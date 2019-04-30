@@ -281,24 +281,41 @@ class LoginV2 extends React.Component {
                   maxInputsLength={24}
                   onFill={this.checkPassphrase} />
 
-                  <div className={`${styles.hardwareHolder}
-                    ${(localStorage.getItem('trezor') && this.state.devices.length > 0)
-                    ? styles.show : ''}`}>
-                    <div className={`${styles.label}`}>
-                      {t('Hardware login (beta): ')}
-                      <span className={`${styles.link} hardwareWalletLink`}
-                        onClick={() => this.validateCorrectNode(routes.hwWallet.path)}>
-                        {this.state.devices[0] && this.state.devices[0].model}
-                      </span>
+                  {localStorage.getItem('trezor') ?
+                    <div className={`${styles.hardwareHolder}
+                      ${this.state.devices.length > 0 ? styles.show : ''}`}>
+                      <div className={`${styles.label}`}>
+                        {t('Hardware login (beta): ')}
+                        <span className={`${styles.link} hardwareWalletLink`}
+                          onClick={() => this.validateCorrectNode(routes.hwWallet.path)}>
+                          {this.state.devices[0] && this.state.devices[0].model}
+                        </span>
+                      </div>
+                      <a
+                        className={styles.link}
+                        target='_blank'
+                        href={feedbackLinks.ledger}
+                        rel='noopener noreferrer'>
+                        {t('Give feedback about this feature')}
+                      </a>
+                    </div> :
+                    <div className={`${styles.hardwareHolder} ${(this.props.settings && this.props.settings.isHarwareWalletConnected) ? styles.show : ''}`}>
+                      <div className={`${styles.label}`}>
+                        {t('Hardware login (beta): ')}
+                        <span className={`${styles.link} hardwareWalletLink`}
+                          onClick={() => this.validateCorrectNode(routes.hwWallet.path)}>
+                          Ledger Nano S
+                        </span>
+                      </div>
+                      <a
+                        className={styles.link}
+                        target='_blank'
+                        href={feedbackLinks.ledger}
+                        rel='noopener noreferrer'>
+                        {t('Give feedback about this feature')}
+                      </a>
                     </div>
-                    <a
-                      className={styles.link}
-                      target='_blank'
-                      href={feedbackLinks.ledger}
-                      rel='noopener noreferrer'>
-                      {t('Give feedback about this feature')}
-                    </a>
-                  </div>
+                  }
               </div>
 
               <div className={`${styles.buttonsHolder}`}>
