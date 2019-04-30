@@ -1,7 +1,26 @@
+import Lisk from 'lisk-elements';
 import { toRawLsk } from '../../../utils/lsk';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import txFilters from '../../../constants/transactionFilters';
 import { getAPIClient } from './network';
+
+export const send = (
+  liskAPIClient,
+  recipientId,
+  amount,
+  passphrase,
+  secondPassphrase = null,
+  data,
+  timeOffset,
+) =>
+  new Promise((resolve, reject) => {
+    const transaction = Lisk.transaction.transfer({
+      recipientId, amount, passphrase, secondPassphrase, data, timeOffset,
+    });
+    liskAPIClient.transactions.broadcast(transaction).then(() => {
+      resolve(transaction);
+    }).catch(reject);
+  });
 
 // eslint-disable-next-line max-statements, complexity, import/prefer-default-export
 export const getTransactions = ({
@@ -50,3 +69,12 @@ export const getSingleTransaction = ({
       }
     }).catch(reject);
 });
+
+
+export const unconfirmedTransactions = (liskAPIClient, address, limit = 20, offset = 0, sort = 'timestamp:desc') =>
+  liskAPIClient.node.getTransactions('unconfirmed', {
+    senderId: address,
+    limit,
+    offset,
+    sort,
+  });

@@ -1,5 +1,4 @@
-import { send, getTransactions, unconfirmedTransactions, getSingleTransaction } from './transactions';
-import accounts from '../../../test/constants/accounts';
+import { getTransactions, getSingleTransaction } from './transactions';
 import networks from '../../constants/networks';
 import { getAPIClient } from './lsk/network';
 
@@ -39,18 +38,6 @@ describe('Utils: Transactions API', () => {
     localStorage.removeItem('btc'); // TODO remove when enabling BTC
   });
 
-  // TODO: fix these tests for assert more than just a promise is returned
-  describe('send', () => {
-    it('should broadcast a transaction and return a promise', () => {
-      const promise = send(liskAPIClient, recipientId, amount, accounts.genesis.passphrase);
-      expect(liskAPIClient.transactions.broadcast).toHaveBeenCalledWith(expect.objectContaining({
-        amount,
-        recipientId,
-      }));
-      expect(typeof promise.then).toEqual('function');
-    });
-  });
-
   describe('getTransactions', () => {
     it('should resolve getTransactions for specific token (BTC, LSK, ...) based on the address format ', async () => {
       const params = {
@@ -76,13 +63,6 @@ describe('Utils: Transactions API', () => {
       expect(liskAPIClient.transactions.get).toHaveBeenCalledWith(expect.objectContaining({
         id,
       }));
-    });
-  });
-
-  describe('unconfirmedTransactions', () => {
-    it('should return a promise', () => {
-      const promise = unconfirmedTransactions(liskAPIClient);
-      expect(typeof promise.then).toEqual('function');
     });
   });
 });

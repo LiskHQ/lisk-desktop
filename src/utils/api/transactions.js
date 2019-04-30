@@ -1,25 +1,6 @@
-import Lisk from 'lisk-elements';
 import { validateAddress } from '../validators';
 import { tokenMap, tokenKeys } from '../../constants/tokens';
 import getMappedFunction from './functionMapper';
-
-export const send = (
-  liskAPIClient,
-  recipientId,
-  amount,
-  passphrase,
-  secondPassphrase = null,
-  data,
-  timeOffset,
-) =>
-  new Promise((resolve, reject) => {
-    const transaction = Lisk.transaction.transfer({
-      recipientId, amount, passphrase, secondPassphrase, data, timeOffset,
-    });
-    liskAPIClient.transactions.broadcast(transaction).then(() => {
-      resolve(transaction);
-    }).catch(reject);
-  });
 
 const getTokenFromAddress = address => (
   // TODO remove the localStorage condition after BTC features is enabled.
@@ -54,11 +35,3 @@ export const getTransactions = ({
 export const getSingleTransaction = async ({ token, ...params }) => (
   getMappedFunction(token || getTokenFromTransactionId(params.id), 'transactions', 'getSingleTransaction')(params)
 );
-
-export const unconfirmedTransactions = (liskAPIClient, address, limit = 20, offset = 0, sort = 'timestamp:desc') =>
-  liskAPIClient.node.getTransactions('unconfirmed', {
-    senderId: address,
-    limit,
-    offset,
-    sort,
-  });

@@ -110,7 +110,7 @@ list.on('connect', (device) => {
     logDebug(`Disconnected device ${device.features.label}`);
     const trezorDevice = getDeviceById(deviceId);
     if (trezorDevice) {
-      win.send({ event: 'trezorDisconnected', value: trezorDevice });
+      win.send({ event: 'hwDisconnected', value: { model: trezorDevice.model } });
       removeConnectedDeviceByID(trezorDevice.deviceId);
     }
   });
@@ -144,7 +144,7 @@ list.on('connect', (device) => {
   logDebug(`Adding Device ${device.features.label} to connected devices.`);
   const trezorDevice = createTrezorHWDevice(device.features);
   addConnectedDevices(trezorDevice);
-  win.send({ event: 'trezorConnected', value: trezorDevice });
+  win.send({ event: 'hwConnected', value: { model: trezorDevice.model } });
 });
 
 // This gets called on general error of the devicelist (no transport, etc)

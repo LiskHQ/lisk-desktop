@@ -7,6 +7,7 @@ export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t,
   let index = unInitializedAdded ? hwAccounts.length : 0;
   let accountInfo;
   const deviceId = device && device.deviceId;
+  const deviceModel = device && device.model;
 
   const accounts = [];
   do {
@@ -37,6 +38,8 @@ export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t,
   while (accountInfo.isInitialized || index === 0);
   /* eslint-disable-next-line */
   return {
+    deviceModel,
+    deviceId,
     hwAccounts: accounts,
     isLoading: false,
     showNextAvailable: (index === 1),

@@ -7,7 +7,7 @@ import networks from '../constants/networks';
 import { errorToastDisplayed } from './toaster';
 import { loadingStarted, loadingFinished } from '../actions/loading';
 
-import { getAccount } from '../utils/api/account';
+import { getAccount } from '../utils/api/lsk/account';
 import { extractAddress, extractPublicKey } from '../utils/account';
 import { accountLoggedIn, accountLoading, accountLoggedOut } from './account';
 import accountConfig from '../constants/account';

@@ -1,24 +1,28 @@
 import { tokenMap } from '../../constants/tokens';
 import * as btcAccount from './btc/account';
-import * as btcTransactions from './btc/transactions';
-import * as btcService from './btc/service';
 import * as btcNetwork from './btc/network';
+import * as btcService from './btc/service';
+import * as btcTransactions from './btc/transactions';
+import * as lskAccount from './lsk/account';
 import * as lskNetwork from './lsk/network';
+import * as lskService from './lsk/liskService';
 import * as lskTransactions from './lsk/transactions';
 
 /**
  * Resource oriented mapping from token type to utility functions.
  */
 const resourceMap = {
+  [tokenMap.LSK.key]: {
+    account: lskAccount,
+    network: lskNetwork,
+    service: lskService.default,
+    transactions: lskTransactions,
+  },
   [tokenMap.BTC.key]: {
     account: btcAccount,
-    transactions: btcTransactions,
-    service: btcService,
     network: btcNetwork,
-  },
-  [tokenMap.LSK.key]: {
-    network: lskNetwork,
-    transactions: lskTransactions,
+    service: btcService,
+    transactions: btcTransactions,
   },
 };
 

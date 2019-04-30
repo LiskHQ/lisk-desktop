@@ -1,30 +1,60 @@
-import { getTransactions, getSingleTransaction } from './transactions';
-import { getTimestampFromFirstBlock } from '../../datetime';
-import txFilters from '../../../constants/transactionFilters';
+import { send, getTransactions, unconfirmedTransactions, getSingleTransaction } from './transactions';
+import accounts from '../../../../test/constants/accounts';
+import networks from '../../../constants/networks';
 import { getAPIClient } from './network';
+import txFilters from '../../../constants/transactionFilters';
+import { getTimestampFromFirstBlock } from '../../datetime';
 
 jest.mock('./network');
 
 describe('Utils: Transactions API', () => {
-  const address = '1212409187243L';
+  const id = '124701289470';
+  const amount = '100000';
+  const recipientId = '123L';
+  const networkConfig = {
+    name: networks.mainnet.name,
+    networks: {
+      LSK: {},
+    },
+  };
   let apiClient;
-  const networkConfig = {};
+  const address = '1212409187243L';
 
   beforeEach(() => {
     apiClient = {
       transactions: {
         get: jest.fn(),
+        broadcast: jest.fn(),
       },
       node: {
         getTransactions: jest.fn(),
       },
     };
+    apiClient.transactions.broadcast.mockResolvedValue({ recipientId, amount, id });
     apiClient.node.getTransactions.mockResolvedValue({ data: [] });
+
+    localStorage.setItem('btc', true); // TODO remove when enabling BTC
 
     getAPIClient.mockReturnValue(apiClient);
   });
 
-  describe('transactions', () => {
+  afterEach(() => {
+    localStorage.removeItem('btc'); // TODO remove when enabling BTC
+  });
+
+  // TODO: fix these tests for assert more than just a promise is returned
+  describe('send', () => {
+    it('should broadcast a transaction and return a promise', () => {
+      const promise = send(apiClient, recipientId, amount, accounts.genesis.passphrase);
+      expect(apiClient.transactions.broadcast).toHaveBeenCalledWith(expect.objectContaining({
+        amount,
+        recipientId,
+      }));
+      expect(typeof promise.then).toEqual('function');
+    });
+  });
+
+  describe('getTransactions', () => {
     it('should call transactions.get for incoming promise', () => {
       getTransactions({ networkConfig, address, filter: txFilters.incoming });
 
@@ -84,8 +114,6 @@ describe('Utils: Transactions API', () => {
   });
 
   describe('getSingleTransaction', () => {
-    const id = '124701289470';
-
     it('should apiClient.transactions.get and return a promise', () => {
       const promise = getSingleTransaction({ apiClient, id });
       expect(apiClient.transactions.get).toHaveBeenCalledWith({ id });
@@ -100,6 +128,13 @@ describe('Utils: Transactions API', () => {
 
     it('should reject if apiClient is undefined', async () => {
       expect(getSingleTransaction({ id })).rejects.toThrow('');
+    });
+  });
+
+  describe('unconfirmedTransactions', () => {
+    it('should return a promise', () => {
+      const promise = unconfirmedTransactions(apiClient);
+      expect(typeof promise.then).toEqual('function');
     });
   });
 });

@@ -9,7 +9,7 @@ import routes from '../../constants/routes';
 import Piwik from '../../utils/piwik';
 import { getDeviceList, getLoginTypeFromDevice,
   getHWPublicKeyFromIndex, getHWAddressFromIndex } from '../../utils/hwWallet';
-import { extractAddress } from '../../utils/api/account';
+import { extractAddress } from '../../utils/api/lsk/account';
 
 
 import cubeImage from '../../assets/images/dark-blue-cube.svg';
@@ -34,6 +34,7 @@ class TrezorLogin extends React.Component {
       loginType: null,
       publicKey: null,
       address: null,
+      deviceId: null,
     };
 
     if (ipc) {
@@ -66,6 +67,8 @@ class TrezorLogin extends React.Component {
         loginType,
         publicKey,
         address: extractAddress(publicKey),
+        deviceId,
+        deviceModel: devices[0].model,
       });
 
       // Retrieve Address with verification
@@ -91,7 +94,7 @@ class TrezorLogin extends React.Component {
       network: this.props.network,
       hwInfo: {
         device: this.props.device,
-        deviceId: this.props.device.deviceId,
+        deviceId: this.state.deviceId,
         derivationIndex: 0,
       },
     });
@@ -102,6 +105,7 @@ class TrezorLogin extends React.Component {
   async componentDidMount() {
     this.setState({ isLoading: true });
     const devices = await getDeviceList();
+
     setTimeout(async () => {
       const output = await displayAccounts({
         liskAPIClient: this.props.liskAPIClient,
@@ -124,20 +128,19 @@ class TrezorLogin extends React.Component {
 
   selectAccount(ledgerAccount, index) {
     Piwik.trackingEvent('TrezorLogin', 'button', 'Select account');
-    // set active peer
     this.props.liskAPIClientSet({
       publicKey: ledgerAccount.publicKey,
       network: this.props.network,
-      hwInfo: { // Use pubKey[0] first 10 char as device id
-        deviceId: ledgerAccount.publicKey.substring(0, 10),
+      hwInfo: {
+        deviceId: this.state.deviceId,
         derivationIndex: index,
+        deviceModel: this.state.deviceModel,
       },
     });
   }
 
   async addAccount() {
     Piwik.trackingEvent('TrezorLogin', 'button', 'Add account');
-    console.log(this.state.hwAccounts);
     const devices = await getDeviceList();
 
     if (this.state.hwAccounts[this.state.hwAccounts.length - 1].isInitialized) {

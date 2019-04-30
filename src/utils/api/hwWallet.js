@@ -11,10 +11,10 @@ import { getTransactionBytes, calculateTxId, getBufferToHex, createSendTX, creat
 import { PLATFORM_TYPES, getPlatformType } from '../platform';
 import store from '../../store';
 
-import { getAccount } from './account';
+import { getAccount } from './lsk/account';
 import { extractAddress } from '../account';
 import { getVotes } from './delegate';
-import { getTransactions } from './transactions';
+import { getTransactions } from './lsk/transactions';
 
 import loginTypes from '../../constants/loginTypes';
 import { HW_MSG, models, loginType } from '../../constants/hwConstants';
@@ -287,19 +287,15 @@ export const getHWAccountInfo = async (activePeer, deviceId, loginType, accountI
 export const sendWithHW = (activePeer, account, recipientId, amount,
   pin = null, data = null) =>
   new Promise(async (resolve, reject) => {
-    console.log(account.publicKey, recipientId, amount, data);
     const rawTx = createSendTX(account.publicKey, recipientId, amount, data);
     let error;
     let signedTx;
-    console.log('signTransactionWithHW', rawTx);
     [error, signedTx] = await to(signTransactionWithHW(rawTx, account, pin));
 
     if (error) {
       reject(error);
     } else {
       activePeer.transactions.broadcast(signedTx).then(() => {
-        console.log('signedTx', signedTx);
-
         resolve(signedTx);
       }).catch(reject);
     }
