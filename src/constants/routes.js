@@ -11,6 +11,7 @@ import AccountTransactions from '../components/accountTransactions';
 import Voting from '../components/voting';
 import SingleTransaction from '../components/singleTransactionV2';
 import HwWallet from '../components/hwWallet';
+import HwWalletLogin from '../components/hwWalletLogin';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
 import SendV2 from '../components/sendV2';
@@ -117,8 +118,15 @@ export default {
     isPrivate: false,
   },
   hwWallet: {
+    // TODO remove this when enabling new hw wallet UI
     path: '/hw-walet-login',
     component: HwWallet,
+    isV2Layout: true,
+    isPrivate: false,
+  },
+  hwWalletV2: {
+    path: '/hw-walet-login-v2', // TODO remove '-v2' when enabling new hw wallet UI
+    component: HwWalletLogin,
     isV2Layout: true,
     isPrivate: false,
   },
