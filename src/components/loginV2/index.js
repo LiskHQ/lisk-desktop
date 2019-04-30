@@ -17,6 +17,7 @@ setDefaults({
 
 const mapStateToProps = state => ({
   account: state.account,
+  peers: state.peers,
   settings: state.settings,
   liskAPIClient: state.peers && state.peers.liskAPIClient,
 });
