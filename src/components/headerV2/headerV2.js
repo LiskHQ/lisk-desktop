@@ -1,6 +1,5 @@
 import React from 'react';
 import Lisk from 'lisk-elements';
-import i18next from 'i18next';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
@@ -8,7 +7,8 @@ import { SecondaryButtonV2, PrimaryButtonV2 } from '../toolbox/buttons/button';
 import Feedback from '../toolbox/feedback/feedback';
 import { InputV2 } from '../toolbox/inputsV2';
 import { addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
-import getNetwork from '../../utils/getNetwork';
+import getNetwork, { getNetworksList } from '../../utils/getNetwork';
+import { parseSearchParams } from './../../utils/searchParams';
 
 import darkLogo from '../../assets/images/logo/lisk-logo-dark.svg';
 import whiteLogo from '../../assets/images/logo/lisk-logo-white.svg';
@@ -43,18 +43,28 @@ class HeaderV2 extends React.Component {
       isFirstTime: true,
     };
 
-    this.getNetworksList();
+    // this.getNetworksList();
+    this.networkList = getNetworksList();
 
     this.toggleDropdown = this.toggleDropdown.bind(this);
   }
 
-  getNetworksList() {
-    this.networks = Object.keys(networks)
-      .filter(network => network !== 'default')
-      .map((network, index) => ({
-        label: i18next.t(networks[network].name),
-        value: index,
-      }));
+  // getNetworksList() {
+  //   this.networks = Object.keys(networks)
+  //     .filter(network => network !== 'default')
+  //     .map((network, index) => ({
+  //       label: i18next.t(networks[network].name),
+  //       value: index,
+  //     }));
+  // }
+
+  // eslint-disable-next-line class-methods-use-this
+  showNetworkOptions() {
+    const showNetwork = this.props.settings && this.props.settings.showNetwork;
+    const params = parseSearchParams(this.props.history.location.search);
+    const showNetworkParam = params.showNetwork || params.shownetwork;
+
+    return showNetworkParam === 'true' || (showNetwork && showNetworkParam !== 'false');
   }
 
   changeAddress({ target }) {
@@ -129,9 +139,10 @@ class HeaderV2 extends React.Component {
   /* eslint-disable complexity */
   render() {
     const {
-      t, showSettings, showNetwork, networkList,
+      t, showSettings,
       dark, selectedNetwork, address,
     } = this.props;
+    const showNetwork = this.showNetworkOptions();
 
     return (
       <header className={`${styles.wrapper} mainHeader ${dark ? 'dark' : ''}`}>
@@ -145,14 +156,14 @@ class HeaderV2 extends React.Component {
                 <span className={`${this.state.validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
                       onClick={() => this.toggleDropdown(!this.state.showDropdown)}>
                       { selectedNetwork !== networks.customNode.code
-                        ? networkList[selectedNetwork].label
+                        ? this.networkList[selectedNetwork].label
                         : address || this.state.address }</span>
                 <DropdownV2
                   className={`${styles.dropdown} ${dark ? 'dark' : ''} network-dropdown`}
                   showArrow={false}
                   showDropdown={this.state.showDropdown}
                   active={selectedNetwork}>
-                  {networkList && networkList.map((network, key) => {
+                  {this.networkList && this.networkList.map((network, key) => {
                     const activeTab = this.state.network === networks.customNode.code;
                     if (network.value === networks.customNode.code) {
                       return <span

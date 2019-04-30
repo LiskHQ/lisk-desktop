@@ -1,4 +1,5 @@
 import Lisk from 'lisk-elements';
+import i18next from 'i18next';
 import networks from '../constants/networks';
 
 const getNetwork = (code) => {
@@ -26,3 +27,11 @@ export const getNetworkIdentifier = (peers) => {
     ? network.name.toLowerCase()
     : peers.options.nethash;
 };
+
+export const getNetworksList = () =>
+  Object.keys(networks)
+    .filter(network => network !== 'default')
+    .map((network, index) => ({
+      label: i18next.t(networks[network].name),
+      alue: index,
+    }));

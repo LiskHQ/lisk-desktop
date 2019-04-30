@@ -1,15 +1,14 @@
 import React from 'react';
-import i18next from 'i18next';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 
 import routes from '../../constants/routes';
-import { addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
+import { getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import { parseSearchParams } from './../../utils/searchParams';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
-import getNetwork from '../../utils/getNetwork';
+import { getNetworksList } from '../../utils/getNetwork';
 import networks from '../../constants/networks';
-import HeaderV2 from '../headerV2/headerV2';
+import HeaderV2 from '../headerV2/index';
 import styles from './splashscreen.css';
 import Tooltip from '../toolbox/tooltip/tooltip';
 
@@ -36,9 +35,7 @@ class Splashscreen extends React.Component {
 
     this.secondIteration = false;
 
-    this.getNetworksList();
-
-    this.changeNetwork = this.changeNetwork.bind(this);
+    this.networks = getNetworksList();
   }
   componentDidMount() {
     // istanbul ignore else
@@ -75,53 +72,12 @@ class Splashscreen extends React.Component {
       this.props.peers.options.address === network.address;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  showNetworkOptions() {
-    const showNetwork = this.props.settings && this.props.settings.showNetwork;
-    const params = parseSearchParams(this.props.history.location.search);
-    const showNetworkParam = params.showNetwork || params.shownetwork;
-
-    return showNetworkParam === 'true' || (showNetwork && showNetworkParam !== 'false');
-  }
-
-  changeNetwork(network) {
-    this.setState({ network });
-    this.props.settingsUpdated({ network });
-  }
-
-  getNetwork(chosenNetwork) {
-    const network = { ...getNetwork(chosenNetwork) };
-    if (chosenNetwork === networks.customNode.code) {
-      network.address = addHttp(this.state.address);
-    }
-    return network;
-  }
-
-  getNetworksList() {
-    this.networks = Object.keys(networks)
-      .filter(network => network !== 'default')
-      .map((network, index) => ({
-        label: i18next.t(networks[network].name),
-        value: index,
-      }));
-  }
-
   render() {
-    const { t, settingsUpdated, peers } = this.props;
+    const { t } = this.props;
 
     return (
       <React.Fragment>
-        <HeaderV2
-          dark={true}
-          showSettings={true}
-          validationError={this.state.validationError}
-          liskAPIClientSet={this.props.liskAPIClientSet}
-          address={peers.options.address}
-          networkList={this.networks}
-          selectedNetwork={peers.options.code || 0}
-          handleNetworkSelect={this.changeNetwork}
-          settingsUpdated={settingsUpdated}
-          showNetwork={this.showNetworkOptions()} />
+        <HeaderV2 dark={true} />
         <div className={`${styles.splashscreen}`}>
           <div className={`${styles.wrapper}`}>
             <div className={`${styles.titleHolder}`}>

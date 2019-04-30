@@ -1,6 +1,5 @@
 /* eslint-disable max-lines */
 import React from 'react';
-import Lisk from 'lisk-elements';
 import i18next from 'i18next';
 
 import { translate } from 'react-i18next';
@@ -9,14 +8,14 @@ import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
 import { parseSearchParams } from './../../utils/searchParams';
 import { extractAddress } from '../../utils/account';
-import { validateUrl, addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
-import getNetwork from '../../utils/getNetwork';
+import { getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
+import { getNetworksList } from '../../utils/getNetwork';
 import networks from '../../constants/networks';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
 import feedbackLinks from '../../constants/feedbackLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
-import HeaderV2 from '../headerV2/headerV2';
+import HeaderV2 from '../headerV2/index';
 import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
 import styles from './loginV2.css';
 import Piwik from '../../utils/piwik';
@@ -47,11 +46,9 @@ class LoginV2 extends React.Component {
 
     this.secondIteration = false;
 
-    this.getNetworksList();
+    this.networks = getNetworksList();
 
     this.checkPassphrase = this.checkPassphrase.bind(this);
-    this.changeNetwork = this.changeNetwork.bind(this);
-    this.changeAddress = this.changeAddress.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onLoginSubmission = this.onLoginSubmission.bind(this);
   }
@@ -66,7 +63,7 @@ class LoginV2 extends React.Component {
       devices: await getDeviceList(),
     });
 
-    i18next.on('languageChanged', this.getNetworksList);
+    i18next.on('languageChanged', getNetworksList);
   }
 
   componentDidUpdate(prevProps) {
@@ -102,50 +99,11 @@ class LoginV2 extends React.Component {
       this.props.peers.options.address === network.address;
   }
 
-  getNetworksList() {
-    this.networks = Object.keys(networks)
-      .filter(network => network !== 'default')
-      .map((network, index) => ({
-        label: i18next.t(networks[network].name),
-        value: index,
-      }));
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  showNetworkOptions() {
-    const showNetwork = this.props.settings && this.props.settings.showNetwork;
-    const params = parseSearchParams(this.props.history.location.search);
-    const showNetworkParam = params.showNetwork || params.shownetwork;
-
-    return showNetworkParam === 'true' || (showNetwork && showNetworkParam !== 'false');
-  }
-
   checkPassphrase(passphrase, validationError) {
     this.setState({
       passphrase,
       isValid: !validationError,
     });
-  }
-
-  changeAddress({ target }) {
-    const address = target.value;
-    this.setState({
-      address,
-      ...validateUrl(address),
-    });
-  }
-
-  changeNetwork(network) {
-    this.setState({ network });
-    this.props.settingsUpdated({ network });
-  }
-
-  getNetwork(chosenNetwork) {
-    const network = { ...getNetwork(chosenNetwork) };
-    if (chosenNetwork === networks.customNode.code) {
-      network.address = addHttp(this.state.address);
-    }
-    return network;
   }
 
   onFormSubmit(e) {
@@ -167,53 +125,14 @@ class LoginV2 extends React.Component {
     }
   }
 
-  validateCorrectNode(nextPath) {
-    const { address } = this.state;
-    const nodeURL = address !== '' ? addHttp(address) : address;
-    if (this.state.network === networks.customNode.code) {
-      const liskAPIClient = new Lisk.APIClient([nodeURL], {});
-      liskAPIClient.node.getConstants()
-        .then((res) => {
-          if (res.data) {
-            this.props.liskAPIClientSet({
-              network: {
-                ...this.getNetwork(this.state.network),
-                address: nodeURL,
-              },
-            });
-            this.props.history.push(nextPath);
-          } else {
-            throw new Error();
-          }
-        }).catch(() => {
-          this.props.errorToastDisplayed({ label: i18next.t('Unable to connect to the node') });
-        });
-    } else {
-      const network = this.getNetwork(this.state.network);
-      this.props.liskAPIClientSet({ network });
-      this.props.history.push(nextPath);
-    }
-  }
-
   // eslint-disable-next-line complexity
   render() {
-    const {
-      t, match, settingsUpdated, peers,
-    } = this.props;
+    const { t, match } = this.props;
 
     return (
       <React.Fragment>
         { match.url === routes.loginV2.path ? (
-        <HeaderV2
-          showNetwork={this.showNetworkOptions()}
-          validationError={this.state.validationError}
-          liskAPIClientSet={this.props.liskAPIClientSet}
-          networkList={this.networks}
-          selectedNetwork={peers.options.code || 0}
-          address={peers.options.address}
-          handleNetworkSelect={this.changeNetwork}
-          settingsUpdated={settingsUpdated}
-          showSettings={true} />
+        <HeaderV2 showSettings={true} />
         ) : null }
         <div className={`${styles.login} ${grid.row}`}>
           <div
@@ -274,7 +193,7 @@ class LoginV2 extends React.Component {
                     <div className={`${styles.label}`}>
                       {t('Hardware login (beta): ')}
                       <span className={`${styles.link} hardwareWalletLink`}
-                        onClick={() => this.validateCorrectNode(routes.hwWallet.path)}>
+                        onClick={() => this.props.history.push(routes.hwWallet.path)}>
                         {this.state.devices[0] && this.state.devices[0].model}
                       </span>
                     </div>

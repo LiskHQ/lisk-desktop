@@ -5,7 +5,6 @@ import { settingsUpdated } from '../../actions/settings';
 import Splashscreen from './splashscreen';
 
 const mapStateToProps = state => ({
-  peers: state.peers,
   settings: state.settings,
   liskAPIClient: state.peers && state.peers.liskAPIClient,
 });
