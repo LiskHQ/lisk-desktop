@@ -11,10 +11,10 @@ import { getTransactionBytes, calculateTxId, getBufferToHex, createSendTX, creat
 import { PLATFORM_TYPES, getPlatformType } from '../platform';
 import store from '../../store';
 
-import { getAccount } from './account';
+import { getAccount } from './lsk/account';
 import { extractAddress } from '../account';
 import { getVotes } from './delegate';
-import { getTransactions } from './transactions';
+import { getTransactions } from './lsk/transactions';
 
 import loginTypes from '../../constants/loginTypes';
 import { HW_MSG, models, loginType } from '../../constants/hwConstants';

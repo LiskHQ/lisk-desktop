@@ -1,5 +1,10 @@
 import settingsMiddleware from './settings';
 import actionTypes from '../../constants/actions';
+import * as settings from '../../actions/settings';
+import * as service from '../../actions/service';
+
+jest.mock('../../actions/service');
+jest.mock('../../actions/settings');
 
 describe('Middleware: Settings', () => {
   const next = jest.fn();
@@ -9,8 +14,6 @@ describe('Middleware: Settings', () => {
       settings: {},
     }),
   };
-  const pricesRetrieved = jest.fn();
-  // const settingsUpdated = jest.fn();
 
   it('should pass the action', () => {
     const action = { type: 'ANY_ACTION' };
@@ -27,8 +30,20 @@ describe('Middleware: Settings', () => {
     };
 
     settingsMiddleware(store)(next)(action);
-    // const { settings } = store.getState();
-    expect(pricesRetrieved).not.toBeCalled();
-    // expect(settingsUpdated).toBeCalledWith(settings);
+    expect(service.pricesRetrieved).not.toBeCalled();
+    expect(settings.settingsUpdated).toBeCalledWith(store.getState().settings);
+  });
+
+  it('should dispatch pricesRetrieved and settingsUpdated', () => {
+    const action = {
+      type: actionTypes.settingsUpdateToken,
+      data: {
+        token: true,
+      },
+    };
+
+    settingsMiddleware(store)(next)(action);
+    expect(service.pricesRetrieved).toBeCalled();
+    expect(settings.settingsUpdated).toBeCalledWith(store.getState().settings);
   });
 });

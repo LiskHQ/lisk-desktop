@@ -1,4 +1,9 @@
 // istanbul ignore file
+/**
+ * This file doesnt have test file
+ * because it just calling a function mapper
+ * and the functionMapper file it is already tested
+ */
 import getMappedFunction from './functionMapper';
 
 /**

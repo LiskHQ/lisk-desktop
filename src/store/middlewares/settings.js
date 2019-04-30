@@ -6,7 +6,6 @@ const settings = store => next => (action) => {
   switch (action.type) {
     case actionsType.settingsUpdateToken:
       next(action);
-      // istanbul ignore next
       if (action.data.token) {
         store.dispatch(pricesRetrieved());
       }

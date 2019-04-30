@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 import { stub } from 'sinon';
 import searchAll from './search';
-import * as accountsAPI from './account';
-import * as transactionsAPI from './transactions';
+import * as accountsAPI from './lsk/account';
+import * as transactionsAPI from './lsk/transactions';
 import * as delegateAPI from './delegate';
 
 describe('Utils: Search', () => {

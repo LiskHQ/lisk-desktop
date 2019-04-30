@@ -3,10 +3,10 @@ import * as btcAccount from './btc/account';
 import * as btcNetwork from './btc/network';
 import * as btcService from './btc/service';
 import * as btcTransactions from './btc/transactions';
-import * as lskAccount from './account';
+import * as lskAccount from './lsk/account';
 import * as lskNetwork from './lsk/network';
-import * as lskService from './liskService';
-import * as lskTransactions from './transactions';
+import * as lskService from './lsk/liskService';
+import * as lskTransactions from './lsk/transactions';
 
 /**
  * Resource oriented mapping from token type to utility functions.
