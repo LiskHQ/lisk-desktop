@@ -43,20 +43,8 @@ class HeaderV2 extends React.Component {
       isFirstTime: true,
     };
 
-    // this.getNetworksList();
-    this.networkList = getNetworksList();
-
     this.toggleDropdown = this.toggleDropdown.bind(this);
   }
-
-  // getNetworksList() {
-  //   this.networks = Object.keys(networks)
-  //     .filter(network => network !== 'default')
-  //     .map((network, index) => ({
-  //       label: i18next.t(networks[network].name),
-  //       value: index,
-  //     }));
-  // }
 
   // eslint-disable-next-line class-methods-use-this
   showNetworkOptions() {
@@ -143,6 +131,7 @@ class HeaderV2 extends React.Component {
       dark, selectedNetwork, address,
     } = this.props;
     const showNetwork = this.showNetworkOptions();
+    const networkList = getNetworksList();
 
     return (
       <header className={`${styles.wrapper} mainHeader ${dark ? 'dark' : ''}`}>
@@ -156,14 +145,14 @@ class HeaderV2 extends React.Component {
                 <span className={`${this.state.validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
                       onClick={() => this.toggleDropdown(!this.state.showDropdown)}>
                       { selectedNetwork !== networks.customNode.code
-                        ? this.networkList[selectedNetwork].label
+                        ? networkList[selectedNetwork].label
                         : address || this.state.address }</span>
                 <DropdownV2
                   className={`${styles.dropdown} ${dark ? 'dark' : ''} network-dropdown`}
                   showArrow={false}
                   showDropdown={this.state.showDropdown}
                   active={selectedNetwork}>
-                  {this.networkList && this.networkList.map((network, key) => {
+                  {networkList && networkList.map((network, key) => {
                     const activeTab = this.state.network === networks.customNode.code;
                     if (network.value === networks.customNode.code) {
                       return <span
