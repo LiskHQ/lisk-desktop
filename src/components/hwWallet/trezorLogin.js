@@ -9,7 +9,7 @@ import routes from '../../constants/routes';
 import Piwik from '../../utils/piwik';
 import { getDeviceList, getLoginTypeFromDevice,
   getHWPublicKeyFromIndex, getHWAddressFromIndex } from '../../utils/hwWallet';
-import { extractAddress } from '../../utils/api/account';
+import { extractAddress } from '../../utils/api/lsk/account';
 
 
 import cubeImage from '../../assets/images/dark-blue-cube.svg';

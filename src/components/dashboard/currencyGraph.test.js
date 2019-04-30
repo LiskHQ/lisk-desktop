@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import React from 'react';
 import { mountWithContext } from '../../../test/unit-test-utils/mountHelpers';
 import { prepareStore } from '../../../test/unit-test-utils/applicationInit';
-import liskServiceApi from '../../utils/api/liskService';
+import liskServiceApi from '../../utils/api/lsk/liskService';
 
 import liskServiceReducer from '../../store/reducers/liskService';
 import CurrencyGraph from './currencyGraph';

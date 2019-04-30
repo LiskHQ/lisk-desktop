@@ -1,7 +1,7 @@
 import Lisk from 'lisk-elements';
-import { toRawLsk } from '../../utils/lsk';
-import { getTimestampFromFirstBlock } from '../datetime';
-import txFilters from './../../constants/transactionFilters';
+import { toRawLsk } from '../../lsk';
+import { getTimestampFromFirstBlock } from '../../datetime';
+import txFilters from '../../../constants/transactionFilters';
 
 export const send = (
   liskAPIClient,

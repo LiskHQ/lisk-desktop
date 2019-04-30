@@ -1,7 +1,6 @@
-// import { requestToActivePeer } from './peers';
 import Lisk from 'lisk-elements';
-import getMappedFunction from './functionMapper';
-import { tokenMap } from '../../constants/tokens';
+import getMappedFunction from '../functionMapper';
+import { tokenMap } from '../../../constants/tokens';
 
 export const getAccount = (liskAPIClient, address) =>
   new Promise((resolve, reject) => {
