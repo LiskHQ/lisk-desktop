@@ -209,7 +209,7 @@ class LoginV2 extends React.Component {
                       <div className={`${styles.label}`}>
                         {t('Hardware login (beta): ')}
                         <span className={`${styles.link} hardwareWalletLink`}
-                          onClick={() => this.validateCorrectNode(routes.hwWallet.path)}>
+                          onClick={() => this.props.history.push(routes.hwWallet.path)}>
                           Ledger Nano S
                         </span>
                       </div>

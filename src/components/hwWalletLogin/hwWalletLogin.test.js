@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
+import { mountWithContext } from '../../../test/unit-test-utils/mountHelpers';
 import HwWalletLogin from './hwWalletLogin';
 
 describe('HwWalletLogin', () => {
@@ -32,7 +33,7 @@ describe('HwWalletLogin', () => {
   };
 
   it('should show "looking for device" at first and "SelectDevice" after device conneted', () => {
-    wrapper = mount(<HwWalletLogin {...props}/>, options);
+    wrapper = mountWithContext(<HwWalletLogin {...props}/>, options);
     wrapper.update();
     // TODO figure out why the assertion below doesn't work.
     // I guess something with MultiStep using React.cloneElement

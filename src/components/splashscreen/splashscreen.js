@@ -77,7 +77,7 @@ class Splashscreen extends React.Component {
 
     return (
       <React.Fragment>
-        <HeaderV2 dark={true} />
+        <HeaderV2 dark={true} showSettings={true} />
         <div className={`${styles.splashscreen}`}>
           <div className={`${styles.wrapper}`}>
             <div className={`${styles.titleHolder}`}>
