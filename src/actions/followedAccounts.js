@@ -1,5 +1,5 @@
 import actionTypes from '../constants/actions';
-import { getAccount } from '../utils/api/account';
+import { getAccount } from '../utils/api/lsk/account';
 
 export const followedAccountAdded = account => ({
   data: account,

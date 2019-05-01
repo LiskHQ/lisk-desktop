@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import NewsFeed from './newsFeed';
 import SettingsNewsFeed from './settingsNewsFeed';
-import liskServiceApi from '../../utils/api/liskService';
+import liskServiceApi from '../../utils/api/lsk/liskService';
 
 describe('NewsFeed', () => {
   let liskServiceApiMock;

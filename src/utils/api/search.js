@@ -1,5 +1,5 @@
-import { getAccount } from './account';
-import { getSingleTransaction } from './transactions';
+import { getAccount } from './lsk/account';
+import { getSingleTransaction } from './lsk/transactions';
 import { listDelegates } from './delegate';
 import regex from './../../utils/regex';
 
