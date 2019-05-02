@@ -16,7 +16,7 @@ const filterAndOrderByMatch = (searchTerm, delegates) =>
 
 /* eslint-disable prefer-promise-reject-errors */
 const searchAddresses = ({ liskAPIClient, searchTerm }) => new Promise((resolve, reject) =>
-  getAccount({ liskAPIClient, addresses: searchTerm })
+  getAccount({ liskAPIClient, address: searchTerm })
     .then(response => resolve({ addresses: [response] }))
     .catch(() => reject({ addresses: [] })));
 
