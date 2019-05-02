@@ -2,6 +2,7 @@
 import actionTypes from '../../constants/actions';
 import { accountLoggedOut } from '../../actions/account';
 import { dialogDisplayed, dialogHidden } from '../../actions/dialog';
+import { devicesListUpdated } from '../../actions/hwWallets';
 import { successToastDisplayed, errorToastDisplayed, infoToastDisplayed } from '../../actions/toaster';
 import { HW_MSG } from '../../constants/hwConstants';
 import Alert from '../../components/dialog/alert';
@@ -19,10 +20,7 @@ const hwWalletMiddleware = store => next => (action) => {
     });
 
     ipc.on('hwDeviceListChanged', (event, devicesList) => {
-      store.dispatch({
-        type: actionTypes.devicesListUpdate,
-        data: devicesList,
-      });
+      store.dispatch(devicesListUpdated(devicesList));
     });
 
     ipc.on('hwConnected', (event, { model }) => {
@@ -56,7 +54,7 @@ const hwWalletMiddleware = store => next => (action) => {
 
       store.dispatch({
         type: actionTypes.settingsUpdated,
-        data: { isHarwareWalletConnected: false },
+        data: { isHarwareWalletConnected: !!state.hwWallets.devices.length },
       });
 
       store.dispatch(successToastDisplayed({ label: `${model} disconnected` }));

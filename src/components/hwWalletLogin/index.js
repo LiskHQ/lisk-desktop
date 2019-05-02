@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+import { devicesListUpdated } from '../../actions/hwWallets';
 import HardwareWalletLogin from './hwWalletLogin';
 
 const mapStateToProps = state => ({
@@ -9,6 +10,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  devicesListUpdated,
 };
 
 export default connect(
