@@ -6,9 +6,21 @@ import Loading from './loading';
 import SelectDevice from './selectDevice';
 import UnlockDevice from './unlockDevice';
 import SelectAccount from './selectAccount';
+import { getDeviceList } from '../../utils/hwWallet';
 import styles from './hwWalletLogin.css';
 
 class HardwareWalletLogin extends React.Component {
+  async componentDidMount() {
+    await this.updateDeviceList(null);
+  }
+
+  async updateDeviceList(deviceList) {
+    if (!deviceList) {
+      deviceList = await getDeviceList();
+    }
+    this.props.devicesListUpdated(deviceList);
+  }
+
   render() {
     const { devices, t } = this.props;
     return <React.Fragment>
