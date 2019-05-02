@@ -17,7 +17,7 @@ class HardwareWalletLogin extends React.Component {
         <MultiStep
           className={`${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}>
           <Loading t={t} devices={devices} />
-          <SelectDevice t={t} />
+          <SelectDevice t={t} devices={devices} />
           <UnlockDevice devices={devices} t={t} />
           <SelectAccount t={t} />
         </MultiStep>
