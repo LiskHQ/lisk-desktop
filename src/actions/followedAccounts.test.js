@@ -8,7 +8,7 @@ import {
   followedAccountRemoved,
 } from './followedAccounts';
 import actionTypes from '../constants/actions';
-import * as accountApi from '../utils/api/account';
+import * as accountApi from '../utils/api/lsk/account';
 import accounts from '../../test/constants/accounts';
 
 describe('actions: followedAccount', () => {

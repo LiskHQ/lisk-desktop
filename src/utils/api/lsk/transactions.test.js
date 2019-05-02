@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import { stub } from 'sinon';
 import { send, getTransactions, unconfirmedTransactions, getSingleTransaction } from './transactions';
-import { getTimestampFromFirstBlock } from '../datetime';
-import txFilters from './../../constants/transactionFilters';
-import accounts from '../../../test/constants/accounts';
+import { getTimestampFromFirstBlock } from '../../datetime';
+import txFilters from '../../../constants/transactionFilters';
+import accounts from '../../../../test/constants/accounts';
 
 describe('Utils: Transactions API', () => {
   const id = '124701289470';

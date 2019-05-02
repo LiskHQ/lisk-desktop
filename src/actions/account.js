@@ -1,8 +1,8 @@
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
-import { setSecondPassphrase, getAccount } from '../utils/api/account';
+import { setSecondPassphrase, getAccount } from '../utils/api/lsk/account';
 import { registerDelegate, getDelegate, getAllVotes, getVoters } from '../utils/api/delegate';
-import { getTransactions } from '../utils/api/transactions';
+import { getTransactions } from '../utils/api/lsk/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import { loadTransactionsFinish, transactionsUpdated } from './transactions';
 import { delegateRegisteredFailure } from './delegate';

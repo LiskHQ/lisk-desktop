@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import to from 'await-to-js';
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
-import { send, getTransactions, getSingleTransaction, unconfirmedTransactions } from '../utils/api/transactions';
+import { send, getTransactions, getSingleTransaction, unconfirmedTransactions } from '../utils/api/lsk/transactions';
 import { getDelegate } from '../utils/api/delegate';
 import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';

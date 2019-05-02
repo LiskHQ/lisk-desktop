@@ -2,7 +2,7 @@ import to from 'await-to-js';
 import {
   getAccountFromLedgerIndex,
 } from '../ledger';
-import { getAccount } from './account';
+import { getAccount } from './lsk/account';
 
 const getLedgerAccountInfo = async (liskAPIClient, accountIndex) => {
   let error;
