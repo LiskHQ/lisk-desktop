@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
 import { mountWithContext } from '../../../test/unit-test-utils/mountHelpers';
 import HwWalletLogin from './hwWalletLogin';
 

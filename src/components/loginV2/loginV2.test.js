@@ -105,7 +105,7 @@ describe('LoginV2', () => {
       expect(wrapper.find('passphraseInputV2 Feedback')).to.contain(expectedError);
     });
 
-    xit('Should show the address input when custom node is selected', () => {
+    it('Should show the address input when custom node is selected', () => {
       history.location.search = '?showNetwork=true';
       wrapper.setProps({ history });
 
@@ -156,7 +156,7 @@ describe('LoginV2', () => {
       expect(props.history.replace).to.have.been.calledWith(`${routes.delegates.path}`);
     });
 
-    xit('shows network options when url param showNetwork is true', () => {
+    it('shows network options when url param showNetwork is true', () => {
       props.history.replace.reset();
       history.location.search = '?showNetwork=true';
       wrapper.setProps({ history });
@@ -173,4 +173,3 @@ describe('LoginV2', () => {
     });
   });
 });
- 

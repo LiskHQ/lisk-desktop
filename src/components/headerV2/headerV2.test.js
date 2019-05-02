@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { spy, useFakeTimers } from 'sinon';
 import { expect } from 'chai';
-import { mount } from 'enzyme';
-import { MemoryRouter } from 'react-router-dom';
 import { mountWithContext } from '../../../test/unit-test-utils/mountHelpers';
 import i18n from '../../i18n';
 import HeaderV2 from './index';
@@ -31,7 +29,7 @@ describe.skip('V2 Header', () => {
 
     settingsUpdated: spy(),
     liskAPIClientSet: spy(),
-  };  
+  };
 
   beforeEach(() => {
     clock = useFakeTimers({
