@@ -105,13 +105,13 @@ describe('LoginV2', () => {
       expect(wrapper.find('passphraseInputV2 Feedback')).to.contain(expectedError);
     });
 
-    it('Should show the address input when custom node is selected', () => {
-      history.location.search = '?showNetwork=true';
-      wrapper.setProps({ history });
+    // it('Should show the address input when custom node is selected', () => {
+    //   history.location.search = '?showNetwork=true';
+    //   wrapper.setProps({ history });
 
-      wrapper.find('HeaderV2 .option').at(2).simulate('click');
-      expect(wrapper.find('ThemedTBPrimaryButton').at(0)).to.have.className('connect-button');
-    });
+    //   wrapper.find('HeaderV2 .option').at(2).simulate('click');
+    //   expect(wrapper.find('ThemedTBPrimaryButton').at(0)).to.have.className('connect-button');
+    // });
 
     it('Should show hardware login if hardware is connected and should go to hwWallet on click', () => {
       wrapper.setProps({
@@ -156,12 +156,12 @@ describe('LoginV2', () => {
       expect(props.history.replace).to.have.been.calledWith(`${routes.delegates.path}`);
     });
 
-    it('shows network options when url param showNetwork is true', () => {
-      props.history.replace.reset();
-      history.location.search = '?showNetwork=true';
-      wrapper.setProps({ history });
-      expect(wrapper.find('HeaderV2')).to.have.prop('showNetwork');
-    });
+    // it('shows network options when url param showNetwork is true', () => {
+    //   props.history.replace.reset();
+    //   history.location.search = '?showNetwork=true';
+    //   wrapper.setProps({ history });
+    //   expect(wrapper.find('HeaderV2')).to.have.prop('showNetwork');
+    // });
   });
 
   describe('After submission', () => {
