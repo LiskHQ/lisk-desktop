@@ -1,4 +1,5 @@
 // TODO this file should be removed after the new 'network' actions are used everywhere
+/* istanbul ignore file */
 
 import i18next from 'i18next';
 import Lisk from 'lisk-elements';
