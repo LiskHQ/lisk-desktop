@@ -15,7 +15,7 @@ const hwWalletMiddleware = store => next => (action) => {
 
     store.dispatch({
       type: actionTypes.settingsUpdated,
-      data: { isHarwareWalletConnected: false, isAppOpen: false },
+      data: { isHarwareWalletConnected: false },
     });
 
     ipc.on('hwDeviceListChanged', (event, devicesList) => {
@@ -32,13 +32,6 @@ const hwWalletMiddleware = store => next => (action) => {
       });
 
       store.dispatch(successToastDisplayed({ label: `${model} connected` }));
-    });
-
-    ipc.on('openApp', () => {
-      store.dispatch({
-        type: actionTypes.settingsUpdated,
-        data: { isAppOpen: true },
-      });
     });
 
     ipc.on('hwDisconnected', (event, { model }) => {
@@ -63,7 +56,7 @@ const hwWalletMiddleware = store => next => (action) => {
 
       store.dispatch({
         type: actionTypes.settingsUpdated,
-        data: { isHarwareWalletConnected: false, isAppOpen: false },
+        data: { isHarwareWalletConnected: false },
       });
 
       store.dispatch(successToastDisplayed({ label: `${model} disconnected` }));

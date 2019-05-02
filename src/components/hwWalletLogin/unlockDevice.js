@@ -12,7 +12,8 @@ class UnlockDevice extends React.Component {
   }
 
   goNextIfAppIsOpen() {
-    if (this.props.isAppOpen) {
+    const connectedDevice = this.props.devices.find(d => d.deviceId === this.props.deviceId);
+    if (connectedDevice && (connectedDevice.openApp || /(trezor(\s?))/ig.test(connectedDevice.model))) {
       this.props.nextStep();
     }
   }
