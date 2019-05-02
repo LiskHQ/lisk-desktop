@@ -18,6 +18,13 @@ const hwWalletMiddleware = store => next => (action) => {
       data: { isHarwareWalletConnected: false, isAppOpen: false },
     });
 
+    ipc.on('hwDeviceListChanged', (event, devicesList) => {
+      store.dispatch({
+        type: actionTypes.devicesListUpdate,
+        data: devicesList,
+      });
+    });
+
     ipc.on('hwConnected', (event, { model }) => {
       store.dispatch({
         type: actionTypes.settingsUpdated,
