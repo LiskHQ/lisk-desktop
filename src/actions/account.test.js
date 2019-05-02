@@ -19,7 +19,7 @@ import {
 } from './account';
 import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { delegateRegisteredFailure } from './delegate';
-import * as accountApi from '../utils/api/lsk/account';
+import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegate';
 import * as transactionsApi from '../utils/api/transactions';
 import * as blocksApi from '../utils/api/blocks';

@@ -3,11 +3,11 @@ import Lisk from 'lisk-elements';
 import { spy, stub, match } from 'sinon';
 import actionTypes from '../constants/actions';
 import { liskAPIClientSet, liskAPIClientUpdate } from './peers';
-import * as accountApi from '../utils/api/lsk/account';
+import * as accountApi from '../utils/api/account';
 import accounts from '../../test/constants/accounts';
 import networks from '../constants/networks';
 
-jest.mock('../utils/api/lsk/account');
+jest.mock('../utils/api/account');
 jest.mock('../actions/account');
 
 describe('actions: peers', () => {
