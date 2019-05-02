@@ -5,7 +5,7 @@ import HardwareWalletLogin from './hwWalletLogin';
 
 const mapStateToProps = state => ({
   // TODO update this when isHarwareWalletConnected is refactored and we have devices in store
-  devices: state.settings.isHarwareWalletConnected ? [{}] : [],
+  devices: state.hwWallets.devices,
 });
 
 const mapDispatchToProps = {

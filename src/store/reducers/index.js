@@ -18,4 +18,5 @@ export { default as filters } from './filters';
 export { default as secondPassphrase } from './secondPassphrase';
 export { default as extensions } from './extensions';
 export { default as wallets } from './wallets';
+export { default as hwWallets } from './hwWallets';
 export { default as service } from './service';

@@ -6,6 +6,7 @@ import { successToastDisplayed, errorToastDisplayed, infoToastDisplayed } from '
 import { HW_MSG } from '../../constants/hwConstants';
 import Alert from '../../components/dialog/alert';
 
+// eslint-disable-next-line max-statements
 const hwWalletMiddleware = store => next => (action) => {
   const { ipc } = window;
 
@@ -15,6 +16,13 @@ const hwWalletMiddleware = store => next => (action) => {
     store.dispatch({
       type: actionTypes.settingsUpdated,
       data: { isHarwareWalletConnected: false },
+    });
+
+    ipc.on('hwDeviceListChanged', (event, devicesList) => {
+      store.dispatch({
+        type: actionTypes.devicesListUpdate,
+        data: devicesList,
+      });
     });
 
     ipc.on('hwConnected', (event, { model }) => {
