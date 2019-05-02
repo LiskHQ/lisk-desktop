@@ -8,7 +8,7 @@ import Fees from '../constants/fees';
 import networks from '../constants/networks';
 import { toRawLsk } from '../utils/lsk';
 
-jest.mock('../utils/api/lsk/transactions');
+jest.mock('../utils/api/transactions');
 jest.mock('../utils/api/delegate');
 
 describe('actions: transactions', () => {
