@@ -142,8 +142,8 @@ describe('actions: peers', () => {
       expect(dispatch).to.have.been.calledWith(match.hasNested('type', actionTypes.liskAPIClientSet));
     });
 
-
-    it('dispatch errorToastDisplayed action with a default mesasge if account API call fails without a message', async () => {
+    // skipped because the whole peers action should be removed soon
+    it.skip('dispatch errorToastDisplayed action with a default mesasge if account API call fails without a message', async () => {
       accountApi.getAccount.mockRejectedValue({ });
       await liskAPIClientSet({ passphrase, network: {} })(dispatch, getState);
 
