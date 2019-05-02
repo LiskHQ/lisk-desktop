@@ -27,7 +27,7 @@ describe('Utils: Account API', () => {
       const response = { data: [{ ...account }] };
 
       liskAPIClientMock.expects('get').withArgs({ address }).returnsPromise().resolves(response);
-      const requestPromise = getAccount(liskAPIClient, address);
+      const requestPromise = getAccount({ liskAPIClient, address });
       return expect(requestPromise).to.eventually.eql({ ...account, serverPublicKey: 'sample_key' });
     });
 
@@ -35,7 +35,7 @@ describe('Utils: Account API', () => {
       const account = { address, balance: 0 };
 
       liskAPIClientMock.expects('get').withArgs({ address }).returnsPromise().resolves({ data: [] });
-      const requestPromise = getAccount(liskAPIClient, address);
+      const requestPromise = getAccount({ liskAPIClient, address });
       return expect(requestPromise).to.eventually.eql(account);
     });
 
@@ -43,7 +43,7 @@ describe('Utils: Account API', () => {
       const response = { success: false };
 
       liskAPIClientMock.expects('get').withArgs({ address }).returnsPromise().rejects(response);
-      const requestPromise = getAccount(liskAPIClient, address);
+      const requestPromise = getAccount({ liskAPIClient, address });
       return expect(requestPromise).to.eventually.be.rejectedWith(response);
     });
   });
