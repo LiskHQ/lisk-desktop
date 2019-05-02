@@ -86,7 +86,6 @@ const actionTypes = {
   votesUpdated: 'VOTES_UPDATED',
   voteToggled: 'VOTE_TOGGLED',
   walletUpdated: 'WALLET_UPDATED',
-  settingsUpdateToken: 'SETTINGS_UPDATE_TOKEN',
   devicesListUpdate: 'DEVICE_LIST_UPDATE',
 };
 
