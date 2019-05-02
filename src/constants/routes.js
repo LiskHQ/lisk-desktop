@@ -125,7 +125,7 @@ export default {
     isPrivate: false,
   },
   hwWalletV2: {
-    path: '/hw-walet-login-v2', // TODO remove '-v2' when enabling new hw wallet UI
+    path: '/hw-wallet-login-v2', // TODO remove '-v2' when enabling new hw wallet UI
     component: HwWalletLogin,
     isV2Layout: true,
     isPrivate: false,

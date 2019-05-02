@@ -40,19 +40,6 @@ const getLedgerAccount = (index = 0) => {
   return ledgerAccount;
 };
 
-const isInsideLedgerApp = async (path) => {
-  try {
-    const transport = await TransportNodeHid.open(path);
-    const liskLedger = new DposLedger(transport);
-    const ledgerAccount = getLedgerAccount(0);
-    const liskAccount = await liskLedger.getPubKey(ledgerAccount);
-    transport.close();
-    return isValidAddress(liskAccount.address);
-  } catch (e) {
-    return false;
-  }
-};
-
 const createLedgerHWDevice = (liskAccount, path) =>
   new HWDevice(
     liskAccount.publicKey.substring(0, 10),
@@ -76,17 +63,24 @@ const getLiskAccount = async (path) => {
   }
 };
 
+const isInsideLedgerApp = async (path) => {
+  const liskAccount = await getLiskAccount(path);
+  if (liskAccount) return isValidAddress(liskAccount.address);
+  return false;
+};
+
 const ledgerObserver = {
   // eslint-disable-next-line max-statements
   next: async ({ device, type }) => {
     if (device) {
-      if (type === 'add') {
-        if (process.platform !== 'linux' || await isInsideLedgerApp(device.path)) {
-          const liskAccount = await getLiskAccount(device.path);
-          const ledgerDevice = createLedgerHWDevice(liskAccount, device.path);
-          addConnectedDevices(ledgerDevice);
-          hwDevice = ledgerDevice;
-          win.send({ event: 'hwConnected', value: { model: ledgerDevice.model } });
+      if (type === 'add' && process.platform !== 'linux') {
+        const liskAccount = await getLiskAccount(device.path);
+        const ledgerDevice = createLedgerHWDevice(liskAccount, device.path);
+        addConnectedDevices(ledgerDevice);
+        hwDevice = ledgerDevice;
+        win.send({ event: 'hwConnected', value: { model: ledgerDevice.model } });
+        if (await isInsideLedgerApp(device.path)) {
+          win.send({ event: 'openApp' });
         }
       } else if (type === 'remove') {
         if (hwDevice) {
