@@ -84,6 +84,12 @@ class Splashscreen extends React.Component {
                 </React.Fragment>
               </Tooltip>
             </span>
+
+            <span className={styles.linkWrapper}>
+              <Link className={`${styles.link} signin-hwWallet-button`} to={routes.hwWalletV2.path}>
+                {t('Sign in with a Hardware Wallet')}
+              </Link>
+            </span>
           </div>
         </div>
       </React.Fragment>
