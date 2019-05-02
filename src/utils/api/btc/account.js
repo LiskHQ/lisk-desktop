@@ -1,28 +1,17 @@
 import * as bitcoin from 'bitcoinjs-lib';
 import Lisk from 'lisk-elements';
 import bip32 from 'bip32';
-import * as popsicle from 'popsicle';
 import getBtcConfig from './config';
+import { getAPIClient } from './network';
 
-export const getSummary = (address, netCode = 1) => new Promise(async (resolve, reject) => {
-  try {
-    const config = getBtcConfig(netCode);
-    const response = await popsicle.get(`${config.url}/account/${address}`)
-      .use(popsicle.plugins.parse('json'));
-    const json = response.body;
-
-    if (response) {
-      resolve({
-        address,
-        balance: json.data.confirmed_balance,
-        initialized: true,
-      });
-    } else {
-      reject(json);
-    }
-  } catch (error) {
-    reject(error);
-  }
+export const getAccount = ({ networkConfig, address }) => new Promise(async (resolve, reject) => {
+  await getAPIClient(networkConfig).get(`account/${address}`).then((response) => {
+    resolve({
+      address,
+      balance: response.body.data.confirmed_balance,
+      initialized: true,
+    });
+  }).catch(reject);
 });
 
 export const getDerivedPathFromPassphrase = (passphrase, netCode = 1) => {
