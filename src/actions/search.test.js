@@ -20,7 +20,7 @@ const {
 jest.mock('../utils/api/search');
 jest.mock('../utils/api/lsk/account');
 jest.mock('../utils/api/delegate');
-jest.mock('../utils/api/lsk/transactions');
+jest.mock('../utils/api/transactions');
 
 describe('actions: search', () => {
   let dispatch;
