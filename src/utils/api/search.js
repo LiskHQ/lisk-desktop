@@ -1,4 +1,4 @@
-import { getAccount } from './lsk/account';
+import { getAccount } from './account';
 import { getSingleTransaction } from './lsk/transactions';
 import { listDelegates } from './delegate';
 import regex from './../../utils/regex';
@@ -16,7 +16,7 @@ const filterAndOrderByMatch = (searchTerm, delegates) =>
 
 /* eslint-disable prefer-promise-reject-errors */
 const searchAddresses = ({ liskAPIClient, searchTerm }) => new Promise((resolve, reject) =>
-  getAccount(liskAPIClient, searchTerm)
+  getAccount({ liskAPIClient, addresses: searchTerm })
     .then(response => resolve({ addresses: [response] }))
     .catch(() => reject({ addresses: [] })));
 

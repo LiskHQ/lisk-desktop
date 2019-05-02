@@ -47,7 +47,7 @@ export const login = async (dispatch, getState, data, config) => {
     dispatch(accountLoading());
 
     // redirect to main/transactions
-    await getAccount(liskAPIClient, address).then((accountData) => {
+    await getAccount({ liskAPIClient, address }).then((accountData) => {
       const duration = (passphrase && store.settings.autoLog) ?
         Date.now() + accountConfig.lockDuration : 0;
       const accountUpdated = {

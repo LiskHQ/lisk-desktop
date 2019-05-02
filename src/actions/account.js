@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
-import { setSecondPassphrase, getAccount } from '../utils/api/lsk/account';
+import { setSecondPassphrase } from '../utils/api/lsk/account';
+import { getAccount } from '../utils/api/account';
 import { registerDelegate, getDelegate, getAllVotes, getVoters } from '../utils/api/delegate';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
@@ -188,12 +189,8 @@ export const loadAccount = ({
   isSameAccount,
 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    getAccount(liskAPIClient, address)
-    // TODO next line should replace the two above when implementing BTC support
-    // const networkConfig = getState().network;
-    // const token = getState().settings.token.active;
-    // getAccount({ token, networkConfig, address })
+    const networkConfig = getState().network;
+    getAccount({ networkConfig, address })
       .then((response) => {
         let accountDataUpdated = {
           confirmed: transactionsResponse.data,
@@ -241,8 +238,8 @@ export const accountDataUpdated = ({
   account, windowIsFocused, transactions,
 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    getAccount(liskAPIClient, account.address).then((result) => {
+    const networkConfig = getState().network;
+    getAccount({ networkConfig, address: account.address }).then((result) => {
       if (result.balance !== account.balance) {
         dispatch(updateTransactionsIfNeeded(
           {

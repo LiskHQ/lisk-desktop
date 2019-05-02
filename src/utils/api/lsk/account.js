@@ -1,13 +1,16 @@
 import Lisk from 'lisk-elements';
 import getMappedFunction from '../functionMapper';
 import { tokenMap } from '../../../constants/tokens';
+import { getAPIClient } from './network';
 
-export const getAccount = (liskAPIClient, address) =>
+export const getAccount = ({ liskAPIClient, networkConfig, address }) =>
   new Promise((resolve, reject) => {
-    if (!liskAPIClient) {
+    // TODO remove liskAPIClient after all code that uses is is removed
+    const apiClient = liskAPIClient || getAPIClient(networkConfig);
+    if (!apiClient) {
       reject();
     }
-    liskAPIClient.accounts.get({ address }).then((res) => {
+    apiClient.accounts.get({ address }).then((res) => {
       if (res.data.length > 0) {
         resolve({
           ...res.data[0],
@@ -23,9 +26,6 @@ export const getAccount = (liskAPIClient, address) =>
       }
     }).catch(reject);
   });
-
-// export const setSecondPassphrase = (liskAPIClient, secondSecret, publicKey, secret) =>
-//   requestToActivePeer(liskAPIClient, 'signatures', { secondSecret, publicKey, secret });
 
 export const setSecondPassphrase = (
   liskAPIClient,
@@ -43,8 +43,6 @@ export const setSecondPassphrase = (
   });
 
 export const btc = { // Temporary btc account utility while we don't normalize the apis calls.
-  getAccount: /* istanbul ignore next */ (address, netCode) =>
-    getMappedFunction(tokenMap.BTC.key, 'account', 'getSummary')(address, netCode),
   extractAddress: /* istanbul ignore next */ (passphrase, netCode) =>
     getMappedFunction(tokenMap.BTC.key, 'account', 'extractAddress')(passphrase, netCode),
 };
