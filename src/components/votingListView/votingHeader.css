@@ -105,19 +105,20 @@
   position: relative;
 
   & input {
-    height: 25px;
-    border: none;
+    @mixin contentNormal;
+
+    width: 177px;
+    height: 32px;
+    border-radius: 3px;
+    border: solid 1px rgba(0, 0, 0, 0.08);
+    background-color: var(--color-white);
     outline: none;
     margin: 0;
-    font-size: 15px;
-    color: var(--color-grayscale-dark);
-    font-weight: 400;
-    padding-left: 30px;
+    color: var(--color-blue-gray);
+    padding-left: 20px;
     padding-right: 20px;
     vertical-align: top;
-    background-color: transparent;
     border-radius: 0;
-    border-bottom: solid 1px transparent;
     transition: all ease 250ms;
 
     &.desktopInput {
@@ -130,7 +131,6 @@
 
     &:focus,
     &.dirty {
-      border-bottom-color: var(--color-grayscale-dark);
 
       & ~ .clean {
         visibility: visible;

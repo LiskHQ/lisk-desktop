@@ -102,24 +102,23 @@ class VotingHeader extends React.Component {
                 ))}
               </ul>
                 <div className={`${styles.search} ${styles.items} ${styles.filter} search`}>
-                  <FontIcon className={styles.search} value='search' id='searchIcon'/>
                   <input type='text'
                     name='query'
                     className={`search ${styles.desktopInput} ${this.state.query.length > 0 ? styles.dirty : ''} `}
                     value={this.state.query}
                     onChange={this.search.bind(this)}
-                    placeholder={t('Search for a delegate')}/>
+                    placeholder={t('Filter by name...')}/>
                   <input type='text'
                     name='query'
                     className={`${styles.mobileInput} ${this.state.query.length > 0 ? styles.dirty : ''} `}
                     value={this.state.query}
                     onChange={this.search.bind(this)}
                     placeholder={t('Search')}/>
-                  <FontIcon
+                  {/* <FontIcon
                     id='cleanIcon'
                     className={`${styles.clean} clean-icon`}
                     value='close'
-                    onClick={ this.clearSearch.bind(this) }/>
+                    onClick={ this.clearSearch.bind(this) }/> */}
                 </div>
             </div>
           </div>
