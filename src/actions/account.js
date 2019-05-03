@@ -310,9 +310,26 @@ export const login = data => async (dispatch, getState) => {
         ...accountData,
         ...accountBasics,
         expireTime: duration,
+        info: {
+          [tokenMap.LSK.key]: accountData,
+        },
       };
 
       dispatch(accountLoggedIn(updatedAccount));
+      // TODO remove this condition with enabling BTC feature
+      if (localStorage.getItem('btc')) {
+        getAccount({
+          token: tokenMap.BTC.key, networkConfig, passphrase,
+        }).then((btcAccountData) => {
+          dispatch(accountLoggedIn({
+            ...updatedAccount,
+            info: {
+              ...updatedAccount.info,
+              [tokenMap.BTC.key]: btcAccountData,
+            },
+          }));
+        });
+      }
     }).catch((error) => {
       dispatch(connectionErrorToast(error));
       dispatch(accountLoggedOut());
