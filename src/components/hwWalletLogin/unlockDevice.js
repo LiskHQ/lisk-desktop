@@ -13,26 +13,28 @@ class UnlockDevice extends React.Component {
   }
 
   componentDidMount() {
-    this.goNextIfAppIsOpen();
+    this.checkLedger();
   }
 
   componentDidUpdate() {
-    this.goNextIfAppIsOpen();
+    this.navigateIfNeeded();
   }
 
   componentWillUnmount() {
     clearTimeout(this.timeout);
   }
 
-  goNextIfAppIsOpen() {
-    const connectedDevice = this.props.devices.find(d => d.deviceId === this.props.deviceId);
-    if (connectedDevice && (connectedDevice.openApp || /(trezor(\s?))/ig.test(connectedDevice.model))) {
+  navigateIfNeeded() {
+    const selectedDevice = this.props.devices.find(d => d.deviceId === this.props.deviceId);
+    if (!selectedDevice) this.props.prevStep();
+    if (selectedDevice && (selectedDevice.openApp || /(trezor(\s?))/ig.test(selectedDevice.model))) {
       clearTimeout(this.timeout);
-      this.props.nextStep({ device: connectedDevice });
+      this.props.nextStep({ device: selectedDevice });
     } else {
       this.timeout = setTimeout(this.checkLedger, 1000);
     }
   }
+
   checkLedger() {
     if (!ipc) return;
     ipc.send('checkLedger', { id: this.props.deviceId });

@@ -11,14 +11,20 @@ class SelectDevice extends React.Component {
     super(props);
 
     this.onSelectDevice = this.onSelectDevice.bind(this);
+    this.goBackIfNoDevices = this.goBackIfNoDevices.bind(this);
   }
 
   componentDidMount() {
     const { devices } = this.props;
+    this.goBackIfNoDevices();
     if (devices.length === 1) this.onSelectDevice(devices[0].deviceId);
   }
 
   componentDidUpdate() {
+    this.goBackIfNoDevices();
+  }
+
+  goBackIfNoDevices() {
     if (!this.props.devices.length) this.props.prevStep();
   }
 

@@ -77,9 +77,7 @@ const ledgerObserver = {
     if (device) {
       if (type === 'add' && process.platform !== 'linux') {
         const ledgerDevice = createLedgerHWDevice(device.path);
-        if (await isInsideLedgerApp(device.path)) {
-          ledgerDevice.openApp = true;
-        }
+        ledgerDevice.openApp = await isInsideLedgerApp(device.path);
         addConnectedDevices(ledgerDevice);
         hwDevice = ledgerDevice;
         win.send({ event: 'hwConnected', value: { model: ledgerDevice.model } });
