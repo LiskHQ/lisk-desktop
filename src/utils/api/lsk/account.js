@@ -2,14 +2,22 @@ import Lisk from 'lisk-elements';
 import getMappedFunction from '../functionMapper';
 import { tokenMap } from '../../../constants/tokens';
 import { getAPIClient } from './network';
+import { extractAddress } from '../../account';
 
-export const getAccount = ({ liskAPIClient, networkConfig, address }) =>
+export const getAccount = ({
+  liskAPIClient,
+  networkConfig,
+  address,
+  passphrase,
+  publicKey,
+}) =>
   new Promise((resolve, reject) => {
     // TODO remove liskAPIClient after all code that uses is is removed
     const apiClient = liskAPIClient || getAPIClient(networkConfig);
     if (!apiClient) {
       reject();
     }
+    address = address || extractAddress(passphrase || publicKey);
     apiClient.accounts.get({ address }).then((res) => {
       if (res.data.length > 0) {
         resolve({

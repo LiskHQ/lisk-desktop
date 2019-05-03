@@ -14,7 +14,6 @@ import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import { updateWallet } from './wallets';
-import { extractAddress, extractPublicKey } from '../utils/account';
 import accountConfig from '../constants/account';
 import { loginType } from '../constants/hwConstants';
 import { errorToastDisplayed } from './toaster';
@@ -288,27 +287,21 @@ export const connectionErrorToast = error => (
   })
 );
 
-export const login = data => async (dispatch, getState) => {
-  if (data.passphrase || data.hwInfo) {
-    const { passphrase } = data;
-    const publicKey = passphrase ? extractPublicKey(passphrase) : data.publicKey;
+export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, getState) => {
+  if (passphrase || hwInfo) {
     const networkConfig = getState().network;
-    const address = extractAddress(publicKey);
-    const accountBasics = {
-      passphrase,
-      publicKey,
-      loginType: data.hwInfo ? loginType.ledger : loginType.normal,
-      hwInfo: data.hwInfo ? data.hwInfo : {},
-    };
-
     dispatch(accountLoading());
 
-    await getAccount({ token: tokenMap.LSK.key, networkConfig, address }).then((accountData) => {
+    await getAccount({
+      token: tokenMap.LSK.key, networkConfig, publicKey, passphrase,
+    }).then((accountData) => {
       const duration = (passphrase && getState().settings.autoLog) ?
         Date.now() + accountConfig.lockDuration : 0;
       const updatedAccount = {
-        ...accountData,
-        ...accountBasics,
+        ...accountData, // TODO remove this after all components are updated to use "info"
+        passphrase,
+        loginType: hwInfo ? loginType.ledger : loginType.normal,
+        hwInfo: hwInfo || {},
         expireTime: duration,
         info: {
           [tokenMap.LSK.key]: accountData,
