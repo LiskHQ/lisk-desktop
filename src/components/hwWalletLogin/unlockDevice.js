@@ -25,6 +25,7 @@ class UnlockDevice extends React.Component {
   }
 
   componentWillUnmount() {
+    /* istanbul ignore next */
     clearTimeout(this.timeout);
   }
 
@@ -40,20 +41,21 @@ class UnlockDevice extends React.Component {
   }
 
   checkLedger() {
+    /* istanbul ignore else */
     if (!ipc) {
       this.setState({ isLoading: false });
-      return;
+    } else {
+      if (this.state.isLoading) {
+        ipc.once('checkLedger.done', () => this.setState({ isLoading: false }));
+      }
+      ipc.send('checkLedger', { id: this.props.deviceId });
     }
-    if (this.state.isLoading) {
-      ipc.once('checkLedger.done', () => this.setState({ isLoading: false }));
-    }
-    ipc.send('checkLedger', { id: this.props.deviceId });
   }
 
   render() {
     const { t, prevStep, deviceModel = 'Ledger S' } = this.props;
     return !this.state.isLoading && (
-      <React.Fragment>
+      <div>
         <h1>{t('{{deviceModel}} connected! Open the Lisk app on the device', { deviceModel })}</h1>
         <p>
         {
@@ -69,7 +71,7 @@ class UnlockDevice extends React.Component {
         <TertiaryButtonV2 onClick={prevStep}>
           {t('Go Back')}
         </TertiaryButtonV2>
-      </React.Fragment>
+      </div>
     );
   }
 }
