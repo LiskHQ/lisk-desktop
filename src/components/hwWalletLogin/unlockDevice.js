@@ -2,7 +2,16 @@ import React from 'react';
 import { TertiaryButtonV2 } from '../toolbox/buttons/button';
 import illustration from '../../assets/images/illustrations/illustration-ledger-nano-light.svg';
 
+const { ipc } = window;
+
 class UnlockDevice extends React.Component {
+  constructor() {
+    super();
+
+    this.timeout = null;
+    this.checkLedger = this.checkLedger.bind(this);
+  }
+
   componentDidMount() {
     this.goNextIfAppIsOpen();
   }
@@ -11,11 +20,22 @@ class UnlockDevice extends React.Component {
     this.goNextIfAppIsOpen();
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
+
   goNextIfAppIsOpen() {
     const connectedDevice = this.props.devices.find(d => d.deviceId === this.props.deviceId);
     if (connectedDevice && (connectedDevice.openApp || /(trezor(\s?))/ig.test(connectedDevice.model))) {
-      this.props.nextStep();
+      clearTimeout(this.timeout);
+      this.props.nextStep({ device: connectedDevice });
+    } else {
+      this.timeout = setTimeout(this.checkLedger, 1000);
     }
+  }
+  checkLedger() {
+    if (!ipc) return;
+    ipc.send('checkLedger', { id: this.props.deviceId });
   }
 
   render() {
