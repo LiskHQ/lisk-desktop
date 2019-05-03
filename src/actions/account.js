@@ -18,6 +18,7 @@ import accountConfig from '../constants/account';
 import { loginType } from '../constants/hwConstants';
 import { errorToastDisplayed } from './toaster';
 import { tokenMap } from '../constants/tokens';
+import { getConnectionErrorMessage } from './network/lsk';
 
 /**
  * Trigger this action to remove passphrase from account object
@@ -277,16 +278,6 @@ export const updateAccountDelegateStats = account =>
     }));
   };
 
-
-// TODO remove the export once peers actions are removed
-export const connectionErrorToast = error => (
-  errorToastDisplayed({
-    label: error && error.message ?
-      i18next.t(`Unable to connect to the node, Error: ${error.message}`) :
-      i18next.t('Unable to connect to the node, no response from the server.'),
-  })
-);
-
 export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, getState) => {
   const networkConfig = getState().network;
   dispatch(accountLoading());
@@ -324,7 +315,9 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
       });
     }
   }).catch((error) => {
-    dispatch(connectionErrorToast(error));
+    dispatch(errorToastDisplayed({
+      label: getConnectionErrorMessage(error),
+    }));
     dispatch(accountLoggedOut());
   });
 };

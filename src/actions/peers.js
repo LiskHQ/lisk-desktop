@@ -5,7 +5,8 @@ import Lisk from 'lisk-elements';
 import actionTypes from '../constants/actions';
 import networks from '../constants/networks';
 import { loadingStarted, loadingFinished } from '../actions/loading';
-import { login, connectionErrorToast } from './account';
+import { login } from './account';
+import { getConnectionErrorMessage } from './network/lsk';
 
 import { networkSet } from './network';
 
@@ -59,7 +60,9 @@ export const liskAPIClientSet = data =>
         }
       }).catch((error) => {
         dispatch(loadingFinished('getConstants'));
-        dispatch(connectionErrorToast(error));
+        dispatch(errorToastDisplayed({
+          label: getConnectionErrorMessage(error),
+        }));
       });
     } else {
       dispatch(peerSet(data, config));
