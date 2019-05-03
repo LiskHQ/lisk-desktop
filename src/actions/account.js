@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+// TODO figure out how to reduce size of this file
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { getAccount, setSecondPassphrase } from '../utils/api/account';
@@ -12,6 +14,11 @@ import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import { updateWallet } from './wallets';
+import { extractAddress, extractPublicKey } from '../utils/account';
+import accountConfig from '../constants/account';
+import { loginType } from '../constants/hwConstants';
+import { errorToastDisplayed } from './toaster';
+import { tokenMap } from '../constants/tokens';
 
 /**
  * Trigger this action to remove passphrase from account object
@@ -270,3 +277,45 @@ export const updateAccountDelegateStats = account =>
       txDelegateRegister: transaction.data[0],
     }));
   };
+
+
+// TODO remove the export once peers actions are removed
+export const connectionErrorToast = error => (
+  errorToastDisplayed({
+    label: error && error.message ?
+      i18next.t(`Unable to connect to the node, Error: ${error.message}`) :
+      i18next.t('Unable to connect to the node, no response from the server.'),
+  })
+);
+
+export const login = data => async (dispatch, getState) => {
+  if (data.passphrase || data.hwInfo) {
+    const { passphrase } = data;
+    const publicKey = passphrase ? extractPublicKey(passphrase) : data.publicKey;
+    const networkConfig = getState().network;
+    const address = extractAddress(publicKey);
+    const accountBasics = {
+      passphrase,
+      publicKey,
+      loginType: data.hwInfo ? loginType.ledger : loginType.normal,
+      hwInfo: data.hwInfo ? data.hwInfo : {},
+    };
+
+    dispatch(accountLoading());
+
+    await getAccount({ token: tokenMap.LSK.key, networkConfig, address }).then((accountData) => {
+      const duration = (passphrase && getState().settings.autoLog) ?
+        Date.now() + accountConfig.lockDuration : 0;
+      const updatedAccount = {
+        ...accountData,
+        ...accountBasics,
+        expireTime: duration,
+      };
+
+      dispatch(accountLoggedIn(updatedAccount));
+    }).catch((error) => {
+      dispatch(connectionErrorToast(error));
+      dispatch(accountLoggedOut());
+    });
+  }
+};
