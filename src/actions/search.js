@@ -7,14 +7,16 @@ import { getBlocks } from '../utils/api/blocks';
 import searchAll from '../utils/api/search';
 import transactionTypes from '../constants/transactionTypes';
 import { updateWallet } from './wallets';
+import { tokenMap } from '../constants/tokens';
 
 const searchDelegate = ({ publicKey, address }) =>
   async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     const networkConfig = getState().network;
+    const token = tokenMap.LSK.key;
     const delegates = await getDelegate(liskAPIClient, { publicKey });
     const transactions = await getTransactions({
-      networkConfig, address, limit: 1, type: transactionTypes.registerDelegate,
+      token, networkConfig, address, limit: 1, type: transactionTypes.registerDelegate,
     });
     const block = await getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 });
     dispatch({
