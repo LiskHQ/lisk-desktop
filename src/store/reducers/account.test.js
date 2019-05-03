@@ -25,16 +25,17 @@ describe('Reducer: account(state, action)', () => {
     const action = {
       type: actionTypes.accountUpdated,
       data: {
-        passphrase: state.passphrase,
+        address: state.address,
         balance: 100000000,
+        token: 'LSK',
       },
     };
     const changedAccount = account(state, action);
     expect(changedAccount).to.deep.equal({
-      balance: action.data.balance,
-      passphrase: state.passphrase,
-      publicKey: state.publicKey,
-      address: state.address,
+      ...state,
+      info: {
+        LSK: action.data,
+      },
     });
   });
 
@@ -45,6 +46,15 @@ describe('Reducer: account(state, action)', () => {
     const changedAccount = account(state, action);
     expect(changedAccount).to.deep.equal({ afterLogout: true });
   });
+
+  it('should return loading account object if action.type = actionTypes.accountLoading', () => {
+    const action = {
+      type: actionTypes.accountLoading,
+    };
+    const changedAccount = account(state, action);
+    expect(changedAccount).to.deep.equal({ loading: true });
+  });
+
 
   it('should return remove passphrase from account object if actionTypes.removePassphrase is called', () => {
     const action = {

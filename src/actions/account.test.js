@@ -502,30 +502,25 @@ describe('actions: account', () => {
         type: actionTypes.accountLoading,
       }));
 
-      const accountInfo = {
-        LSK: {
-          address,
-          balance,
-        },
-      };
       expect(dispatch).toHaveBeenNthCalledWith(2, expect.objectContaining({
         type: actionTypes.accountLoggedIn,
         data: expect.objectContaining({
           passphrase,
-          info: accountInfo,
+          info: {},
         }),
       }));
       expect(dispatch).toHaveBeenNthCalledWith(3, expect.objectContaining({
-        type: actionTypes.accountLoggedIn,
+        type: actionTypes.accountUpdated,
         data: expect.objectContaining({
-          passphrase,
-          info: {
-            ...accountInfo,
-            BTC: {
-              address,
-              balance,
-            },
-          },
+          address,
+          balance,
+        }),
+      }));
+      expect(dispatch).toHaveBeenNthCalledWith(4, expect.objectContaining({
+        type: actionTypes.accountUpdated,
+        data: expect.objectContaining({
+          address,
+          balance,
         }),
       }));
     });

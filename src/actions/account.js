@@ -285,33 +285,24 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
   await getAccount({
     token: tokenMap.LSK.key, networkConfig, publicKey, passphrase,
   }).then(async (accountData) => {
-    const duration = (passphrase && getState().settings.autoLog) ?
+    const expireTime = (passphrase && getState().settings.autoLog) ?
       Date.now() + accountConfig.lockDuration : 0;
-    const updatedAccount = {
+    dispatch(accountLoggedIn({
       ...accountData, // TODO remove this after all components are updated to use "info"
       passphrase,
       loginType: hwInfo ? loginType.ledger : loginType.normal,
       hwInfo: hwInfo || {},
-      expireTime: duration,
-      info: {
-        [tokenMap.LSK.key]: accountData,
-      },
-    };
-
-    dispatch(accountLoggedIn(updatedAccount));
+      expireTime,
+      info: {},
+    }));
+    dispatch(accountUpdated(accountData));
     // TODO remove this condition with enabling BTC feature
     // istanbul ignore else
     if (localStorage.getItem('btc')) {
       await getAccount({
         token: tokenMap.BTC.key, networkConfig, passphrase,
       }).then((btcAccountData) => {
-        dispatch(accountLoggedIn({
-          ...updatedAccount,
-          info: {
-            ...updatedAccount.info,
-            [tokenMap.BTC.key]: btcAccountData,
-          },
-        }));
+        dispatch(accountUpdated(btcAccountData));
       });
     }
   }).catch((error) => {
