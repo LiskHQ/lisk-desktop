@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './voting.css';
-import DelegateSidebar from '../delegateSidebar';
+// import DelegateSidebar from '../delegateSidebar';
 import VotingListView from '../votingListView';
 
 class Voting extends React.Component {
@@ -37,7 +37,8 @@ class Voting extends React.Component {
   render() {
     return (
       <div className={`${grid.row} ${styles.wrapper}`} ref={(el) => { this.root = el; }}>
-        {/* <aside className={`${grid['col-sm-12']} ${grid['col-md-4']} ${styles.votingBox} ${styles.sideBar}`}>
+        {/* <aside className={`${grid['col-sm-12']}
+          ${grid['col-md-4']} ${styles.votingBox} ${styles.sideBar}`}>
           <DelegateSidebar votes={this.props.votes}
             nextStepGotCalled={this.nextStepGotCalled.bind(this)}
             setLayover={this.setLayover.bind(this)}

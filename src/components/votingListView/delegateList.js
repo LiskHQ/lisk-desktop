@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Waypoint from 'react-waypoint';
-import DelegateRow from './delegateRow';
+import DelegateRowV2 from './delegateRowV2';
 
 class DelegateList extends React.Component {
   constructor() {
@@ -23,7 +23,7 @@ class DelegateList extends React.Component {
       {
         this.state.didMount ?
           this.props.list.map(item =>
-            <DelegateRow key={item.account.address} data={item}
+            <DelegateRowV2 key={item.account.address} data={item}
               className={this.props.safari}
               voteToggled={this.props.voteToggled}
               voteStatus={this.props.votes[item.username]}
