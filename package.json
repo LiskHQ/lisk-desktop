@@ -60,6 +60,7 @@
     "chart.js": "2.7.3",
     "cheerio": "1.0.0-rc.2",
     "dpos-ledger-api": "2.0.0",
+    "ecstatic": "git://github.com/jfhbrook/node-ecstatic.git#b1ad80189fcd7f2410efbc9347361fe69d165de8",
     "electron-localshortcut": "3.1.0",
     "express": "4.16.4",
     "flexboxgrid": "=6.3.1",
