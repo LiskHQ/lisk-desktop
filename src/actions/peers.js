@@ -7,6 +7,7 @@ import networks from '../constants/networks';
 import { loadingStarted, loadingFinished } from '../actions/loading';
 import { login } from './account';
 import { getConnectionErrorMessage } from './network/lsk';
+import { errorToastDisplayed } from './toaster';
 
 import { networkSet } from './network';
 
