@@ -11,13 +11,11 @@ import styles from './hwWalletLogin.css';
 
 class HardwareWalletLogin extends React.Component {
   async componentDidMount() {
-    await this.updateDeviceList(null);
+    await this.updateDeviceList();
   }
 
-  async updateDeviceList(deviceList) {
-    if (!deviceList) {
-      deviceList = await getDeviceList();
-    }
+  async updateDeviceList() {
+    const deviceList = await getDeviceList();
     this.props.devicesListUpdated(deviceList);
   }
 
