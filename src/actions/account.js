@@ -284,7 +284,7 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
 
   await getAccount({
     token: tokenMap.LSK.key, networkConfig, publicKey, passphrase,
-  }).then((accountData) => {
+  }).then(async (accountData) => {
     const duration = (passphrase && getState().settings.autoLog) ?
       Date.now() + accountConfig.lockDuration : 0;
     const updatedAccount = {
@@ -302,7 +302,7 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
     // TODO remove this condition with enabling BTC feature
     // istanbul ignore else
     if (localStorage.getItem('btc')) {
-      getAccount({
+      await getAccount({
         token: tokenMap.BTC.key, networkConfig, passphrase,
       }).then((btcAccountData) => {
         dispatch(accountLoggedIn({

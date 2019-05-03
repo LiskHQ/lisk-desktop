@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+// TODO figure out how to reduce size of this file
 import { expect as chaiExpect } from 'chai';
 import { spy, stub } from 'sinon';
 import i18next from 'i18next';
@@ -30,6 +32,8 @@ import networks from '../constants/networks';
 import accounts from '../../test/constants/accounts';
 import * as peersActions from './peers';
 import * as transactionsActions from './transactions';
+
+jest.mock('../utils/api/account');
 
 describe('actions: account', () => {
   describe('accountUpdated', () => {
@@ -467,14 +471,14 @@ describe('actions: account', () => {
   });
 
   describe('login', () => {
-    const dispatch = jest.fn();
+    let dispatch;
     let state;
     const getState = () => (state);
     const balance = 10e8;
     const { passphrase, address } = accounts.genesis;
 
     beforeEach(() => {
-      stub(accountApi, 'getAccount').returnsPromise();
+      dispatch = jest.fn();
       state = {
         network: {
           name: 'Mainnet',
@@ -487,12 +491,12 @@ describe('actions: account', () => {
     });
 
     afterEach(() => {
-      accountApi.getAccount.restore();
+      accountApi.getAccount.mockReset();
       localStorage.removeItem('btc'); // TODO remove when enabling BTC
     });
 
     it('should call account api and dispatch accountLoggedIn ', async () => {
-      accountApi.getAccount.resolves({ balance, address });
+      accountApi.getAccount.mockResolvedValue({ balance, address });
       await login({ passphrase })(dispatch, getState);
       expect(dispatch).toHaveBeenNthCalledWith(1, expect.objectContaining({
         type: actionTypes.accountLoading,
@@ -523,6 +527,14 @@ describe('actions: account', () => {
             },
           },
         }),
+      }));
+    });
+
+    it('should dispatch errorToastDisplayed if getAccount fails ', async () => {
+      accountApi.getAccount.mockRejectedValue({ error: 'custom error' });
+      await login({ passphrase })(dispatch, getState);
+      expect(dispatch).toHaveBeenNthCalledWith(2, expect.objectContaining({
+        type: actionTypes.toastDisplayed,
       }));
     });
   });
