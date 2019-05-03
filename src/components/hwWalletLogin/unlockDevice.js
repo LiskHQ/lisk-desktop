@@ -8,6 +8,10 @@ class UnlockDevice extends React.Component {
   constructor() {
     super();
 
+    this.state = {
+      isLoading: true,
+    };
+
     this.timeout = null;
     this.checkLedger = this.checkLedger.bind(this);
   }
@@ -37,12 +41,15 @@ class UnlockDevice extends React.Component {
 
   checkLedger() {
     if (!ipc) return;
+    if (this.state.isLoading) {
+      ipc.once('checkLedger.done', () => this.setState({ isLoading: false }));
+    }
     ipc.send('checkLedger', { id: this.props.deviceId });
   }
 
   render() {
     const { t, prevStep, deviceModel = 'Ledger S' } = this.props;
-    return (
+    return !this.state.isLoading && (
       <React.Fragment>
         <h1>{t('{{deviceModel}} connected! Open the Lisk app on the device', { deviceModel })}</h1>
         <p>

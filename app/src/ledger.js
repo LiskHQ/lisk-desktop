@@ -97,6 +97,7 @@ ipcMain.on('checkLedger', async (event, { id }) => {
   ledgerDevice.openApp = await isInsideLedgerApp(ledgerDevice.path);
   updateConnectedDevices(ledgerDevice);
   hwDevice = ledgerDevice;
+  win.send({ event: 'checkLedger.done' });
 });
 
 let observableListen = null;
