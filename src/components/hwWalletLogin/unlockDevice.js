@@ -40,7 +40,10 @@ class UnlockDevice extends React.Component {
   }
 
   checkLedger() {
-    if (!ipc) return;
+    if (!ipc) {
+      this.setState({ isLoading: false });
+      return;
+    }
     if (this.state.isLoading) {
       ipc.once('checkLedger.done', () => this.setState({ isLoading: false }));
     }
