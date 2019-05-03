@@ -38,7 +38,7 @@ class MultiStep extends React.Component {
   }
 
   next(data, jump = 1) {
-    const newState = Object.assign({}, this.state);
+    const newState = { ...this.state };
     newState.step.current += jump;
     newState.step.data[newState.step.current] = data;
     this.setState(newState);
@@ -57,11 +57,12 @@ class MultiStep extends React.Component {
   prev(config) {
     const getTarget = (current) => {
       if (current === 0) return current;
+      else if (config && config.jump) return current - config.jump;
       else if (!config || !config.reset) return current - 1;
       else if (config.reset) return 0;
       return current;
     };
-    const newState = Object.assign({}, this.state);
+    const newState = { ...this.state };
     newState.step.current = getTarget(this.state.step.current);
     newState.step.data = (config && config.reset && !config.amount) ? [{}] : newState.step.data;
     this.setState(newState);
