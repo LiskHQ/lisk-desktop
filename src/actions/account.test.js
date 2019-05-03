@@ -506,14 +506,12 @@ describe('actions: account', () => {
         type: actionTypes.accountLoggedIn,
         data: expect.objectContaining({
           passphrase,
-          info: {},
-        }),
-      }));
-      expect(dispatch).toHaveBeenNthCalledWith(3, expect.objectContaining({
-        type: actionTypes.accountUpdated,
-        data: expect.objectContaining({
-          address,
-          balance,
+          info: {
+            LSK: expect.objectContaining({
+              address,
+              balance,
+            }),
+          },
         }),
       }));
       expect(dispatch).toHaveBeenNthCalledWith(4, expect.objectContaining({

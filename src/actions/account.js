@@ -293,9 +293,10 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
       loginType: hwInfo ? loginType.ledger : loginType.normal,
       hwInfo: hwInfo || {},
       expireTime,
-      info: {},
+      info: {
+        LSK: accountData,
+      },
     }));
-    dispatch(accountUpdated(accountData));
     // TODO remove this condition with enabling BTC feature
     // istanbul ignore else
     if (localStorage.getItem('btc')) {
