@@ -4,7 +4,8 @@
 .wrapper {
   align-items: center;
   display: flex;
-  margin: 0;
+  margin: 0 auto;
+  max-width: 1226px;
   min-height: 100%;
   justify-content: center;
   text-align: center;
@@ -35,5 +36,11 @@
   & img {
     display: block;
     margin: 48px auto;
+  }
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    max-width: 720px;
   }
 }
