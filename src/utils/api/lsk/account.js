@@ -23,6 +23,7 @@ export const getAccount = ({
         resolve({
           ...res.data[0],
           serverPublicKey: res.data[0].publicKey,
+          token: tokenMap.LSK.key,
         });
       } else {
         // when the account has no transactions yet (therefore is not saved on the blockchain)
@@ -30,6 +31,7 @@ export const getAccount = ({
         resolve({
           address,
           balance: 0,
+          token: tokenMap.LSK.key,
         });
       }
     }).catch(reject);

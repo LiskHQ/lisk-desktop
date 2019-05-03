@@ -2,6 +2,7 @@ import * as bitcoin from 'bitcoinjs-lib';
 import Lisk from 'lisk-elements';
 import bip32 from 'bip32';
 import { getAPIClient } from './network';
+import { tokenMap } from '../../../constants/tokens';
 
 export const getDerivedPathFromPassphrase = (passphrase, config) => {
   const seed = Lisk.passphrase.Mnemonic.mnemonicToSeed(passphrase);
@@ -27,6 +28,7 @@ export const getAccount = ({
       address,
       balance: response.body.data.confirmed_balance,
       initialized: true,
+      token: tokenMap.BTC.key,
     });
   }).catch(reject);
 });
