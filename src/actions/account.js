@@ -309,6 +309,7 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
 
     dispatch(accountLoggedIn(updatedAccount));
     // TODO remove this condition with enabling BTC feature
+    // istanbul ignore else
     if (localStorage.getItem('btc')) {
       getAccount({
         token: tokenMap.BTC.key, networkConfig, passphrase,
