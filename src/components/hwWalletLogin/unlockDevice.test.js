@@ -21,7 +21,7 @@ describe('Unlock Device', () => {
 
   it('Should render asking for opening app on Ledger', () => {
     props.deviceId = 1;
-    wrapper = mount(<div><UnlockDevice {...props} /></div>);
+    wrapper = mount(<UnlockDevice {...props} />);
     expect(props.nextStep).not.toBeCalled();
     wrapper.find('button').simulate('click');
     expect(props.prevStep).toBeCalled();
@@ -34,5 +34,24 @@ describe('Unlock Device', () => {
     props.deviceId = 3;
     wrapper = mount(<UnlockDevice {...props} />);
     expect(props.nextStep).toBeCalled();
+  });
+
+  it('Should call nextStep after openApp is set to true', () => {
+    const devices = [
+      { deviceId: 1, openApp: true, model: 'Ledger' },
+    ];
+    props.deviceId = 1;
+    wrapper = mount(<UnlockDevice {...props} />);
+    wrapper.setProps({ devices });
+    wrapper.update();
+    expect(props.nextStep).toBeCalled();
+  });
+
+  it('Call prevStep if device disconnects', () => {
+    props.deviceId = 1;
+    wrapper = mount(<UnlockDevice {...props} />);
+    wrapper.setProps({ devices: [] });
+    wrapper.update();
+    expect(props.prevStep).toBeCalled();
   });
 });
