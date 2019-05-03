@@ -19,8 +19,14 @@ const UserAccount = (props) => {
           copyClassName={styles.copy}
         />
         <div className={`${styles.balance} balance`}>
-          <LiskAmount val={props.account.balance} />
-          <small>{props.t(' LSK')}</small>
+          {Object.keys(props.account.info).map(key => (
+            <React.Fragment key={key}>
+              &nbsp; &nbsp;
+              <LiskAmount val={props.account.info[key].balance}/>
+              &nbsp;
+              <small>{key}</small>
+            </React.Fragment>
+          ))}
         </div>
       </div>
       <div
