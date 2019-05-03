@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import Box from '../box';
 import MultiStep from './../multiStep';
 import VotingHeader from './votingHeader';
-import ListLabels from './listLabels';
+import ListLabelsV2 from './listLabelsV2';
 import styles from './votingListView.css';
 import VoteUrlProcessor from '../voteUrlProcessor';
 import voteFilters from './../../constants/voteFilters';
@@ -158,7 +158,7 @@ class VotingListView extends React.Component {
       <Fragment>
         <VoteUrlProcessor toggleShowInfo={this.toggleShowInfo.bind(this)} show={this.showInfo()} />
         { !this.showInfo() ?
-          <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
+          <div>
             <VotingHeader
               account={this.props.account}
               setActiveFilter={this.setActiveFilter.bind(this)}
@@ -167,9 +167,10 @@ class VotingListView extends React.Component {
               voteToggled={voteToggled}
               search={ value => this.search(value) }
             />
+            <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
             <section className={`${styles.delegatesList} delegate-list`}>
               <div className={styles.table}>
-                <ListLabels t={t} status={showChangeSummery} />
+                <ListLabelsV2 t={t} status={showChangeSummery} />
                 <MultiStep
                   className={styles.wrapper}>
                   <DelegateList list={filteredList} votes={votes}
@@ -186,7 +187,7 @@ class VotingListView extends React.Component {
                   </div> : null
               }
             </section>
-          </Box> : null
+          </Box></div> : null
         }
       </Fragment>
     );

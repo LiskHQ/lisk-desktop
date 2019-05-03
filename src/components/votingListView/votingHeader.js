@@ -79,7 +79,7 @@ class VotingHeader extends React.Component {
     const titleMobile = this.props.showChangeSummery ? selectionTitle : votingTitle;
     const isHardwareWallet = this.props.account.hwInfo && this.props.account.hwInfo.deviceId;
     return (
-      <header className={`${styles.header} ${styles[this.state.headerPosition]}`}>
+      <div>
         <div>
           <h2 className={styles.desktopTitle}>{titleDesktop}</h2>
           <h2 className={styles.mobileTitle}>{titleMobile}</h2>
@@ -90,39 +90,43 @@ class VotingHeader extends React.Component {
             <FontIcon value='arrow-right'/>
           </Link> : null
         }
-        <div>
-          <ul className={`${styles.filters} ${this.props.showChangeSummery ? styles.disabled : ''}`}>
-            {this.filters.map((filter, i) => (
-              <li key={i} className={`transaction-filter-item ${filter.className} ${styles.filter} ${(this.state.activeFilter === filter.value) ? styles.active : ''}`}
-                onClick={this.filterVotes.bind(this, filter)}>
-                {filter.name}
-              </li>
-            ))}
-            <li className={`${styles.search} ${styles.filter} search`}>
-              <FontIcon className={styles.search} value='search' id='searchIcon'/>
-              <input type='text'
-                name='query'
-                className={`search ${styles.desktopInput} ${this.state.query.length > 0 ? styles.dirty : ''} `}
-                value={this.state.query}
-                onChange={this.search.bind(this)}
-                placeholder={t('Search for a delegate')}/>
-              <input type='text'
-                name='query'
-                className={`${styles.mobileInput} ${this.state.query.length > 0 ? styles.dirty : ''} `}
-                value={this.state.query}
-                onChange={this.search.bind(this)}
-                placeholder={t('Search')}/>
-              <FontIcon
-                id='cleanIcon'
-                className={`${styles.clean} clean-icon`}
-                value='close'
-                onClick={ this.clearSearch.bind(this) }/>
-            </li>
-          </ul>
-        </div>
-        <Waypoint onLeave={this.markOnOffCanvas.bind(this, 'offCanvas')} threshold={200}
-          onEnter={this.markOnOffCanvas.bind(this, 'onCanvas')} />
-      </header>
+        <header className={`${styles.header} ${styles[this.state.headerPosition]}`}>
+          <div>
+            <div className={styles.container}>
+              <ul className={`${styles.filters} ${this.props.showChangeSummery ? styles.disabled : ''}`}>
+                {this.filters.map((filter, i) => (
+                  <li key={i} className={`transaction-filter-item ${filter.className} ${styles.filter} ${(this.state.activeFilter === filter.value) ? styles.active : ''}`}
+                    onClick={this.filterVotes.bind(this, filter)}>
+                    {filter.name}
+                  </li>
+                ))}
+              </ul>
+                <div className={`${styles.search} ${styles.items} ${styles.filter} search`}>
+                  <FontIcon className={styles.search} value='search' id='searchIcon'/>
+                  <input type='text'
+                    name='query'
+                    className={`search ${styles.desktopInput} ${this.state.query.length > 0 ? styles.dirty : ''} `}
+                    value={this.state.query}
+                    onChange={this.search.bind(this)}
+                    placeholder={t('Search for a delegate')}/>
+                  <input type='text'
+                    name='query'
+                    className={`${styles.mobileInput} ${this.state.query.length > 0 ? styles.dirty : ''} `}
+                    value={this.state.query}
+                    onChange={this.search.bind(this)}
+                    placeholder={t('Search')}/>
+                  <FontIcon
+                    id='cleanIcon'
+                    className={`${styles.clean} clean-icon`}
+                    value='close'
+                    onClick={ this.clearSearch.bind(this) }/>
+                </div>
+            </div>
+          </div>
+          <Waypoint onLeave={this.markOnOffCanvas.bind(this, 'offCanvas')} threshold={200}
+            onEnter={this.markOnOffCanvas.bind(this, 'onCanvas')} />
+        </header>
+      </div>
     );
   }
 }
