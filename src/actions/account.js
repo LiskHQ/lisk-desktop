@@ -288,44 +288,42 @@ export const connectionErrorToast = error => (
 );
 
 export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, getState) => {
-  if (passphrase || hwInfo) {
-    const networkConfig = getState().network;
-    dispatch(accountLoading());
+  const networkConfig = getState().network;
+  dispatch(accountLoading());
 
-    await getAccount({
-      token: tokenMap.LSK.key, networkConfig, publicKey, passphrase,
-    }).then((accountData) => {
-      const duration = (passphrase && getState().settings.autoLog) ?
-        Date.now() + accountConfig.lockDuration : 0;
-      const updatedAccount = {
-        ...accountData, // TODO remove this after all components are updated to use "info"
-        passphrase,
-        loginType: hwInfo ? loginType.ledger : loginType.normal,
-        hwInfo: hwInfo || {},
-        expireTime: duration,
-        info: {
-          [tokenMap.LSK.key]: accountData,
-        },
-      };
+  await getAccount({
+    token: tokenMap.LSK.key, networkConfig, publicKey, passphrase,
+  }).then((accountData) => {
+    const duration = (passphrase && getState().settings.autoLog) ?
+      Date.now() + accountConfig.lockDuration : 0;
+    const updatedAccount = {
+      ...accountData, // TODO remove this after all components are updated to use "info"
+      passphrase,
+      loginType: hwInfo ? loginType.ledger : loginType.normal,
+      hwInfo: hwInfo || {},
+      expireTime: duration,
+      info: {
+        [tokenMap.LSK.key]: accountData,
+      },
+    };
 
-      dispatch(accountLoggedIn(updatedAccount));
-      // TODO remove this condition with enabling BTC feature
-      if (localStorage.getItem('btc')) {
-        getAccount({
-          token: tokenMap.BTC.key, networkConfig, passphrase,
-        }).then((btcAccountData) => {
-          dispatch(accountLoggedIn({
-            ...updatedAccount,
-            info: {
-              ...updatedAccount.info,
-              [tokenMap.BTC.key]: btcAccountData,
-            },
-          }));
-        });
-      }
-    }).catch((error) => {
-      dispatch(connectionErrorToast(error));
-      dispatch(accountLoggedOut());
-    });
-  }
+    dispatch(accountLoggedIn(updatedAccount));
+    // TODO remove this condition with enabling BTC feature
+    if (localStorage.getItem('btc')) {
+      getAccount({
+        token: tokenMap.BTC.key, networkConfig, passphrase,
+      }).then((btcAccountData) => {
+        dispatch(accountLoggedIn({
+          ...updatedAccount,
+          info: {
+            ...updatedAccount.info,
+            [tokenMap.BTC.key]: btcAccountData,
+          },
+        }));
+      });
+    }
+  }).catch((error) => {
+    dispatch(connectionErrorToast(error));
+    dispatch(accountLoggedOut());
+  });
 };

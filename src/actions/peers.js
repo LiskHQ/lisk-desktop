@@ -54,14 +54,18 @@ export const liskAPIClientSet = data =>
         dispatch(loadingFinished('getConstants'));
         config.nethash = response.data.nethash;
         dispatch(peerSet(data, config));
-        login(data, config)(dispatch, getState);
+        if (data.passphrase || data.hwInfo) {
+          login(data, config)(dispatch, getState);
+        }
       }).catch((error) => {
         dispatch(loadingFinished('getConstants'));
         dispatch(connectionErrorToast(error));
       });
     } else {
       dispatch(peerSet(data, config));
-      await login(data, config)(dispatch, getState);
+      if (data.passphrase || data.hwInfo) {
+        await login(data, config)(dispatch, getState);
+      }
     }
   };
 
