@@ -2,7 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { generatePassphrase } from '../../utils/passphrase';
 import { extractAddress } from '../../utils/account';
-import HeaderV2 from '../headerV2/headerV2';
+import HeaderV2 from '../headerV2/index';
 import MultiStep from '../multiStep';
 import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';

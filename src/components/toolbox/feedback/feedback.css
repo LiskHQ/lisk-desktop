@@ -34,3 +34,8 @@
     margin-right: 10px;
   }
 }
+
+.dark {
+  color: var(--color-white) !important;
+  background: var(--color-burnt-sienna) !important;
+}
