@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import HeaderV2 from '../headerV2/headerV2';
+import HeaderV2 from '../headerV2/index';
 import MultiStep from '../multiStep';
 import Loading from './loading';
 import SelectDevice from './selectDevice';

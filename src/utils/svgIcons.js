@@ -40,6 +40,7 @@ import fowardArrowInactiveIcon from '../assets/images/icons-v2/arrow-right-inact
 import iconFilter from '../assets/images/icons-v2/icon-filter.svg';
 import questionIcon from '../assets/images/icons-v2/ico-question.svg';
 import fileOutline from '../assets/images/icons-v2/icon-file-outline.svg';
+import iconWarning from '../assets/images/icons-v2/icon-warning.svg';
 import iconLoader from '../assets/images/icons-v2/icon-loader-16.svg';
 import iconTrezorModelTDevice from '../assets/images/icons-v2/icon_trezor_device.svg';
 import iconLedgerNanoDevice from '../assets/images/icons-v2/icon_ledger_device.svg';
@@ -87,6 +88,7 @@ export default {
   iconFilter,
   questionIcon,
   fileOutline,
+  iconWarning,
   iconLoader,
   icon_trezor_modelT_device: iconTrezorModelTDevice,
   icon_ledger_nano_device: iconLedgerNanoDevice,
