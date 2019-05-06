@@ -3,7 +3,6 @@ import { spy, stub } from 'sinon';
 import {
   followedAccountFetchedAndUpdated,
   followedAccountUpdated,
-  followedAccountsRetrieved,
   followedAccountAdded,
   followedAccountRemoved,
 } from './followedAccounts';
@@ -20,14 +19,6 @@ describe('actions: followedAccount', () => {
   };
   const getState = () => ({
     peers: { liskAPIClient: {} },
-  });
-
-  it('should create an action to retrieve the followed accounts list', () => {
-    const expectedAction = {
-      data,
-      type: actionTypes.followedAccountsRetrieved,
-    };
-    expect(followedAccountsRetrieved(data)).to.be.deep.equal(expectedAction);
   });
 
   it('should create an action to add a followed account', () => {

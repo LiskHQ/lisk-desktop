@@ -16,11 +16,6 @@ export const followedAccountRemoved = account => ({
   type: actionTypes.followedAccountRemoved,
 });
 
-export const followedAccountsRetrieved = accounts => ({
-  data: accounts,
-  type: actionTypes.followedAccountsRetrieved,
-});
-
 export const followedAccountFetchedAndUpdated = ({ account }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
