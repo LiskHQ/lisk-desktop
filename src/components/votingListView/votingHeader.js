@@ -80,16 +80,18 @@ class VotingHeader extends React.Component {
     const isHardwareWallet = this.props.account.hwInfo && this.props.account.hwInfo.deviceId;
     return (
       <div>
-        {/* <div>
-          <h2 className={styles.desktopTitle}>{titleDesktop}</h2>
-          <h2 className={styles.mobileTitle}>{titleMobile}</h2>
-        </div> */}
-        {!isDelegate && !isHardwareWallet ?
-          <Link to={`${routes.registerDelegate.path}`} className={`${styles.link} ${styles.registerLink} register-delegate`}>
-            {t('Become a delegate (Fee: {{fee}} LSK)', { fee: fromRawLsk(Fees.registerDelegate) })}
-            <FontIcon value='arrow-right'/>
-          </Link> : null
-        }
+        <div className={`${styles.titleHeader}`}>
+          <div>
+            <h2 className={styles.desktopTitle}>{titleDesktop}</h2>
+            <h2 className={styles.mobileTitle}>{titleMobile}</h2>
+          </div>
+          {!isDelegate && !isHardwareWallet ?
+            <Link to={`${routes.registerDelegate.path}`} className={`${styles.link} ${styles.registerLink} register-delegate`}>
+              {t('Become a delegate (Fee: {{fee}} LSK)', { fee: fromRawLsk(Fees.registerDelegate) })}
+              <FontIcon value='arrow-right'/>
+            </Link> : null
+          }
+        </div>
         <header className={`${styles.header} ${styles[this.state.headerPosition]}`}>
           <div>
             <div className={styles.container}>
@@ -114,11 +116,6 @@ class VotingHeader extends React.Component {
                     value={this.state.query}
                     onChange={this.search.bind(this)}
                     placeholder={t('Search')}/>
-                  {/* <FontIcon
-                    id='cleanIcon'
-                    className={`${styles.clean} clean-icon`}
-                    value='close'
-                    onClick={ this.clearSearch.bind(this) }/> */}
                 </div>
             </div>
           </div>

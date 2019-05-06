@@ -12,8 +12,8 @@ const ListLabelsV2 = ({ status, t }) =>
           </div> : null
       }
       <div className={`${grid['col-md-1']} ${grid['col-xs-2']}`}>{t('Rank')}</div>
-      <div className={`${grid['col-md-3']} ${grid['col-xs-5']}`}>{t('Name')}</div>
-      <div className={`${grid['col-md-5']}`}>{t('Lisk ID')}</div>
+      <div className={`${grid['col-md-3']} ${grid['col-xs-5']}`}>{t('Delegate')}</div>
+      <div className={`${grid['col-md-5']}`}>{t('')}</div>
       <div className={`${grid['col-md-2']} ${grid['col-xs-3']} ${styles.productivity}`}>{t('Productivity')}</div>
     </TableRow>);
 

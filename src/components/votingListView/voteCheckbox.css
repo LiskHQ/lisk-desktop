@@ -1,3 +1,5 @@
+@import '../app/variablesV2.css';
+
 .checkbox {
   display: inline-block;
   width: 16px;
@@ -10,6 +12,8 @@
   }
 
   & span {
+    color: var(--color-ultramarine-blue);
+    font-size: 20px;
     position: absolute;
     left: 0;
     top: 0;

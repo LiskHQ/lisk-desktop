@@ -3,6 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './votingListView.css';
 import Checkbox from './voteCheckbox';
 import TableRow from '../toolbox/table/tableRow';
+import AccountVisual from '../accountVisual';
 
 const setRowClass = (voteStatus) => {
   if (!voteStatus) {
@@ -32,6 +33,7 @@ class DelegateRowV2 extends React.Component {
     const {
       data, voteStatus, voteToggled, className,
     } = this.props;
+
     return (
       <TableRow className={`${className} ${grid.row} ${styles.row} ${setRowClass(voteStatus)} transactions-row`} onClick={() => voteToggled(data)}>
         <div className={`${grid['col-md-1']} ${grid['col-xs-2']} ${styles.leftText}`}>
@@ -42,9 +44,18 @@ class DelegateRowV2 extends React.Component {
             data={data}
           />
         </div>
-        <div className={`${grid['col-md-1']} ${grid['col-xs-2']} delegate-rank`}>{data.rank}</div>
-        <div className={`${grid['col-md-3']} ${grid['col-xs-5']} ${styles.username} delegate-name`}>{data.username}</div>
-        <div className={`${grid['col-md-5']} delegate-id`}>{data.account.address}</div>
+        <div className={`${grid['col-md-1']} ${grid['col-xs-2']} delegate-rank`}>#{data.rank}</div>
+        <div className={`${grid['col-md-3']} ${grid['col-xs-5']} delegate-name`}>
+          <AccountVisual
+            className={`${styles.avatar} tx-avatar`}
+            address={data.account.address}
+            size={36} />
+          <div className={styles.accountInfo}>
+            <span className={styles.title}>{data.username}</span>
+            <span className={styles.address}>{data.account.address}</span>
+          </div>
+        </div>
+        <div className={`${grid['col-md-5']} delegate-id`}></div>
         <div className={`${grid['col-md-2']} ${grid['col-xs-3']} ${styles.productivity} delegate-productivity`}>{data.productivity} %</div>
       </TableRow>
     );

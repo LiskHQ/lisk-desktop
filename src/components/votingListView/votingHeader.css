@@ -11,21 +11,35 @@
   --link-font-size: 15px;
 }
 
+.desktopTitle {
+  display: block;
+}
+
+.mobileTitle {
+  display: none;
+}
+
+.titleHeader {
+  padding: 0 32px 40px;
+
+  & h2 {
+    margin-bottom: 0;
+    font-weight: 400;
+    padding-bottom: 60px;
+  }
+
+  & h3 {
+    display: inline-block;
+    margin: 0;
+  }
+}
+
 .header {
   line-height: var(--header-line-height);
 
   & h2 {
     margin-bottom: 0;
     font-weight: 400;
-    padding-bottom: 60px;
-
-    &.desktopTitle {
-      display: block;
-    }
-
-    &.mobileTitle {
-      display: none;
-    }
   }
 
   & h3 {
@@ -118,7 +132,6 @@
     padding-left: 20px;
     padding-right: 20px;
     vertical-align: top;
-    border-radius: 0;
     transition: all ease 250ms;
 
     &.desktopInput {
@@ -131,7 +144,6 @@
 
     &:focus,
     &.dirty {
-
       & ~ .clean {
         visibility: visible;
       }
@@ -161,6 +173,15 @@
 }
 
 @media (--medium-viewport) {
+  .desktopTitle {
+    display: none;
+  }
+
+  .mobileTitle {
+    display: block;
+    padding: 0;
+  }
+
   .header {
     & .table .tableHead li {
       padding: 0 0 12px 12px;
@@ -183,23 +204,10 @@
         }
       }
     }
-
-    & h2.desktopTitle {
-      display: none;
-    }
-
-    & h2.mobileTitle {
-      display: block;
-      padding: 0;
-    }
   }
 
   .filters {
     & .filter {
-      &:not(:last-of-type) {
-        margin-right: 24px;
-      }
-
       & input {
         width: 70px;
         line-height: 16px;
