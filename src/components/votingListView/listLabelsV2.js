@@ -4,7 +4,7 @@ import TableRow from '../toolbox/table/tableRow';
 import styles from './votingListView.css';
 
 const ListLabelsV2 = ({ status, t }) =>
-  (<TableRow isHeader={true} className={`${grid.row}`} id="transactionsHeader">
+  (<TableRow isHeader={true} className={`${styles.header} ${grid.row}`} id="transactionsHeader">
       {
         !status ?
           <div className={`${grid['col-md-1']}  ${grid['col-xs-2']} ${styles.leftText}`}>

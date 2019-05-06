@@ -17,6 +17,10 @@
 .leftText {
   text-align: left;
   padding-left: 0px;
+
+  &:first-child {
+    padding-left: 20px;
+  }
 }
 
 .wrapper {
@@ -33,6 +37,10 @@
     line-height: 48px;
     margin: 0;
   }
+}
+
+.header {
+  padding: 0 32px;
 }
 
 .upVoteRow {
@@ -121,11 +129,11 @@
   }
 
   & .row {
-    background: linear-gradient(90deg, var(--color-white) 0%, #f5f8fc 82%);
+    background: var(--color-white);
     flex-wrap: nowrap;
 
-    &:nth-child(2n) {
-      background: var(--color-white);
+    &:hover {
+      background: rgba(64, 112, 244, 0.08)l !important;
     }
 
     & li {
