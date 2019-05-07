@@ -16,7 +16,7 @@ class HardwareWalletLogin extends React.Component {
 
   async updateDeviceList() {
     const deviceList = await getDeviceList();
-    this.props.devicesListUpdated(deviceList);
+    this.props.updateDeviceList(deviceList);
   }
 
   render() {

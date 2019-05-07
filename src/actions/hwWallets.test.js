@@ -1,8 +1,8 @@
-import { devicesListUpdated } from './hwWallets';
+import { updateDeviceList } from './hwWallets';
 import actionTypes from '../constants/actions';
 
 describe('hwWallet Actions', () => {
-  it(`Should dispatch ${actionTypes.devicesListUpdate} with deviceList`, () => {
+  it(`Should dispatch ${actionTypes.deviceListUpdated} with deviceList`, () => {
     const data = [
       { deviceId: 1, openApp: false, model: 'Ledger' },
       { deviceId: 2, model: 'Trezor' },
@@ -10,8 +10,8 @@ describe('hwWallet Actions', () => {
     ];
     const expectedAction = {
       data,
-      type: actionTypes.devicesListUpdate,
+      type: actionTypes.deviceListUpdated,
     };
-    expect(devicesListUpdated(data)).toEqual(expectedAction);
+    expect(updateDeviceList(data)).toEqual(expectedAction);
   });
 });

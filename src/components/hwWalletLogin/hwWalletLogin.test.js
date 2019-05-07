@@ -13,7 +13,7 @@ describe('HwWalletLogin', () => {
   const store = configureMockStore([])({});
   const props = {
     devices: [],
-    devicesListUpdated: jest.fn(),
+    updateDeviceList: jest.fn(),
     t: key => key,
   };
 
@@ -34,6 +34,6 @@ describe('HwWalletLogin', () => {
     wrapper = mount(<Router><HwWalletLogin {...props} /></Router>, options);
     const devices = await hwWalletUtils.getDeviceList();
     expect(wrapper).toContainMatchingElement('Loading');
-    expect(props.devicesListUpdated).toBeCalledWith(devices);
+    expect(props.updateDeviceList).toBeCalledWith(devices);
   });
 });

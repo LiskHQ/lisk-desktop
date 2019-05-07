@@ -32,8 +32,8 @@ class UnlockDevice extends React.Component {
   navigateIfNeeded() {
     const selectedDevice = this.props.devices.find(d => d.deviceId === this.props.deviceId);
     if (!selectedDevice) this.props.prevStep();
+    clearTimeout(this.timeout);
     if (selectedDevice && (selectedDevice.openApp || /(trezor(\s?))/ig.test(selectedDevice.model))) {
-      clearTimeout(this.timeout);
       this.props.nextStep({ device: selectedDevice });
     } else {
       this.timeout = setTimeout(this.checkLedger, 1000);
