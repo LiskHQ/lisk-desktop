@@ -15,6 +15,7 @@ class HardwareWalletLogin extends React.Component {
   }
 
   async updateDeviceList(deviceList) {
+    // istanbul ignore else
     if (!deviceList) {
       deviceList = await getDeviceList();
     }
@@ -28,10 +29,10 @@ class HardwareWalletLogin extends React.Component {
       <div className={`${styles.wrapper} ${grid.row}`}>
         <MultiStep
           className={`${grid['col-xs-10']}`}>
-          <SelectAccount t={t} liskAPIClient={liskAPIClient} />
           <Loading t={t} devices={devices} />
           <SelectDevice t={t} devices={devices} />
           <UnlockDevice t={t} devices={devices} />
+          <SelectAccount t={t} liskAPIClient={liskAPIClient} />
         </MultiStep>
       </div>
     </React.Fragment>;

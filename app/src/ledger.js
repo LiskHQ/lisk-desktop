@@ -42,7 +42,7 @@ const getLedgerAccount = (index = 0) => {
   return ledgerAccount;
 };
 
-const createLedgerHWDevice = (liskAccount, path) =>
+const createLedgerHWDevice = path =>
   new HWDevice(
     Math.floor(Math.random() * 1e10) + 1,
     null,
