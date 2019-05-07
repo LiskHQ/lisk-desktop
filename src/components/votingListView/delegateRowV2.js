@@ -35,7 +35,7 @@ class DelegateRowV2 extends React.Component {
     } = this.props;
 
     return (
-      <TableRow className={`${className} ${grid.row} ${styles.row} ${setRowClass(voteStatus)} transactions-row`} onClick={() => voteToggled(data)}>
+      <TableRow className={`delegate-row ${className} ${grid.row} ${styles.row} ${setRowClass(voteStatus)}`} onClick={() => voteToggled(data)}>
         <div className={`${grid['col-md-1']} ${grid['col-xs-2']} ${styles.leftText}`}>
           <Checkbox styles={styles}
             toggle={voteToggled}
@@ -45,14 +45,14 @@ class DelegateRowV2 extends React.Component {
           />
         </div>
         <div className={`${grid['col-md-1']} ${grid['col-xs-2']} delegate-rank`}>#{data.rank}</div>
-        <div className={`${grid['col-md-3']} ${grid['col-xs-5']} delegate-name`}>
+        <div className={`${grid['col-md-3']} ${grid['col-xs-5']} delegate-info`}>
           <AccountVisual
             className={`${styles.avatar} tx-avatar`}
             address={data.account.address}
             size={36} />
           <div className={styles.accountInfo}>
-            <span className={styles.title}>{data.username}</span>
-            <span className={styles.address}>{data.account.address}</span>
+            <span className={`delegate-name ${styles.title}`}>{data.username}</span>
+            <span className={`delegate-id ${styles.address}`}>{data.account.address}</span>
           </div>
         </div>
         <div className={`${grid['col-md-5']} delegate-id`}></div>
