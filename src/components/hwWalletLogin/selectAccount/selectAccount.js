@@ -2,6 +2,7 @@ import React from 'react';
 import { TertiaryButtonV2 } from '../../toolbox/buttons/button';
 import { displayAccounts } from '../../../utils/ledger';
 import { loginType } from '../../../constants/hwConstants';
+import routes from '../../../constants/routes';
 import AccountCard from './accountCard';
 import styles from './selectAccount.css';
 
@@ -20,14 +21,32 @@ class SelectAccount extends React.Component {
     this.getAccountsFromDevice = this.getAccountsFromDevice.bind(this);
     this.onSaveNameAccounts = this.onSaveNameAccounts.bind(this);
     this.onAddNewAccount = this.onAddNewAccount.bind(this);
+    this.onSelectAccount = this.onSelectAccount.bind(this);
+    this.getNameFromAccount = this.getNameFromAccount.bind(this);
   }
 
   componentDidMount() {
     this.getAccountsFromDevice();
   }
 
+  componentDidUpdate() {
+    if (this.props.account && this.props.account.address) {
+      this.props.history.push(`${routes.dashboard.path}`);
+    }
+  }
+
+  getNameFromAccount(address) {
+    const { settings } = this.props;
+    const storedAccount = settings.hardwareAccounts.filter(account => account.address === address);
+    return storedAccount.length ? storedAccount[0].name : 'Unnamed account';
+  }
+
   async getAccountsFromDevice() {
-    const { device, liskAPIClient, t } = this.props;
+    const {
+      device,
+      liskAPIClient,
+      t,
+    } = this.props;
     let activeDevice = '';
 
     setTimeout(async () => {
@@ -40,7 +59,8 @@ class SelectAccount extends React.Component {
       });
 
       const hwAccounts = activeDevice.hwAccounts.map(account =>
-        ({ ...account, name: 'Unnamed account' }));
+        ({ ...account, name: this.getNameFromAccount(account.address) }));
+
       this.setState({ activeDevice: { ...activeDevice }, hwAccounts });
     }, 2000);
   }
@@ -64,35 +84,54 @@ class SelectAccount extends React.Component {
   }
 
   async onAddNewAccount() {
-    const { device, hwAccounts } = this.state;
+    const {
+      device,
+      errorToastDisplayed,
+      liskAPIClient,
+      t,
+    } = this.props;
+    const { hwAccounts } = this.state;
 
     if (hwAccounts[hwAccounts.length - 1].isInitialized) {
       const output = await displayAccounts({
-        liskAPIClient: this.props.liskAPIClient,
+        liskAPIClient,
         loginType: /trezor/ig.test(device.deviceModel) ? loginType.trezor : loginType.ledger,
-        hwAccounts: this.state.hwAccounts,
-        t: this.props.t,
+        hwAccounts,
+        t,
         unInitializedAdded: true,
+        device,
       });
 
       const newHWAccounts = hwAccounts.concat([output.hwAccounts[0]]);
       this.setState({ hwAccounts: newHWAccounts });
     } else {
-      const label = this.props.t('Please use the last not-initialized account before creating a new one!');
-      this.props.errorToastDisplayed({ label });
+      const label = t('Please use the last not-initialized account before creating a new one!');
+      errorToastDisplayed({ label });
     }
   }
 
+  onSelectAccount(account, index) {
+    const { liskAPIClientSet, network, device } = this.props;
+    liskAPIClientSet({
+      publicKey: account.publicKey,
+      network,
+      hwInfo: {
+        deviceId: device.deviceId,
+        derivationIndex: index,
+      },
+    });
+  }
+
   render() {
-    const { t, prevStep } = this.props;
+    const { t, prevStep, device } = this.props;
     const { accountOnEditMode, hwAccounts } = this.state;
 
     return <React.Fragment>
-      <h1>{t('Lisk accounts on {{WalletModel}}', { WalletModel: 'Trezor Model T' })}</h1>
+      <h1>{t('Lisk accounts on {{WalletModel}}', { WalletModel: device.model })}</h1>
       <p>
         {t('Please select the account you’d like to sign in to or')}
         <TertiaryButtonV2
-          className={styles.createAccountBtn}
+          className={`${styles.createAccountBtn} create-account`}
           onClick={this.onAddNewAccount}
         >
           {t('Create account')}
@@ -102,22 +141,23 @@ class SelectAccount extends React.Component {
       <div className={`${styles.deviceContainer} hw-container`}>
         {
           hwAccounts.length
-          ? hwAccounts.map((account, index) =>
+          ? hwAccounts.map((hwAccount, index) =>
             <AccountCard
               key={index}
-              account={account}
+              account={hwAccount}
               accountOnEditMode={accountOnEditMode}
               index={index}
               onChangeAccountTitle={this.onChangeAccountTitle}
               onEditAccount={this.onEditAccount}
               onSaveNameAccounts={this.onSaveNameAccounts}
+              onSelectAccount={this.onSelectAccount}
               t={t}
             />)
           : null
         }
       </div>
 
-      <TertiaryButtonV2 onClick={() => prevStep({ jump: 2 })}>
+      <TertiaryButtonV2 className={'go-back'} onClick={() => prevStep({ jump: 2 })}>
         {t('Go Back')}
       </TertiaryButtonV2>
     </React.Fragment>;

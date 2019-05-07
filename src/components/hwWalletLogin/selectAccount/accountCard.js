@@ -12,6 +12,7 @@ const AccountCard = ({
   onChangeAccountTitle,
   onEditAccount,
   onSaveNameAccounts,
+  onSelectAccount,
   t,
 }) => (
   <div id={account.address} className={`${styles.account} hw-account`}>
@@ -19,13 +20,13 @@ const AccountCard = ({
       <input
         value={account.name}
         onChange={input => onChangeAccountTitle(input.target.value, index)}
-        className={`${accountOnEditMode === index ? styles.accountTitleEdit : styles.accountTitle}`}
+        className={`${accountOnEditMode === index ? styles.accountTitleEdit : styles.accountTitle} account-name`}
         readOnly={accountOnEditMode !== index}
       />
       {
         accountOnEditMode === index
-        ? <PrimaryButtonV2 className={`${styles.saveBtn}`} onClick={() => onSaveNameAccounts()}>{t('Save')}</PrimaryButtonV2>
-        : <SecondaryButtonV2 className={styles.editBtn} onClick={() => onEditAccount(index)}>{t('Edit')}<img src={svg.icon_edit}/></SecondaryButtonV2>
+        ? <PrimaryButtonV2 className={`${styles.saveBtn} save-account`} onClick={() => onSaveNameAccounts()}>{t('Save')}</PrimaryButtonV2>
+        : <SecondaryButtonV2 className={`${styles.editBtn} edit-account`} onClick={() => onEditAccount(index)}>{t('Edit')}<img src={svg.icon_edit}/></SecondaryButtonV2>
       }
     </header>
 
@@ -34,16 +35,18 @@ const AccountCard = ({
         address={account.address || ''}
         size={55}
       />
-      <div className={styles.row}>
+      <div className={`${styles.row} row-address`}>
         <p>{account.address}</p>
         <span>{t('Address')}</span>
       </div>
-      <div className={styles.row}>
+      <div className={`${styles.row} row-balance`}>
         <p><LiskAmount val={account.balance} /> {t(' LSK')}</p>
         <span>{t('Balance')}</span>
       </div>
 
-      <PrimaryButtonV2>{t('Select this account')}</PrimaryButtonV2>
+      <PrimaryButtonV2 className={'select-account'} onClick={() => onSelectAccount(account, index)}>
+        {t('Select this account')}
+      </PrimaryButtonV2>
     </div>
   </div>
 );
