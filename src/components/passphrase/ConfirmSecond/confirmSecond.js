@@ -1,14 +1,11 @@
 import React from 'react';
 import { PrimaryButton, Button } from '../../toolbox/buttons/button';
 import styles from './confirmSecond.css';
-import { passphraseIsValid } from '../../../utils/form';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
 import { FontIcon } from '../../fontIcon';
 import { extractPublicKey } from '../../../utils/account';
 // eslint-disable-next-line import/no-named-as-default
 import SliderCheckbox from '../../toolbox/sliderCheckbox';
-// eslint-disable-next-line import/no-named-as-default
-import PassphraseInput from '../../passphraseInput';
 import routes from '../../../constants/routes';
 import Piwik from '../../../utils/piwik';
 
@@ -16,7 +13,7 @@ class ConfirmSecond extends React.Component {
   constructor() {
     super();
     this.state = {
-      step: 'login',
+      step: 'confirm',
       passphrase: {
         value: '',
         error: '',
@@ -95,11 +92,6 @@ class ConfirmSecond extends React.Component {
       this.state.step === 'second-passphrase-register-failure') ? styles.done : '';
     return (<section className={`${styles.wrapper} ${status}`}>
       <header className={doneClass}>
-        <TransitionWrapper current={this.state.step} step='login' animationName='slide'>
-          <h2>
-            {t('Please sign in with your first passphrase')}
-          </h2>
-        </TransitionWrapper>
         <TransitionWrapper current={this.state.step} step='confirm' animationName='slide'>
           <h2>
             {t('Great!\nYou’re almost done')}
@@ -141,27 +133,6 @@ class ConfirmSecond extends React.Component {
       </header>
       {this.state.error ? null :
       <div className={`${styles.content} ${doneClass}`}>
-        <TransitionWrapper current={this.state.step} step='login'>
-          <div className={styles.innerContent}>
-            <PassphraseInput
-              error={this.state.passphrase.error}
-              value={this.state.passphrase.value}
-              onChange={this.onChange.bind(this, 'passphrase')}
-              columns={{ xs: 6, sm: 4, md: 2 }}
-              isFocused={true}
-              className='passphraseInput'
-            />
-            <footer>
-              <Button
-                label={this.props.t('Unlock account')}
-                theme={styles}
-                className={'unlock'}
-                onClick={this.login.bind(this, 'passphrase')}
-                disabled={!passphraseIsValid(this.state.passphrase)}
-              />
-            </footer>
-          </div>
-        </TransitionWrapper>
         <TransitionWrapper current={this.state.step} step='confirm'>
           <div className={styles.innerContent}>
             <h5>

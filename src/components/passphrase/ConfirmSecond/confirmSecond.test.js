@@ -13,7 +13,7 @@ describe('SecondPassphrase: Confirmation', () => {
   const account = {
     passphrase: accounts.delegate.passphrase,
     info: {
-      LSK: accounts.delegate,
+      LSK: {},
     },
   };
   const props = {
@@ -53,41 +53,11 @@ describe('SecondPassphrase: Confirmation', () => {
     expect(className).to.include('hidden');
   });
 
-  it('shows login step when user is not login', () => {
-    wrapper = mount(<ConfirmSecond {...props} account={{ passphrase: null }} />, options);
-    clock.tick(501);
-    wrapper.update();
-    const className = wrapper.find('h2').at(0).props().className;
-    expect(className).to.include('slideIn');
-  });
-
-  it('should unlock button become enable when passphrase is entered', () => {
-    const newAccount = {
-      passphrase: null,
-      info: {
-        LSK: accounts.delegate,
-      },
-    };
-    wrapper = mount(<ConfirmSecond {...props} account={newAccount} />, options);
-    clock.tick(501);
-    wrapper.update();
-    expect(wrapper.find('button.unlock')).to.be.disabled();
-    const temp = wrapper.find('Input.passphraseInput input').at(0);
-    temp.simulate('change', { target: { value: accounts.delegate.passphrase } });
-    wrapper.update();
-    expect(wrapper.find('button.unlock')).to.not.be.disabled();
-    wrapper.find('button.unlock').simulate('click');
-    clock.tick(501);
-    wrapper.update();
-    const className = wrapper.find('h2').at(1).props().className;
-    expect(className).to.include('slideIn');
-  });
-
   it('shows confirmation step when user is login', () => {
     wrapper = mount(<ConfirmSecond {...props} />, options);
     clock.tick(501);
     wrapper.update();
-    const className = wrapper.find('h2').at(1).props().className;
+    const className = wrapper.find('h2').at(0).props().className;
     expect(className).to.include('slideIn');
   });
 
