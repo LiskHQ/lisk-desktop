@@ -1,4 +1,5 @@
 @import '../app/variables.css';
+@import '../app/mixins.css';
 
 :root {
   --amount-negative-color: var(--color-grayscale-dark);
@@ -10,21 +11,35 @@
   --link-font-size: 15px;
 }
 
+.desktopTitle {
+  display: block;
+}
+
+.mobileTitle {
+  display: none;
+}
+
+.titleHeader {
+  padding: 0 32px 40px;
+
+  & h2 {
+    margin-bottom: 0;
+    font-weight: 400;
+    padding-bottom: 60px;
+  }
+
+  & h3 {
+    display: inline-block;
+    margin: 0;
+  }
+}
+
 .header {
   line-height: var(--header-line-height);
 
   & h2 {
     margin-bottom: 0;
     font-weight: 400;
-    padding-bottom: 60px;
-
-    &.desktopTitle {
-      display: block;
-    }
-
-    &.mobileTitle {
-      display: none;
-    }
   }
 
   & h3 {
@@ -49,38 +64,54 @@
   top: 95px;
 }
 
-.filters {
-  font-weight: var(--font-weight-bold);
-  color: var(--filter-list-color);
-  line-height: var(--list-line-height);
-  list-style: none;
-  padding: 0;
+.container {
+  align-items: center;
+  border-radius: var(--border-radius-box) var(--border-radius-box) 0 0;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+  background: var(--color-white-smoke);
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-platinum);
 
-  & .filter {
-    display: inline-block;
+  & .items {
+    padding: 0px 10px;
+  }
+}
+
+.filters {
+  border-radius: inherit;
+  background-color: var(--color-white-smoke);
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  & > li {
+    @mixin contentSmallest;
+
+    align-items: center;
+    border-bottom: 1px solid var(--color-platinum);
+    border-right: 1px solid var(--color-platinum);
+    color: var(--color-slate-gray);
     cursor: pointer;
-    font-size: 15px;
-    font-weight: 500;
-    vertical-align: middle;
-    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: -1px;
+    padding: 14px 20px;
+    position: relative;
 
-    &:not(:last-of-type) {
-      margin-right: 24px;
+    &:first-child {
+      border-top-left-radius: var(--border-radius-box);
     }
-  }
 
-  & .active {
-    border-bottom: 2px solid var(--amount-negative-color);
-    color: var(--amount-negative-color);
-  }
+    &:last-child:not(.active) {
+      border-right: 0 none;
+    }
 
-  &.disabled {
-    pointer-events: none;
-    cursor: disabled;
-    opacity: 0.4;
+    &.active {
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-white);
+      color: var(--color-ultramarine-blue);
+    }
   }
 }
 
@@ -88,19 +119,19 @@
   position: relative;
 
   & input {
-    height: 25px;
-    border: none;
+    @mixin contentNormal;
+
+    width: 177px;
+    height: 32px;
+    border-radius: 3px;
+    border: solid 1px rgba(0, 0, 0, 0.08);
+    background-color: var(--color-white);
     outline: none;
     margin: 0;
-    font-size: 15px;
-    color: var(--color-grayscale-dark);
-    font-weight: 400;
-    padding-left: 30px;
+    color: var(--color-blue-gray);
+    padding-left: 20px;
     padding-right: 20px;
     vertical-align: top;
-    background-color: transparent;
-    border-radius: 0;
-    border-bottom: solid 1px transparent;
     transition: all ease 250ms;
 
     &.desktopInput {
@@ -113,8 +144,6 @@
 
     &:focus,
     &.dirty {
-      border-bottom-color: var(--color-grayscale-dark);
-
       & ~ .clean {
         visibility: visible;
       }
@@ -144,6 +173,15 @@
 }
 
 @media (--medium-viewport) {
+  .desktopTitle {
+    display: none;
+  }
+
+  .mobileTitle {
+    display: block;
+    padding: 0;
+  }
+
   .header {
     & .table .tableHead li {
       padding: 0 0 12px 12px;
@@ -166,23 +204,10 @@
         }
       }
     }
-
-    & h2.desktopTitle {
-      display: none;
-    }
-
-    & h2.mobileTitle {
-      display: block;
-      padding: 0;
-    }
   }
 
   .filters {
     & .filter {
-      &:not(:last-of-type) {
-        margin-right: 24px;
-      }
-
       & input {
         width: 70px;
         line-height: 16px;

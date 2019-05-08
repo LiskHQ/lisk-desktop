@@ -10,7 +10,6 @@ import Fees from './../../constants/fees';
 import routes from './../../constants/routes';
 import Piwik from '../../utils/piwik';
 
-
 class VotingHeader extends React.Component {
   constructor() {
     super();
@@ -24,7 +23,7 @@ class VotingHeader extends React.Component {
   componentWillMount() {
     this.filters = [
       {
-        name: this.props.t('All delegates'),
+        name: this.props.t('All'),
         value: voteFilters.all,
         className: 'filter-all',
       },
@@ -79,50 +78,50 @@ class VotingHeader extends React.Component {
     const titleMobile = this.props.showChangeSummery ? selectionTitle : votingTitle;
     const isHardwareWallet = this.props.account.hwInfo && this.props.account.hwInfo.deviceId;
     return (
-      <div>
-        <div className={`${styles.titleHeader}`}>
-          <div>
-            <h2 className={styles.desktopTitle}>{titleDesktop}</h2>
-            <h2 className={styles.mobileTitle}>{titleMobile}</h2>
-          </div>
-          {!isDelegate && !isHardwareWallet ?
-            <Link to={`${routes.registerDelegate.path}`} className={`${styles.link} ${styles.registerLink} register-delegate`}>
-              {t('Become a delegate (Fee: {{fee}} LSK)', { fee: fromRawLsk(Fees.registerDelegate) })}
-              <FontIcon value='arrow-right'/>
-            </Link> : null
-          }
+      <header className={`${styles.header} ${styles[this.state.headerPosition]}`}>
+        <div>
+          <h2 className={styles.desktopTitle}>{titleDesktop}</h2>
+          <h2 className={styles.mobileTitle}>{titleMobile}</h2>
         </div>
-        <header className={`${styles.header} ${styles[this.state.headerPosition]}`}>
-          <div>
-            <div className={styles.container}>
-              <ul className={`${styles.filters} ${this.props.showChangeSummery ? styles.disabled : ''}`}>
-                {this.filters.map((filter, i) => (
-                  <li key={i} className={`transaction-filter-item ${filter.className} ${styles.filter} ${(this.state.activeFilter === filter.value) ? styles.active : ''}`}
-                    onClick={this.filterVotes.bind(this, filter)}>
-                    {filter.name}
-                  </li>
-                ))}
-              </ul>
-                <div className={`${styles.search} ${styles.items} ${styles.filter} search`}>
-                  <input type='text'
-                    name='query'
-                    className={`search ${styles.desktopInput} ${this.state.query.length > 0 ? styles.dirty : ''} `}
-                    value={this.state.query}
-                    onChange={this.search.bind(this)}
-                    placeholder={t('Filter by name...')}/>
-                  <input type='text'
-                    name='query'
-                    className={`${styles.mobileInput} ${this.state.query.length > 0 ? styles.dirty : ''} `}
-                    value={this.state.query}
-                    onChange={this.search.bind(this)}
-                    placeholder={t('Search')}/>
-                </div>
-            </div>
-          </div>
-          <Waypoint onLeave={this.markOnOffCanvas.bind(this, 'offCanvas')} threshold={200}
-            onEnter={this.markOnOffCanvas.bind(this, 'onCanvas')} />
-        </header>
-      </div>
+        {!isDelegate && !isHardwareWallet ?
+          <Link to={`${routes.registerDelegate.path}`} className={`${styles.link} ${styles.registerLink} register-delegate`}>
+            {t('Become a delegate (Fee: {{fee}} LSK)', { fee: fromRawLsk(Fees.registerDelegate) })}
+            <FontIcon value='arrow-right'/>
+          </Link> : null
+        }
+        <div>
+          <ul className={`${styles.filters} ${this.props.showChangeSummery ? styles.disabled : ''}`}>
+            {this.filters.map((filter, i) => (
+              <li key={i} className={`transaction-filter-item ${filter.className} ${styles.filter} ${(this.state.activeFilter === filter.value) ? styles.active : ''}`}
+                onClick={this.filterVotes.bind(this, filter)}>
+                {filter.name}
+              </li>
+            ))}
+            <li className={`${styles.search} ${styles.filter} search`}>
+              <FontIcon className={styles.search} value='search' id='searchIcon'/>
+              <input type='text'
+                name='query'
+                className={`search ${styles.desktopInput} ${this.state.query.length > 0 ? styles.dirty : ''} `}
+                value={this.state.query}
+                onChange={this.search.bind(this)}
+                placeholder={t('Search for a delegate')}/>
+              <input type='text'
+                name='query'
+                className={`${styles.mobileInput} ${this.state.query.length > 0 ? styles.dirty : ''} `}
+                value={this.state.query}
+                onChange={this.search.bind(this)}
+                placeholder={t('Search')}/>
+              <FontIcon
+                id='cleanIcon'
+                className={`${styles.clean} clean-icon`}
+                value='close'
+                onClick={ this.clearSearch.bind(this) }/>
+            </li>
+          </ul>
+        </div>
+        <Waypoint onLeave={this.markOnOffCanvas.bind(this, 'offCanvas')} threshold={200}
+          onEnter={this.markOnOffCanvas.bind(this, 'onCanvas')} />
+      </header>
     );
   }
 }

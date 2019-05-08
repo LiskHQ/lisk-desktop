@@ -1,17 +1,17 @@
 import React, { Fragment } from 'react';
 import Box from '../box';
 import MultiStep from './../multiStep';
-import VotingHeader from './votingHeader';
-import ListLabels from './listLabels';
+import VotingHeaderV2 from './votingHeaderV2';
+import ListLabelsV2 from './listLabelsV2';
 import styles from './votingListView.css';
 import VoteUrlProcessor from '../voteUrlProcessor';
 import voteFilters from './../../constants/voteFilters';
 import { parseSearchParams } from '../../utils/searchParams';
-import VoteList from './voteList';
-import DelegateList from './delegateList';
+import VoteListV2 from './voteListV2';
+import DelegateListV2 from './delegateListV2';
 
 // Create a new Table component injecting Head and Row
-class VotingListView extends React.Component {
+class VotingListViewV2 extends React.Component {
   constructor() {
     super();
     this.freezeLoading = false;
@@ -159,7 +159,7 @@ class VotingListView extends React.Component {
         <VoteUrlProcessor toggleShowInfo={this.toggleShowInfo.bind(this)} show={this.showInfo()} />
         { !this.showInfo() ?
           <div>
-            <VotingHeader
+            <VotingHeaderV2
               account={this.props.account}
               setActiveFilter={this.setActiveFilter.bind(this)}
               showChangeSummery={showChangeSummery}
@@ -170,13 +170,13 @@ class VotingListView extends React.Component {
             <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
             <section className={`${styles.delegatesList} delegate-list`}>
               <div className={styles.table}>
-                <ListLabels t={t} status={showChangeSummery} />
+                <ListLabelsV2 t={t} status={showChangeSummery} />
                 <MultiStep
                   className={styles.wrapper}>
-                  <DelegateList list={filteredList} votes={votes}
+                  <DelegateListV2 list={filteredList} votes={votes}
                     voteToggled={voteToggled} showChangeSummery={showChangeSummery}
                     safari={this.state.safariClass} loadMore={this.loadMore.bind(this)} />
-                  <VoteList votes={votes} showChangeSummery={showChangeSummery}
+                  <VoteListV2 votes={votes} showChangeSummery={showChangeSummery}
                     safari={this.state.safariClass} />
                 </MultiStep>
               </div>
@@ -194,4 +194,4 @@ class VotingListView extends React.Component {
   }
 }
 
-export default VotingListView;
+export default VotingListViewV2;

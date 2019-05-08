@@ -1,10 +1,10 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import styles from './voting.css';
+import styles from './votingV2.css';
 import DelegateSidebar from '../delegateSidebar';
-import VotingListView from '../votingListView';
+import VotingListViewV2 from '../votingListViewV2';
 
-class Voting extends React.Component {
+class VotingV2 extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -33,7 +33,6 @@ class Voting extends React.Component {
     this.setState({ nextStepCalled: true });
   }
 
-
   render() {
     return (
       <div className={`${grid.row} ${styles.wrapper}`} ref={(el) => { this.root = el; }}>
@@ -44,7 +43,7 @@ class Voting extends React.Component {
             updateList={(value) => { this.toggleSummery(value); }} />
         </aside>
         <section className={`${grid['col-sm-12']} ${grid['col-md-8']} ${styles.votingBox} ${styles.votes}`}>
-          <VotingListView showChangeSummery={this.state.showChangeSummery}
+          <VotingListViewV2 showChangeSummery={this.state.showChangeSummery}
             nextStepCalled={this.state.nextStepCalled}
             history={this.props.history}
           />
@@ -54,4 +53,4 @@ class Voting extends React.Component {
   }
 }
 
-export default Voting;
+export default VotingV2;

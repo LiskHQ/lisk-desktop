@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './votingListView.css';
-import Checkbox from './voteCheckbox';
+import Checkbox from './voteCheckboxV2';
 import TableRow from '../toolbox/table/tableRow';
 import AccountVisual from '../accountVisual';
 

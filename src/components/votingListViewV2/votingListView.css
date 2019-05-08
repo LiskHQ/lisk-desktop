@@ -1,4 +1,6 @@
 @import '../app/variables.css';
+@import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
 :root {
   --grid-padding-L: var(--box-padding-left-L);
@@ -12,11 +14,16 @@
   box-shadow: none;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
+  height: 58vh; /* stylelint-disable-line */
 }
 
 .leftText {
   text-align: left;
   padding-left: 0px;
+
+  &:first-child {
+    padding-left: 20px;
+  }
 }
 
 .wrapper {
@@ -35,14 +42,6 @@
   }
 }
 
-.upVoteRow {
-  background: #caf8ff !important;
-}
-
-.downVoteRow {
-  background: #fed9d9 !important;
-}
-
 .actionBar {
   margin-top: 9px;
   display: inline-block;
@@ -57,14 +56,6 @@
     line-height: 24px;
     margin-left: 6px;
   }
-}
-
-.voted {
-  color: #7cb342;
-}
-
-.unvoted {
-  color: #c62828;
 }
 
 .menuItem {
@@ -121,11 +112,11 @@
   }
 
   & .row {
-    background: linear-gradient(90deg, var(--color-white) 0%, #f5f8fc 82%);
+    background: var(--color-white);
     flex-wrap: nowrap;
 
-    &:nth-child(2n) {
-      background: var(--color-white);
+    &:hover {
+      background: rgba(64, 112, 244, 0.08) !important;
     }
 
     & li {
@@ -176,6 +167,29 @@
   font-weight: 500;
 }
 
+.accountInfo {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+}
+
+.title {
+  @mixin headingSmall;
+
+  color: var(--color-maastricht-blue);
+}
+
+.address {
+  @mixin contentNormal;
+
+  margin-top: 3px;
+  color: var(--color-slate-gray);
+}
+
+.checkbox {
+  padding: 0px;
+}
+
 @media (--xLarge-viewport) {
   .delegatesList {
     margin: 0px calc(0 - var(--box-padding-left-XL));
@@ -195,14 +209,12 @@
 @media (--large-viewport) {
   .delegatesList {
     margin: 0px calc(0 - var(--box-padding-left-L));
-
-    & .row {
-      padding: 0px var(--grid-padding-L);
-    }
+    overflow-x: hidden;
 
     & .table {
       & ul {
         padding: 0 var(--box-padding-left-L);
+        height: 77px;
       }
     }
   }
