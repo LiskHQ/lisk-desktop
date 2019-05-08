@@ -1,5 +1,4 @@
 import {
-  accountUpdated,
   accountDataUpdated,
   updateTransactionsIfNeeded,
   updateDelegateAccount,
@@ -7,7 +6,6 @@ import {
 import { votesFetched } from '../../actions/voting';
 import { transactionsFilterSet, cleanTransactions } from '../../actions/transactions';
 import actionTypes from '../../constants/actions';
-import accountConfig from '../../constants/account';
 import transactionTypes from '../../constants/transactionTypes';
 
 import { extractAddress, extractPublicKey } from '../../utils/account';
@@ -19,8 +17,6 @@ import txFilters from '../../constants/transactionFilters';
 
 import { setWalletsLastBalance } from '../../actions/wallets';
 import { setWalletsInLocalStorage } from '../../utils/wallets';
-
-const { lockDuration } = accountConfig;
 
 const updateAccountData = (store, action) => {
   const { account, transactions } = store.getState();
@@ -82,16 +78,6 @@ const votePlaced = (store, action) => {
       type: 'update',
     }));
   }
-};
-
-const passphraseUsed = (store, action) => {
-  const data = { expireTime: Date.now() + lockDuration };
-
-  if (!store.getState().account.passphrase) {
-    data.passphrase = action.data;
-  }
-
-  store.dispatch(accountUpdated(data));
 };
 
 const checkTransactionsAndUpdateAccount = (store, action) => {
@@ -163,9 +149,6 @@ const accountMiddleware = store => next => (action) => {
     case actionTypes.transactionsUpdated:
       delegateRegistration(store, action);
       votePlaced(store, action);
-      break;
-    case actionTypes.passphraseUsed:
-      passphraseUsed(store, action);
       break;
     case actionTypes.accountLoggedOut:
       setWalletsInLocalStorage(store.getState().wallets);

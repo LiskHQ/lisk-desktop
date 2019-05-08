@@ -177,37 +177,6 @@ describe('Account middleware', () => {
     });
   });
 
-  it(`should dispatch accountUpdated({passphrase}) action on ${actionTypes.passphraseUsed} action if store.account.passphrase is not set`, () => {
-    const accountUpdatedSpy = spy(accountActions, 'accountUpdated');
-
-    const action = {
-      type: actionTypes.passphraseUsed,
-      data: passphrase,
-    };
-    middleware(store)(next)(action);
-    expect(accountUpdatedSpy).to.have.been.calledWith({
-      passphrase,
-      expireTime: clock.now + lockDuration,
-    });
-    accountUpdatedSpy.restore();
-  });
-
-  it(`should not dispatch accountUpdated action on ${actionTypes.passphraseUsed} action if store.account.passphrase is already set`, () => {
-    const accountUpdatedSpy = spy(accountActions, 'accountUpdated');
-    const action = {
-      type: actionTypes.passphraseUsed,
-      data: passphrase,
-    };
-    store.getState = () => ({
-      ...state,
-      account: { ...state.account, passphrase, expireTime: clock.now + lockDuration },
-    });
-
-    middleware(store)(next)(action);
-    expect(accountUpdatedSpy).to.have.been.calledWith({ expireTime: clock.now + lockDuration });
-    accountUpdatedSpy.restore();
-  });
-
   it(`should dispatch ${actionTypes.liskAPIClientSet} action on ${actionTypes.storeCreated} if autologin data found in localStorage`, () => {
     getAutoLogInDataMock.withArgs().returns({
       [settings.keys.loginKey]: passphrase,
