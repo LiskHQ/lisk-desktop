@@ -1,6 +1,7 @@
 import React from 'react';
 import { TertiaryButtonV2 } from '../../toolbox/buttons/button';
 import { displayAccounts } from '../../../utils/ledger';
+import getNetwork from '../../../utils/getNetwork';
 import { loginType } from '../../../constants/hwConstants';
 import routes from '../../../constants/routes';
 import AccountCard from './accountCard';
@@ -30,6 +31,7 @@ class SelectAccount extends React.Component {
   }
 
   componentDidUpdate() {
+    // istanbul ignore else
     if (this.props.account && this.props.account.address) {
       this.props.history.push(`${routes.dashboard.path}`);
     }
@@ -37,8 +39,14 @@ class SelectAccount extends React.Component {
 
   getNameFromAccount(address) {
     const { settings } = this.props;
-    const storedAccount = settings.hardwareAccounts.filter(account => account.address === address);
-    return storedAccount.length ? storedAccount[0].name : 'Unnamed account';
+    // istanbul ignore else
+    if (Array.isArray(settings.hardwareAccounts)) {
+      const storedAccount = settings.hardwareAccounts.filter(account =>
+        account.address === address);
+      return storedAccount.length ? storedAccount[0].name : 'Unnamed account';
+    }
+
+    return 'Unnamed account';
   }
 
   async getAccountsFromDevice() {
@@ -112,12 +120,14 @@ class SelectAccount extends React.Component {
 
   onSelectAccount(account, index) {
     const { liskAPIClientSet, network, device } = this.props;
+
     liskAPIClientSet({
       publicKey: account.publicKey,
-      network,
+      network: getNetwork(network),
       hwInfo: {
         deviceId: device.deviceId,
         derivationIndex: index,
+        deviceModel: device.model,
       },
     });
   }
@@ -126,7 +136,7 @@ class SelectAccount extends React.Component {
     const { t, prevStep, device } = this.props;
     const { accountOnEditMode, hwAccounts } = this.state;
 
-    return <React.Fragment>
+    return <div>
       <h1>{t('Lisk accounts on {{WalletModel}}', { WalletModel: device.model })}</h1>
       <p>
         {t('Please select the account you’d like to sign in to or')}
@@ -160,7 +170,7 @@ class SelectAccount extends React.Component {
       <TertiaryButtonV2 className={'go-back'} onClick={() => prevStep({ jump: 2 })}>
         {t('Go Back')}
       </TertiaryButtonV2>
-    </React.Fragment>;
+    </div>;
   }
 }
 

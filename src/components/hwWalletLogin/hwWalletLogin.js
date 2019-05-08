@@ -20,7 +20,12 @@ class HardwareWalletLogin extends React.Component {
   }
 
   render() {
-    const { devices, t, liskAPIClient } = this.props;
+    const {
+      devices,
+      history,
+      liskAPIClient,
+      t,
+    } = this.props;
     return <React.Fragment>
       <HeaderV2 showSettings={true} />
       <div className={`${styles.wrapper} ${grid.row}`}>
@@ -29,7 +34,7 @@ class HardwareWalletLogin extends React.Component {
           <Loading t={t} devices={devices} />
           <SelectDevice t={t} devices={devices} />
           <UnlockDevice t={t} devices={devices} />
-          <SelectAccount t={t} liskAPIClient={liskAPIClient} />
+          <SelectAccount t={t} liskAPIClient={liskAPIClient} history={history} />
         </MultiStep>
       </div>
     </React.Fragment>;
