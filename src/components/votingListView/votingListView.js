@@ -158,7 +158,7 @@ class VotingListView extends React.Component {
       <Fragment>
         <VoteUrlProcessor toggleShowInfo={this.toggleShowInfo.bind(this)} show={this.showInfo()} />
         { !this.showInfo() ?
-          <div>
+          <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
             <VotingHeader
               account={this.props.account}
               setActiveFilter={this.setActiveFilter.bind(this)}
@@ -167,7 +167,6 @@ class VotingListView extends React.Component {
               voteToggled={voteToggled}
               search={ value => this.search(value) }
             />
-            <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
             <section className={`${styles.delegatesList} delegate-list`}>
               <div className={styles.table}>
                 <ListLabels t={t} status={showChangeSummery} />
@@ -187,7 +186,7 @@ class VotingListView extends React.Component {
                   </div> : null
               }
             </section>
-          </Box></div> : null
+          </Box> : null
         }
       </Fragment>
     );

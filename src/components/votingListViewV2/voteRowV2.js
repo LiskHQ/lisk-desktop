@@ -18,8 +18,8 @@ class VoteRowV2 extends React.Component {
     return (<ul className={`delegate-row selected-row ${styles.row} ${grid.row} ${className} ${voteType}`}>
       <li className={`${grid['col-md-1']} ${grid['col-xs-2']}`}>{data.rank}</li>
       <li className={`${grid['col-md-3']} ${grid['col-xs-5']} ${styles.username}`}>{username}</li>
-      <li className={`${grid['col-md-5']}`}>{data.address}</li>
-      <li className={`${grid['col-md-2']} ${grid['col-xs-3']} ${styles.productivity}`}>{data.productivity} %</li>
+      <li className={`${grid['col-md-4']}`}>{data.address}</li>
+      <li className={`${grid['col-md-3']} ${grid['col-xs-3']} ${styles.productivity}`}>{data.productivity} %</li>
     </ul>
     );
   }

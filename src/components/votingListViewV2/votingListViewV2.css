@@ -30,14 +30,6 @@
   width: 100%;
 }
 
-.upVoteRow {
-  background: #caf8ff !important;
-}
-
-.downVoteRow {
-  background: #fed9d9 !important;
-}
-
 .table {
   & :global thead th:first-child {
     display: none !important;
@@ -98,7 +90,7 @@
 }
 
 .productivity {
-  text-align: right;
+  text-align: left;
 }
 
 .delegatesList {
