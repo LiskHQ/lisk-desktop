@@ -33,6 +33,10 @@ const getNethash = async nodeUrl => (
 export const networkSet = data =>
   async (dispatch) => {
     if (data.name === networks.customNode.name) {
+      dispatch(generateAction(data, {
+        nodeUrl: data.nodeUrl,
+        nethash: '',
+      }));
       await getNethash(data.nodeUrl).then((nethash) => {
         dispatch(generateAction(data, {
           nodeUrl: data.nodeUrl,

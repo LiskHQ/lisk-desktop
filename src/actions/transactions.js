@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import to from 'await-to-js';
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
-import { send, getTransactions, getSingleTransaction, unconfirmedTransactions } from '../utils/api/lsk/transactions';
+import { send, getTransactions, getSingleTransaction, unconfirmedTransactions } from '../utils/api/transactions';
 import { getDelegate } from '../utils/api/delegate';
 import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
@@ -31,12 +31,12 @@ export const testExtensions = () => ({
 export const transactionsFilterSet = ({
   address, limit, filter, customFilters = {},
 }) => (dispatch, getState) => {
-  const liskAPIClient = getState().peers.liskAPIClient;
+  const networkConfig = getState().network;
 
   dispatch(loadingStarted(actionTypes.transactionsFilterSet));
 
   return getTransactions({
-    liskAPIClient,
+    networkConfig,
     address,
     limit,
     filter,
@@ -87,11 +87,11 @@ export const loadTransactionsFinish = accountUpdated =>
 
 export const loadTransactions = ({ publicKey, address }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const networkConfig = getState().network;
     const lastActiveAddress = publicKey && extractAddress(publicKey);
     const isSameAccount = lastActiveAddress === address;
     dispatch(loadingStarted(actionTypes.transactionsLoad));
-    getTransactions({ liskAPIClient, address, limit: 25 })
+    getTransactions({ networkConfig, address, limit: 25 })
       .then((transactionsResponse) => {
         dispatch(loadAccount({
           address,
@@ -113,12 +113,11 @@ export const transactionsRequested = ({
 }) =>
   (dispatch, getState) => {
     dispatch(loadingStarted(actionTypes.transactionsRequested));
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const networkConfig = getState().network;
     getTransactions({
-      liskAPIClient, address, limit, offset, filter, customFilters,
+      networkConfig, address, limit, offset, filter, customFilters,
     })
       .then((response) => {
-        dispatch(loadingFinished(actionTypes.transactionsRequested));
         dispatch({
           data: {
             count: parseInt(response.meta.count, 10),
@@ -128,15 +127,16 @@ export const transactionsRequested = ({
           },
           type: actionTypes.transactionsLoaded,
         });
+        dispatch(loadingFinished(actionTypes.transactionsRequested));
       });
   };
 
 export const loadLastTransaction = address => (dispatch, getState) => {
-  const { liskAPIClient } = getState().peers;
-  if (liskAPIClient) {
+  const networkConfig = getState().network;
+  if (networkConfig) {
     dispatch({ type: actionTypes.transactionCleared });
     getTransactions({
-      liskAPIClient, address, limit: 1, offset: 0,
+      networkConfig, address, limit: 1, offset: 0,
     }).then(response => dispatch({ data: response.data[0], type: actionTypes.transactionLoaded }));
   }
 };
@@ -144,8 +144,10 @@ export const loadLastTransaction = address => (dispatch, getState) => {
 export const loadTransaction = ({ id }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
+    const networkConfig = getState().network;
     dispatch({ type: actionTypes.transactionCleared });
-    getSingleTransaction({ liskAPIClient, id })
+    // TODO remove the btc condition
+    getSingleTransaction(localStorage.getItem('btc') ? { networkConfig, id } : { liskAPIClient, id })
       .then((response) => { // eslint-disable-line max-statements
         let added = [];
         let deleted = [];
@@ -157,7 +159,7 @@ export const loadTransaction = ({ id }) =>
 
         // since core 1.0 added and deleted are not filtered in core,
         // but provided as single array with [+,-] signs
-        if ('votes' in response.data[0].asset) {
+        if (response.data[0].asset && 'votes' in response.data[0].asset) {
           added = response.data[0].asset.votes.filter(item => item.startsWith('+')).map(item => item.replace('+', ''));
           deleted = response.data[0].asset.votes.filter(item => item.startsWith('-')).map(item => item.replace('-', ''));
         }
@@ -215,9 +217,10 @@ export const transactionsUpdated = ({
   address, limit, filter, pendingTransactions, customFilters,
 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const networkConfig = getState().network;
+
     getTransactions({
-      liskAPIClient, address, limit, filter, customFilters,
+      networkConfig, address, limit, filter, customFilters,
     })
       .then((response) => {
         if (filter === getState().transactions.filter) {
