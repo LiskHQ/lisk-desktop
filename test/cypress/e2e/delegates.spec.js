@@ -78,7 +78,7 @@ describe('Delegates', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
     cy.get(ss.delegateRow).eq(0).as('dg');
-    cy.get('@dg').find(ss.delegateRank).should('have.text', '#1');
+    cy.get('@dg').find(ss.delegateRank).should('have.text', '1');
     cy.get('@dg').find(ss.delegateName).contains(/genesis_\d+/);
     cy.get('@dg').find(ss.delegateId).contains(/\d+L/);
     cy.get('@dg').find(ss.delegateProductivity).contains(/\d+ %/);
