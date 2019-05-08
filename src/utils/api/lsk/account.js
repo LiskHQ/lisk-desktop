@@ -2,7 +2,7 @@ import Lisk from 'lisk-elements';
 import getMappedFunction from '../functionMapper';
 import { tokenMap } from '../../../constants/tokens';
 import { getAPIClient } from './network';
-import { extractAddress } from '../../account';
+import { extractAddress, extractPublicKey } from '../../account';
 
 export const getAccount = ({
   liskAPIClient,
@@ -17,6 +17,7 @@ export const getAccount = ({
     if (!apiClient) {
       reject();
     }
+    publicKey = publicKey || (passphrase && extractPublicKey(passphrase));
     address = address || extractAddress(passphrase || publicKey);
     apiClient.accounts.get({ address }).then((res) => {
       if (res.data.length > 0) {
@@ -30,6 +31,7 @@ export const getAccount = ({
         // this endpoint returns { success: false }
         resolve({
           address,
+          publicKey,
           balance: 0,
           token: tokenMap.LSK.key,
         });
