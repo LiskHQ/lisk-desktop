@@ -23,6 +23,7 @@ export const getAccount = ({
       if (res.data.length > 0) {
         resolve({
           ...res.data[0],
+          publicKey: publicKey || res.data[0].publicKey,
           serverPublicKey: res.data[0].publicKey,
           token: tokenMap.LSK.key,
         });
