@@ -50,14 +50,6 @@
   }
 }
 
-.upVoteRow {
-  background: #caf8ff !important;
-}
-
-.downVoteRow {
-  background: #fed9d9 !important;
-}
-
 .actionBar {
   margin-top: 9px;
   display: inline-block;
