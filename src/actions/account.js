@@ -268,8 +268,9 @@ export const updateAccountDelegateStats = account =>
     const liskAPIClient = getState().peers.liskAPIClient;
     const { address, publicKey } = account;
     const networkConfig = getState().network;
+    const token = tokenMap.LSK.key;
     const transaction = await getTransactions({
-      networkConfig, address, limit: 1, type: transactionTypes.registerDelegate,
+      token, networkConfig, address, limit: 1, type: transactionTypes.registerDelegate,
     });
     const block = await getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 });
     dispatch(delegateStatsLoaded({
