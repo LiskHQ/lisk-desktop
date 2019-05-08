@@ -34,6 +34,13 @@ export const addConnectedDevices = (device) => {
   win.send({ event: 'hwDeviceListChanged', value: connectedDevices });
 };
 
+export const updateConnectedDevices = (device) => {
+  logDebug('Updating device', device);
+  const deviceIndex = connectedDevices.findIndex(d => d.path === device.path);
+  connectedDevices[deviceIndex] = device;
+  win.send({ event: 'hwDeviceListChanged', value: connectedDevices });
+};
+
 export const removeConnectedDeviceByID = (deviceId) => {
   logDebug('Removing device with id: ', deviceId);
   connectedDevices.some((device, index) =>

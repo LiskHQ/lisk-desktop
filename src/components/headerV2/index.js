@@ -1,19 +1,26 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import HeaderV2 from './headerV2';
 import { liskAPIClientSet } from '../../actions/peers';
+import { errorToastDisplayed } from '../../actions/toaster';
 import { settingsUpdated } from '../../actions/settings';
-import Splashscreen from './splashscreen';
 
 const mapStateToProps = state => ({
-  peers: state.peers,
   account: state.account,
+  peers: state.peers,
   settings: state.settings,
+  selectedNetwork: (state.peers && state.peers.options.code) || 0,
+  address: state.peers && state.peers.options.address,
   liskAPIClient: state.peers && state.peers.liskAPIClient,
 });
 
 const mapDispatchToProps = {
   liskAPIClientSet,
   settingsUpdated,
+  errorToastDisplayed,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Splashscreen));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(HeaderV2);

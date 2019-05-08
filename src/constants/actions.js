@@ -86,7 +86,7 @@ const actionTypes = {
   votesUpdated: 'VOTES_UPDATED',
   voteToggled: 'VOTE_TOGGLED',
   walletUpdated: 'WALLET_UPDATED',
-  devicesListUpdate: 'DEVICE_LIST_UPDATE',
+  deviceListUpdated: 'DEVICE_LIST_UPDATED',
 };
 
 export default actionTypes;

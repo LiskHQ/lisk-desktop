@@ -20,7 +20,9 @@ module.exports = {
     'src/store/middlewares/socket.test.js',
     'src/store/middlewares/peers.test.js',
     'src/components/votingListViewV2/*',
-    'src/components/votingV2/*',
+    'src/components/votingV2/*'
+    'src/components/registerV2/registerV2.test.js',
+    'src/components/headerV2/headerV2.test.js',
   ],
   verbose: false,
   cache: false,
@@ -131,6 +133,8 @@ module.exports = {
     'src/utils/hwWallet.js',
     'src/components/votingListViewV2/*',
     'src/components/votingV2/*',
+    'src/components/headerV2/headerV2.js',
+    'src/components/registerV2/registerV2.js',
   ],
   coverageThreshold: {
     global: {

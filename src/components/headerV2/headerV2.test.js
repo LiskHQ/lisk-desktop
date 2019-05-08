@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { spy } from 'sinon';
+import { spy, useFakeTimers } from 'sinon';
 import { expect } from 'chai';
-import { mount } from 'enzyme';
-import { MemoryRouter } from 'react-router-dom';
+import { mountWithContext } from '../../../test/unit-test-utils/mountHelpers';
 import i18n from '../../i18n';
-import HeaderV2 from './headerV2';
+import HeaderV2 from './index';
+// import networks from '../../constants/networks';
 
-describe('V2 Header', () => {
+describe.skip('V2 Header', () => {
   let wrapper;
+  let clock;
   const options = {
     context: { i18n },
     childContextTypes: {
@@ -25,13 +26,21 @@ describe('V2 Header', () => {
       { label: 'Testnet', value: 1 },
       { label: 'Custom Node', value: 2 },
     ],
-    handleNetworkSelect: spy(),
+
+    settingsUpdated: spy(),
+    liskAPIClientSet: spy(),
   };
 
   beforeEach(() => {
-    wrapper = mount(<MemoryRouter>
-      <HeaderV2 {...props} />
-    </MemoryRouter>, options);
+    clock = useFakeTimers({
+      toFake: ['setTimeout', 'clearTimeout'],
+    });
+
+    wrapper = mountWithContext(<HeaderV2 {...props} />, options);
+  });
+
+  afterEach(() => {
+    clock.restore();
   });
 
   it('Should render Logo, Settings Button and Network Switcher dropdown', () => {
@@ -52,13 +61,33 @@ describe('V2 Header', () => {
   });
 
   it('Should open dropdown on Network switcher click and close and call handler on option click', () => {
-    const { networkList, handleNetworkSelect } = props;
-    const randomNetwork = Math.floor(Math.random() * networkList.length);
+    const { networkList } = props;
     expect(wrapper.find('.dropdownHandler')).to.be.present();
     wrapper.find('.dropdownHandler').simulate('click');
     expect(wrapper.find('DropdownV2')).to.have.prop('showDropdown', true);
-    wrapper.find('DropdownV2 .dropdown-content').children().at(randomNetwork).simulate('click');
-    expect(handleNetworkSelect).to.have.been.calledWith(networkList[randomNetwork].value);
+    wrapper.find('DropdownV2 .dropdown-content').children().at(networkList[0].value).simulate('click');
     expect(wrapper.find('DropdownV2')).to.have.prop('showDropdown', false);
+  });
+
+  it('Should open dropdown on Network switcher click and show Connect button', () => {
+    const { networkList } = props;
+    expect(wrapper.find('.dropdownHandler')).to.be.present();
+    wrapper.find('.dropdownHandler').simulate('click');
+    expect(wrapper.find('DropdownV2')).to.have.prop('showDropdown', true);
+    wrapper.find('DropdownV2 .dropdown-content').children().at(networkList[2].value).simulate('click');
+    wrapper.find('.custom-network').first().simulate('change', { target: { value: 'localhost:4000' } });
+
+    expect(wrapper).to.have.descendants('.connect-button');
+  });
+
+  it('Should open dropdown on Network switcher click and show Connect button', () => {
+    const { networkList } = props;
+    expect(wrapper.find('.dropdownHandler')).to.be.present();
+    wrapper.find('.dropdownHandler').simulate('click');
+    expect(wrapper.find('DropdownV2')).to.have.prop('showDropdown', true);
+    wrapper.find('DropdownV2 .dropdown-content').children().at(networkList[2].value).simulate('click');
+    wrapper.find('.custom-network').first().simulate('change', { target: { value: 'localhost:4000' } });
+
+    expect(wrapper).to.have.descendants('.connect-button');
   });
 });

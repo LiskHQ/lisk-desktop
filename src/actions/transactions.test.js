@@ -1,14 +1,14 @@
 import actionTypes from '../constants/actions';
 import txFilters from './../constants/transactionFilters';
 import { sent, transactionsRequested, loadTransaction, transactionsUpdated } from './transactions';
-import * as transactionsApi from '../utils/api/lsk/transactions';
+import * as transactionsApi from '../utils/api/transactions';
 import * as delegateApi from '../utils/api/delegate';
 import accounts from '../../test/constants/accounts';
 import Fees from '../constants/fees';
 import networks from '../constants/networks';
 import { toRawLsk } from '../utils/lsk';
 
-jest.mock('../utils/api/lsk/transactions');
+jest.mock('../utils/api/transactions');
 jest.mock('../utils/api/delegate');
 
 describe('actions: transactions', () => {

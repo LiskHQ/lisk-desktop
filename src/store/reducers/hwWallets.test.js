@@ -21,7 +21,7 @@ describe('Reducer: hwWallets(state, action)', () => {
 
   it('Should return new deviceList if action.type === devicesListUpdate', () => {
     const action = {
-      type: actionTypes.devicesListUpdate,
+      type: actionTypes.deviceListUpdated,
       data: [{ model: 'Trezor', deviceId: 1 }, { model: 'Ledger', deviceId: 2 }],
     };
     const updatedState = hwWallets(state, action);

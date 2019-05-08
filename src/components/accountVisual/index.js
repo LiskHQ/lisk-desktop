@@ -5,6 +5,7 @@ import { Gradients, gradientSchemes } from './gradients';
 import generateUniqueId from './../../utils/generateUniqueId';
 import breakpoints from './../../constants/breakpoints';
 import styles from './accountVisual.css';
+import reg from './../../utils/regex';
 
 
 /*
@@ -202,6 +203,10 @@ class AccountVisual extends React.Component {
     const {
       address, size, sizeS, className,
     } = this.props;
+
+    if (!reg.address.test(address)) {
+      return null;
+    }
 
     const replaceUrlByHashOnScheme = gradientScheme => ({
       ...gradientScheme,

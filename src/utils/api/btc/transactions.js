@@ -1,9 +1,9 @@
-import * as bitcoin from 'bitcoinjs-lib';
-import * as popsicle from 'popsicle';
+import bitcoin from 'bitcoinjs-lib';
 import getBtcConfig from './config';
 import { extractAddress, getDerivedPathFromPassphrase } from './account';
 import { validateAddress } from '../../validators';
 import { tokenMap } from '../../../constants/tokens';
+import { getAPIClient } from './network';
 
 /**
  * Normalizes transaction data retrieved from Blockchain.info API
@@ -11,79 +11,73 @@ import { tokenMap } from '../../../constants/tokens';
  * @param {String} data.address Base address to use for formatting transactions
  * @param {Array} data.list Transaction list retrieved from API
  * @param {Number} data.blockHeight Latest block height for calculating confirmation count
- * @param {Number} [netCode=1] Network code of mainnet or testnet. Defaults to testnet (1)
  */
 const normalizeTransactionsResponse = ({
   address,
   list,
-// eslint-disable-next-line max-statements
-}, netCode = 1) => list.map((tx, feeSatoshi, confirmations, timestamp) => {
+  // eslint-disable-next-line max-statements
+}) => list.map(({
+  tx, feeSatoshi, confirmations, timestamp,
+}) => {
   const data = {
     id: tx.txid,
-    timestamp: Number(timestamp) * 1000,
-    confirmations,
+    timestamp: timestamp ? Number(timestamp) * 1000 : null,
+    confirmations: confirmations || 0,
     type: 0,
     data: '',
+    fee: feeSatoshi,
+    token: tokenMap.BTC.key,
   };
-
-  data.fee = feeSatoshi;
 
   const ownedInput = tx.inputs.find(i => i.txDetail.scriptPubKey.addresses.includes(address));
 
   if (ownedInput) {
-    data.senderAddress = address;
+    data.senderId = address;
     const extractedAddress = tx.outputs[0].scriptPubKey.addresses[0];
-    data.recipientAddress = validateAddress(tokenMap.BTC.key, extractedAddress, netCode) === 0 ? extractedAddress : 'Unparsed Address';
+    data.recipientId = validateAddress(tokenMap.BTC.key, extractedAddress) === 0 ? extractedAddress : 'Unparsed Address';
     data.amount = tx.outputs[0].satoshi;
   } else {
+    address = address || tx.inputs[0].txDetail.scriptPubKey.addresses[0];
     const output = tx.outputs.find(o => o.scriptPubKey.addresses.includes(address));
     const extractedAddress = tx.inputs[0].txDetail.scriptPubKey.addresses[0];
-    data.senderAddress = validateAddress(tokenMap.BTC.key, extractedAddress, netCode) === 0 ? extractedAddress : 'Unparsed Address';
-    data.recipientAddress = address;
+    data.senderId = validateAddress(tokenMap.BTC.key, extractedAddress) === 0 ? extractedAddress : 'Unparsed Address';
+    data.recipientId = address;
     data.amount = output.satoshi;
   }
 
   return data;
 });
 
-export const get = ({
-  id,
+export const getTransactions = ({
+  networkConfig,
   address,
-  limit = 50,
-  offset = 0,
-// eslint-disable-next-line max-statements
-}, netCode = 1) => new Promise(async (resolve, reject) => {
-  try {
-    let response;
-    const config = getBtcConfig(netCode);
-
-    if (id) {
-      response = await popsicle.get(`${config.url}/transaction/${id}`)
-        .use(popsicle.plugins.parse('json'));
-    } else {
-      response = await popsicle.get(`${config.url}/transactions/${address}?limit=${limit}&offset=${offset}&sort=height:desc`)
-        .use(popsicle.plugins.parse('json'));
-    }
-
-    const json = response.body;
-
-    if (response) {
-      const data = normalizeTransactionsResponse({
-        address,
-        list: id ? [json.data] : json.data,
-      });
-
-
+  limit,
+  offset,
+}) => new Promise(async (resolve, reject) => {
+  await getAPIClient(networkConfig).get(`transactions/${address}?limit=${limit}&offset=${offset}&sort=height:desc`)
+    .then((response) => {
       resolve({
-        data,
-        meta: json.meta || {},
+        data: normalizeTransactionsResponse({
+          address,
+          list: response.body.data,
+        }),
+        meta: response.body.meta ? { count: response.body.meta.total } : {},
       });
-    } else {
-      reject(json);
-    }
-  } catch (error) {
-    reject(error);
-  }
+    }).catch(reject);
+});
+
+export const getSingleTransaction = ({
+  networkConfig,
+  id,
+}) => new Promise(async (resolve, reject) => {
+  await getAPIClient(networkConfig).get(`transaction/${id}`)
+    .then((response) => {
+      resolve({
+        data: normalizeTransactionsResponse({
+          list: [response.body.data],
+        }),
+      });
+    }).catch(reject);
 });
 
 /**
@@ -104,36 +98,33 @@ export const calculateTransactionFee = ({
  * @param {String} address
  * @returns {Promise<Array>}
  */
-export const getUnspentTransactionOutputs = (address, netCode = 1) =>
-  new Promise(async (resolve, reject) => {
-    try {
-      const config = getBtcConfig(netCode);
-      const response = await popsicle.get(`${config.url}/utxo/${address}`)
-        .use(popsicle.plugins.parse('json'));
-      const json = response.body;
+export const getUnspentTransactionOutputs = address => new Promise(async (resolve, reject) => {
+  try {
+    const config = getBtcConfig(1); // TODO fix this to get config from redux
+    const response = await fetch(`${config.url}/utxo/${address}`);
+    const json = await response.json();
 
-      if (response) {
-        resolve(json.data);
-      } else {
-        reject(json);
-      }
-    } catch (error) {
-      reject(error);
+    if (response.ok) {
+      resolve(json.data);
+    } else {
+      reject(json);
     }
-  });
+  } catch (error) {
+    reject(error);
+  }
+});
 
 export const create = ({
   passphrase,
   recipientAddress,
   amount,
   dynamicFeePerByte,
-// eslint-disable-next-line max-statements
-}, netCode = 1) => new Promise(async (resolve, reject) => {
+  // eslint-disable-next-line max-statements
+}) => new Promise(async (resolve, reject) => {
   try {
     amount = Number(amount);
     dynamicFeePerByte = Number(dynamicFeePerByte);
 
-    const config = getBtcConfig(netCode);
     const senderAddress = extractAddress(passphrase);
     const unspentTxOuts = await exports.getUnspentTransactionOutputs(senderAddress);
 
@@ -168,6 +159,7 @@ export const create = ({
       sumOfConsumedOutputs += tx.value;
     }
 
+    const config = getBtcConfig(1); // TODO fix this to get config from redux
     const txb = new bitcoin.TransactionBuilder(config.network);
 
     // Add inputs from unspent txOuts
@@ -206,17 +198,21 @@ export const create = ({
   }
 });
 
-export const broadcast = (transactionHex, netCode = 1) => new Promise(async (resolve, reject) => {
+export const broadcast = transactionHex => new Promise(async (resolve, reject) => {
   try {
-    const config = getBtcConfig(netCode);
-    const body = JSON.stringify({ tx: transactionHex });
+    const config = getBtcConfig(1); // TODO fix this to get config from redux
+    const response = await fetch(`${config.url}/transaction`, {
+      ...config.requestOptions,
+      method: 'POST',
+      body: JSON.stringify({ tx: transactionHex }),
+    });
 
-    const response = await popsicle.post(`${config.url}/transaction`, { body });
+    const json = await response.json();
 
-    if (response) {
-      resolve(response.body);
+    if (response.ok) {
+      resolve(json);
     } else {
-      reject(response.body);
+      reject(json);
     }
   } catch (error) {
     reject(error);
@@ -229,4 +225,7 @@ export const broadcast = (transactionHex, netCode = 1) => new Promise(async (res
  * @param {String} - Transaction ID
  * @returns {String} - URL
  */
-export const getTransactionExplorerURL = (id, netCode = 1) => `${getBtcConfig(netCode).transactionExplorerURL}/${id}`;
+export const getTransactionExplorerURL = (id) => {
+  const config = getBtcConfig(1); // TODO fix this to get config from redux
+  return `${config.transactionExplorerURL}/${id}`;
+};
