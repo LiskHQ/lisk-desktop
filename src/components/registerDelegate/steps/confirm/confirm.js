@@ -27,6 +27,9 @@ class Confirm extends React.Component {
     if (nextProps.delegate.registerStep) {
       this.setState({ step: nextProps.delegate.registerStep });
     }
+    if (this.state.step === 'submitting' && nextProps.account.info.LSK.isDelegate) {
+      this.setState({ step: 'register-success' });
+    }
   }
 
   handleConfirmation() {

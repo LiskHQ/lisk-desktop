@@ -418,6 +418,11 @@ describe('actions: account', () => {
       stub(delegateApi, 'getDelegate').returnsPromise();
       getState = () => ({
         peers: { liskAPIClient: {} },
+        account: {
+          info: {
+            LSK: {},
+          },
+        },
       });
     });
 
@@ -433,7 +438,7 @@ describe('actions: account', () => {
 
       updateDelegateAccount(data)(dispatch, getState);
 
-      const accountUpdatedAction = accountUpdated(Object.assign({}, { delegate: { account: 'delegate data' }, isDelegate: true }));
+      const accountUpdatedAction = accountUpdated({ delegate: { account: 'delegate data' }, isDelegate: true });
       chaiExpect(dispatch).to.have.been.calledWith(accountUpdatedAction);
     });
   });

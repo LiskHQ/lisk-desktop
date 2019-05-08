@@ -138,10 +138,11 @@ export const updateDelegateAccount = ({ publicKey }) =>
     const liskAPIClient = getState().peers.liskAPIClient;
     return getDelegate(liskAPIClient, { publicKey })
       .then((response) => {
-        dispatch(accountUpdated(Object.assign(
-          {},
-          { delegate: response.data[0], isDelegate: true },
-        )));
+        dispatch(accountUpdated({
+          ...getState().account.info.LSK,
+          delegate: response.data[0],
+          isDelegate: true,
+        }));
       });
   };
 
@@ -306,6 +307,8 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
       }).then((btcAccountData) => {
         dispatch(accountUpdated(btcAccountData));
       });
+      /*
+      */
     }
   }).catch((error) => {
     dispatch(errorToastDisplayed({
