@@ -8,12 +8,12 @@ const AccountInfo = ({ address, label, addressClass = '' }) => {
   const addressLink = `${routes.accounts.pathPrefix}${routes.accounts.path}`;
   return (
     <div className={styles.accountInfo}>
-      <AccountVisual className={styles.avatar} address={address} size={36} />
-      <div>
+      <p className={styles.label}>{label}</p>
+      <div className={styles.addressRow}>
+        <AccountVisual className={styles.avatar} address={address} size={24} />
         <Link
           to={`${addressLink}/${address}`}
           className={`${styles.address} ${addressClass}`}>{address}</Link>
-        <p className={styles.label}>{label}</p>
       </div>
     </div>
   );

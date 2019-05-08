@@ -6,6 +6,7 @@ import generateUniqueId from './../../utils/generateUniqueId';
 import breakpoints from './../../constants/breakpoints';
 import styles from './accountVisual.css';
 import reg from './../../utils/regex';
+import svg from '../../utils/svgIcons';
 
 
 /*
@@ -204,8 +205,11 @@ class AccountVisual extends React.Component {
       address, size, sizeS, className,
     } = this.props;
 
+    const sizeL = size || 200;
+    const newSize = this.state.isSBreakpoint && sizeS ? sizeS : sizeL;
+
     if (!reg.address.test(address)) {
-      return null;
+      return <img src={svg.btcIcon} style={{ height: newSize, width: newSize }}/>;
     }
 
     const replaceUrlByHashOnScheme = gradientScheme => ({
@@ -213,8 +217,6 @@ class AccountVisual extends React.Component {
       url: gradientScheme.url.replace(/\)/g, `-${this.uniqueSvgUrlHash})`),
       id: `${gradientScheme.id}-${this.uniqueSvgUrlHash}`,
     });
-    const sizeL = size || 200;
-    const newSize = this.state.isSBreakpoint && sizeS ? sizeS : sizeL;
 
     const addressHashChunks = getHashChunks(address);
     const gradientScheme = gradientSchemes[

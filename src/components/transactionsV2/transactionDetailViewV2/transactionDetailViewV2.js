@@ -4,7 +4,6 @@ import AccountInfo from './accountInfo';
 import TransactionVotes from './transactionVotes';
 import styles from './transactionDetailViewV2.css';
 import AmountV2 from '../amountV2';
-import svg from '../../../utils/svgIcons';
 import transactionTypes from '../../../constants/transactionTypes';
 
 class TransactionDetailViewV2 extends React.Component {
@@ -56,14 +55,12 @@ class TransactionDetailViewV2 extends React.Component {
             address={transaction.senderId}
             addressClass={'sender-address'}
             label={label} />
-          {transaction.type === transactionTypes.send ? (
-            <React.Fragment>
-              <span className={styles.separator}><img src={svg.txSendArrow} /></span>
-              <AccountInfo
-                address={transaction.recipientId}
-                addressClass={'receiver-address'}
-                label={'Recipient'} />
-            </React.Fragment>) : null
+          {transaction.type === transactionTypes.send ?
+            <AccountInfo
+              address={transaction.recipientId}
+              addressClass={'receiver-address'}
+              label={'Recipient'} /> :
+            null
           }
         </div>
         { transaction.type === transactionTypes.send ||
