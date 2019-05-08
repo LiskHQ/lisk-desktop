@@ -1,7 +1,9 @@
 import { expect } from 'chai';
+import { useFakeTimers } from 'sinon';
 import account from './account';
 import accounts from '../../../test/constants/accounts';
 import actionTypes from '../../constants/actions';
+import { lockDuration } from '../../constants/account';
 
 
 describe('Reducer: account(state, action)', () => {
@@ -53,6 +55,19 @@ describe('Reducer: account(state, action)', () => {
     };
     const changedAccount = account(state, action);
     expect(changedAccount).to.deep.equal({ loading: true });
+  });
+
+  it('should extend expireTime if action.type = actionTypes.passphraseUsed', () => {
+    const clock = useFakeTimers(new Date('2017-12-29').getTime());
+    const action = {
+      type: actionTypes.passphraseUsed,
+    };
+    const changedAccount = account(state, action);
+    expect(changedAccount).to.deep.equal({
+      ...state,
+      expireTime: clock.now + lockDuration,
+    });
+    clock.restore();
   });
 
 
