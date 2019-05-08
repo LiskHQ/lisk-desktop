@@ -90,7 +90,6 @@ class LedgerLogin extends React.Component {
 
   changeAccountNameInput(value = '', account) {
     const newHardwareAccountsName = {
-
       ...this.state.hardwareAccountsName,
       [account]: value.length < 20 ? value : value.substr(0, 20),
     };

@@ -133,7 +133,6 @@ export const updateDelegateAccount = ({ publicKey }) =>
     return getDelegate(liskAPIClient, { publicKey })
       .then((response) => {
         dispatch(accountUpdated({
-
           delegate: response.data[0], isDelegate: true,
         }));
       });
