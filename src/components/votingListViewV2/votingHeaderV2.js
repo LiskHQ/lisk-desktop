@@ -1,13 +1,13 @@
 import React from 'react';
 import Waypoint from 'react-waypoint';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import styles from './votingHeaderV2.css';
-import { FontIcon } from '../fontIcon';
+// import { FontIcon } from '../fontIcon';
 import voteFilters from './../../constants/voteFilters';
-import { fromRawLsk } from './../../utils/lsk';
-import Fees from './../../constants/fees';
-import routes from './../../constants/routes';
+// import { fromRawLsk } from './../../utils/lsk';
+// import Fees from './../../constants/fees';
+// import routes from './../../constants/routes';
 import Piwik from '../../utils/piwik';
 
 
@@ -71,27 +71,15 @@ class VotingHeadeV2 extends React.Component {
   }
 
   render() {
-    const { t, isDelegate } = this.props;
-    const selectionTitle = t('Your selection');
-    const delegateTitle = t('Delegate List');
-    const votingTitle = t('Voting');
-    const titleDesktop = this.props.showChangeSummery ? selectionTitle : delegateTitle;
-    const titleMobile = this.props.showChangeSummery ? selectionTitle : votingTitle;
-    const isHardwareWallet = this.props.account.hwInfo && this.props.account.hwInfo.deviceId;
+    const { t } = this.props;
+    // const selectionTitle = t('Your selection');
+    // const delegateTitle = t('Delegate List');
+    // const votingTitle = t('Voting');
+    // const titleDesktop = this.props.showChangeSummery ? selectionTitle : delegateTitle;
+    // const titleMobile = this.props.showChangeSummery ? selectionTitle : votingTitle;
+    // const isHardwareWallet = this.props.account.hwInfo && this.props.account.hwInfo.deviceId;
     return (
       <div>
-        <div className={`${styles.titleHeader}`}>
-          <div>
-            <h2 className={styles.desktopTitle}>{titleDesktop}</h2>
-            <h2 className={styles.mobileTitle}>{titleMobile}</h2>
-          </div>
-          {!isDelegate && !isHardwareWallet ?
-            <Link to={`${routes.registerDelegate.path}`} className={`${styles.link} ${styles.registerLink} register-delegate`}>
-              {t('Become a delegate (Fee: {{fee}} LSK)', { fee: fromRawLsk(Fees.registerDelegate) })}
-              <FontIcon value='arrow-right'/>
-            </Link> : null
-          }
-        </div>
         <header className={`${styles.header} ${styles[this.state.headerPosition]}`}>
           <div>
             <div className={styles.container}>

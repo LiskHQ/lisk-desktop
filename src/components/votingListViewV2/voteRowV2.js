@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import styles from './votingListView.css';
+import styles from './votingListViewV2.css';
 
 class VoteRowV2 extends React.Component {
   shouldComponentUpdate({ data }) {

@@ -105,15 +105,12 @@
       transition: all ease 200ms;
       font-weight: 700;
     }
-
-    & .productivity {
-      direction: rtl;
-    }
   }
 
   & .row {
     background: var(--color-white);
     flex-wrap: nowrap;
+    height: 72px;
 
     &:hover {
       background: rgba(64, 112, 244, 0.08) !important;
@@ -171,6 +168,7 @@
   display: flex;
   flex-direction: column;
   padding-left: 20px;
+  height: 36px;
 }
 
 .title {
@@ -201,7 +199,7 @@
     }
 
     & .row {
-      padding: 11px var(--box-padding-left-XL);
+      padding: 11px 5px;
     }
   }
 }

@@ -3,7 +3,7 @@ import Box from '../box';
 import MultiStep from './../multiStep';
 import VotingHeaderV2 from './votingHeaderV2';
 import ListLabelsV2 from './listLabelsV2';
-import styles from './votingListView.css';
+import styles from './votingListViewV2.css';
 import VoteUrlProcessor from '../voteUrlProcessor';
 import voteFilters from './../../constants/voteFilters';
 import { parseSearchParams } from '../../utils/searchParams';

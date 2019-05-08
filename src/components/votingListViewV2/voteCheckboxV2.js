@@ -1,7 +1,7 @@
 import React from 'react';
 import Spinner from '../spinner';
 import { FontIcon } from '../fontIcon';
-import styles from './voteCheckbox.css';
+import styles from './voteCheckboxV2.css';
 
 const VoteCheckboxV2 = ({ data, status, toggle }) => {
   const {
