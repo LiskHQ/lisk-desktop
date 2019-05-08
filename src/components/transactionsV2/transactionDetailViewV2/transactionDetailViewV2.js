@@ -5,6 +5,7 @@ import TransactionVotes from './transactionVotes';
 import styles from './transactionDetailViewV2.css';
 import AmountV2 from '../amountV2';
 import svg from '../../../utils/svgIcons';
+import transactionTypes from '../../../constants/transactionTypes';
 
 class TransactionDetailViewV2 extends React.Component {
   // eslint-disable-next-line complexity
@@ -14,17 +15,17 @@ class TransactionDetailViewV2 extends React.Component {
     let title = t('Amount transfered');
     let value = transaction.amount;
     switch (transaction.type) {
-      case 1:
+      case transactionTypes.setSecondPassphrase:
         label = t('Registrant');
         break;
-      case 2:
+      case transactionTypes.registerDelegate:
         label = t('Registrant');
         title = t('Username');
         value = transaction.asset
           && transaction.asset.delegate
           && transaction.asset.delegate.username;
         break;
-      case 3:
+      case transactionTypes.vote:
         label = t('Voter');
         break;
       default:
@@ -33,10 +34,11 @@ class TransactionDetailViewV2 extends React.Component {
 
     return (transaction.id ? (
       <React.Fragment>
-        {transaction.type === 0 || transaction.type === 2 ? (
+        {transaction.type === transactionTypes.send ||
+          transaction.type === transactionTypes.registerDelegate ? (
           <div className={styles.summaryHeader}>
             <p>
-            {transaction.type === 0 ? (
+            {transaction.type === transactionTypes.send ? (
               <span className={'tx-amount'}>
                 <AmountV2
                   className={styles.txAmount}
@@ -54,7 +56,7 @@ class TransactionDetailViewV2 extends React.Component {
             address={transaction.senderId}
             addressClass={'sender-address'}
             label={label} />
-          {transaction.type === 0 ? (
+          {transaction.type === transactionTypes.send ? (
             <React.Fragment>
               <span className={styles.separator}><img src={svg.txSendArrow} /></span>
               <AccountInfo
@@ -64,9 +66,11 @@ class TransactionDetailViewV2 extends React.Component {
             </React.Fragment>) : null
           }
         </div>
-        { transaction.type === 0 || transaction.type === 3 ? (
+        { transaction.type === transactionTypes.send ||
+          transaction.type === transactionTypes.vote ? (
           <React.Fragment>
-          { transaction.type === 0 && (transaction.asset && transaction.asset.data) ? (
+          { transaction.type === transactionTypes.send &&
+            (transaction.asset && transaction.asset.data) ? (
             <div className={styles.detailsWrapper}>
               <span className={styles.label}>{t('Message')}</span>
               <div className={`${styles.message} tx-reference`}>
@@ -74,7 +78,7 @@ class TransactionDetailViewV2 extends React.Component {
               </div>
             </div>
           ) : null}
-          { transaction.type === 3 && transaction.votesName ? (
+          { transaction.type === transactionTypes.vote && transaction.votesName ? (
             <TransactionVotes votes={transaction.votesName} />
           ) : null}
           </React.Fragment>) : null}
