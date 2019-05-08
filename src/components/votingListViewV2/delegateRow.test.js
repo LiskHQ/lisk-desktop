@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import store from '../../store';
-import DelegateRow from './delegateRow';
+import DelegateRowV2 from './delegateRowV2';
 
 describe('DelegateRow', () => {
   const votedStatus = { confirmed: true, unconfirmed: true, publicKey: 'sample_key' };
@@ -27,7 +27,7 @@ describe('DelegateRow', () => {
 
   it('should have a list item with class name of "pendingRow" when props.data.pending is true', () => {
     const wrapper = mount(
-      <DelegateRow {...props} voteStatus={pendingStatus}></DelegateRow>,
+      <DelegateRowV2 {...props} voteStatus={pendingStatus}></DelegateRowV2>,
       options,
     );
     const expectedClass = 'pendingRow';
@@ -37,7 +37,7 @@ describe('DelegateRow', () => {
 
   it.skip('should have a list item with class name of "votedRow" when voteStatus.unconfirmed and confirmed are true', () => {
     const wrapper = mount(
-      <DelegateRow {...props} voteStatus={votedStatus}></DelegateRow>,
+      <DelegateRowV2 {...props} voteStatus={votedStatus}></DelegateRowV2>,
       options,
     );
     const expectedClass = 'votedRow';
@@ -47,7 +47,7 @@ describe('DelegateRow', () => {
 
   it('should have a list item with class name of "downVoteRow" when voteStatus.unconfirmed is false but confirmed is true', () => {
     const wrapper = mount(
-      <DelegateRow {...props} voteStatus={unvoteStatus}></DelegateRow>,
+      <DelegateRowV2 {...props} voteStatus={unvoteStatus}></DelegateRowV2>,
       options,
     );
     const expectedClass = 'downVoteRow';
@@ -57,7 +57,7 @@ describe('DelegateRow', () => {
 
   it('should have a list item with class name of "upVoteRow" when voteStatus.unconfirmed is false but confirmed is true', () => {
     const wrapper = mount(
-      <DelegateRow {...props} voteStatus={voteStatus}></DelegateRow>,
+      <DelegateRowV2 {...props} voteStatus={voteStatus}></DelegateRowV2>,
       options,
     );
     const expectedClass = 'upVoteRow';

@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount, shallow } from 'enzyme';
-import VoteRow from './voteRow';
+import VoteRowV2 from './voteRowV2';
 
-describe('VoteRow', () => {
+describe('VoteRowV2', () => {
   const downVoteStatus = { confirmed: true, unconfirmed: false, publicKey: 'sample_key' };
   const upVoteStatus = { confirmed: false, unconfirmed: true, publicKey: 'sample_key' };
   const props = {
@@ -14,7 +14,7 @@ describe('VoteRow', () => {
 
   it('should have a list item with class name of "downVoteRow" when unconfirmed is false', () => {
     const downVoteProps = Object.assign({}, props, { data: { ...props.data, ...downVoteStatus } });
-    const wrapper = mount(<VoteRow {...downVoteProps} />);
+    const wrapper = mount(<VoteRowV2 {...downVoteProps} />);
     const expectedClass = 'downVoteRow';
     const className = wrapper.find('ul').prop('className');
     expect(className).to.contain(expectedClass);
@@ -22,7 +22,7 @@ describe('VoteRow', () => {
 
   it('should have a list item with class name of "upVoteRow" when unconfirmed is true', () => {
     const upVoteProps = Object.assign({}, props, { data: { ...props.data, ...upVoteStatus } });
-    const wrapper = mount(<VoteRow {...upVoteProps} />);
+    const wrapper = mount(<VoteRowV2 {...upVoteProps} />);
     const expectedClass = 'upVoteRow';
     const className = wrapper.find('ul').prop('className');
     expect(className).to.contain(expectedClass);
@@ -31,7 +31,7 @@ describe('VoteRow', () => {
   it('should not re-render if voteStatus has not been changed', () => {
     const oldProps = Object.assign({}, props, { data: { ...props.data, ...downVoteStatus } });
     const newProps = Object.assign({}, props, { data: { ...props.data, ...downVoteStatus } });
-    const wrapper = shallow(<VoteRow {...oldProps} />);
+    const wrapper = shallow(<VoteRowV2 {...oldProps} />);
     const shouldUpdate = wrapper.instance()
       .shouldComponentUpdate(newProps);
     expect(shouldUpdate).to.be.equal(false);

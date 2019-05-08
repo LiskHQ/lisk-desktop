@@ -6,11 +6,11 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import store from '../../store';
-import VotingListView from './index';
+import VotingListViewV2 from './index';
 import i18n from '../../i18n';
 import history from '../../history';
 
-describe.skip('VotingListView', () => {
+describe.skip('VotingListViewV2', () => {
   let wrapper;
   const account = { address: '16313739661670634666L' };
   const voting = {
@@ -37,7 +37,7 @@ describe.skip('VotingListView', () => {
     });
     wrapper = mount(<Provider store={store}>
         <Router>
-          <VotingListView history={{ location: { search: '' } }} />
+          <VotingListViewV2 history={{ location: { search: '' } }} />
         </Router>
       </Provider>, {
       context: { store, history, i18n },

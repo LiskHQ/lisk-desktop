@@ -2,10 +2,10 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { mount } from 'enzyme';
-import VoteCheckbox from './voteCheckbox';
+import VoteCheckboxV2 from './voteCheckboxV2';
 import styles from './votingListView.css';
 
-describe('VoteCheckbox', () => {
+describe('VoteCheckboxV2', () => {
   const props = {
     data: {
       account: {},
@@ -22,7 +22,7 @@ describe('VoteCheckbox', () => {
   describe('General', () => {
     let wrapper;
     beforeEach(() => {
-      wrapper = mount(<VoteCheckbox {...props} status={ voteStatus } />);
+      wrapper = mount(<VoteCheckboxV2 {...props} status={ voteStatus } />);
     });
 
     it('should render an checkbox input', () => {
@@ -37,26 +37,26 @@ describe('VoteCheckbox', () => {
 
   describe('To show vote', () => {
     it('should check the checkbox input', () => {
-      const wrapper = mount(<VoteCheckbox {...props} status={ voteStatus } />);
+      const wrapper = mount(<VoteCheckboxV2 {...props} status={ voteStatus } />);
       expect(wrapper.find('input').props().checked).to.equal(true);
     });
   });
 
   describe('To show unvote', () => {
     it('should uncheck the checkbox input', () => {
-      const wrapper = mount(<VoteCheckbox {...props} status={ unvoteStatus } />);
+      const wrapper = mount(<VoteCheckboxV2 {...props} status={ unvoteStatus } />);
       expect(wrapper.find('input').props().checked).to.equal(false);
     });
 
     it('should render a checkbox input even if status is not passed', () => {
-      const wrapper = mount(<VoteCheckbox {...props} />);
+      const wrapper = mount(<VoteCheckboxV2 {...props} />);
       expect(wrapper.find('input').props().checked).to.equal(false);
     });
   });
 
   describe('To show pending', () => {
     it('should render a Spinner When pending is true', () => {
-      const wrapper = mount(<VoteCheckbox {...props} status={ pendingStatus } />);
+      const wrapper = mount(<VoteCheckboxV2 {...props} status={ pendingStatus } />);
       expect(wrapper.find('Spinner').exists()).to.be.equal(true);
     });
   });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import DelegateList from './delegateList';
+import DelegateListV2 from './delegateListV2';
 
 describe('DelegateList', () => {
   const delegate1 = {
@@ -27,12 +27,12 @@ describe('DelegateList', () => {
   };
 
   it('should render no delegates in first render period', () => {
-    const wrapper = mount(<DelegateList {...props} />);
+    const wrapper = mount(<DelegateListV2 {...props} />);
     expect(wrapper.find('DelegateRow')).to.have.lengthOf(3);
   });
 
   it('should render all the delegates in props.list after component received new props', () => {
-    const wrapper = mount(<DelegateList {...props} />);
+    const wrapper = mount(<DelegateListV2 {...props} />);
     wrapper.setProps({ any: 'any' });
     expect(wrapper.find('ul.delegate-row')).to.have.lengthOf(props.list.length);
   });
