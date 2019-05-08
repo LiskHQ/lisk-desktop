@@ -50,7 +50,7 @@ describe.skip('VotingListViewV2', () => {
   });
 
   it('should render delegate list', () => {
-    expect(wrapper.find(VotingListView)).to.have.lengthOf(1);
+    expect(wrapper.find(VotingListViewV2)).to.have.lengthOf(1);
   });
 
   it('should mount DelegatesList with appropriate properties', () => {

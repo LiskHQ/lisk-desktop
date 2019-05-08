@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { mount } from 'enzyme';
 import VoteCheckbox from './voteCheckbox';
-import styles from './votingListView.css';
+import styles from './votingListViewV2.css';
 
 describe('VoteCheckbox', () => {
   const props = {
