@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import { spy, stub, useFakeTimers } from 'sinon';
 import * as accountActions from '../../actions/account';
 import * as transactionsActions from '../../actions/transactions';
-import accountConfig from '../../constants/account';
 import * as votingActions from '../../actions/voting';
 import * as peersActions from '../../actions/peers';
 import * as accountApi from '../../utils/api/account';
@@ -17,7 +16,6 @@ import transactionTypes from '../../constants/transactionTypes';
 
 /* eslint-disable-next-line max-statements */
 describe('Account middleware', () => {
-  const { lockDuration } = accountConfig;
   let store;
   let next;
   let state;
