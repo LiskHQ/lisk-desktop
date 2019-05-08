@@ -30,6 +30,14 @@
   width: 100%;
 }
 
+.upVoteRow {
+  background: #caf8ff !important;
+}
+
+.downVoteRow {
+  background: #fed9d9 !important;
+}
+
 .table {
   & :global thead th:first-child {
     display: none !important;
@@ -40,6 +48,14 @@
     line-height: 48px;
     margin: 0;
   }
+}
+
+.upVoteRow {
+  background: #caf8ff !important;
+}
+
+.downVoteRow {
+  background: #fed9d9 !important;
 }
 
 .actionBar {
@@ -239,7 +255,6 @@
 
     & .row,
     & .tableHead {
-      padding-left: var(--grid-padding-M);
       padding-right: var(--grid-padding-M);
     }
 

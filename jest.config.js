@@ -19,6 +19,8 @@ module.exports = {
     'src/store/reducers/liskService.test.js',
     'src/store/middlewares/socket.test.js',
     'src/store/middlewares/peers.test.js',
+    'src/components/votingListViewV2/*',
+    'src/components/votingV2/*',
   ],
   verbose: false,
   cache: false,
@@ -127,6 +129,8 @@ module.exports = {
     'src/components/hwWallet/trezorLogin.js',
     'src/components/loginV2/loginV2.js',
     'src/utils/hwWallet.js',
+    'src/components/votingListViewV2/*',
+    'src/components/votingV2/*',
   ],
   coverageThreshold: {
     global: {
