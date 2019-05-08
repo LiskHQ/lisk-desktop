@@ -47,7 +47,7 @@ class SecondPassphrase extends React.Component {
           backButtonLabel={t('Back')}
           prevPage={this.backToPreviousPage.bind(this)}
         >
-          <CreateSecond title={t('Create')} t={t} icon='add' balance={account.balance} />
+          <CreateSecond title={t('Create')} t={t} icon='add' balance={account.info && account.info.LSK.balance} />
           <Safekeeping title={t('Safekeeping')} t={t} step='revealing-step'
             icon='checkmark' header={header} message={message} />
           <Confirm title={t('Confirm')} t={t} confirmButton='Register'
