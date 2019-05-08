@@ -3,7 +3,6 @@ import { PrimaryButton, Button } from '../../toolbox/buttons/button';
 import styles from './confirmSecond.css';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
 import { FontIcon } from '../../fontIcon';
-import { extractPublicKey } from '../../../utils/account';
 // eslint-disable-next-line import/no-named-as-default
 import SliderCheckbox from '../../toolbox/sliderCheckbox';
 import routes from '../../../constants/routes';
@@ -20,26 +19,6 @@ class ConfirmSecond extends React.Component {
       },
       error: false,
     };
-  }
-
-  onChange(name, value, error) {
-    const { publicKey } = this.props.account.info.LSK;
-    if (!error && extractPublicKey(value) !== publicKey) {
-      error = this.props.t('Entered passphrase does not belong to the active account');
-    }
-    this.setState({
-      [name]: {
-        value,
-        error: typeof error === 'string' ? error : undefined,
-      },
-    });
-  }
-
-  login() {
-    Piwik.trackingEvent('Passphrase_ConfirmSecond', 'button', 'Login');
-    this.setState({
-      step: 'confirm',
-    });
   }
 
   componentDidMount() {
