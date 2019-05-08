@@ -12,14 +12,17 @@ import actionTypes from '../../constants/actions';
  * @param {any} value - The new value of the property
  */
 const setChangedItem = (account, changes, property, value) =>
-  Object.assign({}, changes, (() => {
-    const obj = {};
+  ({
+    ...changes,
+    ...(() => {
+      const obj = {};
 
-    if (!deepEquals(account[property], value)) {
-      obj[property] = [account[property], value];
-    }
-    return obj;
-  })());
+      if (!deepEquals(account[property], value)) {
+        obj[property] = [account[property], value];
+      }
+      return obj;
+    })(),
+  });
 
 /**
  * Merges account object with given info object
@@ -34,7 +37,7 @@ const setChangedItem = (account, changes, property, value) =>
 const merge = (account, info) => {
   const keys = Object.keys(info);
   let changes = {};
-  const updatedAccount = Object.assign({}, account, {});
+  const updatedAccount = { ...account };
 
   keys.forEach((key) => {
     if (info[key]) {
@@ -55,7 +58,7 @@ const merge = (account, info) => {
 const account = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.removePassphrase:
-      return Object.assign({}, state, { passphrase: null, expireTime: 0 });
+      return { ...state, passphrase: null, expireTime: 0 };
     case actionTypes.accountUpdated:
       return merge(state, action.data);
     case actionTypes.transactionsLoadFinish:

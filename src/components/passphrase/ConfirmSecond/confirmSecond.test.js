@@ -57,7 +57,7 @@ describe('SecondPassphrase: Confirmation', () => {
   });
 
   it('should unlock button become enable when passphrase is entered', () => {
-    const newAccount = Object.assign({}, accounts.delegate, { passphrase: null });
+    const newAccount = { ...accounts.delegate, passphrase: null };
     wrapper = mount(<ConfirmSecond {...props} account={newAccount} />, options);
     clock.tick(501);
     wrapper.update();

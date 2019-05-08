@@ -50,7 +50,7 @@ const headCssLoader = {
     modules: false,
   },
 };
-const headCssLoadersConfig = Object.assign({}, headCssLoader);
+const headCssLoadersConfig = { ...headCssLoader };
 
 const cssLoadersConfig = {
   fallback: 'style-loader',
