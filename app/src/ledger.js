@@ -1,4 +1,4 @@
-import { app } from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
+import { app, ipcMain } from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
 import Lisk from 'lisk-elements'; // eslint-disable-line import/no-extraneous-dependencies
 import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api'; // eslint-disable-line import/no-extraneous-dependencies
 import TransportNodeHid from '@ledgerhq/hw-transport-node-hid'; // eslint-disable-line import/no-extraneous-dependencies
@@ -7,6 +7,8 @@ import {
   HWDevice,
   addConnectedDevices,
   removeConnectedDeviceByPath,
+  getDeviceById,
+  updateConnectedDevices,
 } from './hwManager';
 
 import { createCommand, isValidAddress } from './utils';
@@ -42,7 +44,7 @@ const getLedgerAccount = (index = 0) => {
 
 const createLedgerHWDevice = (liskAccount, path) =>
   new HWDevice(
-    liskAccount.publicKey.substring(0, 10),
+    Math.floor(Math.random() * 1e5) + 1,
     null,
     'Ledger Nano S',
     path,
@@ -74,14 +76,11 @@ const ledgerObserver = {
   next: async ({ device, type }) => {
     if (device) {
       if (type === 'add' && process.platform !== 'linux') {
-        const liskAccount = await getLiskAccount(device.path);
-        const ledgerDevice = createLedgerHWDevice(liskAccount, device.path);
+        const ledgerDevice = createLedgerHWDevice(device.path);
+        ledgerDevice.openApp = await isInsideLedgerApp(device.path);
         addConnectedDevices(ledgerDevice);
         hwDevice = ledgerDevice;
         win.send({ event: 'hwConnected', value: { model: ledgerDevice.model } });
-        if (await isInsideLedgerApp(device.path)) {
-          win.send({ event: 'openApp' });
-        }
       } else if (type === 'remove') {
         if (hwDevice) {
           removeConnectedDeviceByPath(hwDevice.path);
@@ -93,6 +92,14 @@ const ledgerObserver = {
   },
 };
 
+ipcMain.on('checkLedger', async (event, { id }) => {
+  const ledgerDevice = getDeviceById(id);
+  ledgerDevice.openApp = await isInsideLedgerApp(ledgerDevice.path);
+  updateConnectedDevices(ledgerDevice);
+  hwDevice = ledgerDevice;
+  win.send({ event: 'checkLedger.done' });
+});
+
 let observableListen = null;
 const syncDevices = () => {
   try {
@@ -103,6 +110,7 @@ const syncDevices = () => {
   }
 };
 syncDevices();
+
 app.on('will-quit', () => {
   if (observableListen) {
     observableListen.unsubscribe();

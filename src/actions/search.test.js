@@ -4,7 +4,7 @@ import txFilters from '../constants/transactionFilters';
 import * as searchAPI from '../utils/api/search';
 import * as accountAPI from '../utils/api/lsk/account';
 import * as delegateAPI from '../utils/api/delegate';
-import * as transactionsAPI from '../utils/api/lsk/transactions';
+import * as transactionsAPI from '../utils/api/transactions';
 import accounts from '../../test/constants/accounts';
 import * as actions from './search';
 
@@ -20,7 +20,7 @@ const {
 jest.mock('../utils/api/search');
 jest.mock('../utils/api/lsk/account');
 jest.mock('../utils/api/delegate');
-jest.mock('../utils/api/lsk/transactions');
+jest.mock('../utils/api/transactions');
 
 describe('actions: search', () => {
   let dispatch;
@@ -28,6 +28,9 @@ describe('actions: search', () => {
     peers: {
       liskAPIClient: {},
       options: networks.mainnet,
+    },
+    network: {
+      name: networks.mainnet.name,
     },
   });
 

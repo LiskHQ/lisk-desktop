@@ -112,7 +112,7 @@ describe('Login Page', () => {
    * Try to sign in to invalid custom node address
    * @expect error popup is shown
    */
-  it('Log in to invalid address', () => {
+  xit('Log in to invalid address', () => {
     cy.addObjectToLocalStorage('settings', 'showNetwork', true);
     cy.visit(urls.login);
     chooseNetwork('invalid');

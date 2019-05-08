@@ -22,17 +22,17 @@ class Loading extends React.Component {
 
   render() {
     const { t } = this.props;
-    return <React.Fragment>
+    return <div>
       <h1>{t('Connect your Hardware Wallet')}</h1>
       <p>{t('Lisk Hub currently supports Ledger Nano S and Trezor wallets')}</p>
       <img src={svgIcons.iconLoader} className={styles.loadingIcon} />
-      <p>{t('Looking for a device…')}</p>
+      <p>{t('Looking for a device...')}</p>
       <Link to={routes.splashscreen.path}>
         <TertiaryButtonV2>
           {t('Go Back')}
         </TertiaryButtonV2>
       </Link>
-    </React.Fragment>;
+    </div>;
   }
 }
 

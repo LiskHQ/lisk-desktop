@@ -29,7 +29,9 @@ describe('Utils: network LSK API', () => {
       const nethash = Lisk.APIClient.constants.MAINNET_NETHASH;
       const network = {
         name: networks.mainnet.name,
-        [tokenMap.LSK.key]: {
+        networks: {
+          [tokenMap.LSK.key]: {
+          },
         },
       };
       const apiClient = getAPIClient(network);
@@ -43,7 +45,9 @@ describe('Utils: network LSK API', () => {
       const nethash = Lisk.APIClient.constants.TESTNET_NETHASH;
       const network = {
         name: networks.testnet.name,
-        [tokenMap.LSK.key]: {
+        networks: {
+          [tokenMap.LSK.key]: {
+          },
         },
       };
       getAPIClient(network);
@@ -55,9 +59,11 @@ describe('Utils: network LSK API', () => {
       const nodeUrl = 'http://localhost:4000';
       const network = {
         name: networks.customNode.name,
-        [tokenMap.LSK.key]: {
-          nethash,
-          nodeUrl,
+        networks: {
+          [tokenMap.LSK.key]: {
+            nethash,
+            nodeUrl,
+          },
         },
       };
       getAPIClient(network);

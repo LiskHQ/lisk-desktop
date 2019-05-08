@@ -1,4 +1,5 @@
 @import './../app/variablesV2.css';
+@import './../app/mixins.css';
 
 .deviceContainer {
   width: 100%;

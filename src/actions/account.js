@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { setSecondPassphrase, getAccount } from '../utils/api/lsk/account';
 import { registerDelegate, getDelegate, getAllVotes, getVoters } from '../utils/api/delegate';
-import { getTransactions } from '../utils/api/lsk/transactions';
+import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import { loadTransactionsFinish, transactionsUpdated } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
@@ -12,6 +12,7 @@ import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import { updateWallet } from './wallets';
+import { tokenMap } from '../constants/tokens';
 
 /**
  * Trigger this action to remove passphrase from account object
@@ -264,8 +265,10 @@ export const updateAccountDelegateStats = account =>
   async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     const { address, publicKey } = account;
+    const networkConfig = getState().network;
+    const token = tokenMap.LSK.key;
     const transaction = await getTransactions({
-      liskAPIClient, address, limit: 1, type: transactionTypes.registerDelegate,
+      token, networkConfig, address, limit: 1, type: transactionTypes.registerDelegate,
     });
     const block = await getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 });
     dispatch(delegateStatsLoaded({

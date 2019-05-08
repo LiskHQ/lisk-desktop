@@ -113,13 +113,11 @@ export const liskAPIClientSet = data =>
       dispatch(peerSet(data, config));
       await login(dispatch, getState, data, config);
     }
-    if (localStorage.getItem('btc')) { // TODO remove this condition when enabling store BTC feature
-      // TODO calling token-agnostic action inside LSK action is hacky, should be refactored
-      dispatch(networkSet({
-        ...data.network,
-        nodeUrl: data.network.address,
-      }));
-    }
+    // TODO calling token-agnostic action inside LSK action is hacky, should be refactored
+    dispatch(networkSet({
+      ...data.network,
+      nodeUrl: data.network.address,
+    }));
   };
 
 
