@@ -19,6 +19,9 @@ class ConfirmSecond extends React.Component {
       },
       error: false,
     };
+    this.onRedirectToDashboard = this.onRedirectToDashboard.bind(this);
+    this.redirectToFirstStep = this.redirectToFirstStep.bind(this);
+    this.confirm = this.confirm.bind(this);
   }
 
   componentDidMount() {
@@ -63,6 +66,7 @@ class ConfirmSecond extends React.Component {
     this.props.secondPassphraseRegisteredFailureReset();
     this.props.history.goBack();
   }
+
   render() {
     const { hidden, t } = this.props;
     const status = hidden ? styles.hidden : '';
@@ -99,12 +103,12 @@ class ConfirmSecond extends React.Component {
               <div className='subTitle'>
                 {this.state.error}
               </div>
-              <form onSubmit={this.redirectToFirstStep.bind(this)}>
+              <form onSubmit={this.redirectToFirstStep}>
                 <PrimaryButton
                   disabled={false}
                   label={t('Try again')}
                   className={`${styles.tryButton} try-again`}
-                  onClick={this.redirectToFirstStep.bind(this)}
+                  onClick={this.redirectToFirstStep}
                 />
               </form>
           </article>
@@ -124,7 +128,7 @@ class ConfirmSecond extends React.Component {
               className={`${styles.smallSlider} confirm-checkbox`}
               label={t('I confirm (Fee: 5 LSK)')}
               clickable={true}
-              onChange={this.confirm.bind(this)}
+              onChange={this.confirm}
               input={{
                 value: 'introduction-step',
               }}/>
@@ -141,7 +145,7 @@ class ConfirmSecond extends React.Component {
           <Button
             label={this.props.t('Go back to Dashboard')}
             className={`${styles.resultButton} get-to-your-dashboard-button`}
-            onClick={() => this.onRedirectToDashboard()}
+            onClick={this.onRedirectToDashboard}
           />
         </TransitionWrapper>
       </div>}

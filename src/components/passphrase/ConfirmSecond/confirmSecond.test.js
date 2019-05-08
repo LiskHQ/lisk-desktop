@@ -138,4 +138,14 @@ describe('SecondPassphrase: Confirmation', () => {
     expect(history.goBack).to.have.been.calledWith();
     expect(secondPassphraseRegisteredFailureReset).to.have.been.calledWith();
   });
+
+  it('should call props.secondPassphraseRegisteredFailureReset on unount', () => {
+    const secondPassphraseRegisteredFailureReset = spy();
+    wrapper = mount(<ConfirmSecond {...{
+      ...props,
+      secondPassphraseRegisteredFailureReset,
+    }} />, options);
+    wrapper.unmount();
+    expect(secondPassphraseRegisteredFailureReset).to.have.been.calledWith();
+  });
 });
