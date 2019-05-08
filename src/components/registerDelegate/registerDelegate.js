@@ -13,7 +13,7 @@ import passphraseStyles from './steps/passphraseSteps.css';
 class RegisterDelegate extends React.Component {
   submitDelegate({ delegateName, passphrase, secondPassphrase }) {
     this.props.delegateRegistered({
-      account: this.props.account,
+      account: this.props.account.info.LSK,
       username: delegateName,
       passphrase: passphrase.value,
       secondPassphrase: secondPassphrase.value,

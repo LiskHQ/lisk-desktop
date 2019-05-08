@@ -24,7 +24,7 @@ class Choose extends React.Component {
   }
 
   hasEnoughLSK() {
-    return (fromRawLsk(this.props.account.balance) * 1
+    return (fromRawLsk(this.props.account.info.LSK.balance) * 1
     >= fromRawLsk(Fees.registerDelegate) * 1);
   }
 
@@ -76,7 +76,7 @@ class Choose extends React.Component {
   render() { // eslint-disable-line
     const { t, account } = this.props;
     const hasEnoughLSK = this.hasEnoughLSK();
-    const isDelegate = account.isDelegate;
+    const isDelegate = account.info.LSK.isDelegate;
     const delegateNameHasError = (typeof this.state.delegateName.error === 'string' &&
       this.state.delegateName.error !== '');
     const delegateNameDuplicated = !delegateNameHasError
