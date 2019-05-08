@@ -4,7 +4,6 @@ import illustration from '../../assets/images/illustrations/illustration-ledger-
 
 const { ipc } = window;
 
-// istanbul ignore file
 class UnlockDevice extends React.Component {
   constructor() {
     super();

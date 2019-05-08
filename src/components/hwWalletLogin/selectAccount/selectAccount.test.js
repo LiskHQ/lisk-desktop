@@ -23,15 +23,19 @@ describe('Select Account', () => {
         hardwareAccounts: [],
       },
       t: v => v,
+      history: {
+        push: jest.fn(),
+      },
       nextStep: jest.fn(),
       prevStep: jest.fn(),
       liskAPIClientSet: jest.fn(),
       settingsUpdated: jest.fn(),
     };
+
+    wrapper = mount(<SelectAccount {...props} />);
   });
 
   it('Should render SelectAccount properly', () => {
-    wrapper = mount(<SelectAccount {...props} />);
     expect(wrapper).toContainMatchingElement('.create-account');
     expect(wrapper).toContainMatchingElement('.hw-container');
     expect(wrapper).toContainMatchingElement('.go-back');
