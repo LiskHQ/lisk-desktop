@@ -4,7 +4,7 @@ const hwWallets = (state = {
   devices: [],
 }, action) => {
   switch (action.type) {
-    case actionTypes.devicesListUpdate:
+    case actionTypes.deviceListUpdated:
       return {
         devices: action.data,
       };

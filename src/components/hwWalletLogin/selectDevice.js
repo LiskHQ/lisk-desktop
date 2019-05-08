@@ -11,14 +11,20 @@ class SelectDevice extends React.Component {
     super(props);
 
     this.onSelectDevice = this.onSelectDevice.bind(this);
+    this.goBackIfNoDevices = this.goBackIfNoDevices.bind(this);
   }
 
   componentDidMount() {
     const { devices } = this.props;
+    this.goBackIfNoDevices();
     if (devices.length === 1) this.onSelectDevice(devices[0].deviceId);
   }
 
   componentDidUpdate() {
+    this.goBackIfNoDevices();
+  }
+
+  goBackIfNoDevices() {
     if (!this.props.devices.length) this.props.prevStep();
   }
 
@@ -28,7 +34,7 @@ class SelectDevice extends React.Component {
 
   render() {
     const { t, devices } = this.props;
-    return <React.Fragment>
+    return <div>
       <h1>{t('Found several devices, choose the one you’d like to access')}</h1>
       <p>{t('Lisk Hub currently supports Ledger Nano S and Trezor wallets')}</p>
 
@@ -60,7 +66,7 @@ class SelectDevice extends React.Component {
           {t('Go Back')}
         </TertiaryButtonV2>
       </Link>
-    </React.Fragment>;
+    </div>;
   }
 }
 

@@ -1,51 +1,39 @@
 import React from 'react';
+import { MemoryRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { mountWithContext } from '../../../test/unit-test-utils/mountHelpers';
+import configureMockStore from 'redux-mock-store';
+import { mount } from 'enzyme';
+import * as hwWalletUtils from '../../utils/hwWallet';
 import HwWalletLogin from './hwWalletLogin';
+
+jest.mock('../../utils/hwWallet');
 
 describe('HwWalletLogin', () => {
   let wrapper;
+  const store = configureMockStore([])({});
   const props = {
     devices: [],
+    updateDeviceList: jest.fn(),
     t: key => key,
   };
 
-  const history = {
-    location: {
-      pathname: '',
-      search: '',
-    },
-    createHref: jest.fn(),
-    push: jest.fn(),
-    replace: jest.fn(),
-  };
-
   const options = {
-    context: {
-      history, router: { route: history, history },
-    },
+    context: { store },
     childContextTypes: {
-      history: PropTypes.object.isRequired,
-      router: PropTypes.object.isRequired,
+      store: PropTypes.object.isRequired,
     },
-    lifecycleExperimental: true,
   };
 
-  it('should show "looking for device" at first and "SelectDevice" after device conneted', () => {
-    wrapper = mountWithContext(<HwWalletLogin {...props}/>, options);
-    wrapper.update();
-    // TODO figure out why the assertion below doesn't work.
-    // I guess something with MultiStep using React.cloneElement
-    // expect(wrapper.text()).toEqual(expect.stringContaining('Looking for a device...'));
-    wrapper.setProps({
-      ...props,
-      devices: [{
-        id: 'DUMMY',
-      }],
-    });
-    wrapper.update();
-    // TODO figure out why the assertion below doesn't work.
-    // I guess something with MultiStep using React.cloneElement
-    // expect(wrapper.text()).toEqual(expect.stringContaining('SelectDevice'));
+  it('Should render Loading component and call getDeviceList ', async () => {
+    hwWalletUtils.getDeviceList.mockResolvedValue([
+      { deviceId: 1, openApp: false, model: 'Ledger' },
+      { deviceId: 2, model: 'Trezor' },
+      { deviceId: 3, openApp: true, model: 'Ledger' },
+    ]);
+
+    wrapper = mount(<Router><HwWalletLogin {...props} /></Router>, options);
+    const devices = await hwWalletUtils.getDeviceList();
+    expect(wrapper).toContainMatchingElement('Loading');
+    expect(props.updateDeviceList).toBeCalledWith(devices);
   });
 });
