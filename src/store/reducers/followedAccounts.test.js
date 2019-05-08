@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import followedAccounts from './followedAccounts';
 import {
-  followedAccountsRetrieved,
   followedAccountAdded,
   followedAccountUpdated,
   followedAccountRemoved,
@@ -12,30 +11,18 @@ import accounts from '../../../test/constants/accounts';
 describe('Reducer: followedAccounts(state, action)', () => {
   const account = {
     address: accounts.genesis.address,
-    balance: accounts.genesis.balance,
     title: accounts.genesis.address,
     publicKey: accounts.genesis.publicKey,
   };
   const account2 = {
     address: accounts.delegate.address,
-    balance: accounts.delegate.balance,
     title: accounts.genesis.address,
     publicKey: accounts.delegate.publicKey,
   };
 
-  it(`should return accounts if action.type is ${actionTypes.followedAccountsRetrieved}`, () => {
-    const state = { accounts: [] };
-    const action = followedAccountsRetrieved([account, account2]);
-
-    const changedState = followedAccounts(state, action);
-    expect(changedState.accounts[0]).to.deep.equal(account);
-    expect(changedState.accounts[1]).to.deep.equal(account2);
-  });
-
   it(`should return accounts with added account if action.type is ${actionTypes.followedAccountAdded}`, () => {
     const account3 = {
       address: accounts['empty account'].address,
-      balance: accounts['empty account'].balance,
       title: accounts['empty account'].address,
       publicKey: accounts['empty account'].publicKey,
     };
@@ -52,7 +39,6 @@ describe('Reducer: followedAccounts(state, action)', () => {
   it(`should return accounts with updated account if action.type is ${actionTypes.followedAccountUpdated}`, () => {
     const updatedAccount = {
       address: accounts.delegate.address,
-      balance: accounts.delegate.balance,
       title: 'bob',
       publicKey: accounts.delegate.publicKey,
     };

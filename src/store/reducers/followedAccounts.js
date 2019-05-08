@@ -6,9 +6,6 @@ const followedAccounts = (state = { accounts: getFollowedAccountsFromLocalStorag
   let indexOfAccount;
 
   switch (action.type) {
-    case actionTypes.followedAccountsRetrieved:
-      return { accounts: action.data };
-
     case actionTypes.followedAccountAdded:
       accounts.push(action.data);
       return { accounts };
@@ -19,7 +16,6 @@ const followedAccounts = (state = { accounts: getFollowedAccountsFromLocalStorag
       if (indexOfAccount !== -1) {
         const changedAccount = {
           ...accounts[indexOfAccount],
-          balance: action.data.balance,
           address: action.data.address,
           title: action.data.title,
           publicKey: action.data.publicKey,

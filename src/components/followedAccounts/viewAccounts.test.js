@@ -57,17 +57,17 @@ describe('Followed accounts list Component', () => {
         followedAccounts: {
           accounts: [
             {
-              address: '123L', balance: 0, title: 'bob', isDelegate: false,
+              address: '123L', title: 'bob', isDelegate: false,
             }, {
-              address: '567L', balance: 100000, title: '', isDelegate: false,
+              address: '567L', title: '', isDelegate: false,
             }, {
-              address: '23467L', balance: 30000, title: '', isDelegate: false,
+              address: '23467L', title: '', isDelegate: false,
             }, {
-              address: '23464567L', balance: 3000, title: '', isDelegate: false,
+              address: '23464567L', title: '', isDelegate: false,
             }, {
-              address: '2346456347L', balance: 3000, title: '', isDelegate: false,
+              address: '2346456347L', title: '', isDelegate: false,
             }, {
-              address: '234645634347L', balance: 3000, title: '', isDelegate: false,
+              address: '234645634347L', title: '', isDelegate: false,
             },
           ],
         },
@@ -92,10 +92,8 @@ describe('Followed accounts list Component', () => {
       expect(wrapper.find('.followed-accounts-list')).to.have.length(1);
 
       expect(wrapper.find('.account-title input').at(0)).to.have.value('bob');
-      expect(wrapper.find('LiskAmount').at(0).text()).to.contain(0);
 
       expect(wrapper.find('.account-title input').at(1)).to.have.value('567L');
-      expect(wrapper.find('LiskAmount').at(1).text()).to.contain(1);
     });
 
     it('directs you to account page on click', () => {
@@ -115,7 +113,7 @@ describe('Followed accounts list Component', () => {
       wrapper.find('.remove-account').at(0).simulate('click');
 
       expect(followedAccounts.followedAccountRemoved).to.have.been.calledWith({
-        address: '123L', balance: 0, title: 'bob', isDelegate: false,
+        address: '123L', title: 'bob', isDelegate: false,
       });
     });
 
@@ -149,7 +147,7 @@ describe('Followed accounts list Component', () => {
 
       expect(wrapper.find('.account-title input').at(1)).to.have.value('my friend');
       expect(followedAccounts.followedAccountUpdated).to.have.been.calledWith({
-        address: '567L', balance: 100000, title: 'my friend', isDelegate: false,
+        address: '567L', title: 'my friend', isDelegate: false,
       });
     });
 

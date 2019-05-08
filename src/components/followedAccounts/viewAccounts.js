@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import BoxV2 from '../boxV2';
 import AccountVisual from '../accountVisual/index';
-import LiskAmount from '../liskAmount/index';
 import { FontIcon } from '../fontIcon/index';
 import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 import routes from '../../constants/routes';
@@ -102,7 +101,7 @@ class ViewAccounts extends React.Component {
                     <div className={`${styles.accountInformation}`}>
                       <div className={this.state.edit ? styles.editMode : ''}>
                         <div className={`${styles.balance} followed-account-balance`}>
-                          <LiskAmount val={account.balance} /> <span>LSK</span>
+                          <span>{account.address}</span>
                         </div>
                         <TitleInput
                           key={account.address}
@@ -110,7 +109,6 @@ class ViewAccounts extends React.Component {
                           account={{
                             title: account.title || account.address,
                             address: account.address,
-                            balance: account.balance,
                             isDelegate: account.isDelegate,
                           }}
                         />
