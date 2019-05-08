@@ -10,13 +10,18 @@ import accounts from '../../../../test/constants/accounts';
 
 
 describe('SecondPassphrase: Confirmation', () => {
+  const account = {
+    passphrase: accounts.delegate.passphrase,
+    info: {
+      LSK: accounts.delegate,
+    },
+  };
   const props = {
     t: key => key,
     hidden: false,
     finalCallback: spy(),
-    account: accounts.delegate,
+    account,
   };
-  const account = accounts.delegate;
   const fakeStore = configureStore();
   const store = fakeStore({
     account,
@@ -57,7 +62,12 @@ describe('SecondPassphrase: Confirmation', () => {
   });
 
   it('should unlock button become enable when passphrase is entered', () => {
-    const newAccount = Object.assign({}, accounts.delegate, { passphrase: null });
+    const newAccount = {
+      passphrase: null,
+      info: {
+        LSK: accounts.delegate,
+      },
+    };
     wrapper = mount(<ConfirmSecond {...props} account={newAccount} />, options);
     clock.tick(501);
     wrapper.update();
@@ -102,7 +112,11 @@ describe('SecondPassphrase: Confirmation', () => {
     wrapper.setProps({
       account: {
         passphrase: accounts['second passphrase account'].passphrase,
-        secondPublicKey: accounts['second passphrase account'].publicKey,
+        info: {
+          LSK: {
+            secondPublicKey: accounts['second passphrase account'].publicKey,
+          },
+        },
       },
     });
     clock.tick(501);

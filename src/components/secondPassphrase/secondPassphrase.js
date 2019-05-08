@@ -16,9 +16,8 @@ class SecondPassphrase extends React.Component {
   }
   componentDidMount() {
     document.body.classList.add('contentFocused');
-    if (this.props.account.secondPublicKey) {
-      this.props.history
-        .push(`${routes.dashboard.path}`);
+    if (this.props.account.info.LSK.secondPublicKey) {
+      this.props.history.push(`${routes.dashboard.path}`);
     }
   }
 
@@ -37,7 +36,7 @@ class SecondPassphrase extends React.Component {
       registerSecondPassphrase({
         secondPassphrase,
         passphrase,
-        account,
+        account: account.info.LSK,
       });
     };
     return (

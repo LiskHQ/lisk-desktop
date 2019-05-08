@@ -26,7 +26,7 @@ class ConfirmSecond extends React.Component {
   }
 
   onChange(name, value, error) {
-    const { publicKey } = this.props.account;
+    const { publicKey } = this.props.account.info.LSK;
     if (!error && extractPublicKey(value) !== publicKey) {
       error = this.props.t('Entered passphrase does not belong to the active account');
     }
@@ -56,7 +56,7 @@ class ConfirmSecond extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.account.secondPublicKey && !nextProps.error) {
+    if (nextProps.account.info && nextProps.account.info.LSK.secondPublicKey && !nextProps.error) {
       this.setState({ step: 'done' });
     } else if (nextProps.step) {
       this.setState({
