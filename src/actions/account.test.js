@@ -514,7 +514,7 @@ describe('actions: account', () => {
           },
         }),
       }));
-      expect(dispatch).toHaveBeenNthCalledWith(4, expect.objectContaining({
+      expect(dispatch).toHaveBeenNthCalledWith(3, expect.objectContaining({
         type: actionTypes.accountUpdated,
         data: expect.objectContaining({
           address,
