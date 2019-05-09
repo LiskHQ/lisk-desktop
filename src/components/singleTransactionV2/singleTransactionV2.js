@@ -139,12 +139,14 @@ class SingleTransactionV2 extends React.Component {
                   <p>
                     <span className={styles.label}>
                       {t('Transaction ID')}
-                      <img src={svg.icoLink} />
                     </span>
                     <span className={'transaction-id'}>
                       {this.state.idCopied
                         ? t('Copied!')
-                        : <span className={'copy-title'}>{transaction.id}</span>
+                        : <span>
+                            <span className={'copy-title'}>{transaction.id}</span>
+                            <img src={svg.icoLink} />
+                          </span>
                       }
                     </span>
                   </p>
