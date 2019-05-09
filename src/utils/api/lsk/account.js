@@ -1,5 +1,5 @@
 import Lisk from 'lisk-elements';
-import getMappedFunction from '../functionMapper';
+import api from '../';
 import { tokenMap } from '../../../constants/tokens';
 import { getAPIClient } from './network';
 import { extractAddress, extractPublicKey } from '../../account';
@@ -57,5 +57,5 @@ export const setSecondPassphrase = (
 
 export const btc = { // Temporary btc account utility while we don't normalize the apis calls.
   extractAddress: /* istanbul ignore next */ (passphrase, netCode) =>
-    getMappedFunction(tokenMap.BTC.key, 'account', 'extractAddress')(passphrase, netCode),
+    api.BTC.account.extractAddress(passphrase, netCode),
 };
