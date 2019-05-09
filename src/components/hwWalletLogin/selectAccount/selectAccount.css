@@ -43,44 +43,20 @@
     background-color: var(--color-white-smoke);
     border-top-left-radius: var(--border-radius-box);
     border-top-right-radius: var(--border-radius-box);
+    border-bottom: 1px solid var(--color-platinum);
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     & .accountTitle {
       @mixin contentNormal bold;
-
-      background-color: var(--color-white-smoke);
-      border: none;
-      color: var(--color-maastricht-blue);
-      padding: 4px 5px;
-      width: 177px;
-      cursor: default;
-
-      &:focus {
-        outline: none;
-      }
-    }
-
-    & .accountTitleEdit {
-      @mixin contentNormal;
-
-      background-color: var(--color-white);
-      border-radius: 3px;
-      border: solid 1px rgba(0, 0, 0, 0.08);
-      color: var(--color-blue-gray);
-      padding: 4px 5px;
-      width: 177px;
-
-      &:focus {
-        outline: none;
-      }
     }
 
     & .editBtn {
       @mixin contentSmall bold;
 
       width: 83px;
+      min-width: auto;
       height: 32px;
       color: var(--color-maastricht-blue) !important;
       display: flex;
@@ -99,6 +75,7 @@
 
       width: 83px;
       height: 32px;
+      margin-left: 20px;
     }
   }
 

@@ -3,6 +3,7 @@ import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button
 import AccountVisual from '../../accountVisual';
 import LiskAmount from '../../liskAmount';
 import svg from '../../../utils/svgIcons';
+import { InputV2 } from '../../toolbox/inputsV2';
 import styles from './selectAccount.css';
 
 const AccountCard = ({
@@ -17,16 +18,20 @@ const AccountCard = ({
 }) => (
   <div id={account.address} className={`${styles.account} hw-account`}>
     <header className={styles.header}>
-      <input
-        value={account.name}
-        onChange={input => onChangeAccountTitle(input.target.value, index)}
-        className={`${accountOnEditMode === index ? styles.accountTitleEdit : styles.accountTitle} account-name`}
-        readOnly={accountOnEditMode !== index}
-      />
-      {
-        accountOnEditMode === index
-        ? <PrimaryButtonV2 className={`${styles.saveBtn} save-account`} onClick={() => onSaveNameAccounts()}>{t('Save')}</PrimaryButtonV2>
-        : <SecondaryButtonV2 className={`${styles.editBtn} edit-account`} onClick={() => onEditAccount(index)}>{t('Edit')}<img src={svg.icon_edit}/></SecondaryButtonV2>
+      { accountOnEditMode === index ?
+        <React.Fragment>
+          <InputV2
+            value={account.name}
+            size='xs'
+            onChange={input => onChangeAccountTitle(input.target.value, index)}
+            className={'account-name'}
+          />
+          <PrimaryButtonV2 className={`${styles.saveBtn} save-account`} onClick={() => onSaveNameAccounts()}>{t('Save')}</PrimaryButtonV2>
+        </React.Fragment> :
+        <React.Fragment>
+          <span className={styles.accountTitle}>{account.name}</span>
+          <SecondaryButtonV2 className={`${styles.editBtn} edit-account`} onClick={() => onEditAccount(index)}>{t('Edit')}<img src={svg.icon_edit}/></SecondaryButtonV2>
+        </React.Fragment>
       }
     </header>
 
