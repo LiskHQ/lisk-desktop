@@ -7,7 +7,7 @@
   flex-direction: column;
   margin: 20px 0;
 
-  & > h1 {
+  & > h2 {
     @mixin contentSmall;
 
     color: var(--color-slate-gray);
@@ -45,15 +45,7 @@
     flex-direction: column;
 
     & .avatar {
-      margin-bottom: 20px;
-    }
-
-    & > div:last-child {
-      align-items: center;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      justify-content: space-between;
+      margin-right: 10px;
     }
 
     & .addressRow {

@@ -59,19 +59,15 @@ class SingleTransactionV2 extends React.Component {
   render() {
     const { t, transaction } = this.props;
     let title = t('Transfer Transaction');
-    let icon = svg.txDefault;
     switch (transaction.type) {
       case transactionTypes.setSecondPassphrase:
         title = t('2nd Passphrase Registration');
-        icon = svg.tx2ndPassphrase;
         break;
       case transactionTypes.registerDelegate:
         title = t('Delegate Registration');
-        icon = svg.txDelegate;
         break;
       case transactionTypes.vote:
         title = t('Vote Transaction');
-        icon = svg.txVote;
         break;
       default:
         break;
@@ -98,7 +94,6 @@ class SingleTransactionV2 extends React.Component {
               </CopyToClipboard>
           </header>
           <main className={styles.mainContent}>
-            <img className={styles.txIcon} src={icon} />
             <TransactionDetailViewV2 address={this.props.address} transaction={transaction} />
             <footer className={styles.detailsFooter}>
               <div>
@@ -112,6 +107,14 @@ class SingleTransactionV2 extends React.Component {
                       showSeconds={true} />
                   </span>
                 </p>
+                <p className={styles.value}>
+                  <span className={styles.label}>{t('Transaction fee')} </span>
+                  <span className={'tx-fee'}>
+                    <LiskAmount val={transaction.fee} /> {t('LSK')}
+                  </span>
+                </p>
+              </div>
+              <div>
                 <p className={`${styles.value}`}>
                   <span className={styles.label}>{t('Confirmations')} </span>
                   <span className={'tx-confirmation'}>
@@ -120,12 +123,6 @@ class SingleTransactionV2 extends React.Component {
                 </p>
               </div>
               <div>
-              <p className={styles.value}>
-                <span className={styles.label}>{t('Fee')} </span>
-                <span className={'tx-fee'}>
-                  <LiskAmount val={transaction.fee} /> {t('LSK')}
-                </span>
-              </p>
               <CopyToClipboard
                 className={`${styles.clickable} ${styles.value} tx-id`}
                 text={transaction.id}

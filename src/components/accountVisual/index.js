@@ -209,7 +209,10 @@ class AccountVisual extends React.Component {
     const newSize = this.state.isSBreakpoint && sizeS ? sizeS : sizeL;
 
     if (!reg.address.test(address)) {
-      return <img src={svg.btcIcon} style={{ height: newSize, width: newSize }}/>;
+      return <img
+        src={svg.btcIcon}
+        className={`${styles.wrapper} ${className}`}
+        style={{ height: newSize, width: newSize }}/>;
     }
 
     const replaceUrlByHashOnScheme = gradientScheme => ({

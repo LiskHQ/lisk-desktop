@@ -36,6 +36,7 @@ class TransactionDetailViewV2 extends React.Component {
         {transaction.type === transactionTypes.send ||
           transaction.type === transactionTypes.registerDelegate ? (
           <div className={styles.summaryHeader}>
+            <h2>{title}</h2>
             <p>
             {transaction.type === transactionTypes.send ? (
               <span className={'tx-amount'}>
@@ -47,7 +48,6 @@ class TransactionDetailViewV2 extends React.Component {
               ) : value
             }
             </p>
-            <h1>{title}</h1>
           </div>
         ) : null}
         <div className={styles.accountWrapper}>
