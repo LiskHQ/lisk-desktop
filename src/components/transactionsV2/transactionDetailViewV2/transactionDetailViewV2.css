@@ -11,7 +11,7 @@
     @mixin contentSmall;
 
     color: var(--color-slate-gray);
-    margin: 0;
+    margin-bottom: 10px;
   }
 
   & > p,
@@ -51,17 +51,18 @@
     & .addressRow {
       display: flex;
       flex-direction: row;
+      align-items: center;
     }
 
     & .label {
       @mixin contentSmall;
 
       color: var(--color-slate-gray);
-      margin: 0;
+      margin-bottom: 10px;
     }
 
     & .address {
-      @mixin headingSmall;
+      @mixin contentLargest;
 
       color: var(--color-maastricht-blue);
       text-decoration: none;
