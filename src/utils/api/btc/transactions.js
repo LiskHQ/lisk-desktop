@@ -13,6 +13,7 @@ import { getAPIClient } from './network';
  * @param {Number} data.blockHeight Latest block height for calculating confirmation count
  */
 const normalizeTransactionsResponse = ({
+  networkConfig,
   address,
   list,
   // eslint-disable-next-line max-statements
@@ -27,6 +28,7 @@ const normalizeTransactionsResponse = ({
     data: '',
     fee: feeSatoshi,
     token: tokenMap.BTC.key,
+    explorerLink: `${getAPIClient(networkConfig).config.transactionExplorerURL}/${tx.txid}`,
   };
 
   const ownedInput = tx.inputs.find(i => i.txDetail.scriptPubKey.addresses.includes(address));
@@ -58,6 +60,7 @@ export const getTransactions = ({
     .then((response) => {
       resolve({
         data: normalizeTransactionsResponse({
+          networkConfig,
           address,
           list: response.body.data,
         }),
@@ -74,6 +77,7 @@ export const getSingleTransaction = ({
     .then((response) => {
       resolve({
         data: normalizeTransactionsResponse({
+          networkConfig,
           list: [response.body.data],
         }),
       });

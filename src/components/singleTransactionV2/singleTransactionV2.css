@@ -81,6 +81,8 @@
       margin: 0;
       padding-left: 20px;
       width: 100%;
+      word-break: break-all;
+      text-align: left;
 
       & img {
         display: inline-block;
@@ -92,8 +94,11 @@
 
       &:first-child {
         padding-left: 0;
-        padding-right: 20px;
         position: relative;
+      }
+
+      &:not(:last-child) {
+        padding-right: 20px;
 
         &::after {
           background-color: var(--color-platinum);
