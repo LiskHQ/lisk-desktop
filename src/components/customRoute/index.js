@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import CustomRoute from './customRoute';
 
 const mapStateToProps = state => ({
-  isAuthenticated: !!state.account.publicKey,
+  isAuthenticated: !!state.account.info,
   settings: state.settings,
 });
 

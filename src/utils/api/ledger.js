@@ -12,7 +12,7 @@ const getLedgerAccountInfo = async (liskAPIClient, accountIndex) => {
   if (error) {
     throw error;
   }
-  const resAccount = await getAccount(liskAPIClient, liskAccount.address);
+  const resAccount = await getAccount({ liskAPIClient, address: liskAccount.address });
   const isInitialized = !!resAccount.unconfirmedBalance;
   Object.assign(resAccount, { isInitialized });
   // Set PublicKey from Ledger Info

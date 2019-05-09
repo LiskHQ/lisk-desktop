@@ -12,7 +12,12 @@ import routes from '../../constants/routes';
 
 describe('SecondPassphrase', () => {
   let wrapper;
-  const account = accounts.delegate;
+  const account = {
+    passphrase: accounts.delegate.passphrase,
+    info: {
+      LSK: accounts.delegate,
+    },
+  };
   const store = configureMockStore([])({
     account,
   });
@@ -57,7 +62,9 @@ describe('SecondPassphrase', () => {
 
     it('should go to dashboard if account already has second passphrase', () => {
       wrapper = mount(<SecondPassphrase {...props}
-        account={accounts['second passphrase account']} />, options);
+        account={{
+          info: { LSK: accounts['second passphrase account'] },
+        }} />, options);
       expect(props.history.push).to.have.calledWith(routes.dashboard.path);
     });
   });

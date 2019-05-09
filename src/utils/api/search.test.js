@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { stub } from 'sinon';
 import searchAll from './search';
-import * as accountsAPI from './lsk/account';
+import * as accountsAPI from './account';
 import * as transactionsAPI from './lsk/transactions';
 import * as delegateAPI from './delegate';
 
@@ -52,13 +52,13 @@ describe('Utils: Search', () => {
     getSingleTransactionStub = stub(transactionsAPI, 'getSingleTransaction');
 
     // address match
-    getAccountStub.withArgs(undefined, '1337L').returnsPromise().resolves(accountsResponse);
+    getAccountStub.withArgs({ liskAPIClient: undefined, address: '1337L' }).returnsPromise().resolves(accountsResponse);
     listDelegatesStub.withArgs(undefined, delegatesUrlParams)
       .returnsPromise().resolves(delegatesResponse);
     getSingleTransactionStub.returnsPromise().resolves(transactionsResponse);
 
     // txSearch match
-    getAccountStub.withArgs(undefined, '1337').returnsPromise().resolves(accountsResponse);
+    getAccountStub.withArgs({ liskAPIClient: undefined, address: '1337' }).returnsPromise().resolves(accountsResponse);
     listDelegatesStub.withArgs(undefined, delegatesUrlParamsTxMatch)
       .returnsPromise().resolves(delegatesResponse);
   });
@@ -93,9 +93,10 @@ describe('Utils: Search', () => {
     ]);
   });
 
-  it('should still search for {delegates} when failing {addresses} request', () => {
-    getAccountStub.withArgs(undefined, '1337L').returnsPromise().rejects({ success: false });
-    return expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
+  it('should still search for {delegates} when failing {addresses} request', async () => {
+    getAccountStub.withArgs({ liskAPIClient: undefined, address: '1337L' }).returnsPromise().rejects({ success: false });
+    const result = await searchAll({ searchTerm: '1337L' });
+    expect(result).to.deep.equal([
       { addresses: [] },
       { transactions: [] },
       { delegates: delegatesResponseOrderedAddressMatch.delegates },

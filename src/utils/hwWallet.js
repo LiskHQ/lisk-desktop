@@ -41,7 +41,7 @@ export const getDeviceList = () =>
       // Browser mode, only dev purpose
       const deviceList = [];
       deviceList.push({
-        deviceId: 0, label: 'FakeLedger', model: 'Ledger Nano S', path: '/fake/path',
+        deviceId: 0, label: 'FakeLedger', model: 'Ledger Nano S', path: '/fake/path', openApp: true,
       });
       deviceList.push({
         deviceId: 1, label: 'FakeTrezorT', model: 'Trezor Model T', path: null,

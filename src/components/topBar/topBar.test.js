@@ -11,12 +11,20 @@ import routes from '../../constants/routes';
 
 describe('TopBar', () => {
   let wrapper;
+  const account = {
+    address: '12345L',
+    balance: 120,
+    // TODO remove the props above after components are fully migrated to use the props below
+    info: {
+      LSK: {
+        address: '12345L',
+        balance: 120,
+      },
+    },
+  };
 
   const myProps = {
-    account: {
-      address: '12345L',
-      balance: 120,
-    },
+    account,
     setActiveDialog: sinon.spy(),
     location: { pathname: routes.dashboard.path },
     showDelegate: false,
@@ -44,10 +52,7 @@ describe('TopBar', () => {
   };
 
   const store = configureStore([thunk])({
-    account: {
-      address: '12345L',
-      balance: 120,
-    },
+    account,
     showDelegate: false,
     history,
     search: {

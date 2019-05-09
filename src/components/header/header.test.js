@@ -15,7 +15,9 @@ describe('Header', () => {
   const mountWithRouter = (node, options) => mount(<Router>{node}</Router>, options);
   const storeObject = {
     peers: { liskAPIClient: {}, options: {} },
-    account: {},
+    account: {
+      info: {},
+    },
     liskAPIClientSet: () => {},
     search: {
       suggestions: {
@@ -64,7 +66,7 @@ describe('Header', () => {
 
   it('does not show timer if account is not locked auto logout it turned off', () => {
     mockInputProps.account.passphrase = accounts.genesis.passphrase;
-    storeObject.account = { publicKey: '123' };
+    storeObject.account = { publicKey: '123', info: {} };
     wrapper = mountWithRouter(<Header {...mockInputProps} />, options);
     expect(wrapper.find('Countdown')).to.have.length(0);
   });
@@ -73,7 +75,7 @@ describe('Header', () => {
     mockInputProps.account.passphrase = accounts.genesis.passphrase;
     mockInputProps.account.expireTime = 1527755244818;
     mockInputProps.autoLog = true;
-    storeObject.account = { publicKey: '123' };
+    storeObject.account = { publicKey: '123', info: {} };
     wrapper = mountWithRouter(<Header {...mockInputProps} />, options);
     expect(wrapper.find('Countdown')).to.have.length(1);
   });

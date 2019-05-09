@@ -39,7 +39,7 @@ export const TooltipWrapper = (props) => {
       tooltipPosition="top"
       tooltipDelay={350}
       {...props}
-      theme={Object.assign({}, theme, props.theme || {})} />);
+      theme={({ ...theme, ...props.theme || {} })} />);
   }
   return <Div {...props} />;
 };
@@ -70,9 +70,14 @@ export const TooltipTime = translate()((props) => {
   </TooltipWrapper>);
 });
 
+const timestampConverters = {
+  LSK: _convertTimeFromFirstBlock,
+  BTC: timestamp => timestamp,
+};
+
 export const DateTimeFromTimestamp = translate()((props) => {
   moment.locale(i18n.language);
-  const datetime = moment(_convertTimeFromFirstBlock(props.time));
+  const datetime = moment(timestampConverters[props.token || 'LSK'](props.time));
   return (<span className={`${props.className || ''}`}>{
     props.fulltime ? (
       datetime.format('DD MMM YYYY, HH:mm:ss')

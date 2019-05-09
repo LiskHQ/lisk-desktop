@@ -7,6 +7,11 @@ describe('Choose', () => {
   let wrapper;
   const props = {
     account: {
+      info: {
+        LSK: {
+          balance: 0,
+        },
+      },
     },
     delegate: {
     },

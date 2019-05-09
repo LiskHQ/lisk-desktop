@@ -1,75 +1,26 @@
 // TODO this file should be removed after the new 'network' actions are used everywhere
+/* istanbul ignore file */
 
-import i18next from 'i18next';
 import Lisk from 'lisk-elements';
 import actionTypes from '../constants/actions';
 import networks from '../constants/networks';
-import { errorToastDisplayed } from './toaster';
 import { loadingStarted, loadingFinished } from '../actions/loading';
+import { login } from './account';
+import { getConnectionErrorMessage } from './network/lsk';
+import { errorToastDisplayed } from './toaster';
 
-import { getAccount } from '../utils/api/lsk/account';
-import { extractAddress, extractPublicKey } from '../utils/account';
-import { accountLoggedIn, accountLoading, accountLoggedOut } from './account';
-import accountConfig from '../constants/account';
-import settings from '../constants/settings';
-import { loginType } from '../constants/hwConstants';
 import { networkSet } from './network';
 
 const peerSet = (data, config) => ({
-  data: Object.assign({
+  data: {
     passphrase: data.passphrase,
     publicKey: data.publicKey,
     liskAPIClient: new Lisk.APIClient(config.nodes, { nethash: config.nethash }),
     options: config,
     loginType: data.loginType,
-  }),
+  },
   type: actionTypes.liskAPIClientSet,
 });
-
-export const login = async (dispatch, getState, data, config) => {
-  if (data.passphrase || data.hwInfo) {
-    const store = getState();
-    const { passphrase } = data;
-    const publicKey = passphrase ? extractPublicKey(passphrase) : data.publicKey;
-    const liskAPIClient = store.peers.liskAPIClient ||
-      new Lisk.APIClient(config.nodes, { nethash: config.nethash });
-    const address = extractAddress(publicKey);
-    const accountBasics = {
-      passphrase,
-      publicKey,
-      address,
-      network: data.network.code || 0,
-      loginType: data.hwInfo ? loginType.ledger : loginType.normal,
-      peerAddress: data.network.nodes[0],
-      hwInfo: data.hwInfo ? data.hwInfo : {},
-    };
-
-    dispatch(accountLoading());
-
-    // redirect to main/transactions
-    await getAccount(liskAPIClient, address).then((accountData) => {
-      const duration = (passphrase && store.settings.autoLog) ?
-        Date.now() + accountConfig.lockDuration : 0;
-      const accountUpdated = {
-        ...accountData,
-        ...accountBasics,
-        expireTime: duration,
-      };
-      /* Save selected network to localStorage */
-      const networkAddress = data.network.address ? data.network.address : data.network.nodes[0];
-      window.localStorage.setItem(settings.keys.liskCoreUrl, networkAddress);
-
-      dispatch(accountLoggedIn(accountUpdated));
-    }).catch((error) => {
-      if (error && error.message) {
-        dispatch(errorToastDisplayed({ label: i18next.t(`Unable to connect to the node, Error: ${error.message}`) }));
-      } else {
-        dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node, no response from the server.') }));
-      }
-      dispatch(accountLoggedOut());
-    });
-  }
-};
 
 /**
  * Returns required action object to set
@@ -92,6 +43,11 @@ export const liskAPIClientSet = data =>
       config.nethash = Lisk.APIClient.constants.MAINNET_NETHASH;
       config.nodes = networks.mainnet.nodes;
     }
+    // TODO calling token-agnostic action inside LSK action is hacky, should be refactored
+    dispatch(networkSet({
+      ...data.network,
+      nodeUrl: data.network.address,
+    }));
 
     if (config.custom) {
       const liskAPIClient = new Lisk.APIClient(config.nodes, {});
@@ -100,24 +56,21 @@ export const liskAPIClientSet = data =>
         dispatch(loadingFinished('getConstants'));
         config.nethash = response.data.nethash;
         dispatch(peerSet(data, config));
-        login(dispatch, getState, data, config);
+        if (data.passphrase || data.hwInfo) {
+          login(data, config)(dispatch, getState);
+        }
       }).catch((error) => {
         dispatch(loadingFinished('getConstants'));
-        if (error && error.message) {
-          dispatch(errorToastDisplayed({ label: i18next.t(`Unable to connect to the node, Error: ${error.message}`) }));
-        } else {
-          dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node, no response from the server.') }));
-        }
+        dispatch(errorToastDisplayed({
+          label: getConnectionErrorMessage(error),
+        }));
       });
     } else {
       dispatch(peerSet(data, config));
-      await login(dispatch, getState, data, config);
+      if (data.passphrase || data.hwInfo) {
+        await login(data, config)(dispatch, getState);
+      }
     }
-    // TODO calling token-agnostic action inside LSK action is hacky, should be refactored
-    dispatch(networkSet({
-      ...data.network,
-      nodeUrl: data.network.address,
-    }));
   };
 
 

@@ -20,11 +20,12 @@ describe('InputV2', () => {
     expect(props.onChange).to.have.been.calledWith();
   });
 
-  it('should not put undefined as className if className is not on props', () => {
+  it('should pass size as className ', () => {
     const propWithoutClassName = {
       defaultValue: 'test',
+      size: 'l',
     };
     wrapper = mount(<InputV2 {...propWithoutClassName} />);
-    expect(wrapper).not.to.have.className('undefined');
+    expect(wrapper).to.have.className('l');
   });
 });
