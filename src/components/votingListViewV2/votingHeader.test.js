@@ -16,7 +16,7 @@ describe('VotingHeader', () => {
   const unvoteDict = {
     username1: { confirmed: true, unconfirmed: false, publicKey: 'sample_key1' },
   };
-  const votes = Object.assign({}, voteDict, unvoteDict);
+  const votes = { ...voteDict, unvoteDict };
 
   const store = configureMockStore([])({
     peers: {
