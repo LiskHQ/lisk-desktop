@@ -502,6 +502,7 @@
   "Unable to detect the communication layer. Is ledger connected? Is Fido U2F Extension Installed?": "Unable to detect the communication layer. Is ledger connected? Is Fido U2F Extension Installed?",
   "Undo": "Undo",
   "Unlock account": "Unlock account",
+  "Unnamed account": "Unnamed account",
   "Update download finished": "Update download finished",
   "Update now": "Update now",
   "Updates downloaded, application has to be restarted to apply the updates.": "Updates downloaded, application has to be restarted to apply the updates.",

@@ -39,12 +39,12 @@ class SelectAccount extends React.Component {
   }
 
   getNameFromAccount(address) {
-    const { settings } = this.props;
+    const { settings, t } = this.props;
     // istanbul ignore else
     if (Array.isArray(settings.hardwareAccounts)) {
       const storedAccount = settings.hardwareAccounts.filter(account =>
         account.address === address);
-      return storedAccount.length ? storedAccount[0].name : 'Unnamed account';
+      return storedAccount.length ? storedAccount[0].name : t('Unnamed account');
     }
 
     return 'Unnamed account';
