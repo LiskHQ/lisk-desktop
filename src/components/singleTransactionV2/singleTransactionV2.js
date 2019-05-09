@@ -104,6 +104,7 @@ class SingleTransactionV2 extends React.Component {
                       fulltime={true}
                       className={'date'}
                       time={transaction.timestamp}
+                      token={transaction.token}
                       showSeconds={true} />
                   </span>
                 </p>
