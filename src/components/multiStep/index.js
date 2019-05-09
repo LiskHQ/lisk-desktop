@@ -57,6 +57,7 @@ class MultiStep extends React.Component {
   prev(config) {
     const getTarget = (current) => {
       if (current === 0) return current;
+      else if (config && config.jump) return current - config.jump;
       else if (!config || !config.reset) return current - 1;
       else if (config.reset) return 0;
       return current;

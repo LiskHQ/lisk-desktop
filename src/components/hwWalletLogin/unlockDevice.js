@@ -1,3 +1,4 @@
+// istanbul ignore file
 import React from 'react';
 import { TertiaryButtonV2 } from '../toolbox/buttons/button';
 import illustration from '../../assets/images/illustrations/illustration-ledger-nano-light.svg';
