@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './dropdownV2.css';
 
 const DropdownV2 = ({
-  children, showDropdown, className, showArrow,
+  children, showDropdown, className, showArrow, active,
 }) => {
   const isSelectionList = children && Array.isArray(children);
   return (
@@ -15,7 +15,7 @@ const DropdownV2 = ({
       </span>}
       <div className={`${styles.dropdownContent} dropdown-content ${isSelectionList ? 'options' : ''}`}>
         { isSelectionList ? children.map((child, key) => (
-          React.cloneElement(child, { className: `${child.props.className || ''} ${styles.option}`, key })
+          React.cloneElement(child, { className: ` ${styles.option} ${active === key ? styles.active : ''} ${child.props.className || ''}`, key })
         )) : children }
       </div>
     </div>

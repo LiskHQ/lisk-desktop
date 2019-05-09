@@ -49,14 +49,14 @@ class TransitionWrapper extends React.Component {
   transitionIn(AddWillTransition) {
     this.timeout = setTimeout(() => {
       const className = `${this.props.children.props.className} ${AddWillTransition ? styles.willTransition : ''} ${this.cssStyleRules.slideIn}`;
-      const extraProps = Object.assign({}, this.state.extraProps);
+      const extraProps = { ...this.state.extraProps };
       extraProps.className = className;
       this.setState({ extraProps });
     }, this.cssStyleRules.duration);
   }
 
   transitionOut() {
-    const extraProps = Object.assign({}, this.state.extraProps);
+    const extraProps = { ...this.state.extraProps };
     let className = extraProps.className.replace(this.cssStyleRules.slideIn, '').trim();
 
     className = `${className} ${this.cssStyleRules.slideOut}`;
@@ -69,7 +69,7 @@ class TransitionWrapper extends React.Component {
   setStable() {
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
-      const extraProps = Object.assign({}, this.state.extraProps);
+      const extraProps = { ...this.state.extraProps };
       extraProps.className = extraProps.className
         .replace(this.cssStyleRules.slideIn, '').replace(this.cssStyleRules.slideOut, '').trim();
       this.setState({ extraProps });
@@ -88,7 +88,7 @@ class TransitionWrapper extends React.Component {
 
     return React.cloneElement(
       this.props.children,
-      Object.assign({}, this.state.extraProps, inlineStyles),
+      { ...this.state.extraProps, ...inlineStyles },
     );
   }
 }

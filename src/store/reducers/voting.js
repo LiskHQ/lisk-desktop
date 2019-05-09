@@ -27,7 +27,7 @@ const mergeVotes = (newList, oldDict) => {
       (!pending && unconfirmed !== confirmed &&
         (newDict[username] === undefined || confirmed === newDict[username].confirmed))
     ) {
-      newDict[username] = Object.assign({}, oldDict[username]);
+      newDict[username] = { ...oldDict[username] };
     }
   });
 
@@ -48,7 +48,8 @@ const voting = (state = { // eslint-disable-line complexity
 }, action) => {
   switch (action.type) {
     case actionTypes.votesAdded:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         votes: action.data.list
           .reduce((votesDict, delegate) => {
             votesDict[delegate.username] = {
@@ -62,21 +63,24 @@ const voting = (state = { // eslint-disable-line complexity
             return votesDict;
           }, {}),
         refresh: false,
-      });
+      };
 
     case actionTypes.delegatesAdded:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         delegates: action.data.refresh ? action.data.list :
           [...state.delegates, ...action.data.list],
         totalDelegates: action.data.refresh ? action.data.list.length :
           [...state.delegates, ...action.data.list].length,
         refresh: true,
-      });
+      };
 
     case actionTypes.voteToggled:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         refresh: false,
-        votes: Object.assign({}, state.votes, {
+        votes: {
+          ...state.votes,
           [action.data.username]: {
             confirmed: state.votes[action.data.username] ?
               state.votes[action.data.username].confirmed : false,
@@ -87,19 +91,21 @@ const voting = (state = { // eslint-disable-line complexity
             rank: action.data.rank,
             address: action.data.address,
           },
-        }),
-      });
+        },
+      };
 
 
     case actionTypes.accountLoading:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         votes: {},
         delegates: [],
         refresh: true,
-      });
+      };
 
     case actionTypes.votesCleared:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         votes: Object.keys(state.votes).reduce((votesDict, username) => {
           votesDict[username] = {
             confirmed: state.votes[username].confirmed,
@@ -113,16 +119,18 @@ const voting = (state = { // eslint-disable-line complexity
           return votesDict;
         }, {}),
         refresh: true,
-      });
+      };
 
     case actionTypes.votesUpdated:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         votes: mergeVotes(action.data.list, state.votes),
         refresh: false,
-      });
+      };
 
     case actionTypes.pendingVotesAdded:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         refresh: false,
         votes: Object.keys(state.votes).reduce((votesDict, username) => {
           const {
@@ -142,7 +150,7 @@ const voting = (state = { // eslint-disable-line complexity
           };
           return votesDict;
         }, {}),
-      });
+      };
 
     case actionTypes.voteLookupStatusUpdated:
       return {

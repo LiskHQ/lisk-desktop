@@ -8,9 +8,7 @@ const peersMiddleware = store => next => (action) => {
 
   const autologinData = getAutoLogInData();
   const { liskCoreUrl } = autologinData;
-
   let loginNetwork = findMatchingLoginNetwork();
-
   // if cant find login network but liskCoreUrl is set then is custom node
   // else default network
   if (loginNetwork) {

@@ -18,5 +18,22 @@
     @mixin contentLarge;
 
     color: var(--color-slate-gray);
+
+    & > a {
+      @mixin contentLarge bold;
+
+      color: var(--color-ultramarine-blue);
+      text-decoration: none;
+
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  & img {
+    display: block;
+    margin: 48px auto;
   }
 }

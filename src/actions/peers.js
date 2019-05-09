@@ -12,13 +12,13 @@ import { errorToastDisplayed } from './toaster';
 import { networkSet } from './network';
 
 const peerSet = (data, config) => ({
-  data: Object.assign({
+  data: {
     passphrase: data.passphrase,
     publicKey: data.publicKey,
     liskAPIClient: new Lisk.APIClient(config.nodes, { nethash: config.nethash }),
     options: config,
     loginType: data.loginType,
-  }),
+  },
   type: actionTypes.liskAPIClientSet,
 });
 

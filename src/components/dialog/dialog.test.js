@@ -58,7 +58,7 @@ describe('Dialog', () => {
 
   // this test used to pass only because the history.push spy was not in beforeEach
   it.skip('should fix the route if there are two dialog names', () => {
-    const newProps = Object.assign({}, { dialog: dialogProps, history }, props);
+    const newProps = { dialog: dialogProps, history, ...props };
     newProps.dialog.title = 'Send1';
     // trying to update the component
     wrapper.setProps(newProps);

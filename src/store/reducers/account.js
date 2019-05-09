@@ -10,7 +10,7 @@ import { lockDuration } from '../../constants/account';
 const account = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.removePassphrase:
-      return Object.assign({}, state, { passphrase: null, expireTime: 0 });
+      return { ...state, passphrase: null, expireTime: 0 };
     case actionTypes.accountUpdated:
       return {
         ...state,

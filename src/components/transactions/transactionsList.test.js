@@ -67,25 +67,26 @@ describe('TransactionsList', () => {
   };
 
   it('should render empty state template if transactions list is empty', () => {
-    const propsNoTx = Object.assign({}, props, { transactions: emptyTx });
+    const propsNoTx = { ...props, transactions: emptyTx };
     wrapper = mount(<TransactionsList {...propsNoTx} />, options);
     expect(wrapper.find('.empty-message')).to.have.lengthOf(1);
   });
 
   it('should render nothing if transactions list is empty and filter is ALL', () => {
-    const propsNoTx = Object.assign({}, props, {
+    const propsNoTx = {
+      ...props,
       transactions: emptyTx,
       filter: {
         value: txFilters.all,
         name: 'All',
       },
-    });
+    };
     wrapper = mount(<TransactionsList {...propsNoTx} />, options);
     expect(wrapper.html()).to.be.equal(null);
   });
 
   it('should render tx details if nextStep is a function', () => {
-    const propsTxDetails = Object.assign({}, props, { nextStep: spy() });
+    const propsTxDetails = { ...props, nextStep: spy() };
     wrapper = mount(<TransactionsList {...propsTxDetails} />, options);
 
     wrapper.setProps({
@@ -103,12 +104,13 @@ describe('TransactionsList', () => {
   });
 
   it('should render delegate statistics', () => {
-    const propsDelegateStatistics = Object.assign({}, props, {
+    const propsDelegateStatistics = {
+      ...props,
       filter: {
         value: txFilters.statistics,
         name: 'delegate-statistics',
       },
-    });
+    };
     wrapper = mount(<TransactionsList {...propsDelegateStatistics} />, options);
     expect(wrapper.find('.user-votes')).to.have.lengthOf(1);
     expect(wrapper.find('.voters')).to.have.lengthOf(1);
