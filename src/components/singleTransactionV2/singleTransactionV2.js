@@ -55,6 +55,13 @@ class SingleTransactionV2 extends React.Component {
     this.setState({ [`${name}Copied`]: true });
   }
 
+  getLinkToCopy() {
+    return {
+      LSK: `lisk:/${this.props.match.url}`,
+      BTC: this.props.transaction.explorerLink,
+    }[this.props.transaction.token];
+  }
+
   // eslint-disable-next-line complexity
   render() {
     const { t, transaction } = this.props;
@@ -73,6 +80,7 @@ class SingleTransactionV2 extends React.Component {
         break;
     }
 
+
     return (
       <div className={`${grid.row} ${grid['center-xs']}`}>
       { transaction.id && !transaction.error ? (
@@ -80,7 +88,7 @@ class SingleTransactionV2 extends React.Component {
           <header className={`${styles.detailsHeader} tx-header`}>
             <h1>{title}</h1>
               <CopyToClipboard
-                text={`lisk:/${this.props.match.url}`}
+                text={this.getLinkToCopy()}
                 onCopy={() => this.handleCopy('link')}>
                 <SecondaryButtonV2 className={'extra-small'} disabled={this.state.linkCopied}>
                   {this.state.linkCopied
