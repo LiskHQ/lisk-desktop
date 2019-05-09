@@ -1,18 +1,16 @@
 // istanbul ignore file
 import { connect } from 'react-redux';
 import { settingsUpdated } from '../../../actions/settings';
-import { liskAPIClientSet } from '../../../actions/peers';
-import networks from '../../../constants/networks';
+import { login } from '../../../actions/account';
 import SelectAccount from './selectAccount';
 
 const mapStateToProps = state => ({
   account: state.account,
-  network: state.settings.network || networks.mainnet.code,
   settings: state.settings,
 });
 
 const mapDispatchToProps = {
-  liskAPIClientSet,
+  login,
   settingsUpdated,
 };
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import { TertiaryButtonV2 } from '../../toolbox/buttons/button';
 import { displayAccounts } from '../../../utils/ledger';
-import getNetwork from '../../../utils/getNetwork';
 import { loginType } from '../../../constants/hwConstants';
 import routes from '../../../constants/routes';
 import AccountCard from './accountCard';
@@ -120,11 +119,10 @@ class SelectAccount extends React.Component {
   }
 
   onSelectAccount(account, index) {
-    const { liskAPIClientSet, network, device } = this.props;
+    const { login, device } = this.props;
 
-    liskAPIClientSet({
+    login({
       publicKey: account.publicKey,
-      network: getNetwork(network),
       hwInfo: {
         deviceId: device.deviceId,
         derivationIndex: index,

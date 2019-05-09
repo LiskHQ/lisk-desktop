@@ -91,7 +91,7 @@ describe('Select Account', () => {
       },
       nextStep: jest.fn(),
       prevStep: jest.fn(),
-      liskAPIClientSet: jest.fn(),
+      login: jest.fn(),
       settingsUpdated: jest.fn(),
       errorToastDisplayed: jest.fn(),
     };
@@ -157,12 +157,12 @@ describe('Select Account', () => {
     expect(props.errorToastDisplayed).toBeCalled();
   });
 
-  it('Should call liskAPIClientSet function after click on a select account button', async () => {
+  it('Should call login function after click on a select account button', async () => {
     jest.advanceTimersByTime(2000);
     await utils.displayAccounts();
     wrapper.update();
     expect(wrapper.find('.hw-container')).toContainMatchingElement('.hw-account');
     wrapper.find('.select-account').at(0).simulate('click');
-    expect(props.liskAPIClientSet).toBeCalled();
+    expect(props.login).toBeCalled();
   });
 });
