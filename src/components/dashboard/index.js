@@ -95,7 +95,7 @@ class Dashboard extends React.Component {
               footer={(
                 <Fragment>
                   <Link to={`${routes.send.path}?recipient=${account.address}&amount=0.1&reference=Account initialization`}>
-                    <SecondaryButtonV2>{t('Create First Transaction')}</SecondaryButtonV2>
+                    <SecondaryButtonV2 className='light' >{t('Create First Transaction')}</SecondaryButtonV2>
                   </Link>
                   <a
                     className={styles.initLink}
