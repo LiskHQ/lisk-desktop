@@ -38,7 +38,7 @@ describe('Account Card', () => {
     wrapper.setProps({ accountOnEditMode: 0 });
     wrapper.update();
     expect(wrapper).toContainMatchingElement('.save-account');
-    wrapper.find('.account-name').simulate('change', { target: { value: 'Lisk Account' } });
+    wrapper.find('.account-name input').simulate('change', { target: { value: 'Lisk Account' } });
     expect(props.onChangeAccountTitle).toBeCalled();
     wrapper.find('.save-account').at(0).simulate('click');
     expect(props.onSaveNameAccounts).toBeCalled();
