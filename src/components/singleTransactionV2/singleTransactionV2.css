@@ -82,6 +82,7 @@
       padding-left: 20px;
       width: 100%;
       word-break: break-all;
+      text-align: left;
 
       & img {
         display: inline-block;
