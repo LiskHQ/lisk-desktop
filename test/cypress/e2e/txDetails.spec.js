@@ -27,7 +27,7 @@ describe('Tx details', () => {
     cy.go('back');
     cy.get(ss.txAddedVotes).should('not.exist');
     cy.get(ss.txRemovedVotes).should('not.exist');
-    cy.get(ss.txAmount).should('have.text', '-90 LSK');
+    cy.get(ss.txAmount).should('have.text', '90 LSK');
     cy.get(ss.txFee).should('have.text', '0.1');
     cy.get(ss.txId).contains(regex.transactionId);
     cy.get(ss.txReference).should('have.text', 'delegate-candidate');
