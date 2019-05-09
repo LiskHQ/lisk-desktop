@@ -202,7 +202,7 @@ class WalletTransactionsV2 extends React.Component {
                 <CopyToClipboard
                   text={account.address}
                   onCopy={this.onCopy}>
-                    <SecondaryButtonV2 disabled={this.state.copied}>
+                    <SecondaryButtonV2 disabled={this.state.copied} className='light'>
                       <span>{this.state.copied ? t('Copied') : t('Copy')}</span>
                     </SecondaryButtonV2>
                 </CopyToClipboard>
