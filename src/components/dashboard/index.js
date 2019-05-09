@@ -55,8 +55,8 @@ class Dashboard extends React.Component {
 
   shouldShowInitializatiion() {
     const { account, transactions } = this.props;
-    const needsNoAccountInit = account.serverPublicKey
-      || account.balance === 0
+    const needsNoAccountInit = (account.info && account.info.LSK.serverPublicKey)
+      || (account.info && account.info.LSK.balance === 0)
       || (transactions.pending && transactions.pending.length > 0);
     return !needsNoAccountInit;
   }

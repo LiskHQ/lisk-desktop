@@ -1,14 +1,10 @@
 import React from 'react';
 import { PrimaryButton, Button } from '../../toolbox/buttons/button';
 import styles from './confirmSecond.css';
-import { passphraseIsValid } from '../../../utils/form';
 import TransitionWrapper from '../../toolbox/transitionWrapper';
 import { FontIcon } from '../../fontIcon';
-import { extractPublicKey } from '../../../utils/account';
 // eslint-disable-next-line import/no-named-as-default
 import SliderCheckbox from '../../toolbox/sliderCheckbox';
-// eslint-disable-next-line import/no-named-as-default
-import PassphraseInput from '../../passphraseInput';
 import routes from '../../../constants/routes';
 import Piwik from '../../../utils/piwik';
 
@@ -16,33 +12,16 @@ class ConfirmSecond extends React.Component {
   constructor() {
     super();
     this.state = {
-      step: 'login',
+      step: 'confirm',
       passphrase: {
         value: '',
         error: '',
       },
       error: false,
     };
-  }
-
-  onChange(name, value, error) {
-    const { publicKey } = this.props.account;
-    if (!error && extractPublicKey(value) !== publicKey) {
-      error = this.props.t('Entered passphrase does not belong to the active account');
-    }
-    this.setState({
-      [name]: {
-        value,
-        error: typeof error === 'string' ? error : undefined,
-      },
-    });
-  }
-
-  login() {
-    Piwik.trackingEvent('Passphrase_ConfirmSecond', 'button', 'Login');
-    this.setState({
-      step: 'confirm',
-    });
+    this.onRedirectToDashboard = this.onRedirectToDashboard.bind(this);
+    this.redirectToFirstStep = this.redirectToFirstStep.bind(this);
+    this.confirm = this.confirm.bind(this);
   }
 
   componentDidMount() {
@@ -56,7 +35,7 @@ class ConfirmSecond extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.account.secondPublicKey && !nextProps.error) {
+    if (nextProps.account.info && nextProps.account.info.LSK.secondPublicKey && !nextProps.error) {
       this.setState({ step: 'done' });
     } else if (nextProps.step) {
       this.setState({
@@ -87,6 +66,7 @@ class ConfirmSecond extends React.Component {
     this.props.secondPassphraseRegisteredFailureReset();
     this.props.history.goBack();
   }
+
   render() {
     const { hidden, t } = this.props;
     const status = hidden ? styles.hidden : '';
@@ -95,11 +75,6 @@ class ConfirmSecond extends React.Component {
       this.state.step === 'second-passphrase-register-failure') ? styles.done : '';
     return (<section className={`${styles.wrapper} ${status}`}>
       <header className={doneClass}>
-        <TransitionWrapper current={this.state.step} step='login' animationName='slide'>
-          <h2>
-            {t('Please sign in with your first passphrase')}
-          </h2>
-        </TransitionWrapper>
         <TransitionWrapper current={this.state.step} step='confirm' animationName='slide'>
           <h2>
             {t('Great!\nYou’re almost done')}
@@ -128,12 +103,12 @@ class ConfirmSecond extends React.Component {
               <div className='subTitle'>
                 {this.state.error}
               </div>
-              <form onSubmit={this.redirectToFirstStep.bind(this)}>
+              <form onSubmit={this.redirectToFirstStep}>
                 <PrimaryButton
                   disabled={false}
                   label={t('Try again')}
                   className={`${styles.tryButton} try-again`}
-                  onClick={this.redirectToFirstStep.bind(this)}
+                  onClick={this.redirectToFirstStep}
                 />
               </form>
           </article>
@@ -141,27 +116,6 @@ class ConfirmSecond extends React.Component {
       </header>
       {this.state.error ? null :
       <div className={`${styles.content} ${doneClass}`}>
-        <TransitionWrapper current={this.state.step} step='login'>
-          <div className={styles.innerContent}>
-            <PassphraseInput
-              error={this.state.passphrase.error}
-              value={this.state.passphrase.value}
-              onChange={this.onChange.bind(this, 'passphrase')}
-              columns={{ xs: 6, sm: 4, md: 2 }}
-              isFocused={true}
-              className='passphraseInput'
-            />
-            <footer>
-              <Button
-                label={this.props.t('Unlock account')}
-                theme={styles}
-                className={'unlock'}
-                onClick={this.login.bind(this, 'passphrase')}
-                disabled={!passphraseIsValid(this.state.passphrase)}
-              />
-            </footer>
-          </div>
-        </TransitionWrapper>
         <TransitionWrapper current={this.state.step} step='confirm'>
           <div className={styles.innerContent}>
             <h5>
@@ -174,7 +128,7 @@ class ConfirmSecond extends React.Component {
               className={`${styles.smallSlider} confirm-checkbox`}
               label={t('I confirm (Fee: 5 LSK)')}
               clickable={true}
-              onChange={this.confirm.bind(this)}
+              onChange={this.confirm}
               input={{
                 value: 'introduction-step',
               }}/>
@@ -191,7 +145,7 @@ class ConfirmSecond extends React.Component {
           <Button
             label={this.props.t('Go back to Dashboard')}
             className={`${styles.resultButton} get-to-your-dashboard-button`}
-            onClick={() => this.onRedirectToDashboard()}
+            onClick={this.onRedirectToDashboard}
           />
         </TransitionWrapper>
       </div>}

@@ -1,31 +1,44 @@
 import Lisk from 'lisk-elements';
 import getMappedFunction from '../functionMapper';
 import { tokenMap } from '../../../constants/tokens';
+import { getAPIClient } from './network';
+import { extractAddress, extractPublicKey } from '../../account';
 
-export const getAccount = (liskAPIClient, address) =>
+export const getAccount = ({
+  liskAPIClient,
+  networkConfig,
+  address,
+  passphrase,
+  publicKey,
+}) =>
   new Promise((resolve, reject) => {
-    if (!liskAPIClient) {
+    // TODO remove liskAPIClient after all code that uses is is removed
+    const apiClient = liskAPIClient || getAPIClient(networkConfig);
+    if (!apiClient) {
       reject();
     }
-    liskAPIClient.accounts.get({ address }).then((res) => {
+    publicKey = publicKey || (passphrase && extractPublicKey(passphrase));
+    address = address || extractAddress(passphrase || publicKey);
+    apiClient.accounts.get({ address }).then((res) => {
       if (res.data.length > 0) {
         resolve({
           ...res.data[0],
+          publicKey: publicKey || res.data[0].publicKey,
           serverPublicKey: res.data[0].publicKey,
+          token: tokenMap.LSK.key,
         });
       } else {
         // when the account has no transactions yet (therefore is not saved on the blockchain)
         // this endpoint returns { success: false }
         resolve({
           address,
+          publicKey,
           balance: 0,
+          token: tokenMap.LSK.key,
         });
       }
     }).catch(reject);
   });
-
-// export const setSecondPassphrase = (liskAPIClient, secondSecret, publicKey, secret) =>
-//   requestToActivePeer(liskAPIClient, 'signatures', { secondSecret, publicKey, secret });
 
 export const setSecondPassphrase = (
   liskAPIClient,
@@ -43,8 +56,6 @@ export const setSecondPassphrase = (
   });
 
 export const btc = { // Temporary btc account utility while we don't normalize the apis calls.
-  getAccount: /* istanbul ignore next */ (address, netCode) =>
-    getMappedFunction(tokenMap.BTC.key, 'account', 'getSummary')(address, netCode),
   extractAddress: /* istanbul ignore next */ (passphrase, netCode) =>
     getMappedFunction(tokenMap.BTC.key, 'account', 'extractAddress')(passphrase, netCode),
 };

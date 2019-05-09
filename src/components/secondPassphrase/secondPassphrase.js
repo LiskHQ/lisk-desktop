@@ -16,9 +16,8 @@ class SecondPassphrase extends React.Component {
   }
   componentDidMount() {
     document.body.classList.add('contentFocused');
-    if (this.props.account.secondPublicKey) {
-      this.props.history
-        .push(`${routes.dashboard.path}`);
+    if (this.props.account.info.LSK.secondPublicKey) {
+      this.props.history.push(`${routes.dashboard.path}`);
     }
   }
 
@@ -32,12 +31,12 @@ class SecondPassphrase extends React.Component {
     } = this.props;
     const header = t('Secure the use of your Lisk ID with a second passphrase.');
     const message = t('You will need it to use your Lisk ID, like sending and voting. You are responsible for keeping your second passphrase safe. No one can restore it, not even Lisk.');
-    const onPassphraseRegister = (secondPassphrase, passphrase) => {
+    const onPassphraseRegister = (secondPassphrase) => {
       /* istanbul ignore next */
       registerSecondPassphrase({
         secondPassphrase,
-        passphrase,
-        account,
+        passphrase: account.passphrase,
+        account: account.info.LSK,
       });
     };
     return (
@@ -48,7 +47,7 @@ class SecondPassphrase extends React.Component {
           backButtonLabel={t('Back')}
           prevPage={this.backToPreviousPage.bind(this)}
         >
-          <CreateSecond title={t('Create')} t={t} icon='add' balance={account.balance} />
+          <CreateSecond title={t('Create')} t={t} icon='add' balance={account.info && account.info.LSK.balance} />
           <Safekeeping title={t('Safekeeping')} t={t} step='revealing-step'
             icon='checkmark' header={header} message={message} />
           <Confirm title={t('Confirm')} t={t} confirmButton='Register'

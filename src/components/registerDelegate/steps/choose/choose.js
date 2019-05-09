@@ -24,8 +24,10 @@ class Choose extends React.Component {
   }
 
   hasEnoughLSK() {
-    return (fromRawLsk(this.props.account.balance) * 1
-    >= fromRawLsk(Fees.registerDelegate) * 1);
+    return this.props.account.info && (
+      fromRawLsk(this.props.account.info.LSK.balance) * 1
+        >= fromRawLsk(Fees.registerDelegate) * 1
+    );
   }
 
   checkSufficientFunds(evt) {

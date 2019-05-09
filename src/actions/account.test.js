@@ -1,4 +1,6 @@
-import { expect } from 'chai';
+/* eslint-disable max-lines */
+// TODO figure out how to reduce size of this file
+import { expect as chaiExpect } from 'chai';
 import { spy, stub } from 'sinon';
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
@@ -16,10 +18,11 @@ import {
   updateDelegateAccount,
   delegateStatsLoaded,
   updateAccountDelegateStats,
+  login,
 } from './account';
 import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { delegateRegisteredFailure } from './delegate';
-import * as accountApi from '../utils/api/lsk/account';
+import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegate';
 import * as transactionsApi from '../utils/api/transactions';
 import * as blocksApi from '../utils/api/blocks';
@@ -29,6 +32,8 @@ import networks from '../constants/networks';
 import accounts from '../../test/constants/accounts';
 import * as peersActions from './peers';
 import * as transactionsActions from './transactions';
+
+jest.mock('../utils/api/account');
 
 describe('actions: account', () => {
   describe('accountUpdated', () => {
@@ -41,7 +46,7 @@ describe('actions: account', () => {
         data,
         type: actionTypes.accountUpdated,
       };
-      expect(accountUpdated(data)).to.be.deep.equal(expectedAction);
+      chaiExpect(accountUpdated(data)).to.be.deep.equal(expectedAction);
     });
   });
 
@@ -51,7 +56,7 @@ describe('actions: account', () => {
         type: actionTypes.accountLoggedOut,
       };
 
-      expect(accountLoggedOut()).to.be.deep.equal(expectedAction);
+      chaiExpect(accountLoggedOut()).to.be.deep.equal(expectedAction);
     });
   });
 
@@ -86,7 +91,7 @@ describe('actions: account', () => {
     });
 
     it('should create an action function', () => {
-      expect(typeof actionFunction).to.be.deep.equal('function');
+      chaiExpect(typeof actionFunction).to.be.deep.equal('function');
     });
 
     it('should dispatch transactionAdded action if resolved', () => {
@@ -101,7 +106,7 @@ describe('actions: account', () => {
       };
 
       actionFunction(dispatch, getState);
-      expect(dispatch).to.have.been
+      chaiExpect(dispatch).to.have.been
         .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
     });
 
@@ -110,7 +115,7 @@ describe('actions: account', () => {
 
       actionFunction(dispatch, getState);
       const expectedAction = secondPassphraseRegisteredFailure({ text: 'sample message' });
-      expect(dispatch).to.have.been.calledWith(expectedAction);
+      chaiExpect(dispatch).to.have.been.calledWith(expectedAction);
     });
 
     it('should dispatch secondPassphraseRegisteredFailure action if caught but no message returned', () => {
@@ -118,7 +123,7 @@ describe('actions: account', () => {
 
       actionFunction(dispatch, getState);
       const expectedAction = secondPassphraseRegisteredFailure({ text: 'An error occurred while registering your second passphrase. Please try again.' });
-      expect(dispatch).to.have.been.calledWith(expectedAction);
+      chaiExpect(dispatch).to.have.been.calledWith(expectedAction);
     });
   });
 
@@ -151,7 +156,7 @@ describe('actions: account', () => {
     });
 
     it('should create an action function', () => {
-      expect(typeof actionFunction).to.be.deep.equal('function');
+      chaiExpect(typeof actionFunction).to.be.deep.equal('function');
     });
 
     it('should dispatch transactionAdded action if resolved', () => {
@@ -167,7 +172,7 @@ describe('actions: account', () => {
       };
 
       actionFunction(dispatch, getState);
-      expect(dispatch).to.have.been
+      chaiExpect(dispatch).to.have.been
         .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
     });
 
@@ -176,7 +181,7 @@ describe('actions: account', () => {
 
       actionFunction(dispatch, getState);
       const delegateRegisteredFailureAction = delegateRegisteredFailure({ message: 'sample message.' });
-      expect(dispatch).to.have.been.calledWith(delegateRegisteredFailureAction);
+      chaiExpect(dispatch).to.have.been.calledWith(delegateRegisteredFailureAction);
     });
 
     it('should dispatch passphraseUsed action always', () => {
@@ -184,7 +189,7 @@ describe('actions: account', () => {
 
       actionFunction(dispatch, getState);
       const passphraseUsedAction = passphraseUsed(accounts.genesis.passphrase);
-      expect(dispatch).to.have.been.calledWith(passphraseUsedAction);
+      chaiExpect(dispatch).to.have.been.calledWith(passphraseUsedAction);
     });
   });
 
@@ -219,7 +224,7 @@ describe('actions: account', () => {
         data: delegateResponse,
         type: actionTypes.updateDelegate,
       };
-      expect(dispatch).to.have.been.calledWith(updateDelegateAction);
+      chaiExpect(dispatch).to.have.been.calledWith(updateDelegateAction);
     });
   });
 
@@ -236,7 +241,7 @@ describe('actions: account', () => {
         type: actionTypes.removePassphrase,
       };
 
-      expect(removePassphrase(data)).to.be.deep.equal(expectedAction);
+      chaiExpect(removePassphrase(data)).to.be.deep.equal(expectedAction);
     });
   });
 
@@ -274,7 +279,7 @@ describe('actions: account', () => {
       };
 
       loadAccount(data)(dispatch, getState);
-      expect(transactionsActionsStub).to.have.been.calledWith({
+      chaiExpect(transactionsActionsStub).to.have.been.calledWith({
         confirmed: [],
         count: 0,
         balance: 10e8,
@@ -296,7 +301,7 @@ describe('actions: account', () => {
       };
 
       loadAccount(data)(dispatch, getState);
-      expect(transactionsActionsStub).to.have.been.calledWith({
+      chaiExpect(transactionsActionsStub).to.have.been.calledWith({
         confirmed: [],
         count: 0,
         balance: 10e8,
@@ -345,8 +350,8 @@ describe('actions: account', () => {
       };
 
       accountDataUpdated(data)(dispatch, getState);
-      expect(dispatch).to.have.callCount(4);
-      expect(peersActionsStub).to.have.not.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
+      chaiExpect(dispatch).to.have.callCount(4);
+      chaiExpect(peersActionsStub).to.have.not.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
     });
 
     it(`should call account API methods on ${actionTypes.newBlockCreated} action when offline`, () => {
@@ -363,7 +368,7 @@ describe('actions: account', () => {
       };
 
       accountDataUpdated(data)(dispatch, getState);
-      expect(peersActionsStub).to.have.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
+      chaiExpect(peersActionsStub).to.have.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
     });
   });
 
@@ -391,7 +396,7 @@ describe('actions: account', () => {
       };
 
       updateTransactionsIfNeeded(data, true)(dispatch, getState);
-      expect(transactionsActionsStub).to.have.been.calledWith();
+      chaiExpect(transactionsActionsStub).to.have.been.calledWith();
     });
 
     it('should update transactions when there are no recent transactions', () => {
@@ -401,7 +406,7 @@ describe('actions: account', () => {
       };
 
       updateTransactionsIfNeeded(data, false)(dispatch, getState);
-      expect(transactionsActionsStub).to.have.been.calledWith();
+      chaiExpect(transactionsActionsStub).to.have.been.calledWith();
     });
   });
 
@@ -413,6 +418,11 @@ describe('actions: account', () => {
       stub(delegateApi, 'getDelegate').returnsPromise();
       getState = () => ({
         peers: { liskAPIClient: {} },
+        account: {
+          info: {
+            LSK: {},
+          },
+        },
       });
     });
 
@@ -429,7 +439,7 @@ describe('actions: account', () => {
       updateDelegateAccount(data)(dispatch, getState);
 
       const accountUpdatedAction = accountUpdated({ delegate: { account: 'delegate data' }, isDelegate: true });
-      expect(dispatch).to.have.been.calledWith(accountUpdatedAction);
+      chaiExpect(dispatch).to.have.been.calledWith(accountUpdatedAction);
     });
   });
 
@@ -461,7 +471,69 @@ describe('actions: account', () => {
         txDelegateRegister: { timestamp: 2 },
       });
 
-      expect(dispatch).to.have.been.calledWith(delegateStatsLoadedAction);
+      chaiExpect(dispatch).to.have.been.calledWith(delegateStatsLoadedAction);
+    });
+  });
+
+  describe('login', () => {
+    let dispatch;
+    let state;
+    const getState = () => (state);
+    const balance = 10e8;
+    const { passphrase, address } = accounts.genesis;
+
+    beforeEach(() => {
+      dispatch = jest.fn();
+      state = {
+        network: {
+          name: 'Mainnet',
+        },
+        settings: {
+          autoLog: true,
+        },
+      };
+      localStorage.setItem('btc', true); // TODO remove when enabling BTC
+    });
+
+    afterEach(() => {
+      accountApi.getAccount.mockReset();
+      localStorage.removeItem('btc'); // TODO remove when enabling BTC
+    });
+
+    it('should call account api and dispatch accountLoggedIn ', async () => {
+      accountApi.getAccount.mockResolvedValue({ balance, address });
+      await login({ passphrase })(dispatch, getState);
+      expect(dispatch).toHaveBeenNthCalledWith(1, expect.objectContaining({
+        type: actionTypes.accountLoading,
+      }));
+
+      expect(dispatch).toHaveBeenNthCalledWith(2, expect.objectContaining({
+        type: actionTypes.accountLoggedIn,
+        data: expect.objectContaining({
+          passphrase,
+          info: {
+            LSK: expect.objectContaining({
+              address,
+              balance,
+            }),
+          },
+        }),
+      }));
+      expect(dispatch).toHaveBeenNthCalledWith(3, expect.objectContaining({
+        type: actionTypes.accountUpdated,
+        data: expect.objectContaining({
+          address,
+          balance,
+        }),
+      }));
+    });
+
+    it('should dispatch errorToastDisplayed if getAccount fails ', async () => {
+      accountApi.getAccount.mockRejectedValue({ error: 'custom error' });
+      await login({ passphrase })(dispatch, getState);
+      expect(dispatch).toHaveBeenNthCalledWith(2, expect.objectContaining({
+        type: actionTypes.toastDisplayed,
+      }));
     });
   });
 });

@@ -2,7 +2,7 @@ import actionTypes from '../constants/actions';
 import networks from '../constants/networks';
 import txFilters from '../constants/transactionFilters';
 import * as searchAPI from '../utils/api/search';
-import * as accountAPI from '../utils/api/lsk/account';
+import * as accountAPI from '../utils/api/account';
 import * as delegateAPI from '../utils/api/delegate';
 import * as transactionsAPI from '../utils/api/transactions';
 import accounts from '../../test/constants/accounts';
@@ -18,7 +18,7 @@ const {
 } = actions;
 
 jest.mock('../utils/api/search');
-jest.mock('../utils/api/lsk/account');
+jest.mock('../utils/api/account');
 jest.mock('../utils/api/delegate');
 jest.mock('../utils/api/transactions');
 

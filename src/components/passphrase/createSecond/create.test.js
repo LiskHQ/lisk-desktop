@@ -19,7 +19,11 @@ describe('Second Passphrase: Create', () => {
   const account = accounts.delegate;
   const fakeStore = configureStore();
   const store = fakeStore({
-    account,
+    account: {
+      info: {
+        LSK: account,
+      },
+    },
   });
 
   const options = {

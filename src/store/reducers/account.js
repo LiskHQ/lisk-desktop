@@ -1,53 +1,5 @@
-import { deepEquals } from '../../utils/polyfills';
 import actionTypes from '../../constants/actions';
-
-/**
- * If the new value of the given property on the account is changed,
- * it sets the changed property with the values on a dictionary
- *
- * @private
- * @method setChangedItem
- * @param {Object} changes - The object to collect a dictionary of all the changes
- * @param {String} property - The name of the property to check if changed
- * @param {any} value - The new value of the property
- */
-const setChangedItem = (account, changes, property, value) =>
-  ({
-    ...changes,
-    ...(() => {
-      const obj = {};
-
-      if (!deepEquals(account[property], value)) {
-        obj[property] = [account[property], value];
-      }
-      return obj;
-    })(),
-  });
-
-/**
- * Merges account object with given info object
- * and if info contains passphrase, it also sets
- * the values of address and publicKey
- *
- * @param {Object} account - Account object
- * @param {Object} info - New changes
- *
- * @returns {Object} the updated account object
- */
-const merge = (account, info) => {
-  const keys = Object.keys(info);
-  let changes = {};
-  const updatedAccount = { ...account };
-
-  keys.forEach((key) => {
-    if (info[key]) {
-      changes = setChangedItem(account, changes, key, info[key]);
-      updatedAccount[key] = info[key];
-    }
-  });
-
-  return updatedAccount;
-};
+import { lockDuration } from '../../constants/account';
 
 /**
  *
@@ -60,7 +12,18 @@ const account = (state = {}, action) => {
     case actionTypes.removePassphrase:
       return { ...state, passphrase: null, expireTime: 0 };
     case actionTypes.accountUpdated:
-      return merge(state, action.data);
+      return {
+        ...state,
+        info: {
+          ...(state.info || {}),
+          [action.data.token]: {
+            ...((state.info && state.info[action.data.token]) || {}),
+            ...action.data,
+          },
+        },
+      };
+    case actionTypes.passphraseUsed:
+      return { ...state, expireTime: Date.now() + lockDuration };
     case actionTypes.transactionsLoadFinish:
       return { ...state, delegate: action.data.delegate };
     case actionTypes.accountLoggedIn:
