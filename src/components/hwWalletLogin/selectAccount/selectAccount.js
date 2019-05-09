@@ -70,7 +70,7 @@ class SelectAccount extends React.Component {
         ({ ...account, name: this.getNameFromAccount(account.address) }));
 
       this.setState({ activeDevice: { ...activeDevice }, hwAccounts });
-    }, 2000);
+    }, 200);
   }
 
   onEditAccount(index) {

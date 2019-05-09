@@ -128,7 +128,7 @@ describe('Select Account', () => {
     expect(wrapper).toContainMatchingElement('.save-account');
     wrapper.find('.account-name').at(0).simulate('change', { target: { value: 'Lisk Account' } });
     wrapper.find('.save-account').at(0).simulate('click');
-    expect(wrapper.find('.account-name').at(0).html()).toContain('value="Lisk Account"');
+    expect(wrapper.find('.account-name').at(0).text()).toEqual('Lisk Account');
   });
 
   it('Should add another account to the list after do click on create account button', async () => {
