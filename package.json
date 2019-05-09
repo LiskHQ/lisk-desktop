@@ -37,9 +37,7 @@
     "pack:win": "cmd /c npm install && npm run install-electron-dependencies && npm run clean-build && npm run copy-files && npm run build-prod && npm run build-electron && npm run clean-dist && npm run dist:win",
     "install-storybook-dependencies": "cd ./storybook/; npm install; cd ..",
     "storybook": "cd ./storybook/; npm run storybook; cd ..",
-    "serve": "http-server",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "serve": "http-server"
   },
   "author": "Lisk Foundation <admin@lisk.io>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
@@ -106,8 +104,6 @@
     "redux": "4.0.1",
     "redux-thunk": "2.3.0",
     "semver": "5.6.0",
-    "snyk": "1.147.3",
-    "snyk-nodejs-lockfile-parser": "1.12.0",
     "socket.io-client": "2.2.0",
     "trezor-connect": "^5.0.33",
     "trezor.js": "^6.18.2",
@@ -255,7 +251,6 @@
       "postcss-cssnext"
     ]
   },
-  "snyk": true,
   "engines": {
     "node": ">=v8.14.0 <=v10.0.0"
   }
