@@ -428,7 +428,7 @@ describe('actions: account', () => {
 
       updateDelegateAccount(data)(dispatch, getState);
 
-      const accountUpdatedAction = accountUpdated(Object.assign({}, { delegate: { account: 'delegate data' }, isDelegate: true }));
+      const accountUpdatedAction = accountUpdated({ delegate: { account: 'delegate data' }, isDelegate: true });
       expect(dispatch).to.have.been.calledWith(accountUpdatedAction);
     });
   });

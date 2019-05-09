@@ -13,7 +13,7 @@ describe('VoteRow', () => {
   };
 
   it('should have a list item with class name of "downVoteRow" when unconfirmed is false', () => {
-    const downVoteProps = Object.assign({}, props, { data: { ...props.data, ...downVoteStatus } });
+    const downVoteProps = { ...props, data: { ...props.data, ...downVoteStatus } };
     const wrapper = mount(<VoteRow {...downVoteProps} />);
     const expectedClass = 'downVoteRow';
     const className = wrapper.find('ul').prop('className');
@@ -21,7 +21,7 @@ describe('VoteRow', () => {
   });
 
   it('should have a list item with class name of "upVoteRow" when unconfirmed is true', () => {
-    const upVoteProps = Object.assign({}, props, { data: { ...props.data, ...upVoteStatus } });
+    const upVoteProps = { ...props, data: { ...props.data, ...upVoteStatus } };
     const wrapper = mount(<VoteRow {...upVoteProps} />);
     const expectedClass = 'upVoteRow';
     const className = wrapper.find('ul').prop('className');
@@ -29,8 +29,8 @@ describe('VoteRow', () => {
   });
 
   it('should not re-render if voteStatus has not been changed', () => {
-    const oldProps = Object.assign({}, props, { data: { ...props.data, ...downVoteStatus } });
-    const newProps = Object.assign({}, props, { data: { ...props.data, ...downVoteStatus } });
+    const oldProps = { ...props, data: { ...props.data, ...downVoteStatus } };
+    const newProps = { ...props, data: { ...props.data, ...downVoteStatus } };
     const wrapper = shallow(<VoteRow {...oldProps} />);
     const shouldUpdate = wrapper.instance()
       .shouldComponentUpdate(newProps);

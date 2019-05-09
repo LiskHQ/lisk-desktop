@@ -8,7 +8,7 @@ import actionTypes from '../../constants/actions';
 const dialog = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.dialogDisplayed:
-      return Object.assign({}, state, action.data);
+      return { ...state, ...action.data };
     case actionTypes.dialogHidden:
       return {};
     default:
