@@ -13,7 +13,11 @@ import RegisterDelegate from './registerDelegate';
 let store;
 
 const account = {
-  balance: 11000,
+  info: {
+    LSK: {
+      balance: 11000,
+    },
+  },
 };
 const delegate = {};
 const browserHistory = {

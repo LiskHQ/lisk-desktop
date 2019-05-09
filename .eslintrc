@@ -27,6 +27,7 @@
   "rules": {
     "jest/no-focused-tests": "error",
     "prefer-destructuring": "off",
+    "prefer-object-spread": 2,
     "func-names": "off",
     "global-require": "off",
     "new-cap": ["error", {

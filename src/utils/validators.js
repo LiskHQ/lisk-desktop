@@ -1,4 +1,4 @@
-import bitcoin from 'bitcoinjs-lib';
+import * as bitcoin from 'bitcoinjs-lib';
 import getBtcConfig from './api/btc/config';
 import reg from './regex';
 import { tokenMap } from '../constants/tokens';

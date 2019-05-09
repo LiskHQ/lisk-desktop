@@ -1,8 +1,7 @@
 import Lisk from 'lisk-elements';
 
-import { expect } from 'chai';
-import { mock } from 'sinon';
 import { getAPIClient } from './network';
+import networks from '../../constants/networks';
 import { tokenMap } from '../../constants/tokens';
 
 describe('Utils: network API', () => {
@@ -11,7 +10,7 @@ describe('Utils: network API', () => {
     let constructorSpy;
 
     beforeEach(() => {
-      constructorSpy = mock();
+      constructorSpy = jest.fn();
       // TODO: find a better way of mocking Lisk.APIClient
       APIClientBackup = Lisk.APIClient;
       Lisk.APIClient = class MockAPIClient {
@@ -20,10 +19,12 @@ describe('Utils: network API', () => {
         }
       };
       Lisk.APIClient.constants = APIClientBackup.constants;
+      localStorage.setItem('btc', true);
     });
 
     afterEach(() => {
       Lisk.APIClient = APIClientBackup;
+      localStorage.removeItem('btc');
     });
 
     it('should create a new Lisk APIClient instance if called with LSK token', () => {
@@ -31,14 +32,17 @@ describe('Utils: network API', () => {
       const nodeUrl = 'https://hub23.lisk.io';
       const state = {
         network: {
-          [tokenMap.LSK.key]: {
-            nethash,
-            nodeUrl,
+          name: networks.customNode.name,
+          networks: {
+            [tokenMap.LSK.key]: {
+              nethash,
+              nodeUrl,
+            },
           },
         },
       };
       getAPIClient(tokenMap.LSK.key, state);
-      expect(constructorSpy).to.have.been.calledWith([nodeUrl], { nethash });
+      expect(constructorSpy).toHaveBeenCalledWith([nodeUrl], { nethash });
     });
   });
 });

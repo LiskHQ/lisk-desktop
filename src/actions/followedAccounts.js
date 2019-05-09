@@ -1,5 +1,5 @@
 import actionTypes from '../constants/actions';
-import { getAccount } from '../utils/api/lsk/account';
+import { getAccount } from '../utils/api/account';
 
 export const followedAccountAdded = account => ({
   data: account,
@@ -23,8 +23,8 @@ export const followedAccountsRetrieved = accounts => ({
 
 export const followedAccountFetchedAndUpdated = ({ account }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    getAccount(liskAPIClient, account.address).then((result) => {
+    const networkConfig = getState().network;
+    getAccount({ networkConfig, address: account.address }).then((result) => {
       if (result.balance !== account.balance || result.publicKey !== account.publicKey) {
         account.balance = result.balance;
         if (result.publicKey) account.publicKey = result.publicKey;

@@ -39,7 +39,7 @@ export const TooltipWrapper = (props) => {
       tooltipPosition="top"
       tooltipDelay={350}
       {...props}
-      theme={Object.assign({}, theme, props.theme || {})} />);
+      theme={({ ...theme, ...props.theme || {} })} />);
   }
   return <Div {...props} />;
 };

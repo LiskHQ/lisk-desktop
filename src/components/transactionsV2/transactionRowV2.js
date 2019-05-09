@@ -68,11 +68,11 @@ class TransactionRowV2 extends React.Component {
         <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
           <div className={`${styles.status} ${!isConfirmed ? styles.showSpinner : styles.showDate}`}>
             <SpinnerV2 completed={hasConfirmations} label={props.t('Pending...')} />
-            <DateTimeFromTimestamp time={props.value.timestamp} />
+            <DateTimeFromTimestamp time={props.value.timestamp} token={props.value.token} />
           </div>
         </div>
         <div className={`${grid['col-sm-1']} ${grid['col-lg-2']} transactions-cell`}>
-          <LiskAmount val={props.value.fee}/> {props.t('LSK')}
+          <LiskAmount val={props.value.fee}/>&nbsp;{props.value.token || props.t('LSK')}
         </div>
         <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
           <AmountV2 {...props}/>

@@ -1,19 +1,22 @@
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
-import { getAccount } from '../utils/api/lsk/account';
+import { getAccount } from '../utils/api/account';
 import { getDelegate, getVoters, getVotes, listDelegates } from '../utils/api/delegate';
-import { getTransactions } from '../utils/api/lsk/transactions';
+import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import searchAll from '../utils/api/search';
 import transactionTypes from '../constants/transactionTypes';
 import { updateWallet } from './wallets';
+import { tokenMap } from '../constants/tokens';
 
 const searchDelegate = ({ publicKey, address }) =>
   async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
+    const networkConfig = getState().network;
+    const token = tokenMap.LSK.key;
     const delegates = await getDelegate(liskAPIClient, { publicKey });
     const transactions = await getTransactions({
-      liskAPIClient, address, limit: 1, type: transactionTypes.registerDelegate,
+      token, networkConfig, address, limit: 1, type: transactionTypes.registerDelegate,
     });
     const block = await getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 });
     dispatch({
@@ -113,8 +116,8 @@ const searchVoters = ({
 /* because it's not used anymore and should be removed in #1911 */
 export const searchMoreVoters = ({ address, offset = 0, limit = 100 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    getAccount(liskAPIClient, address).then((response) => {
+    const networkConfig = getState().network;
+    getAccount({ networkConfig, address }).then((response) => {
       const accountData = {
         ...response,
       };
@@ -128,10 +131,10 @@ export const searchMoreVoters = ({ address, offset = 0, limit = 100 }) =>
 
 export const searchAccount = ({ address }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const networkConfig = getState().network;
     /* istanbul ignore else */
-    if (liskAPIClient) {
-      getAccount(liskAPIClient, address).then((response) => {
+    if (networkConfig) {
+      getAccount({ networkConfig, address }).then((response) => {
         const accountData = {
           ...response,
         };
@@ -150,12 +153,12 @@ export const searchTransactions = ({
   address, limit, filter, showLoading = true, customFilters = {},
 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const networkConfig = getState().network;
     if (showLoading) dispatch(loadingStarted(actionTypes.searchTransactions));
     /* istanbul ignore else */
-    if (liskAPIClient) {
+    if (networkConfig) {
       getTransactions({
-        liskAPIClient, address, limit, filter, customFilters,
+        networkConfig, address, limit, filter, customFilters,
       })
         .then((transactionsResponse) => {
           dispatch({
@@ -186,10 +189,10 @@ export const searchMoreTransactions = ({
   address, limit, offset, filter, customFilters = {},
 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const networkConfig = getState().network;
     dispatch(loadingStarted(actionTypes.searchMoreTransactions));
     getTransactions({
-      liskAPIClient, address, limit, offset, filter, customFilters,
+      networkConfig, address, limit, offset, filter, customFilters,
     })
       .then((transactionsResponse) => {
         dispatch({

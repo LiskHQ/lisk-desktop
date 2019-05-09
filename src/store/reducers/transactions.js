@@ -22,35 +22,30 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
     case actionTypes.cleanTransactions:
       return initialState;
     case actionTypes.transactionAdded:
-      return Object.assign({}, state, {
-        pending: [action.data, ...state.pending],
-      });
+      return { ...state, pending: [action.data, ...state.pending] };
     case actionTypes.transactionFailed:
-      return Object.assign({}, state, {
-        failed: { errorMessage: action.data.errorMessage },
-      });
+      return { ...state, failed: { errorMessage: action.data.errorMessage } };
     case actionTypes.transactionFailedClear:
-      return Object.assign({}, state, {
-        failed: undefined,
-      });
+      return { ...state, failed: undefined };
     case actionTypes.transactionsFailed:
-      return Object.assign({}, state, {
-        // Filter any failed transaction from pending
+      return {
+        ...state, // Filter any failed transaction from pending
         pending: state.pending.filter(pendingTransaction =>
           action.data.failed.filter(transaction =>
             transaction.id === pendingTransaction.id).length === 0),
-      });
+      };
     case actionTypes.transactionsLoaded:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         confirmed: [
           ...state.confirmed,
           ...action.data.confirmed,
         ],
         count: action.data.count,
-      });
+      };
     case actionTypes.transactionsUpdated:
-      return Object.assign({}, state, {
-        // Filter any newly confirmed transaction from pending
+      return {
+        ...state, // Filter any newly confirmed transaction from pending
         pending: state.pending.filter(pendingTransaction =>
           action.data.confirmed.filter(transaction =>
             transaction.id === pendingTransaction.id).length === 0),
@@ -62,16 +57,18 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
               transaction.id === confirmedTransaction.id).length === 0),
         ],
         count: action.data.count,
-      });
+      };
     case actionTypes.transactionsFiltered:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         confirmed: action.data.confirmed,
         count: action.data.count,
         filter: action.data.filter,
         customFilters: action.data.customFilters,
-      });
+      };
     case actionTypes.transactionsLoadFinish:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         confirmed: action.data.confirmed,
         count: action.data.count,
         account: {
@@ -80,11 +77,9 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
           delegate: action.data.delegate,
         },
         filter: txFilter.all,
-      });
+      };
     case 'extensinonTest':
-      return Object.assign({}, state, {
-        test: new Date().toLocaleTimeString(),
-      });
+      return { ...state, test: new Date().toLocaleTimeString() };
     case (actionTypes.accountSwitched):
       return { pending: [], confirmed: [], count: 0 };
     default:

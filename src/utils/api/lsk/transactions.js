@@ -1,7 +1,8 @@
 import Lisk from 'lisk-elements';
-import { toRawLsk } from '../../lsk';
+import { toRawLsk } from '../../../utils/lsk';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import txFilters from '../../../constants/transactionFilters';
+import { getAPIClient } from './network';
 
 export const send = (
   liskAPIClient,
@@ -21,9 +22,9 @@ export const send = (
     }).catch(reject);
   });
 
-// eslint-disable-next-line max-statements, complexity
+// eslint-disable-next-line max-statements, complexity, import/prefer-default-export
 export const getTransactions = ({
-  liskAPIClient, address, limit = 20, offset = 0, type = undefined,
+  networkConfig, address, limit, offset, type = undefined,
   sort = 'timestamp:desc', filter = txFilters.all, customFilters = {},
 }) => {
   const params = {
@@ -51,23 +52,24 @@ export const getTransactions = ({
   if (filter === txFilters.incoming) params.recipientId = address;
   if (filter === txFilters.outgoing) params.senderId = address;
   if (filter === txFilters.all) params.senderIdOrRecipientId = address;
-  return liskAPIClient.transactions.get(params);
+  return getAPIClient(networkConfig).transactions.get(params);
 };
 
-export const getSingleTransaction = ({ liskAPIClient, id }) => new Promise((resolve, reject) => {
-  if (!liskAPIClient) {
-    reject();
-  } else {
-    liskAPIClient.transactions.get({ id })
-      .then((response) => {
-        if (response.data.length !== 0) {
-          resolve(response);
-        } else {
-          resolve(liskAPIClient.node.getTransactions('unconfirmed', { id }).then(resp => resp));
-        }
-      });
-  }
+export const getSingleTransaction = ({
+  networkConfig, id, liskAPIClient,
+}) => new Promise((resolve, reject) => {
+  // TODO remove liskAPIClient after all code that uses is is removed
+  const apiClient = liskAPIClient || getAPIClient(networkConfig);
+  apiClient.transactions.get({ id })
+    .then((response) => {
+      if (response.data.length !== 0) {
+        resolve(response);
+      } else {
+        apiClient.node.getTransactions('unconfirmed', { id }).then(resolve).catch(reject);
+      }
+    }).catch(reject);
 });
+
 
 export const unconfirmedTransactions = (liskAPIClient, address, limit = 20, offset = 0, sort = 'timestamp:desc') =>
   liskAPIClient.node.getTransactions('unconfirmed', {

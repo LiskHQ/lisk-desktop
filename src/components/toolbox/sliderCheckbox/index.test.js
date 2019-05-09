@@ -96,7 +96,7 @@ describe('SliderCheckbox without HOC', () => {
       unchecked: 'unchecked',
       checked: 'checked',
     };
-    const propsWithIcons = Object.assign({}, props, { icons, textAsIcon: true });
+    const propsWithIcons = { ...props, icons, textAsIcon: true };
     const wrapper = mount(<SliderCheckbox {...propsWithIcons} />);
     shouldBeNotChecked(wrapper);
     drag(wrapper, 30);
@@ -108,7 +108,7 @@ describe('SliderCheckbox without HOC', () => {
   });
 
   it('has default icons if not defined in props', () => {
-    const propsWithNoIcons = Object.assign({}, props);
+    const propsWithNoIcons = { ...props };
     delete propsWithNoIcons.icons;
 
     const wrapper = mount(<SliderCheckbox {...propsWithNoIcons} />);
@@ -117,13 +117,13 @@ describe('SliderCheckbox without HOC', () => {
   });
 
   it('renders a label if defined in props', () => {
-    const propsWithArrows = Object.assign({}, props, { label: 'Test slider' });
+    const propsWithArrows = { ...props, label: 'Test slider' };
     const wrapper = mount(<SliderCheckbox {...propsWithArrows} />);
     expect(wrapper.find('span.label')).to.have.lengthOf(1);
   });
 
   it('renders arrows in the width of slider if defined', () => {
-    const propsWithArrows = Object.assign({}, props, { hasSlidingArrows: true, label: 'Test slider' });
+    const propsWithArrows = { ...props, hasSlidingArrows: true, label: 'Test slider' };
     const wrapper = mount(<SliderCheckbox {...propsWithArrows} />);
     expect(wrapper.find('span.arrow')).to.have.lengthOf(1);
   });

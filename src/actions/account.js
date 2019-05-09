@@ -1,8 +1,10 @@
+/* eslint-disable max-lines */
+// TODO figure out how to reduce size of this file
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
-import { setSecondPassphrase, getAccount } from '../utils/api/lsk/account';
+import { getAccount, setSecondPassphrase } from '../utils/api/account';
 import { registerDelegate, getDelegate, getAllVotes, getVoters } from '../utils/api/delegate';
-import { getTransactions } from '../utils/api/lsk/transactions';
+import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import { loadTransactionsFinish, transactionsUpdated } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
@@ -12,6 +14,11 @@ import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import { updateWallet } from './wallets';
+import accountConfig from '../constants/account';
+import { loginType } from '../constants/hwConstants';
+import { errorToastDisplayed } from './toaster';
+import { tokenMap } from '../constants/tokens';
+import { getConnectionErrorMessage } from './network/lsk';
 
 /**
  * Trigger this action to remove passphrase from account object
@@ -131,10 +138,11 @@ export const updateDelegateAccount = ({ publicKey }) =>
     const liskAPIClient = getState().peers.liskAPIClient;
     return getDelegate(liskAPIClient, { publicKey })
       .then((response) => {
-        dispatch(accountUpdated(Object.assign(
-          {},
-          { delegate: response.data[0], isDelegate: true },
-        )));
+        dispatch(accountUpdated({
+          ...getState().account.info.LSK,
+          delegate: response.data[0],
+          isDelegate: true,
+        }));
       });
   };
 
@@ -188,12 +196,8 @@ export const loadAccount = ({
   isSameAccount,
 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    getAccount(liskAPIClient, address)
-    // TODO next line should replace the two above when implementing BTC support
-    // const networkConfig = getState().network;
-    // const token = getState().settings.token.active;
-    // getAccount({ token, networkConfig, address })
+    const networkConfig = getState().network;
+    getAccount({ networkConfig, address })
       .then((response) => {
         let accountDataUpdated = {
           confirmed: transactionsResponse.data,
@@ -241,8 +245,8 @@ export const accountDataUpdated = ({
   account, windowIsFocused, transactions,
 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    getAccount(liskAPIClient, account.address).then((result) => {
+    const networkConfig = getState().network;
+    getAccount({ networkConfig, address: account.address }).then((result) => {
       if (result.balance !== account.balance) {
         dispatch(updateTransactionsIfNeeded(
           {
@@ -264,8 +268,10 @@ export const updateAccountDelegateStats = account =>
   async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     const { address, publicKey } = account;
+    const networkConfig = getState().network;
+    const token = tokenMap.LSK.key;
     const transaction = await getTransactions({
-      liskAPIClient, address, limit: 1, type: transactionTypes.registerDelegate,
+      token, networkConfig, address, limit: 1, type: transactionTypes.registerDelegate,
     });
     const block = await getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 });
     dispatch(delegateStatsLoaded({
@@ -273,3 +279,41 @@ export const updateAccountDelegateStats = account =>
       txDelegateRegister: transaction.data[0],
     }));
   };
+
+export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, getState) => {
+  const networkConfig = getState().network;
+  dispatch(accountLoading());
+
+  await getAccount({
+    token: tokenMap.LSK.key, networkConfig, publicKey, passphrase,
+  }).then(async (accountData) => {
+    const expireTime = (passphrase && getState().settings.autoLog) ?
+      Date.now() + accountConfig.lockDuration : 0;
+    dispatch(accountLoggedIn({
+      ...accountData, // TODO remove this after all components are updated to use "info"
+      passphrase,
+      loginType: hwInfo ? loginType.ledger : loginType.normal,
+      hwInfo: hwInfo || {},
+      expireTime,
+      info: {
+        LSK: accountData,
+      },
+    }));
+    // TODO remove this condition with enabling BTC feature
+    // istanbul ignore else
+    if (localStorage.getItem('btc')) {
+      await getAccount({
+        token: tokenMap.BTC.key, networkConfig, passphrase,
+      }).then((btcAccountData) => {
+        dispatch(accountUpdated(btcAccountData));
+      });
+      /*
+      */
+    }
+  }).catch((error) => {
+    dispatch(errorToastDisplayed({
+      label: getConnectionErrorMessage(error),
+    }));
+    dispatch(accountLoggedOut());
+  });
+};

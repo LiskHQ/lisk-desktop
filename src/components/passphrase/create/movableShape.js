@@ -51,10 +51,11 @@ class MovableShape extends React.Component {
 
   allocateShape() {
     const { zIndex } = this.props;
-    const style = Object.assign(
-      { zIndex },
-      { left: this.props.initial[0], bottom: this.props.initial[1] },
-    );
+    const style = {
+      zIndex,
+      left: this.props.initial[0],
+      bottom: this.props.initial[1],
+    };
     this.setState({ style });
   }
 

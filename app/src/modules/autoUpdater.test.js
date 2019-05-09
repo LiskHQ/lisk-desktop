@@ -157,7 +157,7 @@ describe('autoUpdater', () => {
   });
 
   it('should download the update if update is available and the "Update" button was pressed', () => {
-    const newPrams = Object.assign({}, params, { electron });
+    const newPrams = { ...params, electron };
     autoUpdater(newPrams);
     callbacks['update-available']({ version });
     clock.tick(1001);
