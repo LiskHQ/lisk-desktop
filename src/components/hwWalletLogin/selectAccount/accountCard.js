@@ -25,11 +25,12 @@ const AccountCard = ({
             size='xs'
             onChange={input => onChangeAccountTitle(input.target.value, index)}
             className={'account-name'}
+            placeholder={t('Account name')}
           />
           <PrimaryButtonV2 className={`${styles.saveBtn} save-account`} onClick={() => onSaveNameAccounts()}>{t('Save')}</PrimaryButtonV2>
         </React.Fragment> :
         <React.Fragment>
-          <span className={styles.accountTitle}>{account.name}</span>
+          <span className={styles.accountTitle}>{account.name === null ? account.name : t('Unnamed account')}</span>
           <SecondaryButtonV2 className={`${styles.editBtn} edit-account`} onClick={() => onEditAccount(index)}>{t('Edit')}<img src={svg.icon_edit}/></SecondaryButtonV2>
         </React.Fragment>
       }
