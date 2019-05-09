@@ -5,6 +5,7 @@ import getNetwork from '../../../utils/getNetwork';
 import { loginType } from '../../../constants/hwConstants';
 import routes from '../../../constants/routes';
 import AccountCard from './accountCard';
+import LoadingIcon from '../loadingIcon';
 import styles from './selectAccount.css';
 
 class SelectAccount extends React.Component {
@@ -163,7 +164,7 @@ class SelectAccount extends React.Component {
               onSelectAccount={this.onSelectAccount}
               t={t}
             />)
-          : null
+          : <LoadingIcon />
         }
       </div>
 
