@@ -85,11 +85,13 @@ class Splashscreen extends React.Component {
               </Tooltip>
             </span>
 
+            {localStorage.getItem('trezor') ?
             <span className={styles.linkWrapper}>
               <Link className={`${styles.link} signin-hwWallet-button`} to={routes.hwWalletV2.path}>
                 {t('Sign in with a Hardware Wallet')}
               </Link>
-            </span>
+            </span> :
+            null}
           </div>
         </div>
       </React.Fragment>
