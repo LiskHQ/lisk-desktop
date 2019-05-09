@@ -10,6 +10,7 @@ import BoxV2 from '../boxV2';
 import { SecondaryButtonV2 } from '../toolbox/buttons/button';
 import TransactionDetailViewV2 from '../transactionsV2/transactionDetailViewV2/transactionDetailViewV2';
 import styles from './singleTransactionV2.css';
+import transactionTypes from '../../constants/transactionTypes';
 
 class SingleTransactionV2 extends React.Component {
   constructor(props) {
@@ -60,15 +61,15 @@ class SingleTransactionV2 extends React.Component {
     let title = t('Transfer Transaction');
     let icon = svg.txDefault;
     switch (transaction.type) {
-      case 1:
+      case transactionTypes.setSecondPassphrase:
         title = t('2nd Passphrase Registration');
         icon = svg.tx2ndPassphrase;
         break;
-      case 2:
+      case transactionTypes.registerDelegate:
         title = t('Delegate Registration');
         icon = svg.txDelegate;
         break;
-      case 3:
+      case transactionTypes.vote:
         title = t('Vote Transaction');
         icon = svg.txVote;
         break;
