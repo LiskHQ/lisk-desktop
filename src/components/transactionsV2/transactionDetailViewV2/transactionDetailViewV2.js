@@ -42,7 +42,6 @@ class TransactionDetailViewV2 extends React.Component {
               <span className={'tx-amount'}>
                 <AmountV2
                   className={styles.txAmount}
-                  address={this.props.address}
                   value={transaction} />
               </span>
               ) : value

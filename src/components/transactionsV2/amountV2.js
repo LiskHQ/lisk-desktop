@@ -10,10 +10,10 @@ const AmountV2 = ({ className = '', ...props }) => {
     pre: '',
     className: 'greyLabel',
   };
-  if (props.value.senderId !== props.address) {
+  if (props.address && props.value.senderId !== props.address) {
     params.className = 'greenLabel';
     params.pre = '+';
-  } else if (props.value.type === transactionTypes.send &&
+  } else if (props.address && props.value.type === transactionTypes.send &&
       props.value.recipientId !== props.address) {
     params.pre = '-';
   }
