@@ -12,6 +12,7 @@ import ReactPiwik from 'react-piwik';
 import crypto from 'crypto';
 // TODO remove next line after upgrading node version to at least 7
 import 'es7-object-polyfill';
+import { Line } from 'react-chartjs-2';
 
 require('jest-localstorage-mock');
 
@@ -76,3 +77,9 @@ const getSelection = () => ({
 });
 window.getSelection = getSelection;
 document.getSelection = getSelection;
+
+// https://stackoverflow.com/questions/53961469/testing-chart-js-with-jest-enzyme-failed-to-create-chart-cant-acquire-contex
+jest.mock('react-chartjs-2', () => ({
+  Line: () => null,
+  Chart: () => null,
+}));
