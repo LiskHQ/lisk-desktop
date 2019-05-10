@@ -157,6 +157,7 @@ module.exports = {
   },
   setupFiles: [
     '<rootDir>/config/setupJest.js',
+    'jest-canvas-mock',
   ],
   transform: {
     '^.+\\.js$': 'babel-jest',
