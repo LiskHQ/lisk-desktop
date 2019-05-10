@@ -167,11 +167,13 @@ module.exports = {
     TEST: true,
     VERSION: '',
   },
-  coverageReporters: [
+  coverageReporters: process.env.ON_JENKINS ? [
     'text',
-    'html',
     'lcov',
     'cobertura',
+  ] : [
+    'html',
+    'json',
   ],
   reporters: [
     'default',
