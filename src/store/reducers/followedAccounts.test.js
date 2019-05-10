@@ -27,12 +27,12 @@ describe('Reducer: followedAccounts(state, action)', () => {
       publicKey: accounts['empty account'].publicKey,
     };
 
-    const state = { accounts: [account, account2] };
-    const action = followedAccountAdded(account3);
+    const state = { LSK: [account, account2], BTC: [] };
+    const action = followedAccountAdded({ account: account3, token: 'BTC' });
     const changedState = followedAccounts(state, action);
-    expect(changedState.accounts[0]).to.deep.equal(account);
-    expect(changedState.accounts[1]).to.deep.equal(account2);
-    expect(changedState.accounts[2]).to.deep.equal(account3);
+    expect(changedState.LSK[0]).to.deep.equal(account);
+    expect(changedState.LSK[1]).to.deep.equal(account2);
+    expect(changedState.BTC[0]).to.include(account3);
   });
 
 
@@ -43,24 +43,24 @@ describe('Reducer: followedAccounts(state, action)', () => {
       publicKey: accounts.delegate.publicKey,
     };
 
-    const state = { accounts: [account, account2] };
-    const action = followedAccountUpdated(updatedAccount);
+    const state = { LSK: [account, account2], BTC: [] };
+    const action = followedAccountUpdated({ account: updatedAccount });
 
     const changedState = followedAccounts(state, action);
 
-    expect(changedState.accounts[0]).to.deep.equal(account);
-    expect(changedState.accounts[1]).to.deep.equal(updatedAccount);
+    expect(changedState.LSK[0]).to.deep.equal(account);
+    expect(changedState.LSK[1]).to.deep.equal(updatedAccount);
   });
 
 
   it(`should return accounts without deleted account if action.type is ${actionTypes.followedAccountRemoved}`, () => {
-    const state = { accounts: [account, account2] };
-    const action = followedAccountRemoved(account2);
+    const state = { LSK: [account, account2] };
+    const action = followedAccountRemoved({ address: account2.address, token: 'LSK' });
 
     const changedState = followedAccounts(state, action);
 
-    expect(changedState.accounts[0]).to.deep.equal(account);
-    expect(changedState.accounts[1]).to.deep.equal(undefined);
+    expect(changedState.LSK[0]).to.deep.equal(account);
+    expect(changedState.LSK[1]).to.deep.equal(undefined);
   });
 });
 

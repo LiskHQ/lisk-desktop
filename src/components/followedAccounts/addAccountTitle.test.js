@@ -6,7 +6,6 @@ import configureStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import AddAccountTitle from './addAccountTitle';
-import * as followedAccounts from '../../actions/followedAccounts';
 import accounts from '../../../test/constants/accounts';
 
 const fakeStore = configureStore();
@@ -23,15 +22,14 @@ describe('Add Account Title Component', () => {
           [accounts.delegate.address]: { delegate: accounts.delegate.address },
         },
       },
-      followedAccounts: { acounts: [] },
+      followedAccounts: { LSK: [] },
     });
-
-    spy(followedAccounts, 'followedAccountAdded');
 
     props = {
       address: accounts.genesis.address,
       prevStep: spy(),
       t: key => key,
+      addAccount: spy(),
     };
 
     options = {
@@ -43,10 +41,6 @@ describe('Add Account Title Component', () => {
     };
 
     wrapper = mount(<AddAccountTitle {...props} />, options);
-  });
-
-  afterEach(() => {
-    followedAccounts.followedAccountAdded.restore();
   });
 
   it('renders one Input components', () => {
@@ -84,10 +78,12 @@ describe('Add Account Title Component', () => {
   it('goes to next step on button click', () => {
     wrapper.find('.account-title input').simulate('change', { target: { value: 'some title' } });
     wrapper.find('.next').first().simulate('click');
-    expect(followedAccounts.followedAccountAdded).to.have.been.calledWith({
-      address: accounts.genesis.address,
-      title: 'some title',
-      isDelegate: false,
+    expect(props.addAccount).to.have.been.calledWith({
+      account: {
+        address: accounts.genesis.address,
+        title: 'some title',
+        isDelegate: false,
+      },
     });
   });
 });

@@ -34,7 +34,7 @@ describe('WalletTransactions V2 Component', () => {
     peers,
     account: accounts.genesis,
     followedAccounts: {
-      accounts: [],
+      LSK: [],
     },
     settings: {},
   });
@@ -54,7 +54,10 @@ describe('WalletTransactions V2 Component', () => {
     account: accounts.genesis,
     match: { params: { address: accounts.genesis.address } },
     history: { push: jest.fn(), location: { search: ' ' } },
-    followedAccounts: [],
+    followedAccounts: {
+      LSK: [],
+      BTC: [],
+    },
     transactionsCount: 1000,
     transaction: transactions[0],
     transactions,

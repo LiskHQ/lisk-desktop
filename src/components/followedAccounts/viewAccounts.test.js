@@ -21,10 +21,18 @@ describe('Followed accounts list Component', () => {
     history: { push: spy() },
   };
 
+  beforeEach(() => {
+    spy(followedAccounts, 'followedAccountRemoved');
+  });
+
+  afterEach(() => {
+    followedAccounts.followedAccountRemoved.restore();
+  });
+
   describe('Without followed accounts', () => {
     beforeEach(() => {
       const store = fakeStore({
-        followedAccounts: { accounts: [] },
+        followedAccounts: { LSK: [] },
       });
 
       wrapper = mount(<ViewAccounts {...props} />, {
@@ -50,12 +58,9 @@ describe('Followed accounts list Component', () => {
 
   describe('With followed accounts', () => {
     beforeEach(() => {
-      spy(followedAccounts, 'followedAccountUpdated');
-      spy(followedAccounts, 'followedAccountRemoved');
-
       const store = fakeStore({
         followedAccounts: {
-          accounts: [
+          LSK: [
             {
               address: '123L', title: 'bob', isDelegate: false,
             }, {
@@ -80,11 +85,6 @@ describe('Followed accounts list Component', () => {
           i18n: PropTypes.object.isRequired,
         },
       });
-    });
-
-    afterEach(() => {
-      followedAccounts.followedAccountUpdated.restore();
-      followedAccounts.followedAccountRemoved.restore();
     });
 
     it('shows list of followed accounts', () => {
@@ -113,7 +113,7 @@ describe('Followed accounts list Component', () => {
       wrapper.find('.remove-account').at(0).simulate('click');
 
       expect(followedAccounts.followedAccountRemoved).to.have.been.calledWith({
-        address: '123L', title: 'bob', isDelegate: false,
+        address: '123L', token: 'LSK',
       });
     });
 
@@ -127,7 +127,7 @@ describe('Followed accounts list Component', () => {
       // exit edit mode
       wrapper.find('.edit-accounts').simulate('click');
 
-      expect(followedAccounts.followedAccountUpdated).to.not.have.been.calledWith();
+      expect(wrapper.find('.account-title input').at(1)).to.have.value('567L');
 
       // activate edit mode
       wrapper.find('.edit-accounts').simulate('click');
@@ -136,7 +136,7 @@ describe('Followed accounts list Component', () => {
       // exit edit mode
       wrapper.find('.edit-accounts').simulate('click');
 
-      expect(followedAccounts.followedAccountUpdated).to.not.have.been.calledWith();
+      expect(wrapper.find('.account-title input').at(1)).to.have.value('567L');
 
       // activate edit mode
       wrapper.find('.edit-accounts').simulate('click');
@@ -146,9 +146,6 @@ describe('Followed accounts list Component', () => {
       wrapper.find('.edit-accounts').simulate('click');
 
       expect(wrapper.find('.account-title input').at(1)).to.have.value('my friend');
-      expect(followedAccounts.followedAccountUpdated).to.have.been.calledWith({
-        address: '567L', title: 'my friend', isDelegate: false,
-      });
     });
 
     it('should render showMore button propery', () => {
