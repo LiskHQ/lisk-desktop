@@ -133,7 +133,7 @@ describe('WalletTransactions V2 Component', () => {
           rewards: '140500000000',
           username: accounts.delegate.username,
           vote: '9876965713168313',
-          lastBlock: { timestamp: 0 },
+          lastBlock: 0,
           txDelegateRegister: { timestamp: 0 },
         },
       },
