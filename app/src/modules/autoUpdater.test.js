@@ -1,5 +1,5 @@
 import { expect } from 'chai'; // eslint-disable-line import/no-extraneous-dependencies
-import sinon, { spy } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
+import sinon, { spy, stub } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
 import ipcMock from 'electron-ipc-mock'; // eslint-disable-line import/no-extraneous-dependencies
 import autoUpdater from './autoUpdater';
 
@@ -77,10 +77,14 @@ describe('autoUpdater', () => {
     clock = sinon.useFakeTimers({
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
     });
+    stub(console, 'error');
+    stub(console, 'log');
   });
 
   afterEach(() => {
     clock.restore();
+    console.error.restore();
+    console.log.restore();
   });
 
   it('should call params.autoUpdater.checkForUpdates', () => {
@@ -199,14 +203,12 @@ describe('autoUpdater', () => {
 
   it('should log any update error', () => {
     const error = new Error('Error: Can not find Squirrel');
-    const consoleSpy = spy(console, 'error');
 
     autoUpdater(params);
     callbacks.error(error);
 
-    expect(consoleSpy).to.have.been.calledWith('There was a problem updating the application');
-    expect(consoleSpy).to.have.been.calledWith(error);
-    consoleSpy.restore();
+    expect(console.error).to.have.been.calledWith('There was a problem updating the application');
+    expect(console.error).to.have.been.calledWith(error);
   });
 });
 
