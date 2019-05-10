@@ -35,8 +35,9 @@ class AddAccountTitle extends React.Component {
     const { addAccount, address, prevStep } = this.props;
     const title = this.state.title.value;
     const isDelegate = this.state.title.isDelegate;
+    const account = { title, address, isDelegate };
 
-    addAccount({ title, address, isDelegate });
+    addAccount({ account });
     prevStep({ reset: true });
   }
 
@@ -97,11 +98,11 @@ class AddAccountTitle extends React.Component {
 
 const mapStateToProps = (state, ownProps) => ({
   account: state.search.accounts[ownProps.address],
-  accounts: state.followedAccounts.accounts,
+  accounts: state.followedAccounts,
 });
 
-const mapDispatchToProps = dispatch => ({
-  addAccount: data => dispatch(followedAccountAdded(data)),
-});
+const mapDispatchToProps = {
+  addAccount: followedAccountAdded,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(AddAccountTitle));

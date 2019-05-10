@@ -8,9 +8,11 @@ import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 import routes from '../../constants/routes';
 import TitleInput from './titleInputForList';
 import { followedAccountRemoved } from '../../actions/followedAccounts';
+import { flattenFollowedAccounts } from '../../utils/followedAccounts';
 import Piwik from '../../utils/piwik';
 import ShowMore from '../showMore';
 import styles from './followedAccounts.css';
+import { getTokenFromAddress } from '../../utils/api/transactions';
 
 class ViewAccounts extends React.Component {
   constructor() {
@@ -39,7 +41,9 @@ class ViewAccounts extends React.Component {
 
   onRemoveAccount(account) {
     Piwik.trackingEvent('ViewAccounts', 'button', 'Remove account');
-    this.props.removeAccount(account);
+    const address = account.address;
+    const token = getTokenFromAddress(address);
+    this.props.followedAccountRemoved({ address, token });
   }
 
   onAddAccount() {
@@ -50,9 +54,10 @@ class ViewAccounts extends React.Component {
   render() {
     const {
       t,
-      accounts,
+      followedAccounts,
     } = this.props;
 
+    const accounts = flattenFollowedAccounts(followedAccounts);
     const showBar = accounts.length > 4;
 
     return (
@@ -158,11 +163,11 @@ class ViewAccounts extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  accounts: state.followedAccounts.accounts,
+  followedAccounts: state.followedAccounts,
 });
 
-const mapDispatchToProps = dispatch => ({
-  removeAccount: data => dispatch(followedAccountRemoved(data)),
-});
+const mapDispatchToProps = {
+  followedAccountRemoved,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(ViewAccounts));

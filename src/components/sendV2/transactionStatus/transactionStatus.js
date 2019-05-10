@@ -6,6 +6,7 @@ import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import FollowAccount from '../../followAccount';
 import { getIndexOfFollowedAccount } from '../../../utils/followedAccounts';
 import styles from './transactionStatus.css';
+import { getTokenFromAddress } from '../../../utils/api/transactions';
 
 class TransactionStatus extends React.Component {
   constructor(props) {
@@ -74,7 +75,7 @@ class TransactionStatus extends React.Component {
     let transactionStatus = this.props.failedTransactions === undefined
       ? messages.success
       : messages.error;
-
+    const token = getTokenFromAddress(this.props.fields.recipient.address);
     const isFollowing = getIndexOfFollowedAccount(
       this.props.followedAccounts,
       { address: this.props.fields.recipient.address },
@@ -125,6 +126,7 @@ class TransactionStatus extends React.Component {
                       delegate={delegate}
                       balance={this.props.fields.recipient.balance}
                       address={this.props.fields.recipient.address}
+                      token={token}
                       isFollowing={isFollowing} />
                   </DropdownV2>
                 </div>)

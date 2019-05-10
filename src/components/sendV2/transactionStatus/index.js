@@ -7,7 +7,7 @@ import { searchAccount } from '../../../actions/search';
 
 const mapStateToProps = state => ({
   failedTransactions: state.transactions.failed,
-  followedAccounts: state.followedAccounts ? state.followedAccounts.accounts : [],
+  followedAccounts: state.followedAccounts,
   delegates: state.search.delegates || {},
 });
 

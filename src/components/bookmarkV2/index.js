@@ -5,6 +5,7 @@ import keyCodes from './../../constants/keyCodes';
 import svg from '../../utils/svgIcons';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
 import Feedback from '../toolbox/feedback/feedback';
+import { flattenFollowedAccounts } from '../../utils/followedAccounts';
 import styles from './bookmark.css';
 
 // eslint-disable-next-line complexity
@@ -34,10 +35,12 @@ class Bookmark extends React.Component {
 
   getFilterList() {
     const { followedAccounts, recipient } = this.props;
+    const accounts = flattenFollowedAccounts(followedAccounts);
 
-    if (recipient.value === '') return followedAccounts;
+    if (recipient.value === '') return accounts;
 
-    return followedAccounts
+
+    return accounts
       .filter(account =>
         account.title.toLowerCase().includes(recipient.value.toLowerCase()) ||
         account.address.toLowerCase().includes(recipient.value.toLowerCase()));
