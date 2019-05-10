@@ -32,7 +32,7 @@ module.exports = {
   },
   collectCoverage: true,
   coverageDirectory: '<rootDir>/coverage/jest',
-  collectCoverageFrom: [
+  collectCoverageFrom: process.env.NO_COV ? [] : [
     'src/**/*.js',
     'app/src/**/*.js',
   ],
@@ -132,7 +132,7 @@ module.exports = {
     'src/components/headerV2/headerV2.js',
     'src/components/registerV2/registerV2.js',
   ],
-  coverageThreshold: {
+  coverageThreshold: process.env.NO_COV ? {} : {
     global: {
       branches: 90,
       functions: 90,
