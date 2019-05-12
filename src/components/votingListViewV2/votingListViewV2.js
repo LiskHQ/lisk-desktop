@@ -29,16 +29,9 @@ class VotingListViewV2 extends React.Component {
     if (this.props.serverPublicKey) {
       this.loadVotedDelegates(true);
     }
-
-    if (navigator.userAgent) {
-      const agent = navigator.userAgent;
-      if (agent.indexOf('Safari') > 0 && agent.indexOf('Chrome') === -1) {
-        this.setState({ safariClass: styles.safariHack });
-      }
-    }
   }
 
-  componentWillUpdate(nextProps) {
+  componentDidUpdate(nextProps) {
     if (!this.props.refreshDelegates && nextProps.refreshDelegates) {
       this.loadVotedDelegates(true);
     }
@@ -173,7 +166,7 @@ class VotingListViewV2 extends React.Component {
                 <ListLabelsV2 t={t} status={showChangeSummery} />
                 <MultiStep
                   className={styles.wrapper}>
-                  <DelegateListV2 list={filteredList} votes={votes}
+                  <DelegateListV2 t={t} list={filteredList} votes={votes}
                     voteToggled={voteToggled} showChangeSummery={showChangeSummery}
                     safari={this.state.safariClass} loadMore={this.loadMore.bind(this)} />
                   <VoteListV2 votes={votes} showChangeSummery={showChangeSummery}

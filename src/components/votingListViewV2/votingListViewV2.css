@@ -89,6 +89,24 @@
   top: 3px;
 }
 
+.loadMore {
+  @mixin contentSmall bold;
+
+  z-index: 20;
+  width: 100%;
+  height: 36px;
+  color: var(--color-maastricht-blue) !important;
+  border: solid 1px var(--color-platinum);
+  background-color: var(--color-white-smoke) !important;
+  box-shadow: none;
+  min-height: 36px;
+
+  &:hover {
+    color: var(--color-maastricht-blue) !important;
+    background: var(--color-white-smoke) !important;
+  }
+}
+
 .productivity {
   text-align: left;
 }
@@ -100,7 +118,7 @@
     flex-wrap: nowrap;
 
     & li {
-      color: var(--color-grayscale-dark) !important;
+      color: var(--color-dark-blue) !important;
       font-size: 15px !important;
       transition: all ease 200ms;
       font-weight: 700;
@@ -117,7 +135,7 @@
     }
 
     & li {
-      color: var(--color-grayscale-dark);
+      color: var(--color-dark-blue);
       font-size: 16px;
       font-weight: 400;
 
@@ -159,7 +177,7 @@
 
 .emptyMessage {
   text-align: center;
-  color: var(--color-grayscale-dark);
+  color: var(--color-dark-blue);
   padding: 23px 0;
   font-weight: 500;
 }

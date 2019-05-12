@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
-import Waypoint from 'react-waypoint';
 import DelegateRowV2 from './delegateRowV2';
+import { Button } from '../toolbox/buttons/button';
+
+import styles from './votingListViewV2.css';
 
 class DelegateListV2 extends React.Component {
   constructor() {
@@ -29,9 +31,12 @@ class DelegateListV2 extends React.Component {
               voteStatus={this.props.votes[item.username]}
             />) : null
       }
-      <Waypoint bottomOffset='-80%'
-        key={this.props.list.length}
-        onEnter={this.props.loadMore}></Waypoint>
+      <Button
+        className={`${styles.loadMore} loadMore`}
+        type='button'
+        onClick={() => this.props.loadMore()}>
+        {this.props.t('Load More')}
+        </Button>
     </Fragment>);
   }
 }

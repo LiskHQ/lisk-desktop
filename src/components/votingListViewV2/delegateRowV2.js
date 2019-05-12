@@ -19,7 +19,6 @@ const setRowClass = (voteStatus) => {
 };
 
 class DelegateRowV2 extends React.Component {
-  // eslint-disable-next-line class-methods-use-this
   shouldComponentUpdate({ voteStatus }) {
     const oldStatus = this.props.voteStatus;
     return (!oldStatus && !!voteStatus) ||

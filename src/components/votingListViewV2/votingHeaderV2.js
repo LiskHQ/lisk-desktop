@@ -72,12 +72,7 @@ class VotingHeadeV2 extends React.Component {
 
   render() {
     const { t } = this.props;
-    // const selectionTitle = t('Your selection');
-    // const delegateTitle = t('Delegate List');
-    // const votingTitle = t('Voting');
-    // const titleDesktop = this.props.showChangeSummery ? selectionTitle : delegateTitle;
-    // const titleMobile = this.props.showChangeSummery ? selectionTitle : votingTitle;
-    // const isHardwareWallet = this.props.account.hwInfo && this.props.account.hwInfo.deviceId;
+
     return (
       <div>
         <header className={`${styles.header} ${styles[this.state.headerPosition]}`}>

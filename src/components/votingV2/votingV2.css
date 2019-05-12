@@ -15,6 +15,7 @@
   }
 
   & > section {
+    border-radius: 6px;
     padding-right: 0;
   }
 }

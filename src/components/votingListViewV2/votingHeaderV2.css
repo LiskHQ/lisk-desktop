@@ -8,7 +8,7 @@
   --tabel-header-padding-s: 19px;
   --list-line-height: 25px;
   --header-line-height: 36px;
-  --link-font-size: 15px;
+  --animation-time: 250ms;
 }
 
 .desktopTitle {
@@ -49,11 +49,11 @@
 }
 
 .link {
-  font-size: var(--link-font-size);
+  @mixin headingSmall;
+
   color: var(--color-link);
   margin-top: 16px;
   display: block;
-  font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
   line-height: 15px;
@@ -132,7 +132,7 @@
     padding-left: 20px;
     padding-right: 20px;
     vertical-align: top;
-    transition: all ease 250ms;
+    transition: all ease var(--animation-time);
 
     &.desktopInput {
       display: inline-block;
@@ -237,21 +237,5 @@
     top: var(--header-height-s);
     padding-left: var(--tabel-header-padding-s);
     padding-right: var(--tabel-header-padding-s);
-  }
-}
-
-@media (--xSmall-viewport) {
-  .header {
-    & .account {
-      display: none;
-    }
-  }
-
-  .filters {
-    & .filter {
-      &:not(:last-of-type) {
-        margin-right: 20px;
-      }
-    }
   }
 }

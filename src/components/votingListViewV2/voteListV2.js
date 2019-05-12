@@ -2,7 +2,7 @@ import React from 'react';
 import VoteRowV2 from './voteRowV2';
 
 class VoteListV2 extends React.Component {
-  componentWillUpdate(nextProps) {
+  componentDidUpdate(nextProps) {
     // istanbul ignore else
     if (this.props.showChangeSummery === true && nextProps.showChangeSummery === false) {
       this.props.prevStep();

@@ -52,16 +52,4 @@ describe.skip('VotingListViewV2', () => {
   it('should render delegate list', () => {
     expect(wrapper.find(VotingListViewV2)).to.have.lengthOf(1);
   });
-
-  it('should mount DelegatesList with appropriate properties', () => {
-    const props = wrapper.find('VotingListView').first().props();
-    expect(props.refreshDelegates).to.be.equal(voting.refresh);
-    expect(props.delegates).to.be.equal(voting.delegates);
-    expect(props.votes).to.be.equal(voting.votes);
-    expect(props.totalDelegates).to.be.equal(voting.totalDelegates);
-    expect(props.address).to.be.equal(account.address);
-    expect(typeof props.voteToggled).to.be.equal('function');
-    expect(typeof props.votesFetched).to.be.equal('function');
-    expect(typeof props.delegatesFetched).to.be.equal('function');
-  });
 });
