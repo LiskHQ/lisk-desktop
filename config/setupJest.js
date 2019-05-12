@@ -12,7 +12,6 @@ import ReactPiwik from 'react-piwik';
 import crypto from 'crypto';
 // TODO remove next line after upgrading node version to at least 7
 import 'es7-object-polyfill';
-import { Line } from 'react-chartjs-2';
 
 require('jest-localstorage-mock');
 

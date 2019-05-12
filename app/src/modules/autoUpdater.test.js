@@ -83,8 +83,8 @@ describe('autoUpdater', () => {
 
   afterEach(() => {
     clock.restore();
-    console.error.restore();
-    console.log.restore();
+    console.error.restore(); // eslint-disable-line no-console
+    console.log.restore(); // eslint-disable-line no-console
   });
 
   it('should call params.autoUpdater.checkForUpdates', () => {
@@ -207,8 +207,9 @@ describe('autoUpdater', () => {
     autoUpdater(params);
     callbacks.error(error);
 
+    // eslint-disable-next-line no-console
     expect(console.error).to.have.been.calledWith('There was a problem updating the application');
-    expect(console.error).to.have.been.calledWith(error);
+    expect(console.error).to.have.been.calledWith(error); // eslint-disable-line no-console
   });
 });
 
