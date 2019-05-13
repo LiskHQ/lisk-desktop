@@ -62,7 +62,7 @@ class transactionsHeader extends React.Component {
 
   render() {
     const {
-      followedAccounts, address, t, delegate = {},
+      followedAccounts, address, t, delegate = {}, detailAccount,
     } = this.props;
     const { token } = this.state;
 
@@ -133,6 +133,7 @@ class transactionsHeader extends React.Component {
                   token={token}
                   delegate={delegate}
                   address={address}
+                  detailAccount={detailAccount}
                   isFollowing={isFollowing} />
               </DropdownV2>
             </span>

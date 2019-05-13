@@ -143,6 +143,7 @@ class ExplorerTransactionsV2 extends React.Component {
           match={this.props.match}
           t={this.props.t}
           account={this.props.account}
+          detailAccount={detailAccount}
         />
         <TabsContainer>
           <WalletTab tabName={this.props.t('Wallet')}

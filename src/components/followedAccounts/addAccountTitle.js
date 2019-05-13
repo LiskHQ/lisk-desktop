@@ -29,12 +29,19 @@ class AddAccountTitle extends React.Component {
   onAddToList() {
     Piwik.trackingEvent('AddAccountTitle', 'button', 'Add to list');
 
-    const { addAccount, address, prevStep } = this.props;
+    const {
+      addAccount, address, prevStep, account,
+    } = this.props;
     const title = this.state.title.value;
     const isDelegate = this.state.title.isDelegate;
-    const account = { title, address, isDelegate };
+    const followAccount = {
+      title,
+      address,
+      isDelegate,
+      publicKey: account.publicKey || null,
+    };
 
-    addAccount({ account });
+    addAccount({ account: followAccount });
     prevStep({ reset: true });
   }
 

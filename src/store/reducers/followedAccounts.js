@@ -10,7 +10,6 @@ const followedAccounts = (state = getFollowedAccountsFromLocalStorage(), action)
           ...state[action.data.token],
           {
             ...action.data.account,
-            addedAt: new Date().getTime(),
           },
         ],
       };

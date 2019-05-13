@@ -64,6 +64,7 @@ describe('Add Account Title Component', () => {
         address: accounts.genesis.address,
         title: 'some title',
         isDelegate: false,
+        publicKey: accounts.genesis.publicKey,
       },
     });
   });

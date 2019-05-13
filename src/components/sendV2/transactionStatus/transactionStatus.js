@@ -123,6 +123,7 @@ class TransactionStatus extends React.Component {
                     showDropdown={this.state.isFollowAccountDropdown}
                     className={`${styles.followDropdown}`}>
                     <FollowAccount
+                      detailAccount={this.props.detailAccount}
                       delegate={delegate}
                       balance={this.props.fields.recipient.balance}
                       address={this.props.fields.recipient.address}

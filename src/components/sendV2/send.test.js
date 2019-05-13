@@ -60,6 +60,7 @@ describe('Form', () => {
     },
     search: {
       delegates: {},
+      accounts: {},
     },
   });
 

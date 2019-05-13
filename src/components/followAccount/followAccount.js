@@ -85,13 +85,14 @@ class FollowAccount extends React.Component {
   handleFollow() {
     const {
       address, followedAccounts, delegate, followedAccountAdded,
-      token,
+      token, detailAccount,
     } = this.props;
     const title = this.state.fields.accountName.value;
     const account = {
       address,
       title,
       isDelegate: !!(delegate && delegate.username),
+      publicKey: detailAccount.publicKey || null,
     };
     const accounts = followedAccounts[token];
     const followIndex = accounts.length;
