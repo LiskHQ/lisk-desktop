@@ -11,8 +11,19 @@ import txFilters from './../../../constants/transactionFilters';
 import removeDuplicateTransactions from '../../../utils/transactions';
 import { tokenMap } from '../../../constants/tokens';
 
+const getActiveTokenAccount = state => (
+  (state.account.info && state.account.info[
+    state.settings.token && state.settings.token.active ?
+      state.settings.token.active :
+      tokenMap.LSK.key
+  ]) || {}
+);
+
 const mapStateToProps = (state, ownProps) => ({
-  account: state.account,
+  account: {
+    ...state.account,
+    ...(getActiveTokenAccount(state)),
+  },
   transaction: state.transaction,
   transactions:
     removeDuplicateTransactions(
@@ -25,11 +36,7 @@ const mapStateToProps = (state, ownProps) => ({
   followedAccounts: state.followedAccounts.accounts,
   wallets: state.wallets,
   peers: state.peers,
-  balance: state.account.info && state.account.info[
-    state.settings.token && state.settings.token.active ?
-      state.settings.token.active :
-      tokenMap.LSK.key
-  ].balance,
+  balance: getActiveTokenAccount(state).balance,
   votes: state.search.votes[ownProps.account.info.LSK.address],
 });
 
