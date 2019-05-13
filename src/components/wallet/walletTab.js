@@ -6,7 +6,7 @@ import WalletDetails from './walletDetails';
 
 const WalletTab = ({ ...props }) => (
   <React.Fragment>
-    {props.detailAccount ? (
+    {props.detailAccount && props.activeToken !== 'BTC' ? (
       <div className={`${grid.row}`}>
         <div className={`${grid['col-sm-4']} ${grid['col-lg-3']}`}>
           <WalletDetails

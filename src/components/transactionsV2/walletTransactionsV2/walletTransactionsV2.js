@@ -217,13 +217,13 @@ class WalletTransactionsV2 extends React.Component {
         <TabsContainer>
           <WalletTab tabName={t('Wallet')}
             {...overviewProps}/>
-          <VotesTab
+          {this.props.activeToken !== 'BTC' ? <VotesTab
             history={this.props.history}
             address={this.props.account.address}
             fetchVotedDelegateInfo={this.props.fetchVotedDelegateInfo}
             loading={this.props.loading}
             votes={this.props.votes}
-            tabName={this.props.t('Votes')} />
+            tabName={this.props.t('Votes')} /> : null}
           {account.isDelegate && delegate.txDelegateRegister
             ? (<DelegateTab
               tabClassName={'delegate-statistics'}

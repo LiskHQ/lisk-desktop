@@ -65,12 +65,14 @@ class TransactionsOverviewV2 extends React.Component {
               </li>
             ))}
           </ul>
+          {this.props.activeToken !== 'BTC' ?
           <div className={styles.items}>
             <FilterContainer
               updateCustomFilters={this.props.updateCustomFilters}
               saveFilters={this.props.saveFilters}
               customFilters={this.props.customFilters} />
-          </div>
+          </div> :
+          null}
         </div>
         {this.props.activeCustomFilters &&
           Object.values(this.props.activeCustomFilters).find(filter => filter) ? <FilterBar
