@@ -32,6 +32,8 @@ class TransactionsListV2 extends React.Component {
 
       return !(isFilterIncoming && (isTypeNonSend || isAccountInit));
     };
+    const filterByActiveToken = tx => activeToken && tx.token === activeToken;
+    const filteredTransactions = transactions.filter(fixIncomingFilter).filter(filterByActiveToken);
 
     const isLoading = loading.filter(type =>
       [actionTypes.transactionsRequested, actionTypes.transactionsFilterSet]
@@ -46,8 +48,8 @@ class TransactionsListV2 extends React.Component {
         ) : null
       }
       <TransactionsHeaderV2 isSmallScreen={isSmallScreen} activeToken={activeToken}/>
-      {transactions.length
-        ? transactions.filter(fixIncomingFilter)
+      {filteredTransactions.length
+        ? filteredTransactions
             .map((transaction, i) =>
               <TransactionRowV2 key={i}
                 followedAccounts={followedAccounts}

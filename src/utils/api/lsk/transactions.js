@@ -22,6 +22,14 @@ export const send = (
     }).catch(reject);
   });
 
+const enhanceTxListResponse = response => ({
+  ...response,
+  data: response.data.map(tx => ({
+    ...tx,
+    token: 'LSK',
+  })),
+});
+
 // eslint-disable-next-line max-statements, complexity, import/prefer-default-export
 export const getTransactions = ({
   networkConfig, address, limit, offset, type = undefined,
@@ -52,7 +60,12 @@ export const getTransactions = ({
   if (filter === txFilters.incoming) params.recipientId = address;
   if (filter === txFilters.outgoing) params.senderId = address;
   if (filter === txFilters.all) params.senderIdOrRecipientId = address;
-  return getAPIClient(networkConfig).transactions.get(params);
+
+  return new Promise((resolve, reject) => {
+    getAPIClient(networkConfig).transactions.get(params).then(response => (
+      resolve(enhanceTxListResponse(response))
+    )).catch(reject);
+  });
 };
 
 export const getSingleTransaction = ({
@@ -63,9 +76,11 @@ export const getSingleTransaction = ({
   apiClient.transactions.get({ id })
     .then((response) => {
       if (response.data.length !== 0) {
-        resolve(response);
+        resolve(enhanceTxListResponse(response));
       } else {
-        apiClient.node.getTransactions('unconfirmed', { id }).then(resolve).catch(reject);
+        apiClient.node.getTransactions('unconfirmed', { id }).then(unconfirmedRes => (
+          resolve(enhanceTxListResponse(unconfirmedRes))
+        )).catch(reject);
       }
     }).catch(reject);
 });
