@@ -22,6 +22,7 @@ describe('Follow Account Component', () => {
     followedAccountAdded: jest.fn(),
     followedAccountRemoved: jest.fn(),
     token: 'LSK',
+    detailAccount: accounts.genesis,
     t: v => v,
   };
 
@@ -61,6 +62,7 @@ describe('Follow Account Component', () => {
           address: props.address,
           title: evt.target.value,
           isDelegate: false,
+          publicKey: accounts.genesis.publicKey,
         },
         token: props.token,
       };

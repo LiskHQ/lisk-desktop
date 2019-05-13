@@ -92,7 +92,7 @@ class FollowAccount extends React.Component {
       address,
       title,
       isDelegate: !!(delegate && delegate.username),
-      publicKey: detailAccount.publicKey || null,
+      publicKey: (detailAccount && detailAccount.publicKey) || null,
     };
     const accounts = followedAccounts[token];
     const followIndex = accounts.length;
