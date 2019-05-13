@@ -3,13 +3,13 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
 import TableRow from '../toolbox/table/tableRow';
 
-const TransactionsHeaderV2 = ({ t, isSmallScreen }) => (
+const TransactionsHeaderV2 = ({ t, isSmallScreen, activeToken }) => (
   <TableRow isHeader={true} className={`${grid.row}`} id="transactionsHeader">
     <div className={`${grid['col-sm-4']} ${grid['col-lg-3']} transactions-header`}>
       {t('Transaction')}
     </div>
     <div className={`${grid['col-sm-3']} ${grid['col-lg-3']} transactions-header`}>
-      {t('Details')}
+      {activeToken !== 'BTC' ? t('Details') : null}
     </div>
     <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-header`}>
       {t('Date')}
