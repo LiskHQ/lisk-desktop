@@ -5,9 +5,10 @@ import DropdownV2 from './dropdownV2';
 
 describe('Dropdown V2', () => {
   let wrapper;
+  const DummyChild = () => <span></span>;
 
   beforeEach(() => {
-    wrapper = mount(<DropdownV2 showDropdown={false} />);
+    wrapper = mount(<DropdownV2 showDropdown={false} ><DummyChild /></DropdownV2>);
   });
 
   it('Should render with dropdown closed', () => {
