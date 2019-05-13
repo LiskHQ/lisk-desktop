@@ -18,6 +18,7 @@ import { getTransactions } from './lsk/transactions';
 
 import loginTypes from '../../constants/loginTypes';
 import { HW_MSG, models, loginType } from '../../constants/hwConstants';
+import { getAPIClient } from './lsk/network';
 
 const util = require('util');
 
@@ -284,7 +285,7 @@ export const getHWAccountInfo = async (activePeer, deviceId, loginType, accountI
  * @returns Promise - Action Send with Ledger
  */
 /* eslint-disable prefer-const */
-export const sendWithHW = (activePeer, account, recipientId, amount,
+export const sendWithHW = (networkConfig, account, recipientId, amount,
   pin = null, data = null) =>
   new Promise(async (resolve, reject) => {
     const rawTx = createSendTX(account.publicKey, recipientId, amount, data);
@@ -295,7 +296,7 @@ export const sendWithHW = (activePeer, account, recipientId, amount,
     if (error) {
       reject(error);
     } else {
-      activePeer.transactions.broadcast(signedTx).then(() => {
+      getAPIClient(networkConfig).transactions.broadcast(signedTx).then(() => {
         resolve(signedTx);
       }).catch(reject);
     }

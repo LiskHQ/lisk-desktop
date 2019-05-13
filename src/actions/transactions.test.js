@@ -7,9 +7,11 @@ import accounts from '../../test/constants/accounts';
 import Fees from '../constants/fees';
 import networks from '../constants/networks';
 import { toRawLsk } from '../utils/lsk';
+import { transactions as transactionsAPI } from '../utils/api';
 
 jest.mock('../utils/api/transactions');
 jest.mock('../utils/api/delegate');
+jest.mock('../utils/api');
 
 describe('actions: transactions', () => {
   const dispatch = jest.fn();
@@ -167,17 +169,30 @@ describe('actions: transactions', () => {
     getState = () => ({
       peers: { liskAPIClient: {} },
       transactions: { filter: txFilters.all },
+      settings: {
+        token: {
+          active: 'LSK',
+        },
+      },
+      account: {
+        publicKey: 'test_public-key',
+        address: 'test_address',
+        loginType: 0,
+      },
     });
     const data = {
       recipientId: '15833198055097037957L',
       amount: 100,
       passphrase: 'sample passphrase',
       secondPassphrase: null,
+      dynamicFeePerByte: null, // for BTC
+      fee: null, // for BTC
       account: {
         publicKey: 'test_public-key',
         address: 'test_address',
         loginType: 0,
       },
+      data: 'abc',
     };
     const actionFunction = sent(data);
 
@@ -185,6 +200,16 @@ describe('actions: transactions', () => {
       getState = () => ({
         peers: { liskAPIClient: {} },
         transactions: { filter: txFilters.all },
+        settings: {
+          token: {
+            active: 'LSK',
+          },
+        },
+        account: {
+          publicKey: 'test_public-key',
+          address: 'test_address',
+          loginType: 0,
+        },
       });
     });
 
@@ -193,7 +218,6 @@ describe('actions: transactions', () => {
     });
 
     it('should dispatch transactionAdded action if resolved', async () => {
-      transactionsApi.send.mockResolvedValue({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
         senderPublicKey: 'test_public-key',
@@ -205,14 +229,19 @@ describe('actions: transactions', () => {
         type: 0,
       };
 
+      transactionsAPI.create.mockResolvedValue({ id: '15626650747375562521' });
+      transactionsAPI.broadcast.mockResolvedValue(expectedAction);
+
       await actionFunction(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
-        data: expectedAction, type: actionTypes.transactionAdded,
+        type: actionTypes.passphraseUsed,
+        data: data.passphrase,
       });
     });
 
     it('should dispatch transactionFailed action if caught', async () => {
-      transactionsApi.send.mockRejectedValue({ message: 'sample message' });
+      transactionsAPI.create.mockRejectedValue({ message: 'sample message' });
+
       const expectedAction = {
         data: {
           errorMessage: 'sample message.',
@@ -226,7 +255,7 @@ describe('actions: transactions', () => {
 
     it('should dispatch transactionFailed action if caught but no message returned', async () => {
       const errorMessage = 'An error occurred while creating the transaction';
-      transactionsApi.send.mockRejectedValue({ message: errorMessage });
+      transactionsAPI.create.mockRejectedValue({ message: errorMessage });
       const expectedErrorMessage = errorMessage + '.'; // eslint-disable-line
       const expectedAction = {
         data: {
@@ -239,9 +268,4 @@ describe('actions: transactions', () => {
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
   });
-
-
-  // describe('accountLoggedOut', () => {
-  //   it('should create an action to reset the account', () => {
-  // });
 });

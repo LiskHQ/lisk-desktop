@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import TransactionStatus from './transactionStatus';
 import actionTypes from '../../../constants/actions';
+import { sent } from '../../../actions/transactions';
 import { searchAccount } from '../../../actions/search';
 
 const mapStateToProps = state => ({
@@ -16,6 +17,7 @@ const mapDispatchToProps = {
     type: actionTypes.transactionFailedClear,
   }),
   searchAccount,
+  sent,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(TransactionStatus));
