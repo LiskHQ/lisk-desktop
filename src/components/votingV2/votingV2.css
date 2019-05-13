@@ -40,8 +40,8 @@
     }
 
     & > section {
-      height: calc(100vh - var(--submit-button-height) - var(--header-height-m) - var(--footer-height-m)); /* stylelint-disable-line */
       position: relative;
+      overflow-y: hidden;
     }
 
     & > aside {
