@@ -2,45 +2,24 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
-import configureStore from 'redux-mock-store';
-import PropTypes from 'prop-types';
-import i18n from '../../i18n';
 import AddAccountTitle from './addAccountTitle';
 import accounts from '../../../test/constants/accounts';
-
-const fakeStore = configureStore();
 
 describe('Add Account Title Component', () => {
   let wrapper;
   let props;
-  let options;
 
   beforeEach(() => {
-    const store = fakeStore({
-      search: {
-        accounts: {
-          [accounts.delegate.address]: { delegate: accounts.delegate.address },
-        },
-      },
-      followedAccounts: { LSK: [] },
-    });
-
     props = {
+      account: accounts.genesis,
       address: accounts.genesis.address,
+      accounts: { LSK: [] },
       prevStep: spy(),
       t: key => key,
       addAccount: spy(),
     };
 
-    options = {
-      context: { store, i18n },
-      childContextTypes: {
-        store: PropTypes.object.isRequired,
-        i18n: PropTypes.object.isRequired,
-      },
-    };
-
-    wrapper = mount(<AddAccountTitle {...props} />, options);
+    wrapper = mount(<AddAccountTitle {...props} />);
   });
 
   it('renders one Input components', () => {
@@ -53,6 +32,7 @@ describe('Add Account Title Component', () => {
 
   it('renders Input with delegate name if account is delegate', () => {
     props = {
+      account: { delegate: accounts.delegate },
       address: accounts.delegate.address,
     };
     wrapper.setProps(props);
@@ -78,6 +58,7 @@ describe('Add Account Title Component', () => {
   it('goes to next step on button click', () => {
     wrapper.find('.account-title input').simulate('change', { target: { value: 'some title' } });
     wrapper.find('.next').first().simulate('click');
+
     expect(props.addAccount).to.have.been.calledWith({
       account: {
         address: accounts.genesis.address,

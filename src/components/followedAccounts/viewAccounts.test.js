@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import ViewAccounts from './viewAccounts';
 import routes from '../../constants/routes';
-import * as followedAccounts from '../../actions/followedAccounts';
 
 const fakeStore = configureStore([thunk]);
 
@@ -20,14 +19,6 @@ describe('Followed accounts list Component', () => {
     t: key => key,
     history: { push: spy() },
   };
-
-  beforeEach(() => {
-    spy(followedAccounts, 'followedAccountRemoved');
-  });
-
-  afterEach(() => {
-    followedAccounts.followedAccountRemoved.restore();
-  });
 
   describe('Without followed accounts', () => {
     beforeEach(() => {
@@ -111,10 +102,7 @@ describe('Followed accounts list Component', () => {
 
       wrapper.find('.edit-accounts').simulate('click');
       wrapper.find('.remove-account').at(0).simulate('click');
-
-      expect(followedAccounts.followedAccountRemoved).to.have.been.calledWith({
-        address: '123L', token: 'LSK',
-      });
+      expect(wrapper.find('.editMode span').at(0)).to.not.be.eq('123L');
     });
 
     it('edits an accounts title', () => {

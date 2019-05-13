@@ -23,6 +23,7 @@ describe('actions: followedAccount', () => {
       type: actionTypes.followedAccountAdded,
     };
     expect(followedAccountAdded(data)).toEqual(expectedAction);
+    expect(followedAccountAdded({ account: data.account })).toEqual(expectedAction);
   });
 
   it('should create an action to update a followed account', () => {
@@ -31,6 +32,7 @@ describe('actions: followedAccount', () => {
       type: actionTypes.followedAccountUpdated,
     };
     expect(followedAccountUpdated(data)).toEqual(expectedAction);
+    expect(followedAccountUpdated({ account: data.account })).toEqual(expectedAction);
   });
 
   it('should create an action to remove a followed account', () => {
@@ -43,5 +45,6 @@ describe('actions: followedAccount', () => {
       type: actionTypes.followedAccountRemoved,
     };
     expect(followedAccountRemoved(removedData)).toEqual(expectedAction);
+    expect(followedAccountRemoved({ address: accounts.genesis.address })).toEqual(expectedAction);
   });
 });
