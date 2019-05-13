@@ -34,9 +34,9 @@ export default {
   },
   wallet: {
     path: '/wallet',
+    pathSuffix: '/:token?',
     component: TransactionDashboard,
     isPrivate: true,
-    exact: true,
   },
   send: {
     path: '/wallet/send',
