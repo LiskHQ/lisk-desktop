@@ -31,7 +31,7 @@ class VotingListViewV2 extends React.Component {
     }
   }
 
-  componentDidUpdate(nextProps) {
+  componentWillUpdate(nextProps) {
     if (!this.props.refreshDelegates && nextProps.refreshDelegates) {
       this.loadVotedDelegates(true);
     }

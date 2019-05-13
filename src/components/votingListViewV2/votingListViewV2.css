@@ -14,7 +14,7 @@
   box-shadow: none;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
-  height: 58vh; /* stylelint-disable-line */
+  min-height: 80vh; /* stylelint-disable-line */
 }
 
 .leftText {
@@ -246,7 +246,6 @@
   .delegatesList {
     height: auto;
     overflow-y: visible;
-    padding-bottom: var(--list-bottom-padding-m);
     margin: 0px calc(0 - var(--box-padding-left-M));
 
     & .table {
@@ -257,7 +256,7 @@
 
     & .row,
     & .tableHead {
-      padding-right: var(--grid-padding-M);
+      /* padding-right: var(--grid-padding-M); */
     }
 
     & .tableHead li:nth-child(4),
