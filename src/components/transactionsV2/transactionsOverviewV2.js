@@ -37,16 +37,18 @@ class TransactionsOverviewV2 extends React.Component {
         value: txFilters.all,
         className: 'filter-all',
       },
-      {
-        name: this.props.t('Incoming transactions'),
-        value: txFilters.incoming,
-        className: 'filter-in',
-      },
-      {
-        name: this.props.t('Outgoing transactions'),
-        value: txFilters.outgoing,
-        className: 'filter-out',
-      },
+      ...(this.props.activeToken !== 'BTC' ? [
+        {
+          name: this.props.t('Incoming transactions'),
+          value: txFilters.incoming,
+          className: 'filter-in',
+        },
+        {
+          name: this.props.t('Outgoing transactions'),
+          value: txFilters.outgoing,
+          className: 'filter-out',
+        },
+      ] : []),
     ];
   }
 
