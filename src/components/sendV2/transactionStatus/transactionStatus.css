@@ -62,11 +62,11 @@
 
   & .btn {
     width: 354px;
+    margin-bottom: 10px;
   }
 
   & .followBtn {
     position: relative;
-    margin-bottom: 10px;
   }
 
   & .followDropdown {

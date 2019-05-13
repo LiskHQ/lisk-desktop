@@ -5,27 +5,39 @@ import txFilters from '../../../constants/transactionFilters';
 import { getAPIClient } from './network';
 
 export const send = (
-  liskAPIClient,
-  recipientId,
   amount,
-  passphrase,
-  secondPassphrase = null,
   data,
+  networkConfig,
+  passphrase,
+  recipientId,
+  secondPassphrase = null,
   timeOffset,
 ) =>
   new Promise((resolve, reject) => {
-    const transaction = Lisk.transaction.transfer({
-      recipientId, amount, passphrase, secondPassphrase, data, timeOffset,
+    const txId = Lisk.transaction.transfer({
+      amount,
+      data,
+      passphrase,
+      recipientId,
+      secondPassphrase,
+      timeOffset,
     });
-    liskAPIClient.transactions.broadcast(transaction).then(() => {
-      resolve(transaction);
-    }).catch(reject);
+
+    getAPIClient(networkConfig).transactions.broadcast(txId)
+      .then(resolve(txId))
+      .catch(reject);
   });
 
 // eslint-disable-next-line max-statements, complexity, import/prefer-default-export
 export const getTransactions = ({
-  networkConfig, address, limit, offset, type = undefined,
-  sort = 'timestamp:desc', filter = txFilters.all, customFilters = {},
+  address,
+  customFilters = {},
+  filter = txFilters.all,
+  limit,
+  networkConfig,
+  offset,
+  sort = 'timestamp:desc',
+  type = undefined,
 }) => {
   const params = {
     limit,
@@ -78,3 +90,37 @@ export const unconfirmedTransactions = (liskAPIClient, address, limit = 20, offs
     offset,
     sort,
   });
+
+
+export const create = ({
+  amount,
+  data,
+  passphrase,
+  recipientId,
+  secondPassphrase,
+  timeOffset,
+}) => new Promise((resolve, reject) => {
+  try {
+    const transaction = Lisk.transaction.transfer({
+      amount,
+      data,
+      passphrase,
+      recipientId,
+      secondPassphrase,
+      timeOffset,
+    });
+    resolve(transaction);
+  } catch (error) {
+    reject(error);
+  }
+});
+
+export const broadcast = (networkConfig, transaction) => new Promise((resolve, reject) => {
+  setTimeout(async () => {
+    try {
+      getAPIClient(networkConfig).transactions.broadcast(transaction).then(resolve(transaction));
+    } catch (error) {
+      reject(error);
+    }
+  });
+});

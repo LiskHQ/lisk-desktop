@@ -3,7 +3,7 @@ import ConverterV2 from '../../converterV2';
 import AccountVisual from '../../accountVisual/index';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../../toolbox/buttons/button';
 import fees from '../../../constants/fees';
-import { fromRawLsk } from '../../../utils/lsk';
+import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
 import PassphraseInputV2 from '../../passphraseInputV2/passphraseInputV2';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
@@ -65,13 +65,16 @@ class Summary extends React.Component {
   }
 
   submitTransaction() {
+    const { account, fields } = this.props;
+
     this.props.sent({
-      account: this.props.account,
-      recipientId: this.props.fields.recipient.address,
-      amount: this.props.fields.amount.value,
-      data: this.props.fields.reference.value,
-      passphrase: this.props.account.passphrase,
+      amount: toRawLsk(fields.amount.value),
+      data: fields.reference.value,
+      passphrase: account.passphrase,
+      recipientId: fields.recipient.address,
       secondPassphrase: this.state.secondPassphrase.value,
+      dynamicFeePerByte: null, // for BTC
+      fee: null, // for BTC
     });
   }
 
@@ -132,13 +135,23 @@ class Summary extends React.Component {
   }
 
   nextStep() {
+    const { account, fields } = this.props;
     Piwik.trackingEvent('Send_Summary', 'button', 'Next step');
     this.submitTransaction();
     this.props.nextStep({
       fields: {
-        ...this.props.fields,
+        ...fields,
         hwTransactionStatus: false,
         isHardwareWalletConnected: false,
+      },
+      transactionData: {
+        amount: toRawLsk(fields.amount.value),
+        data: fields.reference.value,
+        passphrase: account.passphrase,
+        recipientId: fields.recipient.address,
+        secondPassphrase: this.state.secondPassphrase.value,
+        dynamicFeePerByte: null, // for BTC
+        fee: null, // for BTC
       },
     });
   }

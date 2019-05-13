@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import to from 'await-to-js';
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
-import { send, getTransactions, getSingleTransaction, unconfirmedTransactions } from '../utils/api/transactions';
+import { getTransactions, getSingleTransaction, unconfirmedTransactions } from '../utils/api/transactions';
 import { getDelegate } from '../utils/api/delegate';
 import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
@@ -11,9 +11,10 @@ import { loadAccount, passphraseUsed } from './account';
 import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
-import { toRawLsk } from '../utils/lsk';
 import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
+import { tokenMap } from '../constants/tokens';
+import { transactions as transactionsAPI } from '../utils/api';
 
 export const cleanTransactions = () => ({
   type: actionTypes.cleanTransactions,
@@ -268,46 +269,65 @@ const handleSentError = ({ error, account, dispatch }) => {
   });
 };
 
-export const sent = ({
-  account, recipientId, amount, passphrase, secondPassphrase, data,
-}) =>
+
+/**
+ * Calls transactionAPI.create and transactionAPI.broadcast methods to make a transaction.
+ * @param {Object} data
+ * @param {String} data.recipientAddress
+ * @param {Number} data.amount - In raw format (satoshis, beddows)
+ * @param {Number} data.fee - In raw format, used for updating the TX List.
+ * @param {Number} data.dynamicFeePerByte - In raw format, used for creating BTC transaction.
+ * @param {Number} data.reference - Data field for LSK transactions
+ * @param {String} data.secondPassphrase - Second passphrase for LSK transactions
+ */
 // eslint-disable-next-line max-statements
-  async (dispatch, getState) => {
-    // account.loginType = 1;
-    let error;
-    let callResult;
-    const liskAPIClient = getState().peers.liskAPIClient;
-    const timeOffset = getTimeOffset(getState());
-    switch (account.loginType) {
-      case loginType.normal:
-        // eslint-disable-next-line
-        [error, callResult] = await to(send(liskAPIClient, recipientId, toRawLsk(amount), passphrase, secondPassphrase, data, timeOffset));
-        break;
-      case loginType.ledger:
-        // eslint-disable-next-line
-        [error, callResult] = await to(sendWithHW(liskAPIClient, account, recipientId, toRawLsk(amount), secondPassphrase, data));
-        break;
-      // case 2:
-      //   errorMessage = i18next.t('Not Yet Implemented. Sorry.');
-      //   dispatch({ data: { errorMessage }, type: actionTypes.transactionFailed });
-      //   break;
-      default:
-        dispatch({ data: { errorMessage: i18next.t('Login Type not recognized.') }, type: actionTypes.transactionFailed });
+export const sent = data => async (dispatch, getState) => {
+  let broadcastTx;
+  const account = getState().account;
+  const networkConfig = getState().network;
+  const timeOffset = getTimeOffset(getState());
+  const activeToken = getState().settings.token.active;
+  console.log(networkConfig);
+  try {
+    if (account.loginType === loginType.normal) {
+      const tx = await transactionsAPI.create(activeToken, { ...data, timeOffset });
+
+      if (activeToken === tokenMap.LSK.key) {
+        broadcastTx = await transactionsAPI.broadcast(activeToken, networkConfig, tx);
+      }
+      if (activeToken === tokenMap.BTC.key) {
+        await transactionsAPI.broadcast(activeToken, networkConfig, tx);
+      }
     }
+
+    if (account.loginType === loginType.ledger || account.loginType === loginType.trezor) {
+      broadcastTx = await to(sendWithHW(
+        networkConfig,
+        account,
+        data.recipientId,
+        data.amount,
+        data.secondPassphrase,
+        data.data,
+      ));
+    }
+
     loadingFinished('sent');
-    if (error) {
-      handleSentError({ error, account, dispatch });
-    } else {
+
+    if (activeToken === tokenMap.LSK.key) {
       dispatch(transactionAdded({
-        id: callResult.id,
-        senderPublicKey: account.publicKey,
-        senderId: account.address,
-        recipientId,
-        amount: toRawLsk(amount),
+        amount: data.amount,
+        asset: { reference: data.data },
         fee: Fees.send,
+        id: broadcastTx.id,
+        recipientId: data.recipientId,
+        senderId: account.address,
+        senderPublicKey: account.publicKey,
         type: transactionTypes.send,
-        asset: { data },
       }));
-      dispatch(passphraseUsed(passphrase));
+      dispatch(passphraseUsed(data.passphrase));
     }
-  };
+  } catch (error) {
+    loadingFinished('sent');
+    handleSentError({ error, account, dispatch });
+  }
+};
