@@ -32,15 +32,15 @@ export default {
     component: Dashboard,
     isPrivate: false,
   },
+  send: {
+    path: '/wallet/send',
+    component: SendV2,
+    isPrivate: true,
+  },
   wallet: {
     path: '/wallet',
     pathSuffix: '/:token?',
     component: TransactionDashboard,
-    isPrivate: true,
-  },
-  send: {
-    path: '/wallet/send',
-    component: SendV2,
     isPrivate: true,
   },
   delegates: {
