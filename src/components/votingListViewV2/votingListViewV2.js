@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
-import Box from '../box';
 import MultiStep from './../multiStep';
 import VotingHeaderV2 from './votingHeaderV2';
-import ListLabelsV2 from './listLabelsV2';
 import styles from './votingListViewV2.css';
 import VoteUrlProcessor from '../voteUrlProcessor';
 import voteFilters from './../../constants/voteFilters';
@@ -151,7 +149,7 @@ class VotingListViewV2 extends React.Component {
       <Fragment>
         <VoteUrlProcessor toggleShowInfo={this.toggleShowInfo.bind(this)} show={this.showInfo()} />
         { !this.showInfo() ?
-          <div>
+          <Fragment>
             <VotingHeaderV2
               account={this.props.account}
               setActiveFilter={this.setActiveFilter.bind(this)}
@@ -160,27 +158,21 @@ class VotingListViewV2 extends React.Component {
               voteToggled={voteToggled}
               search={ value => this.search(value) }
             />
-            <Box className={`voting delegate-list-box ${showChangeSummery} ${styles.box}`}>
-            <section className={`${styles.delegatesList} delegate-list`}>
-              <div className={styles.table}>
-                <ListLabelsV2 t={t} status={showChangeSummery} />
-                <MultiStep
-                  className={styles.wrapper}>
-                  <DelegateListV2 t={t} list={filteredList} votes={votes}
-                    voteToggled={voteToggled} showChangeSummery={showChangeSummery}
-                    safari={this.state.safariClass} loadMore={this.loadMore.bind(this)} />
-                  <VoteListV2 votes={votes} showChangeSummery={showChangeSummery}
-                    safari={this.state.safariClass} />
-                </MultiStep>
-              </div>
+              <MultiStep
+                className={styles.wrapper}>
+                <DelegateListV2 t={t} list={filteredList} votes={votes}
+                  voteToggled={voteToggled} showChangeSummery={showChangeSummery}
+                  safari={this.state.safariClass} loadMore={this.loadMore.bind(this)} />
+                <VoteListV2 votes={votes} showChangeSummery={showChangeSummery}
+                  safari={this.state.safariClass} />
+              </MultiStep>
               {
                 (filteredList.length === 0) ?
                   <div className={`empty-message ${styles.emptyMessage}`}>
                     {t(this.getEmptyStateMessage(filteredList))}
                   </div> : null
               }
-            </section>
-          </Box></div> : null
+          </Fragment> : null
         }
       </Fragment>
     );

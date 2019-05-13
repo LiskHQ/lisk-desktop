@@ -4,6 +4,7 @@ import styles from './votingListViewV2.css';
 import Checkbox from './voteCheckboxV2';
 import TableRow from '../toolbox/table/tableRow';
 import AccountVisual from '../accountVisual';
+import LiskAmount from '../liskAmount';
 
 const setRowClass = (voteStatus) => {
   if (!voteStatus) {
@@ -55,8 +56,10 @@ class DelegateRowV2 extends React.Component {
             <span className={`delegate-id ${styles.address}`}>{data.account.address}</span>
           </div>
         </div>
-        {/* <div className={`${grid['col-md-5']} delegate-id`}></div> */}
-        <div className={`${grid['col-md-5']} ${grid['col-xs-3']} ${styles.productivity} delegate-productivity`}>{data.productivity} %</div>
+        <div className={`${grid['col-md-4']} ${styles.weight} vote-weight`}>
+          <LiskAmount val={data.vote} /> {this.props.t(' LSK')}
+        </div>
+        <div className={`${grid['col-md-3']} ${grid['col-xs-3']} ${styles.productivity} delegate-productivity`}>{data.productivity} %</div>
       </TableRow>
     );
   }

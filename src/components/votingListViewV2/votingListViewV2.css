@@ -15,6 +15,7 @@
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   min-height: 80vh; /* stylelint-disable-line */
+  height: 100%;
 }
 
 .leftText {
@@ -143,6 +144,10 @@
   text-align: left;
 }
 
+.weight {
+  font-weight: bold;
+}
+
 .delegatesList {
   overflow-y: auto;
 
@@ -236,6 +241,16 @@
 
 .checkbox {
   padding: 0px;
+}
+
+.results {
+  border-radius: 0 0 var(--border-radius-box) var(--border-radius-box);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
 }
 
 @media (--xLarge-viewport) {
