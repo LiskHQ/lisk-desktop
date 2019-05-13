@@ -83,4 +83,16 @@ describe('TransactionsOverview V2', () => {
     wrapper.find('.transaction-filter-item').first().simulate('click');
     expect(props.onFilterSet).to.have.been.calledWith();
   });
+
+  it('should not show in/out filters if active token is BTC', () => {
+    expect(wrapper).to.have.exactly(1).descendants('.filter-all');
+    expect(wrapper).to.have.exactly(1).descendants('.filter-in');
+    expect(wrapper).to.have.exactly(1).descendants('.filter-out');
+
+    wrapper.setProps({ activeToken: 'BTC' });
+
+    expect(wrapper).to.have.exactly(1).descendants('.filter-all');
+    expect(wrapper).to.have.exactly(0).descendants('.filter-in');
+    expect(wrapper).to.have.exactly(0).descendants('.filter-out');
+  });
 });

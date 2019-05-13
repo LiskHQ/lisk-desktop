@@ -9,6 +9,7 @@ const TransactionsHeaderV2 = ({ t, isSmallScreen, activeToken }) => (
       {t('Transaction')}
     </div>
     <div className={`${grid['col-sm-3']} ${grid['col-lg-3']} transactions-header`}>
+      {/* istanbul ignore next */}
       {activeToken !== 'BTC' ? t('Details') : null}
     </div>
     <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-header`}>
