@@ -35,8 +35,9 @@ class DelegateRowV2 extends React.Component {
 
     return (
       <TableRow className={`delegate-row ${className} ${grid.row} ${styles.row} ${setRowClass(voteStatus)}`} onClick={() => voteToggled(data)}>
-        <div className={`${grid['col-md-1']} ${grid['col-xs-2']} ${styles.leftText}`}>
-          <Checkbox styles={styles}
+        <div className={`${grid['col-md-1']} ${grid['col-xs-2']}
+          ${styles.leftText} ${styles.checkBoxContainer}`}>
+          <Checkbox styles={`${styles} ${styles.fakeCheckbox}`}
             toggle={voteToggled}
             value={data.selected}
             status={voteStatus}

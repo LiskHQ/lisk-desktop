@@ -20,9 +20,15 @@
 
     &.checked {
       display: none;
+      color: var(--color-ultramarine-blue);
     }
 
     &.unchecked {
+      font-size: 16px;
+      background-color: var(--color-white);
+      border: 1px solid var(--dark-border-color);
+      border-radius: var(--border-radius-standard);
+      color: var(--color-white);
       display: block;
     }
   }
