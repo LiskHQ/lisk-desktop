@@ -1,8 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
-import { followedAccountAdded } from '../../actions/followedAccounts';
 import styles from './followedAccounts.css';
 import TitleInput from './accountTitleInput';
 import Piwik from '../../utils/piwik';
@@ -96,13 +93,4 @@ class AddAccountTitle extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  account: state.search.accounts[ownProps.address],
-  accounts: state.followedAccounts,
-});
-
-const mapDispatchToProps = {
-  addAccount: followedAccountAdded,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(AddAccountTitle));
+export default AddAccountTitle;
