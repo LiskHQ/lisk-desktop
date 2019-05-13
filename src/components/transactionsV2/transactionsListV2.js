@@ -18,6 +18,7 @@ class TransactionsListV2 extends React.Component {
       loading,
       isSmallScreen,
       t,
+      activeToken,
     } = this.props;
     // All, incoming, outgoing are filter values. To be more consistance with other possible tabs
     // We can refer to props.filter as tabObj
@@ -44,7 +45,7 @@ class TransactionsListV2 extends React.Component {
           </div>
         ) : null
       }
-      <TransactionsHeaderV2 isSmallScreen={isSmallScreen} />
+      <TransactionsHeaderV2 isSmallScreen={isSmallScreen} activeToken={activeToken}/>
       {transactions.length
         ? transactions.filter(fixIncomingFilter)
             .map((transaction, i) =>

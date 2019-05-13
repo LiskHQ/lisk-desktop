@@ -91,6 +91,7 @@ class TransactionsOverviewV2 extends React.Component {
           loading={this.props.loading}
           onLoadMore={this.props.onLoadMore}
           isSmallScreen={isSmallScreen}
+          activeToken={this.props.activeToken}
         />
       </div>
     );

@@ -60,7 +60,7 @@ class transactionsHeader extends React.Component {
 
   render() {
     const {
-      followedAccounts, address, t, delegate = {},
+      followedAccounts, address, t, delegate = {}, activeToken,
     } = this.props;
 
     const isFollowing = getIndexOfFollowedAccount(followedAccounts, { address }) !== -1;
@@ -73,6 +73,7 @@ class transactionsHeader extends React.Component {
           address={address}
           delegate={delegate}
           account={this.props.account}
+          toggleActiveToken={this.props.toggleActiveToken}
           />
         <div className={`${styles.buttonsHolder}`}>
         { isWalletRoute ? (
@@ -82,7 +83,7 @@ class transactionsHeader extends React.Component {
               data-name={'requestDropdown'}
               className={`${styles.requestContainer} tx-receive-bt`}>
               <SecondaryButtonV2 onClick={() => this.toggleDropdown('requestDropdown')}>
-                {t('Request LSK')}
+                {t('Request {{token}}', { token: activeToken })}
               </SecondaryButtonV2>
               <DropdownV2
                 showDropdown={this.state.shownDropdown === 'requestDropdown'}
@@ -92,7 +93,7 @@ class transactionsHeader extends React.Component {
             </span>
             <Link to={`${routes.send.path}?wallet`} className={'tx-send-bt'}>
               <PrimaryButtonV2>
-                {t('Send LSK')}
+                {t('Send {{token}}', { token: activeToken })}
               </PrimaryButtonV2>
             </Link>
           </React.Fragment>
@@ -101,7 +102,7 @@ class transactionsHeader extends React.Component {
             <Link to={`${routes.send.path}?wallet&recipient=${address}`}
               className={'send-to-address'}>
                 <SecondaryButtonV2>
-                  {t('Send LSK to this Account')}
+                  {t('Send {{token}} to this Account ', { token: activeToken })}
                 </SecondaryButtonV2>
             </Link>
             <span

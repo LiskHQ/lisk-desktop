@@ -19,7 +19,7 @@ class walletDetails extends React.Component {
   // eslint-disable-next-line complexity
   render() {
     const {
-      balance, t, address, wallets, peers, lastTransaction,
+      balance, t, address, wallets, peers, lastTransaction, activeToken,
     } = this.props;
 
     const lastTx = {
@@ -51,7 +51,7 @@ class walletDetails extends React.Component {
           <div className={`${styles.info} account-balance`}>
             <span className={`${styles.value}`}>
               <LiskAmount val={balance} />
-              <span className={`${styles.currency}`}> {t('LSK')}</span>
+              <span className={`${styles.currency}`}> {activeToken}</span>
             </span>
             <span className={`${styles.label}`}>{t('Account Balance')}</span>
           </div>
@@ -61,7 +61,7 @@ class walletDetails extends React.Component {
               {lastTx.tx && lastTx.tx.id ? (
                 <React.Fragment>
                   {lastTx.pre}<LiskAmount val={lastTx.totalAmount} />
-                  <span className={`${styles.currency}`}> {t('LSK')}</span>
+                  <span className={`${styles.currency}`}> {activeToken}</span>
                 </React.Fragment>
               ) : '-'}
               </span>
@@ -72,7 +72,7 @@ class walletDetails extends React.Component {
               {lastVisitDifference !== '-' ? (
                 <React.Fragment>
                   {lastVisitDifference > 0 ? '+' : ''}<LiskAmount val={lastVisitDifference} />
-                  <span className={`${styles.currency}`}> {t('LSK')}</span>
+                  <span className={`${styles.currency}`}> {activeToken}</span>
                 </React.Fragment>
               ) : '-'}
               </span>
