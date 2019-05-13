@@ -131,7 +131,7 @@ const ss = {
   passphraseInput: '.passphrase input',
   loginBtn: '.login-button',
   networkDropdown: '.network',
-  networkOptions: '.network .options > *',
+  networkOptions: '.network-dropdown .options > *',
   addressInput: '.address input',
   headerAddress: '.copy-title',
   nodeAddress: '.peer',
@@ -206,6 +206,7 @@ const ss = {
   navigationBtnBack: '.go-back',
   navigationBtnForward: '.go-forward',
   termsOfUseLink: '.terms-of-use',
+  connectButton: '.connect-button',
 };
 
 export default ss;

@@ -7,11 +7,11 @@
   flex-direction: column;
   margin: 20px 0;
 
-  & > h1 {
+  & > h2 {
     @mixin contentSmall;
 
     color: var(--color-slate-gray);
-    margin: 0;
+    margin-bottom: 10px;
   }
 
   & > p,
@@ -26,6 +26,7 @@
 .accountWrapper {
   align-items: center;
   display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
   margin: 20px 0;
 
@@ -44,26 +45,24 @@
     flex-direction: column;
 
     & .avatar {
-      margin-bottom: 20px;
+      margin-right: 10px;
     }
 
-    & > div:last-child {
-      align-items: center;
+    & .addressRow {
       display: flex;
-      flex-direction: column;
-      height: 100%;
-      justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
     }
 
     & .label {
       @mixin contentSmall;
 
       color: var(--color-slate-gray);
-      margin: 0;
+      margin-bottom: 10px;
     }
 
     & .address {
-      @mixin headingSmall;
+      @mixin contentLargest;
 
       color: var(--color-maastricht-blue);
       text-decoration: none;

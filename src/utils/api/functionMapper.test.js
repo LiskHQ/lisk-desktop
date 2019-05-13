@@ -3,7 +3,7 @@ import getMappedFunction from './functionMapper';
 
 describe('api/functionMapper', () => {
   it('maps existing functions correctly', () => {
-    const result = getMappedFunction(tokenMap.BTC.key, 'account', 'getSummary');
+    const result = getMappedFunction(tokenMap.BTC.key, 'account', 'getAccount');
     expect(result).toBeDefined();
   });
 

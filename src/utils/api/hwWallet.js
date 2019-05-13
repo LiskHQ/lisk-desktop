@@ -50,7 +50,7 @@ export const getDeviceList = () =>
     } else {
       // Browser mode, only dev purpose
       const deviceList = [];
-      deviceList.push({ deviceId: 0, label: 'FakeLedger', model: 'Ledger Nano S', path: '/fake/path' });
+      deviceList.push({ deviceId: 0, label: 'FakeLedger', model: 'Ledger Nano S', path: '/fake/path', openApp: true });
       deviceList.push({ deviceId: 1, label: 'FakeTrezorT', model: 'Trezor Model T', path: null });
       deviceList.push({ deviceId: 2, label: 'FakeTrezor1', model: 'Trezor One', path: null });
       resolve(deviceList);
@@ -268,7 +268,7 @@ export const getHWAccountInfo = async (activePeer, deviceId, loginType, accountI
   }
 
   const address = extractAddress(publicKey);
-  let resAccount = await getAccount(activePeer, address);
+  let resAccount = await getAccount({ liskAPIClient: activePeer, address });
 
   const isInitialized = !!resAccount.unconfirmedBalance;
   Object.assign(resAccount, { isInitialized });

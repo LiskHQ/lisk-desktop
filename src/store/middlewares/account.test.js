@@ -2,10 +2,9 @@ import { expect } from 'chai';
 import { spy, stub, useFakeTimers } from 'sinon';
 import * as accountActions from '../../actions/account';
 import * as transactionsActions from '../../actions/transactions';
-import accountConfig from '../../constants/account';
 import * as votingActions from '../../actions/voting';
 import * as peersActions from '../../actions/peers';
-import * as accountApi from '../../utils/api/lsk/account';
+import * as accountApi from '../../utils/api/account';
 import * as transactionsApi from '../../utils/api/lsk/transactions';
 import * as accountUtils from '../../utils/login';
 import accounts from '../../../test/constants/accounts';
@@ -17,7 +16,6 @@ import transactionTypes from '../../constants/transactionTypes';
 
 /* eslint-disable-next-line max-statements */
 describe('Account middleware', () => {
-  const { lockDuration } = accountConfig;
   let store;
   let next;
   let state;
@@ -175,37 +173,6 @@ describe('Account middleware', () => {
       address: state.account.address,
       type: 'update',
     });
-  });
-
-  it(`should dispatch accountUpdated({passphrase}) action on ${actionTypes.passphraseUsed} action if store.account.passphrase is not set`, () => {
-    const accountUpdatedSpy = spy(accountActions, 'accountUpdated');
-
-    const action = {
-      type: actionTypes.passphraseUsed,
-      data: passphrase,
-    };
-    middleware(store)(next)(action);
-    expect(accountUpdatedSpy).to.have.been.calledWith({
-      passphrase,
-      expireTime: clock.now + lockDuration,
-    });
-    accountUpdatedSpy.restore();
-  });
-
-  it(`should not dispatch accountUpdated action on ${actionTypes.passphraseUsed} action if store.account.passphrase is already set`, () => {
-    const accountUpdatedSpy = spy(accountActions, 'accountUpdated');
-    const action = {
-      type: actionTypes.passphraseUsed,
-      data: passphrase,
-    };
-    store.getState = () => ({
-      ...state,
-      account: { ...state.account, passphrase, expireTime: clock.now + lockDuration },
-    });
-
-    middleware(store)(next)(action);
-    expect(accountUpdatedSpy).to.have.been.calledWith({ expireTime: clock.now + lockDuration });
-    accountUpdatedSpy.restore();
   });
 
   it(`should dispatch ${actionTypes.liskAPIClientSet} action on ${actionTypes.storeCreated} if autologin data found in localStorage`, () => {

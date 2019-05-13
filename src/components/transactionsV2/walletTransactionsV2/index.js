@@ -9,6 +9,7 @@ import WalletTransactionsV2 from './walletTransactionsV2';
 import actionTypes from '../../../constants/actions';
 import txFilters from './../../../constants/transactionFilters';
 import removeDuplicateTransactions from '../../../utils/transactions';
+import { tokenMap } from '../../../constants/tokens';
 
 const mapStateToProps = (state, ownProps) => ({
   account: state.account,
@@ -24,8 +25,12 @@ const mapStateToProps = (state, ownProps) => ({
   followedAccounts: state.followedAccounts,
   wallets: state.wallets,
   peers: state.peers,
-  balance: state.account.balance,
-  votes: state.search.votes[ownProps.account.address],
+  balance: state.account.info && state.account.info[
+    state.settings.token && state.settings.token.active ?
+      state.settings.token.active :
+      tokenMap.LSK.key
+  ].balance,
+  votes: state.search.votes[ownProps.account.info.LSK.address],
 });
 
 const mapDispatchToProps = {

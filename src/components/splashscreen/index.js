@@ -1,11 +1,19 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+import { liskAPIClientSet } from '../../actions/peers';
+import { settingsUpdated } from '../../actions/settings';
 import Splashscreen from './splashscreen';
 
 const mapStateToProps = state => ({
-  account: state.account,
   peers: state.peers,
+  account: state.account,
   settings: state.settings,
+  liskAPIClient: state.peers && state.peers.liskAPIClient,
 });
 
-export default connect(mapStateToProps)(translate()(Splashscreen));
+const mapDispatchToProps = {
+  liskAPIClientSet,
+  settingsUpdated,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(Splashscreen));

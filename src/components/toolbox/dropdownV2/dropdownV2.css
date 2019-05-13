@@ -55,6 +55,34 @@
       top: 9px;
     }
   }
+
+  &:global(.dark) {
+    background: var(--color-maastricht-blue);
+    border: 1px solid var(--light-border-color);
+
+    & .option {
+      background: var(--color-maastricht-blue);
+
+      &.active {
+        background-color: var(--color-maastricht-blue);
+        color: #4070f4;
+      }
+
+      &:hover {
+        background-color: rgba(64, 112, 244, 0.24);
+        color: #4070f4;
+      }
+
+      & input {
+        @mixin contentNormal;
+
+        border: 1px solid var(--light-border-color);
+        background-color: var(--color-maastricht-blue);
+        color: var(--color-white);
+        padding: 0 20px 0 10px;
+      }
+    }
+  }
 }
 
 .dropdownContent {
@@ -76,6 +104,10 @@
 
     &:hover {
       background-color: var(--primary-background-color);
+      color: var(--color-ultramarine-blue);
+    }
+
+    &.active {
       color: var(--color-ultramarine-blue);
     }
   }

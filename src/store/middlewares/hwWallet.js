@@ -2,10 +2,12 @@
 import actionTypes from '../../constants/actions';
 import { accountLoggedOut } from '../../actions/account';
 import { dialogDisplayed, dialogHidden } from '../../actions/dialog';
+import { updateDeviceList } from '../../actions/hwWallets';
 import { successToastDisplayed, errorToastDisplayed, infoToastDisplayed } from '../../actions/toaster';
 import { HW_MSG } from '../../constants/hwConstants';
 import Alert from '../../components/dialog/alert';
 
+// eslint-disable-next-line max-statements
 const hwWalletMiddleware = store => next => (action) => {
   const { ipc } = window;
 
@@ -15,6 +17,10 @@ const hwWalletMiddleware = store => next => (action) => {
     store.dispatch({
       type: actionTypes.settingsUpdated,
       data: { isHarwareWalletConnected: false },
+    });
+
+    ipc.on('hwDeviceListChanged', (event, devicesList) => {
+      store.dispatch(updateDeviceList(devicesList));
     });
 
     ipc.on('hwConnected', (event, { model }) => {
@@ -48,7 +54,7 @@ const hwWalletMiddleware = store => next => (action) => {
 
       store.dispatch({
         type: actionTypes.settingsUpdated,
-        data: { isHarwareWalletConnected: false },
+        data: { isHarwareWalletConnected: !!state.hwWallets.devices.length },
       });
 
       store.dispatch(successToastDisplayed({ label: `${model} disconnected` }));

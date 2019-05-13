@@ -10,6 +10,7 @@ import BoxV2 from '../boxV2';
 import { SecondaryButtonV2 } from '../toolbox/buttons/button';
 import TransactionDetailViewV2 from '../transactionsV2/transactionDetailViewV2/transactionDetailViewV2';
 import styles from './singleTransactionV2.css';
+import transactionTypes from '../../constants/transactionTypes';
 
 class SingleTransactionV2 extends React.Component {
   constructor(props) {
@@ -54,27 +55,31 @@ class SingleTransactionV2 extends React.Component {
     this.setState({ [`${name}Copied`]: true });
   }
 
+  getLinkToCopy() {
+    return {
+      LSK: `lisk:/${this.props.match.url}`,
+      BTC: this.props.transaction.explorerLink,
+    }[this.props.transaction.token];
+  }
+
   // eslint-disable-next-line complexity
   render() {
     const { t, transaction } = this.props;
     let title = t('Transfer Transaction');
-    let icon = svg.txDefault;
     switch (transaction.type) {
-      case 1:
+      case transactionTypes.setSecondPassphrase:
         title = t('2nd Passphrase Registration');
-        icon = svg.tx2ndPassphrase;
         break;
-      case 2:
+      case transactionTypes.registerDelegate:
         title = t('Delegate Registration');
-        icon = svg.txDelegate;
         break;
-      case 3:
+      case transactionTypes.vote:
         title = t('Vote Transaction');
-        icon = svg.txVote;
         break;
       default:
         break;
     }
+
 
     return (
       <div className={`${grid.row} ${grid['center-xs']}`}>
@@ -83,7 +88,7 @@ class SingleTransactionV2 extends React.Component {
           <header className={`${styles.detailsHeader} tx-header`}>
             <h1>{title}</h1>
               <CopyToClipboard
-                text={`lisk:/${this.props.match.url}`}
+                text={this.getLinkToCopy()}
                 onCopy={() => this.handleCopy('link')}>
                 <SecondaryButtonV2 className={'extra-small'} disabled={this.state.linkCopied}>
                   {this.state.linkCopied
@@ -97,7 +102,6 @@ class SingleTransactionV2 extends React.Component {
               </CopyToClipboard>
           </header>
           <main className={styles.mainContent}>
-            <img className={styles.txIcon} src={icon} />
             <TransactionDetailViewV2 address={this.props.address} transaction={transaction} />
             <footer className={styles.detailsFooter}>
               <div>
@@ -108,9 +112,18 @@ class SingleTransactionV2 extends React.Component {
                       fulltime={true}
                       className={'date'}
                       time={transaction.timestamp}
+                      token={transaction.token}
                       showSeconds={true} />
                   </span>
                 </p>
+                <p className={styles.value}>
+                  <span className={styles.label}>{t('Transaction fee')} </span>
+                  <span className={'tx-fee'}>
+                    <LiskAmount val={transaction.fee} /> {t('LSK')}
+                  </span>
+                </p>
+              </div>
+              <div>
                 <p className={`${styles.value}`}>
                   <span className={styles.label}>{t('Confirmations')} </span>
                   <span className={'tx-confirmation'}>
@@ -119,12 +132,6 @@ class SingleTransactionV2 extends React.Component {
                 </p>
               </div>
               <div>
-              <p className={styles.value}>
-                <span className={styles.label}>{t('Fee')} </span>
-                <span className={'tx-fee'}>
-                  <LiskAmount val={transaction.fee} /> {t('LSK')}
-                </span>
-              </p>
               <CopyToClipboard
                 className={`${styles.clickable} ${styles.value} tx-id`}
                 text={transaction.id}
@@ -132,12 +139,14 @@ class SingleTransactionV2 extends React.Component {
                   <p>
                     <span className={styles.label}>
                       {t('Transaction ID')}
-                      <img src={svg.icoLink} />
                     </span>
                     <span className={'transaction-id'}>
                       {this.state.idCopied
                         ? t('Copied!')
-                        : <span className={'copy-title'}>{transaction.id}</span>
+                        : <span>
+                            <span className={'copy-title'}>{transaction.id}</span>
+                            <img src={svg.icoLink} />
+                          </span>
                       }
                     </span>
                   </p>

@@ -45,7 +45,7 @@ describe('MovableShape', () => {
 
   it('assigns the initial state from the positions', () => {
     const initial = ['10%', '70%'];
-    const rightProps = Object.assign({}, props, { initial });
+    const rightProps = { ...props, initial };
     const wrapper = mount(<MovableShape {...rightProps} />);
     expect(wrapper.find('div').props().style.left).to.be.equal(initial[0]);
     expect(wrapper.find('div').props().style.bottom).to.be.equal(initial[1]);

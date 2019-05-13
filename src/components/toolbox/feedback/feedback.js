@@ -4,11 +4,11 @@ import svg from '../../../utils/svgIcons';
 import styles from './feedback.css';
 
 const Feedback = ({
-  showIcon, status, children, show, className,
+  showIcon, status, children, show, className, dark,
 }) => {
   const icon = status === 'error' && svg.alert_icon;
   return (
-    <span className={`${className} ${styles.feedback} ${status} ${show ? styles.show : ''}`}>
+    <span className={`${dark ? styles.dark : ''} ${className} ${styles.feedback} ${status} ${show ? styles.show : ''}`}>
       {showIcon && icon && <img src={icon} />}
       {children}
     </span>

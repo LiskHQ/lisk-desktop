@@ -53,12 +53,13 @@ export const initialState = JSON.parse(localStorage.getItem('settings')) || {
 const settings = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.settingsUpdated:
-      return Object.assign({}, state, action.data);
+      return { ...state, ...action.data };
     case actionTypes.settingsReset:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         advancedMode: false,
         autoLog: true,
-      });
+      };
     case actionTypes.switchChannel:
       return {
         ...state,
@@ -68,12 +69,14 @@ const settings = (state = initialState, action) => {
         },
       };
     case actionTypes.settingsUpdateToken:
-      return Object.assign({}, state, action.data, {
+      return {
+        ...state,
+        ...action.data,
         token: {
           active: defineActiveToken(action.data.token, state.token),
           list: action.data.token ? action.data.token.list : state.token.list,
         },
-      });
+      };
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
-import { getAccount } from '../utils/api/lsk/account';
+import { getAccount } from '../utils/api/account';
 import { getDelegate, getVoters, getVotes, listDelegates } from '../utils/api/delegate';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
@@ -116,8 +116,8 @@ const searchVoters = ({
 /* because it's not used anymore and should be removed in #1911 */
 export const searchMoreVoters = ({ address, offset = 0, limit = 100 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    getAccount(liskAPIClient, address).then((response) => {
+    const networkConfig = getState().network;
+    getAccount({ networkConfig, address }).then((response) => {
       const accountData = {
         ...response,
       };
@@ -131,10 +131,10 @@ export const searchMoreVoters = ({ address, offset = 0, limit = 100 }) =>
 
 export const searchAccount = ({ address }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const networkConfig = getState().network;
     /* istanbul ignore else */
-    if (liskAPIClient) {
-      getAccount(liskAPIClient, address).then((response) => {
+    if (networkConfig) {
+      getAccount({ networkConfig, address }).then((response) => {
         const accountData = {
           ...response,
         };

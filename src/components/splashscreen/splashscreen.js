@@ -1,14 +1,42 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
+
 import routes from '../../constants/routes';
+import { getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import { parseSearchParams } from './../../utils/searchParams';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
-import HeaderV2 from '../headerV2/headerV2';
+import { getNetworksList } from '../../utils/getNetwork';
+import networks from '../../constants/networks';
+import HeaderV2 from '../headerV2/index';
 import styles from './splashscreen.css';
 import Tooltip from '../toolbox/tooltip/tooltip';
 
 class Splashscreen extends React.Component {
+  constructor() { // eslint-disable-line max-statements
+    super();
+    const { liskCoreUrl } = getAutoLogInData();
+    let loginNetwork = findMatchingLoginNetwork();
+    let address = '';
+
+    if (loginNetwork) {
+      loginNetwork = loginNetwork.slice(-1).shift();
+    } else if (!loginNetwork) {
+      loginNetwork = liskCoreUrl ? networks.customNode : networks.default;
+      address = liskCoreUrl || '';
+    }
+
+    this.state = {
+      isValid: false,
+      passphrase: '',
+      network: loginNetwork.code,
+      address,
+    };
+
+    this.secondIteration = false;
+
+    this.networks = getNetworksList();
+  }
   componentDidMount() {
     // istanbul ignore else
     if (!this.props.settings.areTermsOfUseAccepted) {
@@ -46,6 +74,7 @@ class Splashscreen extends React.Component {
 
   render() {
     const { t } = this.props;
+
     return (
       <React.Fragment>
         <HeaderV2 dark={true} showSettings={true} />
@@ -83,6 +112,12 @@ class Splashscreen extends React.Component {
                   </p>
                 </React.Fragment>
               </Tooltip>
+            </span>
+
+            <span className={styles.linkWrapper}>
+              <Link className={`${styles.link} signin-hwWallet-button`} to={routes.hwWalletV2.path}>
+                {t('Sign in with a Hardware Wallet')}
+              </Link>
             </span>
           </div>
         </div>

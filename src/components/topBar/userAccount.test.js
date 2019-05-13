@@ -15,6 +15,13 @@ describe('UserAccount', () => {
     account: {
       address: '12345L',
       balance: 120,
+      // TODO remove the props above after components are fully migrated to use the props below
+      info: {
+        LSK: {
+          address: '12345L',
+          balance: 120,
+        },
+      },
     },
     isDropdownEnable: false,
     onDropdownToggle: sinon.spy(),
@@ -75,7 +82,7 @@ describe('UserAccount', () => {
   });
 
   it('render no address as account has no address', () => {
-    myProps.account = {};
+    myProps.account = { info: {} };
     wrapper = mountWithRouter(<UserAccount {...myProps} />, myOptions);
     expect(wrapper.find('.copy-title')).to.have.text('');
   });
