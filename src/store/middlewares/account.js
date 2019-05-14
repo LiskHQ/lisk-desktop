@@ -1,10 +1,13 @@
 import {
   accountDataUpdated,
-  updateTransactionsIfNeeded,
   updateDelegateAccount,
 } from '../../actions/account'; // eslint-disable-line
 import { votesFetched } from '../../actions/voting';
-import { transactionsRequested, cleanTransactions } from '../../actions/transactions';
+import {
+  transactionsRequested,
+  cleanTransactions,
+  updateTransactionsIfNeeded,
+} from '../../actions/transactions';
 import actionTypes from '../../constants/actions';
 import transactionTypes from '../../constants/transactionTypes';
 

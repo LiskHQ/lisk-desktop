@@ -1,5 +1,4 @@
 import actionTypes from '../../constants/actions';
-import txFilter from '../../constants/transactionFilters';
 /**
  *
  * @param {Array} state
