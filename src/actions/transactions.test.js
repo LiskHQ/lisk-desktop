@@ -1,6 +1,12 @@
 import actionTypes from '../constants/actions';
 import txFilters from './../constants/transactionFilters';
-import { sent, transactionsRequested, loadTransaction, transactionsUpdated } from './transactions';
+import {
+  sent,
+  transactionsRequested,
+  loadTransaction,
+  transactionsUpdated,
+  updateTransactionsIfNeeded,
+} from './transactions';
 import * as transactionsApi from '../utils/api/transactions';
 import * as delegateApi from '../utils/api/delegate';
 import accounts from '../../test/constants/accounts';
@@ -241,8 +247,27 @@ describe('actions: transactions', () => {
     });
   });
 
+  describe('updateTransactionsIfNeeded', () => {
+    it('should update transactions when window is in focus', () => {
+      transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { count: '0' } });
+      const data = {
+        transactions: { confirmed: [{ confirmations: 10 }], pending: [] },
+        account: { address: accounts.genesis.address },
+      };
 
-  // describe('accountLoggedOut', () => {
-  //   it('should create an action to reset the account', () => {
-  // });
+      updateTransactionsIfNeeded(data, true)(dispatch, getState);
+      expect(dispatch).toHaveBeenCalled();
+    });
+
+    it('should update transactions when there are no recent transactions', () => {
+      transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { count: '0' } });
+      const data = {
+        transactions: { confirmed: [{ confirmations: 10000 }], pending: [{ id: '123' }] },
+        account: { address: accounts.genesis.address },
+      };
+
+      updateTransactionsIfNeeded(data, false)(dispatch, getState);
+      expect(dispatch).toHaveBeenCalled();
+    });
+  });
 });

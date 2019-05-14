@@ -312,3 +312,25 @@ export const sent = ({
       dispatch(passphraseUsed(passphrase));
     }
   };
+
+export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocus) =>
+  (dispatch) => {
+    const hasRecentTransactions = txs => (
+      txs.confirmed.filter(tx => tx.confirmations < 1000).length !== 0 ||
+      txs.pending.length !== 0
+    );
+
+    if (windowFocus || hasRecentTransactions(transactions)) {
+      const { filter, customFilters } = transactions;
+      const address = transactions.account ? transactions.account.address : account.address;
+
+      dispatch(transactionsUpdated({
+        pendingTransactions: transactions.pending,
+        address,
+        limit: 25,
+        filter,
+        customFilters,
+      }));
+    }
+  };
+
