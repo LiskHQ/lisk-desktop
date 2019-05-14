@@ -287,7 +287,7 @@ export const sent = data => async (dispatch, getState) => {
   const networkConfig = getState().network;
   const timeOffset = getTimeOffset(getState());
   const activeToken = getState().settings.token.active;
-  console.log(networkConfig);
+
   try {
     if (account.loginType === loginType.normal) {
       const tx = await transactionsAPI.create(activeToken, { ...data, timeOffset });
@@ -313,19 +313,18 @@ export const sent = data => async (dispatch, getState) => {
 
     loadingFinished('sent');
 
-    if (activeToken === tokenMap.LSK.key) {
-      dispatch(transactionAdded({
-        amount: data.amount,
-        asset: { reference: data.data },
-        fee: Fees.send,
-        id: broadcastTx.id,
-        recipientId: data.recipientId,
-        senderId: account.address,
-        senderPublicKey: account.publicKey,
-        type: transactionTypes.send,
-      }));
-      dispatch(passphraseUsed(data.passphrase));
-    }
+    dispatch(transactionAdded({
+      amount: data.amount,
+      asset: { reference: data.data },
+      fee: Fees.send,
+      id: broadcastTx.id,
+      recipientId: data.recipientId,
+      senderId: account.address,
+      senderPublicKey: account.publicKey,
+      type: transactionTypes.send,
+    }));
+
+    dispatch(passphraseUsed(data.passphrase));
   } catch (error) {
     loadingFinished('sent');
     handleSentError({ error, account, dispatch });
