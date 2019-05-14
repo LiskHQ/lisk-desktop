@@ -48,7 +48,6 @@ const actionTypes = {
   searchSuggestions: 'SEARCH_SUGGESTIONS',
   searchTransactions: 'SEARCH_TRANSACTIONS',
   searchUpdateLast: 'SEARCH_UPDATE_LAST',
-  searchVoters: 'SEARCH_VOTERS',
   searchVotes: 'SEARCH_VOTES',
   secondPassphraseRegisteredFailure: 'SECOND_PASSPHRASE_REGISTRATION_FAILIRE',
   secondPassphraseRegisteredFailureReset: 'SECOND_PASSPHRASE_REGISTRATION_FAILIRE_RESET',
