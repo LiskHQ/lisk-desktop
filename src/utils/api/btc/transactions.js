@@ -1,4 +1,4 @@
-import bitcoin from 'bitcoinjs-lib';
+import * as bitcoin from 'bitcoinjs-lib';
 import getBtcConfig from './config';
 import { extractAddress, getDerivedPathFromPassphrase } from './account';
 import { validateAddress } from '../../validators';
@@ -126,10 +126,11 @@ export const create = ({
   // eslint-disable-next-line max-statements
 }) => new Promise(async (resolve, reject) => {
   try {
+    const config = getBtcConfig(1); // TODO fix this to get config from redux
     amount = Number(amount);
     dynamicFeePerByte = Number(dynamicFeePerByte);
 
-    const senderAddress = extractAddress(passphrase);
+    const senderAddress = extractAddress(passphrase, config);
     const unspentTxOuts = await exports.getUnspentTransactionOutputs(senderAddress);
 
     // Estimate total cost (currently estimates max cost by assuming the worst case)
@@ -163,7 +164,6 @@ export const create = ({
       sumOfConsumedOutputs += tx.value;
     }
 
-    const config = getBtcConfig(1); // TODO fix this to get config from redux
     const txb = new bitcoin.TransactionBuilder(config.network);
 
     // Add inputs from unspent txOuts
@@ -190,7 +190,7 @@ export const create = ({
     txb.addOutput(senderAddress, change);
 
     // Sign inputs
-    const derivedPath = getDerivedPathFromPassphrase(passphrase);
+    const derivedPath = getDerivedPathFromPassphrase(passphrase, config);
     const keyPair = bitcoin.ECPair.fromWIF(derivedPath.toWIF(), config.network);
     for (let i = 0; i < txOutsToConsume.length; i++) {
       txb.sign(i, keyPair);
@@ -214,7 +214,7 @@ export const broadcast = transactionHex => new Promise(async (resolve, reject) =
     const json = await response.json();
 
     if (response.ok) {
-      resolve(json);
+      resolve(json.data);
     } else {
       reject(json);
     }

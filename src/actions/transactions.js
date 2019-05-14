@@ -13,7 +13,6 @@ import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
-import { tokenMap } from '../constants/tokens';
 import { transactions as transactionsAPI } from '../utils/api';
 
 export const cleanTransactions = () => ({
@@ -290,28 +289,19 @@ export const sent = data => async (dispatch, getState) => {
   let broadcastTx;
   let tx;
   let fail;
-  const account = getState().account;
-  const networkConfig = getState().network;
+  const { account, network, settings } = getState().account;
   const timeOffset = getTimeOffset(getState());
-  const activeToken = getState().settings.token.active;
+  const activeToken = settings.token.active;
 
-  data = { ...data, timeOffset };
+  const txData = { ...data, timeOffset };
 
   try {
     if (account.loginType === loginType.normal) {
-      tx = await transactionsAPI.create(activeToken, data);
-
-      if (activeToken === tokenMap.LSK.key) {
-        broadcastTx = await transactionsAPI.broadcast(activeToken, networkConfig, tx);
-      }
-      if (activeToken === tokenMap.BTC.key) {
-        await transactionsAPI.broadcast(activeToken, networkConfig, tx);
-      }
-    }
-
-    if (account.loginType === loginType.ledger || account.loginType === loginType.trezor) {
+      tx = await transactionsAPI.create(activeToken, txData);
+      broadcastTx = await transactionsAPI.broadcast(activeToken, tx, network);
+    } else {
       [fail, broadcastTx] = await to(sendWithHW(
-        networkConfig,
+        network,
         account,
         data.recipientId,
         data.amount,
@@ -324,21 +314,62 @@ export const sent = data => async (dispatch, getState) => {
 
     loadingFinished('sent');
     dispatch(transactionAdded({
-      amount: data.amount,
-      asset: { reference: data.data },
+      amount: txData.amount,
+      asset: { reference: txData.data },
       fee: Fees.send,
       id: broadcastTx.id,
-      recipientId: data.recipientId,
-      senderId: account.address,
+      recipientId: txData.recipientId,
+      senderId: account.info[activeToken].address,
       senderPublicKey: account.publicKey,
       type: transactionTypes.send,
     }));
 
-    dispatch(passphraseUsed(data.passphrase));
+    dispatch(passphraseUsed(txData.passphrase));
   } catch (error) {
     loadingFinished('sent');
     handleSentError({
       error, account, tx, dispatch,
     });
+  }
+};
+
+
+export const transactionCreated = data => async (dispatch, getState) => {
+  let tx;
+  const state = getState();
+  const { account, settings: { token } } = state;
+  const timeOffset = getTimeOffset(state);
+  const txData = { ...data, timeOffset };
+
+  // try removing the try catch
+  try {
+    tx = await transactionsAPI.create(token.active, txData, account.loginType);
+
+    return tx;
+  } catch (error) {
+    return handleSentError({ error, dispatch });
+  }
+};
+
+export const transactionBroadcasted = transaction => async (dispatch, getState) => {
+  const { account, network, settings: { token } } = getState();
+
+  try {
+    const broadcastTx = await transactionsAPI.broadcast(token.active, transaction, network);
+
+    dispatch(transactionAdded({
+      amount: transaction.amount,
+      asset: { reference: transaction.data },
+      fee: Fees.send,
+      id: broadcastTx.id,
+      recipientId: transaction.recipientId,
+      senderId: account.info[token.active].address,
+      senderPublicKey: account.publicKey,
+      type: transactionTypes.send,
+    }));
+
+    dispatch(passphraseUsed(transaction.passphrase));
+  } catch (error) {
+    handleSentError({ error, transaction, dispatch });
   }
 };
