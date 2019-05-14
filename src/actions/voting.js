@@ -145,6 +145,7 @@ export const votePlaced = ({
         amount: 0,
         fee: Fees.vote,
         type: transactionTypes.vote,
+        token: 'LSK',
       }));
       dispatch(passphraseUsed(passphrase));
       goToNextStep({ success: true });

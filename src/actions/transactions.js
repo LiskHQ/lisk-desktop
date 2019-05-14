@@ -307,6 +307,7 @@ export const sent = ({
         fee: Fees.send,
         type: transactionTypes.send,
         asset: { data },
+        token: 'LSK', // TODO use the passed token once implemented
       }));
       dispatch(passphraseUsed(passphrase));
     }

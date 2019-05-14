@@ -123,6 +123,7 @@ export const secondPassphraseRegistered = ({ secondPassphrase, account, passphra
             amount: 0,
             fee: Fees.setSecondPassphrase,
             type: transactionTypes.setSecondPassphrase,
+            token: 'LSK',
           },
           type: actionTypes.transactionAdded,
         });
@@ -167,6 +168,7 @@ export const delegateRegistered = ({
             amount: 0,
             fee: Fees.registerDelegate,
             type: transactionTypes.registerDelegate,
+            token: 'LSK',
           },
           type: actionTypes.transactionAdded,
         });
