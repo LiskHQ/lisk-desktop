@@ -7,7 +7,6 @@ import txFilters from '../../constants/transactionFilters';
 import txTypes from '../../constants/transactionTypes';
 import styles from './transactionsList.css';
 import { parseSearchParams } from '../../utils/searchParams';
-import DelegateStatistics from './delegateStatistics';
 import UserVotes from './userVotes';
 
 class TransactionsList extends React.Component {
@@ -67,24 +66,12 @@ class TransactionsList extends React.Component {
       return null;
     }
 
-    const isDelegateStatistics = tabObj && (tabObj.value === txFilters.statistics);
-
-    if (isDelegateStatistics) {
-      return <DelegateStatistics
-        delegate={this.props.delegate}
-        votes={this.props.votes}
-        voters={this.props.voters}
-        votersSize={this.props.votersSize} />;
-    }
-
     const isAccountInfo = tabObj && (tabObj.value === txFilters.accountInfo);
 
     if (isAccountInfo) {
       return <UserVotes
         delegate={this.props.delegate}
-        votes={this.props.votes}
-        voters={this.props.voters}
-        votersSize={this.props.votersSize} />;
+        votes={this.props.votes} />;
     }
 
     return <div className={`${styles.results} ${this.props.isBarEnabledTransactions ? styles.onBarEnabled : ''} ${showMore && styles.onShowMore} transaction-results`}>
