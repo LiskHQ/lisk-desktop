@@ -109,10 +109,11 @@ export const searchAccount = ({ address }) =>
 
 export const searchTransactions = ({
   address, limit, filter, showLoading = true, customFilters = {},
+  actionType = actionTypes.searchTransactions,
 }) =>
   (dispatch, getState) => {
     const networkConfig = getState().network;
-    if (showLoading) dispatch(loadingStarted(actionTypes.searchTransactions));
+    if (showLoading) dispatch(loadingStarted(actionType));
     /* istanbul ignore else */
     if (networkConfig) {
       getTransactions({
@@ -127,9 +128,9 @@ export const searchTransactions = ({
               filter,
               customFilters,
             },
-            type: actionTypes.searchTransactions,
+            type: actionType,
           });
-          if (filter !== undefined) {
+          if (filter !== undefined && actionType === actionTypes.searchTransactions) {
             dispatch({
               data: {
                 filterName: 'transactions',
@@ -138,34 +139,17 @@ export const searchTransactions = ({
               type: actionTypes.addFilter,
             });
           }
-          if (showLoading) dispatch(loadingFinished(actionTypes.searchTransactions));
+          if (showLoading) dispatch(loadingFinished(actionType));
         });
     }
   };
 
-export const searchMoreTransactions = ({
-  address, limit, offset, filter, customFilters = {},
-}) =>
-  (dispatch, getState) => {
-    const networkConfig = getState().network;
-    dispatch(loadingStarted(actionTypes.searchMoreTransactions));
-    getTransactions({
-      networkConfig, address, limit, offset, filter, customFilters,
-    })
-      .then((transactionsResponse) => {
-        dispatch({
-          data: {
-            address,
-            transactions: transactionsResponse.data,
-            count: parseInt(transactionsResponse.meta.count, 10),
-            filter,
-            customFilters,
-          },
-          type: actionTypes.searchMoreTransactions,
-        });
-        dispatch(loadingFinished(actionTypes.searchMoreTransactions));
-      });
-  };
+export const searchMoreTransactions = params => (
+  searchTransactions({
+    ...params,
+    actionType: actionTypes.searchMoreTransactions,
+  })
+);
 
 export const clearSearchSuggestions = () => ({
   data: {},
