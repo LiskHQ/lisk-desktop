@@ -1,8 +1,8 @@
+// TODO this file can be removed
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
 import UserVotes from './userVotes';
-import VotedDelegates from './votedDelegates';
 import LiskAmount from '../liskAmount';
 import voting from '../../constants/voting';
 import styles from './delegateStatistics.css';
@@ -51,7 +51,6 @@ class DelegateStatistics extends React.Component {
           </div>
         </div>
         <UserVotes {...this.props} />
-        <VotedDelegates {...this.props} />
       </div>
     );
   }

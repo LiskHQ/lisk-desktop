@@ -113,6 +113,5 @@ describe('TransactionsList', () => {
     };
     wrapper = mount(<TransactionsList {...propsDelegateStatistics} />, options);
     expect(wrapper.find('.user-votes')).to.have.lengthOf(1);
-    expect(wrapper.find('.voters')).to.have.lengthOf(1);
   });
 });
