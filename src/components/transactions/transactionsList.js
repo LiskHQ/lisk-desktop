@@ -7,7 +7,6 @@ import txFilters from '../../constants/transactionFilters';
 import txTypes from '../../constants/transactionTypes';
 import styles from './transactionsList.css';
 import { parseSearchParams } from '../../utils/searchParams';
-import UserVotes from './userVotes';
 
 class TransactionsList extends React.Component {
   componentWillReceiveProps(nextProps) {
@@ -64,14 +63,6 @@ class TransactionsList extends React.Component {
         </p>;
       }
       return null;
-    }
-
-    const isAccountInfo = tabObj && (tabObj.value === txFilters.accountInfo);
-
-    if (isAccountInfo) {
-      return <UserVotes
-        delegate={this.props.delegate}
-        votes={this.props.votes} />;
     }
 
     return <div className={`${styles.results} ${this.props.isBarEnabledTransactions ? styles.onBarEnabled : ''} ${showMore && styles.onShowMore} transaction-results`}>
