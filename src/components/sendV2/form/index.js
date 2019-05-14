@@ -6,7 +6,7 @@ import Form from './form';
 
 const mapStateToProps = state => ({
   account: state.account,
-  followedAccounts: state.followedAccounts.accounts,
+  followedAccounts: state.followedAccounts,
 });
 
 export default connect(mapStateToProps)(translate()(Form));

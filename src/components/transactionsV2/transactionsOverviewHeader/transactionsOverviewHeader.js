@@ -60,15 +60,18 @@ class transactionsHeader extends React.Component {
 
   render() {
     const {
-      followedAccounts, address, t, delegate = {}, activeToken,
+      followedAccounts, address, t, delegate = {}, activeToken, detailAccount,
     } = this.props;
 
-    const isFollowing = getIndexOfFollowedAccount(followedAccounts, { address }) !== -1;
+    const isFollowing = getIndexOfFollowedAccount(followedAccounts, {
+      address, token: activeToken,
+    }) !== -1;
     const isWalletRoute = this.props.match.url === routes.wallet.path;
 
     return (
       <header className={`${styles.wrapper}`}>
         <HeaderAccountInfo
+          token={activeToken}
           followedAccounts={followedAccounts}
           address={address}
           delegate={delegate}
@@ -127,9 +130,10 @@ class transactionsHeader extends React.Component {
               showDropdown={this.state.shownDropdown === 'followDropdown'}
               className={`${styles.followDropdown}`}>
                 <FollowAccount
+                  token={activeToken}
                   delegate={delegate}
-                  balance={this.props.balance}
                   address={address}
+                  detailAccount={detailAccount}
                   isFollowing={isFollowing} />
               </DropdownV2>
             </span>

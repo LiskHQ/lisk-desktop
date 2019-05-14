@@ -1,4 +1,6 @@
 import React from 'react';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import PropTypes from 'prop-types';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
@@ -8,10 +10,12 @@ import RegisterV2 from './registerV2';
 
 describe('V2 Register Process', () => {
   let wrapper;
+  const store = configureMockStore([thunk])({});
   const options = {
-    context: { i18n },
+    context: { i18n, store },
     childContextTypes: {
       i18n: PropTypes.object.isRequired,
+      store: PropTypes.object.isRequired,
     },
   };
 

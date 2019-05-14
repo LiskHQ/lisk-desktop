@@ -1,34 +1,16 @@
 import actionTypes from '../constants/actions';
-import { getAccount } from '../utils/api/account';
 
-export const followedAccountAdded = account => ({
-  data: account,
+export const followedAccountAdded = ({ account, token = 'LSK' }) => ({
+  data: { account, token },
   type: actionTypes.followedAccountAdded,
 });
 
-export const followedAccountUpdated = account => ({
-  data: account,
+export const followedAccountUpdated = ({ account, token = 'LSK' }) => ({
+  data: { account, token },
   type: actionTypes.followedAccountUpdated,
 });
 
-export const followedAccountRemoved = account => ({
-  data: account,
+export const followedAccountRemoved = ({ address, token = 'LSK' }) => ({
+  data: { address, token },
   type: actionTypes.followedAccountRemoved,
 });
-
-export const followedAccountsRetrieved = accounts => ({
-  data: accounts,
-  type: actionTypes.followedAccountsRetrieved,
-});
-
-export const followedAccountFetchedAndUpdated = ({ account }) =>
-  (dispatch, getState) => {
-    const networkConfig = getState().network;
-    getAccount({ networkConfig, address: account.address }).then((result) => {
-      if (result.balance !== account.balance || result.publicKey !== account.publicKey) {
-        account.balance = result.balance;
-        if (result.publicKey) account.publicKey = result.publicKey;
-        dispatch(followedAccountUpdated(account));
-      }
-    });
-  };

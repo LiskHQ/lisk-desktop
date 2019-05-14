@@ -102,7 +102,7 @@ class TransactionsOverviewV2 extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  followedAccounts: state.followedAccounts.accounts,
+  followedAccounts: state.followedAccounts,
   peers: state.peers,
   account: state.account,
 });

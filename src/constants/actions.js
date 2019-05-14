@@ -24,7 +24,6 @@ const actionTypes = {
   dynamicFeesRetrieved: 'DYNAMIC_FEES_RETRIEVED',
   followedAccountAdded: 'FOLLOWED_ACCOUNT_ADDED',
   followedAccountRemoved: 'FOLLOWED_ACCOUNTS_REMOVED',
-  followedAccountsRetrieved: 'FOLLOWED_ACCOUNTS_RETRIEVED',
   followedAccountUpdated: 'FOLLOWED_ACCOUNT_UPDATED',
   getNewsFeed: 'GET_NEWS_FEED',
   // TODO next 3 lines should be removed after the new 'network' actions are used everywhere

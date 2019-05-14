@@ -19,23 +19,21 @@ describe('BookmarkV2', () => {
     validateBookmark: jest.fn(),
     onChange: jest.fn(),
     onSelectedAccount: jest.fn(),
-    followedAccounts: [
-      {
+    followedAccounts: {
+      LSK: [{
         title: 'ABC',
         address: '12345L',
-        balance: 10,
       },
       {
         title: 'FRG',
         address: '12375L',
-        balance: 15,
       },
       {
         title: 'KTG',
         address: '12395L',
-        balance: 7,
-      },
-    ],
+      }],
+      BTC: [],
+    },
     placeholder: 'e.g. 1234523423L or John Doe',
     recipient: {
       address: '',

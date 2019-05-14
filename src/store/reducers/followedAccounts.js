@@ -1,38 +1,45 @@
 import { getIndexOfFollowedAccount, getFollowedAccountsFromLocalStorage } from '../../utils/followedAccounts';
 import actionTypes from '../../constants/actions';
 
-const followedAccounts = (state = { accounts: getFollowedAccountsFromLocalStorage() }, action) => {
-  const accounts = [...state.accounts];
-  let indexOfAccount;
-
+const followedAccounts = (state = getFollowedAccountsFromLocalStorage(), action) => {
   switch (action.type) {
-    case actionTypes.followedAccountsRetrieved:
-      return { accounts: action.data };
-
     case actionTypes.followedAccountAdded:
-      accounts.push(action.data);
-      return { accounts };
+      return {
+        ...state,
+        [action.data.token]: [
+          ...state[action.data.token],
+          {
+            ...action.data.account,
+          },
+        ],
+      };
 
-    case actionTypes.followedAccountUpdated:
-      indexOfAccount = getIndexOfFollowedAccount(state.accounts, action.data);
-
+    case actionTypes.followedAccountUpdated: {
+      const indexOfAccount = getIndexOfFollowedAccount(state, {
+        address: action.data.account.address,
+        token: action.data.token,
+      });
+      const accounts = state[action.data.token];
       if (indexOfAccount !== -1) {
         const changedAccount = {
           ...accounts[indexOfAccount],
-          balance: action.data.balance,
-          address: action.data.address,
-          title: action.data.title,
-          publicKey: action.data.publicKey,
+          address: action.data.account.address,
+          title: action.data.account.title,
+          publicKey: action.data.account.publicKey,
         };
         accounts[indexOfAccount] = changedAccount;
       }
 
-      return { accounts };
-
+      return {
+        ...state,
+        [action.data.token]: accounts,
+      };
+    }
     case actionTypes.followedAccountRemoved:
       return {
         ...state,
-        accounts: state.accounts.filter(account => !(account.address === action.data.address)),
+        [action.data.token]:
+          state[action.data.token].filter(account => !(account.address === action.data.address)),
       };
 
     default:

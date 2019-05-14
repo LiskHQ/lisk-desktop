@@ -35,7 +35,8 @@ describe('ExplorerTransactions V2 Component', () => {
     peers,
     account: accounts.genesis,
     followedAccounts: {
-      accounts: [],
+      LSK: [],
+      BTC: [],
     },
     settings: {},
   });
@@ -58,7 +59,10 @@ describe('ExplorerTransactions V2 Component', () => {
     account: accounts['empty account'],
     match: { params: { address: accounts.genesis.address } },
     history: { push: jest.fn(), location: { search: ' ' } },
-    followedAccounts: [],
+    followedAccounts: {
+      LSK: [],
+      BTC: [],
+    },
     count: 1000,
     transactions,
     transaction: transactions[0],

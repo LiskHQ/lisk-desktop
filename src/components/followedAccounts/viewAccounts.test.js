@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import ViewAccounts from './viewAccounts';
 import routes from '../../constants/routes';
-import * as followedAccounts from '../../actions/followedAccounts';
 
 const fakeStore = configureStore([thunk]);
 
@@ -24,7 +23,7 @@ describe('Followed accounts list Component', () => {
   describe('Without followed accounts', () => {
     beforeEach(() => {
       const store = fakeStore({
-        followedAccounts: { accounts: [] },
+        followedAccounts: { LSK: [] },
       });
 
       wrapper = mount(<ViewAccounts {...props} />, {
@@ -50,24 +49,21 @@ describe('Followed accounts list Component', () => {
 
   describe('With followed accounts', () => {
     beforeEach(() => {
-      spy(followedAccounts, 'followedAccountUpdated');
-      spy(followedAccounts, 'followedAccountRemoved');
-
       const store = fakeStore({
         followedAccounts: {
-          accounts: [
+          LSK: [
             {
-              address: '123L', balance: 0, title: 'bob', isDelegate: false,
+              address: '123L', title: 'bob', isDelegate: false,
             }, {
-              address: '567L', balance: 100000, title: '', isDelegate: false,
+              address: '567L', title: '', isDelegate: false,
             }, {
-              address: '23467L', balance: 30000, title: '', isDelegate: false,
+              address: '23467L', title: '', isDelegate: false,
             }, {
-              address: '23464567L', balance: 3000, title: '', isDelegate: false,
+              address: '23464567L', title: '', isDelegate: false,
             }, {
-              address: '2346456347L', balance: 3000, title: '', isDelegate: false,
+              address: '2346456347L', title: '', isDelegate: false,
             }, {
-              address: '234645634347L', balance: 3000, title: '', isDelegate: false,
+              address: '234645634347L', title: '', isDelegate: false,
             },
           ],
         },
@@ -82,20 +78,13 @@ describe('Followed accounts list Component', () => {
       });
     });
 
-    afterEach(() => {
-      followedAccounts.followedAccountUpdated.restore();
-      followedAccounts.followedAccountRemoved.restore();
-    });
-
     it('shows list of followed accounts', () => {
       expect(wrapper.find('.followed-accounts-empty-list')).to.have.length(0);
       expect(wrapper.find('.followed-accounts-list')).to.have.length(1);
 
       expect(wrapper.find('.account-title input').at(0)).to.have.value('bob');
-      expect(wrapper.find('LiskAmount').at(0).text()).to.contain(0);
 
       expect(wrapper.find('.account-title input').at(1)).to.have.value('567L');
-      expect(wrapper.find('LiskAmount').at(1).text()).to.contain(1);
     });
 
     it('directs you to account page on click', () => {
@@ -113,10 +102,7 @@ describe('Followed accounts list Component', () => {
 
       wrapper.find('.edit-accounts').simulate('click');
       wrapper.find('.remove-account').at(0).simulate('click');
-
-      expect(followedAccounts.followedAccountRemoved).to.have.been.calledWith({
-        address: '123L', balance: 0, title: 'bob', isDelegate: false,
-      });
+      expect(wrapper.find('.editMode span').at(0)).to.not.be.eq('123L');
     });
 
     it('edits an accounts title', () => {
@@ -129,7 +115,7 @@ describe('Followed accounts list Component', () => {
       // exit edit mode
       wrapper.find('.edit-accounts').simulate('click');
 
-      expect(followedAccounts.followedAccountUpdated).to.not.have.been.calledWith();
+      expect(wrapper.find('.account-title input').at(1)).to.have.value('567L');
 
       // activate edit mode
       wrapper.find('.edit-accounts').simulate('click');
@@ -138,7 +124,7 @@ describe('Followed accounts list Component', () => {
       // exit edit mode
       wrapper.find('.edit-accounts').simulate('click');
 
-      expect(followedAccounts.followedAccountUpdated).to.not.have.been.calledWith();
+      expect(wrapper.find('.account-title input').at(1)).to.have.value('567L');
 
       // activate edit mode
       wrapper.find('.edit-accounts').simulate('click');
@@ -148,9 +134,6 @@ describe('Followed accounts list Component', () => {
       wrapper.find('.edit-accounts').simulate('click');
 
       expect(wrapper.find('.account-title input').at(1)).to.have.value('my friend');
-      expect(followedAccounts.followedAccountUpdated).to.have.been.calledWith({
-        address: '567L', balance: 100000, title: 'my friend', isDelegate: false,
-      });
     });
 
     it('should render showMore button propery', () => {
