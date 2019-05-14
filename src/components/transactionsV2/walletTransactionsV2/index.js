@@ -29,7 +29,8 @@ const mapStateToProps = (state, ownProps) => ({
     removeDuplicateTransactions(
       state.transactions.pending,
       state.transactions.confirmed,
-    ),
+    ).filter(tx => !state.settings.token ||
+      state.settings.token.active === tx.token),
   count: state.transactions.count,
   activeFilter: state.filters.wallet || txFilters.all,
   loading: state.loading,
