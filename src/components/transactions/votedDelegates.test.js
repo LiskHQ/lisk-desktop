@@ -19,7 +19,6 @@ describe('VotedDelegates', () => {
       balance: '0',
     }),
     votersSize: 100,
-    searchMoreVoters: spy(),
   };
 
   it('should render 100 voters', () => {

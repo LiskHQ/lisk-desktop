@@ -127,7 +127,6 @@ class TransactionsOverview extends React.Component {
             votes={this.props.votes}
             voters={this.props.voters}
             votersSize={this.props.votersSize}
-            searchMoreVoters={this.props.searchMoreVoters}
             address={this.props.address}
             publicKey={this.props.publicKey}
             transactions={this.props.transactions}

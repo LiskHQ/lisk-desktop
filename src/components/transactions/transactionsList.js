@@ -74,8 +74,7 @@ class TransactionsList extends React.Component {
         delegate={this.props.delegate}
         votes={this.props.votes}
         voters={this.props.voters}
-        votersSize={this.props.votersSize}
-        searchMoreVoters={this.props.searchMoreVoters} />;
+        votersSize={this.props.votersSize} />;
     }
 
     const isAccountInfo = tabObj && (tabObj.value === txFilters.accountInfo);
@@ -85,8 +84,7 @@ class TransactionsList extends React.Component {
         delegate={this.props.delegate}
         votes={this.props.votes}
         voters={this.props.voters}
-        votersSize={this.props.votersSize}
-        searchMoreVoters={this.props.searchMoreVoters} />;
+        votersSize={this.props.votersSize} />;
     }
 
     return <div className={`${styles.results} ${this.props.isBarEnabledTransactions ? styles.onBarEnabled : ''} ${showMore && styles.onShowMore} transaction-results`}>

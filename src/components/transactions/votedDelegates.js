@@ -1,3 +1,4 @@
+// TODO remove this file
 import React from 'react';
 import Waypoint from 'react-waypoint';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
@@ -38,11 +39,7 @@ class VotedDelegates extends AccountList {
             </div> :
             <Waypoint
               key={voters.length}
-              onEnter={() => {
-                if (voters.length < this.props.votersSize) {
-                  super.searchMoreVoters();
-                }
-              }}>
+              onEnter={() => { }}>
             </Waypoint>
           }
         </div>

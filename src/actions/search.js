@@ -88,47 +88,6 @@ const searchVotes = ({ address, offset, limit }) =>
     dispatch(loadingFinished(actionTypes.searchVotes));
   };
 
-/* istanbul ignore next */
-/* because it's not used anymore and should be removed in #1911 */
-const searchVoters = ({
-  address, publicKey, offset, limit, append,
-}) =>
-  (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    /* istanbul ignore else */
-    if (liskAPIClient) {
-      getVoters(liskAPIClient, {
-        publicKey, offset, limit,
-      }).then(response =>
-        dispatch({
-          type: actionTypes.searchVoters,
-          data: {
-            append: append || false,
-            voters: response.data.voters,
-            votersSize: response.data.votes,
-            address,
-          },
-        }));
-    }
-  };
-
-/* istanbul ignore next */
-/* because it's not used anymore and should be removed in #1911 */
-export const searchMoreVoters = ({ address, offset = 0, limit = 100 }) =>
-  (dispatch, getState) => {
-    const networkConfig = getState().network;
-    getAccount({ networkConfig, address }).then((response) => {
-      const accountData = {
-        ...response,
-      };
-      if (accountData.publicKey) {
-        dispatch(searchVoters({
-          address, publicKey: accountData.publicKey, offset, limit, append: true,
-        }));
-      }
-    });
-  };
-
 export const searchAccount = ({ address }) =>
   (dispatch, getState) => {
     const networkConfig = getState().network;
@@ -140,7 +99,6 @@ export const searchAccount = ({ address }) =>
         };
         if (accountData.delegate && accountData.delegate.username) {
           dispatch(searchDelegate({ publicKey: accountData.publicKey, address }));
-          dispatch(searchVoters({ address, publicKey: accountData.publicKey }));
         }
         dispatch({ data: accountData, type: actionTypes.searchAccount });
         dispatch(updateWallet(response, getState().peers));
