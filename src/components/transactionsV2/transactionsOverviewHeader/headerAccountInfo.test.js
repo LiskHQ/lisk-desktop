@@ -6,10 +6,11 @@ import HeaderAccountInfo from './headerAccountInfo';
 describe('HeaderAccountInfo Component', () => {
   const defaultProps = {
     address: accounts.genesis.address,
-    followedAccounts: [],
+    followedAccounts: { LSK: [], BTC: [] },
     account: accounts.genesis,
     delegate: {},
     t: v => v,
+    token: 'LSK',
   };
 
   it('Should show information for own account', () => {
@@ -24,10 +25,13 @@ describe('HeaderAccountInfo Component', () => {
   it('Should show information for followed account', () => {
     const props = {
       ...defaultProps,
-      followedAccounts: [{
-        address: accounts['empty account'].address,
-        title: 'following-test',
-      }],
+      followedAccounts: {
+        LSK: [{
+          address: accounts['empty account'].address,
+          title: 'following-test',
+        }],
+        BTC: [],
+      },
       address: accounts['empty account'].address,
     };
     const wrapper = mount(<HeaderAccountInfo {...props} />);

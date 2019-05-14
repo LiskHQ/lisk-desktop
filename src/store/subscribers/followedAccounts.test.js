@@ -1,8 +1,8 @@
-import { expect } from 'chai';
-import { spy } from 'sinon';
 import followedAccounts from './followedAccounts';
 import * as followedAccountsUtils from '../../utils/followedAccounts';
 import accounts from '../../../test/constants/accounts';
+
+jest.mock('../../utils/followedAccounts');
 
 describe('Subscriber: followedAccounts(state)', () => {
   const account = {
@@ -17,15 +17,12 @@ describe('Subscriber: followedAccounts(state)', () => {
   };
 
   it('should save accounts in localStorage', () => {
-    spy(followedAccountsUtils, 'setFollowedAccountsInLocalStorage');
-    const state = { followedAccounts: { accounts: [account, account2] } };
+    const state = { followedAccounts: { LSK: [account, account2], BTC: [] } };
     const store = { getState: () => state };
 
     followedAccounts(store);
     expect(followedAccountsUtils.setFollowedAccountsInLocalStorage)
-      .to.have.been.calledWith(state.followedAccounts.accounts);
-
-    followedAccountsUtils.setFollowedAccountsInLocalStorage.restore();
+      .toBeCalledWith(state.followedAccounts);
   });
 });
 

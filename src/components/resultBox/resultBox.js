@@ -6,6 +6,8 @@ import CopyToClipboard from '../copyToClipboard';
 import Piwik from '../../utils/piwik';
 import styles from './resultBox.css';
 import check from '../../assets/images/icons/check.svg';
+import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
+import { getTokenFromAddress } from '../../utils/api/transactions';
 
 class ResultBox extends React.Component {
   componentDidMount() {
@@ -15,7 +17,9 @@ class ResultBox extends React.Component {
   }
 
   isNotYetFollowed(address) {
-    return this.props.followedAccounts.find(account => account.address === address) === undefined;
+    const { followedAccounts } = this.props;
+    const token = getTokenFromAddress(address);
+    return getIndexOfFollowedAccount(followedAccounts, { address, token }) === -1;
   }
 
   handleRetryButton() {

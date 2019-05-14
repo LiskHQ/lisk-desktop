@@ -40,7 +40,7 @@ describe('Form', () => {
       balance: accounts.genesis.balance,
     },
     followedAccounts: {
-      accounts: [
+      LSK: [
         {
           title: 'ABC',
           address: '12345L',
@@ -60,6 +60,7 @@ describe('Form', () => {
     },
     search: {
       delegates: {},
+      accounts: {},
     },
   });
 
@@ -87,8 +88,8 @@ describe('Form', () => {
     prevState: {
       fields: {},
     },
-    followedAccounts: [
-      {
+    followedAccounts: {
+      LSK: [{
         title: 'ABC',
         address: '12345L',
         balance: 10,
@@ -102,8 +103,8 @@ describe('Form', () => {
         title: 'KTG',
         address: '12395L',
         balance: 7,
-      },
-    ],
+      }],
+    },
     history: {
       location: {
         path: '/wallet/sendV2/send',

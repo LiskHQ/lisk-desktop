@@ -38,7 +38,9 @@ describe('Result Box', () => {
       transactionFailedClear: () => {},
       t: () => {},
       history: { location: {}, push: () => {}, replace: () => {} },
-      followedAccounts: [],
+      followedAccounts: {
+        LSK: [],
+      },
     };
 
     wrapper = mount(<ResultBox {...props} />, options);
@@ -65,7 +67,9 @@ describe('Result Box', () => {
       reset: () => {},
       copyToClipboard: () => {},
       t: () => {},
-      followedAccounts: [],
+      followedAccounts: {
+        LSK: [],
+      },
     };
 
     wrapper = mount(<ResultBox {...props} />, options);
@@ -87,7 +91,9 @@ describe('Result Box', () => {
       copyToClipboard: () => {},
       t: () => {},
       onMount: spy(),
-      followedAccounts: [],
+      followedAccounts: {
+        LSK: [],
+      },
       account: {},
     };
 
@@ -107,9 +113,11 @@ describe('Result Box', () => {
       t: () => {},
       onMount: spy(),
       recipientId: '123L',
-      followedAccounts: [{
-        address: '1L',
-      }],
+      followedAccounts: {
+        LSK: [{
+          address: '1L',
+        }],
+      },
       account: {
         hwInfo: {},
       },
@@ -131,7 +139,9 @@ describe('Result Box', () => {
       reset: () => {},
       copyToClipboard: () => {},
       t: () => {},
-      followedAccounts: ['123'],
+      followedAccounts: {
+        LSK: [],
+      },
       prevStep: spy(),
       transactionFailedClear: spy(),
     };
@@ -153,7 +163,9 @@ describe('Result Box', () => {
       reset: () => {},
       copyToClipboard: () => {},
       t: () => {},
-      followedAccounts: ['123'],
+      followedAccounts: {
+        LSK: [],
+      },
       nextStep: spy(),
     };
     wrapper = mount(<ResultBox {...props} />, options);

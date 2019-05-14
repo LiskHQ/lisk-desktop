@@ -49,7 +49,9 @@ const createTest = (type) => {
       type,
       senderId: accounts.delegate.address,
       showTransaction: true,
-      followedAccounts: [],
+      followedAccounts: {
+        LSK: [],
+      },
     };
     const wrapper = mount(<TransactionTypeV2 {...props} />, options);
     expect(wrapper.find('.title')).toIncludeText(expectedValue);
@@ -65,7 +67,9 @@ describe('TransactionType V2', () => {
     const props = {
       type: 0,
       senderId: accounts.delegate.address,
-      followedAccounts: [],
+      followedAccounts: {
+        LSK: [],
+      },
     };
     const wrapper = mount(<TransactionTypeV2 {...props} />, options);
     expect(wrapper).toIncludeText(props.senderId);
@@ -76,10 +80,12 @@ describe('TransactionType V2', () => {
     const props = {
       type: 0,
       senderId: accounts.delegate.address,
-      followedAccounts: [{
-        address: accounts.delegate.address,
-        title,
-      }],
+      followedAccounts: {
+        LSK: [{
+          address: accounts.delegate.address,
+          title,
+        }],
+      },
     };
     const wrapper = mount(<TransactionTypeV2 {...props} />, options);
     expect(wrapper).toIncludeText(title);

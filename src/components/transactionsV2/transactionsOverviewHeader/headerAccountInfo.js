@@ -7,15 +7,15 @@ import styles from './transactionsOverviewHeader.css';
 // eslint-disable-next-line complexity
 const headerAccountInfo = ({
   t, address, followedAccounts, account,
-  delegate,
+  delegate, token,
 }) => {
   const index = getIndexOfFollowedAccount(
     followedAccounts,
-    { address },
+    { address, token },
   );
-
+  const accounts = followedAccounts[token];
   const accountTitle = delegate.username
-    || (index > -1 && followedAccounts[index] && followedAccounts[index].title);
+    || (index > -1 && accounts[index] && accounts[index].title);
 
   const label =
     (address === account.address && t('My Account'))

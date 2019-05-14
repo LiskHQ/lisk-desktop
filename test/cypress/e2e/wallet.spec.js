@@ -3,7 +3,7 @@ import networks from '../../constants/networks';
 import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
 
-const getFollowedAccountObjFromLS = () => JSON.parse(localStorage.getItem('followedAccounts'));
+const getFollowedAccountObjFromLS = () => JSON.parse(localStorage.getItem('followedAccounts')).LSK;
 const checkAccountsPageIsLoaded = () => cy.get(ss.transactionSendButton);
 
 describe('Wallet', () => {

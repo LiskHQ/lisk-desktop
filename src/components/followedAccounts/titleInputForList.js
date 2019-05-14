@@ -3,6 +3,7 @@ import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
 import styles from './followedAccounts.css';
 import { followedAccountUpdated } from '../../actions/followedAccounts';
+import { getTokenFromAddress } from '../../utils/api/transactions';
 import TitleInput from './accountTitleInput';
 
 class TitleInputForList extends React.Component {
@@ -17,8 +18,11 @@ class TitleInputForList extends React.Component {
 
     if (!props.edit && newTitle.length && oldTitle !== newTitle && !error) {
       this.props.updateAccount({
-        ...props.account,
-        title: this.state.title.value,
+        account: {
+          ...props.account,
+          title: this.state.title.value,
+        },
+        token: getTokenFromAddress(props.account.address),
       });
     } else if (!props.edit && (!newTitle.length || error)) {
       this.setState({ title: { value: oldTitle } });
@@ -45,8 +49,8 @@ class TitleInputForList extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  updateAccount: data => dispatch(followedAccountUpdated(data)),
-});
+const mapDispatchToProps = {
+  updateAccount: followedAccountUpdated,
+};
 
 export default connect(null, mapDispatchToProps)(translate()(TitleInputForList));

@@ -33,7 +33,7 @@ describe('TransactionRow V2', () => {
   const props = {
     value: rowData,
     address: '16313739661670634666L',
-    followedAccounts: [],
+    followedAccounts: { LSK: [], BTC: [] },
   };
 
   const options = {
