@@ -29,7 +29,7 @@ const getActiveTokenAccount = state => (
 const mapStateToProps = state => ({
   address: getActiveTokenAccount(state).address,
   balance: getActiveTokenAccount(state).balance,
-  activeToken: state.settings.token.active,
+  activeToken: state.settings.token ? state.settings.token.active : tokenMap.LSK.key,
   account: {
     ...state.account,
     ...(getActiveTokenAccount(state)),
