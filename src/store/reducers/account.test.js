@@ -79,17 +79,6 @@ describe('Reducer: account(state, action)', () => {
     expect(changedAccount.passphrase).to.be.equal(null);
   });
 
-  it('should reduce account delegate when updateDelegate has been triggered', () => {
-    const action = {
-      data: {
-        delegate: accounts['delegate candidate'],
-      },
-      type: actionTypes.updateDelegate,
-    };
-    const accountWithDelegateUpdated = account(state, action);
-    expect(accountWithDelegateUpdated.delegate).to.be.equal(accounts['delegate candidate']);
-  });
-
   it('should reduce account delegate when loading transactions', () => {
     const action = {
       data: {
@@ -125,19 +114,6 @@ describe('Reducer: account(state, action)', () => {
     };
     const changedAccount = account({}, action);
     expect(changedAccount).to.deep.equal({ voters: action.voters });
-  });
-
-  it('should add lastBlock and txRegisterDelegate to state', () => {
-    const action = {
-      type: actionTypes.delegateStatsLoaded,
-      data: {
-        lastBlock: { timestamp: 0 },
-        txRegisterDelegate: { timestamp: 0 },
-      },
-    };
-    const initialState = { delegate: {} };
-    const changedAccount = account(initialState, action);
-    expect(changedAccount).to.deep.equal({ delegate: action.data });
   });
 });
 

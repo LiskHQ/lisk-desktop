@@ -45,19 +45,6 @@ const account = (state = {}, action) => {
       return { ...state, votes: action.votes };
     case actionTypes.accountAddVoters:
       return { ...state, voters: action.voters };
-    case actionTypes.updateDelegate:
-      return {
-        ...state,
-        ...action.data,
-      };
-    case actionTypes.delegateStatsLoaded:
-      return {
-        ...state,
-        delegate: {
-          ...state.delegate,
-          ...action.data,
-        },
-      };
     default:
       return state;
   }
