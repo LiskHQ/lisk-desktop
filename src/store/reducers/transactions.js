@@ -24,7 +24,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
     case actionTypes.transactionAdded:
       return { ...state, pending: [action.data, ...state.pending] };
     case actionTypes.transactionFailed:
-      return { ...state, failed: { errorMessage: action.data.errorMessage } };
+      return { ...state, failed: { ...action.data } };
     case actionTypes.transactionFailedClear:
       return { ...state, failed: undefined };
     case actionTypes.transactionsFailed:

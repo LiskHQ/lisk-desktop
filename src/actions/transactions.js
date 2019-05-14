@@ -251,7 +251,9 @@ export const transactionsUpdated = ({
       });
   };
 
-const handleSentError = ({ error, account, dispatch }) => {
+const handleSentError = ({
+  error, account, transaction, dispatch,
+}) => {
   let text;
   switch (account.loginType) {
     case loginType.normal:
@@ -264,7 +266,10 @@ const handleSentError = ({ error, account, dispatch }) => {
       text = error.message;
   }
   dispatch({
-    data: { errorMessage: text },
+    data: {
+      errorMessage: text,
+      tx: { ...transaction },
+    },
     type: actionTypes.transactionFailed,
   });
 };
@@ -283,14 +288,18 @@ const handleSentError = ({ error, account, dispatch }) => {
 // eslint-disable-next-line max-statements
 export const sent = data => async (dispatch, getState) => {
   let broadcastTx;
+  let tx;
+  let fail;
   const account = getState().account;
   const networkConfig = getState().network;
   const timeOffset = getTimeOffset(getState());
   const activeToken = getState().settings.token.active;
 
+  data = { ...data, timeOffset };
+
   try {
     if (account.loginType === loginType.normal) {
-      const tx = await transactionsAPI.create(activeToken, { ...data, timeOffset });
+      tx = await transactionsAPI.create(activeToken, data);
 
       if (activeToken === tokenMap.LSK.key) {
         broadcastTx = await transactionsAPI.broadcast(activeToken, networkConfig, tx);
@@ -301,7 +310,7 @@ export const sent = data => async (dispatch, getState) => {
     }
 
     if (account.loginType === loginType.ledger || account.loginType === loginType.trezor) {
-      broadcastTx = await to(sendWithHW(
+      [fail, broadcastTx] = await to(sendWithHW(
         networkConfig,
         account,
         data.recipientId,
@@ -309,10 +318,11 @@ export const sent = data => async (dispatch, getState) => {
         data.secondPassphrase,
         data.data,
       ));
+
+      if (fail) throw new Error(fail);
     }
 
     loadingFinished('sent');
-
     dispatch(transactionAdded({
       amount: data.amount,
       asset: { reference: data.data },
@@ -327,6 +337,8 @@ export const sent = data => async (dispatch, getState) => {
     dispatch(passphraseUsed(data.passphrase));
   } catch (error) {
     loadingFinished('sent');
-    handleSentError({ error, account, dispatch });
+    handleSentError({
+      error, account, tx, dispatch,
+    });
   }
 };
