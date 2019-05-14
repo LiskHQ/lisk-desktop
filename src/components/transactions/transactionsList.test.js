@@ -102,16 +102,4 @@ describe('TransactionsList', () => {
       t: propsTxDetails.t,
     });
   });
-
-  it('should render delegate statistics', () => {
-    const propsDelegateStatistics = {
-      ...props,
-      filter: {
-        value: txFilters.statistics,
-        name: 'delegate-statistics',
-      },
-    };
-    wrapper = mount(<TransactionsList {...propsDelegateStatistics} />, options);
-    expect(wrapper.find('.user-votes')).to.have.lengthOf(1);
-  });
 });

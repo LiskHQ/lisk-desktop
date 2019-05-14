@@ -11,13 +11,8 @@ class AccountList extends React.Component {
     super(props);
     this.state = {
       showVotesNumber: 35,
-      showVotersNumber: 35,
-      showMoreVoters: true,
-      votersOffset: 100,
       loadAllVotes: false,
-      votersFilterQuery: '',
       votesFilterQuery: '',
-      votersSize: (props.voters && props.voters.length) || 0,
       votesSize: (props.votes && props.votes.length) || 0,
     };
   }
