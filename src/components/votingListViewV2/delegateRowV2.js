@@ -56,10 +56,10 @@ class DelegateRowV2 extends React.Component {
             <span className={`delegate-id ${styles.address}`}>{data.account.address}</span>
           </div>
         </div>
+        <div className={`${grid['col-md-3']} ${grid['col-xs-3']} ${styles.productivity} delegate-productivity`}>{data.productivity} %</div>
         <div className={`${grid['col-md-4']} ${styles.weight} vote-weight`}>
           <LiskAmount val={data.vote} /> {this.props.t(' LSK')}
         </div>
-        <div className={`${grid['col-md-3']} ${grid['col-xs-3']} ${styles.productivity} delegate-productivity`}>{data.productivity} %</div>
       </TableRow>
     );
   }

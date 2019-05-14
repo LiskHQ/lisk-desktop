@@ -7,6 +7,7 @@ import voteFilters from './../../constants/voteFilters';
 import { parseSearchParams } from '../../utils/searchParams';
 import VoteListV2 from './voteListV2';
 import DelegateListV2 from './delegateListV2';
+import ProgressBar from '../toolbox/progressBar/progressBar';
 
 // Create a new Table component injecting Head and Row
 class VotingListViewV2 extends React.Component {
@@ -20,6 +21,7 @@ class VotingListViewV2 extends React.Component {
       showInfo: true,
       activeFilter: voteFilters.all,
       safariClass: '',
+      isLoading: false,
     };
   }
 
@@ -76,10 +78,11 @@ class VotingListViewV2 extends React.Component {
    * @param {Number} limit - The maximum number of results
    */
   loadDelegates(q = '', refresh) {
+    const list = this.filter(this.props.delegates);
     this.freezeLoading = true;
-    this.offset = refresh ? -1 : this.offset;
+
     this.props.delegatesFetched({
-      offset: this.offset > -1 ? this.offset : 0,
+      offset: list.length !== 0 ? list[list.length - 1].rank : 0,
       q,
       refresh,
     });
@@ -89,16 +92,16 @@ class VotingListViewV2 extends React.Component {
    * load more data when scroll bar reaches end of the page
    */
   loadMore() {
-    /* istanbul-ignore-else */
-    if (!this.state.showChangeSummery && !this.freezeLoading
-      && this.props.totalDelegates >= this.offset) {
-      this.loadDelegates(this.query);
-    }
+    this.loadDelegates(this.query);
   }
 
   setActiveFilter(filter) {
+    setTimeout(() => {
+      this.setState({ isLoading: false });
+    }, 1000);
     this.setState({
       activeFilter: filter,
+      isLoading: true,
     });
   }
 
@@ -147,6 +150,11 @@ class VotingListViewV2 extends React.Component {
     } = this.props;
     return (
       <Fragment>
+        {this.props.delegates.length === 0 || this.state.isLoading ? (
+          <div className={styles.loadingOverlay}>
+            <ProgressBar type="linear" mode="indeterminate" theme={styles} className={'loading'}/>
+          </div>
+        ) : null}
         <VoteUrlProcessor toggleShowInfo={this.toggleShowInfo.bind(this)} show={this.showInfo()} />
         { !this.showInfo() ?
           <Fragment>

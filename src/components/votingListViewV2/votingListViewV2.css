@@ -253,6 +253,27 @@
   position: relative;
 }
 
+.loadingOverlay {
+  background: rgba(255, 255, 255, 0.8);
+  bottom: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.linear {
+  background: transparent !important;
+  height: 3px;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  & .value {
+    height: 3px;
+  }
+}
+
 @media (--xLarge-viewport) {
   .delegatesList {
     margin: 0px calc(0 - var(--box-padding-left-XL));
