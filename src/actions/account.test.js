@@ -103,6 +103,7 @@ describe('actions: account', () => {
         amount: 0,
         fee: Fees.setSecondPassphrase,
         type: transactionTypes.setSecondPassphrase,
+        token: 'LSK',
       };
 
       actionFunction(dispatch, getState);
@@ -169,6 +170,7 @@ describe('actions: account', () => {
         amount: 0,
         fee: Fees.registerDelegate,
         type: transactionTypes.registerDelegate,
+        token: 'LSK',
       };
 
       actionFunction(dispatch, getState);
