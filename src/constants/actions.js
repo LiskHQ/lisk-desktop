@@ -1,5 +1,4 @@
 const actionTypes = {
-  accountAddVoters: 'ACCOUNT_ADD_VOTERS',
   accountAddVotes: 'ACCOUNT_ADD_VOTES',
   accountLoading: 'ACCOUNT_LOADING',
   accountLoggedIn: 'ACCOUNT_LOGGED_IN',

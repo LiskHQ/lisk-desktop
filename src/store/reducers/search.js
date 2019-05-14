@@ -10,7 +10,6 @@ const search = (state = { // eslint-disable-line complexity
   accounts: {},
   delegates: {},
   votes: {},
-  voters: {},
   suggestions: {
     delegates: [],
     addresses: [],
