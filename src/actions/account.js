@@ -74,11 +74,6 @@ export const passphraseUsed = data => ({
   data,
 });
 
-export const delegateStatsLoaded = data => ({
-  type: actionTypes.delegateStatsLoaded,
-  data,
-});
-
 /**
  * Gets list of all votes
  */
@@ -140,12 +135,20 @@ export const updateDelegateAccount = ({ publicKey }) =>
     return getDelegate(liskAPIClient, { publicKey })
       .then((response) => {
         dispatch(accountUpdated({
-          ...getState().account.info.LSK,
-          delegate: response.data[0],
+          token: 'LSK',
+          delegate: {
+            ...(getState().account.info.LSK.delegate || {}),
+            ...response.data[0],
+          },
           isDelegate: true,
         }));
       });
   };
+
+
+// TODO change all uses of loadDelegate to updateDelegateAccount
+export const loadDelegate = updateDelegateAccount;
+
 
 /**
  *
@@ -177,19 +180,6 @@ export const delegateRegistered = ({
         dispatch(delegateRegisteredFailure(error));
       });
     dispatch(passphraseUsed(passphrase));
-  };
-
-export const loadDelegate = ({ publicKey }) =>
-  (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    getDelegate(liskAPIClient, { publicKey }).then((response) => {
-      dispatch({
-        data: {
-          delegate: response.delegate,
-        },
-        type: actionTypes.updateDelegate,
-      });
-    });
   };
 
 export const loadAccount = ({
@@ -276,9 +266,13 @@ export const updateAccountDelegateStats = account =>
       token, networkConfig, address, limit: 1, type: transactionTypes.registerDelegate,
     });
     const block = await getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 });
-    dispatch(delegateStatsLoaded({
-      lastBlock: (block.data[0] && block.data[0].timestamp) || '-',
-      txDelegateRegister: transaction.data[0],
+    dispatch(accountUpdated({
+      token: 'LSK',
+      delegate: {
+        ...(getState().account.info.LSK.delegate || {}),
+        lastBlock: (block.data[0] && block.data[0].timestamp) || '-',
+        txDelegateRegister: transaction.data[0],
+      },
     }));
   };
 
