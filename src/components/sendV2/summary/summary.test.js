@@ -99,7 +99,7 @@ describe('Summary', () => {
   });
 
   it('should disable "Next" button if secondPassphrase invalid for active account', () => {
-    expect(wrapper.find('.send-button').at(0).prop('disabled')).toBeFalsy();
+    expect(wrapper.find('.send-button').at(0).prop('disabled')).toBeTruthy();
     const clipboardData = {
       getData: () => accounts['second passphrase account'].passphrase,
     };

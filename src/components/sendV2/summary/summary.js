@@ -110,7 +110,7 @@ class Summary extends React.Component {
     this.setState({
       secondPassphrase: {
         ...this.state.secondPassphrase,
-        isValid: isPassphraseValid && !!error,
+        isValid: feedback === '' && passphrase !== '',
         feedback,
         value: passphrase,
       },
@@ -137,8 +137,6 @@ class Summary extends React.Component {
   render() {
     const { account, fields, t } = this.props;
     const { secondPassphrase, isHardwareWalletConnected } = this.state;
-    let isBtnDisabled = secondPassphrase.hasSecondPassphrase && secondPassphrase.feedback !== '' && !secondPassphrase.isValid;
-    isBtnDisabled = isBtnDisabled || isHardwareWalletConnected;
 
     const confirmBtnMessage = isHardwareWalletConnected
       ? t('Confirm on {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })
@@ -225,7 +223,11 @@ class Summary extends React.Component {
           <PrimaryButtonV2
             className={`${styles.confirmBtn} on-nextStep send-button`}
             onClick={this.nextStep}
-            disabled={isBtnDisabled}>
+            disabled={
+              (secondPassphrase.hasSecondPassphrase &&
+                !secondPassphrase.isValid)
+              || isHardwareWalletConnected
+            }>
             {confirmBtnMessage}
           </PrimaryButtonV2>
 
