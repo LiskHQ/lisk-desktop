@@ -248,6 +248,7 @@ describe('actions: search', () => {
         delegate: {
           username: accounts.delegate.username,
         },
+        token: 'LSK',
       };
       accountAPI.getAccount.mockResolvedValue(account);
       await searchAccount({ address: account.address })(dispatch, getState);
