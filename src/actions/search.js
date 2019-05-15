@@ -98,11 +98,11 @@ export const searchAccount = ({ address }) =>
           ...response,
         };
         if (accountData.delegate && accountData.delegate.username) {
-          dispatch(searchDelegate({ publicKey: accountData.publicKey, address }));
+          searchDelegate({ publicKey: accountData.publicKey, address })(dispatch, getState);
         }
         dispatch({ data: accountData, type: actionTypes.searchAccount });
         dispatch(updateWallet(response, getState().peers));
-        dispatch(searchVotes({ address, offset: 0, limit: 101 }));
+        searchVotes({ address, offset: 0, limit: 101 })(dispatch, getState);
       });
     }
   };
