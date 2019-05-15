@@ -1,5 +1,4 @@
 import React from 'react';
-import Waypoint from 'react-waypoint';
 // import tableStyle from 'react-toolbox/lib/table/theme.css';
 import Rows from './rows';
 
@@ -25,18 +24,12 @@ class TransactionsList extends React.Component {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  isLargeScreen() {
-    return window.innerWidth > 768;
-  }
-
   render() { // eslint-disable-line
     const {
       transactions,
       dashboard,
       address,
       onClick,
-      loadMore,
       showMore,
       t,
     } = this.props;
@@ -76,20 +69,6 @@ class TransactionsList extends React.Component {
             value={transaction}
             onClick={onClick}
           />)
-      }
-      {
-        // the transaction list should be scrollable on a large screen
-        // otherwise (XS) the whole transaction box will be scrollable
-        // (see transactionOverview.js)
-        this.isLargeScreen()
-          ? <Waypoint bottomOffset='-20%'
-            key={transactions.length}
-            onEnter={() => {
-              if (!dashboard) {
-                loadMore();
-              }
-            }}></Waypoint>
-          : null
       }
     </div>;
   }
