@@ -162,6 +162,7 @@
 .qrSection {
   width: 300px;
   display: block;
+  margin-left: 40px;
 
   &.hide {
     display: none;

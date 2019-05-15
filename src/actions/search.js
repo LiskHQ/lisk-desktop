@@ -1,7 +1,7 @@
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
 import { getAccount } from '../utils/api/account';
-import { getDelegate, getVoters, getVotes, listDelegates } from '../utils/api/delegate';
+import { getDelegate, getVotes, listDelegates } from '../utils/api/delegate';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import searchAll from '../utils/api/search';
@@ -88,47 +88,6 @@ const searchVotes = ({ address, offset, limit }) =>
     dispatch(loadingFinished(actionTypes.searchVotes));
   };
 
-/* istanbul ignore next */
-/* because it's not used anymore and should be removed in #1911 */
-const searchVoters = ({
-  address, publicKey, offset, limit, append,
-}) =>
-  (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    /* istanbul ignore else */
-    if (liskAPIClient) {
-      getVoters(liskAPIClient, {
-        publicKey, offset, limit,
-      }).then(response =>
-        dispatch({
-          type: actionTypes.searchVoters,
-          data: {
-            append: append || false,
-            voters: response.data.voters,
-            votersSize: response.data.votes,
-            address,
-          },
-        }));
-    }
-  };
-
-/* istanbul ignore next */
-/* because it's not used anymore and should be removed in #1911 */
-export const searchMoreVoters = ({ address, offset = 0, limit = 100 }) =>
-  (dispatch, getState) => {
-    const networkConfig = getState().network;
-    getAccount({ networkConfig, address }).then((response) => {
-      const accountData = {
-        ...response,
-      };
-      if (accountData.publicKey) {
-        dispatch(searchVoters({
-          address, publicKey: accountData.publicKey, offset, limit, append: true,
-        }));
-      }
-    });
-  };
-
 export const searchAccount = ({ address }) =>
   (dispatch, getState) => {
     const networkConfig = getState().network;
@@ -139,8 +98,7 @@ export const searchAccount = ({ address }) =>
           ...response,
         };
         if (accountData.delegate && accountData.delegate.username) {
-          dispatch(searchDelegate({ publicKey: accountData.publicKey, address }));
-          dispatch(searchVoters({ address, publicKey: accountData.publicKey }));
+          searchDelegate({ publicKey: accountData.publicKey, address })(dispatch, getState);
         }
         dispatch({ data: accountData, type: actionTypes.searchAccount });
         dispatch(updateWallet(response, getState().peers));
@@ -153,10 +111,11 @@ export const searchAccount = ({ address }) =>
 
 export const searchTransactions = ({
   address, limit, filter, showLoading = true, customFilters = {},
+  actionType = actionTypes.searchTransactions,
 }) =>
   (dispatch, getState) => {
     const networkConfig = getState().network;
-    if (showLoading) dispatch(loadingStarted(actionTypes.searchTransactions));
+    if (showLoading) dispatch(loadingStarted(actionType));
     /* istanbul ignore else */
     if (networkConfig) {
       getTransactions({
@@ -171,9 +130,9 @@ export const searchTransactions = ({
               filter,
               customFilters,
             },
-            type: actionTypes.searchTransactions,
+            type: actionType,
           });
-          if (filter !== undefined) {
+          if (filter !== undefined && actionType === actionTypes.searchTransactions) {
             dispatch({
               data: {
                 filterName: 'transactions',
@@ -182,34 +141,17 @@ export const searchTransactions = ({
               type: actionTypes.addFilter,
             });
           }
-          if (showLoading) dispatch(loadingFinished(actionTypes.searchTransactions));
+          if (showLoading) dispatch(loadingFinished(actionType));
         });
     }
   };
 
-export const searchMoreTransactions = ({
-  address, limit, offset, filter, customFilters = {},
-}) =>
-  (dispatch, getState) => {
-    const networkConfig = getState().network;
-    dispatch(loadingStarted(actionTypes.searchMoreTransactions));
-    getTransactions({
-      networkConfig, address, limit, offset, filter, customFilters,
-    })
-      .then((transactionsResponse) => {
-        dispatch({
-          data: {
-            address,
-            transactions: transactionsResponse.data,
-            count: parseInt(transactionsResponse.meta.count, 10),
-            filter,
-            customFilters,
-          },
-          type: actionTypes.searchMoreTransactions,
-        });
-        dispatch(loadingFinished(actionTypes.searchMoreTransactions));
-      });
-  };
+export const searchMoreTransactions = params => (
+  searchTransactions({
+    ...params,
+    actionType: actionTypes.searchMoreTransactions,
+  })
+);
 
 export const clearSearchSuggestions = () => ({
   data: {},

@@ -24,7 +24,6 @@ const ss = {
   votesTab: 'li[data-tabname=\'Votes\']',
   delegateStatisticsTab: '.delegate-statistics ',
   votedAddress: '.votes .voter-address',
-  voterAddress: '.voters .voter-address',
   voteRow: '.vote-row',
   accountAddress: '.account-address',
   selectionVotingNumber: '.selection h4',

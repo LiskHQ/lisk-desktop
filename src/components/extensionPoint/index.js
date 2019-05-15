@@ -11,7 +11,6 @@ import {
 import {
   searchDelegate,
   searchVotes,
-  searchVoters,
   searchAccount,
   searchTransactions,
 } from '../../actions/search';
@@ -34,7 +33,6 @@ const mapDispatchToProps = {
   transactionsFilterSet,
   searchDelegate,
   searchVotes,
-  searchVoters,
   searchAccount,
   searchTransactions,
 };

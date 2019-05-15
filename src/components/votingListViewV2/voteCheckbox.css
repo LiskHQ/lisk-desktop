@@ -1,0 +1,35 @@
+.checkbox {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  position: relative;
+
+  & input {
+    visibility: hidden;
+    position: absolute;
+  }
+
+  & span {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    &.checked {
+      display: none;
+    }
+
+    &.unchecked {
+      display: block;
+    }
+  }
+
+  & input:checked {
+    & ~ .checked {
+      display: block;
+    }
+
+    & ~ .unchecked {
+      display: none;
+    }
+  }
+}

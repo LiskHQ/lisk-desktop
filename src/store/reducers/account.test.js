@@ -106,14 +106,5 @@ describe('Reducer: account(state, action)', () => {
     const changedAccount = account({}, action);
     expect(changedAccount).to.deep.equal({ votes: action.votes });
   });
-
-  it('should add voters to state', () => {
-    const action = {
-      type: actionTypes.accountAddVoters,
-      voters: [{ id: 123 }],
-    };
-    const changedAccount = account({}, action);
-    expect(changedAccount).to.deep.equal({ voters: action.voters });
-  });
 });
 
