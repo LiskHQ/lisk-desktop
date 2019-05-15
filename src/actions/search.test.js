@@ -14,7 +14,6 @@ const {
   searchTransactions,
   searchAccount,
   searchSuggestions,
-  searchMoreVoters,
 } = actions;
 
 jest.mock('../utils/api/search');
@@ -47,41 +46,6 @@ describe('actions: search', () => {
     expect(dispatch).toHaveBeenNthCalledWith(1, {
       data: {},
       type: actionTypes.searchSuggestions,
-    });
-  });
-
-  it('should call to searchMoreVoters no publicKey', () => {
-    accountAPI.getAccount.mockResolvedValue({ publicKey: null });
-    const address = '123L';
-    const offset = 0;
-    const limit = 100;
-    const action = searchMoreVoters({ address, offset, limit });
-    action(dispatch, getState);
-    expect(dispatch).not.toHaveBeenCalledWith();
-  });
-
-  it('should call to searchMoreVoters no publicKey offset or limit', () => {
-    accountAPI.getAccount.mockResolvedValue({ publicKey: null });
-    const address = '123L';
-    const action = searchMoreVoters({ address });
-    action(dispatch, getState);
-    expect(dispatch).not.toHaveBeenCalledWith();
-  });
-
-  it('should call to searchMoreVoters no offset or limit', () => {
-    const publicKey = 'my-key';
-    accountAPI.getAccount.mockResolvedValue({ publicKey });
-    delegateAPI.getVoters.mockResolvedValue({
-      data: { voters: [] },
-    });
-    const address = '123L';
-    const action = searchMoreVoters({ address });
-    action(dispatch, getState);
-    expect(dispatch).not.toHaveBeenCalledWith({
-      type: actionTypes.searchVoters,
-      data: {
-        voters: [],
-      },
     });
   });
 

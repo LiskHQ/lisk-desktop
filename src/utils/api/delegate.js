@@ -54,9 +54,6 @@ export const getAllVotes = (liskAPIClient, address) =>
     }).catch(reject);
   });
 
-export const getVoters = (liskAPIClient, { publicKey, offset = 0, limit = 100 }) =>
-  liskAPIClient.voters.get({ publicKey, offset, limit });
-
 export const registerDelegate = (
   liskAPIClient,
   username,

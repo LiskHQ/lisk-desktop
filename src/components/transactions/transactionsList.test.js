@@ -11,8 +11,6 @@ import peersReducer from '../../store/reducers/peers';
 import accountReducer from '../../store/reducers/account';
 import transactionReducer from '../../store/reducers/transaction';
 import delegateReducer from '../../store/reducers/delegate';
-import accountMiddleware from '../../store/middlewares/account';
-import peerMiddleware from '../../store/middlewares/peers';
 import txFilters from '../../constants/transactionFilters';
 import i18n from '../../i18n';
 
@@ -38,8 +36,6 @@ describe('TransactionsList', () => {
     delegate: delegateReducer,
   }, [
     thunk,
-    peerMiddleware,
-    accountMiddleware,
   ]);
 
   const options = {
@@ -101,18 +97,5 @@ describe('TransactionsList', () => {
       value: transactions[0],
       t: propsTxDetails.t,
     });
-  });
-
-  it('should render delegate statistics', () => {
-    const propsDelegateStatistics = {
-      ...props,
-      filter: {
-        value: txFilters.statistics,
-        name: 'delegate-statistics',
-      },
-    };
-    wrapper = mount(<TransactionsList {...propsDelegateStatistics} />, options);
-    expect(wrapper.find('.user-votes')).to.have.lengthOf(1);
-    expect(wrapper.find('.voters')).to.have.lengthOf(1);
   });
 });

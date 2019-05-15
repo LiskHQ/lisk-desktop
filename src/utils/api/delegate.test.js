@@ -7,7 +7,6 @@ import {
   getDelegate,
   vote,
   getVotes,
-  getVoters,
   getAllVotes,
   registerDelegate,
 } from './delegate';
@@ -16,7 +15,6 @@ import accounts from '../../../test/constants/accounts';
 describe('Utils: Delegate', () => {
   let liskAPIClientMockDelegates;
   let liskAPIClientMockVotes;
-  let liskAPIClientMockVoters;
   let liskAPIClientMockTransations;
   let liskTransactionsCastVotesStub;
   let liskTransactionsRegisterDelegateStub;
@@ -29,9 +27,6 @@ describe('Utils: Delegate', () => {
     votes: {
       get: () => { },
     },
-    voters: {
-      get: () => { },
-    },
     transactions: {
       broadcast: () => {},
     },
@@ -42,7 +37,6 @@ describe('Utils: Delegate', () => {
     liskTransactionsRegisterDelegateStub = sinon.stub(Lisk.transaction, 'registerDelegate');
     liskAPIClientMockDelegates = sinon.mock(liskAPIClient.delegates);
     liskAPIClientMockVotes = sinon.mock(liskAPIClient.votes);
-    liskAPIClientMockVoters = sinon.mock(liskAPIClient.voters);
     liskAPIClientMockTransations = sinon.stub(liskAPIClient.transactions, 'broadcast').returnsPromise().resolves({ id: '1234' });
   });
 
@@ -52,9 +46,6 @@ describe('Utils: Delegate', () => {
 
     liskAPIClientMockVotes.verify();
     liskAPIClientMockVotes.restore();
-
-    liskAPIClientMockVoters.verify();
-    liskAPIClientMockVoters.restore();
 
     liskAPIClientMockTransations.restore();
 
@@ -161,28 +152,6 @@ describe('Utils: Delegate', () => {
         .returnsPromise().resolves({ data: { votes: [1], votesUsed: 1 } });
       const returnedPromise = getAllVotes(liskAPIClient, address);
       expect(returnedPromise).to.eventually.equal([1]);
-    });
-  });
-
-  describe('getVoters', () => {
-    it('should return getVoters(liskAPIClient, { publicKey, offset: 0, limit: 100 })', () => {
-      const publicKey = '';
-      liskAPIClientMockVoters.expects('get').withArgs({ publicKey, offset: 0, limit: 100 })
-        .returnsPromise().resolves('resolved promise');
-
-      const returnedPromise = getVoters(liskAPIClient, { publicKey, offset: 0, limit: 100 });
-      expect(returnedPromise).to.eventually.equal('resolved promise');
-    });
-  });
-
-  describe('getVoters', () => {
-    it('should return getVoters(liskAPIClient, { publicKey })', () => {
-      const publicKey = '';
-      liskAPIClientMockVoters.expects('get').withArgs({ publicKey, offset: 0, limit: 100 })
-        .returnsPromise().resolves('resolved promise');
-
-      const returnedPromise = getVoters(liskAPIClient, { publicKey });
-      expect(returnedPromise).to.eventually.equal('resolved promise');
     });
   });
 
