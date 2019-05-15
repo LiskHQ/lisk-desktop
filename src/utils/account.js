@@ -1,4 +1,4 @@
-import Lisk from 'lisk-elements';
+import Lisk from '@liskhq/lisk-client';
 
 export const extractPublicKey = passphrase =>
   Lisk.cryptography.getKeys(passphrase).publicKey;

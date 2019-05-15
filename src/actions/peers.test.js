@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Lisk from 'lisk-elements';
+import Lisk from '@liskhq/lisk-client';
 import { spy, stub, match } from 'sinon';
 import actionTypes from '../constants/actions';
 import { liskAPIClientSet, liskAPIClientUpdate } from './peers';

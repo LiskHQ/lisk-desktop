@@ -1,4 +1,4 @@
-import Lisk from 'lisk-elements';
+import Lisk from '@liskhq/lisk-client';
 import getMappedFunction from '../functionMapper';
 import { tokenMap } from '../../../constants/tokens';
 import { getAPIClient } from './network';

@@ -1,4 +1,4 @@
-import Lisk from 'lisk-elements';
+import Lisk from '@liskhq/lisk-client';
 import { toRawLsk } from '../../../utils/lsk';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import txFilters from '../../../constants/transactionFilters';
