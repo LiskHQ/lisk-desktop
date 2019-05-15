@@ -37,11 +37,11 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
     case actionTypes.transactionsLoaded:
       return {
         ...state,
-        confirmed: [
-          ...state.confirmed,
-          ...action.data.confirmed,
-        ],
+        confirmed: action.data.confirmed,
         count: action.data.count,
+        filter: action.data.filter !== undefined ? action.data.filter : state.filter,
+        customFilters: action.data.customFilters !== undefined ?
+          action.data.customFilters : state.filter,
       };
     case actionTypes.transactionsUpdated:
       return {
@@ -57,14 +57,9 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
               transaction.id === confirmedTransaction.id).length === 0),
         ],
         count: action.data.count,
-      };
-    case actionTypes.transactionsFiltered:
-      return {
-        ...state,
-        confirmed: action.data.confirmed,
-        count: action.data.count,
-        filter: action.data.filter,
-        customFilters: action.data.customFilters,
+        filter: action.data.filter !== undefined ? action.data.filter : state.filter,
+        customFilters: action.data.customFilters !== undefined ?
+          action.data.customFilters : state.filter,
       };
     case actionTypes.transactionsLoadFinish:
       return {

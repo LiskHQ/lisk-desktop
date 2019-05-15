@@ -55,7 +55,7 @@ export const transactionsFilterSet = ({
         filter,
         customFilters,
       },
-      type: actionTypes.transactionsFiltered,
+      type: actionTypes.transactionsLoaded,
     });
     if (filter !== undefined) {
       dispatch({
@@ -107,7 +107,7 @@ export const transactionsRequested = ({
             address,
             filter,
           },
-          type: actionTypes.transactionsLoaded,
+          type: offset > 0 ? actionTypes.transactionsUpdated : actionTypes.transactionsLoaded,
         });
         dispatch(loadingFinished(actionTypes.transactionsRequested));
       });

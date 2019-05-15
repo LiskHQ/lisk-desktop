@@ -80,24 +80,6 @@ describe('Reducer: transactions(state, action)', () => {
     expect(pendingTransactionsFiltered).toEqual(stateWithNoPendingTransactions);
   });
 
-  it('should concat action.data to state.confirmed if action.type = actionTypes.transactionsLoaded', () => {
-    const state = { ...defaultState };
-    const action = {
-      type: actionTypes.transactionsLoaded,
-      data: {
-        confirmed: mockTransactions,
-        count: mockTransactions.length,
-      },
-    };
-    const expectedState = {
-      ...defaultState,
-      confirmed: action.data.confirmed,
-      count: action.data.count,
-    };
-    const changedState = transactions(state, action);
-    expect(changedState).toEqual(expectedState);
-  });
-
   it('should prepend newer transactions from action.data to state.confirmed and remove from state.pending if action.type = actionTypes.transactionsUpdated', () => {
     const state = {
       ...defaultState,
@@ -157,7 +139,7 @@ describe('Reducer: transactions(state, action)', () => {
     });
   });
 
-  it('should reduce transactions when filtered', () => {
+  it('should reduce transactions when loaded', () => {
     const state = {
       ...defaultState,
     };
@@ -173,7 +155,7 @@ describe('Reducer: transactions(state, action)', () => {
         message: '5',
       },
     };
-    const action = { type: actionTypes.transactionsFiltered, data };
+    const action = { type: actionTypes.transactionsLoaded, data };
     const changedState = transactions(state, action);
     expect(changedState).toEqual({
       ...defaultState,
