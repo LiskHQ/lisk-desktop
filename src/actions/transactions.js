@@ -19,6 +19,12 @@ export const cleanTransactions = () => ({
   type: actionTypes.cleanTransactions,
 });
 
+/**
+ * This action is used when a new pending transaction is sent to the network.
+ * It is used in send, vote, second passphrase registration, and delegate registration.
+ *
+ * @param {Object} data - the transaction object
+ */
 export const transactionAdded = data => ({
   data,
   type: actionTypes.transactionAdded,
