@@ -51,7 +51,7 @@ describe('AmountFieldGroup', () => {
   describe('Error handling', () => {
     it('Should handle amountFrom greater than amountTo', () => {
       wrapper.find('.amountFromInput input').simulate('change', { target: { name: 'amountFrom', value: '99.9' } });
-      wrapper.setProps({ filters: { amountFrom: '99.9' } });
+      wrapper.setProps({ filters: { ...props.filters, amountFrom: '99.9' } });
       wrapper.find('.amountToInput input').simulate('change', { target: { name: 'amountTo', value: '99' } });
       jest.advanceTimersByTime(300);
       wrapper.update();

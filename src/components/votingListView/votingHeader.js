@@ -10,7 +10,6 @@ import Fees from './../../constants/fees';
 import routes from './../../constants/routes';
 import Piwik from '../../utils/piwik';
 
-
 class VotingHeader extends React.Component {
   constructor() {
     super();

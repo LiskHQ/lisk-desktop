@@ -19,6 +19,8 @@ module.exports = {
     'src/store/reducers/liskService.test.js',
     'src/store/middlewares/socket.test.js',
     'src/store/middlewares/peers.test.js',
+    'src/components/votingListViewV2/*',
+    'src/components/votingV2/*',
     'src/components/registerV2/registerV2.test.js',
     'src/components/headerV2/headerV2.test.js',
   ],
@@ -32,7 +34,7 @@ module.exports = {
   },
   collectCoverage: true,
   coverageDirectory: '<rootDir>/coverage/jest',
-  collectCoverageFrom: [
+  collectCoverageFrom: process.env.NO_COV ? [] : [
     'src/**/*.js',
     'app/src/**/*.js',
   ],
@@ -129,10 +131,12 @@ module.exports = {
     'src/components/hwWallet/trezorLogin.js',
     'src/components/loginV2/loginV2.js',
     'src/utils/hwWallet.js',
+    'src/components/votingListViewV2/*',
+    'src/components/votingV2/*',
     'src/components/headerV2/headerV2.js',
     'src/components/registerV2/registerV2.js',
   ],
-  coverageThreshold: {
+  coverageThreshold: process.env.NO_COV ? {} : {
     global: {
       branches: 90,
       functions: 90,
@@ -157,6 +161,7 @@ module.exports = {
   },
   setupFiles: [
     '<rootDir>/config/setupJest.js',
+    'jest-canvas-mock',
   ],
   transform: {
     '^.+\\.js$': 'babel-jest',
@@ -167,11 +172,13 @@ module.exports = {
     TEST: true,
     VERSION: '',
   },
-  coverageReporters: [
+  coverageReporters: process.env.ON_JENKINS ? [
     'text',
-    'html',
     'lcov',
     'cobertura',
+  ] : [
+    'html',
+    'json',
   ],
   reporters: [
     'default',

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import RequestV2 from '../../requestV2/requestV2';
 import { getIndexOfFollowedAccount } from '../../../utils/followedAccounts';
+import { getTokenFromAddress } from '../../../utils/api/transactions';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import HeaderAccountInfo from './headerAccountInfo';
 import FollowAccount from '../../followAccount';
@@ -11,11 +12,12 @@ import styles from './transactionsOverviewHeader.css';
 import routes from '../../../constants/routes';
 
 class transactionsHeader extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
 
     this.state = {
       shownDropdown: '',
+      token: getTokenFromAddress(props.address),
     };
 
     this.dropdownRefs = {};
@@ -60,15 +62,17 @@ class transactionsHeader extends React.Component {
 
   render() {
     const {
-      followedAccounts, address, t, delegate = {},
+      followedAccounts, address, t, delegate = {}, detailAccount,
     } = this.props;
+    const { token } = this.state;
 
-    const isFollowing = getIndexOfFollowedAccount(followedAccounts, { address }) !== -1;
+    const isFollowing = getIndexOfFollowedAccount(followedAccounts, { address, token }) !== -1;
     const isWalletRoute = this.props.match.url === routes.wallet.path;
 
     return (
       <header className={`${styles.wrapper}`}>
         <HeaderAccountInfo
+          token={token}
           followedAccounts={followedAccounts}
           address={address}
           delegate={delegate}
@@ -126,9 +130,10 @@ class transactionsHeader extends React.Component {
               showDropdown={this.state.shownDropdown === 'followDropdown'}
               className={`${styles.followDropdown}`}>
                 <FollowAccount
+                  token={token}
                   delegate={delegate}
-                  balance={this.props.balance}
                   address={address}
+                  detailAccount={detailAccount}
                   isFollowing={isFollowing} />
               </DropdownV2>
             </span>

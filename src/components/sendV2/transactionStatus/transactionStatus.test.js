@@ -21,7 +21,7 @@ describe('TransactionStatus', () => {
       failed: undefined,
     },
     followedAccounts: {
-      accounts: [],
+      LSK: [],
     },
     search: {
       delegates: {},
@@ -41,7 +41,9 @@ describe('TransactionStatus', () => {
     finalCallback: jest.fn(),
     failedTransactions: undefined,
     transactionFailedClear: jest.fn(),
-    followedAccounts: [],
+    followedAccounts: {
+      LSK: [],
+    },
     delegates: {},
     searchAccount: jest.fn(),
     prevStep: jest.fn(),
@@ -107,9 +109,11 @@ describe('TransactionStatus', () => {
     wrapper.find('button').last().simulate('click');
     wrapper.setProps({
       ...props,
-      followedAccounts: [{
-        address: '123123L',
-      }],
+      followedAccounts: {
+        LSK: [{
+          address: '123123L',
+        }],
+      },
     });
     wrapper.update();
     expect(wrapper.find('.following-btn').at(0).text()).toEqual('Account bookmarked');

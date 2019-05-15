@@ -7,18 +7,19 @@ import {
 } from './followedAccounts';
 
 describe('followedAccounts', () => {
-  const accounts = [
-    {
+  const followedAccountsObj = { LSK: [], BTC: [] };
+  const accounts = {
+    LSK: [{
       address: '1234L',
       title: 'some title',
       balance: 0,
-    },
-    {
+    }, {
       address: '5678L',
       title: 'some title',
       balance: 100000,
-    },
-  ];
+    }],
+    BTC: [],
+  };
 
   beforeEach(() => {
     stub(localStorage, 'getItem');
@@ -31,25 +32,23 @@ describe('followedAccounts', () => {
   });
 
   describe('getFollowedAccountsFromLocalStorage', () => {
-    it('returns [] if if localStorage.getItem(\'followedAccounts\') returns undefined', () => {
-      expect(getFollowedAccountsFromLocalStorage()).to.deep.equal([]);
+    it('returns { LSK: [], BTC: [] } if localStorage.getItem(\'followedAccounts\') returns undefined', () => {
+      expect(getFollowedAccountsFromLocalStorage()).to.deep.equal(followedAccountsObj);
     });
 
-    it('returns [] if if localStorage.getItem(\'followedAccounts\') returns invalid JSON string', () => {
+    it('returns { LSK: [], BTC: [] } if localStorage.getItem(\'followedAccounts\') returns invalid JSON string', () => {
       localStorage.getItem.returns('{]');
-      expect(getFollowedAccountsFromLocalStorage()).to.deep.equal([]);
+      expect(getFollowedAccountsFromLocalStorage()).to.deep.equal(followedAccountsObj);
       localStorage.getItem.returns('{}');
-      expect(getFollowedAccountsFromLocalStorage()).to.deep.equal([]);
+      expect(getFollowedAccountsFromLocalStorage()).to.deep.equal({});
     });
 
-    it('returns [] if if localStorage.getItem(\'followedAccounts\') returns JSON encoded array with invalid data', () => {
-      const invalidAccounts = [{ address: 'invalid' }];
-
-      localStorage.getItem.returns(JSON.stringify(invalidAccounts));
-      expect(getFollowedAccountsFromLocalStorage()).to.deep.equal([]);
+    it('returns { LSK: [], BTC: [] } if localStorage.getItem(\'followedAccounts\') returns JSON encoded array with invalid data', () => {
+      localStorage.getItem.returns('[]');
+      expect(getFollowedAccountsFromLocalStorage()).to.deep.equal(followedAccountsObj);
     });
 
-    it('returns array parsed from json in localStorage.getItem(\'followedAccounts\')', () => {
+    it('returns object parsed from json in localStorage.getItem(\'followedAccounts\')', () => {
       localStorage.getItem.returns(JSON.stringify(accounts));
       expect(getFollowedAccountsFromLocalStorage()).to.deep.equal(accounts);
     });
@@ -57,14 +56,18 @@ describe('followedAccounts', () => {
 
   describe('setFollowedAccountsInLocalStorage', () => {
     it('sets accounts in localStorage with appended passed account and also returns it', () => {
-      setFollowedAccountsInLocalStorage([accounts[0]]);
-      expect(localStorage.setItem).to.have.been.calledWith('followedAccounts', JSON.stringify([accounts[0]]));
+      setFollowedAccountsInLocalStorage(accounts);
+      expect(localStorage.setItem).to.have.been.calledWith('followedAccounts', JSON.stringify(accounts));
     });
   });
 
   describe('getIndexOfFollowedAccount', () => {
     it('gets the index based on the address', () => {
-      expect(getIndexOfFollowedAccount(accounts, accounts[0])).to.equal(0);
+      const data = {
+        address: accounts.LSK[0].address,
+        token: 'LSK',
+      };
+      expect(getIndexOfFollowedAccount(accounts, data)).to.equal(0);
     });
   });
 });

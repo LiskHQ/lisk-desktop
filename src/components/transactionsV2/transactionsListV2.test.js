@@ -31,7 +31,10 @@ describe('TransactionsList V2', () => {
   };
 
   const props = {
-    followedAccounts: [],
+    followedAccounts: {
+      LSK: [],
+      BTC: [],
+    },
     address: '',
     filter: {
       value: txFilters.incoming,

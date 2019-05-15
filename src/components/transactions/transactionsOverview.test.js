@@ -30,7 +30,7 @@ describe('TransactionsOverview', () => {
       match: { url: '' },
     };
     store.getState = () => ({
-      followedAccounts: { accounts: [] },
+      followedAccounts: { LSK: [] },
       peers: { status: {}, options: {}, liskAPIClient: {} },
       transactions: {
         confirmed: [],

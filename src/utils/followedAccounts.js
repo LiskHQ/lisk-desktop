@@ -1,13 +1,19 @@
 import localJSONStorage from './localJSONStorage';
-import regex from './regex';
+import { tokenKeys } from '../constants/tokens';
+
+export const flattenFollowedAccounts = accounts =>
+  Object.keys(accounts).reduce((acc, token) =>
+    [...acc, ...accounts[token]], []);
 
 export const getFollowedAccountsFromLocalStorage = () => {
-  const accounts = localJSONStorage.get('followedAccounts', []);
-  const accountsArray = Array.isArray(accounts) ? accounts : [];
-  return accountsArray.filter(({ address }) => address.match(regex.address));
+  const followedAccountsObj = tokenKeys.reduce((acc, token) => ({ ...acc, [token]: [] }), {});
+  const followedAccounts = localJSONStorage.get('followedAccounts', followedAccountsObj);
+  return Array.isArray(followedAccounts)
+    ? { ...followedAccountsObj, LSK: followedAccounts }
+    : followedAccounts;
 };
 
-export const setFollowedAccountsInLocalStorage = accounts => localJSONStorage.set('followedAccounts', accounts);
+export const setFollowedAccountsInLocalStorage = data => localJSONStorage.set('followedAccounts', data);
 
-export const getIndexOfFollowedAccount = (accounts, { address }) =>
-  accounts.findIndex(account => (account.address === address));
+export const getIndexOfFollowedAccount = (accounts, { address, token = 'LSK' }) =>
+  accounts[token].findIndex(account => (account.address === address));

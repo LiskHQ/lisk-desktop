@@ -15,6 +15,7 @@ import Feedback from '../../toolbox/feedback/feedback';
 import CircularProgress from '../../toolbox/circularProgress/circularProgress';
 import styles from './form.css';
 import Piwik from '../../../utils/piwik';
+import { flattenFollowedAccounts } from '../../../utils/followedAccounts';
 
 class Form extends React.Component {
   // eslint-disable-next-line max-statements
@@ -108,7 +109,8 @@ class Form extends React.Component {
   }
 
   checkIfBoormakedAccount() {
-    const { followedAccounts, fields } = this.props;
+    const { fields } = this.props;
+    const followedAccounts = flattenFollowedAccounts(this.props.followedAccounts);
     const account = followedAccounts.length
       ? followedAccounts.find(acc => acc.address === fields.recipient.address)
       : false;
@@ -130,7 +132,7 @@ class Form extends React.Component {
 
   // eslint-disable-next-line max-statements
   validateBookmark() {
-    const { followedAccounts } = this.props;
+    const followedAccounts = flattenFollowedAccounts(this.props.followedAccounts);
     let recipient = this.state.fields.recipient;
     let isAccountValid = '';
     let isAddressValid = '';

@@ -3,7 +3,7 @@
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { getAccount, setSecondPassphrase } from '../utils/api/account';
-import { registerDelegate, getDelegate, getAllVotes, getVoters } from '../utils/api/delegate';
+import { registerDelegate, getDelegate, getAllVotes } from '../utils/api/delegate';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import { loadTransactionsFinish, transactionsUpdated } from './transactions';
@@ -93,19 +93,6 @@ export const accountVotesFetched = ({ address }) =>
     });
   };
 
-/**
- * Gets list of all voters
- */
-export const accountVotersFetched = ({ publicKey }) =>
-  (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    return getVoters(liskAPIClient, { publicKey }).then(({ data }) => {
-      dispatch({
-        type: actionTypes.accountAddVoters,
-        voters: data,
-      });
-    });
-  };
 /**
  *
  */

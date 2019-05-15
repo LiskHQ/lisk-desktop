@@ -34,7 +34,8 @@ describe('TransactionsOverview V2', () => {
     peers,
     account: accounts.genesis,
     followedAccounts: {
-      accounts: [],
+      LSK: [],
+      BTC: [],
     },
   });
 
@@ -45,7 +46,10 @@ describe('TransactionsOverview V2', () => {
     onLoadMore: spy(),
     onFilterSet: spy(),
     account: accounts.genesis,
-    followedAccounts: [],
+    followedAccounts: {
+      LSK: [],
+      BTC: [],
+    },
     transactions,
     peers,
     loading: [],

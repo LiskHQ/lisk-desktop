@@ -1,5 +1,4 @@
 import React from 'react';
-import Waypoint from 'react-waypoint';
 // import tableStyle from 'react-toolbox/lib/table/theme.css';
 import Rows from './rows';
 
@@ -7,8 +6,6 @@ import txFilters from '../../constants/transactionFilters';
 import txTypes from '../../constants/transactionTypes';
 import styles from './transactionsList.css';
 import { parseSearchParams } from '../../utils/searchParams';
-import DelegateStatistics from './delegateStatistics';
-import UserVotes from './userVotes';
 
 class TransactionsList extends React.Component {
   componentWillReceiveProps(nextProps) {
@@ -27,18 +24,12 @@ class TransactionsList extends React.Component {
     }
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  isLargeScreen() {
-    return window.innerWidth > 768;
-  }
-
   render() { // eslint-disable-line
     const {
       transactions,
       dashboard,
       address,
       onClick,
-      loadMore,
       showMore,
       t,
     } = this.props;
@@ -67,28 +58,6 @@ class TransactionsList extends React.Component {
       return null;
     }
 
-    const isDelegateStatistics = tabObj && (tabObj.value === txFilters.statistics);
-
-    if (isDelegateStatistics) {
-      return <DelegateStatistics
-        delegate={this.props.delegate}
-        votes={this.props.votes}
-        voters={this.props.voters}
-        votersSize={this.props.votersSize}
-        searchMoreVoters={this.props.searchMoreVoters} />;
-    }
-
-    const isAccountInfo = tabObj && (tabObj.value === txFilters.accountInfo);
-
-    if (isAccountInfo) {
-      return <UserVotes
-        delegate={this.props.delegate}
-        votes={this.props.votes}
-        voters={this.props.voters}
-        votersSize={this.props.votersSize}
-        searchMoreVoters={this.props.searchMoreVoters} />;
-    }
-
     return <div className={`${styles.results} ${this.props.isBarEnabledTransactions ? styles.onBarEnabled : ''} ${showMore && styles.onShowMore} transaction-results`}>
       {
         transactions
@@ -100,20 +69,6 @@ class TransactionsList extends React.Component {
             value={transaction}
             onClick={onClick}
           />)
-      }
-      {
-        // the transaction list should be scrollable on a large screen
-        // otherwise (XS) the whole transaction box will be scrollable
-        // (see transactionOverview.js)
-        this.isLargeScreen()
-          ? <Waypoint bottomOffset='-20%'
-            key={transactions.length}
-            onEnter={() => {
-              if (!dashboard) {
-                loadMore();
-              }
-            }}></Waypoint>
-          : null
       }
     </div>;
   }

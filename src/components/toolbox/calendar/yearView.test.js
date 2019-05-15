@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { shallow } from 'enzyme';
 import YearView from './yearView';
 
@@ -9,7 +10,7 @@ describe('Calendar YearView', () => {
     setCurrentView: jest.fn(),
     setShowingDate: jest.fn(),
     selectedDate: '',
-    showingDate: '01.03.19',
+    showingDate: moment('2019-03-01'),
   };
 
   beforeEach(() => {

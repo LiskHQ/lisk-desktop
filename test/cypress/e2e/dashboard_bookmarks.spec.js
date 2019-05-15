@@ -4,7 +4,7 @@ import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
 import compareBalances from '../utils/compareBalances';
 
-const getFollowedAccountObjFromLS = () => JSON.parse(localStorage.getItem('followedAccounts'));
+const getFollowedAccountObjFromLS = () => JSON.parse(localStorage.getItem('followedAccounts')).LSK;
 
 const txConfirmationTimeout = 14000;
 

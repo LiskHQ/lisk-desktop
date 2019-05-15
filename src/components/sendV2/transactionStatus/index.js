@@ -5,9 +5,10 @@ import TransactionStatus from './transactionStatus';
 import actionTypes from '../../../constants/actions';
 import { searchAccount } from '../../../actions/search';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
+  detailAccount: state.search.accounts[ownProps.fields.recipient.address] || {},
   failedTransactions: state.transactions.failed,
-  followedAccounts: state.followedAccounts ? state.followedAccounts.accounts : [],
+  followedAccounts: state.followedAccounts,
   delegates: state.search.delegates || {},
 });
 

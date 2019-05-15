@@ -34,7 +34,7 @@ describe('WalletTransactions V2 Component', () => {
     peers,
     account: accounts.genesis,
     followedAccounts: {
-      accounts: [],
+      LSK: [],
     },
     settings: {},
   });
@@ -54,7 +54,10 @@ describe('WalletTransactions V2 Component', () => {
     account: accounts.genesis,
     match: { params: { address: accounts.genesis.address } },
     history: { push: jest.fn(), location: { search: ' ' } },
-    followedAccounts: [],
+    followedAccounts: {
+      LSK: [],
+      BTC: [],
+    },
     transactionsCount: 1000,
     transaction: transactions[0],
     transactions,
@@ -133,7 +136,7 @@ describe('WalletTransactions V2 Component', () => {
           rewards: '140500000000',
           username: accounts.delegate.username,
           vote: '9876965713168313',
-          lastBlock: { timestamp: 0 },
+          lastBlock: 0,
           txDelegateRegister: { timestamp: 0 },
         },
       },

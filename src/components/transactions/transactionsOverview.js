@@ -125,9 +125,6 @@ class TransactionsOverview extends React.Component {
             filter={filters[this.props.activeFilter]}
             delegate={this.props.delegate}
             votes={this.props.votes}
-            voters={this.props.voters}
-            votersSize={this.props.votersSize}
-            searchMoreVoters={this.props.searchMoreVoters}
             address={this.props.address}
             publicKey={this.props.publicKey}
             transactions={this.props.transactions}
@@ -153,7 +150,7 @@ class TransactionsOverview extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  followedAccounts: state.followedAccounts.accounts,
+  followedAccounts: state.followedAccounts,
   peers: state.peers,
   account: state.account,
 });
