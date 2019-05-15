@@ -100,30 +100,21 @@ class Summary extends React.Component {
   }
 
   checkSecondPassphrase(passphrase, error) {
-    // istanbul ignore else
-    if (!error) {
-      const expectedPublicKey = extractPublicKey(passphrase);
-      const isPassphraseValid = this.props.account.secondPublicKey === expectedPublicKey;
+    let feedback = error || '';
+    const expectedPublicKey = !error && extractPublicKey(passphrase);
+    const isPassphraseValid = this.props.account.secondPublicKey === expectedPublicKey;
 
-      if (isPassphraseValid) {
-        this.setState({
-          secondPassphrase: {
-            ...this.state.secondPassphrase,
-            isValid: true,
-            feedback: '',
-            value: passphrase,
-          },
-        });
-      } else {
-        this.setState({
-          secondPassphrase: {
-            ...this.state.secondPassphrase,
-            isValid: false,
-            feedback: this.props.t('Oops! Wrong passphrase'),
-          },
-        });
-      }
+    if (feedback === '' && !isPassphraseValid) {
+      feedback = this.props.t('Oops! Wrong passphrase');
     }
+    this.setState({
+      secondPassphrase: {
+        ...this.state.secondPassphrase,
+        isValid: feedback === '' && passphrase !== '',
+        feedback,
+        value: passphrase,
+      },
+    });
   }
 
   prevStep() {
@@ -146,8 +137,6 @@ class Summary extends React.Component {
   render() {
     const { account, fields, t } = this.props;
     const { secondPassphrase, isHardwareWalletConnected } = this.state;
-    let isBtnDisabled = secondPassphrase.hasSecondPassphrase && secondPassphrase.isValid !== '' && !secondPassphrase.isValid;
-    isBtnDisabled = !isBtnDisabled && isHardwareWalletConnected;
 
     const confirmBtnMessage = isHardwareWalletConnected
       ? t('Confirm on {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })
@@ -234,7 +223,11 @@ class Summary extends React.Component {
           <PrimaryButtonV2
             className={`${styles.confirmBtn} on-nextStep send-button`}
             onClick={this.nextStep}
-            disabled={isBtnDisabled}>
+            disabled={
+              (secondPassphrase.hasSecondPassphrase &&
+                !secondPassphrase.isValid)
+              || isHardwareWalletConnected
+            }>
             {confirmBtnMessage}
           </PrimaryButtonV2>
 
