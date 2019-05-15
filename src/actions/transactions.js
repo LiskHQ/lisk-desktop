@@ -85,6 +85,17 @@ export const loadTransactionsFinish = accountUpdated =>
     });
   };
 
+/**
+ * This action is used to request transactions on dashboard and wallet page.
+ *
+ * @param {Object} params - all params
+ * @param {String} params.address - address of the account to fetch the transactions for
+ * @param {Number} params.limit - amount of transactions to fetch
+ * @param {Number} params.offste - index of the first transaction
+ * @param {Number} params.filter - one of values from src/constants/transactionFilters.js
+ * @param {Object} params.customFilters - object with filters for the filer dropdown
+ *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
+ */
 export const transactionsRequested = ({
   address, limit, offset, filter, customFilters = {},
 }) =>
@@ -108,6 +119,13 @@ export const transactionsRequested = ({
       });
   };
 
+/**
+ * This action is used to get the data for "My Wallet Details" module on wallet page
+ * which shows Last transactions. It cannot get the latest transaction from the list,
+ * because the list can be filtered.
+ *
+ * @param {String} address - address of the active account
+ */
 export const loadLastTransaction = address => (dispatch, getState) => {
   const networkConfig = getState().network;
   if (networkConfig) {
@@ -118,6 +136,11 @@ export const loadLastTransaction = address => (dispatch, getState) => {
   }
 };
 
+/**
+ * This action is used to get the data for transaction detail page.
+ *
+ * @param {String} id - id of the transaction
+ */
 export const loadTransaction = ({ id }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
