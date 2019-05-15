@@ -15,7 +15,7 @@ export const send = (
 ) =>
   new Promise((resolve, reject) => {
     const transaction = Lisk.transaction.transfer({
-      recipientId, amount, passphrase, secondPassphrase, data, timeOffset,
+      recipientId, amount: `${amount}`, passphrase, secondPassphrase, data, timeOffset,
     });
     liskAPIClient.transactions.broadcast(transaction).then(() => {
       resolve(transaction);
