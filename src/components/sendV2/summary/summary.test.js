@@ -6,12 +6,13 @@ import thunk from 'redux-thunk';
 import i18n from '../../../i18n';
 import accounts from '../../../../test/constants/accounts';
 import Summary from './summary';
+import { tokenMap } from '../../../constants/tokens';
 
 describe('Summary', () => {
   let wrapper;
 
   const store = configureMockStore([thunk])({
-    settings: { currency: 'USD' },
+    settings: { currency: 'USD', token: { active: tokenMap.LSK.key } },
     settingsUpdated: () => {},
     liskService: {
       success: true,
