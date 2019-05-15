@@ -244,7 +244,7 @@ export const updateAccountDelegateStats = account =>
     });
     const block = await getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 });
     dispatch(accountUpdated({
-      token: 'LSK',
+      token,
       delegate: {
         ...(getState().account.info.LSK.delegate || {}),
         lastBlock: (block.data[0] && block.data[0].timestamp) || '-',
