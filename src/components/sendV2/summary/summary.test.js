@@ -98,6 +98,15 @@ describe('Summary', () => {
     expect(props.prevStep).toBeCalled();
   });
 
+  it('should disable "Next" button if secondPassphrase invalid for active account', () => {
+    expect(wrapper.find('.send-button').at(0).prop('disabled')).toBeFalsy();
+    const clipboardData = {
+      getData: () => accounts['second passphrase account'].passphrase,
+    };
+    wrapper.find('passphraseInputV2 input').first().simulate('paste', { clipboardData });
+    expect(wrapper.find('.send-button').at(0).prop('disabled')).toBeTruthy();
+  });
+
   it('should goind to next page if everyting is successfull', () => {
     const clipboardData = {
       getData: () => accounts['second passphrase account'].secondPassphrase,
