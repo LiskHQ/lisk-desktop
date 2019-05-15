@@ -7,7 +7,7 @@ import { send, getTransactions, getSingleTransaction, unconfirmedTransactions } 
 import { getDelegate } from '../utils/api/delegate';
 import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
-import { loadAccount, passphraseUsed } from './account';
+import { passphraseUsed } from './account';
 import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
@@ -83,29 +83,6 @@ export const loadTransactionsFinish = accountUpdated =>
       data: accountUpdated,
       type: actionTypes.transactionsLoadFinish,
     });
-  };
-
-export const loadTransactions = ({ publicKey, address }) =>
-  (dispatch, getState) => {
-    const networkConfig = getState().network;
-    const lastActiveAddress = publicKey && extractAddress(publicKey);
-    const isSameAccount = lastActiveAddress === address;
-    dispatch(loadingStarted(actionTypes.transactionsLoad));
-    getTransactions({ networkConfig, address, limit: 25 })
-      .then((transactionsResponse) => {
-        dispatch(loadAccount({
-          address,
-          transactionsResponse,
-          isSameAccount,
-        }));
-        dispatch({
-          data: {
-            count: parseInt(transactionsResponse.meta.count, 10),
-            confirmed: transactionsResponse.data,
-          },
-          type: actionTypes.transactionsLoaded,
-        });
-      });
   };
 
 export const transactionsRequested = ({
