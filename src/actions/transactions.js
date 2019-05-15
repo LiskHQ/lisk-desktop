@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import to from 'await-to-js';
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
-import { send, getTransactions, getSingleTransaction, unconfirmedTransactions } from '../utils/api/transactions';
+import { send, getTransactions, getSingleTransaction } from '../utils/api/transactions';
 import { getDelegate } from '../utils/api/delegate';
 import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
@@ -63,18 +63,6 @@ export const transactionsFilterSet = ({
     dispatch(loadingFinished(actionTypes.transactionsFilterSet));
   });
 };
-
-export const transactionsUpdateUnconfirmed = ({ address, pendingTransactions }) =>
-  (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    return unconfirmedTransactions(liskAPIClient, address).then(response => dispatch({
-      data: {
-        failed: pendingTransactions.filter(tx =>
-          response.data.filter(unconfirmedTx => tx.id === unconfirmedTx.id).length === 0),
-      },
-      type: actionTypes.transactionsFailed,
-    }));
-  };
 
 export const loadTransactionsFinish = accountUpdated =>
   (dispatch) => {
@@ -214,7 +202,7 @@ export const loadTransaction = ({ id }) =>
   };
 
 export const transactionsUpdated = ({
-  address, limit, filter, pendingTransactions, customFilters,
+  address, limit, filter, customFilters,
 }) =>
   (dispatch, getState) => {
     const networkConfig = getState().network;
@@ -231,21 +219,6 @@ export const transactionsUpdated = ({
             },
             type: actionTypes.transactionsUpdated,
           });
-        }
-        // eslint-disable-next-line no-constant-condition
-        if (pendingTransactions.length) {
-          // this was disabled, because this caused pending transactions
-          // to disappear from the list before they appeared again as confirmed.
-          // Currently, the problem is that a pending transaction will not be removed
-          // from the list if it fails. Caused by Lisk Core 1.0.0
-          // TODO: figure out how to make this work again
-          /*
-          dispatch(transactionsUpdateUnconfirmed({
-            liskAPIClient,
-            address,
-            pendingTransactions,
-          }));
-          */
         }
       });
   };
