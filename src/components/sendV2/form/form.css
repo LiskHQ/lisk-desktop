@@ -120,6 +120,21 @@
     width: 100%;
     position: relative;
   }
+
+  & .selector {
+    margin: 13px 0;
+  }
+
+  & .processingInfo {
+    @mixin contentLargest;
+
+    color: var(--color-slate-gray);
+    margin: 8px 0;
+
+    & > span {
+      color: var(--color-maastricht-blue);
+    }
+  }
 }
 
 .feedbackMessage {

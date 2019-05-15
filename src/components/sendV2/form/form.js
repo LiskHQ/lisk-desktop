@@ -251,18 +251,20 @@ class Form extends React.Component {
   getMaxAmount() {
     const { token } = this.props;
     const account = this.props.account.info[token];
+    const dynamicFee = this.state.fields.processingSpeed.value || 0;
     return token === 'LSK'
       ? fromRawLsk(Math.max(0, account.balance - fees.send))
-      : fromRawLsk(account.balance);
+      : fromRawLsk(Math.max(0, account.balance - dynamicFee));
   }
 
   validateAmountField(value) {
+    if (this.props.token !== tokenMap.LSK.key && !Object.keys(this.props.dynamicFees).length) {
+      this.props.dynamicFeesRetrieved();
+    }
     if (/^0.(0|[a-zA-z])*$/g.test(value)) return this.props.t('Provide a correct amount of LSK');
     if (/([^\d.])/g.test(value)) return this.props.t('Provide a correct amount of LSK');
     if ((/(\.)(.*\1){1}/g.test(value) || /\.$/.test(value)) || value === '0') return this.props.t('Invalid amount');
     if (parseFloat(this.getMaxAmount()) < value) return this.props.t('Provided amount is higher than your current balance.');
-
-    if (this.props.token !== tokenMap.LSK.key) this.props.dynamicFeesRetrieved();
     return false;
   }
 
@@ -279,6 +281,7 @@ class Form extends React.Component {
   // eslint-disable-next-line max-statements
   validateAmountAndReference(name, value) {
     const { t } = this.props;
+    const { fields } = this.state;
     const messageMaxLength = 64;
     let feedback = '';
     let error = '';
@@ -297,17 +300,17 @@ class Form extends React.Component {
       feedback = t('{{length}} bytes left', { length: messageMaxLength - byteCount });
     }
 
-    this.setState(prevState => ({
+    this.setState({
       fields: {
-        ...prevState.fields,
+        ...fields,
         [name]: {
-          ...prevState.fields[name],
+          ...fields[name],
           error: !!error,
           value,
           feedback,
         },
       },
-    }));
+    });
   }
 
   onAmountOrReferenceChange({ target }) {
@@ -494,6 +497,7 @@ class Form extends React.Component {
                 </Tooltip>
               </span>
               <Selector
+                className={styles.selector}
                 onSelectorChange={this.selectProcessingSpeed}
                 name={'speedSelector'}
                 options={[
@@ -501,7 +505,9 @@ class Form extends React.Component {
                   { title: t('High'), value: dynamicFees.High },
                 ]}
               />
-              <span>{t('Transaction fee:')} {fields.processingSpeed.value}</span>
+              <span className={styles.processingInfo}>
+                {t('Transaction fee: ')} <span>{`${fromRawLsk(fields.processingSpeed.value)} ${token}`}</span>
+              </span>
             </div>
           )}
         </div>
