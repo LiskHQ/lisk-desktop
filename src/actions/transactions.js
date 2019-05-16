@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import i18next from 'i18next';
 import to from 'await-to-js';
 import actionTypes from '../constants/actions';
@@ -34,42 +33,6 @@ export const testExtensions = () => ({
   type: 'extensinonTest',
 });
 
-export const transactionsFilterSet = ({
-  address, limit, filter, customFilters = {},
-}) => (dispatch, getState) => {
-  const networkConfig = getState().network;
-
-  dispatch(loadingStarted(actionTypes.transactionsFilterSet));
-
-  return getTransactions({
-    networkConfig,
-    address,
-    limit,
-    filter,
-    customFilters,
-  }).then((response) => {
-    dispatch({
-      data: {
-        confirmed: response.data,
-        count: parseInt(response.meta.count, 10),
-        filter,
-        customFilters,
-      },
-      type: actionTypes.transactionsLoaded,
-    });
-    if (filter !== undefined) {
-      dispatch({
-        data: {
-          filterName: 'wallet',
-          value: filter,
-        },
-        type: actionTypes.addFilter,
-      });
-    }
-    dispatch(loadingFinished(actionTypes.transactionsFilterSet));
-  });
-};
-
 export const loadTransactionsFinish = accountUpdated =>
   (dispatch) => {
     dispatch(loadingFinished(actionTypes.transactionsLoad));
@@ -91,7 +54,7 @@ export const loadTransactionsFinish = accountUpdated =>
  *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
  */
 export const transactionsRequested = ({
-  address, limit, offset, filter, customFilters = {},
+  address, limit, offset, filter, customFilters,
 }) =>
   (dispatch, getState) => {
     dispatch(loadingStarted(actionTypes.transactionsRequested));
@@ -106,12 +69,24 @@ export const transactionsRequested = ({
             confirmed: response.data,
             address,
             filter,
+            customFilters,
           },
           type: offset > 0 ? actionTypes.transactionsUpdated : actionTypes.transactionsLoaded,
         });
+        if (filter !== undefined) {
+          dispatch({
+            data: {
+              filterName: 'wallet',
+              value: filter,
+            },
+            type: actionTypes.addFilter,
+          });
+        }
         dispatch(loadingFinished(actionTypes.transactionsRequested));
       });
   };
+
+export const transactionsFilterSet = transactionsRequested;
 
 /**
  * This action is used to get the data for "My Wallet Details" module on wallet page
