@@ -12,7 +12,6 @@ import {
   removePassphrase,
   passphraseUsed,
   loadDelegate,
-  loadAccount,
   accountDataUpdated,
   updateTransactionsIfNeeded,
   updateDelegateAccount,
@@ -242,72 +241,6 @@ describe('actions: account', () => {
       };
 
       chaiExpect(removePassphrase(data)).to.be.deep.equal(expectedAction);
-    });
-  });
-
-  describe('loadAccount', () => {
-    let getAccountStub;
-    let transactionsActionsStub;
-    let getState;
-
-    const dispatch = spy();
-
-    beforeEach(() => {
-      getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
-      transactionsActionsStub = spy(transactionsActions, 'loadTransactionsFinish');
-      getState = () => ({
-        peers: { liskAPIClient: {} },
-      });
-    });
-
-    afterEach(() => {
-      getAccountStub.restore();
-      transactionsActionsStub.restore();
-    });
-
-    it('should finish transactions load and load delegate if not own account', () => {
-      getAccountStub.resolves({
-        balance: 10e8,
-        publicKey: accounts.genesis.publicKey,
-        isDelegate: false,
-      });
-
-      const data = {
-        address: accounts.genesis.address,
-        transactionsResponse: { meta: { count: 0 }, data: [] },
-        isSameAccount: false,
-      };
-
-      loadAccount(data)(dispatch, getState);
-      chaiExpect(transactionsActionsStub).to.have.been.calledWith({
-        confirmed: [],
-        count: 0,
-        balance: 10e8,
-        address: accounts.genesis.address,
-      });
-    });
-
-    it('should finish transactions load and should not load delegate if own account', () => {
-      getAccountStub.resolves({
-        balance: 10e8,
-        publicKey: accounts.genesis.publicKey,
-        delegate: { username: 'delegate information' },
-      });
-
-      const data = {
-        address: accounts.genesis.address,
-        transactionsResponse: { meta: { count: 0 }, data: [] },
-        isSameAccount: true,
-      };
-
-      loadAccount(data)(dispatch, getState);
-      chaiExpect(transactionsActionsStub).to.have.been.calledWith({
-        confirmed: [],
-        count: 0,
-        balance: 10e8,
-        address: accounts.genesis.address,
-        delegate: { username: 'delegate information' },
-      });
     });
   });
 

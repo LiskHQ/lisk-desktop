@@ -6,7 +6,7 @@ import { getAccount, setSecondPassphrase } from '../utils/api/account';
 import { registerDelegate, getDelegate, getAllVotes } from '../utils/api/delegate';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
-import { loadTransactionsFinish, transactionsUpdated } from './transactions';
+import { transactionsUpdated } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { liskAPIClientUpdate } from './peers';
@@ -175,36 +175,6 @@ export const loadDelegate = ({ publicKey }) =>
         type: actionTypes.updateDelegate,
       });
     });
-  };
-
-export const loadAccount = ({
-  address,
-  transactionsResponse,
-  isSameAccount,
-}) =>
-  (dispatch, getState) => {
-    const networkConfig = getState().network;
-    getAccount({ networkConfig, address })
-      .then((response) => {
-        let accountDataUpdated = {
-          confirmed: transactionsResponse.data,
-          count: parseInt(transactionsResponse.meta.count, 10),
-          balance: response.balance,
-          address,
-        };
-
-        if (!isSameAccount && response.publicKey) {
-          dispatch(loadDelegate({
-            publicKey: response.publicKey,
-          }));
-        } else if (isSameAccount && response.delegate && response.delegate.username) {
-          accountDataUpdated = {
-            ...accountDataUpdated,
-            delegate: response.delegate,
-          };
-        }
-        dispatch(loadTransactionsFinish(accountDataUpdated));
-      });
   };
 
 export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocus) =>
