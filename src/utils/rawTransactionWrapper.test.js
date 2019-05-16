@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Lisk from 'lisk-elements';
+import Lisk from '@liskhq/lisk-client';
 import transactionTypes from '../constants/transactionTypes';
 import { createDelegateTX, createSendTX, createSecondPassphraseTX,
   createRawVoteTX, concatVoteLists,

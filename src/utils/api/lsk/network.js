@@ -1,4 +1,4 @@
-import Lisk from 'lisk-elements';
+import Lisk from '@liskhq/lisk-client';
 import networks from '../../../constants/networks';
 import { tokenMap } from '../../../constants/tokens';
 
