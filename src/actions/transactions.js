@@ -14,6 +14,7 @@ import transactionTypes from '../constants/transactionTypes';
 import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
 import { transactions as transactionsAPI, hardwareWallet as hwAPI } from '../utils/api';
+import { tokenMap } from '../constants/tokens';
 
 export const cleanTransactions = () => ({
   type: actionTypes.cleanTransactions,
@@ -254,7 +255,7 @@ const handleSentError = ({
   account,
   dispatch,
   error,
-  transaction,
+  tx,
 }) => {
   let text;
   switch (account.loginType) {
@@ -272,7 +273,7 @@ const handleSentError = ({
     type: actionTypes.transactionFailed,
     data: {
       errorMessage: text,
-      tx: { ...transaction },
+      tx,
     },
   });
 };
@@ -295,7 +296,12 @@ export const sent = data => async (dispatch, getState) => {
   let fail;
   const { account, network, settings } = getState();
   const timeOffset = getTimeOffset(getState());
-  const activeToken = settings.token.active;
+  const activeToken = localStorage.getItem('btc')
+    ? settings.token.active
+    : tokenMap.LSK.key;
+  const senderId = localStorage.getItem('btc')
+    ? account.info[activeToken].address
+    : account.address;
 
   const txData = { ...data, timeOffset };
 
@@ -323,7 +329,7 @@ export const sent = data => async (dispatch, getState) => {
       fee: Fees.send,
       id: broadcastTx.id,
       recipientId: txData.recipientId,
-      senderId: account.info[activeToken].address,
+      senderId,
       senderPublicKey: account.publicKey,
       type: transactionTypes.send,
     }));

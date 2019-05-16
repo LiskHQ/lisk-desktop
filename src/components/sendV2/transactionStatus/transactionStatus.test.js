@@ -58,6 +58,13 @@ describe('TransactionStatus', () => {
       isLoading: false,
       isHardwareWalletConnected: false,
     },
+    resetTransactionResult: jest.fn(),
+    transactionBroadcasted: jest.fn(),
+    transactions: {
+      transactionsCreated: [],
+      transactionsCreatedFailed: [],
+      broadcastedTransactionsError: [],
+    },
   };
 
   beforeEach(() => {
@@ -77,27 +84,6 @@ describe('TransactionStatus', () => {
     expect(props.finalCallback).toBeCalled();
   });
 
-  it('should render error message in case of transaction failed', () => {
-    const newProps = { ...props };
-    newProps.failedTransactions = [{ recipient: '123L', amount: 1, reference: 'test' }];
-    wrapper = mount(<TransactionStatus {...newProps} />, options);
-    expect(wrapper).toContainMatchingElement('.transaction-status-error');
-    wrapper.find('.on-goToWallet').at(0).simulate('click');
-    wrapper.update();
-    expect(props.finalCallback).toBeCalled();
-  });
-
-  it('should call onPrevStep function', () => {
-    const newProps = { ...props };
-    newProps.fields.isHardwareWalletConnected = true;
-    newProps.fields.hwTransactionStatus = 'error';
-    newProps.failedTransactions = [{ recipient: '123L', amount: 1, reference: 'test' }];
-    wrapper = mount(<TransactionStatus {...newProps} />, options);
-    expect(wrapper).toContainMatchingElement('.transaction-status-error');
-    wrapper.find('.retry').at(0).simulate('click');
-    expect(props.prevStep).toBeCalled();
-  });
-
   it('should show dropdown follow account', () => {
     expect(wrapper).toContainMatchingElement('.following-container');
     expect(wrapper).toContainMatchingElement('.following-btn');
@@ -114,5 +100,26 @@ describe('TransactionStatus', () => {
     wrapper.update();
     expect(wrapper.find('.following-btn').at(0).text()).toEqual('Account bookmarked');
     wrapper.find('.following-btn').at(0).simulate('click');
+  });
+
+  it('should render error message in case of transaction failed', () => {
+    const newProps = { ...props };
+    newProps.transactions.broadcastedTransactionsError = [{ recipient: '123L', amount: 1, reference: 'test' }];
+    wrapper = mount(<TransactionStatus {...newProps} />, options);
+    expect(wrapper).toContainMatchingElement('.transaction-status-error');
+    wrapper.find('.on-goToWallet').at(0).simulate('click');
+    wrapper.update();
+    expect(props.finalCallback).toBeCalled();
+  });
+
+  it('should call onPrevStep function', () => {
+    const newProps = { ...props };
+    newProps.fields.isHardwareWalletConnected = true;
+    newProps.fields.hwTransactionStatus = 'error';
+    newProps.failedTransactions = [{ recipient: '123L', amount: 1, reference: 'test' }];
+    wrapper = mount(<TransactionStatus {...newProps} />, options);
+    expect(wrapper).toContainMatchingElement('.transaction-status-error');
+    wrapper.find('.retry').at(0).simulate('click');
+    expect(props.transactionBroadcasted).toBeCalled();
   });
 });

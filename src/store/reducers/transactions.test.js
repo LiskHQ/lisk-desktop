@@ -6,6 +6,9 @@ describe('Reducer: transactions(state, action)', () => {
   const defaultState = {
     pending: [],
     confirmed: [],
+    transactionsCreated: [],
+    transactionsCreatedFailed: [],
+    broadcastedTransactionsError: [],
   };
   const mockTransactions = [{
     amount: 100000000000,
@@ -210,6 +213,7 @@ describe('Reducer: transactions(state, action)', () => {
 
   it('should reset all data if action.type = cleanTransactions', () => {
     const state = {
+      ...defaultState,
       pending: null,
       confirmed: null,
       count: null,
@@ -217,6 +221,7 @@ describe('Reducer: transactions(state, action)', () => {
     };
 
     const expectedState = {
+      ...defaultState,
       pending: [],
       confirmed: [],
       count: null,

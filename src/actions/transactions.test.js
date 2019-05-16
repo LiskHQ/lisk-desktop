@@ -7,11 +7,9 @@ import accounts from '../../test/constants/accounts';
 import Fees from '../constants/fees';
 import networks from '../constants/networks';
 import { toRawLsk } from '../utils/lsk';
-import { transactions as transactionsAPI } from '../utils/api';
 
 jest.mock('../utils/api/transactions');
 jest.mock('../utils/api/delegate');
-jest.mock('../utils/api');
 
 describe('actions: transactions', () => {
   const dispatch = jest.fn();
@@ -169,6 +167,7 @@ describe('actions: transactions', () => {
     getState = () => ({
       peers: { liskAPIClient: {} },
       transactions: { filter: txFilters.all },
+      network: { liskAPIClient: {} },
       settings: {
         token: {
           active: 'LSK',
@@ -200,6 +199,7 @@ describe('actions: transactions', () => {
       getState = () => ({
         peers: { liskAPIClient: {} },
         transactions: { filter: txFilters.all },
+        network: { liskAPIClient: {} },
         settings: {
           token: {
             active: 'LSK',
@@ -229,8 +229,8 @@ describe('actions: transactions', () => {
         type: 0,
       };
 
-      transactionsAPI.create.mockResolvedValue({ id: '15626650747375562521' });
-      transactionsAPI.broadcast.mockResolvedValue(expectedAction);
+      transactionsApi.create.mockReturnValue(expectedAction);
+      transactionsApi.broadcast.mockReturnValue(expectedAction);
 
       await actionFunction(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
@@ -240,7 +240,9 @@ describe('actions: transactions', () => {
     });
 
     it('should dispatch transactionFailed action if caught', async () => {
-      transactionsAPI.create.mockRejectedValue({ message: 'sample message' });
+      transactionsApi.create.mockImplementation(() => {
+        throw new Error('sample message');
+      });
 
       const expectedAction = {
         data: {
@@ -255,7 +257,10 @@ describe('actions: transactions', () => {
 
     it('should dispatch transactionFailed action if caught but no message returned', async () => {
       const errorMessage = 'An error occurred while creating the transaction';
-      transactionsAPI.create.mockRejectedValue({ message: errorMessage });
+      transactionsApi.create.mockImplementation(() => {
+        throw new Error(errorMessage);
+      });
+
       const expectedErrorMessage = errorMessage + '.'; // eslint-disable-line
       const expectedAction = {
         data: {

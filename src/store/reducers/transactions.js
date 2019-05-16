@@ -84,7 +84,9 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
     case 'extensinonTest':
       return { ...state, test: new Date().toLocaleTimeString() };
     case (actionTypes.accountSwitched):
-      return { pending: [], confirmed: [], count: 0 };
+      return {
+        ...state, pending: [], confirmed: [], count: 0,
+      };
     case actionTypes.transactionCreatedSuccess:
       return {
         ...state,
@@ -99,6 +101,8 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
       return {
         ...state,
         transactionsCreated: state.transactionsCreated.filter(tx => tx.id !== action.data.id),
+        broadcastedTransactionsError: state.broadcastedTransactionsError
+          .filter(tx => tx.id !== action.data.id),
       };
     case actionTypes.broadcastedTransactionError:
       return {

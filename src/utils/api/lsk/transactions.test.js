@@ -44,13 +44,12 @@ describe('Utils: Transactions API', () => {
 
   // TODO: fix these tests for assert more than just a promise is returned
   describe('send', () => {
-    it('should broadcast a transaction and return a promise', () => {
-      const promise = send(apiClient, recipientId, amount, accounts.genesis.passphrase);
+    it('should broadcast a transaction and return a promise', async () => {
+      await send(amount, {}, apiClient, accounts.genesis.passphrase, recipientId, null, 0);
       expect(apiClient.transactions.broadcast).toHaveBeenCalledWith(expect.objectContaining({
         amount,
         recipientId,
       }));
-      expect(typeof promise.then).toEqual('function');
     });
   });
 

@@ -93,15 +93,10 @@ export const unconfirmedTransactions = (liskAPIClient, address, limit = 20, offs
 
 
 export const create = ({
-  amount,
-  data,
-  passphrase,
-  recipientId,
-  secondPassphrase,
-  timeOffset,
+  amount, data, passphrase, recipientId, secondPassphrase, timeOffset,
 }) => new Promise((resolve, reject) => {
   try {
-    const transaction = Lisk.transaction.transfer({
+    const tx = Lisk.transaction.transfer({
       amount,
       data,
       passphrase,
@@ -109,18 +104,16 @@ export const create = ({
       secondPassphrase,
       timeOffset,
     });
-    resolve(transaction);
+    resolve(tx);
   } catch (error) {
     reject(error);
   }
 });
 
 export const broadcast = (transaction, networkConfig) => new Promise((resolve, reject) => {
-  setTimeout(async () => {
-    try {
-      getAPIClient(networkConfig).transactions.broadcast(transaction).then(resolve(transaction));
-    } catch (error) {
-      reject(error);
-    }
-  });
+  try {
+    getAPIClient(networkConfig).transactions.broadcast(transaction).then(resolve(transaction));
+  } catch (error) {
+    reject(error);
+  }
 });

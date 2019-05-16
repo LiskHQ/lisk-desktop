@@ -36,6 +36,11 @@ describe('Summary', () => {
         balance: 7,
       },
     ],
+    transactions: {
+      transactionsCreated: [],
+      transactionsCreatedFailed: [],
+      broadcastedTransactionsError: [],
+    },
   });
 
   const options = {
@@ -75,9 +80,15 @@ describe('Summary', () => {
     },
     prevStep: jest.fn(),
     nextStep: jest.fn(),
-    sent: jest.fn(),
+    transactionCreated: jest.fn(),
+    resetTransactionResult: jest.fn(),
     isLoading: false,
     isHardwareWalletConnected: false,
+    transactions: {
+      transactionsCreated: [],
+      transactionsCreatedFailed: [],
+      broadcastedTransactionsError: [],
+    },
   };
 
   beforeEach(() => {
@@ -98,7 +109,7 @@ describe('Summary', () => {
     expect(props.prevStep).toBeCalled();
   });
 
-  it('should goind to next page if everyting is successfull', () => {
+  it('should call transactionCreated function after do a click in confirm button', () => {
     const clipboardData = {
       getData: () => accounts['second passphrase account'].secondPassphrase,
     };
@@ -106,10 +117,10 @@ describe('Summary', () => {
     wrapper.update();
     wrapper.find('.on-nextStep').at(0).simulate('click');
     wrapper.update();
-    expect(props.nextStep).toBeCalled();
+    expect(props.transactionCreated).toBeCalled();
   });
 
-  it('should goind to next page if everything is successfull with Hardware Wallet', () => {
+  it('should call transactionCreated as soon the component load if using HW', () => {
     const newProps = { ...props };
     newProps.account = {
       ...props.account,
@@ -118,19 +129,7 @@ describe('Summary', () => {
       },
     };
     wrapper = mount(<Summary {...newProps} />, options);
-    wrapper.setProps({
-      ...props,
-      pendingTransactions: [{
-        senderId: accounts['second passphrase account'].address,
-        recipientId: '123123L',
-        amount: 1,
-      }],
-      fields: {
-        ...props.fields,
-        isLoading: true,
-      },
-    });
     wrapper.update();
-    expect(props.nextStep).toBeCalled();
+    expect(props.transactionCreated).toBeCalled();
   });
 });
