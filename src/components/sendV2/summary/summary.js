@@ -9,6 +9,7 @@ import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
 import Piwik from '../../../utils/piwik';
 import { extractPublicKey } from '../../../utils/account';
+import { tokenMap } from '../../../constants/tokens';
 import styles from './summary.css';
 
 class Summary extends React.Component {
@@ -135,16 +136,22 @@ class Summary extends React.Component {
   }
 
   render() {
-    const { account, fields, t } = this.props;
+    const {
+      account, fields, t, token,
+    } = this.props;
     const { secondPassphrase, isHardwareWalletConnected } = this.state;
 
     const confirmBtnMessage = isHardwareWalletConnected
       ? t('Confirm on {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })
-      : t('Send {{amount}} LSK', { amount: fields.amount.value });
+      : t('Send {{amount}} {{token}}', { amount: fields.amount.value, token });
 
     const title = isHardwareWalletConnected
       ? t('Confirm transaction on {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })
       : t('Transaction summary');
+
+    const fee = token === tokenMap.LSK.key
+      ? fromRawLsk(fees.send)
+      : fromRawLsk(fields.processingSpeed.value);
 
     return (
       <div className={`${styles.wrapper} summary`}>
@@ -169,15 +176,17 @@ class Summary extends React.Component {
           <div className={styles.row}>
             <label>{t('Amount')}</label>
             <label className={`${styles.information} ${styles.amount} amount-summary`}>
-              {`${fields.amount.value} ${t('LSK')}`}
+              {`${fields.amount.value} ${token}`}
               <ConverterV2 className={`${styles.secondText} ${styles.amountSecondText}`} value={fields.amount.value} />
             </label>
           </div>
 
-          <div className={styles.row}>
-            <label>{t('Message')}</label>
-            <p className={`${styles.information} reference`}>{fields.reference.value}</p>
-          </div>
+          {token === 'LSK' && fields.reference.value !== '' ? (
+            <div className={styles.row}>
+              <label>{t('Message')}</label>
+              <p className={`${styles.information} reference`}>{fields.reference.value}</p>
+            </div>
+          ) : null}
 
           <div className={styles.row}>
             <label className={styles.transactionFee}>
@@ -201,7 +210,7 @@ class Summary extends React.Component {
                 </p>
               </Tooltip>
             </label>
-            <span>{t('{{fee}} LSK', { fee: fromRawLsk(fees.send) })}</span>
+            <span>{t('{{fee}} {{token}}', { fee, token })}</span>
           </div>
 
           {
