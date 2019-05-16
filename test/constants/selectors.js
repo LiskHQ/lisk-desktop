@@ -164,7 +164,7 @@ const ss = {
   bookmarkedAccountTitle: '.transactions .account-title',
   showMoreButton: '.show-more-button',
   chooseAvatar: '.choose-avatar span',
-  copyPassphrase: '.option-value',
+  copyPassphrase: '.passphrase input',
   passphraseWordConfirm: '.passphrase-holder .word-option',
   passphraseConfirmButton: '.passphrase-is-correct-button',
   exploreAsGuestBtn: '.explore-as-guest-button',

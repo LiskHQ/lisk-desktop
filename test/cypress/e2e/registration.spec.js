@@ -6,12 +6,15 @@ describe('Registration', () => {
    * Create an account
    * @expect Account is created
    */
-  xit('Create an account', function () {
+  it('Create an account', function () {
     cy.visit(urls.register);
     cy.url().should('contain', 'register');
     cy.get(ss.chooseAvatar).first().click();
     cy.get(ss.getPassphraseButton).click();
-    cy.get(ss.copyPassphrase).invoke('text').as('passphrase');
+    this.passphrase = [];
+    cy.get(ss.copyPassphrase).each(($el) => {
+      this.passphrase = [...this.passphrase, $el.val()];
+    });
     cy.get(ss.itsSafeBtn).click();
     cy.get(ss.passphraseWordConfirm).each(($el) => {
       if (this.passphrase.includes($el[0].textContent)) cy.wrap($el).click();
