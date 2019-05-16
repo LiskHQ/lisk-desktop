@@ -33,14 +33,6 @@ export const testExtensions = () => ({
   type: 'extensinonTest',
 });
 
-export const loadTransactionsFinish = accountUpdated =>
-  (dispatch) => {
-    dispatch({
-      data: accountUpdated,
-      type: actionTypes.transactionsLoadFinish,
-    });
-  };
-
 /**
  * This action is used to request transactions on dashboard and wallet page.
  *

@@ -61,18 +61,6 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
         customFilters: action.data.customFilters !== undefined ?
           action.data.customFilters : state.filter,
       };
-    case actionTypes.transactionsLoadFinish:
-      return {
-        ...state,
-        confirmed: action.data.confirmed,
-        count: action.data.count,
-        account: {
-          address: action.data.address,
-          balance: action.data.balance,
-          delegate: action.data.delegate,
-        },
-        filter: txFilter.all,
-      };
     case 'extensinonTest':
       return { ...state, test: new Date().toLocaleTimeString() };
     case (actionTypes.accountSwitched):
