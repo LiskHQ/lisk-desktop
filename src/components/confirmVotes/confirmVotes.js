@@ -74,11 +74,14 @@ class ConfirmVotes extends React.Component {
       secondPassphrase: secondPassphrase.value,
       goToNextStep: this.goToNextStep.bind(this),
     };
+
+    const deviceModel = this.props.account.hwInfo && this.props.account.hwInfo.deviceModel;
     return (
       <div className={styles.wrapper}>
         <article className={styles.content}>
           <h2 className={styles.header}>{account.hwInfo && account.hwInfo.deviceId ?
-            t('Confirm vote on Ledger Nano S') : t('Final confirmation') }</h2>
+            t('Confirm vote on {{deviceModel}}', { deviceModel })
+            : t('Final confirmation') }</h2>
           <p className={styles.message}>
             {t('Are you certain of your choice?')}
           </p>

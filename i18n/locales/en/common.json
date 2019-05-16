@@ -86,7 +86,7 @@
   "Confirm on {{deviceModel}}": "Confirm on {{deviceModel}}",
   "Confirm to register your second passphrase on the blockchain.": "Confirm to register your second passphrase on the blockchain.",
   "Confirm transaction on {{deviceModel}}": "Confirm transaction on {{deviceModel}}",
-  "Confirm vote on Ledger Nano S": "Confirm vote on Ledger Nano S",
+  "Confirm vote on {{deviceModel}}": "Confirm vote on {{deviceModel}}",
   "Confirm your name": "Confirm your name",
   "Confirm your passphrase": "Confirm your passphrase",
   "Confirmation in the next step": "Confirmation in the next step",
