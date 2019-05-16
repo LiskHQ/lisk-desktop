@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { extractPublicKey, extractAddress } from './account';
+import { extractPublicKey, extractAddress, getActiveTokenAccount } from './account';
 
 describe('Utils: Account', () => {
   describe('extractPublicKey', () => {
@@ -25,6 +25,31 @@ describe('Utils: Account', () => {
 
     it('should return false if no param passed to it', () => {
       expect(extractAddress()).to.be.equal(false);
+    });
+  });
+
+  describe('getActiveTokenAccount', () => {
+    it('should get account with active token info on the top level', () => {
+      const activeToken = 'BTC';
+      const account = {
+        info: {
+          BTC: {
+            address: 'btc address dummy',
+          },
+        },
+      };
+      const state = {
+        account,
+        settings: {
+          token: {
+            active: activeToken,
+          },
+        },
+      };
+      expect(getActiveTokenAccount(state)).to.be.deep.equal({
+        ...account,
+        ...account.info[activeToken],
+      });
     });
   });
 });
