@@ -11,7 +11,7 @@ import {
 import actionTypes from '../../constants/actions';
 import transactionTypes from '../../constants/transactionTypes';
 
-import { extractAddress, extractPublicKey } from '../../utils/account';
+import { extractAddress, extractPublicKey, getActiveTokenAccount } from '../../utils/account';
 import { getAutoLogInData, shouldAutoLogIn } from '../../utils/login';
 import { liskAPIClientSet, liskAPIClientUpdate } from '../../actions/peers';
 import networks from '../../constants/networks';
@@ -22,7 +22,8 @@ import { setWalletsLastBalance } from '../../actions/wallets';
 import { setWalletsInLocalStorage } from '../../utils/wallets';
 
 const updateAccountData = (store, action) => {
-  const { account, transactions } = store.getState();
+  const { transactions } = store.getState();
+  const account = getActiveTokenAccount(store.getState());
 
   store.dispatch(accountDataUpdated({
     windowIsFocused: action.data.windowIsFocused,
@@ -85,7 +86,8 @@ const votePlaced = (store, action) => {
 
 const checkTransactionsAndUpdateAccount = (store, action) => {
   const state = store.getState();
-  const { account, transactions } = state;
+  const { transactions } = state;
+  const account = getActiveTokenAccount(store.getState());
   // Adding timeout explained in
   // https://github.com/LiskHQ/lisk-hub/pull/1609
   setTimeout(() => {
@@ -99,11 +101,10 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }, 500);
 
   const tx = action.data.block.transactions || [];
-  const accountAddress = state.account.address;
   const blockContainsRelevantTransaction = tx.filter((transaction) => {
     const sender = transaction ? transaction.senderId : null;
     const recipient = transaction ? transaction.recipientId : null;
-    return accountAddress === recipient || accountAddress === sender;
+    return account.address === recipient || account.address === sender;
   }).length > 0;
 
   if (blockContainsRelevantTransaction) {
