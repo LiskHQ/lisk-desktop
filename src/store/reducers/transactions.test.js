@@ -139,7 +139,7 @@ describe('Reducer: transactions(state, action)', () => {
     });
   });
 
-  it('should reduce transactions when loaded', () => {
+  it('should reduce transactions when loaded with filters', () => {
     const state = {
       ...defaultState,
     };
@@ -154,6 +154,22 @@ describe('Reducer: transactions(state, action)', () => {
         amountTo: '4',
         message: '5',
       },
+    };
+    const action = { type: actionTypes.transactionsLoaded, data };
+    const changedState = transactions(state, action);
+    expect(changedState).toEqual({
+      ...defaultState,
+      ...data,
+    });
+  });
+
+  it('should reduce transactions when loaded without filters', () => {
+    const state = {
+      ...defaultState,
+    };
+    const data = {
+      confirmed: mockTransactions,
+      count: mockTransactions.length,
     };
     const action = { type: actionTypes.transactionsLoaded, data };
     const changedState = transactions(state, action);
