@@ -50,8 +50,9 @@ class TransactionsListV2 extends React.Component {
       <TransactionsHeaderV2 isSmallScreen={isSmallScreen} activeToken={activeToken}/>
       {filteredTransactions.length
         ? filteredTransactions
-            .map((transaction, i) =>
-              <TransactionRowV2 key={i}
+            .map(transaction =>
+              <TransactionRowV2
+                key={transaction.id}
                 followedAccounts={followedAccounts}
                 address={address}
                 value={transaction}
