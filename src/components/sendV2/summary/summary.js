@@ -28,7 +28,6 @@ class Summary extends React.Component {
 
     this.checkForHardwareWallet = this.checkForHardwareWallet.bind(this);
     this.checkSecondPassphrase = this.checkSecondPassphrase.bind(this);
-    this.nextStep = this.nextStep.bind(this);
     this.prevStep = this.prevStep.bind(this);
     this.submitTransaction = this.submitTransaction.bind(this);
   }
@@ -62,12 +61,14 @@ class Summary extends React.Component {
 
   componentDidUpdate() {
     this.checkForHardwareWallet();
+    this.checkForSuccessOrFailedTransactions();
   }
 
   submitTransaction() {
+    Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
     const { account, fields } = this.props;
 
-    this.props.sent({
+    this.props.transactionCreated({
       amount: toRawLsk(fields.amount.value),
       data: fields.reference.value,
       passphrase: account.passphrase,
@@ -102,6 +103,20 @@ class Summary extends React.Component {
     }
   }
 
+  checkForSuccessOrFailedTransactions() {
+    const { transactions, nextStep, fields } = this.props;
+
+    if (transactions.transactionsCreated.length && !transactions.transactionsCreatedFailed.length) {
+      nextStep({
+        fields: {
+          ...fields,
+          hwTransactionStatus: false,
+          isHardwareWalletConnected: false,
+        },
+      });
+    }
+  }
+
   checkSecondPassphrase(passphrase, error) {
     // istanbul ignore else
     if (!error) {
@@ -131,29 +146,8 @@ class Summary extends React.Component {
 
   prevStep() {
     Piwik.trackingEvent('Send_Summary', 'button', 'Previous step');
+    this.props.resetTransactionResult();
     this.props.prevStep({ ...this.props.fields });
-  }
-
-  nextStep() {
-    const { account, fields } = this.props;
-    Piwik.trackingEvent('Send_Summary', 'button', 'Next step');
-    this.submitTransaction();
-    this.props.nextStep({
-      fields: {
-        ...fields,
-        hwTransactionStatus: false,
-        isHardwareWalletConnected: false,
-      },
-      transactionData: {
-        amount: toRawLsk(fields.amount.value),
-        data: fields.reference.value,
-        passphrase: account.passphrase,
-        recipientId: fields.recipient.address,
-        secondPassphrase: this.state.secondPassphrase.value,
-        dynamicFeePerByte: null, // for BTC
-        fee: null, // for BTC
-      },
-    });
   }
 
   render() {
@@ -246,7 +240,7 @@ class Summary extends React.Component {
         <footer className={`${styles.footer} summary-footer`}>
           <PrimaryButtonV2
             className={`${styles.confirmBtn} on-nextStep send-button`}
-            onClick={this.nextStep}
+            onClick={this.submitTransaction}
             disabled={isBtnDisabled}>
             {confirmBtnMessage}
           </PrimaryButtonV2>

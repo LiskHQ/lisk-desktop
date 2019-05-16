@@ -18,7 +18,7 @@ class TransactionStatus extends React.Component {
     this.followContainerRef = {};
     this.backToWallet = this.backToWallet.bind(this);
     this.onErrorReport = this.onErrorReport.bind(this);
-    this.onPrevStep = this.onPrevStep.bind(this);
+    this.onRetry = this.onRetry.bind(this);
     this.onFollowingDropdownToggle = this.onFollowingDropdownToggle.bind(this);
     this.handleClickOutsideDropdown = this.handleClickOutsideDropdown.bind(this);
     this.getDelegateInformation = this.getDelegateInformation.bind(this);
@@ -26,6 +26,7 @@ class TransactionStatus extends React.Component {
 
   componentDidMount() {
     this.props.searchAccount({ address: this.props.fields.recipient.address });
+    this.transactionBroadcasted();
   }
 
   /* istanbul ignore next */
@@ -33,10 +34,14 @@ class TransactionStatus extends React.Component {
     document.removeEventListener('click', this.handleClickOutsideDropdown);
   }
 
+  transactionBroadcasted() {
+    const { transactions: { transactionsCreated }, transactionBroadcasted } = this.props;
+    transactionsCreated.forEach(tx => transactionBroadcasted(tx));
+  }
+
   backToWallet() {
     Piwik.trackingEvent('TransactionStatus', 'button', 'Back to wallet');
-    // istanbul ignore else
-    if (this.props.failedTransactions !== undefined) this.props.transactionFailedClear();
+    this.props.resetTransactionResult();
     this.props.finalCallback();
   }
 
@@ -81,11 +86,11 @@ class TransactionStatus extends React.Component {
   }
 
   getMessagesDetails() {
-    const { failedTransactions, fields } = this.props;
+    const { transactions, fields } = this.props;
 
     const isHardwareWalletOnError = fields.isHardwareWalletConnected && fields.hwTransactionStatus === 'error';
     const messages = statusMessage(this.props.t);
-    let messageDetails = failedTransactions === undefined
+    let messageDetails = !transactions.broadcastedTransactionsError.length
       ? messages.success
       : messages.error;
 
@@ -106,16 +111,17 @@ class TransactionStatus extends React.Component {
     return `mailto:${recipient}?&subject=${subject}`;
   }
 
-  onPrevStep() {
-    this.props.transactionFailedClear();
-    this.props.prevStep({ fields: { ...this.props.fields } });
+  onRetry() {
+    const { transactions: { broadcastedTransactionsError }, transactionBroadcasted } = this.props;
+    broadcastedTransactionsError.forEach(tx => transactionBroadcasted(tx));
   }
 
   render() {
-    const { failedTransactions, fields, t } = this.props;
+    const { transactions, fields, t } = this.props;
     const { isFollowing, followButtonLabel } = this.followAccountInformation();
     const { isHardwareWalletOnError, messageDetails } = this.getMessagesDetails();
-    const isShowFollowingAccount = failedTransactions === undefined && !fields.recipient.following;
+    const isShowFollowingAccount = !transactions.broadcastedTransactionsError.length
+      && !fields.recipient.following;
 
     return (
       <div className={`${styles.wrapper} transaction-status`}>
@@ -129,8 +135,8 @@ class TransactionStatus extends React.Component {
         <footer className={`${styles.footer} transaction-status-footer`}>
           <div>
             {
-              isHardwareWalletOnError || failedTransactions !== undefined
-              ? <SecondaryButtonV2 label={t('Retry')} className={`${styles.btn} retry`} onClick={() => this.onPrevStep()} />
+              isHardwareWalletOnError || transactions.broadcastedTransactionsError.length
+              ? <SecondaryButtonV2 label={t('Retry')} className={`${styles.btn} retry`} onClick={() => this.onRetry()} />
               : null
             }
             {
@@ -162,7 +168,7 @@ class TransactionStatus extends React.Component {
             </PrimaryButtonV2>
           </div>
           {
-            !(failedTransactions === undefined)
+            transactions.broadcastedTransactionsError.length
             ? <div className={`${styles.errorReport} transaction-status-error`}>
                 <span>{t('Does the problem still persist?')}</span>
                 <a

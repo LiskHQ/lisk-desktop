@@ -13,7 +13,7 @@ import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
-import { transactions as transactionsAPI } from '../utils/api';
+import { transactions as transactionsAPI, hardwareWallet as hwAPI } from '../utils/api';
 
 export const cleanTransactions = () => ({
   type: actionTypes.cleanTransactions,
@@ -251,7 +251,10 @@ export const transactionsUpdated = ({
   };
 
 const handleSentError = ({
-  error, account, transaction, dispatch,
+  account,
+  dispatch,
+  error,
+  transaction,
 }) => {
   let text;
   switch (account.loginType) {
@@ -264,12 +267,13 @@ const handleSentError = ({
     default:
       text = error.message;
   }
+
   dispatch({
+    type: actionTypes.transactionFailed,
     data: {
       errorMessage: text,
       tx: { ...transaction },
     },
-    type: actionTypes.transactionFailed,
   });
 };
 
@@ -289,7 +293,7 @@ export const sent = data => async (dispatch, getState) => {
   let broadcastTx;
   let tx;
   let fail;
-  const { account, network, settings } = getState().account;
+  const { account, network, settings } = getState();
   const timeOffset = getTimeOffset(getState());
   const activeToken = settings.token.active;
 
@@ -334,42 +338,88 @@ export const sent = data => async (dispatch, getState) => {
 };
 
 
+const transactionCreatedSuccess = data => ({
+  type: actionTypes.transactionCreatedSuccess,
+  data,
+});
+
+const transactionCreatedError = data => ({
+  type: actionTypes.transactionCreatedError,
+  data,
+});
+
+export const resetTransactionResult = () => ({
+  type: actionTypes.resetTransactionResult,
+});
+
+const broadcastedTransactionError = data => ({
+  type: actionTypes.broadcastedTransactionError,
+  data,
+});
+
+const broadcastedTransactionSuccess = data => ({
+  type: actionTypes.broadcastedTransactionSuccess,
+  data,
+});
+
+
+/**
+ * Calls transactionAPI.create for create the tx object that will broadcast
+ * @param {Object} data
+ * @param {String} data.recipientAddress
+ * @param {Number} data.amount - In raw format (satoshis, beddows)
+ * @param {Number} data.fee - In raw format, used for updating the TX List.
+ * @param {Number} data.dynamicFeePerByte - In raw format, used for creating BTC transaction.
+ * @param {Number} data.reference - Data field for LSK transactions
+ * @param {String} data.secondPassphrase - Second passphrase for LSK transactions
+ */
+// eslint-disable-next-line max-statements
 export const transactionCreated = data => async (dispatch, getState) => {
+  let error;
   let tx;
   const state = getState();
   const { account, settings: { token } } = state;
   const timeOffset = getTimeOffset(state);
-  const txData = { ...data, timeOffset };
 
-  // try removing the try catch
-  try {
-    tx = await transactionsAPI.create(token.active, txData, account.loginType);
-
-    return tx;
-  } catch (error) {
-    return handleSentError({ error, dispatch });
+  if (account.loginType === loginType.normal) {
+    [error, tx] = await to(transactionsAPI.create(token.active, { ...data, timeOffset }));
+  } else {
+    [error, tx] = await to(hwAPI.create(account, data));
   }
+
+  if (error) return dispatch(transactionCreatedError(error));
+  return dispatch(transactionCreatedSuccess(tx));
 };
 
+/**
+ * Calls transactionAPI.broadcast function for put the tx object (signed) into the network
+ * @param {Object} transaction
+ * @param {String} transaction.recipientAddress
+ * @param {Number} transaction.amount - In raw format (satoshis, beddows)
+ * @param {Number} transaction.fee - In raw format, used for updating the TX List.
+ * @param {Number} transaction.dynamicFeePerByte - In raw format, used for creating BTC transaction.
+ * @param {Number} transaction.reference - Data field for LSK transactions
+ * @param {String} transaction.secondPassphrase - Second passphrase for LSK transactions
+ */
 export const transactionBroadcasted = transaction => async (dispatch, getState) => {
   const { account, network, settings: { token } } = getState();
 
-  try {
-    const broadcastTx = await transactionsAPI.broadcast(token.active, transaction, network);
+  const [error, tx] = await to(transactionsAPI.broadcast(token.active, transaction, network));
 
-    dispatch(transactionAdded({
-      amount: transaction.amount,
-      asset: { reference: transaction.data },
-      fee: Fees.send,
-      id: broadcastTx.id,
-      recipientId: transaction.recipientId,
-      senderId: account.info[token.active].address,
-      senderPublicKey: account.publicKey,
-      type: transactionTypes.send,
-    }));
+  if (error) return dispatch(broadcastedTransactionError(transaction));
 
-    dispatch(passphraseUsed(transaction.passphrase));
-  } catch (error) {
-    handleSentError({ error, transaction, dispatch });
-  }
+  dispatch(broadcastedTransactionSuccess(transaction));
+
+  dispatch(transactionAdded({
+    amount: transaction.amount,
+    asset: { reference: transaction.data },
+    fee: Fees.send,
+    id: tx.id,
+    recipientId: transaction.recipientId,
+    senderId: account.info[token.active].address,
+    senderPublicKey: account.publicKey,
+    type: transactionTypes.send,
+  }));
+
+  return dispatch(passphraseUsed(transaction.passphrase));
 };

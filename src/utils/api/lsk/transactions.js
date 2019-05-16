@@ -115,7 +115,7 @@ export const create = ({
   }
 });
 
-export const broadcast = (networkConfig, transaction) => new Promise((resolve, reject) => {
+export const broadcast = (transaction, networkConfig) => new Promise((resolve, reject) => {
   setTimeout(async () => {
     try {
       getAPIClient(networkConfig).transactions.broadcast(transaction).then(resolve(transaction));
