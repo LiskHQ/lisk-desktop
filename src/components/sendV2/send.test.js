@@ -11,7 +11,7 @@ describe('Form', () => {
   let wrapper;
 
   const store = configureMockStore([thunk])({
-    settings: { currency: 'USD' },
+    settings: { currency: 'USD', token: { active: 'LSK' } },
     settingsUpdated: () => {},
     peers: { liskAPIClient: {} },
     liskService: {
@@ -41,9 +41,12 @@ describe('Form', () => {
     failedTransactions: '',
     account: {
       balance: accounts.genesis.balance,
+      info: {
+        LSK: accounts.genesis,
+      },
     },
     followedAccounts: {
-      accounts: [
+      LSK: [
         {
           title: 'ABC',
           address: '12345L',
@@ -63,6 +66,10 @@ describe('Form', () => {
     },
     search: {
       delegates: {},
+      accounts: {},
+    },
+    service: {
+      dynamicFees: {},
     },
   });
 
@@ -90,8 +97,8 @@ describe('Form', () => {
     prevState: {
       fields: {},
     },
-    followedAccounts: [
-      {
+    followedAccounts: {
+      LSK: [{
         title: 'ABC',
         address: '12345L',
         balance: 10,
@@ -105,8 +112,8 @@ describe('Form', () => {
         title: 'KTG',
         address: '12395L',
         balance: 7,
-      },
-    ],
+      }],
+    },
     history: {
       location: {
         path: '/wallet/sendV2/send',

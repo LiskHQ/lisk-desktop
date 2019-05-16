@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import keyCodes from './../../constants/keyCodes';
 import i18n from '../../i18n';
 import Bookmark from './index';
+import { tokenMap } from '../../constants/tokens';
 
 describe('BookmarkV2', () => {
   let wrapper;
@@ -15,27 +16,26 @@ describe('BookmarkV2', () => {
   };
 
   const props = {
+    token: tokenMap.LSK.key,
     t: v => v,
     validateBookmark: jest.fn(),
     onChange: jest.fn(),
     onSelectedAccount: jest.fn(),
-    followedAccounts: [
-      {
+    followedAccounts: {
+      LSK: [{
         title: 'ABC',
         address: '12345L',
-        balance: 10,
       },
       {
         title: 'FRG',
         address: '12375L',
-        balance: 15,
       },
       {
         title: 'KTG',
         address: '12395L',
-        balance: 7,
-      },
-    ],
+      }],
+      BTC: [],
+    },
     placeholder: 'e.g. 1234523423L or John Doe',
     recipient: {
       address: '',

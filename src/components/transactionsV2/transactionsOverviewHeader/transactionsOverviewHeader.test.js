@@ -9,14 +9,16 @@ import i18n from '../../../i18n';
 import TransactionHeader from './transactionsOverviewHeader';
 import accounts from '../../../../test/constants/accounts';
 import routes from '../../../constants/routes';
+import { tokenMap } from '../../../constants/tokens';
 
 describe('Transactions Overview Header', () => {
   let wrapper;
   const store = configureMockStore([thunk])({
     followedAccounts: {
-      accounts: [],
+      LSK: [],
+      BTC: [],
     },
-    settings: { currency: 'USD' },
+    settings: { currency: 'USD', token: { active: tokenMap.LSK.key } },
     settingsUpdated: () => {},
     liskService: {
       success: true,
@@ -36,7 +38,10 @@ describe('Transactions Overview Header', () => {
 
   const props = {
     account: accounts.genesis,
-    followedAccounts: [],
+    followedAccounts: {
+      LSK: [],
+      BTC: [],
+    },
     address: accounts.genesis.address,
     match: { url: routes.wallet.path },
     balance: accounts.genesis.balance,
@@ -56,15 +61,19 @@ describe('Transactions Overview Header', () => {
     });
 
     it('Should render bookmark title instead of Wallet if address is in user bookmark', () => {
-      wrapper.setProps({
-        children: React.cloneElement(wrapper.props().children, {
-          followedAccounts: [{
+      const followingProps = {
+        ...props,
+        followedAccounts: {
+          LSK: [{
             ...props.account,
             title: 'Some Title',
           }],
-        }),
-      });
-      wrapper.update();
+          BTC: [],
+        },
+      };
+      wrapper = mount(<MemoryRouter>
+        <TransactionHeader {...followingProps} />
+      </MemoryRouter>, options);
       const accountInfo = wrapper.find('.accountInfo');
       expect(accountInfo.text()).to.includes('Some Title');
     });

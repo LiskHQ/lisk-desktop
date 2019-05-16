@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
 import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
 import svg from '../../utils/svgIcons';
-// import { FontIcon } from '../fontIcon';
 import { InputV2 } from '../toolbox/inputsV2';
 import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 import styles from './followAccount.css';
 
 class FollowAccount extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       account: {},
@@ -58,9 +56,12 @@ class FollowAccount extends React.Component {
   }
 
   setFollowed() {
-    const { accounts, address, delegate } = this.props;
+    const {
+      followedAccounts, address, delegate, token,
+    } = this.props;
     const { fields } = this.state;
-    const index = getIndexOfFollowedAccount(accounts, { address });
+    const index = getIndexOfFollowedAccount(followedAccounts, { address, token });
+    const accounts = followedAccounts[token];
     const followedTitle = accounts[index] && accounts[index].title;
     const delegateTitle = delegate.account && delegate.account.address === address
       ? delegate.username : undefined;
@@ -83,17 +84,19 @@ class FollowAccount extends React.Component {
 
   handleFollow() {
     const {
-      address, balance, accounts, delegate,
+      address, followedAccounts, delegate, followedAccountAdded,
+      token, detailAccount,
     } = this.props;
     const title = this.state.fields.accountName.value;
     const account = {
       address,
       title,
-      balance,
       isDelegate: !!(delegate && delegate.username),
+      publicKey: (detailAccount && detailAccount.publicKey) || null,
     };
+    const accounts = followedAccounts[token];
     const followIndex = accounts.length;
-    this.props.followedAccountAdded(account);
+    followedAccountAdded({ account, token });
     this.setState({
       account,
       followIndex,
@@ -109,8 +112,13 @@ class FollowAccount extends React.Component {
 
   handleUnfollow() {
     const { fields, followIndex } = this.state;
-    const { accounts } = this.props;
-    this.props.followedAccountRemoved(accounts[followIndex]);
+    const { token, followedAccounts, followedAccountRemoved } = this.props;
+    const accounts = followedAccounts[token];
+    const data = {
+      address: accounts[followIndex] && accounts[followIndex].address,
+      token,
+    };
+    followedAccountRemoved(data);
     this.setState({
       isValid: false,
       fields: {
@@ -234,12 +242,9 @@ class FollowAccount extends React.Component {
 
 FollowAccount.propTypes = {
   address: PropTypes.string.isRequired,
-  balance: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]).isRequired,
-  accounts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  accounts: PropTypes.object.isRequired,
   isFollowing: PropTypes.bool.isRequired,
+  followedAccounts: PropTypes.object.isRequired,
   followedAccountAdded: PropTypes.func.isRequired,
   followedAccountRemoved: PropTypes.func.isRequired,
   delegate: PropTypes.object.isRequired,
@@ -248,12 +253,11 @@ FollowAccount.propTypes = {
 /* istanbul ignore next */
 FollowAccount.defaultProps = {
   address: '',
-  accounts: [],
-  balance: '0',
+  accounts: {},
   isFollowing: false,
   followedAccountAdded: () => null,
   followedAccountRemoved: () => null,
   delegate: {},
 };
 
-export default translate()(FollowAccount);
+export default FollowAccount;

@@ -21,7 +21,7 @@ describe('TransactionStatus', () => {
       failed: undefined,
     },
     followedAccounts: {
-      accounts: [],
+      LSK: [],
     },
     search: {
       delegates: {},
@@ -41,7 +41,9 @@ describe('TransactionStatus', () => {
     finalCallback: jest.fn(),
     failedTransactions: undefined,
     transactionFailedClear: jest.fn(),
-    followedAccounts: [],
+    followedAccounts: {
+      LSK: [],
+    },
     delegates: {},
     searchAccount: jest.fn(),
     prevStep: jest.fn(),

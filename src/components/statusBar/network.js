@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Lisk from 'lisk-elements';
+import Lisk from '@liskhq/lisk-client';
 import networks from '../../constants/networks';
 import styles from './network.css';
 

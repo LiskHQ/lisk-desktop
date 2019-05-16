@@ -20,7 +20,6 @@ class Send extends React.Component {
         reference: { value: reference || '' },
       },
     };
-
     this.backToWallet = this.backToWallet.bind(this);
   }
 

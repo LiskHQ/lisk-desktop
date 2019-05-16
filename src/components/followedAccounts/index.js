@@ -2,7 +2,7 @@ import React from 'react';
 import { translate } from 'react-i18next';
 import ViewAccounts from './viewAccounts';
 import AddAccountID from './addAccountID';
-import AddAccountTitle from './addAccountTitle';
+import AddAccountTitle from './addAccountTitleHOC';
 import MultiStep from '../multiStep/index';
 import styles from './followedAccounts.css';
 

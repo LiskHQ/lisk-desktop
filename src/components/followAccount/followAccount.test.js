@@ -16,11 +16,14 @@ describe('Follow Account Component', () => {
 
   const props = {
     address: accounts.genesis.address,
-    accounts: [],
+    followedAccounts: { LSK: [], BTC: [] },
     balance: accounts.genesis.balance,
     isFollowing: false,
     followedAccountAdded: jest.fn(),
     followedAccountRemoved: jest.fn(),
+    token: 'LSK',
+    detailAccount: accounts.genesis,
+    t: v => v,
   };
 
   beforeEach(() => {
@@ -33,13 +36,16 @@ describe('Follow Account Component', () => {
       const followingProps = {
         ...props,
         isFollowing: true,
-        accounts: [account],
+        followedAccounts: { LSK: [account], BTC: [] },
       };
       wrapper = mount(<FollowAccount {...followingProps} />, options);
       expect(wrapper.find('input[name="accountName"]')).toHaveValue(account.title);
       expect(wrapper.find('button').last()).toHaveText('Remove from bookmarks');
       wrapper.find('button').last().simulate('click');
-      expect(props.followedAccountRemoved).toBeCalledWith(account);
+      expect(props.followedAccountRemoved).toBeCalledWith({
+        address: account.address,
+        token: props.token,
+      });
     });
 
     it('Should render in follow state', () => {
@@ -52,10 +58,13 @@ describe('Follow Account Component', () => {
     it('Should validate to true if name is valid', () => {
       const evt = { target: { name: 'accountName', value: 'test name' } };
       const expected = {
-        address: props.address,
-        balance: props.balance,
-        title: evt.target.value,
-        isDelegate: false,
+        account: {
+          address: props.address,
+          title: evt.target.value,
+          isDelegate: false,
+          publicKey: accounts.genesis.publicKey,
+        },
+        token: props.token,
       };
       wrapper.find('input[name="accountName"]').simulate('change', evt);
       expect(wrapper.find('.fieldInput')).toContainMatchingElement('SpinnerV2.show');

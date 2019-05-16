@@ -5,7 +5,8 @@ import TransactionStatus from './transactionStatus';
 import { transactionBroadcasted, resetTransactionResult } from '../../../actions/transactions';
 import { searchAccount } from '../../../actions/search';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
+  detailAccount: state.search.accounts[ownProps.fields.recipient.address] || {},
   delegates: state.search.delegates || {},
   followedAccounts: state.followedAccounts ? state.followedAccounts.accounts : [],
   transactions: state.transactions,

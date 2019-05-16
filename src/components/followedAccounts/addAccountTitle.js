@@ -1,8 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
-import { followedAccountAdded } from '../../actions/followedAccounts';
 import styles from './followedAccounts.css';
 import TitleInput from './accountTitleInput';
 import Piwik from '../../utils/piwik';
@@ -32,11 +29,19 @@ class AddAccountTitle extends React.Component {
   onAddToList() {
     Piwik.trackingEvent('AddAccountTitle', 'button', 'Add to list');
 
-    const { addAccount, address, prevStep } = this.props;
+    const {
+      addAccount, address, prevStep, account,
+    } = this.props;
     const title = this.state.title.value;
     const isDelegate = this.state.title.isDelegate;
+    const followAccount = {
+      title,
+      address,
+      isDelegate,
+      publicKey: account.publicKey || null,
+    };
 
-    addAccount({ title, address, isDelegate });
+    addAccount({ account: followAccount });
     prevStep({ reset: true });
   }
 
@@ -95,13 +100,4 @@ class AddAccountTitle extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  account: state.search.accounts[ownProps.address],
-  accounts: state.followedAccounts.accounts,
-});
-
-const mapDispatchToProps = dispatch => ({
-  addAccount: data => dispatch(followedAccountAdded(data)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(AddAccountTitle));
+export default AddAccountTitle;

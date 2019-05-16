@@ -1,4 +1,4 @@
-import Lisk from 'lisk-elements';
+import Lisk from '@liskhq/lisk-client';
 
 export const listAccountDelegates = (liskAPIClient, address) =>
   liskAPIClient.votes.get({ address, limit: '101' });
@@ -53,9 +53,6 @@ export const getAllVotes = (liskAPIClient, address) =>
       }).catch(reject);
     }).catch(reject);
   });
-
-export const getVoters = (liskAPIClient, { publicKey, offset = 0, limit = 100 }) =>
-  liskAPIClient.voters.get({ publicKey, offset, limit });
 
 export const registerDelegate = (
   liskAPIClient,

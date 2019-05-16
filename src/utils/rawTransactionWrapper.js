@@ -1,4 +1,4 @@
-import Lisk from 'lisk-elements';
+import Lisk from '@liskhq/lisk-client';
 import transactionTypes from '../constants/transactionTypes';
 /**
  * TODO: This is a temporary solution. Missing full integration with lisk-elemenst

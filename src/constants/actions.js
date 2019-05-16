@@ -1,5 +1,4 @@
 const actionTypes = {
-  accountAddVoters: 'ACCOUNT_ADD_VOTERS',
   accountAddVotes: 'ACCOUNT_ADD_VOTES',
   accountLoading: 'ACCOUNT_LOADING',
   accountLoggedIn: 'ACCOUNT_LOGGED_IN',
@@ -25,7 +24,6 @@ const actionTypes = {
   dynamicFeesRetrieved: 'DYNAMIC_FEES_RETRIEVED',
   followedAccountAdded: 'FOLLOWED_ACCOUNT_ADDED',
   followedAccountRemoved: 'FOLLOWED_ACCOUNTS_REMOVED',
-  followedAccountsRetrieved: 'FOLLOWED_ACCOUNTS_RETRIEVED',
   followedAccountUpdated: 'FOLLOWED_ACCOUNT_UPDATED',
   getNewsFeed: 'GET_NEWS_FEED',
   // TODO next 3 lines should be removed after the new 'network' actions are used everywhere
@@ -49,7 +47,6 @@ const actionTypes = {
   searchSuggestions: 'SEARCH_SUGGESTIONS',
   searchTransactions: 'SEARCH_TRANSACTIONS',
   searchUpdateLast: 'SEARCH_UPDATE_LAST',
-  searchVoters: 'SEARCH_VOTERS',
   searchVotes: 'SEARCH_VOTES',
   secondPassphraseRegisteredFailure: 'SECOND_PASSPHRASE_REGISTRATION_FAILIRE',
   secondPassphraseRegisteredFailureReset: 'SECOND_PASSPHRASE_REGISTRATION_FAILIRE_RESET',

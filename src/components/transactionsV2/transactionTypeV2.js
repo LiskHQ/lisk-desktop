@@ -4,6 +4,7 @@ import AccountVisual from '../accountVisual';
 import styles from './transactionTypeV2.css';
 import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
 import svg from '../../utils/svgIcons';
+import { getTokenFromAddress } from '../../utils/api/transactions';
 
 const TransactionTypeV2 = (props) => { // eslint-disable-line complexity
   const { t } = props;
@@ -39,14 +40,15 @@ const TransactionTypeV2 = (props) => { // eslint-disable-line complexity
       type = false;
       break;
   }
+  const token = getTokenFromAddress(address);
 
   const index = getIndexOfFollowedAccount(
     props.followedAccounts,
-    { address },
+    { address, token },
   );
-  const accountTitle = props.followedAccounts[index]
-    && props.followedAccounts[index].title;
-  const hasTitle = index !== -1;
+  const hasTitle = index > -1;
+  const accountTitle = hasTitle && props.followedAccounts[token][index]
+    && props.followedAccounts[token][index].title;
 
   return (
     <div className={`${styles.transactionType} transaction-address`}>

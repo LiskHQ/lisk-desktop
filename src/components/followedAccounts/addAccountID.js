@@ -8,6 +8,7 @@ import styles from './followedAccounts.css';
 import AddressInput from '../addressInput/index';
 import Piwik from '../../utils/piwik';
 import BoxV2 from '../boxV2';
+import { flattenFollowedAccounts } from '../../utils/followedAccounts';
 
 class AddAccountID extends React.Component {
   constructor() {
@@ -25,7 +26,8 @@ class AddAccountID extends React.Component {
   }
 
   validateInput(value) {
-    const alreadyFollowing = this.props.accounts.filter(({ address }) =>
+    const accounts = flattenFollowedAccounts(this.props.followedAccounts);
+    const alreadyFollowing = accounts.filter(({ address }) =>
       address === value).length > 0;
 
     if (!value) {
@@ -86,7 +88,7 @@ class AddAccountID extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  accounts: state.followedAccounts.accounts,
+  followedAccounts: state.followedAccounts,
 });
 
 const mapDispatchToProps = {

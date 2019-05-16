@@ -33,11 +33,13 @@ class Bookmark extends React.Component {
   }
 
   getFilterList() {
-    const { followedAccounts, recipient } = this.props;
+    const { followedAccounts, recipient, token } = this.props;
+    const accounts = followedAccounts[token];
 
-    if (recipient.value === '') return followedAccounts;
+    if (recipient.value === '') return accounts;
 
-    return followedAccounts
+
+    return accounts
       .filter(account =>
         account.title.toLowerCase().includes(recipient.value.toLowerCase()) ||
         account.address.toLowerCase().includes(recipient.value.toLowerCase()));
