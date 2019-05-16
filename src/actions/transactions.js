@@ -48,7 +48,7 @@ export const loadTransactionsFinish = accountUpdated =>
  * @param {Object} params - all params
  * @param {String} params.address - address of the account to fetch the transactions for
  * @param {Number} params.limit - amount of transactions to fetch
- * @param {Number} params.offste - index of the first transaction
+ * @param {Number} params.offset - index of the first transaction
  * @param {Number} params.filter - one of values from src/constants/transactionFilters.js
  * @param {Object} params.customFilters - object with filters for the filer dropdown
  *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
@@ -180,6 +180,19 @@ export const loadTransaction = ({ id }) =>
       });
   };
 
+/**
+ * This action is used to update transactions from account middleware when balance
+ * of the account changes. The difference from transactionsRequested action is that
+ * this one merges the transactions list with what is already in the store whereas
+ * the other one replaces the list.
+ *
+ * @param {Object} params - all params
+ * @param {String} params.address - address of the account to fetch the transactions for
+ * @param {Number} params.limit - amount of transactions to fetch
+ * @param {Number} params.filter - one of values from src/constants/transactionFilters.js
+ * @param {Object} params.customFilters - object with filters for the filer dropdown
+ *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
+ */
 export const transactionsUpdated = ({
   address, limit, filter, customFilters,
 }) =>
