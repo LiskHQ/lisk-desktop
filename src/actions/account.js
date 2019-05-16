@@ -80,20 +80,6 @@ export const delegateStatsLoaded = data => ({
 });
 
 /**
- * Gets list of all votes
- */
-export const accountVotesFetched = ({ address }) =>
-  (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    return getAllVotes(liskAPIClient, address).then(({ data }) => {
-      dispatch({
-        type: actionTypes.accountAddVotes,
-        votes: data.votes,
-      });
-    });
-  };
-
-/**
  *
  */
 export const secondPassphraseRegistered = ({ secondPassphrase, account, passphrase }) =>
