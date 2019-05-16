@@ -9,21 +9,10 @@ import WalletTransactionsV2 from './walletTransactionsV2';
 import actionTypes from '../../../constants/actions';
 import txFilters from './../../../constants/transactionFilters';
 import removeDuplicateTransactions from '../../../utils/transactions';
-import { tokenMap } from '../../../constants/tokens';
-
-const getActiveTokenAccount = state => (
-  (state.account.info && state.account.info[
-    state.settings.token && state.settings.token.active ?
-      state.settings.token.active :
-      tokenMap.LSK.key
-  ]) || {}
-);
+import { getActiveTokenAccount } from '../../../utils/account';
 
 const mapStateToProps = (state, ownProps) => ({
-  account: {
-    ...state.account,
-    ...(getActiveTokenAccount(state)),
-  },
+  account: getActiveTokenAccount(state),
   transaction: state.transaction,
   transactions:
     removeDuplicateTransactions(
