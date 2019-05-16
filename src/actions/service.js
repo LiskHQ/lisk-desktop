@@ -6,13 +6,15 @@ import { tokenMap } from '../constants/tokens';
 
 export const pricesRetrieved = () => (dispatch, getState) => {
   const { settings: { token } } = getState();
+  // istanbul ignore next
+  const activeToken = localStorage.getItem('btc') ? token.active : tokenMap.LSK.key; // TODO: Refactor after enabling BTC
 
-  serviceAPI.getPriceTicker((token && token.active) || tokenMap.LSK.key)
+  serviceAPI.getPriceTicker(activeToken)
     .then(priceTicker => dispatch({
       type: actionTypes.pricesRetrieved,
       data: {
         priceTicker,
-        activeToken: token ? token.active : tokenMap.LSK.key,
+        activeToken,
       },
     }))
     .catch(() => dispatch(errorToastDisplayed(i18next.t('Error retrieving convertion rates.'))));
@@ -20,8 +22,10 @@ export const pricesRetrieved = () => (dispatch, getState) => {
 
 export const dynamicFeesRetrieved = () => (dispatch, getState) => {
   const { settings: { token } } = getState();
+  // istanbul ignore next
+  const activeToken = localStorage.getItem('btc') ? token.active : tokenMap.LSK.key; // TODO: Refactor after enabling BTC
 
-  serviceAPI.getDynamicFees((token && token.active) || tokenMap.LSK.key)
+  serviceAPI.getDynamicFees(activeToken)
     .then(dynamicFees => dispatch({
       type: actionTypes.dynamicFeesRetrieved,
       dynamicFees,
