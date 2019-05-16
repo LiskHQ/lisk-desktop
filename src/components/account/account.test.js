@@ -1,5 +1,5 @@
 import React from 'react';
-import Lisk from 'lisk-elements';
+import Lisk from '@liskhq/lisk-client';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';

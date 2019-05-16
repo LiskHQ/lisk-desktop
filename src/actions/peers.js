@@ -1,7 +1,7 @@
 // TODO this file should be removed after the new 'network' actions are used everywhere
 /* istanbul ignore file */
 
-import Lisk from 'lisk-elements';
+import Lisk from '@liskhq/lisk-client';
 import actionTypes from '../constants/actions';
 import networks from '../constants/networks';
 import { loadingStarted, loadingFinished } from '../actions/loading';

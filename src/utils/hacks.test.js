@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Lisk from 'lisk-elements';
+import Lisk from '@liskhq/lisk-client';
 import { getTimeOffset } from './hacks';
 
 describe('hack utils', () => {

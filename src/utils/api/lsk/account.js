@@ -1,4 +1,5 @@
-import Lisk from 'lisk-elements';
+
+import Lisk from '@liskhq/lisk-client';
 import api from '../';
 import { tokenMap } from '../../../constants/tokens';
 import { getAPIClient } from './network';
