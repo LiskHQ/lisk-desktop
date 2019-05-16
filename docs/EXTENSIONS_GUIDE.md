@@ -30,7 +30,6 @@ data = {
   search,
 }
 actions={
-  testExtensions,
   loadTransactions,
   sent,
   loadTransaction,

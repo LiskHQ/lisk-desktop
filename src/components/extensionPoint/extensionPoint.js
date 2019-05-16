@@ -10,7 +10,6 @@ export default class ExtensionPoint extends React.Component {
   render() {
     const modules = this.props.modules[this.props.identifier] || [];
     const {
-      testExtensions,
       loadTransactions,
       sent,
       loadTransaction,
@@ -39,7 +38,6 @@ export default class ExtensionPoint extends React.Component {
               search: this.props.search,
             }}
             actions={{
-              testExtensions,
               loadTransactions,
               sent,
               loadTransaction,
@@ -49,7 +47,6 @@ export default class ExtensionPoint extends React.Component {
               searchAccount,
               searchTransactions,
             }}
-            onClickHandle={() => { this.props.testExtensions(); }}
             t={this.props.t}
             identifier={this.props.identifier}
             key={i} />;

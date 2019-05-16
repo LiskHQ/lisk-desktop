@@ -60,8 +60,6 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
         customFilters: action.data.customFilters !== undefined ?
           action.data.customFilters : state.filter,
       };
-    case 'extensinonTest':
-      return { ...state, test: new Date().toLocaleTimeString() };
     case (actionTypes.accountSwitched):
       return { pending: [], confirmed: [], count: 0 };
     default:

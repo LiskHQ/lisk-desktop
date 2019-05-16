@@ -14,6 +14,10 @@ import { toRawLsk } from '../utils/lsk';
 import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
 
+/**
+ * This action is used on logout
+ *
+ */
 export const cleanTransactions = () => ({
   type: actionTypes.cleanTransactions,
 });
@@ -27,10 +31,6 @@ export const cleanTransactions = () => ({
 export const transactionAdded = data => ({
   data,
   type: actionTypes.transactionAdded,
-});
-
-export const testExtensions = () => ({
-  type: 'extensinonTest',
 });
 
 /**
