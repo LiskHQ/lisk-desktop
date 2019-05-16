@@ -68,6 +68,9 @@ describe('Summary', () => {
       reference: {
         value: 1,
       },
+      processingSpeed: {
+        value: 1,
+      },
       isLoading: false,
       isHardwareWalletConnected: false,
     },
