@@ -68,7 +68,6 @@ const actionTypes = {
   transactionLoadFailed: 'TRANSACTION_LOAD_FAILED',
   transactionLoadRequested: 'TRANSACTION_LOAD_REQUESTED',
   transactionsFailed: 'TRANSACTIONS_FAILED',
-  transactionsLoad: 'TRANSACTIONS_LOAD',
   transactionsLoaded: 'TRANSACTIONS_LOADED',
   transactionsLoadFinish: 'TRANSACTIONS_LOAD_FINISH',
   transactionsUpdated: 'TRANSACTIONS_UPDATED',

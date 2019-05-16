@@ -35,7 +35,6 @@ export const testExtensions = () => ({
 
 export const loadTransactionsFinish = accountUpdated =>
   (dispatch) => {
-    dispatch(loadingFinished(actionTypes.transactionsLoad));
     dispatch({
       data: accountUpdated,
       type: actionTypes.transactionsLoadFinish,
