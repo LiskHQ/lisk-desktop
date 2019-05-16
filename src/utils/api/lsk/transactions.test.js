@@ -1,4 +1,11 @@
-import { send, getTransactions, unconfirmedTransactions, getSingleTransaction } from './transactions';
+import {
+  send,
+  getTransactions,
+  unconfirmedTransactions,
+  getSingleTransaction,
+  create,
+  broadcast,
+} from './transactions';
 import accounts from '../../../../test/constants/accounts';
 import networks from '../../../constants/networks';
 import { getAPIClient } from './network';
@@ -134,6 +141,40 @@ describe('Utils: Transactions API', () => {
     it('should return a promise', () => {
       const promise = unconfirmedTransactions(apiClient);
       expect(typeof promise.then).toEqual('function');
+    });
+  });
+
+  describe('create', () => {
+    it('should create a transaction and return a promise', async () => {
+      const tx = {
+        amount: '0.01',
+        data: { data: 'payment' },
+        passphrase: 'abc',
+        recipientId: '123L',
+        secondPassphrase: null,
+        timeOffset: 0,
+      };
+      const txResult = await create(tx);
+      expect(txResult.recipientId).toEqual(tx.recipientId);
+      expect(txResult.amount).toEqual(tx.amount);
+      expect(txResult.signature).not.toBeNull();
+      expect(txResult.id).not.toBeNull();
+      expect(txResult.senderPublicKey).not.toBeNull();
+    });
+  });
+
+  describe('Broadcast', () => {
+    it('should Broadcast a transaction and return a promise', async () => {
+      const tx = {
+        amount: '0.01',
+        data: { data: 'payment' },
+        passphrase: 'abc',
+        recipientId: '123L',
+        secondPassphrase: null,
+        timeOffset: 0,
+      };
+      await broadcast(tx);
+      expect(apiClient.transactions.broadcast).toHaveBeenCalledWith(expect.objectContaining(tx));
     });
   });
 });

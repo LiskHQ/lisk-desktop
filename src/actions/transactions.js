@@ -344,12 +344,12 @@ export const sent = data => async (dispatch, getState) => {
 };
 
 
-const transactionCreatedSuccess = data => ({
+export const transactionCreatedSuccess = data => ({
   type: actionTypes.transactionCreatedSuccess,
   data,
 });
 
-const transactionCreatedError = data => ({
+export const transactionCreatedError = data => ({
   type: actionTypes.transactionCreatedError,
   data,
 });
@@ -358,12 +358,12 @@ export const resetTransactionResult = () => ({
   type: actionTypes.resetTransactionResult,
 });
 
-const broadcastedTransactionError = data => ({
+export const broadcastedTransactionError = data => ({
   type: actionTypes.broadcastedTransactionError,
   data,
 });
 
-const broadcastedTransactionSuccess = data => ({
+export const broadcastedTransactionSuccess = data => ({
   type: actionTypes.broadcastedTransactionSuccess,
   data,
 });

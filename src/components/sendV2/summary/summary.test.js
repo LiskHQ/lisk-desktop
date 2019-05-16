@@ -118,8 +118,18 @@ describe('Summary', () => {
     wrapper.find('.on-nextStep').at(0).simulate('click');
     wrapper.update();
     expect(props.transactionCreated).toBeCalled();
+    wrapper.setProps({
+      transactions: {
+        transactionsCreated: [{
+          id: '123123', senderId: '34234L', recipientId: '2342342L', amount: '0.01',
+        }],
+        transactionsCreatedFailed: [],
+        broadcastedTransactionsError: [],
+      },
+    });
+    wrapper.update();
+    expect(props.nextStep).toBeCalled();
   });
-
   it('should call transactionCreated as soon the component load if using HW', () => {
     const newProps = { ...props };
     newProps.account = {
