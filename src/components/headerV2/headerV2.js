@@ -1,5 +1,5 @@
 import React from 'react';
-import Lisk from 'lisk-elements';
+import Lisk from '@liskhq/lisk-client';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';

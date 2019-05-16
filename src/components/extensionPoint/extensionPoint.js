@@ -17,7 +17,6 @@ export default class ExtensionPoint extends React.Component {
       transactionsFilterSet,
       searchDelegate,
       searchVotes,
-      searchVoters,
       searchAccount,
       searchTransactions,
     } = this.props;
@@ -47,7 +46,6 @@ export default class ExtensionPoint extends React.Component {
               transactionsFilterSet,
               searchDelegate,
               searchVotes,
-              searchVoters,
               searchAccount,
               searchTransactions,
             }}

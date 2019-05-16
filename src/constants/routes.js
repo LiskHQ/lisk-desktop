@@ -9,6 +9,7 @@ import SearchResult from '../components/searchResult';
 import TransactionDashboard from '../components/transactionDashboard';
 import AccountTransactions from '../components/accountTransactions';
 import Voting from '../components/voting';
+import VotingV2 from '../components/votingV2';
 import SingleTransaction from '../components/singleTransactionV2';
 import HwWallet from '../components/hwWallet';
 import HwWalletLogin from '../components/hwWalletLogin';
@@ -46,6 +47,11 @@ export default {
   delegates: {
     path: '/delegates',
     component: Voting,
+    isPrivate: true,
+  },
+  delegatesV2: {
+    path: '/delegatesV2',
+    component: VotingV2,
     isPrivate: true,
   },
   help: {

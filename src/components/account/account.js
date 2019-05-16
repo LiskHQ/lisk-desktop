@@ -1,5 +1,5 @@
 import React from 'react';
-import Lisk from 'lisk-elements';
+import Lisk from '@liskhq/lisk-client';
 import { FontIcon } from '../fontIcon';
 import networks from '../../constants/networks';
 import styles from './account.css';
