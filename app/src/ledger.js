@@ -75,7 +75,7 @@ const ledgerObserver = {
   // eslint-disable-next-line max-statements
   next: async ({ device, type }) => {
     if (device) {
-      if (type === 'add' && process.platform !== 'linux') {
+      if (type === 'add') {
         const ledgerDevice = createLedgerHWDevice(device.path);
         ledgerDevice.openApp = await isInsideLedgerApp(device.path);
         addConnectedDevices(ledgerDevice);
