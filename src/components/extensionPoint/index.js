@@ -6,7 +6,7 @@ import {
   loadTransactions,
   sent,
   loadTransaction,
-  transactionsFilterSet,
+  transactionsRequested,
 } from '../../actions/transactions';
 import {
   searchDelegate,
@@ -30,7 +30,7 @@ const mapDispatchToProps = {
   loadTransactions,
   sent,
   loadTransaction,
-  transactionsFilterSet,
+  transactionsRequested,
   searchDelegate,
   searchVotes,
   searchAccount,

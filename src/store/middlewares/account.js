@@ -4,7 +4,7 @@ import {
   updateDelegateAccount,
 } from '../../actions/account'; // eslint-disable-line
 import { votesFetched } from '../../actions/voting';
-import { transactionsFilterSet, cleanTransactions } from '../../actions/transactions';
+import { transactionsRequested, cleanTransactions } from '../../actions/transactions';
 import actionTypes from '../../constants/actions';
 import transactionTypes from '../../constants/transactionTypes';
 
@@ -36,7 +36,7 @@ const updateAccountData = (store, action) => {
    */
   /* istanbul ignore if */
   if (shouldAutoLogIn(getAutoLogInData()) && action.data.passphrase) {
-    store.dispatch(transactionsFilterSet({
+    store.dispatch(transactionsRequested({
       address: extractAddress(extractPublicKey(action.data.passphrase)),
       limit: 30,
       filter: txFilters.all,

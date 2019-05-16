@@ -86,8 +86,6 @@ export const transactionsRequested = ({
       });
   };
 
-export const transactionsFilterSet = transactionsRequested;
-
 /**
  * This action is used to get the data for "My Wallet Details" module on wallet page
  * which shows Last transactions. It cannot get the latest transaction from the list,

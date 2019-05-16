@@ -34,7 +34,7 @@ actions={
   loadTransactions,
   sent,
   loadTransaction,
-  transactionsFilterSet,
+  transactionsRequested,
   searchDelegate,
   searchVotes,
   searchAccount,
