@@ -372,7 +372,7 @@ describe('actions: account', () => {
     let state;
     const getState = () => (state);
     const balance = 10e8;
-    const { passphrase, address } = accounts.genesis;
+    const { passphrase, address, publicKey } = accounts.genesis;
 
     beforeEach(() => {
       dispatch = jest.fn();
@@ -416,6 +416,22 @@ describe('actions: account', () => {
         data: expect.objectContaining({
           address,
           balance,
+        }),
+      }));
+    });
+
+    it('should call account api and dispatch accountLoggedIn with ledger loginType', async () => {
+      accountApi.getAccount.mockResolvedValue({ balance, address });
+      await login({ hwInfo: {}, publicKey })(dispatch, getState);
+      expect(dispatch).toHaveBeenNthCalledWith(2, expect.objectContaining({
+        type: actionTypes.accountLoggedIn,
+        data: expect.objectContaining({
+          info: {
+            LSK: expect.objectContaining({
+              address,
+              balance,
+            }),
+          },
         }),
       }));
     });
