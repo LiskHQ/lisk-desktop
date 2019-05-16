@@ -238,9 +238,10 @@ class Summary extends React.Component {
             {confirmBtnMessage}
           </PrimaryButtonV2>
 
-          <TertiaryButtonV2 className={`${styles.editBtn} on-prevStep`} onClick={this.prevStep}>
-            {t('Edit transaction')}
-          </TertiaryButtonV2>
+          {this.props.account.hwInfo && this.props.account.hwInfo.deviceId ? null :
+            <TertiaryButtonV2 className={`${styles.editBtn} on-prevStep`} onClick={this.prevStep}>
+              {t('Edit transaction')}
+            </TertiaryButtonV2>}
         </footer>
       </div>
     );
