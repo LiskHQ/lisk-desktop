@@ -11,7 +11,7 @@ describe('Form', () => {
   let wrapper;
 
   const store = configureMockStore([thunk])({
-    settings: { currency: 'USD' },
+    settings: { currency: 'USD', token: { active: 'LSK' } },
     settingsUpdated: () => {},
     peers: { liskAPIClient: {} },
     liskService: {
@@ -38,6 +38,9 @@ describe('Form', () => {
     failedTransactions: '',
     account: {
       balance: accounts.genesis.balance,
+      info: {
+        LSK: accounts.genesis,
+      },
     },
     followedAccounts: {
       LSK: [
@@ -61,6 +64,9 @@ describe('Form', () => {
     search: {
       delegates: {},
       accounts: {},
+    },
+    service: {
+      dynamicFees: {},
     },
   });
 

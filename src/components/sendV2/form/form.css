@@ -50,7 +50,9 @@
   & .fieldLabel {
     @mixin contentNormal bold;
 
+    align-items: center;
     color: var(--color-maastricht-blue);
+    display: flex;
     margin-bottom: 8px;
   }
 
@@ -118,6 +120,21 @@
     width: 100%;
     position: relative;
   }
+
+  & .selector {
+    margin: 13px 0;
+  }
+
+  & .processingInfo {
+    @mixin contentLargest;
+
+    color: var(--color-slate-gray);
+    margin: 8px 0;
+
+    & > span {
+      color: var(--color-maastricht-blue);
+    }
+  }
 }
 
 .feedbackMessage {
@@ -160,7 +177,7 @@
   @mixin contentLarge;
 }
 
-footer {
+.footer {
   width: 100%;
   box-sizing: border-box;
   padding: 24px 16px;
