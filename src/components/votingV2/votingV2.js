@@ -2,6 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './votingV2.css';
 import VotingListViewV2 from '../votingListViewV2';
+import VotingHeader from './votingHeader';
 
 class VotingV2 extends React.Component {
   constructor() {
@@ -35,6 +36,7 @@ class VotingV2 extends React.Component {
   render() {
     return (
       <div className={`${grid.row} ${styles.wrapper}`} ref={(el) => { this.root = el; }}>
+        <VotingHeader t={this.props.t} votes={this.props.votes}/>
         <section className={`${grid['col-sm-12']} ${grid['col-md-12']} ${styles.votingBox} ${styles.votes}`}>
           <VotingListViewV2 showChangeSummery={this.state.showChangeSummery}
             nextStepCalled={this.state.nextStepCalled}
