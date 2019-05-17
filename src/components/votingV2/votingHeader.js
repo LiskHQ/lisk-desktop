@@ -6,7 +6,12 @@ import routes from './../../constants/routes';
 
 class VotingHeader extends React.Component {
   render() {
-    const { t, votes } = this.props;
+    const {
+      t,
+      votes,
+      toggleVotingMode,
+      votingModeEnabled,
+    } = this.props;
     return (
       <div className={`${grid.row} ${grid['between-xs']}`}>
         <div className={`${grid['col-sm-12']} ${grid['col-md-12']} `}>
@@ -15,16 +20,26 @@ class VotingHeader extends React.Component {
               <h2>{Object.keys(votes).length}/101</h2>
               <div>{t('My votes after confirmation')}</div>
             </span>
+            { votingModeEnabled ?
+            <span>
+              <SecondaryButtonV2 onClick={toggleVotingMode}>
+                {t('Cancel voting')}
+              </SecondaryButtonV2>
+              <PrimaryButtonV2>
+                {t('Go to Confirmation')}
+              </PrimaryButtonV2>
+            </span> :
             <span>
               <Link to={routes.registerDelegate.path} >
                 <SecondaryButtonV2 className='register-delegate'>
                   {t('Register as a Delegate')}
                 </SecondaryButtonV2>
               </Link>
-              <PrimaryButtonV2>
+              <PrimaryButtonV2 onClick={toggleVotingMode}>
                 {t('Start voting')}
               </PrimaryButtonV2>
             </span>
+            }
           </div>
         </div>
       </div>
