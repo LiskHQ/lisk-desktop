@@ -32,6 +32,8 @@ class Summary extends React.Component {
     this.nextStep = this.nextStep.bind(this);
     this.prevStep = this.prevStep.bind(this);
     this.submitTransaction = this.submitTransaction.bind(this);
+    this.getConfirmButtonLabel = this.getConfirmButtonLabel.bind(this);
+    this.getTitle = this.getTitle.bind(this);
   }
 
   componentDidMount() {
@@ -135,20 +137,29 @@ class Summary extends React.Component {
     });
   }
 
-  // eslint-disable-next-line complexity
-  render() {
+  getConfirmButtonLabel() {
     const {
       account, fields, t, token,
     } = this.props;
-    const { secondPassphrase, isHardwareWalletConnected } = this.state;
-
-    const confirmBtnMessage = isHardwareWalletConnected
+    return this.state.isHardwareWalletConnected
       ? t('Confirm on {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })
       : t('Send {{amount}} {{token}}', { amount: fields.amount.value, token });
+  }
 
-    const title = isHardwareWalletConnected
+  getTitle() {
+    const {
+      account, t,
+    } = this.props;
+    return this.state.isHardwareWalletConnected
       ? t('Confirm transaction on {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })
       : t('Transaction summary');
+  }
+
+  render() {
+    const {
+      fields, t, token,
+    } = this.props;
+    const { secondPassphrase, isHardwareWalletConnected } = this.state;
 
     const fee = token === tokenMap.LSK.key
       ? fromRawLsk(fees.send)
@@ -157,7 +168,7 @@ class Summary extends React.Component {
     return (
       <div className={`${styles.wrapper} summary`}>
         <header className={`${styles.header} summary-header`}>
-          <h1>{title}</h1>
+          <h1>{this.getTitle()}</h1>
         </header>
 
         <div className={`${styles.content} summary-content`}>
@@ -248,7 +259,7 @@ class Summary extends React.Component {
                 !secondPassphrase.isValid)
               || isHardwareWalletConnected
             }>
-            {confirmBtnMessage}
+            {this.getConfirmButtonLabel()}
           </PrimaryButtonV2>
 
           <TertiaryButtonV2 className={`${styles.editBtn} on-prevStep`} onClick={this.prevStep}>
