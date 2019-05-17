@@ -296,10 +296,10 @@ export const sent = data => async (dispatch, getState) => {
   let fail;
   const { account, network, settings } = getState();
   const timeOffset = getTimeOffset(getState());
-  const activeToken = localStorage.getItem('btc')
+  const activeToken = localStorage.getItem('btc') // TODO: Refactor after enabling BTC
     ? settings.token.active
     : tokenMap.LSK.key;
-  const senderId = localStorage.getItem('btc')
+  const senderId = localStorage.getItem('btc') // TODO: Refactor after enabling BTC
     ? account.info[activeToken].address
     : account.address;
 
@@ -384,11 +384,14 @@ export const transactionCreated = data => async (dispatch, getState) => {
   let error;
   let tx;
   const state = getState();
-  const { account, settings: { token } } = state;
+  const { account, settings } = state;
   const timeOffset = getTimeOffset(state);
+  const activeToken = localStorage.getItem('btc') // TODO: Refactor after enabling BTC
+    ? settings.token.active
+    : tokenMap.LSK.key;
 
   if (account.loginType === loginType.normal) {
-    [error, tx] = await to(transactionsAPI.create(token.active, { ...data, timeOffset }));
+    [error, tx] = await to(transactionsAPI.create(activeToken, { ...data, timeOffset }));
   } else {
     [error, tx] = await to(hwAPI.create(account, data));
   }
@@ -408,9 +411,12 @@ export const transactionCreated = data => async (dispatch, getState) => {
  * @param {String} transaction.secondPassphrase - Second passphrase for LSK transactions
  */
 export const transactionBroadcasted = transaction => async (dispatch, getState) => {
-  const { account, network, settings: { token } } = getState();
+  const { account, network, settings } = getState();
+  const activeToken = localStorage.getItem('btc') // TODO: Refactor after enabling BTC
+    ? settings.token.active
+    : tokenMap.LSK.key;
 
-  const [error, tx] = await to(transactionsAPI.broadcast(token.active, transaction, network));
+  const [error, tx] = await to(transactionsAPI.broadcast(activeToken, transaction, network));
 
   if (error) return dispatch(broadcastedTransactionError(transaction));
 
@@ -422,7 +428,7 @@ export const transactionBroadcasted = transaction => async (dispatch, getState) 
     fee: Fees.send,
     id: tx.id,
     recipientId: transaction.recipientId,
-    senderId: account.info[token.active].address,
+    senderId: account.info[activeToken].address,
     senderPublicKey: account.publicKey,
     type: transactionTypes.send,
   }));

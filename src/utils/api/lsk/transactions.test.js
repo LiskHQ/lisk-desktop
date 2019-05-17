@@ -198,7 +198,7 @@ describe('Utils: Transactions API', () => {
     });
 
     it('should fail Broadcast a transaction and return a promise', async () => {
-      apiClient.transactions.broadcast.mockRejectedValue('sample error message');
+      apiClient.transactions.broadcast.mockRejectedValue(new Error('sample error message'));
       const tx = {
         amount: '1',
         data: { data: 'payment' },
