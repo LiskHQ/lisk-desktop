@@ -82,6 +82,7 @@ describe('Summary', () => {
     sent: jest.fn(),
     isLoading: false,
     isHardwareWalletConnected: false,
+    token: tokenMap.LSK.key,
   };
 
   beforeEach(() => {
