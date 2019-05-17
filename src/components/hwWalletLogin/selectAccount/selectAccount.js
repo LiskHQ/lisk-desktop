@@ -132,7 +132,7 @@ class SelectAccount extends React.Component {
   }
 
   render() {
-    const { t, prevStep, device } = this.props;
+    const { t, prevStep, device, history } = this.props;
     const { accountOnEditMode, hwAccounts } = this.state;
 
     return <div>
@@ -166,7 +166,7 @@ class SelectAccount extends React.Component {
         }
       </div>
 
-      <TertiaryButtonV2 className={'go-back'} onClick={() => prevStep({ jump: 2 })}>
+      <TertiaryButtonV2 className={'go-back'} onClick={() => history.push(routes.splashscreen.path)}>
         {t('Go Back')}
       </TertiaryButtonV2>
     </div>;

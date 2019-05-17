@@ -108,12 +108,12 @@ describe('Select Account', () => {
     expect(wrapper).toContainMatchingElement('.go-back');
   });
 
-  it('Should call prevStep function if do click in Go Back button', () => {
+  it('Should call push function if do click in Go Back button', () => {
     wrapper = mount(<SelectAccount {...props} />);
-    expect(props.prevStep).not.toBeCalled();
+    expect(props.push).not.toBeCalled();
     wrapper.find('.go-back').at(0).simulate('click');
     wrapper.update();
-    expect(props.prevStep).toBeCalled();
+    expect(props.push).toBeCalled();
   });
 
   it('Should change name "label" of one account', async () => {
