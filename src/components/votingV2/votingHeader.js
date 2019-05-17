@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { SecondaryButtonV2, PrimaryButtonV2 } from '../toolbox/buttons/button';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import routes from './../../constants/routes';
@@ -10,6 +9,8 @@ import {
   getVoteList,
   getUnvoteList,
 } from './../../utils/voting';
+
+import styles from './votingHeader.css';
 
 class VotingHeader extends React.Component {
   render() {
@@ -30,59 +31,55 @@ class VotingHeader extends React.Component {
       voteList.length + unvoteList.length
     ) / maxCountOfVotesInOneTurn);
     return (
-      <div className={`${grid.row} ${grid['between-xs']}`}>
-        <div className={`${grid['col-sm-12']} ${grid['col-md-12']} `}>
-          <div className={`${grid.row} ${grid['between-xs']}`}>
+      <div className={`${styles.wrapper}`}>
             <span>
-              <span>
+              <span className={styles.box}>
                 <h2>{getTotalVotesCount(votes)}/{maxCountOfVotes}</h2>
                 <div>{t('My votes after confirmation')}</div>
               </span>
               { votingModeEnabled ?
-              <span>
+              <span className={styles.outlinedBox}>
                <h3>{voteList.length}</h3>
                <span>{t('Added votes')}</span>
               </span> :
               null }
               { unvoteList.length ?
-              <span>
+              <span className={styles.outlinedBox}>
                <h3>{unvoteList.length}</h3>
-               <span>{t('Remove votes')}</span>
+               <span>{t('Removed votes')}</span>
               </span> :
               null }
               { votingModeEnabled ?
-              <span>
+              <span className={styles.outlinedBox}>
                <h3>{totalActions}
-                 <Tooltip>
+                 <Tooltip className={styles.tooltip}>
                   <p>{t('Each time you add or remove a vote it is counted as an action. There\'s {{fee}} LSK fee per every 33 actions.', { fee })}</p>
                  </Tooltip>
                </h3>
-               <span>{t('Total actions (Total fee:')}<b>{fee * totalActions} LSK</b>)</span>
+               <span>{t('Total actions (Total fee: ')} <b>{fee * totalActions} LSK</b>)</span>
               </span> :
               null }
             </span>
             { votingModeEnabled ?
             <span>
-              <SecondaryButtonV2 onClick={toggleVotingMode}>
+              <SecondaryButtonV2 onClick={toggleVotingMode} className={styles.btn}>
                 {t('Cancel voting')}
               </SecondaryButtonV2>
-              <PrimaryButtonV2>
+              <PrimaryButtonV2 className={styles.btn}>
                 {t('Go to Confirmation')}
               </PrimaryButtonV2>
             </span> :
             <span>
               <Link to={routes.registerDelegate.path} >
-                <SecondaryButtonV2 className='register-delegate'>
+                <SecondaryButtonV2 className={`register-delegate ${styles.btn}`}>
                   {t('Register as a Delegate')}
                 </SecondaryButtonV2>
               </Link>
-              <PrimaryButtonV2 onClick={toggleVotingMode}>
+              <PrimaryButtonV2 onClick={toggleVotingMode} className={styles.btn}>
                 {t('Start voting')}
               </PrimaryButtonV2>
             </span>
             }
-          </div>
-        </div>
       </div>
     );
   }
