@@ -76,10 +76,11 @@ class ConfirmVotes extends React.Component {
     };
 
     const deviceModel = this.props.account.hwInfo && this.props.account.hwInfo.deviceModel;
+    const isHwWallet = account.hwInfo && account.hwInfo.deviceId;
     return (
       <div className={styles.wrapper}>
         <article className={styles.content}>
-          <h2 className={styles.header}>{account.hwInfo && account.hwInfo.deviceId ?
+          <h2 className={styles.header}>{isHwWallet ?
             t('Confirm vote on {{deviceModel}}', { deviceModel })
             : t('Final confirmation') }</h2>
           <p className={styles.message}>
@@ -90,6 +91,7 @@ class ConfirmVotes extends React.Component {
             className={`${styles.confirmButton} confirm`}
             onClick={() => this.onNext(data)}>{t('Confirm (Fee: 1 LSK)')}</PrimaryButton>
           <Button
+            disabled={isHwWallet}
             className={`${styles.backButton} back`}
             onClick={() => this.onPrev()}>{t('Back')}</Button>
           <Checkbox
