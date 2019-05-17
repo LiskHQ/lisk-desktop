@@ -27,7 +27,7 @@ class HardwareWalletLogin extends React.Component {
       t,
     } = this.props;
     return <React.Fragment>
-      <HeaderV2 showSettings={true} />
+      <HeaderV2 showSettings={true} showNetwork={true} />
       <div className={`${styles.wrapper} ${grid.row}`}>
         <MultiStep
           className={`${grid['col-xs-10']}`}>

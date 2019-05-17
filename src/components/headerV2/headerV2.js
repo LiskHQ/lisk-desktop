@@ -127,10 +127,10 @@ class HeaderV2 extends React.Component {
   /* eslint-disable complexity */
   render() {
     const {
-      t, showSettings,
+      t, showSettings, showNetwork,
       dark, selectedNetwork, address,
     } = this.props;
-    const showNetwork = this.showNetworkOptions();
+    const showNetwork = showNetwork || this.showNetworkOptions();
     const networkList = getNetworksList();
 
     return (
