@@ -188,13 +188,14 @@ describe('Send', () => {
    */
   it('Error message is shown if transfer tx fails', () => {
     cy.server({ status: 409 });
-    cy.route('POST', '/api/transactions', { message: 'Test error' });
+    cy.route('POST', '/api/transactions', { message: 'Test error' }).as('broadcast');
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.send);
     cy.get(ss.recipientInput).type(randomAddress);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
+    cy.wait('@broadcast');
     cy.get(ss.submittedTransactionMessage).contains('Oops, looks like something went wrong. Please try again.');
   });
 
