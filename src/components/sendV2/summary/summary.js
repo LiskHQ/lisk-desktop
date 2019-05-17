@@ -34,6 +34,7 @@ class Summary extends React.Component {
     this.submitTransaction = this.submitTransaction.bind(this);
     this.getConfirmButtonLabel = this.getConfirmButtonLabel.bind(this);
     this.getTitle = this.getTitle.bind(this);
+    this.getTooltip = this.getTooltip.bind(this);
   }
 
   componentDidMount() {
@@ -157,11 +158,31 @@ class Summary extends React.Component {
       : t('Transaction summary');
   }
 
+  getTooltip() {
+    const { t, token } = this.props;
+    return {
+      LSK: {
+        title: t('Transaction fee'),
+        footer: <a href={links.transactionFee}
+            rel="noopener noreferrer"
+            target="_blank">
+              {t('Read More')}
+          </a>,
+        children: t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
+                    Such operations require hardware resources and because of that there is a small fee for processing those.`),
+      },
+      BTC: {
+        children: t('Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.'),
+      },
+    }[token];
+  }
+
   render() {
     const {
       fields, t, token,
     } = this.props;
     const { secondPassphrase, isHardwareWalletConnected } = this.state;
+    const tooltip = this.getTooltip();
 
     const fee = token === tokenMap.LSK.key
       ? fromRawLsk(fees.send)
@@ -207,32 +228,15 @@ class Summary extends React.Component {
           <div className={styles.row}>
             <label className={styles.transactionFee}>
               {t('Transaction fee')}
-              {token === 'LSK' ? (
-                <Tooltip
-                  className={'showOnTop'}
-                  title={t('Transaction fee')}
-                  footer={
-                    <a href={links.transactionFee}
-                      rel="noopener noreferrer"
-                      target="_blank">
-                        {t('Read More')}
-                    </a>
-                  }
-                >
-                  <p className={styles.tooltipText}>
-                  {
-                    t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
-                    Such operations require hardware resources and because of that there is a small fee for processing those.`)
-                  }
-                  </p>
-                </Tooltip>
-              ) : (
-                <Tooltip>
-                  <p className={styles.tooltipText}>{
-                    t('Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.')
-                  }</p>
-                </Tooltip>
-              )}
+              <Tooltip
+                className={'showOnTop'}
+                title={tooltip.title}
+                footer={tooltip.footer}
+              >
+                <p className={styles.tooltipText}>
+                  {tooltip.children}
+                </p>
+              </Tooltip>
             </label>
             <span>{t('{{fee}} {{token}}', { fee, token })}</span>
           </div>
