@@ -4,14 +4,14 @@ import {
 } from '../../actions/account'; // eslint-disable-line
 import { votesFetched } from '../../actions/voting';
 import {
-  transactionsFilterSet,
+  transactionsRequested,
   cleanTransactions,
   updateTransactionsIfNeeded,
 } from '../../actions/transactions';
 import actionTypes from '../../constants/actions';
 import transactionTypes from '../../constants/transactionTypes';
 
-import { extractAddress, extractPublicKey, getActiveTokenAccount } from '../../utils/account';
+import { getActiveTokenAccount } from '../../utils/account';
 import { getAutoLogInData, shouldAutoLogIn } from '../../utils/login';
 import { liskAPIClientSet, liskAPIClientUpdate } from '../../actions/peers';
 import networks from '../../constants/networks';
@@ -39,10 +39,9 @@ const updateAccountData = (store, action) => {
    *  Ignoring coverage because autologin is a development feature not accessible by end users
    */
   /* istanbul ignore if */
-  if (shouldAutoLogIn(getAutoLogInData()) && action.data.passphrase) {
-    store.dispatch(transactionsFilterSet({
-      address: extractAddress(extractPublicKey(action.data.passphrase)),
-      limit: 30,
+  if (shouldAutoLogIn(getAutoLogInData())) {
+    store.dispatch(transactionsRequested({
+      address: account.address,
       filter: txFilters.all,
     }));
   }
