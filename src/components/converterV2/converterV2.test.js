@@ -3,12 +3,13 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
 import ConverterV2 from './converterV2';
+import { tokenMap } from '../../constants/tokens';
 
 describe('Converter V2', () => {
   let wrapper;
 
   const props = {
-    getPriceTicker: spy(),
+    token: tokenMap.LSK.key,
     settings: {
       currency: 'EUR',
     },
@@ -16,11 +17,12 @@ describe('Converter V2', () => {
     error: false,
     className: 'test',
     priceTicker: { LSK: { USD: 123, EUR: 12 } },
+    pricesRetrieved: spy(),
   };
 
   it('shold render ConverterV2 component', () => {
     wrapper = mount(<ConverterV2 {...props} />);
-    expect(props.getPriceTicker).to.have.been.calledWith();
+    expect(props.pricesRetrieved).to.have.been.calledWith();
     expect(wrapper.find('.wrapper')).to.have.className(props.className);
     expect(wrapper.find('.price')).to.include.text(props.priceTicker.LSK.EUR);
     expect(wrapper.find('.price')).to.include.text(props.settings.currency);

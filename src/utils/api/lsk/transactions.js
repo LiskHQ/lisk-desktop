@@ -1,4 +1,4 @@
-import Lisk from 'lisk-elements';
+import Lisk from '@liskhq/lisk-client';
 import { toRawLsk } from '../../../utils/lsk';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import txFilters from '../../../constants/transactionFilters';
@@ -15,43 +15,52 @@ export const send = (
 ) =>
   new Promise((resolve, reject) => {
     const transaction = Lisk.transaction.transfer({
-      recipientId, amount, passphrase, secondPassphrase, data, timeOffset,
+      recipientId, amount: `${amount}`, passphrase, secondPassphrase, data, timeOffset,
     });
     liskAPIClient.transactions.broadcast(transaction).then(() => {
       resolve(transaction);
     }).catch(reject);
   });
 
-// eslint-disable-next-line max-statements, complexity, import/prefer-default-export
+const parseTxFilters = (filter = txFilters.all, address) => ({
+  [txFilters.incoming]: { recipientId: address },
+  [txFilters.outgoing]: { senderId: address },
+  [txFilters.all]: { senderIdOrRecipientId: address },
+}[filter]);
+
+const processParam = (customFilters, filtersKey, paramsKey, transformFn) => ({
+  ...(customFilters[filtersKey] && customFilters[filtersKey] !== '' ? {
+    [paramsKey]: transformFn(customFilters[filtersKey]),
+  } : {}),
+});
+
+const parseCustomFilters = customFilters => ({
+  ...processParam(customFilters, 'message', 'data', value => `%${value}%`),
+  ...processParam(customFilters, 'dateFrom', 'fromTimestamp', (value) => {
+    const fromTimestamp = getTimestampFromFirstBlock(value, 'DD.MM.YY');
+    return fromTimestamp > 0 ? fromTimestamp : 0;
+  }),
+  ...processParam(customFilters, 'dateTo', 'toTimestamp', (value) => {
+    const toTimestamp = getTimestampFromFirstBlock(value, 'DD.MM.YY', { inclusive: true });
+    return toTimestamp > 1 ? toTimestamp : 1;
+  }),
+  ...processParam(customFilters, 'amountFrom', 'minAmount', toRawLsk),
+  ...processParam(customFilters, 'amountTo', 'maxAmount', toRawLsk),
+});
+
 export const getTransactions = ({
   networkConfig, address, limit, offset, type = undefined,
-  sort = 'timestamp:desc', filter = txFilters.all, customFilters = {},
+  sort = 'timestamp:desc', filter, customFilters = {},
 }) => {
   const params = {
     limit,
     offset,
     sort,
+    ...parseTxFilters(filter, address),
+    ...parseCustomFilters(customFilters),
+    ...(type !== undefined ? { type } : {}),
   };
 
-  if (type !== undefined) params.type = type;
-  if (customFilters.message) params.data = `%${customFilters.message}%`;
-  if (customFilters.dateFrom && customFilters.dateFrom !== '') {
-    params.fromTimestamp = getTimestampFromFirstBlock(customFilters.dateFrom, 'DD.MM.YY');
-    params.fromTimestamp = params.fromTimestamp > 0 ? params.fromTimestamp : 0;
-  }
-  if (customFilters.dateTo && customFilters.dateTo !== '') {
-    params.toTimestamp = getTimestampFromFirstBlock(customFilters.dateTo, 'DD.MM.YY', { inclusive: true });
-    params.toTimestamp = params.toTimestamp > 1 ? params.toTimestamp : 1;
-  }
-  if (customFilters.amountFrom && customFilters.amountFrom !== '') {
-    params.minAmount = toRawLsk(customFilters.amountFrom);
-  }
-  if (customFilters.amountTo && customFilters.amountTo !== '') {
-    params.maxAmount = toRawLsk(customFilters.amountTo);
-  }
-  if (filter === txFilters.incoming) params.recipientId = address;
-  if (filter === txFilters.outgoing) params.senderId = address;
-  if (filter === txFilters.all) params.senderIdOrRecipientId = address;
   return getAPIClient(networkConfig).transactions.get(params);
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Lisk from 'lisk-elements';
+import Lisk from '@liskhq/lisk-client';
 import styles from './confirmMessage.css';
 import { Button } from '../toolbox/buttons/button';
 import ToolBoxInput from '../toolbox/inputs/toolBoxInput';

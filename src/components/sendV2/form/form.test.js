@@ -6,12 +6,13 @@ import thunk from 'redux-thunk';
 import i18n from '../../../i18n';
 import accounts from '../../../../test/constants/accounts';
 import Form from './form';
+import { tokenMap } from '../../../constants/tokens';
 
 describe('Form', () => {
   let wrapper;
 
   const store = configureMockStore([thunk])({
-    settings: { currency: 'USD' },
+    settings: { currency: 'USD', token: { active: 'LSK' } },
     settingsUpdated: () => {},
     liskService: {
       success: true,
@@ -19,23 +20,24 @@ describe('Form', () => {
         USD: 1,
       },
     },
-    followedAccounts: [
-      {
+    followedAccounts: {
+      LSK: [{
         title: 'ABC',
         address: '12345L',
         balance: 10,
-      },
-      {
+      }, {
         title: 'FRG',
         address: '12375L',
         balance: 15,
-      },
-      {
+      }, {
         title: 'KTG',
         address: '12395L',
         balance: 7,
-      },
-    ],
+      }],
+    },
+    service: {
+      dynamicFees: {},
+    },
   });
 
   const options = {
@@ -47,6 +49,7 @@ describe('Form', () => {
   };
 
   const props = {
+    token: tokenMap.LSK.key,
     t: v => v,
     fields: {
       recipient: { address: '' },
@@ -58,24 +61,28 @@ describe('Form', () => {
     },
     account: {
       balance: accounts.genesis.balance,
+      info: {
+        LSK: accounts.genesis,
+      },
     },
-    followedAccounts: [
-      {
+    followedAccounts: {
+      LSK: [{
         title: 'ABC',
         address: '12345L',
         balance: 10,
-      },
-      {
+      }, {
         title: 'FRG',
         address: '12375L',
         balance: 15,
-      },
-      {
+      }, {
         title: 'KTG',
         address: '12395L',
         balance: 7,
-      },
-    ],
+      }],
+      BTC: [],
+    },
+    dynamicFees: {},
+    dynamicFeesRetrieved: jest.fn(),
   };
 
   beforeEach(() => {
@@ -98,7 +105,7 @@ describe('Form', () => {
   });
 
   it('should validate address', () => {
-    props.followedAccounts = [];
+    props.followedAccounts = { LSK: [] };
     wrapper = mount(<Form {...props} />, options);
     const evt = { target: { name: 'recipient', value: '123456L' } };
     wrapper.find('input.recipient').simulate('change', evt);
