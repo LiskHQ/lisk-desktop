@@ -9,6 +9,7 @@ import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
 import Piwik from '../../../utils/piwik';
 import { extractPublicKey } from '../../../utils/account';
+import { tokenMap } from '../../../constants/tokens';
 import styles from './summary.css';
 
 class Summary extends React.Component {
@@ -31,6 +32,9 @@ class Summary extends React.Component {
     this.nextStep = this.nextStep.bind(this);
     this.prevStep = this.prevStep.bind(this);
     this.submitTransaction = this.submitTransaction.bind(this);
+    this.getConfirmButtonLabel = this.getConfirmButtonLabel.bind(this);
+    this.getTitle = this.getTitle.bind(this);
+    this.getTooltip = this.getTooltip.bind(this);
   }
 
   componentDidMount() {
@@ -72,6 +76,8 @@ class Summary extends React.Component {
       data: this.props.fields.reference.value,
       passphrase: this.props.account.passphrase,
       secondPassphrase: this.state.secondPassphrase.value,
+      dynamicFeePerByte: this.props.fields.processingSpeed.value,
+      fee: fees.send,
     });
   }
 
@@ -134,22 +140,58 @@ class Summary extends React.Component {
     });
   }
 
-  render() {
-    const { account, fields, t } = this.props;
-    const { secondPassphrase, isHardwareWalletConnected } = this.state;
-
-    const confirmBtnMessage = isHardwareWalletConnected
+  getConfirmButtonLabel() {
+    const {
+      account, fields, t, token,
+    } = this.props;
+    return this.state.isHardwareWalletConnected
       ? t('Confirm on {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })
-      : t('Send {{amount}} LSK', { amount: fields.amount.value });
+      : t('Send {{amount}} {{token}}', { amount: fields.amount.value, token });
+  }
 
-    const title = isHardwareWalletConnected
+  getTitle() {
+    const {
+      account, t,
+    } = this.props;
+    return this.state.isHardwareWalletConnected
       ? t('Confirm transaction on {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })
       : t('Transaction summary');
+  }
+
+  getTooltip() {
+    const { t, token } = this.props;
+    return {
+      LSK: {
+        title: t('Transaction fee'),
+        footer: <a href={links.transactionFee}
+            rel="noopener noreferrer"
+            target="_blank">
+              {t('Read More')}
+          </a>,
+        children: t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
+                    Such operations require hardware resources and because of that there is a small fee for processing those.`),
+      },
+      BTC: {
+        children: t('Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.'),
+      },
+    }[token];
+  }
+
+  render() {
+    const {
+      fields, t, token,
+    } = this.props;
+    const { secondPassphrase, isHardwareWalletConnected } = this.state;
+    const tooltip = this.getTooltip();
+
+    const fee = token === tokenMap.LSK.key
+      ? fromRawLsk(fees.send)
+      : fromRawLsk(fields.processingSpeed.value);
 
     return (
       <div className={`${styles.wrapper} summary`}>
         <header className={`${styles.header} summary-header`}>
-          <h1>{title}</h1>
+          <h1>{this.getTitle()}</h1>
         </header>
 
         <div className={`${styles.content} summary-content`}>
@@ -160,48 +202,43 @@ class Summary extends React.Component {
               <label className={`${styles.information} recipient-confirm`}>
                 {fields.recipient.title || fields.recipient.address}
               </label>
-              <span className={`${styles.secondText} ${styles.accountSecondText}`}>
-                {fields.recipient.address}
-              </span>
+              { fields.recipient.title ? (
+                <span className={`${styles.secondText} ${styles.accountSecondText}`}>
+                  {fields.recipient.address}
+                </span>
+              ) : null }
             </div>
           </div>
 
           <div className={styles.row}>
             <label>{t('Amount')}</label>
             <label className={`${styles.information} ${styles.amount} amount-summary`}>
-              {`${fields.amount.value} ${t('LSK')}`}
+              {`${fields.amount.value} ${token}`}
               <ConverterV2 className={`${styles.secondText} ${styles.amountSecondText}`} value={fields.amount.value} />
             </label>
           </div>
 
-          <div className={styles.row}>
-            <label>{t('Message')}</label>
-            <p className={`${styles.information} reference`}>{fields.reference.value}</p>
-          </div>
+          {token === 'LSK' && fields.reference.value !== '' ? (
+            <div className={styles.row}>
+              <label>{t('Message')}</label>
+              <p className={`${styles.information} reference`}>{fields.reference.value}</p>
+            </div>
+          ) : null}
 
           <div className={styles.row}>
             <label className={styles.transactionFee}>
               {t('Transaction fee')}
               <Tooltip
                 className={'showOnTop'}
-                title={t('Transaction fee')}
-                footer={
-                  <a href={links.transactionFee}
-                    rel="noopener noreferrer"
-                    target="_blank">
-                      {t('Read More')}
-                  </a>
-                }
+                title={tooltip.title}
+                footer={tooltip.footer}
               >
                 <p className={styles.tooltipText}>
-                {
-                  t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
-                  Such operations require hardware resources and because of that there is a small fee for processing those.`)
-                }
+                  {tooltip.children}
                 </p>
               </Tooltip>
             </label>
-            <span>{t('{{fee}} LSK', { fee: fromRawLsk(fees.send) })}</span>
+            <span>{t('{{fee}} {{token}}', { fee, token })}</span>
           </div>
 
           {
@@ -228,7 +265,7 @@ class Summary extends React.Component {
                 !secondPassphrase.isValid)
               || isHardwareWalletConnected
             }>
-            {confirmBtnMessage}
+            {this.getConfirmButtonLabel()}
           </PrimaryButtonV2>
 
           <TertiaryButtonV2 className={`${styles.editBtn} on-prevStep`} onClick={this.prevStep}>

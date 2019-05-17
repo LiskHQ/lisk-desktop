@@ -68,6 +68,9 @@ describe('Summary', () => {
       reference: {
         value: 1,
       },
+      processingSpeed: {
+        value: 1,
+      },
       isLoading: false,
       isHardwareWalletConnected: false,
     },
@@ -79,6 +82,7 @@ describe('Summary', () => {
     sent: jest.fn(),
     isLoading: false,
     isHardwareWalletConnected: false,
+    token: tokenMap.LSK.key,
   };
 
   beforeEach(() => {
