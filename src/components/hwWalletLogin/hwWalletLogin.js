@@ -27,13 +27,13 @@ class HardwareWalletLogin extends React.Component {
       t,
     } = this.props;
     return <React.Fragment>
-      <HeaderV2 showSettings={true} showNetwork={true} />
+      <HeaderV2 showSettings={true} hideNetwork={true} />
       <div className={`${styles.wrapper} ${grid.row}`}>
         <MultiStep
           className={`${grid['col-xs-10']}`}>
           <Loading t={t} devices={devices} />
           <SelectDevice t={t} devices={devices} />
-          <UnlockDevice t={t} devices={devices} />
+          <UnlockDevice t={t} devices={devices} history={history} />
           <SelectAccount t={t} liskAPIClient={liskAPIClient} history={history} />
         </MultiStep>
       </div>

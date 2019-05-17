@@ -127,10 +127,10 @@ class HeaderV2 extends React.Component {
   /* eslint-disable complexity */
   render() {
     const {
-      t, showSettings, showNetwork,
+      t, showSettings, hideNetwork = false,
       dark, selectedNetwork, address,
     } = this.props;
-    const showNetwork = showNetwork || this.showNetworkOptions();
+    const showNetworkOptions = !hideNetwork && this.showNetworkOptions();
     const networkList = getNetworksList();
 
     return (
@@ -140,7 +140,7 @@ class HeaderV2 extends React.Component {
             <img src={dark ? whiteLogo : darkLogo} />
           </div>
           <div className={`${styles.buttonsHolder}`}>
-            {showNetwork &&
+            {showNetworkOptions &&
               <div>
                 <span className={`${this.state.validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
                       onClick={() => this.toggleDropdown(!this.state.showDropdown)}>

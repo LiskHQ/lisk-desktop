@@ -110,10 +110,10 @@ describe('Select Account', () => {
 
   it('Should call push function if do click in Go Back button', () => {
     wrapper = mount(<SelectAccount {...props} />);
-    expect(props.push).not.toBeCalled();
+    expect(props.history.push).not.toBeCalled();
     wrapper.find('.go-back').at(0).simulate('click');
     wrapper.update();
-    expect(props.push).toBeCalled();
+    expect(props.history.push).toBeCalled();
   });
 
   it('Should change name "label" of one account', async () => {

@@ -132,7 +132,7 @@ class SelectAccount extends React.Component {
   }
 
   render() {
-    const { t, prevStep, device, history } = this.props;
+    const { t, device, history } = this.props;
     const { accountOnEditMode, hwAccounts } = this.state;
 
     return <div>
