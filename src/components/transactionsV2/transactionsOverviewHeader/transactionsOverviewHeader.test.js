@@ -9,6 +9,7 @@ import i18n from '../../../i18n';
 import TransactionHeader from './transactionsOverviewHeader';
 import accounts from '../../../../test/constants/accounts';
 import routes from '../../../constants/routes';
+import { tokenMap } from '../../../constants/tokens';
 
 describe('Transactions Overview Header', () => {
   let wrapper;
@@ -17,7 +18,7 @@ describe('Transactions Overview Header', () => {
       LSK: [],
       BTC: [],
     },
-    settings: { currency: 'USD' },
+    settings: { currency: 'USD', token: { active: tokenMap.LSK.key } },
     settingsUpdated: () => {},
     liskService: {
       success: true,

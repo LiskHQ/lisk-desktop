@@ -9,12 +9,13 @@ import i18n from '../../i18n';
 import RequestV2 from './requestV2';
 import accounts from '../../../test/constants/accounts';
 import { AutoresizeTextarea } from '../toolbox/inputsV2';
+import { tokenMap } from '../../constants/tokens';
 
 describe('RequestV2', () => {
   let wrapper;
 
   const store = configureMockStore([thunk])({
-    settings: { currency: 'USD' },
+    settings: { currency: 'USD', token: { active: tokenMap.LSK.key } },
     settingsUpdated: () => {},
     liskService: {
       success: true,

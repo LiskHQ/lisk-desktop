@@ -6,25 +6,25 @@ class ConverterV2 extends React.Component {
   constructor(props) {
     super(props);
 
-    props.getPriceTicker();
+    props.pricesRetrieved();
   }
 
   render() {
     const {
-      settings, value, error, className = '',
+      settings, value, error, className = '', token, priceTicker,
     } = this.props;
-    const { LSK } = this.props.priceTicker;
+    const currencies = priceTicker[token];
 
     const currency = settings.currency || 'USD';
 
     let price = error && Number.isNaN(value)
-      ? (0).toFixed(2) : (value * LSK[currency]).toFixed(2);
+      ? (0).toFixed(2) : (value * currencies[currency]).toFixed(2);
 
     price = price > converter.maxLSKSupply || price === 'NaN' || price < 0 ? (0).toFixed(2) : price;
 
     return (
       <div className={`${styles.wrapper} ${className}`}>
-        {value !== '' && LSK[currency]
+        {value !== '' && currencies[currency]
           ? <span className={`${styles.price} converted-price`}>~{price} {currency}</span>
           : null
         }
