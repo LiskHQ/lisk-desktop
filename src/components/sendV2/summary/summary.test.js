@@ -73,6 +73,9 @@ describe('Summary', () => {
       reference: {
         value: 1,
       },
+      processingSpeed: {
+        value: 1,
+      },
       isLoading: false,
       isHardwareWalletConnected: false,
     },
@@ -90,6 +93,7 @@ describe('Summary', () => {
       transactionsCreatedFailed: [],
       broadcastedTransactionsError: [],
     },
+    token: tokenMap.LSK.key,
   };
 
   beforeEach(() => {
