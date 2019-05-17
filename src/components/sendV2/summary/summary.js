@@ -75,6 +75,8 @@ class Summary extends React.Component {
       data: this.props.fields.reference.value,
       passphrase: this.props.account.passphrase,
       secondPassphrase: this.state.secondPassphrase.value,
+      dynamicFeePerByte: this.props.fields.processingSpeed.value,
+      fee: fees.send,
     });
   }
 

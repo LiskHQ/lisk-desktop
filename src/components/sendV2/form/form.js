@@ -50,7 +50,10 @@ class Form extends React.Component {
           feedback: props.t('64 bytes left'),
           isActive: false,
         },
-        processingSpeed: {},
+        processingSpeed: {
+          value: 0,
+          loaded: false,
+        },
       },
     };
 
@@ -79,12 +82,13 @@ class Form extends React.Component {
   componentDidUpdate() {
     const { fields } = this.state;
     const { dynamicFees } = this.props;
-    if (!Object.keys(fields.processingSpeed).length && dynamicFees.Low) {
+    if (!fields.processingSpeed.loaded && dynamicFees.Low) {
       this.setState({
         fields: {
           ...fields,
           processingSpeed: {
             value: dynamicFees.Low,
+            loaded: true,
           },
         },
       });
@@ -273,7 +277,10 @@ class Form extends React.Component {
     this.setState({
       fields: {
         ...fields,
-        processingSpeed: item,
+        processingSpeed: {
+          ...fields.processingSpeed,
+          ...item,
+        },
       },
     });
   }
