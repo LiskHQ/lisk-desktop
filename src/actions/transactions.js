@@ -40,18 +40,18 @@ export const transactionAdded = data => ({
  * @param {String} params.address - address of the account to fetch the transactions for
  * @param {Number} params.limit - amount of transactions to fetch
  * @param {Number} params.offset - index of the first transaction
- * @param {Number} params.filter - one of values from src/constants/transactionFilters.js
- * @param {Object} params.customFilters - object with filters for the filer dropdown
+ * @param {Object} params.filters - object with filters for the filer dropdown
  *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
+ * @param {Number} params.filters.direction - one of values from src/constants/transactionFilters.js
  */
 export const transactionsRequested = ({
-  address, limit, offset, filter, customFilters,
+  address, limit, offset, filters,
 }) =>
   (dispatch, getState) => {
     dispatch(loadingStarted(actionTypes.transactionsRequested));
     const networkConfig = getState().network;
     getTransactions({
-      networkConfig, address, limit, offset, filter, customFilters,
+      networkConfig, address, limit, offset, filters,
     })
       .then((response) => {
         dispatch({
@@ -59,16 +59,15 @@ export const transactionsRequested = ({
             count: parseInt(response.meta.count, 10),
             confirmed: response.data,
             address,
-            filter,
-            customFilters,
+            filters,
           },
           type: offset > 0 ? actionTypes.transactionsUpdated : actionTypes.transactionsLoaded,
         });
-        if (filter !== undefined) {
+        if (filters && filters.direction !== undefined) {
           dispatch({
             data: {
               filterName: 'wallet',
-              value: filter,
+              value: filters.direction,
             },
             type: actionTypes.addFilter,
           });
@@ -180,21 +179,21 @@ export const loadTransaction = ({ id }) =>
  * @param {Object} params - all params
  * @param {String} params.address - address of the account to fetch the transactions for
  * @param {Number} params.limit - amount of transactions to fetch
- * @param {Number} params.filter - one of values from src/constants/transactionFilters.js
- * @param {Object} params.customFilters - object with filters for the filer dropdown
+ * @param {Object} params.filters - object with filters for the filer dropdown
  *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
+ * @param {Number} params.filters.direction - one of values from src/constants/transactionFilters.js
  */
 export const transactionsUpdated = ({
-  address, limit, filter, customFilters,
+  address, limit, filters,
 }) =>
   (dispatch, getState) => {
     const networkConfig = getState().network;
 
     getTransactions({
-      networkConfig, address, limit, filter, customFilters,
+      networkConfig, address, limit, filters,
     })
       .then((response) => {
-        if (filter === getState().transactions.filter) {
+        if (filters && filters.direction === getState().transactions.filters.direction) {
           dispatch({
             data: {
               confirmed: response.data,
@@ -285,15 +284,14 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
     );
 
     if (windowFocus || hasRecentTransactions(transactions)) {
-      const { filter, customFilters } = transactions;
+      const { filters } = transactions;
       const address = transactions.account ? transactions.account.address : account.address;
 
       dispatch(transactionsUpdated({
         pendingTransactions: transactions.pending,
         address,
         limit: 25,
-        filter,
-        customFilters,
+        filters,
       }));
     }
   };

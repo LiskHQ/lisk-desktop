@@ -21,7 +21,11 @@ describe('actions: transactions', () => {
   const dispatch = jest.fn();
   let getState = () => ({
     peers: { liskAPIClient: {} },
-    transactions: { filter: txFilters.all },
+    transactions: {
+      filters: {
+        direction: txFilters.all,
+      },
+    },
   });
 
   describe('transactionsUpdated', () => {
@@ -29,7 +33,7 @@ describe('actions: transactions', () => {
       address: '15626650747375562521',
       limit: 20,
       offset: 0,
-      filter: txFilters.all,
+      filters: { direction: txFilters.all },
     };
     const actionFunction = transactionsUpdated(data);
 
@@ -53,7 +57,7 @@ describe('actions: transactions', () => {
       address: '15626650747375562521L',
       limit: 20,
       offset: 0,
-      filter: txFilters.all,
+      filters: { direction: txFilters.all },
     };
     const actionFunction = transactionsRequested(data);
 
@@ -67,7 +71,7 @@ describe('actions: transactions', () => {
         count: 0,
         confirmed: [],
         address: data.address,
-        filter: data.filter,
+        filters: data.filters,
       };
 
       await actionFunction(dispatch, getState);
@@ -78,21 +82,13 @@ describe('actions: transactions', () => {
   });
 
   describe('loadTransaction', () => {
-    getState = () => ({
-      peers: {
-        liskAPIClient: {
-          options: {
-            name: networks.mainnet.name,
-          },
-        },
-      },
-      transactions: { filter: txFilters.all },
-    });
     const data = {
       address: '15626650747375562521',
       limit: 20,
       offset: 0,
-      filter: txFilters.all,
+      filters: {
+        direction: txFilters.all,
+      },
     };
     const actionFunction = loadTransaction(data);
 
@@ -108,7 +104,11 @@ describe('actions: transactions', () => {
             },
           },
         },
-        transactions: { filter: txFilters.all },
+        transactions: {
+          filters: {
+            direction: txFilters.all,
+          },
+        },
       });
     });
 
@@ -170,10 +170,6 @@ describe('actions: transactions', () => {
   });
 
   describe('sent', () => {
-    getState = () => ({
-      peers: { liskAPIClient: {} },
-      transactions: { filter: txFilters.all },
-    });
     const data = {
       recipientId: '15833198055097037957L',
       amount: 100,
@@ -190,7 +186,11 @@ describe('actions: transactions', () => {
     beforeEach(() => {
       getState = () => ({
         peers: { liskAPIClient: {} },
-        transactions: { filter: txFilters.all },
+        transactions: {
+          filters: {
+            direction: txFilters.all,
+          },
+        },
       });
     });
 
