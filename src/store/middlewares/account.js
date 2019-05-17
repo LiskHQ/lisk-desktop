@@ -85,7 +85,7 @@ const votePlaced = (store, action) => {
 
 const checkTransactionsAndUpdateAccount = (store, action) => {
   const state = store.getState();
-  const { transactions } = state;
+  const { transactions, settings: { token } } = state;
   const account = getActiveTokenAccount(store.getState());
   // Adding timeout explained in
   // https://github.com/LiskHQ/lisk-hub/pull/1609
@@ -99,14 +99,16 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     ));
   }, 500);
 
-  const tx = action.data.block.transactions || [];
-  const blockContainsRelevantTransaction = tx.filter((transaction) => {
+  const txs = action.data.block.transactions || [];
+  const blockContainsRelevantTransaction = txs.filter((transaction) => {
     const sender = transaction ? transaction.senderId : null;
     const recipient = transaction ? transaction.recipientId : null;
     return account.address === recipient || account.address === sender;
   }).length > 0;
+  const recentBtcTransaction = token.active === 'BTC' &&
+    transactions.confirmed.filter(t => t.confirmations === 1).length;
 
-  if (blockContainsRelevantTransaction) {
+  if (blockContainsRelevantTransaction || recentBtcTransaction) {
     // it was not getting the account with secondPublicKey right
     // after a new block with second passphrase registration transaction was received
     setTimeout(() => {
