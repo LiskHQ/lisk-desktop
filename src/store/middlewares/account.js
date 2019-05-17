@@ -105,8 +105,10 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     const recipient = transaction ? transaction.recipientId : null;
     return account.address === recipient || account.address === sender;
   }).length > 0;
-  const recentBtcTransaction = token.active === 'BTC' &&
-    transactions.confirmed.filter(t => t.confirmations === 1).length;
+
+  // TODO remove the localStorage condition when enabling the BTC feature
+  const recentBtcTransaction = localStorage.getItem('btc') && token.active === 'BTC' &&
+    transactions.confirmed.filter(t => t.confirmations === 1).length > 0;
 
   if (blockContainsRelevantTransaction || recentBtcTransaction) {
     // it was not getting the account with secondPublicKey right
