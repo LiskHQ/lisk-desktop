@@ -64,8 +64,9 @@ class WalletTransactionsV2 extends React.Component {
 
     this.props.transactionsRequested({
       address: this.props.account.address,
-      limit: 30,
-      filter: txFilters.all,
+      filters: {
+        direction: txFilters.all,
+      },
     });
 
     this.props.addFilter({
@@ -77,10 +78,11 @@ class WalletTransactionsV2 extends React.Component {
   onLoadMore() {
     this.props.transactionsRequested({
       address: this.props.address,
-      limit: 30,
       offset: this.props.transactions.length,
-      filter: this.props.activeFilter,
-      customFilters: this.state.activeCustomFilters,
+      filters: {
+        direction: this.props.activeFilter,
+        ...this.state.customFilters,
+      },
     });
   }
   /*
@@ -94,9 +96,10 @@ class WalletTransactionsV2 extends React.Component {
     if (filter <= 2) {
       this.props.transactionsRequested({
         address: this.props.address,
-        limit: 30,
-        filter,
-        customFilters: this.state.activeCustomFilters,
+        filters: {
+          direction: filter,
+          ...this.state.customFilters,
+        },
       });
     } else {
       this.props.addFilter({
@@ -116,9 +119,10 @@ class WalletTransactionsV2 extends React.Component {
   saveFilters(customFilters) {
     this.props.transactionsRequested({
       address: this.props.address,
-      limit: 30,
-      filter: this.props.activeFilter,
-      customFilters,
+      filters: {
+        direction: this.props.activeFilter,
+        ...customFilters,
+      },
     });
     this.setState({ activeCustomFilters: customFilters, customFilters });
   }

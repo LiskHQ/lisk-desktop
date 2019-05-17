@@ -116,8 +116,9 @@ describe('actions: search', () => {
     it('should fetch transactions and then dispatch them', async () => {
       const params = {
         address: accounts.delegate.address,
-        filter: txFilters.all,
-        customFilters: {},
+        filters: {
+          direction: txFilters.all,
+        },
       };
       transactionsAPI.getTransactions.mockResolvedValue(transactions);
       await searchTransactions(params)(dispatch, getState);
@@ -179,8 +180,9 @@ describe('actions: search', () => {
       };
       const params = {
         address: accounts.delegate.address,
-        filter: txFilters.all,
-        customFilters: {},
+        filters: {
+          direction: txFilters.all,
+        },
       };
       transactionsAPI.getTransactions.mockResolvedValue(transactions);
       await searchMoreTransactions(params)(dispatch, getState);
