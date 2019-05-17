@@ -1,3 +1,4 @@
+import Lisk from '@liskhq/lisk-client';
 import {
   send,
   getTransactions,
@@ -38,6 +39,7 @@ describe('Utils: Transactions API', () => {
       },
     };
     apiClient.transactions.broadcast.mockResolvedValue({ recipientId, amount, id });
+    apiClient.transactions.get.mockResolvedValue({ data: [{ id: 1 }, { id: 2 }] });
     apiClient.node.getTransactions.mockResolvedValue({ data: [] });
 
     localStorage.setItem('btc', true); // TODO remove when enabling BTC
@@ -123,17 +125,13 @@ describe('Utils: Transactions API', () => {
     it('should apiClient.transactions.get and return a promise', () => {
       const promise = getSingleTransaction({ apiClient, id });
       expect(apiClient.transactions.get).toHaveBeenCalledWith({ id });
-      expect(typeof promise.then).toEqual('function');
+      expect(promise).toBeInstanceOf(Promise);
     });
 
     it('should apiClient.node.getTransactions if empty response', async () => {
       apiClient.transactions.get.mockResolvedValue({ data: [] });
       await getSingleTransaction({ apiClient, id });
       expect(apiClient.node.getTransactions).toHaveBeenCalledWith('unconfirmed', { id });
-    });
-
-    it('should reject if apiClient is undefined', async () => {
-      expect(getSingleTransaction({ id })).rejects.toThrow('');
     });
   });
 
@@ -147,7 +145,7 @@ describe('Utils: Transactions API', () => {
   describe('create', () => {
     it('should create a transaction and return a promise', async () => {
       const tx = {
-        amount: '0.01',
+        amount: '1',
         data: { data: 'payment' },
         passphrase: 'abc',
         recipientId: '123L',
@@ -161,12 +159,34 @@ describe('Utils: Transactions API', () => {
       expect(txResult.id).not.toBeNull();
       expect(txResult.senderPublicKey).not.toBeNull();
     });
+
+    it('should fail for create a transaction and return a promise', async () => {
+      Lisk.transaction.transfer = jest.fn();
+      Lisk.transaction.transfer.mockImplementation(() => {
+        throw new Error('sample error message');
+      });
+      const tx = {
+        amount: '1',
+        data: { data: 'payment' },
+        passphrase: 'abc',
+        recipientId: '123L',
+        secondPassphrase: null,
+        timeOffset: 0,
+      };
+      try {
+        await create(tx);
+      } catch (e) {
+        expect(e).toBeInstanceOf(Error);
+        expect(e.message).toEqual('sample error message');
+      }
+      Lisk.transaction.transfer.mockRestore();
+    });
   });
 
   describe('Broadcast', () => {
     it('should Broadcast a transaction and return a promise', async () => {
       const tx = {
-        amount: '0.01',
+        amount: '1',
         data: { data: 'payment' },
         passphrase: 'abc',
         recipientId: '123L',
@@ -175,6 +195,24 @@ describe('Utils: Transactions API', () => {
       };
       await broadcast(tx);
       expect(apiClient.transactions.broadcast).toHaveBeenCalledWith(expect.objectContaining(tx));
+    });
+
+    it('should fail Broadcast a transaction and return a promise', async () => {
+      apiClient.transactions.broadcast.mockRejectedValue('sample error message');
+      const tx = {
+        amount: '1',
+        data: { data: 'payment' },
+        passphrase: 'abc',
+        recipientId: '123L',
+        secondPassphrase: null,
+        timeOffset: 0,
+      };
+      try {
+        await broadcast(tx);
+      } catch (e) {
+        expect(e).toBeInstanceOf(Error);
+        expect(e.message).toEqual('sample error message');
+      }
     });
   });
 });

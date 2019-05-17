@@ -120,9 +120,7 @@ export const create = ({
 });
 
 export const broadcast = (transaction, networkConfig) => new Promise((resolve, reject) => {
-  try {
-    getAPIClient(networkConfig).transactions.broadcast(transaction).then(resolve(transaction));
-  } catch (error) {
-    reject(error);
-  }
+  getAPIClient(networkConfig).transactions.broadcast(transaction)
+    .then(resolve(transaction))
+    .catch(reject);
 });

@@ -95,9 +95,11 @@ describe('TransactionStatus', () => {
     wrapper.find('button').last().simulate('click');
     wrapper.setProps({
       ...props,
-      followedAccounts: [{
-        address: '123123L',
-      }],
+      followedAccounts: {
+        LSK: [{
+          address: '123123L',
+        }],
+      },
     });
     wrapper.update();
     expect(wrapper.find('.following-btn').at(0).text()).toEqual('Account bookmarked');

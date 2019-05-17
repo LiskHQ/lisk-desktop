@@ -121,6 +121,7 @@ class TransactionStatus extends React.Component {
     const { transactions, fields, t } = this.props;
     const { isFollowing, followButtonLabel } = this.followAccountInformation();
     const { isHardwareWalletOnError, messageDetails } = this.getMessagesDetails();
+    const token = getTokenFromAddress(fields.recipient.address);
     const isShowFollowingAccount = !transactions.broadcastedTransactionsError.length
       && !fields.recipient.following;
 
