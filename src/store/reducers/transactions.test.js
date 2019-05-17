@@ -146,8 +146,8 @@ describe('Reducer: transactions(state, action)', () => {
     const data = {
       confirmed: mockTransactions,
       count: mockTransactions.length,
-      filter: txFilter.all,
-      customFilters: {
+      filters: {
+        direction: txFilter.all,
         dateFrom: '1',
         dateTo: '2',
         amountFrom: '3',
@@ -184,14 +184,15 @@ describe('Reducer: transactions(state, action)', () => {
       pending: null,
       confirmed: null,
       count: null,
-      customFilters: null,
+      filters: null,
     };
 
     const expectedState = {
       pending: [],
       confirmed: [],
       count: null,
-      customFilters: {
+      filters: {
+        direction: txFilter.all,
         dateFrom: '',
         dateTo: '',
         amountFrom: '',

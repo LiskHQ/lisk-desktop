@@ -1,4 +1,5 @@
 import actionTypes from '../../constants/actions';
+import txFilters from '../../constants/transactionFilters';
 /**
  *
  * @param {Array} state
@@ -8,7 +9,8 @@ const initialState = {
   pending: [],
   confirmed: [],
   count: null,
-  customFilters: {
+  filters: {
+    direction: txFilters.all,
     dateFrom: '',
     dateTo: '',
     amountFrom: '',
@@ -38,9 +40,8 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
         ...state,
         confirmed: action.data.confirmed,
         count: action.data.count,
-        filter: action.data.filter !== undefined ? action.data.filter : state.filter,
-        customFilters: action.data.customFilters !== undefined ?
-          action.data.customFilters : state.filter,
+        filters: action.data.filters !== undefined ?
+          action.data.filters : state.filters,
       };
     case actionTypes.transactionsUpdated:
       return {
@@ -56,9 +57,8 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
               transaction.id === confirmedTransaction.id).length === 0),
         ],
         count: action.data.count,
-        filter: action.data.filter !== undefined ? action.data.filter : state.filter,
-        customFilters: action.data.customFilters !== undefined ?
-          action.data.customFilters : state.filter,
+        filters: action.data.filters !== undefined ?
+          action.data.filters : state.filters,
       };
     case (actionTypes.accountSwitched):
       return { pending: [], confirmed: [], count: 0 };
