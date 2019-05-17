@@ -49,7 +49,9 @@ const hwWalletMiddleware = store => next => (action) => {
           },
         }));
 
-        store.dispatch(accountLoggedOut());
+        if (account.hwInfo && account.hwInfo.deviceId) {
+          store.dispatch(accountLoggedOut());
+        }
       }
 
       store.dispatch({
