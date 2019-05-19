@@ -78,12 +78,14 @@ describe('Select Account', () => {
       },
       network: 0,
       settings: {
-        hardwareAccounts: [
-          {
-            address: '123456L',
-            name: 'Main',
-          },
-        ],
+        hardwareAccounts: {
+          'Ledger Nano S': [
+            {
+              address: '123456L',
+              name: 'Main',
+            },
+          ],
+        },
       },
       t: v => v,
       history: {
