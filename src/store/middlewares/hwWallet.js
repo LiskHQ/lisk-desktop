@@ -37,7 +37,6 @@ const hwWalletMiddleware = store => next => (action) => {
       const { account } = state;
 
       if (account.address) {
-        console.log(account);
         if (account.hwInfo && account.hwInfo.deviceId) {
           store.dispatch(dialogDisplayed({
             childComponent: Alert,

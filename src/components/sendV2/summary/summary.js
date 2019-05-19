@@ -142,7 +142,7 @@ class Summary extends React.Component {
       },
     });
   }
-
+  /* eslint-disable complexity */
   render() {
     const { account, fields, t } = this.props;
     const { secondPassphrase, isHardwareWalletConnected } = this.state;
