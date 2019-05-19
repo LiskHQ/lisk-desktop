@@ -1,5 +1,5 @@
 import { app, ipcMain } from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
-import Lisk from 'lisk-elements'; // eslint-disable-line import/no-extraneous-dependencies
+import Lisk from '@liskhq/lisk-client'; // eslint-disable-line import/no-extraneous-dependencies
 import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api'; // eslint-disable-line import/no-extraneous-dependencies
 import TransportNodeHid from '@ledgerhq/hw-transport-node-hid'; // eslint-disable-line import/no-extraneous-dependencies
 

@@ -8,7 +8,7 @@ const getFollowedAccountObjFromLS = () => JSON.parse(localStorage.getItem('follo
 
 const txConfirmationTimeout = 14000;
 
-describe('Bookmarks', () => {
+describe('Dashboard Bookmarks', () => {
   /**
    * Add follower in dashboard widget
    * @expect localStorage have the follower object with correct address

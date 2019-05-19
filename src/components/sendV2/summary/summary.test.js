@@ -6,12 +6,13 @@ import thunk from 'redux-thunk';
 import i18n from '../../../i18n';
 import accounts from '../../../../test/constants/accounts';
 import Summary from './summary';
+import { tokenMap } from '../../../constants/tokens';
 
 describe('Summary', () => {
   let wrapper;
 
   const store = configureMockStore([thunk])({
-    settings: { currency: 'USD' },
+    settings: { currency: 'USD', token: { active: tokenMap.LSK.key } },
     settingsUpdated: () => {},
     liskService: {
       success: true,
@@ -67,6 +68,9 @@ describe('Summary', () => {
       reference: {
         value: 1,
       },
+      processingSpeed: {
+        value: 1,
+      },
       isLoading: false,
       isHardwareWalletConnected: false,
     },
@@ -78,6 +82,7 @@ describe('Summary', () => {
     sent: jest.fn(),
     isLoading: false,
     isHardwareWalletConnected: false,
+    token: tokenMap.LSK.key,
   };
 
   beforeEach(() => {
@@ -96,6 +101,15 @@ describe('Summary', () => {
     wrapper.find('.on-prevStep').at(0).simulate('click');
     wrapper.update();
     expect(props.prevStep).toBeCalled();
+  });
+
+  it('should disable "Next" button if secondPassphrase invalid for active account', () => {
+    expect(wrapper.find('.send-button').at(0).prop('disabled')).toBeTruthy();
+    const clipboardData = {
+      getData: () => accounts['second passphrase account'].passphrase,
+    };
+    wrapper.find('passphraseInputV2 input').first().simulate('paste', { clipboardData });
+    expect(wrapper.find('.send-button').at(0).prop('disabled')).toBeTruthy();
   });
 
   it('should goind to next page if everyting is successfull', () => {

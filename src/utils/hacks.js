@@ -1,4 +1,4 @@
-import Lisk from 'lisk-elements';
+import Lisk from '@liskhq/lisk-client';
 
 // The following function is used as a hack to fix timestamp issues.
 // The problem is that Windows has often local time little bit in future and
