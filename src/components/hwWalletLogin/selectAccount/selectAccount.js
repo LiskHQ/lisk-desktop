@@ -38,10 +38,10 @@ class SelectAccount extends React.Component {
   }
 
   getNameFromAccount(address) {
-    const { settings } = this.props;
+    const { settings, device } = this.props;
     // istanbul ignore else
-    if (Array.isArray(settings.hardwareAccounts)) {
-      const storedAccount = settings.hardwareAccounts.filter(account =>
+    if (Array.isArray(settings.hardwareAccounts[device.model])) {
+      const storedAccount = settings.hardwareAccounts[device.model].filter(account =>
         account.address === address);
       return storedAccount.length ? storedAccount[0].name : null;
     }
@@ -87,7 +87,12 @@ class SelectAccount extends React.Component {
   onSaveNameAccounts() {
     const accountNames = this.state.hwAccounts.map(account =>
       ({ address: account.address, name: account.name }));
-    this.props.settingsUpdated({ hardwareAccounts: accountNames });
+    this.props.settingsUpdated({
+      hardwareAccounts: {
+        ...this.props.settings.hardwareAccounts,
+        [this.props.device.model]: accountNames,
+      },
+    });
     this.setState({ accountOnEditMode: -1 });
   }
 
