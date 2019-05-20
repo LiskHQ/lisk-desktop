@@ -91,7 +91,7 @@ describe('actions: account', () => {
       chaiExpect(typeof actionFunction).to.be.deep.equal('function');
     });
 
-    it('should dispatch transactionAdded action if resolved', () => {
+    it('should dispatch addPendingTransaction action if resolved', () => {
       accountApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
@@ -104,7 +104,7 @@ describe('actions: account', () => {
 
       actionFunction(dispatch, getState);
       chaiExpect(dispatch).to.have.been
-        .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
+        .calledWith({ data: expectedAction, type: actionTypes.addPendingTransaction });
     });
 
     it('should dispatch secondPassphraseRegisteredFailure action if caught', () => {
@@ -156,7 +156,7 @@ describe('actions: account', () => {
       chaiExpect(typeof actionFunction).to.be.deep.equal('function');
     });
 
-    it('should dispatch transactionAdded action if resolved', () => {
+    it('should dispatch addPendingTransaction action if resolved', () => {
       delegateApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
@@ -170,7 +170,7 @@ describe('actions: account', () => {
 
       actionFunction(dispatch, getState);
       chaiExpect(dispatch).to.have.been
-        .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
+        .calledWith({ data: expectedAction, type: actionTypes.addPendingTransaction });
     });
 
     it('should dispatch delegateRegisteredFailure action if caught', () => {

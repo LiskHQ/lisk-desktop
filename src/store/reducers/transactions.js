@@ -22,7 +22,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
   switch (action.type) {
     case actionTypes.cleanTransactions:
       return initialState;
-    case actionTypes.transactionAdded:
+    case actionTypes.addPendingTransaction:
       return { ...state, pending: [action.data, ...state.pending] };
     case actionTypes.transactionFailed:
       return { ...state, failed: { errorMessage: action.data.errorMessage } };

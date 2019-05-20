@@ -60,7 +60,7 @@ const actionTypes = {
   toastDisplayed: 'TOAST_DISPLAYED',
   toastHidden: 'TOAST_HIDDEN',
   transactionAddDelegateName: 'TRANSACTION_ADD_DELEGATE_NAME',
-  transactionAdded: 'TRANSACTION_ADDED',
+  addPendingTransaction: 'ADD_PENIDNG_TRANSACTION',
   transactionCleared: 'TRANSACTION_CLEARED',
   transactionFailed: 'TRANSACTION_FAILED',
   transactionFailedClear: 'TRANSACTION_FAILED_CLEAR',

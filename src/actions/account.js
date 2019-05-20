@@ -95,7 +95,7 @@ export const secondPassphraseRegistered = ({ secondPassphrase, account, passphra
             fee: Fees.setSecondPassphrase,
             type: transactionTypes.setSecondPassphrase,
           },
-          type: actionTypes.transactionAdded,
+          type: actionTypes.addPendingTransaction,
         });
       }).catch((error) => {
         const text = (error && error.message) ? error.message : i18next.t('An error occurred while registering your second passphrase. Please try again.');
@@ -139,7 +139,7 @@ export const delegateRegistered = ({
             fee: Fees.registerDelegate,
             type: transactionTypes.registerDelegate,
           },
-          type: actionTypes.transactionAdded,
+          type: actionTypes.addPendingTransaction,
         });
       })
       .catch((error) => {

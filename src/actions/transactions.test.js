@@ -196,7 +196,7 @@ describe('actions: transactions', () => {
       expect(typeof actionFunction).toBe('function');
     });
 
-    it('should dispatch transactionAdded action if resolved', async () => {
+    it('should dispatch addPendingTransaction action if resolved', async () => {
       transactionsApi.send.mockResolvedValue({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
@@ -211,7 +211,7 @@ describe('actions: transactions', () => {
 
       await actionFunction(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
-        data: expectedAction, type: actionTypes.transactionAdded,
+        data: expectedAction, type: actionTypes.addPendingTransaction,
       });
     });
 

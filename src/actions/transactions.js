@@ -28,9 +28,9 @@ export const cleanTransactions = () => ({
  *
  * @param {Object} data - the transaction object
  */
-export const transactionAdded = data => ({
+export const addPendingTransaction = data => ({
   data,
-  type: actionTypes.transactionAdded,
+  type: actionTypes.addPendingTransaction,
 });
 
 /**
@@ -253,7 +253,7 @@ export const sent = ({
     if (error) {
       handleSentError({ error, account, dispatch });
     } else {
-      dispatch(transactionAdded({
+      dispatch(addPendingTransaction({
         id: callResult.id,
         senderPublicKey: account.publicKey,
         senderId: account.address,

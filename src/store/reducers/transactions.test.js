@@ -21,13 +21,13 @@ describe('Reducer: transactions(state, action)', () => {
     timestamp: 33505743,
   }];
 
-  it('should prepend action.data to state.pending if action.type = actionTypes.transactionAdded', () => {
+  it('should prepend action.data to state.pending if action.type = actionTypes.addPendingTransaction', () => {
     const state = {
       ...defaultState,
       pending: [mockTransactions[1]],
     };
     const action = {
-      type: actionTypes.transactionAdded,
+      type: actionTypes.addPendingTransaction,
       data: mockTransactions[0],
     };
     const changedState = transactions(state, action);
