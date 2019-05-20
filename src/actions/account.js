@@ -175,7 +175,6 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
       dispatch(updateTransactions({
         pendingTransactions: transactions.pending,
         address,
-        limit: 25,
         filters,
       }));
     }
