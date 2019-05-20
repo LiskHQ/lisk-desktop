@@ -169,15 +169,14 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
     );
 
     if (windowFocus || hasRecentTransactions(transactions)) {
-      const { filter, customFilters } = transactions;
+      const { filters } = transactions;
       const address = transactions.account ? transactions.account.address : account.address;
 
       dispatch(transactionsUpdated({
         pendingTransactions: transactions.pending,
         address,
         limit: 25,
-        filter,
-        customFilters,
+        filters,
       }));
     }
   };
