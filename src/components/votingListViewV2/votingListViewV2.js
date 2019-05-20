@@ -8,6 +8,8 @@ import { parseSearchParams } from '../../utils/searchParams';
 import VoteListV2 from './voteListV2';
 import DelegateListV2 from './delegateListV2';
 import ProgressBar from '../toolbox/progressBar/progressBar';
+import Tooltip from '../toolbox/tooltip/tooltip';
+import { getTotalVotesCount } from './../../utils/voting';
 
 // Create a new Table component injecting Head and Row
 class VotingListViewV2 extends React.Component {
@@ -146,7 +148,7 @@ class VotingListViewV2 extends React.Component {
   render() {
     const filteredList = this.filter(this.props.delegates);
     const {
-      showChangeSummery, isDelegate, voteToggled, votes, t,
+      showChangeSummery, isDelegate, voteToggled, votes, t, votingModeEnabled,
     } = this.props;
     return (
       <Fragment>
@@ -155,6 +157,16 @@ class VotingListViewV2 extends React.Component {
             <ProgressBar type="linear" mode="indeterminate" theme={styles} className={'loading'}/>
           </div>
         ) : null}
+        {votingModeEnabled && getTotalVotesCount(votes) === 0 ?
+          <Tooltip
+            infoIconClassName={styles.infoIconClassName}
+            tooltipClassName={styles.tooltipClassName}
+            className={styles.selectingDelegates}
+            showTooltip={true}
+            title={t('Selecting Delegates')} >
+            <p>{t('Start by Selecting the delegates you’d like to vote for.')}</p>
+          </Tooltip> :
+        null}
         <VoteUrlProcessor toggleShowInfo={this.toggleShowInfo.bind(this)} show={this.showInfo()} />
         { !this.showInfo() ?
           <Fragment>
@@ -169,6 +181,7 @@ class VotingListViewV2 extends React.Component {
               <MultiStep
                 className={styles.wrapper}>
                 <DelegateListV2 t={t} list={filteredList} votes={votes}
+                  votingModeEnabled={votingModeEnabled}
                   voteToggled={voteToggled} showChangeSummery={showChangeSummery}
                   safari={this.state.safariClass} loadMore={this.loadMore.bind(this)} />
                 <VoteListV2 votes={votes} showChangeSummery={showChangeSummery}

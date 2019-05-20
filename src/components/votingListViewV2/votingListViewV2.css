@@ -274,6 +274,25 @@
   }
 }
 
+.selectingDelegates {
+  position: absolute;
+  top: 100px;
+  bottom: 46px;
+  left: 11px;
+  width: 36px;
+  border-radius: 3px;
+  background-color: var(--color-highlight-checkboxes);
+  z-index: 1;
+}
+
+.tooltipClassName {
+  top: 220px;
+}
+
+.infoIconClassName {
+  display: none;
+}
+
 @media (--xLarge-viewport) {
   .delegatesList {
     margin: 0px calc(0 - var(--box-padding-left-XL));

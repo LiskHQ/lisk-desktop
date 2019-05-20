@@ -52,6 +52,7 @@ class VotingV2 extends React.Component {
           votes={votes}/>
         <section className={`${grid['col-sm-12']} ${grid['col-md-12']} ${styles.votingBox} ${styles.votes}`}>
           <VotingListViewV2 showChangeSummery={this.state.showChangeSummery}
+            votingModeEnabled={votingModeEnabled}
             nextStepCalled={this.state.nextStepCalled}
             history={this.props.history}
           />

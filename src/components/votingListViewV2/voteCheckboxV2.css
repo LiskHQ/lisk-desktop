@@ -5,6 +5,8 @@
   width: 16px;
   height: 16px;
   position: relative;
+  z-index: 2;
+  cursor: pointer;
 
   & input {
     visibility: hidden;
