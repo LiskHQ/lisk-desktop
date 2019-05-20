@@ -11,12 +11,6 @@ class DelegateListV2 extends React.Component {
     this.state = { didMount: false };
   }
 
-  componentWillUpdate(nextProps) {
-    if (this.props.showChangeSummery === false && nextProps.showChangeSummery === true) {
-      this.props.nextStep();
-    }
-  }
-
   componentDidMount() {
     this.setState({ didMount: true });
   }

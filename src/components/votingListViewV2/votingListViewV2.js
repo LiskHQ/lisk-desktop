@@ -1,11 +1,9 @@
 import React, { Fragment } from 'react';
-import MultiStep from './../multiStep';
 import VotingHeaderV2 from './votingHeaderV2';
 import styles from './votingListViewV2.css';
 import VoteUrlProcessor from '../voteUrlProcessor';
 import voteFilters from './../../constants/voteFilters';
 import { parseSearchParams } from '../../utils/searchParams';
-import VoteListV2 from './voteListV2';
 import DelegateListV2 from './delegateListV2';
 import ProgressBar from '../toolbox/progressBar/progressBar';
 import Tooltip from '../toolbox/tooltip/tooltip';
@@ -178,15 +176,12 @@ class VotingListViewV2 extends React.Component {
               voteToggled={voteToggled}
               search={ value => this.search(value) }
             />
-              <MultiStep
-                className={styles.wrapper}>
+              <div className={styles.wrapper}>
                 <DelegateListV2 t={t} list={filteredList} votes={votes}
                   votingModeEnabled={votingModeEnabled}
                   voteToggled={voteToggled} showChangeSummery={showChangeSummery}
                   safari={this.state.safariClass} loadMore={this.loadMore.bind(this)} />
-                <VoteListV2 votes={votes} showChangeSummery={showChangeSummery}
-                  safari={this.state.safariClass} />
-              </MultiStep>
+              </div>
               {
                 (filteredList.length === 0) ?
                   <div className={`empty-message ${styles.emptyMessage}`}>

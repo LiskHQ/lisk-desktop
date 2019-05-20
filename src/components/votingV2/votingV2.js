@@ -9,7 +9,6 @@ class VotingV2 extends React.Component {
     super();
     this.state = {
       showChangeSummery: false,
-      nextStepCalled: false,
       votingModeEnabled: false,
     };
 
@@ -32,10 +31,6 @@ class VotingV2 extends React.Component {
     }
   }
 
-  nextStepGotCalled() {
-    this.setState({ nextStepCalled: true });
-  }
-
   toggleVotingMode() {
     this.setState({ votingModeEnabled: !this.state.votingModeEnabled });
   }
@@ -53,7 +48,6 @@ class VotingV2 extends React.Component {
         <section className={`${grid['col-sm-12']} ${grid['col-md-12']} ${styles.votingBox} ${styles.votes}`}>
           <VotingListViewV2 showChangeSummery={this.state.showChangeSummery}
             votingModeEnabled={votingModeEnabled}
-            nextStepCalled={this.state.nextStepCalled}
             history={this.props.history}
           />
         </section>
