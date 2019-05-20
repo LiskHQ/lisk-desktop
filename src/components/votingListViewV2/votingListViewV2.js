@@ -1,9 +1,7 @@
 import React, { Fragment } from 'react';
 import VotingHeaderV2 from './votingHeaderV2';
 import styles from './votingListViewV2.css';
-import VoteUrlProcessor from '../voteUrlProcessor';
 import voteFilters from './../../constants/voteFilters';
-import { parseSearchParams } from '../../utils/searchParams';
 import DelegateListV2 from './delegateListV2';
 import ProgressBar from '../toolbox/progressBar/progressBar';
 import Tooltip from '../toolbox/tooltip/tooltip';
@@ -18,7 +16,6 @@ class VotingListViewV2 extends React.Component {
     this.offset = -1;
     this.query = '';
     this.state = {
-      showInfo: true,
       activeFilter: voteFilters.all,
       safariClass: '',
       isLoading: false,
@@ -41,10 +38,6 @@ class VotingListViewV2 extends React.Component {
       this.offset = nextProps.delegates.length;
       this.isInitial = false;
     }
-  }
-
-  componentWillUnmount() {
-    this.props.delegatesCleared();
   }
 
   loadVotedDelegates(refresh) {
@@ -134,15 +127,6 @@ class VotingListViewV2 extends React.Component {
     return message;
   }
 
-  showInfo() {
-    const params = parseSearchParams(this.props.history.location.search);
-    return !this.props.nextStepCalled && (params.votes || params.unvotes) && this.state.showInfo;
-  }
-
-  toggleShowInfo(shouldShow) {
-    this.setState({ showInfo: shouldShow });
-  }
-
   render() {
     const filteredList = this.filter(this.props.delegates);
     const {
@@ -165,32 +149,27 @@ class VotingListViewV2 extends React.Component {
             <p>{t('Start by Selecting the delegates you’d like to vote for.')}</p>
           </Tooltip> :
         null}
-        <VoteUrlProcessor toggleShowInfo={this.toggleShowInfo.bind(this)} show={this.showInfo()} />
-        { !this.showInfo() ?
-          <Fragment>
-            <VotingHeaderV2
-              account={this.props.account}
-              setActiveFilter={this.setActiveFilter.bind(this)}
-              showChangeSummery={showChangeSummery}
-              isDelegate={isDelegate}
-              voteToggled={voteToggled}
-              search={ value => this.search(value) }
-            />
-              <div className={styles.wrapper}>
-                <DelegateListV2 t={t} list={filteredList} votes={votes}
-                  votingModeEnabled={votingModeEnabled}
-                  voteToggled={voteToggled} showChangeSummery={showChangeSummery}
-                  safari={this.state.safariClass} loadMore={this.loadMore.bind(this)} />
-              </div>
-              {
-                (filteredList.length === 0) ?
-                  <div className={`empty-message ${styles.emptyMessage}`}>
-                    {t(this.getEmptyStateMessage(filteredList))}
-                  </div> : null
-              }
-          </Fragment> : null
-        }
-      </Fragment>
+        <VotingHeaderV2
+          account={this.props.account}
+          setActiveFilter={this.setActiveFilter.bind(this)}
+          showChangeSummery={showChangeSummery}
+          isDelegate={isDelegate}
+          voteToggled={voteToggled}
+          search={ value => this.search(value) }
+        />
+          <div className={styles.wrapper}>
+            <DelegateListV2 t={t} list={filteredList} votes={votes}
+              votingModeEnabled={votingModeEnabled}
+              voteToggled={voteToggled} showChangeSummery={showChangeSummery}
+              safari={this.state.safariClass} loadMore={this.loadMore.bind(this)} />
+          </div>
+          {
+            (filteredList.length === 0) ?
+              <div className={`empty-message ${styles.emptyMessage}`}>
+                {t(this.getEmptyStateMessage(filteredList))}
+              </div> : null
+          }
+    </Fragment>
     );
   }
 }
