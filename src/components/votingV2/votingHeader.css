@@ -51,9 +51,16 @@
 
 .tooltip {
   display: inline-block;
+  vertical-align: text-top;
 }
 
 .btn {
   margin-left: 25px;
   margin-top: 15px;
+}
+
+@media (--medium-viewport) {
+  .hideInMedium {
+    display: none;
+  }
 }
