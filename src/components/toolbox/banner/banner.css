@@ -1,12 +1,12 @@
 @import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
 
 .banner {
-  background-color: var(--color-background-dark);
+  background-color: var(--color-maastricht-blue);
   border-radius: var(--border-radius-standard);
-  box-shadow: var(--box-shadow-standard);
   box-sizing: border-box;
   color: var(--color-white);
-  padding: 40px;
+  padding: 30px;
 
   & header {
     display: flex;
@@ -14,18 +14,15 @@
   }
 
   & .title {
-    font-family: var(--heading-font);
-    font-size: var(--subtitle-font-size);
-    font-weight: var(--font-weight-bold);
-    letter-spacing: 0.1px;
+    @mixin headingLarge;
+
     margin: 0;
   }
 
   & .closeBtn {
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
+    border: 1px solid var(--color-slate-gray);
+    border-radius: var(--border-radius-box);
     box-sizing: border-box;
     cursor: pointer;
     display: flex;
@@ -39,11 +36,10 @@
     &::before,
     &::after {
       background-color: var(--color-white);
-      border-radius: 1px;
       content: '';
-      height: 15px;
+      height: 11px;
       position: absolute;
-      width: 2px;
+      width: 1px;
     }
 
     &::before {
@@ -56,11 +52,8 @@
   }
 
   & .content {
-    font-family: var(--content-font);
-    font-size: var(--paragraph-font-size-s);
-    font-weight: var(--font-weight-semi-bold);
-    line-height: 1.71;
-    letter-spacing: 0.1px;
+    @mixin contentLargest;
+
     margin: 20px 0;
 
     & > p {
