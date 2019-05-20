@@ -257,7 +257,7 @@
   background: rgba(255, 255, 255, 0.8);
   bottom: 0;
   position: absolute;
-  top: 0;
+  top: 48px;
   width: 100%;
   z-index: 1;
 }
