@@ -5,7 +5,6 @@ import {
   transactionsRequested,
   loadTransaction,
   transactionsUpdated,
-  updateTransactionsIfNeeded,
 } from './transactions';
 import * as transactionsApi from '../utils/api/transactions';
 import * as delegateApi from '../utils/api/delegate';
@@ -242,30 +241,6 @@ describe('actions: transactions', () => {
 
       await actionFunction(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
-    });
-  });
-
-  describe('updateTransactionsIfNeeded', () => {
-    it('should update transactions when window is in focus', () => {
-      transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { count: '0' } });
-      const data = {
-        transactions: { confirmed: [{ confirmations: 10 }], pending: [] },
-        account: { address: accounts.genesis.address },
-      };
-
-      updateTransactionsIfNeeded(data, true)(dispatch, getState);
-      expect(dispatch).toHaveBeenCalled();
-    });
-
-    it('should update transactions when there are no recent transactions', () => {
-      transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { count: '0' } });
-      const data = {
-        transactions: { confirmed: [{ confirmations: 10000 }], pending: [{ id: '123' }] },
-        account: { address: accounts.genesis.address },
-      };
-
-      updateTransactionsIfNeeded(data, false)(dispatch, getState);
-      expect(dispatch).toHaveBeenCalled();
     });
   });
 });

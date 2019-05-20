@@ -266,32 +266,3 @@ export const sent = ({
       dispatch(passphraseUsed(passphrase));
     }
   };
-
-/**
- * This action is used in account middleware to update transactions when new block was created.
- * TODO this action should be likely removed when account middleware is cleaned up in
- * https://github.com/LiskHQ/lisk-hub/issues/2021
- *
- * @param {Object} param.transactions - the transaction object with pending and confirmed list
- * @param {Object} param.account - an object with active account
- * @param {Boolean} windowFocus - flag that says if the Lisk Hub window is focused
- */
-export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocus) =>
-  (dispatch) => {
-    const hasRecentTransactions = txs => (
-      txs.confirmed.filter(tx => tx.confirmations < 1000).length !== 0 ||
-      txs.pending.length !== 0
-    );
-
-    if (windowFocus || hasRecentTransactions(transactions)) {
-      const { filters } = transactions;
-      const address = transactions.account ? transactions.account.address : account.address;
-
-      dispatch(transactionsUpdated({
-        pendingTransactions: transactions.pending,
-        address,
-        limit: 25,
-        filters,
-      }));
-    }
-  };

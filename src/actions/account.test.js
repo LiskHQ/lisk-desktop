@@ -11,6 +11,7 @@ import {
   passphraseUsed,
   loadDelegate,
   accountDataUpdated,
+  updateTransactionsIfNeeded,
   updateDelegateAccount,
   delegateStatsLoaded,
   updateAccountDelegateStats,
@@ -299,6 +300,44 @@ describe('actions: account', () => {
 
       accountDataUpdated(data)(dispatch, getState);
       chaiExpect(peersActionsStub).to.have.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
+    });
+  });
+
+  describe('updateTransactionsIfNeeded', () => {
+    let transactionsActionsStub;
+    let getState;
+
+    const dispatch = spy();
+
+    beforeEach(() => {
+      transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
+      getState = () => ({
+        peers: { liskAPIClient: {} },
+      });
+    });
+
+    afterEach(() => {
+      transactionsActionsStub.restore();
+    });
+
+    it('should update transactions when window is in focus', () => {
+      const data = {
+        transactions: { confirmed: [{ confirmations: 10 }], pending: [] },
+        account: { address: accounts.genesis.address },
+      };
+
+      updateTransactionsIfNeeded(data, true)(dispatch, getState);
+      chaiExpect(transactionsActionsStub).to.have.been.calledWith();
+    });
+
+    it('should update transactions when there are no recent transactions', () => {
+      const data = {
+        transactions: { confirmed: [{ confirmations: 10000 }], pending: [{ id: '123' }] },
+        account: { address: accounts.genesis.address },
+      };
+
+      updateTransactionsIfNeeded(data, false)(dispatch, getState);
+      chaiExpect(transactionsActionsStub).to.have.been.calledWith();
     });
   });
 

@@ -4,7 +4,7 @@ import { getAccount, setSecondPassphrase } from '../utils/api/account';
 import { registerDelegate, getDelegate } from '../utils/api/delegate';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
-import { updateTransactionsIfNeeded } from './transactions';
+import { transactionsUpdated } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { liskAPIClientUpdate } from './peers';
@@ -159,6 +159,27 @@ export const loadDelegate = ({ publicKey }) =>
         type: actionTypes.updateDelegate,
       });
     });
+  };
+
+export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocus) =>
+  (dispatch) => {
+    const hasRecentTransactions = txs => (
+      txs.confirmed.filter(tx => tx.confirmations < 1000).length !== 0 ||
+      txs.pending.length !== 0
+    );
+
+    if (windowFocus || hasRecentTransactions(transactions)) {
+      const { filter, customFilters } = transactions;
+      const address = transactions.account ? transactions.account.address : account.address;
+
+      dispatch(transactionsUpdated({
+        pendingTransactions: transactions.pending,
+        address,
+        limit: 25,
+        filter,
+        customFilters,
+      }));
+    }
   };
 
 export const accountDataUpdated = ({

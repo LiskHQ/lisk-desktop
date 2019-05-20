@@ -77,7 +77,7 @@ describe('Account middleware', () => {
     store.getState = () => (state);
 
     next = spy();
-    spy(transactionsActions, 'updateTransactionsIfNeeded');
+    spy(accountActions, 'updateTransactionsIfNeeded');
     spy(accountActions, 'updateDelegateAccount');
     stubGetAccount = stub(accountApi, 'getAccount').returnsPromise();
     transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
@@ -90,7 +90,7 @@ describe('Account middleware', () => {
 
   afterEach(() => {
     accountActions.updateDelegateAccount.restore();
-    transactionsActions.updateTransactionsIfNeeded.restore();
+    accountActions.updateTransactionsIfNeeded.restore();
     transactionsActionsStub.restore();
     stubGetAccount.restore();
     stubTransactions.restore();
@@ -116,7 +116,7 @@ describe('Account middleware', () => {
 
     clock.tick(7000);
     expect(accountDataUpdatedSpy).to.have.been.calledWith(data);
-    expect(transactionsActions.updateTransactionsIfNeeded).to.have.been.calledWith();
+    expect(accountActions.updateTransactionsIfNeeded).to.have.been.calledWith();
   });
 
   it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confirmed does not contain recent transaction. Case with transactions address`, () => {
