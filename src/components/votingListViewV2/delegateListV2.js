@@ -16,6 +16,7 @@ class DelegateListV2 extends React.Component {
   }
 
   render() {
+    const { votingModeEnabled } = this.props;
     const shouldLoadMore = this.props.list.length > 0 &&
       this.props.list[this.props.list.length - 1].rank % 100 === 0;
     return (<div>
@@ -28,6 +29,7 @@ class DelegateListV2 extends React.Component {
                 className={this.props.safari}
                 voteToggled={this.props.voteToggled}
                 voteStatus={this.props.votes[item.username]}
+                votingModeEnabled={votingModeEnabled}
               />)
         }
         {shouldLoadMore ? <Button

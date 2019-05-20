@@ -20,22 +20,23 @@ const setRowClass = (voteStatus) => {
 };
 
 class DelegateRowV2 extends React.Component {
-  shouldComponentUpdate({ voteStatus }) {
+  shouldComponentUpdate({ voteStatus, votingModeEnabled }) {
     const oldStatus = this.props.voteStatus;
     return (!oldStatus && !!voteStatus) ||
       (!!oldStatus && !voteStatus) ||
       ((!!oldStatus && !!voteStatus) &&
       (oldStatus.unconfirmed !== voteStatus.unconfirmed ||
-      oldStatus.pending !== voteStatus.pending));
+      oldStatus.pending !== voteStatus.pending)) ||
+      this.props.votingModeEnabled !== votingModeEnabled;
   }
 
   render() {
     const {
-      data, voteStatus, voteToggled, className,
+      data, voteStatus, voteToggled, className, votingModeEnabled,
     } = this.props;
 
     return (
-      <TableRow className={`delegate-row ${className} ${grid.row} ${styles.row} ${setRowClass(voteStatus)}`} onClick={() => voteToggled(data)}>
+      <TableRow className={`delegate-row ${className} ${grid.row} ${styles.row} ${setRowClass(voteStatus)}`}>
         <div className={`${grid['col-md-1']} ${grid['col-xs-2']}
           ${styles.leftText} ${styles.checkBoxContainer}`}>
           <Checkbox styles={`${styles} ${styles.fakeCheckbox}`}
@@ -43,6 +44,7 @@ class DelegateRowV2 extends React.Component {
             value={data.selected}
             status={voteStatus}
             data={data}
+            votingModeEnabled={votingModeEnabled}
           />
         </div>
         <div className={`${grid['col-md-1']} ${grid['col-xs-2']} delegate-rank`}>#{data.rank}</div>
