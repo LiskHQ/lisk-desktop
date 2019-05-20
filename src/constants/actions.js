@@ -69,7 +69,7 @@ const actionTypes = {
   transactionLoadRequested: 'TRANSACTION_LOAD_REQUESTED',
   transactionsFailed: 'TRANSACTIONS_FAILED',
   transactionsLoaded: 'TRANSACTIONS_LOADED',
-  transactionsUpdated: 'TRANSACTIONS_UPDATED',
+  updateTransactions: 'UPDATE_TRANSACTIONS',
   updateDelegate: 'UPDATE_DELEGATE',
   voteLookupStatusCleared: 'VOTE_LOOKUP_STATUS_CLEARED',
   voteLookupStatusUpdated: 'VOTE_LOOKUP_STATUS_UPDATED',

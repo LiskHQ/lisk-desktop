@@ -80,7 +80,7 @@ describe('Reducer: transactions(state, action)', () => {
     expect(pendingTransactionsFiltered).toEqual(stateWithNoPendingTransactions);
   });
 
-  it('should prepend newer transactions from action.data to state.confirmed and remove from state.pending if action.type = actionTypes.transactionsUpdated', () => {
+  it('should prepend newer transactions from action.data to state.confirmed and remove from state.pending if action.type = actionTypes.updateTransactions', () => {
     const state = {
       ...defaultState,
       pending: [mockTransactions[0]],
@@ -88,7 +88,7 @@ describe('Reducer: transactions(state, action)', () => {
       count: mockTransactions[1].length + mockTransactions[2].length,
     };
     const action = {
-      type: actionTypes.transactionsUpdated,
+      type: actionTypes.updateTransactions,
       data: {
         confirmed: mockTransactions,
         count: mockTransactions.length,
@@ -102,12 +102,12 @@ describe('Reducer: transactions(state, action)', () => {
     });
   });
 
-  it('should action.data to state.confirmed if state.confirmed is empty and action.type = actionTypes.transactionsUpdated', () => {
+  it('should action.data to state.confirmed if state.confirmed is empty and action.type = actionTypes.updateTransactions', () => {
     const state = {
       ...defaultState,
     };
     const action = {
-      type: actionTypes.transactionsUpdated,
+      type: actionTypes.updateTransactions,
       data: {
         confirmed: mockTransactions,
         count: 3,

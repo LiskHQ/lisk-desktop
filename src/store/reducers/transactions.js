@@ -43,7 +43,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
         filters: action.data.filters !== undefined ?
           action.data.filters : state.filters,
       };
-    case actionTypes.transactionsUpdated:
+    case actionTypes.updateTransactions:
       return {
         ...state, // Filter any newly confirmed transaction from pending
         pending: state.pending.filter(pendingTransaction =>

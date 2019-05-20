@@ -4,7 +4,7 @@ import {
   sent,
   loadTransactions,
   loadSingleTransaction,
-  transactionsUpdated,
+  updateTransactions,
 } from './transactions';
 import * as transactionsApi from '../utils/api/transactions';
 import * as delegateApi from '../utils/api/delegate';
@@ -26,16 +26,16 @@ describe('actions: transactions', () => {
     },
   });
 
-  describe('transactionsUpdated', () => {
+  describe('updateTransactions', () => {
     const data = {
       address: '15626650747375562521',
       limit: 20,
       offset: 0,
       filters: { direction: txFilters.all },
     };
-    const actionFunction = transactionsUpdated(data);
+    const actionFunction = updateTransactions(data);
 
-    it('should dispatch transactionsUpdated action if resolved', async () => {
+    it('should dispatch updateTransactions action if resolved', async () => {
       transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { count: '0' } });
       const expectedAction = {
         count: 0,
@@ -45,7 +45,7 @@ describe('actions: transactions', () => {
       await actionFunction(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
         data: expectedAction,
-        type: actionTypes.transactionsUpdated,
+        type: actionTypes.updateTransactions,
       });
     });
   });

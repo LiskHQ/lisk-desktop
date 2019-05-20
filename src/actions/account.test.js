@@ -253,7 +253,7 @@ describe('actions: account', () => {
     beforeEach(() => {
       peersActionsStub = spy(peersActions, 'liskAPIClientUpdate');
       getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
-      transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
+      transactionsActionsStub = spy(transactionsActions, 'updateTransactions');
       getState = () => ({
         peers: { liskAPIClient: {}, options: { code: 0 } },
       });
@@ -310,7 +310,7 @@ describe('actions: account', () => {
     const dispatch = spy();
 
     beforeEach(() => {
-      transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
+      transactionsActionsStub = spy(transactionsActions, 'updateTransactions');
       getState = () => ({
         peers: { liskAPIClient: {} },
       });

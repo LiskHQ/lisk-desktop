@@ -61,7 +61,7 @@ export const loadTransactions = ({
             address,
             filters,
           },
-          type: offset > 0 ? actionTypes.transactionsUpdated : actionTypes.transactionsLoaded,
+          type: offset > 0 ? actionTypes.updateTransactions : actionTypes.transactionsLoaded,
         });
         if (filters && filters.direction !== undefined) {
           dispatch({
@@ -183,7 +183,7 @@ export const loadSingleTransaction = ({ id }) =>
  *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
  * @param {Number} params.filters.direction - one of values from src/constants/transactionFilters.js
  */
-export const transactionsUpdated = ({
+export const updateTransactions = ({
   address, limit, filters,
 }) =>
   (dispatch, getState) => {
@@ -199,7 +199,7 @@ export const transactionsUpdated = ({
               confirmed: response.data,
               count: parseInt(response.meta.count, 10),
             },
-            type: actionTypes.transactionsUpdated,
+            type: actionTypes.updateTransactions,
           });
         }
       });

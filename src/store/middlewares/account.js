@@ -149,7 +149,7 @@ const accountMiddleware = store => next => (action) => {
     case actionTypes.newBlockCreated:
       checkTransactionsAndUpdateAccount(store, action);
       break;
-    case actionTypes.transactionsUpdated:
+    case actionTypes.updateTransactions:
       delegateRegistration(store, action);
       votePlaced(store, action);
       break;

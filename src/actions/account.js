@@ -4,7 +4,7 @@ import { getAccount, setSecondPassphrase } from '../utils/api/account';
 import { registerDelegate, getDelegate } from '../utils/api/delegate';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
-import { transactionsUpdated } from './transactions';
+import { updateTransactions } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { liskAPIClientUpdate } from './peers';
@@ -172,7 +172,7 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
       const { filters } = transactions;
       const address = transactions.account ? transactions.account.address : account.address;
 
-      dispatch(transactionsUpdated({
+      dispatch(updateTransactions({
         pendingTransactions: transactions.pending,
         address,
         limit: 25,
