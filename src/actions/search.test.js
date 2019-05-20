@@ -116,9 +116,8 @@ describe('actions: search', () => {
     it('should fetch transactions and then dispatch them', async () => {
       const params = {
         address: accounts.delegate.address,
-        filters: {
-          direction: txFilters.all,
-        },
+        filter: txFilters.all,
+        customFilters: {},
       };
       transactionsAPI.getTransactions.mockResolvedValue(transactions);
       await searchTransactions(params)(dispatch, getState);
@@ -129,7 +128,10 @@ describe('actions: search', () => {
       });
       expect(dispatch).toHaveBeenNthCalledWith(2, {
         data: {
-          ...params,
+          address: accounts.delegate.address,
+          filters: {
+            direction: txFilters.all,
+          },
           count,
           transactions: transactions.data,
         },
@@ -180,9 +182,8 @@ describe('actions: search', () => {
       };
       const params = {
         address: accounts.delegate.address,
-        filters: {
-          direction: txFilters.all,
-        },
+        filter: txFilters.all,
+        customFilters: {},
       };
       transactionsAPI.getTransactions.mockResolvedValue(transactions);
       await searchMoreTransactions(params)(dispatch, getState);
@@ -193,7 +194,10 @@ describe('actions: search', () => {
       });
       expect(dispatch).toHaveBeenNthCalledWith(2, {
         data: {
-          ...params,
+          address: accounts.delegate.address,
+          filters: {
+            direction: txFilters.all,
+          },
           count,
           transactions: transactions.data,
         },
