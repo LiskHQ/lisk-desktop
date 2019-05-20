@@ -13,7 +13,6 @@ class VotingListViewV2 extends React.Component {
     super();
     this.freezeLoading = false;
     this.isInitial = true;
-    this.offset = -1;
     this.query = '';
     this.state = {
       activeFilter: voteFilters.all,
@@ -23,30 +22,25 @@ class VotingListViewV2 extends React.Component {
   }
 
   componentDidMount() {
+    this.loadDelegates('', true);
     if (this.props.serverPublicKey) {
-      this.loadVotedDelegates(true);
+      this.loadVotedDelegates();
     }
   }
 
   componentDidUpdate(nextProps) {
-    if (!this.props.refreshDelegates && nextProps.refreshDelegates) {
-      this.loadVotedDelegates(true);
-    }
-
     if (this.props.delegates.length < nextProps.delegates.length) {
       this.freezeLoading = false;
-      this.offset = nextProps.delegates.length;
       this.isInitial = false;
     }
   }
 
-  loadVotedDelegates(refresh) {
+  loadVotedDelegates() {
     /* istanbul-ignore-else */
     if (!this.freezeLoading) {
       this.props.votesFetched({
         address: this.props.address,
       });
-      this.loadDelegates('', refresh);
     }
   }
 
@@ -56,9 +50,8 @@ class VotingListViewV2 extends React.Component {
    */
   search(query) {
     this.query = query;
-    this.offset = 0;
     this.freezeLoading = false;
-    this.loadDelegates(query, true);
+    this.loadDelegates(query, true, 0);
   }
 
   /**
@@ -70,12 +63,11 @@ class VotingListViewV2 extends React.Component {
    *  should replace the old delegates list
    * @param {Number} limit - The maximum number of results
    */
-  loadDelegates(q = '', refresh) {
-    const list = this.filter(this.props.delegates);
+  loadDelegates(q = '', refresh, offset = 0) {
     this.freezeLoading = true;
 
     this.props.delegatesFetched({
-      offset: list.length !== 0 ? list[list.length - 1].rank : 0,
+      offset,
       q,
       refresh,
     });
@@ -85,7 +77,8 @@ class VotingListViewV2 extends React.Component {
    * load more data when scroll bar reaches end of the page
    */
   loadMore() {
-    this.loadDelegates(this.query);
+    const list = this.filter(this.props.delegates);
+    this.loadDelegates(this.query, false, list[list.length - 1].rank);
   }
 
   setActiveFilter(filter) {
@@ -118,7 +111,7 @@ class VotingListViewV2 extends React.Component {
     if (!this.isInitial && this.props.delegates.length === 0) {
       message = 'No delegates found.';
     } else if (this.state.activeFilter === voteFilters.voted &&
-      Object.keys(this.props.votes).length === 0) {
+      getTotalVotesCount(this.props.votes) === 0) {
       message = 'You have not voted yet.';
     } else if (this.query !== '' && Object.keys(filteredList).length === 0) {
       message = 'No search result in given criteria.';
@@ -134,7 +127,7 @@ class VotingListViewV2 extends React.Component {
     } = this.props;
     return (
       <Fragment>
-        {this.props.delegates.length === 0 || this.state.isLoading ? (
+        {this.state.isLoading ? (
           <div className={styles.loadingOverlay}>
             <ProgressBar type="linear" mode="indeterminate" theme={styles} className={'loading'}/>
           </div>
