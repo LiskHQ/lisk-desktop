@@ -32,6 +32,9 @@ class VotingV2 extends React.Component {
   }
 
   toggleVotingMode() {
+    if (this.state.votingModeEnabled) {
+      this.props.clearVotes();
+    }
     this.setState({ votingModeEnabled: !this.state.votingModeEnabled });
   }
 
