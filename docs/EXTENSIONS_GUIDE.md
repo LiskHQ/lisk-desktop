@@ -32,7 +32,7 @@ data = {
 actions={
   loadTransactions,
   sent,
-  loadTransaction,
+  loadSingleTransaction,
   loadTransactions,
   searchDelegate,
   searchVotes,

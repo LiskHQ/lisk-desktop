@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import {
   loadTransactions,
   sent,
-  loadTransaction,
+  loadSingleTransaction,
 } from '../../actions/transactions';
 import {
   searchDelegate,
@@ -26,7 +26,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   loadTransactions,
   sent,
-  loadTransaction,
+  loadSingleTransaction,
   searchDelegate,
   searchVotes,
   searchAccount,

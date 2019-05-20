@@ -98,7 +98,7 @@ export const loadLastTransaction = address => (dispatch, getState) => {
  *
  * @param {String} id - id of the transaction
  */
-export const loadTransaction = ({ id }) =>
+export const loadSingleTransaction = ({ id }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     const networkConfig = getState().network;

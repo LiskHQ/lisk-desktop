@@ -3,7 +3,7 @@ import txFilters from './../constants/transactionFilters';
 import {
   sent,
   loadTransactions,
-  loadTransaction,
+  loadSingleTransaction,
   transactionsUpdated,
 } from './transactions';
 import * as transactionsApi from '../utils/api/transactions';
@@ -79,7 +79,7 @@ describe('actions: transactions', () => {
     });
   });
 
-  describe('loadTransaction', () => {
+  describe('loadSingleTransaction', () => {
     const data = {
       address: '15626650747375562521',
       limit: 20,
@@ -88,7 +88,7 @@ describe('actions: transactions', () => {
         direction: txFilters.all,
       },
     };
-    const actionFunction = loadTransaction(data);
+    const actionFunction = loadSingleTransaction(data);
 
     beforeEach(() => {
       getState = () => ({
