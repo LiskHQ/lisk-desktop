@@ -6,7 +6,7 @@ import React, { Fragment } from 'react';
 import throttle from 'lodash.throttle';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import BoxV2 from '../boxV2';
-import { transactionsRequested } from '../../actions/transactions';
+import { loadTransactions } from '../../actions/transactions';
 import TransactionsList from '../transactions/transactionsList';
 import CurrencyGraph from './currencyGraph';
 import routes from '../../constants/routes';
@@ -39,7 +39,7 @@ class Dashboard extends React.Component {
     const isLoggedIn = props.account.address;
 
     if (isLoggedIn) {
-      props.transactionsRequested({
+      props.loadTransactions({
         address: props.account.address,
         publicKey: props.account.publicKey,
       });
@@ -194,7 +194,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  transactionsRequested,
+  loadTransactions,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(Dashboard));

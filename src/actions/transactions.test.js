@@ -2,7 +2,7 @@ import actionTypes from '../constants/actions';
 import txFilters from './../constants/transactionFilters';
 import {
   sent,
-  transactionsRequested,
+  loadTransactions,
   loadTransaction,
   transactionsUpdated,
 } from './transactions';
@@ -50,14 +50,14 @@ describe('actions: transactions', () => {
     });
   });
 
-  describe('transactionsRequested', () => {
+  describe('loadTransactions', () => {
     const data = {
       address: '15626650747375562521L',
       limit: 20,
       offset: 0,
       filters: { direction: txFilters.all },
     };
-    const actionFunction = transactionsRequested(data);
+    const actionFunction = loadTransactions(data);
 
     it('should create an action function', () => {
       expect(typeof actionFunction).toBe('function');

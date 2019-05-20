@@ -33,7 +33,7 @@ actions={
   loadTransactions,
   sent,
   loadTransaction,
-  transactionsRequested,
+  loadTransactions,
   searchDelegate,
   searchVotes,
   searchAccount,

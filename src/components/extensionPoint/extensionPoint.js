@@ -10,10 +10,9 @@ export default class ExtensionPoint extends React.Component {
   render() {
     const modules = this.props.modules[this.props.identifier] || [];
     const {
-      loadTransactions,
       sent,
       loadTransaction,
-      transactionsRequested,
+      loadTransactions,
       searchDelegate,
       searchVotes,
       searchAccount,
@@ -38,10 +37,9 @@ export default class ExtensionPoint extends React.Component {
               search: this.props.search,
             }}
             actions={{
-              loadTransactions,
               sent,
               loadTransaction,
-              transactionsRequested,
+              loadTransactions,
               searchDelegate,
               searchVotes,
               searchAccount,

@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import { loadLastTransaction, transactionsRequested } from '../../../actions/transactions';
+import { loadLastTransaction, loadTransactions } from '../../../actions/transactions';
 import { searchAccount, fetchVotedDelegateInfo } from '../../../actions/search';
 import { updateAccountDelegateStats } from '../../../actions/account';
 import WalletTransactionsV2 from './walletTransactionsV2';
@@ -34,7 +34,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = {
-  transactionsRequested,
+  loadTransactions,
   loadLastTransaction,
   updateAccountDelegateStats,
   searchAccount,

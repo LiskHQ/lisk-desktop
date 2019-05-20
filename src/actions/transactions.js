@@ -44,11 +44,11 @@ export const transactionAdded = data => ({
  *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
  * @param {Number} params.filters.direction - one of values from src/constants/transactionFilters.js
  */
-export const transactionsRequested = ({
+export const loadTransactions = ({
   address, limit, offset, filters,
 }) =>
   (dispatch, getState) => {
-    dispatch(loadingStarted(actionTypes.transactionsRequested));
+    dispatch(loadingStarted(actionTypes.loadTransactions));
     const networkConfig = getState().network;
     getTransactions({
       networkConfig, address, limit, offset, filters,
@@ -72,7 +72,7 @@ export const transactionsRequested = ({
             type: actionTypes.addFilter,
           });
         }
-        dispatch(loadingFinished(actionTypes.transactionsRequested));
+        dispatch(loadingFinished(actionTypes.loadTransactions));
       });
   };
 
@@ -172,7 +172,7 @@ export const loadTransaction = ({ id }) =>
 
 /**
  * This action is used to update transactions from account middleware when balance
- * of the account changes. The difference from transactionsRequested action is that
+ * of the account changes. The difference from loadTransactions action is that
  * this one merges the transactions list with what is already in the store whereas
  * the other one replaces the list.
  *

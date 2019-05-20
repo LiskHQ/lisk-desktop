@@ -61,7 +61,7 @@ describe('WalletTransactions V2 Component', () => {
     transactionsCount: 1000,
     transaction: transactions[0],
     transactions,
-    transactionsRequested: jest.fn(),
+    loadTransactions: jest.fn(),
     loadLastTransaction: jest.fn(),
     updateAccountDelegateStats: jest.fn(),
     addFilter: jest.fn(),
