@@ -186,17 +186,16 @@ describe('Send', () => {
    * Make a transfer which will fail
    * @expect status code and error message are shown
    */
-  // TODO unskip this file once that found the reason why the test fails flacky
-  it.skip('Error message is shown if transfer tx fails', () => {
+  it('Error message is shown if transfer tx fails', () => {
     cy.server({ status: 409 });
-    cy.route('POST', '/api/transactions', { message: 'Test error' }).as('broadcast');
+    cy.route('POST', '/api/transactions', { message: 'Test error' });
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.send);
     cy.get(ss.recipientInput).type(randomAddress);
     cy.get(ss.amountInput).click().type(randomAmount);
+    cy.wait(2000);
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
-    cy.wait('@broadcast');
     cy.get(ss.submittedTransactionMessage).contains('Oops, looks like something went wrong. Please try again.');
   });
 
