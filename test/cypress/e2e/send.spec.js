@@ -193,7 +193,6 @@ describe('Send', () => {
     cy.visit(urls.send);
     cy.get(ss.recipientInput).type(randomAddress);
     cy.get(ss.amountInput).click().type(randomAmount);
-    cy.wait(2000);
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
     cy.get(ss.submittedTransactionMessage).contains('Oops, looks like something went wrong. Please try again.');

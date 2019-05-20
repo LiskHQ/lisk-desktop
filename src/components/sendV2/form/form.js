@@ -24,8 +24,7 @@ class Form extends React.Component {
     super(props);
 
     this.state = {
-      isAmountLoading: false,
-      isReferenceLoading: false,
+      isLoading: false,
       fields: {
         recipient: {
           address: '',
@@ -324,9 +323,9 @@ class Form extends React.Component {
     clearTimeout(this.loaderTimeout);
 
     if (target.name === 'amount') {
-      this.setState({ isAmountLoading: true });
+      this.setState({ isLoading: true });
       this.loaderTimeout = setTimeout(() => {
-        this.setState({ isAmountLoading: false });
+        this.setState({ isLoading: false });
         this.validateAmountAndReference(target.name, target.value);
       }, 300);
     }
@@ -364,9 +363,10 @@ class Form extends React.Component {
     const { t, token, dynamicFees } = this.props;
     const messageMaxLength = 64;
     const byteCount = encodeURI(fields.reference.value).split(/%..|./).length - 1;
-    const isBtnDisabled =
-      fields.recipient.error || fields.amount.error || fields.reference.error ||
-      fields.recipient.value === '' || fields.amount.value === '';
+    const isBtnEnabled =
+      ((fields.recipient.value !== '' && !fields.recipient.error)
+      && (fields.amount.value !== '' && !fields.amount.error)
+      && !fields.reference.error) && !this.state.isLoading;
 
     return (
       <div className={`${styles.wrapper}`}>
@@ -522,7 +522,7 @@ class Form extends React.Component {
         <footer className={`${styles.footer}`}>
           <PrimaryButtonV2
             className={`${styles.confirmButton} btn-submit send-next-button`}
-            disabled={isBtnDisabled}
+            disabled={!isBtnEnabled}
             onClick={this.onGoNext}
           >
             {t('Go to Confirmation')}
