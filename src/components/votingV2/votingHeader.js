@@ -38,13 +38,13 @@ class VotingHeader extends React.Component {
                 <div>{t('My votes after confirmation')}</div>
               </span>
               { votingModeEnabled ?
-              <span className={styles.outlinedBox}>
+              <span className={`${styles.outlinedBox} ${styles.addedVotes}`}>
                <h3>{voteList.length}</h3>
                <span>{t('Added votes')}</span>
               </span> :
               null }
               { unvoteList.length ?
-              <span className={styles.outlinedBox}>
+              <span className={`${styles.outlinedBox} ${styles.removedVotes}`}>
                <h3>{unvoteList.length}</h3>
                <span>{t('Removed votes')}</span>
               </span> :

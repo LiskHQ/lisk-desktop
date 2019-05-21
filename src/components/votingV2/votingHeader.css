@@ -47,6 +47,14 @@
   background-color: var(--color-white);
   border-radius: 3px;
   border: solid 1px var(--color-platinum);
+
+  &.addedVotes {
+    border-color: var(--color-ultramarine-blue);
+  }
+
+  &.removedVotes {
+    border-color: var(--color-burnt-sienna);
+  }
 }
 
 .tooltip {
