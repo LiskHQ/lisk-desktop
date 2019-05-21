@@ -146,14 +146,16 @@ class VotingListViewV2 extends React.Component {
           </div>
         ) : null}
         {votingModeEnabled && getTotalVotesCount(votes) === 0 ?
-          <Tooltip
-            infoIconClassName={styles.infoIconClassName}
-            tooltipClassName={styles.tooltipClassName}
-            className={styles.selectingDelegates}
-            showTooltip={true}
-            title={t('Selecting Delegates')} >
-            <p>{t('Start by Selecting the delegates you’d like to vote for.')}</p>
-          </Tooltip> :
+          <div className={styles.loadingOverlay}>
+            <Tooltip
+              infoIconClassName={styles.infoIconClassName}
+              tooltipClassName={styles.tooltipClassName}
+              className={styles.selectingDelegates}
+              showTooltip={true}
+              title={t('Selecting Delegates')} >
+              <p>{t('Start by Selecting the delegates you’d like to vote for.')}</p>
+            </Tooltip>
+          </div> :
         null}
           <div className={styles.wrapper}>
             <DelegateListV2 t={t} list={filteredList} votes={votes}
