@@ -3,7 +3,10 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './votingV2.css';
 import VotingListViewV2 from '../votingListViewV2';
 import Onboarding from '../toolbox/onboarding/onboarding';
-import illustration from '../../assets/images/illustrations/illustration-welcome-to-lisk-delegates-dark.svg';
+import illustration1 from '../../assets/images/illustrations/illustration-welcome-to-lisk-delegates-dark.svg';
+import illustration2 from '../../assets/images/illustrations/illustration-your-voice-matters-dark.svg';
+import illustration3 from '../../assets/images/illustrations/illustration-get-rewarded-dark.svg';
+import illustration4 from '../../assets/images/illustrations/illustration-expand-your-knowledge-dark.svg';
 
 class VotingV2 extends React.Component {
   constructor() {
@@ -41,16 +44,19 @@ class VotingV2 extends React.Component {
     return [{
       title: t('Welcome to Lisk Delegates!'),
       content: t('Lisk blockchain network is based on a Delegated Proof of Stake consensus algorithm, in which 101 delegates are chosen to run the network by the community.'),
-      illustration,
+      illustration: illustration1,
     }, {
       title: t('Your voice matters'),
       content: t('In this section of Lisk Hub you can vote for up to 101 delegates to run Lisk’s blockchain network and by doing so have a real impact on the Lisk ecosystem.'),
+      illustration: illustration2,
     }, {
       title: t('Get rewarded by the community'),
       content: t('Some delegates offer to share a certain percentage of their earnings from running the network with the users who vote for them. You can find more information on Lisk’s Reddit or Rocketchat.'),
+      illustration: illustration3,
     }, {
       title: t('Expand your knowledge'),
       content: t('Want to dig deeper? We got you covered. You can read more about Lisk’s delgates, voting mechanism and benefits in a dedicated section of Lisk’s help centre.'),
+      illustration: illustration4,
     }];
   }
 
@@ -58,7 +64,6 @@ class VotingV2 extends React.Component {
     const { t } = this.props;
     return (
       <div className={`${grid.row} ${styles.wrapper}`} ref={(el) => { this.root = el; }}>
-        <Onboarding />
         <Onboarding
           slides={this.getOnboardingSlides()}
           finalCallback={console.log}
