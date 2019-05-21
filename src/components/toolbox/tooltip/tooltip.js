@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import styles from './tooltip.css';
 
 class Tooltip extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
 
     this.state = {
-      showTooltip: props.showTooltip,
+      showTooltip: false,
       timeoutObj: null,
       clicked: false,
     };
@@ -64,8 +64,11 @@ class Tooltip extends React.Component {
 
   render() {
     const {
-      title, children, footer, className,
+      title, children, footer, className, alwaysShow,
     } = this.props;
+    const {
+      showTooltip,
+    } = this.state;
     const {
       infoIcon = '', tooltip = '',
     } = this.props.styles || {};
@@ -79,7 +82,7 @@ class Tooltip extends React.Component {
           className={`${styles.infoIcon} ${infoIcon}`}
           onClick={this.handleClick}
           />
-        <div className={`${styles.tooltip} ${this.state.showTooltip ? 'shownTooltip' : ''} ${tooltip} tooltip-window`}>
+        <div className={`${styles.tooltip} ${(alwaysShow || showTooltip) ? 'shownTooltip' : ''} ${tooltip} tooltip-window`}>
           <span className={`${styles.tooltipArrow} tooltip-arrow`}>
             <svg stroke="inherit" fill="currentColor" viewBox="0 0 14 28">
               <path d="M13.307.5S.5 10.488.5 13.896c0 3.409 12.785 12.893 12.785 12.893"/>

@@ -154,7 +154,7 @@ class VotingListViewV2 extends React.Component {
               }}
               tooltipClassName={styles.tooltipClassName}
               className={styles.selectingDelegates}
-              showTooltip={true}
+              alwaysShow={true}
               title={t('Selecting Delegates')} >
               <p>{t('Start by Selecting the delegates you’d like to vote for.')}</p>
             </Tooltip>
