@@ -112,12 +112,18 @@ export const searchTransactions = ({
   actionType = actionTypes.searchTransactions,
 }) =>
   (dispatch, getState) => {
+    // TODO move assembling filters outside of this action in
+    // https://github.com/LiskHQ/lisk-hub/issues/2025
+    const filters = {
+      ...customFilters,
+      direction: filter,
+    };
     const networkConfig = getState().network;
     if (showLoading) dispatch(loadingStarted(actionType));
     /* istanbul ignore else */
     if (networkConfig) {
       getTransactions({
-        networkConfig, address, limit, filter, customFilters,
+        networkConfig, address, limit, filters,
       })
         .then((transactionsResponse) => {
           dispatch({
@@ -125,8 +131,7 @@ export const searchTransactions = ({
               address,
               transactions: transactionsResponse.data,
               count: parseInt(transactionsResponse.meta.count, 10) || 0,
-              filter,
-              customFilters,
+              filters,
             },
             type: actionType,
           });

@@ -1,12 +1,10 @@
-/* eslint-disable max-lines */
-// TODO figure out how to reduce size of this file
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { getAccount, setSecondPassphrase } from '../utils/api/account';
-import { registerDelegate, getDelegate, getAllVotes } from '../utils/api/delegate';
+import { registerDelegate, getDelegate } from '../utils/api/delegate';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
-import { loadTransactionsFinish, transactionsUpdated } from './transactions';
+import { updateTransactions } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
 import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { liskAPIClientUpdate } from './peers';
@@ -80,20 +78,6 @@ export const delegateStatsLoaded = data => ({
 });
 
 /**
- * Gets list of all votes
- */
-export const accountVotesFetched = ({ address }) =>
-  (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    return getAllVotes(liskAPIClient, address).then(({ data }) => {
-      dispatch({
-        type: actionTypes.accountAddVotes,
-        votes: data.votes,
-      });
-    });
-  };
-
-/**
  *
  */
 export const secondPassphraseRegistered = ({ secondPassphrase, account, passphrase }) =>
@@ -111,7 +95,7 @@ export const secondPassphraseRegistered = ({ secondPassphrase, account, passphra
             fee: Fees.setSecondPassphrase,
             type: transactionTypes.setSecondPassphrase,
           },
-          type: actionTypes.transactionAdded,
+          type: actionTypes.addPendingTransaction,
         });
       }).catch((error) => {
         const text = (error && error.message) ? error.message : i18next.t('An error occurred while registering your second passphrase. Please try again.');
@@ -155,7 +139,7 @@ export const delegateRegistered = ({
             fee: Fees.registerDelegate,
             type: transactionTypes.registerDelegate,
           },
-          type: actionTypes.transactionAdded,
+          type: actionTypes.addPendingTransaction,
         });
       })
       .catch((error) => {
@@ -177,36 +161,6 @@ export const loadDelegate = ({ publicKey }) =>
     });
   };
 
-export const loadAccount = ({
-  address,
-  transactionsResponse,
-  isSameAccount,
-}) =>
-  (dispatch, getState) => {
-    const networkConfig = getState().network;
-    getAccount({ networkConfig, address })
-      .then((response) => {
-        let accountDataUpdated = {
-          confirmed: transactionsResponse.data,
-          count: parseInt(transactionsResponse.meta.count, 10),
-          balance: response.balance,
-          address,
-        };
-
-        if (!isSameAccount && response.publicKey) {
-          dispatch(loadDelegate({
-            publicKey: response.publicKey,
-          }));
-        } else if (isSameAccount && response.delegate && response.delegate.username) {
-          accountDataUpdated = {
-            ...accountDataUpdated,
-            delegate: response.delegate,
-          };
-        }
-        dispatch(loadTransactionsFinish(accountDataUpdated));
-      });
-  };
-
 export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocus) =>
   (dispatch) => {
     const hasRecentTransactions = txs => (
@@ -215,15 +169,13 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
     );
 
     if (windowFocus || hasRecentTransactions(transactions)) {
-      const { filter, customFilters } = transactions;
+      const { filters } = transactions;
       const address = transactions.account ? transactions.account.address : account.address;
 
-      dispatch(transactionsUpdated({
+      dispatch(updateTransactions({
         pendingTransactions: transactions.pending,
         address,
-        limit: 25,
-        filter,
-        customFilters,
+        filters,
       }));
     }
   };
