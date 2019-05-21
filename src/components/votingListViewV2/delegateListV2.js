@@ -16,7 +16,7 @@ class DelegateListV2 extends React.Component {
   }
 
   render() {
-    const { votingModeEnabled, votes } = this.props;
+    const { votingModeEnabled, votes, firstTimeVotingActive } = this.props;
     const shouldLoadMore = this.props.list.length > 0 &&
       this.props.list[this.props.list.length - 1].rank % 100 === 0;
     const shouldShowVoteColumn = votingModeEnabled || Object.keys(votes).length > 0;
@@ -32,6 +32,7 @@ class DelegateListV2 extends React.Component {
                 voteStatus={votes[item.username]}
                 votingModeEnabled={votingModeEnabled}
                 shouldShowVoteColumn={shouldShowVoteColumn}
+                shouldHightlightCheckbox={firstTimeVotingActive}
               />)
         }
         {shouldLoadMore ? <Button

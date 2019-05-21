@@ -127,6 +127,7 @@ class VotingListViewV2 extends React.Component {
     const {
       showChangeSummery, isDelegate, voteToggled, votes, t, votingModeEnabled,
     } = this.props;
+    const firstTimeVotingActive = votingModeEnabled && getTotalVotesCount(votes) === 0;
     return (
       <BoxV2>
         <header>
@@ -145,7 +146,7 @@ class VotingListViewV2 extends React.Component {
             <ProgressBar type="linear" mode="indeterminate" theme={styles} className={'loading'}/>
           </div>
         ) : null}
-        {votingModeEnabled && getTotalVotesCount(votes) === 0 ?
+        {firstTimeVotingActive ?
           <div className={styles.loadingOverlay}>
             <Tooltip
               styles={{
@@ -162,6 +163,7 @@ class VotingListViewV2 extends React.Component {
         null}
           <div className={styles.wrapper}>
             <DelegateListV2 t={t} list={filteredList} votes={votes}
+              firstTimeVotingActive={firstTimeVotingActive}
               votingModeEnabled={votingModeEnabled}
               voteToggled={voteToggled} showChangeSummery={showChangeSummery}
               safari={this.state.safariClass} loadMore={this.loadMore.bind(this)} />
