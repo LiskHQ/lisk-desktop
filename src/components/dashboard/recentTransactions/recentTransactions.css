@@ -1,1 +1,5 @@
 @import '../../app/variablesV2.css';
+
+.box {
+  max-width: 431px;
+}

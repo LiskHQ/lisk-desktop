@@ -5,6 +5,7 @@ import RecentTransactions from './recentTransactions';
 
 
 const mapStateToProps = state => ({
+  transactions: state.transactions,
   settings: state.settings,
 });
 

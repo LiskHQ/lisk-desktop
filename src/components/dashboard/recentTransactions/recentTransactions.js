@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Box from '../../boxV3';
+import removeDuplicateTransactions from '../../../utils/transactions';
 import styles from './recentTransactions';
 
 class RecentTransactions extends Component {
@@ -7,11 +8,18 @@ class RecentTransactions extends Component {
     super(props);
 
     this.onTabClick = this.onTabClick.bind(this);
+    this.getLatestTransactions = this.getLatestTransactions.bind(this);
   }
 
   // eslint-disable-next-line class-methods-use-this
   onTabClick(tab) {
     console.log(tab);
+  }
+
+  getLatestTransactions() {
+    const { transactions } = this.props;
+    const latestTx = removeDuplicateTransactions(transactions.pending, transactions.confirmed);
+    return latestTx.length >= 5 ? latestTx.slice(0, 5) : latestTx;
   }
 
   render() {
@@ -21,8 +29,15 @@ class RecentTransactions extends Component {
     return (
       <Box
         title={`Recent ${activeToken} Transactions`}
-        t={t}>
-        <div className={styles.wrapper}>{activeToken}</div>
+        t={t}
+      >
+        <div className={styles.wrapper}>
+          {activeToken}
+          {
+            this.getLatestTransactions().map((tx, index) =>
+              <li key={index}>{tx.type} - {tx.recipientId} - {tx.amount}</li>)
+          }
+        </div>
       </Box>
     );
   }
