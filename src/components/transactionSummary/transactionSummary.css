@@ -1,6 +1,15 @@
 @import '../app/variablesV2.css';
 @import '../app/mixins.css';
 
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  width: 100%;
+}
+
 .wrapper {
   width: 100%;
   display: flex;
@@ -8,6 +17,9 @@
   justify-content: center;
   align-items: flex-start;
   box-sizing: border-box;
+  background: transparent;
+  max-width: 670px;
+  height: auto;
 
   & > footer {
     width: 100%;
