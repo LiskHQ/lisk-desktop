@@ -38,6 +38,8 @@ describe('Summary', () => {
       },
     ],
     transactions: {
+      pending: [],
+      fail: {},
       transactionsCreated: [],
       transactionsCreatedFailed: [],
       broadcastedTransactionsError: [],
@@ -61,8 +63,6 @@ describe('Summary', () => {
         deviceModel: 'Ledger Nano S',
       },
     },
-    failedTransactions: '',
-    pendingTransactions: [],
     fields: {
       recipient: {
         address: '123123L',
@@ -89,6 +89,8 @@ describe('Summary', () => {
     isLoading: false,
     isHardwareWalletConnected: false,
     transactions: {
+      pending: [],
+      failed: '',
       transactionsCreated: [],
       transactionsCreatedFailed: [],
       broadcastedTransactionsError: [],
@@ -134,6 +136,7 @@ describe('Summary', () => {
     expect(props.transactionCreated).toBeCalled();
     wrapper.setProps({
       transactions: {
+        ...props.transactions,
         transactionsCreated: [{
           id: '123123', senderId: '34234L', recipientId: '2342342L', amount: '0.01',
         }],

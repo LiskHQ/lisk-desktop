@@ -7,8 +7,6 @@ import Summary from './summary';
 
 const mapStateToProps = state => ({
   account: state.account,
-  failedTransactions: state.transactions.failed,
-  pendingTransactions: state.transactions.pending,
   transactions: state.transactions,
   token: localStorage.getItem('btc') ? state.settings.token.active : tokenMap.LSK.key,
 });

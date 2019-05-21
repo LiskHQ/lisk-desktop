@@ -84,19 +84,19 @@ class Summary extends React.Component {
   }
 
   checkForHardwareWallet() {
-    const { failedTransactions, pendingTransactions } = this.props;
+    const { transactions } = this.props;
     const { isHardwareWalletConnected, isLoading } = this.state;
 
     const hasPendingTransaction = isHardwareWalletConnected
-      ? pendingTransactions.find(transaction => (
+      ? transactions.pending.find(transaction => (
         transaction.senderId === this.props.account.address &&
         transaction.recipientId === this.props.fields.recipient.address &&
         fromRawLsk(transaction.amount) === this.props.fields.amount.value
       ))
-      : pendingTransactions.length;
+      : transactions.pending.length;
 
     // istanbul ignore else
-    if (isLoading && (hasPendingTransaction || failedTransactions)) {
+    if (isLoading && (hasPendingTransaction || transactions.failed)) {
       this.props.nextStep({
         fields: {
           ...this.props.fields,

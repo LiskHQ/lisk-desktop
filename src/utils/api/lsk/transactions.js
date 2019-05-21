@@ -4,6 +4,8 @@ import { getTimestampFromFirstBlock } from '../../datetime';
 import txFilters from '../../../constants/transactionFilters';
 import { getAPIClient } from './network';
 
+// TODO remove this function as is replaced right now by Create and Broadcast functions
+// Issue ticket #2046
 export const send = (
   amount,
   data,
@@ -101,18 +103,9 @@ export const unconfirmedTransactions = (liskAPIClient, address, limit = 20, offs
   });
 
 
-export const create = ({
-  amount, data, passphrase, recipientId, secondPassphrase, timeOffset,
-}) => new Promise((resolve, reject) => {
+export const create = transaction => new Promise((resolve, reject) => {
   try {
-    const tx = Lisk.transaction.transfer({
-      amount,
-      data,
-      passphrase,
-      recipientId,
-      secondPassphrase,
-      timeOffset,
-    });
+    const tx = Lisk.transaction.transfer(transaction);
     resolve(tx);
   } catch (error) {
     reject(error);

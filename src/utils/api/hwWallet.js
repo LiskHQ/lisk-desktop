@@ -324,7 +324,7 @@ export const voteWithHW = (activePeer, account, votedList, unvotedList, pin = nu
  * @param {String} pin 
  */
 const transactionSigned = async (transaction, account, pin) => {
-  let signature;
+  let finalTx;
   const index = (typeof pin === 'string' && pin !== '')
     ? calculateSecondPassphraseIndex(account.hwInfo.derivationIndex, pin)
     : account.hwInfo.derivationIndex;
@@ -340,13 +340,12 @@ const transactionSigned = async (transaction, account, pin) => {
   };
 
   try {
-    signature = await platformHendler(command);
+    const signature = await platformHendler(command);
+    const signedTx = { ...transaction, signature };
+    finalTx = { ...signedTx, id: calculateTxId(signedTx) };
   } catch (err) {
     throw err;
   }
-  
-  const signedTx = { ...transaction, signature };
-  const finalTx = { ...signedTx, id: calculateTxId(signedTx) };
 
   return finalTx;
 };
@@ -357,16 +356,12 @@ const transactionSigned = async (transaction, account, pin) => {
  * @param {Object} data 
  * @param {String} pin 
  */
-export const create = (account, data, pin = null) => {
-  return new Promise(async (resolve, reject) => {
-    const txObject = createSendTX(account.publicKey, data.recipientId, data.amount, data.data);
-    const [error, tx] = await to(transactionSigned(txObject, account, pin));
-
-    if (error) reject(error);
-
-    resolve(tx);
-  });
-}
+export const create = (account, data, pin = null) => new Promise(async (resolve, reject) => {
+  const txObject = createSendTX(account.publicKey, data.recipientId, data.amount, data.data);
+  const [error, tx] = await to(transactionSigned(txObject, account, pin));
+  if (error) reject(error);
+  resolve(tx);
+});
 
 export default {
   create,

@@ -164,21 +164,6 @@ describe('actions: transactions', () => {
   });
 
   describe('sent', () => {
-    getState = () => ({
-      peers: { liskAPIClient: {} },
-      transactions: { filter: txFilters.all },
-      network: { liskAPIClient: {} },
-      settings: {
-        token: {
-          active: 'LSK',
-        },
-      },
-      account: {
-        publicKey: 'test_public-key',
-        address: 'test_address',
-        loginType: 0,
-      },
-    });
     const data = {
       recipientId: '15833198055097037957L',
       amount: 100,
@@ -193,6 +178,7 @@ describe('actions: transactions', () => {
       },
       data: 'abc',
     };
+
     const actionFunction = sent(data);
 
     beforeEach(() => {

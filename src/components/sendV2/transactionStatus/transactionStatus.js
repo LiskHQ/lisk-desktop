@@ -89,18 +89,18 @@ class TransactionStatus extends React.Component {
   getMessagesDetails() {
     const { transactions, fields } = this.props;
 
-    const isHardwareWalletOnError = fields.isHardwareWalletConnected && fields.hwTransactionStatus === 'error';
+    const isHardwareWalletError = fields.isHardwareWalletConnected && fields.hwTransactionStatus === 'error';
     const messages = statusMessage(this.props.t);
     let messageDetails = !transactions.broadcastedTransactionsError.length
       ? messages.success
       : messages.error;
 
     if (fields.isHardwareWalletConnected) {
-      messageDetails = isHardwareWalletOnError ? messages.hw : messages.success;
+      messageDetails = isHardwareWalletError ? messages.hw : messages.success;
     }
 
     return {
-      isHardwareWalletOnError,
+      isHardwareWalletError,
       messageDetails,
     };
   }
@@ -120,9 +120,9 @@ class TransactionStatus extends React.Component {
   render() {
     const { transactions, fields, t } = this.props;
     const { isFollowing, followButtonLabel } = this.followAccountInformation();
-    const { isHardwareWalletOnError, messageDetails } = this.getMessagesDetails();
+    const { isHardwareWalletError, messageDetails } = this.getMessagesDetails();
     const token = getTokenFromAddress(fields.recipient.address);
-    const isShowFollowingAccount = !transactions.broadcastedTransactionsError.length
+    const shouldShowFollowingAccount = !transactions.broadcastedTransactionsError.length
       && !fields.recipient.following;
 
     return (
@@ -137,12 +137,12 @@ class TransactionStatus extends React.Component {
         <footer className={`${styles.footer} transaction-status-footer`}>
           <div>
             {
-              isHardwareWalletOnError || transactions.broadcastedTransactionsError.length
-              ? <SecondaryButtonV2 label={t('Retry')} className={`${styles.btn} retry`} onClick={() => this.onRetry()} />
+              isHardwareWalletError || transactions.broadcastedTransactionsError.length
+              ? <SecondaryButtonV2 label={t('Retry')} className={`${styles.btn} retry`} onClick={this.onRetry} />
               : null
             }
             {
-              isShowFollowingAccount
+              shouldShowFollowingAccount
               ? (<div
                   className={`${styles.followBtn} following-container`} ref={(node) => { this.followContainerRef = node; }}>
                   <SecondaryButtonV2

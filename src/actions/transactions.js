@@ -381,20 +381,15 @@ export const broadcastedTransactionSuccess = data => ({
  */
 // eslint-disable-next-line max-statements
 export const transactionCreated = data => async (dispatch, getState) => {
-  let error;
-  let tx;
-  const state = getState();
-  const { account, settings } = state;
+  const { account, settings, ...state } = getState();
   const timeOffset = getTimeOffset(state);
   const activeToken = localStorage.getItem('btc') // TODO: Refactor after enabling BTC
     ? settings.token.active
     : tokenMap.LSK.key;
 
-  if (account.loginType === loginType.normal) {
-    [error, tx] = await to(transactionsAPI.create(activeToken, { ...data, timeOffset }));
-  } else {
-    [error, tx] = await to(hwAPI.create(account, data));
-  }
+  const [error, tx] = account.loginType === loginType.normal
+    ? await to(transactionsAPI.create(activeToken, { ...data, timeOffset }))
+    : await to(hwAPI.create(account, data));
 
   if (error) return dispatch(transactionCreatedError(error));
   return dispatch(transactionCreatedSuccess(tx));
