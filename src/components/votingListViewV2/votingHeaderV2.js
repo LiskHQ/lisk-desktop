@@ -9,36 +9,37 @@ import voteFilters from './../../constants/voteFilters';
 // import Fees from './../../constants/fees';
 // import routes from './../../constants/routes';
 import Piwik from '../../utils/piwik';
+import Tabs from '../toolbox/tabs';
 
 
 class VotingHeadeV2 extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       query: '',
       votesList: [],
       activeFilter: voteFilters.all,
     };
-  }
-
-  componentWillMount() {
+    const { t } = props;
     this.filters = [
       {
-        name: this.props.t('All delegates'),
+        name: t('All delegates'),
         value: voteFilters.all,
         className: 'filter-all',
       },
       {
-        name: this.props.t('Voted'),
+        name: t('Voted'),
         value: voteFilters.voted,
         className: 'filter-voted',
       },
       {
-        name: this.props.t('Not voted'),
+        name: t('Not voted'),
         value: voteFilters.notVoted,
         className: 'filter-not-voted',
       },
     ];
+
+    this.filterVotes = this.filterVotes.bind(this);
   }
 
   search({ nativeEvent }) {
@@ -61,6 +62,7 @@ class VotingHeadeV2 extends React.Component {
   }
 
   filterVotes(filter) {
+    console.log('filter', filter);
     Piwik.trackingEvent('VoatingListView', 'button', 'Filter votes');
     this.setState({ activeFilter: filter.value });
     this.props.setActiveFilter(filter.value);
@@ -72,34 +74,22 @@ class VotingHeadeV2 extends React.Component {
 
   render() {
     const { t } = this.props;
+    const { activeFilter } = this.state;
 
     return (
       <div>
         <header className={`${styles.header} ${styles[this.state.headerPosition]}`}>
           <div>
             <div className={styles.container}>
-              <ul className={`${styles.filters} ${this.props.showChangeSummery ? styles.disabled : ''}`}>
-                {this.filters.map((filter, i) => (
-                  <li key={i} className={`transaction-filter-item ${filter.className} ${styles.filter} ${(this.state.activeFilter === filter.value) ? styles.active : ''}`}
-                    onClick={this.filterVotes.bind(this, filter)}>
-                    {filter.name}
-                  </li>
-                ))}
-              </ul>
-                <div className={`${styles.search} ${styles.items} ${styles.filter} search`}>
-                  <input type='text'
-                    name='query'
-                    className={`search ${styles.desktopInput} ${this.state.query.length > 0 ? styles.dirty : ''} `}
-                    value={this.state.query}
-                    onChange={this.search.bind(this)}
-                    placeholder={t('Filter by name...')}/>
-                  <input type='text'
-                    name='query'
-                    className={`${styles.mobileInput} ${this.state.query.length > 0 ? styles.dirty : ''} `}
-                    value={this.state.query}
-                    onChange={this.search.bind(this)}
-                    placeholder={t('Search')}/>
-                </div>
+              <Tabs tabs={this.filters} active={activeFilter} onClick={this.filterVotes} />
+              <div className={`${styles.search} ${styles.items} ${styles.filter} search`}>
+                <input type='text'
+                  name='query'
+                  className={`search ${styles.desktopInput} ${this.state.query.length > 0 ? styles.dirty : ''} `}
+                  value={this.state.query}
+                  onChange={this.search.bind(this)}
+                  placeholder={t('Filter by name...')}/>
+              </div>
             </div>
           </div>
           <Waypoint onLeave={this.markOnOffCanvas.bind(this, 'offCanvas')} threshold={200}
