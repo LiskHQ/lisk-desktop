@@ -32,12 +32,12 @@ class DelegateRowV2 extends React.Component {
 
   render() {
     const {
-      data, voteStatus, voteToggled, className, votingModeEnabled,
+      data, voteStatus, voteToggled, className, votingModeEnabled, shouldShowVoteColumn,
     } = this.props;
 
     return (
       <TableRow className={`delegate-row ${className} ${grid.row} ${styles.row} ${setRowClass(voteStatus)}`}>
-        <div className={`${grid['col-md-1']} ${grid['col-xs-2']}
+        {shouldShowVoteColumn ? <div className={`${grid['col-md-1']} ${grid['col-xs-2']}
           ${styles.leftText} ${styles.checkBoxContainer}`}>
           <Checkbox styles={`${styles} ${styles.fakeCheckbox}`}
             toggle={voteToggled}
@@ -46,7 +46,7 @@ class DelegateRowV2 extends React.Component {
             data={data}
             votingModeEnabled={votingModeEnabled}
           />
-        </div>
+        </div> : null}
         <div className={`${grid['col-md-1']} ${grid['col-xs-2']} delegate-rank`}>#{data.rank}</div>
         <div className={`${grid['col-md-3']} ${grid['col-xs-5']} delegate-info`}>
           <AccountVisual
@@ -58,7 +58,7 @@ class DelegateRowV2 extends React.Component {
             <span className={`delegate-id ${styles.address}`}>{data.account.address}</span>
           </div>
         </div>
-        <div className={`${grid['col-md-3']} ${grid['col-xs-3']} ${styles.productivity} delegate-productivity`}>{data.productivity} %</div>
+        <div className={`${grid[shouldShowVoteColumn ? 'col-md-3' : 'col-md-4']} ${grid['col-xs-3']} ${styles.productivity} delegate-productivity`}>{data.productivity} %</div>
         <div className={`${grid['col-md-4']} ${styles.weight} vote-weight`}>
           <LiskAmount val={data.vote} /> {this.props.t(' LSK')}
         </div>
