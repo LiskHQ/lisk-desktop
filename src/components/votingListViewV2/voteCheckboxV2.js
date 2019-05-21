@@ -5,7 +5,7 @@ import svgIcons from '../../utils/svgIcons';
 import CheckBox from '../toolbox/checkBox';
 
 const VoteCheckboxV2 = ({
-  data, status = {}, toggle, votingModeEnabled, accent,
+  data, status = {}, toggle, votingModeEnabled, accent, className,
 }) => {
   const {
     username, rank, productivity, account,
@@ -16,7 +16,7 @@ const VoteCheckboxV2 = ({
     <Spinner /> :
     <React.Fragment> { votingModeEnabled ?
       <CheckBox
-        className='vote-checkbox'
+        className={`${className} vote-checkbox`}
         checked={status.unconfirmed}
         added={added}
         accent={accent}

@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './votingListViewV2.css';
-import Checkbox from './voteCheckboxV2';
+import VoteCheckboxV2 from './voteCheckboxV2';
 import TableRow from '../toolbox/table/tableRow';
 import AccountVisual from '../accountVisual';
 import LiskAmount from '../liskAmount';
@@ -42,7 +42,8 @@ class DelegateRowV2 extends React.Component {
       <TableRow className={`delegate-row ${className} ${grid.row} ${styles.row} ${setRowClass(voteStatus)}`}>
         {shouldShowVoteColumn ? <div className={`${grid['col-md-1']} ${grid['col-xs-2']}
           ${styles.leftText} ${styles.checkBoxContainer}`}>
-          <Checkbox styles={`${styles} ${styles.fakeCheckbox}`}
+          <VoteCheckboxV2
+            className={styles.checkbox}
             accent={shouldHightlightCheckbox}
             toggle={voteToggled}
             value={data.selected}
