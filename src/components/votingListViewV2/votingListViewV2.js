@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import VotingHeaderV2 from './votingHeaderV2';
 import styles from './votingListViewV2.css';
 import voteFilters from './../../constants/voteFilters';
@@ -6,6 +6,7 @@ import DelegateListV2 from './delegateListV2';
 import ProgressBar from '../toolbox/progressBar/progressBar';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import { getTotalVotesCount } from './../../utils/voting';
+import BoxV2 from '../boxV2';
 
 // Create a new Table component injecting Head and Row
 class VotingListViewV2 extends React.Component {
@@ -106,15 +107,16 @@ class VotingListViewV2 extends React.Component {
   }
 
   getEmptyStateMessage(filteredList) {
+    const { t } = this.props;
     let message = '';
 
     if (!this.isInitial && this.props.delegates.length === 0) {
-      message = 'No delegates found.';
+      message = t('No delegates found.');
     } else if (this.state.activeFilter === voteFilters.voted &&
       getTotalVotesCount(this.props.votes) === 0) {
-      message = 'You have not voted yet.';
+      message = t('You have not voted yet.');
     } else if (this.query !== '' && Object.keys(filteredList).length === 0) {
-      message = 'No search result in given criteria.';
+      message = t('No search result in given criteria.');
     }
 
     return message;
@@ -126,7 +128,18 @@ class VotingListViewV2 extends React.Component {
       showChangeSummery, isDelegate, voteToggled, votes, t, votingModeEnabled,
     } = this.props;
     return (
-      <Fragment>
+      <BoxV2>
+        <header>
+          <VotingHeaderV2
+            t={t}
+            account={this.props.account}
+            setActiveFilter={this.setActiveFilter.bind(this)}
+            showChangeSummery={showChangeSummery}
+            isDelegate={isDelegate}
+            voteToggled={voteToggled}
+            search={ value => this.search(value) }
+          />
+        </header>
         {this.state.isLoading ? (
           <div className={styles.loadingOverlay}>
             <ProgressBar type="linear" mode="indeterminate" theme={styles} className={'loading'}/>
@@ -142,14 +155,6 @@ class VotingListViewV2 extends React.Component {
             <p>{t('Start by Selecting the delegates you’d like to vote for.')}</p>
           </Tooltip> :
         null}
-        <VotingHeaderV2
-          account={this.props.account}
-          setActiveFilter={this.setActiveFilter.bind(this)}
-          showChangeSummery={showChangeSummery}
-          isDelegate={isDelegate}
-          voteToggled={voteToggled}
-          search={ value => this.search(value) }
-        />
           <div className={styles.wrapper}>
             <DelegateListV2 t={t} list={filteredList} votes={votes}
               votingModeEnabled={votingModeEnabled}
@@ -162,7 +167,7 @@ class VotingListViewV2 extends React.Component {
                 {t(this.getEmptyStateMessage(filteredList))}
               </div> : null
           }
-    </Fragment>
+    </BoxV2>
     );
   }
 }
