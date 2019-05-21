@@ -1,10 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './votingListViewV2.css';
 import VoteCheckboxV2 from './voteCheckboxV2';
 import TableRow from '../toolbox/table/tableRow';
 import AccountVisual from '../accountVisual';
 import LiskAmount from '../liskAmount';
+import routes from '../../constants/routes';
 
 const setRowClass = (voteStatus) => {
   if (!voteStatus) {
@@ -62,14 +64,17 @@ class DelegateRowV2 extends React.Component {
         </div> : null}
         <div className={`${grid['col-md-1']} ${grid['col-xs-2']} delegate-rank`}>#{data.rank}</div>
         <div className={`${grid['col-md-3']} ${grid['col-xs-5']} delegate-info`}>
-          <AccountVisual
-            className={`${styles.avatar} tx-avatar`}
-            address={data.account.address}
-            size={36} />
-          <div className={styles.accountInfo}>
-            <span className={`delegate-name ${styles.title}`}>{data.username}</span>
-            <span className={`delegate-id ${styles.address}`}>{data.account.address}</span>
-          </div>
+          <Link className={styles.delegateLink}
+            to={`${routes.accounts.pathPrefix}${routes.accounts.path}/${data.account.address}`}>
+            <AccountVisual
+              className={`${styles.avatar} tx-avatar`}
+              address={data.account.address}
+              size={36} />
+            <div className={styles.accountInfo}>
+              <span className={`delegate-name ${styles.title}`}>{data.username}</span>
+              <span className={`delegate-id ${styles.address}`}>{data.account.address}</span>
+            </div>
+          </Link>
         </div>
         <div className={`${grid[shouldShowVoteColumn ? 'col-md-3' : 'col-md-4']} ${grid['col-xs-3']} ${styles.productivity} delegate-productivity`}>{data.productivity} %</div>
         <div className={`${grid['col-md-4']} ${styles.weight} vote-weight`}>
