@@ -27,42 +27,6 @@
   }
 }
 
-.checkbox {
-  z-index: calc(var(--overlay-index) + 2);
-}
-
-.checkBoxContainer {
-  & > input {
-    display: none;
-
-    &:checked + .fakeCheckbox {
-      background-color: var(--color-ultramarine-blue);
-      border-color: var(--color-ultramarine-blue);
-    }
-  }
-
-  & .fakeCheckbox {
-    align-items: center;
-    background-color: var(--color-white);
-    border: 1px solid var(--dark-border-color);
-    border-radius: var(--border-radius-standard);
-    box-sizing: border-box;
-    color: var(--color-white);
-    display: flex;
-    justify-content: center;
-    height: 16px;
-    transition:
-      background var(--animation-speed-fast) linear,
-      border var(--animation-speed-fast) linear,
-      color var(--animation-speed-fast) linear;
-    width: 16px;
-
-    & > .icon {
-      font-size: inherit;
-    }
-  }
-}
-
 .wrapper {
   width: 100%;
 }
@@ -245,6 +209,7 @@
 }
 
 .checkbox {
+  z-index: calc(var(--overlay-index) + 2);
   padding: 0px;
 }
 

@@ -40,8 +40,7 @@ class DelegateRowV2 extends React.Component {
 
     return (
       <TableRow className={`delegate-row ${className} ${grid.row} ${styles.row} ${setRowClass(voteStatus)}`}>
-        {shouldShowVoteColumn ? <div className={`${grid['col-md-1']} ${grid['col-xs-2']}
-          ${styles.leftText} ${styles.checkBoxContainer}`}>
+        {shouldShowVoteColumn ? <div className={`${grid['col-md-1']} ${grid['col-xs-2']} ${styles.leftText}`}>
           <VoteCheckboxV2
             className={styles.checkbox}
             accent={shouldHightlightCheckbox}
