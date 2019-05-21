@@ -284,14 +284,14 @@
   border-radius: 3px;
   background-color: var(--color-highlight-checkboxes);
   z-index: 1;
-}
 
-.tooltipClassName {
-  top: 220px;
-}
+  & .tooltipClass {
+    top: 220px;
+  }
 
-.infoIconClassName {
-  display: none;
+  & .infoIcon {
+    display: none;
+  }
 }
 
 @media (--xLarge-viewport) {

@@ -148,7 +148,10 @@ class VotingListViewV2 extends React.Component {
         {votingModeEnabled && getTotalVotesCount(votes) === 0 ?
           <div className={styles.loadingOverlay}>
             <Tooltip
-              infoIconClassName={styles.infoIconClassName}
+              styles={{
+                infoIcon: styles.infoIcon,
+                tooltip: styles.tooltipClass,
+              }}
               tooltipClassName={styles.tooltipClassName}
               className={styles.selectingDelegates}
               showTooltip={true}
