@@ -27,7 +27,7 @@ const getTokenFromTransactionId = id => (
 
 export const getTransactions = ({
   offset = 0,
-  limit = 25,
+  limit = 30,
   token,
   ...params
 }) => (

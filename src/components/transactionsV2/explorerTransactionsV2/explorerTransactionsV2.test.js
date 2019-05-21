@@ -67,7 +67,7 @@ describe('ExplorerTransactions V2 Component', () => {
     transaction: transactions[0],
     searchAccount: jest.fn(),
     searchTransactions: jest.fn(),
-    transactionsFilterSet: jest.fn(),
+    loadTransactions: jest.fn(),
     searchMoreTransactions: jest.fn(),
     addFilter: jest.fn(),
     loading: [],

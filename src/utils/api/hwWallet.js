@@ -257,7 +257,13 @@ export const getHWAccountInfo = async (activePeer, deviceId, loginType, accountI
   let error;
   let publicKey;
 
-  [error, publicKey] = await to(getHWPublicKeyFromIndex(deviceId, loginType, accountIndex));
+  if (loginType === loginTypes.ledgerNano) {
+    publicKey = await getHWPublicKeyFromIndex(deviceId, loginType, accountIndex);
+    error = publicKey ? '' : this.props.t('No Public Key');
+  } else {
+    [error, publicKey] = await to(getHWPublicKeyFromIndex(deviceId, loginType, accountIndex));
+  }
+
   if (error) {
     throw error;
   }

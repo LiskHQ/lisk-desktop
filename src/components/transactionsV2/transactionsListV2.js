@@ -33,7 +33,7 @@ class TransactionsListV2 extends React.Component {
     };
 
     const isLoading = loading.filter(type =>
-      [actionTypes.transactionsRequested, actionTypes.transactionsFilterSet]
+      [actionTypes.loadTransactions, actionTypes.loadTransactions]
         .includes(type)).length > 0;
 
     return <div className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} ${isLoading ? styles.isLoading : ''} transaction-results`}>

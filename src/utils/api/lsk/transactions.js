@@ -36,42 +36,36 @@ const parseTxFilters = (filter = txFilters.all, address) => ({
   [txFilters.all]: { senderIdOrRecipientId: address },
 }[filter]);
 
-const processParam = (customFilters, filtersKey, paramsKey, transformFn) => ({
-  ...(customFilters[filtersKey] && customFilters[filtersKey] !== '' ? {
-    [paramsKey]: transformFn(customFilters[filtersKey]),
+const processParam = (filters, filtersKey, paramsKey, transformFn) => ({
+  ...(filters[filtersKey] && filters[filtersKey] !== '' ? {
+    [paramsKey]: transformFn(filters[filtersKey]),
   } : {}),
 });
 
-const parseCustomFilters = customFilters => ({
-  ...processParam(customFilters, 'message', 'data', value => `%${value}%`),
-  ...processParam(customFilters, 'dateFrom', 'fromTimestamp', (value) => {
+const parseCustomFilters = filters => ({
+  ...processParam(filters, 'message', 'data', value => `%${value}%`),
+  ...processParam(filters, 'dateFrom', 'fromTimestamp', (value) => {
     const fromTimestamp = getTimestampFromFirstBlock(value, 'DD.MM.YY');
     return fromTimestamp > 0 ? fromTimestamp : 0;
   }),
-  ...processParam(customFilters, 'dateTo', 'toTimestamp', (value) => {
+  ...processParam(filters, 'dateTo', 'toTimestamp', (value) => {
     const toTimestamp = getTimestampFromFirstBlock(value, 'DD.MM.YY', { inclusive: true });
     return toTimestamp > 1 ? toTimestamp : 1;
   }),
-  ...processParam(customFilters, 'amountFrom', 'minAmount', toRawLsk),
-  ...processParam(customFilters, 'amountTo', 'maxAmount', toRawLsk),
+  ...processParam(filters, 'amountFrom', 'minAmount', toRawLsk),
+  ...processParam(filters, 'amountTo', 'maxAmount', toRawLsk),
 });
 
 export const getTransactions = ({
-  address,
-  customFilters = {},
-  filter = txFilters.all,
-  limit,
-  networkConfig,
-  offset,
-  sort = 'timestamp:desc',
-  type = undefined,
+  networkConfig, address, limit, offset, type = undefined,
+  sort = 'timestamp:desc', filters = {},
 }) => {
   const params = {
     limit,
     offset,
     sort,
-    ...parseTxFilters(filter, address),
-    ...parseCustomFilters(customFilters),
+    ...parseTxFilters(filters.direction, address),
+    ...parseCustomFilters(filters),
     ...(type !== undefined ? { type } : {}),
   };
 

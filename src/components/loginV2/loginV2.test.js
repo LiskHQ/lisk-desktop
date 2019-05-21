@@ -113,17 +113,6 @@ describe('LoginV2', () => {
     //   expect(wrapper.find('ThemedTBPrimaryButton').at(0)).to.have.className('connect-button');
     // });
 
-    it('Should show hardware login if hardware is connected and should go to hwWallet on click', () => {
-      wrapper.setProps({
-        children: React.cloneElement(wrapper.props().children, {
-          settings: { isHarwareWalletConnected: true },
-        }),
-      });
-      expect(wrapper).to.have.exactly(1).descendants('.hardwareHolder');
-      wrapper.find('.hardwareWalletLink').simulate('click');
-      expect(props.history.push).to.have.been.calledWith(`${routes.hwWallet.path}`);
-    });
-
     it('Should not render header if route is not /login', () => {
       wrapper.setProps({
         children: React.cloneElement(wrapper.props().children, {

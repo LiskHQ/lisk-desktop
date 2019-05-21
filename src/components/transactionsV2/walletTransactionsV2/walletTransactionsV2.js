@@ -62,10 +62,11 @@ class WalletTransactionsV2 extends React.Component {
   onInit() {
     this.props.loadLastTransaction(this.props.account.address);
 
-    this.props.transactionsFilterSet({
+    this.props.loadTransactions({
       address: this.props.account.address,
-      limit: 30,
-      filter: txFilters.all,
+      filters: {
+        direction: txFilters.all,
+      },
     });
 
     this.props.addFilter({
@@ -75,12 +76,13 @@ class WalletTransactionsV2 extends React.Component {
   }
   /* istanbul ignore next */
   onLoadMore() {
-    this.props.transactionsRequested({
+    this.props.loadTransactions({
       address: this.props.address,
-      limit: 30,
       offset: this.props.transactions.length,
-      filter: this.props.activeFilter,
-      customFilters: this.state.activeCustomFilters,
+      filters: {
+        direction: this.props.activeFilter,
+        ...this.state.customFilters,
+      },
     });
   }
   /*
@@ -92,11 +94,12 @@ class WalletTransactionsV2 extends React.Component {
   onFilterSet(filter) {
     this.setState({ filter });
     if (filter <= 2) {
-      this.props.transactionsFilterSet({
+      this.props.loadTransactions({
         address: this.props.address,
-        limit: 30,
-        filter,
-        customFilters: this.state.activeCustomFilters,
+        filters: {
+          direction: filter,
+          ...this.state.customFilters,
+        },
       });
     } else {
       this.props.addFilter({
@@ -114,11 +117,12 @@ class WalletTransactionsV2 extends React.Component {
 
   /* istanbul ignore next */
   saveFilters(customFilters) {
-    this.props.transactionsFilterSet({
+    this.props.loadTransactions({
       address: this.props.address,
-      limit: 30,
-      filter: this.props.activeFilter,
-      customFilters,
+      filters: {
+        direction: this.props.activeFilter,
+        ...customFilters,
+      },
     });
     this.setState({ activeCustomFilters: customFilters, customFilters });
   }

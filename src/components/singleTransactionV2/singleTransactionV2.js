@@ -22,7 +22,7 @@ class SingleTransactionV2 extends React.Component {
     };
 
     if (props.peers.liskAPIClient) {
-      props.loadTransaction({
+      props.loadSingleTransaction({
         id: props.match.params.id,
       });
     }
@@ -33,7 +33,7 @@ class SingleTransactionV2 extends React.Component {
   shouldComponentUpdate(nextProps) {
     if (nextProps.peers.liskAPIClient !== this.props.peers.liskAPIClient
       || nextProps.match.params.id !== this.props.match.params.id) {
-      this.props.loadTransaction({
+      this.props.loadSingleTransaction({
         id: nextProps.match.params.id,
       });
       return false;

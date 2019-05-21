@@ -64,7 +64,7 @@ describe('Utils: Transactions API', () => {
 
   describe('getTransactions', () => {
     it('should call transactions.get for incoming promise', () => {
-      getTransactions({ networkConfig, address, filter: txFilters.incoming });
+      getTransactions({ networkConfig, address, filters: { direction: txFilters.incoming } });
 
       expect(apiClient.transactions.get).toHaveBeenCalledWith(expect.objectContaining({
         recipientId: address,
@@ -72,7 +72,7 @@ describe('Utils: Transactions API', () => {
     });
 
     it('should call transactions.get for outgoing promise', () => {
-      getTransactions({ apiClient, address, filter: txFilters.outgoing });
+      getTransactions({ apiClient, address, filters: { direction: txFilters.outgoing } });
 
       expect(apiClient.transactions.get).toHaveBeenCalledWith(expect.objectContaining({
         senderId: address,
@@ -83,7 +83,9 @@ describe('Utils: Transactions API', () => {
       const params = {
         apiClient,
         address,
-        filter: txFilters.incoming,
+        filters: {
+          direction: txFilters.incoming,
+        },
         type: 2,
       };
 
@@ -101,8 +103,8 @@ describe('Utils: Transactions API', () => {
       const params = {
         apiClient,
         address: '123L',
-        filter: txFilters.outgoing,
-        customFilters: {
+        filters: {
+          direction: txFilters.outgoing,
           message: 'test',
           dateTo: '16.12.16',
           dateFrom: '16.10.16',

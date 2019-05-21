@@ -31,13 +31,13 @@ describe('Reducer: transactions(state, action)', () => {
     timestamp: 33505743,
   }];
 
-  it('should prepend action.data to state.pending if action.type = actionTypes.transactionAdded', () => {
+  it('should prepend action.data to state.pending if action.type = actionTypes.addPendingTransaction', () => {
     const state = {
       ...defaultState,
       pending: [mockTransactions[1]],
     };
     const action = {
-      type: actionTypes.transactionAdded,
+      type: actionTypes.addPendingTransaction,
       data: mockTransactions[0],
     };
     const changedState = transactions(state, action);
@@ -90,25 +90,7 @@ describe('Reducer: transactions(state, action)', () => {
     expect(pendingTransactionsFiltered).toEqual(stateWithNoPendingTransactions);
   });
 
-  it('should concat action.data to state.confirmed if action.type = actionTypes.transactionsLoaded', () => {
-    const state = { ...defaultState };
-    const action = {
-      type: actionTypes.transactionsLoaded,
-      data: {
-        confirmed: mockTransactions,
-        count: mockTransactions.length,
-      },
-    };
-    const expectedState = {
-      ...defaultState,
-      confirmed: action.data.confirmed,
-      count: action.data.count,
-    };
-    const changedState = transactions(state, action);
-    expect(changedState).toEqual(expectedState);
-  });
-
-  it('should prepend newer transactions from action.data to state.confirmed and remove from state.pending if action.type = actionTypes.transactionsUpdated', () => {
+  it('should prepend newer transactions from action.data to state.confirmed and remove from state.pending if action.type = actionTypes.updateTransactions', () => {
     const state = {
       ...defaultState,
       pending: [mockTransactions[0]],
@@ -116,7 +98,7 @@ describe('Reducer: transactions(state, action)', () => {
       count: mockTransactions[1].length + mockTransactions[2].length,
     };
     const action = {
-      type: actionTypes.transactionsUpdated,
+      type: actionTypes.updateTransactions,
       data: {
         confirmed: mockTransactions,
         count: mockTransactions.length,
@@ -130,12 +112,12 @@ describe('Reducer: transactions(state, action)', () => {
     });
   });
 
-  it('should action.data to state.confirmed if state.confirmed is empty and action.type = actionTypes.transactionsUpdated', () => {
+  it('should action.data to state.confirmed if state.confirmed is empty and action.type = actionTypes.updateTransactions', () => {
     const state = {
       ...defaultState,
     };
     const action = {
-      type: actionTypes.transactionsUpdated,
+      type: actionTypes.updateTransactions,
       data: {
         confirmed: mockTransactions,
         count: 3,
@@ -167,15 +149,15 @@ describe('Reducer: transactions(state, action)', () => {
     });
   });
 
-  it('should reduce transactions when filtered', () => {
+  it('should reduce transactions when loaded with filters', () => {
     const state = {
       ...defaultState,
     };
     const data = {
       confirmed: mockTransactions,
       count: mockTransactions.length,
-      filter: txFilter.all,
-      customFilters: {
+      filters: {
+        direction: txFilter.all,
         dateFrom: '1',
         dateTo: '2',
         amountFrom: '3',
@@ -183,7 +165,7 @@ describe('Reducer: transactions(state, action)', () => {
         message: '5',
       },
     };
-    const action = { type: actionTypes.transactionsFiltered, data };
+    const action = { type: actionTypes.transactionsLoaded, data };
     const changedState = transactions(state, action);
     expect(changedState).toEqual({
       ...defaultState,
@@ -191,30 +173,19 @@ describe('Reducer: transactions(state, action)', () => {
     });
   });
 
-  it('should reduce transactions and account when loading Transactions', () => {
+  it('should reduce transactions when loaded without filters', () => {
     const state = {
       ...defaultState,
     };
     const data = {
       confirmed: mockTransactions,
       count: mockTransactions.length,
-      balance: 100,
-      address: '123L',
-      delegate: { username: 'test1' },
     };
-    const action = { type: actionTypes.transactionsLoadFinish, data };
+    const action = { type: actionTypes.transactionsLoaded, data };
     const changedState = transactions(state, action);
-
     expect(changedState).toEqual({
       ...defaultState,
-      confirmed: data.confirmed,
-      count: data.count,
-      account: {
-        address: data.address,
-        balance: data.balance,
-        delegate: data.delegate,
-      },
-      filter: txFilter.all,
+      ...data,
     });
   });
 
@@ -224,7 +195,7 @@ describe('Reducer: transactions(state, action)', () => {
       pending: null,
       confirmed: null,
       count: null,
-      customFilters: null,
+      filters: null,
     };
 
     const expectedState = {
@@ -232,7 +203,8 @@ describe('Reducer: transactions(state, action)', () => {
       pending: [],
       confirmed: [],
       count: null,
-      customFilters: {
+      filters: {
+        direction: txFilter.all,
         dateFrom: '',
         dateTo: '',
         amountFrom: '',
