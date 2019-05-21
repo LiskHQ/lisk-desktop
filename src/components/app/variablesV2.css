@@ -139,7 +139,7 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Animation
   *************************/
-  --animation-speed-faster: 150ms;
+  --animation-speed-fastest: 150ms;
   --animation-speed-fast: 250ms;
   --animation-speed-standard: 500ms;
   --animation-speed-slow: 700ms;
