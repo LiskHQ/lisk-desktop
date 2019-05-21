@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './tabs.css';
 
 const Tabs = ({
-  tabs = [], active, onClick = () => {}, className,
+  tabs, active, onClick, className,
 }) => (
   <ul className={styles.wrapper}>
     {tabs.map((filter, i) => (
@@ -14,5 +14,11 @@ const Tabs = ({
     ))}
   </ul>
 );
+
+Tabs.defaultProps = {
+  tabs: [],
+  onClick: () => {},
+  className: '',
+};
 
 export default Tabs;
