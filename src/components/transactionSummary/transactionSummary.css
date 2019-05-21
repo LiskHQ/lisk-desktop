@@ -84,6 +84,7 @@
 
       color: var(--color-maastricht-blue);
       margin-bottom: 10px;
+      display: flex;
     }
   }
 }

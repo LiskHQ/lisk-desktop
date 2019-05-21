@@ -7,6 +7,8 @@ import {
   getUnvoteList,
 } from '../../utils/voting';
 import routes from '../../constants/routes';
+import Tooltip from '../toolbox/tooltip/tooltip';
+import links from '../../constants/externalLinks';
 
 import styles from './votingSummary.css';
 
@@ -36,7 +38,26 @@ const VotingSummary = ({ t, votes, history }) => {
         <label>{getTotalVotesCount(votes)}/{maxCountOfVotes}</label>
       </section>
       <section>
-        <label>{t('Transaction fee')}</label>
+        <label>
+          {t('Transaction fee')}
+          <Tooltip
+            title={t('Transaction fee')}
+            footer={
+              <a href={links.transactionFee}
+                rel="noopener noreferrer"
+                target="_blank">
+                  {t('Read More')}
+              </a>
+            }
+          >
+            <p className={styles.tooltipText}>
+            {
+              t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
+                  Such operations require hardware resources and because of that there is a small fee for processing those.`)
+            }
+            </p>
+          </Tooltip>
+        </label>
         <label> {fee} LSK </label>
       </section>
       {voteList.length > 0 ?
