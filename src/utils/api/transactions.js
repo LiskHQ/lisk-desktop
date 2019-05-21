@@ -57,4 +57,9 @@ export default {
   broadcast,
   create,
   get,
+  getSingleTransaction,
+  getTokenFromAddress,
+  getTransactions,
+  send,
+  unconfirmedTransactions,
 };

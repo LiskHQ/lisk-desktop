@@ -3,7 +3,6 @@ import i18next from 'i18next';
 import to from 'await-to-js';
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
-import { getTransactions, getSingleTransaction, unconfirmedTransactions } from '../utils/api/transactions';
 import { getDelegate } from '../utils/api/delegate';
 import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
@@ -36,7 +35,7 @@ export const transactionsFilterSet = ({
 
   dispatch(loadingStarted(actionTypes.transactionsFilterSet));
 
-  return getTransactions({
+  return transactionsAPI.getTransactions({
     networkConfig,
     address,
     limit,
@@ -68,13 +67,14 @@ export const transactionsFilterSet = ({
 export const transactionsUpdateUnconfirmed = ({ address, pendingTransactions }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    return unconfirmedTransactions(liskAPIClient, address).then(response => dispatch({
-      data: {
-        failed: pendingTransactions.filter(tx =>
-          response.data.filter(unconfirmedTx => tx.id === unconfirmedTx.id).length === 0),
-      },
-      type: actionTypes.transactionsFailed,
-    }));
+    return transactionsAPI.unconfirmedTransactions(liskAPIClient, address).then(response =>
+      dispatch({
+        data: {
+          failed: pendingTransactions.filter(tx =>
+            response.data.filter(unconfirmedTx => tx.id === unconfirmedTx.id).length === 0),
+        },
+        type: actionTypes.transactionsFailed,
+      }));
   };
 
 export const loadTransactionsFinish = accountUpdated =>
@@ -92,7 +92,7 @@ export const loadTransactions = ({ publicKey, address }) =>
     const lastActiveAddress = publicKey && extractAddress(publicKey);
     const isSameAccount = lastActiveAddress === address;
     dispatch(loadingStarted(actionTypes.transactionsLoad));
-    getTransactions({ networkConfig, address, limit: 25 })
+    transactionsAPI.getTransactions({ networkConfig, address, limit: 25 })
       .then((transactionsResponse) => {
         dispatch(loadAccount({
           address,
@@ -115,7 +115,7 @@ export const transactionsRequested = ({
   (dispatch, getState) => {
     dispatch(loadingStarted(actionTypes.transactionsRequested));
     const networkConfig = getState().network;
-    getTransactions({
+    transactionsAPI.getTransactions({
       networkConfig, address, limit, offset, filter, customFilters,
     })
       .then((response) => {
@@ -136,7 +136,7 @@ export const loadLastTransaction = address => (dispatch, getState) => {
   const networkConfig = getState().network;
   if (networkConfig) {
     dispatch({ type: actionTypes.transactionCleared });
-    getTransactions({
+    transactionsAPI.getTransactions({
       networkConfig, address, limit: 1, offset: 0,
     }).then(response => dispatch({ data: response.data[0], type: actionTypes.transactionLoaded }));
   }
@@ -148,7 +148,7 @@ export const loadTransaction = ({ id }) =>
     const networkConfig = getState().network;
     dispatch({ type: actionTypes.transactionCleared });
     // TODO remove the btc condition
-    getSingleTransaction(localStorage.getItem('btc') ? { networkConfig, id } : { liskAPIClient, id })
+    transactionsAPI.getSingleTransaction(localStorage.getItem('btc') ? { networkConfig, id } : { liskAPIClient, id })
       .then((response) => { // eslint-disable-line max-statements
         let added = [];
         let deleted = [];
@@ -220,7 +220,7 @@ export const transactionsUpdated = ({
   (dispatch, getState) => {
     const networkConfig = getState().network;
 
-    getTransactions({
+    transactionsAPI.getTransactions({
       networkConfig, address, limit, filter, customFilters,
     })
       .then((response) => {
