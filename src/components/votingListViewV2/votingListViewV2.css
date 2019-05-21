@@ -125,14 +125,15 @@
 .loadMore {
   @mixin contentSmall bold;
 
-  z-index: 20;
   width: 100%;
   height: 36px;
   color: var(--color-maastricht-blue) !important;
-  border: solid 1px var(--color-platinum);
+  border-top: solid 1px var(--color-platinum);
   background-color: var(--color-white-smoke) !important;
   box-shadow: none;
   min-height: 36px;
+  margin-top: -1px;
+  border-radius: unset;
 
   &:hover {
     color: var(--color-maastricht-blue) !important;
