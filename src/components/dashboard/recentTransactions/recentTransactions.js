@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Box from '../../boxV3';
 import removeDuplicateTransactions from '../../../utils/transactions';
-import styles from './recentTransactions';
+import TransactionList from './transactionsList';
+import styles from './recentTransactions.css';
 
 class RecentTransactions extends Component {
   constructor(props) {
@@ -28,16 +29,12 @@ class RecentTransactions extends Component {
 
     return (
       <Box
+        className={`${styles.box}`}
         title={`Recent ${activeToken} Transactions`}
-        t={t}
-      >
-        <div className={styles.wrapper}>
-          {activeToken}
-          {
-            this.getLatestTransactions().map((tx, index) =>
-              <li key={index}>{tx.type} - {tx.recipientId} - {tx.amount}</li>)
-          }
-        </div>
+        t={t}>
+        <TransactionList
+          transactions={this.getLatestTransactions()}
+          t={t}/>
       </Box>
     );
   }

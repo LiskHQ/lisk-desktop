@@ -1,5 +1,26 @@
 @import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
 
 .box {
   max-width: 431px;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 20px;
+
+  & > header {
+    @mixin contentNormal;
+
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
