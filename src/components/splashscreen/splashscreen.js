@@ -115,7 +115,7 @@ class Splashscreen extends React.Component {
             </span>
 
             <span className={styles.linkWrapper}>
-              <Link className={`${styles.link} signin-hwWallet-button`} to={routes.hwWalletV2.path}>
+              <Link className={`${styles.link} signin-hwWallet-button`} to={routes.hwWallet.path}>
                 {t('Sign in with a Hardware Wallet')}
               </Link>
             </span>

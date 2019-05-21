@@ -9,7 +9,7 @@ import { getTimeOffset } from '../utils/hacks';
 import { updateDelegateCache } from '../utils/delegates';
 import { voteWithHW } from '../utils/api/hwWallet';
 import { passphraseUsed } from './account';
-import { transactionAdded } from './transactions';
+import { addPendingTransaction } from './transactions';
 import Fees from '../constants/fees';
 import actionTypes from '../constants/actions';
 import transactionTypes from '../constants/transactionTypes';
@@ -138,7 +138,7 @@ export const votePlaced = ({
       goToNextStep({ success: false, text: handleVoteError({ error, account, dispatch }) });
     } else {
       dispatch(pendingVotesAdded());
-      dispatch(transactionAdded({
+      dispatch(addPendingTransaction({
         id: callResult.id,
         senderPublicKey: account.publicKey,
         senderId: account.address,

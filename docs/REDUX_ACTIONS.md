@@ -97,7 +97,7 @@ and every 10 seconds dispatches [`newBlockCreated`](https://github.com/LiskHQ/li
 - [`newBlockCreated`](https://github.com/LiskHQ/lisk-hub/blob/e71527bd273af2f16d6980fe3b0c1a379694c45b/src/store/reducers/blocks.js#L5)<br/>
   ↪️ Account Middleware<br/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`updateAccountData`](https://github.com/LiskHQ/lisk-hub/blob/77b6defdf98b6f67f005c25c28ea85378d375817/src/store/middlewares/account.js#L21)<br/>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`transactionsUpdated`](https://github.com/LiskHQ/lisk-hub/blob/77b6defdf98b6f67f005c25c28ea85378d375817/src/store/middlewares/account.js#L97)<br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`updateTransactions`](https://github.com/LiskHQ/lisk-hub/blob/77b6defdf98b6f67f005c25c28ea85378d375817/src/store/middlewares/account.js#L97)<br/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↪️ Account Middleware<br/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`votesFetched`](https://github.com/LiskHQ/lisk-hub/blob/77b6defdf98b6f67f005c25c28ea85378d375817/src/store/middlewares/account.js#L156) (sometimes)<br/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`updateDelegateAccount`](https://github.com/LiskHQ/lisk-hub/blob/77b6defdf98b6f67f005c25c28ea85378d375817/src/store/middlewares/account.js#L155)  (sometimes)<br/>

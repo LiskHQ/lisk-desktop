@@ -36,7 +36,7 @@ class TransactionsListV2 extends React.Component {
     const filteredTransactions = transactions.filter(fixIncomingFilter).filter(filterByActiveToken);
 
     const isLoading = loading.filter(type =>
-      actionTypes.transactionsFilterSet === type).length > 0;
+      actionTypes.transactionsLoaded === type).length > 0;
 
     return <div className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} ${isLoading ? styles.isLoading : ''} transaction-results`}>
       {

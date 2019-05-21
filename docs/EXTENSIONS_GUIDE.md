@@ -30,11 +30,10 @@ data = {
   search,
 }
 actions={
-  testExtensions,
   loadTransactions,
   sent,
-  loadTransaction,
-  transactionsFilterSet,
+  loadSingleTransaction,
+  loadTransactions,
   searchDelegate,
   searchVotes,
   searchAccount,

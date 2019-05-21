@@ -126,7 +126,7 @@ describe('actions: voting', () => {
       expect(typeof actionFunction).to.be.deep.equal('function');
     });
 
-    it('should dispatch transactionAdded action if resolved', async () => {
+    it('should dispatch addPendingTransaction action if resolved', async () => {
       delegateApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
@@ -140,7 +140,7 @@ describe('actions: voting', () => {
 
       await actionFunction(dispatch, getState);
       expect(dispatch).to.have.been
-        .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
+        .calledWith({ data: expectedAction, type: actionTypes.addPendingTransaction });
     });
 
     it('should call goToNextStep with "success: false" if caught an error', async () => {

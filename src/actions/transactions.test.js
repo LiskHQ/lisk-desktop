@@ -2,16 +2,14 @@ import actionTypes from '../constants/actions';
 import txFilters from './../constants/transactionFilters';
 import {
   sent,
-  transactionsRequested,
-  loadTransaction,
-  transactionsUpdated,
-  updateTransactionsIfNeeded,
+  loadTransactions,
+  loadSingleTransaction,
+  updateTransactions,
 } from './transactions';
 import * as transactionsApi from '../utils/api/transactions';
 import * as delegateApi from '../utils/api/delegate';
 import accounts from '../../test/constants/accounts';
 import Fees from '../constants/fees';
-import networks from '../constants/networks';
 import { toRawLsk } from '../utils/lsk';
 
 jest.mock('../utils/api/transactions');
@@ -21,19 +19,23 @@ describe('actions: transactions', () => {
   const dispatch = jest.fn();
   let getState = () => ({
     peers: { liskAPIClient: {} },
-    transactions: { filter: txFilters.all },
+    transactions: {
+      filters: {
+        direction: txFilters.all,
+      },
+    },
   });
 
-  describe('transactionsUpdated', () => {
+  describe('updateTransactions', () => {
     const data = {
       address: '15626650747375562521',
       limit: 20,
       offset: 0,
-      filter: txFilters.all,
+      filters: { direction: txFilters.all },
     };
-    const actionFunction = transactionsUpdated(data);
+    const actionFunction = updateTransactions(data);
 
-    it('should dispatch transactionsUpdated action if resolved', async () => {
+    it('should dispatch updateTransactions action if resolved', async () => {
       transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { count: '0' } });
       const expectedAction = {
         count: 0,
@@ -43,19 +45,19 @@ describe('actions: transactions', () => {
       await actionFunction(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
         data: expectedAction,
-        type: actionTypes.transactionsUpdated,
+        type: actionTypes.updateTransactions,
       });
     });
   });
 
-  describe('transactionsRequested', () => {
+  describe('loadTransactions', () => {
     const data = {
       address: '15626650747375562521L',
       limit: 20,
       offset: 0,
-      filter: txFilters.all,
+      filters: { direction: txFilters.all },
     };
-    const actionFunction = transactionsRequested(data);
+    const actionFunction = loadTransactions(data);
 
     it('should create an action function', () => {
       expect(typeof actionFunction).toBe('function');
@@ -67,7 +69,7 @@ describe('actions: transactions', () => {
         count: 0,
         confirmed: [],
         address: data.address,
-        filter: data.filter,
+        filters: data.filters,
       };
 
       await actionFunction(dispatch, getState);
@@ -77,24 +79,16 @@ describe('actions: transactions', () => {
     });
   });
 
-  describe('loadTransaction', () => {
-    getState = () => ({
-      peers: {
-        liskAPIClient: {
-          options: {
-            name: networks.mainnet.name,
-          },
-        },
-      },
-      transactions: { filter: txFilters.all },
-    });
+  describe('loadSingleTransaction', () => {
     const data = {
       address: '15626650747375562521',
       limit: 20,
       offset: 0,
-      filter: txFilters.all,
+      filters: {
+        direction: txFilters.all,
+      },
     };
-    const actionFunction = loadTransaction(data);
+    const actionFunction = loadSingleTransaction(data);
 
     beforeEach(() => {
       getState = () => ({
@@ -108,7 +102,11 @@ describe('actions: transactions', () => {
             },
           },
         },
-        transactions: { filter: txFilters.all },
+        transactions: {
+          filters: {
+            direction: txFilters.all,
+          },
+        },
       });
     });
 
@@ -170,10 +168,6 @@ describe('actions: transactions', () => {
   });
 
   describe('sent', () => {
-    getState = () => ({
-      peers: { liskAPIClient: {} },
-      transactions: { filter: txFilters.all },
-    });
     const data = {
       recipientId: '15833198055097037957L',
       amount: 100,
@@ -190,7 +184,11 @@ describe('actions: transactions', () => {
     beforeEach(() => {
       getState = () => ({
         peers: { liskAPIClient: {} },
-        transactions: { filter: txFilters.all },
+        transactions: {
+          filters: {
+            direction: txFilters.all,
+          },
+        },
       });
     });
 
@@ -198,7 +196,7 @@ describe('actions: transactions', () => {
       expect(typeof actionFunction).toBe('function');
     });
 
-    it('should dispatch transactionAdded action if resolved', async () => {
+    it('should dispatch addPendingTransaction action if resolved', async () => {
       transactionsApi.send.mockResolvedValue({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
@@ -214,7 +212,7 @@ describe('actions: transactions', () => {
 
       await actionFunction(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
-        data: expectedAction, type: actionTypes.transactionAdded,
+        data: expectedAction, type: actionTypes.addPendingTransaction,
       });
     });
 
@@ -244,30 +242,6 @@ describe('actions: transactions', () => {
 
       await actionFunction(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
-    });
-  });
-
-  describe('updateTransactionsIfNeeded', () => {
-    it('should update transactions when window is in focus', () => {
-      transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { count: '0' } });
-      const data = {
-        transactions: { confirmed: [{ confirmations: 10 }], pending: [] },
-        account: { address: accounts.genesis.address },
-      };
-
-      updateTransactionsIfNeeded(data, true)(dispatch, getState);
-      expect(dispatch).toHaveBeenCalled();
-    });
-
-    it('should update transactions when there are no recent transactions', () => {
-      transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { count: '0' } });
-      const data = {
-        transactions: { confirmed: [{ confirmations: 10000 }], pending: [{ id: '123' }] },
-        account: { address: accounts.genesis.address },
-      };
-
-      updateTransactionsIfNeeded(data, false)(dispatch, getState);
-      expect(dispatch).toHaveBeenCalled();
     });
   });
 });
