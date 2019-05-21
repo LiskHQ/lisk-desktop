@@ -10,6 +10,7 @@ import TransactionDashboard from '../components/transactionDashboard';
 import AccountTransactions from '../components/accountTransactions';
 import Voting from '../components/voting';
 import VotingV2 from '../components/votingV2';
+import VotingSummary from '../components/votingSummary';
 import SingleTransaction from '../components/singleTransactionV2';
 import HwWalletLogin from '../components/hwWalletLogin';
 // import NotFound from '../components/notFound';
@@ -46,6 +47,11 @@ export default {
   delegates: {
     path: '/delegates',
     component: Voting,
+    isPrivate: true,
+  },
+  voting: {
+    path: '/delegatesV2/vote',
+    component: VotingSummary,
     isPrivate: true,
   },
   delegatesV2: {
