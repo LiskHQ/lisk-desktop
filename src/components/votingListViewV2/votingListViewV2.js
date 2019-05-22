@@ -125,7 +125,7 @@ class VotingListViewV2 extends React.Component {
   render() {
     const filteredList = this.filter(this.props.delegates);
     const {
-      showChangeSummery, isDelegate, voteToggled, votes, t, votingModeEnabled,
+      voteToggled, votes, t, votingModeEnabled,
     } = this.props;
     const firstTimeVotingActive = votingModeEnabled && getTotalVotesCount(votes) === 0;
     return (
@@ -135,8 +135,6 @@ class VotingListViewV2 extends React.Component {
             t={t}
             account={this.props.account}
             setActiveFilter={this.setActiveFilter.bind(this)}
-            showChangeSummery={showChangeSummery}
-            isDelegate={isDelegate}
             voteToggled={voteToggled}
             search={ value => this.search(value) }
           />
@@ -165,7 +163,7 @@ class VotingListViewV2 extends React.Component {
             <DelegateListV2 t={t} list={filteredList} votes={votes}
               firstTimeVotingActive={firstTimeVotingActive}
               votingModeEnabled={votingModeEnabled}
-              voteToggled={voteToggled} showChangeSummery={showChangeSummery}
+              voteToggled={voteToggled}
               safari={this.state.safariClass} loadMore={this.loadMore.bind(this)} />
           </div>
           {

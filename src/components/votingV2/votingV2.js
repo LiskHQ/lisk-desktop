@@ -8,19 +8,10 @@ class VotingV2 extends React.Component {
   constructor() {
     super();
     this.state = {
-      showChangeSummery: false,
       votingModeEnabled: false,
     };
 
     this.toggleVotingMode = this.toggleVotingMode.bind(this);
-  }
-
-  toggleSummery(value) {
-    if (value !== this.state.showChangeSummery) {
-      this.setState({
-        showChangeSummery: value,
-      });
-    }
   }
 
   setLayover(isLayover) {
@@ -49,7 +40,7 @@ class VotingV2 extends React.Component {
           toggleVotingMode={this.toggleVotingMode}
           votes={votes}/>
         <section className={`${grid['col-sm-12']} ${grid['col-md-12']} ${styles.votingBox} ${styles.votes}`}>
-          <VotingListViewV2 showChangeSummery={this.state.showChangeSummery}
+          <VotingListViewV2
             votingModeEnabled={votingModeEnabled}
             history={this.props.history}
           />
