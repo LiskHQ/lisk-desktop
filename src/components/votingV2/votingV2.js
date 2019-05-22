@@ -3,23 +3,17 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './votingV2.css';
 import VotingListViewV2 from '../votingListViewV2';
 import VotingHeader from './votingHeader';
+import { getTotalActions } from './../../utils/voting';
 
 class VotingV2 extends React.Component {
-  constructor() {
+  constructor({ votes }) {
     super();
+
     this.state = {
-      votingModeEnabled: false,
+      votingModeEnabled: getTotalActions(votes) > 0,
     };
 
     this.toggleVotingMode = this.toggleVotingMode.bind(this);
-  }
-
-  setLayover(isLayover) {
-    if (isLayover && this.root) {
-      this.root.classList.add(styles.hasLayover);
-    } else if (!isLayover && this.root) {
-      this.root.classList.remove(styles.hasLayover);
-    }
   }
 
   toggleVotingMode() {
