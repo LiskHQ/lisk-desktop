@@ -65,8 +65,7 @@ class Onboarding extends React.Component {
               <section key={`slides-${index}`}
                 className={`${slide.className || ''} ${index === currentSlide ? styles.active : ''}`}>
                   <h1 className={styles.title}>{slide.title}</h1>
-                {typeof slide.content === 'string' &&
-                  <p>{slide.content}</p>}
+                  <p>{slide.content}</p>
               </section>
             ))}
           </div>
