@@ -12,11 +12,10 @@ import Tooltip from '../toolbox/tooltip/tooltip';
 import links from '../../constants/externalLinks';
 import VoteUrlProcessor from '../voteUrlProcessorV2';
 
-
-import styles from './votingSummary.css';
+import styles from './votingV2.css';
 
 const VotingSummary = ({
-  t, votes, history, account,
+  t, votes, history, account, nextStep,
 }) => {
   const {
     maxCountOfVotes,
@@ -31,7 +30,9 @@ const VotingSummary = ({
       account={account}
       confirmButton={{
         label: t('Confirm voting'),
-        onClick: () => {},
+        onClick: () => {
+          nextStep();
+        },
       }}
       cancelButton={{
         label: t('Edit voting'),

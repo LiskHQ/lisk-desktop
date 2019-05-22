@@ -1,6 +1,15 @@
 @import '../app/variablesV2.css';
 @import '../app/mixins.css';
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  width: 100%;
+}
+
 .votesContainer {
   display: flex;
   flex-wrap: wrap;

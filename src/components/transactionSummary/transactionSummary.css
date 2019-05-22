@@ -1,15 +1,6 @@
 @import '../app/variablesV2.css';
 @import '../app/mixins.css';
 
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-  align-items: center;
-  width: 100%;
-}
-
 .wrapper {
   width: 100%;
   display: flex;
