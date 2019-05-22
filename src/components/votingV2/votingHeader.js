@@ -8,6 +8,7 @@ import {
   getTotalVotesCount,
   getVoteList,
   getUnvoteList,
+  getTotalActions,
 } from './../../utils/voting';
 
 import styles from './votingHeader.css';
@@ -22,14 +23,11 @@ class VotingHeader extends React.Component {
     } = this.props;
     const voteList = getVoteList(votes);
     const unvoteList = getUnvoteList(votes);
+    const totalActions = getTotalActions(votes);
     const {
-      maxCountOfVotesInOneTurn,
       maxCountOfVotes,
       fee,
     } = votingConst;
-    const totalActions = Math.ceil((
-      voteList.length + unvoteList.length
-    ) / maxCountOfVotesInOneTurn);
     return (
       <div className={`${styles.wrapper}`}>
             <span>

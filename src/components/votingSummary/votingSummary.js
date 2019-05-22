@@ -5,6 +5,7 @@ import {
   getTotalVotesCount,
   getVoteList,
   getUnvoteList,
+  getTotalActions,
 } from '../../utils/voting';
 import routes from '../../constants/routes';
 import Tooltip from '../toolbox/tooltip/tooltip';
@@ -21,6 +22,7 @@ const VotingSummary = ({ t, votes, history }) => {
   } = votingConst;
   const voteList = getVoteList(votes);
   const unvoteList = getUnvoteList(votes);
+  const totalActions = getTotalActions(votes);
   return (
     <TransactionSummary
       confirmButton={{
@@ -59,7 +61,7 @@ const VotingSummary = ({ t, votes, history }) => {
             </p>
           </Tooltip>
         </label>
-        <label> {fee} LSK </label>
+        <label> {fee * totalActions} LSK </label>
       </section>
       <VoteUrlProcessor/>
       {voteList.length > 0 ?
