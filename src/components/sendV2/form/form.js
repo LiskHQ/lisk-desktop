@@ -1,5 +1,6 @@
 // eslint-disable-line max-lines
 import React from 'react';
+import { BigNumber } from 'bignumber.js';
 import ConverterV2 from '../../converterV2';
 import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
 import { InputV2, AutoresizeTextarea } from '../../toolbox/inputsV2';
@@ -17,6 +18,7 @@ import Piwik from '../../../utils/piwik';
 import { validateAddress } from '../../../utils/validators';
 import Selector from '../../toolbox/selector/selector';
 import { tokenMap } from '../../../constants/tokens';
+import * as btcTransactionsAPI from '../../../utils/api/btc/transactions';
 
 class Form extends React.Component {
   // eslint-disable-next-line max-statements
@@ -52,8 +54,14 @@ class Form extends React.Component {
         processingSpeed: {
           value: 0,
           loaded: false,
+          txFee: 0,
+          selectedIndex: 0,
+        },
+        fee: {
+          value: 0,
         },
       },
+      unspentTransactionOutputs: [],
     };
 
     this.loaderTimeout = null;
@@ -73,14 +81,26 @@ class Form extends React.Component {
   }
 
   componentDidMount() {
+    // istanbul ignore if
     if (!Object.entries(this.props.prevState).length) this.ifDataFromUrl();
     else this.ifDataFromPrevState();
+    // istanbul ignore if
+    if (this.props.token === tokenMap.BTC.key) this.props.dynamicFeesRetrieved();
     this.checkIfBookmarkedAccount();
   }
 
   componentDidUpdate() {
     const { fields } = this.state;
-    const { dynamicFees } = this.props;
+    const { token, account, dynamicFees } = this.props;
+    // istanbul ignore next
+    if (token === tokenMap.BTC.key && account && account.info[token]) {
+      btcTransactionsAPI
+        .getUnspentTransactionOutputs(account.info[token].address)
+        .then(data => this.setState({ unspentTransactionOutputs: data }))
+        .catch(() => this.setState({ unspentTransactionOutputs: [] }));
+    }
+
+    // istanbul ignore if
     if (!fields.processingSpeed.loaded && dynamicFees.Low) {
       this.setState({
         fields: {
@@ -88,6 +108,7 @@ class Form extends React.Component {
           processingSpeed: {
             value: dynamicFees.Low,
             loaded: true,
+            txFee: this.getCalculatedDynamicFee(dynamicFees.Low),
           },
         },
       });
@@ -96,6 +117,7 @@ class Form extends React.Component {
 
   ifDataFromPrevState() {
     const { prevState } = this.props;
+    // istanbul ignore if
     if (prevState.fields && Object.entries(prevState.fields).length) {
       this.setState({
         fields: {
@@ -105,6 +127,7 @@ class Form extends React.Component {
     }
   }
 
+  // istanbul ignore next
   ifDataFromUrl() {
     const { fields = {} } = this.props;
     if (fields.recipient.address !== '' || fields.amount.value !== '' || fields.reference.value !== '') {
@@ -136,19 +159,28 @@ class Form extends React.Component {
       ? followedAccounts.find(acc => acc.address === fields.recipient.address)
       : false;
 
+    // istanbul ignore if
     if (account) this.onSelectedAccount(account);
   }
 
   onInputChange({ target }) {
-    this.setState(prevState => ({
+    const { fields } = this.state;
+    const txFee = target.name === 'amount'
+      ? this.getCalculatedDynamicFee(fields.processingSpeed.value, target.value)
+      : fields.processingSpeed.txFee;
+    this.setState({
       fields: {
-        ...prevState.fields,
+        ...fields,
         [target.name]: {
-          ...prevState.fields[target.name],
+          ...fields[target.name],
           value: target.value,
         },
+        processingSpeed: {
+          ...fields.processingSpeed,
+          txFee,
+        },
       },
-    }));
+    });
   }
 
   // eslint-disable-next-line max-statements
@@ -166,7 +198,7 @@ class Form extends React.Component {
     }
     isAddressValid = validateAddress(token, recipient.value) === 0;
 
-    // istanbul ignore else
+    // istanbul ignore if
     if (!isAccountValid && !isAddressValid && recipient.value) {
       recipient = {
         ...this.state.recipient,
@@ -180,7 +212,7 @@ class Form extends React.Component {
       };
     }
 
-    // istanbul ignore else
+    // istanbul ignore if
     if (isAddressValid) {
       recipient = {
         ...this.state.recipient,
@@ -193,7 +225,7 @@ class Form extends React.Component {
       };
     }
 
-    // istanbul ignore else
+    // istanbul ignore if
     if (isAccountValid) {
       recipient = {
         ...this.state.recipient,
@@ -208,7 +240,7 @@ class Form extends React.Component {
       };
     }
 
-    // istanbul ignore else
+    // istanbul ignore if
     if (recipient.value === '') {
       recipient = {
         ...this.state.recipient,
@@ -233,6 +265,7 @@ class Form extends React.Component {
     });
   }
 
+  // istanbul ignore next
   onSelectedAccount(account) {
     this.setState(prevState => ({
       fields: {
@@ -254,16 +287,46 @@ class Form extends React.Component {
   getMaxAmount() {
     const { token } = this.props;
     const account = this.props.account.info[token];
-    const dynamicFee = this.state.fields.processingSpeed.value || 0;
+    const dynamicFee = this.state.fields.processingSpeed.txFee || 0;
     return token === 'LSK'
       ? fromRawLsk(Math.max(0, account.balance - fees.send))
       : fromRawLsk(Math.max(0, account.balance - dynamicFee));
   }
 
-  validateAmountField(value) {
-    if (this.props.token !== tokenMap.LSK.key && !Object.keys(this.props.dynamicFees).length) {
-      this.props.dynamicFeesRetrieved();
+  getUnspentTransactionOutputCountToConsume(value) {
+    const { unspentTransactionOutputs } = this.state;
+
+    const amount = new BigNumber(value);
+    const [count] = unspentTransactionOutputs.reduce((result, output) => {
+      // istanbul ignore if
+      if (amount.isGreaterThan(result[1])) {
+        result[0] += 1;
+        result[1] = result[1].plus(fromRawLsk(output.value));
+      }
+
+      return result;
+    }, [0, new BigNumber(0)]);
+
+    return count;
+  }
+
+  getCalculatedDynamicFee(dynamicFeePerByte, value) {
+    const { fields: { amount } } = this.state;
+    if (this.validateAmountField(value || amount.value)) {
+      return 0;
     }
+
+    const feeInSatoshis = btcTransactionsAPI.calculateTransactionFee({
+      inputCount: this.getUnspentTransactionOutputCountToConsume(value),
+      outputCount: 2,
+      dynamicFeePerByte,
+    });
+
+    return feeInSatoshis;
+  }
+
+  validateAmountField(value) {
+    // istanbul ignore if
     if (/^0.(0|[a-zA-z])*$/g.test(value)) return this.props.t('Provide a correct amount of {{token}}', { token: this.props.token });
     if (/([^\d.])/g.test(value)) return this.props.t('Provide a correct amount of {{token}}', { token: this.props.token });
     if ((/(\.)(.*\1){1}/g.test(value) || /\.$/.test(value)) || value === '0') return this.props.t('Invalid amount');
@@ -271,7 +334,8 @@ class Form extends React.Component {
     return false;
   }
 
-  selectProcessingSpeed({ item }) {
+  // istanbul ignore next
+  selectProcessingSpeed({ item, index }) {
     const { fields } = this.state;
     this.setState({
       fields: {
@@ -279,6 +343,8 @@ class Form extends React.Component {
         processingSpeed: {
           ...fields.processingSpeed,
           ...item,
+          selectedIndex: index,
+          txFee: this.getCalculatedDynamicFee(item.value),
         },
       },
     });
@@ -493,7 +559,7 @@ class Form extends React.Component {
                 </Tooltip>
               </span>
             </label>
-          ) : !!Object.keys(dynamicFees).length && (
+          ) : !!Object.keys(dynamicFees).length && fields.amount.value !== '' && (
             <div className={`${styles.fieldGroup}`}>
               <span className={`${styles.fieldLabel}`}>
                 {t('Processing Speed')}
@@ -507,13 +573,14 @@ class Form extends React.Component {
                 className={styles.selector}
                 onSelectorChange={this.selectProcessingSpeed}
                 name={'speedSelector'}
+                selectedIndex={fields.processingSpeed.selectedIndex}
                 options={[
                   { title: t('Low'), value: dynamicFees.Low },
                   { title: t('High'), value: dynamicFees.High },
                 ]}
               />
               <span className={styles.processingInfo}>
-                {t('Transaction fee: ')} <span>{`${fromRawLsk(fields.processingSpeed.value)} ${token}`}</span>
+                {t('Transaction fee: ')} <span>{`${fromRawLsk(fields.processingSpeed.txFee)} ${token}`}</span>
               </span>
             </div>
           )}
