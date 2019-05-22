@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { SecondaryButtonV2, PrimaryButtonV2 } from '../toolbox/buttons/button';
 import Tooltip from '../toolbox/tooltip/tooltip';
+import SignInTooltipWrapper from '../signInTooltipWrapper';
 import routes from './../../constants/routes';
 import votingConst from '../../constants/voting';
 import {
@@ -72,14 +73,18 @@ class VotingHeader extends React.Component {
               </Link>
             </span> :
             <span>
-              <Link to={routes.registerDelegate.path} >
-                <SecondaryButtonV2 className={`register-delegate ${styles.btn}`}>
-                  {t('Register as a Delegate')}
-                </SecondaryButtonV2>
-              </Link>
-              <PrimaryButtonV2 onClick={toggleVotingMode} className={styles.btn}>
-                {t('Start voting')}
-              </PrimaryButtonV2>
+              <SignInTooltipWrapper>
+                <Link to={routes.registerDelegate.path} >
+                  <SecondaryButtonV2 className={`register-delegate ${styles.btn}`}>
+                    {t('Register as a Delegate')}
+                  </SecondaryButtonV2>
+                </Link>
+              </SignInTooltipWrapper>
+              <SignInTooltipWrapper>
+                <PrimaryButtonV2 onClick={toggleVotingMode} className={styles.btn}>
+                  {t('Start voting')}
+                </PrimaryButtonV2>
+              </SignInTooltipWrapper>
             </span>
             }
       </div>

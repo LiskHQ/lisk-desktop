@@ -57,7 +57,7 @@ export default {
   delegatesV2: {
     path: '/delegatesV2',
     component: VotingV2,
-    isPrivate: true,
+    isPrivate: false,
   },
   help: {
     path: '/help',
