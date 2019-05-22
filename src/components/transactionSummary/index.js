@@ -1,5 +1,6 @@
 import React from 'react';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
+import Illustration from '../toolbox/illustration';
 import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
 import { extractPublicKey } from '../../utils/account';
 
@@ -8,8 +9,10 @@ import styles from './transactionSummary.css';
 class TransactionSummary extends React.Component {
   constructor(props) {
     super(props);
+    const { account } = props;
 
     this.state = {
+      isHardwareWalletConnected: !!(account.hwInfo && account.hwInfo.deviceId),
       secondPassphrase: {
         isValid: false,
         feedback: '',
@@ -18,6 +21,14 @@ class TransactionSummary extends React.Component {
     };
     this.checkSecondPassphrase = this.checkSecondPassphrase.bind(this);
     this.confirmOnClick = this.confirmOnClick.bind(this);
+    this.getHwWalletIllustration = this.getHwWalletIllustration.bind(this);
+  }
+  componentDidMount() {
+    const { isHardwareWalletConnected } = this.state;
+
+    if (isHardwareWalletConnected) {
+      this.confirmOnClick();
+    }
   }
 
   checkSecondPassphrase(passphrase, error) {
@@ -44,16 +55,29 @@ class TransactionSummary extends React.Component {
     });
   }
 
+  getHwWalletIllustration() {
+    return {
+      'Trezor Model T': 'trezorLight',
+      'Ledger Nano S': 'ledgerNanoLight',
+    }[this.props.account.hwInfo.deviceModel];
+  }
+
   render() {
     const {
       title, children, confirmButton, cancelButton, account, t,
     } = this.props;
     const {
-      secondPassphrase,
+      secondPassphrase, isHardwareWalletConnected,
     } = this.state;
     return <div className={styles.wrapper}>
     <header className='summary-header'>
-      <h1>{title}</h1>
+      { isHardwareWalletConnected ?
+        <React.Fragment>
+          <h1> {t('Confirm transaction on your {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })} </h1>
+          <p>{t('Please check if all the transaction details are correct.')}</p>
+          <Illustration name={this.getHwWalletIllustration()} />
+        </React.Fragment> : null }
+      <h2>{title}</h2>
     </header>
     <div className={styles.content}>
       {children}
@@ -71,12 +95,15 @@ class TransactionSummary extends React.Component {
       }
     </div>
     <footer className='summary-footer'>
-      <PrimaryButtonV2
-        className={`${styles.confirmBtn} confirm-button`}
-        disabled={!!account.secondPublicKey && !secondPassphrase.isValid}
-        onClick={this.confirmOnClick}>
-        {confirmButton.label}
-      </PrimaryButtonV2>
+      {isHardwareWalletConnected ?
+        null :
+        <PrimaryButtonV2
+          className={`${styles.confirmBtn} confirm-button`}
+          disabled={!!account.secondPublicKey && !secondPassphrase.isValid}
+          onClick={this.confirmOnClick}>
+          {confirmButton.label}
+        </PrimaryButtonV2>
+      }
       <TertiaryButtonV2
         className={`${styles.editBtn} cancel-button`}
         onClick={cancelButton.onClick}>
