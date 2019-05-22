@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { translate } from 'react-i18next';
 import styles from './onboarding.css';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../buttons/button';
 
@@ -32,7 +33,9 @@ class Onboarding extends React.Component {
   }
 
   render() {
-    const { slides, onClose, className } = this.props;
+    const {
+      slides, ctaLabel, finalCallback, onClose, className, t,
+    } = this.props;
     const { currentSlide } = this.state;
 
     return slides.length ? (
@@ -73,16 +76,22 @@ class Onboarding extends React.Component {
                   name={'prev'}
                   onClick={this.handleButtonClick}
                 >
-                  Previous
+                  {t('Previous')}
                 </SecondaryButtonV2>
               ) : null
             }
-            <PrimaryButtonV2
-              name={'next'}
-              onClick={this.handleButtonClick}
-            >
-              Next
-            </PrimaryButtonV2>
+            {(currentSlide !== slides.length - 1 && ctaLabel !== '')
+              ? (<PrimaryButtonV2
+                  name={'next'}
+                  onClick={this.handleButtonClick}
+                >
+                  {t('Next')}
+                </PrimaryButtonV2>
+              ) : (
+                <PrimaryButtonV2 onClick={finalCallback}>
+                  {ctaLabel}
+                </PrimaryButtonV2>
+            )}
           </div>
         </div>
       </div>
@@ -109,6 +118,7 @@ Onboarding.propTypes = {
 Onboarding.defaultProps = {
   slides: [],
   className: '',
+  ctaLabel: '',
 };
 
-export default Onboarding;
+export default translate()(Onboarding);

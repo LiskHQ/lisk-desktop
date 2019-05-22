@@ -53,7 +53,6 @@
     & > span {
       background-color: transparent;
       border: 1px solid var(--color-slate-gray);
-      cursor: pointer;
       border-radius: 50%;
       display: block;
       height: 7px;
