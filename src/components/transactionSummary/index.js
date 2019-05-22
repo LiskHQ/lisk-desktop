@@ -1,9 +1,12 @@
 import React from 'react';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
+import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
 import styles from './transactionSummary.css';
 
+const checkSecondPassphrase = () => {};
+
 const TransactionSummary = ({
-  title, children, confirmButton, cancelButton,
+  title, children, confirmButton, cancelButton, account, t,
 }) => (
   <div className={styles.container}>
     <div className={styles.wrapper}>
@@ -11,7 +14,19 @@ const TransactionSummary = ({
         <h1>{title}</h1>
       </header>
       <div className={styles.content}>
-       {children}
+        {children}
+        {account.secondPublicKey ?
+          <section className='summary-second-passphrase'>
+              <label>{t('Second passphrase')}</label>
+              <PassphraseInputV2
+                isSecondPassphrase={true}
+                secondPPFeedback={''}
+                inputsLength={12}
+                maxInputsLength={24}
+                onFill={checkSecondPassphrase} />
+          </section>
+          : null
+        }
       </div>
       <footer className='summary-footer'>
         <PrimaryButtonV2

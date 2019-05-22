@@ -15,7 +15,9 @@ import VoteUrlProcessor from '../voteUrlProcessorV2';
 
 import styles from './votingSummary.css';
 
-const VotingSummary = ({ t, votes, history }) => {
+const VotingSummary = ({
+  t, votes, history, account,
+}) => {
   const {
     maxCountOfVotes,
     fee,
@@ -25,6 +27,8 @@ const VotingSummary = ({ t, votes, history }) => {
   const totalActions = getTotalActions(votes);
   return (
     <TransactionSummary
+      t={t}
+      account={account}
       confirmButton={{
         label: t('Confirm voting'),
         onClick: () => {},

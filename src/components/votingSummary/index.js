@@ -7,6 +7,7 @@ import { clearVotes } from '../../actions/voting';
 
 const mapStateToProps = state => ({
   votes: state.voting.votes,
+  account: state.account,
 });
 
 const mapDispatchToProps = {
