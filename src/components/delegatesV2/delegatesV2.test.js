@@ -7,11 +7,11 @@ import { prepareStore } from '../../../test/unit-test-utils/applicationInit';
 import peersReducer from '../../store/reducers/peers';
 import accountReducer from '../../store/reducers/account';
 import votingReducer from '../../store/reducers/voting';
-import VotingV2 from './votingV2';
+import DelegatesV2 from './delegatesV2';
 import history from '../../history';
 import i18n from '../../i18n';
 
-describe('VotingV2', () => {
+describe('DelegatesV2', () => {
   let wrapper;
   const votes = {
     username1: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
@@ -48,7 +48,7 @@ describe('VotingV2', () => {
   };
   beforeEach(() => {
     wrapper = mount(
-<Router><VotingV2 {...props} store={store}></VotingV2></Router>,
+<Router><DelegatesV2 {...props} store={store}></DelegatesV2></Router>,
 {
   context: { store, history, i18n },
   childContextTypes: {

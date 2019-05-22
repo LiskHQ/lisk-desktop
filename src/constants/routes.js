@@ -9,7 +9,7 @@ import SearchResult from '../components/searchResult';
 import TransactionDashboard from '../components/transactionDashboard';
 import AccountTransactions from '../components/accountTransactions';
 import Voting from '../components/voting';
-import VotingV2 from '../components/votingV2';
+import DelegatesV2 from '../components/delegatesV2';
 import VotingSummary from '../components/votingSummary';
 import SingleTransaction from '../components/singleTransactionV2';
 import HwWalletLogin from '../components/hwWalletLogin';
@@ -56,7 +56,7 @@ export default {
   },
   delegatesV2: {
     path: '/delegatesV2',
-    component: VotingV2,
+    component: DelegatesV2,
     isPrivate: false,
   },
   help: {

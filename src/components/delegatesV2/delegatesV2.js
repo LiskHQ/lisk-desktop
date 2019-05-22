@@ -5,7 +5,7 @@ import VotingListViewV2 from '../votingListViewV2';
 import VotingHeader from './votingHeader';
 import { getTotalActions } from './../../utils/voting';
 
-class VotingV2 extends React.Component {
+class DelegatesV2 extends React.Component {
   constructor({ votes }) {
     super();
 
@@ -43,4 +43,4 @@ class VotingV2 extends React.Component {
   }
 }
 
-export default VotingV2;
+export default DelegatesV2;
