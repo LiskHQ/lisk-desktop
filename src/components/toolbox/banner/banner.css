@@ -54,6 +54,7 @@
   & .content {
     @mixin contentLargest;
 
+    line-height: 25px;
     margin: 20px 0;
 
     & > p {
