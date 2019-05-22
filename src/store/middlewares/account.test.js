@@ -78,7 +78,7 @@ describe('Account middleware', () => {
     store.getState = () => (state);
 
     next = spy();
-    spy(transactionsActions, 'updateTransactionsIfNeeded');
+    spy(accountActions, 'updateTransactionsIfNeeded');
     spy(accountActions, 'updateDelegateAccount');
     stubGetAccount = stub(accountApi, 'getAccount').returnsPromise();
     transactionsActionsStub = spy(transactionsActions, 'updateTransactions');
@@ -91,7 +91,7 @@ describe('Account middleware', () => {
 
   afterEach(() => {
     accountActions.updateDelegateAccount.restore();
-    transactionsActions.updateTransactionsIfNeeded.restore();
+    accountActions.updateTransactionsIfNeeded.restore();
     transactionsActionsStub.restore();
     stubGetAccount.restore();
     stubTransactions.restore();
@@ -117,7 +117,7 @@ describe('Account middleware', () => {
 
     clock.tick(7000);
     expect(accountDataUpdatedSpy).to.have.been.calledWith(data);
-    expect(transactionsActions.updateTransactionsIfNeeded).to.have.been.calledWith();
+    expect(accountActions.updateTransactionsIfNeeded).to.have.been.calledWith();
   });
 
   it(`should call account BTC API methods on ${actionTypes.newBlockCreated} action when BTC is the active token`, () => {
@@ -127,7 +127,7 @@ describe('Account middleware', () => {
     middleware(store)(next)(newBlockCreated);
 
     clock.tick(7000);
-    expect(transactionsActions.updateTransactionsIfNeeded)
+    expect(accountActions.updateTransactionsIfNeeded)
       .to.have.been.calledWith(match({ account }));
   });
 
