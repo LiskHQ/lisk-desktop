@@ -9,6 +9,8 @@ import {
 import routes from '../../constants/routes';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import links from '../../constants/externalLinks';
+import VoteUrlProcessor from '../voteUrlProcessorV2';
+
 
 import styles from './votingSummary.css';
 
@@ -18,7 +20,6 @@ const VotingSummary = ({ t, votes, history }) => {
     fee,
   } = votingConst;
   const voteList = getVoteList(votes);
-  console.log(voteList);
   const unvoteList = getUnvoteList(votes);
   return (
     <TransactionSummary
@@ -60,6 +61,7 @@ const VotingSummary = ({ t, votes, history }) => {
         </label>
         <label> {fee} LSK </label>
       </section>
+      <VoteUrlProcessor/>
       {voteList.length > 0 ?
         <section>
           <label>{t('Added votes')} ({voteList.length})</label>
