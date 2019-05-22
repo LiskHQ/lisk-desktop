@@ -11,7 +11,7 @@ class VotingV2 extends React.Component {
     super(props);
     this.state = {
       votingModeEnabled: false,
-      closedVotingOnboarding: false,
+      showVotingOnboarding: !localStorage.getItem('closedVotingOnboarding'),
     };
 
     this.toggleVotingMode = this.toggleVotingMode.bind(this);
@@ -37,7 +37,7 @@ class VotingV2 extends React.Component {
 
   handleCloseOnboarding() {
     localStorage.setItem('closedVotingOnboarding', true);
-    this.setState({ closedVotingOnboarding: true });
+    this.setState({ showVotingOnboarding: false });
   }
 
   handleOnboardingFinalCallback() {
@@ -68,10 +68,11 @@ class VotingV2 extends React.Component {
 
   render() {
     const { t, votes } = this.props;
-    const { votingModeEnabled } = this.state;
+    const { votingModeEnabled, showVotingOnboarding } = this.state;
+
     return (
       <div className={`${grid.row} ${styles.wrapper}`} ref={(el) => { this.root = el; }}>
-        { !localStorage.getItem('closedVotingOnboarding') && !Object.keys(votes).length ? (
+        { showVotingOnboarding ? (
           <Onboarding
             slides={this.getOnboardingSlides()}
             finalCallback={this.handleOnboardingFinalCallback}

@@ -51,13 +51,15 @@ class Onboarding extends React.Component {
         </div>
 
         <div className={styles.content}>
-          <span className={styles.bullets}>
-            {slides.map((_, i) =>
-              <span key={`bullet-${i}`}
-                data-index={i}
-                className={i === currentSlide ? styles.active : ''}/>)
-            }
-          </span>
+          {slides.length > 1 ?
+            <span className={styles.bullets}>
+              {slides.map((_, i) =>
+                <span key={`bullet-${i}`}
+                  data-index={i}
+                  className={i === currentSlide ? styles.active : ''}/>)
+              }
+            </span> : null
+          }
           <div className={styles.slides}>
             {slides.map((slide, index) => (
               <section key={`slides-${index}`}

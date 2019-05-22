@@ -177,3 +177,15 @@
     }
   }
 }
+
+@media (--medium-viewport) {
+  .onboarding {
+    & .illustrations {
+      display: none;
+    }
+
+    & .content {
+      flex-basis: 100%;
+    }
+  }
+}
