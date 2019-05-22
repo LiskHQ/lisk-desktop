@@ -2,6 +2,7 @@ import React from 'react';
 import DelegateRowV2 from './delegateRowV2';
 import ListLabelsV2 from './listLabelsV2';
 import { Button } from '../toolbox/buttons/button';
+import { getTotalVotesCount } from './../../utils/voting';
 
 import styles from './votingListViewV2.css';
 
@@ -19,7 +20,7 @@ class DelegateListV2 extends React.Component {
     const { votingModeEnabled, votes, firstTimeVotingActive } = this.props;
     const shouldLoadMore = this.props.list.length > 0 &&
       this.props.list[this.props.list.length - 1].rank % 100 === 0;
-    const shouldShowVoteColumn = votingModeEnabled || firstTimeVotingActive;
+    const shouldShowVoteColumn = votingModeEnabled || getTotalVotesCount(votes) >= 0;
     return (<div>
       { this.state.didMount ? <div className={`${styles.results} transaction-results`}>
         <ListLabelsV2 t={this.props.t} shouldShowVoteColumn={shouldShowVoteColumn} />
