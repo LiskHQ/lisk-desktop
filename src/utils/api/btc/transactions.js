@@ -120,7 +120,7 @@ export const getUnspentTransactionOutputs = address => new Promise(async (resolv
 
 export const create = ({
   passphrase,
-  recipientAddress,
+  recipientId: recipientAddress,
   amount,
   dynamicFeePerByte,
   // eslint-disable-next-line max-statements
