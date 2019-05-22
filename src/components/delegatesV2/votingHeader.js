@@ -63,7 +63,7 @@ class VotingHeader extends React.Component {
             </span>
             { votingModeEnabled ?
             <span>
-              <SecondaryButtonV2 onClick={toggleVotingMode} className={styles.btn}>
+              <SecondaryButtonV2 onClick={toggleVotingMode} className={`cancel-voting-button ${styles.btn}`}>
                 {t('Cancel voting')}
               </SecondaryButtonV2>
               <Link to={routes.voting.path} >
@@ -81,7 +81,7 @@ class VotingHeader extends React.Component {
                 </Link>
               </SignInTooltipWrapper>
               <SignInTooltipWrapper>
-                <PrimaryButtonV2 onClick={toggleVotingMode} className={styles.btn}>
+                <PrimaryButtonV2 onClick={toggleVotingMode} className={`start-voting-button ${styles.btn}`}>
                   {t('Start voting')}
                 </PrimaryButtonV2>
               </SignInTooltipWrapper>
