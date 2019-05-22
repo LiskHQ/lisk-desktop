@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { loadTransaction } from '../../actions/transactions';
+import { loadSingleTransaction } from '../../actions/transactions';
 import SingleTransactionV2 from './singleTransactionV2';
 
 const mapStateToProps = state => ({
@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  loadTransaction,
+  loadSingleTransaction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleTransactionV2);

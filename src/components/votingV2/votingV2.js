@@ -2,6 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './votingV2.css';
 import VotingListViewV2 from '../votingListViewV2';
+import VotingHeader from './votingHeader';
 import Onboarding from '../toolbox/onboarding/onboarding';
 import { delegateOnboarding } from '../../utils/illustrations';
 
@@ -9,19 +10,11 @@ class VotingV2 extends React.Component {
   constructor() {
     super();
     this.state = {
-      showChangeSummery: false,
-      nextStepCalled: false,
+      votingModeEnabled: false,
     };
 
+    this.toggleVotingMode = this.toggleVotingMode.bind(this);
     this.getOnboardingSlides = this.getOnboardingSlides.bind(this);
-  }
-
-  toggleSummery(value) {
-    if (value !== this.state.showChangeSummery) {
-      this.setState({
-        showChangeSummery: value,
-      });
-    }
   }
 
   setLayover(isLayover) {
@@ -32,8 +25,11 @@ class VotingV2 extends React.Component {
     }
   }
 
-  nextStepGotCalled() {
-    this.setState({ nextStepCalled: true });
+  toggleVotingMode() {
+    if (this.state.votingModeEnabled) {
+      this.props.clearVotes();
+    }
+    this.setState({ votingModeEnabled: !this.state.votingModeEnabled });
   }
 
   getOnboardingSlides() {
@@ -58,7 +54,8 @@ class VotingV2 extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, votes } = this.props;
+    const { votingModeEnabled } = this.state;
     return (
       <div className={`${grid.row} ${styles.wrapper}`} ref={(el) => { this.root = el; }}>
         <Onboarding
@@ -67,9 +64,14 @@ class VotingV2 extends React.Component {
           ctaLabel={t('Start voting')}
           onClose={console.log}
         />
+        <VotingHeader
+          t={t}
+          votingModeEnabled={votingModeEnabled}
+          toggleVotingMode={this.toggleVotingMode}
+          votes={votes}/>
         <section className={`${grid['col-sm-12']} ${grid['col-md-12']} ${styles.votingBox} ${styles.votes}`}>
-          <VotingListViewV2 showChangeSummery={this.state.showChangeSummery}
-            nextStepCalled={this.state.nextStepCalled}
+          <VotingListViewV2
+            votingModeEnabled={votingModeEnabled}
             history={this.props.history}
           />
         </section>

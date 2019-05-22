@@ -38,10 +38,10 @@ class SelectAccount extends React.Component {
   }
 
   getNameFromAccount(address) {
-    const { settings } = this.props;
+    const { settings, device } = this.props;
     // istanbul ignore else
-    if (Array.isArray(settings.hardwareAccounts)) {
-      const storedAccount = settings.hardwareAccounts.filter(account =>
+    if (Array.isArray(settings.hardwareAccounts[device.model])) {
+      const storedAccount = settings.hardwareAccounts[device.model].filter(account =>
         account.address === address);
       return storedAccount.length ? storedAccount[0].name : null;
     }
@@ -70,7 +70,7 @@ class SelectAccount extends React.Component {
         ({ ...account, name: this.getNameFromAccount(account.address) }));
 
       this.setState({ activeDevice: { ...activeDevice }, hwAccounts });
-    }, 200);
+    }, 1000);
   }
 
   onEditAccount(index) {
@@ -87,7 +87,12 @@ class SelectAccount extends React.Component {
   onSaveNameAccounts() {
     const accountNames = this.state.hwAccounts.map(account =>
       ({ address: account.address, name: account.name }));
-    this.props.settingsUpdated({ hardwareAccounts: accountNames });
+    this.props.settingsUpdated({
+      hardwareAccounts: {
+        ...this.props.settings.hardwareAccounts,
+        [this.props.device.model]: accountNames,
+      },
+    });
     this.setState({ accountOnEditMode: -1 });
   }
 
@@ -132,7 +137,7 @@ class SelectAccount extends React.Component {
   }
 
   render() {
-    const { t, prevStep, device } = this.props;
+    const { t, device, history } = this.props;
     const { accountOnEditMode, hwAccounts } = this.state;
 
     return <div>
@@ -166,7 +171,7 @@ class SelectAccount extends React.Component {
         }
       </div>
 
-      <TertiaryButtonV2 className={'go-back'} onClick={() => prevStep({ jump: 2 })}>
+      <TertiaryButtonV2 className={'go-back'} onClick={() => history.push(routes.splashscreen.path)}>
         {t('Go Back')}
       </TertiaryButtonV2>
     </div>;

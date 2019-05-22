@@ -74,11 +74,15 @@ class ConfirmVotes extends React.Component {
       secondPassphrase: secondPassphrase.value,
       goToNextStep: this.goToNextStep.bind(this),
     };
+
+    const deviceModel = this.props.account.hwInfo && this.props.account.hwInfo.deviceModel;
+    const isHwWallet = account.hwInfo && account.hwInfo.deviceId;
     return (
       <div className={styles.wrapper}>
         <article className={styles.content}>
-          <h2 className={styles.header}>{account.hwInfo && account.hwInfo.deviceId ?
-            t('Confirm vote on Ledger Nano S') : t('Final confirmation') }</h2>
+          <h2 className={styles.header}>{isHwWallet ?
+            t('Confirm vote on {{deviceModel}}', { deviceModel })
+            : t('Final confirmation') }</h2>
           <p className={styles.message}>
             {t('Are you certain of your choice?')}
           </p>
@@ -87,6 +91,7 @@ class ConfirmVotes extends React.Component {
             className={`${styles.confirmButton} confirm`}
             onClick={() => this.onNext(data)}>{t('Confirm (Fee: 1 LSK)')}</PrimaryButton>
           <Button
+            disabled={isHwWallet}
             className={`${styles.backButton} back`}
             onClick={() => this.onPrev()}>{t('Back')}</Button>
           <Checkbox

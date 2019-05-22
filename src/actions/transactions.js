@@ -1,13 +1,12 @@
-/* eslint-disable max-lines */
 import i18next from 'i18next';
 import to from 'await-to-js';
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
-import { send, getTransactions, getSingleTransaction, unconfirmedTransactions } from '../utils/api/transactions';
+import { send, getTransactions, getSingleTransaction } from '../utils/api/transactions';
 import { getDelegate } from '../utils/api/delegate';
 import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
-import { loadAccount, passphraseUsed } from './account';
+import { passphraseUsed } from './account';
 import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
@@ -15,107 +14,44 @@ import { toRawLsk } from '../utils/lsk';
 import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
 
+/**
+ * This action is used on logout
+ *
+ */
 export const cleanTransactions = () => ({
   type: actionTypes.cleanTransactions,
 });
 
-export const transactionAdded = data => ({
+/**
+ * This action is used when a new pending transaction is sent to the network.
+ * It is used in send, vote, second passphrase registration, and delegate registration.
+ *
+ * @param {Object} data - the transaction object
+ */
+export const addPendingTransaction = data => ({
   data,
-  type: actionTypes.transactionAdded,
+  type: actionTypes.addPendingTransaction,
 });
 
-export const testExtensions = () => ({
-  type: 'extensinonTest',
-});
-
-export const transactionsFilterSet = ({
-  address, limit, filter, customFilters = {},
-}) => (dispatch, getState) => {
-  const networkConfig = getState().network;
-
-  dispatch(loadingStarted(actionTypes.transactionsFilterSet));
-
-  return getTransactions({
-    networkConfig,
-    address,
-    limit,
-    filter,
-    customFilters,
-  }).then((response) => {
-    dispatch({
-      data: {
-        confirmed: response.data,
-        count: parseInt(response.meta.count, 10),
-        filter,
-        customFilters,
-      },
-      type: actionTypes.transactionsFiltered,
-    });
-    if (filter !== undefined) {
-      dispatch({
-        data: {
-          filterName: 'wallet',
-          value: filter,
-        },
-        type: actionTypes.addFilter,
-      });
-    }
-    dispatch(loadingFinished(actionTypes.transactionsFilterSet));
-  });
-};
-
-export const transactionsUpdateUnconfirmed = ({ address, pendingTransactions }) =>
-  (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    return unconfirmedTransactions(liskAPIClient, address).then(response => dispatch({
-      data: {
-        failed: pendingTransactions.filter(tx =>
-          response.data.filter(unconfirmedTx => tx.id === unconfirmedTx.id).length === 0),
-      },
-      type: actionTypes.transactionsFailed,
-    }));
-  };
-
-export const loadTransactionsFinish = accountUpdated =>
-  (dispatch) => {
-    dispatch(loadingFinished(actionTypes.transactionsLoad));
-    dispatch({
-      data: accountUpdated,
-      type: actionTypes.transactionsLoadFinish,
-    });
-  };
-
-export const loadTransactions = ({ publicKey, address }) =>
-  (dispatch, getState) => {
-    const networkConfig = getState().network;
-    const lastActiveAddress = publicKey && extractAddress(publicKey);
-    const isSameAccount = lastActiveAddress === address;
-    dispatch(loadingStarted(actionTypes.transactionsLoad));
-    getTransactions({ networkConfig, address, limit: 25 })
-      .then((transactionsResponse) => {
-        dispatch(loadAccount({
-          address,
-          transactionsResponse,
-          isSameAccount,
-        }));
-        dispatch({
-          data: {
-            count: parseInt(transactionsResponse.meta.count, 10),
-            confirmed: transactionsResponse.data,
-          },
-          type: actionTypes.transactionsLoaded,
-        });
-      });
-  };
-
-export const transactionsRequested = ({
-  address, limit, offset, filter, customFilters = {},
+/**
+ * This action is used to request transactions on dashboard and wallet page.
+ *
+ * @param {Object} params - all params
+ * @param {String} params.address - address of the account to fetch the transactions for
+ * @param {Number} params.limit - amount of transactions to fetch
+ * @param {Number} params.offset - index of the first transaction
+ * @param {Object} params.filters - object with filters for the filer dropdown
+ *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
+ * @param {Number} params.filters.direction - one of values from src/constants/transactionFilters.js
+ */
+export const loadTransactions = ({
+  address, limit, offset, filters,
 }) =>
   (dispatch, getState) => {
-    dispatch(loadingStarted(actionTypes.transactionsRequested));
+    dispatch(loadingStarted(actionTypes.loadTransactions));
     const networkConfig = getState().network;
     getTransactions({
-      networkConfig, address, limit, offset, filter, customFilters,
+      networkConfig, address, limit, offset, filters,
     })
       .then((response) => {
         dispatch({
@@ -123,14 +59,30 @@ export const transactionsRequested = ({
             count: parseInt(response.meta.count, 10),
             confirmed: response.data,
             address,
-            filter,
+            filters,
           },
-          type: actionTypes.transactionsLoaded,
+          type: offset > 0 ? actionTypes.updateTransactions : actionTypes.transactionsLoaded,
         });
-        dispatch(loadingFinished(actionTypes.transactionsRequested));
+        if (filters && filters.direction !== undefined) {
+          dispatch({
+            data: {
+              filterName: 'wallet',
+              value: filters.direction,
+            },
+            type: actionTypes.addFilter,
+          });
+        }
+        dispatch(loadingFinished(actionTypes.loadTransactions));
       });
   };
 
+/**
+ * This action is used to get the data for "My Wallet Details" module on wallet page
+ * which shows Last transactions. It cannot get the latest transaction from the list,
+ * because the list can be filtered.
+ *
+ * @param {String} address - address of the active account
+ */
 export const loadLastTransaction = address => (dispatch, getState) => {
   const networkConfig = getState().network;
   if (networkConfig) {
@@ -141,7 +93,12 @@ export const loadLastTransaction = address => (dispatch, getState) => {
   }
 };
 
-export const loadTransaction = ({ id }) =>
+/**
+ * This action is used to get the data for transaction detail page.
+ *
+ * @param {String} id - id of the transaction
+ */
+export const loadSingleTransaction = ({ id }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     const networkConfig = getState().network;
@@ -213,39 +170,37 @@ export const loadTransaction = ({ id }) =>
       });
   };
 
-export const transactionsUpdated = ({
-  address, limit, filter, pendingTransactions, customFilters,
+/**
+ * This action is used to update transactions from account middleware when balance
+ * of the account changes. The difference from loadTransactions action is that
+ * this one merges the transactions list with what is already in the store whereas
+ * the other one replaces the list.
+ *
+ * @param {Object} params - all params
+ * @param {String} params.address - address of the account to fetch the transactions for
+ * @param {Number} params.limit - amount of transactions to fetch
+ * @param {Object} params.filters - object with filters for the filer dropdown
+ *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
+ * @param {Number} params.filters.direction - one of values from src/constants/transactionFilters.js
+ */
+export const updateTransactions = ({
+  address, limit, filters,
 }) =>
   (dispatch, getState) => {
     const networkConfig = getState().network;
 
     getTransactions({
-      networkConfig, address, limit, filter, customFilters,
+      networkConfig, address, limit, filters,
     })
       .then((response) => {
-        if (filter === getState().transactions.filter) {
+        if (filters && filters.direction === getState().transactions.filters.direction) {
           dispatch({
             data: {
               confirmed: response.data,
               count: parseInt(response.meta.count, 10),
             },
-            type: actionTypes.transactionsUpdated,
+            type: actionTypes.updateTransactions,
           });
-        }
-        // eslint-disable-next-line no-constant-condition
-        if (pendingTransactions.length) {
-          // this was disabled, because this caused pending transactions
-          // to disappear from the list before they appeared again as confirmed.
-          // Currently, the problem is that a pending transaction will not be removed
-          // from the list if it fails. Caused by Lisk Core 1.0.0
-          // TODO: figure out how to make this work again
-          /*
-          dispatch(transactionsUpdateUnconfirmed({
-            liskAPIClient,
-            address,
-            pendingTransactions,
-          }));
-          */
         }
       });
   };
@@ -298,7 +253,7 @@ export const sent = ({
     if (error) {
       handleSentError({ error, account, dispatch });
     } else {
-      dispatch(transactionAdded({
+      dispatch(addPendingTransaction({
         id: callResult.id,
         senderPublicKey: account.publicKey,
         senderId: account.address,

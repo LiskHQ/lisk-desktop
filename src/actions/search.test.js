@@ -128,7 +128,10 @@ describe('actions: search', () => {
       });
       expect(dispatch).toHaveBeenNthCalledWith(2, {
         data: {
-          ...params,
+          address: accounts.delegate.address,
+          filters: {
+            direction: txFilters.all,
+          },
           count,
           transactions: transactions.data,
         },
@@ -191,7 +194,10 @@ describe('actions: search', () => {
       });
       expect(dispatch).toHaveBeenNthCalledWith(2, {
         data: {
-          ...params,
+          address: accounts.delegate.address,
+          filters: {
+            direction: txFilters.all,
+          },
           count,
           transactions: transactions.data,
         },

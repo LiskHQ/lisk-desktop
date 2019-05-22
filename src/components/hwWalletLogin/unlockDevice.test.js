@@ -16,6 +16,9 @@ describe('Unlock Device', () => {
       t: v => v,
       nextStep: jest.fn(),
       prevStep: jest.fn(),
+      history: {
+        push: jest.fn(),
+      },
     };
   });
 
@@ -24,7 +27,7 @@ describe('Unlock Device', () => {
     wrapper = mount(<UnlockDevice {...props} />);
     expect(props.nextStep).not.toBeCalled();
     wrapper.find('button').simulate('click');
-    expect(props.prevStep).toBeCalled();
+    expect(props.history.push).toBeCalled();
   });
 
   it('Should call nextStep if openApp = true, or not Ledger', () => {

@@ -23,7 +23,7 @@ class Loading extends React.Component {
     const { t } = this.props;
     return <div>
       <h1>{t('Connect your Hardware Wallet')}</h1>
-      <p>{t('Lisk Hub currently supports Ledger Nano S and Trezor wallets')}</p>
+      <p>{t('Lisk Hub currently supports Ledger Nano S and Trezor Model T wallets')}</p>
       <LoadingIcon />
       <p>{t('Looking for a device...')}</p>
       <Link to={routes.splashscreen.path}>

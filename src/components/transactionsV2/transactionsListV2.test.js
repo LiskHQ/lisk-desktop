@@ -70,7 +70,7 @@ describe('TransactionsList V2', () => {
   it('should render loading spinner', () => {
     const loadingProps = {
       ...props,
-      loading: [actionTypes.transactionsFilterSet],
+      loading: [actionTypes.loadTransactions],
     };
     wrapper = mount(<TransactionsListV2 {...loadingProps} />, options);
     expect(wrapper).to.have.descendants('SpinnerV2');

@@ -78,12 +78,14 @@ describe('Select Account', () => {
       },
       network: 0,
       settings: {
-        hardwareAccounts: [
-          {
-            address: '123456L',
-            name: 'Main',
-          },
-        ],
+        hardwareAccounts: {
+          'Ledger Nano S': [
+            {
+              address: '123456L',
+              name: 'Main',
+            },
+          ],
+        },
       },
       t: v => v,
       history: {
@@ -108,12 +110,12 @@ describe('Select Account', () => {
     expect(wrapper).toContainMatchingElement('.go-back');
   });
 
-  it('Should call prevStep function if do click in Go Back button', () => {
+  it('Should call push function if do click in Go Back button', () => {
     wrapper = mount(<SelectAccount {...props} />);
-    expect(props.prevStep).not.toBeCalled();
+    expect(props.history.push).not.toBeCalled();
     wrapper.find('.go-back').at(0).simulate('click');
     wrapper.update();
-    expect(props.prevStep).toBeCalled();
+    expect(props.history.push).toBeCalled();
   });
 
   it('Should change name "label" of one account', async () => {

@@ -2,6 +2,7 @@
 import React from 'react';
 import { TertiaryButtonV2 } from '../toolbox/buttons/button';
 import illustration from '../../assets/images/illustrations/illustration-ledger-nano-light.svg';
+import routes from '../../constants/routes';
 
 const { ipc } = window;
 
@@ -54,7 +55,7 @@ class UnlockDevice extends React.Component {
   }
 
   render() {
-    const { t, prevStep, deviceModel = 'Ledger S' } = this.props;
+    const { t, history, deviceModel = 'Ledger S' } = this.props;
     return !this.state.isLoading && (
       <div>
         <h1>{t('{{deviceModel}} connected! Open the Lisk app on the device', { deviceModel })}</h1>
@@ -69,7 +70,7 @@ class UnlockDevice extends React.Component {
           </a>
         </p>
         <img src={illustration} />
-        <TertiaryButtonV2 onClick={prevStep}>
+        <TertiaryButtonV2 onClick={() => { history.push(routes.splashscreen.path); }}>
           {t('Go Back')}
         </TertiaryButtonV2>
       </div>

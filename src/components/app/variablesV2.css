@@ -124,6 +124,7 @@ or "warn/action" ineastd of "red/green"
   --color-title-header-box: #4c4c4c;
   --color-link: var(--color-primary-standard);
   --color-rows-hover: rgba(157, 184, 250, 0.2);
+  --color-highlight-checkboxes: rgba(64, 112, 244, 0.08);
 
   /*************************
         Box
