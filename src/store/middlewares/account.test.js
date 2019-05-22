@@ -35,7 +35,7 @@ describe('Account middleware', () => {
   const transactions = { transactions: [{ senderId: 'sample_address', receiverId: 'some_address' }] };
 
   const transactionsUpdatedAction = {
-    type: actionTypes.transactionsUpdated,
+    type: actionTypes.updateTransactions,
     data: {
       confirmed: [{
         type: transactionTypes.registerDelegate,
@@ -80,7 +80,7 @@ describe('Account middleware', () => {
     spy(accountActions, 'updateTransactionsIfNeeded');
     spy(accountActions, 'updateDelegateAccount');
     stubGetAccount = stub(accountApi, 'getAccount').returnsPromise();
-    transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
+    transactionsActionsStub = spy(transactionsActions, 'updateTransactions');
     stubTransactions = stub(transactionsApi, 'getTransactions').returnsPromise().resolves(true);
     getAutoLogInDataMock = stub(accountUtils, 'getAutoLogInData');
     getAutoLogInDataMock.withArgs().returns({ });
@@ -153,19 +153,19 @@ describe('Account middleware', () => {
     expect(accountDataUpdatedSpy).to.have.been.calledWith();
   });
 
-  it(`should fetch delegate info on ${actionTypes.transactionsUpdated} action if action.data.confirmed contains delegateRegistration transactions`, () => {
+  it(`should fetch delegate info on ${actionTypes.updateTransactions} action if action.data.confirmed contains delegateRegistration transactions`, () => {
     middleware(store)(next)(transactionsUpdatedAction);
     expect(accountActions.updateDelegateAccount).to.have.been.calledWith();
   });
 
-  it(`should not fetch delegate info on ${actionTypes.transactionsUpdated} action if action.data.confirmed does not contain delegateRegistration transactions`, () => {
+  it(`should not fetch delegate info on ${actionTypes.updateTransactions} action if action.data.confirmed does not contain delegateRegistration transactions`, () => {
     transactionsUpdatedAction.data.confirmed[0].type = transactionTypes.send;
 
     middleware(store)(next)(transactionsUpdatedAction);
     expect(store.dispatch).to.not.have.been.calledWith();
   });
 
-  it(`should dispatch ${actionTypes.votesFetched} action on ${actionTypes.transactionsUpdated} action if action.data.confirmed contains delegateRegistration transactions`, () => {
+  it(`should dispatch ${actionTypes.votesFetched} action on ${actionTypes.updateTransactions} action if action.data.confirmed contains delegateRegistration transactions`, () => {
     const actionSpy = spy(votingActions, 'votesFetched');
     transactionsUpdatedAction.data.confirmed[0].type = transactionTypes.vote;
     middleware(store)(next)(transactionsUpdatedAction);

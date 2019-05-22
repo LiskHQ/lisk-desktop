@@ -1,5 +1,3 @@
-/* eslint-disable max-lines */
-// TODO figure out how to reduce size of this file
 import { expect as chaiExpect } from 'chai';
 import { spy, stub } from 'sinon';
 import i18next from 'i18next';
@@ -12,7 +10,6 @@ import {
   removePassphrase,
   passphraseUsed,
   loadDelegate,
-  loadAccount,
   accountDataUpdated,
   updateTransactionsIfNeeded,
   updateDelegateAccount,
@@ -94,7 +91,7 @@ describe('actions: account', () => {
       chaiExpect(typeof actionFunction).to.be.deep.equal('function');
     });
 
-    it('should dispatch transactionAdded action if resolved', () => {
+    it('should dispatch addPendingTransaction action if resolved', () => {
       accountApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
@@ -107,7 +104,7 @@ describe('actions: account', () => {
 
       actionFunction(dispatch, getState);
       chaiExpect(dispatch).to.have.been
-        .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
+        .calledWith({ data: expectedAction, type: actionTypes.addPendingTransaction });
     });
 
     it('should dispatch secondPassphraseRegisteredFailure action if caught', () => {
@@ -159,7 +156,7 @@ describe('actions: account', () => {
       chaiExpect(typeof actionFunction).to.be.deep.equal('function');
     });
 
-    it('should dispatch transactionAdded action if resolved', () => {
+    it('should dispatch addPendingTransaction action if resolved', () => {
       delegateApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
@@ -173,7 +170,7 @@ describe('actions: account', () => {
 
       actionFunction(dispatch, getState);
       chaiExpect(dispatch).to.have.been
-        .calledWith({ data: expectedAction, type: actionTypes.transactionAdded });
+        .calledWith({ data: expectedAction, type: actionTypes.addPendingTransaction });
     });
 
     it('should dispatch delegateRegisteredFailure action if caught', () => {
@@ -245,72 +242,6 @@ describe('actions: account', () => {
     });
   });
 
-  describe('loadAccount', () => {
-    let getAccountStub;
-    let transactionsActionsStub;
-    let getState;
-
-    const dispatch = spy();
-
-    beforeEach(() => {
-      getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
-      transactionsActionsStub = spy(transactionsActions, 'loadTransactionsFinish');
-      getState = () => ({
-        peers: { liskAPIClient: {} },
-      });
-    });
-
-    afterEach(() => {
-      getAccountStub.restore();
-      transactionsActionsStub.restore();
-    });
-
-    it('should finish transactions load and load delegate if not own account', () => {
-      getAccountStub.resolves({
-        balance: 10e8,
-        publicKey: accounts.genesis.publicKey,
-        isDelegate: false,
-      });
-
-      const data = {
-        address: accounts.genesis.address,
-        transactionsResponse: { meta: { count: 0 }, data: [] },
-        isSameAccount: false,
-      };
-
-      loadAccount(data)(dispatch, getState);
-      chaiExpect(transactionsActionsStub).to.have.been.calledWith({
-        confirmed: [],
-        count: 0,
-        balance: 10e8,
-        address: accounts.genesis.address,
-      });
-    });
-
-    it('should finish transactions load and should not load delegate if own account', () => {
-      getAccountStub.resolves({
-        balance: 10e8,
-        publicKey: accounts.genesis.publicKey,
-        delegate: { username: 'delegate information' },
-      });
-
-      const data = {
-        address: accounts.genesis.address,
-        transactionsResponse: { meta: { count: 0 }, data: [] },
-        isSameAccount: true,
-      };
-
-      loadAccount(data)(dispatch, getState);
-      chaiExpect(transactionsActionsStub).to.have.been.calledWith({
-        confirmed: [],
-        count: 0,
-        balance: 10e8,
-        address: accounts.genesis.address,
-        delegate: { username: 'delegate information' },
-      });
-    });
-  });
-
   describe('accountDataUpdated', () => {
     let peersActionsStub;
     let getAccountStub;
@@ -322,7 +253,7 @@ describe('actions: account', () => {
     beforeEach(() => {
       peersActionsStub = spy(peersActions, 'liskAPIClientUpdate');
       getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
-      transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
+      transactionsActionsStub = spy(transactionsActions, 'updateTransactions');
       getState = () => ({
         peers: { liskAPIClient: {}, options: { code: 0 } },
       });
@@ -379,7 +310,7 @@ describe('actions: account', () => {
     const dispatch = spy();
 
     beforeEach(() => {
-      transactionsActionsStub = spy(transactionsActions, 'transactionsUpdated');
+      transactionsActionsStub = spy(transactionsActions, 'updateTransactions');
       getState = () => ({
         peers: { liskAPIClient: {} },
       });
@@ -480,7 +411,7 @@ describe('actions: account', () => {
     let state;
     const getState = () => (state);
     const balance = 10e8;
-    const { passphrase, address } = accounts.genesis;
+    const { passphrase, address, publicKey } = accounts.genesis;
 
     beforeEach(() => {
       dispatch = jest.fn();
@@ -524,6 +455,22 @@ describe('actions: account', () => {
         data: expect.objectContaining({
           address,
           balance,
+        }),
+      }));
+    });
+
+    it('should call account api and dispatch accountLoggedIn with ledger loginType', async () => {
+      accountApi.getAccount.mockResolvedValue({ balance, address });
+      await login({ hwInfo: {}, publicKey })(dispatch, getState);
+      expect(dispatch).toHaveBeenNthCalledWith(2, expect.objectContaining({
+        type: actionTypes.accountLoggedIn,
+        data: expect.objectContaining({
+          info: {
+            LSK: expect.objectContaining({
+              address,
+              balance,
+            }),
+          },
         }),
       }));
     });

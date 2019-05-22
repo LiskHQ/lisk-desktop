@@ -1,5 +1,5 @@
 import actionTypes from '../../constants/actions';
-import txFilter from '../../constants/transactionFilters';
+import txFilters from '../../constants/transactionFilters';
 /**
  *
  * @param {Array} state
@@ -9,7 +9,8 @@ const initialState = {
   pending: [],
   confirmed: [],
   count: null,
-  customFilters: {
+  filters: {
+    direction: txFilters.all,
     dateFrom: '',
     dateTo: '',
     amountFrom: '',
@@ -21,7 +22,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
   switch (action.type) {
     case actionTypes.cleanTransactions:
       return initialState;
-    case actionTypes.transactionAdded:
+    case actionTypes.addPendingTransaction:
       return { ...state, pending: [action.data, ...state.pending] };
     case actionTypes.transactionFailed:
       return { ...state, failed: { errorMessage: action.data.errorMessage } };
@@ -37,13 +38,12 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
     case actionTypes.transactionsLoaded:
       return {
         ...state,
-        confirmed: [
-          ...state.confirmed,
-          ...action.data.confirmed,
-        ],
+        confirmed: action.data.confirmed,
         count: action.data.count,
+        filters: action.data.filters !== undefined ?
+          action.data.filters : state.filters,
       };
-    case actionTypes.transactionsUpdated:
+    case actionTypes.updateTransactions:
       return {
         ...state, // Filter any newly confirmed transaction from pending
         pending: state.pending.filter(pendingTransaction =>
@@ -57,29 +57,9 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
               transaction.id === confirmedTransaction.id).length === 0),
         ],
         count: action.data.count,
+        filters: action.data.filters !== undefined ?
+          action.data.filters : state.filters,
       };
-    case actionTypes.transactionsFiltered:
-      return {
-        ...state,
-        confirmed: action.data.confirmed,
-        count: action.data.count,
-        filter: action.data.filter,
-        customFilters: action.data.customFilters,
-      };
-    case actionTypes.transactionsLoadFinish:
-      return {
-        ...state,
-        confirmed: action.data.confirmed,
-        count: action.data.count,
-        account: {
-          address: action.data.address,
-          balance: action.data.balance,
-          delegate: action.data.delegate,
-        },
-        filter: txFilter.all,
-      };
-    case 'extensinonTest':
-      return { ...state, test: new Date().toLocaleTimeString() };
     case (actionTypes.accountSwitched):
       return { pending: [], confirmed: [], count: 0 };
     default:

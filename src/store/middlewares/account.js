@@ -4,7 +4,10 @@ import {
   updateDelegateAccount,
 } from '../../actions/account'; // eslint-disable-line
 import { votesFetched } from '../../actions/voting';
-import { transactionsFilterSet, cleanTransactions } from '../../actions/transactions';
+import {
+  loadTransactions,
+  cleanTransactions,
+} from '../../actions/transactions';
 import actionTypes from '../../constants/actions';
 import transactionTypes from '../../constants/transactionTypes';
 
@@ -36,7 +39,7 @@ const updateAccountData = (store, action) => {
    */
   /* istanbul ignore if */
   if (shouldAutoLogIn(getAutoLogInData()) && action.data.passphrase) {
-    store.dispatch(transactionsFilterSet({
+    store.dispatch(loadTransactions({
       address: extractAddress(extractPublicKey(action.data.passphrase)),
       limit: 30,
       filter: txFilters.all,
@@ -146,7 +149,7 @@ const accountMiddleware = store => next => (action) => {
     case actionTypes.newBlockCreated:
       checkTransactionsAndUpdateAccount(store, action);
       break;
-    case actionTypes.transactionsUpdated:
+    case actionTypes.updateTransactions:
       delegateRegistration(store, action);
       votePlaced(store, action);
       break;

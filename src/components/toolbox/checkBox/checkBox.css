@@ -1,10 +1,11 @@
-@import '../app/variablesV2.css';
+@import '../../app/variablesV2.css';
 
 .checkbox {
   display: inline-block;
   width: 16px;
   height: 16px;
   position: relative;
+  cursor: pointer;
 
   & input {
     visibility: hidden;
@@ -13,10 +14,13 @@
 
   & span {
     color: var(--color-ultramarine-blue);
+    border-radius: var(--border-radius-standard);
     font-size: 20px;
     position: absolute;
     left: 0;
     top: 0;
+    width: 15px;
+    height: 15px;
 
     &.checked {
       display: none;
@@ -26,10 +30,21 @@
     &.unchecked {
       font-size: 16px;
       background-color: var(--color-white);
-      border: 1px solid var(--dark-border-color);
-      border-radius: var(--border-radius-standard);
+      border: solid 1px rgba(0, 0, 0, 0.08);
       color: var(--color-white);
       display: block;
+    }
+
+    &.accent {
+      border: 1px solid var(--color-ultramarine-blue);
+      border-radius: calc(var(--border-radius-standard) + 1px);
+      box-shadow: 0 0 5px 0 var(--color-ultramarine-blue);
+      line-height: 15px !important;
+    }
+
+    &.removed {
+      border: solid 1px var(--color-burnt-sienna);
+      box-shadow: unset;
     }
   }
 

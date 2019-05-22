@@ -39,7 +39,7 @@ describe('Single Transaction V2 Component', () => {
       account: accounts.genesis,
       transaction,
       peers,
-      loadTransaction: jest.fn(),
+      loadSingleTransaction: jest.fn(),
     });
 
     const options = {
@@ -87,7 +87,7 @@ describe('Single Transaction V2 Component', () => {
       account: accounts.genesis,
       transaction,
       peers,
-      loadTransaction: jest.fn(),
+      loadSingleTransaction: jest.fn(),
     });
 
     const options = {
@@ -117,7 +117,7 @@ describe('Single Transaction V2 Component', () => {
       account: accounts.genesis,
       transaction,
       peers,
-      loadTransaction: jest.fn(),
+      loadSingleTransaction: jest.fn(),
     });
 
     const options = {
@@ -148,7 +148,7 @@ describe('Single Transaction V2 Component', () => {
       account: accounts.genesis,
       transaction,
       peers,
-      loadTransaction: jest.fn(),
+      loadSingleTransaction: jest.fn(),
     });
 
     const options = {
@@ -172,7 +172,7 @@ describe('Single Transaction V2 Component', () => {
       account: accounts.genesis,
       transaction,
       peers,
-      loadTransaction: jest.fn(),
+      loadSingleTransaction: jest.fn(),
     });
 
     const options = {
