@@ -2,10 +2,14 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import VotingV2 from './votingV2';
+import { clearVotes } from '../../actions/voting';
 
 const mapStateToProps = state => ({
   votes: state.voting.votes,
 });
 
+const mapDispatchToProps = {
+  clearVotes,
+};
 
-export default connect(mapStateToProps)(translate()(VotingV2));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(VotingV2));

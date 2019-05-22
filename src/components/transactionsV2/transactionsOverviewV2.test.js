@@ -84,7 +84,7 @@ describe('TransactionsOverview V2', () => {
   });
 
   it('should call onFilterSet when filtering transations', () => {
-    wrapper.find('.transaction-filter-item').first().simulate('click');
+    wrapper.find('.filter-all').first().simulate('click');
     expect(props.onFilterSet).to.have.been.calledWith();
   });
 });
