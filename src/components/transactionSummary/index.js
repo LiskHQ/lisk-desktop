@@ -23,6 +23,7 @@ class TransactionSummary extends React.Component {
     this.confirmOnClick = this.confirmOnClick.bind(this);
     this.getHwWalletIllustration = this.getHwWalletIllustration.bind(this);
   }
+
   componentDidMount() {
     const { isHardwareWalletConnected } = this.state;
 
