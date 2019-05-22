@@ -165,4 +165,16 @@
       margin: 30px 0;
     }
   }
+
+  & .buttonsHolder {
+    display: flex;
+
+    & > button {
+      margin-right: 16px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
 }

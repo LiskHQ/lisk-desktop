@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './onboarding.css';
-import { PrimaryButtonV2, TertiaryButtonV2 } from '../buttons/button';
+import { PrimaryButtonV2, SecondaryButtonV2 } from '../buttons/button';
 
 class Onboarding extends React.Component {
   constructor() {
@@ -32,11 +32,11 @@ class Onboarding extends React.Component {
   }
 
   render() {
-    const { slides, onClose } = this.props;
+    const { slides, onClose, className } = this.props;
     const { currentSlide } = this.state;
 
     return slides.length ? (
-      <div className={styles.onboarding}>
+      <div className={`${styles.onboarding} ${className}`}>
         <span className={styles.closeBtn} onClick={onClose} />
         <div className={styles.illustrations}>
           {slides.map(({ illustration }, i) =>
@@ -56,28 +56,33 @@ class Onboarding extends React.Component {
             }
           </span>
           <div className={styles.slides}>
-            {slides.map(({ className = '', ...slide }, index) => (
+            {slides.map((slide, index) => (
               <section key={`slides-${index}`}
-                className={`${className} ${index === currentSlide ? styles.active : ''}`}>
+                className={`${slide.className || ''} ${index === currentSlide ? styles.active : ''}`}>
                   <h1 className={styles.title}>{slide.title}</h1>
                 {typeof slide.content === 'string' &&
                   <p>{slide.content}</p>}
               </section>
             ))}
           </div>
-          <div>
+          <div className={styles.buttonsHolder}>
+            {currentSlide !== 0
+              ? (
+                <SecondaryButtonV2
+                  className={'light'}
+                  name={'prev'}
+                  onClick={this.handleButtonClick}
+                >
+                  Previous
+                </SecondaryButtonV2>
+              ) : null
+            }
             <PrimaryButtonV2
               name={'next'}
               onClick={this.handleButtonClick}
             >
               Next
             </PrimaryButtonV2>
-            {currentSlide === 0 ? null :
-              <TertiaryButtonV2
-                name={'prev'}
-                onClick={this.handleButtonClick}
-              >Previous</TertiaryButtonV2>
-            }
           </div>
         </div>
       </div>
@@ -93,12 +98,17 @@ Onboarding.propTypes = {
       PropTypes.node,
       PropTypes.arrayOf(PropTypes.node),
     ]).isRequired,
-    illustration: PropTypes.string,
-  })),
+    illustration: PropTypes.string.isRequired,
+  })).isRequired,
+  ctaLabel: PropTypes.string.isRequired,
+  finalCallback: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  className: PropTypes.string,
 };
 
 Onboarding.defaultProps = {
   slides: [],
+  className: '',
 };
 
 export default Onboarding;
