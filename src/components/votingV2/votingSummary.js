@@ -30,11 +30,12 @@ const VotingSummary = ({
       account={account}
       confirmButton={{
         label: t('Confirm voting'),
-        onClick: () => {
+        onClick: ({ secondPassphrase }) => {
           votePlaced({
             account,
             votes,
             passphrase: account.passphrase,
+            secondPassphrase,
             goToNextStep: nextStep,
           });
         },
