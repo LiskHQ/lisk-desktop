@@ -23,4 +23,34 @@
     justify-content: space-between;
     align-items: center;
   }
+
+  & .list {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & > .listRow {
+      @mixin contentLargest bold;
+
+      width: 100%;
+      height: 75px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      border-bottom: 1px solid var(--color-mystic);
+
+      & > span:last-child {
+        margin-left: auto;
+      }
+    }
+
+    & > .listRow:last-child {
+      border-bottom: 1px solid transparent;
+    }
+  }
 }

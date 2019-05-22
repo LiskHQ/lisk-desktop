@@ -32,10 +32,10 @@
   line-height: 20px;
 }
 
-@define-mixin contentLargest {
+@define-mixin contentLargest $weight: normal {
   font-family: var(--content-font);
   font-size: 15px;
-  font-weight: var(--font-weight-normal);
+  font-weight: var(--font-weight-$(weight));
   letter-spacing: 0;
   line-height: 18px;
 }

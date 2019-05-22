@@ -1,0 +1,19 @@
+@import '../app/variablesV2.css';
+@import '../app/mixins.css';
+
+.wrapper {
+  @mixin contentLargest bold;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+  margin: 0 15px;
+
+  & .subTitle {
+    @mixin contentNormal;
+
+    color: var(--color-slate-gray);
+  }
+}

@@ -1,14 +1,14 @@
-// istanbull ignore file
+// istanbul ignore file
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import RecentTransactions from './recentTransactions';
 
 
 const mapStateToProps = state => ({
-  transactions: state.transactions,
+  account: state.account,
+  followedAccounts: state.followedAccounts,
   settings: state.settings,
+  transactions: state.transactions,
 });
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(RecentTransactions));
+export default connect(mapStateToProps)(translate()(RecentTransactions));

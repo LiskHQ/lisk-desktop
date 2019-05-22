@@ -1,40 +1,61 @@
+// istanbul ignore file
 import React, { Component } from 'react';
 import Box from '../../boxV3';
 import removeDuplicateTransactions from '../../../utils/transactions';
-import TransactionList from './transactionsList';
+import TransactionList from './transactionList';
+import EmptyState from '../../emptyStateV2';
+import { tokenMap } from '../../../constants/tokens';
+import svg from '../../../utils/svgIcons';
 import styles from './recentTransactions.css';
 
 class RecentTransactions extends Component {
   constructor(props) {
     super(props);
 
-    this.onTabClick = this.onTabClick.bind(this);
     this.getLatestTransactions = this.getLatestTransactions.bind(this);
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  onTabClick(tab) {
-    console.log(tab);
-  }
-
   getLatestTransactions() {
-    const { transactions } = this.props;
-    const latestTx = removeDuplicateTransactions(transactions.pending, transactions.confirmed);
-    return latestTx.length >= 5 ? latestTx.slice(0, 5) : latestTx;
+    const { transactions, settings } = this.props;
+    if (settings.token.active === tokenMap.LSK.key) {
+      const latestTx = removeDuplicateTransactions(transactions.pending, transactions.confirmed);
+      return latestTx.length >= 5 ? latestTx.slice(0, 5) : latestTx;
+    }
+    // TODO once we know how to get latest BTC tx we can do this part here
+    return [];
   }
 
   render() {
-    const { settings, t } = this.props;
+    const {
+      account,
+      followedAccounts,
+      settings,
+      t,
+    } = this.props;
     const activeToken = settings.token.active || 'LSK';
+    const transactionList = this.getLatestTransactions();
 
     return (
       <Box
         className={`${styles.box}`}
         title={`Recent ${activeToken} Transactions`}
-        t={t}>
-        <TransactionList
-          transactions={this.getLatestTransactions()}
-          t={t}/>
+        t={t}
+      >
+      {
+        transactionList.length
+        ? <TransactionList
+            account={account}
+            activeToken={activeToken}
+            followedAccounts={followedAccounts}
+            transactions={transactionList}
+            t={t}/>
+        : <EmptyState
+            t={t}
+            title={t('No Transactions Yet')}
+            description={t('A great way to start is to top up your account with some LSK tokens.')}
+            icon={svg.icon_empty_recent_transactions}
+          />
+      }
       </Box>
     );
   }
