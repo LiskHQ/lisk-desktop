@@ -90,10 +90,12 @@ class Form extends React.Component {
   }
 
   componentDidUpdate() {
-    const { fields } = this.state;
+    const { fields, unspentTransactionOutputs } = this.state;
     const { token, account, dynamicFees } = this.props;
     // istanbul ignore next
-    if (token === tokenMap.BTC.key && account && account.info[token]) {
+    if (token === tokenMap.BTC.key
+        && account && account.info[token]
+        && !unspentTransactionOutputs.length) {
       btcTransactionsAPI
         .getUnspentTransactionOutputs(account.info[token].address)
         .then(data => this.setState({ unspentTransactionOutputs: data }))
@@ -295,7 +297,6 @@ class Form extends React.Component {
 
   getUnspentTransactionOutputCountToConsume(value) {
     const { unspentTransactionOutputs } = this.state;
-
     const amount = new BigNumber(value);
     const [count] = unspentTransactionOutputs.reduce((result, output) => {
       // istanbul ignore if
@@ -315,9 +316,8 @@ class Form extends React.Component {
     if (this.validateAmountField(value || amount.value)) {
       return 0;
     }
-
     const feeInSatoshis = btcTransactionsAPI.calculateTransactionFee({
-      inputCount: this.getUnspentTransactionOutputCountToConsume(value),
+      inputCount: this.getUnspentTransactionOutputCountToConsume(value || amount.value),
       outputCount: 2,
       dynamicFeePerByte,
     });
@@ -559,7 +559,9 @@ class Form extends React.Component {
                 </Tooltip>
               </span>
             </label>
-          ) : !!Object.keys(dynamicFees).length && fields.amount.value !== '' && (
+          ) : !!Object.keys(dynamicFees).length &&
+            fields.amount.value !== '' &&
+            !this.validateAmountField(fields.amount.value) && (
             <div className={`${styles.fieldGroup}`}>
               <span className={`${styles.fieldLabel}`}>
                 {t('Processing Speed')}
