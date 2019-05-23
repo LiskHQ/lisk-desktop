@@ -64,7 +64,7 @@ class Tooltip extends React.Component {
 
   render() {
     const {
-      title, children, footer, className, alwaysShow,
+      title, children, footer, className, alwaysShow, content,
     } = this.props;
     const {
       showTooltip,
@@ -78,10 +78,13 @@ class Tooltip extends React.Component {
         onMouseLeave={this.handleMouseLeave}
         onMouseMove={this.handleMouseMove}
         ref={this.setWrapperRef}>
-        <span
-          className={`${styles.infoIcon} ${infoIcon}`}
-          onClick={this.handleClick}
-          />
+        {React.isValidElement(content) ?
+          content :
+          <span
+            className={`${styles.infoIcon} ${infoIcon}`}
+            onClick={this.handleClick} >
+          </span>
+         }
         <div className={`${styles.tooltip} ${(alwaysShow || showTooltip) ? 'shownTooltip' : ''} ${tooltip} tooltip-window`}>
           <span className={`${styles.tooltipArrow} tooltip-arrow`}>
             <svg stroke="inherit" fill="currentColor" viewBox="0 0 14 28">
@@ -107,6 +110,7 @@ Tooltip.propTypes = {
   children: PropTypes.node.isRequired,
   footer: PropTypes.node,
   className: PropTypes.string,
+  content: PropTypes.node,
 };
 
 Tooltip.defaultProps = {

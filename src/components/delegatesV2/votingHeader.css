@@ -6,6 +6,10 @@
   justify-content: space-between;
   width: 100%;
   margin-bottom: 25px;
+
+  & > * {
+    display: flex;
+  }
 }
 
 .box,

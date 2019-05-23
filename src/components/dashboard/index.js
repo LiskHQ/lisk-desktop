@@ -5,7 +5,6 @@ import { loadTransactions } from '../../actions/transactions';
 import removeDuplicateTransactions from '../../utils/transactions';
 import Dashboard from './dashboard';
 
-
 const mapStateToProps = state => ({
   transactions: removeDuplicateTransactions(
     state.transactions.pending,
