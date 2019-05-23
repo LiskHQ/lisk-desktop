@@ -127,8 +127,7 @@ describe('actions: voting', () => {
     });
 
     it('should dispatch addPendingTransaction action if resolved', async () => {
-      delegateApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
-      const expectedAction = {
+      const transaction = {
         id: '15626650747375562521',
         senderPublicKey: account.publicKey,
         senderId: account.address,
@@ -136,10 +135,11 @@ describe('actions: voting', () => {
         fee: Fees.vote,
         type: 3,
       };
+      delegateApiMock.returnsPromise().resolves([transaction]);
 
       await actionFunction(dispatch, getState);
       expect(dispatch).to.have.been
-        .calledWith({ data: expectedAction, type: actionTypes.addPendingTransaction });
+        .calledWith({ data: transaction, type: actionTypes.addPendingTransaction });
     });
 
     it('should call goToNextStep with "success: false" if caught an error', async () => {

@@ -12,8 +12,8 @@ import { passphraseUsed } from './account';
 import { addPendingTransaction } from './transactions';
 import { errorToastDisplayed } from './toaster';
 import Fees from '../constants/fees';
+import votingConst from '../constants/voting';
 import actionTypes from '../constants/actions';
-import transactionTypes from '../constants/transactionTypes';
 import { loginType } from '../constants/hwConstants';
 
 /**
@@ -123,7 +123,7 @@ export const votePlaced = ({
       }));
       return;
     }
-    if (unvotedList.length + votedList > 33) {
+    if (unvotedList.length + votedList > votingConst.maxCountOfVotes) {
       dispatch(errorToastDisplayed({
         label: i18next.t('Max amount of delegates in one voting exceeded.'),
       }));
@@ -152,14 +152,7 @@ export const votePlaced = ({
       goToNextStep({ success: false, text: handleVoteError({ error, account, dispatch }) });
     } else {
       dispatch(pendingVotesAdded());
-      dispatch(addPendingTransaction({
-        id: callResult.id,
-        senderPublicKey: account.publicKey,
-        senderId: account.address,
-        amount: 0,
-        fee: Fees.vote,
-        type: transactionTypes.vote,
-      }));
+      callResult.map(transaction => dispatch(addPendingTransaction(transaction)));
       dispatch(passphraseUsed(passphrase));
       goToNextStep({ success: true });
     }
