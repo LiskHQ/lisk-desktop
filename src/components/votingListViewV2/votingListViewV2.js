@@ -23,7 +23,7 @@ class VotingListViewV2 extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.account.serverPublicKey) {
+    if (this.props.account.serverPublicKey && !this.props.votingModeEnabled) {
       this.loadVotedDelegates();
     }
     this.loadDelegates('', true);

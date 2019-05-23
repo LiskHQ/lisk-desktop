@@ -1,3 +1,4 @@
+import votingConst from '../constants/voting';
 
 const getVotedList = votes => (Object.keys(votes).filter(key => votes[key].confirmed));
 
@@ -10,4 +11,10 @@ const getVoteList = votes => (Object.keys(votes).filter(key =>
 const getTotalVotesCount = votes => ((getVotedList(votes).length - getUnvoteList(votes).length)
   + getVoteList(votes).length);
 
-export { getTotalVotesCount, getVotedList, getVoteList, getUnvoteList };
+const getTotalActions = votes => (
+  Math.ceil((
+    getVoteList(votes).length + getUnvoteList(votes).length
+  ) / votingConst.maxCountOfVotesInOneTurn)
+);
+
+export { getTotalVotesCount, getVotedList, getVoteList, getUnvoteList, getTotalActions };
