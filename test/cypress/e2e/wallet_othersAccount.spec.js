@@ -63,9 +63,9 @@ describe('Wallet Others account', () => {
     cy.visit(`${urls.accounts}/${accounts.genesis.address}`);
     cy.wait('@requestAccountData');
     cy.get(ss.followAccountBtn).contains('Bookmark account');
-    cy.get(ss.followAccountBtn).click();
+    cy.get(ss.followAccountBtn).click('bottom');
     cy.get(ss.titleInput).type('Bob');
-    cy.get(ss.confirmAddToBookmarks).click()
+    cy.get(ss.confirmAddToBookmarks).click('bottom')
       .should(() => {
         expect(getFollowedAccountObjFromLS().LSK[0].address).to.equal(accounts.genesis.address);
         expect(getFollowedAccountObjFromLS().LSK[0].title).to.equal('Bob');
@@ -88,7 +88,7 @@ describe('Wallet Others account', () => {
     cy.visit(`${urls.accounts}/${accounts.delegate.address}`);
     cy.wait('@requestAccountData');
     cy.get(ss.followAccountBtn).contains('Bookmark account');
-    cy.get(ss.followAccountBtn).click();
+    cy.get(ss.followAccountBtn).click('bottom');
     cy.get(ss.titleInput).type('Bob');
     cy.get(ss.titleInput).should('have.value', accounts.delegate.username);
   });
