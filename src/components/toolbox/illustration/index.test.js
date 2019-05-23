@@ -7,6 +7,4 @@ describe('Illustration', () => {
     const wrapper = mount(<Illustration />);
     expect(wrapper.find('img')).toHaveLength(1);
   });
-
 });
-
