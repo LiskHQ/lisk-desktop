@@ -17,13 +17,14 @@ const VotingResult = ({
     <Illustration name={success ? 'transactionSuccess' : 'transactionError'} />
     <h1>{title}</h1>
     <p>{message}</p>
-    <PrimaryButtonV2 onClick={primaryButon.onClick} className={styles.button}>
+    <PrimaryButtonV2 onClick={primaryButon.onClick}
+      className={`${styles.button} ${primaryButon.className}`}>
       {primaryButon.title}
     </PrimaryButtonV2>
     {!success ?
       <React.Fragment>
         <p>{t('Does the problem still persist?')}</p>
-        <a
+        <a className='report-error-link'
           href={getErrorReportMailto(error)}
           target='_top'
           rel='noopener noreferrer'>

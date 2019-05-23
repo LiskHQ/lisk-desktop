@@ -44,6 +44,7 @@ const VotingSummary = ({
                   message: t('You will be notified when your votes are forged.'),
                   primaryButon: {
                     title: t('Back to Delegates'),
+                    className: 'back-to-delegates',
                     onClick: () => {
                       history.push(routes.delegatesV2.path);
                     },
