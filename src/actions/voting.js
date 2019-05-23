@@ -10,6 +10,7 @@ import { updateDelegateCache } from '../utils/delegates';
 import { voteWithHW } from '../utils/api/hwWallet';
 import { passphraseUsed } from './account';
 import { addPendingTransaction } from './transactions';
+import { errorToastDisplayed } from './toaster';
 import Fees from '../constants/fees';
 import actionTypes from '../constants/actions';
 import transactionTypes from '../constants/transactionTypes';
@@ -115,6 +116,19 @@ export const votePlaced = ({
         unvotedList.push(votes[username].publicKey);
       }
     });
+
+    if (account.balance < Fees.vote) {
+      dispatch(errorToastDisplayed({
+        label: i18next.t('Not enough LSK to pay for the transaction.'),
+      }));
+      return;
+    }
+    if (unvotedList.length + votedList > 33) {
+      dispatch(errorToastDisplayed({
+        label: i18next.t('Max amount of delegates in one voting exceeded.'),
+      }));
+      return;
+    }
 
     switch (account.loginType) {
       case loginType.normal:
