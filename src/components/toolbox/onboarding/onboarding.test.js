@@ -15,9 +15,11 @@ describe('Onboarding component', () => {
       ctaLabel: 'cta label',
       finalCallback: jest.fn(),
       onClose: jest.fn(),
+      name: 'onboaring name',
       className: '',
       t: v => v,
     };
+    localStorage.removeItem(props.name);
   });
 
   it('Should render without bullet if only one slide and button call final Callback', () => {
@@ -32,7 +34,7 @@ describe('Onboarding component', () => {
   it('Should call onClose when clicking close button', () => {
     const wrapper = mount(<Onboarding {...props} />);
     wrapper.find('.closeBtn').simulate('click');
-    expect(props.onClose).toBeCalled();
+    expect(localStorage.getItem(props.name)).toBeTruthy();
   });
 
   it('Should render multiple slides and navigate between them', () => {
@@ -64,5 +66,11 @@ describe('Onboarding component', () => {
     wrapper.find('button').last().simulate('click');
     wrapper.find('button').last().simulate('click');
     expect(props.finalCallback).toBeCalled();
+  });
+
+  it('Should not render if was closed before', () => {
+    localStorage.setItem(props.name, true);
+    const wrapper = mount(<Onboarding {...props} />);
+    expect(wrapper).not.toContainMatchingElement('.onboarding');
   });
 });

@@ -15,6 +15,19 @@ class Onboarding extends React.Component {
 
     this.setCurrent = this.setCurrent.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleFinalCallback = this.handleFinalCallback.bind(this);
+  }
+
+  handleClose() {
+    const { name } = this.props;
+    localStorage.setItem(name, true);
+    this.forceUpdate();
+  }
+
+  handleFinalCallback() {
+    this.props.finalCallback();
+    this.handleClose();
   }
 
   handleButtonClick({ target: { name } }) {
@@ -35,13 +48,14 @@ class Onboarding extends React.Component {
 
   render() {
     const {
-      slides, ctaLabel, finalCallback, onClose, className, t,
+      slides, ctaLabel, className, t, name,
     } = this.props;
     const { currentSlide } = this.state;
+    const closedBefore = !!localStorage.getItem(name);
 
-    return slides.length ? (
+    return slides.length && !closedBefore ? (
       <div className={`${styles.onboarding} ${className}`}>
-        <span className={styles.closeBtn} onClick={onClose} />
+        <span className={styles.closeBtn} onClick={this.handleClose} />
         <div className={styles.illustrations}>
           {slides.map(({ illustration }, i) =>
             <Illustration
@@ -90,7 +104,7 @@ class Onboarding extends React.Component {
                   {t('Next')}
                 </PrimaryButtonV2>
               ) : (
-                <PrimaryButtonV2 onClick={finalCallback}>
+                <PrimaryButtonV2 onClick={this.handleFinalCallback}>
                   {ctaLabel}
                 </PrimaryButtonV2>
             )}
@@ -113,8 +127,8 @@ Onboarding.propTypes = {
   })),
   ctaLabel: PropTypes.string,
   finalCallback: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
   className: PropTypes.string,
+  name: PropTypes.string.isRequired,
 };
 
 Onboarding.defaultProps = {

@@ -10,13 +10,10 @@ class VotingV2 extends React.Component {
     super(props);
     this.state = {
       votingModeEnabled: false,
-      showVotingOnboarding: !localStorage.getItem('closedVotingOnboarding'),
     };
 
     this.toggleVotingMode = this.toggleVotingMode.bind(this);
     this.getOnboardingSlides = this.getOnboardingSlides.bind(this);
-    this.handleCloseOnboarding = this.handleCloseOnboarding.bind(this);
-    this.handleOnboardingFinalCallback = this.handleOnboardingFinalCallback.bind(this);
   }
 
   setLayover(isLayover) {
@@ -32,16 +29,6 @@ class VotingV2 extends React.Component {
       this.props.clearVotes();
     }
     this.setState({ votingModeEnabled: !this.state.votingModeEnabled });
-  }
-
-  handleCloseOnboarding() {
-    localStorage.setItem('closedVotingOnboarding', true);
-    this.setState({ showVotingOnboarding: false });
-  }
-
-  handleOnboardingFinalCallback() {
-    this.handleCloseOnboarding();
-    this.toggleVotingMode();
   }
 
   getOnboardingSlides() {
@@ -67,18 +54,16 @@ class VotingV2 extends React.Component {
 
   render() {
     const { t, votes } = this.props;
-    const { votingModeEnabled, showVotingOnboarding } = this.state;
+    const { votingModeEnabled } = this.state;
 
     return (
       <div className={`${grid.row} ${styles.wrapper}`} ref={(el) => { this.root = el; }}>
-        { showVotingOnboarding ? (
-          <Onboarding
-            slides={this.getOnboardingSlides()}
-            finalCallback={this.handleOnboardingFinalCallback}
-            ctaLabel={t('Start voting')}
-            onClose={this.handleCloseOnboarding}
-          />
-        ) : null}
+        <Onboarding
+          slides={this.getOnboardingSlides()}
+          finalCallback={this.toggleVotingMode}
+          ctaLabel={t('Start voting')}
+          name={'delegateOnboarding'}
+        />
         <VotingHeader
           t={t}
           votingModeEnabled={votingModeEnabled}
