@@ -1,10 +1,8 @@
-// istanbul ignore file
 import React, { Component } from 'react';
-import Box from '../../boxV3';
+import Box from '../../boxV2';
 import removeDuplicateTransactions from '../../../utils/transactions';
 import TransactionList from './transactionList';
 import EmptyState from '../../emptyStateV2';
-import { tokenMap } from '../../../constants/tokens';
 import svg from '../../../utils/svgIcons';
 import styles from './recentTransactions.css';
 
@@ -17,12 +15,9 @@ class RecentTransactions extends Component {
 
   getLatestTransactions() {
     const { transactions, settings } = this.props;
-    if (settings.token.active === tokenMap.LSK.key) {
-      const latestTx = removeDuplicateTransactions(transactions.pending, transactions.confirmed);
-      return latestTx.length >= 5 ? latestTx.slice(0, 5) : latestTx;
-    }
-    // TODO once we know how to get latest BTC tx we can do this part here
-    return [];
+    const latestTx = removeDuplicateTransactions(transactions.pending, transactions.confirmed);
+    const filteredTxs = latestTx.filter(tx => tx.token === settings.token.active);
+    return filteredTxs.length >= 5 ? filteredTxs.slice(0, 5) : filteredTxs;
   }
 
   render() {
@@ -32,15 +27,14 @@ class RecentTransactions extends Component {
       settings,
       t,
     } = this.props;
-    const activeToken = settings.token.active || 'LSK';
+    const activeToken = settings.token.active;
     const transactionList = this.getLatestTransactions();
 
     return (
-      <Box
-        className={`${styles.box}`}
-        title={`Recent ${activeToken} Transactions`}
-        t={t}
-      >
+      <Box className={`${styles.box}`}>
+      <header>
+        <h2 className={styles.title}>{t('Recent {{value}} transactions', { value: settings.token.active })}</h2>
+      </header>
       {
         transactionList.length
         ? <TransactionList

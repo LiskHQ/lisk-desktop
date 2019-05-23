@@ -20,7 +20,6 @@ import { SecondaryButtonV2 } from '../toolbox/buttons/button';
 import Banner from '../toolbox/banner/banner';
 import ExtensionPoint from '../extensionPoint';
 import LiskHubExtensions from '../../utils/liskHubExtensions';
-import RecentTransactions from './recentTransactions';
 import styles from './dashboard.css';
 
 class Dashboard extends React.Component {
@@ -172,7 +171,6 @@ class Dashboard extends React.Component {
               <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn3} />
             </div>
           }
-          <RecentTransactions />
         </div>
       </React.Fragment>
     );

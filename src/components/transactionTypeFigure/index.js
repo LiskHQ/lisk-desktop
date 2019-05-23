@@ -1,8 +1,8 @@
-// istanbul ignore file
 import React from 'react';
 import AccountVisual from '../accountVisual';
 import svg from '../../utils/svgIcons';
 import reg from '../../utils/regex';
+import transactionTypes from '../../constants/transactionTypes';
 import styles from './transactionTypeFigure.css';
 
 const TransactionTypeFigure = ({
@@ -12,15 +12,15 @@ const TransactionTypeFigure = ({
     let icon = '';
 
     switch (transactionType) {
-      case 0:
+      case transactionTypes.send:
         return <AccountVisual address={address} size={avatarSize}/>;
-      case 1:
+      case transactionTypes.setSecondPassphrase:
         icon = svg.tx2ndPassphrase;
         break;
-      case 2:
+      case transactionTypes.registerDelegate:
         icon = svg.txDelegate;
         break;
-      case 3:
+      case transactionTypes.vote:
         icon = svg.txVote;
         break;
       default:

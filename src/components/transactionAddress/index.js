@@ -1,7 +1,7 @@
-// istanbul ignore file
 import React from 'react';
 import { tokenMap } from '../../constants/tokens';
 import regex from '../../utils/regex';
+import transactionTypes from '../../constants/transactionTypes';
 import styles from './transactionAddress.css';
 
 const TransactionAddress = ({
@@ -15,18 +15,22 @@ const TransactionAddress = ({
   // eslint-disable-next-line complexity
   const checkTransactionType = () => {
     switch (transactionType) {
-      case 1:
+      case transactionTypes.setSecondPassphrase:
         return t('Second passphrase registration');
-      case 2:
+      case transactionTypes.registerDelegate:
         return t('Delegate registration');
-      case 3:
+      case transactionTypes.vote:
         return t('Delegate vote', { context: 'noun' });
+      // istanbul ignore next
       case 4:
         return t('Multisignature Creation');
+      // istanbul ignore next
       case 5:
         return t('Blockchain Application Registration');
+      // istanbul ignore next
       case 6:
         return t('Send Lisk to Blockchain Application');
+      // istanbul ignore next
       case 7:
         return t('Send Lisk from Blockchain Application');
       default: {

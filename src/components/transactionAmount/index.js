@@ -1,4 +1,3 @@
-// istanbul ignore file
 import React from 'react';
 import transactionTypes from '../../constants/transactionTypes';
 import LiskAmount from '../liskAmount';
