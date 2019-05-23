@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import styles from './onboarding.css';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../buttons/button';
+import Illustration from '../illustration';
 
 class Onboarding extends React.Component {
   constructor() {
@@ -43,10 +44,10 @@ class Onboarding extends React.Component {
         <span className={styles.closeBtn} onClick={onClose} />
         <div className={styles.illustrations}>
           {slides.map(({ illustration }, i) =>
-            <img
+            <Illustration
               className={`${i === currentSlide ? styles.active : ''}`}
               key={`illustration-${i}`}
-              src={illustration} />)
+              name={illustration} />)
           }
         </div>
 
