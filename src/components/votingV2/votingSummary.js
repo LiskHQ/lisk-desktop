@@ -15,7 +15,7 @@ import VoteUrlProcessor from '../voteUrlProcessorV2';
 import styles from './votingV2.css';
 
 const VotingSummary = ({
-  t, votes, history, account, nextStep, votePlaced,
+  t, votes, history, account, nextStep, votePlaced, prevStep,
 }) => {
   const {
     maxCountOfVotes,
@@ -36,7 +36,29 @@ const VotingSummary = ({
             votes,
             passphrase: account.passphrase,
             secondPassphrase,
-            goToNextStep: nextStep,
+            goToNextStep: ({ success, text }) => {
+              nextStep({
+                success,
+                ...(success ? {
+                  title: t('Voting submitted'),
+                  message: t('You will be notified when your votes are forged.'),
+                  primaryButon: {
+                    title: t('Back to Delegates'),
+                    onClick: () => {
+                      history.push(routes.delegatesV2.path);
+                    },
+                  },
+                } : {
+                  title: t('Voting failed'),
+                  message: t('Oops, looks like something went wrong. Please try again.'),
+                  primaryButon: {
+                    title: t('Back to Voting summary'),
+                    onClick: prevStep,
+                  },
+                  error: text,
+                }),
+              });
+            },
           });
         },
       }}
