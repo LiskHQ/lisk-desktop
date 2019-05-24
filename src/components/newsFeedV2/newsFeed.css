@@ -1,0 +1,91 @@
+@import '../app/variables.css';
+@import '../app/variablesV2.css';
+
+.header {
+  justify-content: space-between !important;
+}
+
+.newsFeedBox {
+  padding: 0;
+  height: auto;
+  font-family: var(--content-font);
+}
+
+.settingsButton {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+
+  & span {
+    cursor: pointer;
+    color: #2475b9;
+  }
+}
+
+.emptyNews {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--content-font);
+  font-size: var(--paragraph-font-size-l);
+  padding-top: 16px;
+}
+
+.liskLogo {
+  opacity: 0.2;
+}
+
+.container {
+  min-height: 578px;
+  overflow: hidden;
+  height: 578px;
+
+  & > div {
+    height: 100%;
+  }
+
+  & .newsWrapper {
+    box-sizing: border-box;
+    padding: 0 20px;
+  }
+}
+
+.newsFeed {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  height: 866px;
+}
+
+@media (--medium-viewport) {
+  .newsFeed {
+    width: 100%;
+    height: 748px;
+  }
+
+  .liskLogo {
+    display: none;
+  }
+
+  .newsFeedBox {
+    height: auto;
+    min-height: 0;
+  }
+
+  .container {
+    min-height: 500px;
+    height: 587px;
+  }
+}
+
+.showMoreAlign {
+  margin-top: auto;
+  align-self: flex-end;
+}
+
+.showMore {
+  height: auto;
+}
