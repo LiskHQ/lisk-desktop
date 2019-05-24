@@ -70,6 +70,7 @@ describe('Search', () => {
    */
   it('Search for Transaction using keyboard Enter, signed off', () => {
     openSearchAndType(mainnetTransaction);
+    cy.wait('@requestTransaction');
     cy.get(ss.searchTransactionRow).eq(0).click();
     assertTransactionPage(mainnetTransaction);
   });
@@ -102,6 +103,7 @@ describe('Search', () => {
   it('Search for Delegate using suggestions, signed in', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     openSearchAndType(accounts.delegate.username);
+    cy.wait('@requestDelegate');
     cy.get(ss.searchDelegatesRow).eq(0).click();
     assertDelegatePage(accounts.delegate.username);
   });
