@@ -1,5 +1,6 @@
 import actionTypes from '../../constants/actions';
 import { tokenKeys } from '../../constants/tokens';
+import { deepMergeObj } from '../../utils/helpers';
 
 
 /**
@@ -53,7 +54,7 @@ export const initialState = JSON.parse(localStorage.getItem('settings')) || {
 const settings = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.settingsUpdated:
-      return { ...state, ...action.data };
+      return deepMergeObj(state, action.data);
     case actionTypes.settingsReset:
       return {
         ...state,
