@@ -41,3 +41,25 @@ export const getTransactions = ({
 export const getSingleTransaction = async ({ token, ...params }) => (
   getMappedFunction(token || getTokenFromTransactionId(params.id), 'transactions', 'getSingleTransaction')(params)
 );
+
+/**
+ * This functions are not test it because all the purpose is just
+ * pass parameters to another functions
+ */
+// istanbul ignore file
+export const get = (tokenType, data) => getMappedFunction(tokenType, 'transactions', 'get')(data);
+// istanbul ignore next
+export const create = (tokenType, data) => getMappedFunction(tokenType, 'transactions', 'create')(data);
+// istanbul ignore next
+export const broadcast = (tokenType, transaction, networkConfig) => getMappedFunction(tokenType, 'transactions', 'broadcast')(transaction, networkConfig);
+
+export default {
+  broadcast,
+  create,
+  get,
+  getSingleTransaction,
+  getTokenFromAddress,
+  getTransactions,
+  send,
+  unconfirmedTransactions,
+};

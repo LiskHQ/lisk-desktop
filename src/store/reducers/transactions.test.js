@@ -1,11 +1,21 @@
 import transactions from './transactions';
 import actionTypes from '../../constants/actions';
 import txFilter from '../../constants/transactionFilters';
+import {
+  transactionCreatedSuccess,
+  transactionCreatedError,
+  broadcastedTransactionError,
+  broadcastedTransactionSuccess,
+  resetTransactionResult,
+} from '../../actions/transactions';
 
 describe('Reducer: transactions(state, action)', () => {
   const defaultState = {
     pending: [],
     confirmed: [],
+    transactionsCreated: [],
+    transactionsCreatedFailed: [],
+    broadcastedTransactionsError: [],
   };
   const mockTransactions = [{
     amount: 100000000000,
@@ -181,6 +191,7 @@ describe('Reducer: transactions(state, action)', () => {
 
   it('should reset all data if action.type = cleanTransactions', () => {
     const state = {
+      ...defaultState,
       pending: null,
       confirmed: null,
       count: null,
@@ -188,6 +199,7 @@ describe('Reducer: transactions(state, action)', () => {
     };
 
     const expectedState = {
+      ...defaultState,
       pending: [],
       confirmed: [],
       count: null,
@@ -204,5 +216,109 @@ describe('Reducer: transactions(state, action)', () => {
     const action = { type: actionTypes.cleanTransactions };
     const changedState = transactions(state, action);
     expect(changedState).toEqual(expectedState);
+  });
+
+  it('Should update transactions reducer for TransactionCreatedSuccess', () => {
+    const tx = {
+      id: '12312334',
+      senderId: '123L',
+      recipientId: '456L',
+      amount: '0.01',
+      data: 'sending',
+    };
+    const actionResult = transactionCreatedSuccess(tx);
+    const changedState = transactions(defaultState, actionResult);
+    expect(changedState.transactionsCreated[0]).toEqual(tx);
+  });
+
+  it('Should update transactions reducer for TransactionCreatedError', () => {
+    const tx = {
+      id: '12312334',
+      senderId: '123L',
+      recipientId: '456L',
+      amount: '0.01',
+      data: 'sending',
+    };
+    const actionResult = transactionCreatedError(tx);
+    const changedState = transactions(defaultState, actionResult);
+    expect(changedState.transactionsCreatedFailed[0]).toEqual(tx);
+  });
+
+  it('Should update transactions reducer for BroadcastedTransactionError', () => {
+    const tx = {
+      id: '12312334',
+      senderId: '123L',
+      recipientId: '456L',
+      amount: '0.01',
+      data: 'sending',
+    };
+    const newState = {
+      pending: [],
+      confirmed: [],
+      transactionsCreated: [tx],
+      transactionsCreatedFailed: [],
+      broadcastedTransactionsError: [],
+    };
+    const actionResult = broadcastedTransactionError(tx);
+    const changedState = transactions(newState, actionResult);
+    expect(changedState.transactionsCreated).toEqual([]);
+    expect(changedState.broadcastedTransactionsError[0]).toEqual(tx);
+  });
+
+  it('Should update transactions reducer for BroadcastedTransactionSuccess', () => {
+    const tx = {
+      id: '12312334',
+      senderId: '123L',
+      recipientId: '456L',
+      amount: '0.01',
+      data: 'sending',
+    };
+    const newState = {
+      pending: [],
+      confirmed: [],
+      transactionsCreated: [tx],
+      transactionsCreatedFailed: [],
+      broadcastedTransactionsError: [],
+    };
+    const actionResult = broadcastedTransactionSuccess(tx);
+    const changedState = transactions(newState, actionResult);
+    expect(changedState.transactionsCreated).toEqual([]);
+    expect(changedState.broadcastedTransactionsError).toEqual([]);
+  });
+
+  it('Should update transactions reducer for ResetTransactionResult', () => {
+    const newState = {
+      pending: [],
+      confirmed: [],
+      transactionsCreated: [],
+      transactionsCreatedFailed: [],
+      broadcastedTransactionsError: [{ id: '123' }],
+    };
+    const actionResult = resetTransactionResult();
+    const changedState = transactions(newState, actionResult);
+    expect(changedState.transactionsCreated).toEqual([]);
+    expect(changedState.broadcastedTransactionsError).toEqual([]);
+    expect(changedState.transactionsCreatedFailed).toEqual([]);
+  });
+
+  it('Should update transactions reducer for TransactionCreatedSuccess on RETRY', () => {
+    const tx = {
+      id: '12312334',
+      senderId: '123L',
+      recipientId: '456L',
+      amount: '0.01',
+      data: 'sending',
+    };
+    const newState = {
+      pending: [],
+      confirmed: [],
+      transactionsCreated: [],
+      transactionsCreatedFailed: [],
+      broadcastedTransactionsError: [tx],
+    };
+    const actionResult = broadcastedTransactionSuccess(tx);
+    const changedState = transactions(newState, actionResult);
+    expect(changedState.transactionsCreated).toEqual([]);
+    expect(changedState.broadcastedTransactionsError).toEqual([]);
   });
 });

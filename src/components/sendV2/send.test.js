@@ -34,6 +34,9 @@ describe('Form', () => {
     transactions: {
       failed: undefined,
       pending: [],
+      transactionsCreated: [],
+      transactionsCreatedFailed: [],
+      broadcastedTransactionsError: [],
     },
     failedTransactions: '',
     account: {
@@ -141,22 +144,5 @@ describe('Form', () => {
     expect(wrapper).toContainMatchingElement('.send-box');
     expect(wrapper).toContainMatchingElement('MultiStep');
     expect(wrapper).toContainMatchingElement('Form');
-  });
-
-  it('should call finallCallback after submit a transaction', () => {
-    wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: '12345L' } });
-    const amountField = wrapper.find('.fieldGroup').at(1);
-    amountField.find('InputV2').simulate('change', { target: { name: 'amount', value: '.1' } });
-    jest.advanceTimersByTime(300);
-    wrapper.update();
-    wrapper.find('.btn-submit').at(0).simulate('click');
-    wrapper.update();
-    expect(wrapper).toContainMatchingElement('Summary');
-    wrapper.find('.on-nextStep').at(0).simulate('click');
-    wrapper.update();
-    expect(wrapper).toContainMatchingElement('TransactionStatus');
-    wrapper.find('.on-goToWallet').at(0).simulate('click');
-    wrapper.update();
-    expect(props.history.push).toBeCalled();
   });
 });

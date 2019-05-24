@@ -1,4 +1,12 @@
-import { send, getTransactions, unconfirmedTransactions, getSingleTransaction } from './transactions';
+import Lisk from '@liskhq/lisk-client';
+import {
+  send,
+  getTransactions,
+  unconfirmedTransactions,
+  getSingleTransaction,
+  create,
+  broadcast,
+} from './transactions';
 import accounts from '../../../../test/constants/accounts';
 import networks from '../../../constants/networks';
 import { getAPIClient } from './network';
@@ -31,6 +39,7 @@ describe('Utils: Transactions API', () => {
       },
     };
     apiClient.transactions.broadcast.mockResolvedValue({ recipientId, amount, id });
+    apiClient.transactions.get.mockResolvedValue({ data: [{ id: 1 }, { id: 2 }] });
     apiClient.node.getTransactions.mockResolvedValue({ data: [] });
 
     localStorage.setItem('btc', true); // TODO remove when enabling BTC
@@ -44,13 +53,12 @@ describe('Utils: Transactions API', () => {
 
   // TODO: fix these tests for assert more than just a promise is returned
   describe('send', () => {
-    it('should broadcast a transaction and return a promise', () => {
-      const promise = send(apiClient, recipientId, amount, accounts.genesis.passphrase);
+    it('should broadcast a transaction and return a promise', async () => {
+      await send(amount, {}, apiClient, accounts.genesis.passphrase, recipientId, null, 0);
       expect(apiClient.transactions.broadcast).toHaveBeenCalledWith(expect.objectContaining({
         amount,
         recipientId,
       }));
-      expect(typeof promise.then).toEqual('function');
     });
   });
 
@@ -119,7 +127,7 @@ describe('Utils: Transactions API', () => {
     it('should apiClient.transactions.get and return a promise', () => {
       const promise = getSingleTransaction({ apiClient, id });
       expect(apiClient.transactions.get).toHaveBeenCalledWith({ id });
-      expect(typeof promise.then).toEqual('function');
+      expect(promise).toBeInstanceOf(Promise);
     });
 
     it('should apiClient.node.getTransactions if empty response', async () => {
@@ -127,16 +135,86 @@ describe('Utils: Transactions API', () => {
       await getSingleTransaction({ apiClient, id });
       expect(apiClient.node.getTransactions).toHaveBeenCalledWith('unconfirmed', { id });
     });
-
-    it('should reject if apiClient is undefined', async () => {
-      expect(getSingleTransaction({ id })).rejects.toThrow('');
-    });
   });
 
   describe('unconfirmedTransactions', () => {
     it('should return a promise', () => {
       const promise = unconfirmedTransactions(apiClient);
       expect(typeof promise.then).toEqual('function');
+    });
+  });
+
+  describe('create', () => {
+    it('should create a transaction and return a promise', async () => {
+      const tx = {
+        amount: '1',
+        data: { data: 'payment' },
+        passphrase: 'abc',
+        recipientId: '123L',
+        secondPassphrase: null,
+        timeOffset: 0,
+      };
+      const txResult = await create(tx);
+      expect(txResult.recipientId).toEqual(tx.recipientId);
+      expect(txResult.amount).toEqual(tx.amount);
+      expect(txResult.signature).not.toBeNull();
+      expect(txResult.id).not.toBeNull();
+      expect(txResult.senderPublicKey).not.toBeNull();
+    });
+
+    it('should fail for create a transaction and return a promise', async () => {
+      Lisk.transaction.transfer = jest.fn();
+      Lisk.transaction.transfer.mockImplementation(() => {
+        throw new Error('sample error message');
+      });
+      const tx = {
+        amount: '1',
+        data: { data: 'payment' },
+        passphrase: 'abc',
+        recipientId: '123L',
+        secondPassphrase: null,
+        timeOffset: 0,
+      };
+      try {
+        await create(tx);
+      } catch (e) {
+        expect(e).toBeInstanceOf(Error);
+        expect(e.message).toEqual('sample error message');
+      }
+      Lisk.transaction.transfer.mockRestore();
+    });
+  });
+
+  describe('Broadcast', () => {
+    it('should Broadcast a transaction and return a promise', async () => {
+      const tx = {
+        amount: '1',
+        data: { data: 'payment' },
+        passphrase: 'abc',
+        recipientId: '123L',
+        secondPassphrase: null,
+        timeOffset: 0,
+      };
+      await broadcast(tx);
+      expect(apiClient.transactions.broadcast).toHaveBeenCalledWith(expect.objectContaining(tx));
+    });
+
+    it('should fail Broadcast a transaction and return a promise', async () => {
+      apiClient.transactions.broadcast.mockRejectedValue(new Error('sample error message'));
+      const tx = {
+        amount: '1',
+        data: { data: 'payment' },
+        passphrase: 'abc',
+        recipientId: '123L',
+        secondPassphrase: null,
+        timeOffset: 0,
+      };
+      try {
+        await broadcast(tx);
+      } catch (e) {
+        expect(e).toBeInstanceOf(Error);
+        expect(e.message).toEqual('sample error message');
+      }
     });
   });
 });

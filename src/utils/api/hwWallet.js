@@ -6,18 +6,13 @@ import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api';
 import to from 'await-to-js';
 import { HW_CMD, calculateSecondPassphraseIndex } from '../../constants/hwConstants';
 import { loadingStarted, loadingFinished } from '../loading';
-import { infoToastDisplayed, errorToastDisplayed } from '../../actions/toaster';
 import { getTransactionBytes, calculateTxId, getBufferToHex, createSendTX, createRawVoteTX } from '../rawTransactionWrapper';
 import { PLATFORM_TYPES, getPlatformType } from '../platform';
-import store from '../../store';
-
 import { getAccount } from './lsk/account';
 import { extractAddress } from '../account';
-import { getVotes } from './delegate';
-import { getTransactions } from './lsk/transactions';
-
 import loginTypes from '../../constants/loginTypes';
 import { HW_MSG, models, loginType } from '../../constants/hwConstants';
+import { getAPIClient } from './lsk/network';
 
 const util = require('util');
 
@@ -290,7 +285,7 @@ export const getHWAccountInfo = async (activePeer, deviceId, loginType, accountI
  * @returns Promise - Action Send with Ledger
  */
 /* eslint-disable prefer-const */
-export const sendWithHW = (activePeer, account, recipientId, amount,
+export const sendWithHW = (networkConfig, account, recipientId, amount,
   pin = null, data = null) =>
   new Promise(async (resolve, reject) => {
     const rawTx = createSendTX(account.publicKey, recipientId, amount, data);
@@ -301,7 +296,7 @@ export const sendWithHW = (activePeer, account, recipientId, amount,
     if (error) {
       reject(error);
     } else {
-      activePeer.transactions.broadcast(signedTx).then(() => {
+      getAPIClient(networkConfig).transactions.broadcast(signedTx).then(() => {
         resolve(signedTx);
       }).catch(reject);
     }
@@ -326,3 +321,54 @@ export const voteWithHW = (activePeer, account, votedList, unvotedList, pin = nu
       }).catch(reject);
     }
   });
+
+
+/**
+ * Get/Sign transaction using the hardware wallet device
+ * @param {Object} transaction 
+ * @param {Object} account 
+ * @param {String} pin 
+ */
+const transactionSigned = async (transaction, account, pin) => {
+  let finalTx;
+  const index = (typeof pin === 'string' && pin !== '')
+    ? calculateSecondPassphraseIndex(account.hwInfo.derivationIndex, pin)
+    : account.hwInfo.derivationIndex;
+
+  const command = {
+    action: HW_CMD.SIGN_TX,
+    hwType: account.loginType,
+    data: {
+      deviceId: account.hwInfo.deviceId,
+      index,
+      tx: transaction,
+    },
+  };
+
+  try {
+    const signature = await platformHendler(command);
+    const signedTx = { ...transaction, signature };
+    finalTx = { ...signedTx, id: calculateTxId(signedTx) };
+  } catch (err) {
+    throw err;
+  }
+
+  return finalTx;
+};
+
+/**
+ * Create the transaction that will be broadcast to the network after sign
+ * @param {Object} account 
+ * @param {Object} data 
+ * @param {String} pin 
+ */
+export const create = (account, data, pin = null) => new Promise(async (resolve, reject) => {
+  const txObject = createSendTX(account.publicKey, data.recipientId, data.amount, data.data);
+  const [error, tx] = await to(transactionSigned(txObject, account, pin));
+  if (error) reject(error);
+  resolve(tx);
+});
+
+export default {
+  create,
+};
