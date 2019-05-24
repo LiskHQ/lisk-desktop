@@ -128,7 +128,7 @@ describe('Search', () => {
    * Search signed in mainnet
    * @expect happens in mainnet
    */
-  xit('Search signed in mainnet - happens in mainnet', () => {
+  it('Search signed in mainnet - happens in mainnet', () => {
     cy.autologin(accounts.genesis.passphrase, networks.mainnet.node);
     openSearchAndType(mainnetTransaction);
     cy.wait('@requestTransaction');
