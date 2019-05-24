@@ -7,10 +7,8 @@ import styles from './transactionAddress.css';
 const TransactionAddress = ({
   address, followedAccounts, transactionType, t, token,
 }) => {
-  const checkForFollowedAccount = () => [...followedAccounts.LSK, ...followedAccounts.BTC]
+  const account = [...followedAccounts.LSK, ...followedAccounts.BTC]
     .filter(acc => acc.address === address);
-
-  const account = checkForFollowedAccount();
 
   // eslint-disable-next-line complexity
   const checkTransactionType = () => {

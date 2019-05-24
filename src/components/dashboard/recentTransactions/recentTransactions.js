@@ -4,6 +4,7 @@ import removeDuplicateTransactions from '../../../utils/transactions';
 import TransactionList from './transactionList';
 import EmptyState from '../../emptyStateV2';
 import svg from '../../../utils/svgIcons';
+import links from '../../../constants/externalLinks';
 import styles from './recentTransactions.css';
 
 class RecentTransactions extends Component {
@@ -44,10 +45,11 @@ class RecentTransactions extends Component {
             transactions={transactionList}
             t={t}/>
         : <EmptyState
-            t={t}
             title={t('No Transactions Yet')}
             description={t('A great way to start is to top up your account with some LSK tokens.')}
             icon={svg.icon_empty_recent_transactions}
+            btnText={t('Learn more')}
+            btnExternalUrl={links.outgoingTransactions}
           />
       }
       </Box>
