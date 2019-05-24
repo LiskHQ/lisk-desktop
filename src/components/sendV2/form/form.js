@@ -78,6 +78,7 @@ class Form extends React.Component {
     this.checkIfBookmarkedAccount = this.checkIfBookmarkedAccount.bind(this);
     this.setReferenceActive = this.setReferenceActive.bind(this);
     this.selectProcessingSpeed = this.selectProcessingSpeed.bind(this);
+    this.getProcessingSpeedStatus = this.getProcessingSpeedStatus.bind(this);
   }
 
   componentDidMount() {
@@ -423,6 +424,20 @@ class Form extends React.Component {
     }));
   }
 
+  /**
+   * Get status of processing soeed fetch based on state of component
+   * @returns {Node} - Text to display to the user or loader
+   */
+  getProcessingSpeedStatus() {
+    const { token, t } = this.props;
+    const { fields } = this.state;
+    const { amount: { value } } = fields;
+    if (value === '') return <span>{t('Loading')} <SpinnerV2 className={styles.loading} /></span>;
+    return <span>{!this.validateAmountField(value)
+      ? `${fromRawLsk(fields.processingSpeed.txFee)} ${token}`
+      : t('Invalid amount')}</span>;
+  }
+
   // eslint-disable-next-line complexity
   render() {
     const { fields } = this.state;
@@ -559,9 +574,7 @@ class Form extends React.Component {
                 </Tooltip>
               </span>
             </label>
-          ) : !!Object.keys(dynamicFees).length &&
-            fields.amount.value !== '' &&
-            !this.validateAmountField(fields.amount.value) && (
+          ) : (
             <div className={`${styles.fieldGroup}`}>
               <span className={`${styles.fieldLabel}`}>
                 {t('Processing Speed')}
@@ -582,7 +595,7 @@ class Form extends React.Component {
                 ]}
               />
               <span className={styles.processingInfo}>
-                {t('Transaction fee: ')} <span>{`${fromRawLsk(fields.processingSpeed.txFee)} ${token}`}</span>
+                {t('Transaction fee: ')} {this.getProcessingSpeedStatus()}
               </span>
             </div>
           )}
