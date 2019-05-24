@@ -52,7 +52,7 @@
     "await-to-js": "2.1.1",
     "bignumber.js": "8.0.1",
     "bip32": "1.0.4",
-    "bitcoinjs-lib": "5.0.1",
+    "bitcoinjs-lib": "4.0.5",
     "bitcore-mnemonic": "1.7.0",
     "body-parser": "1.18.3",
     "browser-or-node": "1.1.0",

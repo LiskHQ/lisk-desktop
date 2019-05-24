@@ -17,6 +17,9 @@ const initialState = {
     amountTo: '',
     message: '',
   },
+  transactionsCreated: [],
+  transactionsCreatedFailed: [],
+  broadcastedTransactionsError: [],
 };
 const transactions = (state = initialState, action) => { // eslint-disable-line complexity
   switch (action.type) {
@@ -25,7 +28,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
     case actionTypes.addPendingTransaction:
       return { ...state, pending: [action.data, ...state.pending] };
     case actionTypes.transactionFailed:
-      return { ...state, failed: { errorMessage: action.data.errorMessage } };
+      return { ...state, failed: { ...action.data } };
     case actionTypes.transactionFailedClear:
       return { ...state, failed: undefined };
     case actionTypes.transactionsFailed:
@@ -60,8 +63,40 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
         filters: action.data.filters !== undefined ?
           action.data.filters : state.filters,
       };
+    case actionTypes.transactionCreatedSuccess:
+      return {
+        ...state,
+        transactionsCreated: [...state.transactionsCreated, action.data],
+      };
+    case actionTypes.transactionCreatedError:
+      return {
+        ...state,
+        transactionsCreatedFailed: [...state.transactionsCreatedFailed, action.data],
+      };
+    case actionTypes.broadcastedTransactionSuccess:
+      return {
+        ...state,
+        transactionsCreated: state.transactionsCreated.filter(tx => tx.id !== action.data.id),
+        broadcastedTransactionsError: state.broadcastedTransactionsError
+          .filter(tx => tx.id !== action.data.id),
+      };
+    case actionTypes.broadcastedTransactionError:
+      return {
+        ...state,
+        transactionsCreated: state.transactionsCreated.filter(tx => tx.id !== action.data.id),
+        broadcastedTransactionsError: [...state.broadcastedTransactionsError, action.data],
+      };
+    case actionTypes.resetTransactionResult:
+      return {
+        ...state,
+        transactionsCreated: [],
+        transactionsFailed: [],
+        broadcastedTransactionsError: [],
+      };
     case (actionTypes.accountSwitched):
-      return { pending: [], confirmed: [], count: 0 };
+      return {
+        ...state, pending: [], confirmed: [], count: 0,
+      };
     default:
       return state;
   }

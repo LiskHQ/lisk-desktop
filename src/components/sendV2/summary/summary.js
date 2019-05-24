@@ -3,7 +3,7 @@ import ConverterV2 from '../../converterV2';
 import AccountVisual from '../../accountVisual/index';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../../toolbox/buttons/button';
 import fees from '../../../constants/fees';
-import { fromRawLsk } from '../../../utils/lsk';
+import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
 import PassphraseInputV2 from '../../passphraseInputV2/passphraseInputV2';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
@@ -29,7 +29,6 @@ class Summary extends React.Component {
 
     this.checkForHardwareWallet = this.checkForHardwareWallet.bind(this);
     this.checkSecondPassphrase = this.checkSecondPassphrase.bind(this);
-    this.nextStep = this.nextStep.bind(this);
     this.prevStep = this.prevStep.bind(this);
     this.submitTransaction = this.submitTransaction.bind(this);
     this.getConfirmButtonLabel = this.getConfirmButtonLabel.bind(this);
@@ -66,15 +65,18 @@ class Summary extends React.Component {
 
   componentDidUpdate() {
     this.checkForHardwareWallet();
+    this.checkForSuccessOrFailedTransactions();
   }
 
   submitTransaction() {
-    this.props.sent({
-      account: this.props.account,
-      recipientId: this.props.fields.recipient.address,
-      amount: this.props.fields.amount.value,
-      data: this.props.fields.reference.value,
-      passphrase: this.props.account.passphrase,
+    Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
+    const { account, fields } = this.props;
+
+    this.props.transactionCreated({
+      amount: `${toRawLsk(fields.amount.value)}`,
+      data: fields.reference.value,
+      passphrase: account.passphrase,
+      recipientId: fields.recipient.address,
       secondPassphrase: this.state.secondPassphrase.value,
       dynamicFeePerByte: this.props.fields.processingSpeed.value,
       fee: fees.send,
@@ -82,24 +84,38 @@ class Summary extends React.Component {
   }
 
   checkForHardwareWallet() {
-    const { failedTransactions, pendingTransactions } = this.props;
+    const { transactions } = this.props;
     const { isHardwareWalletConnected, isLoading } = this.state;
 
     const hasPendingTransaction = isHardwareWalletConnected
-      ? pendingTransactions.find(transaction => (
+      ? transactions.pending.find(transaction => (
         transaction.senderId === this.props.account.address &&
         transaction.recipientId === this.props.fields.recipient.address &&
         fromRawLsk(transaction.amount) === this.props.fields.amount.value
       ))
-      : pendingTransactions.length;
+      : transactions.pending.length;
 
     // istanbul ignore else
-    if (isLoading && (hasPendingTransaction || failedTransactions)) {
+    if (isLoading && (hasPendingTransaction || transactions.failed)) {
       this.props.nextStep({
         fields: {
           ...this.props.fields,
           hwTransactionStatus: hasPendingTransaction ? 'success' : 'error',
           isHardwareWalletConnected: this.state.isHardwareWalletConnected,
+        },
+      });
+    }
+  }
+
+  checkForSuccessOrFailedTransactions() {
+    const { transactions, nextStep, fields } = this.props;
+
+    if (transactions.transactionsCreated.length && !transactions.transactionsCreatedFailed.length) {
+      nextStep({
+        fields: {
+          ...fields,
+          hwTransactionStatus: false,
+          isHardwareWalletConnected: false,
         },
       });
     }
@@ -125,19 +141,8 @@ class Summary extends React.Component {
 
   prevStep() {
     Piwik.trackingEvent('Send_Summary', 'button', 'Previous step');
+    this.props.resetTransactionResult();
     this.props.prevStep({ ...this.props.fields });
-  }
-
-  nextStep() {
-    Piwik.trackingEvent('Send_Summary', 'button', 'Next step');
-    this.submitTransaction();
-    this.props.nextStep({
-      fields: {
-        ...this.props.fields,
-        hwTransactionStatus: false,
-        isHardwareWalletConnected: false,
-      },
-    });
   }
 
   getConfirmButtonLabel() {
@@ -186,7 +191,7 @@ class Summary extends React.Component {
 
     const fee = token === tokenMap.LSK.key
       ? fromRawLsk(fees.send)
-      : fromRawLsk(fields.processingSpeed.value);
+      : fromRawLsk(fields.processingSpeed.txFee);
 
     return (
       <div className={`${styles.wrapper} summary`}>
@@ -259,7 +264,7 @@ class Summary extends React.Component {
         <footer className={`${styles.footer} summary-footer`}>
           <PrimaryButtonV2
             className={`${styles.confirmBtn} on-nextStep send-button`}
-            onClick={this.nextStep}
+            onClick={this.submitTransaction}
             disabled={
               (secondPassphrase.hasSecondPassphrase &&
                 !secondPassphrase.isValid)
