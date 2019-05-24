@@ -2,25 +2,6 @@ import actionTypes from '../../constants/actions';
 import { tokenKeys } from '../../constants/tokens';
 import { deepMergeObj } from '../../utils/helpers';
 
-
-/**
- * Defines the active token. Reverts to LSK if the active token is disabled.
- *
- * @param {Object} actionToken - action.data.token value
- * @param {Object} stateToken - state.token value
- *
- * @returns {String} active token key
- */
-const defineActiveToken = (actionToken, stateToken) => {
-  if (!actionToken) return stateToken.active;
-  if (actionToken.active && !actionToken.list) {
-    return stateToken.list[actionToken.active] === true ? actionToken.active : stateToken.active;
-  }
-
-  const lastActiveToken = actionToken.active || stateToken.active;
-  return actionToken.list[lastActiveToken] === false ? tokenKeys[0] : lastActiveToken;
-};
-
 export const channels = {
   academy: false,
   twitter: true,
@@ -28,6 +9,18 @@ export const channels = {
   github: false,
   reddit: false,
 };
+
+/**
+ * Function to validate that the active token is enabled on the settings, otherwise
+ * sets the default token to LSK.
+ * @param {Object} state
+ * @returns {Object} -> state with correct active token.
+ */
+const validateToken = state => (
+  !state.token.list[state.token.active]
+    ? { ...state, token: { active: tokenKeys[0], list: state.token.list } }
+    : state
+);
 
 // load setting data from localStorage if it exists
 export const initialState = JSON.parse(localStorage.getItem('settings')) || {
@@ -54,7 +47,7 @@ export const initialState = JSON.parse(localStorage.getItem('settings')) || {
 const settings = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.settingsUpdated:
-      return deepMergeObj(state, action.data);
+      return validateToken(deepMergeObj(state, action.data));
     case actionTypes.settingsReset:
       return {
         ...state,
@@ -67,15 +60,6 @@ const settings = (state = initialState, action) => {
         channels: {
           ...state.channels,
           [action.data.name]: action.data.value,
-        },
-      };
-    case actionTypes.settingsUpdateToken:
-      return {
-        ...state,
-        ...action.data,
-        token: {
-          active: defineActiveToken(action.data.token, state.token),
-          list: action.data.token ? action.data.token.list : state.token.list,
         },
       };
     default:
