@@ -1,3 +1,9 @@
+/**
+ * Deeply merge two objects recursively, if the value isn't an object it considers
+ * the value of the second object.
+ * @param {Object} obj1 - Object to be merged into.
+ * @param {Object} obj2 - Object with new values to be merged onto obj1.
+ */
 export const deepMergeObj = (obj1, obj2) =>
   Object.keys({ ...obj2 }).reduce((obj, key) => (
     typeof obj2[key] === 'object' && typeof obj1[key] === 'object'
