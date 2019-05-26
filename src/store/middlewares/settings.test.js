@@ -1,6 +1,5 @@
 import settingsMiddleware from './settings';
 import actionTypes from '../../constants/actions';
-import * as settings from '../../actions/settings';
 import * as service from '../../actions/service';
 
 jest.mock('../../actions/service');
@@ -31,6 +30,5 @@ describe('Middleware: Settings', () => {
 
     settingsMiddleware(store)(next)(action);
     expect(service.pricesRetrieved).not.toBeCalled();
-    expect(settings.settingsUpdated).toBeCalledWith(store.getState().settings);
   });
 });

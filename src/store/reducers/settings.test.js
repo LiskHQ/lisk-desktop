@@ -1,12 +1,20 @@
 import settings from './settings';
 import actionTypes from '../../constants/actions';
+import { tokenKeys } from '../../constants/tokens';
 
 
 describe('Reducer: settings(state, action)', () => {
   let initializeState;
 
   beforeEach(() => {
-    initializeState = { autoLog: true, advancedMode: false };
+    initializeState = {
+      autoLog: true,
+      advancedMode: false,
+      token: {
+        active: tokenKeys[0],
+        list: tokenKeys.reduce((acc, key) => { acc[key] = true; return acc; }, {}),
+      },
+    };
   });
 
   it('should return updated settings if action.type = actionTypes.settingsUpdated', () => {
@@ -15,7 +23,7 @@ describe('Reducer: settings(state, action)', () => {
       data: { autoLog: false },
     };
     const changedState = settings(initializeState, action);
-    expect(changedState).toEqual({ autoLog: false, advancedMode: false });
+    expect(changedState).toEqual({ ...initializeState, autoLog: false, advancedMode: false });
   });
 
   it('should return updated initializeState if action.type = actionTypes.settingsReset', () => {
@@ -23,19 +31,12 @@ describe('Reducer: settings(state, action)', () => {
       type: actionTypes.settingsReset,
     };
     const changedState = {
-      autoLog: false, advancedMode: true,
+      ...initializeState,
+      autoLog: false,
+      advancedMode: true,
     };
     const FinalStep = settings(changedState, action);
     expect(FinalStep).toEqual(initializeState);
-  });
-
-  it('should return updated settings if action.type = actionTypes.switchChannel', () => {
-    const action = {
-      type: actionTypes.switchChannel,
-      data: { name: 'twitter', value: true },
-    };
-    const changedState = settings(initializeState, action);
-    expect(changedState.channels).toEqual({ twitter: true });
   });
 });
 
