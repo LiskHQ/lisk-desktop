@@ -54,14 +54,6 @@ const settings = (state = initialState, action) => {
         advancedMode: false,
         autoLog: true,
       };
-    case actionTypes.switchChannel:
-      return {
-        ...state,
-        channels: {
-          ...state.channels,
-          [action.data.name]: action.data.value,
-        },
-      };
     default:
       return state;
   }
