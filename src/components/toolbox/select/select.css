@@ -1,0 +1,9 @@
+@import '../../app/variablesV2.css';
+
+.wrapper {
+  position: relative;
+
+  & .dropdown {
+    transform-origin: top center;
+  }
+}
