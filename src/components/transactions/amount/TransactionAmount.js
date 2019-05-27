@@ -1,6 +1,6 @@
 import React from 'react';
-import transactionTypes from '../../constants/transactionTypes';
-import LiskAmount from '../liskAmount';
+import transactionTypes from '../../../constants/transactionTypes';
+import LiskAmount from '../../liskAmount';
 import styles from './transactionAmount.css';
 
 const TransactionAmount = ({ address, transaction, token }) => {

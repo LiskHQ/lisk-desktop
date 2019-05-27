@@ -1,7 +1,7 @@
 import React from 'react';
-import { tokenMap } from '../../constants/tokens';
-import regex from '../../utils/regex';
-import transactionTypes from '../../constants/transactionTypes';
+import { tokenMap } from '../../../constants/tokens';
+import regex from '../../../utils/regex';
+import transactionTypes from '../../../constants/transactionTypes';
 import styles from './transactionAddress.css';
 
 const TransactionAddress = ({

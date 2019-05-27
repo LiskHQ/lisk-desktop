@@ -1,8 +1,8 @@
 import React from 'react';
-import AccountVisual from '../accountVisual';
-import svg from '../../utils/svgIcons';
-import reg from '../../utils/regex';
-import transactionTypes from '../../constants/transactionTypes';
+import AccountVisual from '../../accountVisual';
+import svg from '../../../utils/svgIcons';
+import reg from '../../../utils/regex';
+import transactionTypes from '../../../constants/transactionTypes';
 import styles from './transactionTypeFigure.css';
 
 const TransactionTypeFigure = ({

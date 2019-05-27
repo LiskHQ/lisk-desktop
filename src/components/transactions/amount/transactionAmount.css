@@ -1,4 +1,4 @@
-@import '../app/variablesV2.css';
+@import '../../app/variablesV2.css';
 
 .wrapper {
   display: flex;
@@ -11,6 +11,6 @@
   & .recieve {
     padding: 6px;
     background-color: rgba(43, 214, 123, 0.15);
-    color: var(--color-amount-green);
+    color: var(--color-deep-green);
   }
 }
