@@ -43,7 +43,11 @@
     align-items: flex-start;
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
+    margin-top: 0;
+
+    &:first-child {
+      margin-top: 20px;
+    }
   }
 
   & .fieldLabel {
@@ -62,6 +66,8 @@
     justify-content: flex-end;
     align-items: center;
     color: var(--color-slate-gray);
+    position: relative;
+    top: -30px;
     width: 100%;
 
     & > img {
