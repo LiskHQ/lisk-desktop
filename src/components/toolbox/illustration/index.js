@@ -6,7 +6,7 @@ import expandYourKnowledge from '../../../assets/images/illustrations/illustrati
 import ledgerNanoLight from '../../../assets/images/illustrations/illustration-ledger-nano-light.svg';
 import trezorLight from '../../../assets/images/illustrations/illustration-trezor-confirm-light.svg';
 
-const illustrations = {
+export const illustrations = {
   welcomeLiskDelegates,
   yourVoiceMatters,
   getRewarded,
