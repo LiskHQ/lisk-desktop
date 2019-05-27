@@ -1,28 +1,37 @@
 import React from 'react';
 import Spinner from '../spinner';
-import { FontIcon } from '../fontIcon';
-import styles from './voteCheckboxV2.css';
+import svgIcons from '../../utils/svgIcons';
 
-const VoteCheckboxV2 = ({ data, status, toggle }) => {
+import CheckBox from '../toolbox/checkBox';
+
+const VoteCheckboxV2 = ({
+  data, status = {}, toggle, votingModeEnabled, accent, className,
+}) => {
   const {
     username, rank, productivity, account,
   } = data;
-  const template = status && status.pending ?
+  const removed = status.confirmed && !status.unconfirmed;
+  const added = !status.confirmed && status.unconfirmed;
+  const template = status.pending ?
     <Spinner /> :
-    <label className={`${styles.checkbox} vote-checkbox ${status ? 'checked' : 'unchecked'}`} htmlFor={`vote-${account.publicKey}`}>
-      <input type='checkbox'
+    <React.Fragment> { votingModeEnabled ?
+      <CheckBox
+        className={`${className} vote-checkbox`}
+        checked={status.unconfirmed}
+        added={added}
+        accent={accent}
+        removed={removed}
         id={`vote-${account.publicKey}`}
-        checked={status ? status.unconfirmed : false}
         onChange={toggle.bind(null, {
           username,
           publicKey: account.publicKey,
           rank,
           productivity,
           address: account.address,
-        })} />
-      <FontIcon value='checkmark-check' className={styles.checked} />
-      <FontIcon value='checkmark-uncheck' className={styles.unchecked} />
-    </label>;
+        })}
+      /> :
+      <img src={status.unconfirmed ? svgIcons.ok_icon : undefined} />
+    } </React.Fragment>;
   return template;
 };
 

@@ -17,16 +17,17 @@ class TransactionStatus extends React.Component {
     };
 
     this.followContainerRef = {};
-
     this.backToWallet = this.backToWallet.bind(this);
     this.onErrorReport = this.onErrorReport.bind(this);
-    this.onPrevStep = this.onPrevStep.bind(this);
+    this.onRetry = this.onRetry.bind(this);
     this.onFollowingDropdownToggle = this.onFollowingDropdownToggle.bind(this);
     this.handleClickOutsideDropdown = this.handleClickOutsideDropdown.bind(this);
+    this.getDelegateInformation = this.getDelegateInformation.bind(this);
   }
 
   componentDidMount() {
     this.props.searchAccount({ address: this.props.fields.recipient.address });
+    this.transactionBroadcasted();
   }
 
   /* istanbul ignore next */
@@ -34,10 +35,14 @@ class TransactionStatus extends React.Component {
     document.removeEventListener('click', this.handleClickOutsideDropdown);
   }
 
+  transactionBroadcasted() {
+    const { transactions: { transactionsCreated }, transactionBroadcasted } = this.props;
+    transactionsCreated.forEach(tx => transactionBroadcasted(tx));
+  }
+
   backToWallet() {
     Piwik.trackingEvent('TransactionStatus', 'button', 'Back to wallet');
-    // istanbul ignore else
-    if (this.props.failedTransactions !== undefined) this.props.transactionFailedClear();
+    this.props.resetTransactionResult();
     this.props.finalCallback();
   }
 
@@ -56,6 +61,50 @@ class TransactionStatus extends React.Component {
     this.onFollowingDropdownToggle();
   }
 
+  followAccountInformation() {
+    const { followedAccounts, t } = this.props;
+
+    const isFollowing = getIndexOfFollowedAccount(
+      followedAccounts,
+      { address: this.props.fields.recipient.address },
+    ) !== -1;
+
+    const followButtonLabel = isFollowing
+      ? t('Account bookmarked')
+      : t('Bookmark account');
+
+    return {
+      isFollowing,
+      followButtonLabel,
+    };
+  }
+
+  getDelegateInformation() {
+    const { delegates, fields } = this.props;
+    return Object.entries(delegates).length
+      ? delegates[fields.recipient.address]
+      : {};
+  }
+
+  getMessagesDetails() {
+    const { transactions, fields } = this.props;
+
+    const isHardwareWalletError = fields.isHardwareWalletConnected && fields.hwTransactionStatus === 'error';
+    const messages = statusMessage(this.props.t);
+    let messageDetails = !transactions.broadcastedTransactionsError.length
+      ? messages.success
+      : messages.error;
+
+    if (fields.isHardwareWalletConnected) {
+      messageDetails = isHardwareWalletError ? messages.hw : messages.success;
+    }
+
+    return {
+      isHardwareWalletError,
+      messageDetails,
+    };
+  }
+
   // eslint-disable-next-line class-methods-use-this
   onErrorReport() {
     const recipient = 'hubdev@lisk.io';
@@ -63,87 +112,74 @@ class TransactionStatus extends React.Component {
     return `mailto:${recipient}?&subject=${subject}`;
   }
 
-  onPrevStep() {
-    this.props.transactionFailedClear();
-    this.props.prevStep({ fields: { ...this.props.fields } });
+  onRetry() {
+    const { transactions: { broadcastedTransactionsError }, transactionBroadcasted } = this.props;
+    broadcastedTransactionsError.forEach(tx => transactionBroadcasted(tx));
   }
 
-  // eslint-disable-next-line complexity
   render() {
-    const hwTransactionError = this.props.fields.isHardwareWalletConnected && this.props.fields.hwTransactionStatus === 'error';
-    const messages = statusMessage(this.props.t);
-    let transactionStatus = this.props.failedTransactions === undefined
-      ? messages.success
-      : messages.error;
-    const token = getTokenFromAddress(this.props.fields.recipient.address);
-    const isFollowing = getIndexOfFollowedAccount(
-      this.props.followedAccounts,
-      { address: this.props.fields.recipient.address },
-    ) !== -1;
-
-    const followBtnLabel = isFollowing
-      ? this.props.t('Account bookmarked')
-      : this.props.t('Bookmark account');
-
-    const delegate = Object.entries(this.props.delegates).length
-      ? this.props.delegates[this.props.fields.recipient.address]
-      : {};
-
-    // istanbul ignore else
-    if (this.props.fields.isHardwareWalletConnected) {
-      transactionStatus = hwTransactionError ? messages.hw : messages.success;
-    }
+    const { transactions, fields, t } = this.props;
+    const { isFollowing, followButtonLabel } = this.followAccountInformation();
+    const { isHardwareWalletError, messageDetails } = this.getMessagesDetails();
+    const token = getTokenFromAddress(fields.recipient.address);
+    const shouldShowFollowingAccount = !transactions.broadcastedTransactionsError.length
+      && !fields.recipient.following;
 
     return (
       <div className={`${styles.wrapper} transaction-status`}>
         <header className={styles.header}>
-          <img src={transactionStatus.headerIcon}/>
+          <img src={messageDetails.headerIcon}/>
         </header>
         <div className={`${styles.content} transaction-status-content`}>
-          <h1>{transactionStatus.bodyText.title}</h1>
-          <p className={'body-message'}>{transactionStatus.bodyText.paragraph}</p>
+          <h1>{messageDetails.bodyText.title}</h1>
+          <p className={'body-message'}>{messageDetails.bodyText.paragraph}</p>
         </div>
         <footer className={`${styles.footer} transaction-status-footer`}>
           <div>
             {
-              hwTransactionError
-              ? <SecondaryButtonV2 label={this.props.t('Retry')} className={`${styles.btn} retry`} onClick={() => this.onPrevStep()} />
+              isHardwareWalletError || transactions.broadcastedTransactionsError.length
+              ? <SecondaryButtonV2 label={t('Retry')} className={`${styles.btn} retry`} onClick={this.onRetry} />
               : null
             }
             {
-              !this.props.fields.recipient.following
+              shouldShowFollowingAccount
               ? (<div
                   className={`${styles.followBtn} following-container`} ref={(node) => { this.followContainerRef = node; }}>
                   <SecondaryButtonV2
                     className={`${styles.btn} ${isFollowing ? styles.followingButton : ''} following-btn`}
                     onClick={this.onFollowingDropdownToggle}>
-                    {followBtnLabel}
+                    {followButtonLabel}
                   </SecondaryButtonV2>
                   <DropdownV2
                     showDropdown={this.state.isFollowAccountDropdown}
                     className={`${styles.followDropdown}`}>
                     <FollowAccount
+                      delegate={this.getDelegateInformation()}
+                      balance={fields.recipient.balance}
+                      address={fields.recipient.address}
                       detailAccount={this.props.detailAccount}
-                      delegate={delegate}
-                      balance={this.props.fields.recipient.balance}
-                      address={this.props.fields.recipient.address}
                       token={token}
                       isFollowing={isFollowing} />
                   </DropdownV2>
                 </div>)
               : null
             }
-            <PrimaryButtonV2 className={`${styles.btn} on-goToWallet okay-button`} onClick={this.backToWallet}>{this.props.t('Back to wallet')}</PrimaryButtonV2>
+
+            <PrimaryButtonV2
+              className={`${styles.btn} on-goToWallet okay-button`}
+              onClick={this.backToWallet}>
+              {t('Back to wallet')}
+            </PrimaryButtonV2>
           </div>
           {
-            !(this.props.failedTransactions === undefined)
+            transactions.broadcastedTransactionsError.length
             ? <div className={`${styles.errorReport} transaction-status-error`}>
-                <span>{this.props.t('Does the problem still persist?')}</span>
+                <span>{t('Does the problem still persist?')}</span>
                 <a
                   href={this.onErrorReport()}
                   target='_top'
                   rel='noopener noreferrer'>
-                {this.props.t('Report the error via E-Mail')}
+                {t('Report the error via E-Mail')}
                 </a>
               </div>
             : null

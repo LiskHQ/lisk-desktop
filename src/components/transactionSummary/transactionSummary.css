@@ -1,0 +1,88 @@
+@import '../app/variablesV2.css';
+@import '../app/mixins.css';
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+  background: transparent;
+  max-width: 670px;
+  height: auto;
+
+  & > footer {
+    width: 100%;
+    min-width: 572px;
+    margin: 36px 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+
+    & > .confirmBtn {
+      width: 431px;
+    }
+
+    & > .editBtn {
+      width: auto !important;
+    }
+  }
+
+  & > header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+
+    & > h1 {
+      @mixin headingLarge bold;
+    }
+
+    & > h2 {
+      @mixin headingNormal bold;
+
+      width: 100%;
+      padding: 0;
+    }
+
+    & > p {
+      @mixin contentLarge;
+
+      color: var(--color-slate-gray);
+    }
+  }
+}
+
+.content {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  & section {
+    width: 100%;
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border-top: 1px solid rgba(111, 114, 118, 0.1);
+    box-sizing: border-box;
+
+    & > label:first-child {
+      @mixin contentNormal bold;
+
+      color: var(--color-maastricht-blue);
+      margin-bottom: 10px;
+      display: flex;
+    }
+  }
+}

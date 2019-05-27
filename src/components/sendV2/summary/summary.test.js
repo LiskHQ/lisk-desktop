@@ -37,6 +37,13 @@ describe('Summary', () => {
         balance: 7,
       },
     ],
+    transactions: {
+      pending: [],
+      fail: {},
+      transactionsCreated: [],
+      transactionsCreatedFailed: [],
+      broadcastedTransactionsError: [],
+    },
   });
 
   const options = {
@@ -56,8 +63,6 @@ describe('Summary', () => {
         deviceModel: 'Ledger Nano S',
       },
     },
-    failedTransactions: '',
-    pendingTransactions: [],
     fields: {
       recipient: {
         address: '123123L',
@@ -79,9 +84,17 @@ describe('Summary', () => {
     },
     prevStep: jest.fn(),
     nextStep: jest.fn(),
-    sent: jest.fn(),
+    transactionCreated: jest.fn(),
+    resetTransactionResult: jest.fn(),
     isLoading: false,
     isHardwareWalletConnected: false,
+    transactions: {
+      pending: [],
+      failed: '',
+      transactionsCreated: [],
+      transactionsCreatedFailed: [],
+      broadcastedTransactionsError: [],
+    },
     token: tokenMap.LSK.key,
   };
 
@@ -112,7 +125,7 @@ describe('Summary', () => {
     expect(wrapper.find('.send-button').at(0).prop('disabled')).toBeTruthy();
   });
 
-  it('should goind to next page if everyting is successfull', () => {
+  it('should call transactionCreated function after do a click in confirm button', () => {
     const clipboardData = {
       getData: () => accounts['second passphrase account'].secondPassphrase,
     };
@@ -120,10 +133,21 @@ describe('Summary', () => {
     wrapper.update();
     wrapper.find('.on-nextStep').at(0).simulate('click');
     wrapper.update();
+    expect(props.transactionCreated).toBeCalled();
+    wrapper.setProps({
+      transactions: {
+        ...props.transactions,
+        transactionsCreated: [{
+          id: '123123', senderId: '34234L', recipientId: '2342342L', amount: '0.01',
+        }],
+        transactionsCreatedFailed: [],
+        broadcastedTransactionsError: [],
+      },
+    });
+    wrapper.update();
     expect(props.nextStep).toBeCalled();
   });
-
-  it('should goind to next page if everything is successfull with Hardware Wallet', () => {
+  it('should call transactionCreated as soon the component load if using HW', () => {
     const newProps = { ...props };
     newProps.account = {
       ...props.account,
@@ -132,19 +156,7 @@ describe('Summary', () => {
       },
     };
     wrapper = mount(<Summary {...newProps} />, options);
-    wrapper.setProps({
-      ...props,
-      pendingTransactions: [{
-        senderId: accounts['second passphrase account'].address,
-        recipientId: '123123L',
-        amount: 1,
-      }],
-      fields: {
-        ...props.fields,
-        isLoading: true,
-      },
-    });
     wrapper.update();
-    expect(props.nextStep).toBeCalled();
+    expect(props.transactionCreated).toBeCalled();
   });
 });

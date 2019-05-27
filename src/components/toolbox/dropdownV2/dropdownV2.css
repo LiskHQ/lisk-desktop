@@ -14,9 +14,9 @@
   transform: scale(0.9);
   transform-origin: calc(100% - 25px) -5px;
   transition:
-    opacity var(--animation-speed-faster) linear,
-    transform var(--animation-speed-faster) linear,
-    visibility var(--animation-speed-faster) linear;
+    opacity var(--animation-speed-fastest) linear,
+    transform var(--animation-speed-fastest) linear,
+    visibility var(--animation-speed-fastest) linear;
   top: calc(100% + 5px);
   visibility: hidden;
   width: 100%;

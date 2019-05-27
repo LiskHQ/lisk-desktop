@@ -173,21 +173,32 @@ describe('actions: transactions', () => {
       amount: 100,
       passphrase: 'sample passphrase',
       secondPassphrase: null,
+      dynamicFeePerByte: null, // for BTC
+      fee: null, // for BTC
       account: {
         publicKey: 'test_public-key',
         address: 'test_address',
         loginType: 0,
       },
+      data: 'abc',
     };
+
     const actionFunction = sent(data);
 
     beforeEach(() => {
       getState = () => ({
         peers: { liskAPIClient: {} },
-        transactions: {
-          filters: {
-            direction: txFilters.all,
+        transactions: { filter: txFilters.all },
+        network: { liskAPIClient: {} },
+        settings: {
+          token: {
+            active: 'LSK',
           },
+        },
+        account: {
+          publicKey: 'test_public-key',
+          address: 'test_address',
+          loginType: 0,
         },
       });
     });
@@ -210,14 +221,20 @@ describe('actions: transactions', () => {
         token: 'LSK',
       };
 
+      transactionsApi.create.mockReturnValue(expectedAction);
+      transactionsApi.broadcast.mockReturnValue(expectedAction);
+
       await actionFunction(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
-        data: expectedAction, type: actionTypes.addPendingTransaction,
+        data: data.passphrase, type: actionTypes.passphraseUsed,
       });
     });
 
     it('should dispatch transactionFailed action if caught', async () => {
-      transactionsApi.send.mockRejectedValue({ message: 'sample message' });
+      transactionsApi.create.mockImplementation(() => {
+        throw new Error('sample message');
+      });
+
       const expectedAction = {
         data: {
           errorMessage: 'sample message.',
@@ -231,7 +248,10 @@ describe('actions: transactions', () => {
 
     it('should dispatch transactionFailed action if caught but no message returned', async () => {
       const errorMessage = 'An error occurred while creating the transaction';
-      transactionsApi.send.mockRejectedValue({ message: errorMessage });
+      transactionsApi.create.mockImplementation(() => {
+        throw new Error(errorMessage);
+      });
+
       const expectedErrorMessage = errorMessage + '.'; // eslint-disable-line
       const expectedAction = {
         data: {

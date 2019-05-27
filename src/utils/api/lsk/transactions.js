@@ -4,22 +4,30 @@ import { getTimestampFromFirstBlock } from '../../datetime';
 import txFilters from '../../../constants/transactionFilters';
 import { getAPIClient } from './network';
 
+// TODO remove this function as is replaced right now by Create and Broadcast functions
+// Issue ticket #2046
 export const send = (
-  liskAPIClient,
-  recipientId,
   amount,
-  passphrase,
-  secondPassphrase = null,
   data,
+  networkConfig,
+  passphrase,
+  recipientId,
+  secondPassphrase = null,
   timeOffset,
 ) =>
   new Promise((resolve, reject) => {
-    const transaction = Lisk.transaction.transfer({
-      recipientId, amount: `${amount}`, passphrase, secondPassphrase, data, timeOffset,
+    const txId = Lisk.transaction.transfer({
+      amount,
+      data,
+      passphrase,
+      recipientId,
+      secondPassphrase,
+      timeOffset,
     });
-    liskAPIClient.transactions.broadcast(transaction).then(() => {
-      resolve(transaction);
-    }).catch(reject);
+
+    getAPIClient(networkConfig).transactions.broadcast(txId)
+      .then(resolve(txId))
+      .catch(reject);
   });
 
 const enhanceTxListResponse = response => ({
@@ -101,3 +109,22 @@ export const unconfirmedTransactions = (liskAPIClient, address, limit = 20, offs
     offset,
     sort,
   });
+
+
+export const create = transaction => new Promise((resolve, reject) => {
+  try {
+    const tx = Lisk.transaction.transfer(transaction);
+    resolve(tx);
+  } catch (error) {
+    reject(error);
+  }
+});
+
+export const broadcast = (transaction, networkConfig) => new Promise(async (resolve, reject) => {
+  try {
+    await getAPIClient(networkConfig).transactions.broadcast(transaction);
+    resolve(transaction);
+  } catch (error) {
+    reject(error);
+  }
+});

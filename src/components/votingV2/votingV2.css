@@ -1,98 +1,51 @@
-@import '../app/variables.css';
-
-:root {
-  --submit-button-height: 55px;
-  --filters-height: 55px;
-}
+@import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
 .wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+  align-items: center;
   width: 100%;
-  margin: 0;
+}
 
-  & > aside {
-    padding-left: 0;
+.votesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+
+  &:last-child {
+    margin-bottom: 0;
   }
 
-  & > section {
-    border-radius: 6px;
+  & .voteTag {
+    @mixin contentSmall bold;
+
+    align-items: center;
+    border: 1px solid var(--dark-border-color);
+    border-radius: var(--border-radius-standard);
+    box-sizing: border-box;
+    color: var(--color-maastricht-blue);
     display: flex;
-    flex-direction: column;
-    height: auto;
-    margin-bottom: 40px;
-    padding: 0;
-  }
-}
-
-.sideBar {
-  padding-right: 0px;
-}
-
-.votes {
-  padding-left: 0px;
-  background-color: var(--color-white);
-}
-
-@media (--medium-viewport) {
-  .wrapper {
-    margin: 0;
-
-    & > section,
-    & > aside {
-      padding: 0;
-    }
-
-    & > section {
-      position: relative;
-      overflow-y: hidden;
-    }
-
-    & > aside {
-      position: fixed;
-      z-index: 2;
-      left: 0;
-      bottom: var(--footer-height-m);
-      max-height: 100%;
-      height: auto;
-      max-width: 100%;
-    }
+    height: 32px;
+    margin-bottom: 8px;
+    margin-right: 8px;
+    padding: 7px 10px;
+    text-decoration: none;
   }
 
-  .hasLayover {
-    & :global(.delegate-list-box) {
-      overflow: hidden;
-      opacity: 0;
-    }
+  & .rank {
+    @mixin contentSmall semi-bold;
 
-    & aside {
-      height: 100%;
-      height: calc(100% - var(--header-height-m) - var(--footer-height-m));
-    }
-  }
-
-  .wrapper:not(.hasLayover) aside > div {
-    background-color: transparent;
-  }
-}
-
-@media (--small-viewport) {
-  .wrapper {
-    & > section {
-      height: calc(100vh - var(--submit-button-height) - var(--header-height-s) - var(--footer-height-s)); /* stylelint-disable-line */
-    }
-
-    & > aside {
-      bottom: var(--footer-height-s);
-    }
-  }
-
-  .hasLayover aside {
-    height: calc(100% - var(--header-height-s) - var(--footer-height-s));
-  }
-}
-
-@media (max-width: 1025px) {
-  .votingBox {
-    flex-basis: 100%;
-    max-width: 100%;
+    align-items: center;
+    background-color: var(--color-slate-gray);
+    border-radius: var(--border-radius-standard);
+    color: var(--color-white);
+    display: flex;
+    height: 18px;
+    margin-right: 10px;
+    padding: 0 5px;
+    text-align: center;
   }
 }

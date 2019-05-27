@@ -96,6 +96,23 @@ describe('Form', () => {
     expect(wrapper).not.toContainMatchingElement('PrimaryButtonV2.btn-submit');
   });
 
+  it('should render properly with data from prevState', () => {
+    wrapper.setProps({
+      prevState: {
+        fields: {
+          recipient: { address: '' },
+          amount: { value: '' },
+          reference: { value: '' },
+        },
+      },
+    });
+    wrapper.update();
+    expect(wrapper).toContainMatchingElement('span.recipient');
+    expect(wrapper).toContainMatchingElement('span.amount');
+    expect(wrapper).toContainMatchingElement('label.reference');
+    expect(wrapper).not.toContainMatchingElement('PrimaryButtonV2.btn-submit');
+  });
+
   it('should validate bookmark', () => {
     const evt = { target: { name: 'recipient', value: '123456L' } };
     wrapper.find('input.recipient').simulate('change', evt);

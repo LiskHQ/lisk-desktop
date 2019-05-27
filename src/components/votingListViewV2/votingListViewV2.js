@@ -1,13 +1,12 @@
-import React, { Fragment } from 'react';
-import MultiStep from './../multiStep';
+import React from 'react';
 import VotingHeaderV2 from './votingHeaderV2';
 import styles from './votingListViewV2.css';
-import VoteUrlProcessor from '../voteUrlProcessor';
 import voteFilters from './../../constants/voteFilters';
-import { parseSearchParams } from '../../utils/searchParams';
-import VoteListV2 from './voteListV2';
 import DelegateListV2 from './delegateListV2';
 import ProgressBar from '../toolbox/progressBar/progressBar';
+import Tooltip from '../toolbox/tooltip/tooltip';
+import { getTotalVotesCount } from './../../utils/voting';
+import BoxV2 from '../boxV2';
 
 // Create a new Table component injecting Head and Row
 class VotingListViewV2 extends React.Component {
@@ -15,10 +14,8 @@ class VotingListViewV2 extends React.Component {
     super();
     this.freezeLoading = false;
     this.isInitial = true;
-    this.offset = -1;
     this.query = '';
     this.state = {
-      showInfo: true,
       activeFilter: voteFilters.all,
       safariClass: '',
       isLoading: false,
@@ -26,34 +23,25 @@ class VotingListViewV2 extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.serverPublicKey) {
-      this.loadVotedDelegates(true);
+    if (this.props.account.serverPublicKey && !this.props.votingModeEnabled) {
+      this.loadVotedDelegates();
     }
+    this.loadDelegates('', true);
   }
 
   componentDidUpdate(nextProps) {
-    if (!this.props.refreshDelegates && nextProps.refreshDelegates) {
-      this.loadVotedDelegates(true);
-    }
-
     if (this.props.delegates.length < nextProps.delegates.length) {
       this.freezeLoading = false;
-      this.offset = nextProps.delegates.length;
       this.isInitial = false;
     }
   }
 
-  componentWillUnmount() {
-    this.props.delegatesCleared();
-  }
-
-  loadVotedDelegates(refresh) {
+  loadVotedDelegates() {
     /* istanbul-ignore-else */
     if (!this.freezeLoading) {
       this.props.votesFetched({
         address: this.props.address,
       });
-      this.loadDelegates('', refresh);
     }
   }
 
@@ -63,9 +51,8 @@ class VotingListViewV2 extends React.Component {
    */
   search(query) {
     this.query = query;
-    this.offset = 0;
     this.freezeLoading = false;
-    this.loadDelegates(query, true);
+    this.loadDelegates(query, true, 0);
   }
 
   /**
@@ -77,12 +64,11 @@ class VotingListViewV2 extends React.Component {
    *  should replace the old delegates list
    * @param {Number} limit - The maximum number of results
    */
-  loadDelegates(q = '', refresh) {
-    const list = this.filter(this.props.delegates);
+  loadDelegates(q = '', refresh, offset = 0) {
     this.freezeLoading = true;
 
     this.props.delegatesFetched({
-      offset: list.length !== 0 ? list[list.length - 1].rank : 0,
+      offset,
       q,
       refresh,
     });
@@ -92,7 +78,8 @@ class VotingListViewV2 extends React.Component {
    * load more data when scroll bar reaches end of the page
    */
   loadMore() {
-    this.loadDelegates(this.query);
+    const list = this.filter(this.props.delegates);
+    this.loadDelegates(this.query, false, list[list.length - 1].rank);
   }
 
   setActiveFilter(filter) {
@@ -120,69 +107,72 @@ class VotingListViewV2 extends React.Component {
   }
 
   getEmptyStateMessage(filteredList) {
+    const { t } = this.props;
     let message = '';
 
     if (!this.isInitial && this.props.delegates.length === 0) {
-      message = 'No delegates found.';
+      message = t('No delegates found.');
     } else if (this.state.activeFilter === voteFilters.voted &&
-      Object.keys(this.props.votes).length === 0) {
-      message = 'You have not voted yet.';
+      getTotalVotesCount(this.props.votes) === 0) {
+      message = t('You have not voted yet.');
     } else if (this.query !== '' && Object.keys(filteredList).length === 0) {
-      message = 'No search result in given criteria.';
+      message = t('No search result in given criteria.');
     }
 
     return message;
   }
 
-  showInfo() {
-    const params = parseSearchParams(this.props.history.location.search);
-    return !this.props.nextStepCalled && (params.votes || params.unvotes) && this.state.showInfo;
-  }
-
-  toggleShowInfo(shouldShow) {
-    this.setState({ showInfo: shouldShow });
-  }
-
   render() {
     const filteredList = this.filter(this.props.delegates);
     const {
-      showChangeSummery, isDelegate, voteToggled, votes, t,
+      voteToggled, votes, t, votingModeEnabled,
     } = this.props;
+    const firstTimeVotingActive = votingModeEnabled && getTotalVotesCount(votes) === 0;
     return (
-      <Fragment>
-        {this.props.delegates.length === 0 || this.state.isLoading ? (
+      <BoxV2>
+        <header>
+          <VotingHeaderV2
+            t={t}
+            account={this.props.account}
+            setActiveFilter={this.setActiveFilter.bind(this)}
+            voteToggled={voteToggled}
+            search={ value => this.search(value) }
+          />
+        </header>
+        {this.state.isLoading ? (
           <div className={styles.loadingOverlay}>
             <ProgressBar type="linear" mode="indeterminate" theme={styles} className={'loading'}/>
           </div>
         ) : null}
-        <VoteUrlProcessor toggleShowInfo={this.toggleShowInfo.bind(this)} show={this.showInfo()} />
-        { !this.showInfo() ?
-          <Fragment>
-            <VotingHeaderV2
-              account={this.props.account}
-              setActiveFilter={this.setActiveFilter.bind(this)}
-              showChangeSummery={showChangeSummery}
-              isDelegate={isDelegate}
+        {firstTimeVotingActive ?
+          <div className={styles.loadingOverlay}>
+            <Tooltip
+              styles={{
+                infoIcon: styles.infoIcon,
+                tooltip: styles.tooltipClass,
+              }}
+              tooltipClassName={styles.tooltipClassName}
+              className={styles.selectingDelegates}
+              alwaysShow={true}
+              title={t('Selecting Delegates')} >
+              <p>{t('Start by Selecting the delegates you’d like to vote for.')}</p>
+            </Tooltip>
+          </div> :
+        null}
+          <div className={styles.wrapper}>
+            <DelegateListV2 t={t} list={filteredList} votes={votes}
+              firstTimeVotingActive={firstTimeVotingActive}
+              votingModeEnabled={votingModeEnabled}
               voteToggled={voteToggled}
-              search={ value => this.search(value) }
-            />
-              <MultiStep
-                className={styles.wrapper}>
-                <DelegateListV2 t={t} list={filteredList} votes={votes}
-                  voteToggled={voteToggled} showChangeSummery={showChangeSummery}
-                  safari={this.state.safariClass} loadMore={this.loadMore.bind(this)} />
-                <VoteListV2 votes={votes} showChangeSummery={showChangeSummery}
-                  safari={this.state.safariClass} />
-              </MultiStep>
-              {
-                (filteredList.length === 0) ?
-                  <div className={`empty-message ${styles.emptyMessage}`}>
-                    {t(this.getEmptyStateMessage(filteredList))}
-                  </div> : null
-              }
-          </Fragment> : null
-        }
-      </Fragment>
+              safari={this.state.safariClass} loadMore={this.loadMore.bind(this)} />
+          </div>
+          {
+            (filteredList.length === 0) ?
+              <div className={`empty-message ${styles.emptyMessage}`}>
+                {t(this.getEmptyStateMessage(filteredList))}
+              </div> : null
+          }
+    </BoxV2>
     );
   }
 }
