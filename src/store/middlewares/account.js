@@ -129,7 +129,9 @@ const autoLogInIfNecessary = (store) => {
     store.dispatch(liskAPIClientUpdate({
       online: true,
     }));
-  } else if (localStorage.getItem('trezorDeviceId')) {
+
+  //  Ignoring coverage because autologin is a development feature not accessible by end users
+  } else /* istanbul ignore next */ if (localStorage.getItem('trezorDeviceId')) {
     store.dispatch(liskAPIClientSet({
       hwInfo: {
         derivationIndex: localStorage.getItem('derivationIndex') || 0,
