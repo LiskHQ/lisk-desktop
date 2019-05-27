@@ -32,8 +32,9 @@
     padding: 16px 20px;
     width: 100%;
 
-    & h1 {
-      @mixin contentNormal bold;
+    & h1,
+    & h2 {
+      @mixin contentLargest bold;
 
       color: var(--color-maastricht-blue);
       margin: 0;
