@@ -6,8 +6,8 @@
  */
 export const deepMergeObj = (obj1, obj2) =>
   Object.keys({ ...obj2 }).reduce((obj, key) => (
-    typeof (obj2[key] === 'object' && typeof obj1[key] === 'object')
-      && (!Array.isArray(obj2[key]) && !Array.isArray(obj1[key]))
+    typeof obj2[key] === 'object' && typeof obj1[key] === 'object'
+      && !Array.isArray(obj2[key]) && !Array.isArray(obj1[key])
       ? { ...obj, [key]: deepMergeObj(obj1[key], obj2[key]) }
       : { ...obj, [key]: obj2[key] }
   ), obj1);
