@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-// import ReactSwipe from 'react-swipe';
 import Checkbox from '../toolbox/sliderCheckbox';
 import styles from './setting.css';
 import accountConfig from '../../constants/account';
@@ -10,10 +9,10 @@ import settingsConst from './../../constants/settings';
 // TODO: will be re-enabled when the functionality is updated
 import routes from '../../constants/routes';
 import { FontIcon } from '../fontIcon';
-import Box from '../box';
 import links from './../../constants/externalLinks';
 import Piwik from '../../utils/piwik';
-// import languageSwitcherTheme from './languageSwitcher.css';
+import BoxV2 from '../boxV2';
+import Select from '../toolbox/select';
 
 class Setting extends React.Component {
   constructor() {
@@ -51,13 +50,38 @@ class Setting extends React.Component {
       `${styles.disable} disabled` : '';
     const activeCurrency = settings.currency || settingsConst.currencies[0];
 
-    return (<Box className={styles.wrapper}>
-      <aside className={`${grid['col-sm-12']} ${grid['col-md-4']}`}>
-        <header>
-          <h4>{t('Settings')}</h4>
-          <p>{t('Set up Lisk Hub and your account.')}</p>
-        </header>
-      </aside>
+    return window.location.hash.indexOf('v2') > -1 ? (
+      <div className={styles.settingsHolder}>
+        <section className={styles.wrapper}>
+          <BoxV2>
+            <header>
+              <h1>{t('Settings')}</h1>
+            </header>
+            <div className={styles.content}>
+              <section>
+                <h1>{t('Locale')}</h1>
+                <Select options={[
+                  { label: 'USD' },
+                  { label: 'EUR' },
+                ]}
+                  onChange={console.log}
+                />
+              </section>
+              <section>
+                <h1>{t('Security')}</h1>
+
+              </section>
+              <section>
+                <h1>{t('Developers')}</h1>
+              </section>
+              <section>
+                <h1>{t('Privacy')}</h1>
+              </section>
+            </div>
+          </BoxV2>
+        </section>
+      </div>
+    ) : (
       <section className={`${grid['col-sm-12']} ${grid['col-md-8']}`}>
         <h4>{t('Security')}</h4>
         <div className={styles.item}>
@@ -145,7 +169,7 @@ class Setting extends React.Component {
           </ul>
         </div>
       </section>
-    </Box>);
+    );
   }
 }
 
