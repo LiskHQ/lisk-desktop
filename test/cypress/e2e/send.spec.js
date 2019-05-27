@@ -118,7 +118,6 @@ describe('Send', () => {
     cy.get(ss.submittedTransactionMessage).should('have.text', msg.transferTxSuccess);
     cy.get(ss.okayBtn).click();
     cy.get(ss.transactionRow).eq(0).as('tx');
-    cy.get('@tx').find(ss.spinner).should('be.visible');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', randomAddress);
   });
 
