@@ -20,7 +20,6 @@ let lastBtcUpdate = new Date();
 const shouldUpdateBtc = (state) => {
   const now = new Date();
   const oneMinute = 1000 * 60;
-  console.log('socckc', !(state.settings.token && state.settings.token.active === 'BTC'), now - lastBtcUpdate, now - lastBtcUpdate > oneMinute);
   if (!(state.settings.token && state.settings.token.active === 'BTC') || now - lastBtcUpdate > oneMinute) {
     lastBtcUpdate = now;
     return true;

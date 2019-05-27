@@ -47,11 +47,12 @@ export const getSingleTransaction = async ({ token, ...params }) => (
  * pass parameters to another functions
  */
 // istanbul ignore file
-export const get = (tokenType, data) => getMappedFunction(tokenType, 'transactions', 'get')(data);
+export const get = (token, data) => api[token].transactions.get(data);
 // istanbul ignore next
-export const create = (tokenType, data) => getMappedFunction(tokenType, 'transactions', 'create')(data);
+export const create = (tokenType, data) => api[tokenType].transactions.create(data);
 // istanbul ignore next
-export const broadcast = (tokenType, transaction, networkConfig) => getMappedFunction(tokenType, 'transactions', 'broadcast')(transaction, networkConfig);
+export const broadcast = (tokenType, transaction, networkConfig) =>
+  api[tokenType].transactions.broadcast(transaction, networkConfig);
 
 export default {
   broadcast,
