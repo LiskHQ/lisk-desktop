@@ -17,7 +17,7 @@ export const channels = {
  * @returns {Object} -> state with correct active token.
  */
 const validateToken = state => (
-  !state.token.list[state.token.active]
+  state.token && !state.token.list[state.token.active]
     ? { ...state, token: { active: tokenKeys[0], list: state.token.list } }
     : state
 );
