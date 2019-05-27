@@ -129,6 +129,23 @@ const autoLogInIfNecessary = (store) => {
     store.dispatch(liskAPIClientUpdate({
       online: true,
     }));
+  } else if (localStorage.getItem('trezorDeviceId')) {
+    store.dispatch(liskAPIClientSet({
+      hwInfo: {
+        derivationIndex: localStorage.getItem('derivationIndex') || 0,
+        deviceId: localStorage.getItem('trezorDeviceId'),
+        deviceModel: 'Trezor Model T',
+      },
+      publicKey: localStorage.getItem('publicKey'),
+      network: { ...networks.customNode, address: autologinData[settings.keys.liskCoreUrl] },
+      options: {
+        code: networks.customNode.code,
+        address: autologinData[settings.keys.liskCoreUrl],
+      },
+    }));
+    store.dispatch(liskAPIClientUpdate({
+      online: true,
+    }));
   }
 };
 
