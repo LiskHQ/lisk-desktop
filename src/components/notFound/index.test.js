@@ -1,11 +1,13 @@
 import React from 'react';
-import { expect } from 'chai';
+import { MemoryRouter as Router } from 'react-router-dom';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import NotFound from './index';
 import i18n from '../../i18n';
 
 describe('notFound', () => {
+  const mountWithRouter = (node, options) => mount(<Router>{node}</Router>, options);
+
   const options = {
     context: { i18n },
     childContextTypes: {
@@ -13,8 +15,11 @@ describe('notFound', () => {
     },
   };
 
-  it('should render a Box', () => {
-    const wrapper = mount(<NotFound />, options);
-    expect(wrapper.find('Box')).to.have.lengthOf(1);
+  it('should render correctly', () => {
+    const wrapper = mountWithRouter(<NotFound/>, options);
+    expect(wrapper.find('section')).toHaveLength(1);
+    expect(wrapper).toContainMatchingElement('Illustration');
+    expect(wrapper).toContainMatchingElement('.go-to-dashboard-button');
   });
 });
+
