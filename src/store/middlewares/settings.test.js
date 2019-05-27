@@ -20,7 +20,7 @@ describe('Middleware: Settings', () => {
     expect(next).toBeCalledWith(action);
   });
 
-  it('should dispatch settingsUpdated', () => {
+  it('should not dispatch pricesRetrieved', () => {
     const action = {
       type: actionTypes.settingsUpdated,
       data: {
@@ -30,5 +30,17 @@ describe('Middleware: Settings', () => {
 
     settingsMiddleware(store)(next)(action);
     expect(service.pricesRetrieved).not.toBeCalled();
+  });
+
+  it('should dispatch pricesRetrieved', () => {
+    const action = {
+      type: actionTypes.settingsUpdated,
+      data: {
+        token: {},
+      },
+    };
+
+    settingsMiddleware(store)(next)(action);
+    expect(service.pricesRetrieved).toBeCalled();
   });
 });
