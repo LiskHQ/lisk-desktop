@@ -430,9 +430,10 @@ class Form extends React.Component {
    */
   getProcessingSpeedStatus() {
     const { token, t } = this.props;
-    const { fields } = this.state;
+    const { fields, isLoading } = this.state;
     const { amount: { value } } = fields;
-    if (value === '') return <span>{t('Loading')} <SpinnerV2 className={styles.loading} /></span>;
+    if (value === '') return <span>-</span>;
+    if (isLoading) return <span>{t('Loading')} <SpinnerV2 className={styles.loading} /></span>;
     return <span>{!this.validateAmountField(value)
       ? `${fromRawLsk(fields.processingSpeed.txFee)} ${token}`
       : t('Invalid amount')}</span>;
