@@ -66,7 +66,6 @@ describe('Settings', () => {
   });
 
   [
-    ss.autoLogoutTrigger,
     ss.switchNetworksTrigger,
     ss.delegateFeaturesTrigger,
   ]
@@ -76,6 +75,7 @@ describe('Settings', () => {
        * @expect corresponding localStorage setting toggles true/false
        */
       it(`${selector.substr(1)} default position is off and can be toggled to on and back`, () => {
+        cy.clearLocalStorage();
         cy.visit(urls.settings);
         cy.get(`${selector}`).click().should(() => {
           expect(getSettingsObjFromLS()[`${selector.substr(1)}`]).to.equal(true);
@@ -91,6 +91,7 @@ describe('Settings', () => {
    * @expect corresponding localStorage setting changes to USD/EUR
    */
   it('Currency default position should be USD and can be toggled to USD and back', () => {
+    cy.clearLocalStorage();
     cy.visit(urls.settings);
     cy.get(ss.currencyUSDBtn).should('have.class', 'active');
     cy.get(ss.currencyEURBtn).click().should(($button) => {

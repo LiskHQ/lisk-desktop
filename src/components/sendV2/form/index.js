@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import { settingsUpdateToken } from '../../../actions/settings';
 import { dynamicFeesRetrieved } from '../../../actions/service';
 import { tokenMap } from '../../../constants/tokens';
 import Form from './form';
@@ -14,7 +13,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  settingsUpdateToken,
   dynamicFeesRetrieved,
 };
 
