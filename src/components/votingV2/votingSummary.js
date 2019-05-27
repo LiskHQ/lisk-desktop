@@ -36,7 +36,7 @@ const VotingSummary = ({
             votes,
             passphrase: account.passphrase,
             secondPassphrase,
-            goToNextStep: ({ success, text }) => {
+            goToNextStep: ({ success, text, errorMessage }) => {
               nextStep({
                 success,
                 ...(success ? {
@@ -51,7 +51,7 @@ const VotingSummary = ({
                   },
                 } : {
                   title: t('Voting failed'),
-                  message: t('Oops, looks like something went wrong. Please try again.'),
+                  message: errorMessage || t('Oops, looks like something went wrong. Please try again.'),
                   primaryButon: {
                     title: t('Back to Voting summary'),
                     onClick: prevStep,

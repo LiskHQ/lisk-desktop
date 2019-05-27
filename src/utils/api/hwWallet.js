@@ -13,6 +13,7 @@ import { extractAddress } from '../account';
 import loginTypes from '../../constants/loginTypes';
 import { HW_MSG, models, loginType } from '../../constants/hwConstants';
 import { getAPIClient } from './lsk/network';
+import { splitVotesIntoRounds } from './delegate';
 
 const util = require('util');
 
@@ -307,20 +308,48 @@ export const sendWithHW = (networkConfig, account, recipientId, amount,
  * NOTE: secondPassphrase for ledger is a PIN (numeric)
  * @returns Promise - Action Vote with Ledger
  */
-export const voteWithHW = (activePeer, account, votedList, unvotedList, pin = null) =>
-  new Promise(async (resolve, reject) => {
-    const rawTx = createRawVoteTX(account.publicKey, account.address, votedList, unvotedList);
-    let error;
-    let signedTx;
-    [error, signedTx] = await to(signTransactionWithHW(rawTx, account, pin));
-    if (error) {
-      reject(error);
+export const voteWithHW = async (
+  activePeer,
+  account,
+  votedList,
+  unvotedList,
+  pin = null,
+) => {
+  let error;
+  const transactions = [];
+  const rounds = splitVotesIntoRounds({
+    votes: [...votedList],
+    unvotes: [...unvotedList],
+  });
+  for (let i = 0; i < rounds.length && !error; i++) {
+    const { votes, unvotes } = rounds[i];
+    const rawTx = createRawVoteTX(account.publicKey, account.address, votes, unvotes);
+    // eslint-disable-next-line no-await-in-loop
+    const [e, signedTx] = await to(signTransactionWithHW(rawTx, account, pin));
+
+    if (e) {
+      error = new Error(i18next.t(
+        'The transaction has been canceled on your {{model}}',
+        { model: account.hwInfo.deviceModel },
+      ));
     } else {
-      activePeer.transactions.broadcast(signedTx).then(() => {
-        resolve(signedTx);
-      }).catch(reject);
+      // eslint-disable-next-line no-await-in-loop
+      const [er] = await to(activePeer.transactions.broadcast(signedTx));
+      if (er) {
+        error = er;
+      } else {
+        transactions.push(signedTx);
+      }
+    }
+  }
+  return new Promise((resolve, reject) => {
+    if (transactions.length) {
+      resolve(transactions);
+    } else {
+      reject(error);
     }
   });
+};
 
 
 /**

@@ -17,7 +17,7 @@ export const getDelegate = (liskAPIClient, options) =>
   liskAPIClient.delegates.get(options);
 
 
-const splitVotesIntoRounds = ({ votes, unvotes }) => {
+export const splitVotesIntoRounds = ({ votes, unvotes }) => {
   const rounds = [];
   const maxCountOfVotesInOneTurn = 33;
   while (votes.length + unvotes.length > 0) {
