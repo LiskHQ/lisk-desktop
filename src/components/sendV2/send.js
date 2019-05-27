@@ -23,6 +23,7 @@ class Send extends React.Component {
     this.backToWallet = this.backToWallet.bind(this);
   }
 
+  // istanbul ignore next
   backToWallet() {
     this.props.history.push(routes.wallet.path);
   }
