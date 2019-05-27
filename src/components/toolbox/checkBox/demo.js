@@ -1,25 +1,22 @@
 import React from 'react';
 import CheckBox from './';
+import DemoRenderer from '../demoRenderer';
 
 const CheckBoxDemo = () => (
   <React.Fragment>
     <h2>CheckBox</h2>
-    <div>
-      <label>{'<CheckBox checked={true} /> '}</label>
-      <CheckBox checked={true} />
-    </div>
-    <div>
-      <label>{'<CheckBox checked={false} /> '}</label>
-      <CheckBox checked={false} />
-    </div>
-    <div>
-      <label>{'<CheckBox checked={true} accent={true} /> '}</label>
-      <CheckBox checked={true} accent={true} />
-    </div>
-    <div>
-      <label>{'<CheckBox checked={false} removed={true} /> '}</label>
-      <CheckBox checked={false} removed={true} />
-    </div>
+    <DemoRenderer>
+      <CheckBox checked={true} onChange={() => {}} />
+    </DemoRenderer>
+    <DemoRenderer>
+      <CheckBox checked={false} onChange={() => {}} />
+    </DemoRenderer>
+    <DemoRenderer>
+      <CheckBox checked={true} accent={true} onChange={() => {}} />
+    </DemoRenderer>
+    <DemoRenderer>
+      <CheckBox checked={false} removed={true} onChange={() => {}} />
+    </DemoRenderer>
   </React.Fragment>
 );
 
