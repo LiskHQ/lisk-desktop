@@ -37,7 +37,7 @@ describe('NewsFeed', () => {
         source: 'test',
         content: '',
         timestamp: '',
-        url: '',
+        url: 'https://test.io',
       },
       {
         source: 'test',
