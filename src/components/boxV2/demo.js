@@ -3,6 +3,9 @@ import BoxV2 from './';
 import Tabs from '../toolbox/tabs';
 import DemoRenderer from '../toolbox/demoRenderer';
 
+/* eslint-disable-next-line no-console */
+const onClick = console.log;
+
 const BoxV2Demo = () => (
   <React.Fragment>
     <h2>BoxV2</h2>
@@ -24,7 +27,7 @@ const BoxV2Demo = () => (
            { name: 'Tab 1', value: 'tab1' },
            { name: 'Tab 2', value: 'tab2' },
          ]}
-           onClick={() => {}}
+           onClick={onClick}
            active='tab2'/>
          <span>Some other stuff</span>
        </header>

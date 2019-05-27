@@ -2,10 +2,10 @@ import React from 'react';
 import jsxToString from 'jsx-to-string';
 
 const DemoRenderer = ({ children }) => (
-  <p>
+  <div>
     <pre>{jsxToString(children)} </pre>
     { children }
-  </p>
+  </div>
 );
 
 export default DemoRenderer;
