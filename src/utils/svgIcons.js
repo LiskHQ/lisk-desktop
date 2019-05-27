@@ -46,6 +46,7 @@ import iconTrezorModelTDevice from '../assets/images/icons-v2/icon_trezor_device
 import iconLedgerNanoDevice from '../assets/images/icons-v2/icon_ledger_device.svg';
 import iconEdit from '../assets/images/icons-v2/icon_edit.svg';
 import btcIcon from '../assets/images/icons-v2/icon-btc-48.svg';
+import iconEmptyRecentTransactions from '../assets/images/icons-v2/empty_recent_transactions.svg';
 import checkmark from '../assets/images/icons-v2/checkmark-16-filled.svg';
 
 export default {
@@ -97,5 +98,6 @@ export default {
   icon_ledger_nano_device: iconLedgerNanoDevice,
   icon_edit: iconEdit,
   btcIcon,
+  icon_empty_recent_transactions: iconEmptyRecentTransactions,
   checkmark,
 };

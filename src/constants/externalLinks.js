@@ -16,6 +16,7 @@ const links = {
   accountInitialization: 'https://lisk.io/help-center/account-security/should-i-initialize-my-lisk-account',
   whatIsAnPassphrase: 'https://lisk.io/help-center/account-security/what-is-a-lisk-passphrase',
   transactionFee: 'https://lisk.io/help-center/getting-started/does-lisk-have-transaction-fees',
+  outgoingTransactions: 'https://lisk.io/help-center/transactions/how-to-make-an-outgoing-lsk-transaction',
 };
 export default links;
 

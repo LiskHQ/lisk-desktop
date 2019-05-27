@@ -16,12 +16,3 @@ export const settingsUpdated = data => ({
 export const settingsReset = () => ({
   type: actionTypes.settingsReset,
 });
-
-/**
- * An action to dispatch settingsTokenUpdate
- *
- */
-export const settingsUpdateToken = data => ({
-  type: actionTypes.settingsUpdateToken,
-  data,
-});

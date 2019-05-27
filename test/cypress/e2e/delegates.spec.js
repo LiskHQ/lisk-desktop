@@ -103,8 +103,11 @@ describe('Delegates', () => {
    * @expect on All tab all delegates are shown
    */
   it('Filter voted/not voted delegates', () => {
+    cy.server();
+    cy.route('/api/delegates**').as('requestDelegate');
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
+    cy.wait('@requestDelegate');
     // Filter Voted
     cy.get(ss.filterVoted).click();
     cy.get(ss.delegateRow).eq(0).find(ss.delegateName).contains('genesis_51');

@@ -52,7 +52,6 @@ const actionTypes = {
   sendFeedback: 'SEND_FEEDBACK',
   settingsReset: 'SETTINGS_RESET',
   settingsUpdated: 'SETTINGS_UPDATED',
-  settingsUpdateToken: 'SETTINGS_UPDATE_TOKEN',
   showEmptyNewsFeed: 'SHOW_EMPTY_NEWS_FEED',
   storeCreated: 'STORE_CREATED',
   switchChannel: 'SWITCH_CHANNEL',

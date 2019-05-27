@@ -1,0 +1,56 @@
+@import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
+
+.box {
+  max-width: 431px;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 20px;
+
+  & > header {
+    @mixin contentNormal;
+
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  & .list {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & > .listRow {
+      @mixin contentLargest bold;
+
+      width: 100%;
+      height: 75px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      border-bottom: 1px solid var(--color-mystic);
+
+      & > span:last-child {
+        margin-left: auto;
+      }
+    }
+
+    & > .listRow:last-child {
+      border-bottom: 1px solid transparent;
+    }
+  }
+}

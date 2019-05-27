@@ -62,6 +62,7 @@ describe('Wallet Others account', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.accounts}/${accounts.genesis.address}`);
     cy.wait('@requestAccountData');
+    cy.wait(300);
     cy.get(ss.followAccountBtn).contains('Bookmark account');
     cy.get(ss.followAccountBtn).click();
     cy.get(ss.titleInput).type('Bob');
@@ -87,6 +88,7 @@ describe('Wallet Others account', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(`${urls.accounts}/${accounts.delegate.address}`);
     cy.wait('@requestAccountData');
+    cy.wait(300);
     cy.get(ss.followAccountBtn).contains('Bookmark account');
     cy.get(ss.followAccountBtn).click();
     cy.get(ss.titleInput).type('Bob');
