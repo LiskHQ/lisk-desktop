@@ -11,7 +11,7 @@
   "+ Transaction fee {{fee}} LSK": "+ Transaction fee {{fee}} LSK",
   "2nd Passphrase Registration": "2nd Passphrase Registration",
   "64 bytes left": "64 bytes left",
-  "A great way to start is to top up your account with some LSK tokens.": "A great way to start is to top up your account with some LSK tokens.",
+  "A great way to start is to top up your account with some {{value}} tokens.": "A great way to start is to top up your account with some {{value}} tokens.",
   "About": "About",
   "Academy": "Academy",
   "Account": "Account",
