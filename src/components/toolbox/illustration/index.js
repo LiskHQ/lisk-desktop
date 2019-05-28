@@ -7,6 +7,7 @@ import ledgerNanoLight from '../../../assets/images/illustrations/illustration-l
 import trezorLight from '../../../assets/images/illustrations/illustration-trezor-confirm-light.svg';
 import transactionSuccess from '../../../assets/images/illustrations/transaction_success.svg';
 import transactionError from '../../../assets/images/illustrations/transaction_error.svg';
+import pageNotFound from '../../../assets/images/illustrations/illustration-page-not-found.svg';
 
 const illustrations = {
   welcomeLiskDelegates,
@@ -17,6 +18,7 @@ const illustrations = {
   trezorLight,
   transactionSuccess,
   transactionError,
+  pageNotFound,
 };
 
 const Illustration = ({ name, className }) => (

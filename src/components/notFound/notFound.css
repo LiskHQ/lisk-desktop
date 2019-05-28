@@ -1,23 +1,35 @@
-@import '../app/variables.css';
+@import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
-.emptyTransactions {
-  max-width: 230px;
+.notFoundPage {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+.errorMessageContainer {
+  width: 431px;
   margin: auto;
   text-align: center;
 
-  & img {
-    animation: float 1500ms 0ms infinite alternate ease-in-out;
-  }
-
   & h2 {
-    font-weight: var(--font-weight-semi-bold);
-    font-size: 24px;
-    margin: 10px;
+    @mixin headingLarge;
+
+    margin: 32px 0 20px;
   }
 
   & p {
-    font-size: 14px;
-    line-height: 26px;
-    color: var(--color-grayscale-dark);
+    @mixin contentLargest;
+
+    color: var(--color-slate-gray);
+    margin-bottom: 32px;
+    line-height: 22px;
+    letter-spacing: 0.21px;
+    padding: 0px 13px;
   }
+}
+
+.goToDashboardButton {
+  width: 100%;
 }

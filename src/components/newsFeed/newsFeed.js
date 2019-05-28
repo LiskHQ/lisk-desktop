@@ -22,8 +22,8 @@ class NewsFeed extends React.Component {
   render() {
     const onShowMore = this.state.showMore ? styles.showMore : '';
 
-    const filteredNewsFeed =
-      this.props.newsFeed.filter(feed => this.props.channels[feed.source]) || [];
+    const filteredNewsFeed = this.props.newsFeed
+      ? this.props.newsFeed.filter(feed => this.props.channels[feed.source]) : [];
 
     return (
       <Box className={`newsFeed-box ${styles.newsFeedBox}`}>
