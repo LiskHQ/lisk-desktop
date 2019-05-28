@@ -6,7 +6,7 @@ import networks from '../../constants/networks';
 describe('Extra', () => {
   it('Page not found page', () => {
     cy.visit('/sdk');
-    cy.get(ss.app).contains('Page not found.');
+    cy.get(ss.app).contains('Whoops, that page is gone.');
   });
 
   // TODO unskip after fix PR #1901
