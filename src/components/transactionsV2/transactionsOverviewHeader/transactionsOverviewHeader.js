@@ -66,7 +66,7 @@ class transactionsHeader extends React.Component {
     } = this.props;
     const { token } = this.state;
 
-    const isFollowing = getIndexOfBookmark(bookmarks, { address, token }) !== -1;
+    const isBookmark = getIndexOfBookmark(bookmarks, { address, token }) !== -1;
     const isWalletRoute = this.props.match.url === routes.wallet.path;
 
     return (
@@ -112,7 +112,7 @@ class transactionsHeader extends React.Component {
               ref={this.setDropownRefs}
               data-name={'followDropdown'}
               className={`${styles.bookmarkContainer} follow-account`}>
-            { isFollowing ? (
+            { isBookmark ? (
               <SecondaryButtonV2
                 className={`${styles.followingButton}`}
                 onClick={
@@ -134,7 +134,7 @@ class transactionsHeader extends React.Component {
                   delegate={delegate}
                   address={address}
                   detailAccount={detailAccount}
-                  isFollowing={isFollowing} />
+                  isBookmark={isBookmark} />
               </DropdownV2>
             </span>
           </React.Fragment>

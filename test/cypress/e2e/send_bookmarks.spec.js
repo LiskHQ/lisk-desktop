@@ -10,7 +10,7 @@ describe('Send: Bookmarks', () => {
    */
   it('Bookmarks are not present if there is no followers', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node)
-      .then(() => window.localStorage.removeItem('followedAccounts'));
+      .then(() => window.localStorage.removeItem('bookmarks'));
     cy.visit(urls.send);
     cy.get(ss.recipientInput).click();
     cy.get(ss.sendBookmarkList).should('not.be.visible');
@@ -25,7 +25,7 @@ describe('Send: Bookmarks', () => {
    */
   /* eslint-disable max-statements */
   it('Choose follower from bookmarks and send tx', () => {
-    window.localStorage.setItem('followedAccounts', `[
+    window.localStorage.setItem('bookmarks', `[
       {"title":"Alice","address":"${accounts.delegate.address}","balance":101},
       {"title":"Bob","address":"${accounts.genesis.address}","balance":101}
     ]`);
@@ -53,7 +53,7 @@ describe('Send: Bookmarks', () => {
    * @expect account found by delegate
    */
   it('Search through bookmarks by typing', () => {
-    window.localStorage.setItem('followedAccounts', `[
+    window.localStorage.setItem('bookmarks', `[
       {"title":"Alice","address":"${accounts.delegate.address}","balance":101},
       {"title":"Bob","address":"${accounts.genesis.address}","balance":101}
     ]`);

@@ -4,7 +4,7 @@ import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
 import compareBalances from '../utils/compareBalances';
 
-const getFollowedAccountObjFromLS = () => JSON.parse(localStorage.getItem('followedAccounts')).LSK;
+const getBookmarksObjFromLS = () => JSON.parse(localStorage.getItem('bookmarks')).LSK;
 
 const txConfirmationTimeout = 14000;
 
@@ -24,8 +24,8 @@ describe('Dashboard Bookmarks', () => {
     cy.get(ss.titleInput).type('Bob');
     cy.get(ss.nextBtn).click()
       .should(() => {
-        expect(getFollowedAccountObjFromLS()[0].address).to.equal(accounts.genesis.address);
-        expect(getFollowedAccountObjFromLS()[0].title).to.equal('Bob');
+        expect(getBookmarksObjFromLS()[0].address).to.equal(accounts.genesis.address);
+        expect(getBookmarksObjFromLS()[0].title).to.equal('Bob');
       });
     cy.get(ss.followedAccountItem).should('have.length', 1);
     cy.get(ss.titleInput).should('have.value', 'Bob');
@@ -33,7 +33,7 @@ describe('Dashboard Bookmarks', () => {
 
   describe('Saved bookmark in localStorage', () => {
     beforeEach(() => {
-      window.localStorage.setItem('followedAccounts', `[{"title":"Alice","address":"${accounts.genesis.address}","balance":101}]`);
+      window.localStorage.setItem('bookmarks', `[{"title":"Alice","address":"${accounts.genesis.address}","balance":101}]`);
     });
 
     /**
@@ -81,7 +81,7 @@ describe('Dashboard Bookmarks', () => {
     });
 
     it('Balance is correct and get live updates', function () {
-      window.localStorage.setItem('followedAccounts', `[
+      window.localStorage.setItem('bookmarks', `[
         {"title":"Alice","address":"${accounts.genesis.address}","balance":101}
       ]`);
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
@@ -107,7 +107,7 @@ describe('Dashboard Bookmarks', () => {
      * @expect 4 bookmarks visible
      */
     it('4 bookmarks are shown by default', () => {
-      window.localStorage.setItem('followedAccounts', `[
+      window.localStorage.setItem('bookmarks', `[
         {"title":"1","address":"${accounts.genesis.address}","balance":101},
         {"title":"2","address":"${accounts.genesis.address}","balance":101},
         {"title":"3","address":"${accounts.genesis.address}","balance":101},
@@ -125,7 +125,7 @@ describe('Dashboard Bookmarks', () => {
      * @expect All bookmarks visible
      */
     it('More bookmarks are shown after Show More click', () => {
-      window.localStorage.setItem('followedAccounts', `[
+      window.localStorage.setItem('bookmarks', `[
         {"title":"1","address":"${accounts.genesis.address}","balance":101},
         {"title":"2","address":"${accounts.genesis.address}","balance":101},
         {"title":"3","address":"${accounts.genesis.address}","balance":101},

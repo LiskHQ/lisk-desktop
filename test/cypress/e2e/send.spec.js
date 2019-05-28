@@ -199,7 +199,7 @@ describe('Send', () => {
 
   it('Add to bookmarks button doesn’t exist if recipient is in followers', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node)
-      .then(() => window.localStorage.setItem('followedAccounts', `[{"title":"Alice","address":"${accounts.genesis.address}","balance":101}]`));
+      .then(() => window.localStorage.setItem('bookmarks', `[{"title":"Alice","address":"${accounts.genesis.address}","balance":101}]`));
     cy.visit(urls.send);
     cy.get(ss.recipientInput).type(accounts.genesis.address);
     cy.get(ss.amountInput).click().type(randomAmount);

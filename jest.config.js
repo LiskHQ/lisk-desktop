@@ -88,7 +88,6 @@ module.exports = {
     'src/utils/ledger.js',
     'src/utils/proxyLogin.js',
     'src/components/transactions/delegateStatistics.js',
-    'src/components/followedAccounts/index.js',
     'src/components/registerDelegate/registerDelegate.js',
     'src/components/registerDelegate/steps/choose/choose.js',
     'src/components/registerDelegate/steps/confirm/index.js',

@@ -16,11 +16,11 @@ describe('Bookmark Component', () => {
 
   const props = {
     address: accounts.genesis.address,
-    followedAccounts: { LSK: [], BTC: [] },
+    bookmarks: { LSK: [], BTC: [] },
     balance: accounts.genesis.balance,
-    isFollowing: false,
-    followedAccountAdded: jest.fn(),
-    followedAccountRemoved: jest.fn(),
+    isBookmarked: false,
+    bookmarkAdded: jest.fn(),
+    bookmarkRemoved: jest.fn(),
     token: 'LSK',
     detailAccount: accounts.genesis,
     t: v => v,
@@ -30,25 +30,25 @@ describe('Bookmark Component', () => {
     wrapper = mount(<Bookmark {...props} />, options);
   });
 
-  describe('Should render in follow and following states', () => {
-    it('Should render in following state', () => {
-      const account = { ...accounts.genesis, title: 'follow test' };
-      const followingProps = {
+  describe('Should render in bookmark and bookmarking states', () => {
+    it('Should render in bookmark state', () => {
+      const account = { ...accounts.genesis, title: 'bookmark test' };
+      const bookmarkProps = {
         ...props,
-        isFollowing: true,
-        followedAccounts: { LSK: [account], BTC: [] },
+        isBookmarked: true,
+        bookmarks: { LSK: [account], BTC: [] },
       };
-      wrapper = mount(<Bookmark {...followingProps} />, options);
+      wrapper = mount(<Bookmark {...bookmarkProps} />, options);
       expect(wrapper.find('input[name="accountName"]')).toHaveValue(account.title);
       expect(wrapper.find('button').last()).toHaveText('Remove from bookmarks');
       wrapper.find('button').last().simulate('click');
-      expect(props.followedAccountRemoved).toBeCalledWith({
+      expect(props.bookmarkRemoved).toBeCalledWith({
         address: account.address,
         token: props.token,
       });
     });
 
-    it('Should render in follow state', () => {
+    it('Should render in bookmark state', () => {
       expect(wrapper.find('input[name="accountName"]')).not.toHaveValue();
       expect(wrapper.find('button').last()).toHaveText('Confirm');
     });
@@ -74,7 +74,7 @@ describe('Bookmark Component', () => {
       expect(wrapper.find('.fieldInput')).toContainMatchingElement('img.show');
       expect(wrapper.find('button').last()).not.toBeDisabled();
       wrapper.find('button').last().simulate('click');
-      expect(props.followedAccountAdded).toBeCalledWith(expected);
+      expect(props.bookmarkAdded).toBeCalledWith(expected);
     });
 
     it('Should show error if account name to long', () => {

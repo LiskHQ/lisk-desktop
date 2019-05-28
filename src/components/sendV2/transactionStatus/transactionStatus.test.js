@@ -20,7 +20,7 @@ describe('TransactionStatus', () => {
     transactions: {
       failed: undefined,
     },
-    followedAccounts: {
+    bookmarks: {
       LSK: [],
     },
     search: {
@@ -41,7 +41,7 @@ describe('TransactionStatus', () => {
     finalCallback: jest.fn(),
     failedTransactions: undefined,
     transactionFailedClear: jest.fn(),
-    followedAccounts: {
+    bookmarks: {
       LSK: [],
     },
     delegates: {},
@@ -86,7 +86,7 @@ describe('TransactionStatus', () => {
     expect(props.finalCallback).toBeCalled();
   });
 
-  it('should show dropdown follow account', () => {
+  it('should show dropdown bookmark', () => {
     expect(wrapper).toContainMatchingElement('.following-container');
     expect(wrapper).toContainMatchingElement('.following-btn');
     expect(wrapper.find('.following-btn').at(0).text()).toEqual('Bookmark account');
@@ -95,7 +95,7 @@ describe('TransactionStatus', () => {
     wrapper.find('button').last().simulate('click');
     wrapper.setProps({
       ...props,
-      followedAccounts: {
+      bookmarks: {
         LSK: [{
           address: '123123L',
         }],

@@ -33,7 +33,7 @@ describe('WalletTransactions V2 Component', () => {
   const store = configureMockStore([thunk])({
     peers,
     account: accounts.genesis,
-    followedAccounts: {
+    bookmarks: {
       LSK: [],
     },
     settings: {},
@@ -54,7 +54,7 @@ describe('WalletTransactions V2 Component', () => {
     account: accounts.genesis,
     match: { params: { address: accounts.genesis.address } },
     history: { push: jest.fn(), location: { search: ' ' } },
-    followedAccounts: {
+    bookmarks: {
       LSK: [],
       BTC: [],
     },

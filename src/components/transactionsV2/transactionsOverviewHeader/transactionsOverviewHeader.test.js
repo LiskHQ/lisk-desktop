@@ -14,7 +14,7 @@ import { tokenMap } from '../../../constants/tokens';
 describe('Transactions Overview Header', () => {
   let wrapper;
   const store = configureMockStore([thunk])({
-    followedAccounts: {
+    bookmarks: {
       LSK: [],
       BTC: [],
     },
@@ -38,7 +38,7 @@ describe('Transactions Overview Header', () => {
 
   const props = {
     account: accounts.genesis,
-    followedAccounts: {
+    bookmarks: {
       LSK: [],
       BTC: [],
     },
@@ -61,9 +61,9 @@ describe('Transactions Overview Header', () => {
     });
 
     it('Should render bookmark title instead of Wallet if address is in user bookmark', () => {
-      const followingProps = {
+      const bookmarkProps = {
         ...props,
-        followedAccounts: {
+        bookmarks: {
           LSK: [{
             ...props.account,
             title: 'Some Title',
@@ -72,7 +72,7 @@ describe('Transactions Overview Header', () => {
         },
       };
       wrapper = mount(<MemoryRouter>
-        <TransactionHeader {...followingProps} />
+        <TransactionHeader {...bookmarkProps} />
       </MemoryRouter>, options);
       const accountInfo = wrapper.find('.accountInfo');
       expect(accountInfo.text()).to.includes('Some Title');

@@ -9,7 +9,7 @@ describe('Wallet Others account', () => {
     username: 'genesis_51',
   };
 
-  const getFollowedAccountObjFromLS = () => JSON.parse(localStorage.getItem('followedAccounts'));
+  const getBookmaksObjFromLS = () => JSON.parse(localStorage.getItem('bookmarks'));
 
   beforeEach(() => {
     cy.server();
@@ -46,7 +46,7 @@ describe('Wallet Others account', () => {
     cy.visit(`${urls.accounts}/${accounts['empty account'].address}`);
     cy.get(ss.accountAddress).contains(accounts['empty account'].address);
     cy.get(ss.accountName).contains('Alice');
-    cy.get(ss.accountLabel).contains('Followed Account');
+    cy.get(ss.accountLabel).contains('Bookmarked Account');
   });
 
   it('Send LSK to this account', () => {
@@ -68,8 +68,8 @@ describe('Wallet Others account', () => {
     cy.get(ss.titleInput).type('Bob');
     cy.get(ss.confirmAddToBookmarks).click()
       .should(() => {
-        expect(getFollowedAccountObjFromLS().LSK[0].address).to.equal(accounts.genesis.address);
-        expect(getFollowedAccountObjFromLS().LSK[0].title).to.equal('Bob');
+        expect(getBookmaksObjFromLS().LSK[0].address).to.equal(accounts.genesis.address);
+        expect(getBookmaksObjFromLS().LSK[0].title).to.equal('Bob');
       });
     cy.route('/api/delegates?**').as('requestDelegatesData');
     cy.reload();
@@ -79,7 +79,7 @@ describe('Wallet Others account', () => {
     cy.get(ss.followAccountBtn).click();
     cy.get(ss.confirmAddToBookmarks).click()
       .should(() => {
-        expect(getFollowedAccountObjFromLS().LSK.length).to.equal(0);
+        expect(getBookmaksObjFromLS().LSK.length).to.equal(0);
       });
     cy.get(ss.accountName).contains('Account');
   });

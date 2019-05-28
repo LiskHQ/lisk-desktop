@@ -13,14 +13,14 @@ class TransactionStatus extends React.Component {
     super(props);
 
     this.state = {
-      isFollowAccountDropdown: false,
+      isBookmarkDropdown: false,
     };
 
-    this.followContainerRef = {};
+    this.bookmarkContainerRef = {};
     this.backToWallet = this.backToWallet.bind(this);
     this.onErrorReport = this.onErrorReport.bind(this);
     this.onRetry = this.onRetry.bind(this);
-    this.onFollowingDropdownToggle = this.onFollowingDropdownToggle.bind(this);
+    this.onBookmarkDropdownToggle = this.onBookmarkDropdownToggle.bind(this);
     this.handleClickOutsideDropdown = this.handleClickOutsideDropdown.bind(this);
     this.getDelegateInformation = this.getDelegateInformation.bind(this);
   }
@@ -46,36 +46,36 @@ class TransactionStatus extends React.Component {
     this.props.finalCallback();
   }
 
-  onFollowingDropdownToggle() {
-    if (this.state.isFollowAccountDropdown) {
+  onBookmarkDropdownToggle() {
+    if (this.state.isBookmarkDropdown) {
       document.removeEventListener('click', this.handleClickOutsideDropdown);
     } else {
       document.addEventListener('click', this.handleClickOutsideDropdown);
     }
 
-    this.setState(prevState => ({ isFollowAccountDropdown: !prevState.isFollowAccountDropdown }));
+    this.setState(prevState => ({ isBookmarkDropdown: !prevState.isBookmarkDropdown }));
   }
 
   handleClickOutsideDropdown(e) {
-    if (this.followContainerRef.contains(e.target)) return;
-    this.onFollowingDropdownToggle();
+    if (this.bookmarkContainerRef.contains(e.target)) return;
+    this.onBookmarkDropdownToggle();
   }
 
-  followAccountInformation() {
+  bookmarkInformation() {
     const { bookmarks, t } = this.props;
 
-    const isFollowing = getIndexOfBookmark(
+    const isBookmarked = getIndexOfBookmark(
       bookmarks,
       { address: this.props.fields.recipient.address },
     ) !== -1;
 
-    const followButtonLabel = isFollowing
+    const bookmarkButtonLabel = isBookmarked
       ? t('Account bookmarked')
       : t('Bookmark account');
 
     return {
-      isFollowing,
-      followButtonLabel,
+      isBookmarked,
+      bookmarkButtonLabel,
     };
   }
 
@@ -119,10 +119,10 @@ class TransactionStatus extends React.Component {
 
   render() {
     const { transactions, fields, t } = this.props;
-    const { isFollowing, followButtonLabel } = this.followAccountInformation();
+    const { isBookmarked, bookmarkButtonLabel } = this.bookmarkInformation();
     const { isHardwareWalletError, messageDetails } = this.getMessagesDetails();
     const token = getTokenFromAddress(fields.recipient.address);
-    const shouldShowFollowingAccount = !transactions.broadcastedTransactionsError.length
+    const shouldShowBookmark = !transactions.broadcastedTransactionsError.length
       && !fields.recipient.following;
 
     return (
@@ -142,16 +142,16 @@ class TransactionStatus extends React.Component {
               : null
             }
             {
-              shouldShowFollowingAccount
+              shouldShowBookmark
               ? (<div
-                  className={`${styles.followBtn} following-container`} ref={(node) => { this.followContainerRef = node; }}>
+                  className={`${styles.followBtn} following-container`} ref={(node) => { this.bookmarkContainerRef = node; }}>
                   <SecondaryButtonV2
-                    className={`${styles.btn} ${isFollowing ? styles.followingButton : ''} following-btn`}
-                    onClick={this.onFollowingDropdownToggle}>
-                    {followButtonLabel}
+                    className={`${styles.btn} ${isBookmarked ? styles.followingButton : ''} following-btn`}
+                    onClick={this.onBookmarkDropdownToggle}>
+                    {bookmarkButtonLabel}
                   </SecondaryButtonV2>
                   <DropdownV2
-                    showDropdown={this.state.isFollowAccountDropdown}
+                    showDropdown={this.state.isBookmarkDropdown}
                     className={`${styles.followDropdown}`}>
                     <Bookmark
                       delegate={this.getDelegateInformation()}
@@ -159,7 +159,7 @@ class TransactionStatus extends React.Component {
                       address={fields.recipient.address}
                       detailAccount={this.props.detailAccount}
                       token={token}
-                      isFollowing={isFollowing} />
+                      isBookmarked={isBookmarked} />
                   </DropdownV2>
                 </div>)
               : null

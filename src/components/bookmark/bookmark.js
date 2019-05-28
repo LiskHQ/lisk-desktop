@@ -25,16 +25,16 @@ class Bookmark extends React.Component {
           value: true,
         },
       },
-      followIndex: -1,
+      bookmarkIndex: -1,
       isValid: false,
     };
 
     this.timeout = null;
 
     this.handleAccountNameChange = this.handleAccountNameChange.bind(this);
-    this.handleUnfollow = this.handleUnfollow.bind(this);
-    this.handleFollow = this.handleFollow.bind(this);
-    this.setFollowed = this.setFollowed.bind(this);
+    this.handleUnbookmark = this.handleUnbookmark.bind(this);
+    this.handleBookmark = this.handleBookmark.bind(this);
+    this.setBookmark = this.setBookmark.bind(this);
   }
 
   /* istanbul ignore next */
@@ -44,28 +44,28 @@ class Bookmark extends React.Component {
 
   // eslint-disable-next-line max-statements
   componentDidUpdate() {
-    if (this.props.delegate.username || this.props.isFollowing) {
-      this.setFollowed();
+    if (this.props.delegate.username || this.props.isBookmarked) {
+      this.setBookmark();
     }
   }
 
   componentDidMount() {
-    if (this.props.isFollowing) {
-      this.setFollowed();
+    if (this.props.isBookmarked) {
+      this.setBookmark();
     }
   }
 
-  setFollowed() {
+  setBookmark() {
     const {
       bookmarks, address, delegate, token,
     } = this.props;
     const { fields } = this.state;
     const index = getIndexOfBookmark(bookmarks, { address, token });
     const accounts = bookmarks[token];
-    const followedTitle = accounts[index] && accounts[index].title;
+    const bookmarkTitle = accounts[index] && accounts[index].title;
     const delegateTitle = delegate.account && delegate.account.address === address
       ? delegate.username : undefined;
-    const value = delegateTitle || followedTitle || '';
+    const value = delegateTitle || bookmarkTitle || '';
     if (value !== fields.accountName.value) {
       this.setState({
         fields: {
@@ -77,12 +77,12 @@ class Bookmark extends React.Component {
           },
         },
         isValid: true,
-        followIndex: index,
+        bookmarkIndex: index,
       });
     }
   }
 
-  handleFollow() {
+  handleBookmark() {
     const {
       address, bookmarks, delegate, bookmarkAdded,
       token, detailAccount,
@@ -95,11 +95,11 @@ class Bookmark extends React.Component {
       publicKey: (detailAccount && detailAccount.publicKey) || null,
     };
     const accounts = bookmarks[token];
-    const followIndex = accounts.length;
+    const bookmarkIndex = accounts.length;
     bookmarkAdded({ account, token });
     this.setState({
       account,
-      followIndex,
+      bookmarkIndex,
       fields: {
         ...this.state.fields,
         accountName: {
@@ -110,12 +110,12 @@ class Bookmark extends React.Component {
     });
   }
 
-  handleUnfollow() {
-    const { fields, followIndex } = this.state;
+  handleUnbookmark() {
+    const { fields, bookmarkIndex } = this.state;
     const { token, bookmarks, bookmarkRemoved } = this.props;
     const accounts = bookmarks[token];
     const data = {
-      address: accounts[followIndex] && accounts[followIndex].address,
+      address: accounts[bookmarkIndex] && accounts[bookmarkIndex].address,
       token,
     };
     bookmarkRemoved(data);
@@ -177,7 +177,7 @@ class Bookmark extends React.Component {
 
   // eslint-disable-next-line complexity
   render() {
-    const { t, isFollowing } = this.props;
+    const { t, isBookmarked } = this.props;
     const { isValid, fields } = this.state;
 
     return (
@@ -203,7 +203,7 @@ class Bookmark extends React.Component {
               </React.Fragment>
             : null}
           </span>
-          <span className={`${styles.feedback} ${fields.accountName.error || fields.accountName.value.length >= 15 ? 'error' : ''} ${fields.accountName.value && !isFollowing ? styles.show : ''}`}>
+          <span className={`${styles.feedback} ${fields.accountName.error || fields.accountName.value.length >= 15 ? 'error' : ''} ${fields.accountName.value && !isBookmarked ? styles.show : ''}`}>
             {fields.accountName.feedback}
           </span>
         </label>
@@ -219,17 +219,17 @@ class Bookmark extends React.Component {
             </span>
           </div>
           </label> */}
-        {isFollowing
+        {isBookmarked
           ? (
             <PrimaryButtonV2
               className={'follow-account-button extra-small'}
-              onClick={this.handleUnfollow}>
+              onClick={this.handleUnbookmark}>
               {t('Remove from bookmarks')}
             </PrimaryButtonV2>
           ) : (
             <PrimaryButtonV2
               className={'follow-account-button extra-small'}
-              onClick={this.handleFollow}
+              onClick={this.handleBookmark}
               disabled={!isValid}>
               {t('Confirm')}
             </PrimaryButtonV2>
@@ -243,7 +243,7 @@ class Bookmark extends React.Component {
 Bookmark.propTypes = {
   address: PropTypes.string.isRequired,
   accounts: PropTypes.object.isRequired,
-  isFollowing: PropTypes.bool.isRequired,
+  isBookmarked: PropTypes.bool.isRequired,
   bookmarks: PropTypes.object.isRequired,
   bookmarkAdded: PropTypes.func.isRequired,
   bookmarkRemoved: PropTypes.func.isRequired,
@@ -254,7 +254,7 @@ Bookmark.propTypes = {
 Bookmark.defaultProps = {
   address: '',
   accounts: {},
-  isFollowing: false,
+  isBookmarked: false,
   bookmarkAdded: () => null,
   bookmarkRemoved: () => null,
   delegate: {},

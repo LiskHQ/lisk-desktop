@@ -16,7 +16,7 @@ class ResultBox extends React.Component {
     }
   }
 
-  isNotYetFollowed(address) {
+  isNotYetBookmarked(address) {
     const { bookmarks } = this.props;
     const token = getTokenFromAddress(address);
     return getIndexOfBookmark(bookmarks, { address, token }) === -1;
@@ -39,7 +39,7 @@ class ResultBox extends React.Component {
   }
 
   onAddToFollowedAccounts() {
-    Piwik.trackingEvent('ResultBox', 'button', 'Add to followed accounts');
+    Piwik.trackingEvent('ResultBox', 'button', 'Add to bookmarks accounts');
     this.props.transactionFailedClear();
     this.props.prevStep({
       success: null,
@@ -86,7 +86,7 @@ class ResultBox extends React.Component {
 
         <footer className={`${grid.row} ${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`}>
           {this.props.success &&
-            this.props.recipientId && this.isNotYetFollowed(this.props.recipientId) ?
+            this.props.recipientId && this.isNotYetBookmarked(this.props.recipientId) ?
             <div className={`${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-5']} ${grid['col-lg-5']}`}>
               <Button className={`add-to-bookmarks ${styles.addFollowedAccountButton}`}
                 onClick={this.onAddToBookmarks.bind(this)}>

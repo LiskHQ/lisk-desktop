@@ -1,4 +1,4 @@
-import followedAccounts from './bookmarks';
+import bookmarksSubscriber from './bookmarks';
 import * as bookmarksUtils from '../../utils/bookmarks';
 import accounts from '../../../test/constants/accounts';
 
@@ -20,7 +20,7 @@ describe('Subscriber: bookmarks(state)', () => {
     const state = { bookmarks: { LSK: [account, account2], BTC: [] } };
     const store = { getState: () => state };
 
-    followedAccounts(store);
+    bookmarksSubscriber(store);
     expect(bookmarksUtils.setBookmarksInLocalStorage)
       .toBeCalledWith(state.bookmarks);
   });

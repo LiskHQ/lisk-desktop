@@ -32,7 +32,7 @@ class ViewAccounts extends React.Component {
     this.setState({ edit: !this.state.edit });
   }
 
-  onFollowedAccount(account) {
+  onBookmark(account) {
     Piwik.trackingEvent('ViewAccounts', 'button', 'Bookmark');
 
     const { history } = this.props;
@@ -94,7 +94,7 @@ class ViewAccounts extends React.Component {
                   (<div
                     key={i}
                     className={`${styles.rows} ${styles.clickable} followed-account`}
-                    onClick={() => this.onFollowedAccount(account)}
+                    onClick={() => this.onBookmark(account)}
                   >
                     <div className={''}>
                       <AccountVisual

@@ -20,10 +20,10 @@ describe('Followed accounts list Component', () => {
     history: { push: spy() },
   };
 
-  describe('Without followed accounts', () => {
+  describe('Without bookmarks accounts', () => {
     beforeEach(() => {
       const store = fakeStore({
-        followedAccounts: { LSK: [] },
+        bookmarks: { LSK: [] },
       });
 
       wrapper = mount(<ViewAccounts {...props} />, {
@@ -47,10 +47,10 @@ describe('Followed accounts list Component', () => {
     });
   });
 
-  describe('With followed accounts', () => {
+  describe('With bookmarks accounts', () => {
     beforeEach(() => {
       const store = fakeStore({
-        followedAccounts: {
+        bookmarks: {
           LSK: [
             {
               address: '123L', title: 'bob', isDelegate: false,
@@ -78,7 +78,7 @@ describe('Followed accounts list Component', () => {
       });
     });
 
-    it('shows list of followed accounts', () => {
+    it('shows list of bookmarks accounts', () => {
       expect(wrapper.find('.followed-accounts-empty-list')).to.have.length(0);
       expect(wrapper.find('.followed-accounts-list')).to.have.length(1);
 
