@@ -10,6 +10,7 @@ import SpinnerV2 from '../spinnerV2/spinnerV2';
 import LiskAmount from '../liskAmount';
 import { DateTimeFromTimestamp } from './../timestamp/index';
 import TableRow from '../toolbox/table/tableRow';
+import Icon from '../toolbox/icon';
 
 class TransactionRowV2 extends React.Component {
   constructor() {
@@ -58,6 +59,7 @@ class TransactionRowV2 extends React.Component {
     return (
       <TableRow className={`${grid.row} ${styles.row} ${!hasConfirmations ? styles.pending : ''} transactions-row`} onClick={() => onClick(props)}>
         <div className={`${grid['col-sm-4']} ${grid['col-lg-3']} transactions-cell`}>
+          <Icon name={props.address === value.senderId ? 'outgoing' : 'incoming' } className={styles.inOutIcon} />
           <TransactionTypeFigure
             address={props.address === value.senderId ? value.recipientId : value.senderId }
             transactionType={value.type}

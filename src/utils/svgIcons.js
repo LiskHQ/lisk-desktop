@@ -48,6 +48,8 @@ import iconEdit from '../assets/images/icons-v2/icon_edit.svg';
 import btcIcon from '../assets/images/icons-v2/icon-btc-48.svg';
 import iconEmptyRecentTransactions from '../assets/images/icons-v2/empty_recent_transactions.svg';
 import checkmark from '../assets/images/icons-v2/checkmark-16-filled.svg';
+import incoming from '../assets/images/icons-v2/incoming.svg';
+import outgoing from '../assets/images/icons-v2/outgoing.svg';
 
 export default {
   alert_icon: alertIcon,
@@ -100,4 +102,6 @@ export default {
   btcIcon,
   icon_empty_recent_transactions: iconEmptyRecentTransactions,
   checkmark,
+  incoming,
+  outgoing,
 };
