@@ -8,15 +8,15 @@ const TransactionsHeaderV2 = ({ t, isSmallScreen, activeToken }) => (
     <div className={`${grid['col-sm-4']} ${grid['col-lg-3']} transactions-header`}>
       {t('Transaction')}
     </div>
-    <div className={`${grid['col-sm-3']} ${grid['col-lg-3']} transactions-header`}>
-      {/* istanbul ignore next */}
-      {activeToken !== 'BTC' ? t('Details') : null}
-    </div>
     <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-header`}>
       {t('Date')}
     </div>
     <div className={`${grid['col-sm-1']} ${grid['col-lg-2']} transactions-header`}>
       { isSmallScreen ? t('Fee') : t('Transaction Fee') }
+    </div>
+    <div className={`${grid['col-sm-3']} ${grid['col-lg-3']} transactions-header`}>
+      {/* istanbul ignore next */}
+      {activeToken !== 'BTC' ? t('Details') : null}
     </div>
     <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-header`}>
       {t('Amount')}
