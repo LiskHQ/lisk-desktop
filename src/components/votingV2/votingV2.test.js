@@ -27,6 +27,7 @@ describe('VotingV2', () => {
   const props = {
     votes: {},
     account: {},
+    voteLookupStatus: {},
     votePlaced: ({ goToNextStep }) => goToNextStep(voteResult),
     t: key => key,
     history: { push: jest.fn() },

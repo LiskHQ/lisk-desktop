@@ -15,7 +15,7 @@ import VoteUrlProcessor from '../voteUrlProcessorV2';
 import styles from './votingV2.css';
 
 const VotingSummary = ({
-  t, votes, history, account, nextStep, votePlaced, prevStep,
+  t, votes, history, account, nextStep, votePlaced, prevStep, voteLookupStatus,
 }) => {
   const {
     maxCountOfVotes,
@@ -30,6 +30,7 @@ const VotingSummary = ({
       account={account}
       confirmButton={{
         label: t('Confirm voting'),
+        disabled: voteLookupStatus.pending && voteLookupStatus.pending.length > 0,
         onClick: ({ secondPassphrase }) => {
           votePlaced({
             account,
