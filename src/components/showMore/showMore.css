@@ -1,22 +1,20 @@
 @import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
 .wrapper {
   width: 100%;
-  min-height: 30px;
-  height: 30px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  box-shadow: 0px -10px 25px -10px lightgray;
+  min-height: 36px;
+  height: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  background-color: #fff;
-  font-family: var(--content-font);
+  background-color: var(--color-white-smoke);
+  border-top: 1px solid var(--color-platinum);
 
   & > span {
-    color: var(--color-primary-standard);
-    font-size: 14px;
-    font-weight: 600;
+    @mixin contentSmall bold;
+
+    color: var(--color-maastricht-blue);
   }
 }
