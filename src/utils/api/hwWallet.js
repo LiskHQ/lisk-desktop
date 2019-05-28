@@ -305,6 +305,8 @@ export const sendWithHW = (networkConfig, account, recipientId, amount,
 
 /**
  * Trigger this action to sign and broadcast a VoteTX with Ledger Account
+ * If it receives votedList.length + unvotedList.length > 33, it will split it into multiple 
+ * transactions, sing them one by one and broadcast all at once in the end.
  * NOTE: secondPassphrase for ledger is a PIN (numeric)
  * @returns Promise - Action Vote with Ledger
  */
@@ -333,22 +335,22 @@ export const voteWithHW = async (
         { model: account.hwInfo.deviceModel },
       ));
     } else {
-      // eslint-disable-next-line no-await-in-loop
-      const [er] = await to(activePeer.transactions.broadcast(signedTx));
-      if (er) {
-        error = er;
-      } else {
-        transactions.push(signedTx);
-      }
+      transactions.push(signedTx);
     }
   }
-  return new Promise((resolve, reject) => {
-    if (transactions.length) {
-      resolve(transactions);
-    } else {
+
+  if (transactions.length && !error) {
+    return Promise.all(transactions.map(transaction => (
+      new Promise((resolve, reject) => {
+        activePeer.transactions.broadcast(transaction)
+          .then(() => resolve(transaction)).catch(reject);
+      })
+    )))
+  } else {
+    return new Promise((resolve, reject) => {
       reject(error);
-    }
-  });
+    });
+  }
 };
 
 
