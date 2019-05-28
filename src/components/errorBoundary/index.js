@@ -36,7 +36,7 @@ class ErrorBoundary extends React.Component {
             <Illustration name={'errorBoundaryPage'}/>
             <h2>{t('An error occurred.')}</h2>
             <p>{t('To recover, you can try to reload the page, by clicking the button below. If the problem persists, report the error via email.')}</p>
-            <PrimaryButtonV2 className={`${styles.reloadPageButton} error-reload-btn`} onClick={() => this.reloadPage() }>
+            <PrimaryButtonV2 className={`${styles.reloadPageButton} error-reload-btn`} onClick={this.reloadPage}>
               {t('Reload the page')}
             </PrimaryButtonV2>
             <a target='_blank' href={getMailReference()} rel='noopener noreferrer'>
