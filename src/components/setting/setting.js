@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import styles from './setting.css';
 import accountConfig from '../../constants/account';
 import settingsConst from './../../constants/settings';
-// TODO: will be re-enabled when the functionality is updated
 import routes from '../../constants/routes';
 import links from './../../constants/externalLinks';
 import Piwik from '../../utils/piwik';
@@ -74,66 +73,91 @@ class Setting extends React.Component {
                     }))}
                     selected={activeCurrency}
                     onChange={this.setCurrency}
+                    className={'currency'}
                   />
                 </div>
               </section>
               <section>
                 <h1>{t('Security')}</h1>
-                <div className={styles.fieldGroup}>
+                <div className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                   <CheckBox
-                    className={'autoLog'}
+                    className={`${styles.checkbox} autoLog`}
                     checked={settings.autoLog}
                     onChange={this.onUpdateSettings.bind(this, { autoLog: !settings.autoLog })}
                    />
-                   <span className={styles.labelName}>{t('Auto Logout')}</span>
-                   <p>{t('Log out automatically after a specified amount of time.')}</p>
+                   <div>
+                    <span className={styles.labelName}>{t('Auto Logout')}</span>
+                    <p>{t('Log out automatically after a specified amount of time.')}</p>
+                   </div>
                 </div>
-                <div className={styles.fieldGroup}>
+                <div className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                   <CheckBox
-                    checked={hasSecondPassphrase} />
-                  <span className={styles.labelName}>{t('Second Passphrase')}</span>
-                  <p>
-                    {t('Every time you make a transaction you’ll need to enter your second passphrase in order to confirm it.')}
-                  </p>
-                  <p className={styles.highlight}>{t('Once activated can’t be turned off.')}</p>
-                  <Link
-                    className={`register-second-passphrase ${styles.link} ${allowAuthClass}`}
-                    to={`${routes.secondPassphrase.path}`}>
-                    {t('Activate (5 LSK Fee)')}
-                  </Link>
+                    className={`${styles.checkbox} ${!hasSecondPassphrase ? styles.hide : ''}`}
+                    checked={hasSecondPassphrase}
+                  />
+                  <div>
+                    <span className={styles.labelName}>{t('Second Passphrase')}</span>
+                    <p>
+                      {t('Every time you make a transaction you’ll need to enter your second passphrase in order to confirm it.')}
+                    </p>
+                    <p className={styles.highlight}>{t('Once activated can’t be turned off.')}</p>
+                    {!hasSecondPassphrase ?
+                      <Link
+                        className={`register-second-passphrase ${styles.link} ${allowAuthClass}`}
+                        to={`${routes.secondPassphrase.path}`}>
+                        {t('Activate (5 LSK Fee)')}
+                      </Link>
+                    : null}
+                  </div>
                 </div>
               </section>
               <section>
-                <h1>{t('Developers')}</h1>
-                <div className={styles.fieldGroup}>
+                <h1>{t('Advanced')}</h1>
+                <div className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                   <CheckBox
-                    className={'showNetwork'}
+                    className={`${styles.checkbox} showNetwork`}
                     checked={settings.showNetwork}
                     onChange={this.onUpdateSettings.bind(this, {
                       showNetwork: !settings.showNetwork,
                     })}
                   />
-                  <span className={styles.labelName}>{t('Network switcher')}</span>
-                  <p>{t('Enable a network switcher that lets you select testnet or custom node when logging in.')}</p>
+                  <div>
+                    <span className={styles.labelName}>{t('Network switcher')}</span>
+                    <p>{t('Enable a network switcher that lets you select testnet or custom node when logging in.')}</p>
+                  </div>
+                </div>
+                <div className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+                    <CheckBox
+                      className={`${styles.checkbox} advancedMode`}
+                      checked={settings.advancedMode}
+                      onChange={this.onUpdateSettings.bind(this, {
+                        advancedMode: !settings.advancedMode,
+                      })}
+                    />
+                    <div>
+                      <span className={styles.labelName}>{t('Delegate Features')}</span>
+                    </div>
                 </div>
               </section>
               <section>
                 <h1>{t('Privacy')}</h1>
-                <div className={styles.fieldGroup}>
+                <div className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                   <CheckBox
-                    className={'statistics'}
+                    className={`${styles.checkbox} statistics`}
                     checked={settings.statistics}
                     onChange={this.onUpdateSettings.bind(this, {
                       statistics: !settings.statistics,
                     })}
                   />
-                  <span className={styles.labelName}>
-                    {t('Anonymous analytics collection')}
-                  </span>
-                  <p>{t('Help improve Lisk Hub by allowing Lisk to gather anonymous usage data used for analytical purposes.')}</p>
-                  <a target="_blank" href={links.privacyPolicy} className={styles.link}>
-                    {t('Privacy Policy')}
-                  </a>
+                  <div>
+                    <span className={styles.labelName}>
+                      {t('Anonymous analytics collection')}
+                    </span>
+                    <p>{t('Help improve Lisk Hub by allowing Lisk to gather anonymous usage data used for analytical purposes.')}</p>
+                    <a target="_blank" href={links.privacyPolicy} className={styles.link}>
+                      {t('Privacy Policy')}
+                    </a>
+                  </div>
                 </div>
               </section>
             </div>

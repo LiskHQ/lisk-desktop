@@ -9,7 +9,7 @@
 }
 
 .wrapper {
-  max-width: 431px;
+  max-width: 720px;
   width: 100%;
 }
 
@@ -29,6 +29,8 @@
     @mixin contentSmall bold;
 
     color: var(--color-ultramarine-blue);
+    display: inline-block;
+    margin-top: 10px;
     text-decoration: none;
   }
 }
@@ -38,6 +40,16 @@
 
   &:last-child {
     margin-bottom: 0;
+  }
+
+  &.checkboxField {
+    align-items: flex-start;
+    display: flex;
+
+    & .checkbox {
+      margin-right: 10px;
+      margin-top: 2px;
+    }
   }
 
   & .labelName {
@@ -57,5 +69,9 @@
     &.highlight {
       color: var(--color-maastricht-blue);
     }
+  }
+
+  & .hide {
+    visibility: hidden;
   }
 }

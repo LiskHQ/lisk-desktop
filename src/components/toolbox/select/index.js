@@ -38,13 +38,13 @@ class Select extends React.Component {
   }
 
   render() {
-    const { options, size } = this.props;
+    const { options, size, className } = this.props;
     const { selected, isOpen } = this.state;
     return (
       <OutsideClickHandler
         disabled={!isOpen}
         onOutsideClick={this.toggleIsOpen}
-        className={styles.wrapper}
+        className={`${styles.wrapper} ${className}`}
       >
         <label className={styles.inputHolder}>
           <InputV2
@@ -82,12 +82,14 @@ Select.propTypes = {
     'l', 'm', 's', 'xs',
   ]),
   onChange: PropTypes.func.isRequired,
+  className: PropTypes.string,
 };
 
 Select.defaultProps = {
   options: [],
   selected: 0,
   size: 'l',
+  className: '',
 };
 
 export default Select;
