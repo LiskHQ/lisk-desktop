@@ -3,7 +3,7 @@ import jsxToString from 'jsx-to-string';
 
 const DemoRenderer = ({ children }) => (
   <div>
-    <pre>{jsxToString(children)} </pre>
+    <pre>{children.map ? children.map(jsxToString).join('\n') : jsxToString(children)} </pre>
     { children }
   </div>
 );
