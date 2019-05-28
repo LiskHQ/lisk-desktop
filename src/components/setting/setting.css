@@ -24,6 +24,13 @@
     color: var(--color-slate-gray);
     margin: 0 0 20px;
   }
+
+  & .link {
+    @mixin contentSmall bold;
+
+    color: var(--color-ultramarine-blue);
+    text-decoration: none;
+  }
 }
 
 .fieldGroup {
@@ -33,11 +40,22 @@
     margin-bottom: 0;
   }
 
-  & > span {
+  & .labelName {
     @mixin contentNormal bold;
 
     color: var(--color-maastricht-blue);
     display: block;
     margin-bottom: 9px;
+  }
+
+  & p {
+    @mixin contentNormal;
+
+    color: var(--color-blue-gray);
+    margin: 0;
+
+    &.highlight {
+      color: var(--color-maastricht-blue);
+    }
   }
 }

@@ -17,4 +17,12 @@ const CheckBox = ({
   </label>
 );
 
+CheckBox.defaultProps = {
+  added: false,
+  removed: false,
+  accent: false,
+  checked: false,
+  className: '',
+};
+
 export default CheckBox;

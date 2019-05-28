@@ -1,18 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import Checkbox from '../toolbox/sliderCheckbox';
 import styles from './setting.css';
 import accountConfig from '../../constants/account';
 import settingsConst from './../../constants/settings';
 // TODO: will be re-enabled when the functionality is updated
 import routes from '../../constants/routes';
-import { FontIcon } from '../fontIcon';
 import links from './../../constants/externalLinks';
 import Piwik from '../../utils/piwik';
 import BoxV2 from '../boxV2';
 import Select from '../toolbox/select';
+import CheckBox from '../toolbox/checkBox';
 
 class Setting extends React.Component {
   constructor() {
@@ -37,7 +35,8 @@ class Setting extends React.Component {
   }
 
   setCurrency(currency) {
-    this.onUpdateSettings({ currency: currency.value });
+    const { settings } = this.props;
+    if (settings.currency !== currency.value) this.onUpdateSettings({ currency: currency.value });
   }
 
   onUpdateSettings(newSettings) {
@@ -57,7 +56,7 @@ class Setting extends React.Component {
       `${styles.disable} disabled` : '';
     const activeCurrency = currencies.indexOf(settings.currency || settingsConst.currencies[0]);
 
-    return window.location.hash.indexOf('v2') > -1 ? (
+    return (
       <div className={styles.settingsHolder}>
         <section className={styles.wrapper}>
           <BoxV2>
@@ -68,7 +67,7 @@ class Setting extends React.Component {
               <section>
                 <h1>{t('Locale')}</h1>
                 <div className={styles.fieldGroup}>
-                  <span>{t('Currency')}</span>
+                  <span className={styles.labelName}>{t('Currency')}</span>
                   <Select
                     options={currencies.map(currency => ({
                       label: currency, value: currency,
@@ -80,106 +79,67 @@ class Setting extends React.Component {
               </section>
               <section>
                 <h1>{t('Security')}</h1>
-
+                <div className={styles.fieldGroup}>
+                  <CheckBox
+                    className={'autoLog'}
+                    checked={settings.autoLog}
+                    onChange={this.onUpdateSettings.bind(this, { autoLog: !settings.autoLog })}
+                   />
+                   <span className={styles.labelName}>{t('Auto Logout')}</span>
+                   <p>{t('Log out automatically after a specified amount of time.')}</p>
+                </div>
+                <div className={styles.fieldGroup}>
+                  <CheckBox
+                    checked={hasSecondPassphrase} />
+                  <span className={styles.labelName}>{t('Second Passphrase')}</span>
+                  <p>
+                    {t('Every time you make a transaction you’ll need to enter your second passphrase in order to confirm it.')}
+                  </p>
+                  <p className={styles.highlight}>{t('Once activated can’t be turned off.')}</p>
+                  <Link
+                    className={`register-second-passphrase ${styles.link} ${allowAuthClass}`}
+                    to={`${routes.secondPassphrase.path}`}>
+                    {t('Activate (5 LSK Fee)')}
+                  </Link>
+                </div>
               </section>
               <section>
                 <h1>{t('Developers')}</h1>
+                <div className={styles.fieldGroup}>
+                  <CheckBox
+                    className={'showNetwork'}
+                    checked={settings.showNetwork}
+                    onChange={this.onUpdateSettings.bind(this, {
+                      showNetwork: !settings.showNetwork,
+                    })}
+                  />
+                  <span className={styles.labelName}>{t('Network switcher')}</span>
+                  <p>{t('Enable a network switcher that lets you select testnet or custom node when logging in.')}</p>
+                </div>
               </section>
               <section>
                 <h1>{t('Privacy')}</h1>
+                <div className={styles.fieldGroup}>
+                  <CheckBox
+                    className={'statistics'}
+                    checked={settings.statistics}
+                    onChange={this.onUpdateSettings.bind(this, {
+                      statistics: !settings.statistics,
+                    })}
+                  />
+                  <span className={styles.labelName}>
+                    {t('Anonymous analytics collection')}
+                  </span>
+                  <p>{t('Help improve Lisk Hub by allowing Lisk to gather anonymous usage data used for analytical purposes.')}</p>
+                  <a target="_blank" href={links.privacyPolicy} className={styles.link}>
+                    {t('Privacy Policy')}
+                  </a>
+                </div>
               </section>
             </div>
           </BoxV2>
         </section>
       </div>
-    ) : (
-      <section className={`${grid['col-sm-12']} ${grid['col-md-8']}`}>
-        <h4>{t('Security')}</h4>
-        <div className={styles.item}>
-          <label className={`${allowAuthClass}`}>{t('Second passphrase (Fee: 5 LSK)')}</label>
-          {!hasSecondPassphrase ?
-            <Link
-              className={`register-second-passphrase ${styles.secondPassphrase} ${allowAuthClass}`}
-              to={`${routes.secondPassphrase.path}`}>
-              {t('Register')}
-              <FontIcon>arrow-right</FontIcon>
-            </Link> :
-            <span
-              className={`second-passphrase-registered ${styles.secondPassphraseEnabled}`}>
-              {t('Registered')}
-              <FontIcon>checkmark</FontIcon>
-            </span>
-          }
-        </div>
-        <div className={styles.item}>
-          <label>{t('Auto-logout')}</label>
-          <Checkbox
-            theme={styles}
-            className={`${styles.smallSlider} autoLog`}
-            onChange={() => this.toggleAutoLog(!settings.autoLog)}
-            input={{
-              value: true,
-              checked: settings.autoLog,
-            }}/>
-        </div>
-        <h4>{t('Advanced features')}</h4>
-        <div className={`${styles.item} ${styles.network}`}>
-          <label>{t('Switch networks (Main-/Testnet, Custom)')}</label>
-          <Checkbox
-            theme={styles}
-            className={`${styles.smallSlider} showNetwork`}
-            onChange={() => this.onUpdateSettings({ showNetwork: !settings.showNetwork })}
-            input={{
-              value: false,
-              checked: settings.showNetwork,
-            }}/>
-        </div>
-        <div className={`${styles.item} ${styles.description}`}>
-          {t('You will be able to select the desired network when signing in')}
-        </div>
-        <div className={styles.item}>
-          <label>{t('Delegate features')}</label>
-          <Checkbox
-            theme={styles}
-            className={`${styles.smallSlider} advancedMode`}
-            onChange={() => this.onUpdateSettings({ advancedMode: !settings.advancedMode })}
-            input={{
-              value: true,
-              checked: settings.advancedMode,
-            }}/>
-        </div>
-        <div>
-          <div className={`${styles.item} ${styles.network}`}>
-            <label>{t('Send anonymous usage statistics')}</label>
-            <Checkbox
-              theme={styles}
-              className={`${styles.smallSlider} statistics`}
-              onChange={() => this.onUpdateSettings({ statistics: !settings.statistics })}
-              input={{
-                value: false,
-                checked: settings.statistics,
-              }}/>
-          </div>
-          <div className={`${styles.item} ${styles.privatePolicy}`}>
-            {t('For more information refer to our ')}
-            <a href={links.privacyPolicy} target={'_blank'}>{t('Privacy Policy')}</a>
-          </div>
-        </div>
-        <h4>{t('Local')}</h4>
-        <div className={styles.item}>
-          <label>{t('Currency')}</label>
-          <ul className={styles.currencyList}>
-            {this.state.currencies.map(currency => (
-              <li
-                key={`currency-${currency}`}
-                className={`currency currency-${currency} ${currency === activeCurrency ? `${styles.active} active` : ''}`}
-                onClick={() => this.onUpdateSettings({ currency })}>
-                {currency}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
     );
   }
 }

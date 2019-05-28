@@ -16,7 +16,7 @@
 
   & input,
   & input:read-only {
-    color: var(---color-maastricht-blue);
+    color: var(--color-maastricht-blue);
     cursor: inherit;
   }
 
