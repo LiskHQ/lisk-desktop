@@ -36,6 +36,7 @@ describe('WalletTransactions V2 Component', () => {
     account: accounts.genesis,
     followedAccounts: {
       LSK: [],
+      BTC: [],
     },
     settings: {},
   });
