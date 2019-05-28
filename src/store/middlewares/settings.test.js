@@ -1,6 +1,5 @@
 import settingsMiddleware from './settings';
 import actionTypes from '../../constants/actions';
-import * as settings from '../../actions/settings';
 import * as service from '../../actions/service';
 
 jest.mock('../../actions/service');
@@ -21,9 +20,9 @@ describe('Middleware: Settings', () => {
     expect(next).toBeCalledWith(action);
   });
 
-  it('should dispatch settingsUpdated', () => {
+  it('should not dispatch pricesRetrieved', () => {
     const action = {
-      type: actionTypes.settingsUpdateToken,
+      type: actionTypes.settingsUpdated,
       data: {
         test: true,
       },
@@ -31,19 +30,17 @@ describe('Middleware: Settings', () => {
 
     settingsMiddleware(store)(next)(action);
     expect(service.pricesRetrieved).not.toBeCalled();
-    expect(settings.settingsUpdated).toBeCalledWith(store.getState().settings);
   });
 
-  it('should dispatch pricesRetrieved and settingsUpdated', () => {
+  it('should dispatch pricesRetrieved', () => {
     const action = {
-      type: actionTypes.settingsUpdateToken,
+      type: actionTypes.settingsUpdated,
       data: {
-        token: true,
+        token: {},
       },
     };
 
     settingsMiddleware(store)(next)(action);
     expect(service.pricesRetrieved).toBeCalled();
-    expect(settings.settingsUpdated).toBeCalledWith(store.getState().settings);
   });
 });

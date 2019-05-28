@@ -22,6 +22,7 @@ import LoginV2 from '../components/loginV2';
 import Extensions from '../components/extensions';
 import TermsOfUse from '../components/termsOfUse';
 import ToolboxDemo from '../components/toolbox/demo';
+import DasboardV2 from '../components/dashboardV2';
 
 export default {
   accountVisualDemo: {
@@ -38,6 +39,11 @@ export default {
   dashboard: {
     path: '/dashboard',
     component: Dashboard,
+    isPrivate: false,
+  },
+  dashboardV2: {
+    path: '/dashboardV2',
+    component: DasboardV2,
     isPrivate: false,
   },
   wallet: {

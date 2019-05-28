@@ -1,15 +1,15 @@
 import actionsType from '../../constants/actions';
-import { settingsUpdated } from '../../actions/settings';
 import { pricesRetrieved } from '../../actions/service';
+import { setSettingsInLocalStorage } from '../../utils/settings';
 
 const settings = store => next => (action) => {
   switch (action.type) {
-    case actionsType.settingsUpdateToken:
+    case actionsType.settingsUpdated:
       next(action);
       if (action.data.token) {
         store.dispatch(pricesRetrieved());
       }
-      store.dispatch(settingsUpdated(store.getState().settings));
+      setSettingsInLocalStorage(store.getState().settings);
       break;
     default:
       next(action);
