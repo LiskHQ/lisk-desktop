@@ -50,6 +50,7 @@ import iconEmptyRecentTransactions from '../assets/images/icons-v2/empty_recent_
 import checkmark from '../assets/images/icons-v2/checkmark-16-filled.svg';
 import incoming from '../assets/images/icons-v2/incoming.svg';
 import outgoing from '../assets/images/icons-v2/outgoing.svg';
+import newsFeedAvatar from '../assets/images/icons-v2/newsFeedsAvatar.svg';
 
 export default {
   alert_icon: alertIcon,
@@ -104,4 +105,5 @@ export default {
   checkmark,
   incoming,
   outgoing,
+  newsFeedAvatar,
 };

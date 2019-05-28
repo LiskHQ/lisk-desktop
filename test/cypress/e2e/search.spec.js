@@ -72,7 +72,7 @@ describe('Search', () => {
     openSearchAndType(mainnetTransaction);
     cy.wait('@requestTransaction');
     cy.get(ss.searchTransactionRow).eq(0).click();
-    assertTransactionPage(mainnetTransaction);
+    cy.get(ss.transactionId).should('have.text', mainnetTransaction);
   });
 
   /**
