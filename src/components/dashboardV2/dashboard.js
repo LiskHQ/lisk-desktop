@@ -117,12 +117,11 @@ class Dashboard extends React.Component {
             }
 
             {
-            this.state.isDesktop &&
             <div className={`${styles.newsFeedWrapper}`}>
               <NewsFeed />
               <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn3} />
             </div>
-          }
+            }
 
             <div className={`${styles.following} bookmarks`}>
               <FollowedAccounts history={history}/>

@@ -6,7 +6,6 @@ import sinon from 'sinon';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import NewsFeed from './newsFeed';
-import SettingsNewsFeed from './settingsNewsFeed';
 import liskServiceApi from '../../utils/api/lsk/liskService';
 
 describe('NewsFeed', () => {
@@ -107,14 +106,6 @@ describe('NewsFeed', () => {
     clock.restore();
   });
 
-  it.skip('should render SettingsNewsFeed', () => {
-    const wrapper = mount(<MemoryRouter>
-      <NewsFeed {...props} />
-    </MemoryRouter>, options);
-    wrapper.find('.settingsButton').simulate('click');
-    expect(wrapper.find(SettingsNewsFeed).exists()).to.equal(true);
-  });
-
   it('should render empty state', () => {
     const newProps = {
       channels: { test: true },
@@ -129,16 +120,6 @@ describe('NewsFeed', () => {
     </MemoryRouter>, options);
 
     expect(wrapper.find('.empty-news').exists()).to.equal(true);
-  });
-
-  it.skip('should render not SettingsNewsFeed', () => {
-    const wrapper = mount(<MemoryRouter>
-      <NewsFeed {...props} />
-    </MemoryRouter>, options);
-    wrapper.find('.settingsButton').simulate('click');
-    expect(wrapper.find(SettingsNewsFeed).exists()).to.equal(true);
-    wrapper.find('.settingsButton').simulate('click');
-    expect(wrapper.find(SettingsNewsFeed).exists()).to.equal(false);
   });
 
   it('should render News', () => {
