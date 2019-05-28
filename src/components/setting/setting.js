@@ -20,6 +20,8 @@ class Setting extends React.Component {
     this.state = {
       currencies: settingsConst.currencies,
     };
+
+    this.setCurrency = this.setCurrency.bind(this);
   }
 
   toggleAutoLog(state) {
@@ -34,6 +36,10 @@ class Setting extends React.Component {
     settingsUpdated({ autoLog: !settings.autoLog });
   }
 
+  setCurrency(currency) {
+    this.onUpdateSettings({ currency: currency.value });
+  }
+
   onUpdateSettings(newSettings) {
     Piwik.trackingEvent('Settings', 'button', 'Update settings');
     this.props.settingsUpdated(newSettings);
@@ -44,11 +50,12 @@ class Setting extends React.Component {
       t, settings,
       hasSecondPassphrase,
     } = this.props;
+    const { currencies } = this.state;
 
     const allowAuthClass = !this.props.isAuthenticated ||
       (this.props.account.hwInfo && this.props.account.hwInfo.deviceId) ?
       `${styles.disable} disabled` : '';
-    const activeCurrency = settings.currency || settingsConst.currencies[0];
+    const activeCurrency = currencies.indexOf(settings.currency || settingsConst.currencies[0]);
 
     return window.location.hash.indexOf('v2') > -1 ? (
       <div className={styles.settingsHolder}>
@@ -60,12 +67,16 @@ class Setting extends React.Component {
             <div className={styles.content}>
               <section>
                 <h1>{t('Locale')}</h1>
-                <Select options={[
-                  { label: 'USD' },
-                  { label: 'EUR' },
-                ]}
-                  onChange={console.log}
-                />
+                <div className={styles.fieldGroup}>
+                  <span>{t('Currency')}</span>
+                  <Select
+                    options={currencies.map(currency => ({
+                      label: currency, value: currency,
+                    }))}
+                    selected={activeCurrency}
+                    onChange={this.setCurrency}
+                  />
+                </div>
               </section>
               <section>
                 <h1>{t('Security')}</h1>
