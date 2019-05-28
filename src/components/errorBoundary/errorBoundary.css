@@ -1,22 +1,45 @@
-@import './../app/variables.css';
+@import './../app/variablesV2.css';
+@import '../app/mixins.css';
 
-:root {
-  --link-font-size: 15px;
+.errorBoundaryPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
 }
 
-.section {
-  max-width: 360px;
+.errorMessageContainer {
+  width: 522px;
   margin: auto;
   text-align: center;
+
+  & h2 {
+    @mixin headingLarge;
+
+    margin: 43px 0 20px;
+  }
+
+  & p {
+    @mixin contentLargest;
+
+    color: var(--color-slate-gray);
+    margin-bottom: 32px;
+    line-height: 22px;
+    letter-spacing: 0.21px;
+  }
+
+  & a {
+    @mixin contentLargest;
+
+    color: var(--color-ultramarine-blue);
+    line-height: 16px;
+    letter-spacing: 0.31px;
+  }
 }
 
-.link {
-  font-size: var(--link-font-size);
-  color: var(--color-link);
-  display: block;
-  font-weight: 600;
-  text-decoration: none;
-  white-space: nowrap;
-  line-height: 15px;
-  text-align: center;
+.reloadPageButton {
+  width: 431px;
+  margin-bottom: 6px;
+  letter-spacing: 0.25px;
+  line-height: 14px;
 }
