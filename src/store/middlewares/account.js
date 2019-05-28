@@ -21,6 +21,9 @@ import txFilters from '../../constants/transactionFilters';
 import { setWalletsLastBalance } from '../../actions/wallets';
 import { setWalletsInLocalStorage } from '../../utils/wallets';
 
+import { getDeviceList, getHWPublicKeyFromIndex } from '../../utils/hwWallet';
+import { loginType } from '../../constants/hwConstants';
+
 const updateAccountData = (store, action) => {
   const { account, transactions } = store.getState();
 
@@ -115,7 +118,7 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }
 };
 
-const autoLogInIfNecessary = (store) => {
+const autoLogInIfNecessary = async (store) => {
   const autologinData = getAutoLogInData();
   if (shouldAutoLogIn(autologinData)) {
     store.dispatch(liskAPIClientSet({
@@ -131,23 +134,29 @@ const autoLogInIfNecessary = (store) => {
     }));
 
   //  Ignoring coverage because autologin is a development feature not accessible by end users
-  } else /* istanbul ignore next */ if (localStorage.getItem('trezorDeviceId')) {
-    store.dispatch(liskAPIClientSet({
-      hwInfo: {
-        derivationIndex: localStorage.getItem('derivationIndex') || 0,
-        deviceId: localStorage.getItem('trezorDeviceId'),
-        deviceModel: 'Trezor Model T',
-      },
-      publicKey: localStorage.getItem('publicKey'),
-      network: { ...networks.customNode, address: autologinData[settings.keys.liskCoreUrl] },
-      options: {
-        code: networks.customNode.code,
-        address: autologinData[settings.keys.liskCoreUrl],
-      },
-    }));
-    store.dispatch(liskAPIClientUpdate({
-      online: true,
-    }));
+  } else /* istanbul ignore next */ if (localStorage.getItem('hwWalletAutoLogin')) {
+    const device = (await getDeviceList())[0];
+
+    if (device) {
+      const hwWalletType = /trezor/ig.test(device.deviceModel) ? loginType.trezor : loginType.ledger;
+      const publicKey = await getHWPublicKeyFromIndex(device.deviceId, hwWalletType, 0);
+      store.dispatch(liskAPIClientSet({
+        hwInfo: {
+          derivationIndex: 0,
+          deviceId: device.deviceId,
+          deviceModel: device.model,
+        },
+        publicKey,
+        network: { ...networks.customNode, address: autologinData[settings.keys.liskCoreUrl] },
+        options: {
+          code: networks.customNode.code,
+          address: autologinData[settings.keys.liskCoreUrl],
+        },
+      }));
+      store.dispatch(liskAPIClientUpdate({
+        online: true,
+      }));
+    }
   }
 };
 
