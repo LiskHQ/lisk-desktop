@@ -151,7 +151,7 @@ const ss = {
   transactionSendButton: '.tx-send-bt',
   bookmarks: '.bookmarks',
   addToBookmarks: '.add-to-bookmarks',
-  confirmAddToBookmarks: '.follow-account-button',
+  confirmAddToBookmarks: '.bookmark-button',
   delegateStatsUptime: '.productivity',
   delegateStatsRank: '.rank',
   delegateStatsApproval: '.approval',

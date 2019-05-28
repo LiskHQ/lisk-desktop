@@ -44,13 +44,13 @@ class Bookmark extends React.Component {
 
   // eslint-disable-next-line max-statements
   componentDidUpdate() {
-    if (this.props.delegate.username || this.props.isBookmarked) {
+    if (this.props.delegate.username || this.props.isBookmark) {
       this.setBookmark();
     }
   }
 
   componentDidMount() {
-    if (this.props.isBookmarked) {
+    if (this.props.isBookmark) {
       this.setBookmark();
     }
   }
@@ -177,7 +177,7 @@ class Bookmark extends React.Component {
 
   // eslint-disable-next-line complexity
   render() {
-    const { t, isBookmarked } = this.props;
+    const { t, isBookmark } = this.props;
     const { isValid, fields } = this.state;
 
     return (
@@ -203,7 +203,7 @@ class Bookmark extends React.Component {
               </React.Fragment>
             : null}
           </span>
-          <span className={`${styles.feedback} ${fields.accountName.error || fields.accountName.value.length >= 15 ? 'error' : ''} ${fields.accountName.value && !isBookmarked ? styles.show : ''}`}>
+          <span className={`${styles.feedback} ${fields.accountName.error || fields.accountName.value.length >= 15 ? 'error' : ''} ${fields.accountName.value && !isBookmark ? styles.show : ''}`}>
             {fields.accountName.feedback}
           </span>
         </label>
@@ -219,16 +219,16 @@ class Bookmark extends React.Component {
             </span>
           </div>
           </label> */}
-        {isBookmarked
+        {isBookmark
           ? (
             <PrimaryButtonV2
-              className={'follow-account-button extra-small'}
+              className={'bookmark-button extra-small'}
               onClick={this.handleUnbookmark}>
               {t('Remove from bookmarks')}
             </PrimaryButtonV2>
           ) : (
             <PrimaryButtonV2
-              className={'follow-account-button extra-small'}
+              className={'bookmark-button extra-small'}
               onClick={this.handleBookmark}
               disabled={!isValid}>
               {t('Confirm')}
@@ -243,7 +243,7 @@ class Bookmark extends React.Component {
 Bookmark.propTypes = {
   address: PropTypes.string.isRequired,
   accounts: PropTypes.object.isRequired,
-  isBookmarked: PropTypes.bool.isRequired,
+  isBookmark: PropTypes.bool.isRequired,
   bookmarks: PropTypes.object.isRequired,
   bookmarkAdded: PropTypes.func.isRequired,
   bookmarkRemoved: PropTypes.func.isRequired,
@@ -254,7 +254,7 @@ Bookmark.propTypes = {
 Bookmark.defaultProps = {
   address: '',
   accounts: {},
-  isBookmarked: false,
+  isBookmark: false,
   bookmarkAdded: () => null,
   bookmarkRemoved: () => null,
   delegate: {},
