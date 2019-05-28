@@ -143,10 +143,11 @@ describe('actions: voting', () => {
     });
 
     it('should call goToNextStep with "success: false" if caught an error', async () => {
-      delegateApiMock.returnsPromise().rejects({ message: 'sample message' });
+      const message = 'sample message';
+      delegateApiMock.returnsPromise().rejects({ message });
 
       await actionFunction(dispatch, getState);
-      const expectedAction = { success: false, text: 'sample message.' };
+      const expectedAction = { success: false, text: message, errorMessage: message };
       expect(goToNextStep).to.have.been.calledWith(expectedAction);
     });
 
@@ -154,7 +155,11 @@ describe('actions: voting', () => {
       delegateApiMock.returnsPromise().rejects({});
 
       await actionFunction(dispatch, getState);
-      const expectedAction = { success: false, text: 'An error occurred while placing your vote.' };
+      const expectedAction = {
+        success: false,
+        text: 'An error occurred while placing your vote.',
+        errorMessage: undefined,
+      };
       expect(goToNextStep).to.have.been.calledWith(expectedAction);
     });
   });

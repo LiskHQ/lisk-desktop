@@ -78,7 +78,7 @@ export const clearVotes = () => ({
 const handleVoteError = ({ error }) => {
   if (error && error.message) {
     return error.message;
-  } else if (error) {
+  } else if (typeof error === 'string') {
     return error;
   }
   return i18next.t('An error occurred while placing your vote.');
