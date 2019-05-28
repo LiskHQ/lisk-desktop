@@ -27,7 +27,7 @@ class NewsFeed extends React.Component {
 
     return (
       <Box className={`newsFeed-box ${styles.newsFeedBox}`}>
-        <header className={styles.header}>
+        <header>
           <h1>{this.props.t('Community feed')}</h1>
         </header>
 
