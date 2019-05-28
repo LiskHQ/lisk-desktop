@@ -31,6 +31,12 @@ class Select extends React.Component {
       onChange(options[selected]) : null;
   }
 
+  componentWillUnmount() {
+    this.setState({
+      isOpen: false,
+    });
+  }
+
   render() {
     const { options, size } = this.props;
     const { selected, isOpen } = this.state;
@@ -38,13 +44,16 @@ class Select extends React.Component {
       <OutsideClickHandler
         disabled={!isOpen}
         onOutsideClick={this.toggleIsOpen}
-        className={styles.wrapper}>
-        <InputV2
-          readOnly={true}
-          value={options[selected].label}
-          onFocus={() => this.setState({ isOpen: true })}
-          size={size}
-        />
+        className={styles.wrapper}
+      >
+        <label className={styles.inputHolder}>
+          <InputV2
+            readOnly={true}
+            value={options[selected].label}
+            onFocus={this.toggleIsOpen}
+            size={size}
+          />
+        </label>
         <DropdownV2
           className={styles.dropdown}
           showArrow={false}
