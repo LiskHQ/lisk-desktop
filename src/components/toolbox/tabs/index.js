@@ -2,12 +2,12 @@ import React from 'react';
 import styles from './tabs.css';
 
 const Tabs = ({
-  tabs, active, onClick, className,
+  tabs, active, onClick, className, isActive,
 }) => (
   <ul className={styles.wrapper}>
     {tabs.map((filter, i) => (
       <li key={i}
-        className={`${className} ${filter.className} ${(active === filter.value) ? styles.active : ''}`}
+        className={`${className} ${filter.className} ${(active === filter.value) || isActive(filter.value) ? styles.active : ''}`}
         onClick={() => onClick(filter)}>
         {filter.name}
       </li>
@@ -15,9 +15,12 @@ const Tabs = ({
   </ul>
 );
 
+const emptyFn = () => {};
+
 Tabs.defaultProps = {
   tabs: [],
-  onClick: () => {},
+  onClick: emptyFn,
+  isActive: emptyFn,
   className: '',
 };
 

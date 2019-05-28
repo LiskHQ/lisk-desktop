@@ -5,6 +5,7 @@ import Piwik from '../../utils/piwik';
 import FilterContainer from './filters/filterContainer';
 import FilterBar from './filters/filterBar';
 import TransactionsListV2 from './transactionsListV2';
+import Tabs from '../toolbox/tabs';
 import styles from './transactionsV2.css';
 
 class TransactionsOverviewV2 extends React.Component {
@@ -12,6 +13,8 @@ class TransactionsOverviewV2 extends React.Component {
     super(props);
 
     this.props.onInit();
+    this.isActiveFilter = this.isActiveFilter.bind(this);
+    this.setTransactionsFilter = this.setTransactionsFilter.bind(this);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -27,7 +30,7 @@ class TransactionsOverviewV2 extends React.Component {
 
   setTransactionsFilter(filter) {
     Piwik.trackingEvent('TransactionsOverview', 'button', 'Set transactions filter');
-    this.props.onFilterSet(filter);
+    this.props.onFilterSet(filter.value);
   }
 
   generateFilters() {
@@ -59,14 +62,10 @@ class TransactionsOverviewV2 extends React.Component {
     return (
       <div className={`${styles.transactions} transactions`}>
         <div className={styles.container}>
-          <ul className={`${styles.txFilters}`}>
-            {filters.map((filter, i) => (
-              <li key={i} className={`transaction-filter-item ${filter.className} ${this.isActiveFilter(filter.value) ? `${styles.active} active` : ''}`}
-                onClick={() => this.setTransactionsFilter(filter.value)}>
-                {filter.name}
-              </li>
-            ))}
-          </ul>
+          <Tabs tabs={filters}
+            className='transaction-filter-item'
+            isActive={this.isActiveFilter}
+            onClick={this.setTransactionsFilter} />
           {this.props.activeToken !== 'BTC' ?
           <div className={styles.items}>
             <FilterContainer
