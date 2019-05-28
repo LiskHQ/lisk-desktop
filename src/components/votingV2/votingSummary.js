@@ -98,7 +98,10 @@ const VotingSummary = ({
         </label>
         <label> {fee * totalActions} LSK </label>
       </section>
-      <VoteUrlProcessor/>
+      <VoteUrlProcessor
+        account={account}
+        votes={votes}
+        voteLookupStatus={voteLookupStatus}/>
       {voteList.length > 0 ?
         <section>
           <label>{t('Added votes')} ({voteList.length})</label>

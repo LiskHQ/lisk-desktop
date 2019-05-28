@@ -27,7 +27,11 @@ describe('VotingV2', () => {
   const props = {
     votes: {},
     account: {},
-    voteLookupStatus: {},
+    voteLookupStatus: {
+      pending: [],
+      notFound: [],
+      alreadyVoted: [],
+    },
     votePlaced: ({ goToNextStep }) => goToNextStep(voteResult),
     t: key => key,
     history: { push: jest.fn() },
