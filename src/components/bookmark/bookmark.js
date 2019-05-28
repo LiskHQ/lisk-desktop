@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
+import { getIndexOfBookmark } from '../../utils/bookmarks';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
 import svg from '../../utils/svgIcons';
 import { InputV2 } from '../toolbox/inputsV2';
 import { PrimaryButtonV2 } from '../toolbox/buttons/button';
-import styles from './followAccount.css';
+import styles from './bookmark.css';
 
-class FollowAccount extends React.Component {
+class Bookmark extends React.Component {
   constructor(props) {
     super(props);
 
@@ -57,11 +57,11 @@ class FollowAccount extends React.Component {
 
   setFollowed() {
     const {
-      followedAccounts, address, delegate, token,
+      bookmarks, address, delegate, token,
     } = this.props;
     const { fields } = this.state;
-    const index = getIndexOfFollowedAccount(followedAccounts, { address, token });
-    const accounts = followedAccounts[token];
+    const index = getIndexOfBookmark(bookmarks, { address, token });
+    const accounts = bookmarks[token];
     const followedTitle = accounts[index] && accounts[index].title;
     const delegateTitle = delegate.account && delegate.account.address === address
       ? delegate.username : undefined;
@@ -84,7 +84,7 @@ class FollowAccount extends React.Component {
 
   handleFollow() {
     const {
-      address, followedAccounts, delegate, followedAccountAdded,
+      address, bookmarks, delegate, bookmarkAdded,
       token, detailAccount,
     } = this.props;
     const title = this.state.fields.accountName.value;
@@ -94,9 +94,9 @@ class FollowAccount extends React.Component {
       isDelegate: !!(delegate && delegate.username),
       publicKey: (detailAccount && detailAccount.publicKey) || null,
     };
-    const accounts = followedAccounts[token];
+    const accounts = bookmarks[token];
     const followIndex = accounts.length;
-    followedAccountAdded({ account, token });
+    bookmarkAdded({ account, token });
     this.setState({
       account,
       followIndex,
@@ -112,13 +112,13 @@ class FollowAccount extends React.Component {
 
   handleUnfollow() {
     const { fields, followIndex } = this.state;
-    const { token, followedAccounts, followedAccountRemoved } = this.props;
-    const accounts = followedAccounts[token];
+    const { token, bookmarks, bookmarkRemoved } = this.props;
+    const accounts = bookmarks[token];
     const data = {
       address: accounts[followIndex] && accounts[followIndex].address,
       token,
     };
-    followedAccountRemoved(data);
+    bookmarkRemoved(data);
     this.setState({
       isValid: false,
       fields: {
@@ -240,24 +240,24 @@ class FollowAccount extends React.Component {
   }
 }
 
-FollowAccount.propTypes = {
+Bookmark.propTypes = {
   address: PropTypes.string.isRequired,
   accounts: PropTypes.object.isRequired,
   isFollowing: PropTypes.bool.isRequired,
-  followedAccounts: PropTypes.object.isRequired,
-  followedAccountAdded: PropTypes.func.isRequired,
-  followedAccountRemoved: PropTypes.func.isRequired,
+  bookmarks: PropTypes.object.isRequired,
+  bookmarkAdded: PropTypes.func.isRequired,
+  bookmarkRemoved: PropTypes.func.isRequired,
   delegate: PropTypes.object.isRequired,
 };
 
 /* istanbul ignore next */
-FollowAccount.defaultProps = {
+Bookmark.defaultProps = {
   address: '',
   accounts: {},
   isFollowing: false,
-  followedAccountAdded: () => null,
-  followedAccountRemoved: () => null,
+  bookmarkAdded: () => null,
+  bookmarkRemoved: () => null,
   delegate: {},
 };
 
-export default FollowAccount;
+export default Bookmark;

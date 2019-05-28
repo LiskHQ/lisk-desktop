@@ -3,8 +3,8 @@ import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button
 import Piwik from '../../../utils/piwik';
 import statusMessage from './statusMessages';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
-import FollowAccount from '../../followAccount';
-import { getIndexOfFollowedAccount } from '../../../utils/followedAccounts';
+import Bookmark from '../../bookmark';
+import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import styles from './transactionStatus.css';
 import { getTokenFromAddress } from '../../../utils/api/transactions';
 
@@ -62,10 +62,10 @@ class TransactionStatus extends React.Component {
   }
 
   followAccountInformation() {
-    const { followedAccounts, t } = this.props;
+    const { bookmarks, t } = this.props;
 
-    const isFollowing = getIndexOfFollowedAccount(
-      followedAccounts,
+    const isFollowing = getIndexOfBookmark(
+      bookmarks,
       { address: this.props.fields.recipient.address },
     ) !== -1;
 
@@ -153,7 +153,7 @@ class TransactionStatus extends React.Component {
                   <DropdownV2
                     showDropdown={this.state.isFollowAccountDropdown}
                     className={`${styles.followDropdown}`}>
-                    <FollowAccount
+                    <Bookmark
                       delegate={this.getDelegateInformation()}
                       balance={fields.recipient.balance}
                       address={fields.recipient.address}

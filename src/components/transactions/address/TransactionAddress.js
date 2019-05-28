@@ -5,9 +5,9 @@ import transactionTypes from '../../../constants/transactionTypes';
 import styles from './transactionAddress.css';
 
 const TransactionAddress = ({
-  address, followedAccounts, transactionType, t, token,
+  address, bookmarks, transactionType, t, token,
 }) => {
-  const account = [...followedAccounts.LSK, ...followedAccounts.BTC]
+  const account = [...bookmarks.LSK, ...bookmarks.BTC]
     .filter(acc => acc.address === address);
 
   // eslint-disable-next-line complexity

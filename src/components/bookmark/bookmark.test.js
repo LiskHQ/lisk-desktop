@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
 import i18n from '../../i18n';
 import accounts from '../../../test/constants/accounts';
-import FollowAccount from './followAccount';
+import Bookmark from './bookmark';
 
-describe('Follow Account Component', () => {
+describe('Bookmark Component', () => {
   let wrapper;
   const options = {
     context: { i18n },
@@ -27,7 +27,7 @@ describe('Follow Account Component', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<FollowAccount {...props} />, options);
+    wrapper = mount(<Bookmark {...props} />, options);
   });
 
   describe('Should render in follow and following states', () => {
@@ -38,7 +38,7 @@ describe('Follow Account Component', () => {
         isFollowing: true,
         followedAccounts: { LSK: [account], BTC: [] },
       };
-      wrapper = mount(<FollowAccount {...followingProps} />, options);
+      wrapper = mount(<Bookmark {...followingProps} />, options);
       expect(wrapper.find('input[name="accountName"]')).toHaveValue(account.title);
       expect(wrapper.find('button').last()).toHaveText('Remove from bookmarks');
       wrapper.find('button').last().simulate('click');

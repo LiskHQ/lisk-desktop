@@ -190,7 +190,7 @@ class WalletTransactionsV2 extends React.Component {
     return (
       <React.Fragment>
         <TransactionsOverviewHeader
-          followedAccounts={this.props.followedAccounts}
+          bookmarks={this.props.bookmarks}
           address={this.props.address}
           match={this.props.match}
           account={account}

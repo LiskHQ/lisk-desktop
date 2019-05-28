@@ -9,7 +9,7 @@ import styles from './recentTransactions.css';
 
 const TransactionList = ({
   account,
-  followedAccounts,
+  bookmarks,
   activeToken,
   t,
   transactions,
@@ -29,7 +29,7 @@ const TransactionList = ({
           />
           <TransactionAddress
             address={tx.recipientId}
-            followedAccounts={followedAccounts}
+            bookmarks={bookmarks}
             t={t}
             token={activeToken}
             transactionType={tx.type}

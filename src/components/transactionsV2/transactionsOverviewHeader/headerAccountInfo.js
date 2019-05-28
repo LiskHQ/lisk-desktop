@@ -1,26 +1,26 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import AccountVisual from '../../accountVisual';
-import { getIndexOfFollowedAccount } from '../../../utils/followedAccounts';
+import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import styles from './transactionsOverviewHeader.css';
 
 // eslint-disable-next-line complexity
 const headerAccountInfo = ({
-  t, address, followedAccounts, account,
+  t, address, bookmarks, account,
   delegate, token,
 }) => {
-  const index = getIndexOfFollowedAccount(
-    followedAccounts,
+  const index = getIndexOfBookmark(
+    bookmarks,
     { address, token },
   );
-  const accounts = followedAccounts[token];
+  const accounts = bookmarks[token];
   const accountTitle = delegate.username
     || (index > -1 && accounts[index] && accounts[index].title);
 
   const label =
     (address === account.address && t('My Account'))
     || (delegate.username && t('Delegate #{{rank}}', { rank: delegate.rank }))
-    || (!!accountTitle && t('Followed Account'));
+    || (!!accountTitle && t('Bookmarked Account'));
 
   return (
     <div className={`${styles.account}`}>

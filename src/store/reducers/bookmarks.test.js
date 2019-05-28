@@ -1,14 +1,14 @@
 import { expect } from 'chai';
-import followedAccounts from './followedAccounts';
+import bookmarks from './bookmarks';
 import {
   followedAccountAdded,
   followedAccountUpdated,
   followedAccountRemoved,
-} from '../../actions/followedAccounts';
+} from '../../actions/bookmarks';
 import actionTypes from '../../constants/actions';
 import accounts from '../../../test/constants/accounts';
 
-describe('Reducer: followedAccounts(state, action)', () => {
+describe('Reducer: bookmarks(state, action)', () => {
   const account = {
     address: accounts.genesis.address,
     title: accounts.genesis.address,
@@ -29,7 +29,7 @@ describe('Reducer: followedAccounts(state, action)', () => {
 
     const state = { LSK: [account, account2], BTC: [] };
     const action = followedAccountAdded({ account: account3, token: 'BTC' });
-    const changedState = followedAccounts(state, action);
+    const changedState = bookmarks(state, action);
     expect(changedState.LSK[0]).to.deep.equal(account);
     expect(changedState.LSK[1]).to.deep.equal(account2);
     expect(changedState.BTC[0]).to.include(account3);
@@ -46,7 +46,7 @@ describe('Reducer: followedAccounts(state, action)', () => {
     const state = { LSK: [account, account2], BTC: [] };
     const action = followedAccountUpdated({ account: updatedAccount });
 
-    const changedState = followedAccounts(state, action);
+    const changedState = bookmarks(state, action);
 
     expect(changedState.LSK[0]).to.deep.equal(account);
     expect(changedState.LSK[1]).to.deep.equal(updatedAccount);
@@ -57,7 +57,7 @@ describe('Reducer: followedAccounts(state, action)', () => {
     const state = { LSK: [account, account2] };
     const action = followedAccountRemoved({ address: account2.address, token: 'LSK' });
 
-    const changedState = followedAccounts(state, action);
+    const changedState = bookmarks(state, action);
 
     expect(changedState.LSK[0]).to.deep.equal(account);
     expect(changedState.LSK[1]).to.deep.equal(undefined);

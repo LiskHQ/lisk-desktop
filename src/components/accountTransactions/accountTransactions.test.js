@@ -12,7 +12,7 @@ import accountReducer from '../../store/reducers/account';
 import searchReducer from '../../store/reducers/search';
 import loadingReducer from '../../store/reducers/loading';
 import filtersReducer from '../../store/reducers/filters';
-import followedAccountsReducer from '../../store/reducers/followedAccounts';
+import bookmarksReducer from '../../store/reducers/bookmarks';
 
 import { liskAPIClientSet } from './../../../src/actions/peers';
 import networks from './../../../src/constants/networks';
@@ -32,7 +32,7 @@ describe('AccountTransaction Component', () => {
   let searchAccountSpy;
 
   const store = prepareStore({
-    followedAccounts: followedAccountsReducer,
+    bookmarks: bookmarksReducer,
     peers: peersReducer,
     account: accountReducer,
     search: searchReducer,

@@ -7,11 +7,11 @@ import { FontIcon } from '../fontIcon/index';
 import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 import routes from '../../constants/routes';
 import TitleInput from './titleInputForList';
-import { followedAccountRemoved } from '../../actions/followedAccounts';
-import { flattenFollowedAccounts } from '../../utils/followedAccounts';
+import { bookmarkRemoved } from '../../actions/bookmarks';
+import { flattenBookmarks } from '../../utils/bookmarks';
 import Piwik from '../../utils/piwik';
 import ShowMore from '../showMore';
-import styles from './followedAccounts.css';
+import styles from './bookmarks.css';
 import { getTokenFromAddress } from '../../utils/api/transactions';
 
 class ViewAccounts extends React.Component {
@@ -33,7 +33,7 @@ class ViewAccounts extends React.Component {
   }
 
   onFollowedAccount(account) {
-    Piwik.trackingEvent('ViewAccounts', 'button', 'Followed account');
+    Piwik.trackingEvent('ViewAccounts', 'button', 'Bookmark');
 
     const { history } = this.props;
     if (!this.state.edit) history.push(`${routes.explorer.path}${routes.accounts.path}/${account.address}`);
@@ -43,7 +43,7 @@ class ViewAccounts extends React.Component {
     Piwik.trackingEvent('ViewAccounts', 'button', 'Remove account');
     const address = account.address;
     const token = getTokenFromAddress(address);
-    this.props.followedAccountRemoved({ address, token });
+    this.props.bookmarkRemoved({ address, token });
   }
 
   onAddAccount() {
@@ -54,10 +54,10 @@ class ViewAccounts extends React.Component {
   render() {
     const {
       t,
-      followedAccounts,
+      bookmarks,
     } = this.props;
 
-    const accounts = flattenFollowedAccounts(followedAccounts);
+    const accounts = flattenBookmarks(bookmarks);
     const showBar = accounts.length > 4;
 
     return (
@@ -163,11 +163,11 @@ class ViewAccounts extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  followedAccounts: state.followedAccounts,
+  bookmarks: state.bookmarks,
 });
 
 const mapDispatchToProps = {
-  followedAccountRemoved,
+  bookmarkRemoved,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(ViewAccounts));

@@ -4,11 +4,11 @@ import { translate } from 'react-i18next';
 import { searchAccount } from '../../actions/search';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import regex from '../../utils/regex';
-import styles from './followedAccounts.css';
+import styles from './bookmarks.css';
 import AddressInput from '../addressInput/index';
 import Piwik from '../../utils/piwik';
 import BoxV2 from '../boxV2';
-import { flattenFollowedAccounts } from '../../utils/followedAccounts';
+import { flattenBookmarks } from '../../utils/bookmarks';
 
 class AddAccountID extends React.Component {
   constructor() {
@@ -26,15 +26,15 @@ class AddAccountID extends React.Component {
   }
 
   validateInput(value) {
-    const accounts = flattenFollowedAccounts(this.props.followedAccounts);
-    const alreadyFollowing = accounts.filter(({ address }) =>
+    const accounts = flattenBookmarks(this.props.bookmarks);
+    const alreadyBookmarked = accounts.filter(({ address }) =>
       address === value).length > 0;
 
     if (!value) {
       return this.props.t('Required');
     } else if (!value.match(regex.address)) {
       return this.props.t('Invalid address');
-    } else if (alreadyFollowing) {
+    } else if (alreadyBookmarked) {
       return this.props.t('ID already added to bookmarks');
     }
     return undefined;
@@ -88,7 +88,7 @@ class AddAccountID extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  followedAccounts: state.followedAccounts,
+  bookmarks: state.bookmarks,
 });
 
 const mapDispatchToProps = {

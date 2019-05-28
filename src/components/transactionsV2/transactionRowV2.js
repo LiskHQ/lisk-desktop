@@ -57,7 +57,7 @@ class TransactionRowV2 extends React.Component {
       <TableRow className={`${grid.row} ${styles.row} ${!hasConfirmations ? styles.pending : ''} transactions-row`} onClick={() => onClick(props)}>
         <div className={`${grid['col-sm-4']} ${grid['col-lg-3']} transactions-cell`}>
           <TransactionTypeV2 {...props.value}
-            followedAccounts={props.followedAccounts}
+            bookmarks={props.bookmarks}
             address={props.address} />
         </div>
           <div className={`${grid['col-sm-3']} ${grid['col-lg-3']} transactions-cell`}>

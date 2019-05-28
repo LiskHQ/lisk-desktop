@@ -7,7 +7,7 @@ import BoxV2 from '../boxV2';
 import TransactionsList from '../transactions/transactionsList';
 import CurrencyGraph from './currencyGraph';
 import routes from '../../constants/routes';
-import FollowedAccounts from '../followedAccounts/index';
+import Bookmarks from '../bookmarks';
 import QuickTips from '../quickTips';
 import NewsFeed from '../newsFeed';
 import Piwik from '../../utils/piwik';
@@ -146,7 +146,7 @@ class Dashboard extends React.Component {
             }
             <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>
               <div className={`${styles.following} bookmarks`}>
-                <FollowedAccounts history={history}/>
+                <Bookmarks history={history}/>
                 <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn1} />
               </div>
               <div className={`${grid['col-md-6']} ${grid['col-lg-6']} ${grid['col-xs-6']}`} style={{ paddingRight: '0px' }}>
