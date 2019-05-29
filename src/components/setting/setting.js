@@ -24,13 +24,13 @@ class Setting extends React.Component {
   toggleAutoLog(state) {
     Piwik.trackingEvent('Settings', 'button', 'Toggle autoLog');
     const {
-      account, settings, settingsUpdated, accountUpdated,
+      account, settings, accountUpdated,
     } = this.props;
     if (state && account.passphrase) {
       const date = Date.now() + accountConfig.lockDuration;
       accountUpdated({ expireTime: date });
     }
-    settingsUpdated({ autoLog: !settings.autoLog });
+    this.onUpdateSettings({ autoLog: !settings.autoLog });
   }
 
   setCurrency(currency) {
@@ -85,7 +85,7 @@ class Setting extends React.Component {
                   <CheckBox
                     className={`${styles.checkbox} autoLog`}
                     checked={settings.autoLog}
-                    onChange={this.onUpdateSettings.bind(this, { autoLog: !settings.autoLog })}
+                    onChange={this.toggleAutoLog.bind(this, { autoLog: !settings.autoLog })}
                    />
                    <div>
                     <span className={styles.labelName}>{t('Auto Logout')}</span>
