@@ -2,7 +2,7 @@ import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
 import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
-import { enterSecondPassphraseOnSend } from '../utils/enterSecondPassphrase';
+import { enterSecondPassphraseV2 } from '../utils/enterSecondPassphrase';
 import compareBalances from '../utils/compareBalances';
 import loginUI from '../utils/loginUI';
 
@@ -113,7 +113,7 @@ describe('Send', () => {
     cy.get(ss.sendReferenceText).click().type(randomReference);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).click();
-    enterSecondPassphraseOnSend(accounts['second passphrase account'].secondPassphrase);
+    enterSecondPassphraseV2(accounts['second passphrase account'].secondPassphrase);
     cy.get(ss.sendBtn).click();
     cy.get(ss.submittedTransactionMessage).should('have.text', msg.transferTxSuccess);
     cy.get(ss.okayBtn).click();

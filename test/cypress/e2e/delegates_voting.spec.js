@@ -12,7 +12,7 @@ import networks from '../../constants/networks';
 import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
 import compareBalances from '../utils/compareBalances';
-import enterSecondPassphrase from '../utils/enterSecondPassphrase';
+import { enterSecondPassphraseV2 } from '../utils/enterSecondPassphrase';
 
 const txConfirmationTimeout = 20000;
 const txVotePrice = 1;
@@ -52,7 +52,6 @@ describe('Delegates Voting', () => {
       compareBalances(this.balanceBefore, this.balanceAfter, txVotePrice);
     });
     // Vote
-    // cy.get(ss.nextBtn).should('be.disabled');
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.voteCheckbox).click();
     cy.get(ss.addedVotesCount).should('have.text', '1');
@@ -86,13 +85,15 @@ describe('Delegates Voting', () => {
   it('Vote with second passphrase', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
+    cy.get(ss.startVotingButton).click();
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.voteCheckbox).click();
-    // cy.get(ss.nextBtn).click();
-    enterSecondPassphrase(accounts['second passphrase account'].secondPassphrase);
+    cy.get(ss.goToConfirmationButton).click();
+    enterSecondPassphraseV2(accounts['second passphrase account'].secondPassphrase);
     cy.get(ss.confirmVotingButton).click();
     cy.get(ss.voteResultHeader).contains('Voting submitted');
     cy.get(ss.backToDelegatesButton).click();
+    cy.get(ss.startVotingButton).click();
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.spinner);
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout });
@@ -110,7 +111,7 @@ describe('Delegates Voting', () => {
     cy.visit(`${urls.delegatesVote}?votes=genesis_12,genesis_14,genesis_16`);
     cy.get(ss.votesPreselection).contains('genesis_12, genesis_14, genesis_16');
     // cy.get(ss.nextBtn).should('be.enabled').click();
-    cy.get(ss.confirmVotingButton).click();
+    cy.get(ss.confirmVotingButton).should('be.enabled').click();
     cy.get(ss.voteResultHeader).contains('Voting submitted');
     cy.wait(txConfirmationTimeout);
     cy.visit(urls.wallet);
