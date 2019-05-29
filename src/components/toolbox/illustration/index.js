@@ -6,6 +6,7 @@ import expandYourKnowledge from '../../../assets/images/illustrations/illustrati
 import ledgerNanoLight from '../../../assets/images/illustrations/illustration-ledger-nano-light.svg';
 import trezorLight from '../../../assets/images/illustrations/illustration-trezor-confirm-light.svg';
 import pageNotFound from '../../../assets/images/illustrations/illustration-page-not-found.svg';
+import errorBoundaryPage from '../../../assets/images/illustrations/illustration-error-boundary-page.svg';
 
 const illustrations = {
   welcomeLiskDelegates,
@@ -15,6 +16,7 @@ const illustrations = {
   ledgerNanoLight,
   trezorLight,
   pageNotFound,
+  errorBoundaryPage,
 };
 
 const Illustration = ({ name, className }) => (
