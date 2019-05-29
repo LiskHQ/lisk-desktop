@@ -23,10 +23,16 @@ describe('VotingV2', () => {
       store: PropTypes.object.isRequired,
     },
   };
+  let voteResult = { success: true };
   const props = {
     votes: {},
     account: {},
-    votePlaced: ({ goToNextStep }) => goToNextStep(),
+    voteLookupStatus: {
+      pending: [],
+      notFound: [],
+      alreadyVoted: [],
+    },
+    votePlaced: ({ goToNextStep }) => goToNextStep(voteResult),
     t: key => key,
     history: { push: jest.fn() },
   };
@@ -36,10 +42,19 @@ describe('VotingV2', () => {
     expect(wrapper.find('VotingSummary')).toHaveLength(1);
   });
 
-  it('should go to VotingResult when confirm button is clicked', () => {
+  it('should go to VotingResult with confirm button and then back to delegates', () => {
     const wrapper = mount(<Router><VotingV2 {...{ ...props, votes } } /></Router>, options);
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(wrapper.find('VotingResult')).toHaveLength(1);
+    wrapper.find('.back-to-delegates-button').at(0).simulate('click');
+    expect(props.history.push).toHaveBeenCalledWith('/delegatesV2');
+  });
+
+  it('should show report error link when confirm button is clicked and voting fails', () => {
+    voteResult = { success: false };
+    const wrapper = mount(<Router><VotingV2 {...{ ...props, votes } } /></Router>, options);
+    wrapper.find('.confirm-button').at(0).simulate('click');
+    expect(wrapper.find('.report-error-link')).toHaveLength(1);
   });
 
   it('should go to Delegates page when cancel button is clicked', () => {

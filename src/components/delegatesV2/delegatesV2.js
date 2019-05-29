@@ -7,11 +7,11 @@ import Onboarding from '../toolbox/onboarding/onboarding';
 import { getTotalActions } from './../../utils/voting';
 
 class DelegatesV2 extends React.Component {
-  constructor({ votes, ...props }) {
+  constructor(props) {
     super(props);
 
     this.state = {
-      votingModeEnabled: getTotalActions(votes) > 0,
+      votingModeEnabled: getTotalActions(props.votes) > 0,
     };
 
     this.toggleVotingMode = this.toggleVotingMode.bind(this);
