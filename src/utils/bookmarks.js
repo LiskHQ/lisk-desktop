@@ -7,7 +7,8 @@ export const flattenBookmarks = accounts =>
 
 export const getBookmarksFromLocalStorage = () => {
   const bookmarksObj = tokenKeys.reduce((acc, token) => ({ ...acc, [token]: [] }), {});
-  const bookmarks = localJSONStorage.get('bookmarks', bookmarksObj);
+  const bookmarks = localJSONStorage.get('bookmarks', localJSONStorage.get('followedAccounts', bookmarksObj));
+  localStorage.removeItem('followedAccounts');
   return Array.isArray(bookmarks)
     ? { ...bookmarksObj, LSK: bookmarks }
     : bookmarks;
