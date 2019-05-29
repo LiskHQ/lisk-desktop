@@ -70,9 +70,8 @@ describe('Delegates Voting', () => {
     cy.get('@dg').find(ss.spinner);
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout }).should('have.class', 'checked');
     cy.get(ss.topBarMenuWalletBtn).click();
-    cy.get(ss.transactionRow).eq(0).as('tx');
-    cy.get('@tx').find(ss.transactionAddress).should('have.text', 'Delegate vote');
-    cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');
+    cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).should('have.text', 'Delegate vote');
+    cy.get(`${ss.transactionRow} ${ss.transactionAmountPlaceholder}`).eq(0).should('have.text', '-');
   });
 
   /**

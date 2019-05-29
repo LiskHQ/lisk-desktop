@@ -14,11 +14,11 @@ const TransactionAmount = ({ address, transaction, token }) => {
   };
 
   return (
-    <div className={`${styles.wrapper} transaction-amount`}>
+    <div className={`${styles.wrapper} transactionAmount`}>
     {
       transaction.type === transactionTypes.send
       ? getTransactionType()
-      : null
+      : '-'
     }
     </div>
   );
