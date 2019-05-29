@@ -48,7 +48,7 @@ const VotingSummary = ({
                     title: t('Back to Delegates'),
                     className: 'back-to-delegates-button',
                     onClick: () => {
-                      history.push(routes.delegatesV2.path);
+                      history.push(routes.delegates.path);
                     },
                   },
                 } : {
@@ -68,7 +68,7 @@ const VotingSummary = ({
       cancelButton={{
         label: t('Edit voting'),
         onClick: () => {
-          history.push(routes.delegatesV2.path);
+          history.push(routes.delegates.path);
         },
       }}
       title={t('Voting summary')} >
