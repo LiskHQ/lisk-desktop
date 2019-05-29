@@ -4,6 +4,7 @@ const delegatesPage = {
   addedVotesCount: '.added-votes-count',
   removedVotesCount: '.removed-votes-count',
   goToConfirmationButton: '.go-to-confirmation-button',
+  votingHeader: '.voting-header',
 };
 
 const votingPage = {
@@ -121,7 +122,6 @@ const ss = {
   accountInitializationBtn: '.account-init-button',
   sidebarMenuDelegatesBtn: '#delegates',
   becomeDelegateLink: '.register-delegate',
-  votesConfirmSidebar: '.confirm-votes',
   confirmBtn: '.confirm',
   delegateRow: '.delegate-row',
   delegateList: '.delegate-list',

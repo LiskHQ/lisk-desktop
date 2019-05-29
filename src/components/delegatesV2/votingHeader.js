@@ -30,7 +30,7 @@ class VotingHeader extends React.Component {
       fee,
     } = votingConst;
     return (
-      <div className={`${styles.wrapper}`}>
+      <div className={`${styles.wrapper} voting-header`}>
             <span>
               <span className={styles.box}>
                 <h2>

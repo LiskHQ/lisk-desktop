@@ -13,7 +13,7 @@ describe('Delegates', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
     cy.url().should('contain', urls.delegates);
-    cy.get(ss.votesConfirmSidebar).find(ss.nextBtn);
+    cy.get(ss.votingHeader).find(ss.startVotingButton);
   });
 
   /**
@@ -21,13 +21,12 @@ describe('Delegates', () => {
    * @expect url is correct
    * @expect some specific to page element is present on it
    */
-  it('opens by sidebar button', () => {
-    cy.addObjectToLocalStorage('settings', 'advancedMode', true);
+  it('opens by top bar button', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
     cy.get(ss.sidebarMenuDelegatesBtn).should('have.css', 'opacity', '1').click();
     cy.url().should('contain', urls.delegates);
-    cy.get(ss.votesConfirmSidebar).find(ss.nextBtn);
+    cy.get(ss.votingHeader).find(ss.startVotingButton);
   });
 
   /**
