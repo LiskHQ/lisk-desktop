@@ -4,10 +4,7 @@ import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
 import VotingV2 from './votingV2';
 import { clearVotes, votePlaced } from '../../actions/voting';
-
-const filterObjectPropsWithValue = (object = {}, value) => (
-  Object.keys(object).filter(key => object[key] === value)
-);
+import { filterObjectPropsWithValue } from '../../utils/helpers';
 
 const mapStateToProps = state => ({
   votes: state.voting.votes,
