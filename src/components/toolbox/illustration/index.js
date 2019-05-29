@@ -8,6 +8,7 @@ import trezorLight from '../../../assets/images/illustrations/illustration-trezo
 import transactionSuccess from '../../../assets/images/illustrations/transaction_success.svg';
 import transactionError from '../../../assets/images/illustrations/transaction_error.svg';
 import pageNotFound from '../../../assets/images/illustrations/illustration-page-not-found.svg';
+import errorBoundaryPage from '../../../assets/images/illustrations/illustration-error-boundary-page.svg';
 
 const illustrations = {
   welcomeLiskDelegates,
@@ -19,6 +20,7 @@ const illustrations = {
   transactionSuccess,
   transactionError,
   pageNotFound,
+  errorBoundaryPage,
 };
 
 const Illustration = ({ name, className }) => (

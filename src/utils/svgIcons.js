@@ -49,6 +49,7 @@ import btcIcon from '../assets/images/icons-v2/icon-btc-48.svg';
 import iconEmptyRecentTransactions from '../assets/images/icons-v2/empty_recent_transactions.svg';
 import checkboxFilled from '../assets/images/icons-v2/checkmark-16-filled.svg';
 import checkmark from '../assets/images/icons-v2/checkmark.svg';
+import newsFeedAvatar from '../assets/images/icons-v2/newsFeedsAvatar.svg';
 
 export default {
   alert_icon: alertIcon,
@@ -102,4 +103,5 @@ export default {
   icon_empty_recent_transactions: iconEmptyRecentTransactions,
   checkboxFilled,
   checkmark,
+  newsFeedAvatar,
 };
