@@ -30,7 +30,7 @@ const VoteCheckboxV2 = ({
           address: account.address,
         })}
       /> :
-      <img src={status.unconfirmed ? svgIcons.ok_icon : undefined} />
+      <img src={status.unconfirmed ? svgIcons.checkmark : undefined} />
     } </React.Fragment>;
   return template;
 };
