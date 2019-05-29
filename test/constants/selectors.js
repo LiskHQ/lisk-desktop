@@ -16,6 +16,7 @@ const votingPage = {
   alreadyVotedPreselection: '.alreadyVoted-message',
   addedVotesContainer: '.added-votes',
   becomeDelegateLink: '.register-delegate',
+  loadMoreButton: '.loadMore',
 };
 
 const ss = {
