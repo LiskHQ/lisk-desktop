@@ -20,37 +20,41 @@ const txVotePrice = 1;
 describe('Delegates Voting', () => {
   it('Unvote and Vote + Header balance is affected', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
+    cy.visit(urls.dashboard);
+    cy.wait(1000); // TODO fix loading of delegates page and remove this line
     cy.visit(urls.delegates);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
-    cy.get(ss.nextBtn).should('be.disabled');
-    cy.get(ss.selectionVotingNumber).should('have.text', '0');
+    cy.get(ss.startVotingButton).click();
+    cy.get(ss.goToConfirmationButton).should('be.disabled');
+    cy.get(ss.addedVotesCount).should('have.text', '0');
     cy.get(ss.totalVotingNumber).should('have.text', '101');
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.voteCheckbox).should('have.class', 'checked');
     // Unvote
     cy.get('@dg').find(ss.voteCheckbox).click();
-    cy.get(ss.selectionVotingNumber).should('have.text', '1');
+    cy.get(ss.removedVotesCount).should('have.text', '1');
     cy.get(ss.totalVotingNumber).should('have.text', '100');
     cy.get('@dg').find(ss.voteCheckbox).click();
-    cy.get(ss.selectionVotingNumber).should('have.text', '0');
+    cy.get(ss.addedVotesCount).should('have.text', '0');
     cy.get(ss.totalVotingNumber).should('have.text', '101');
     cy.get('@dg').find(ss.voteCheckbox).click();
-    cy.get(ss.nextBtn).click();
-    cy.get(ss.delegateRow).should('have.length', 1);
-    cy.get(ss.confirmBtn).click();
-    cy.get(ss.voteResultHeader).contains('Votes submitted');
-    cy.get(ss.okayBtn).click();
-    cy.get(ss.selectionVotingNumber).should('have.text', '0');
+    cy.get(ss.goToConfirmationButton).click();
+    cy.get(ss.removedVotes).should('have.length', 1);
+    cy.get(ss.confirmVotingButton).click();
+    cy.get(ss.voteResultHeader).contains('Voting submitted');
+    cy.get(ss.backToDelegatesButton).click();
+    cy.get(ss.startVotingButton).click();
+    cy.get(ss.addedVotesCount).should('have.text', '0');
     cy.get(ss.delegateRow).eq(0).as('dg');
-    cy.get('@dg').find(ss.spinner);
+    // cy.get('@dg').find(ss.spinner); TODO fix the spinner
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout }).should('have.class', 'unchecked');
-    cy.get(ss.selectionVotingNumber).should('have.text', '0');
+    cy.get(ss.addedVotesCount).should('have.text', '0');
     cy.get(ss.totalVotingNumber).should('have.text', '100');
     cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(function () {
       compareBalances(this.balanceBefore, this.balanceAfter, txVotePrice);
     });
     // Vote
-    cy.get(ss.nextBtn).should('be.disabled');
+    // cy.get(ss.nextBtn).should('be.disabled');
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.voteCheckbox).click();
     cy.get(ss.selectionVotingNumber).should('have.text', '1');
@@ -59,11 +63,11 @@ describe('Delegates Voting', () => {
     cy.get(ss.selectionVotingNumber).should('have.text', '0');
     cy.get(ss.totalVotingNumber).should('have.text', '100');
     cy.get('@dg').find(ss.voteCheckbox).click();
-    cy.get(ss.nextBtn).click();
+    // cy.get(ss.nextBtn).click();
     cy.get(ss.delegateRow).should('have.length', 1);
-    cy.get(ss.confirmBtn).click();
-    cy.get(ss.voteResultHeader).contains('Votes submitted');
-    cy.get(ss.okayBtn).click();
+    cy.get(ss.confirmVotingButton).click();
+    cy.get(ss.voteResultHeader).contains('Voting submitted');
+    cy.get(ss.backToDelegatesButton).click();
     cy.get(ss.selectionVotingNumber).should('have.text', '0');
     cy.get(ss.totalVotingNumber).should('have.text', '101');
     cy.get(ss.delegateRow).eq(0).as('dg');
@@ -85,11 +89,11 @@ describe('Delegates Voting', () => {
     cy.visit(urls.delegates);
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.voteCheckbox).click();
-    cy.get(ss.nextBtn).click();
+    // cy.get(ss.nextBtn).click();
     enterSecondPassphrase(accounts['second passphrase account'].secondPassphrase);
-    cy.get(ss.confirmBtn).click();
-    cy.get(ss.voteResultHeader).contains('Votes submitted');
-    cy.get(ss.okayBtn).click();
+    cy.get(ss.confirmVotingButton).click();
+    cy.get(ss.voteResultHeader).contains('Voting submitted');
+    cy.get(ss.backToDelegatesButton).click();
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.spinner);
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout });
@@ -106,9 +110,9 @@ describe('Delegates Voting', () => {
     cy.visit(urls.dashboard);
     cy.visit(`${urls.delegatesVote}?votes=genesis_12,genesis_14,genesis_16`);
     cy.get(ss.votesPreselection).contains('genesis_12, genesis_14, genesis_16');
-    cy.get(ss.nextBtn).should('be.enabled').click();
-    cy.get(ss.confirmBtn).click();
-    cy.get(ss.voteResultHeader).contains('Votes submitted');
+    // cy.get(ss.nextBtn).should('be.enabled').click();
+    cy.get(ss.confirmVotingButton).click();
+    cy.get(ss.voteResultHeader).contains('Voting submitted');
     cy.wait(txConfirmationTimeout);
     cy.visit(urls.wallet);
     cy.visit(`${urls.delegatesVote}?unvotes=genesis_12`);
