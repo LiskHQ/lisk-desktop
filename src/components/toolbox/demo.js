@@ -3,7 +3,7 @@ import BoxV2Demo from '../boxV2/demo';
 import ButtonDemo from './buttons/demo';
 import CalendarDemo from './calendar/demo';
 import CheckBoxDemo from './checkBox/demo';
-import DropdownDemo from './dropdown/demo';
+import DropdownDemo from './dropdownV2/demo';
 import IconDemo from './icon/demo';
 import InputDemo from './inputsV2/demo';
 import IllustrationDemo from './illustration/demo';
