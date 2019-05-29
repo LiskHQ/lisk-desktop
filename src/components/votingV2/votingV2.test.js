@@ -47,7 +47,7 @@ describe('VotingV2', () => {
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(wrapper.find('VotingResult')).toHaveLength(1);
     wrapper.find('.back-to-delegates-button').at(0).simulate('click');
-    expect(props.history.push).toHaveBeenCalledWith('/delegatesV2');
+    expect(props.history.push).toHaveBeenCalledWith('/delegates');
   });
 
   it('should show report error link when confirm button is clicked and voting fails', () => {
@@ -60,6 +60,6 @@ describe('VotingV2', () => {
   it('should go to Delegates page when cancel button is clicked', () => {
     const wrapper = mount(<Router><VotingV2 {...props} /></Router>, options);
     wrapper.find('.cancel-button').at(0).simulate('click');
-    expect(props.history.push).toHaveBeenCalledWith('/delegatesV2');
+    expect(props.history.push).toHaveBeenCalledWith('/delegates');
   });
 });
