@@ -28,22 +28,15 @@ class TransactionSummary extends React.Component {
     const { isHardwareWalletConnected } = this.state;
     const { confirmButton } = this.props;
 
-    this.timeout = setTimeout(() => {
-      if (isHardwareWalletConnected && !confirmButton.disabled) {
-        this.confirmOnClick();
-      }
-    }, 1000);
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.timeout);
+    if (isHardwareWalletConnected && !confirmButton.disabled) {
+      this.confirmOnClick();
+    }
   }
 
   componentDidUpdate(prevProps) {
     const { isHardwareWalletConnected } = this.state;
     const { confirmButton } = this.props;
     if (isHardwareWalletConnected && prevProps.confirmButton.disabled && !confirmButton.disabled) {
-      clearTimeout(this.timeout);
       this.confirmOnClick();
     }
   }

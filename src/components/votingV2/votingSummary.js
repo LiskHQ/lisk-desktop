@@ -30,7 +30,8 @@ const VotingSummary = ({
       account={account}
       confirmButton={{
         label: t('Confirm voting'),
-        disabled: voteLookupStatus.pending && voteLookupStatus.pending.length > 0,
+        disabled: totalActions === 0 ||
+          (voteLookupStatus.pending && voteLookupStatus.pending.length > 0),
         onClick: ({ secondPassphrase }) => {
           votePlaced({
             account,

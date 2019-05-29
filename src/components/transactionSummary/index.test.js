@@ -9,7 +9,6 @@ describe('TransactionSummary', () => {
     deviceModel: 'Trezor Model T',
     deviceId: 'mock id',
   };
-  jest.useFakeTimers();
 
   beforeEach(() => {
     props = {
@@ -58,7 +57,6 @@ describe('TransactionSummary', () => {
       }}/>);
     expect(wrapper.find('h1')).toHaveLength(1);
     expect(wrapper.find('.confirm-button')).toHaveLength(0);
-    jest.runAllTimers();
     expect(props.confirmButton.onClick).toHaveBeenCalled();
   });
 
