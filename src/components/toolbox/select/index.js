@@ -62,6 +62,7 @@ class Select extends React.Component {
         >
           {options.map((option, index) => (
             <span
+              className={'option'}
               data-index={index}
               onClick={this.setSelected}
               key={`option-${index}`}
@@ -76,7 +77,9 @@ class Select extends React.Component {
 }
 
 Select.propTypes = {
-  options: PropTypes.array.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string.isRequired,
+  })).isRequired,
   selected: PropTypes.number,
   size: PropTypes.oneOf([
     'l', 'm', 's', 'xs',
