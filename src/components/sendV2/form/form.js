@@ -38,7 +38,7 @@ class Form extends React.Component {
           title: '',
           value: '',
           showSuggestions: false,
-          following: false,
+          isBookmark: false,
         },
         amount: {
           error: false,
@@ -223,7 +223,7 @@ class Form extends React.Component {
         error: false,
         feedback: '',
         showSuggestions: false,
-        following: false,
+        isBookmark: false,
       };
     }
 
@@ -238,7 +238,7 @@ class Form extends React.Component {
         error: false,
         feedback: '',
         showSuggestions: false,
-        following: true,
+        isBookmark: true,
       };
     }
 
@@ -280,7 +280,7 @@ class Form extends React.Component {
           error: '',
           feedback: '',
           showSuggestions: false,
-          following: true,
+          isBookmark: true,
         },
       },
     }));

@@ -18,7 +18,7 @@ describe('Bookmark Component', () => {
     address: accounts.genesis.address,
     bookmarks: { LSK: [], BTC: [] },
     balance: accounts.genesis.balance,
-    isBookmarked: false,
+    isBookmark: false,
     bookmarkAdded: jest.fn(),
     bookmarkRemoved: jest.fn(),
     token: 'LSK',
@@ -35,7 +35,7 @@ describe('Bookmark Component', () => {
       const account = { ...accounts.genesis, title: 'bookmark test' };
       const bookmarkProps = {
         ...props,
-        isBookmarked: true,
+        isBookmark: true,
         bookmarks: { LSK: [account], BTC: [] },
       };
       wrapper = mount(<Bookmark {...bookmarkProps} />, options);

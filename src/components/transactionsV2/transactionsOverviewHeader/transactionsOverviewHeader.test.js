@@ -102,11 +102,11 @@ describe('Transactions Overview Header', () => {
     });
 
     it('Should toggle bookmark dropdown', () => {
-      expect(wrapper.find('.follow-account')).to.not.have.descendants('.show');
-      wrapper.find('.follow-account button').first().simulate('click');
-      expect(wrapper.find('.follow-account')).to.have.descendants('.show');
-      wrapper.find('.follow-account button').first().simulate('click');
-      expect(wrapper.find('.follow-account')).to.not.have.descendants('.show');
+      expect(wrapper.find('.bookmark-account')).to.not.have.descendants('.show');
+      wrapper.find('.bookmark-account button').first().simulate('click');
+      expect(wrapper.find('.bookmark-account')).to.have.descendants('.show');
+      wrapper.find('.bookmark-account button').first().simulate('click');
+      expect(wrapper.find('.bookmark-account')).to.not.have.descendants('.show');
     });
   });
 });

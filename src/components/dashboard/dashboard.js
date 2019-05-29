@@ -145,7 +145,7 @@ class Dashboard extends React.Component {
               : <QuickTips />
             }
             <div className={`${grid.row} ${styles.bottomModuleWrapper} `}>
-              <div className={`${styles.following} bookmarks`}>
+              <div className={`${styles.bookmarks} bookmarks`}>
                 <Bookmarks history={history}/>
                 <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn1} />
               </div>

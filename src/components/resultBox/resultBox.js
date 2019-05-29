@@ -38,7 +38,7 @@ class ResultBox extends React.Component {
     this.props.nextStep({ address: this.props.recipientId });
   }
 
-  onAddToFollowedAccounts() {
+  onAddToBookmarksList() {
     Piwik.trackingEvent('ResultBox', 'button', 'Add to bookmarks accounts');
     this.props.transactionFailedClear();
     this.props.prevStep({
@@ -88,7 +88,7 @@ class ResultBox extends React.Component {
           {this.props.success &&
             this.props.recipientId && this.isNotYetBookmarked(this.props.recipientId) ?
             <div className={`${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-5']} ${grid['col-lg-5']}`}>
-              <Button className={`add-to-bookmarks ${styles.addFollowedAccountButton}`}
+              <Button className={`add-to-bookmarks ${styles.addBookmarkButton}`}
                 onClick={this.onAddToBookmarks.bind(this)}>
                 {this.props.t('Add to bookmarks')}
               </Button>
@@ -96,8 +96,8 @@ class ResultBox extends React.Component {
           }
           {!this.props.success && this.props.account && this.props.account.hwInfo ?
             <div className={`${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-5']} ${grid['col-lg-5']}`}>
-              <Button className={`add-follwed-account-button ${styles.addFollowedAccountButton}`}
-                onClick={this.onAddToFollowedAccounts.bind(this)}>
+              <Button className={`add-follwed-account-button ${styles.addBookmarkButton}`}
+                onClick={this.onAddToBookmarksList.bind(this)}>
                 {this.props.t('Retry')}
               </Button>
             </div> : null

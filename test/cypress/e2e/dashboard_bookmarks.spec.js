@@ -10,15 +10,15 @@ const txConfirmationTimeout = 14000;
 
 describe('Dashboard Bookmarks', () => {
   /**
-   * Add follower in dashboard widget
-   * @expect localStorage have the follower object with correct address
-   * @expect localStorage have the follower object with correct title
-   * @expect following account is shown in widget
+   * Add Bookmark in dashboard widget
+   * @expect localStorage have the Bookmark object with correct address
+   * @expect localStorage have the Bookmark object with correct title
+   * @expect Bookmark account is shown in widget
    */
   it('Add bookmark while logged in', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
-    cy.get(ss.addFollowerAccountButton).click();
+    cy.get(ss.addBookmarkAccountButton).click();
     cy.get(ss.addressInput).click().type(accounts.genesis.address);
     cy.get(ss.nextBtn).click();
     cy.get(ss.titleInput).type('Bob');
@@ -27,7 +27,7 @@ describe('Dashboard Bookmarks', () => {
         expect(getBookmarksObjFromLS()[0].address).to.equal(accounts.genesis.address);
         expect(getBookmarksObjFromLS()[0].title).to.equal('Bob');
       });
-    cy.get(ss.followedAccountItem).should('have.length', 1);
+    cy.get(ss.bookmarkAccountItem).should('have.length', 1);
     cy.get(ss.titleInput).should('have.value', 'Bob');
   });
 
@@ -37,45 +37,45 @@ describe('Dashboard Bookmarks', () => {
     });
 
     /**
-     * Edit followers title
+     * Edit Bookmark title
      * @expect value has changed
      */
     it('Edit bookmarks title', () => {
       cy.visit(urls.dashboard);
-      cy.get(ss.editFollowingAccounts).click();
+      cy.get(ss.editBookmarkAccounts).click();
       cy.get(ss.titleInput).clear().type('Bob');
-      cy.get(ss.editFollowingAccounts).click();
-      cy.get(ss.followedAccountTitle).should('have.value', 'Bob');
+      cy.get(ss.editBookmarkAccounts).click();
+      cy.get(ss.bookmarkAccountTitle).should('have.value', 'Bob');
     });
 
     /**
-     * Delete a follower
-     * @expect follower is not there
+     * Delete a Bookmark
+     * @expect Bookmark is not there
      */
     it('Delete a bookmark', () => {
       cy.visit(urls.dashboard);
-      cy.get(ss.editFollowingAccounts).click();
-      cy.get(ss.removeFollowingAccount).click();
-      cy.get(ss.followedAccount).should('not.exist');
+      cy.get(ss.editBookmarkAccounts).click();
+      cy.get(ss.removeBookmarkAccount).click();
+      cy.get(ss.bookmarkAccount).should('not.exist');
     });
 
     /**
-     * Follower account is clickable
-     * @expect follower account is opened
+     * Bookmark account is clickable
+     * @expect Bookmark account is opened
      */
     it('Open bookmarked account', () => {
       cy.visit(urls.dashboard);
-      cy.get(ss.followedAccount).click();
+      cy.get(ss.bookmarkAccount).click();
       cy.url().should('include', '/explorer/accounts/16313739661670634666L');
     });
 
     /**
-     * Try to add duplicate followed account
+     * Try to add duplicate Bookmark account
      * @expect button is disabled
      */
     it('Not possible to add duplicate', () => {
       cy.visit(urls.dashboard);
-      cy.get(ss.addFollowerAccountButton).click();
+      cy.get(ss.addBookmarkAccountButton).click();
       cy.get(ss.addressInput).click().type(accounts.genesis.address);
       cy.get(ss.nextBtn).should('be.disabled');
     });
@@ -87,7 +87,7 @@ describe('Dashboard Bookmarks', () => {
       cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
       cy.visit(urls.dashboard);
       cy.wait(1000); // To let app fetch and update the actual balance
-      cy.get(ss.followedAccountBalance).invoke('text').as('balanceBefore');
+      cy.get(ss.bookmarkAccountBalance).invoke('text').as('balanceBefore');
       cy.visit(urls.send);
       cy.get(ss.recipientInput).type(accounts.genesis.address);
       cy.get(ss.amountInput).click().type('1');
@@ -97,7 +97,7 @@ describe('Dashboard Bookmarks', () => {
       cy.get(ss.transactionRow).eq(0).find(ss.spinner);
       cy.get(ss.transactionRow).eq(0).find(ss.spinner, { timeout: txConfirmationTimeout }).should('not.exist');
       cy.wait(1000); // To avoid updating lag
-      cy.get(ss.followedAccountBalance).invoke('text').as('balanceAfter').then(() => {
+      cy.get(ss.bookmarkAccountBalance).invoke('text').as('balanceAfter').then(() => {
         compareBalances(this.balanceBefore, this.balanceAfter, 0.1);
       });
     });
@@ -116,8 +116,8 @@ describe('Dashboard Bookmarks', () => {
         {"title":"6","address":"${accounts.genesis.address}","balance":101}
       ]`);
       cy.visit(urls.dashboard);
-      cy.get(ss.followedAccount).eq(4).should('be.visible');
-      cy.get(ss.followedAccount).eq(6).should('be.not.visible');
+      cy.get(ss.bookmarkAccount).eq(4).should('be.visible');
+      cy.get(ss.bookmarkAccount).eq(6).should('be.not.visible');
     });
 
     /**
@@ -135,8 +135,8 @@ describe('Dashboard Bookmarks', () => {
       ]`);
       cy.visit(urls.dashboard);
       cy.get(ss.bookmarks).find(ss.showMoreButton).click();
-      cy.get(ss.followedAccount).should('have.length', 6);
-      cy.get(ss.followedAccount).eq(5).trigger('mouseover').should('be.visible');
+      cy.get(ss.bookmarkAccount).should('have.length', 6);
+      cy.get(ss.bookmarkAccount).eq(5).trigger('mouseover').should('be.visible');
     });
   });
 });

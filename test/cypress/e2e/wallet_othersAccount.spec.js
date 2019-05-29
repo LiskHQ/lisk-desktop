@@ -38,7 +38,7 @@ describe('Wallet Others account', () => {
   it('Bookmarked account -> Address, Name & Label are correct', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
-    cy.get(ss.addFollowerAccountButton).click();
+    cy.get(ss.addBookmarkAccountButton).click();
     cy.get(ss.addressInput).click().type(accounts['empty account'].address);
     cy.get(ss.nextBtn).click();
     cy.get(ss.titleInput).type('Alice');
@@ -63,8 +63,8 @@ describe('Wallet Others account', () => {
     cy.visit(`${urls.accounts}/${accounts.genesis.address}`);
     cy.wait('@requestAccountData');
     cy.wait(300);
-    cy.get(ss.followAccountBtn).contains('Bookmark account');
-    cy.get(ss.followAccountBtn).click();
+    cy.get(ss.bookmarkAccountBtn).contains('Bookmark account');
+    cy.get(ss.bookmarkAccountBtn).click();
     cy.get(ss.titleInput).type('Bob');
     cy.get(ss.confirmAddToBookmarks).click()
       .should(() => {
@@ -75,8 +75,8 @@ describe('Wallet Others account', () => {
     cy.reload();
     cy.wait('@requestDelegatesData');
     cy.get(ss.accountName).contains('Bob');
-    cy.get(ss.followAccountBtn).contains('Account bookmarked');
-    cy.get(ss.followAccountBtn).click();
+    cy.get(ss.bookmarkAccountBtn).contains('Account bookmarked');
+    cy.get(ss.bookmarkAccountBtn).click();
     cy.get(ss.confirmAddToBookmarks).click()
       .should(() => {
         expect(getBookmaksObjFromLS().LSK.length).to.equal(0);
@@ -89,8 +89,8 @@ describe('Wallet Others account', () => {
     cy.visit(`${urls.accounts}/${accounts.delegate.address}`);
     cy.wait('@requestAccountData');
     cy.wait(300);
-    cy.get(ss.followAccountBtn).contains('Bookmark account');
-    cy.get(ss.followAccountBtn).click();
+    cy.get(ss.bookmarkAccountBtn).contains('Bookmark account');
+    cy.get(ss.bookmarkAccountBtn).click();
     cy.get(ss.titleInput).type('Bob');
     cy.get(ss.titleInput).should('have.value', accounts.delegate.username);
   });

@@ -87,10 +87,10 @@ describe('TransactionStatus', () => {
   });
 
   it('should show dropdown bookmark', () => {
-    expect(wrapper).toContainMatchingElement('.following-container');
-    expect(wrapper).toContainMatchingElement('.following-btn');
-    expect(wrapper.find('.following-btn').at(0).text()).toEqual('Bookmark account');
-    wrapper.find('.following-btn').at(0).simulate('click');
+    expect(wrapper).toContainMatchingElement('.bookmark-container');
+    expect(wrapper).toContainMatchingElement('.bookmark-btn');
+    expect(wrapper.find('.bookmark-btn').at(0).text()).toEqual('Bookmark account');
+    wrapper.find('.bookmark-btn').at(0).simulate('click');
     wrapper.find('input[name="accountName"]').simulate('change', { target: { name: 'accountName', value: 'ABC' } });
     wrapper.find('button').last().simulate('click');
     wrapper.setProps({
@@ -102,8 +102,8 @@ describe('TransactionStatus', () => {
       },
     });
     wrapper.update();
-    expect(wrapper.find('.following-btn').at(0).text()).toEqual('Account bookmarked');
-    wrapper.find('.following-btn').at(0).simulate('click');
+    expect(wrapper.find('.bookmark-btn').at(0).text()).toEqual('Account bookmarked');
+    wrapper.find('.bookmark-btn').at(0).simulate('click');
   });
 
   it('should render error message in case of transaction failed', () => {

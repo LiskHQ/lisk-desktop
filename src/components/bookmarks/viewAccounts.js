@@ -87,13 +87,13 @@ class ViewAccounts extends React.Component {
         <div className={`${styles.container}`}>
         {
           accounts.length
-          ? <div className={`${styles.accounts} ${showBar ? styles.onShowBar : ''} ${this.state.showMore ? styles.showMoreToggle : ''} followed-accounts-list`}>
+          ? <div className={`${styles.accounts} ${showBar ? styles.onShowBar : ''} ${this.state.showMore ? styles.showMoreToggle : ''} bookmarks-list`}>
               <div className={styles.list}>
                 {
                   accounts.map((account, i) =>
                   (<div
                     key={i}
-                    className={`${styles.rows} ${styles.clickable} followed-account`}
+                    className={`${styles.rows} ${styles.clickable} bookmark-account`}
                     onClick={() => this.onBookmark(account)}
                   >
                     <div className={''}>
@@ -105,7 +105,7 @@ class ViewAccounts extends React.Component {
 
                     <div className={`${styles.accountInformation}`}>
                       <div className={this.state.edit ? styles.editMode : ''}>
-                        <div className={`${styles.balance} followed-account-balance`}>
+                        <div className={`${styles.balance} bookmark-balance`}>
                           <span>{account.address}</span>
                         </div>
                         <TitleInput
@@ -139,7 +139,7 @@ class ViewAccounts extends React.Component {
                 }
               </div>
             </div>
-          : <div className={`${styles.emptyList} followed-accounts-empty-list`}>
+          : <div className={`${styles.emptyList} bookmarks-empty-list`}>
               <p>{t('Keep track of any Lisk ID balance. Only you will see who you bookmarked.')}</p>
 
               <div className={`${styles.addBookmarkBtn} add-account-button`} onClick={() => this.onAddAccount()}>

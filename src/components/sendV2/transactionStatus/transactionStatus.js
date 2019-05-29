@@ -123,7 +123,7 @@ class TransactionStatus extends React.Component {
     const { isHardwareWalletError, messageDetails } = this.getMessagesDetails();
     const token = getTokenFromAddress(fields.recipient.address);
     const shouldShowBookmark = !transactions.broadcastedTransactionsError.length
-      && !fields.recipient.following;
+      && !fields.recipient.isBookmark;
 
     return (
       <div className={`${styles.wrapper} transaction-status`}>
@@ -144,15 +144,15 @@ class TransactionStatus extends React.Component {
             {
               shouldShowBookmark
               ? (<div
-                  className={`${styles.followBtn} following-container`} ref={(node) => { this.bookmarkContainerRef = node; }}>
+                  className={`${styles.bookmarkBtn} bookmark-container`} ref={(node) => { this.bookmarkContainerRef = node; }}>
                   <SecondaryButtonV2
-                    className={`${styles.btn} ${isBookmarked ? styles.followingButton : ''} following-btn`}
+                    className={`${styles.btn} ${isBookmarked ? styles.bookmarkButton : ''} bookmark-btn`}
                     onClick={this.onBookmarkDropdownToggle}>
                     {bookmarkButtonLabel}
                   </SecondaryButtonV2>
                   <DropdownV2
                     showDropdown={this.state.isBookmarkDropdown}
-                    className={`${styles.followDropdown}`}>
+                    className={`${styles.bookmarkDropdown}`}>
                     <Bookmark
                       delegate={this.getDelegateInformation()}
                       balance={fields.recipient.balance}

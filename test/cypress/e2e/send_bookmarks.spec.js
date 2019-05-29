@@ -5,10 +5,10 @@ import ss from '../../constants/selectors';
 
 describe('Send: Bookmarks', () => {
   /**
-   * Bookmarks suggestions are not present if there is no followers
+   * Bookmarks suggestions are not present if there is no Bookmarks
    * @expect bookmarks components are not present
    */
-  it('Bookmarks are not present if there is no followers', () => {
+  it('Bookmarks are not present if there is no Bookmarks', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node)
       .then(() => window.localStorage.removeItem('bookmarks'));
     cy.visit(urls.send);
@@ -17,14 +17,14 @@ describe('Send: Bookmarks', () => {
   });
 
   /**
-   * Choose follower from bookmarks and send tx
+   * Choose Bookmark account from bookmarks and send tx
    * @expect bookmark contain name
    * @expect bookmark contain address
    * @expect clicking bookmark fills recipient
    * @expect tx appears in activity with right address
    */
   /* eslint-disable max-statements */
-  it('Choose follower from bookmarks and send tx', () => {
+  it('Choose Bookmark account from bookmarks and send tx', () => {
     window.localStorage.setItem('bookmarks', `[
       {"title":"Alice","address":"${accounts.delegate.address}","balance":101},
       {"title":"Bob","address":"${accounts.genesis.address}","balance":101}
