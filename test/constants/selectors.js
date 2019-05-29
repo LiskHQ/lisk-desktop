@@ -12,6 +12,8 @@ const votingPage = {
   confirmVotingButton: '.confirm-button',
   voteResultHeader: '.result-box-header',
   backToDelegatesButton: '.back-to-delegates-button',
+  alreadyVotedPreselection: '.alreadyVoted-message',
+  addedVotesContainer: '.added-votes',
 };
 
 const ss = {
@@ -132,9 +134,6 @@ const ss = {
   searchDelegateInput: 'input.search',
   voteCheckbox: '.vote-checkbox',
   clearSearchBtn: '.clean-icon',
-  votesPreselection: '.upvotes-message',
-  unvotesPreselection: '.unvotes-message',
-  alreadyVotedPreselection: '.alreadyVoted-message',
   addFollowerAccountButton: '.add-account-button',
   followedAccountItem: '.followed-account',
   titleInput: '.account-title input',
