@@ -69,7 +69,7 @@ class VotingHeader extends React.Component {
               <SecondaryButtonV2 onClick={toggleVotingMode} className={`cancel-voting-button ${styles.btn}`}>
                 {t('Cancel voting')}
               </SecondaryButtonV2>
-              <Link to={totalActions !== 0 ? routes.voting.path : routes.delegatesV2.path} >
+              <Link to={totalActions !== 0 ? routes.voting.path : routes.delegates.path} >
                 <PrimaryButtonV2 className={`${styles.btn} go-to-confirmation-button`} disabled={totalActions === 0}>
                   {t('Go to Confirmation')}
                 </PrimaryButtonV2>
