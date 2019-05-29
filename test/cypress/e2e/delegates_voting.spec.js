@@ -44,7 +44,7 @@ describe('Delegates Voting', () => {
     cy.get(ss.startVotingButton).click();
     cy.get(ss.addedVotesCount).should('have.text', '0');
     cy.get(ss.delegateRow).eq(0).as('dg');
-    // cy.get('@dg').find(ss.spinner); TODO fix the spinner
+    cy.get('@dg').find(ss.spinner);
     cy.get('@dg').find(ss.voteCheckbox, { timeout: txConfirmationTimeout }).should('have.class', 'unchecked');
     cy.get(ss.addedVotesCount).should('have.text', '0');
     cy.get(ss.totalVotingNumber).should('have.text', '100');

@@ -5,7 +5,7 @@ import voteFilters from './../../constants/voteFilters';
 import DelegateListV2 from './delegateListV2';
 import ProgressBar from '../toolbox/progressBar/progressBar';
 import Tooltip from '../toolbox/tooltip/tooltip';
-import { getTotalVotesCount } from './../../utils/voting';
+import { getTotalVotesCount, getPendingVotesList } from './../../utils/voting';
 import BoxV2 from '../boxV2';
 
 // Create a new Table component injecting Head and Row
@@ -23,7 +23,8 @@ class VotingListViewV2 extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.account.serverPublicKey && !this.props.votingModeEnabled) {
+    const { votes, account, votingModeEnabled } = this.props;
+    if (account.serverPublicKey && !votingModeEnabled && getPendingVotesList(votes).length === 0) {
       this.loadVotedDelegates();
     }
     this.loadDelegates('', true);
