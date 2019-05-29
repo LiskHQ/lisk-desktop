@@ -69,6 +69,7 @@ const ss = {
   transactionAmountPlaceholder: '.transactionAmount',
   delegateDuplicateNameError: '.error-name-duplicate',
   headerBalance: '.balance span',
+  nextBtn: '.next',
   txHeader: '.tx-header',
   txSenderAddress: '.sender-address',
   txRecipientAddress: '.receiver-address',
