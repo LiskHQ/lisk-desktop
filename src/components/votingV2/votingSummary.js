@@ -45,7 +45,7 @@ const VotingSummary = ({
                   message: t('You will be notified when your votes are forged.'),
                   primaryButon: {
                     title: t('Back to Delegates'),
-                    className: 'back-to-delegates',
+                    className: 'back-to-delegates-button',
                     onClick: () => {
                       history.push(routes.delegatesV2.path);
                     },
@@ -106,7 +106,7 @@ const VotingSummary = ({
         <section>
           <label>{t('Added votes')} ({voteList.length})</label>
           <label>
-            <div className={styles.votesContainer} >
+            <div className={`${styles.votesContainer} added-votes`} >
               {voteList.map(vote => (
                <span key={vote} className={`${styles.voteTag} vote`}>
                 <span className={styles.rank}>#{votes[vote].rank}</span>
@@ -121,7 +121,7 @@ const VotingSummary = ({
         <section>
           <label>{t('Removed votes')} ({unvoteList.length})</label>
           <label>
-            <div className={styles.votesContainer} >
+            <div className={`${styles.votesContainer} removed-votes`} >
               {unvoteList.map(vote => (
                <span key={vote} className={`${styles.voteTag} vote`}>
                 <span className={styles.rank}>#{votes[vote].rank}</span>

@@ -46,7 +46,7 @@ describe('VotingV2', () => {
     const wrapper = mount(<Router><VotingV2 {...{ ...props, votes } } /></Router>, options);
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(wrapper.find('VotingResult')).toHaveLength(1);
-    wrapper.find('.back-to-delegates').at(0).simulate('click');
+    wrapper.find('.back-to-delegates-button').at(0).simulate('click');
     expect(props.history.push).toHaveBeenCalledWith('/delegatesV2');
   });
 
