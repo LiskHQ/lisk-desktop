@@ -41,7 +41,9 @@ class MultiStep extends React.Component {
     const newState = { ...this.state };
     newState.step.current += jump;
     newState.step.data[newState.step.current] = data;
-    this.setState(newState);
+    if (this.props.children[newState.step.current]) {
+      this.setState(newState);
+    }
   }
 
   /**
