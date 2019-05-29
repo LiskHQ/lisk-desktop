@@ -39,8 +39,10 @@ class Setting extends React.Component {
   }
 
   onUpdateSettings(newSettings) {
+    const { settingsUpdated, toastDisplayed, t } = this.props;
     Piwik.trackingEvent('Settings', 'button', 'Update settings');
-    this.props.settingsUpdated(newSettings);
+    settingsUpdated(newSettings);
+    toastDisplayed({ label: t('Settings saved!') });
   }
 
   render() {
@@ -79,7 +81,7 @@ class Setting extends React.Component {
               </section>
               <section>
                 <h1>{t('Security')}</h1>
-                <div className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+                <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                   <CheckBox
                     className={`${styles.checkbox} autoLog`}
                     checked={settings.autoLog}
@@ -89,7 +91,7 @@ class Setting extends React.Component {
                     <span className={styles.labelName}>{t('Auto Logout')}</span>
                     <p>{t('Log out automatically after a specified amount of time.')}</p>
                    </div>
-                </div>
+                </label>
                 <div className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                   <CheckBox
                     className={`${styles.checkbox} ${!hasSecondPassphrase ? styles.hide : ''}`}
@@ -113,7 +115,7 @@ class Setting extends React.Component {
               </section>
               <section>
                 <h1>{t('Advanced')}</h1>
-                <div className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+                <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                   <CheckBox
                     className={`${styles.checkbox} showNetwork`}
                     checked={settings.showNetwork}
@@ -125,8 +127,8 @@ class Setting extends React.Component {
                     <span className={styles.labelName}>{t('Network switcher')}</span>
                     <p>{t('Enable a network switcher that lets you select testnet or custom node when logging in.')}</p>
                   </div>
-                </div>
-                <div className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+                </label>
+                <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                     <CheckBox
                       className={`${styles.checkbox} advancedMode`}
                       checked={settings.advancedMode}
@@ -137,11 +139,11 @@ class Setting extends React.Component {
                     <div>
                       <span className={styles.labelName}>{t('Delegate Features')}</span>
                     </div>
-                </div>
+                </label>
               </section>
               <section>
                 <h1>{t('Privacy')}</h1>
-                <div className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+                <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                   <CheckBox
                     className={`${styles.checkbox} statistics`}
                     checked={settings.statistics}
@@ -158,7 +160,7 @@ class Setting extends React.Component {
                       {t('Privacy Policy')}
                     </a>
                   </div>
-                </div>
+                </label>
               </section>
             </div>
           </BoxV2>
