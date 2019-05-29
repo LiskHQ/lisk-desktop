@@ -11,12 +11,12 @@ describe('CheckBox', () => {
 
   it('should render checkmark icon if props.checked is true', () => {
     const wrapper = mount(<CheckBox {...props} checked={true} />);
-    expect(wrapper).toHaveClassName('checked');
+    expect(wrapper).toContainExactlyOneMatchingElement('.checked');
   });
 
   it('should render with "accent" class if props.accent is true', () => {
     const wrapper = mount(<CheckBox {...props} accent={true} />);
-    expect(wrapper).toHaveClassName('unchecked');
+    expect(wrapper).toContainExactlyOneMatchingElement('.unchecked');
     expect(wrapper).toContainExactlyOneMatchingElement('.accent');
   });
 

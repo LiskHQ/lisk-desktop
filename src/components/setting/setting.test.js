@@ -63,6 +63,7 @@ describe('Setting', () => {
       pathname: '/setting',
       search: '?showTackingSwitch=true',
     },
+    toastDisplayed: sinon.spy(),
   };
 
   beforeEach(() => {
@@ -97,7 +98,7 @@ describe('Setting', () => {
         {...newProps}/>
     </Router>, options);
 
-    expect(wrapper.find('.disabled').length).to.have.equal(3);
+    expect(wrapper.find('.disabled').length).to.have.equal(2);
   });
 
   it.skip('should click on .autoLog update the setting', () => {
@@ -149,7 +150,8 @@ describe('Setting', () => {
   });
 
   it('should change active currency setting to EUR', () => {
-    wrapper.find('.currency').at(1).simulate('click');
+    wrapper.find('.currency input').simulate('focus');
+    wrapper.find('.currency .options span').at(1).simulate('click', { target: { dataset: { index: 1 } } });
     wrapper.update();
     const expectedCallToSettingsUpdated = {
       currency: settingsConst.currencies[1],
