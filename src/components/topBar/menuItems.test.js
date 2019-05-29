@@ -59,6 +59,6 @@ describe('MenuItems', () => {
     expect(wrapper.find('Link')).to.have.length(3);
     expect(wrapper.find('#dashboard').at(0).hasClass('notActive')).to.equal(false);
     expect(wrapper.find('#transactions').at(0).hasClass('notActive')).to.equal(true);
-    expect(wrapper.find('#delegates').at(0).hasClass('notActive')).to.equal(true);
+    expect(wrapper.find('#delegates').at(0).hasClass('notActive')).to.equal(false);
   });
 });
