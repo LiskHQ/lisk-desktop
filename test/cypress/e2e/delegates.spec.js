@@ -56,12 +56,12 @@ describe('Delegates', () => {
    * Scrolling down triggers loading another portion of delegates
    * @expect more delegates are present
    */
-  it('Displays 100 delegates and loads more as I scroll to bottom', () => {
+  it('Displays 101 delegates and loads more as I scroll to bottom', () => {
     cy.autologin(accounts.genesis.passphrase, networks.testnet.node);
     cy.visit(urls.delegates);
     cy.get(ss.delegateName);
     cy.get(ss.delegateList).scrollTo('bottom');
-    cy.get(ss.delegateRow).should('have.length', 200);
+    cy.get(ss.delegateRow).should('have.length', 202);
   });
 
   /**
@@ -118,7 +118,7 @@ describe('Delegates', () => {
     cy.get(ss.searchDelegateInput).click().clear();
     // Filter All
     cy.get(ss.filterAll).click();
-    cy.get(ss.delegateRow).should('have.length', 100);
+    cy.get(ss.delegateRow).should('have.length', 101);
     cy.get(ss.searchDelegateInput).click().type('genesis_51');
     cy.get(ss.delegateRow).should('have.length', 1);
   });

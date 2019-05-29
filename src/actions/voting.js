@@ -180,7 +180,7 @@ export const delegatesFetched = ({
     const liskAPIClient = getState().peers.liskAPIClient;
     let params = {
       offset,
-      limit: '100',
+      limit: '101',
       sort: 'rank:asc',
     };
     params = q ? { ...params, search: q } : params;

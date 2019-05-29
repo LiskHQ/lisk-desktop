@@ -15,6 +15,7 @@ const votingPage = {
   backToDelegatesButton: '.back-to-delegates-button',
   alreadyVotedPreselection: '.alreadyVoted-message',
   addedVotesContainer: '.added-votes',
+  becomeDelegateLink: '.register-delegate',
 };
 
 const ss = {
@@ -121,7 +122,6 @@ const ss = {
   accountInitializationMsg: '.account-initialization',
   accountInitializationBtn: '.account-init-button',
   sidebarMenuDelegatesBtn: '#delegates',
-  becomeDelegateLink: '.register-delegate',
   confirmBtn: '.confirm',
   delegateRow: '.delegate-row',
   delegateList: '.delegate-list',
