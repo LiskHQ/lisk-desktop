@@ -6,6 +6,8 @@ import CustomRoute from './customRoute';
 const mapStateToProps = state => ({
   isAuthenticated: !!state.account.info,
   settings: state.settings,
+  networkIsSet: !!state.network.name,
+  accountLoading: state.account && state.account.loading,
 });
 
 export default withRouter(connect(mapStateToProps)(translate()(CustomRoute)));

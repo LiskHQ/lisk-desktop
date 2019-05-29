@@ -20,8 +20,6 @@ const txVotePrice = 1;
 describe('Delegates Voting', () => {
   it('Unvote and Vote + Header balance is affected', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.dashboard);
-    cy.wait(1000); // TODO fix loading of delegates page and remove this line
     cy.visit(urls.delegates);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     cy.get(ss.startVotingButton).click();
