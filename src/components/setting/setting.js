@@ -19,23 +19,30 @@ class Setting extends React.Component {
     };
 
     this.setCurrency = this.setCurrency.bind(this);
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+    this.toggleAutoLog = this.toggleAutoLog.bind(this);
   }
 
-  toggleAutoLog(state) {
+  toggleAutoLog({ target }) {
     Piwik.trackingEvent('Settings', 'button', 'Toggle autoLog');
     const {
-      account, settings, accountUpdated,
+      account, accountUpdated,
     } = this.props;
-    if (state && account.passphrase) {
+    if (target && account.passphrase) {
       const date = Date.now() + accountConfig.lockDuration;
       accountUpdated({ expireTime: date });
     }
-    this.onUpdateSettings({ autoLog: !settings.autoLog });
+    this.handleCheckboxChange({ target });
   }
 
   setCurrency(currency) {
     const { settings } = this.props;
     if (settings.currency !== currency.value) this.onUpdateSettings({ currency: currency.value });
+  }
+
+  handleCheckboxChange({ target: { name } }) {
+    const { settings } = this.props;
+    this.onUpdateSettings({ [name]: !settings[name] });
   }
 
   onUpdateSettings(newSettings) {
@@ -83,9 +90,10 @@ class Setting extends React.Component {
                 <h1>{t('Security')}</h1>
                 <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                   <CheckBox
+                    name={'autoLog'}
                     className={`${styles.checkbox} autoLog`}
                     checked={settings.autoLog}
-                    onChange={this.toggleAutoLog.bind(this, { autoLog: !settings.autoLog })}
+                    onChange={this.toggleAutoLog}
                    />
                    <div>
                     <span className={styles.labelName}>{t('Auto Logout')}</span>
@@ -117,11 +125,10 @@ class Setting extends React.Component {
                 <h1>{t('Advanced')}</h1>
                 <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                   <CheckBox
+                    name={'showNetwork'}
                     className={`${styles.checkbox} showNetwork`}
                     checked={settings.showNetwork}
-                    onChange={this.onUpdateSettings.bind(this, {
-                      showNetwork: !settings.showNetwork,
-                    })}
+                    onChange={this.handleCheckboxChange}
                   />
                   <div>
                     <span className={styles.labelName}>{t('Network switcher')}</span>
@@ -129,27 +136,25 @@ class Setting extends React.Component {
                   </div>
                 </label>
                 <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                    <CheckBox
-                      className={`${styles.checkbox} advancedMode`}
-                      checked={settings.advancedMode}
-                      onChange={this.onUpdateSettings.bind(this, {
-                        advancedMode: !settings.advancedMode,
-                      })}
-                    />
-                    <div>
-                      <span className={styles.labelName}>{t('Delegate Features')}</span>
-                    </div>
+                  <CheckBox
+                    name={'advancedMode'}
+                    className={`${styles.checkbox} advancedMode`}
+                    checked={settings.advancedMode}
+                    onChange={this.handleCheckboxChange}
+                  />
+                  <div>
+                    <span className={styles.labelName}>{t('Delegate Features')}</span>
+                  </div>
                 </label>
               </section>
               <section>
                 <h1>{t('Privacy')}</h1>
                 <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                   <CheckBox
+                    name={'statistics'}
                     className={`${styles.checkbox} statistics`}
                     checked={settings.statistics}
-                    onChange={this.onUpdateSettings.bind(this, {
-                      statistics: !settings.statistics,
-                    })}
+                    onChange={this.handleCheckboxChange}
                   />
                   <div>
                     <span className={styles.labelName}>
