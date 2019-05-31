@@ -6,7 +6,7 @@ import HeaderAccountInfo from './headerAccountInfo';
 describe('HeaderAccountInfo Component', () => {
   const defaultProps = {
     address: accounts.genesis.address,
-    followedAccounts: { LSK: [], BTC: [] },
+    bookmarks: { LSK: [], BTC: [] },
     account: accounts.genesis,
     delegate: {},
     t: v => v,
@@ -22,13 +22,13 @@ describe('HeaderAccountInfo Component', () => {
     expect(wrapper.find('.address')).toHaveText(props.address);
   });
 
-  it('Should show information for followed account', () => {
+  it('Should show information for bookmark', () => {
     const props = {
       ...defaultProps,
-      followedAccounts: {
+      bookmarks: {
         LSK: [{
           address: accounts['empty account'].address,
-          title: 'following-test',
+          title: 'bookmark-test',
         }],
         BTC: [],
       },
@@ -36,8 +36,8 @@ describe('HeaderAccountInfo Component', () => {
     };
     const wrapper = mount(<HeaderAccountInfo {...props} />);
     expect(wrapper).toContainExactlyOneMatchingElement('.label');
-    expect(wrapper.find('.title')).toHaveText('following-test');
-    expect(wrapper.find('.label')).toHaveText('Followed Account');
+    expect(wrapper.find('.title')).toHaveText('bookmark-test');
+    expect(wrapper.find('.label')).toHaveText('Bookmarked Account');
   });
 
   it('Should show information for delegate account', () => {
@@ -52,7 +52,7 @@ describe('HeaderAccountInfo Component', () => {
     expect(wrapper.find('.label')).toHaveText('Delegate #{{rank}}');
   });
 
-  it('Should show information for not followed account', () => {
+  it('Should show information for not bookmark', () => {
     const props = {
       ...defaultProps,
       address: accounts['empty account'].address,

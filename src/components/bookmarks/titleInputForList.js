@@ -1,8 +1,8 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import { connect } from 'react-redux';
-import styles from './followedAccounts.css';
-import { followedAccountUpdated } from '../../actions/followedAccounts';
+import styles from './bookmarks.css';
+import { bookmarkUpdated } from '../../actions/bookmarks';
 import { getTokenFromAddress } from '../../utils/api/transactions';
 import TitleInput from './accountTitleInput';
 
@@ -50,7 +50,7 @@ class TitleInputForList extends React.Component {
 }
 
 const mapDispatchToProps = {
-  updateAccount: followedAccountUpdated,
+  updateAccount: bookmarkUpdated,
 };
 
 export default connect(null, mapDispatchToProps)(translate()(TitleInputForList));

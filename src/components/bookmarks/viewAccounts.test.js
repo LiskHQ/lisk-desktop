@@ -11,7 +11,7 @@ import routes from '../../constants/routes';
 
 const fakeStore = configureStore([thunk]);
 
-describe('Followed accounts list Component', () => {
+describe('Bookmarks list Component', () => {
   let wrapper;
   const props = {
     address: '16313739661670634666L',
@@ -20,10 +20,10 @@ describe('Followed accounts list Component', () => {
     history: { push: spy() },
   };
 
-  describe('Without followed accounts', () => {
+  describe('Without bookmarks accounts', () => {
     beforeEach(() => {
       const store = fakeStore({
-        followedAccounts: { LSK: [] },
+        bookmarks: { LSK: [] },
       });
 
       wrapper = mount(<ViewAccounts {...props} />, {
@@ -37,8 +37,8 @@ describe('Followed accounts list Component', () => {
 
 
     it('shows empty list', () => {
-      expect(wrapper.find('.followed-accounts-empty-list')).to.have.length(1);
-      expect(wrapper.find('.followed-accounts-list')).to.have.length(0);
+      expect(wrapper.find('.bookmarks-empty-list')).to.have.length(1);
+      expect(wrapper.find('.bookmarks-list')).to.have.length(0);
     });
 
     it('goes to next step on button click', () => {
@@ -47,10 +47,10 @@ describe('Followed accounts list Component', () => {
     });
   });
 
-  describe('With followed accounts', () => {
+  describe('With bookmarks accounts', () => {
     beforeEach(() => {
       const store = fakeStore({
-        followedAccounts: {
+        bookmarks: {
           LSK: [
             {
               address: '123L', title: 'bob', isDelegate: false,
@@ -78,9 +78,9 @@ describe('Followed accounts list Component', () => {
       });
     });
 
-    it('shows list of followed accounts', () => {
-      expect(wrapper.find('.followed-accounts-empty-list')).to.have.length(0);
-      expect(wrapper.find('.followed-accounts-list')).to.have.length(1);
+    it('shows list of bookmarks accounts', () => {
+      expect(wrapper.find('.bookmarks-empty-list')).to.have.length(0);
+      expect(wrapper.find('.bookmarks-list')).to.have.length(1);
 
       expect(wrapper.find('.account-title input').at(0)).to.have.value('bob');
 
@@ -88,7 +88,7 @@ describe('Followed accounts list Component', () => {
     });
 
     it('directs you to account page on click', () => {
-      wrapper.find('.followed-account').at(0).simulate('click');
+      wrapper.find('.bookmark-account').at(0).simulate('click');
       expect(props.history.push).to.have.been.calledWith(`${routes.explorer.path}${routes.accounts.path}/123L`);
     });
 

@@ -1,14 +1,14 @@
 import { expect } from 'chai';
-import followedAccounts from './followedAccounts';
+import bookmarks from './bookmarks';
 import {
-  followedAccountAdded,
-  followedAccountUpdated,
-  followedAccountRemoved,
-} from '../../actions/followedAccounts';
+  bookmarkAdded,
+  bookmarkUpdated,
+  bookmarkRemoved,
+} from '../../actions/bookmarks';
 import actionTypes from '../../constants/actions';
 import accounts from '../../../test/constants/accounts';
 
-describe('Reducer: followedAccounts(state, action)', () => {
+describe('Reducer: bookmarks(state, action)', () => {
   const account = {
     address: accounts.genesis.address,
     title: accounts.genesis.address,
@@ -20,7 +20,7 @@ describe('Reducer: followedAccounts(state, action)', () => {
     publicKey: accounts.delegate.publicKey,
   };
 
-  it(`should return accounts with added account if action.type is ${actionTypes.followedAccountAdded}`, () => {
+  it(`should return accounts with added account if action.type is ${actionTypes.bookmarkAdded}`, () => {
     const account3 = {
       address: accounts['empty account'].address,
       title: accounts['empty account'].address,
@@ -28,15 +28,15 @@ describe('Reducer: followedAccounts(state, action)', () => {
     };
 
     const state = { LSK: [account, account2], BTC: [] };
-    const action = followedAccountAdded({ account: account3, token: 'BTC' });
-    const changedState = followedAccounts(state, action);
+    const action = bookmarkAdded({ account: account3, token: 'BTC' });
+    const changedState = bookmarks(state, action);
     expect(changedState.LSK[0]).to.deep.equal(account);
     expect(changedState.LSK[1]).to.deep.equal(account2);
     expect(changedState.BTC[0]).to.include(account3);
   });
 
 
-  it(`should return accounts with updated account if action.type is ${actionTypes.followedAccountUpdated}`, () => {
+  it(`should return accounts with updated account if action.type is ${actionTypes.bookmarkUpdated}`, () => {
     const updatedAccount = {
       address: accounts.delegate.address,
       title: 'bob',
@@ -44,20 +44,20 @@ describe('Reducer: followedAccounts(state, action)', () => {
     };
 
     const state = { LSK: [account, account2], BTC: [] };
-    const action = followedAccountUpdated({ account: updatedAccount });
+    const action = bookmarkUpdated({ account: updatedAccount });
 
-    const changedState = followedAccounts(state, action);
+    const changedState = bookmarks(state, action);
 
     expect(changedState.LSK[0]).to.deep.equal(account);
     expect(changedState.LSK[1]).to.deep.equal(updatedAccount);
   });
 
 
-  it(`should return accounts without deleted account if action.type is ${actionTypes.followedAccountRemoved}`, () => {
+  it(`should return accounts without deleted account if action.type is ${actionTypes.bookmarkRemoved}`, () => {
     const state = { LSK: [account, account2] };
-    const action = followedAccountRemoved({ address: account2.address, token: 'LSK' });
+    const action = bookmarkRemoved({ address: account2.address, token: 'LSK' });
 
-    const changedState = followedAccounts(state, action);
+    const changedState = bookmarks(state, action);
 
     expect(changedState.LSK[0]).to.deep.equal(account);
     expect(changedState.LSK[1]).to.deep.equal(undefined);

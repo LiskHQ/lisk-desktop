@@ -6,7 +6,7 @@ import CopyToClipboard from '../copyToClipboard';
 import Piwik from '../../utils/piwik';
 import styles from './resultBox.css';
 import check from '../../assets/images/icons/check.svg';
-import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
+import { getIndexOfBookmark } from '../../utils/bookmarks';
 import { getTokenFromAddress } from '../../utils/api/transactions';
 
 class ResultBox extends React.Component {
@@ -16,10 +16,10 @@ class ResultBox extends React.Component {
     }
   }
 
-  isNotYetFollowed(address) {
-    const { followedAccounts } = this.props;
+  isNotYetBookmarked(address) {
+    const { bookmarks } = this.props;
     const token = getTokenFromAddress(address);
-    return getIndexOfFollowedAccount(followedAccounts, { address, token }) === -1;
+    return getIndexOfBookmark(bookmarks, { address, token }) === -1;
   }
 
   handleRetryButton() {
@@ -38,8 +38,8 @@ class ResultBox extends React.Component {
     this.props.nextStep({ address: this.props.recipientId });
   }
 
-  onAddToFollowedAccounts() {
-    Piwik.trackingEvent('ResultBox', 'button', 'Add to followed accounts');
+  onAddToBookmarksList() {
+    Piwik.trackingEvent('ResultBox', 'button', 'Add to bookmarks accounts');
     this.props.transactionFailedClear();
     this.props.prevStep({
       success: null,
@@ -86,9 +86,9 @@ class ResultBox extends React.Component {
 
         <footer className={`${grid.row} ${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`}>
           {this.props.success &&
-            this.props.recipientId && this.isNotYetFollowed(this.props.recipientId) ?
+            this.props.recipientId && this.isNotYetBookmarked(this.props.recipientId) ?
             <div className={`${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-5']} ${grid['col-lg-5']}`}>
-              <Button className={`add-to-bookmarks ${styles.addFollowedAccountButton}`}
+              <Button className={`add-to-bookmarks ${styles.addBookmarkButton}`}
                 onClick={this.onAddToBookmarks.bind(this)}>
                 {this.props.t('Add to bookmarks')}
               </Button>
@@ -96,8 +96,8 @@ class ResultBox extends React.Component {
           }
           {!this.props.success && this.props.account && this.props.account.hwInfo ?
             <div className={`${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-5']} ${grid['col-lg-5']}`}>
-              <Button className={`add-follwed-account-button ${styles.addFollowedAccountButton}`}
-                onClick={this.onAddToFollowedAccounts.bind(this)}>
+              <Button className={`add-follwed-account-button ${styles.addBookmarkButton}`}
+                onClick={this.onAddToBookmarksList.bind(this)}>
                 {this.props.t('Retry')}
               </Button>
             </div> : null

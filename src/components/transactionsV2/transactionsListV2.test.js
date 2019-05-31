@@ -31,7 +31,7 @@ describe('TransactionsList V2', () => {
   };
 
   const props = {
-    followedAccounts: {
+    bookmarks: {
       LSK: [],
       BTC: [],
     },

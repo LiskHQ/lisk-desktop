@@ -13,7 +13,7 @@ class TransactionsListV2 extends React.Component {
     const {
       transactions,
       address,
-      followedAccounts,
+      bookmarks,
       canLoadMore,
       loading,
       isSmallScreen,
@@ -49,7 +49,7 @@ class TransactionsListV2 extends React.Component {
         ? transactions.filter(fixIncomingFilter)
             .map((transaction, i) =>
               <TransactionRowV2 key={i}
-                followedAccounts={followedAccounts}
+                bookmarks={bookmarks}
                 address={address}
                 value={transaction}
                 onClick={this.props.onClick}/>)

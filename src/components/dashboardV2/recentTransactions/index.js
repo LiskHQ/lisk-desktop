@@ -6,7 +6,7 @@ import RecentTransactions from './recentTransactions';
 
 const mapStateToProps = state => ({
   account: state.account,
-  followedAccounts: state.followedAccounts,
+  bookmarks: state.bookmarks,
   settings: state.settings,
   transactions: state.transactions,
 });

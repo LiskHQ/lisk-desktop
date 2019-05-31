@@ -38,7 +38,7 @@ describe('Result Box', () => {
       transactionFailedClear: () => {},
       t: () => {},
       history: { location: {}, push: () => {}, replace: () => {} },
-      followedAccounts: {
+      bookmarks: {
         LSK: [],
       },
     };
@@ -67,7 +67,7 @@ describe('Result Box', () => {
       reset: () => {},
       copyToClipboard: () => {},
       t: () => {},
-      followedAccounts: {
+      bookmarks: {
         LSK: [],
       },
     };
@@ -91,7 +91,7 @@ describe('Result Box', () => {
       copyToClipboard: () => {},
       t: () => {},
       onMount: spy(),
-      followedAccounts: {
+      bookmarks: {
         LSK: [],
       },
       account: {},
@@ -113,7 +113,7 @@ describe('Result Box', () => {
       t: () => {},
       onMount: spy(),
       recipientId: '123L',
-      followedAccounts: {
+      bookmarks: {
         LSK: [{
           address: '1L',
         }],
@@ -139,7 +139,7 @@ describe('Result Box', () => {
       reset: () => {},
       copyToClipboard: () => {},
       t: () => {},
-      followedAccounts: {
+      bookmarks: {
         LSK: [],
       },
       prevStep: spy(),
@@ -163,7 +163,7 @@ describe('Result Box', () => {
       reset: () => {},
       copyToClipboard: () => {},
       t: () => {},
-      followedAccounts: {
+      bookmarks: {
         LSK: [],
       },
       nextStep: spy(),

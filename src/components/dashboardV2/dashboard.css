@@ -73,7 +73,7 @@
   text-decoration: none;
 }
 
-.following {
+.bookmarks {
   height: auto;
   padding: 0;
   width: calc(50% - 10px);
@@ -162,7 +162,7 @@
     overflow: initial;
   }
 
-  .following {
+  .bookmarks {
     height: auto;
     min-height: 300px;
     width: 100%;

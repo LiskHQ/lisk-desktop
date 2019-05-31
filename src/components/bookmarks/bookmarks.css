@@ -22,7 +22,7 @@
   cursor: pointer;
 }
 
-.followedAccountsWrapper {
+.bookmarksWrapper {
   height: auto;
   min-height: 318px;
 }
@@ -245,7 +245,7 @@ header {
 }
 
 @media (--medium-viewport) {
-  .followedAccountsWrapper {
+  .bookmarksWrapper {
     min-height: 318px;
   }
 

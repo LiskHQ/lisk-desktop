@@ -3,11 +3,11 @@ import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import RequestV2 from '../../requestV2/requestV2';
-import { getIndexOfFollowedAccount } from '../../../utils/followedAccounts';
+import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import { getTokenFromAddress } from '../../../utils/api/transactions';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import HeaderAccountInfo from './headerAccountInfo';
-import FollowAccount from '../../followAccount';
+import Bookmark from '../../bookmark';
 import styles from './transactionsOverviewHeader.css';
 import routes from '../../../constants/routes';
 
@@ -62,18 +62,18 @@ class transactionsHeader extends React.Component {
 
   render() {
     const {
-      followedAccounts, address, t, delegate = {}, detailAccount,
+      bookmarks, address, t, delegate = {}, detailAccount,
     } = this.props;
     const { token } = this.state;
 
-    const isFollowing = getIndexOfFollowedAccount(followedAccounts, { address, token }) !== -1;
+    const isBookmark = getIndexOfBookmark(bookmarks, { address, token }) !== -1;
     const isWalletRoute = this.props.match.url === routes.wallet.path;
 
     return (
       <header className={`${styles.wrapper}`}>
         <HeaderAccountInfo
           token={token}
-          followedAccounts={followedAccounts}
+          bookmarks={bookmarks}
           address={address}
           delegate={delegate}
           account={this.props.account}
@@ -110,31 +110,31 @@ class transactionsHeader extends React.Component {
             </Link>
             <span
               ref={this.setDropownRefs}
-              data-name={'followDropdown'}
-              className={`${styles.bookmarkContainer} follow-account`}>
-            { isFollowing ? (
+              data-name={'bookmarkDropdown'}
+              className={`${styles.bookmarkContainer} bookmark-account`}>
+            { isBookmark ? (
               <SecondaryButtonV2
-                className={`${styles.followingButton}`}
+                className={`${styles.bookmarkButton}`}
                 onClick={
                   /* istanbul ignore next */
-                  () => this.toggleDropdown('followDropdown')
+                  () => this.toggleDropdown('bookmarkDropdown')
                 }>
                 {t('Account bookmarked')}
               </SecondaryButtonV2>
             ) : (
-              <PrimaryButtonV2 onClick={() => this.toggleDropdown('followDropdown')}>
+              <PrimaryButtonV2 onClick={() => this.toggleDropdown('bookmarkDropdown')}>
                 {t('Bookmark account')}
               </PrimaryButtonV2>
             )}
             <DropdownV2
-              showDropdown={this.state.shownDropdown === 'followDropdown'}
-              className={`${styles.followDropdown}`}>
-                <FollowAccount
+              showDropdown={this.state.shownDropdown === 'bookmarkDropdown'}
+              className={`${styles.bookmarkDropdown}`}>
+                <Bookmark
                   token={token}
                   delegate={delegate}
                   address={address}
                   detailAccount={detailAccount}
-                  isFollowing={isFollowing} />
+                  isBookmark={isBookmark} />
               </DropdownV2>
             </span>
           </React.Fragment>

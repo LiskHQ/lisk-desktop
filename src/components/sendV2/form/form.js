@@ -38,7 +38,7 @@ class Form extends React.Component {
           title: '',
           value: '',
           showSuggestions: false,
-          following: false,
+          isBookmark: false,
         },
         amount: {
           error: false,
@@ -156,9 +156,9 @@ class Form extends React.Component {
 
   checkIfBookmarkedAccount() {
     const { fields, token } = this.props;
-    const followedAccounts = this.props.followedAccounts[token];
-    const account = followedAccounts.length
-      ? followedAccounts.find(acc => acc.address === fields.recipient.address)
+    const bookmarks = this.props.bookmarks[token];
+    const account = bookmarks.length
+      ? bookmarks.find(acc => acc.address === fields.recipient.address)
       : false;
 
     // istanbul ignore if
@@ -191,10 +191,10 @@ class Form extends React.Component {
     let recipient = this.state.fields.recipient;
     let isAccountValid = '';
     let isAddressValid = '';
-    const followedAccounts = this.props.followedAccounts[token];
+    const bookmarks = this.props.bookmarks[token];
 
-    if (followedAccounts.length && recipient.value !== '') {
-      isAccountValid = followedAccounts
+    if (bookmarks.length && recipient.value !== '') {
+      isAccountValid = bookmarks
         .find(account => (account.title.toLowerCase() === recipient.value.toLowerCase()) ||
           account.address.toLowerCase() === recipient.value.toLowerCase()) || false;
     }
@@ -223,7 +223,7 @@ class Form extends React.Component {
         error: false,
         feedback: '',
         showSuggestions: false,
-        following: false,
+        isBookmark: false,
       };
     }
 
@@ -238,7 +238,7 @@ class Form extends React.Component {
         error: false,
         feedback: '',
         showSuggestions: false,
-        following: true,
+        isBookmark: true,
       };
     }
 
@@ -280,7 +280,7 @@ class Form extends React.Component {
           error: '',
           feedback: '',
           showSuggestions: false,
-          following: true,
+          isBookmark: true,
         },
       },
     }));
@@ -448,7 +448,7 @@ class Form extends React.Component {
             <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
             <Bookmark
               validateBookmark={this.validateBookmark}
-              followedAccounts={this.props.followedAccounts}
+              bookmarks={this.props.bookmarks}
               onChange={this.onInputChange}
               placeholder={t('Insert public address or a name')}
               recipient={fields.recipient}
