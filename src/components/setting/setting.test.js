@@ -10,7 +10,6 @@ import settingsConst from './../../constants/settings';
 describe('Setting', () => {
   const settings = {
     autoLog: true,
-    advancedMode: true,
     showNetwork: false,
     currency: undefined,
     statistics: false,

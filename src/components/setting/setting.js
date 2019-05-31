@@ -160,17 +160,6 @@ class Setting extends React.Component {
                 </div>
               </label>
               ) : null}
-              <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <CheckBox
-                  name={'advancedMode'}
-                  className={`${styles.checkbox} advancedMode`}
-                  checked={settings.advancedMode}
-                  onChange={this.handleCheckboxChange}
-                />
-                <div>
-                  <span className={styles.labelName}>{t('Delegate Features')}</span>
-                </div>
-              </label>
             </section>
             <section>
               <h1>{t('Privacy')}</h1>
