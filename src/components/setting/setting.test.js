@@ -141,4 +141,14 @@ describe('Setting', () => {
     expect(props.accountUpdated.mock.calls[0][0].expireTime)
       .toBeGreaterThan(expectedCallToAccountUpdated.expireTime);
   });
+
+  // TODO Unskip after enabling BTC
+  it.skip('should enable and disable BTC token', () => {
+    localStorage.setItem('btc', true);
+    wrapper.find('.enableBTC input').at(0).simulate('change', { target: { name: 'BTC' } });
+    const expectedCallToSettingsUpdated = {
+      token: { list: { BTC: !settings.token.list.BTC } },
+    };
+    expect(props.settingsUpdated).toBeCalledWith(expectedCallToSettingsUpdated);
+  });
 });

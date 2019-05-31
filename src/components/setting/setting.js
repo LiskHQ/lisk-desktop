@@ -25,6 +25,8 @@ class Setting extends React.Component {
     this.handleTokenToggle = this.handleTokenToggle.bind(this);
   }
 
+  // TODO: Remove ignore comment when enabling BTC
+  // istanbul ignore next
   handleTokenToggle({ target: { name } }) {
     const { settings } = this.props;
     const newSettings = {
@@ -146,11 +148,12 @@ class Setting extends React.Component {
                   <p>{t('Enable a network switcher that lets you select testnet or custom node when logging in.')}</p>
                 </div>
               </label>
-              {localStorage.getItem('btc') ? ( // TODO: Remove when enabling BTC for final user
-              <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+              { // istanbul ignore next
+                localStorage.getItem('btc') ? ( // TODO: Remove when enabling BTC for final user
+              <label className={`${styles.fieldGroup} ${styles.checkboxField} enableBTC`}>
                 <CheckBox
                   name={'BTC'}
-                  className={`${styles.checkbox} enableBTC`}
+                  className={`${styles.checkbox}`}
                   checked={!!(settings.token && settings.token.list.BTC)}
                   onChange={this.handleTokenToggle}
                 />
