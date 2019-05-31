@@ -72,7 +72,7 @@ describe('Setting', () => {
     wrapper = mount(<Router>
       <Setting {...newProps} store={store}/>
     </Router>, options);
-    expect(wrapper).toContainMatchingElements(1, '.disabled');
+    expect(wrapper).toContainMatchingElements(3, '.disabled');
   });
 
   it('should render 2nd passphrase as active', () => {

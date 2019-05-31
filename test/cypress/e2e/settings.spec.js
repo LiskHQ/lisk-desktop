@@ -93,13 +93,12 @@ describe('Settings', () => {
   it('Currency default position should be USD and can be toggled to USD and back', () => {
     cy.clearLocalStorage();
     cy.visit(urls.settings);
-    cy.get(ss.currencyUSDBtn).should('have.class', 'active');
-    cy.get(ss.currencyEURBtn).click().should(($button) => {
-      expect($button).to.have.class('active');
+    cy.get(ss.currencySelect).click();
+    cy.get(ss.currencyOptions).eq(1).click().should(() => {
       expect(getSettingsObjFromLS().currency).to.equal('EUR');
     });
-    cy.get(ss.currencyUSDBtn).click().should(($button) => {
-      expect($button).to.have.class('active');
+    cy.get(ss.currencySelect).click();
+    cy.get(ss.currencyOptions).eq(0).click().should(() => {
       expect(getSettingsObjFromLS().currency).to.equal('USD');
     });
   });

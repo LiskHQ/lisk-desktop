@@ -125,7 +125,7 @@ class Setting extends React.Component {
                       </Link>
                     </SignInTooltipWrapper>
                   : (
-                    <span className={styles.activeLabel}>
+                    <span className={`${styles.activeLabel} second-passphrase-registered`}>
                       {t('Second Passphrase is active for this account.')}
                     </span>
                   )}
@@ -150,7 +150,7 @@ class Setting extends React.Component {
                 <CheckBox
                   name={'BTC'}
                   className={`${styles.checkbox} enableBTC`}
-                  checked={settings.token.list.BTC}
+                  checked={!!(settings.token && settings.token.list.BTC)}
                   onChange={this.handleTokenToggle}
                 />
                 <div>
