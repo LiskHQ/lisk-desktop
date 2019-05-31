@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import OutsideClickHandler from './index';
 
-describe('Ouside Click Handler Compnent', () => {
+describe('Outside Click Handler Compnent', () => {
   const props = {
     onOutsideClick: jest.fn(),
   };
