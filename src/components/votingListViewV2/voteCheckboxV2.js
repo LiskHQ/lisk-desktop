@@ -1,5 +1,5 @@
 import React from 'react';
-import Spinner from '../spinner';
+import Spinner from '../spinnerV2/spinnerV2';
 import svgIcons from '../../utils/svgIcons';
 
 import CheckBox from '../toolbox/checkBox';
@@ -30,7 +30,7 @@ const VoteCheckboxV2 = ({
           address: account.address,
         })}
       /> :
-      <img src={status.unconfirmed ? svgIcons.ok_icon : undefined} />
+      <img src={status.unconfirmed ? svgIcons.checkmark : undefined} />
     } </React.Fragment>;
   return template;
 };

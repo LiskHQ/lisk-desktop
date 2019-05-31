@@ -13,7 +13,7 @@ export default function enterSecondPassphrase(passphrase) {
   cy.get(secondPassphraseSS.secondPassphraseNextBtn).click();
 }
 
-export function enterSecondPassphraseOnSend(passphrase) {
+export function enterSecondPassphraseV2(passphrase) {
   cy.get(ss.passphraseInput).first().click();
   cy.get(ss.passphraseInput).each(($el, index) => {
     const passphraseWordsArray = passphrase.split(' ');

@@ -5,7 +5,11 @@ import voteFilters from './../../constants/voteFilters';
 import DelegateListV2 from './delegateListV2';
 import ProgressBar from '../toolbox/progressBar/progressBar';
 import Tooltip from '../toolbox/tooltip/tooltip';
-import { getTotalVotesCount } from './../../utils/voting';
+import {
+  getTotalVotesCount,
+  getPendingVotesList,
+  getVotedList,
+} from './../../utils/voting';
 import BoxV2 from '../boxV2';
 
 // Create a new Table component injecting Head and Row
@@ -23,7 +27,8 @@ class VotingListViewV2 extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.account.serverPublicKey && !this.props.votingModeEnabled) {
+    const { votes, account, votingModeEnabled } = this.props;
+    if (account.serverPublicKey && !votingModeEnabled && getPendingVotesList(votes).length === 0) {
       this.loadVotedDelegates();
     }
     this.loadDelegates('', true);
@@ -66,17 +71,18 @@ class VotingListViewV2 extends React.Component {
    */
   loadDelegates(q = '', refresh, offset = 0) {
     this.freezeLoading = true;
+    this.setState({ isLoading: true });
 
     this.props.delegatesFetched({
       offset,
       q,
       refresh,
+      callback: () => {
+        this.setState({ isLoading: false });
+      },
     });
   }
 
-  /**
-   * load more data when scroll bar reaches end of the page
-   */
   loadMore() {
     const list = this.filter(this.props.delegates);
     this.loadDelegates(this.query, false, list[list.length - 1].rank);
@@ -85,7 +91,7 @@ class VotingListViewV2 extends React.Component {
   setActiveFilter(filter) {
     setTimeout(() => {
       this.setState({ isLoading: false });
-    }, 1000);
+    }, 500);
     this.setState({
       activeFilter: filter,
       isLoading: true,
@@ -116,17 +122,18 @@ class VotingListViewV2 extends React.Component {
       getTotalVotesCount(this.props.votes) === 0) {
       message = t('You have not voted yet.');
     } else if (this.query !== '' && Object.keys(filteredList).length === 0) {
-      message = t('No search result in given criteria.');
+      message = t('No search results in given criteria.');
     }
 
     return message;
   }
 
   render() {
-    const filteredList = this.filter(this.props.delegates);
     const {
       voteToggled, votes, t, votingModeEnabled,
+      delegates,
     } = this.props;
+    const filteredList = this.filter(delegates);
     const firstTimeVotingActive = votingModeEnabled && getTotalVotesCount(votes) === 0;
     return (
       <BoxV2>
@@ -164,7 +171,17 @@ class VotingListViewV2 extends React.Component {
               firstTimeVotingActive={firstTimeVotingActive}
               votingModeEnabled={votingModeEnabled}
               voteToggled={voteToggled}
-              safari={this.state.safariClass} loadMore={this.loadMore.bind(this)} />
+              shouldLoadMore={
+                filteredList.length > 0 &&
+                (
+                  (this.state.activeFilter !== voteFilters.voted &&
+                    delegates.length % 101 === 0) ||
+                  (this.state.activeFilter === voteFilters.voted &&
+                    filteredList.length < getVotedList(votes).length)
+                )
+              }
+              safari={this.state.safariClass}
+              loadMore={this.loadMore.bind(this)} />
           </div>
           {
             (filteredList.length === 0) ?

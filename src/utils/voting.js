@@ -17,4 +17,13 @@ const getTotalActions = votes => (
   ) / votingConst.maxCountOfVotesInOneTurn)
 );
 
-export { getTotalVotesCount, getVotedList, getVoteList, getUnvoteList, getTotalActions };
+const getPendingVotesList = votes => (Object.keys(votes).filter(key => votes[key].pending));
+
+export {
+  getTotalVotesCount,
+  getVotedList,
+  getVoteList,
+  getUnvoteList,
+  getTotalActions,
+  getPendingVotesList,
+};

@@ -47,9 +47,10 @@ import iconLedgerNanoDevice from '../assets/images/icons-v2/icon_ledger_device.s
 import iconEdit from '../assets/images/icons-v2/icon_edit.svg';
 import btcIcon from '../assets/images/icons-v2/icon-btc-48.svg';
 import iconEmptyRecentTransactions from '../assets/images/icons-v2/empty_recent_transactions.svg';
-import checkmark from '../assets/images/icons-v2/checkmark-16-filled.svg';
 import incoming from '../assets/images/icons-v2/incoming.svg';
 import outgoing from '../assets/images/icons-v2/outgoing.svg';
+import checkboxFilled from '../assets/images/icons-v2/checkmark-16-filled.svg';
+import checkmark from '../assets/images/icons-v2/checkmark.svg';
 import newsFeedAvatar from '../assets/images/icons-v2/newsFeedsAvatar.svg';
 
 export default {
@@ -102,6 +103,7 @@ export default {
   icon_edit: iconEdit,
   btcIcon,
   icon_empty_recent_transactions: iconEmptyRecentTransactions,
+  checkboxFilled,
   checkmark,
   incoming,
   outgoing,

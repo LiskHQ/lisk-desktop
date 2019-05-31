@@ -53,7 +53,6 @@ describe('TopBar', () => {
 
   const store = configureStore([thunk])({
     account,
-    showDelegate: false,
     history,
     search: {
       suggestions: {
@@ -98,16 +97,7 @@ describe('TopBar', () => {
     expect(wrapper.find('.signIn').at(0)).to.have.length(0);
   });
 
-  it('renders only 2 menu items', () => {
-    expect(wrapper.find('a.item')).to.have.length(2);
-  });
-
-  it('renders 3 menu items including delegates', () => {
-    const newProps = {
-      ...myProps,
-      showDelegate: true,
-    };
-    wrapper = mountWithRouter(<TopBar {...newProps} />, myOptions);
+  it('renders 3 menu items', () => {
     expect(wrapper.find('a.item')).to.have.length(3);
   });
 
