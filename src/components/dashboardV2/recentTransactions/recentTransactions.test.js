@@ -11,7 +11,7 @@ describe('Recent Transactions', () => {
     account: {
       address: '123456L',
     },
-    followedAccounts: {
+    bookmarks: {
       LSK: [
         {
           id: 0,
@@ -82,7 +82,7 @@ describe('Recent Transactions', () => {
     account: {
       address: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
     },
-    followedAccounts: {
+    bookmarks: {
       BTC: [
         {
           id: 0,

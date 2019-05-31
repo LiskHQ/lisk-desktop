@@ -33,18 +33,21 @@ class VotingHeader extends React.Component {
       <div className={`${styles.wrapper}`}>
             <span>
               <span className={styles.box}>
-                <h2>{getTotalVotesCount(votes)}/{maxCountOfVotes}</h2>
+                <h2>
+                  <span className='total-voting-number'>{getTotalVotesCount(votes)}</span>/
+                  {maxCountOfVotes}
+                </h2>
                 <div>{t('My votes after confirmation')}</div>
               </span>
               { votingModeEnabled ?
               <span className={`${styles.outlinedBox} ${styles.addedVotes}`}>
-               <h3>{voteList.length}</h3>
+               <h3 className='added-votes-count'>{voteList.length}</h3>
                <span>{t('Added votes')}</span>
               </span> :
               null }
               { unvoteList.length ?
               <span className={`${styles.outlinedBox} ${styles.removedVotes}`}>
-               <h3>{unvoteList.length}</h3>
+               <h3 className='removed-votes-count'>{unvoteList.length}</h3>
                <span>{t('Removed votes')}</span>
               </span> :
               null }
@@ -66,8 +69,8 @@ class VotingHeader extends React.Component {
               <SecondaryButtonV2 onClick={toggleVotingMode} className={`cancel-voting-button ${styles.btn}`}>
                 {t('Cancel voting')}
               </SecondaryButtonV2>
-              <Link to={routes.voting.path} >
-                <PrimaryButtonV2 className={styles.btn} disabled={totalActions === 0}>
+              <Link to={totalActions !== 0 ? routes.voting.path : routes.delegatesV2.path} >
+                <PrimaryButtonV2 className={`${styles.btn} go-to-confirmation-button`} disabled={totalActions === 0}>
                   {t('Go to Confirmation')}
                 </PrimaryButtonV2>
               </Link>

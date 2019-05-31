@@ -16,7 +16,7 @@ describe('Add Account ID Component', () => {
 
   beforeEach(() => {
     const store = fakeStore({
-      followedAccounts: { accounts: [{ address: '16313739661670634666L', balance: 0 }] },
+      bookmarks: { accounts: [{ address: '16313739661670634666L', balance: 0 }] },
       peers: { liskAPIClient: {} },
     });
 
@@ -53,7 +53,7 @@ describe('Add Account ID Component', () => {
     expect(wrapper.find('Input.address').text()).to.contain('Required');
   });
 
-  it('recognizes already following address', () => {
+  it('recognizes already bookmarked address', () => {
     wrapper.find('.address input').simulate('change', { target: { value: '16313739661670634666L' } });
     expect(wrapper.find('Input.address').text()).to.contain('ID already added to bookmarks');
   });

@@ -26,8 +26,17 @@ class TransactionSummary extends React.Component {
 
   componentDidMount() {
     const { isHardwareWalletConnected } = this.state;
+    const { confirmButton } = this.props;
 
-    if (isHardwareWalletConnected) {
+    if (isHardwareWalletConnected && !confirmButton.disabled) {
+      this.confirmOnClick();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { isHardwareWalletConnected } = this.state;
+    const { confirmButton } = this.props;
+    if (isHardwareWalletConnected && prevProps.confirmButton.disabled && !confirmButton.disabled) {
       this.confirmOnClick();
     }
   }
@@ -100,7 +109,9 @@ class TransactionSummary extends React.Component {
         null :
         <PrimaryButtonV2
           className={`${styles.confirmBtn} confirm-button`}
-          disabled={!!account.secondPublicKey && !secondPassphrase.isValid}
+          disabled={
+            (!!account.secondPublicKey && !secondPassphrase.isValid) ||
+            confirmButton.disabled}
           onClick={this.confirmOnClick}>
           {confirmButton.label}
         </PrimaryButtonV2>

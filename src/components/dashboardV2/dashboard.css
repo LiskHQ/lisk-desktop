@@ -73,14 +73,16 @@
   text-decoration: none;
 }
 
-.following {
+.bookmarks {
   height: auto;
   padding: 0;
   width: calc(50% - 10px);
 }
 
 .newsFeedWrapper {
-  padding: 0 15px;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 15px;
 }
 
 .seeAllLink {
@@ -149,8 +151,8 @@
   }
 
   .newsFeedWrapper {
-    flex-basis: 50%;
     padding: 0 8px;
+    min-width: 476px;
   }
 
   .graph {
@@ -160,7 +162,7 @@
     overflow: initial;
   }
 
-  .following {
+  .bookmarks {
     height: auto;
     min-height: 300px;
     width: 100%;

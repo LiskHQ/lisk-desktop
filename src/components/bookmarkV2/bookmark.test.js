@@ -21,7 +21,7 @@ describe('BookmarkV2', () => {
     validateBookmark: jest.fn(),
     onChange: jest.fn(),
     onSelectedAccount: jest.fn(),
-    followedAccounts: {
+    bookmarks: {
       LSK: [{
         title: 'ABC',
         address: '12345L',
