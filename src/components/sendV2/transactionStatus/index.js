@@ -8,7 +8,7 @@ import { searchAccount } from '../../../actions/search';
 const mapStateToProps = (state, ownProps) => ({
   detailAccount: state.search.accounts[ownProps.fields.recipient.address] || {},
   delegates: state.search.delegates || {},
-  followedAccounts: state.followedAccounts,
+  bookmarks: state.bookmarks,
   transactions: state.transactions,
 });
 

@@ -20,7 +20,7 @@ describe('Summary', () => {
         USD: 1,
       },
     },
-    followedAccounts: [
+    bookmarks: [
       {
         title: 'ABC',
         address: '12345L',

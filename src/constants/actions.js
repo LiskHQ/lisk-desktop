@@ -22,9 +22,9 @@ const actionTypes = {
   dialogDisplayed: 'DIALOG_DISPLAYED',
   dialogHidden: 'DIALOG_HIDDEN',
   dynamicFeesRetrieved: 'DYNAMIC_FEES_RETRIEVED',
-  followedAccountAdded: 'FOLLOWED_ACCOUNT_ADDED',
-  followedAccountRemoved: 'FOLLOWED_ACCOUNTS_REMOVED',
-  followedAccountUpdated: 'FOLLOWED_ACCOUNT_UPDATED',
+  bookmarkAdded: 'BOOKMARK_ADDED',
+  bookmarkRemoved: 'BOOKMARK_REMOVED',
+  bookmarkUpdated: 'BOOKMARK_UPDATED',
   getNewsFeed: 'GET_NEWS_FEED',
   // TODO next 3 lines should be removed after the new 'network' actions are used everywhere
   liskAPIClientReset: 'LISK_API_CLIENT_RESET',

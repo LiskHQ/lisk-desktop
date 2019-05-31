@@ -1,10 +1,10 @@
-import followedAccounts from './followedAccounts';
-import * as followedAccountsUtils from '../../utils/followedAccounts';
+import bookmarksSubscriber from './bookmarks';
+import * as bookmarksUtils from '../../utils/bookmarks';
 import accounts from '../../../test/constants/accounts';
 
-jest.mock('../../utils/followedAccounts');
+jest.mock('../../utils/bookmarks');
 
-describe('Subscriber: followedAccounts(state)', () => {
+describe('Subscriber: bookmarks(state)', () => {
   const account = {
     publicKey: accounts.genesis.publicKey,
     balance: accounts.genesis.balance,
@@ -17,12 +17,12 @@ describe('Subscriber: followedAccounts(state)', () => {
   };
 
   it('should save accounts in localStorage', () => {
-    const state = { followedAccounts: { LSK: [account, account2], BTC: [] } };
+    const state = { bookmarks: { LSK: [account, account2], BTC: [] } };
     const store = { getState: () => state };
 
-    followedAccounts(store);
-    expect(followedAccountsUtils.setFollowedAccountsInLocalStorage)
-      .toBeCalledWith(state.followedAccounts);
+    bookmarksSubscriber(store);
+    expect(bookmarksUtils.setBookmarksInLocalStorage)
+      .toBeCalledWith(state.bookmarks);
   });
 });
 

@@ -49,7 +49,7 @@ const createTest = (type) => {
       type,
       senderId: accounts.delegate.address,
       showTransaction: true,
-      followedAccounts: {
+      bookmarks: {
         LSK: [],
       },
     };
@@ -67,7 +67,7 @@ describe('TransactionType V2', () => {
     const props = {
       type: 0,
       senderId: accounts.delegate.address,
-      followedAccounts: {
+      bookmarks: {
         LSK: [],
       },
     };
@@ -75,12 +75,12 @@ describe('TransactionType V2', () => {
     expect(wrapper).toIncludeText(props.senderId);
   });
 
-  it('Should render followed account name if account is followed', () => {
-    const title = 'Followed test';
+  it('Should render bookmark name if account is bookmarked', () => {
+    const title = 'bookmark test';
     const props = {
       type: 0,
       senderId: accounts.delegate.address,
-      followedAccounts: {
+      bookmarks: {
         LSK: [{
           address: accounts.delegate.address,
           title,
