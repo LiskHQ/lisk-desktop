@@ -13,6 +13,7 @@ import { extractAddress } from '../account';
 import loginTypes from '../../constants/loginTypes';
 import { HW_MSG, models, loginType } from '../../constants/hwConstants';
 import { getAPIClient } from './lsk/network';
+import { splitVotesIntoRounds } from './delegate';
 
 const util = require('util');
 
@@ -304,23 +305,53 @@ export const sendWithHW = (networkConfig, account, recipientId, amount,
 
 /**
  * Trigger this action to sign and broadcast a VoteTX with Ledger Account
+ * If it receives votedList.length + unvotedList.length > 33, it will split it into multiple 
+ * transactions, sing them one by one and broadcast all at once in the end.
  * NOTE: secondPassphrase for ledger is a PIN (numeric)
  * @returns Promise - Action Vote with Ledger
  */
-export const voteWithHW = (activePeer, account, votedList, unvotedList, pin = null) =>
-  new Promise(async (resolve, reject) => {
-    const rawTx = createRawVoteTX(account.publicKey, account.address, votedList, unvotedList);
-    let error;
-    let signedTx;
-    [error, signedTx] = await to(signTransactionWithHW(rawTx, account, pin));
-    if (error) {
-      reject(error);
-    } else {
-      activePeer.transactions.broadcast(signedTx).then(() => {
-        resolve(signedTx);
-      }).catch(reject);
-    }
+export const voteWithHW = async (
+  activePeer,
+  account,
+  votedList,
+  unvotedList,
+  pin = null,
+) => {
+  let error;
+  const transactions = [];
+  const rounds = splitVotesIntoRounds({
+    votes: [...votedList],
+    unvotes: [...unvotedList],
   });
+  for (let i = 0; i < rounds.length && !error; i++) {
+    const { votes, unvotes } = rounds[i];
+    const rawTx = createRawVoteTX(account.publicKey, account.address, votes, unvotes);
+    // eslint-disable-next-line no-await-in-loop
+    const [e, signedTx] = await to(signTransactionWithHW(rawTx, account, pin));
+
+    if (e) {
+      error = new Error(i18next.t(
+        'The transaction has been canceled on your {{model}}',
+        { model: account.hwInfo.deviceModel },
+      ));
+    } else {
+      transactions.push(signedTx);
+    }
+  }
+
+  if (transactions.length && !error) {
+    return Promise.all(transactions.map(transaction => (
+      new Promise((resolve, reject) => {
+        activePeer.transactions.broadcast(transaction)
+          .then(() => resolve(transaction)).catch(reject);
+      })
+    )))
+  } else {
+    return new Promise((resolve, reject) => {
+      reject(error);
+    });
+  }
+};
 
 
 /**

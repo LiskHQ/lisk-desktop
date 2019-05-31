@@ -2,6 +2,7 @@ import {
   deepMergeObj,
   removeUndefinedKeys,
   isEmpty,
+  filterObjectPropsWithValue,
 } from './helpers';
 
 
@@ -49,6 +50,16 @@ describe('helpers', () => {
 
     it('works properly with objects', () => {
       expect(isEmpty({ test: 'test' })).toBe(false);
+    });
+  });
+  describe('filterObjectPropsWithValue', () => {
+    it('works properly with arrays', () => {
+      expect(filterObjectPropsWithValue({
+        genesis_14: 'notVotedYet',
+        genesis_15: 'unvotes',
+        genesis_16: 'unvotes',
+        genesis_17: 'votes',
+      }, 'unvotes')).toEqual(['genesis_15', 'genesis_16']);
     });
   });
 });

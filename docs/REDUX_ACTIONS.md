@@ -49,10 +49,6 @@ After clicking `Log in` it executes:
  ↪️ Socket Middleware<br/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`socketSetup`](https://github.com/LiskHQ/lisk-hub/blob/3793f0b0882309335a2ed3444b326ceebabd1bcf/src/store/middlewares/socket.js#L16)<br/>
 
-  ↪️ FollowedAccount Middleware<br/>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`followedAccountFetchedAndUpdated`](https://github.com/LiskHQ/lisk-hub/blob/a525a1c54510a45cf14a0a3c37be231ee316088b/src/store/middlewares/followedAccounts.js#L7) for each followed account
-<br/>
-
 ## Logout
 ![alt text](assets/delegates_screen.png "Logout Screen")
 
@@ -101,9 +97,6 @@ and every 10 seconds dispatches [`newBlockCreated`](https://github.com/LiskHQ/li
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↪️ Account Middleware<br/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`votesFetched`](https://github.com/LiskHQ/lisk-hub/blob/77b6defdf98b6f67f005c25c28ea85378d375817/src/store/middlewares/account.js#L156) (sometimes)<br/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`updateDelegateAccount`](https://github.com/LiskHQ/lisk-hub/blob/77b6defdf98b6f67f005c25c28ea85378d375817/src/store/middlewares/account.js#L155)  (sometimes)<br/>
-  ↪️ Followed Account Middleware<br/>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`followedAccountFetchedAndUpdated`](https://github.com/LiskHQ/lisk-hub/blob/a525a1c54510a45cf14a0a3c37be231ee316088b/src/store/middlewares/followedAccounts.js#L7)<br/>
-
 
 ## Local Storage
   All data saved in localStorage should be saved in Subscribers files

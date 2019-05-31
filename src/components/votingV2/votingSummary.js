@@ -15,7 +15,7 @@ import VoteUrlProcessor from '../voteUrlProcessorV2';
 import styles from './votingV2.css';
 
 const VotingSummary = ({
-  t, votes, history, account, nextStep, votePlaced,
+  t, votes, history, account, nextStep, votePlaced, prevStep, voteLookupStatus,
 }) => {
   const {
     maxCountOfVotes,
@@ -30,13 +30,38 @@ const VotingSummary = ({
       account={account}
       confirmButton={{
         label: t('Confirm voting'),
+        disabled: totalActions === 0 ||
+          (voteLookupStatus.pending && voteLookupStatus.pending.length > 0),
         onClick: ({ secondPassphrase }) => {
           votePlaced({
             account,
             votes,
             passphrase: account.passphrase,
             secondPassphrase,
-            goToNextStep: nextStep,
+            goToNextStep: ({ success, text, errorMessage }) => {
+              nextStep({
+                success,
+                ...(success ? {
+                  title: t('Voting submitted'),
+                  message: t('You will be notified when your votes are forged.'),
+                  primaryButon: {
+                    title: t('Back to Delegates'),
+                    className: 'back-to-delegates-button',
+                    onClick: () => {
+                      history.push(routes.delegatesV2.path);
+                    },
+                  },
+                } : {
+                  title: t('Voting failed'),
+                  message: errorMessage || t('Oops, looks like something went wrong. Please try again.'),
+                  primaryButon: {
+                    title: t('Back to Voting summary'),
+                    onClick: prevStep,
+                  },
+                  error: text,
+                }),
+              });
+            },
           });
         },
       }}
@@ -74,12 +99,15 @@ const VotingSummary = ({
         </label>
         <label> {fee * totalActions} LSK </label>
       </section>
-      <VoteUrlProcessor/>
+      <VoteUrlProcessor
+        account={account}
+        votes={votes}
+        voteLookupStatus={voteLookupStatus}/>
       {voteList.length > 0 ?
         <section>
           <label>{t('Added votes')} ({voteList.length})</label>
           <label>
-            <div className={styles.votesContainer} >
+            <div className={`${styles.votesContainer} added-votes`} >
               {voteList.map(vote => (
                <span key={vote} className={`${styles.voteTag} vote`}>
                 <span className={styles.rank}>#{votes[vote].rank}</span>
@@ -94,7 +122,7 @@ const VotingSummary = ({
         <section>
           <label>{t('Removed votes')} ({unvoteList.length})</label>
           <label>
-            <div className={styles.votesContainer} >
+            <div className={`${styles.votesContainer} removed-votes`} >
               {unvoteList.map(vote => (
                <span key={vote} className={`${styles.voteTag} vote`}>
                 <span className={styles.rank}>#{votes[vote].rank}</span>

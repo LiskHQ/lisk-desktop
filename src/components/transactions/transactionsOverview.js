@@ -6,7 +6,7 @@ import EmptyState from '../emptyState';
 import TransactionsList from './transactionsList';
 import styles from './transactions.css';
 import txFilters from '../../constants/transactionFilters';
-import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
+import { getIndexOfBookmark } from '../../utils/bookmarks';
 import Piwik from '../../utils/piwik';
 
 class TransactionsOverview extends React.Component {
@@ -87,12 +87,12 @@ class TransactionsOverview extends React.Component {
       };
     }
 
-    const index = getIndexOfFollowedAccount(
-      this.props.followedAccounts,
+    const index = getIndexOfBookmark(
+      this.props.bookmarks,
       { address: this.props.address },
     );
-    const accountTitle = this.props.followedAccounts[index]
-      && this.props.followedAccounts[index].title;
+    const accountTitle = this.props.bookmarks[index]
+      && this.props.bookmarks[index].title;
     const hasTitle = index !== -1 && accountTitle !== this.props.address;
 
     return (
@@ -150,7 +150,7 @@ class TransactionsOverview extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  followedAccounts: state.followedAccounts,
+  bookmarks: state.bookmarks,
   peers: state.peers,
   account: state.account,
 });

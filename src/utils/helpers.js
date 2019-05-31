@@ -40,3 +40,15 @@ export const isEmpty = (collection) => {
 
   return Object.keys(collection).length === 0;
 };
+
+
+/**
+ * Filters object keys by given value
+ * @param {Object} object - object to filter on
+ * @param {Any} value - value to be matched against object keys
+ * @returns {Array} array of matching keys
+ */
+export const filterObjectPropsWithValue = (object = {}, value) => (
+  Object.keys(object).filter(key => object[key] === value)
+);
+

@@ -127,8 +127,7 @@ describe('actions: voting', () => {
     });
 
     it('should dispatch addPendingTransaction action if resolved', async () => {
-      delegateApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
-      const expectedAction = {
+      const transaction = {
         id: '15626650747375562521',
         senderPublicKey: account.publicKey,
         senderId: account.address,
@@ -136,17 +135,19 @@ describe('actions: voting', () => {
         fee: Fees.vote,
         type: 3,
       };
+      delegateApiMock.returnsPromise().resolves([transaction]);
 
       await actionFunction(dispatch, getState);
       expect(dispatch).to.have.been
-        .calledWith({ data: expectedAction, type: actionTypes.addPendingTransaction });
+        .calledWith({ data: transaction, type: actionTypes.addPendingTransaction });
     });
 
     it('should call goToNextStep with "success: false" if caught an error', async () => {
-      delegateApiMock.returnsPromise().rejects({ message: 'sample message' });
+      const message = 'sample message';
+      delegateApiMock.returnsPromise().rejects({ message });
 
       await actionFunction(dispatch, getState);
-      const expectedAction = { success: false, text: 'sample message.' };
+      const expectedAction = { success: false, text: message, errorMessage: message };
       expect(goToNextStep).to.have.been.calledWith(expectedAction);
     });
 
@@ -154,7 +155,11 @@ describe('actions: voting', () => {
       delegateApiMock.returnsPromise().rejects({});
 
       await actionFunction(dispatch, getState);
-      const expectedAction = { success: false, text: 'An error occurred while placing your vote.' };
+      const expectedAction = {
+        success: false,
+        text: 'An error occurred while placing your vote.',
+        errorMessage: undefined,
+      };
       expect(goToNextStep).to.have.been.calledWith(expectedAction);
     });
   });

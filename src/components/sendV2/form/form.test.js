@@ -20,7 +20,7 @@ describe('Form', () => {
         USD: 1,
       },
     },
-    followedAccounts: {
+    bookmarks: {
       LSK: [{
         title: 'ABC',
         address: '12345L',
@@ -65,7 +65,7 @@ describe('Form', () => {
         LSK: accounts.genesis,
       },
     },
-    followedAccounts: {
+    bookmarks: {
       LSK: [{
         title: 'ABC',
         address: '12345L',
@@ -122,7 +122,7 @@ describe('Form', () => {
   });
 
   it('should validate address', () => {
-    props.followedAccounts = { LSK: [] };
+    props.bookmarks = { LSK: [] };
     wrapper = mount(<Form {...props} />, options);
     const evt = { target: { name: 'recipient', value: '123456L' } };
     wrapper.find('input.recipient').simulate('change', evt);

@@ -6,7 +6,7 @@ import actionTypes from '../../constants/actions';
 import ResultBox from './resultBox';
 
 const mapStateToProps = state => ({
-  followedAccounts: state.followedAccounts ? state.followedAccounts : [],
+  bookmarks: state.bookmarks ? state.bookmarks : [],
 });
 
 const mapDispatchToProps = {

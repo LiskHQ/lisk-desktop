@@ -93,7 +93,7 @@
     }
   }
 
-  & .followingButton {
+  & .bookmarkButton {
     display: flex;
 
     &::after {
