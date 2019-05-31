@@ -110,10 +110,6 @@ class Setting extends React.Component {
                   </div>
               </label>
               <div className={`${styles.fieldGroup} ${styles.checkboxField} second-passphrase`}>
-                <CheckBox
-                  className={`${styles.checkbox} ${!hasSecondPassphrase ? styles.hide : ''}`}
-                  checked={hasSecondPassphrase}
-                />
                 <div className={isHwWalletClass}>
                   <span className={styles.labelName}>{t('Second Passphrase')}</span>
                   <p>
@@ -128,7 +124,11 @@ class Setting extends React.Component {
                         {t('Activate (5 LSK Fee)')}
                       </Link>
                     </SignInTooltipWrapper>
-                  : null}
+                  : (
+                    <span className={styles.activeLabel}>
+                      {t('Second Passphrase is active for this account.')}
+                    </span>
+                  )}
                 </div>
               </div>
             </section>

@@ -15,19 +15,23 @@
 }
 
 .content {
+  display: block;
+  padding-bottom: 50px;
+  width: 100%;
+
   & > section {
-    margin: 20px;
+    margin: 24px;
   }
 
   & h1 {
-    @mixin contentNormal bold;
+    @mixin contentLargest bold;
 
     color: var(--color-slate-gray);
-    margin: 0 0 20px;
+    margin: 0 0 24px;
   }
 
   & .link {
-    @mixin contentSmall bold;
+    @mixin contentLargest bold;
 
     color: var(--color-ultramarine-blue);
     display: inline-block;
@@ -43,9 +47,25 @@
     margin-bottom: 0;
   }
 
+  & .activeLabel {
+    @mixin contentNormal bold;
+
+    background-color: var(--color-ultramarine-blue);
+    border-radius: var(--border-radius-standard);
+    color: var(--color-white);
+    display: inline-block;
+    margin-top: 10px;
+    padding: 2px 8px;
+  }
+
   &.checkboxField {
     align-items: flex-start;
     display: flex;
+
+    & > div:last-child {
+      flex-basis: calc(100% - 25px);
+      margin-left: auto;
+    }
 
     & .checkbox {
       margin-right: 10px;
@@ -54,7 +74,7 @@
   }
 
   & .labelName {
-    @mixin contentNormal bold;
+    @mixin contentLargest bold;
 
     color: var(--color-maastricht-blue);
     display: block;

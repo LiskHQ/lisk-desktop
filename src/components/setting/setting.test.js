@@ -24,9 +24,13 @@ describe('Setting', () => {
   };
 
   const account = {
-    ...accounts.genesis,
-    isDelegate: false,
-    username: 'lisk-hub',
+    info: {
+      LSK: {
+        ...accounts.genesis,
+        isDelegate: false,
+        username: 'lisk-hub',
+      },
+    },
   };
   const store = configureMockStore([])({
     account,
@@ -71,13 +75,14 @@ describe('Setting', () => {
     expect(wrapper).toContainMatchingElements(1, '.disabled');
   });
 
-  it('should render 2nd passphrase as enabled', () => {
-    const account2ndPassphrase = accounts['second passphrase account'];
-    const newProps = { ...props, account: account2ndPassphrase };
+  it('should render 2nd passphrase as active', () => {
+    const account2ndPassphrase = { info: { LSK: accounts['second passphrase account'] } };
+    const newProps = { ...props, account: account2ndPassphrase, hasSecondPassphrase: true };
     wrapper = mount(<Router>
-      <Setting {...newProps} store={store}/>
+      <Setting {...newProps}/>
     </Router>, options);
-    expect(wrapper.find('.second-passphrase input')).not.toHaveClassName('hide');
+    expect(wrapper.find('.second-passphrase')).not.toContainMatchingElement('.link');
+    expect(wrapper.find('.second-passphrase')).toContainMatchingElement('.activeLabel');
   });
 
   it('should change autolog setting when clicking on checkbox', () => {
