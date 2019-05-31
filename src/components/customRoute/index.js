@@ -7,7 +7,7 @@ import CustomRoute from './customRoute';
 const mapStateToProps = state => ({
   isAuthenticated: !!state.account.info,
   settings: state.settings,
-  networkIsSet: !!state.network.name,
+  networkIsSet: !!state.peers.liskAPIClient,
   accountLoading: state.account && state.account.loading,
 });
 
