@@ -124,10 +124,11 @@ class VotingListViewV2 extends React.Component {
   }
 
   render() {
-    const filteredList = this.filter(this.props.delegates);
     const {
       voteToggled, votes, t, votingModeEnabled,
+      delegates,
     } = this.props;
+    const filteredList = this.filter(delegates);
     const firstTimeVotingActive = votingModeEnabled && getTotalVotesCount(votes) === 0;
     return (
       <BoxV2>
@@ -165,7 +166,13 @@ class VotingListViewV2 extends React.Component {
               firstTimeVotingActive={firstTimeVotingActive}
               votingModeEnabled={votingModeEnabled}
               voteToggled={voteToggled}
-              safari={this.state.safariClass} loadMore={this.loadMore.bind(this)} />
+              shouldLoadMore={
+                filteredList.length > 0 &&
+                delegates.length % 101 === 0 &&
+                this.state.activeFilter !== voteFilters.voted
+              }
+              safari={this.state.safariClass}
+              loadMore={this.loadMore.bind(this)} />
           </div>
           {
             (filteredList.length === 0) ?

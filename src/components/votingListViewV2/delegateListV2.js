@@ -17,9 +17,12 @@ class DelegateListV2 extends React.Component {
   }
 
   render() {
-    const { votingModeEnabled, votes, firstTimeVotingActive } = this.props;
-    const shouldLoadMore = this.props.list.length > 0 &&
-      this.props.list[this.props.list.length - 1].rank % 101 === 0;
+    const {
+      votingModeEnabled,
+      votes,
+      firstTimeVotingActive,
+      shouldLoadMore,
+    } = this.props;
     const shouldShowVoteColumn = votingModeEnabled || getTotalVotesCount(votes) >= 0;
     return (<div>
       { this.state.didMount ? <div className={`${styles.results} delegate-list`}>
