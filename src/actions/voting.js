@@ -174,7 +174,7 @@ export const votesFetched = ({ address, type }) =>
  * Gets list of all delegates
  */
 export const delegatesFetched = ({
-  offset, refresh, q,
+  offset, refresh, q, callback = () => {},
 }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
@@ -191,7 +191,8 @@ export const delegatesFetched = ({
         totalDelegates: response.data.length,
         refresh,
       }));
-    });
+      callback(response);
+    }).catch(callback);
   };
 
 

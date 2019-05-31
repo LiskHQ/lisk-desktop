@@ -67,17 +67,18 @@ class VotingListViewV2 extends React.Component {
    */
   loadDelegates(q = '', refresh, offset = 0) {
     this.freezeLoading = true;
+    this.setState({ isLoading: true });
 
     this.props.delegatesFetched({
       offset,
       q,
       refresh,
+      callback: () => {
+        this.setState({ isLoading: false });
+      },
     });
   }
 
-  /**
-   * load more data when scroll bar reaches end of the page
-   */
   loadMore() {
     const list = this.filter(this.props.delegates);
     this.loadDelegates(this.query, false, list[list.length - 1].rank);
@@ -86,7 +87,7 @@ class VotingListViewV2 extends React.Component {
   setActiveFilter(filter) {
     setTimeout(() => {
       this.setState({ isLoading: false });
-    }, 1000);
+    }, 500);
     this.setState({
       activeFilter: filter,
       isLoading: true,
