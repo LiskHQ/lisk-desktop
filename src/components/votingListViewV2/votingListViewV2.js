@@ -117,7 +117,7 @@ class VotingListViewV2 extends React.Component {
       getTotalVotesCount(this.props.votes) === 0) {
       message = t('You have not voted yet.');
     } else if (this.query !== '' && Object.keys(filteredList).length === 0) {
-      message = t('No search result in given criteria.');
+      message = t('No search results in given criteria.');
     }
 
     return message;
