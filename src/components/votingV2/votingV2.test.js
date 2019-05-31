@@ -1,75 +1,65 @@
 import React from 'react';
-import { expect } from 'chai';
 import { mount } from 'enzyme';
+import { MemoryRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { prepareStore } from '../../../test/unit-test-utils/applicationInit';
-import peersReducer from '../../store/reducers/peers';
-import accountReducer from '../../store/reducers/account';
-import votingReducer from '../../store/reducers/voting';
-import VotingV2 from './votingV2';
-import history from '../../history';
+import configureMockStore from 'redux-mock-store';
 import i18n from '../../i18n';
+import VotingV2 from './votingV2';
 
 describe('VotingV2', () => {
-  let wrapper;
   const votes = {
-    username1: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
+    username3: { confirmed: false, unconfirmed: true, publicKey: 'sample_key3' },
+    username1: { confirmed: true, unconfirmed: false, publicKey: 'sample_key1' },
   };
-  const store = prepareStore({
-    peers: peersReducer,
-    account: accountReducer,
-    voting: votingReducer,
+  const store = configureMockStore([])({
+    voting: {
+      votes,
+    },
   });
-
-  const delegates = [
-    {
-      address: 'address 1',
-      username: 'username1',
-      publicKey: 'sample_key',
-      serverPublicKey: 'sample_key',
-      rank: 12,
+  const options = {
+    context: { i18n, store },
+    childContextTypes: {
+      i18n: PropTypes.object.isRequired,
+      store: PropTypes.object.isRequired,
     },
-    {
-      address: 'address 2',
-      username: 'username2',
-      publicKey: 'sample_key',
-      serverPublicKey: 'sample_key',
-      rank: 23,
-    },
-  ];
+  };
+  let voteResult = { success: true };
   const props = {
-    refreshDelegates: false,
-    delegates,
-    totalDelegates: 10,
-    votes,
+    votes: {},
+    account: {},
+    voteLookupStatus: {
+      pending: [],
+      notFound: [],
+      alreadyVoted: [],
+    },
+    votePlaced: ({ goToNextStep }) => goToNextStep(voteResult),
     t: key => key,
-    history: { location: { search: '' } },
+    history: { push: jest.fn() },
   };
-  beforeEach(() => {
-    wrapper = mount(
-<Router><VotingV2 {...props} store={store}></VotingV2></Router>,
-{
-  context: { store, history, i18n },
-  childContextTypes: {
-    store: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
-    i18n: PropTypes.object.isRequired,
-  },
-},
-    );
+
+  it('should render VotingSummary', () => {
+    const wrapper = mount(<Router><VotingV2 {...props} /></Router>, options);
+    expect(wrapper.find('VotingSummary')).toHaveLength(1);
   });
 
-  afterEach(() => {
-    // Voting.prototype.setStatus.restore();
+  it('should go to VotingResult with confirm button and then back to delegates', () => {
+    const wrapper = mount(<Router><VotingV2 {...{ ...props, votes } } /></Router>, options);
+    wrapper.find('.confirm-button').at(0).simulate('click');
+    expect(wrapper.find('VotingResult')).toHaveLength(1);
+    wrapper.find('.back-to-delegates-button').at(0).simulate('click');
+    expect(props.history.push).toHaveBeenCalledWith('/delegates');
   });
 
-  // it('should render DelegateSidebar', () => {
-  //   expect(wrapper.find('DelegateSidebar')).to.have.lengthOf(1);
-  // });
+  it('should show report error link when confirm button is clicked and voting fails', () => {
+    voteResult = { success: false };
+    const wrapper = mount(<Router><VotingV2 {...{ ...props, votes } } /></Router>, options);
+    wrapper.find('.confirm-button').at(0).simulate('click');
+    expect(wrapper.find('.report-error-link')).toHaveLength(1);
+  });
 
-  it('should render DelegateList', () => {
-    expect(wrapper.find('DelegateListV2')).to.have.lengthOf(1);
+  it('should go to Delegates page when cancel button is clicked', () => {
+    const wrapper = mount(<Router><VotingV2 {...props} /></Router>, options);
+    wrapper.find('.cancel-button').at(0).simulate('click');
+    expect(props.history.push).toHaveBeenCalledWith('/delegates');
   });
 });
-

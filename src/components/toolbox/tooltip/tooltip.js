@@ -64,19 +64,28 @@ class Tooltip extends React.Component {
 
   render() {
     const {
-      title, children, footer, className, infoIconClassName,
+      title, children, footer, className, alwaysShow, content,
     } = this.props;
+    const {
+      showTooltip,
+    } = this.state;
+    const {
+      infoIcon = '', tooltip = '',
+    } = this.props.styles || {};
     return React.isValidElement(children) && (
       <div
         className={`${styles.tooltipWrapper} ${className}`}
         onMouseLeave={this.handleMouseLeave}
         onMouseMove={this.handleMouseMove}
         ref={this.setWrapperRef}>
-        <span
-          className={`${styles.infoIcon} ${infoIconClassName}`}
-          onClick={this.handleClick}
-          />
-        <div className={`${styles.tooltip} ${this.state.showTooltip ? 'shownTooltip' : ''} tooltip-window`}>
+        {React.isValidElement(content) ?
+          content :
+          <span
+            className={`${styles.infoIcon} ${infoIcon}`}
+            onClick={this.handleClick} >
+          </span>
+         }
+        <div className={`${styles.tooltip} ${(alwaysShow || showTooltip) ? 'shownTooltip' : ''} ${tooltip} tooltip-window`}>
           <span className={`${styles.tooltipArrow} tooltip-arrow`}>
             <svg stroke="inherit" fill="currentColor" viewBox="0 0 14 28">
               <path d="M13.307.5S.5 10.488.5 13.896c0 3.409 12.785 12.893 12.785 12.893"/>
@@ -101,6 +110,7 @@ Tooltip.propTypes = {
   children: PropTypes.node.isRequired,
   footer: PropTypes.node,
   className: PropTypes.string,
+  content: PropTypes.node,
 };
 
 Tooltip.defaultProps = {

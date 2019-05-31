@@ -10,7 +10,6 @@ import App from './';
 import Splashscreen from '../splashscreen/splashscreen';
 import Login from '../loginV2/loginV2';
 import TransactionsDashboard from '../transactionDashboard';
-import Voting from '../voting';
 import routes from '../../constants/routes';
 
 const fakeStore = configureStore();
@@ -31,7 +30,6 @@ const publicComponent = [
 
 const privateComponent = [
   { route: `${routes.wallet.path}`, component: TransactionsDashboard },
-  { route: `${routes.delegates.path}`, component: Voting },
 ];
 
 describe('App', () => {
@@ -52,6 +50,9 @@ describe('App', () => {
           addresses: [],
           transactions: [],
         },
+      },
+      network: {
+        name: 'mainnet',
       },
     });
     publicComponent.forEach(({ route, component }) => {

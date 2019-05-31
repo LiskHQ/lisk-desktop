@@ -70,8 +70,9 @@ describe('Search', () => {
    */
   it('Search for Transaction using keyboard Enter, signed off', () => {
     openSearchAndType(mainnetTransaction);
+    cy.wait('@requestTransaction');
     cy.get(ss.searchTransactionRow).eq(0).click();
-    assertTransactionPage(mainnetTransaction);
+    cy.get(ss.transactionId).should('have.text', mainnetTransaction);
   });
 
   /**
@@ -102,6 +103,7 @@ describe('Search', () => {
   it('Search for Delegate using suggestions, signed in', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     openSearchAndType(accounts.delegate.username);
+    cy.wait('@requestDelegate');
     cy.get(ss.searchDelegatesRow).eq(0).click();
     assertDelegatePage(accounts.delegate.username);
   });
@@ -126,7 +128,9 @@ describe('Search', () => {
    * Search signed in mainnet
    * @expect happens in mainnet
    */
-  xit('Search signed in mainnet - happens in mainnet', () => {
+  // TODO figure out what is wrong, fix it and enable this test. For details see:
+  // https://dashboard.cypress.io/#/projects/528xi2/runs/399/specs
+  it.skip('Search signed in mainnet - happens in mainnet', () => {
     cy.autologin(accounts.genesis.passphrase, networks.mainnet.node);
     openSearchAndType(mainnetTransaction);
     cy.wait('@requestTransaction');

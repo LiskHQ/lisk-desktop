@@ -8,6 +8,7 @@ import hwWalletMiddleware from './hwWallet';
 // import notificationMiddleware from './notification';
 import votingMiddleware from './voting';
 import socketMiddleware from './socket';
+import settingsMiddleware from './settings';
 
 export default [
   // notificationMiddleware,
@@ -19,4 +20,5 @@ export default [
   socketMiddleware,
   thunk,
   votingMiddleware,
+  settingsMiddleware,
 ];

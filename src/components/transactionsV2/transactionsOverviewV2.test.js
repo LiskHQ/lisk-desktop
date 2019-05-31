@@ -33,7 +33,7 @@ describe('TransactionsOverview V2', () => {
   const store = configureMockStore([])({
     peers,
     account: accounts.genesis,
-    followedAccounts: {
+    bookmarks: {
       LSK: [],
       BTC: [],
     },
@@ -46,7 +46,7 @@ describe('TransactionsOverview V2', () => {
     onLoadMore: spy(),
     onFilterSet: spy(),
     account: accounts.genesis,
-    followedAccounts: {
+    bookmarks: {
       LSK: [],
       BTC: [],
     },
@@ -84,7 +84,7 @@ describe('TransactionsOverview V2', () => {
   });
 
   it('should call onFilterSet when filtering transations', () => {
-    wrapper.find('.transaction-filter-item').first().simulate('click');
+    wrapper.find('.filter-all').first().simulate('click');
     expect(props.onFilterSet).to.have.been.calledWith();
   });
 });

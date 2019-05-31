@@ -96,6 +96,7 @@ or "warn/action" ineastd of "red/green"
   --color-white-smoke: #f5f7fa;
   --color-burnt-sienna: #ec6868;
   --color-ufo-green: #2bd67b;
+  --color-deep-green: #00d563;
 
   /*************************
       Other Colors
@@ -124,6 +125,7 @@ or "warn/action" ineastd of "red/green"
   --color-title-header-box: #4c4c4c;
   --color-link: var(--color-primary-standard);
   --color-rows-hover: rgba(157, 184, 250, 0.2);
+  --color-highlight-checkboxes: rgba(64, 112, 244, 0.08);
 
   /*************************
         Box
@@ -139,7 +141,7 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Animation
   *************************/
-  --animation-speed-faster: 150ms;
+  --animation-speed-fastest: 150ms;
   --animation-speed-fast: 250ms;
   --animation-speed-standard: 500ms;
   --animation-speed-slow: 700ms;

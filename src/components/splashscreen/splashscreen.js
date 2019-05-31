@@ -101,7 +101,7 @@ class Splashscreen extends React.Component {
               </Link>
               <Tooltip
                 className={`${styles.tooltip}`}
-                infoIconClassName={styles.infoIcon}
+                styles={{ infoIcon: styles.infoIcon }}
                 title={t('Guest mode')}>
                 <React.Fragment>
                   <p className={`${styles.tooltipText}`}>

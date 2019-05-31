@@ -1,7 +1,6 @@
 import actionTypes from '../constants/actions';
 import {
   settingsReset,
-  settingsUpdateToken,
   settingsUpdated,
 } from './settings';
 
@@ -25,26 +24,6 @@ describe('actions: setting', () => {
         type: actionTypes.settingsReset,
       };
       expect(settingsReset()).toEqual(expectedAction);
-    });
-  });
-
-  describe('settingsTokenUpdate', () => {
-    it('should create an action to update settings token', () => {
-      const data = {
-        token: {
-          active: 'LSK',
-          list: {
-            LSK: true,
-            BTC: true,
-          },
-        },
-      };
-
-      const expectedAction = {
-        type: actionTypes.settingsUpdateToken,
-        data,
-      };
-      expect(settingsUpdateToken(data)).toEqual(expectedAction);
     });
   });
 });

@@ -2,7 +2,7 @@ import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
 import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
-import { enterSecondPassphraseOnSend } from '../utils/enterSecondPassphrase';
+import { enterSecondPassphraseV2 } from '../utils/enterSecondPassphrase';
 import compareBalances from '../utils/compareBalances';
 import loginUI from '../utils/loginUI';
 
@@ -113,12 +113,11 @@ describe('Send', () => {
     cy.get(ss.sendReferenceText).click().type(randomReference);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).click();
-    enterSecondPassphraseOnSend(accounts['second passphrase account'].secondPassphrase);
+    enterSecondPassphraseV2(accounts['second passphrase account'].secondPassphrase);
     cy.get(ss.sendBtn).click();
     cy.get(ss.submittedTransactionMessage).should('have.text', msg.transferTxSuccess);
     cy.get(ss.okayBtn).click();
     cy.get(ss.transactionRow).eq(0).as('tx');
-    cy.get('@tx').find(ss.spinner).should('be.visible');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', randomAddress);
   });
 
@@ -198,9 +197,9 @@ describe('Send', () => {
     cy.get(ss.submittedTransactionMessage).contains('Oops, looks like something went wrong. Please try again.');
   });
 
-  it('Add to bookmarks button doesn’t exist if recipient is in followers', () => {
+  it('Add to bookmarks button doesn’t exist if recipient is in Bookmarks', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node)
-      .then(() => window.localStorage.setItem('followedAccounts', `[{"title":"Alice","address":"${accounts.genesis.address}","balance":101}]`));
+      .then(() => window.localStorage.setItem('bookmarks', `[{"title":"Alice","address":"${accounts.genesis.address}","balance":101}]`));
     cy.visit(urls.send);
     cy.get(ss.recipientInput).type(accounts.genesis.address);
     cy.get(ss.amountInput).click().type(randomAmount);

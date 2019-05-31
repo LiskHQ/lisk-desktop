@@ -1,0 +1,79 @@
+@import '../app/variablesV2.css';
+@import './../app/mixins.css';
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 25px;
+
+  & > * {
+    display: flex;
+  }
+}
+
+.box,
+.outlinedBox {
+  @mixin contentSmallest;
+
+  display: inline-block;
+  padding: 7px 10px;
+  margin-right: 20px;
+  margin-top: 10px;
+  color: var(--color-slate-gray);
+
+  & b {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-maastricht-blue);
+  }
+
+  & h2 {
+    @mixin headingLarge;
+
+    margin: -2px 0;
+    color: var(--color-maastricht-blue);
+  }
+
+  & h3 {
+    @mixin headingNormal;
+
+    margin: 5px 0;
+    color: var(--color-maastricht-blue);
+  }
+}
+
+.box:first-child {
+  @mixin contentSmall;
+
+  padding-left: 0;
+}
+
+.outlinedBox {
+  background-color: var(--color-white);
+  border-radius: 3px;
+  border: solid 1px var(--color-platinum);
+
+  &.addedVotes {
+    border-color: var(--color-ultramarine-blue);
+  }
+
+  &.removedVotes {
+    border-color: var(--color-burnt-sienna);
+  }
+}
+
+.tooltip {
+  display: inline-block;
+  vertical-align: text-top;
+}
+
+.btn {
+  margin-left: 25px;
+  margin-top: 25px;
+}
+
+@media (--medium-viewport) {
+  .hideInMedium {
+    display: none;
+  }
+}

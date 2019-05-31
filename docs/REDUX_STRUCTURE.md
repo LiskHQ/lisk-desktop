@@ -11,7 +11,7 @@ Showing here just the parts related to the multi currencies structure.
   "..."
   "accounts": {
     "passphrase": "",
-    "followed": { "tokenKey": [{}] },
+    "bookmarks": { "tokenKey": [{}] },
     "info": { "tokenKey": { "address": "", "balance": "", "publickey": "", "..." } }
   },
   "service": {},
@@ -24,7 +24,7 @@ Showing here just the parts related to the multi currencies structure.
   }
 }
 ```
-Where we have the accounts information and the followed accounts separated per token type, and other informations that are relevant for more than one token being directly on the `accounts` node.  
+Where we have the accounts information and the bookmarks separated per token type, and other informations that are relevant for more than one token being directly on the `accounts` node.  
 On `settings` we have which token is the active one, and also a list with the tokens, of which token is enabled by the user.  
 And also a unified `service` node, not just as liskService as we have right now on Lisk-Hub.  
 
@@ -42,7 +42,7 @@ Ideally we should end up with a structure similar to:
 // lisk-hub final store example
 {
   "accounts": { "info": { "tokenKey": {} }, "passphrase": "", "other account common info" },
-  "followed": {"tokenKey": [{ "address": "", "balance": "" }]},
+  "bookmarks": {"tokenKey": [{ "address": "", "balance": "" }]},
   "service": { "fee": {"LSK": {}, "BTC": {}}, "priceTicker": {"BTC": {}, "LSK": {}} },
   "LSK": { "delegate": {}, "voting": {}, "filters": {}, },
   "tokenKey": { "specific data for token" },

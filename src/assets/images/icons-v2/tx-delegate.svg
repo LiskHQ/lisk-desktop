@@ -1,10 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-    <g fill="none" fill-rule="evenodd">
-        <path fill="#FFF" fill-opacity=".1" d="M0 0h24v24H0z" opacity=".1"/>
-        <g fill-rule="nonzero" stroke="#8A8CA2" transform="translate(1 5)">
-            <path d="M4 7.5A3.5 3.5 0 0 0 .5 11v3a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5v-3A3.5 3.5 0 0 0 8 7.5H4z"/>
-            <circle cx="6" cy="3" r="2.5"/>
-            <path d="M16.5 1v1.5H15a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5h1.5V7a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5V5.5H21a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5h-1.5V1a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 0-.5.5z"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42px" height="42px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 54.1 (76490) - https://sketchapp.com -->
+    <title>60FAC783-9DC9-4180-B7C4-A115034E8CD8</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <circle id="path-1" cx="20" cy="20" r="20"></circle>
+    </defs>
+    <g id="🏡--1.0-Dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1.1.1-Dashboard" transform="translate(-43.000000, -591.000000)">
+            <g id="Recent-Transactions---4-Col" transform="translate(24.000000, 416.000000)">
+                <g id="accounts-copy" transform="translate(20.000000, 67.000000)">
+                    <g id="Recepient-Copy-6" transform="translate(0.000000, 109.000000)">
+                        <g id="Group-4">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <use id="Oval" stroke="#BEC1CD" stroke-width="1.1" xlink:href="#path-1"></use>
+                            <g id="Group-12" mask="url(#mask-2)">
+                                <g transform="translate(7.500000, 10.416667)" id="Group-11">
+                                    <g>
+                                        <path d="M16.2531377,7.89621875 C16.2531377,9.2273125 15.1517029,10.3068438 13.7936014,10.3068438 C12.4355,10.3068438 11.3351812,9.2273125 11.3351812,7.89621875 C11.3351812,6.565125 12.4355,5.48559375 13.7936014,5.48559375 C15.1517029,5.48559375 16.2531377,6.565125 16.2531377,7.89621875 Z" id="Stroke-1" stroke="#BEC1CD" stroke-width="1.1"></path>
+                                        <path d="M13.6691739,16.9500625 L8.54588406,16.9435 C8.55034783,14.191625 10.8614638,11.92975 13.6691739,11.92975 C16.4802319,11.92975 18.7924638,14.196 18.7924638,16.9500625 L13.6691739,16.9500625 Z" id="Stroke-3" stroke="#BEC1CD" stroke-width="1.1"></path>
+                                        <polyline id="Stroke-5" stroke="#BEC1CD" stroke-width="1.1" points="3.52213623 7.80325 3.52213623 16.9535625 25.1736435 16.9535625 22.9607304 10.511375 25.1736435 3.625125 8.0138029 3.625125"></polyline>
+                                        <path d="M8.09604783,4.17276563 C8.09604783,6.24979688 6.3774971,7.93417188 4.25720725,7.93417188 C2.13691739,7.93417188 0.418366667,6.24979688 0.418366667,4.17276563 C0.418366667,2.09464063 2.13691739,0.410265625 4.25720725,0.410265625 C6.3774971,0.410265625 8.09604783,2.09464063 8.09604783,4.17276563 Z" id="Stroke-7" stroke="#BEC1CD" stroke-width="1.1"></path>
+                                        <polyline id="Stroke-9" stroke="#BEC1CD" stroke-width="1.1" points="2.59643555 3.9246106 3.85278225 5.134375 4.82817891 3.73580911 5.54476756 2.70833333"></polyline>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
         </g>
     </g>
 </svg>

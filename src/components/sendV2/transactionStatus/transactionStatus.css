@@ -66,18 +66,18 @@
     margin-bottom: 10px;
   }
 
-  & .followBtn {
+  & .bookmarkBtn {
     position: relative;
   }
 
-  & .followDropdown {
+  & .bookmarkDropdown {
     left: calc(50% - 184px);
     top: calc(100% + 10px);
     width: 368px;
     padding: 0;
   }
 
-  & .followingButton {
+  & .bookmarkButton {
     display: flex;
 
     &::after {
