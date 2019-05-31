@@ -138,7 +138,7 @@ class ExplorerTransactionsV2 extends React.Component {
       <React.Fragment>
         <TransactionsOverviewHeader
           delegate={delegate}
-          followedAccounts={this.props.followedAccounts}
+          bookmarks={this.props.bookmarks}
           balance={this.props.balance}
           address={this.props.address}
           match={this.props.match}

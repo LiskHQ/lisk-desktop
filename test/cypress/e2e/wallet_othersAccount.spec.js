@@ -9,7 +9,7 @@ describe('Wallet Others account', () => {
     username: 'genesis_51',
   };
 
-  const getFollowedAccountObjFromLS = () => JSON.parse(localStorage.getItem('followedAccounts'));
+  const getBookmaksObjFromLS = () => JSON.parse(localStorage.getItem('bookmarks'));
 
   beforeEach(() => {
     cy.server();
@@ -38,7 +38,7 @@ describe('Wallet Others account', () => {
   it('Bookmarked account -> Address, Name & Label are correct', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
-    cy.get(ss.addFollowerAccountButton).click();
+    cy.get(ss.addBookmarkAccountButton).click();
     cy.get(ss.addressInput).click().type(accounts['empty account'].address);
     cy.get(ss.nextBtn).click();
     cy.get(ss.titleInput).type('Alice');
@@ -46,7 +46,7 @@ describe('Wallet Others account', () => {
     cy.visit(`${urls.accounts}/${accounts['empty account'].address}`);
     cy.get(ss.accountAddress).contains(accounts['empty account'].address);
     cy.get(ss.accountName).contains('Alice');
-    cy.get(ss.accountLabel).contains('Followed Account');
+    cy.get(ss.accountLabel).contains('Bookmarked Account');
   });
 
   it('Send LSK to this account', () => {
@@ -63,23 +63,23 @@ describe('Wallet Others account', () => {
     cy.visit(`${urls.accounts}/${accounts.genesis.address}`);
     cy.wait('@requestAccountData');
     cy.wait(300);
-    cy.get(ss.followAccountBtn).contains('Bookmark account');
-    cy.get(ss.followAccountBtn).click();
+    cy.get(ss.bookmarkAccountBtn).contains('Bookmark account');
+    cy.get(ss.bookmarkAccountBtn).click();
     cy.get(ss.titleInput).type('Bob');
     cy.get(ss.confirmAddToBookmarks).click()
       .should(() => {
-        expect(getFollowedAccountObjFromLS().LSK[0].address).to.equal(accounts.genesis.address);
-        expect(getFollowedAccountObjFromLS().LSK[0].title).to.equal('Bob');
+        expect(getBookmaksObjFromLS().LSK[0].address).to.equal(accounts.genesis.address);
+        expect(getBookmaksObjFromLS().LSK[0].title).to.equal('Bob');
       });
     cy.route('/api/delegates?**').as('requestDelegatesData');
     cy.reload();
     cy.wait('@requestDelegatesData');
     cy.get(ss.accountName).contains('Bob');
-    cy.get(ss.followAccountBtn).contains('Account bookmarked');
-    cy.get(ss.followAccountBtn).click();
+    cy.get(ss.bookmarkAccountBtn).contains('Account bookmarked');
+    cy.get(ss.bookmarkAccountBtn).click();
     cy.get(ss.confirmAddToBookmarks).click()
       .should(() => {
-        expect(getFollowedAccountObjFromLS().LSK.length).to.equal(0);
+        expect(getBookmaksObjFromLS().LSK.length).to.equal(0);
       });
     cy.get(ss.accountName).contains('Account');
   });
@@ -89,8 +89,8 @@ describe('Wallet Others account', () => {
     cy.visit(`${urls.accounts}/${accounts.delegate.address}`);
     cy.wait('@requestAccountData');
     cy.wait(300);
-    cy.get(ss.followAccountBtn).contains('Bookmark account');
-    cy.get(ss.followAccountBtn).click();
+    cy.get(ss.bookmarkAccountBtn).contains('Bookmark account');
+    cy.get(ss.bookmarkAccountBtn).click();
     cy.get(ss.titleInput).type('Bob');
     cy.get(ss.titleInput).should('have.value', accounts.delegate.username);
   });

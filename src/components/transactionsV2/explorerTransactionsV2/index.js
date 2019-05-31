@@ -21,7 +21,7 @@ const mapStateToProps = (state, ownProps) => ({
   isSearchInStore: state.search.transactions[ownProps.address] !== undefined,
   loading: state.loading,
   account: state.account,
-  followedAccounts: state.followedAccounts,
+  bookmarks: state.bookmarks,
   wallets: state.wallets,
   peers: state.peers,
   detailAccount: state.search.accounts[state.search.lastSearch],

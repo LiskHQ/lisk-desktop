@@ -32,6 +32,12 @@ localStorage.setItem('liskCoreUrl', 'http://localhost:4000') // desired node to 
 localStorage.setItem('loginKey', 'wagon stock borrow episode laundry kitten salute link globe zero feed marble') // desired account passphrase
 ```
 
+When developing with hardware wallet, this will log you into to first account on the first connected hardware wallet:
+```
+localStorage.setItem('liskCoreUrl', 'http://localhost:4000') // desired node to log in into
+localStorage.setItem('hwWalletAutoLogin', true);
+```
+
 #### Build
 
 ```

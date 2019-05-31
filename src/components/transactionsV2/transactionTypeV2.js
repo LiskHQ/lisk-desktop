@@ -2,7 +2,7 @@ import React from 'react';
 import { translate } from 'react-i18next';
 import AccountVisual from '../accountVisual';
 import styles from './transactionTypeV2.css';
-import { getIndexOfFollowedAccount } from '../../utils/followedAccounts';
+import { getIndexOfBookmark } from '../../utils/bookmarks';
 import svg from '../../utils/svgIcons';
 import { getTokenFromAddress } from '../../utils/api/transactions';
 
@@ -42,13 +42,13 @@ const TransactionTypeV2 = (props) => { // eslint-disable-line complexity
   }
   const token = getTokenFromAddress(address);
 
-  const index = getIndexOfFollowedAccount(
-    props.followedAccounts,
+  const index = getIndexOfBookmark(
+    props.bookmarks,
     { address, token },
   );
   const hasTitle = index > -1;
-  const accountTitle = hasTitle && props.followedAccounts[token][index]
-    && props.followedAccounts[token][index].title;
+  const accountTitle = hasTitle && props.bookmarks[token][index]
+    && props.bookmarks[token][index].title;
 
   return (
     <div className={`${styles.transactionType} transaction-address`}>

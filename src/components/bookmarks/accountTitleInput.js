@@ -1,7 +1,7 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
-import styles from './followedAccounts.css';
+import styles from './bookmarks.css';
 
 const AccountTitleInput = ({
   t, title, onChange, className, disabled, hideLabel,

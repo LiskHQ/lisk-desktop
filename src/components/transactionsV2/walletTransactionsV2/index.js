@@ -23,7 +23,7 @@ const mapStateToProps = (state, ownProps) => ({
   count: state.transactions.count,
   activeFilter: state.filters.wallet || txFilters.all,
   loading: state.loading,
-  followedAccounts: state.followedAccounts,
+  bookmarks: state.bookmarks,
   wallets: state.wallets,
   peers: state.peers,
   balance: getActiveTokenAccount(state).balance,

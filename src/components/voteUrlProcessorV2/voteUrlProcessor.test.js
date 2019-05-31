@@ -19,12 +19,12 @@ describe('VoteUrlProcessor', () => {
       account,
       clearVoteLookupStatus: jest.fn(),
       urlVotesFound: jest.fn(),
-      notVotedYet: [],
-      notFound: [],
-      alreadyVoted: [],
-      upvotes: [],
-      unvotes: [],
-      pending: [],
+      voteLookupStatus: {
+        notVotedYet: [],
+        pending: [],
+        notFound: [],
+        alreadyVoted: [],
+      },
       history: {
         location,
         listen: callback => callback(location),
@@ -70,8 +70,8 @@ describe('VoteUrlProcessor', () => {
   });
 
   it('displays the selected votes', () => {
-    props.alreadyVoted = ['delegate_1', 'delegate_3'];
-    props.notFound = ['delegate_2'];
+    props.voteLookupStatus.alreadyVoted = ['delegate_1', 'delegate_3'];
+    props.voteLookupStatus.notFound = ['delegate_2'];
 
     wrapper = mount(<VoteUrlProcessor {...props} />);
 

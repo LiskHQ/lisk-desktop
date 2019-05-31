@@ -1,9 +1,9 @@
-import { getIndexOfFollowedAccount, getFollowedAccountsFromLocalStorage } from '../../utils/followedAccounts';
+import { getIndexOfBookmark, getBookmarksFromLocalStorage } from '../../utils/bookmarks';
 import actionTypes from '../../constants/actions';
 
-const followedAccounts = (state = getFollowedAccountsFromLocalStorage(), action) => {
+const bookmarks = (state = getBookmarksFromLocalStorage(), action) => {
   switch (action.type) {
-    case actionTypes.followedAccountAdded:
+    case actionTypes.bookmarkAdded:
       return {
         ...state,
         [action.data.token]: [
@@ -14,8 +14,8 @@ const followedAccounts = (state = getFollowedAccountsFromLocalStorage(), action)
         ],
       };
 
-    case actionTypes.followedAccountUpdated: {
-      const indexOfAccount = getIndexOfFollowedAccount(state, {
+    case actionTypes.bookmarkUpdated: {
+      const indexOfAccount = getIndexOfBookmark(state, {
         address: action.data.account.address,
         token: action.data.token,
       });
@@ -35,7 +35,7 @@ const followedAccounts = (state = getFollowedAccountsFromLocalStorage(), action)
         [action.data.token]: accounts,
       };
     }
-    case actionTypes.followedAccountRemoved:
+    case actionTypes.bookmarkRemoved:
       return {
         ...state,
         [action.data.token]:
@@ -47,4 +47,4 @@ const followedAccounts = (state = getFollowedAccountsFromLocalStorage(), action)
   }
 };
 
-export default followedAccounts;
+export default bookmarks;

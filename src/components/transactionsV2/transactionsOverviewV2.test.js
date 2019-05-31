@@ -33,7 +33,7 @@ describe('TransactionsOverview V2', () => {
   const store = configureMockStore([])({
     peers,
     account: accounts.genesis,
-    followedAccounts: {
+    bookmarks: {
       LSK: [],
       BTC: [],
     },
@@ -46,7 +46,7 @@ describe('TransactionsOverview V2', () => {
     onLoadMore: spy(),
     onFilterSet: spy(),
     account: accounts.genesis,
-    followedAccounts: {
+    bookmarks: {
       LSK: [],
       BTC: [],
     },

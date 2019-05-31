@@ -14,7 +14,7 @@ import { tokenMap } from '../../../constants/tokens';
 describe('Transactions Overview Header', () => {
   let wrapper;
   const store = configureMockStore([thunk])({
-    followedAccounts: {
+    bookmarks: {
       LSK: [],
       BTC: [],
     },
@@ -38,7 +38,7 @@ describe('Transactions Overview Header', () => {
 
   const props = {
     account: accounts.genesis,
-    followedAccounts: {
+    bookmarks: {
       LSK: [],
       BTC: [],
     },
@@ -62,9 +62,9 @@ describe('Transactions Overview Header', () => {
     });
 
     it('Should render bookmark title instead of Wallet if address is in user bookmark', () => {
-      const followingProps = {
+      const bookmarkProps = {
         ...props,
-        followedAccounts: {
+        bookmarks: {
           LSK: [{
             ...props.account,
             title: 'Some Title',
@@ -73,7 +73,7 @@ describe('Transactions Overview Header', () => {
         },
       };
       wrapper = mount(<MemoryRouter>
-        <TransactionHeader {...followingProps} />
+        <TransactionHeader {...bookmarkProps} />
       </MemoryRouter>, options);
       const accountInfo = wrapper.find('.accountInfo');
       expect(accountInfo.text()).to.includes('Some Title');
@@ -103,11 +103,11 @@ describe('Transactions Overview Header', () => {
     });
 
     it('Should toggle bookmark dropdown', () => {
-      expect(wrapper.find('.follow-account')).to.not.have.descendants('.show');
-      wrapper.find('.follow-account button').first().simulate('click');
-      expect(wrapper.find('.follow-account')).to.have.descendants('.show');
-      wrapper.find('.follow-account button').first().simulate('click');
-      expect(wrapper.find('.follow-account')).to.not.have.descendants('.show');
+      expect(wrapper.find('.bookmark-account')).to.not.have.descendants('.show');
+      wrapper.find('.bookmark-account button').first().simulate('click');
+      expect(wrapper.find('.bookmark-account')).to.have.descendants('.show');
+      wrapper.find('.bookmark-account button').first().simulate('click');
+      expect(wrapper.find('.bookmark-account')).to.not.have.descendants('.show');
     });
   });
 });

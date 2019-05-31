@@ -4,18 +4,26 @@ import TransactionSummary from './index';
 import accounts from '../../../test/constants/accounts';
 
 describe('TransactionSummary', () => {
-  const props = {
-    title: 'mock title',
-    account: {},
-    confirmButton: {
-      label: 'Confirm',
-      onClick: jest.fn(),
-    },
-    cancelButton: {
-      label: 'Cancel',
-    },
-    t: key => key,
+  let props;
+  const hwInfo = {
+    deviceModel: 'Trezor Model T',
+    deviceId: 'mock id',
   };
+
+  beforeEach(() => {
+    props = {
+      title: 'mock title',
+      account: {},
+      confirmButton: {
+        label: 'Confirm',
+        onClick: jest.fn(),
+      },
+      cancelButton: {
+        label: 'Cancel',
+      },
+      t: key => key,
+    };
+  });
 
   it('should render title', () => {
     const wrapper = mount(<TransactionSummary {...props}/>);
@@ -45,16 +53,26 @@ describe('TransactionSummary', () => {
   it('should render hw wallet confirmation if props.acount.hwInfo', () => {
     const wrapper = mount(<TransactionSummary {...{
       ...props,
-      account: {
-        hwInfo: {
-          deviceModel: 'Trezor Model T',
-          deviceId: 'mock id',
-        },
-      },
+      account: { hwInfo },
       }}/>);
     expect(wrapper.find('h1')).toHaveLength(1);
     expect(wrapper.find('.confirm-button')).toHaveLength(0);
     expect(props.confirmButton.onClick).toHaveBeenCalled();
+  });
+
+  it('should not render hw wallet confirmation if props.acount.hwInfo and props.confirmButton.disabled', () => {
+    const wrapper = mount(<TransactionSummary {...{
+      ...props,
+      confirmButton: {
+        ...props.confirmButton,
+        disabled: true,
+      },
+      account: { hwInfo },
+      }}/>);
+    expect(wrapper.find('h1')).toHaveLength(1);
+    expect(wrapper.find('.confirm-button')).toHaveLength(0);
+    expect(props.confirmButton.onClick).not.toHaveBeenCalled();
+    wrapper.unmount();
   });
 });
 

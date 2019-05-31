@@ -45,7 +45,7 @@ describe('Form', () => {
         LSK: accounts.genesis,
       },
     },
-    followedAccounts: {
+    bookmarks: {
       LSK: [
         {
           title: 'ABC',
@@ -97,7 +97,7 @@ describe('Form', () => {
     prevState: {
       fields: {},
     },
-    followedAccounts: {
+    bookmarks: {
       LSK: [{
         title: 'ABC',
         address: '12345L',

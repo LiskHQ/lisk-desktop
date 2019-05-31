@@ -33,8 +33,8 @@ class Bookmark extends React.Component {
   }
 
   getFilterList() {
-    const { followedAccounts, recipient, token } = this.props;
-    const accounts = followedAccounts[token];
+    const { bookmarks, recipient, token } = this.props;
+    const accounts = bookmarks[token];
 
     if (recipient.value === '') return accounts;
 

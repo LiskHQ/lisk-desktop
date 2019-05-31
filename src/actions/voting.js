@@ -10,9 +10,10 @@ import { updateDelegateCache } from '../utils/delegates';
 import { voteWithHW } from '../utils/api/hwWallet';
 import { passphraseUsed } from './account';
 import { addPendingTransaction } from './transactions';
+import { errorToastDisplayed } from './toaster';
 import Fees from '../constants/fees';
+import votingConst from '../constants/voting';
 import actionTypes from '../constants/actions';
-import transactionTypes from '../constants/transactionTypes';
 import { loginType } from '../constants/hwConstants';
 
 /**
@@ -74,21 +75,13 @@ export const clearVotes = () => ({
   type: actionTypes.votesCleared,
 });
 
-const handleVoteError = ({ error, account }) => {
-  let text;
-  switch (account.loginType) {
-    case loginType.normal:
-      text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while placing your vote.');
-      break;
-    /* istanbul ignore next */
-    case loginType.ledger:
-      text = i18next.t('You have cancelled voting on your hardware wallet.');
-      break;
-    /* istanbul ignore next */
-    default:
-      text = error.message;
+const handleVoteError = ({ error }) => {
+  if (error && error.message) {
+    return error.message;
+  } else if (typeof error === 'string') {
+    return error;
   }
-  return text;
+  return i18next.t('An error occurred while placing your vote.');
 };
 
 /**
@@ -116,6 +109,19 @@ export const votePlaced = ({
       }
     });
 
+    if (account.balance < Fees.vote) {
+      dispatch(errorToastDisplayed({
+        label: i18next.t('Not enough LSK to pay for the transaction.'),
+      }));
+      return;
+    }
+    if (unvotedList.length + votedList > votingConst.maxCountOfVotes) {
+      dispatch(errorToastDisplayed({
+        label: i18next.t('Max amount of delegates in one voting exceeded.'),
+      }));
+      return;
+    }
+
     switch (account.loginType) {
       case loginType.normal:
         [error, callResult] = await to(vote(
@@ -127,7 +133,7 @@ export const votePlaced = ({
       // eslint-disable-next-line no-case-declarations
       case loginType.ledger:
         [error, callResult] =
-          await to(voteWithHW(liskAPIClient, account, votedList, unvotedList, secondPassphrase));
+          await to(voteWithHW(liskAPIClient, account, votedList, unvotedList));
         break;
       /* istanbul ignore next */
       default:
@@ -135,18 +141,17 @@ export const votePlaced = ({
     }
 
     if (error) {
-      goToNextStep({ success: false, text: handleVoteError({ error, account, dispatch }) });
+      goToNextStep({
+        success: false,
+        errorMessage: error.message,
+        text: handleVoteError({ error }),
+      });
     } else {
       dispatch(pendingVotesAdded());
-      dispatch(addPendingTransaction({
-        id: callResult.id,
-        senderPublicKey: account.publicKey,
-        senderId: account.address,
-        amount: 0,
-        fee: Fees.vote,
-        type: transactionTypes.vote,
+      callResult.map(transaction => dispatch(addPendingTransaction({
+        ...transaction,
         token: 'LSK',
-      }));
+      })));
       dispatch(passphraseUsed(passphrase));
       goToNextStep({ success: true });
     }

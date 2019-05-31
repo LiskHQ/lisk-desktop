@@ -52,7 +52,7 @@ export default class VoteUrlProcessor extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, voteLookupStatus } = this.props;
     const sections = {
       pending: t('Processing...'),
       notFound: t('Check spelling – delegate name does not exist'),
@@ -61,11 +61,11 @@ export default class VoteUrlProcessor extends React.Component {
 
     return <React.Fragment>
       {Object.keys(sections).map((list, key) => (
-        this.props[list].length ? (
+        voteLookupStatus[list].length ? (
           <section key={key} className={`${list}-message`}>
-            <label> {sections[list]} ({this.props[list].length}) </label>
+            <label> {sections[list]} ({voteLookupStatus[list].length}) </label>
             <label className={styles.votesContainer}>
-              {this.props[list].map(vote => (
+              {voteLookupStatus[list].map(vote => (
                <span key={vote} className={`${styles.voteTag} vote`}>
                 <span className={styles.username}>{vote}</span>
                </span>

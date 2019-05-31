@@ -25,7 +25,7 @@ class RecentTransactions extends Component {
   render() {
     const {
       account,
-      followedAccounts,
+      bookmarks,
       settings,
       t,
     } = this.props;
@@ -42,7 +42,7 @@ class RecentTransactions extends Component {
         ? <TransactionList
             account={account}
             activeToken={activeToken.key}
-            followedAccounts={followedAccounts}
+            bookmarks={bookmarks}
             transactions={transactionList}
             t={t}/>
         : <EmptyState

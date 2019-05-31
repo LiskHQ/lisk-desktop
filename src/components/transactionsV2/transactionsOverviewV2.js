@@ -83,7 +83,7 @@ class TransactionsOverviewV2 extends React.Component {
           results={this.props.count}
           t={this.props.t} /> : null}
         <TransactionsListV2
-          followedAccounts={this.props.followedAccounts}
+          bookmarks={this.props.bookmarks}
           canLoadMore={this.props.canLoadMore}
           transactions={this.props.transactions}
           filter={filters[this.props.activeFilter]}
@@ -101,7 +101,7 @@ class TransactionsOverviewV2 extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  followedAccounts: state.followedAccounts,
+  bookmarks: state.bookmarks,
   peers: state.peers,
   account: state.account,
 });

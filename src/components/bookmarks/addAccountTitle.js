@@ -1,6 +1,6 @@
 import React from 'react';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
-import styles from './followedAccounts.css';
+import styles from './bookmarks.css';
 import TitleInput from './accountTitleInput';
 import Piwik from '../../utils/piwik';
 import BoxV2 from '../boxV2';
@@ -34,14 +34,14 @@ class AddAccountTitle extends React.Component {
     } = this.props;
     const title = this.state.title.value;
     const isDelegate = this.state.title.isDelegate;
-    const followAccount = {
+    const bookmark = {
       title,
       address,
       isDelegate,
       publicKey: account.publicKey || null,
     };
 
-    addAccount({ account: followAccount });
+    addAccount({ account: bookmark });
     prevStep({ reset: true });
   }
 

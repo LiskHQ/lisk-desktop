@@ -7,7 +7,7 @@ import Form from './form';
 
 const mapStateToProps = state => ({
   account: state.account,
-  followedAccounts: state.followedAccounts,
+  bookmarks: state.bookmarks,
   token: localStorage.getItem('btc') ? (state.settings.token && state.settings.token.active) : tokenMap.LSK.key,
   dynamicFees: state.service.dynamicFees,
 });

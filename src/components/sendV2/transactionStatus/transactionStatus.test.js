@@ -20,7 +20,7 @@ describe('TransactionStatus', () => {
     transactions: {
       failed: undefined,
     },
-    followedAccounts: {
+    bookmarks: {
       LSK: [],
     },
     search: {
@@ -41,7 +41,7 @@ describe('TransactionStatus', () => {
     finalCallback: jest.fn(),
     failedTransactions: undefined,
     transactionFailedClear: jest.fn(),
-    followedAccounts: {
+    bookmarks: {
       LSK: [],
     },
     delegates: {},
@@ -86,24 +86,24 @@ describe('TransactionStatus', () => {
     expect(props.finalCallback).toBeCalled();
   });
 
-  it('should show dropdown follow account', () => {
-    expect(wrapper).toContainMatchingElement('.following-container');
-    expect(wrapper).toContainMatchingElement('.following-btn');
-    expect(wrapper.find('.following-btn').at(0).text()).toEqual('Bookmark account');
-    wrapper.find('.following-btn').at(0).simulate('click');
+  it('should show dropdown bookmark', () => {
+    expect(wrapper).toContainMatchingElement('.bookmark-container');
+    expect(wrapper).toContainMatchingElement('.bookmark-btn');
+    expect(wrapper.find('.bookmark-btn').at(0).text()).toEqual('Bookmark account');
+    wrapper.find('.bookmark-btn').at(0).simulate('click');
     wrapper.find('input[name="accountName"]').simulate('change', { target: { name: 'accountName', value: 'ABC' } });
     wrapper.find('button').last().simulate('click');
     wrapper.setProps({
       ...props,
-      followedAccounts: {
+      bookmarks: {
         LSK: [{
           address: '123123L',
         }],
       },
     });
     wrapper.update();
-    expect(wrapper.find('.following-btn').at(0).text()).toEqual('Account bookmarked');
-    wrapper.find('.following-btn').at(0).simulate('click');
+    expect(wrapper.find('.bookmark-btn').at(0).text()).toEqual('Account bookmarked');
+    wrapper.find('.bookmark-btn').at(0).simulate('click');
   });
 
   it('should render error message in case of transaction failed', () => {

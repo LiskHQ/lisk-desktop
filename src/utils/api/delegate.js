@@ -16,6 +16,23 @@ export const listDelegates = (liskAPIClient, options) => new Promise((resolve, r
 export const getDelegate = (liskAPIClient, options) =>
   liskAPIClient.delegates.get(options);
 
+
+export const splitVotesIntoRounds = ({ votes, unvotes }) => {
+  const rounds = [];
+  const maxCountOfVotesInOneTurn = 33;
+  while (votes.length + unvotes.length > 0) {
+    const votesLength = Math.min(
+      votes.length,
+      maxCountOfVotesInOneTurn - Math.min(unvotes.length, 16),
+    );
+    rounds.push({
+      votes: votes.splice(0, votesLength),
+      unvotes: unvotes.splice(0, maxCountOfVotesInOneTurn - votesLength),
+    });
+  }
+  return rounds;
+};
+
 export const vote = (
   liskAPIClient,
   passphrase,
@@ -24,19 +41,24 @@ export const vote = (
   unvotes,
   secondPassphrase,
   timeOffset,
-) => {
-  const transaction = Lisk.transaction.castVotes({
-    votes,
-    unvotes,
-    passphrase,
-    secondPassphrase,
-    timeOffset,
-  });
-  return new Promise((resolve, reject) => {
-    liskAPIClient.transactions.broadcast(transaction)
-      .then(() => resolve(transaction)).catch(reject);
-  });
-};
+) => (
+  Promise.all(splitVotesIntoRounds({
+    votes: [...votes],
+    unvotes: [...unvotes],
+  }).map(({ votes, unvotes }) => { // eslint-disable-line no-shadow
+    const transaction = Lisk.transaction.castVotes({
+      votes,
+      unvotes,
+      passphrase,
+      secondPassphrase,
+      timeOffset,
+    });
+    return new Promise((resolve, reject) => {
+      liskAPIClient.transactions.broadcast(transaction)
+        .then(() => resolve(transaction)).catch(reject);
+    });
+  }))
+);
 
 export const getVotes = (liskAPIClient, { address, offset, limit }) =>
   liskAPIClient.votes.get({ address, limit, offset });
