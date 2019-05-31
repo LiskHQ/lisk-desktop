@@ -14,6 +14,13 @@ describe('Setting', () => {
     showNetwork: false,
     currency: undefined,
     statistics: false,
+    token: {
+      list: {
+        BTC: true,
+        LSK: true,
+      },
+      active: 'LSK',
+    },
   };
 
   const account = {
