@@ -5,7 +5,11 @@ import voteFilters from './../../constants/voteFilters';
 import DelegateListV2 from './delegateListV2';
 import ProgressBar from '../toolbox/progressBar/progressBar';
 import Tooltip from '../toolbox/tooltip/tooltip';
-import { getTotalVotesCount, getPendingVotesList } from './../../utils/voting';
+import {
+  getTotalVotesCount,
+  getPendingVotesList,
+  getVotedList,
+} from './../../utils/voting';
 import BoxV2 from '../boxV2';
 
 // Create a new Table component injecting Head and Row
@@ -169,8 +173,12 @@ class VotingListViewV2 extends React.Component {
               voteToggled={voteToggled}
               shouldLoadMore={
                 filteredList.length > 0 &&
-                delegates.length % 101 === 0 &&
-                this.state.activeFilter !== voteFilters.voted
+                (
+                  (this.state.activeFilter !== voteFilters.voted &&
+                    delegates.length % 101 === 0) ||
+                  (this.state.activeFilter === voteFilters.voted &&
+                    filteredList.length < getVotedList(votes).length)
+                )
               }
               safari={this.state.safariClass}
               loadMore={this.loadMore.bind(this)} />
