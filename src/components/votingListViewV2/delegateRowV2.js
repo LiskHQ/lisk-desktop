@@ -78,7 +78,7 @@ class DelegateRowV2 extends React.Component {
         </div>
         <div className={`${grid[shouldShowVoteColumn ? 'col-md-3' : 'col-md-4']} ${grid['col-xs-3']} ${styles.productivity} delegate-productivity`}>{data.productivity} %</div>
         <div className={`${grid['col-md-4']} ${styles.weight} vote-weight`}>
-          <LiskAmount val={data.vote} /> {this.props.t(' LSK')}
+          <LiskAmount val={data.vote} />&nbsp;{this.props.t('LSK')}
         </div>
       </TableRow>
     );
