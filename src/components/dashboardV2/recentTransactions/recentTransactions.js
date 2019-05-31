@@ -6,6 +6,7 @@ import EmptyState from '../../emptyStateV2';
 import svg from '../../../utils/svgIcons';
 import links from '../../../constants/externalLinks';
 import { tokenMap } from '../../../constants/tokens';
+import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import styles from './recentTransactions.css';
 
 class RecentTransactions extends Component {
@@ -45,14 +46,22 @@ class RecentTransactions extends Component {
             bookmarks={bookmarks}
             transactions={transactionList}
             t={t}/>
-        : <EmptyState
-            activeToken={activeToken.key}
-            title={t('No Transactions Yet')}
-            description={t('A great way to start is to top up your account with some {{value}} tokens.', { value: activeToken.key })}
-            icon={svg.icon_empty_recent_transactions}
-            btnText={t('Learn more')}
-            btnExternalUrl={links.outgoingTransactions}
-          />
+        : <EmptyState>
+            <img src={svg.icon_empty_recent_transactions} />
+            <h1>{t('No Transactions Yet')}</h1>
+            <p>{t('A great way to start is to top up your account with some {{value}} tokens.', { value: activeToken.key })}</p>
+            <div>
+            {
+              activeToken.key === 'LSK' // TODO this validation should be remove once we have the external link for BTC
+              ? <a href={links.outgoingTransactions}
+                  rel="noopener noreferrer"
+                  target="_blank">
+                  <SecondaryButtonV2>{t('Learn more')}</SecondaryButtonV2>
+                </a>
+              : null
+            }
+            </div>
+          </EmptyState>
       }
       </Box>
     );

@@ -1,0 +1,68 @@
+@import '../app/variablesV2.css';
+@import '../app/mixins.css';
+
+.tab {
+  border-bottom: none !important;
+}
+
+.box {
+  width: 100%;
+  max-width: 321px;
+
+  & .bookmarkList {
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 20px;
+
+    & > .row {
+      width: 100%;
+      height: auto;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--color-mystic);
+      cursor: pointer;
+
+      & .description {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        margin-left: 15px;
+
+        & > span:first-child {
+          @mixin headingSmall;
+
+          color: var(--color-maastricht-blue);
+        }
+
+        & > span:last-child {
+          @mixin contentNormal;
+
+          color: var(--color-slate-gray);
+        }
+      }
+    }
+
+    & > div:nth-last-child(2) {
+      border-bottom: 0;
+    }
+
+    & .footer {
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px 0;
+    }
+  }
+}
