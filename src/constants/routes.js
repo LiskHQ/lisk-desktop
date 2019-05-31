@@ -8,9 +8,8 @@ import SignMessage from '../components/signMessage';
 import SearchResult from '../components/searchResult';
 import TransactionDashboard from '../components/transactionDashboard';
 import AccountTransactions from '../components/accountTransactions';
-import Voting from '../components/voting';
-import DelegatesV2 from '../components/delegatesV2';
-import VotingV2 from '../components/votingV2';
+import Delegates from '../components/delegatesV2';
+import Voting from '../components/votingV2';
 import SingleTransaction from '../components/singleTransactionV2';
 import HwWalletLogin from '../components/hwWalletLogin';
 // import NotFound from '../components/notFound';
@@ -50,19 +49,14 @@ export default {
     component: SendV2,
     isPrivate: true,
   },
-  delegates: {
-    path: '/delegates',
+  voting: {
+    path: '/delegates/vote',
     component: Voting,
     isPrivate: true,
   },
-  voting: {
-    path: '/delegatesV2/vote',
-    component: VotingV2,
-    isPrivate: true,
-  },
-  delegatesV2: {
-    path: '/delegatesV2',
-    component: DelegatesV2,
+  delegates: {
+    path: '/delegates',
+    component: Delegates,
     isPrivate: false,
   },
   help: {

@@ -21,6 +21,8 @@ describe('CustomRoute', () => {
     settings: {
       statistics: false,
     },
+    networkIsSet: true,
+    accountLoading: false,
   };
   const options = {
     context: { store, history, i18n },

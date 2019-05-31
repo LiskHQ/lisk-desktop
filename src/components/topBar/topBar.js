@@ -73,13 +73,10 @@ class TopBar extends React.Component {
   }
 
   render() {
-    const { t, showDelegate, account } = this.props;
+    const { t, account } = this.props;
     const { openDropdown } = this.state;
 
-    const menuItems = menuLinks(t);
-    const items = showDelegate
-      ? menuItems
-      : menuItems.filter(item => item.id !== 'delegates');
+    const items = menuLinks(t);
     const isUserLogout = Object.keys(account).length === 0 || account.afterLogout;
     const isUserDataFetched = (account.balance) || account.balance === 0;
 
