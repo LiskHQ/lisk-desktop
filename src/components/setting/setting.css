@@ -10,6 +10,7 @@
 
 .wrapper {
   max-width: 720px;
+  overflow: initial;
   width: 100%;
 }
 
@@ -69,6 +70,11 @@
     &.highlight {
       color: var(--color-maastricht-blue);
     }
+  }
+
+  & .disabled {
+    pointer-events: none;
+    opacity: 0.4;
   }
 
   & .hide {
