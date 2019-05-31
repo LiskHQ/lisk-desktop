@@ -22,6 +22,15 @@ class Setting extends React.Component {
     this.setCurrency = this.setCurrency.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.toggleAutoLog = this.toggleAutoLog.bind(this);
+    this.handleTokenToggle = this.handleTokenToggle.bind(this);
+  }
+
+  handleTokenToggle({ target: { name } }) {
+    const { settings } = this.props;
+    const newSettings = {
+      token: { list: { [name]: !settings.token.list[name] } },
+    };
+    this.onUpdateSettings(newSettings);
   }
 
   toggleAutoLog({ target }) {
@@ -135,6 +144,18 @@ class Setting extends React.Component {
                 <div>
                   <span className={styles.labelName}>{t('Network switcher')}</span>
                   <p>{t('Enable a network switcher that lets you select testnet or custom node when logging in.')}</p>
+                </div>
+              </label>
+              <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+                <CheckBox
+                  name={'BTC'}
+                  className={`${styles.checkbox} enableBTC`}
+                  checked={settings.token.list.BTC}
+                  onChange={this.handleTokenToggle}
+                />
+                <div>
+                  <span className={styles.labelName}>{t('BTC token')}</span>
+                  <p>{t('By enabling it, you will be able to manage your BTC tokens inside the application.')}</p>
                 </div>
               </label>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
