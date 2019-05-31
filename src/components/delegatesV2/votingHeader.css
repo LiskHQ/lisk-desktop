@@ -19,6 +19,7 @@
   display: inline-block;
   padding: 7px 10px;
   margin-right: 20px;
+  margin-top: 10px;
   color: var(--color-slate-gray);
 
   & b {
@@ -29,7 +30,7 @@
   & h2 {
     @mixin headingLarge;
 
-    margin: 5px 0;
+    margin: -2px 0;
     color: var(--color-maastricht-blue);
   }
 
@@ -68,7 +69,7 @@
 
 .btn {
   margin-left: 25px;
-  margin-top: 15px;
+  margin-top: 25px;
 }
 
 @media (--medium-viewport) {

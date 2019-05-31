@@ -13,7 +13,7 @@ describe('Delegates', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
     cy.url().should('contain', urls.delegates);
-    cy.get(ss.votesConfirmSidebar).find(ss.nextBtn);
+    cy.get(ss.votingHeader).find(ss.startVotingButton);
   });
 
   /**
@@ -21,13 +21,12 @@ describe('Delegates', () => {
    * @expect url is correct
    * @expect some specific to page element is present on it
    */
-  it('opens by sidebar button', () => {
-    cy.addObjectToLocalStorage('settings', 'advancedMode', true);
+  it('opens by top bar button', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
     cy.get(ss.sidebarMenuDelegatesBtn).should('have.css', 'opacity', '1').click();
     cy.url().should('contain', urls.delegates);
-    cy.get(ss.votesConfirmSidebar).find(ss.nextBtn);
+    cy.get(ss.votingHeader).find(ss.startVotingButton);
   });
 
   /**
@@ -57,12 +56,12 @@ describe('Delegates', () => {
    * Scrolling down triggers loading another portion of delegates
    * @expect more delegates are present
    */
-  it('Displays 100 delegates and loads more as I scroll to bottom', () => {
+  it('Displays 101 delegates and loads more as I scroll to bottom', () => {
     cy.autologin(accounts.genesis.passphrase, networks.testnet.node);
     cy.visit(urls.delegates);
     cy.get(ss.delegateName);
-    cy.get(ss.delegateList).scrollTo('bottom');
-    cy.get(ss.delegateRow).should('have.length', 200);
+    cy.get(ss.loadMoreButton).click();
+    cy.get(ss.delegateRow).should('have.length', 202);
   });
 
   /**
@@ -73,7 +72,7 @@ describe('Delegates', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
     cy.get(ss.delegateRow).eq(0).as('dg');
-    cy.get('@dg').find(ss.delegateRank).should('have.text', '1');
+    cy.get('@dg').find(ss.delegateRank).should('have.text', '#1');
     cy.get('@dg').find(ss.delegateName).contains(/genesis_\d+/);
     cy.get('@dg').find(ss.delegateId).contains(/\d+L/);
     cy.get('@dg').find(ss.delegateProductivity).contains(/\d+ %/);
@@ -119,7 +118,7 @@ describe('Delegates', () => {
     cy.get(ss.searchDelegateInput).click().clear();
     // Filter All
     cy.get(ss.filterAll).click();
-    cy.get(ss.delegateRow).should('have.length', 100);
+    cy.get(ss.delegateRow).should('have.length', 101);
     cy.get(ss.searchDelegateInput).click().type('genesis_51');
     cy.get(ss.delegateRow).should('have.length', 1);
   });

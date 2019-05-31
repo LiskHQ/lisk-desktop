@@ -1,4 +1,27 @@
+const delegatesPage = {
+  totalVotingNumber: '.total-voting-number',
+  startVotingButton: '.start-voting-button',
+  addedVotesCount: '.added-votes-count',
+  removedVotesCount: '.removed-votes-count',
+  goToConfirmationButton: '.go-to-confirmation-button',
+  votingHeader: '.voting-header',
+};
+
+const votingPage = {
+  addedVotes: '.added-votes .vote',
+  removedVotes: '.removed-votes .vote',
+  confirmVotingButton: '.confirm-button',
+  voteResultHeader: '.result-box-header',
+  backToDelegatesButton: '.back-to-delegates-button',
+  alreadyVotedPreselection: '.alreadyVoted-message',
+  addedVotesContainer: '.added-votes',
+  becomeDelegateLink: '.register-delegate',
+  loadMoreButton: '.loadMore',
+};
+
 const ss = {
+  ...delegatesPage,
+  ...votingPage,
   app: '#app',
   transactionsTable: '.transaction-results',
   transactionRow: '.transactions-row',
@@ -26,8 +49,6 @@ const ss = {
   votedAddress: '.votes .voter-address',
   voteRow: '.vote-row',
   accountAddress: '.account-address',
-  selectionVotingNumber: '.selection h4',
-  totalVotingNumber: '.total h4',
   showMoreVotesBtn: '.show-votes',
   leftBlockAccountExplorer: '.explorer-account-left-block',
   amountInput: '.amount input',
@@ -103,8 +124,6 @@ const ss = {
   accountInitializationMsg: '.account-initialization',
   accountInitializationBtn: '.account-init-button',
   sidebarMenuDelegatesBtn: '#delegates',
-  becomeDelegateLink: '.register-delegate',
-  votesConfirmSidebar: '.confirm-votes',
   confirmBtn: '.confirm',
   delegateRow: '.delegate-row',
   delegateList: '.delegate-list',
@@ -116,11 +135,7 @@ const ss = {
   delegateProductivity: '.delegate-productivity',
   searchDelegateInput: 'input.search',
   voteCheckbox: '.vote-checkbox',
-  voteResultHeader: '.result-box-header',
   clearSearchBtn: '.clean-icon',
-  votesPreselection: '.upvotes-message',
-  unvotesPreselection: '.unvotes-message',
-  alreadyVotedPreselection: '.alreadyVoted-message',
   addBookmarkAccountButton: '.add-account-button',
   bookmarkAccountItem: '.bookmark-account',
   titleInput: '.account-title input',
