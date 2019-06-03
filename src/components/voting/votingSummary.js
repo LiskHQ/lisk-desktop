@@ -35,7 +35,7 @@ const VotingSummary = ({
             votes,
             passphrase: account.passphrase,
             secondPassphrase,
-            goToNextStep: ({ success, text, errorMessage }) => {
+            callback: ({ success, text, errorMessage }) => {
               nextStep({
                 success,
                 ...(success ? {

@@ -32,7 +32,7 @@ describe('VotingV2', () => {
       notFound: [],
       alreadyVoted: [],
     },
-    votePlaced: ({ goToNextStep }) => goToNextStep(voteResult),
+    votePlaced: ({ callback }) => callback(voteResult),
     t: key => key,
     history: { push: jest.fn() },
   };
