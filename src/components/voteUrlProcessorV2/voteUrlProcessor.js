@@ -2,7 +2,7 @@ import React from 'react';
 import { parseSearchParams } from '../../utils/searchParams';
 import routes from '../../constants/routes';
 
-import styles from '../voting/voting.css';
+import styles from '../voting/voteList.css';
 
 export default class VoteUrlProcessor extends React.Component {
   constructor(props) {

@@ -11,6 +11,7 @@ import routes from '../../constants/routes';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import links from '../../constants/externalLinks';
 import VoteUrlProcessor from '../voteUrlProcessorV2';
+import VoteList from './voteList';
 
 import styles from './voting.css';
 
@@ -103,36 +104,8 @@ const VotingSummary = ({
         account={account}
         votes={votes}
         voteLookupStatus={voteLookupStatus}/>
-      {voteList.length > 0 ?
-        <section>
-          <label>{t('Added votes')} ({voteList.length})</label>
-          <label>
-            <div className={`${styles.votesContainer} added-votes`} >
-              {voteList.map(vote => (
-               <span key={vote} className={`${styles.voteTag} vote`}>
-                <span className={styles.rank}>#{votes[vote].rank}</span>
-                <span className={styles.username}>{vote}</span>
-               </span>
-              ))}
-            </div>
-          </label>
-        </section> :
-        null }
-      {unvoteList.length > 0 ?
-        <section>
-          <label>{t('Removed votes')} ({unvoteList.length})</label>
-          <label>
-            <div className={`${styles.votesContainer} removed-votes`} >
-              {unvoteList.map(vote => (
-               <span key={vote} className={`${styles.voteTag} vote`}>
-                <span className={styles.rank}>#{votes[vote].rank}</span>
-                <span className={styles.username}>{vote}</span>
-               </span>
-              ))}
-            </div>
-          </label>
-        </section> :
-        null }
+      <VoteList title={t('Added votes')} list={voteList} votes={votes} />
+      <VoteList title={t('Removed votes')} list={unvoteList} votes={votes} />
     </TransactionSummary>
   );
 };
