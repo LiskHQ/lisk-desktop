@@ -8,12 +8,8 @@ import {
   getTotalActions,
 } from '../../utils/voting';
 import routes from '../../constants/routes';
-import Tooltip from '../toolbox/tooltip/tooltip';
-import links from '../../constants/externalLinks';
 import VoteUrlProcessor from './voteUrlProcessor';
 import VoteList from './voteList';
-
-import styles from './voting.css';
 
 const VotingSummary = ({
   t, votes, history, account, nextStep, votePlaced, prevStep, voteLookupStatus,
@@ -72,34 +68,8 @@ const VotingSummary = ({
           history.push(routes.delegates.path);
         },
       }}
+      fee={fee * totalActions}
       title={t('Voting summary')} >
-      <section>
-        <label>{t('Votes after confirmation')}</label>
-        <label>{getTotalVotesCount(votes)}/{maxCountOfVotes}</label>
-      </section>
-      <section>
-        <label>
-          {t('Transaction fee')}
-          <Tooltip
-            title={t('Transaction fee')}
-            footer={
-              <a href={links.transactionFee}
-                rel="noopener noreferrer"
-                target="_blank">
-                  {t('Read More')}
-              </a>
-            }
-          >
-            <p className={styles.tooltipText}>
-            {
-              t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
-                  Such operations require hardware resources and because of that there is a small fee for processing those.`)
-            }
-            </p>
-          </Tooltip>
-        </label>
-        <label> {fee * totalActions} LSK </label>
-      </section>
       <VoteUrlProcessor
         account={account}
         votes={votes}
@@ -114,6 +84,10 @@ const VotingSummary = ({
         className='removed-votes'
         list={unvoteList}
         votes={votes} />
+      <section>
+        <label>{t('Votes after confirmation')}</label>
+        <label>{getTotalVotesCount(votes)}/{maxCountOfVotes}</label>
+      </section>
     </TransactionSummary>
   );
 };
