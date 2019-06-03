@@ -1,8 +1,7 @@
 import React from 'react';
 import { parseSearchParams } from '../../utils/searchParams';
 import routes from '../../constants/routes';
-
-import styles from '../voting/voteList.css';
+import VoteList from '../voting/voteList';
 
 export default class VoteUrlProcessor extends React.Component {
   constructor(props) {
@@ -52,7 +51,7 @@ export default class VoteUrlProcessor extends React.Component {
   }
 
   render() {
-    const { t, voteLookupStatus } = this.props;
+    const { t, voteLookupStatus, votes } = this.props;
     const sections = {
       pending: t('Processing...'),
       notFound: t('Check spelling – delegate name does not exist'),
@@ -62,16 +61,12 @@ export default class VoteUrlProcessor extends React.Component {
     return <React.Fragment>
       {Object.keys(sections).map((list, key) => (
         voteLookupStatus[list].length ? (
-          <section key={key} className={`${list}-message`}>
-            <label> {sections[list]} ({voteLookupStatus[list].length}) </label>
-            <label className={styles.votesContainer}>
-              {voteLookupStatus[list].map(vote => (
-               <span key={vote} className={`${styles.voteTag} vote`}>
-                <span className={styles.username}>{vote}</span>
-               </span>
-              ))}
-            </label>
-        </section>
+          <VoteList
+            title={sections[list]}
+            list={voteLookupStatus[list]}
+            votes={votes}
+            key={key}
+          />
         ) : null
       ))}
     </React.Fragment>;

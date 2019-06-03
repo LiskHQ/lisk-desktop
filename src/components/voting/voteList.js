@@ -12,7 +12,10 @@ const VoteList = ({
         <div className={`${styles.votesContainer} ${className}`} >
           {list.map(vote => (
            <span key={vote} className={`${styles.voteTag} vote`}>
-            <span className={styles.rank}>#{votes[vote].rank}</span>
+            { votes[vote] ?
+              <span className={styles.rank}>#{votes[vote].rank}</span> :
+              null
+            }
             <span className={styles.username}>{vote}</span>
            </span>
           ))}
