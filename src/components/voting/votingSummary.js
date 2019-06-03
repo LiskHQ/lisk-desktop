@@ -10,7 +10,7 @@ import {
 import routes from '../../constants/routes';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import links from '../../constants/externalLinks';
-import VoteUrlProcessor from '../voteUrlProcessorV2';
+import VoteUrlProcessor from './voteUrlProcessor';
 import VoteList from './voteList';
 
 import styles from './voting.css';

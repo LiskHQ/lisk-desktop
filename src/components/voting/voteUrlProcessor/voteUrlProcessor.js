@@ -1,7 +1,7 @@
 import React from 'react';
-import { parseSearchParams } from '../../utils/searchParams';
-import routes from '../../constants/routes';
-import VoteList from '../voting/voteList';
+import { parseSearchParams } from '../../../utils/searchParams';
+import routes from '../../../constants/routes';
+import VoteList from '../voteList';
 
 export default class VoteUrlProcessor extends React.Component {
   constructor(props) {
@@ -14,7 +14,7 @@ export default class VoteUrlProcessor extends React.Component {
     };
   }
   componentDidMount() {
-    this.props.clearVoteLookupStatus();
+    this.props.voteLookupStatusCleared();
     let params = parseSearchParams(this.props.history.location.search);
     if (params.votes || params.unvotes) {
       this.setVotesFromParams(params);
@@ -25,7 +25,7 @@ export default class VoteUrlProcessor extends React.Component {
         params = parseSearchParams(location.search);
 
         if (location.search && location.search !== this.state.params) {
-          this.props.clearVoteLookupStatus();
+          this.props.voteLookupStatusCleared();
           this.setVotesFromParams(params);
           this.setState({
             params: location.search,
