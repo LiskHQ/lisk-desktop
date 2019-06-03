@@ -104,8 +104,16 @@ const VotingSummary = ({
         account={account}
         votes={votes}
         voteLookupStatus={voteLookupStatus}/>
-      <VoteList title={t('Added votes')} list={voteList} votes={votes} />
-      <VoteList title={t('Removed votes')} list={unvoteList} votes={votes} />
+      <VoteList
+        title={t('Added votes')}
+        className='added-votes'
+        list={voteList}
+        votes={votes} />
+      <VoteList
+        title={t('Removed votes')}
+        className='removed-votes'
+        list={unvoteList}
+        votes={votes} />
     </TransactionSummary>
   );
 };
