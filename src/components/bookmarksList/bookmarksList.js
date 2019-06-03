@@ -43,6 +43,11 @@ class BookmarksList extends React.Component {
       : address.replace(regex.btcAddressTrunk, '$1...$3');
   }
 
+  isMultipleCoinActive() {
+    const { token } = this.props;
+    return Object.values(token.list).filter(coin => coin === true).length > 1;
+  }
+
   render() {
     const { t } = this.props;
     const { activeToken } = this.state;
@@ -65,18 +70,22 @@ class BookmarksList extends React.Component {
       <Box className={` ${styles.box} bookmarks-list`}>
         <header>
           <h2>Bookmarks</h2>
-          <Tabs
-            active={activeToken}
-            onClick={this.onTabChange}
-            className={styles.tab}
-            tabs={tabs}
-          />
+          {
+            this.isMultipleCoinActive()
+            ? <Tabs
+                active={activeToken}
+                onClick={this.onTabChange}
+                className={styles.tab}
+                tabs={tabs}
+              />
+            : null
+          }
         </header>
-        <div className={styles.bookmarkList}>
+        <div className={`${styles.bookmarkList} bookmark-list-container`}>
         {
           selectedBookmarks.length
           ? selectedBookmarks.map(bookmark =>
-            <div key={bookmark.address} className={styles.row}>
+            <div key={bookmark.address} className={`${styles.row} bookmark-list-row`}>
               {
                 activeToken === tokenMap.LSK.key
                 ? <AccountVisual address={bookmark.address} size={40}/>
