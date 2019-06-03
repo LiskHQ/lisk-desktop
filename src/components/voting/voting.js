@@ -3,7 +3,7 @@ import VotingSummary from './votingSummary';
 import VotingResult from './votingResult';
 import MultiStep from '../multiStep';
 
-import styles from './votingV2.css';
+import styles from './voting.css';
 
 const VotingV2 = ({
   t, votes, history, account, votePlaced, voteLookupStatus,

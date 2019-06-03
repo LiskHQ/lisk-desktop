@@ -4,7 +4,7 @@ import { MemoryRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import i18n from '../../i18n';
-import VotingV2 from './votingV2';
+import VotingV2 from './voting';
 
 describe('VotingV2', () => {
   const votes = {

@@ -12,7 +12,7 @@ import Tooltip from '../toolbox/tooltip/tooltip';
 import links from '../../constants/externalLinks';
 import VoteUrlProcessor from '../voteUrlProcessorV2';
 
-import styles from './votingV2.css';
+import styles from './voting.css';
 
 const VotingSummary = ({
   t, votes, history, account, nextStep, votePlaced, prevStep, voteLookupStatus,
