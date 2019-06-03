@@ -9,6 +9,11 @@ import transactionSuccess from '../../../assets/images/illustrations/transaction
 import transactionError from '../../../assets/images/illustrations/transaction_error.svg';
 import pageNotFound from '../../../assets/images/illustrations/illustration-page-not-found.svg';
 import errorBoundaryPage from '../../../assets/images/illustrations/illustration-error-boundary-page.svg';
+import hubReadyToGo from '../../../assets/images/illustrations/hub-ready-togo.svg';
+import builtAroundCommunity from '../../../assets/images/illustrations/built-around-community.svg';
+import sendLSKTokens from '../../../assets/images/illustrations/send-lsk-tokens.svg';
+import timeToContribute from '../../../assets/images/illustrations/time-to-contribute.svg';
+
 
 const illustrations = {
   welcomeLiskDelegates,
@@ -21,6 +26,10 @@ const illustrations = {
   transactionError,
   pageNotFound,
   errorBoundaryPage,
+  hubReadyToGo,
+  builtAroundCommunity,
+  sendLSKTokens,
+  timeToContribute,
 };
 
 const Illustration = ({ name, className }) => (
