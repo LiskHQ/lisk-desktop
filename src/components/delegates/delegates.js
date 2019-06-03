@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import styles from './votingV2.css';
+import styles from './delegates.css';
 import VotingListViewV2 from '../votingListViewV2';
 import VotingHeader from './votingHeader';
 import Onboarding from '../toolbox/onboarding/onboarding';
