@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './delegates.css';
-import VotingListViewV2 from '../votingListViewV2';
+import DelegatesListView from '../delegatesListView';
 import VotingHeader from './votingHeader';
 import Onboarding from '../toolbox/onboarding/onboarding';
 import { getTotalActions } from './../../utils/voting';
@@ -62,7 +62,7 @@ class Delegates extends React.Component {
           toggleVotingMode={this.toggleVotingMode}
           votes={votes}/>
         <section className={`${grid['col-sm-12']} ${grid['col-md-12']} ${styles.votingBox} ${styles.votes}`}>
-          <VotingListViewV2
+          <DelegatesListView
             votingModeEnabled={votingModeEnabled}
           />
         </section>
