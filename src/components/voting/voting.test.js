@@ -42,10 +42,10 @@ describe('VotingV2', () => {
     expect(wrapper.find('VotingSummary')).toHaveLength(1);
   });
 
-  it('should go to VotingResult with confirm button and then back to delegates', () => {
+  it('should go to result box with confirm button and then back to delegates', () => {
     const wrapper = mount(<Router><VotingV2 {...{ ...props, votes } } /></Router>, options);
     wrapper.find('.confirm-button').at(0).simulate('click');
-    expect(wrapper.find('VotingResult')).toHaveLength(1);
+    expect(wrapper.find('.result-box-header')).toHaveLength(1);
     wrapper.find('.back-to-delegates-button').at(0).simulate('click');
     expect(props.history.push).toHaveBeenCalledWith('/delegates');
   });

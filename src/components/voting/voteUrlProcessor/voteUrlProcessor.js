@@ -62,6 +62,7 @@ export default class VoteUrlProcessor extends React.Component {
       {Object.keys(sections).map((list, key) => (
         voteLookupStatus[list].length ? (
           <VoteList
+            className={`${list}-message`}
             title={sections[list]}
             list={voteLookupStatus[list]}
             votes={votes}
