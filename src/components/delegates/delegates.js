@@ -6,7 +6,7 @@ import VotingHeader from './votingHeader';
 import Onboarding from '../toolbox/onboarding/onboarding';
 import { getTotalActions } from './../../utils/voting';
 
-class DelegatesV2 extends React.Component {
+class Delegates extends React.Component {
   constructor(props) {
     super(props);
 
@@ -71,4 +71,4 @@ class DelegatesV2 extends React.Component {
   }
 }
 
-export default DelegatesV2;
+export default Delegates;

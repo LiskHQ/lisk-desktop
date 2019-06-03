@@ -8,7 +8,7 @@ import SignMessage from '../components/signMessage';
 import SearchResult from '../components/searchResult';
 import TransactionDashboard from '../components/transactionDashboard';
 import AccountTransactions from '../components/accountTransactions';
-import Delegates from '../components/delegatesV2';
+import Delegates from '../components/delegates';
 import Voting from '../components/voting';
 import SingleTransaction from '../components/singleTransactionV2';
 import HwWalletLogin from '../components/hwWalletLogin';

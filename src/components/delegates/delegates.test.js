@@ -8,11 +8,11 @@ import { prepareStore } from '../../../test/unit-test-utils/applicationInit';
 import peersReducer from '../../store/reducers/peers';
 import accountReducer from '../../store/reducers/account';
 import votingReducer from '../../store/reducers/voting';
-import DelegatesV2 from './delegatesV2';
+import Delegates from './delegates';
 import history from '../../history';
 import i18n from '../../i18n';
 
-describe('DelegatesV2', () => {
+describe('Delegates', () => {
   let wrapper;
   const votes = {
     username1: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
@@ -58,7 +58,7 @@ describe('DelegatesV2', () => {
   };
 
   it('should allow to enable and disable voting mode', () => {
-    wrapper = mount(<Router><DelegatesV2 {...props} /></Router>, options);
+    wrapper = mount(<Router><Delegates {...props} /></Router>, options);
     wrapper.find('.start-voting-button').at(0).simulate('click');
     expect(wrapper.find('.addedVotes')).to.have.lengthOf(1);
 
