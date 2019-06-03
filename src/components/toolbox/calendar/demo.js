@@ -11,7 +11,6 @@ const dateFormat = ('DD.MM.YY');
 const CalendarDemo = () => (
   <div>
     <h2>Calendar</h2>
-    <h3> TODO </h3>
     <DemoRenderer>
       <Calendar
         onDateSelected={onDateSelected}
