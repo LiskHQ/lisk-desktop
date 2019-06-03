@@ -163,11 +163,14 @@ export const clearSearchSuggestions = () => ({
   type: actionTypes.searchClearSuggestions,
 });
 
-export const searchSuggestions = ({ searchTerm }) =>
+export const searchSuggestions = ({ searchTerm, callback = () => {} }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    searchAll({ liskAPIClient, searchTerm }).then(response => dispatch({
-      data: response,
-      type: actionTypes.searchSuggestions,
-    }));
+    searchAll({ liskAPIClient, searchTerm }).then((response) => {
+      dispatch({
+        data: response,
+        type: actionTypes.searchSuggestions,
+      });
+      callback(response);
+    }).catch(callback);
   };
