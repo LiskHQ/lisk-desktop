@@ -11,7 +11,7 @@ const CheckBox = ({
       checked={!!checked}
       onChange={onChange} />
     <span className={`${styles.checked} ${(accent || added) && styles.accent}`}>
-      <img src={svgIcons.checkmark} />
+      <img src={svgIcons.checkboxFilled} />
     </span>
     <span className={`${styles.unchecked} ${accent && styles.accent} ${removed && styles.removed}`} />
   </label>

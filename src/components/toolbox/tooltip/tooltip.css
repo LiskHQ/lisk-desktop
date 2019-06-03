@@ -48,6 +48,19 @@
       }
     }
   }
+
+  &:global(.showOnLeft) {
+    & .tooltip {
+      transform: translateY(-50%) translateX(-112%);
+
+      & .tooltipArrow {
+        left: auto;
+        right: -12px;
+        top: calc(50% - 15px);
+        transform: rotate(180deg);
+      }
+    }
+  }
 }
 
 .infoIcon {

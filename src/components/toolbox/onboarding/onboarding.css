@@ -109,7 +109,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    flex-basis: 50%;
+    flex-basis: 45%;
     height: 100%;
     padding: 50px;
     z-index: 1;

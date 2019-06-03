@@ -48,9 +48,24 @@ class DelegateRowV2 extends React.Component {
       votingModeEnabled, shouldShowVoteColumn,
       shouldHightlightCheckbox,
     } = this.props;
+    const {
+      username,
+      rank,
+      productivity,
+      account,
+    } = data;
 
     return (
-      <TableRow className={`delegate-row ${className} ${grid.row} ${styles.row} ${setRowClass(voteStatus)}`}>
+      <TableRow className={`delegate-row ${className} ${grid.row} ${styles.row} ${setRowClass(voteStatus)}`}
+        onClick={() => (
+          votingModeEnabled ? voteToggled({
+            username,
+            publicKey: account.publicKey,
+            rank,
+            productivity,
+            address: account.address,
+          }) : null
+        )}>
         {shouldShowVoteColumn ? <div className={`${grid['col-md-1']} ${grid['col-xs-2']} ${styles.leftText}`}>
           <VoteCheckboxV2
             className={styles.checkbox}
@@ -62,23 +77,23 @@ class DelegateRowV2 extends React.Component {
             votingModeEnabled={votingModeEnabled}
           />
         </div> : null}
-        <div className={`${grid['col-md-1']} ${grid['col-xs-2']} delegate-rank`}>#{data.rank}</div>
+        <div className={`${grid['col-md-1']} ${grid['col-xs-2']} delegate-rank`}>#{rank}</div>
         <div className={`${grid['col-md-3']} ${grid['col-xs-5']} delegate-info`}>
           <Link className={styles.delegateLink}
-            to={`${routes.accounts.pathPrefix}${routes.accounts.path}/${data.account.address}`}>
+            to={`${routes.accounts.pathPrefix}${routes.accounts.path}/${account.address}`}>
             <AccountVisual
               className={`${styles.avatar} tx-avatar`}
-              address={data.account.address}
+              address={account.address}
               size={36} />
             <div className={styles.accountInfo}>
-              <span className={`delegate-name ${styles.title}`}>{data.username}</span>
-              <span className={`delegate-id ${styles.address}`}>{data.account.address}</span>
+              <span className={`delegate-name ${styles.title}`}>{username}</span>
+              <span className={`delegate-id ${styles.address}`}>{account.address}</span>
             </div>
           </Link>
         </div>
-        <div className={`${grid[shouldShowVoteColumn ? 'col-md-3' : 'col-md-4']} ${grid['col-xs-3']} ${styles.productivity} delegate-productivity`}>{data.productivity} %</div>
+        <div className={`${grid[shouldShowVoteColumn ? 'col-md-3' : 'col-md-4']} ${grid['col-xs-3']} ${styles.productivity} delegate-productivity`}>{productivity} %</div>
         <div className={`${grid['col-md-4']} ${styles.weight} vote-weight`}>
-          <LiskAmount val={data.vote} /> {this.props.t(' LSK')}
+          <LiskAmount val={data.vote} />&nbsp;{this.props.t('LSK')}
         </div>
       </TableRow>
     );

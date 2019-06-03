@@ -224,7 +224,6 @@
   flex-direction: column;
   flex-grow: 1;
   margin: 0;
-  overflow: hidden;
   position: relative;
 }
 

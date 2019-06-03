@@ -47,7 +47,7 @@
   }
 
   & > * {
-    @mixin contentSmall;
+    @mixin contentNormal;
 
     align-items: center;
     box-sizing: border-box;
