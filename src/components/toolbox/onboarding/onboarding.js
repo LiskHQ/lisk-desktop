@@ -26,7 +26,8 @@ class Onboarding extends React.Component {
   }
 
   handleFinalCallback() {
-    this.props.finalCallback();
+    const { finalCallback } = this.props;
+    if (typeof finalCallback === 'function') finalCallback();
     this.handleClose();
   }
 
@@ -129,7 +130,7 @@ Onboarding.propTypes = {
     illustration: PropTypes.string.isRequired,
   })),
   ctaLabel: PropTypes.string,
-  finalCallback: PropTypes.func.isRequired,
+  finalCallback: PropTypes.func,
   className: PropTypes.string,
   name: PropTypes.string.isRequired,
 };
@@ -138,6 +139,7 @@ Onboarding.defaultProps = {
   slides: [],
   className: '',
   ctaLabel: '',
+  finalCallback: null,
 };
 
 export default translate()(Onboarding);
