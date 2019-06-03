@@ -100,7 +100,7 @@ class Dashboard extends React.Component {
       <React.Fragment>
         <Onboarding
           slides={this.getOnboardingSlides()}
-          ctaLabel={t('Got it, thanks!')}
+          actionButtonLabel={t('Got it, thanks!')}
           name={'dashboardOnboarding'}
         />
         { isLoggedIn && this.shouldShowInitializatiion() &&

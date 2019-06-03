@@ -49,7 +49,7 @@ class Onboarding extends React.Component {
 
   render() {
     const {
-      slides, ctaLabel, className, t, name,
+      slides, actionButtonLabel, className, t, name,
     } = this.props;
     const { currentSlide } = this.state;
     const closedBefore = !!localStorage.getItem(name);
@@ -97,7 +97,7 @@ class Onboarding extends React.Component {
                 </SecondaryButtonV2>
               ) : null
             }
-            {(currentSlide !== slides.length - 1 && ctaLabel !== '')
+            {(currentSlide !== slides.length - 1 && actionButtonLabel !== '')
               ? (<PrimaryButtonV2
                   className='medium'
                   name={'next'}
@@ -109,7 +109,7 @@ class Onboarding extends React.Component {
                 <PrimaryButtonV2
                   className='medium'
                   onClick={this.handleFinalCallback}>
-                  {ctaLabel}
+                  {actionButtonLabel}
                 </PrimaryButtonV2>
             )}
           </div>
@@ -129,7 +129,7 @@ Onboarding.propTypes = {
     ]).isRequired,
     illustration: PropTypes.string.isRequired,
   })),
-  ctaLabel: PropTypes.string,
+  actionButtonLabel: PropTypes.string,
   finalCallback: PropTypes.func,
   className: PropTypes.string,
   name: PropTypes.string.isRequired,
@@ -138,7 +138,7 @@ Onboarding.propTypes = {
 Onboarding.defaultProps = {
   slides: [],
   className: '',
-  ctaLabel: '',
+  actionButtonLabel: '',
   finalCallback: null,
 };
 
