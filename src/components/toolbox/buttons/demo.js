@@ -1,17 +1,9 @@
 import React from 'react';
 import { PrimaryButtonV2, SecondaryButtonV2, TertiaryButtonV2 } from './button';
-import DemoRenderer from '../demoRenderer';
+import DemoRenderer, { DarkWrapper } from '../demoRenderer';
 
 /* eslint-disable-next-line no-console */
 const onClick = console.log;
-
-const DarkWrapper = ({ children }) => (
-  <span style={{
-    display: 'inline-block', background: '#0c152e', padding: 20,
-  }} >
-   {children}
-  </span>
-);
 
 const ButtonDemo = () => (
   <div>
