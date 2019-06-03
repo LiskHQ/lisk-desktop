@@ -2,7 +2,7 @@ import React from 'react';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
 import Illustration from '../toolbox/illustration';
 
-import styles from './votingResult.css';
+import styles from './transactionResult.css';
 
 const getErrorReportMailto = (error) => {
   const recipient = 'hubdev@lisk.io';
@@ -10,7 +10,7 @@ const getErrorReportMailto = (error) => {
   return `mailto:${recipient}?&subject=${subject}&body=${error}`;
 };
 
-const VotingResult = ({
+const TransactionResult = ({
   success, title, message, primaryButon, t, error,
 }) => (
   <div className={styles.wrapper}>
@@ -37,5 +37,5 @@ const VotingResult = ({
   </div>
 );
 
-export default VotingResult;
+export default TransactionResult;
 

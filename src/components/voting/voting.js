@@ -1,6 +1,6 @@
 import React from 'react';
 import VotingSummary from './votingSummary';
-import VotingResult from './votingResult';
+import TransactionResult from '../transactionResult';
 import MultiStep from '../multiStep';
 
 import styles from './voting.css';
@@ -18,10 +18,7 @@ const VotingV2 = ({
         votePlaced={votePlaced}
         voteLookupStatus={voteLookupStatus}
       />
-      <VotingResult
-        t={t}
-        account={account}
-      />
+      <TransactionResult t={t} />
     </MultiStep>
   </div>
 );
