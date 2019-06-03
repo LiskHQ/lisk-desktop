@@ -10,7 +10,7 @@ import Piwik from '../../utils/piwik';
 import BoxV2 from '../boxV2';
 import Select from '../toolbox/select';
 import CheckBox from '../toolbox/checkBox';
-import SignInTooltipWrapper from '../signInTooltipWrapper';
+import svgIcons from '../../utils/svgIcons';
 
 class Setting extends React.Component {
   constructor() {
@@ -112,25 +112,28 @@ class Setting extends React.Component {
                   </div>
               </label>
               <div className={`${styles.fieldGroup} ${styles.checkboxField} second-passphrase`}>
+                {hasSecondPassphrase
+                  ? <img
+                      className={`${styles.checkmark} second-passphrase-registered`}
+                      src={svgIcons.checkmark}
+                    />
+                  : null
+                }
                 <div className={isHwWalletClass}>
                   <span className={styles.labelName}>{t('Second Passphrase')}</span>
                   <p>
                     {t('Every time you make a transaction you’ll need to enter your second passphrase in order to confirm it.')}
                   </p>
-                  <p className={styles.highlight}>{t('Once activated can’t be turned off.')}</p>
                   {!hasSecondPassphrase ?
-                    <SignInTooltipWrapper>
+                    <React.Fragment>
+                      <p className={styles.highlight}>{t('Once activated can’t be turned off.')}</p>
                       <Link
                         className={`register-second-passphrase ${styles.link}`}
                         to={`${routes.secondPassphrase.path}`}>
                         {t('Activate (5 LSK Fee)')}
                       </Link>
-                    </SignInTooltipWrapper>
-                  : (
-                    <span className={`${styles.activeLabel} second-passphrase-registered`}>
-                      {t('Second Passphrase is active for this account.')}
-                    </span>
-                  )}
+                    </React.Fragment>
+                  : null}
                 </div>
               </div>
             </section>

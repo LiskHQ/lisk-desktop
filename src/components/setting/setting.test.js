@@ -71,7 +71,7 @@ describe('Setting', () => {
     wrapper = mount(<Router>
       <Setting {...newProps} store={store}/>
     </Router>, options);
-    expect(wrapper).toContainMatchingElements(3, '.disabled');
+    expect(wrapper).toContainMatchingElements(1, '.disabled');
   });
 
   it('should render 2nd passphrase as active', () => {
@@ -81,7 +81,7 @@ describe('Setting', () => {
       <Setting {...newProps}/>
     </Router>, options);
     expect(wrapper.find('.second-passphrase')).not.toContainMatchingElement('.link');
-    expect(wrapper.find('.second-passphrase')).toContainMatchingElement('.activeLabel');
+    expect(wrapper.find('.second-passphrase')).toContainMatchingElement('.second-passphrase-registered');
   });
 
   it('should change autolog setting when clicking on checkbox', () => {

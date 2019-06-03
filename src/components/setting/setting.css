@@ -47,17 +47,6 @@
     margin-bottom: 0;
   }
 
-  & .activeLabel {
-    @mixin contentNormal bold;
-
-    background-color: var(--color-ultramarine-blue);
-    border-radius: var(--border-radius-standard);
-    color: var(--color-white);
-    display: inline-block;
-    margin-top: 10px;
-    padding: 2px 8px;
-  }
-
   &.checkboxField {
     align-items: flex-start;
     display: flex;
@@ -65,6 +54,10 @@
     & > div:last-child {
       flex-basis: calc(100% - 25px);
       margin-left: auto;
+    }
+
+    & .checkmark {
+      margin-top: 3px;
     }
 
     & .checkbox {
