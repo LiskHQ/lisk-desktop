@@ -45,6 +45,10 @@
   }
 }
 
+.bookmarkList {
+  max-width: 321px;
+}
+
 .bannerWrapper {
   margin: 0px;
   padding-bottom: 20px;
