@@ -1,49 +1,55 @@
-@import '../app/variables.css';
+@import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
-:root {
-  --padding-top: 40px;
-}
-
-.signMessageContainer {
+.wrapper {
+  align-items: center;
+  display: flex;
   height: 100%;
-  overflow: hidden;
-  margin: 0 -48px;
+  justify-content: center;
 }
 
-.hasPaddingTop {
-  padding-top: var(--padding-top);
+.holder {
+  max-width: 850px;
 }
 
-.hidden {
-  display: none;
-}
+.header {
+  text-align: center;
 
-@media (--medium-viewport) {
-  .hasPaddingTop {
-    height: 100vh; /* stylelint-disable-line */
+  & > .step {
+    @mixin contentSmallest;
+
+    color: var(--color-slate-gray);
+    height: 18px;
+    letter-spacing: 0.4px;
+    line-height: 1.8;
+    text-transform: uppercase;
+  }
+
+  & > h1 {
+    @mixin headingLarge;
+
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 15px;
+    color: var(--color-maastricht-blue);
+  }
+
+  & > p {
+    @mixin contentLarge;
+
+    color: var(--color-slate-gray);
+    margin: 0;
   }
 }
 
-@media (--small-viewport) {
-  .hasPaddingTop {
-    padding-top: var(--box-padding);
-  }
-}
+.buttonsHolder {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 
-@media (--xLarge-viewport) {
-  .signMessageContainer {
-    margin: 0 calc(var(--box-padding-left-XL) * -1);
-  }
-}
-
-@media (--large-viewport) {
-  .signMessageContainer {
-    margin: 0 calc(var(--box-padding-left-L) * -1);
-  }
-}
-
-@media (--medium-viewport) {
-  .signMessageContainer {
-    margin: 0 calc(var(--box-padding-left-M) * -1);
+  & > * {
+    display: block;
+    margin: 5px 0;
+    width: 50%;
   }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import Lisk from '@liskhq/lisk-client';
 import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import CopyToClipboard from '../copyToClipboard';
+import styles from './signMessage.css';
 
 class ConfirmMessage extends React.Component {
   constructor(props) {
@@ -31,12 +32,14 @@ class ConfirmMessage extends React.Component {
     const { t } = this.props;
     return (
       <section>
-        <div>
-          <span>{t('Step 2/2')}</span>
+        <div className={styles.header}>
+          <span className={styles.step}>{t('Step 2/2')}</span>
           <h1>{t('Your signed message')}</h1>
         </div>
         <div>
           <ToolBoxInput multiline readOnly value={this.state.result} />
+        </div>
+        <div className={styles.buttonsHolder}>
           <CopyToClipboard
             value={this.state.result}
             text={t('Copy to Clipboard')}/>
