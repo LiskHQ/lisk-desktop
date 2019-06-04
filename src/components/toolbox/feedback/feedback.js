@@ -16,11 +16,12 @@ const Feedback = ({
 };
 
 Feedback.propTypes = {
-  status: PropTypes.oneOf(['error', '', 'success']).isRequired,
+  status: PropTypes.oneOf(['error', '', 'success']),
   children: PropTypes.string.isRequired,
-  show: PropTypes.bool.isRequired,
-  showIcon: PropTypes.bool.isRequired,
-  className: PropTypes.string.isRequired,
+  show: PropTypes.bool,
+  showIcon: PropTypes.bool,
+  className: PropTypes.string,
+  dark: PropTypes.bool,
 };
 
 Feedback.defaultProps = {
@@ -29,6 +30,7 @@ Feedback.defaultProps = {
   show: false,
   showIcon: false,
   className: '',
+  dark: false,
 };
 
 export default Feedback;

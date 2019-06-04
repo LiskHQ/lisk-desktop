@@ -18,6 +18,7 @@ import ExtensionPoint from '../extensionPoint';
 import LiskHubExtensions from '../../utils/liskHubExtensions';
 import RecentTransactions from './recentTransactions';
 import styles from './dashboard.css';
+import Onboarding from '../toolbox/onboarding/onboarding';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -65,6 +66,27 @@ class Dashboard extends React.Component {
     this.setState({ showMore: !this.state.showMore });
   }
 
+  getOnboardingSlides() {
+    const { t } = this.props;
+    return [{
+      title: t('Lisk Hub is ready to go!'),
+      content: t('Your new Lisk Wallet enables you to take full control of your LSK tokens. Secure, intuitive and robust Hub is your ultimate gateway to Lisk Ecosystem.'),
+      illustration: 'hubReadyToGo',
+    }, {
+      title: t('Built around community'),
+      content: t('The  dashboard lets you track updates not only from Lisk, but also delegates. You can now explore delegate profile pages and follow them to get all the updates.'),
+      illustration: 'builtAroundCommunity',
+    }, {
+      title: t('Easily send and receive LSK tokens'),
+      content: t('Lisk Hub enables you to attach a personal message to each outgoing LSK transaction and to see the value of the LSK tokens you’re about to send in a currency of your chocie.'),
+      illustration: 'sendLSKTokens',
+    }, {
+      title: t('It’s your time to contribute'),
+      content: t('Search, view and vote for Lisk delegates on the network. Lisk Hub gives you the opportunity to request a Lisk feature and allows you to register to become a delegate.'),
+      illustration: 'timeToContribute',
+    }];
+  }
+
   render() {
     const {
       account,
@@ -76,6 +98,11 @@ class Dashboard extends React.Component {
 
     return (
       <React.Fragment>
+        <Onboarding
+          slides={this.getOnboardingSlides()}
+          actionButtonLabel={t('Got it, thanks!')}
+          name={'dashboardOnboarding'}
+        />
         { isLoggedIn && this.shouldShowInitializatiion() &&
           <div className={`${grid.row} ${styles.bannerWrapper}`}>
             <Banner

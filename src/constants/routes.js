@@ -20,6 +20,7 @@ import RegistrationV2 from '../components/registerV2/registerV2';
 import LoginV2 from '../components/loginV2';
 import Extensions from '../components/extensions';
 import TermsOfUse from '../components/termsOfUse';
+import ToolboxDemo from '../components/toolbox/demo';
 import DasboardV2 from '../components/dashboardV2';
 
 export default {
@@ -27,6 +28,12 @@ export default {
     path: '/account-visual-demo',
     component: AccountVisualDemo,
     isPrivate: true,
+    isV2Layout: true,
+  },
+  toolboxDemo: {
+    path: '/toolbox',
+    component: ToolboxDemo,
+    isPrivate: false,
   },
   dashboard: {
     path: '/dashboard',

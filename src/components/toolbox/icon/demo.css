@@ -1,0 +1,6 @@
+.wrapper {
+  & pre,
+  & i {
+    display: inline-block;
+  }
+}
