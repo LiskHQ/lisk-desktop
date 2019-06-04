@@ -5,7 +5,9 @@ import { tokenMap } from '../../constants/tokens';
 import svg from '../../utils/svgIcons';
 import styles from './myAccount.css';
 
-const MyAccount = ({ t, account, settings }) => {
+const MyAccount = ({
+  t, account, settings, className,
+}) => {
   const info = account.info || {};
   const token = settings.token;
 
@@ -14,7 +16,7 @@ const MyAccount = ({ t, account, settings }) => {
     .filter(coin => typeof coin === 'object');
 
   return (
-    <Box className={`${styles.box}`}>
+    <Box className={`${styles.box} ${className}`}>
       <header>
         <h1>{t('Wallet details')}</h1>
       </header>
