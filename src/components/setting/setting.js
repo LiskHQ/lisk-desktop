@@ -70,6 +70,7 @@ class Setting extends React.Component {
     const {
       t, settings,
       hasSecondPassphrase,
+      isAuthenticated,
       transactions: { pending },
     } = this.props;
     const { currencies } = this.state;
@@ -116,38 +117,40 @@ class Setting extends React.Component {
                   <p>{t('Log out automatically after a specified amount of time.')}</p>
                   </div>
               </label>
-              <div className={`${styles.fieldGroup} ${styles.checkboxField} second-passphrase`}>
-                {hasSecondPassphrase
-                  ? <img
-                      className={`${styles.checkmark} second-passphrase-registered`}
-                      src={svgIcons.checkmark}
-                    />
-                  : null
-                }
-                <div className={isHwWalletClass}>
-                  <span className={styles.labelName}>{t('Second Passphrase')}</span>
-                  <p>
-                    {t('Every time you make a transaction you’ll need to enter your second passphrase in order to confirm it.')}
-                  </p>
-                  {!hasSecondPassphrase ?
-                    <React.Fragment>
-                      <p className={styles.highlight}>{t('Once activated can’t be turned off.')}</p>
-                      {hasPendingSecondPassphrase ? (
-                        <SpinnerV2
-                          className={styles.loading}
-                          label={t('Second Passphrase is being activated. Almost there!')}
-                        />
-                      ) : (
-                        <Link
-                          className={`register-second-passphrase ${styles.link}`}
-                          to={`${routes.secondPassphrase.path}`}>
-                          {t('Activate (5 LSK Fee)')}
-                        </Link>
-                      )}
-                    </React.Fragment>
-                  : null}
+              {isAuthenticated ? (
+                <div className={`${styles.fieldGroup} ${styles.checkboxField} second-passphrase`}>
+                  {hasSecondPassphrase
+                    ? <img
+                        className={`${styles.checkmark} second-passphrase-registered`}
+                        src={svgIcons.checkmark}
+                      />
+                    : null
+                  }
+                  <div className={isHwWalletClass}>
+                    <span className={styles.labelName}>{t('Second Passphrase')}</span>
+                    <p>
+                      {t('Every time you make a transaction you’ll need to enter your second passphrase in order to confirm it.')}
+                    </p>
+                    {!hasSecondPassphrase ?
+                      <React.Fragment>
+                        <p className={styles.highlight}>{t('Once activated can’t be turned off.')}</p>
+                        {hasPendingSecondPassphrase ? (
+                          <SpinnerV2
+                            className={styles.loading}
+                            label={t('Second Passphrase is being activated. Almost there!')}
+                          />
+                        ) : (
+                          <Link
+                            className={`register-second-passphrase ${styles.link}`}
+                            to={`${routes.secondPassphrase.path}`}>
+                            {t('Activate (5 LSK Fee)')}
+                          </Link>
+                        )}
+                      </React.Fragment>
+                    : null}
+                  </div>
                 </div>
-              </div>
+              ) : null}
             </section>
             <section>
               <h1>{t('Advanced')}</h1>
