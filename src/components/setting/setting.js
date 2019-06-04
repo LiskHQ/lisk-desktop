@@ -102,17 +102,6 @@ class Setting extends React.Component {
         <div className={`${styles.item} ${styles.description}`}>
           {t('You will be able to select the desired network when signing in')}
         </div>
-        <div className={styles.item}>
-          <label>{t('Delegate features')}</label>
-          <Checkbox
-            theme={styles}
-            className={`${styles.smallSlider} advancedMode`}
-            onChange={() => this.onUpdateSettings({ advancedMode: !settings.advancedMode })}
-            input={{
-              value: true,
-              checked: settings.advancedMode,
-            }}/>
-        </div>
         <div>
           <div className={`${styles.item} ${styles.network}`}>
             <label>{t('Send anonymous usage statistics')}</label>

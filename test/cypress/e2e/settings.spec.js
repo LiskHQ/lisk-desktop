@@ -69,7 +69,6 @@ describe('Settings', () => {
 
   [
     ss.switchNetworksTrigger,
-    ss.delegateFeaturesTrigger,
   ]
     .forEach((selector) => {
       /**

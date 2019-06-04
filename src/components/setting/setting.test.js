@@ -20,7 +20,6 @@ describe('Setting', () => {
   };
   const settings = {
     autoLog: true,
-    advancedMode: true,
     showNetwork: false,
     currency: settingsConst.currencies[0],
     statistics: false,
@@ -82,11 +81,6 @@ describe('Setting', () => {
   afterEach(() => {
     clock.restore();
     // i18n.changeLanguage('en');
-  });
-
-  it('should change advanceMode setting when clicking on checkbox', () => {
-    wrapper.find('.advancedMode').at(0).find('input').simulate('change', { target: { checked: false, value: false } });
-    clock.tick(300);
   });
 
   it('should disable 2nd passphrase when hardwareWallet', () => {
