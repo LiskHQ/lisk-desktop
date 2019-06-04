@@ -107,7 +107,6 @@ const ss = {
   currencyEURBtn: '.currency-EUR',
   autoLogoutTrigger: '.autoLog',
   switchNetworksTrigger: '.showNetwork',
-  delegateFeaturesTrigger: '.advancedMode',
   messageInput: 'textarea',
   resulteBtn: '.result',
   topBarMenuWalletBtn: '#transactions',
