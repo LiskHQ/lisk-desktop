@@ -3,7 +3,6 @@ import { mount } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
 import BookmarksList from './bookmarksList';
 import { tokenMap } from '../../constants/tokens';
-// import keyCodes from './../../constants/keyCodes';
 
 describe('BookmarksList', () => {
   let wrapper;
@@ -62,7 +61,7 @@ describe('BookmarksList', () => {
 
   it('should render LSK bookmakrs ONLY', () => {
     expect(wrapper).toContainMatchingElement('.bookmark-list-container');
-    expect(wrapper).toContainMatchingElements(5, '.bookmark-list-row');
+    expect(wrapper).toContainMatchingElements(5, 'a.bookmark-list-row');
   });
 
   it('should render BTC bookmakrs ONLY', () => {
@@ -75,14 +74,7 @@ describe('BookmarksList', () => {
     });
     wrapper.update();
     expect(wrapper).toContainMatchingElement('.bookmark-list-container');
-    expect(wrapper).toContainMatchingElements(1, '.bookmark-list-row');
-  });
-
-  it('should redirect to a accounts page for selected bookmark', () => {
-    expect(wrapper).toContainMatchingElement('.bookmark-list-container');
-    expect(wrapper).toContainMatchingElements(5, '.bookmark-list-row');
-    wrapper.find('.bookmark-list-row').at(1).simulate('click');
-    expect(props.history.push).toBeCalled();
+    expect(wrapper).toContainMatchingElements(1, 'a.bookmark-list-row');
   });
 
   it('should render EmptyState', () => {

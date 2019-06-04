@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AccountVisual from '../accountVisual';
 import EmptyState from '../emptyStateV2';
@@ -12,18 +11,11 @@ import routes from '../../constants/routes';
 import styles from './bookmarksList.css';
 
 class BookmarksList extends React.Component {
-  onBookmarkSelected(address) {
-    const { history } = this.props;
-    history.push(`${routes.explorer.path}/accounts/${address}`);
-  }
-
   getBookmarkListBasedOnSelectedToken() {
     const { bookmarks, token } = this.props;
 
     const actualBookmarks = { ...bookmarks };
-    return actualBookmarks[token.active].length > 5
-      ? actualBookmarks[token.active].slice(0, 5)
-      : bookmarks[token.active];
+    return actualBookmarks[token.active].slice(0, 5);
   }
 
   displayAddressBasedOnSelectedToken(address) {
@@ -35,12 +27,12 @@ class BookmarksList extends React.Component {
   }
 
   render() {
-    const { t, token } = this.props;
+    const { t, token, className } = this.props;
 
     const selectedBookmarks = this.getBookmarkListBasedOnSelectedToken();
 
     return (
-      <Box className={` ${styles.box} bookmarks-list`}>
+      <Box className={` ${styles.box} ${className} bookmarks-list`}>
         <header>
           <h2>Bookmarks</h2>
         </header>
@@ -48,25 +40,26 @@ class BookmarksList extends React.Component {
         {
           selectedBookmarks.length
           ? selectedBookmarks.map(bookmark =>
-            <div
+            <Link
               key={bookmark.address}
               className={`${styles.row} bookmark-list-row`}
-              onClick={() => this.onBookmarkSelected(bookmark.address)}>
+              to={`${routes.explorer.path}/accounts/${bookmark.address}`}>
               {
                 token.active === tokenMap.LSK.key
-                ? <AccountVisual address={bookmark.address} size={40}/>
+                ? <AccountVisual className={styles.avatar} address={bookmark.address} size={40}/>
                 : null
               }
               <div className={styles.description}>
                 <span>{bookmark.title}</span>
                 <span>{this.displayAddressBasedOnSelectedToken(bookmark.address)}</span>
               </div>
-            </div>)
+            </Link>)
           : <EmptyState>
               <img src={svg.bookmarksIconEmptyState} />
               <h1>{t('No Bookmarks added yet')}</h1>
               <p>{t('Start adding some addresses to bookmarks, to keep track of them.')}</p>
               <div>
+                { /* TODO - pass the correct link when bookmarks page is avaiable */ }
                 <Link to={'#'}>
                   <SecondaryButtonV2>{t('Search Accounts')}</SecondaryButtonV2>
                 </Link>
@@ -76,6 +69,7 @@ class BookmarksList extends React.Component {
         {
           selectedBookmarks.length
           ? <div className={styles.footer}>
+              { /* TODO - pass the correct link when bookmarks page is avaiable */ }
               <Link to={'#'}>
                 <SecondaryButtonV2>{t('View All')}</SecondaryButtonV2>
               </Link>
@@ -87,10 +81,5 @@ class BookmarksList extends React.Component {
     );
   }
 }
-
-BookmarksList.propTypes = {
-  bookmarks: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-};
 
 export default BookmarksList;

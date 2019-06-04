@@ -52,7 +52,8 @@ class RecentTransactions extends Component {
             <p>{t('A great way to start is to top up your account with some {{value}} tokens.', { value: activeToken.key })}</p>
             <div>
             {
-              activeToken.key === 'LSK' // TODO this validation should be remove once we have the external link for BTC
+              // TODO this validation should be remove once we have the external link for BTC
+              activeToken.key === tokenMap.LSK.key
               ? <a href={links.outgoingTransactions}
                   rel="noopener noreferrer"
                   target="_blank">

@@ -1,13 +1,8 @@
 @import '../app/variablesV2.css';
 @import '../app/mixins.css';
 
-.tab {
-  border-bottom: none !important;
-}
-
 .box {
   width: 100%;
-  max-width: 321px;
 
   & .bookmarkList {
     width: 100%;
@@ -29,6 +24,11 @@
       padding: 15px 0;
       border-bottom: 1px solid var(--color-mystic);
       cursor: pointer;
+      text-decoration: none;
+
+      & > .avatar {
+        margin-right: 15px;
+      }
 
       & .description {
         box-sizing: border-box;
@@ -36,7 +36,6 @@
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
-        margin-left: 15px;
 
         & > span:first-child {
           @mixin headingSmall;
@@ -52,7 +51,7 @@
       }
     }
 
-    & > div:nth-last-child(2) {
+    & > a:nth-last-child(2) {
       border-bottom: 0;
     }
 
