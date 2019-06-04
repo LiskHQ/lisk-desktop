@@ -5,7 +5,7 @@ const VoteList = ({
   list, title, className, votes,
 }) => (
   <React.Fragment>
-  {list.length > 0 ?
+  {list.length ?
     <section>
       <label>{title} ({list.length})</label>
       <label>
