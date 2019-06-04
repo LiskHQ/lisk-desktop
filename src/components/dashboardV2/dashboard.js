@@ -6,6 +6,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '../../constants/routes';
 import BookmarksList from '../bookmarksList';
 import NewsFeed from '../newsFeedV2';
+import MyAccount from '../myAccount';
 import Piwik from '../../utils/piwik';
 import links from '../../constants/externalLinks';
 import { fromRawLsk } from '../../utils/lsk';
@@ -136,6 +137,8 @@ class Dashboard extends React.Component {
           </header>
 
           <div className={`${styles.main}`}>
+            <MyAccount />
+
             <RecentTransactions />
 
             {

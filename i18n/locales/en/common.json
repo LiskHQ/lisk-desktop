@@ -549,6 +549,7 @@
   "Voting submitted": "Voting submitted",
   "Voting summary": "Voting summary",
   "Wallet": "Wallet",
+  "Wallet details": "Wallet details",
   "We recommend including date & time or a specific keyword.": "We recommend including date & time or a specific keyword.",
   "Welcome back": "Welcome back",
   "Welcome to Lisk Delegates!": "Welcome to Lisk Delegates!",
@@ -620,5 +621,6 @@
   "{{fee}} {{token}}": "{{fee}} {{token}}",
   "{{length}} bytes left": "{{length}} bytes left",
   "{{length}} extra characters": "{{length}} extra characters",
-  "{{length}} out of {{maxLength}} characters left": "{{length}} out of {{maxLength}} characters left"
+  "{{length}} out of {{maxLength}} characters left": "{{length}} out of {{maxLength}} characters left",
+  "{{token}} Balance": "{{token}} Balance"
 }
