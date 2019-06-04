@@ -2,22 +2,18 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
-
 import {
   urlVotesFound,
   voteLookupStatusCleared,
-} from '../../actions/voting';
+} from '../../../actions/voting';
 import VoteUrlProcessor from './voteUrlProcessor';
-
-const mapStateToProps = () => ({
-});
 
 const mapDispatchToProps = {
   urlVotesFound,
-  clearVoteLookupStatus: voteLookupStatusCleared,
+  voteLookupStatusCleared,
 };
 
 export default withRouter(connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 )(translate()(VoteUrlProcessor)));

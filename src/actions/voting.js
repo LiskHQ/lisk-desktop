@@ -90,7 +90,7 @@ const handleVoteError = ({ error }) => {
  * cleans the pending state
  */
 export const votePlaced = ({
-  passphrase, account, votes, secondPassphrase, goToNextStep,
+  passphrase, account, votes, secondPassphrase, callback,
 }) =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
     // account.loginType = 1;
@@ -141,7 +141,7 @@ export const votePlaced = ({
     }
 
     if (error) {
-      goToNextStep({
+      callback({
         success: false,
         errorMessage: error.message,
         text: handleVoteError({ error }),
@@ -150,7 +150,7 @@ export const votePlaced = ({
       dispatch(pendingVotesAdded());
       callResult.map(transaction => dispatch(addPendingTransaction(transaction)));
       dispatch(passphraseUsed(passphrase));
-      goToNextStep({ success: true });
+      callback({ success: true });
     }
   };
 
