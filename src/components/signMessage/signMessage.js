@@ -1,17 +1,9 @@
 import React from 'react';
-// import Fees from '../../constants/fees';
 import MultiStep from '../multiStep';
-// import Info from '../passphrase/info';
 import SignMessageInput from './signMessageInput';
 import ConfirmMessage from './confirmMessage';
-import Box from '../box';
-import styles from './signMessage.css';
 
 class SignMessage extends React.Component {
-  backToPreviousPage() {
-    this.props.history.goBack();
-  }
-
   render() {
     const { account, t, history } = this.props;
     const header = t('Sign a message');
@@ -20,19 +12,11 @@ class SignMessage extends React.Component {
       t('We recommend including date & time or a specific keyword.');
 
     return (
-      <Box className={`${styles.hasPaddingTop} ${styles.signMessage}`}>
-        <MultiStep
-          showNav={true}
-          backButtonLabel={t('Back')}
-          prevPage={this.backToPreviousPage.bind(this)}
-          className={styles.signMessageContainer}
-        >
-          <SignMessageInput title={t('Input')} t={t}
-            icon='edit' header={header} message={message} history={history} />
-          <ConfirmMessage title={t('Result')} t={t} confirmButton='Register'
-            icon='checkmark' secondPassConfirmation={true} account={account} />
-        </MultiStep>
-      </Box>);
+      <MultiStep>
+        <SignMessageInput t={t} header={header} message={message} history={history} />
+        <ConfirmMessage t={t} account={account} />
+      </MultiStep>
+    );
   }
 }
 

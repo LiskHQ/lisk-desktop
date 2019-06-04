@@ -1,16 +1,11 @@
 import React from 'react';
 import Lisk from '@liskhq/lisk-client';
 import styles from './confirmMessage.css';
-import { Button } from '../toolbox/buttons/button';
 import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
-import { passphraseIsValid } from '../../utils/form';
 import { extractPublicKey } from '../../utils/account';
-// eslint-disable-next-line import/no-named-as-default
-import PassphraseInput from '../passphraseInput';
 import TransitionWrapper from '../toolbox/transitionWrapper';
 import CopyToClipboard from '../copyToClipboard';
 import Piwik from '../../utils/piwik';
-import passphraseStepsStyles from '../passphraseSteps/passphraseSteps.css';
 
 class ConfirmMessage extends React.Component {
   constructor() {
@@ -105,29 +100,6 @@ class ConfirmMessage extends React.Component {
                   copyClassName={styles.copy}
                   text={this.props.t('Copy to Clipboard')}/>
               </div>
-            </div>
-          </TransitionWrapper>
-
-          <TransitionWrapper current={this.state.step} step='verify'>
-            <div className={`${styles.innerContent} ${styles.passphrase}`}>
-              <PassphraseInput
-                error={this.state.passphrase.error}
-                value={this.state.passphrase.value}
-                onChange={this.handleChange.bind(this, 'passphrase')}
-                columns={{ xs: 6, sm: 4, md: 2 }}
-                isFocused={true}
-                className='passphraseInput'
-                theme={passphraseStepsStyles}
-              />
-              <footer>
-                <Button
-                  label={this.props.t('Confirm')}
-                  theme={styles}
-                  className={`${styles.confirm} confirm`}
-                  onClick={this.signMessage.bind(this)}
-                  disabled={!passphraseIsValid(this.state.passphrase)}
-                />
-              </footer>
             </div>
           </TransitionWrapper>
         </section>
