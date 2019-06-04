@@ -27,6 +27,7 @@ class RecentTransactions extends Component {
     const {
       account,
       bookmarks,
+      className,
       settings,
       t,
     } = this.props;
@@ -34,7 +35,7 @@ class RecentTransactions extends Component {
     const transactionList = this.getLatestTransactions();
 
     return (
-      <Box className={`${styles.box}`}>
+      <Box className={`${styles.box} ${className}`}>
       <header>
         <h2 className={styles.title}>{t('Recent {{value}} transactions', { value: activeToken.label })}</h2>
       </header>

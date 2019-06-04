@@ -93,6 +93,7 @@ class Dashboard extends React.Component {
       history,
       t,
     } = this.props;
+    const { isDesktop } = this.state;
 
     const isLoggedIn = account.address;
 
@@ -137,15 +138,23 @@ class Dashboard extends React.Component {
           </header>
 
           <div className={`${styles.main}`}>
-            <MyAccount />
+            <div className={styles.subContainer}>
+              {
+                isLoggedIn
+                ? <MyAccount className={styles.marginFix}/>
+                : null
+              }
 
-            <RecentTransactions />
+              <RecentTransactions className={styles.marginFix}/>
+            </div>
 
             {
-            <div className={`${styles.newsFeedWrapper}`}>
-              <NewsFeed />
-              <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn3} />
-            </div>
+              isDesktop
+              ? <div className={`${styles.community}`}>
+                  <NewsFeed />
+                  <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn3} />
+                </div>
+              : null
             }
 
             <div className={`${styles.bookmarks} bookmarks`}>
