@@ -1,3 +1,4 @@
+// TODO rename this file to 'delegates.js'
 import actionTypes from '../../constants/actions';
 
 const mergeVotes = (newList, oldDict) => {
@@ -43,7 +44,7 @@ const mergeVotes = (newList, oldDict) => {
 const voting = (state = { // eslint-disable-line complexity
   votes: {},
   delegates: [],
-  totalDelegates: 0,
+  totalDelegates: 0, // TODO remove totalDelegates as API no longer provides this
   voteLookupStatus: {},
 }, action) => {
   switch (action.type) {
@@ -62,7 +63,7 @@ const voting = (state = { // eslint-disable-line complexity
             };
             return votesDict;
           }, {}),
-        refresh: false,
+        refresh: false, // TODO figure out why we need this and try to remove it
       };
 
     case actionTypes.delegatesAdded:
@@ -94,7 +95,7 @@ const voting = (state = { // eslint-disable-line complexity
         },
       };
 
-
+    // TODO change this to actionTypes.clearDelegates and dispatch that one from a middleware
     case actionTypes.accountLoading:
       return {
         ...state,
@@ -121,6 +122,7 @@ const voting = (state = { // eslint-disable-line complexity
         refresh: true,
       };
 
+    // TODO try to merge this with actionTypes.votesAdded
     case actionTypes.votesUpdated:
       return {
         ...state,
@@ -128,6 +130,7 @@ const voting = (state = { // eslint-disable-line complexity
         refresh: false,
       };
 
+    // TODO try to merge this with actionTypes.votesAdded
     case actionTypes.pendingVotesAdded:
       return {
         ...state,
