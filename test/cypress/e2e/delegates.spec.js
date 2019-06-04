@@ -33,9 +33,11 @@ describe('Delegates', () => {
    * Become a delegate link absent if I am a delegate
    * @expect link does not exist
    */
-  it('Become a delegate link absent if I am a delegate', () => {
+  // TODO Unskip after https://github.com/LiskHQ/lisk-hub/issues/2103 fix
+  xit('Become a delegate link absent if I am a delegate', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
+    cy.get(ss.startVotingButton).should('exist');
     cy.get(ss.becomeDelegateLink).should('not.exist');
   });
 
@@ -60,8 +62,15 @@ describe('Delegates', () => {
     cy.autologin(accounts.genesis.passphrase, networks.testnet.node);
     cy.visit(urls.delegates);
     cy.get(ss.delegateName);
+    cy.get(ss.delegateRow).should('have.length', 101);
     cy.get(ss.loadMoreButton).click();
     cy.get(ss.delegateRow).should('have.length', 202);
+  });
+
+  it('Displays 101 delegates in guest mode', () => {
+    cy.visit(urls.delegates);
+    cy.get(ss.delegateName);
+    cy.get(ss.delegateRow).should('have.length', 101);
   });
 
   /**
