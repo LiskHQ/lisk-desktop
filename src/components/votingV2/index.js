@@ -5,10 +5,11 @@ import { withRouter } from 'react-router';
 import VotingV2 from './votingV2';
 import { clearVotes, votePlaced } from '../../actions/voting';
 import { filterObjectPropsWithValue } from '../../utils/helpers';
+import { getActiveTokenAccount } from '../../utils/account';
 
 const mapStateToProps = state => ({
   votes: state.voting.votes,
-  account: state.account,
+  account: getActiveTokenAccount(state),
   voteLookupStatus: {
     pending: filterObjectPropsWithValue(state.voting.voteLookupStatus, 'pending'),
     alreadyVoted: filterObjectPropsWithValue(state.voting.voteLookupStatus, 'alreadyVoted').concat(filterObjectPropsWithValue(state.voting.voteLookupStatus, 'notVotedYet')),
