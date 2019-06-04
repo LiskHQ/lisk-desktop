@@ -158,7 +158,7 @@ class Dashboard extends React.Component {
             }
 
             <div className={`${styles.bookmarks} bookmarks`}>
-              <BookmarksList className={styles.bookmarkList} history={history}/>
+              <BookmarksList history={history}/>
               <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn1} />
             </div>
           </div>
