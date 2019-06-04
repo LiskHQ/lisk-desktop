@@ -10,7 +10,7 @@ import transactionError from '../../../assets/images/illustrations/transaction_e
 import pageNotFound from '../../../assets/images/illustrations/illustration-page-not-found.svg';
 import errorBoundaryPage from '../../../assets/images/illustrations/illustration-error-boundary-page.svg';
 
-const illustrations = {
+export const illustrations = {
   welcomeLiskDelegates,
   yourVoiceMatters,
   getRewarded,
