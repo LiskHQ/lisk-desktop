@@ -19,6 +19,8 @@ import { loginType } from '../constants/hwConstants';
 /**
  * Add pending variable to the list of voted delegates and list of unvoted delegates
  */
+// TODO remove this and use directly the actionTypes.pendingVotesAdded
+// as it's used only in this file
 export const pendingVotesAdded = () => ({
   type: actionTypes.pendingVotesAdded,
 });
@@ -26,6 +28,7 @@ export const pendingVotesAdded = () => ({
 /**
  * Remove all data from the list of voted delegates and list of unvoted delegates
  */
+// TODO remove this and use directly the actionTypes.votesUpdated as it's used only in this file
 export const votesUpdated = data => ({
   type: actionTypes.votesUpdated,
   data,
@@ -34,6 +37,7 @@ export const votesUpdated = data => ({
 /**
  * Add data to the list of voted delegates
  */
+// TODO remove this and use directly the actionTypes.votesAdded as it's used only in this file
 export const votesAdded = data => ({
   type: actionTypes.votesAdded,
   data,
@@ -42,6 +46,7 @@ export const votesAdded = data => ({
 /**
  * Add data to the list of all delegates
  */
+// TODO remove this and use directly the actionTypes.delegatesAdded as it's used only in this file
 export const delegatesAdded = data => ({
   type: actionTypes.delegatesAdded,
   data,
@@ -75,6 +80,8 @@ export const clearVotes = () => ({
   type: actionTypes.votesCleared,
 });
 
+
+// TODO adjust the utils to return errors in a consistent way so that this function can be removed
 const handleVoteError = ({ error }) => {
   if (error && error.message) {
     return error.message;
@@ -122,6 +129,7 @@ export const votePlaced = ({
       return;
     }
 
+    // TODO create a util function so that this switch doesn't have to be here
     switch (account.loginType) {
       case loginType.normal:
         [error, callResult] = await to(vote(
@@ -160,6 +168,7 @@ export const votePlaced = ({
  */
 export const votesFetched = ({ address, type }) =>
   (dispatch, getState) => {
+    // TODO use getState().network instead of getState().peers and adjust
     const liskAPIClient = getState().peers.liskAPIClient;
     listAccountDelegates(liskAPIClient, address).then((response) => {
       if (type === 'update') {
@@ -177,6 +186,7 @@ export const delegatesFetched = ({
   offset, refresh, q, callback = () => {},
 }) =>
   (dispatch, getState) => {
+    // TODO use getState().network instead of getState().peers and adjust
     const liskAPIClient = getState().peers.liskAPIClient;
     let params = {
       offset,
