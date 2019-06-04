@@ -5,8 +5,8 @@ import throttle from 'lodash.throttle';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '../../constants/routes';
 import Bookmarks from '../bookmarks';
-import QuickTips from '../quickTips';
 import NewsFeed from '../newsFeedV2';
+import MyAccount from '../myAccount';
 import Piwik from '../../utils/piwik';
 import links from '../../constants/externalLinks';
 import { fromRawLsk } from '../../utils/lsk';
@@ -110,11 +110,9 @@ class Dashboard extends React.Component {
           </header>
 
           <div className={`${styles.main}`}>
-            {
-              isLoggedIn
-              ? <RecentTransactions />
-              : <QuickTips />
-            }
+            <MyAccount />
+
+            <RecentTransactions />
 
             {
             <div className={`${styles.newsFeedWrapper}`}>
