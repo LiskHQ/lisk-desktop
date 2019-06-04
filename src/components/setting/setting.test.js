@@ -48,6 +48,7 @@ describe('Setting', () => {
   let wrapper;
 
   const props = {
+    transactions: { pending: [] },
     account: {},
     settingsUpdated: jest.fn(),
     accountUpdated: jest.fn(),
@@ -72,6 +73,12 @@ describe('Setting', () => {
       <Setting {...newProps} store={store}/>
     </Router>, options);
     expect(wrapper).toContainMatchingElements(1, '.disabled');
+  });
+
+  it('should show 2nd passphrase as processing', () => {
+    const newProps = { ...props, transactions: { pending: [{ type: 1 }] } };
+    wrapper = mount(<Router><Setting {...newProps} /></Router>, options);
+    expect(wrapper.find('.second-passphrase')).toContainMatchingElement('.loading');
   });
 
   it('should render 2nd passphrase as active', () => {

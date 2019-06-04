@@ -92,4 +92,20 @@
   & .hide {
     visibility: hidden;
   }
+
+  & .loading {
+    margin-top: 10px;
+
+    & :global(.spinner) {
+      color: var(--color-ultramarine-blue);
+      height: 20px;
+      width: 20px;
+    }
+
+    & :global(.spinner-label) {
+      @mixin contentNormal bold;
+
+      color: var(--color-maastricht-blue);
+    }
+  }
 }

@@ -11,6 +11,7 @@ const mapStateToProps = state => ({
   settings: state.settings,
   account: state.account,
   isAuthenticated: !!state.account.info,
+  transactions: state.transactions,
 });
 
 const mapDispatchToProps = {

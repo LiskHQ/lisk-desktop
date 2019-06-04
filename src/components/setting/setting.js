@@ -11,6 +11,8 @@ import BoxV2 from '../boxV2';
 import Select from '../toolbox/select';
 import CheckBox from '../toolbox/checkBox';
 import svgIcons from '../../utils/svgIcons';
+import txTypes from '../../constants/transactionTypes';
+import SpinnerV2 from '../spinnerV2/spinnerV2';
 
 class Setting extends React.Component {
   constructor() {
@@ -68,6 +70,7 @@ class Setting extends React.Component {
     const {
       t, settings,
       hasSecondPassphrase,
+      transactions: { pending },
     } = this.props;
     const { currencies } = this.state;
 
@@ -75,6 +78,8 @@ class Setting extends React.Component {
       ? `${styles.disabled} disabled`
       : '';
     const activeCurrency = currencies.indexOf(settings.currency || settingsConst.currencies[0]);
+    const hasPendingSecondPassphrase = pending.find(element =>
+      element.type === txTypes.setSecondPassphrase) !== undefined;
 
     return (
       <div className={styles.settingsHolder}>
@@ -127,11 +132,18 @@ class Setting extends React.Component {
                   {!hasSecondPassphrase ?
                     <React.Fragment>
                       <p className={styles.highlight}>{t('Once activated can’t be turned off.')}</p>
-                      <Link
-                        className={`register-second-passphrase ${styles.link}`}
-                        to={`${routes.secondPassphrase.path}`}>
-                        {t('Activate (5 LSK Fee)')}
-                      </Link>
+                      {hasPendingSecondPassphrase ? (
+                        <SpinnerV2
+                          className={styles.loading}
+                          label={t('Second Passphrase is being activated. Almost there!')}
+                        />
+                      ) : (
+                        <Link
+                          className={`register-second-passphrase ${styles.link}`}
+                          to={`${routes.secondPassphrase.path}`}>
+                          {t('Activate (5 LSK Fee)')}
+                        </Link>
+                      )}
                     </React.Fragment>
                   : null}
                 </div>
