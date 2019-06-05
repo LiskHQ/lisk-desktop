@@ -5,7 +5,7 @@ import {
   listDelegates,
   listAccountDelegates,
   getDelegate,
-  vote,
+  voteWithPassphrase,
   getVotes,
   getAllVotes,
   registerDelegate,
@@ -92,7 +92,7 @@ describe('Utils: Delegate', () => {
     });
   });
 
-  describe('vote', () => {
+  describe('voteWithPassphrase', () => {
     it('should call castVotes and broadcast transaction', () => {
       const votes = [
         accounts.genesis.publicKey,
@@ -112,7 +112,7 @@ describe('Utils: Delegate', () => {
         timeOffset,
       }).returns(transaction);
 
-      vote(
+      voteWithPassphrase(
         liskAPIClient,
         accounts.genesis.passphrase,
         accounts.genesis.publicKey,

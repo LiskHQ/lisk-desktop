@@ -1,4 +1,7 @@
+import i18next from 'i18next';
 import Lisk from '@liskhq/lisk-client';
+import { loginType } from '../../constants/hwConstants';
+import { voteWithHW } from '../../utils/api/hwWallet';
 
 // TODO remove listAccountDelegates and use getVotes defined below
 export const listAccountDelegates = (liskAPIClient, address) =>
@@ -36,7 +39,7 @@ export const splitVotesIntoRounds = ({ votes, unvotes }) => {
   return rounds;
 };
 
-export const vote = (
+export const voteWithPassphrase = (
   liskAPIClient,
   passphrase,
   publicKey,
@@ -62,6 +65,29 @@ export const vote = (
     });
   }))
 );
+
+export const vote = async ({
+  liskAPIClient,
+  account,
+  votedList,
+  unvotedList,
+  secondPassphrase,
+  timeOffset,
+}) => {
+  switch (account.loginType) {
+    case loginType.normal:
+      return voteWithPassphrase(
+        liskAPIClient, account.passphrase, account.publicKey,
+        votedList, unvotedList, secondPassphrase, timeOffset,
+      );
+    case loginType.ledger:
+      return voteWithHW(liskAPIClient, account, votedList, unvotedList);
+    default:
+      return new Promise((resolve, reject) => {
+        reject(i18next.t('Login Type not recognized.'));
+      });
+  }
+};
 
 export const getVotes = (liskAPIClient, { address, offset, limit }) =>
   liskAPIClient.votes.get({ address, limit, offset });

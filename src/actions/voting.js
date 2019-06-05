@@ -8,12 +8,10 @@ import {
 import { getVotingLists, getVotingError } from '../utils/voting';
 import { getTimeOffset } from '../utils/hacks';
 import { updateDelegateCache } from '../utils/delegates';
-import { voteWithHW } from '../utils/api/hwWallet';
 import { passphraseUsed } from './account';
 import { addPendingTransaction } from './transactions';
 import { errorToastDisplayed } from './toaster';
 import actionTypes from '../constants/actions';
-import { loginType } from '../constants/hwConstants';
 
 /**
  * Add pending variable to the list of voted delegates and list of unvoted delegates
@@ -96,40 +94,27 @@ const handleVoteError = ({ error }) => {
  * cleans the pending state
  */
 export const votePlaced = ({
-  passphrase, account, votes, secondPassphrase, callback,
+  account, votes, secondPassphrase, callback,
 }) =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
-    // account.loginType = 1;
-    let error;
-    let callResult;
     const liskAPIClient = getState().peers.liskAPIClient;
     const { votedList, unvotedList } = getVotingLists(votes);
     const timeOffset = getTimeOffset(getState());
 
-    error = getVotingError(votes, account);
-    if (error) {
-      dispatch(errorToastDisplayed({ label: error }));
+    const label = getVotingError(votes, account);
+    if (label) {
+      dispatch(errorToastDisplayed({ label }));
       return;
     }
 
-    // TODO create a util function so that this switch doesn't have to be here
-    switch (account.loginType) {
-      case loginType.normal:
-        [error, callResult] = await to(vote(
-          liskAPIClient, passphrase, account.publicKey,
-          votedList, unvotedList, secondPassphrase, timeOffset,
-        ));
-        break;
-      /* istanbul ignore next */
-      // eslint-disable-next-line no-case-declarations
-      case loginType.ledger:
-        [error, callResult] =
-          await to(voteWithHW(liskAPIClient, account, votedList, unvotedList));
-        break;
-      /* istanbul ignore next */
-      default:
-        dispatch({ data: { errorMessage: i18next.t('Login Type not recognized.') }, type: actionTypes.transactionFailed });
-    }
+    const [error, callResult] = await to(vote({
+      liskAPIClient,
+      account,
+      votedList,
+      unvotedList,
+      secondPassphrase,
+      timeOffset,
+    }));
 
     if (error) {
       callback({
@@ -140,7 +125,7 @@ export const votePlaced = ({
     } else {
       dispatch(pendingVotesAdded());
       callResult.map(transaction => dispatch(addPendingTransaction(transaction)));
-      dispatch(passphraseUsed(passphrase));
+      dispatch(passphraseUsed(account.passphrase));
       callback({ success: true });
     }
   };
