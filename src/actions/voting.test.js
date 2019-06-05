@@ -157,7 +157,7 @@ describe('actions: voting', () => {
     const delegates = delegateList;
 
     beforeEach(() => {
-      delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates').returnsPromise();
+      delegateApiMock = sinon.stub(delegateApi, 'getVotes').returnsPromise();
       getState = () => ({
         peers: { liskAPIClient: {} },
       });
@@ -265,7 +265,7 @@ describe('actions: voting', () => {
     });
 
     beforeEach(() => {
-      delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates').returnsPromise();
+      delegateApiMock = sinon.stub(delegateApi, 'getVotes').returnsPromise();
       getState = () => ({
         peers: { liskAPIClient: {} },
       });

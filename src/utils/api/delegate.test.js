@@ -3,7 +3,6 @@ import sinon from 'sinon';
 import Lisk from '@liskhq/lisk-client';
 import {
   listDelegates,
-  listAccountDelegates,
   getDelegate,
   vote,
   getVotes,
@@ -51,14 +50,6 @@ describe('Utils: Delegate', () => {
 
     liskTransactionsCastVotesStub.restore();
     liskTransactionsRegisterDelegateStub.restore();
-  });
-
-  describe('listAccountDelegates', () => {
-    it('should get votes for an address with 101 limit', () => {
-      const address = '123L';
-      liskAPIClientMockVotes.expects('get').withArgs({ address, limit: '101' }).once();
-      listAccountDelegates(liskAPIClient, address);
-    });
   });
 
   describe('listDelegates', () => {

@@ -3,10 +3,6 @@ import Lisk from '@liskhq/lisk-client';
 import { loginType } from '../../constants/hwConstants';
 import { voteWithHW } from '../../utils/api/hwWallet';
 
-// TODO remove listAccountDelegates and use getVotes defined below
-export const listAccountDelegates = (liskAPIClient, address) =>
-  liskAPIClient.votes.get({ address, limit: '101' });
-
 export const listDelegates = (liskAPIClient, options) => (
   liskAPIClient.delegates.get(options)
 );
@@ -82,7 +78,7 @@ export const vote = async ({
   }
 };
 
-export const getVotes = (liskAPIClient, { address, offset, limit }) =>
+export const getVotes = (liskAPIClient, { address, offset = 0, limit = 101 }) =>
   liskAPIClient.votes.get({ address, limit, offset });
 
 export const registerDelegate = (

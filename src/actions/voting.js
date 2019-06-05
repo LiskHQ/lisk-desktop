@@ -1,7 +1,7 @@
 import to from 'await-to-js';
 import i18next from 'i18next';
 import {
-  listAccountDelegates,
+  getVotes,
   listDelegates,
   vote,
 } from '../utils/api/delegate';
@@ -113,7 +113,7 @@ export const votePlaced = ({
 export const votesFetched = ({ address, type }) =>
   (dispatch, getState) => {
     const liskAPIClient = getAPIClient('LSK', getState());
-    listAccountDelegates(liskAPIClient, address).then((response) => {
+    getVotes(liskAPIClient, { address }).then((response) => {
       dispatch({
         type: type === 'update' ? actionTypes.votesUpdated : actionTypes.votesAdded,
         data: { list: response.data.votes },
@@ -161,7 +161,7 @@ export const urlVotesFound = ({
         data: { list: votes, upvotes, unvotes },
       });
     };
-    listAccountDelegates(liskAPIClient, address)
+    getVotes(liskAPIClient, { address })
       .then((response) => { processUrlVotes(response.data.votes); })
       .catch(() => { processUrlVotes([]); });
   };
