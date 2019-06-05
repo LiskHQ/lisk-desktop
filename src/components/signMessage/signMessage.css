@@ -73,6 +73,12 @@
   & > * {
     display: block;
     margin: 5px 0;
+    text-decoration: none;
     width: 50%;
+
+    & > * {
+      display: block;
+      width: 100%;
+    }
   }
 }

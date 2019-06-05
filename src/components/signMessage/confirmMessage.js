@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Lisk from '@liskhq/lisk-client';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import styles from './signMessage.css';
 import { AutoresizeTextarea } from '../toolbox/inputsV2';
-import { SecondaryButtonV2 } from '../toolbox/buttons/button';
+import { SecondaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
+import routes from '../../constants/routes';
 
 class ConfirmMessage extends React.Component {
   constructor(props) {
@@ -62,6 +64,11 @@ class ConfirmMessage extends React.Component {
               {copied ? t('Copied!') : t('Copy to Clipboard')}
             </SecondaryButtonV2>
           </CopyToClipboard>
+          <Link to={routes.dashboard.path}>
+            <TertiaryButtonV2>
+              {t('Go to Dashboard')}
+            </TertiaryButtonV2>
+          </Link>
         </div>
       </section>
     );
