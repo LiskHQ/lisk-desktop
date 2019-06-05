@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import {
-  votesUpdated,
   votesAdded,
   voteToggled,
   voteLookupStatusUpdated,
@@ -64,17 +63,6 @@ describe('actions: voting', () => {
       };
 
       expect(votesAdded(data)).to.be.deep.equal(expectedAction);
-    });
-  });
-
-  describe('votesUpdated', () => {
-    it('should create an action to update the votes dictionary', () => {
-      const expectedAction = {
-        type: actionTypes.votesUpdated,
-        data: { list: delegateList },
-      };
-      const createdAction = votesUpdated({ list: delegateList });
-      expect(createdAction).to.be.deep.equal(expectedAction);
     });
   });
 
@@ -192,10 +180,13 @@ describe('actions: voting', () => {
       const dispatch = sinon.spy();
 
       delegateApiMock.resolves({ data: { votes: delegates } });
-      const expectedAction = { list: delegates };
+      const expectedAction = {
+        type: actionTypes.votesUpdated,
+        data: { list: delegates },
+      };
 
       votesFetched({ ...data, type: 'update' })(dispatch, getState);
-      expect(dispatch).to.have.been.calledWith(votesUpdated(expectedAction));
+      expect(dispatch).to.have.been.calledWith(expectedAction);
     });
   });
 
