@@ -52,7 +52,7 @@ class TransactionRowV2 extends React.Component {
 
   render() {
     const { props } = this;
-    const { value } = props;
+    const { value, token } = props;
     const onClick = props.onClick || (() => {});
     const hasConfirmations = props.value.confirmations && props.value.confirmations > 0;
     const { isConfirmed } = this.state;
@@ -68,18 +68,18 @@ class TransactionRowV2 extends React.Component {
             address={value.recipientId}
             bookmarks={props.bookmarks}
             t={props.t}
-            token={value.token}
+            token={token}
             transactionType={value.type}
           />
         </div>
         <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
           <div className={`${styles.status} ${!isConfirmed ? styles.showSpinner : styles.showDate}`}>
             <SpinnerV2 completed={hasConfirmations} label={props.t('Pending...')} />
-            <DateTimeFromTimestamp time={props.value.timestamp} token={props.value.token} />
+            <DateTimeFromTimestamp time={props.value.timestamp} token={token} />
           </div>
         </div>
         <div className={`${grid['col-sm-1']} ${grid['col-lg-2']} transactions-cell`}>
-          <LiskAmount val={props.value.fee}/>&nbsp;{props.value.token}
+          <LiskAmount val={props.value.fee}/>&nbsp;{token}
         </div>
           <div className={`${grid['col-sm-3']} ${grid['col-lg-3']} transactions-cell`}>
             <TransactionDetailV2
@@ -89,7 +89,7 @@ class TransactionRowV2 extends React.Component {
         <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
           <TransactionAmount
             address={props.address}
-            token={props.value.token}
+            token={token}
             transaction={props.value}
           />
         </div>

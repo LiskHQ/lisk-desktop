@@ -55,6 +55,7 @@ class TransactionsListV2 extends React.Component {
                 bookmarks={bookmarks}
                 address={address}
                 value={transaction}
+                token={activeToken}
                 onClick={this.props.onClick}/>)
         : <p className={`${styles.empty} empty-message`}>
           {t('There are no transactions.')}
