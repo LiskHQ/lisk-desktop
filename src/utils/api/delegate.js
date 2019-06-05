@@ -7,16 +7,9 @@ import { voteWithHW } from '../../utils/api/hwWallet';
 export const listAccountDelegates = (liskAPIClient, address) =>
   liskAPIClient.votes.get({ address, limit: '101' });
 
-// TODO remove the !liskAPIClient condition
-export const listDelegates = (liskAPIClient, options) => new Promise((resolve, reject) => {
-  if (!liskAPIClient) {
-    reject();
-  } else {
-    liskAPIClient.delegates.get(options)
-      .then(response => resolve(response))
-      .catch(reject);
-  }
-});
+export const listDelegates = (liskAPIClient, options) => (
+  liskAPIClient.delegates.get(options)
+);
 
 // TODO remove getDelegate and use listDelegates defined above
 export const getDelegate = (liskAPIClient, options) =>
