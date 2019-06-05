@@ -53,7 +53,7 @@ class DelegatesV2 extends React.Component {
         <Onboarding
           slides={this.getOnboardingSlides()}
           finalCallback={this.toggleVotingMode}
-          ctaLabel={t('Start voting')}
+          actionButtonLabel={t('Start voting')}
           name={'delegateOnboarding'}
         />
         <VotingHeader
