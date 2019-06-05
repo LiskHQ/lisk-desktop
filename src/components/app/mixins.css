@@ -37,7 +37,7 @@
   font-size: 15px;
   font-weight: var(--font-weight-$(weight));
   letter-spacing: 0;
-  line-height: 18px;
+  line-height: 21px;
 }
 
 @define-mixin headingExtraSmall {
