@@ -1,8 +1,9 @@
 import React from 'react';
 import Lisk from '@liskhq/lisk-client';
-import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
-import CopyToClipboard from '../copyToClipboard';
+import CopyToClipboard from 'react-copy-to-clipboard';
 import styles from './signMessage.css';
+import { AutoresizeTextarea } from '../toolbox/inputsV2';
+import { SecondaryButtonV2 } from '../toolbox/buttons/button';
 
 class ConfirmMessage extends React.Component {
   constructor(props) {
@@ -10,7 +11,19 @@ class ConfirmMessage extends React.Component {
 
     this.state = {
       result: props.account.passphrase ? this.sign() : '',
+      copied: false,
     };
+
+    this.copy = this.copy.bind(this);
+  }
+
+  copy() {
+    this.setState({ copied: true });
+    this.timeout = setTimeout(() => this.setState({ copied: false }), 3000);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
   }
 
   sign() {
@@ -30,19 +43,25 @@ class ConfirmMessage extends React.Component {
 
   render() {
     const { t } = this.props;
+    const { copied, result } = this.state;
     return (
       <section>
         <div className={styles.header}>
-          <span className={styles.step}>{t('Step 2/2')}</span>
+          <span className={styles.step}>{t('Step 2 / 2')}</span>
           <h1>{t('Your signed message')}</h1>
         </div>
-        <div>
-          <ToolBoxInput multiline readOnly value={this.state.result} />
+        <div className={styles.result}>
+          <AutoresizeTextarea className={styles.textarea} readOnly value={result}/>
         </div>
         <div className={styles.buttonsHolder}>
           <CopyToClipboard
-            value={this.state.result}
-            text={t('Copy to Clipboard')}/>
+            onCopy={this.copy}
+            text={result}
+          >
+            <SecondaryButtonV2 disabled={copied}>
+              {copied ? t('Copied!') : t('Copy to Clipboard')}
+            </SecondaryButtonV2>
+          </CopyToClipboard>
         </div>
       </section>
     );

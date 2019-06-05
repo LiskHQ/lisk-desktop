@@ -16,7 +16,7 @@
   text-align: center;
 
   & > .step {
-    @mixin contentSmallest;
+    @mixin contentNormal semi-bold;
 
     color: var(--color-slate-gray);
     height: 18px;
@@ -35,11 +35,37 @@
   }
 
   & > p {
-    @mixin contentLarge;
+    @mixin contentLargest;
 
     color: var(--color-slate-gray);
     margin: 0;
   }
+}
+
+.fieldGroup {
+  display: block;
+  margin: 30px 0 40px;
+
+  & > span {
+    @mixin contentNormal bold;
+
+    color: var(--color-maastricht-blue);
+    display: block;
+    margin-bottom: 12px;
+  }
+}
+
+.result {
+  margin: 40px 0;
+
+  & .textarea {
+    background: var(--color-console-background) !important;
+    color: var(--color-console-text) !important;
+  }
+}
+
+.textarea {
+  resize: none;
 }
 
 .buttonsHolder {

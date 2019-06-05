@@ -39,7 +39,7 @@ class SignMessageInput extends React.Component {
     return (
       <section>
         <div className={styles.header}>
-          <span className={styles.step}>{t('Step 1/2')}</span>
+          <span className={styles.step}>{t('Step 1 / 2')}</span>
           <h1>{t('Sign a message')}</h1>
           <p>{t('You can use your passphrase to sign a message. This signed message can prove that you are the owner of the account, since only your passphrase can produce it. We reccomend including date & time or a specific keyword.')}</p>
         </div>
@@ -47,6 +47,7 @@ class SignMessageInput extends React.Component {
           <label className={styles.fieldGroup}>
             <span>{t('Message')}</span>
             <AutoresizeTextarea
+              className={styles.textarea}
               name={'message'}
               onChange={this.handleChange}
               value={message.value} />
