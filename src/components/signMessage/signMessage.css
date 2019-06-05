@@ -56,8 +56,8 @@
   margin: 40px 0;
 
   & .textarea {
-    background: var(--color-console-background) !important;
-    color: var(--color-console-text) !important;
+    background: #08223c !important;
+    color: #9bf436 !important;
   }
 }
 

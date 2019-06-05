@@ -101,8 +101,6 @@ or "warn/action" ineastd of "red/green"
   /*************************
       Other Colors
   *************************/
-  --color-console-background: #08223c;
-  --color-console-text: #9bf436;
   --light-border-color: rgba(255, 255, 255, 0.24);
   --dark-border-color: rgba(0, 0, 0, 0.08);
   --primary-background-color: color(var(--color-ultramarine-blue) a(8%));
