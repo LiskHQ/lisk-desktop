@@ -5,12 +5,13 @@ import {
   listDelegates,
   listAccountDelegates,
   getDelegate,
-  voteWithPassphrase,
+  vote,
   getVotes,
   getAllVotes,
   registerDelegate,
 } from './delegate';
 import accounts from '../../../test/constants/accounts';
+import { loginType } from '../../constants/hwConstants';
 
 describe('Utils: Delegate', () => {
   let liskAPIClientMockDelegates;
@@ -92,7 +93,7 @@ describe('Utils: Delegate', () => {
     });
   });
 
-  describe('voteWithPassphrase', () => {
+  describe('vote', () => {
     it('should call castVotes and broadcast transaction', () => {
       const votes = [
         accounts.genesis.publicKey,
@@ -112,15 +113,17 @@ describe('Utils: Delegate', () => {
         timeOffset,
       }).returns(transaction);
 
-      voteWithPassphrase(
+      vote({
         liskAPIClient,
-        accounts.genesis.passphrase,
-        accounts.genesis.publicKey,
-        votes,
-        unvotes,
+        account: {
+          ...accounts.genesis,
+          loginType: loginType.normal,
+        },
+        votedList: votes,
+        unvotedList: unvotes,
         secondPassphrase,
         timeOffset,
-      );
+      });
       expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
     });
   });

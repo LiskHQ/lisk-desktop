@@ -32,7 +32,7 @@ export const splitVotesIntoRounds = ({ votes, unvotes }) => {
   return rounds;
 };
 
-export const voteWithPassphrase = (
+const voteWithPassphrase = (
   liskAPIClient,
   passphrase,
   publicKey,
