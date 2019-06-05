@@ -7,7 +7,6 @@ import {
   getDelegate,
   vote,
   getVotes,
-  getAllVotes,
   registerDelegate,
 } from './delegate';
 import accounts from '../../../test/constants/accounts';
@@ -135,26 +134,6 @@ describe('Utils: Delegate', () => {
       const limit = 100;
       liskAPIClientMockVotes.expects('get').withArgs({ address, offset, limit }).once();
       getVotes(liskAPIClient, { address, offset, limit });
-    });
-  });
-
-  describe('getAllVotes', () => {
-    it('should get all votes for an address with no parameters > 100', () => {
-      const address = '123L';
-      liskAPIClientMockVotes.expects('get').withArgs({ address, offset: 0, limit: 100 })
-        .returnsPromise().resolves({ data: { votes: [1, 2, 3], votesUsed: 101 } });
-      liskAPIClientMockVotes.expects('get').withArgs({ address, offset: 100, limit: 1 })
-        .returnsPromise().resolves({ data: { votes: [4], votesUsed: 101 } });
-      const returnedPromise = getAllVotes(liskAPIClient, address);
-      expect(returnedPromise).to.eventually.equal([1, 2, 3, 4]);
-    });
-
-    it('should get all votes for an address with no parameters < 100', () => {
-      const address = '123L';
-      liskAPIClientMockVotes.expects('get').withArgs({ address, offset: 0, limit: 100 })
-        .returnsPromise().resolves({ data: { votes: [1], votesUsed: 1 } });
-      const returnedPromise = getAllVotes(liskAPIClient, address);
-      expect(returnedPromise).to.eventually.equal([1]);
     });
   });
 
