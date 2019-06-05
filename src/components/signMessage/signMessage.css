@@ -4,12 +4,9 @@
 .wrapper {
   align-items: center;
   display: flex;
-  height: 100%;
   justify-content: center;
-}
-
-.holder {
-  max-width: 850px;
+  margin-bottom: 30px;
+  min-height: 100%;
 }
 
 .header {
