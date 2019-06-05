@@ -47,6 +47,7 @@ describe('DelegatesV2', () => {
     t: key => key,
     history: { location: { search: '' } },
     clearVotes: jest.fn(),
+    account: { address: delegates[0].address },
   };
   const options = {
     context: { store, history, i18n },
@@ -64,6 +65,14 @@ describe('DelegatesV2', () => {
 
     wrapper.find('.cancel-voting-button').at(0).simulate('click');
     expect(wrapper.find('.addedVotes')).to.have.lengthOf(0);
+  });
+
+  it('should not show "Register delegate" button if already delegate', () => {
+    wrapper = mount(<Router><DelegatesV2 {...{
+      ...props,
+      account: { delegate: delegates[0], address: delegates[0].address },
+    }} /></Router>, options);
+    expect(wrapper.find('.register-delegate')).to.have.lengthOf(0);
   });
 });
 
