@@ -1,4 +1,5 @@
 import React from 'react';
+import { MemoryRouter as Router } from 'react-router-dom';
 import { mount } from 'enzyme';
 import ConfirmMessage from './confirmMessage';
 import accounts from '../../../test/constants/accounts';
@@ -12,7 +13,7 @@ describe('Confirm Message Component', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<ConfirmMessage {...props} />);
+    wrapper = mount(<Router><ConfirmMessage {...props} /></Router>);
   });
 
   it('Should render correct result', () => {
@@ -21,12 +22,12 @@ describe('Confirm Message Component', () => {
   });
 
   it('Should handle copying result', () => {
-    expect(wrapper).toContainExactlyOneMatchingElement('button');
-    wrapper.find('button').simulate('click');
-    expect(wrapper.find('button')).toBeDisabled();
+    expect(wrapper).toContainMatchingElements(2, 'button');
+    wrapper.find('button').at(0).simulate('click');
+    expect(wrapper.find('button').at(0)).toBeDisabled();
     jest.advanceTimersByTime(3000);
     wrapper.update();
-    expect(wrapper.find('button')).not.toBeDisabled();
+    expect(wrapper.find('button').at(0)).not.toBeDisabled();
     wrapper.unmount();
   });
 });
