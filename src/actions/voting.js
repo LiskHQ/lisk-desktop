@@ -5,6 +5,7 @@ import {
   listDelegates,
   vote,
 } from '../utils/api/delegate';
+import { getVotingLists } from '../utils/voting';
 import { getTimeOffset } from '../utils/hacks';
 import { updateDelegateCache } from '../utils/delegates';
 import { voteWithHW } from '../utils/api/hwWallet';
@@ -104,19 +105,8 @@ export const votePlaced = ({
     let error;
     let callResult;
     const liskAPIClient = getState().peers.liskAPIClient;
-    const votedList = [];
-    const unvotedList = [];
+    const { votedList, unvotedList } = getVotingLists(votes);
     const timeOffset = getTimeOffset(getState());
-
-    // TODO separate votes transformation into a separate util function
-    Object.keys(votes).forEach((username) => {
-      /* istanbul ignore else */
-      if (!votes[username].confirmed && votes[username].unconfirmed) {
-        votedList.push(votes[username].publicKey);
-      } else if (votes[username].confirmed && !votes[username].unconfirmed) {
-        unvotedList.push(votes[username].publicKey);
-      }
-    });
 
     // TODO separate validations into a separate util function
     if (account.balance < Fees.vote) {

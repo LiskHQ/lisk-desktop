@@ -19,6 +19,11 @@ const getTotalActions = votes => (
 
 const getPendingVotesList = votes => (Object.keys(votes).filter(key => votes[key].pending));
 
+const getVotingLists = votes => ({
+  votedList: getVoteList(votes).map(vote => votes[vote].publicKey),
+  unvotedList: getUnvoteList(votes).map(vote => votes[vote].publicKey),
+});
+
 export {
   getTotalVotesCount,
   getVotedList,
@@ -26,4 +31,5 @@ export {
   getUnvoteList,
   getTotalActions,
   getPendingVotesList,
+  getVotingLists,
 };
