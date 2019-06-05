@@ -1,8 +1,10 @@
 import Lisk from '@liskhq/lisk-client';
 
+// TODO remove listAccountDelegates and use getVotes defined below
 export const listAccountDelegates = (liskAPIClient, address) =>
   liskAPIClient.votes.get({ address, limit: '101' });
 
+// TODO remove the !liskAPIClient condition
 export const listDelegates = (liskAPIClient, options) => new Promise((resolve, reject) => {
   if (!liskAPIClient) {
     reject();
@@ -13,6 +15,7 @@ export const listDelegates = (liskAPIClient, options) => new Promise((resolve, r
   }
 });
 
+// TODO remove getDelegate and use listDelegates defined above
 export const getDelegate = (liskAPIClient, options) =>
   liskAPIClient.delegates.get(options);
 
@@ -63,6 +66,9 @@ export const vote = (
 export const getVotes = (liskAPIClient, { address, offset, limit }) =>
   liskAPIClient.votes.get({ address, limit, offset });
 
+// TODO remove getAllVotes and use getVotes with limit:101
+// because lisk-core increased the max limit from 100 to 101 since
+// this function was written here.
 export const getAllVotes = (liskAPIClient, address) =>
   new Promise((resolve, reject) => {
     getVotes(liskAPIClient, { address, offset: 0, limit: 100 }).then((votesEarlyBatch) => {
