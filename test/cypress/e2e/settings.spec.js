@@ -37,9 +37,9 @@ describe('Settings', () => {
    * Second passphrase registration is not available if not logged in
    * @expect link is disabled
    */
-  it('Second passphrase registration is disabled if not logged in', () => {
+  it('Second passphrase registration is not show if not logged in', () => {
     cy.visit(urls.settings);
-    cy.get(ss.registerSecondPassphraseBtn).should('have.class', 'disabled');
+    cy.get(ss.registerSecondPassphraseBtn).should('not.exist');
   });
 
   /**
