@@ -12,8 +12,8 @@ const MyAccount = ({
   const token = settings.token;
 
   const coins = Object.entries(info)
-    .map(coin => (coin[0] === tokenMap[coin[0]].key && token.list[coin[0]] === true) && coin[1])
-    .filter(coin => typeof coin === 'object');
+    .map(([key, coin]) => token.list[key] && coin)
+    .filter(coin => coin);
 
   return (
     <Box className={`${styles.box} ${className}`}>
@@ -24,7 +24,7 @@ const MyAccount = ({
       {
         coins.map((coin, index) =>
           <div key={index} className={`${styles.row} coin-row`}>
-            <img src={coin.token === tokenMap.LSK.key ? svg.lskIcon40 : svg.btcIcon40} />
+            <img src={coin.token === tokenMap.LSK.key ? svg.lskIcon : svg.btcIcon} />
             <div className={styles.details}>
               <span>{t('{{token}} Balance', { token: tokenMap[coin.token].label })}</span>
               <span><LiskAmount val={coin.balance} /> {coin.token}</span>

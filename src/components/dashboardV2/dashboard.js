@@ -145,7 +145,7 @@ class Dashboard extends React.Component {
                 : null
               }
 
-              <RecentTransactions className={styles.marginFix} isSignIn={isLoggedIn} />
+              <RecentTransactions className={styles.marginFix} isLoggedIn={isLoggedIn} />
             </div>
 
             {

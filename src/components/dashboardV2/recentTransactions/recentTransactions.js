@@ -28,7 +28,7 @@ class RecentTransactions extends Component {
       account,
       bookmarks,
       className,
-      isSignIn,
+      isLoggedIn,
       settings,
       t,
     } = this.props;
@@ -41,7 +41,7 @@ class RecentTransactions extends Component {
         <h2 className={styles.title}>{t('Recent {{value}} transactions', { value: activeToken.label })}</h2>
       </header>
         {
-          isSignIn && transactionList.length
+          isLoggedIn && transactionList.length
             ? <TransactionList
                 account={account}
                 activeToken={activeToken.key}
@@ -51,7 +51,7 @@ class RecentTransactions extends Component {
             : null
         }
         {
-          isSignIn && !transactionList.length
+          isLoggedIn && !transactionList.length
           ? <EmptyState>
               <img src={svg.icon_empty_recent_transactions} />
               <h1>{t('No Transactions Yet')}</h1>
@@ -72,7 +72,7 @@ class RecentTransactions extends Component {
           : null
         }
         {
-          !isSignIn
+          !isLoggedIn
           ? <EmptyState>
               <img src={svg.icon_empty_recent_transactions} />
               <h1>{t('Sign in to view recent transactions')}</h1>
