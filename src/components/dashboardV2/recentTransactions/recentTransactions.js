@@ -28,6 +28,7 @@ class RecentTransactions extends Component {
       account,
       bookmarks,
       className,
+      isSignIn,
       settings,
       t,
     } = this.props;
@@ -39,32 +40,46 @@ class RecentTransactions extends Component {
       <header>
         <h2 className={styles.title}>{t('Recent {{value}} transactions', { value: activeToken.label })}</h2>
       </header>
-      {
-        transactionList.length
-        ? <TransactionList
-            account={account}
-            activeToken={activeToken.key}
-            bookmarks={bookmarks}
-            transactions={transactionList}
-            t={t}/>
-        : <EmptyState>
-            <img src={svg.icon_empty_recent_transactions} />
-            <h1>{t('No Transactions Yet')}</h1>
-            <p>{t('A great way to start is to top up your account with some {{value}} tokens.', { value: activeToken.key })}</p>
-            <div>
-            {
-              // TODO this validation should be remove once we have the external link for BTC
-              activeToken.key === tokenMap.LSK.key
-              ? <a href={links.outgoingTransactions}
-                  rel="noopener noreferrer"
-                  target="_blank">
-                  <SecondaryButtonV2>{t('Learn more')}</SecondaryButtonV2>
-                </a>
-              : null
-            }
-            </div>
-          </EmptyState>
-      }
+        {
+          isSignIn && transactionList.length
+            ? <TransactionList
+                account={account}
+                activeToken={activeToken.key}
+                bookmarks={bookmarks}
+                transactions={transactionList}
+                t={t}/>
+            : null
+        }
+        {
+          isSignIn && !transactionList.length
+          ? <EmptyState>
+              <img src={svg.icon_empty_recent_transactions} />
+              <h1>{t('No Transactions Yet')}</h1>
+              <p>{t('A great way to start is to top up your account with some {{value}} tokens.', { value: activeToken.key })}</p>
+              <div>
+              {
+                // TODO this validation should be remove once we have the external link for BTC
+                activeToken.key === tokenMap.LSK.key
+                ? <a href={links.outgoingTransactions}
+                    rel="noopener noreferrer"
+                    target="_blank">
+                    <SecondaryButtonV2>{t('Learn more')}</SecondaryButtonV2>
+                  </a>
+                : null
+              }
+              </div>
+            </EmptyState>
+          : null
+        }
+        {
+          !isSignIn
+          ? <EmptyState>
+              <img src={svg.icon_empty_recent_transactions} />
+              <h1>{t('Sign in to view recent transactions')}</h1>
+              <p>{t('In order to see your recent transactions you need to sign in.')}</p>
+            </EmptyState>
+          : null
+        }
       </Box>
     );
   }
