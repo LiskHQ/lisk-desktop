@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import {
-  pendingVotesAdded,
   votesUpdated,
   votesAdded,
   voteToggled,
@@ -76,15 +75,6 @@ describe('actions: voting', () => {
       };
       const createdAction = votesUpdated({ list: delegateList });
       expect(createdAction).to.be.deep.equal(expectedAction);
-    });
-  });
-
-  describe('pendingVotesAdded', () => {
-    it('should create an action to remove all pending rows from vote list', () => {
-      const expectedAction = {
-        type: actionTypes.pendingVotesAdded,
-      };
-      expect(pendingVotesAdded()).to.be.deep.equal(expectedAction);
     });
   });
 

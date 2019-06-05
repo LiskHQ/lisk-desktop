@@ -14,15 +14,6 @@ import { errorToastDisplayed } from './toaster';
 import actionTypes from '../constants/actions';
 
 /**
- * Add pending variable to the list of voted delegates and list of unvoted delegates
- */
-// TODO remove this and use directly the actionTypes.pendingVotesAdded
-// as it's used only in this file
-export const pendingVotesAdded = () => ({
-  type: actionTypes.pendingVotesAdded,
-});
-
-/**
  * Remove all data from the list of voted delegates and list of unvoted delegates
  */
 // TODO remove this and use directly the actionTypes.votesUpdated as it's used only in this file
@@ -123,7 +114,7 @@ export const votePlaced = ({
         text: handleVoteError({ error }),
       });
     } else {
-      dispatch(pendingVotesAdded());
+      dispatch({ type: actionTypes.pendingVotesAdded });
       callResult.map(transaction => dispatch(addPendingTransaction(transaction)));
       dispatch(passphraseUsed(account.passphrase));
       callback({ success: true });
