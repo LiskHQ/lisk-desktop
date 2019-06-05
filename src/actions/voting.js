@@ -14,15 +14,6 @@ import { errorToastDisplayed } from './toaster';
 import actionTypes from '../constants/actions';
 
 /**
- * Add data to the list of voted delegates
- */
-// TODO remove this and use directly the actionTypes.votesAdded as it's used only in this file
-export const votesAdded = data => ({
-  type: actionTypes.votesAdded,
-  data,
-});
-
-/**
  * Add data to the list of all delegates
  */
 // TODO remove this and use directly the actionTypes.delegatesAdded as it's used only in this file
@@ -164,7 +155,10 @@ export const urlVotesFound = ({
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     const processUrlVotes = (votes) => {
-      dispatch(votesAdded({ list: votes, upvotes, unvotes }));
+      dispatch({
+        type: actionTypes.votesAdded,
+        data: { list: votes, upvotes, unvotes },
+      });
     };
     listAccountDelegates(liskAPIClient, address)
       .then((response) => { processUrlVotes(response.data.votes); })

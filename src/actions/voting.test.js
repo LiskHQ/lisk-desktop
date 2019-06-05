@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import {
-  votesAdded,
   voteToggled,
   voteLookupStatusUpdated,
   votePlaced,
@@ -20,6 +19,11 @@ const delegateList = [
   { username: 'username1', publicKey: '123HG3452245L', address: '1234121321L' },
   { username: 'username2', publicKey: '123HG3522345L', address: '123L' },
 ];
+
+const votesAdded = data => ({
+  type: actionTypes.votesAdded,
+  data,
+});
 
 describe('actions: voting', () => {
   let getState = () => ({
@@ -51,18 +55,6 @@ describe('actions: voting', () => {
       };
 
       expect(voteLookupStatusUpdated(data)).to.be.deep.equal(expectedAction);
-    });
-  });
-
-  describe('votesAdded', () => {
-    it('should create an action to remove data from vote list', () => {
-      const data = delegateList;
-      const expectedAction = {
-        data,
-        type: actionTypes.votesAdded,
-      };
-
-      expect(votesAdded(data)).to.be.deep.equal(expectedAction);
     });
   });
 
