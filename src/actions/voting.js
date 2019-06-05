@@ -5,15 +5,13 @@ import {
   listDelegates,
   vote,
 } from '../utils/api/delegate';
-import { getVotingLists } from '../utils/voting';
+import { getVotingLists, getVotingError } from '../utils/voting';
 import { getTimeOffset } from '../utils/hacks';
 import { updateDelegateCache } from '../utils/delegates';
 import { voteWithHW } from '../utils/api/hwWallet';
 import { passphraseUsed } from './account';
 import { addPendingTransaction } from './transactions';
 import { errorToastDisplayed } from './toaster';
-import Fees from '../constants/fees';
-import votingConst from '../constants/voting';
 import actionTypes from '../constants/actions';
 import { loginType } from '../constants/hwConstants';
 
@@ -108,17 +106,9 @@ export const votePlaced = ({
     const { votedList, unvotedList } = getVotingLists(votes);
     const timeOffset = getTimeOffset(getState());
 
-    // TODO separate validations into a separate util function
-    if (account.balance < Fees.vote) {
-      dispatch(errorToastDisplayed({
-        label: i18next.t('Not enough LSK to pay for the transaction.'),
-      }));
-      return;
-    }
-    if (unvotedList.length + votedList > votingConst.maxCountOfVotes) {
-      dispatch(errorToastDisplayed({
-        label: i18next.t('Max amount of delegates in one voting exceeded.'),
-      }));
+    error = getVotingError(votes, account);
+    if (error) {
+      dispatch(errorToastDisplayed({ label: error }));
       return;
     }
 

@@ -1,4 +1,6 @@
+import i18next from 'i18next';
 import votingConst from '../constants/voting';
+import Fees from '../constants/fees';
 
 const getVotedList = votes => (Object.keys(votes).filter(key => votes[key].confirmed));
 
@@ -24,6 +26,16 @@ const getVotingLists = votes => ({
   unvotedList: getUnvoteList(votes).map(vote => votes[vote].publicKey),
 });
 
+const getVotingError = (votes, account) => {
+  let error;
+  if (account.balance < Fees.vote) {
+    error = i18next.t('Not enough LSK to pay for the transaction.');
+  } else if (getTotalVotesCount(votes) > votingConst.maxCountOfVotes) {
+    error = i18next.t('Max amount of delegates in one voting exceeded.');
+  }
+  return error;
+};
+
 export {
   getTotalVotesCount,
   getVotedList,
@@ -32,4 +44,5 @@ export {
   getTotalActions,
   getPendingVotesList,
   getVotingLists,
+  getVotingError,
 };
