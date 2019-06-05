@@ -103,15 +103,15 @@ describe('actions: voting', () => {
     };
 
     let dispatch;
-    let goToNextStep;
+    let callback;
     let actionFunction;
 
     beforeEach(() => {
       delegateApiMock = sinon.stub(delegateApi, 'vote');
       dispatch = sinon.spy();
-      goToNextStep = sinon.spy();
+      callback = sinon.spy();
       actionFunction = votePlaced({
-        account, votes, secondSecret, goToNextStep,
+        account, votes, secondSecret, callback,
       });
       getState = () => ({
         peers: { liskAPIClient: {} },
@@ -142,16 +142,16 @@ describe('actions: voting', () => {
         .calledWith({ data: transaction, type: actionTypes.addPendingTransaction });
     });
 
-    it('should call goToNextStep with "success: false" if caught an error', async () => {
+    it('should call callback with "success: false" if caught an error', async () => {
       const message = 'sample message';
       delegateApiMock.returnsPromise().rejects({ message });
 
       await actionFunction(dispatch, getState);
       const expectedAction = { success: false, text: message, errorMessage: message };
-      expect(goToNextStep).to.have.been.calledWith(expectedAction);
+      expect(callback).to.have.been.calledWith(expectedAction);
     });
 
-    it('should call goToNextStep with "success: false" and default message if caught an error but no message returned', async () => {
+    it('should call callback with "success: false" and default message if caught an error but no message returned', async () => {
       delegateApiMock.returnsPromise().rejects({});
 
       await actionFunction(dispatch, getState);
@@ -160,7 +160,7 @@ describe('actions: voting', () => {
         text: 'An error occurred while placing your vote.',
         errorMessage: undefined,
       };
-      expect(goToNextStep).to.have.been.calledWith(expectedAction);
+      expect(callback).to.have.been.calledWith(expectedAction);
     });
   });
 

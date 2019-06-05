@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import throttle from 'lodash.throttle';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '../../constants/routes';
-import Bookmarks from '../bookmarks';
-import QuickTips from '../quickTips';
+import BookmarksList from '../bookmarksList';
 import NewsFeed from '../newsFeedV2';
 import Piwik from '../../utils/piwik';
 import links from '../../constants/externalLinks';
@@ -137,11 +136,7 @@ class Dashboard extends React.Component {
           </header>
 
           <div className={`${styles.main}`}>
-            {
-              isLoggedIn
-              ? <RecentTransactions />
-              : <QuickTips />
-            }
+            <RecentTransactions />
 
             {
             <div className={`${styles.newsFeedWrapper}`}>
@@ -151,7 +146,7 @@ class Dashboard extends React.Component {
             }
 
             <div className={`${styles.bookmarks} bookmarks`}>
-              <Bookmarks history={history}/>
+              <BookmarksList className={styles.bookmarkList} history={history}/>
               <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn1} />
             </div>
           </div>

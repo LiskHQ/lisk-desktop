@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
-import VotingV2 from './votingV2';
+import Voting from './voting';
 import { clearVotes, votePlaced } from '../../actions/voting';
 import { filterObjectPropsWithValue } from '../../utils/helpers';
 
@@ -21,4 +21,4 @@ const mapDispatchToProps = {
   votePlaced,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translate()(VotingV2)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translate()(Voting)));

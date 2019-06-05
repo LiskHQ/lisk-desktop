@@ -8,11 +8,8 @@ import {
   getTotalActions,
 } from '../../utils/voting';
 import routes from '../../constants/routes';
-import Tooltip from '../toolbox/tooltip/tooltip';
-import links from '../../constants/externalLinks';
-import VoteUrlProcessor from '../voteUrlProcessorV2';
-
-import styles from './votingV2.css';
+import VoteUrlProcessor from './voteUrlProcessor';
+import VoteList from './voteList';
 
 const VotingSummary = ({
   t, votes, history, account, nextStep, votePlaced, prevStep, voteLookupStatus,
@@ -38,7 +35,7 @@ const VotingSummary = ({
             votes,
             passphrase: account.passphrase,
             secondPassphrase,
-            goToNextStep: ({ success, text, errorMessage }) => {
+            callback: ({ success, text, errorMessage }) => {
               nextStep({
                 success,
                 ...(success ? {
@@ -71,68 +68,26 @@ const VotingSummary = ({
           history.push(routes.delegates.path);
         },
       }}
+      fee={fee * totalActions}
       title={t('Voting summary')} >
-      <section>
-        <label>{t('Votes after confirmation')}</label>
-        <label>{getTotalVotesCount(votes)}/{maxCountOfVotes}</label>
-      </section>
-      <section>
-        <label>
-          {t('Transaction fee')}
-          <Tooltip
-            title={t('Transaction fee')}
-            footer={
-              <a href={links.transactionFee}
-                rel="noopener noreferrer"
-                target="_blank">
-                  {t('Read More')}
-              </a>
-            }
-          >
-            <p className={styles.tooltipText}>
-            {
-              t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
-                  Such operations require hardware resources and because of that there is a small fee for processing those.`)
-            }
-            </p>
-          </Tooltip>
-        </label>
-        <label> {fee * totalActions} LSK </label>
-      </section>
       <VoteUrlProcessor
         account={account}
         votes={votes}
         voteLookupStatus={voteLookupStatus}/>
-      {voteList.length > 0 ?
-        <section>
-          <label>{t('Added votes')} ({voteList.length})</label>
-          <label>
-            <div className={`${styles.votesContainer} added-votes`} >
-              {voteList.map(vote => (
-               <span key={vote} className={`${styles.voteTag} vote`}>
-                <span className={styles.rank}>#{votes[vote].rank}</span>
-                <span className={styles.username}>{vote}</span>
-               </span>
-              ))}
-            </div>
-          </label>
-        </section> :
-        null }
-      {unvoteList.length > 0 ?
-        <section>
-          <label>{t('Removed votes')} ({unvoteList.length})</label>
-          <label>
-            <div className={`${styles.votesContainer} removed-votes`} >
-              {unvoteList.map(vote => (
-               <span key={vote} className={`${styles.voteTag} vote`}>
-                <span className={styles.rank}>#{votes[vote].rank}</span>
-                <span className={styles.username}>{vote}</span>
-               </span>
-              ))}
-            </div>
-          </label>
-        </section> :
-        null }
+      <VoteList
+        title={t('Added votes')}
+        className='added-votes'
+        list={voteList}
+        votes={votes} />
+      <VoteList
+        title={t('Removed votes')}
+        className='removed-votes'
+        list={unvoteList}
+        votes={votes} />
+      <section>
+        <label>{t('Votes after confirmation')}</label>
+        <label>{getTotalVotesCount(votes)}/{maxCountOfVotes}</label>
+      </section>
     </TransactionSummary>
   );
 };
