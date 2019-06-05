@@ -14,7 +14,7 @@ export const listDelegates = (liskAPIClient, options) => new Promise((resolve, r
   } else {
     liskAPIClient.delegates.get(options)
       .then(response => resolve(response))
-      .catch(error => reject(error));
+      .catch(reject);
   }
 });
 
@@ -126,8 +126,6 @@ export const registerDelegate = (
       .then(() => {
         resolve(transaction);
       })
-      .catch((error) => {
-        reject(error);
-      });
+      .catch(reject);
   });
 };
