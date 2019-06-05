@@ -2,10 +2,10 @@
 @import '../app/mixins.css';
 
 .dialog {
-  border-radius: 6px;
+  border-radius: var(--border-radius-box);
 
   & .title {
-    @mixin headingNormalIntermediate;
+    @mixin headingLarge;
 
     color: var(--color-maastricht-blue);
     display: flex;
