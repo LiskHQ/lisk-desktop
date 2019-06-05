@@ -56,7 +56,7 @@ describe('Setting', () => {
     t,
     isAuthenticated: true,
     location: {
-      pathname: '/setting',
+      pathname: '/settings',
     },
     toastDisplayed: jest.fn(),
   };
