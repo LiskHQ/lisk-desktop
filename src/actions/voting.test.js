@@ -28,6 +28,9 @@ const votesAdded = data => ({
 describe('actions: voting', () => {
   let getState = () => ({
     peers: { liskAPIClient: {} },
+    network: {
+      name: networks.mainnet.name,
+    },
   });
 
   describe('voteToggled', () => {

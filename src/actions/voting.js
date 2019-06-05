@@ -12,6 +12,7 @@ import { passphraseUsed } from './account';
 import { addPendingTransaction } from './transactions';
 import { errorToastDisplayed } from './toaster';
 import actionTypes from '../constants/actions';
+import { getAPIClient } from '../utils/api/network';
 
 /**
  * Add data to the list of all delegates
@@ -72,7 +73,7 @@ export const votePlaced = ({
   account, votes, secondPassphrase, callback,
 }) =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const liskAPIClient = getAPIClient('LSK', getState());
     const { votedList, unvotedList } = getVotingLists(votes);
     const timeOffset = getTimeOffset(getState());
 
@@ -111,8 +112,7 @@ export const votePlaced = ({
  */
 export const votesFetched = ({ address, type }) =>
   (dispatch, getState) => {
-    // TODO use getState().network instead of getState().peers and adjust
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const liskAPIClient = getAPIClient('LSK', getState());
     listAccountDelegates(liskAPIClient, address).then((response) => {
       dispatch({
         type: type === 'update' ? actionTypes.votesUpdated : actionTypes.votesAdded,
@@ -128,8 +128,7 @@ export const delegatesFetched = ({
   offset, refresh, q, callback = () => {},
 }) =>
   (dispatch, getState) => {
-    // TODO use getState().network instead of getState().peers and adjust
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const liskAPIClient = getAPIClient('LSK', getState());
     let params = {
       offset,
       limit: '101',
@@ -155,7 +154,7 @@ export const urlVotesFound = ({
   upvotes, unvotes, address,
 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const liskAPIClient = getAPIClient('LSK', getState());
     const processUrlVotes = (votes) => {
       dispatch({
         type: actionTypes.votesAdded,
