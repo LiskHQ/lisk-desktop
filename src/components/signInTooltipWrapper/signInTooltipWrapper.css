@@ -1,0 +1,7 @@
+.wrapper {
+  display: inline-block;
+}
+
+.child {
+  pointer-events: none;
+}

@@ -77,7 +77,7 @@ export default {
     isPrivate: true,
   },
   setting: {
-    path: '/setting',
+    path: '/settings',
     component: Setting,
     isPrivate: false,
   },

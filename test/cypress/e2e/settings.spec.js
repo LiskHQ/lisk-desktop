@@ -37,9 +37,9 @@ describe('Settings', () => {
    * Second passphrase registration is not available if not logged in
    * @expect link is disabled
    */
-  it('Second passphrase registration is disabled if not logged in', () => {
+  it('Second passphrase registration is not show if not logged in', () => {
     cy.visit(urls.settings);
-    cy.get(ss.registerSecondPassphraseBtn).should('have.class', 'disabled');
+    cy.get(ss.registerSecondPassphraseBtn).should('not.exist');
   });
 
   /**
@@ -69,7 +69,6 @@ describe('Settings', () => {
 
   [
     ss.switchNetworksTrigger,
-    ss.delegateFeaturesTrigger,
   ]
     .forEach((selector) => {
       /**
@@ -95,13 +94,12 @@ describe('Settings', () => {
   it('Currency default position should be USD and can be toggled to USD and back', () => {
     cy.clearLocalStorage();
     cy.visit(urls.settings);
-    cy.get(ss.currencyUSDBtn).should('have.class', 'active');
-    cy.get(ss.currencyEURBtn).click().should(($button) => {
-      expect($button).to.have.class('active');
+    cy.get(ss.currencySelect).click();
+    cy.get(ss.currencyOptions).eq(1).click().should(() => {
       expect(getSettingsObjFromLS().currency).to.equal('EUR');
     });
-    cy.get(ss.currencyUSDBtn).click().should(($button) => {
-      expect($button).to.have.class('active');
+    cy.get(ss.currencySelect).click();
+    cy.get(ss.currencyOptions).eq(0).click().should(() => {
       expect(getSettingsObjFromLS().currency).to.equal('USD');
     });
   });

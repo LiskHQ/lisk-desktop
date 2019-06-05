@@ -9,7 +9,6 @@ describe('Reducer: settings(state, action)', () => {
   beforeEach(() => {
     initializeState = {
       autoLog: true,
-      advancedMode: false,
       token: {
         active: tokenKeys[0],
         list: tokenKeys.reduce((acc, key) => { acc[key] = true; return acc; }, {}),
@@ -23,7 +22,7 @@ describe('Reducer: settings(state, action)', () => {
       data: { autoLog: false },
     };
     const changedState = settings(initializeState, action);
-    expect(changedState).toEqual({ ...initializeState, autoLog: false, advancedMode: false });
+    expect(changedState).toEqual({ ...initializeState, autoLog: false });
   });
 
   it('should return updated initializeState if action.type = actionTypes.settingsReset', () => {
@@ -33,7 +32,6 @@ describe('Reducer: settings(state, action)', () => {
     const changedState = {
       ...initializeState,
       autoLog: false,
-      advancedMode: true,
     };
     const FinalStep = settings(changedState, action);
     expect(FinalStep).toEqual(initializeState);

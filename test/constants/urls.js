@@ -4,7 +4,7 @@ const urls = {
   send: '/wallet/send',
   request: '/wallet/request',
   help: '/help',
-  settings: '/setting',
+  settings: '/settings',
   accounts: '/explorer/accounts',
   transactions: '/explorer/transactions',
   register: '/register',

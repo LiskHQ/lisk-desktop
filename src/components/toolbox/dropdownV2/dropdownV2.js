@@ -30,12 +30,14 @@ DropdownV2.propTypes = {
   showDropdown: PropTypes.bool,
   className: PropTypes.string,
   showArrow: PropTypes.bool,
+  active: PropTypes.number,
 };
 
 DropdownV2.defaultProps = {
   showDropdown: false,
   className: '',
   showArrow: true,
+  active: -1,
 };
 
 export default DropdownV2;
