@@ -10,7 +10,6 @@ class ConfirmMessage extends React.Component {
     super(props);
 
     this.state = {
-      result: props.account.passphrase ? this.sign() : '',
       copied: false,
     };
 
@@ -43,7 +42,8 @@ class ConfirmMessage extends React.Component {
 
   render() {
     const { t } = this.props;
-    const { copied, result } = this.state;
+    const { copied } = this.state;
+    const result = this.sign();
     return (
       <section>
         <div className={styles.header}>
