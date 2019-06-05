@@ -86,9 +86,6 @@ describe('actions: voting', () => {
       actionFunction = votePlaced({
         account, votes, secondSecret, callback,
       });
-      getState = () => ({
-        peers: { liskAPIClient: {} },
-      });
     });
 
     afterEach(() => {
@@ -134,6 +131,21 @@ describe('actions: voting', () => {
         errorMessage: undefined,
       };
       expect(callback).to.have.been.calledWith(expectedAction);
+    });
+
+    it('should dispatch error toast if not enought balance', async () => {
+      await votePlaced({
+        account: {
+          ...account,
+          balance: 0,
+        },
+        votes,
+        secondSecret,
+        callback,
+      })(dispatch, getState);
+      expect(dispatch).to.have.been.calledWith(sinon.match({
+        type: actionTypes.toastDisplayed,
+      }));
     });
   });
 
