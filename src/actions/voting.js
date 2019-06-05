@@ -107,6 +107,8 @@ export const votePlaced = ({
     const votedList = [];
     const unvotedList = [];
     const timeOffset = getTimeOffset(getState());
+
+    // TODO separate votes transformation into a separate util function
     Object.keys(votes).forEach((username) => {
       /* istanbul ignore else */
       if (!votes[username].confirmed && votes[username].unconfirmed) {
@@ -116,6 +118,7 @@ export const votePlaced = ({
       }
     });
 
+    // TODO separate validations into a separate util function
     if (account.balance < Fees.vote) {
       dispatch(errorToastDisplayed({
         label: i18next.t('Not enough LSK to pay for the transaction.'),
