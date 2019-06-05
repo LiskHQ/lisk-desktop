@@ -48,6 +48,7 @@ describe('DelegatesV2', () => {
     t: key => key,
     history: { location: { search: '' } },
     clearVotes: jest.fn(),
+    account: { address: delegates[0].address },
   };
   const options = {
     context: { store, history, i18n },
@@ -72,6 +73,13 @@ describe('DelegatesV2', () => {
       <DelegatesV2 {...props} account={accounts.genesis} />
     </Router>, options);
     expect(wrapper.find('Onboarding')).to.have.lengthOf(1);
+  });
+  it('should not show "Register delegate" button if already delegate', () => {
+    wrapper = mount(<Router><DelegatesV2 {...{
+      ...props,
+      account: { delegate: delegates[0], address: delegates[0].address },
+    }} /></Router>, options);
+    expect(wrapper.find('.register-delegate')).to.have.lengthOf(0);
   });
 });
 
