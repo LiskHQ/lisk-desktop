@@ -53,7 +53,11 @@ class ConfirmMessage extends React.Component {
           <h1>{t('Your signed message')}</h1>
         </div>
         <div className={styles.result}>
-          <AutoresizeTextarea className={styles.textarea} readOnly value={result}/>
+          <AutoresizeTextarea
+            className={`${styles.textarea} result`}
+            value={result}
+            readOnly
+          />
         </div>
         <div className={styles.buttonsHolder}>
           <CopyToClipboard

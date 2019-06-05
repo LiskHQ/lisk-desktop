@@ -55,6 +55,7 @@ class SignMessageInput extends React.Component {
         </div>
         <div className={styles.buttonsHolder}>
           <PrimaryButtonV2
+            className={'next'}
             onClick={this.nextStep}
           >{
             t('Continue')
