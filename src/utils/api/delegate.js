@@ -31,7 +31,6 @@ export const splitVotesIntoRounds = ({ votes, unvotes }) => {
 const voteWithPassphrase = (
   liskAPIClient,
   passphrase,
-  publicKey,
   votes,
   unvotes,
   secondPassphrase,
@@ -66,7 +65,7 @@ export const vote = async ({
   switch (account.loginType) {
     case loginType.normal:
       return voteWithPassphrase(
-        liskAPIClient, account.passphrase, account.publicKey,
+        liskAPIClient, account.passphrase,
         votedList, unvotedList, secondPassphrase, timeOffset,
       );
     case loginType.ledger:
@@ -78,8 +77,8 @@ export const vote = async ({
   }
 };
 
-export const getVotes = (liskAPIClient, { address, offset = 0, limit = 101 }) =>
-  liskAPIClient.votes.get({ address, limit, offset });
+export const getVotes = (liskAPIClient, { address }) =>
+  liskAPIClient.votes.get({ address, limit: 101, offset: 0 });
 
 export const registerDelegate = (
   liskAPIClient,

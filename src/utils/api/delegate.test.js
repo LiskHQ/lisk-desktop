@@ -122,9 +122,9 @@ describe('Utils: Delegate', () => {
     it('should get votes for an address with no parameters', () => {
       const address = '123L';
       const offset = 0;
-      const limit = 100;
+      const limit = 101;
       liskAPIClientMockVotes.expects('get').withArgs({ address, offset, limit }).once();
-      getVotes(liskAPIClient, { address, offset, limit });
+      getVotes(liskAPIClient, { address });
     });
   });
 

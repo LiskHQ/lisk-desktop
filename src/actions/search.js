@@ -71,13 +71,13 @@ export const fetchVotedDelegateInfo = (votes, {
     }
   };
 
-const searchVotes = ({ address, offset, limit }) =>
+const searchVotes = ({ address }) =>
   async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     /* istanbul ignore if */
     if (!liskAPIClient) return;
     dispatch(loadingStarted(actionTypes.searchVotes));
-    const votes = await getVotes(liskAPIClient, { address, offset, limit })
+    const votes = await getVotes(liskAPIClient, { address })
       .then(res => res.data.votes || [])
       .catch(() => dispatch(loadingFinished(actionTypes.searchVotes)));
 
@@ -102,7 +102,7 @@ export const searchAccount = ({ address }) =>
         }
         dispatch({ data: accountData, type: actionTypes.searchAccount });
         dispatch(updateWallet(response, getState().peers));
-        searchVotes({ address, offset: 0, limit: 101 })(dispatch, getState);
+        searchVotes({ address })(dispatch, getState);
       });
     }
   };
