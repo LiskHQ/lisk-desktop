@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { fromRawLsk } from './lsk';
 import { getUnixTimestampFromValue } from './datetime';
+import { getTokenFromAddress } from './api/transactions';
 
 const formats = {
   second: 'MMM DD YYYY hh:mm:ss',
@@ -13,6 +14,13 @@ const formats = {
 
 const getUnitFromFormat = format =>
   Object.keys(formats).find(key => formats[key] === format);
+
+const getNormalizedTimestamp = tx => (
+  {
+    BTC: t => t,
+    LSK: getUnixTimestampFromValue,
+  }[getTokenFromAddress(tx.senderId)](tx.timestamp)
+);
 
 const styles = {
   borderColor: 'rgba(15, 126, 255, 0.5)',
@@ -117,7 +125,7 @@ export const graphOptions = format => ({
 export const getChartDateFormat = (transactions) => {
   const last = moment();
   const first = transactions.length
-    && moment(getUnixTimestampFromValue(transactions.slice(-1)[0].timestamp));
+    && moment(getNormalizedTimestamp(transactions.slice(-1)[0]));
 
   if (!first || !last) return '';
   let format = formats.year;
@@ -157,7 +165,7 @@ export const getBalanceData = ({
   const unit = getUnitFromFormat(format);
   const data = transactions.reduce((balances, tx) => {
     const txValue = getTxValue(tx, address);
-    const txDate = tx.timestamp ? new Date(getUnixTimestampFromValue(tx.timestamp)) : new Date();
+    const txDate = tx.timestamp ? new Date(getNormalizedTimestamp(tx)) : new Date();
     const lastBalance = balances.slice(-1)[0];
     const tmpBalances = balances.length > 1 && moment(lastBalance.x).isSame(txDate, unit)
       ? balances.slice(0, -1)
