@@ -116,6 +116,16 @@ describe('Utils: Delegate', () => {
       });
       expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
     });
+
+    it('should call return error if account.loginType is not recognized', () => (
+      expect(vote({
+        liskAPIClient,
+        account: {
+          ...accounts.genesis,
+          loginType: 'something unknown',
+        },
+      })).to.be.rejectedWith('Login Type not recognized.')
+    ));
   });
 
   describe('getVotes', () => {
