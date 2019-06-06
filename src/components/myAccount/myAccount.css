@@ -1,0 +1,53 @@
+@import '../app/variablesV2.css';
+@import '../app/mixins.css';
+
+.container {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 20px;
+
+  & > .row {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--color-platinum);
+
+    & > img {
+      margin-right: 15px;
+      width: 40px;
+    }
+
+    & > .details {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+
+      & > span:first-child {
+        @mixin contentNormal;
+
+        color: var(--color-slate-gray);
+      }
+
+      & > span:last-child {
+        @mixin headingNormal;
+
+        color: var(--color-maastricht-blue);
+      }
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
