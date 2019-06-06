@@ -6,6 +6,7 @@ import LiskAmount from '../liskAmount';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
 import { dropdownLinks } from './constants';
 import styles from './userAccount.css';
+import OutsideClickHandler from '../toolbox/outsideClickHandler';
 
 const UserAccount = (props) => {
   const dropdownOptions = dropdownLinks(props.t);
@@ -29,9 +30,11 @@ const UserAccount = (props) => {
           ))}
         </div>
       </div>
-      <div
+      <OutsideClickHandler
         className={`${styles.avatar} user-avatar`}
         onClick={() => props.onDropdownToggle('avatar')}
+        onOutsideClick={() => props.onDropdownToggle('avatar')}
+        disabled={!props.isDropdownEnable}
       >
         <span
           className={styles.onAvatar}
@@ -65,7 +68,7 @@ const UserAccount = (props) => {
             <span>{dropdownOptions.logout.label}</span>
           </span>
         </DropdownV2>
-      </div>
+      </OutsideClickHandler>
     </div>
   );
 };
