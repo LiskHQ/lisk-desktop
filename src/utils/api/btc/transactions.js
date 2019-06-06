@@ -27,7 +27,6 @@ const normalizeTransactionsResponse = ({
     type: 0,
     data: '',
     fee: feeSatoshi,
-    token: tokenMap.BTC.key,
     explorerLink: `${getAPIClient(networkConfig).config.transactionExplorerURL}/${tx.txid}`,
   };
 

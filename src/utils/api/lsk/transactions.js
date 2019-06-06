@@ -30,14 +30,6 @@ export const send = (
       .catch(reject);
   });
 
-const enhanceTxListResponse = response => ({
-  ...response,
-  data: response.data.map(tx => ({
-    ...tx,
-    token: 'LSK',
-  })),
-});
-
 const parseTxFilters = (filter = txFilters.all, address) => ({
   [txFilters.incoming]: { recipientId: address },
   [txFilters.outgoing]: { senderId: address },
@@ -79,7 +71,7 @@ export const getTransactions = ({
 
   return new Promise((resolve, reject) => {
     getAPIClient(networkConfig).transactions.get(params).then(response => (
-      resolve(enhanceTxListResponse(response))
+      resolve(response)
     )).catch(reject);
   });
 };
@@ -92,10 +84,10 @@ export const getSingleTransaction = ({
   apiClient.transactions.get({ id })
     .then((response) => {
       if (response.data.length !== 0) {
-        resolve(enhanceTxListResponse(response));
+        resolve(response);
       } else {
         apiClient.node.getTransactions('unconfirmed', { id }).then(unconfirmedRes => (
-          resolve(enhanceTxListResponse(unconfirmedRes))
+          resolve(unconfirmedRes)
         )).catch(reject);
       }
     }).catch(reject);

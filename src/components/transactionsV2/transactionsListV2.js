@@ -32,8 +32,7 @@ class TransactionsListV2 extends React.Component {
 
       return !(isFilterIncoming && (isTypeNonSend || isAccountInit));
     };
-    const filterByActiveToken = tx => activeToken && tx.token === activeToken;
-    const filteredTransactions = transactions.filter(fixIncomingFilter).filter(filterByActiveToken);
+    const filteredTransactions = transactions.filter(fixIncomingFilter);
 
     const isLoading = loading.filter(type =>
       actionTypes.transactionsLoaded === type).length > 0;
