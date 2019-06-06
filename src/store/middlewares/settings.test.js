@@ -4,6 +4,7 @@ import * as service from '../../actions/service';
 
 jest.mock('../../actions/service');
 jest.mock('../../actions/settings');
+jest.mock('../../actions/transactions');
 
 describe('Middleware: Settings', () => {
   const next = jest.fn();
