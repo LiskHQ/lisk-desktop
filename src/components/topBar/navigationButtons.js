@@ -1,6 +1,6 @@
 import React from 'react';
-import svg from '../../utils/svgIcons';
 import styles from './navigationButtons.css';
+import Icon from '../toolbox/icon';
 
 class NavigationButtons extends React.Component {
   constructor(props) {
@@ -65,12 +65,6 @@ class NavigationButtons extends React.Component {
     const { counter, firstPageIndex } = this.state;
     const isBackActive = counter > firstPageIndex;
     const isForwardActive = counter < this.props.history.length;
-    const backArrow = isBackActive
-      ? svg.back_arrow_active_icon
-      : svg.back_arrow_inactive_icon;
-    const forwardArrow = isForwardActive
-      ? svg.foward_arrow_active_icon
-      : svg.foward_arrow_inactive_icon;
 
     return (
       <div className={`${styles.wrapper} navigation-buttons`}>
@@ -79,14 +73,14 @@ class NavigationButtons extends React.Component {
           disabled={!isBackActive}
           onClick={this.onGoBack}
         >
-          <img src={backArrow}/>
+          <Icon name={'backArrow'} />
         </button>
         <button
           className={'go-forward'}
           disabled={!isForwardActive}
           onClick={this.onGoForward}
         >
-          <img src={forwardArrow}/>
+          <Icon name={'forwardArrow'} />
         </button>
       </div>
     );
