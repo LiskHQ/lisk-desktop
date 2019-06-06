@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import throttle from 'lodash.throttle';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '../../constants/routes';
-import Bookmarks from '../bookmarks';
-import QuickTips from '../quickTips';
+import BookmarksList from '../bookmarksList';
 import NewsFeed from '../newsFeedV2';
+import MyAccount from '../myAccount';
 import Piwik from '../../utils/piwik';
 import links from '../../constants/externalLinks';
 import { fromRawLsk } from '../../utils/lsk';
@@ -93,6 +93,7 @@ class Dashboard extends React.Component {
       history,
       t,
     } = this.props;
+    const { isDesktop } = this.state;
 
     const isLoggedIn = account.address;
 
@@ -137,21 +138,27 @@ class Dashboard extends React.Component {
           </header>
 
           <div className={`${styles.main}`}>
-            {
-              isLoggedIn
-              ? <RecentTransactions />
-              : <QuickTips />
-            }
+            <div className={styles.subContainer}>
+              {
+                isLoggedIn
+                ? <MyAccount className={styles.marginFix}/>
+                : null
+              }
+
+              <RecentTransactions className={styles.marginFix} isLoggedIn={isLoggedIn} />
+            </div>
 
             {
-            <div className={`${styles.newsFeedWrapper}`}>
-              <NewsFeed />
-              <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn3} />
-            </div>
+              isDesktop
+              ? <div className={`${styles.community}`}>
+                  <NewsFeed />
+                  <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn3} />
+                </div>
+              : null
             }
 
             <div className={`${styles.bookmarks} bookmarks`}>
-              <Bookmarks history={history}/>
+              <BookmarksList history={history}/>
               <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn1} />
             </div>
           </div>

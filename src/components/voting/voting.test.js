@@ -4,7 +4,7 @@ import { MemoryRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import i18n from '../../i18n';
-import VotingV2 from './votingV2';
+import VotingV2 from './voting';
 
 describe('VotingV2', () => {
   const votes = {
@@ -32,7 +32,7 @@ describe('VotingV2', () => {
       notFound: [],
       alreadyVoted: [],
     },
-    votePlaced: ({ goToNextStep }) => goToNextStep(voteResult),
+    votePlaced: ({ callback }) => callback(voteResult),
     t: key => key,
     history: { push: jest.fn() },
   };
@@ -42,10 +42,10 @@ describe('VotingV2', () => {
     expect(wrapper.find('VotingSummary')).toHaveLength(1);
   });
 
-  it('should go to VotingResult with confirm button and then back to delegates', () => {
+  it('should go to result box with confirm button and then back to delegates', () => {
     const wrapper = mount(<Router><VotingV2 {...{ ...props, votes } } /></Router>, options);
     wrapper.find('.confirm-button').at(0).simulate('click');
-    expect(wrapper.find('VotingResult')).toHaveLength(1);
+    expect(wrapper.find('.result-box-header')).toHaveLength(1);
     wrapper.find('.back-to-delegates-button').at(0).simulate('click');
     expect(props.history.push).toHaveBeenCalledWith('/delegates');
   });

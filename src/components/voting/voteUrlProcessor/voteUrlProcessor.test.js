@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import accounts from '../../../test/constants/accounts';
+import accounts from '../../../../test/constants/accounts';
 import VoteUrlProcessor from './voteUrlProcessor';
-import routes from '../../constants/routes';
+import routes from '../../../constants/routes';
 
 describe('VoteUrlProcessor', () => {
   let wrapper;
@@ -17,7 +17,7 @@ describe('VoteUrlProcessor', () => {
 
     props = {
       account,
-      clearVoteLookupStatus: jest.fn(),
+      voteLookupStatusCleared: jest.fn(),
       urlVotesFound: jest.fn(),
       voteLookupStatus: {
         notVotedYet: [],
