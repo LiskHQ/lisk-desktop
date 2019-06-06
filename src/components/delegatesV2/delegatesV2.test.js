@@ -11,6 +11,7 @@ import votingReducer from '../../store/reducers/voting';
 import DelegatesV2 from './delegatesV2';
 import history from '../../history';
 import i18n from '../../i18n';
+import accounts from '../../../test/constants/accounts';
 
 describe('DelegatesV2', () => {
   let wrapper;
@@ -64,6 +65,13 @@ describe('DelegatesV2', () => {
 
     wrapper.find('.cancel-voting-button').at(0).simulate('click');
     expect(wrapper.find('.addedVotes')).to.have.lengthOf(0);
+  });
+
+  it('should show onboarding if not in guest mode', () => {
+    wrapper = mount(<Router>
+      <DelegatesV2 {...props} account={accounts.genesis} />
+    </Router>, options);
+    expect(wrapper.find('Onboarding')).to.have.lengthOf(1);
   });
 });
 
