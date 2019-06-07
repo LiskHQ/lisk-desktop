@@ -2,31 +2,33 @@ import i18next from 'i18next';
 import votingConst from '../constants/voting';
 import Fees from '../constants/fees';
 
-const getVotedList = votes => (Object.keys(votes).filter(key => votes[key].confirmed));
+export const getVotedList = votes => (Object.keys(votes).filter(key => votes[key].confirmed));
 
-const getUnvoteList = votes => (Object.keys(votes).filter(key =>
+export const getUnvoteList = votes => (Object.keys(votes).filter(key =>
   !votes[key].unconfirmed && votes[key].confirmed));
 
-const getVoteList = votes => (Object.keys(votes).filter(key =>
+export const getVoteList = votes => (Object.keys(votes).filter(key =>
   votes[key].unconfirmed && !votes[key].confirmed));
 
-const getTotalVotesCount = votes => ((getVotedList(votes).length - getUnvoteList(votes).length)
-  + getVoteList(votes).length);
+export const getTotalVotesCount = votes => (
+  (getVotedList(votes).length - getUnvoteList(votes).length)
+  + getVoteList(votes).length
+);
 
-const getTotalActions = votes => (
+export const getTotalActions = votes => (
   Math.ceil((
     getVoteList(votes).length + getUnvoteList(votes).length
   ) / votingConst.maxCountOfVotesInOneTurn)
 );
 
-const getPendingVotesList = votes => (Object.keys(votes).filter(key => votes[key].pending));
+export const getPendingVotesList = votes => (Object.keys(votes).filter(key => votes[key].pending));
 
-const getVotingLists = votes => ({
+export const getVotingLists = votes => ({
   votedList: getVoteList(votes).map(vote => votes[vote].publicKey),
   unvotedList: getUnvoteList(votes).map(vote => votes[vote].publicKey),
 });
 
-const getVotingError = (votes, account) => {
+export const getVotingError = (votes, account) => {
   let error;
   if (account.balance < Fees.vote) {
     error = i18next.t('Not enough LSK to pay for the transaction.');
@@ -36,13 +38,18 @@ const getVotingError = (votes, account) => {
   return error;
 };
 
-export {
-  getTotalVotesCount,
-  getVotedList,
-  getVoteList,
-  getUnvoteList,
-  getTotalActions,
-  getPendingVotesList,
-  getVotingLists,
-  getVotingError,
+export const splitVotesIntoRounds = ({ votes, unvotes }) => {
+  const rounds = [];
+  const maxCountOfVotesInOneTurn = 33;
+  while (votes.length + unvotes.length > 0) {
+    const votesLength = Math.min(
+      votes.length,
+      maxCountOfVotesInOneTurn - Math.min(unvotes.length, 16),
+    );
+    rounds.push({
+      votes: votes.splice(0, votesLength),
+      unvotes: unvotes.splice(0, maxCountOfVotesInOneTurn - votesLength),
+    });
+  }
+  return rounds;
 };

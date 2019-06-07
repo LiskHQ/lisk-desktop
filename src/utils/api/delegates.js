@@ -2,25 +2,10 @@ import i18next from 'i18next';
 import Lisk from '@liskhq/lisk-client';
 import { loginType } from '../../constants/hwConstants';
 import { voteWithHW } from '../../utils/api/hwWallet';
+import { splitVotesIntoRounds } from '../voting';
 
 export const getDelegates = (liskAPIClient, options) =>
   liskAPIClient.delegates.get(options);
-
-export const splitVotesIntoRounds = ({ votes, unvotes }) => {
-  const rounds = [];
-  const maxCountOfVotesInOneTurn = 33;
-  while (votes.length + unvotes.length > 0) {
-    const votesLength = Math.min(
-      votes.length,
-      maxCountOfVotesInOneTurn - Math.min(unvotes.length, 16),
-    );
-    rounds.push({
-      votes: votes.splice(0, votesLength),
-      unvotes: unvotes.splice(0, maxCountOfVotesInOneTurn - votesLength),
-    });
-  }
-  return rounds;
-};
 
 const voteWithPassphrase = (
   liskAPIClient,
