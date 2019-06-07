@@ -35,7 +35,7 @@ class WalletDetails extends React.Component {
           </div>
         </section>
         <section className={styles.row}>
-          <Icon name='txVote' /> {/* TODO change the icon when provided by design team */}
+          <Icon name='balance' />
           <div>
             <label>{t('Balance')}</label>
             <div className={styles.value} ><LiskAmount val={balance} /> {activeToken}</div>

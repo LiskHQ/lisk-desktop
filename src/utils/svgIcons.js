@@ -52,6 +52,7 @@ import outgoing from '../assets/images/icons-v2/outgoing.svg';
 import checkboxFilled from '../assets/images/icons-v2/checkmark-16-filled.svg';
 import checkmark from '../assets/images/icons-v2/checkmark.svg';
 import newsFeedAvatar from '../assets/images/icons-v2/newsFeedsAvatar.svg';
+import balance from '../assets/images/icons-v2/balance.svg';
 
 export default {
   alert_icon: alertIcon,
@@ -108,4 +109,5 @@ export default {
   incoming,
   outgoing,
   newsFeedAvatar,
+  balance,
 };
