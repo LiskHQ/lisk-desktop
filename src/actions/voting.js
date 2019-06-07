@@ -2,7 +2,7 @@ import to from 'await-to-js';
 import {
   getVotes,
   getDelegates,
-  vote,
+  castVotes,
 } from '../utils/api/delegate';
 import { getVotingLists, getVotingError } from '../utils/voting';
 import { getTimeOffset } from '../utils/hacks';
@@ -72,7 +72,7 @@ export const votePlaced = ({
       return;
     }
 
-    const [error, callResult] = await to(vote({
+    const [error, callResult] = await to(castVotes({
       liskAPIClient,
       account,
       votedList,

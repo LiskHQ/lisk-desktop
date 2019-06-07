@@ -80,7 +80,7 @@ describe('actions: voting', () => {
     let actionFunction;
 
     beforeEach(() => {
-      delegateApiMock = sinon.stub(delegateApi, 'vote');
+      delegateApiMock = sinon.stub(delegateApi, 'castVotes');
       dispatch = sinon.spy();
       callback = sinon.spy();
       actionFunction = votePlaced({

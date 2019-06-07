@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import Lisk from '@liskhq/lisk-client';
 import {
   getDelegates,
-  vote,
+  castVotes,
   getVotes,
   registerDelegate,
 } from './delegate';
@@ -71,7 +71,7 @@ describe('Utils: Delegate', () => {
     });
   });
 
-  describe('vote', () => {
+  describe('castVotes', () => {
     it('should call castVotes and broadcast transaction', () => {
       const votes = [
         accounts.genesis.publicKey,
@@ -91,7 +91,7 @@ describe('Utils: Delegate', () => {
         timeOffset,
       }).returns(transaction);
 
-      vote({
+      castVotes({
         liskAPIClient,
         account: {
           ...accounts.genesis,
@@ -106,7 +106,7 @@ describe('Utils: Delegate', () => {
     });
 
     it('should call return error if account.loginType is not recognized', () => (
-      expect(vote({
+      expect(castVotes({
         liskAPIClient,
         account: {
           ...accounts.genesis,

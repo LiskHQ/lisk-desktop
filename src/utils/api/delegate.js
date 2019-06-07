@@ -48,7 +48,7 @@ const voteWithPassphrase = (
   }))
 );
 
-export const vote = async ({
+export const castVotes = async ({
   liskAPIClient,
   account,
   votedList,
