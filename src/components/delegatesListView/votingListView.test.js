@@ -36,7 +36,7 @@ describe('VotingListViewV2', () => {
     voteToggled: sinon.spy(),
     addTransaction: sinon.spy(),
     votesFetched: sinon.spy(),
-    delegatesFetched: sinon.spy(),
+    loadDelegates: sinon.spy(),
     t: key => key,
     history: { location: { search: '' } },
   };
@@ -70,11 +70,11 @@ describe('VotingListViewV2', () => {
   });
 
   it('should define search method to reload delegates based on given query', () => {
-    props.delegatesFetched.reset();
+    props.loadDelegates.reset();
     wrapper.find('.search input')
       .at(0).simulate('change', { nativeEvent: { target: { value: 'query' } } });
     clock.tick(251);
-    expect(props.delegatesFetched).to.be.calledWith({
+    expect(props.loadDelegates).to.be.calledWith({
       offset: 0,
       q: 'query',
     });

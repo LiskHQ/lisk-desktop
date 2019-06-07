@@ -5,7 +5,7 @@ import Delegates from './delegates';
 import {
   voteToggled,
   votesFetched,
-  delegatesFetched,
+  loadDelegates,
   clearVotes,
 } from '../../actions/voting';
 
@@ -18,7 +18,7 @@ const mapDispatchToProps = {
   clearVotes,
   voteToggled,
   votesFetched,
-  delegatesFetched,
+  loadDelegates,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(Delegates));

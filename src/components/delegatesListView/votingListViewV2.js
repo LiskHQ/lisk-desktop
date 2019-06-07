@@ -73,7 +73,7 @@ class VotingListViewV2 extends React.Component {
     this.freezeLoading = true;
     this.setState({ isLoading: true });
 
-    this.props.delegatesFetched({
+    this.props.loadDelegates({
       offset,
       q,
       refresh: offset === 0,

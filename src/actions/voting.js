@@ -112,7 +112,7 @@ export const votesFetched = ({ address, type }) =>
 /**
  * Gets list of all delegates
  */
-export const delegatesFetched = ({
+export const loadDelegates = ({
   offset, refresh, q, callback = () => {},
 }) =>
   (dispatch, getState) => {

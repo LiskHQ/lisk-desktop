@@ -45,7 +45,7 @@ describe('Delegates', () => {
     t: key => key,
     history: { location: { search: '' } },
     clearVotes: jest.fn(),
-    delegatesFetched: jest.fn(),
+    loadDelegates: jest.fn(),
     votesFetched: jest.fn(),
   };
   const options = {

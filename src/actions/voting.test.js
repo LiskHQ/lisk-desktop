@@ -7,7 +7,7 @@ import {
   votePlaced,
   votesFetched,
   urlVotesFound,
-  delegatesFetched,
+  loadDelegates,
   delegatesAdded,
 } from './voting';
 import Fees from '../constants/fees';
@@ -185,14 +185,14 @@ describe('actions: voting', () => {
     });
   });
 
-  describe('delegatesFetched', () => {
+  describe('loadDelegates', () => {
     const data = {
       q: '',
       offset: 0,
       refresh: true,
     };
     const delegates = delegateList;
-    const actionFunction = delegatesFetched(data);
+    const actionFunction = loadDelegates(data);
 
     getState = () => ({
       peers: {

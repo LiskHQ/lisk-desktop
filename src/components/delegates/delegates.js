@@ -50,7 +50,7 @@ class Delegates extends React.Component {
       t,
       votes,
       votesFetched,
-      delegatesFetched,
+      loadDelegates,
     } = this.props;
     const { votingModeEnabled } = this.state;
     return (
@@ -69,7 +69,7 @@ class Delegates extends React.Component {
         <section className={`${grid['col-sm-12']} ${grid['col-md-12']} ${styles.votingBox} ${styles.votes}`}>
           <DelegatesListView
             votesFetched={votesFetched}
-            delegatesFetched={delegatesFetched}
+            loadDelegates={loadDelegates}
             votingModeEnabled={votingModeEnabled}
           />
         </section>
