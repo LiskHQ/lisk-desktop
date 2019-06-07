@@ -1,5 +1,4 @@
 import to from 'await-to-js';
-import i18next from 'i18next';
 import {
   getVotes,
   getDelegates,
@@ -54,16 +53,6 @@ export const clearVotes = () => ({
 });
 
 
-// TODO adjust the utils to return errors in a consistent way so that this function can be removed
-const handleVoteError = ({ error }) => {
-  if (error && error.message) {
-    return error.message;
-  } else if (typeof error === 'string') {
-    return error;
-  }
-  return i18next.t('An error occurred while placing your vote.');
-};
-
 /**
  * Makes Api call to register votes
  * Adds pending state and then after the duration of one round
@@ -95,8 +84,7 @@ export const votePlaced = ({
     if (error) {
       callback({
         success: false,
-        errorMessage: error.message,
-        text: handleVoteError({ error }),
+        error,
       });
     } else {
       dispatch({ type: actionTypes.pendingVotesAdded });

@@ -35,7 +35,7 @@ const VotingSummary = ({
             votes,
             passphrase: account.passphrase,
             secondPassphrase,
-            callback: ({ success, text, errorMessage }) => {
+            callback: ({ success, error }) => {
               nextStep({
                 success,
                 ...(success ? {
@@ -50,12 +50,12 @@ const VotingSummary = ({
                   },
                 } : {
                   title: t('Voting failed'),
-                  message: errorMessage || t('Oops, looks like something went wrong. Please try again.'),
+                  message: (error && error.message) || t('Oops, looks like something went wrong. Please try again.'),
                   primaryButon: {
                     title: t('Back to Voting summary'),
                     onClick: prevStep,
                   },
-                  error: text,
+                  error,
                 }),
               });
             },

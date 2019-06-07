@@ -113,23 +113,11 @@ describe('actions: voting', () => {
     });
 
     it('should call callback with "success: false" if caught an error', async () => {
-      const message = 'sample message';
-      delegateApiMock.returnsPromise().rejects({ message });
+      const error = { message: 'sample message' };
+      delegateApiMock.returnsPromise().rejects(error);
 
       await actionFunction(dispatch, getState);
-      const expectedAction = { success: false, text: message, errorMessage: message };
-      expect(callback).to.have.been.calledWith(expectedAction);
-    });
-
-    it('should call callback with "success: false" and default message if caught an error but no message returned', async () => {
-      delegateApiMock.returnsPromise().rejects({});
-
-      await actionFunction(dispatch, getState);
-      const expectedAction = {
-        success: false,
-        text: 'An error occurred while placing your vote.',
-        errorMessage: undefined,
-      };
+      const expectedAction = { success: false, error };
       expect(callback).to.have.been.calledWith(expectedAction);
     });
 
