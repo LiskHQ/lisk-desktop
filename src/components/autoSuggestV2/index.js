@@ -242,7 +242,7 @@ class AutoSuggest extends React.Component {
     this.inputRef.inputNode.select();
   }
 
-  getDelegatesResults() {
+  getDelegatessResults() {
     return this.props.results.delegates.map((delegate, idx) => ({
       id: delegate.account.address,
       valueLeft: delegate.username,
@@ -348,7 +348,7 @@ class AutoSuggest extends React.Component {
         <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}>
           <ResultsList
             key={searchEntities.delegates}
-            results={this.getDelegatesResults()}
+            results={this.getDelegatessResults()}
             header={{
               titleLeft: t('Delegate'),
               titleRight: t('Rank'),

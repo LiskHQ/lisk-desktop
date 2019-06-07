@@ -126,7 +126,7 @@ describe('actions: transactions', () => {
         voteArrayName: 'added',
       };
       transactionsApi.getSingleTransaction.mockResolvedValue({ data: [transactionResponse] });
-      delegateApi.getDelegate.mockResolvedValue({ data: [delegateResponse] });
+      delegateApi.getDelegates.mockResolvedValue({ data: [delegateResponse] });
 
       await actionFunction(dispatch, getState);
       // the following timeout ensures that the async code inside `actionFunction `
@@ -148,7 +148,7 @@ describe('actions: transactions', () => {
         },
       };
       transactionsApi.getSingleTransaction.mockResolvedValue({ data: [transactionResponse] });
-      delegateApi.getDelegate.mockResolvedValue({ data: [delegateResponse] });
+      delegateApi.getDelegates.mockResolvedValue({ data: [delegateResponse] });
       const expectedActionPayload = {
         delegate: delegateResponse,
         voteArrayName: 'deleted',

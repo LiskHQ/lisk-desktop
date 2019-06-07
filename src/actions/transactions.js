@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import to from 'await-to-js';
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
-import { getDelegate } from '../utils/api/delegate';
+import { getDelegates } from '../utils/api/delegate';
 import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';
@@ -138,7 +138,7 @@ export const loadSingleTransaction = ({ id }) =>
               type: actionTypes.transactionAddDelegateName,
             });
           } else {
-            getDelegate(liskAPIClient, { publicKey })
+            getDelegates(liskAPIClient, { publicKey })
               .then((delegateData) => {
                 dispatch({
                   data: { delegate: delegateData.data[0], voteArrayName: 'deleted' },
@@ -156,7 +156,7 @@ export const loadSingleTransaction = ({ id }) =>
               type: actionTypes.transactionAddDelegateName,
             });
           } else {
-            getDelegate(liskAPIClient, { publicKey })
+            getDelegates(liskAPIClient, { publicKey })
               .then((delegateData) => {
                 dispatch({
                   data: { delegate: delegateData.data[0], voteArrayName: 'added' },

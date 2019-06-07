@@ -7,8 +7,8 @@ export const listDelegates = (liskAPIClient, options) => (
   liskAPIClient.delegates.get(options)
 );
 
-// TODO remove getDelegate and use listDelegates defined above
-export const getDelegate = (liskAPIClient, options) =>
+// TODO remove getDelegates and use listDelegates defined above
+export const getDelegates = (liskAPIClient, options) =>
   liskAPIClient.delegates.get(options);
 
 

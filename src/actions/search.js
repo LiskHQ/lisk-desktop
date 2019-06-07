@@ -1,7 +1,7 @@
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
 import { getAccount } from '../utils/api/account';
-import { getDelegate, getVotes, listDelegates } from '../utils/api/delegate';
+import { getDelegates, getVotes, listDelegates } from '../utils/api/delegate';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import searchAll from '../utils/api/search';
@@ -14,7 +14,7 @@ const searchDelegate = ({ publicKey, address }) =>
     const liskAPIClient = getState().peers.liskAPIClient;
     const networkConfig = getState().network;
     const token = tokenMap.LSK.key;
-    const delegates = await getDelegate(liskAPIClient, { publicKey });
+    const delegates = await getDelegates(liskAPIClient, { publicKey });
     const transactions = await getTransactions({
       token, networkConfig, address, limit: 1, type: transactionTypes.registerDelegate,
     });

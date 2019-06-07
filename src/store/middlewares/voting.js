@@ -1,4 +1,4 @@
-import { getDelegate } from '../../utils/api/delegate';
+import { getDelegates } from '../../utils/api/delegate';
 import { voteLookupStatusUpdated, voteToggled, votesFetched, delegatesAdded } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
 import { loadDelegateCache } from '../../utils/delegates';
@@ -20,7 +20,7 @@ const lookupDelegate = (store, username) => {
       resolve({ data: [delegate] });
     });
   }
-  return getDelegate(liskAPIClient, { username });
+  return getDelegates(liskAPIClient, { username });
 };
 
 const processVote = (store, options, username) => {

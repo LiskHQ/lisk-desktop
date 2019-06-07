@@ -201,7 +201,7 @@ describe('actions: account', () => {
     const actionFunction = loadDelegate(data);
 
     beforeEach(() => {
-      delegateApiMock = stub(delegateApi, 'getDelegate');
+      delegateApiMock = stub(delegateApi, 'getDelegates');
       dispatch = spy();
       getState = () => ({
         peers: { liskAPIClient: {} },
@@ -346,7 +346,7 @@ describe('actions: account', () => {
     let getState;
 
     beforeEach(() => {
-      stub(delegateApi, 'getDelegate').returnsPromise();
+      stub(delegateApi, 'getDelegates').returnsPromise();
       getState = () => ({
         peers: { liskAPIClient: {} },
         account: {
@@ -358,11 +358,11 @@ describe('actions: account', () => {
     });
 
     afterEach(() => {
-      delegateApi.getDelegate.restore();
+      delegateApi.getDelegates.restore();
     });
 
     it('should fetch delegate and update account', () => {
-      delegateApi.getDelegate.resolves({ data: [{ account: 'delegate data' }] });
+      delegateApi.getDelegates.resolves({ data: [{ account: 'delegate data' }] });
       const data = {
         publicKey: accounts.genesis.publicKey,
       };

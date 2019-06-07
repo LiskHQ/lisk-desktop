@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { getAccount, setSecondPassphrase } from '../utils/api/account';
-import { registerDelegate, getDelegate } from '../utils/api/delegate';
+import { registerDelegate, getDelegates } from '../utils/api/delegate';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import { updateTransactions } from './transactions';
@@ -107,7 +107,7 @@ export const secondPassphraseRegistered = ({ secondPassphrase, account, passphra
 export const updateDelegateAccount = ({ publicKey }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    return getDelegate(liskAPIClient, { publicKey })
+    return getDelegates(liskAPIClient, { publicKey })
       .then((response) => {
         dispatch(accountUpdated({
           ...getState().account.info.LSK,
@@ -151,7 +151,7 @@ export const delegateRegistered = ({
 export const loadDelegate = ({ publicKey }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    getDelegate(liskAPIClient, { publicKey }).then((response) => {
+    getDelegates(liskAPIClient, { publicKey }).then((response) => {
       dispatch({
         data: {
           delegate: response.delegate,

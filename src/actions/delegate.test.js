@@ -10,7 +10,7 @@ import {
 
 describe('actions: delegate', () => {
   let dispatch;
-  let getDelegateStub;
+  let getDelegatesStub;
   let getState;
 
   describe('delegatesFetched', () => {
@@ -18,7 +18,7 @@ describe('actions: delegate', () => {
     const delegatesFetchedAction = delegatesFetched({ username });
 
     beforeEach(() => {
-      getDelegateStub = sinon.stub(delegateApi, 'getDelegate');
+      getDelegatesStub = sinon.stub(delegateApi, 'getDelegates');
       dispatch = sinon.spy();
       getState = () => ({
         peers: { liskAPIClient: {} },
@@ -26,12 +26,12 @@ describe('actions: delegate', () => {
     });
 
     afterEach(() => {
-      getDelegateStub.restore();
+      getDelegatesStub.restore();
     });
 
-    it('should create actions to handle getDelegate response', () => {
+    it('should create actions to handle getDelegates response', () => {
       const responseData = { delegate: {} };
-      getDelegateStub.returnsPromise().resolves({ data: [{ ...responseData }] });
+      getDelegatesStub.returnsPromise().resolves({ data: [{ ...responseData }] });
 
       const expectedActionDelegateRetrieved = {
         delegate: responseData,
@@ -44,9 +44,9 @@ describe('actions: delegate', () => {
         .calledWith(delegateRetrieved(expectedActionDelegateRetrieved));
     });
 
-    it('should create actions to handle getDelegate response failure', () => {
+    it('should create actions to handle getDelegates response failure', () => {
       const responseData = { delegate: null };
-      getDelegateStub.returnsPromise().resolves({ data: [] });
+      getDelegatesStub.returnsPromise().resolves({ data: [] });
 
       const expectedActionDelegateRetrieved = {
         ...responseData,
