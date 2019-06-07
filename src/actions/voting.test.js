@@ -13,7 +13,7 @@ import {
 import Fees from '../constants/fees';
 import networks from '../constants/networks';
 import { loginType } from '../constants/hwConstants';
-import * as delegateApi from '../utils/api/delegate';
+import * as delegateApi from '../utils/api/delegates';
 
 const delegateList = [
   { username: 'username1', publicKey: '123HG3452245L', address: '1234121321L' },

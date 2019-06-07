@@ -3,7 +3,7 @@ import {
   getVotes,
   getDelegates,
   castVotes,
-} from '../utils/api/delegate';
+} from '../utils/api/delegates';
 import { getVotingLists, getVotingError } from '../utils/voting';
 import { getTimeOffset } from '../utils/hacks';
 import { updateDelegateCache } from '../utils/delegates';

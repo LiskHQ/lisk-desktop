@@ -6,7 +6,7 @@ import {
   castVotes,
   getVotes,
   registerDelegate,
-} from './delegate';
+} from './delegates';
 import accounts from '../../../test/constants/accounts';
 import { loginType } from '../../constants/hwConstants';
 

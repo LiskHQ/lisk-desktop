@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import * as delegateApi from '../utils/api/delegate';
+import * as delegateApi from '../utils/api/delegates';
 
 import {
   delegateRetrieving,

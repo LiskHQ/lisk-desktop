@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { spy, stub, mock, match } from 'sinon';
 
 import { voteLookupStatusUpdated } from '../../actions/voting';
-import * as delegateApi from '../../utils/api/delegate';
+import * as delegateApi from '../../utils/api/delegates';
 import actionTypes from '../../constants/actions';
 import middleware from './voting';
 import votingConst from '../../constants/voting';

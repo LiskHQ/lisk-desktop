@@ -7,13 +7,13 @@ import {
   updateTransactions,
 } from './transactions';
 import * as transactionsApi from '../utils/api/transactions';
-import * as delegateApi from '../utils/api/delegate';
+import * as delegateApi from '../utils/api/delegates';
 import accounts from '../../test/constants/accounts';
 import Fees from '../constants/fees';
 import { toRawLsk } from '../utils/lsk';
 
 jest.mock('../utils/api/transactions');
-jest.mock('../utils/api/delegate');
+jest.mock('../utils/api/delegates');
 
 describe('actions: transactions', () => {
   const dispatch = jest.fn();

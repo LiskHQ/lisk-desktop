@@ -20,7 +20,7 @@ import {
 import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { delegateRegisteredFailure } from './delegate';
 import * as accountApi from '../utils/api/account';
-import * as delegateApi from '../utils/api/delegate';
+import * as delegateApi from '../utils/api/delegates';
 import * as transactionsApi from '../utils/api/transactions';
 import * as blocksApi from '../utils/api/blocks';
 import Fees from '../constants/fees';

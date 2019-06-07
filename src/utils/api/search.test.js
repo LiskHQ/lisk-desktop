@@ -3,7 +3,7 @@ import { stub } from 'sinon';
 import searchAll from './search';
 import * as accountsAPI from './account';
 import * as transactionsAPI from './lsk/transactions';
-import * as delegateAPI from './delegate';
+import * as delegatesAPI from './delegates';
 
 describe('Utils: Search', () => {
   let getAccountStub;
@@ -48,7 +48,7 @@ describe('Utils: Search', () => {
 
   beforeEach(() => {
     getAccountStub = stub(accountsAPI, 'getAccount');
-    getDelegatesStub = stub(delegateAPI, 'getDelegates');
+    getDelegatesStub = stub(delegatesAPI, 'getDelegates');
     getSingleTransactionStub = stub(transactionsAPI, 'getSingleTransaction');
 
     // address match

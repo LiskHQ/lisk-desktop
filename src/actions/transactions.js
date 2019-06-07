@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import to from 'await-to-js';
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
-import { getDelegates } from '../utils/api/delegate';
+import { getDelegates } from '../utils/api/delegates';
 import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';

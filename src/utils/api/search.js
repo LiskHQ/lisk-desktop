@@ -1,6 +1,6 @@
 import { getAccount } from './account';
 import { getSingleTransaction } from './lsk/transactions';
-import { getDelegates } from './delegate';
+import { getDelegates } from './delegates';
 import regex from './../../utils/regex';
 
 const filterAndOrderByMatch = (searchTerm, delegates) =>

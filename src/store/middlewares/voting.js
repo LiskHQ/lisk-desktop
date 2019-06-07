@@ -1,4 +1,4 @@
-import { getDelegates } from '../../utils/api/delegate';
+import { getDelegates } from '../../utils/api/delegates';
 import { voteLookupStatusUpdated, voteToggled, loadVotes, delegatesAdded } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
 import { loadDelegateCache } from '../../utils/delegates';

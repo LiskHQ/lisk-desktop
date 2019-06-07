@@ -1,6 +1,6 @@
 import {
   getDelegates,
-} from '../utils/api/delegate';
+} from '../utils/api/delegates';
 import actionTypes from '../constants/actions';
 
 /**
