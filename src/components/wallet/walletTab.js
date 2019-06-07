@@ -8,14 +8,14 @@ const WalletTab = ({ ...props }) => (
   <React.Fragment>
     {props.detailAccount ? (
       <div className={`${grid.row}`}>
-        <div className={`${grid['col-xs-6']} ${grid['col-md-5']} ${grid['col-lg-4']}`}>
+        <div className={`${grid['col-xs-7']} ${grid['col-md-6']} ${grid['col-lg-5']}`}>
           <WalletDetails
             balance={props.balance}
             address={props.address}
             activeToken={props.activeToken}
             />
         </div>
-        <div className={`${grid['col-xs-6']} ${grid['col-md-7']} ${grid['col-lg-8']}`}>
+        <div className={`${grid['col-xs-5']} ${grid['col-md-6']} ${grid['col-lg-7']}`}>
         { // istanbul ignore next
           !props.hideChart || props.transactions.length ?
           <BalanceChart
