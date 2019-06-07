@@ -6,23 +6,20 @@ import WalletDetails from './walletDetails';
 
 const WalletTab = ({ ...props }) => (
   <React.Fragment>
-    {props.detailAccount && props.activeToken !== 'BTC' ? (
+    {props.detailAccount ? (
       <div className={`${grid.row}`}>
-        <div className={`${grid['col-sm-4']} ${grid['col-lg-3']}`}>
+        <div className={`${grid['col-xs-6']} ${grid['col-md-5']} ${grid['col-lg-4']}`}>
           <WalletDetails
-            peers={props.peers}
-            lastTransaction={props.transaction}
-            loadLastTransaction={props.loadLastTransaction}
             balance={props.balance}
             address={props.address}
-            wallets={props.wallets}
             activeToken={props.activeToken}
             />
         </div>
-        <div className={`${grid['col-sm-8']} ${grid['col-lg-9']}`}>
+        <div className={`${grid['col-xs-6']} ${grid['col-md-7']} ${grid['col-lg-8']}`}>
         { // istanbul ignore next
           !props.hideChart || props.transactions.length ?
           <BalanceChart
+            token={props.activeToken}
             balance={props.balance}
             address={props.address}
             transactions={props.transactions} />

@@ -6,7 +6,7 @@ import Icon from '../toolbox/icon';
 import LiskAmount from '../liskAmount';
 import styles from './walletDetails.css';
 
-class walletDetails extends React.Component {
+class WalletDetails extends React.Component {
   render() {
     const {
       balance, t, address, activeToken,
@@ -39,4 +39,4 @@ class walletDetails extends React.Component {
   }
 }
 
-export default translate()(walletDetails);
+export default translate()(WalletDetails);

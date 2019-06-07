@@ -60,7 +60,6 @@
   "Back to Voting summary": "Back to Voting summary",
   "Back to wallet": "Back to wallet",
   "Balance": "Balance",
-  "Balance details": "Balance details",
   "Become a delegate": "Become a delegate",
   "Before you continue using Lisk Hub, please read and accept the": "Before you continue using Lisk Hub, please read and accept the",
   "Beta: in order to see changes fully please reload the app when removing extension": "Beta: in order to see changes fully please reload the app when removing extension",
@@ -610,5 +609,6 @@
   "{{fee}} {{token}}": "{{fee}} {{token}}",
   "{{length}} bytes left": "{{length}} bytes left",
   "{{length}} extra characters": "{{length}} extra characters",
-  "{{length}} out of {{maxLength}} characters left": "{{length}} out of {{maxLength}} characters left"
+  "{{length}} out of {{maxLength}} characters left": "{{length}} out of {{maxLength}} characters left",
+  "{{token}} Balance": "{{token}} Balance"
 }
