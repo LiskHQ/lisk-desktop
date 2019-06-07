@@ -84,9 +84,12 @@ class transactionsHeader extends React.Component {
                 ref={this.setDropownRefs}
                 data-name={'requestDropdown'}
                 className={`${styles.requestContainer} tx-receive-bt`}>
+                { /* TODO remove this condition when Request BTC is implemented */ }
+                { activeToken !== 'BTC' ?
                 <SecondaryButtonV2 onClick={() => this.toggleDropdown('requestDropdown')}>
                   {t('Request {{token}}', { token: activeToken })}
                 </SecondaryButtonV2>
+                : null }
                 <DropdownV2
                   showDropdown={this.state.shownDropdown === 'requestDropdown'}
                   className={`${styles.requestDropdown} request-dropdown`}>
