@@ -1,4 +1,3 @@
-// TODO rename this file to 'delegates.js'
 import actionTypes from '../../constants/actions';
 
 const mergeVotes = (newList, oldDict) => {
@@ -101,17 +100,17 @@ const voting = (state = { // eslint-disable-line complexity
         refresh: true,
       };
 
+    /**
+     * This action is used when user cancels voting. It sets 'unconfirmed' state
+     * of each vote to match it's 'confirmed' state.
+     */
     case actionTypes.votesCleared:
       return {
         ...state,
         votes: Object.keys(state.votes).reduce((votesDict, username) => {
           votesDict[username] = {
-            confirmed: state.votes[username].confirmed,
+            ...state.votes[username],
             unconfirmed: state.votes[username].confirmed,
-            publicKey: state.votes[username].publicKey,
-            address: state.votes[username].address,
-            productivity: state.votes[username].productivity,
-            rank: state.votes[username].rank,
             pending: false,
           };
           return votesDict;
@@ -119,7 +118,11 @@ const voting = (state = { // eslint-disable-line complexity
         refresh: true,
       };
 
-    // TODO try to merge this with actionTypes.votesAdded
+    /**
+     * This action is used when voting transaction is confirmed. It updates votes
+     * based on response from votes API endpoint.
+     * https://lisk.io/documentation/lisk-core/api#/Votes
+     */
     case actionTypes.votesUpdated:
       return {
         ...state,
@@ -127,9 +130,9 @@ const voting = (state = { // eslint-disable-line complexity
         refresh: false,
       };
 
-    /*
+    /**
      * This action is used when voting is submitted. It sets 'pending' status
-     * of all votes that have different confirmed and unconfirmed state
+     * of all votes that have different 'confirmed' and 'unconfirmed' state
      */
     case actionTypes.pendingVotesAdded:
       return {
