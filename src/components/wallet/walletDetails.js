@@ -4,7 +4,7 @@ import AccountVisual from '../accountVisual';
 import BoxV2 from '../boxV2';
 import Icon from '../toolbox/icon';
 import LiskAmount from '../liskAmount';
-import CopyToClipboard from '../copyToClipboard';
+import CopyToClipboard from '../toolbox/copyToClipboard';
 import styles from './walletDetails.css';
 
 class WalletDetails extends React.Component {
