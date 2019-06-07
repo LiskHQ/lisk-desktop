@@ -11,17 +11,17 @@ class walletDetails extends React.Component {
     } = this.props;
 
     return (
-      <BoxV2 className={`${styles.wrapper}`}>
+      <BoxV2 className={styles.wrapper}>
         <header>
           <h1>{t('Wallet Details')}</h1>
         </header>
         <section>
           <label>{t('Address')}</label>
-          <div>{address}</div>
+          <div className={styles.value} >{address}</div>
         </section>
         <section>
           <label>{t('Balance')}</label>
-          <div><LiskAmount val={balance} /> {activeToken}</div>
+          <div className={styles.value} ><LiskAmount val={balance} /> {activeToken}</div>
         </section>
       </BoxV2>
     );
