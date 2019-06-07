@@ -127,26 +127,24 @@ const voting = (state = { // eslint-disable-line complexity
         refresh: false,
       };
 
-    // TODO try to merge this with actionTypes.votesAdded
+    /*
+     * This action is used when voting is submitted. It sets 'pending' status
+     * of all votes that have different confirmed and unconfirmed state
+     */
     case actionTypes.pendingVotesAdded:
       return {
         ...state,
         refresh: false,
         votes: Object.keys(state.votes).reduce((votesDict, username) => {
           const {
-            confirmed, unconfirmed, publicKey,
-            pending, address, rank, productivity,
+            confirmed, unconfirmed, pending,
           } = state.votes[username];
           const nextPendingStatus = pending || (confirmed !== unconfirmed);
 
           votesDict[username] = {
+            ...state.votes[username],
             confirmed: nextPendingStatus ? !confirmed : confirmed,
-            unconfirmed,
             pending: nextPendingStatus,
-            publicKey,
-            address,
-            rank,
-            productivity,
           };
           return votesDict;
         }, {}),
