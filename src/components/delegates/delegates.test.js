@@ -42,7 +42,6 @@ describe('Delegates', () => {
   const props = {
     refreshDelegates: false,
     delegates,
-    totalDelegates: 10,
     votes,
     t: key => key,
     history: { location: { search: '' } },

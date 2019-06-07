@@ -139,7 +139,6 @@ export const delegatesFetched = ({
       updateDelegateCache(response.data, getState().peers);
       dispatch(delegatesAdded({
         list: response.data,
-        totalDelegates: response.data.length,
         refresh,
       }));
       callback(response);

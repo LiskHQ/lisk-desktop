@@ -30,7 +30,6 @@ describe('VotingListViewV2', () => {
     account: {},
     refreshDelegates: false,
     delegates,
-    totalDelegates: 10,
     votes,
     serverPublicKey: null,
     address: '16313739661670634666L',
@@ -87,7 +86,6 @@ describe('VotingListViewV2', () => {
   it('should call loadMore and not loadDelegates if still loading', () => {
     const loadMoreProps = {
       ...props,
-      totalDelegates: 100,
     };
     wrapper = mountWithContext(<VotingListViewV2 {...loadMoreProps}/>, {});
     const Waypoint = wrapper.find('Waypoint').at(1);
@@ -99,7 +97,6 @@ describe('VotingListViewV2', () => {
   it('should call loadMore and loadDelegates if not still loading', () => {
     const loadMoreProps = {
       ...props,
-      totalDelegates: 100,
     };
     const loadDelegates = sinon.spy(VotingListViewV2.prototype, 'loadDelegates');
     wrapper = mountWithContext(<VotingListViewV2 {...props}/>, { ...store });

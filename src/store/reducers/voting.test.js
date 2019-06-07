@@ -112,7 +112,6 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     const expectedState = {
       delegates: fullDelegates,
       refresh: true,
-      totalDelegates: 100,
     };
     const changedState = voting(state, action);
 
@@ -133,7 +132,6 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     const expectedState = {
       delegates: delegateList1,
       refresh: true,
-      totalDelegates: 2,
     };
     const changedState = voting(state, action);
 

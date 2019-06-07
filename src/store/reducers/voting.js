@@ -44,7 +44,6 @@ const mergeVotes = (newList, oldDict) => {
 const voting = (state = { // eslint-disable-line complexity
   votes: {},
   delegates: [],
-  totalDelegates: 0, // TODO remove totalDelegates as API no longer provides this
   voteLookupStatus: {},
 }, action) => {
   switch (action.type) {
@@ -71,8 +70,6 @@ const voting = (state = { // eslint-disable-line complexity
         ...state,
         delegates: action.data.refresh ? action.data.list :
           [...state.delegates, ...action.data.list],
-        totalDelegates: action.data.refresh ? action.data.list.length :
-          [...state.delegates, ...action.data.list].length,
         refresh: true,
       };
 
