@@ -238,7 +238,7 @@ describe('actions: voting', () => {
       });
 
       delegateApiMock.returnsPromise().resolves({ data: delegates });
-      const expectedAction = { list: delegates, totalDelegates: delegates.length, refresh: true };
+      const expectedAction = { list: delegates, refresh: true };
 
       actionFunction(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(delegatesAdded(expectedAction));

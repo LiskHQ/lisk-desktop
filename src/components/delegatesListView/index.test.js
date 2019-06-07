@@ -16,7 +16,6 @@ describe.skip('VotingListViewV2', () => {
   const voting = {
     votes: {},
     delegates: [],
-    refresh: false,
   };
   const confirmed = [];
   const pending = [];

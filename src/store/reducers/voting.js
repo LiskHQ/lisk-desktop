@@ -61,7 +61,6 @@ const voting = (state = { // eslint-disable-line complexity
             };
             return votesDict;
           }, {}),
-        refresh: false, // TODO figure out why we need this and try to remove it
       };
 
     case actionTypes.delegatesAdded:
@@ -69,13 +68,11 @@ const voting = (state = { // eslint-disable-line complexity
         ...state,
         delegates: action.data.refresh ? action.data.list :
           [...state.delegates, ...action.data.list],
-        refresh: true,
       };
 
     case actionTypes.voteToggled:
       return {
         ...state,
-        refresh: false,
         votes: {
           ...state.votes,
           [action.data.username]: {
@@ -106,7 +103,6 @@ const voting = (state = { // eslint-disable-line complexity
           };
           return votesDict;
         }, {}),
-        refresh: true,
       };
 
     /**
@@ -118,7 +114,6 @@ const voting = (state = { // eslint-disable-line complexity
       return {
         ...state,
         votes: mergeVotes(action.data.list, state.votes),
-        refresh: false,
       };
 
     /**
@@ -128,7 +123,6 @@ const voting = (state = { // eslint-disable-line complexity
     case actionTypes.pendingVotesAdded:
       return {
         ...state,
-        refresh: false,
         votes: Object.keys(state.votes).reduce((votesDict, username) => {
           const {
             confirmed, unconfirmed, pending,

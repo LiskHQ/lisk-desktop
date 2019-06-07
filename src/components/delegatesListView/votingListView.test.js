@@ -28,7 +28,6 @@ describe('VotingListViewV2', () => {
   };
   const props = {
     account: {},
-    refreshDelegates: false,
     delegates,
     votes,
     serverPublicKey: null,
@@ -78,7 +77,6 @@ describe('VotingListViewV2', () => {
     expect(props.delegatesFetched).to.be.calledWith({
       offset: 0,
       q: 'query',
-      refresh: true,
     });
     clock.restore();
   });

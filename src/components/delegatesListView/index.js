@@ -10,13 +10,12 @@ const mapStateToProps = state => ({
   isDelegate: state.account.isDelegate,
   votes: state.voting.votes,
   delegates: state.voting.delegates,
-  refreshDelegates: state.voting.refresh,
 });
 
 const mapDispatchToProps = {
   voteToggled,
   delegatesCleared: () => delegatesAdded({
-    list: [], refresh: true,
+    list: [],
   }),
 };
 

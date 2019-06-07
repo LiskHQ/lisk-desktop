@@ -40,7 +40,6 @@ describe('Delegates', () => {
     },
   ];
   const props = {
-    refreshDelegates: false,
     delegates,
     votes,
     t: key => key,
