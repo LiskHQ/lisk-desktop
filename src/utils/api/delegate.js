@@ -3,14 +3,8 @@ import Lisk from '@liskhq/lisk-client';
 import { loginType } from '../../constants/hwConstants';
 import { voteWithHW } from '../../utils/api/hwWallet';
 
-export const listDelegates = (liskAPIClient, options) => (
-  liskAPIClient.delegates.get(options)
-);
-
-// TODO remove getDelegates and use listDelegates defined above
 export const getDelegates = (liskAPIClient, options) =>
   liskAPIClient.delegates.get(options);
-
 
 export const splitVotesIntoRounds = ({ votes, unvotes }) => {
   const rounds = [];

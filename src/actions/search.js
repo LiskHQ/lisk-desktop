@@ -1,7 +1,7 @@
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
 import { getAccount } from '../utils/api/account';
-import { getDelegates, getVotes, listDelegates } from '../utils/api/delegate';
+import { getDelegates, getVotes } from '../utils/api/delegate';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import searchAll from '../utils/api/search';
@@ -42,7 +42,7 @@ export const fetchVotedDelegateInfo = (votes, {
     /* istanbul ignore if */
     if (!liskAPIClient) return;
     dispatch(loadingStarted(actionTypes.searchVotes));
-    const delegates = await listDelegates(liskAPIClient, { limit, offset });
+    const delegates = await getDelegates(liskAPIClient, { limit, offset });
     const votesWithDelegateInfo = votes.map((vote) => {
       const delegate = delegates.data.find(d => d.username === vote.username) || {};
       return { ...vote, ...delegate };

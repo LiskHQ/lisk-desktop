@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import Lisk from '@liskhq/lisk-client';
 import {
-  listDelegates,
   getDelegates,
   vote,
   getVotes,
@@ -52,29 +51,18 @@ describe('Utils: Delegate', () => {
     liskTransactionsRegisterDelegateStub.restore();
   });
 
-  describe('listDelegates', () => {
+  describe('getDelegates', () => {
     it('should return getDelegates(liskAPIClient, options) if options = {}', () => {
       const options = {};
       const response = { data: [] };
       liskAPIClientMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
 
-      const returnedPromise = listDelegates(liskAPIClient, options);
+      const returnedPromise = getDelegates(liskAPIClient, options);
       expect(returnedPromise).to.eventually.equal(response);
     });
 
     it('should return getDelegates(liskAPIClient, options) if options.q is set', () => {
       const options = { q: 'genesis_1' };
-      const response = { data: [] };
-      liskAPIClientMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
-
-      const returnedPromise = listDelegates(liskAPIClient, options);
-      return expect(returnedPromise).to.eventually.equal(response);
-    });
-  });
-
-  describe('getDelegates', () => {
-    it('should return getDelegates(liskAPIClient, options)', () => {
-      const options = { publicKey: `"${accounts.delegate.publicKey}"` };
       const response = { data: [] };
       liskAPIClientMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
 

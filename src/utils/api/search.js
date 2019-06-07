@@ -1,6 +1,6 @@
 import { getAccount } from './account';
 import { getSingleTransaction } from './lsk/transactions';
-import { listDelegates } from './delegate';
+import { getDelegates } from './delegate';
 import regex from './../../utils/regex';
 
 const filterAndOrderByMatch = (searchTerm, delegates) =>
@@ -21,7 +21,7 @@ const searchAddresses = ({ liskAPIClient, searchTerm }) => new Promise((resolve,
     .catch(() => reject({ addresses: [] })));
 
 const searchDelegates = ({ liskAPIClient, searchTerm }) => new Promise(resolve =>
-  listDelegates(liskAPIClient, {
+  getDelegates(liskAPIClient, {
     search: searchTerm,
     sort: 'username:asc',
   }).then((response) => {

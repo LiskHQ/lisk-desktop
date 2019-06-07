@@ -78,7 +78,7 @@ describe('actions: search', () => {
       }];
       const fetchVotedDelegateInfoSpy = jest.spyOn(actions, 'fetchVotedDelegateInfo');
 
-      delegateAPI.listDelegates.mockResolvedValue(delegates);
+      delegateAPI.getDelegates.mockResolvedValue(delegates);
       await fetchVotedDelegateInfo(votes, { address })(dispatch, getState);
 
       // TODO figure out how to make this assertion work and remove the 'not'
@@ -89,7 +89,7 @@ describe('actions: search', () => {
     });
 
     it('should dispatch searchVotes action if we have all info for all votes', async () => {
-      delegateAPI.listDelegates.mockResolvedValue(delegates);
+      delegateAPI.getDelegates.mockResolvedValue(delegates);
       const votes = delegates.data;
       await fetchVotedDelegateInfo(votes, { address })(dispatch, getState);
       expect(dispatch).toHaveBeenNthCalledWith(1, {

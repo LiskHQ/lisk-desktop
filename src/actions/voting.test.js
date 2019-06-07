@@ -221,7 +221,7 @@ describe('actions: voting', () => {
     });
 
     it('should dispatch delegatesAdded action if resolved', () => {
-      const delegateApiMock = sinon.stub(delegateApi, 'listDelegates');
+      const delegateApiMock = sinon.stub(delegateApi, 'getDelegates');
       const dispatch = sinon.spy();
       getState = () => ({
         peers: {

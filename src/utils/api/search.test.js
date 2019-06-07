@@ -7,7 +7,7 @@ import * as delegateAPI from './delegate';
 
 describe('Utils: Search', () => {
   let getAccountStub;
-  let listDelegatesStub;
+  let getDelegatesStub;
   let getSingleTransactionStub;
 
   const accountsResponse = { address: '1337L', balance: 1110 };
@@ -48,23 +48,23 @@ describe('Utils: Search', () => {
 
   beforeEach(() => {
     getAccountStub = stub(accountsAPI, 'getAccount');
-    listDelegatesStub = stub(delegateAPI, 'listDelegates');
+    getDelegatesStub = stub(delegateAPI, 'getDelegates');
     getSingleTransactionStub = stub(transactionsAPI, 'getSingleTransaction');
 
     // address match
     getAccountStub.withArgs({ liskAPIClient: undefined, address: '1337L' }).returnsPromise().resolves(accountsResponse);
-    listDelegatesStub.withArgs(undefined, delegatesUrlParams)
+    getDelegatesStub.withArgs(undefined, delegatesUrlParams)
       .returnsPromise().resolves(delegatesResponse);
     getSingleTransactionStub.returnsPromise().resolves(transactionsResponse);
 
     // txSearch match
     getAccountStub.withArgs({ liskAPIClient: undefined, address: '1337' }).returnsPromise().resolves(accountsResponse);
-    listDelegatesStub.withArgs(undefined, delegatesUrlParamsTxMatch)
+    getDelegatesStub.withArgs(undefined, delegatesUrlParamsTxMatch)
       .returnsPromise().resolves(delegatesResponse);
   });
 
   afterEach(() => {
-    listDelegatesStub.restore();
+    getDelegatesStub.restore();
     getSingleTransactionStub.restore();
     getAccountStub.restore();
   });
@@ -84,7 +84,7 @@ describe('Utils: Search', () => {
     ]));
 
   it('should still search for {addresses} when failing {delegates} request', () => {
-    listDelegatesStub.withArgs(undefined, delegatesUrlParams)
+    getDelegatesStub.withArgs(undefined, delegatesUrlParams)
       .returnsPromise().rejects({ success: false });
     return expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
       { addresses: [accountsResponse] },

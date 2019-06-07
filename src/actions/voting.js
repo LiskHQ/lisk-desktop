@@ -2,7 +2,7 @@ import to from 'await-to-js';
 import i18next from 'i18next';
 import {
   getVotes,
-  listDelegates,
+  getDelegates,
   vote,
 } from '../utils/api/delegate';
 import { getVotingLists, getVotingError } from '../utils/voting';
@@ -135,7 +135,7 @@ export const delegatesFetched = ({
       sort: 'rank:asc',
     };
     params = q ? { ...params, search: q } : params;
-    listDelegates(liskAPIClient, params).then((response) => {
+    getDelegates(liskAPIClient, params).then((response) => {
       updateDelegateCache(response.data, getState().peers);
       dispatch(delegatesAdded({
         list: response.data,
