@@ -55,7 +55,7 @@ const VotingSummary = ({
                   title: t('Voting failed'),
                   message: errorMessage || t('Oops, looks like something went wrong. Please try again.'),
                   primaryButon: {
-                    title: t('Back to Voting'),
+                    title: t('Back to Voting Table'),
                     onClick: () => {
                       history.push(routes.delegates.path);
                     },
