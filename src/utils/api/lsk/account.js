@@ -23,7 +23,12 @@ export const getAccount = ({
       if (res.data.length > 0) {
         resolve({
           ...res.data[0],
-          publicKey: publicKey || res.data[0].publicKey,
+          // It is necessary to disable this rule, because eslint --fix would
+          // change it to publicKey || res.data[0].publicKey
+          // but that is not equivalent to the ternary if the first value is
+          // defined and the second one not.
+          // eslint-disable-next-line no-unneeded-ternary
+          publicKey: publicKey ? publicKey : res.data[0].publicKey,
           serverPublicKey: res.data[0].publicKey,
           token: tokenMap.LSK.key,
         });

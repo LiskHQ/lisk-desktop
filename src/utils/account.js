@@ -1,4 +1,5 @@
 import Lisk from '@liskhq/lisk-client';
+import { tokenMap } from '../constants/tokens';
 
 export const extractPublicKey = passphrase =>
   Lisk.cryptography.getKeys(passphrase).publicKey;
@@ -15,3 +16,13 @@ export const extractAddress = (data) => {
   }
   return Lisk.cryptography.getAddressFromPassphrase(data);
 };
+
+export const getActiveTokenAccount = state => ({
+  ...state.account,
+  ...((state.account.info && state.account.info[
+    state.settings.token && state.settings.token.active ?
+      state.settings.token.active :
+      tokenMap.LSK.key
+  ]) || {}),
+});
+
