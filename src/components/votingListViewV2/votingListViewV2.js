@@ -84,8 +84,7 @@ class VotingListViewV2 extends React.Component {
   }
 
   loadMore() {
-    const list = this.filter(this.props.delegates);
-    this.loadDelegates(this.query, false, list[list.length - 1].rank);
+    this.loadDelegates(this.query, false, this.props.delegates.length);
   }
 
   setActiveFilter(filter) {
