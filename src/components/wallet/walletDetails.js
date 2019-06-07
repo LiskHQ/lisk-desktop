@@ -4,6 +4,7 @@ import AccountVisual from '../accountVisual';
 import BoxV2 from '../boxV2';
 import Icon from '../toolbox/icon';
 import LiskAmount from '../liskAmount';
+import CopyToClipboard from '../copyToClipboard';
 import styles from './walletDetails.css';
 
 class WalletDetails extends React.Component {
@@ -24,7 +25,13 @@ class WalletDetails extends React.Component {
             />
           <div>
             <label>{t('Address')}</label>
-            <div className={styles.value} >{address}</div>
+            <div className={styles.value} >
+            <CopyToClipboard
+              value={address}
+              className={styles.address}
+              copyClassName={styles.copy}
+            />
+            </div>
           </div>
         </section>
         <section className={styles.row}>
