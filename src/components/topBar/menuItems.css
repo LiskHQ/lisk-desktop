@@ -1,5 +1,5 @@
-@import '../app/variables.css';
 @import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
 .wrapper {
   display: flex;
@@ -10,24 +10,31 @@
 }
 
 .item {
-  height: 36px;
+  align-items: center;
+  border-bottom: 2px solid transparent;
+  border-right: 1px solid var(--color-platinum);
+  border-top: 2px solid transparent;
+  box-sizing: border-box;
+  cursor: pointer;
   display: flex;
   flex-direction: row;
+  height: 100%;
   justify-content: center;
-  align-items: center;
+  padding: 0 24px;
   text-decoration: none;
-  cursor: pointer;
-  margin-right: 32px;
 
   &:last-child {
-    margin-right: 0;
+    border-right: 0 none;
   }
 }
 
 .notActive {
   pointer-events: none;
   cursor: default;
-  opacity: 0.5;
+
+  & > * {
+    opacity: 0.5;
+  }
 }
 
 .item > img {
@@ -35,21 +42,24 @@
 }
 
 .item > span {
-  font-size: var(--button-font-size-s);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-dark-gray);
-  font-family: var(--content-font);
+  @mixin headingSmall;
+
+  color: var(--color-slate-gray);
+  font-weight: var(--font-weight-normal);
+  line-height: 19px;
 }
 
 .selected {
+  background: var(--color-white);
+  border-bottom: 2px solid var(--color-ultramarine-blue);
+
   & > span {
-    color: var(--color-link-active);
+    color: var(--color-ultramarine-blue);
   }
 }
 
 @media (--large-viewport) {
   .wrapper {
-    margin-left: 40px;
     min-width: 238px;
   }
 
@@ -58,22 +68,22 @@
   }
 
   .item > img {
+    margin-bottom: 8px;
     margin-right: 0;
   }
 }
 
 @media (--medium-viewport) {
   .wrapper {
-    margin-left: 32px;
     min-width: 120px;
   }
 
   .item {
     flex-direction: column;
-    margin-right: 24px;
   }
 
   .item > img {
+    margin-bottom: 0;
     margin-right: 0;
   }
 

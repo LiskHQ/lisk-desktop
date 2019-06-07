@@ -1,25 +1,22 @@
 // istanbul ignore file
-import routes from '../../constants/routes';
 import svg from '../../utils/svgIcons';
+import routes from '../../constants/routes';
 
 const menuLinks = t => ([
   {
-    icon: svg.dashboard_icon,
-    iconActive: svg.dashboard_active_icon,
+    icon: 'dashboardIcon',
     id: 'dashboard',
     label: t('Dashboard'),
     path: routes.dashboard.path,
   },
   {
-    icon: svg.wallet_icon,
-    iconActive: svg.wallet_active_icon,
+    icon: 'walletIcon',
     id: 'transactions',
     label: t('My Wallet'),
     path: routes.wallet.path,
   },
   {
-    icon: svg.delegates_icon,
-    iconActive: svg.delegates_active_icon,
+    icon: 'delegatesIcon',
     id: 'delegates',
     label: t('Delegates'),
     path: routes.delegates.path,

@@ -3,10 +3,12 @@ import Avatar from '../assets/images/icons-v2/avatar.svg';
 import Check from '../assets/images/icons-v2/check.svg';
 import CircleLock from '../assets/images/icons-v2/circle-lock.svg';
 import copy from '../assets/images/icons-v2/copy.svg';
-import dashboardActiveIcon from '../assets/images/icons-v2/dashboard-active.svg';
+import dashboardIconActive from '../assets/images/icons-v2/dashboard-active.svg';
 import dashboardIcon from '../assets/images/icons-v2/dashboard.svg';
-import delegatesActiveIcon from '../assets/images/icons-v2/delegates-active.svg';
+import delegatesIconActive from '../assets/images/icons-v2/delegates-active.svg';
 import delegatesIcon from '../assets/images/icons-v2/delegates.svg';
+import walletIconActive from '../assets/images/icons-v2/wallet-active.svg';
+import walletIcon from '../assets/images/icons-v2/wallet.svg';
 import Feedback from '../assets/images/icons-v2/feedback.svg';
 import Help from '../assets/images/icons-v2/help.svg';
 import icoLink from '../assets/images/icons-v2/link.svg';
@@ -17,8 +19,8 @@ import logoutIcon from '../assets/images/icons-v2/logout.svg';
 import okIcon from '../assets/images/icons-v2/icon-checkmark.svg';
 import Pdf from '../assets/images/icons-v2/pdf.svg';
 import questionMark from '../assets/images/icons-v2/question.svg';
-import searchIconActive from '../assets/images/icons-v2/search-icon-active.svg';
-import searchIconInactive from '../assets/images/icons-v2/search-icon-inactive.svg';
+import searchIconActive from '../assets/images/icons-v2/search-active.svg';
+import searchIconInactive from '../assets/images/icons-v2/search.svg';
 import settingsActiveIcon from '../assets/images/icons-v2/settings-active.svg';
 import settingsIcon from '../assets/images/icons-v2/settings.svg';
 import transactionError from '../assets/images/icons-v2/transactionError.svg';
@@ -31,8 +33,6 @@ import txDefault from '../assets/images/icons-v2/tx-default.svg';
 import txDelegate from '../assets/images/icons-v2/tx-delegate.svg';
 import txSendArrow from '../assets/images/icons-v2/tx-send-arrow.svg';
 import txVote from '../assets/images/icons-v2/tx-vote.svg';
-import walletActiveIcon from '../assets/images/icons-v2/wallet-active.svg';
-import walletIcon from '../assets/images/icons-v2/wallet.svg';
 import backArrowActiveIcon from '../assets/images/icons-v2/arrow-left-active.svg';
 import backArrowInactiveIcon from '../assets/images/icons-v2/arrow-left-inactive.svg';
 import fowardArrowActiveIcon from '../assets/images/icons-v2/arrow-right-active.svg';
@@ -59,10 +59,10 @@ export default {
   check_icon: Check,
   circleLock_icon: CircleLock,
   copy,
-  dashboard_active_icon: dashboardActiveIcon,
-  dashboard_icon: dashboardIcon,
-  delegates_active_icon: delegatesActiveIcon,
-  delegates_icon: delegatesIcon,
+  dashboardIconActive,
+  dashboardIcon,
+  delegatesIconActive,
+  delegatesIcon,
   feedback_icon: Feedback,
   help_icon: Help,
   icoLink,
@@ -93,8 +93,8 @@ export default {
   txDelegate,
   txSendArrow,
   txVote,
-  wallet_active_icon: walletActiveIcon,
-  wallet_icon: walletIcon,
+  walletIconActive,
+  walletIcon,
   iconFilter,
   questionIcon,
   fileOutline,

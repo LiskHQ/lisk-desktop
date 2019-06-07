@@ -70,10 +70,6 @@ or "warn/action" ineastd of "red/green"
   --border-radius-standard: 3px;
   --border-radius-box: 6px;
   --header-height: 72px;
-  --header-height-m: var(--header-height);
-  --header-height-s: var(--header-height);
-  --header-height-xs: var(--header-height);
-  --header-elements-height: 36px;
   --header-logo-size: 56px;
   --search-box-width-l: 597px;
 
@@ -120,7 +116,7 @@ or "warn/action" ineastd of "red/green"
   --color-content-grayblue: #7383a7;
   --color-background-wrapper: var(--color-mystic);
   --color-background-header: #fbfcfd;
-  --color-background-menu: #f8f9fb;
+  --color-background-menu: var(--color-white-smoke);
   --color-link-active: #4070f4;
   --color-title-header-box: #4c4c4c;
   --color-link: var(--color-primary-standard);

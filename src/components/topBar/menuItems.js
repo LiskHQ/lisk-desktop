@@ -1,30 +1,40 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import styles from './menuItems.css';
+import Icon from '../toolbox/icon';
 
-const MenuItems = (props) => {
-  function isActive(menuItem) {
-    const { location } = props;
-    return location.pathname.includes(menuItem.path);
-  }
+const MenuItems = ({
+  location: { pathname }, className, items, isUserLogout,
+}) => (
+  <div className={`${styles.wrapper} ${className} menu-items`}>
+    {
+      items && items.map(item =>
+        <NavLink
+          key={item.id}
+          to={item.path}
+          className={`${styles.item} ${(isUserLogout && item.id === 'transactions') ? styles.notActive : ''}`}
+          id={item.id}
+          activeClassName={styles.selected}
+        >
+          <Icon name={`${item.icon}${pathname.includes(item.path) ? 'Active' : ''}`} />
+          <span>{item.label}</span>
+        </NavLink>)
+    }
+  </div>
+);
 
-  return (
-    <div className={`${styles.wrapper} menu-items`}>
-      {
-        props.items && props.items.map(item =>
-          <NavLink
-            key={item.id}
-            to={item.path}
-            className={`${styles.item} ${(props.isUserLogout && item.id === 'transactions') ? styles.notActive : ''}`}
-            id={item.id}
-            activeClassName={styles.selected}
-          >
-            <img src={ isActive(item) ? item.iconActive : item.icon } />
-            <span>{item.label}</span>
-          </NavLink>)
-      }
-    </div>
-  );
+MenuItems.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }).isRequired,
+  items: PropTypes.array.isRequired,
+  className: PropTypes.string,
+  isUserLogout: PropTypes.bool.isRequired,
+};
+
+MenuItems.defaultProps = {
+  className: '',
 };
 
 export default MenuItems;
