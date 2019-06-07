@@ -9,6 +9,7 @@ import HeaderAccountInfo from './headerAccountInfo';
 import Bookmark from '../../bookmark';
 import styles from './transactionsOverviewHeader.css';
 import routes from '../../../constants/routes';
+import { tokenMap } from '../../../constants/tokens';
 
 class transactionsHeader extends React.Component {
   constructor() {
@@ -70,76 +71,84 @@ class transactionsHeader extends React.Component {
 
     return (
       <header className={`${styles.wrapper}`}>
-        <HeaderAccountInfo
-          token={activeToken}
-          bookmarks={bookmarks}
-          address={address}
-          delegate={delegate}
-          account={this.props.account}
-          toggleActiveToken={this.props.toggleActiveToken}
-          />
-        <div className={`${styles.buttonsHolder}`}>
         { isWalletRoute ? (
           <React.Fragment>
-            <span
-              ref={this.setDropownRefs}
-              data-name={'requestDropdown'}
-              className={`${styles.requestContainer} tx-receive-bt`}>
-              <SecondaryButtonV2 onClick={() => this.toggleDropdown('requestDropdown')}>
-                {t('Request {{token}}', { token: activeToken })}
-              </SecondaryButtonV2>
-              <DropdownV2
-                showDropdown={this.state.shownDropdown === 'requestDropdown'}
-                className={`${styles.requestDropdown} request-dropdown`}>
-                <RequestV2 address={address} />
-              </DropdownV2>
+            <span>
+              <h1>{t('{{token}} Wallet', { token: tokenMap[activeToken].label })}</h1>
+              <span className={styles.subtitle}>
+                {t('All important information at a glance')}
+              </span>
             </span>
-            <Link to={`${routes.send.path}?wallet`} className={'tx-send-bt'}>
-              <PrimaryButtonV2>
-                {t('Send {{token}}', { token: activeToken })}
-              </PrimaryButtonV2>
-            </Link>
+            <div className={`${styles.buttonsHolder}`}>
+              <span
+                ref={this.setDropownRefs}
+                data-name={'requestDropdown'}
+                className={`${styles.requestContainer} tx-receive-bt`}>
+                <SecondaryButtonV2 onClick={() => this.toggleDropdown('requestDropdown')}>
+                  {t('Request {{token}}', { token: activeToken })}
+                </SecondaryButtonV2>
+                <DropdownV2
+                  showDropdown={this.state.shownDropdown === 'requestDropdown'}
+                  className={`${styles.requestDropdown} request-dropdown`}>
+                  <RequestV2 address={address} />
+                </DropdownV2>
+              </span>
+              <Link to={`${routes.send.path}?wallet`} className={'tx-send-bt'}>
+                <PrimaryButtonV2>
+                  {t('Send {{token}}', { token: activeToken })}
+                </PrimaryButtonV2>
+              </Link>
+            </div>
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <Link to={`${routes.send.path}?wallet&recipient=${address}`}
-              className={'send-to-address'}>
-                <SecondaryButtonV2>
-                  {t('Send {{token}} to this Account ', { token: activeToken })}
+            <HeaderAccountInfo
+              token={activeToken}
+              bookmarks={bookmarks}
+              address={address}
+              delegate={delegate}
+              account={this.props.account}
+              toggleActiveToken={this.props.toggleActiveToken}
+              />
+            <div className={`${styles.buttonsHolder}`}>
+              <Link to={`${routes.send.path}?wallet&recipient=${address}`}
+                className={'send-to-address'}>
+                  <SecondaryButtonV2>
+                    {t('Send {{token}} to this Account ', { token: activeToken })}
+                  </SecondaryButtonV2>
+              </Link>
+              <span
+                ref={this.setDropownRefs}
+                data-name={'bookmarkDropdown'}
+                className={`${styles.bookmarkContainer} bookmark-account`}>
+              { isBookmark ? (
+                <SecondaryButtonV2
+                  className={`${styles.bookmarkButton}`}
+                  onClick={
+                    /* istanbul ignore next */
+                    () => this.toggleDropdown('bookmarkDropdown')
+                  }>
+                  {t('Account bookmarked')}
                 </SecondaryButtonV2>
-            </Link>
-            <span
-              ref={this.setDropownRefs}
-              data-name={'bookmarkDropdown'}
-              className={`${styles.bookmarkContainer} bookmark-account`}>
-            { isBookmark ? (
-              <SecondaryButtonV2
-                className={`${styles.bookmarkButton}`}
-                onClick={
-                  /* istanbul ignore next */
-                  () => this.toggleDropdown('bookmarkDropdown')
-                }>
-                {t('Account bookmarked')}
-              </SecondaryButtonV2>
-            ) : (
-              <PrimaryButtonV2 onClick={() => this.toggleDropdown('bookmarkDropdown')}>
-                {t('Bookmark account')}
-              </PrimaryButtonV2>
-            )}
-            <DropdownV2
-              showDropdown={this.state.shownDropdown === 'bookmarkDropdown'}
-              className={`${styles.followDropdown}`}>
-                <Bookmark
-                  token={activeToken}
-                  delegate={delegate}
-                  address={address}
-                  detailAccount={detailAccount}
-                  isBookmark={isBookmark} />
-              </DropdownV2>
-            </span>
+              ) : (
+                <PrimaryButtonV2 onClick={() => this.toggleDropdown('bookmarkDropdown')}>
+                  {t('Bookmark account')}
+                </PrimaryButtonV2>
+              )}
+              <DropdownV2
+                showDropdown={this.state.shownDropdown === 'bookmarkDropdown'}
+                className={`${styles.followDropdown}`}>
+                  <Bookmark
+                    token={activeToken}
+                    delegate={delegate}
+                    address={address}
+                    detailAccount={detailAccount}
+                    isBookmark={isBookmark} />
+                </DropdownV2>
+              </span>
+            </div>
           </React.Fragment>
         )}
-        </div>
       </header>
     );
   }

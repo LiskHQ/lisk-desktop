@@ -6,6 +6,19 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
+  margin-top: 10px;
+
+  & h1 {
+    @mixin headingNormalIntermediate;
+
+    margin: 0;
+  }
+
+  & .subtitle {
+    @mixin contentNormal;
+
+    color: var(--color-slate-gray);
+  }
 }
 
 .account {
