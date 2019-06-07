@@ -67,16 +67,6 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     expect(changedState).to.be.equal(state);
   });
 
-  it('should clean up with action: accountLoading', () => {
-    const action = {
-      type: actionTypes.accountLoading,
-    };
-    const state = { votes: cleanVotes, delegates: fullDelegates, refresh: false };
-    const changedState = voting(state, action);
-
-    expect(changedState).to.be.deep.equal(initialState);
-  });
-
   it('should fill votes object with action: votesAdded', () => {
     const action = {
       type: actionTypes.votesAdded,

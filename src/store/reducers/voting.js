@@ -91,15 +91,6 @@ const voting = (state = { // eslint-disable-line complexity
         },
       };
 
-    // TODO change this to actionTypes.clearDelegates and dispatch that one from a middleware
-    case actionTypes.accountLoading:
-      return {
-        ...state,
-        votes: {},
-        delegates: [],
-        refresh: true,
-      };
-
     /**
      * This action is used when user cancels voting. It sets 'unconfirmed' state
      * of each vote to match it's 'confirmed' state.

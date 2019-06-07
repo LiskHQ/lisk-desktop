@@ -202,5 +202,20 @@ describe('voting middleware', () => {
 
       expect(getDelegateMock).to.not.have.been.calledWith();
     });
+
+    it('should clear delegates and votes on accountLoggedOut action', () => {
+      middleware(store)(next)({
+        type: actionTypes.accountLoggedOut,
+      });
+
+      expect(store.dispatch).to.have.been.calledWith({
+        data: { list: [] },
+        type: actionTypes.delegatesAdded,
+      });
+      expect(store.dispatch).to.have.been.calledWith({
+        data: { list: [] },
+        type: actionTypes.votesAdded,
+      });
+    });
   });
 });

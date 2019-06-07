@@ -1,5 +1,5 @@
 import { getDelegate } from '../../utils/api/delegate';
-import { voteLookupStatusUpdated, voteToggled, votesFetched } from '../../actions/voting';
+import { voteLookupStatusUpdated, voteToggled, votesFetched, delegatesAdded } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
 import { loadDelegateCache } from '../../utils/delegates';
 
@@ -76,6 +76,13 @@ const votingMiddleware = store => next => (action) => {
     case actionTypes.votesAdded:
       fetchVotes(store);
       lookupDelegatesFromUrl(store, action);
+      break;
+    case actionTypes.accountLoggedOut:
+      store.dispatch(delegatesAdded({ list: [] }));
+      store.dispatch({
+        type: actionTypes.votesAdded,
+        data: { list: [] },
+      });
       break;
     default: break;
   }
