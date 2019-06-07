@@ -107,7 +107,6 @@ const ss = {
   currencyOptions: '.currency .option',
   autoLogoutTrigger: '.autoLog',
   switchNetworksTrigger: '.showNetwork',
-  delegateFeaturesTrigger: '.advancedMode',
   messageInput: 'textarea',
   resulteBtn: '.result',
   topBarMenuWalletBtn: '#transactions',
