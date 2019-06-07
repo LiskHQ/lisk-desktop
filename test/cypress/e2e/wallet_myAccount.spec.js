@@ -36,12 +36,11 @@ describe('Wallet My Account', () => {
     cy.get(ss.walletOnboarding).should('not.exist');
   });
 
-  it('Shows Address and Label', () => {
+  it('Shows Header and Address', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.wallet);
+    cy.get(ss.walletHeader).contains('Lisk Wallet');
     cy.get(ss.accountAddress).contains(accounts.genesis.address);
-    cy.get(ss.accountName).contains('Account');
-    cy.get(ss.accountLabel).contains('My Account');
   });
 
   it('Send button -> Send page', () => {

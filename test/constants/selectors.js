@@ -221,6 +221,7 @@ const ss = {
   navigationBtnForward: '.go-forward',
   termsOfUseLink: '.terms-of-use',
   connectButton: '.connect-button',
+  walletHeader: '.wallet-header',
 };
 
 export default ss;

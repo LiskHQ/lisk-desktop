@@ -28,8 +28,7 @@ class WalletDetails extends React.Component {
             <div className={styles.value} >
             <CopyToClipboard
               value={address}
-              className={styles.address}
-              copyClassName={styles.copy}
+              className='account-address'
             />
             </div>
           </div>

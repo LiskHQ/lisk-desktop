@@ -74,7 +74,7 @@ class transactionsHeader extends React.Component {
         { isWalletRoute ? (
           <React.Fragment>
             <span>
-              <h1>{t('{{token}} Wallet', { token: tokenMap[activeToken].label })}</h1>
+              <h1 className='wallet-header'>{t('{{token}} Wallet', { token: tokenMap[activeToken].label })}</h1>
               <span className={styles.subtitle}>
                 {t('All important information at a glance')}
               </span>
