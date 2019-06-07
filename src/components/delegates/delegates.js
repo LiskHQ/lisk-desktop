@@ -46,16 +46,19 @@ class Delegates extends React.Component {
     }];
   }
   render() {
-    const { t, votes } = this.props;
+    const { t, votes, account } = this.props;
     const { votingModeEnabled } = this.state;
     return (
       <div className={`${grid.row} ${styles.wrapper}`} ref={(el) => { this.root = el; }}>
-        <Onboarding
-          slides={this.getOnboardingSlides()}
-          finalCallback={this.toggleVotingMode}
-          actionButtonLabel={t('Start voting')}
-          name={'delegateOnboarding'}
-        />
+        { account && account.address ?
+          <Onboarding
+            slides={this.getOnboardingSlides()}
+            finalCallback={this.toggleVotingMode}
+            actionButtonLabel={t('Start voting')}
+            name={'delegateOnboarding'}
+          /> :
+          null
+        }
         <VotingHeader
           t={t}
           votingModeEnabled={votingModeEnabled}
