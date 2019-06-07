@@ -1,5 +1,5 @@
 import { getDelegates } from '../../utils/api/delegate';
-import { voteLookupStatusUpdated, voteToggled, votesFetched, delegatesAdded } from '../../actions/voting';
+import { voteLookupStatusUpdated, voteToggled, loadVotes, delegatesAdded } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
 import { loadDelegateCache } from '../../utils/delegates';
 
@@ -64,7 +64,7 @@ const fetchVotes = (store) => {
   // or maybe it should be moved somewhere else (e.g. urlVotesFound action)
   const state = store.getState();
   const address = state.account.address;
-  store.dispatch(votesFetched({
+  store.dispatch(loadVotes({
     address,
     type: 'update',
   }));

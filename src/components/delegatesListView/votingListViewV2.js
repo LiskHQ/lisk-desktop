@@ -44,7 +44,7 @@ class VotingListViewV2 extends React.Component {
   loadVotedDelegates() {
     /* istanbul-ignore-else */
     if (!this.freezeLoading) {
-      this.props.votesFetched({
+      this.props.loadVotes({
         address: this.props.address,
       });
     }

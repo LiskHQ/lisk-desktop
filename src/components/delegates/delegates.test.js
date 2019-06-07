@@ -46,7 +46,7 @@ describe('Delegates', () => {
     history: { location: { search: '' } },
     clearVotes: jest.fn(),
     loadDelegates: jest.fn(),
-    votesFetched: jest.fn(),
+    loadVotes: jest.fn(),
   };
   const options = {
     context: { store, history, i18n },

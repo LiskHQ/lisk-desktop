@@ -98,7 +98,7 @@ export const votePlaced = ({
  * Gets the list of delegates current account has voted for
  *
  */
-export const votesFetched = ({ address, type }) =>
+export const loadVotes = ({ address, type }) =>
   (dispatch, getState) => {
     const liskAPIClient = getAPIClient('LSK', getState());
     getVotes(liskAPIClient, { address }).then((response) => {

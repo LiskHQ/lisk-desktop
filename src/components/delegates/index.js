@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import Delegates from './delegates';
 import {
   voteToggled,
-  votesFetched,
+  loadVotes,
   loadDelegates,
   clearVotes,
 } from '../../actions/voting';
@@ -17,7 +17,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   clearVotes,
   voteToggled,
-  votesFetched,
+  loadVotes,
   loadDelegates,
 };
 

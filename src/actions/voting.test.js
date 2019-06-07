@@ -5,7 +5,7 @@ import {
   voteToggled,
   voteLookupStatusUpdated,
   votePlaced,
-  votesFetched,
+  loadVotes,
   urlVotesFound,
   loadDelegates,
   delegatesAdded,
@@ -137,7 +137,7 @@ describe('actions: voting', () => {
     });
   });
 
-  describe('votesFetched', () => {
+  describe('loadVotes', () => {
     let delegateApiMock;
     const data = {
       address: '8096217735672704724L',
@@ -157,7 +157,7 @@ describe('actions: voting', () => {
 
 
     it('should create an action function', () => {
-      const actionFunction = votesFetched(data);
+      const actionFunction = loadVotes(data);
       expect(typeof actionFunction).to.be.deep.equal('function');
     });
 
@@ -167,7 +167,7 @@ describe('actions: voting', () => {
       delegateApiMock.resolves({ data: { votes: delegates } });
       const expectedAction = { list: delegates };
 
-      votesFetched(data)(dispatch, getState);
+      loadVotes(data)(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(votesAdded(expectedAction));
     });
 
@@ -180,7 +180,7 @@ describe('actions: voting', () => {
         data: { list: delegates },
       };
 
-      votesFetched({ ...data, type: 'update' })(dispatch, getState);
+      loadVotes({ ...data, type: 'update' })(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(expectedAction);
     });
   });

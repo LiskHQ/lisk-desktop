@@ -35,7 +35,7 @@ describe('VotingListViewV2', () => {
     setActiveDialog: sinon.spy(),
     voteToggled: sinon.spy(),
     addTransaction: sinon.spy(),
-    votesFetched: sinon.spy(),
+    loadVotes: sinon.spy(),
     loadDelegates: sinon.spy(),
     t: key => key,
     history: { location: { search: '' } },
