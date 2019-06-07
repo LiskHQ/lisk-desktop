@@ -2,10 +2,22 @@
 @import '../app/mixins.css';
 
 .wrapper {
+  & .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    & > * {
+      margin-right: 10px;
+    }
+  }
+
   & label {
     @mixin contentNormal;
 
     color: var(--color-slate-gray);
+    margin-bottom: 5px;
   }
 
   & .value {

@@ -1,8 +1,10 @@
 import React from 'react';
 import { translate } from 'react-i18next';
+import AccountVisual from '../accountVisual';
 import BoxV2 from '../boxV2';
-import styles from './walletDetails.css';
+import Icon from '../toolbox/icon';
 import LiskAmount from '../liskAmount';
+import styles from './walletDetails.css';
 
 class walletDetails extends React.Component {
   render() {
@@ -15,13 +17,22 @@ class walletDetails extends React.Component {
         <header>
           <h1>{t('Wallet Details')}</h1>
         </header>
-        <section>
-          <label>{t('Address')}</label>
-          <div className={styles.value} >{address}</div>
+        <section className={styles.row}>
+          <AccountVisual
+            address={address}
+            size={40}
+            />
+          <div>
+            <label>{t('Address')}</label>
+            <div className={styles.value} >{address}</div>
+          </div>
         </section>
-        <section>
-          <label>{t('Balance')}</label>
-          <div className={styles.value} ><LiskAmount val={balance} /> {activeToken}</div>
+        <section className={styles.row}>
+          <Icon name='txVote' /> {/* TODO change the icon when provided by design team */}
+          <div>
+            <label>{t('Balance')}</label>
+            <div className={styles.value} ><LiskAmount val={balance} /> {activeToken}</div>
+          </div>
         </section>
       </BoxV2>
     );
