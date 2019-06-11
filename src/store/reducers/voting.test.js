@@ -76,8 +76,8 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     };
     const expectedState = {
       votes: {
-        username1: { confirmed: true, unconfirmed: true, ...delegate1 },
-        username2: { confirmed: true, unconfirmed: true, ...delegate2 },
+        username1: { ...delegate1, username: 'username1' },
+        username2: { ...delegate2, username: 'username2' },
       },
       delegates: [],
     };

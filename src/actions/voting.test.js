@@ -142,7 +142,11 @@ describe('actions: voting', () => {
     const data = {
       address: '8096217735672704724L',
     };
-    const delegates = delegateList;
+    const delegates = delegateList.map(delegate => ({
+      ...delegate,
+      confirmed: true,
+      unconfirmed: true,
+    }));
 
     beforeEach(() => {
       delegateApiMock = sinon.stub(delegateApi, 'getVotes').returnsPromise();

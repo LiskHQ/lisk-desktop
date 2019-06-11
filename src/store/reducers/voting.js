@@ -51,14 +51,7 @@ const voting = (state = { // eslint-disable-line complexity
         ...state,
         votes: action.data.list
           .reduce((votesDict, delegate) => {
-            votesDict[delegate.username] = {
-              confirmed: true,
-              unconfirmed: true,
-              publicKey: delegate.publicKey,
-              productivity: delegate.productivity,
-              rank: delegate.rank,
-              address: delegate.address,
-            };
+            votesDict[delegate.username] = delegate;
             return votesDict;
           }, {}),
       };

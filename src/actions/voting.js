@@ -1,18 +1,20 @@
 import to from 'await-to-js';
+
+import { addPendingTransaction } from './transactions';
+import { errorToastDisplayed } from './toaster';
+import { getAPIClient } from '../utils/api/network';
+import { getTimeOffset } from '../utils/hacks';
 import {
   getVotes,
   getDelegates,
   castVotes,
 } from '../utils/api/delegates';
 import { getVotingLists, getVotingError } from '../utils/voting';
-import { getTimeOffset } from '../utils/hacks';
-import { updateDelegateCache } from '../utils/delegates';
 import { passphraseUsed } from './account';
-import { addPendingTransaction } from './transactions';
-import { errorToastDisplayed } from './toaster';
-import actionTypes from '../constants/actions';
-import { getAPIClient } from '../utils/api/network';
 import { tokenMap } from '../constants/tokens';
+import { updateDelegateCache } from '../utils/delegates';
+import actionTypes from '../constants/actions';
+import localJSONStorage from '../utils/localJSONStorage';
 
 /**
  * Add data to the list of all delegates
@@ -95,10 +97,16 @@ export const votePlaced = ({
     }
   };
 
-const addPersistedVotes = votesList => (
-  // TODO implement adding persisted votes
-  votesList
-);
+const addPersistedVotes = (address, votesList) => {
+  const votesDict = localJSONStorage.get(`votes-${address}`, {});
+  return votesList.map(vote => ({
+    ...vote,
+    unconfirmed: votesDict[vote.username] ? votesDict[vote.username].unconfirmed : true,
+    confirmed: votesDict[vote.username] ? votesDict[vote.username].confirmed : true,
+  })).concat(Object.keys(votesDict)
+    .filter(username => votesDict[username].unconfirmed)
+    .map(username => ({ username, ...votesDict[username] })));
+};
 
 /**
  * Gets the list of delegates current account has voted for
@@ -109,7 +117,7 @@ export const loadVotes = ({ address, type }) =>
     const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
     getVotes(liskAPIClient, { address })
       .then((response) => {
-        const list = type === 'update' ? response.data.votes : addPersistedVotes(response.data.votes);
+        const list = type === 'update' ? response.data.votes : addPersistedVotes(address, response.data.votes);
         dispatch({
           type: type === 'update' ? actionTypes.votesUpdated : actionTypes.votesAdded,
           data: { list },
