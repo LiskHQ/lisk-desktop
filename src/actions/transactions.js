@@ -378,6 +378,7 @@ export const transactionBroadcasted = transaction => async (dispatch, getState) 
     senderId: account.info[activeToken].address,
     senderPublicKey: account.publicKey,
     type: transactionTypes.send,
+    token: activeToken,
   }));
 
   return dispatch(passphraseUsed(transaction.passphrase));

@@ -59,12 +59,12 @@ class SingleTransactionV2 extends React.Component {
     return {
       LSK: `lisk:/${this.props.match.url}`,
       BTC: this.props.transaction.explorerLink,
-    }[this.props.transaction.token];
+    }[this.props.activeToken];
   }
 
   // eslint-disable-next-line complexity
   render() {
-    const { t, transaction } = this.props;
+    const { t, transaction, activeToken } = this.props;
     let title = t('Transfer Transaction');
     switch (transaction.type) {
       case transactionTypes.setSecondPassphrase:
@@ -102,7 +102,10 @@ class SingleTransactionV2 extends React.Component {
               </CopyToClipboard>
           </header>
           <main className={styles.mainContent}>
-            <TransactionDetailViewV2 address={this.props.address} transaction={transaction} />
+            <TransactionDetailViewV2
+              address={this.props.address}
+              activeToken={activeToken}
+              transaction={transaction} />
             <footer className={styles.detailsFooter}>
               <div>
                 <p className={styles.value}>
@@ -112,7 +115,7 @@ class SingleTransactionV2 extends React.Component {
                       fulltime={true}
                       className={'date'}
                       time={transaction.timestamp}
-                      token={transaction.token}
+                      token={activeToken}
                       showSeconds={true} />
                   </span>
                 </p>

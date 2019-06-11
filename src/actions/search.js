@@ -102,7 +102,9 @@ export const searchAccount = ({ address }) =>
         }
         dispatch({ data: accountData, type: actionTypes.searchAccount });
         dispatch(updateWallet(response, getState().peers));
-        searchVotes({ address })(dispatch, getState);
+        if (accountData.token === tokenMap.LSK.key) {
+          searchVotes({ address })(dispatch, getState);
+        }
       });
     }
   };
@@ -161,11 +163,14 @@ export const clearSearchSuggestions = () => ({
   type: actionTypes.searchClearSuggestions,
 });
 
-export const searchSuggestions = ({ searchTerm }) =>
+export const searchSuggestions = ({ searchTerm, callback = () => {} }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    searchAll({ liskAPIClient, searchTerm }).then(response => dispatch({
-      data: response,
-      type: actionTypes.searchSuggestions,
-    }));
+    searchAll({ liskAPIClient, searchTerm }).then((response) => {
+      dispatch({
+        data: response,
+        type: actionTypes.searchSuggestions,
+      });
+      callback(response);
+    }).catch(callback);
   };

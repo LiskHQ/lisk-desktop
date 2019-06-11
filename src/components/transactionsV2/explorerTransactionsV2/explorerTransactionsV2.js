@@ -125,6 +125,7 @@ class ExplorerTransactionsV2 extends React.Component {
       activeCustomFilters: this.state.activeCustomFilters,
       customFilters: this.state.customFilters,
       updateCustomFilters: this.updateCustomFilters,
+      activeToken: this.props.activeToken,
     };
     const { detailAccount } = this.props;
 
@@ -143,19 +144,20 @@ class ExplorerTransactionsV2 extends React.Component {
           match={this.props.match}
           t={this.props.t}
           account={this.props.account}
+          activeToken={this.props.activeToken}
           detailAccount={detailAccount}
         />
         <TabsContainer>
           <WalletTab tabName={this.props.t('Wallet')}
             {...overviewProps}/>
-          <VotesTab
+          {this.props.activeToken !== 'BTC' ? <VotesTab
             history={this.props.history}
             address={this.props.address}
             fetchVotedDelegateInfo={this.props.fetchVotedDelegateInfo}
             loading={this.props.loading}
             votes={this.props.votes}
             tabClassName={'account-info'}
-            tabName={this.props.t('Votes')} />
+            tabName={this.props.t('Votes')} /> : null}
           {delegate.username
             ? (<DelegateTab
               tabClassName={'delegate-statistics'}

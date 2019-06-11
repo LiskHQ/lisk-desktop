@@ -9,7 +9,7 @@ import transactionTypes from '../../../constants/transactionTypes';
 class TransactionDetailViewV2 extends React.Component {
   // eslint-disable-next-line complexity
   render() {
-    const { transaction, t } = this.props;
+    const { transaction, t, activeToken } = this.props;
     let label = t('Sender');
     let title = t('Amount transfered');
     let value = transaction.amount;
@@ -42,6 +42,7 @@ class TransactionDetailViewV2 extends React.Component {
               <span className={'tx-amount'}>
                 <AmountV2
                   className={styles.txAmount}
+                  token={activeToken}
                   value={transaction} />
               </span>
               ) : value

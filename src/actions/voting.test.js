@@ -104,6 +104,7 @@ describe('actions: voting', () => {
         amount: 0,
         fee: Fees.vote,
         type: 3,
+        token: 'LSK',
       };
       delegateApiMock.returnsPromise().resolves([transaction]);
 

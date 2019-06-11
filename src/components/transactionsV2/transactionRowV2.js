@@ -1,14 +1,16 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
-import TransactionTypeV2 from './transactionTypeV2';
+import TransactionTypeFigure from '../transactions/typeFigure/TransactionTypeFigure';
+import TransactionAddress from '../transactions/address/TransactionAddress';
+import TransactionAmount from '../transactions/amount/TransactionAmount';
 import TransactionDetailV2 from './transactionDetailV2';
 import styles from './transactionRowV2.css';
-import AmountV2 from './amountV2';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
 import LiskAmount from '../liskAmount';
 import { DateTimeFromTimestamp } from './../timestamp/index';
 import TableRow from '../toolbox/table/tableRow';
+import Icon from '../toolbox/icon';
 
 class TransactionRowV2 extends React.Component {
   constructor() {
@@ -50,15 +52,34 @@ class TransactionRowV2 extends React.Component {
 
   render() {
     const { props } = this;
+    const { value, token } = props;
     const onClick = props.onClick || (() => {});
     const hasConfirmations = props.value.confirmations && props.value.confirmations > 0;
     const { isConfirmed } = this.state;
     return (
       <TableRow className={`${grid.row} ${styles.row} ${!hasConfirmations ? styles.pending : ''} transactions-row`} onClick={() => onClick(props)}>
         <div className={`${grid['col-sm-4']} ${grid['col-lg-3']} transactions-cell`}>
-          <TransactionTypeV2 {...props.value}
+          <Icon name={props.address === value.senderId ? 'outgoing' : 'incoming' } className={styles.inOutIcon} />
+          <TransactionTypeFigure
+            address={props.address === value.senderId ? value.recipientId : value.senderId }
+            transactionType={value.type}
+          />
+          <TransactionAddress
+            address={value.recipientId}
             bookmarks={props.bookmarks}
-            address={props.address} />
+            t={props.t}
+            token={token}
+            transactionType={value.type}
+          />
+        </div>
+        <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
+          <div className={`${styles.status} ${!isConfirmed ? styles.showSpinner : styles.showDate}`}>
+            <SpinnerV2 completed={hasConfirmations} label={props.t('Pending...')} />
+            <DateTimeFromTimestamp time={props.value.timestamp} token={token} />
+          </div>
+        </div>
+        <div className={`${grid['col-sm-1']} ${grid['col-lg-2']} transactions-cell`}>
+          <LiskAmount val={props.value.fee}/>&nbsp;{token}
         </div>
           <div className={`${grid['col-sm-3']} ${grid['col-lg-3']} transactions-cell`}>
             <TransactionDetailV2
@@ -66,16 +87,11 @@ class TransactionRowV2 extends React.Component {
               transaction={props.value} />
           </div>
         <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
-          <div className={`${styles.status} ${!isConfirmed ? styles.showSpinner : styles.showDate}`}>
-            <SpinnerV2 completed={hasConfirmations} label={props.t('Pending...')} />
-            <DateTimeFromTimestamp time={props.value.timestamp} token={props.value.token} />
-          </div>
-        </div>
-        <div className={`${grid['col-sm-1']} ${grid['col-lg-2']} transactions-cell`}>
-          <LiskAmount val={props.value.fee}/>&nbsp;{props.value.token || props.t('LSK')}
-        </div>
-        <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
-          <AmountV2 {...props}/>
+          <TransactionAmount
+            address={props.address}
+            token={token}
+            transaction={props.value}
+          />
         </div>
       </TableRow>
     );

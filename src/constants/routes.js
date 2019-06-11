@@ -45,15 +45,15 @@ export default {
     component: DasboardV2,
     isPrivate: false,
   },
-  wallet: {
-    path: '/wallet',
-    component: TransactionDashboard,
-    isPrivate: true,
-    exact: true,
-  },
   send: {
     path: '/wallet/send',
     component: SendV2,
+    isPrivate: true,
+  },
+  wallet: {
+    path: '/wallet',
+    pathSuffix: '/:token?',
+    component: TransactionDashboard,
     isPrivate: true,
   },
   voting: {

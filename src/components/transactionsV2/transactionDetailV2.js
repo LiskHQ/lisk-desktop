@@ -21,8 +21,10 @@ const generateVotes = (asset, t) => {
 const TransactionDetailV2 = ({
   transaction, t,
 }) => {
-  const { asset, username, type } = transaction;
-  let data = '-';
+  const {
+    asset, username, type, token,
+  } = transaction;
+  let data = token !== 'BTC' ? '-' : '';
   let className = '';
   switch (type) {
     case 2:

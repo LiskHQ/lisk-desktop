@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { spy, stub, useFakeTimers } from 'sinon';
+import { spy, stub, useFakeTimers, match } from 'sinon';
 import * as accountActions from '../../actions/account';
 import * as transactionsActions from '../../actions/transactions';
 import * as votingActions from '../../actions/voting';
@@ -73,6 +73,7 @@ describe('Account middleware', () => {
         account: { address: 'test_address', balance: 0 },
       },
       delegate: {},
+      settings: { token: {} },
     };
     store.getState = () => (state);
 
@@ -117,6 +118,17 @@ describe('Account middleware', () => {
     clock.tick(7000);
     expect(accountDataUpdatedSpy).to.have.been.calledWith(data);
     expect(accountActions.updateTransactionsIfNeeded).to.have.been.calledWith();
+  });
+
+  it(`should call account BTC API methods on ${actionTypes.newBlockCreated} action when BTC is the active token`, () => {
+    state.settings = { token: { active: 'BTC' } };
+    const account = { address: 'n45uoyzDvep8cwgkfxq3H3te1ujWyu1kkB' };
+    state.account = account;
+    middleware(store)(next)(newBlockCreated);
+
+    clock.tick(7000);
+    expect(accountActions.updateTransactionsIfNeeded)
+      .to.have.been.calledWith(match({ account }));
   });
 
   it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confirmed does not contain recent transaction. Case with transactions address`, () => {

@@ -37,6 +37,7 @@ describe('Wallet Details Module', () => {
     loadLastTransaction: jest.fn(),
     peers: { options: { code: 0 } },
     t: key => key,
+    activeToken: 'LSK',
   };
 
   beforeEach(() => {

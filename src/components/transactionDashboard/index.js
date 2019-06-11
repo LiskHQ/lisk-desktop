@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import WalletTransactionsV2 from './../transactionsV2/walletTransactionsV2';
+import { tokenMap } from '../../constants/tokens';
 
 import styles from './transactionDasboard.css';
 
@@ -17,10 +18,22 @@ class TransactionsDashboard extends React.Component {
   }
 }
 
+const getActiveTokenAccount = state => (
+  (state.account.info && state.account.info[
+    state.settings.token && state.settings.token.active ?
+      state.settings.token.active :
+      tokenMap.LSK.key
+  ]) || {}
+);
+
 const mapStateToProps = state => ({
-  address: state.account.address,
-  balance: state.account.balance,
-  account: state.account,
+  address: getActiveTokenAccount(state).address,
+  balance: getActiveTokenAccount(state).balance,
+  activeToken: state.settings.token ? state.settings.token.active : tokenMap.LSK.key,
+  account: {
+    ...state.account,
+    ...(getActiveTokenAccount(state)),
+  },
   settings: state.settings,
   pendingTransactions: state.transactions.pending,
 });

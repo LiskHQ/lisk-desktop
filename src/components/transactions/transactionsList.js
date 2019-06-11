@@ -62,9 +62,9 @@ class TransactionsList extends React.Component {
       {
         transactions
         .filter(fixIncomingFilter)
-        .map((transaction, i) =>
+        .map(transaction =>
           <Rows address={address}
-            key={i}
+            key={transaction.id}
             t={t}
             value={transaction}
             onClick={onClick}

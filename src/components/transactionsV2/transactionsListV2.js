@@ -18,6 +18,7 @@ class TransactionsListV2 extends React.Component {
       loading,
       isSmallScreen,
       t,
+      activeToken,
     } = this.props;
     // All, incoming, outgoing are filter values. To be more consistance with other possible tabs
     // We can refer to props.filter as tabObj
@@ -31,10 +32,10 @@ class TransactionsListV2 extends React.Component {
 
       return !(isFilterIncoming && (isTypeNonSend || isAccountInit));
     };
+    const filteredTransactions = transactions.filter(fixIncomingFilter);
 
     const isLoading = loading.filter(type =>
-      [actionTypes.loadTransactions, actionTypes.loadTransactions]
-        .includes(type)).length > 0;
+      actionTypes.transactionsLoaded === type).length > 0;
 
     return <div className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} ${isLoading ? styles.isLoading : ''} transaction-results`}>
       {
@@ -44,14 +45,16 @@ class TransactionsListV2 extends React.Component {
           </div>
         ) : null
       }
-      <TransactionsHeaderV2 isSmallScreen={isSmallScreen} />
-      {transactions.length
-        ? transactions.filter(fixIncomingFilter)
-            .map((transaction, i) =>
-              <TransactionRowV2 key={i}
+      <TransactionsHeaderV2 isSmallScreen={isSmallScreen} activeToken={activeToken}/>
+      {filteredTransactions.length
+        ? filteredTransactions
+            .map(transaction =>
+              <TransactionRowV2
+                key={transaction.id}
                 bookmarks={bookmarks}
                 address={address}
                 value={transaction}
+                token={activeToken}
                 onClick={this.props.onClick}/>)
         : <p className={`${styles.empty} empty-message`}>
           {t('There are no transactions.')}

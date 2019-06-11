@@ -102,18 +102,17 @@ function account(state = {}, action) {
 Above actions are not real use cases, just examples to illustrate.
 
 ## APIs
-APIs should go through the [functionMapper](../src/utils/api/functionMapper.js) function so it's only needed to import the function after the functionMapper, and passing the desired token, resource and function, BTC API have some examples for `account`, we would need to move the `LSK` resources and calls to the same structure, so we can just call the same API function and get the desired result.  
+APIs should go through the [api util](../src/utils/api/index.js) module so it's only needed to import the function after the api, and passing the desired token, resource and function, BTC API have some examples for `account`, we would need to move the `LSK` resources and calls to the same structure, so we can just call the same API function and get the desired result.  
 The function would be something similar to:
 ```javascript
 // account API example
 /**
- * @param {String} tokenKey - Token key. eg. LSK, BTC
- * @param {Object} data - Data that will be passed to mapped function
- * @param {String} data.address - Address of the account.
- * @param {Number} [data.netCode=1] - 0 = mainnet, 1 = testnet
+ * @param {String} {tokenKey} - Token key. eg. LSK, BTC
+ * @param {String} {address} - Address of the account.
+ * @param {Object} {networkConfig} - config for  mainnet, testnet, custom node
  */
-export const getAccount = (tokenKey, { address, netCode }) =>
-  getMappedFunction(tokenKey, 'account', 'getAccount')(address, netCode);
+export const getAccount = ({tokenKey, networkConfig, address }) =>
+  api[tokenKey].account.getAccount({ networkConfig, address);
 ```
 In the example above we have a mapped function `getAccount` that expects a `tokenKey`, and the data that will be passed to the real API call, by normalizing the input and output of the API calls it's possible to have a generic API function that only needs the `tokenKey` and the normalized data.  
 And each token having it's own implementation on how to fetch the data and how to normalize it to save on the store.

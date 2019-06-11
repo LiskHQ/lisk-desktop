@@ -13,6 +13,20 @@ const closeConnection = () => {
   }
 };
 
+// This is a hack to get a signal to check for changes in BTC account and transactions
+// only once per minute and not every 10 seconds as we do for LSK
+// TODO find a cleaner way for shouldUpdateBtc
+let lastBtcUpdate = new Date();
+const shouldUpdateBtc = (state) => {
+  const now = new Date();
+  const oneMinute = 1000 * 60;
+  if (!(state.settings.token && state.settings.token.active === 'BTC') || now - lastBtcUpdate > oneMinute) {
+    lastBtcUpdate = now;
+    return true;
+  }
+  return false;
+};
+
 const socketSetup = (store) => {
   let windowIsFocused = true;
   const { ipc } = window;
@@ -23,10 +37,12 @@ const socketSetup = (store) => {
 
   connection = io.connect(store.getState().peers.liskAPIClient.currentNode);
   connection.on('blocks/change', (block) => {
-    store.dispatch({
-      type: actionTypes.newBlockCreated,
-      data: { block, windowIsFocused },
-    });
+    if (shouldUpdateBtc(store.getState())) {
+      store.dispatch({
+        type: actionTypes.newBlockCreated,
+        data: { block, windowIsFocused },
+      });
+    }
   });
   connection.on('disconnect', () => {
     if (!forcedClosing) {

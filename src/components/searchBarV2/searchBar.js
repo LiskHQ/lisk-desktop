@@ -48,9 +48,14 @@ class SearchBar extends React.Component {
     this.setState({ searchTextValue, rowItemIndex: 0 });
     if (searchTextValue.length > 2 && isTextValid) {
       this.setState({ isLoading: true });
-      setTimeout(() => {
-        this.setState({ isLoading: false });
-        searchSuggestions({ searchTerm: this.state.searchTextValue });
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => {
+        searchSuggestions({
+          searchTerm: this.state.searchTextValue,
+          callback: () => {
+            this.setState({ isLoading: false });
+          },
+        });
       }, 500);
     } else {
       clearSearchSuggestions();

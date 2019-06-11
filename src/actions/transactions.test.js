@@ -218,6 +218,7 @@ describe('actions: transactions', () => {
         fee: Fees.send,
         asset: { data: undefined },
         type: 0,
+        token: 'LSK',
       };
 
       transactionsApi.create.mockReturnValue(expectedAction);

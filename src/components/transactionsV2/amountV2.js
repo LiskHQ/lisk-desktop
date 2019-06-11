@@ -4,9 +4,13 @@ import styles from './transactionsV2.css';
 import LiskAmount from '../liskAmount';
 import transactionTypes from '../../constants/transactionTypes';
 
-const AmountV2 = ({ className = '', ...props }) => {
+const AmountV2 = ({
+  className = '',
+  token,
+  ...props
+}) => {
   const params = {
-    pos: props.value.token || props.t('LSK'),
+    pos: token || props.t('LSK'),
     pre: '',
     className: 'greyLabel',
   };

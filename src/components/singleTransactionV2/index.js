@@ -7,6 +7,7 @@ const mapStateToProps = state => ({
   address: state.account.address,
   transaction: state.transaction,
   peers: state.peers,
+  activeToken: state.settings.token ? state.settings.token.active : 'LSK',
 });
 
 const mapDispatchToProps = {
