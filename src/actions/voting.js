@@ -95,6 +95,11 @@ export const votePlaced = ({
     }
   };
 
+const addPersistedVotes = votesList => (
+  // TODO implement adding persisted votes
+  votesList
+);
+
 /**
  * Gets the list of delegates current account has voted for
  *
@@ -104,9 +109,10 @@ export const loadVotes = ({ address, type }) =>
     const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
     getVotes(liskAPIClient, { address })
       .then((response) => {
+        const list = type === 'update' ? response.data.votes : addPersistedVotes(response.data.votes);
         dispatch({
           type: type === 'update' ? actionTypes.votesUpdated : actionTypes.votesAdded,
-          data: { list: response.data.votes },
+          data: { list },
         });
       });
   };

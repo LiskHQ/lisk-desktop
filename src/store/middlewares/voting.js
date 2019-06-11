@@ -70,12 +70,21 @@ const fetchVotes = (store) => {
   }));
 };
 
+const persistVotes = (account, votes) => {
+  console.log('TODO implement persisting votes', account, votes); // eslint-disable-line no-console
+};
+
 const votingMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
     case actionTypes.votesAdded:
       fetchVotes(store);
       lookupDelegatesFromUrl(store, action);
+      break;
+    case actionTypes.votesUpdated:
+    case actionTypes.votesCleared:
+    case actionTypes.voteToggled:
+      persistVotes(store.account, store.voting.votes);
       break;
     case actionTypes.accountLoggedOut:
       store.dispatch(delegatesAdded({ list: [] }));
