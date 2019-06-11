@@ -18,6 +18,12 @@ class Delegates extends React.Component {
     this.getOnboardingSlides = this.getOnboardingSlides.bind(this);
   }
 
+  componentDidUpdate() {
+    if (getTotalActions(this.props.votes) > 0 && !this.state.votingModeEnabled) {
+      this.setState({ votingModeEnabled: true });
+    }
+  }
+
   toggleVotingMode() {
     if (this.state.votingModeEnabled) {
       this.props.clearVotes();

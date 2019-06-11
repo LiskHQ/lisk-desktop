@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import PropTypes from 'prop-types';
 import thunk from 'redux-thunk';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -65,5 +65,21 @@ describe('Delegates', () => {
     wrapper.find('.cancel-voting-button').at(0).simulate('click');
     expect(wrapper.find('.addedVotes')).to.have.lengthOf(0);
   });
-});
 
+  it('should enable voting mode if votes.props stops being empty', () => {
+    wrapper = shallow(<Delegates {...{ ...props, votes: {} } } />);
+    expect(wrapper.find('VotingHeader')).to.have.prop('votingModeEnabled', false);
+    wrapper.setProps({
+      votes: {
+        username1: {
+          confirmed: false,
+          unconfirmed: true,
+          username: 'username1',
+          publicKey: 'sample_key',
+        },
+      },
+    });
+    wrapper.update();
+    expect(wrapper.find('VotingHeader')).to.have.prop('votingModeEnabled', true);
+  });
+});
