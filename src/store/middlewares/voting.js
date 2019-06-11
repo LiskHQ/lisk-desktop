@@ -1,8 +1,8 @@
 import { getDelegates } from '../../utils/api/delegates';
 import { loadDelegateCache } from '../../utils/delegates';
+import { persistVotes } from '../../utils/voting';
 import { voteLookupStatusUpdated, voteToggled, loadVotes, delegatesAdded } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
-import localJSONStorage from '../../utils/localJSONStorage';
 
 const updateLookupStatus = (store, list, username) => {
   store.dispatch(voteLookupStatusUpdated({
@@ -71,20 +71,9 @@ const fetchVotes = (store) => {
   }));
 };
 
-const persistVotes = (store) => {
-  const state = store.getState();
-  let votes = state.voting.votes;
-  votes = Object.keys(votes).reduce((accumulator, key) => {
-    if (votes[key].unconfirmed !== votes[key].confirmed) {
-      accumulator[key] = votes[key];
-    }
-    return accumulator;
-  }, {});
-  localJSONStorage.set(`votes-${state.account.address}`, votes);
-};
-
 const votingMiddleware = store => next => (action) => {
   next(action);
+  const state = store.getState();
   switch (action.type) {
     case actionTypes.votesAdded:
       fetchVotes(store);
@@ -93,7 +82,7 @@ const votingMiddleware = store => next => (action) => {
     case actionTypes.votesUpdated:
     case actionTypes.votesCleared:
     case actionTypes.voteToggled:
-      persistVotes(store);
+      persistVotes(state.account.address, state.voting.votes);
       break;
     case actionTypes.accountLoggedOut:
       store.dispatch(delegatesAdded({ list: [] }));

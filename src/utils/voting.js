@@ -1,6 +1,8 @@
 import i18next from 'i18next';
-import votingConst from '../constants/voting';
+
 import Fees from '../constants/fees';
+import localJSONStorage from './localJSONStorage';
+import votingConst from '../constants/voting';
 
 export const getVotedList = votes => (Object.keys(votes).filter(key => votes[key].confirmed));
 
@@ -53,3 +55,29 @@ export const splitVotesIntoRounds = ({ votes, unvotes }) => {
   }
   return rounds;
 };
+
+export const getPersistedVotes = address => localJSONStorage.get(`votes-${address}`, {});
+
+export const addPersistedVotes = (address, votesList) => {
+  const votesDict = getPersistedVotes(address);
+  return votesList.map(vote => ({
+    ...vote,
+    unconfirmed: votesDict[vote.username] ? votesDict[vote.username].unconfirmed : true,
+    confirmed: votesDict[vote.username] ? votesDict[vote.username].confirmed : true,
+  })).concat(Object.keys(votesDict)
+    .filter(username => votesDict[username].unconfirmed)
+    .map(username => ({ username, ...votesDict[username] })));
+};
+
+export const persistVotes = (address, votes) => {
+  localJSONStorage.set(
+    `votes-${address}`,
+    Object.keys(votes).reduce((accumulator, key) => {
+      if (votes[key].unconfirmed !== votes[key].confirmed) {
+        accumulator[key] = votes[key];
+      }
+      return accumulator;
+    }, {}),
+  );
+};
+

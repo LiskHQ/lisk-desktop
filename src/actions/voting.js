@@ -1,6 +1,11 @@
 import to from 'await-to-js';
 
 import { addPendingTransaction } from './transactions';
+import {
+  addPersistedVotes,
+  getVotingError,
+  getVotingLists,
+} from '../utils/voting';
 import { errorToastDisplayed } from './toaster';
 import { getAPIClient } from '../utils/api/network';
 import { getTimeOffset } from '../utils/hacks';
@@ -9,12 +14,10 @@ import {
   getDelegates,
   castVotes,
 } from '../utils/api/delegates';
-import { getVotingLists, getVotingError } from '../utils/voting';
 import { passphraseUsed } from './account';
 import { tokenMap } from '../constants/tokens';
 import { updateDelegateCache } from '../utils/delegates';
 import actionTypes from '../constants/actions';
-import localJSONStorage from '../utils/localJSONStorage';
 
 /**
  * Add data to the list of all delegates
@@ -96,17 +99,6 @@ export const votePlaced = ({
       callback({ success: true });
     }
   };
-
-const addPersistedVotes = (address, votesList) => {
-  const votesDict = localJSONStorage.get(`votes-${address}`, {});
-  return votesList.map(vote => ({
-    ...vote,
-    unconfirmed: votesDict[vote.username] ? votesDict[vote.username].unconfirmed : true,
-    confirmed: votesDict[vote.username] ? votesDict[vote.username].confirmed : true,
-  })).concat(Object.keys(votesDict)
-    .filter(username => votesDict[username].unconfirmed)
-    .map(username => ({ username, ...votesDict[username] })));
-};
 
 /**
  * Gets the list of delegates current account has voted for
