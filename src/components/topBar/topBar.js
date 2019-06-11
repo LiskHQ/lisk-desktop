@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
 import MenuItems from './menuItems';
 import UserAccount from './userAccount';
-import NavigationButton from './navigationButtons';
+import NavigationButtons from './navigationButtons';
 import Piwik from '../../utils/piwik';
 import menuLinks from './constants';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
 import SearchBarV2 from '../searchBarV2';
+import Network from './network';
 import styles from './topBar.css';
 
 import OutsideClickHandler from '../toolbox/outsideClickHandler';
@@ -39,21 +40,25 @@ class TopBar extends React.Component {
   }
 
   render() {
-    const { t, account } = this.props;
+    const {
+      t, account, history, peers,
+    } = this.props;
     const { openDropdown } = this.state;
 
     const items = menuLinks(t);
-    const isUserLogout = Object.keys(account).length === 0 || account.afterLogout;
-    const isUserDataFetched = (account.balance) || account.balance === 0;
+    const isUserLogout = !!(Object.keys(account).length === 0 || account.afterLogout);
+    const isUserDataFetched = !!account.balance || account.balance === 0;
 
     return (
       <div className={`${styles.wrapper} top-bar`}>
-        <div className={styles.elements}>
-          <Icon name={'liskLogo'} className={'topbar-logo'} />
+        <div>
+          <div className={styles.logo}>
+            <Icon name={'liskLogo'} className={'topbar-logo'} />
+          </div>
 
-          <NavigationButton
-            account={this.props.account}
-            history={this.props.history}
+          <NavigationButtons
+            account={account}
+            history={history}
           />
 
           <MenuItems
@@ -62,10 +67,17 @@ class TopBar extends React.Component {
             location={this.props.location}
             t={t}
           />
-
+        </div>
+        <div>
+          {!isUserLogout
+          ? <Network
+              peers={peers}
+              t={t}
+            />
+          : null}
           {
-            isUserDataFetched ?
-              <UserAccount
+            isUserDataFetched
+              ? <UserAccount
                 className={styles.userAccount}
                 account={this.props.account}
                 isDropdownEnable={openDropdown === 'avatar'}
@@ -73,11 +85,7 @@ class TopBar extends React.Component {
                 onLogout={this.onLogout}
                 t={t}
               />
-              : null
-          }
-
-          {
-            isUserLogout &&
+            : isUserLogout &&
               <div className={styles.signIn}>
                 <Link to={routes.loginV2.path}>
                   <PrimaryButtonV2 className={'small'}>
@@ -90,12 +98,12 @@ class TopBar extends React.Component {
           <OutsideClickHandler
             className={`${styles.searchButton} search-section`}
             onOutsideClick={() => this.onHandleClick('search')}
+            onClick={() => this.onHandleClick('search')}
             disabled={openDropdown !== 'search'}
             wrapper={<label />}
           >
             <Icon
               className={'search-icon'}
-              onClick={() => this.onHandleClick('search')}
               name={`search_icon_${openDropdown === 'search' ? 'active' : 'inactive'}`}
             />
             <DropdownV2

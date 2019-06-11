@@ -8,6 +8,7 @@ import TopBar from './topBar';
 
 const mapStateToProps = state => ({
   account: state.account,
+  peers: state.peers,
 });
 
 const mapDispatchToProps = {
