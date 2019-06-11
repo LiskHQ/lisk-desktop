@@ -1,4 +1,5 @@
 @import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
 .wrapper {
   display: flex;
@@ -6,55 +7,48 @@
   justify-content: flex-end;
   align-items: center;
   margin-left: auto;
-}
-
-.information {
-  font-family: var(--content-font);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
-  min-width: 156px;
-  margin-right: 16px;
-}
-
-.copyAddress {
-  font-size: 12px;
-  font-weight: var(--font-weight-semi-bold);
-  color: var(--color-dark-gray);
-  white-space: nowrap;
-}
-
-.balance {
-  font-size: 12px;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-content-light);
-  font-family: var(--heading-font);
-
-  & > span:first-child {
-    font-size: 15px;
-  }
-}
-
-.avatar {
   position: relative;
+}
+
+.accountInfo {
+  align-items: center;
+  display: flex;
+  padding: 0 24px;
+
+  &::after {
+    border-bottom: 2px solid var(--color-slate-gray);
+    border-right: 2px solid var(--color-slate-gray);
+    content: '';
+    display: block;
+    height: 5px;
+    transform: rotate(45deg);
+    width: 5px;
+  }
 
   & > div {
-    top: 56px;
-    right: -7px;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 12px;
   }
-}
 
-.onAvatar {
-  cursor: pointer;
-  display: flex;
-  border-radius: 50%;
-  position: relative;
-  padding: 3px;
+  & > img {
+    width: 36px;
+    height: 36px;
+  }
 
-  &:hover {
-    background-color: var(--color-white);
-    box-shadow: 0 0 2px 0 rgba(213, 224, 247, 1);
+  & p {
+    @mixin contentLargest bold;
+
+    color: var(--color-maastricht-blue);
+    margin: 0;
+  }
+
+  & span {
+    @mixin contentNormal;
+
+    color: var(--color-slate-gray);
   }
 }
 
