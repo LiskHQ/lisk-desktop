@@ -34,10 +34,10 @@ const localStorageMock = (() => {
   let store = {};
 
   return {
-    getItem: key => store[key] || null,
-    setItem: (key, value) => {
+    getItem: jest.fn().mockImplementation(key => store[key] || null),
+    setItem: jest.fn().mockImplementation((key, value) => {
       store[key] = value.toString();
-    },
+    }),
     removeItem: (key) => {
       delete store[key];
     },

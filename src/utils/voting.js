@@ -80,4 +80,3 @@ export const persistVotes = (address, votes) => {
     }, {}),
   );
 };
-
