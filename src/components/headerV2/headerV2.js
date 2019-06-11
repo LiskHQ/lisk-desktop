@@ -233,7 +233,7 @@ class HeaderV2 extends React.Component {
             }
             {showSettings
               && <Link className={styles.settingButton} to={routes.setting.path}>
-                <SecondaryButtonV2 className={`${dark ? 'light' : ''}`}>
+                <SecondaryButtonV2 className={`${dark ? 'light' : ''} small`}>
                   {t('Settings')}
                 </SecondaryButtonV2>
               </Link>
