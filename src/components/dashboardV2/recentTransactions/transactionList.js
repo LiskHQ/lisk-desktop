@@ -22,7 +22,11 @@ const TransactionList = ({
     <div className={styles.list}>
     {
       transactions.map((tx, index) =>
-        <div key={index} className={styles.listRow}>
+        <Link
+          key={index}
+          to={`${routes.transactions.pathPrefix}${routes.transactions.path}/${tx.id}`}
+          className={styles.listRow}
+        >
           <TransactionTypeFigure
             address={tx.recipientId}
             transactionType={tx.type}
@@ -39,7 +43,7 @@ const TransactionList = ({
             token={activeToken}
             transaction={tx}
           />
-        </div>)
+        </Link>)
     }
     </div>
     <Link to={routes.wallet.path}>
