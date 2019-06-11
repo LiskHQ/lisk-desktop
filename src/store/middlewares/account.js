@@ -3,7 +3,7 @@ import {
   updateTransactionsIfNeeded,
   updateDelegateAccount,
 } from '../../actions/account'; // eslint-disable-line
-import { votesFetched } from '../../actions/voting';
+import { loadVotes } from '../../actions/voting';
 import {
   loadTransactions,
   cleanTransactions,
@@ -79,7 +79,7 @@ const votePlaced = (store, action) => {
     const state = store.getState();
     const { account } = state;
 
-    store.dispatch(votesFetched({
+    store.dispatch(loadVotes({
       address: account.address,
       type: 'update',
     }));

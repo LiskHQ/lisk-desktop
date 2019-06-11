@@ -2,15 +2,13 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import Lisk from '@liskhq/lisk-client';
 import {
-  listDelegates,
-  listAccountDelegates,
-  getDelegate,
-  vote,
+  getDelegates,
+  castVotes,
   getVotes,
-  getAllVotes,
   registerDelegate,
-} from './delegate';
+} from './delegates';
 import accounts from '../../../test/constants/accounts';
+import { loginType } from '../../constants/hwConstants';
 
 describe('Utils: Delegate', () => {
   let liskAPIClientMockDelegates;
@@ -53,46 +51,27 @@ describe('Utils: Delegate', () => {
     liskTransactionsRegisterDelegateStub.restore();
   });
 
-  describe('listAccountDelegates', () => {
-    it('should get votes for an address with 101 limit', () => {
-      const address = '123L';
-      liskAPIClientMockVotes.expects('get').withArgs({ address, limit: '101' }).once();
-      listAccountDelegates(liskAPIClient, address);
-    });
-  });
-
-  describe('listDelegates', () => {
-    it('should return getDelegate(liskAPIClient, options) if options = {}', () => {
+  describe('getDelegates', () => {
+    it('should return getDelegates(liskAPIClient, options) if options = {}', () => {
       const options = {};
       const response = { data: [] };
       liskAPIClientMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
 
-      const returnedPromise = listDelegates(liskAPIClient, options);
+      const returnedPromise = getDelegates(liskAPIClient, options);
       expect(returnedPromise).to.eventually.equal(response);
     });
 
-    it('should return getDelegate(liskAPIClient, options) if options.q is set', () => {
+    it('should return getDelegates(liskAPIClient, options) if options.q is set', () => {
       const options = { q: 'genesis_1' };
       const response = { data: [] };
       liskAPIClientMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
 
-      const returnedPromise = listDelegates(liskAPIClient, options);
+      const returnedPromise = getDelegates(liskAPIClient, options);
       return expect(returnedPromise).to.eventually.equal(response);
     });
   });
 
-  describe('getDelegate', () => {
-    it('should return getDelegate(liskAPIClient, options)', () => {
-      const options = { publicKey: `"${accounts.delegate.publicKey}"` };
-      const response = { data: [] };
-      liskAPIClientMockDelegates.expects('get').withArgs(options).returnsPromise().resolves(response);
-
-      const returnedPromise = getDelegate(liskAPIClient, options);
-      return expect(returnedPromise).to.eventually.equal(response);
-    });
-  });
-
-  describe('vote', () => {
+  describe('castVotes', () => {
     it('should call castVotes and broadcast transaction', () => {
       const votes = [
         accounts.genesis.publicKey,
@@ -112,46 +91,38 @@ describe('Utils: Delegate', () => {
         timeOffset,
       }).returns(transaction);
 
-      vote(
+      castVotes({
         liskAPIClient,
-        accounts.genesis.passphrase,
-        accounts.genesis.publicKey,
-        votes,
-        unvotes,
+        account: {
+          ...accounts.genesis,
+          loginType: loginType.normal,
+        },
+        votedList: votes,
+        unvotedList: unvotes,
         secondPassphrase,
         timeOffset,
-      );
+      });
       expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
     });
+
+    it('should call return error if account.loginType is not recognized', () => (
+      expect(castVotes({
+        liskAPIClient,
+        account: {
+          ...accounts.genesis,
+          loginType: 'something unknown',
+        },
+      })).to.be.rejectedWith('Login Type not recognized.')
+    ));
   });
 
   describe('getVotes', () => {
     it('should get votes for an address with no parameters', () => {
       const address = '123L';
       const offset = 0;
-      const limit = 100;
+      const limit = 101;
       liskAPIClientMockVotes.expects('get').withArgs({ address, offset, limit }).once();
-      getVotes(liskAPIClient, { address, offset, limit });
-    });
-  });
-
-  describe('getAllVotes', () => {
-    it('should get all votes for an address with no parameters > 100', () => {
-      const address = '123L';
-      liskAPIClientMockVotes.expects('get').withArgs({ address, offset: 0, limit: 100 })
-        .returnsPromise().resolves({ data: { votes: [1, 2, 3], votesUsed: 101 } });
-      liskAPIClientMockVotes.expects('get').withArgs({ address, offset: 100, limit: 1 })
-        .returnsPromise().resolves({ data: { votes: [4], votesUsed: 101 } });
-      const returnedPromise = getAllVotes(liskAPIClient, address);
-      expect(returnedPromise).to.eventually.equal([1, 2, 3, 4]);
-    });
-
-    it('should get all votes for an address with no parameters < 100', () => {
-      const address = '123L';
-      liskAPIClientMockVotes.expects('get').withArgs({ address, offset: 0, limit: 100 })
-        .returnsPromise().resolves({ data: { votes: [1], votesUsed: 1 } });
-      const returnedPromise = getAllVotes(liskAPIClient, address);
-      expect(returnedPromise).to.eventually.equal([1]);
+      getVotes(liskAPIClient, { address });
     });
   });
 

@@ -13,7 +13,7 @@ import { extractAddress } from '../account';
 import loginTypes from '../../constants/loginTypes';
 import { HW_MSG, models, loginType } from '../../constants/hwConstants';
 import { getAPIClient } from './lsk/network';
-import { splitVotesIntoRounds } from './delegate';
+import { splitVotesIntoRounds } from '../voting';
 
 const util = require('util');
 

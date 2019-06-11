@@ -41,14 +41,14 @@ describe('Delegates', () => {
     },
   ];
   const props = {
-    refreshDelegates: false,
     delegates,
-    totalDelegates: 10,
     votes,
     t: key => key,
     history: { location: { search: '' } },
     clearVotes: jest.fn(),
     account: { address: delegates[0].address },
+    loadDelegates: jest.fn(),
+    loadVotes: jest.fn(),
   };
   const options = {
     context: { store, history, i18n },

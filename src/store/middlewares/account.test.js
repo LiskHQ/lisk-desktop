@@ -165,8 +165,8 @@ describe('Account middleware', () => {
     expect(store.dispatch).to.not.have.been.calledWith();
   });
 
-  it(`should dispatch ${actionTypes.votesFetched} action on ${actionTypes.updateTransactions} action if action.data.confirmed contains delegateRegistration transactions`, () => {
-    const actionSpy = spy(votingActions, 'votesFetched');
+  it(`should dispatch ${actionTypes.loadVotes} action on ${actionTypes.updateTransactions} action if action.data.confirmed contains delegateRegistration transactions`, () => {
+    const actionSpy = spy(votingActions, 'loadVotes');
     transactionsUpdatedAction.data.confirmed[0].type = transactionTypes.vote;
     middleware(store)(next)(transactionsUpdatedAction);
     expect(actionSpy).to.have.been.calledWith({
