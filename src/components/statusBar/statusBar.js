@@ -3,7 +3,6 @@ import Countdown from 'react-countdown-now';
 import CountDownTemplate from '../header/countDownTemplate';
 import CustomCountDown from '../header/customCountDown';
 import routes from '../../constants/routes';
-import Network from './network';
 import ExternalLinks from './externalLinks';
 import feedbackLinks from '../../constants/feedbackLinks';
 import svg from '../../utils/svgIcons';
@@ -51,10 +50,8 @@ class StatusBar extends React.Component {
       autoLogout,
       closeDialog,
       history,
-      peers,
       resetTimer,
       setActiveDialog,
-      showNetworkIndicator,
       t,
     } = this.props;
 
@@ -81,11 +78,6 @@ class StatusBar extends React.Component {
             )
           : null}
         </div>
-        <Network
-          peers={peers}
-          t={t}
-          showNetworkIndicator={showNetworkIndicator}
-        />
         <ExternalLinks
           links={this.linksList()}
         />

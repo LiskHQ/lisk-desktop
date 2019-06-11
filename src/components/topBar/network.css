@@ -1,25 +1,26 @@
 @import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
 .wrapper {
-  height: 20px;
-  min-width: 116px;
+  height: auto;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  padding: 0 40px;
 
   /* Message */
   & > p {
-    font-size: var(--font-size-small);
-    color: var(--color-content-grayblue);
-    font-weight: var(--font-weight-semi-bold);
+    @mixin contentNormal semi-bold;
+
+    color: var(--color-blue-gray);
     margin-left: 8px;
 
     /* Network name */
     & > span {
       margin-left: 5px;
-      color: var(--color-content-light);
+      color: var(--color-maastricht-blue);
     }
 
     & > span:first-child {
@@ -32,7 +33,7 @@
 .status {
   height: 5px;
   width: 5px;
-  border-radius: 50px;
+  border-radius: 50%;
 }
 
 .online {
