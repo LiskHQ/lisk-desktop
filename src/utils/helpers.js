@@ -52,3 +52,14 @@ export const filterObjectPropsWithValue = (object = {}, value) => (
   Object.keys(object).filter(key => object[key] === value)
 );
 
+/**
+ * Creates mailto link from an error
+ * @param {string} error - error message to put into the email body
+ * @returns {sting} mailto link with recipient, subject, and body
+ */
+export const getErrorReportMailto = (error) => {
+  const recipient = 'hubdev@lisk.io';
+  const subject = `User Reported Error - Lisk Hub - ${VERSION}`; // eslint-disable-line no-undef
+  return `mailto:${recipient}?&subject=${subject}&body=${error}`;
+};
+

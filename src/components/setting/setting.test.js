@@ -1,160 +1,127 @@
 import React from 'react';
-import { expect } from 'chai';
-import { mount } from 'enzyme';
-import sinon from 'sinon';
-import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
+import { mount } from 'enzyme';
+import configureMockStore from 'redux-mock-store';
 import { MemoryRouter as Router } from 'react-router-dom';
 import Setting from './setting';
 import accounts from '../../../test/constants/accounts';
-import i18n from '../../i18n';
-import breakpoints from './../../constants/breakpoints';
 import settingsConst from './../../constants/settings';
 
 describe('Setting', () => {
-  const history = {
-    location: {
-      pathname: '/delegates',
-    },
-    push: sinon.spy(),
-  };
   const settings = {
     autoLog: true,
-    advancedMode: true,
     showNetwork: false,
-    currency: settingsConst.currencies[0],
+    currency: undefined,
     statistics: false,
+    token: {
+      list: {
+        BTC: true,
+        LSK: true,
+      },
+      active: 'LSK',
+    },
   };
 
   const account = {
-    isDelegate: false,
-    address: '16313739661670634666L',
-    username: 'lisk-hub',
+    info: {
+      LSK: {
+        ...accounts.genesis,
+        isDelegate: false,
+        username: 'lisk-hub',
+      },
+    },
   };
   const store = configureMockStore([])({
     account,
-    liskAPIClientSet: () => {},
+    liskAPIClientSet: jest.fn(),
     settings,
   });
 
   const options = {
-    context: { store, history, i18n },
+    context: { store },
     childContextTypes: {
       store: PropTypes.object.isRequired,
-      history: PropTypes.object.isRequired,
-      i18n: PropTypes.object.isRequired,
     },
   };
 
-
-  let clock;
   const t = key => key;
   let wrapper;
 
   const props = {
+    transactions: { pending: [] },
     account: {},
-    settingsUpdated: sinon.spy(),
-    accountUpdated: sinon.spy(),
+    settingsUpdated: jest.fn(),
+    accountUpdated: jest.fn(),
     settings,
     t,
-    toggleMenu: sinon.spy(),
     isAuthenticated: true,
     location: {
-      pathname: '/setting',
-      search: '?showTackingSwitch=true',
+      pathname: '/settings',
     },
+    toastDisplayed: jest.fn(),
   };
 
   beforeEach(() => {
-    window.innerWidth = breakpoints.l;
-
     wrapper = mount(<Router>
-      <Setting
-        store={store}
-        {...props}/>
+      <Setting {...props} store={store}/>
     </Router>, options);
-
-    clock = sinon.useFakeTimers({
-      toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],
-    });
-  });
-
-  afterEach(() => {
-    clock.restore();
-    // i18n.changeLanguage('en');
-  });
-
-  it('should change advanceMode setting when clicking on checkbox', () => {
-    wrapper.find('.advancedMode').at(0).find('input').simulate('change', { target: { checked: false, value: false } });
-    clock.tick(300);
   });
 
   it('should disable 2nd passphrase when hardwareWallet', () => {
     const newProps = { ...props, account: { hwInfo: { deviceId: '123' } } };
     wrapper = mount(<Router>
-      <Setting
-        store={store}
-        {...newProps}/>
+      <Setting {...newProps} store={store}/>
     </Router>, options);
-
-    expect(wrapper.find('.disabled').length).to.have.equal(3);
+    expect(wrapper).toContainMatchingElements(1, '.disabled');
   });
 
-  it.skip('should click on .autoLog update the setting', () => {
-    wrapper.find('.autoLog input').simulate('click');
-    clock.tick(100);
-    wrapper.find('.autoLog label').simulate('click');
-    wrapper.update();
-    const expectedCallToSettingsUpdated = {
-      advancedMode: !settings.advancedMode,
-    };
-    expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+  it('should show 2nd passphrase as processing', () => {
+    const newProps = { ...props, transactions: { pending: [{ type: 1 }] } };
+    wrapper = mount(<Router><Setting {...newProps} /></Router>, options);
+    expect(wrapper.find('.second-passphrase')).toContainMatchingElement('.loading');
+  });
+
+  it('should render 2nd passphrase as active', () => {
+    const account2ndPassphrase = { info: { LSK: accounts['second passphrase account'] } };
+    const newProps = { ...props, account: account2ndPassphrase, hasSecondPassphrase: true };
+    wrapper = mount(<Router>
+      <Setting {...newProps}/>
+    </Router>, options);
+    expect(wrapper.find('.second-passphrase')).not.toContainMatchingElement('.link');
+    expect(wrapper.find('.second-passphrase')).toContainMatchingElement('.second-passphrase-registered');
   });
 
   it('should change autolog setting when clicking on checkbox', () => {
-    wrapper.find('.autoLog').at(0).find('input').simulate('change', { target: { checked: false, value: false } });
-    clock.tick(300);
-    wrapper.update();
+    wrapper.find('.autoLog input').at(0).simulate('change', { target: { name: 'autoLog' } });
     const expectedCallToSettingsUpdated = {
       autoLog: !settings.autoLog,
     };
-    expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+    expect(props.settingsUpdated).toBeCalledWith(expectedCallToSettingsUpdated);
   });
 
   it('should change showNetwork setting when clicking on checkbox', () => {
-    wrapper.find('.showNetwork').at(0).find('input').simulate('change', { target: { checked: true, value: true } });
-    clock.tick(300);
-    wrapper.update();
+    wrapper.find('.showNetwork input').at(0).simulate('change', { target: { name: 'showNetwork' } });
     const expectedCallToSettingsUpdated = {
       showNetwork: !settings.showNetwork,
     };
-    expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+    expect(props.settingsUpdated).toBeCalledWith(expectedCallToSettingsUpdated);
   });
 
   it('should change usage statistics when clicking on checkbox', () => {
-    props.settings.currency = undefined;
-    wrapper = mount(<Router>
-      <Setting
-        store={store}
-        {...props}/>
-    </Router>, options);
-
-    wrapper.find('.statistics').at(0).find('input').simulate('change', { target: { checked: false, value: false } });
-    clock.tick(300);
-    wrapper.update();
+    wrapper.find('.statistics input').at(0).simulate('change', { target: { name: 'statistics' } });
     const expectedCallToSettingsUpdated = {
       statistics: !settings.statistics,
     };
-    expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+    expect(props.settingsUpdated).toBeCalledWith(expectedCallToSettingsUpdated);
   });
 
   it('should change active currency setting to EUR', () => {
-    wrapper.find('.currency').at(1).simulate('click');
-    wrapper.update();
+    wrapper.find('.currency input').simulate('focus');
+    wrapper.find('.currency .options span').at(1).simulate('click', { target: { dataset: { index: 1 } } });
     const expectedCallToSettingsUpdated = {
       currency: settingsConst.currencies[1],
     };
-    expect(props.settingsUpdated).to.have.been.calledWith(expectedCallToSettingsUpdated);
+    expect(props.settingsUpdated).toBeCalledWith(expectedCallToSettingsUpdated);
   });
 
   it('should update expireTime when updating autolog', () => {
@@ -171,33 +138,24 @@ describe('Setting', () => {
       />
     </Router>, options);
 
-    wrapper.find('.autoLog').at(0).find('input').simulate('change', { target: { checked: true, value: true } });
-    clock.tick(300);
-    wrapper.update();
+    wrapper.find('.autoLog input').at(0).simulate('change', { target: { name: 'autoLog' } });
 
     const timeNow = Date.now();
     const expectedCallToAccountUpdated = {
       expireTime: timeNow,
     };
-    expect(props.accountUpdated.getCall(0).args[0].expireTime)
-      .to.be.greaterThan(expectedCallToAccountUpdated.expireTime);
+    expect(props.accountUpdated).toBeCalled();
+    expect(props.accountUpdated.mock.calls[0][0].expireTime)
+      .toBeGreaterThan(expectedCallToAccountUpdated.expireTime);
   });
 
-  // TODO: will be re-enabled when the functionality is re-enabled
-  it.skip('should click on "languageSwitcher" change the language to "de"', () => {
-    // const languageSpy = sinon.spy(i18n, 'changeLanguage');
-    wrapper.find('.language-switcher .circle').simulate('click');
-    wrapper.update();
-    expect(i18n.language).to.be.equal('de');
-  });
-
-  // TODO: will be re-enabled when the functionality is re-enabled
-  it.skip('should second click on "languageSwitcher" change the language to "en"', () => {
-    wrapper.find('.language-switcher .circle').simulate('click');
-    wrapper.update();
-    expect(i18n.language).to.be.equal('de');
-    wrapper.find('.language-switcher .circle').simulate('click');
-    wrapper.update();
-    expect(i18n.language).to.be.equal('en');
+  // TODO Unskip after enabling BTC
+  it.skip('should enable and disable BTC token', () => {
+    localStorage.setItem('btc', true);
+    wrapper.find('.enableBTC input').at(0).simulate('change', { target: { name: 'BTC' } });
+    const expectedCallToSettingsUpdated = {
+      token: { list: { BTC: !settings.token.list.BTC } },
+    };
+    expect(props.settingsUpdated).toBeCalledWith(expectedCallToSettingsUpdated);
   });
 });

@@ -53,6 +53,8 @@ import checkboxFilled from '../assets/images/icons-v2/checkmark-16-filled.svg';
 import checkmark from '../assets/images/icons-v2/checkmark.svg';
 import newsFeedAvatar from '../assets/images/icons-v2/newsFeedsAvatar.svg';
 import balance from '../assets/images/icons-v2/balance.svg';
+import bookmarksIconEmptyState from '../assets/images/icons-v2/bookmarks_empty_state.svg';
+import lskIcon from '../assets/images/icons-v2/icon-lsk.svg';
 
 export default {
   alert_icon: alertIcon,
@@ -110,4 +112,6 @@ export default {
   outgoing,
   newsFeedAvatar,
   balance,
+  bookmarksIconEmptyState,
+  lskIcon,
 };

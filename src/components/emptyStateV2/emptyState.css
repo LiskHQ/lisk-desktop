@@ -11,14 +11,14 @@
   box-sizing: border-box;
   padding: 20px;
 
-  & .title {
+  & > h1 {
     @mixin headingNormal;
 
     color: var(--color-maastricht-blue);
     margin: 20px 0 0;
   }
 
-  & .description {
+  & > p {
     @mixin contentLarge;
 
     max-width: 267px;

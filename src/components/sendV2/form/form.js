@@ -78,6 +78,7 @@ class Form extends React.Component {
     this.checkIfBookmarkedAccount = this.checkIfBookmarkedAccount.bind(this);
     this.setReferenceActive = this.setReferenceActive.bind(this);
     this.selectProcessingSpeed = this.selectProcessingSpeed.bind(this);
+    this.getProcessingSpeedStatus = this.getProcessingSpeedStatus.bind(this);
   }
 
   componentDidMount() {
@@ -330,6 +331,7 @@ class Form extends React.Component {
     if (/^0.(0|[a-zA-z])*$/g.test(value)) return this.props.t('Provide a correct amount of {{token}}', { token: this.props.token });
     if (/([^\d.])/g.test(value)) return this.props.t('Provide a correct amount of {{token}}', { token: this.props.token });
     if ((/(\.)(.*\1){1}/g.test(value) || /\.$/.test(value)) || value === '0') return this.props.t('Invalid amount');
+    if (/\./.test(value) && /\.\d{9}/.test(value)) return this.props.t('Maximum floating point is 8.');
     if (parseFloat(this.getMaxAmount()) < value) return this.props.t('Provided amount is higher than your current balance.');
     return false;
   }
@@ -421,6 +423,21 @@ class Form extends React.Component {
         },
       },
     }));
+  }
+
+  /**
+   * Get status of processing soeed fetch based on state of component
+   * @returns {Node} - Text to display to the user or loader
+   */
+  getProcessingSpeedStatus() {
+    const { token, t } = this.props;
+    const { fields, isLoading } = this.state;
+    const { amount: { value } } = fields;
+    if (value === '') return <span>-</span>;
+    if (isLoading) return <span>{t('Loading')} <SpinnerV2 className={styles.loading} /></span>;
+    return <span>{!this.validateAmountField(value)
+      ? `${fromRawLsk(fields.processingSpeed.txFee)} ${token}`
+      : t('Invalid amount')}</span>;
   }
 
   // eslint-disable-next-line complexity
@@ -559,9 +576,7 @@ class Form extends React.Component {
                 </Tooltip>
               </span>
             </label>
-          ) : !!Object.keys(dynamicFees).length &&
-            fields.amount.value !== '' &&
-            !this.validateAmountField(fields.amount.value) && (
+          ) : (
             <div className={`${styles.fieldGroup}`}>
               <span className={`${styles.fieldLabel}`}>
                 {t('Processing Speed')}
@@ -582,7 +597,7 @@ class Form extends React.Component {
                 ]}
               />
               <span className={styles.processingInfo}>
-                {t('Transaction fee: ')} <span>{`${fromRawLsk(fields.processingSpeed.txFee)} ${token}`}</span>
+                {t('Transaction fee: ')} {this.getProcessingSpeedStatus()}
               </span>
             </div>
           )}

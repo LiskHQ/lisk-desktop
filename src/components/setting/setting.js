@@ -1,19 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-// import ReactSwipe from 'react-swipe';
-import Checkbox from '../toolbox/sliderCheckbox';
 import styles from './setting.css';
 import accountConfig from '../../constants/account';
 import settingsConst from './../../constants/settings';
-// TODO: will be re-enabled when the functionality is updated
 import routes from '../../constants/routes';
-import { FontIcon } from '../fontIcon';
-import Box from '../box';
 import links from './../../constants/externalLinks';
 import Piwik from '../../utils/piwik';
-// import languageSwitcherTheme from './languageSwitcher.css';
+import BoxV2 from '../boxV2';
+import Select from '../toolbox/select';
+import CheckBox from '../toolbox/checkBox';
+import svgIcons from '../../utils/svgIcons';
+import txTypes from '../../constants/transactionTypes';
+import SpinnerV2 from '../spinnerV2/spinnerV2';
 
 class Setting extends React.Component {
   constructor() {
@@ -21,131 +20,192 @@ class Setting extends React.Component {
     this.state = {
       currencies: settingsConst.currencies,
     };
+
+    this.setCurrency = this.setCurrency.bind(this);
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+    this.toggleAutoLog = this.toggleAutoLog.bind(this);
+    this.handleTokenToggle = this.handleTokenToggle.bind(this);
   }
 
-  toggleAutoLog(state) {
+  // TODO: Remove ignore comment when enabling BTC
+  // istanbul ignore next
+  handleTokenToggle({ target: { name } }) {
+    const { settings } = this.props;
+    const newSettings = {
+      token: { list: { [name]: !settings.token.list[name] } },
+    };
+    this.onUpdateSettings(newSettings);
+  }
+
+  toggleAutoLog({ target }) {
     Piwik.trackingEvent('Settings', 'button', 'Toggle autoLog');
     const {
-      account, settings, settingsUpdated, accountUpdated,
+      account, accountUpdated,
     } = this.props;
-    if (state && account.passphrase) {
+    if (target && account.passphrase) {
       const date = Date.now() + accountConfig.lockDuration;
       accountUpdated({ expireTime: date });
     }
-    settingsUpdated({ autoLog: !settings.autoLog });
+    this.handleCheckboxChange({ target });
+  }
+
+  setCurrency(currency) {
+    const { settings } = this.props;
+    if (settings.currency !== currency.value) this.onUpdateSettings({ currency: currency.value });
+  }
+
+  handleCheckboxChange({ target: { name } }) {
+    const { settings } = this.props;
+    this.onUpdateSettings({ [name]: !settings[name] });
   }
 
   onUpdateSettings(newSettings) {
+    const { settingsUpdated, toastDisplayed, t } = this.props;
     Piwik.trackingEvent('Settings', 'button', 'Update settings');
-    this.props.settingsUpdated(newSettings);
+    settingsUpdated(newSettings);
+    toastDisplayed({ label: t('Settings saved!') });
   }
 
   render() {
     const {
       t, settings,
       hasSecondPassphrase,
+      isAuthenticated,
+      transactions: { pending },
     } = this.props;
+    const { currencies } = this.state;
 
-    const allowAuthClass = !this.props.isAuthenticated ||
-      (this.props.account.hwInfo && this.props.account.hwInfo.deviceId) ?
-      `${styles.disable} disabled` : '';
-    const activeCurrency = settings.currency || settingsConst.currencies[0];
+    const isHwWalletClass = (this.props.account.hwInfo && this.props.account.hwInfo.deviceId)
+      ? `${styles.disabled} disabled`
+      : '';
+    const activeCurrency = currencies.indexOf(settings.currency || settingsConst.currencies[0]);
+    const hasPendingSecondPassphrase = pending.find(element =>
+      element.type === txTypes.setSecondPassphrase) !== undefined;
 
-    return (<Box className={styles.wrapper}>
-      <aside className={`${grid['col-sm-12']} ${grid['col-md-4']}`}>
-        <header>
-          <h4>{t('Settings')}</h4>
-          <p>{t('Set up Lisk Hub and your account.')}</p>
-        </header>
-      </aside>
-      <section className={`${grid['col-sm-12']} ${grid['col-md-8']}`}>
-        <h4>{t('Security')}</h4>
-        <div className={styles.item}>
-          <label className={`${allowAuthClass}`}>{t('Second passphrase (Fee: 5 LSK)')}</label>
-          {!hasSecondPassphrase ?
-            <Link
-              className={`register-second-passphrase ${styles.secondPassphrase} ${allowAuthClass}`}
-              to={`${routes.secondPassphrase.path}`}>
-              {t('Register')}
-              <FontIcon>arrow-right</FontIcon>
-            </Link> :
-            <span
-              className={`second-passphrase-registered ${styles.secondPassphraseEnabled}`}>
-              {t('Registered')}
-              <FontIcon>checkmark</FontIcon>
-            </span>
-          }
-        </div>
-        <div className={styles.item}>
-          <label>{t('Auto-logout')}</label>
-          <Checkbox
-            theme={styles}
-            className={`${styles.smallSlider} autoLog`}
-            onChange={() => this.toggleAutoLog(!settings.autoLog)}
-            input={{
-              value: true,
-              checked: settings.autoLog,
-            }}/>
-        </div>
-        <h4>{t('Advanced features')}</h4>
-        <div className={`${styles.item} ${styles.network}`}>
-          <label>{t('Switch networks (Main-/Testnet, Custom)')}</label>
-          <Checkbox
-            theme={styles}
-            className={`${styles.smallSlider} showNetwork`}
-            onChange={() => this.onUpdateSettings({ showNetwork: !settings.showNetwork })}
-            input={{
-              value: false,
-              checked: settings.showNetwork,
-            }}/>
-        </div>
-        <div className={`${styles.item} ${styles.description}`}>
-          {t('You will be able to select the desired network when signing in')}
-        </div>
-        <div className={styles.item}>
-          <label>{t('Delegate features')}</label>
-          <Checkbox
-            theme={styles}
-            className={`${styles.smallSlider} advancedMode`}
-            onChange={() => this.onUpdateSettings({ advancedMode: !settings.advancedMode })}
-            input={{
-              value: true,
-              checked: settings.advancedMode,
-            }}/>
-        </div>
-        <div>
-          <div className={`${styles.item} ${styles.network}`}>
-            <label>{t('Send anonymous usage statistics')}</label>
-            <Checkbox
-              theme={styles}
-              className={`${styles.smallSlider} statistics`}
-              onChange={() => this.onUpdateSettings({ statistics: !settings.statistics })}
-              input={{
-                value: false,
-                checked: settings.statistics,
-              }}/>
+    return (
+      <div className={styles.settingsHolder}>
+        <BoxV2 className={styles.wrapper}>
+          <header>
+            <h1>{t('Settings')}</h1>
+          </header>
+          <div className={styles.content}>
+            <section>
+              <h1>{t('Locale')}</h1>
+              <div className={styles.fieldGroup}>
+                <span className={styles.labelName}>{t('Currency')}</span>
+                <Select
+                  options={currencies.map(currency => ({
+                    label: currency, value: currency,
+                  }))}
+                  selected={activeCurrency}
+                  onChange={this.setCurrency}
+                  className={'currency'}
+                />
+              </div>
+            </section>
+            <section>
+              <h1>{t('Security')}</h1>
+              <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+                <CheckBox
+                  name={'autoLog'}
+                  className={`${styles.checkbox} autoLog`}
+                  checked={settings.autoLog}
+                  onChange={this.toggleAutoLog}
+                  />
+                  <div>
+                  <span className={styles.labelName}>{t('Auto Logout')}</span>
+                  <p>{t('Log out automatically after a specified amount of time.')}</p>
+                  </div>
+              </label>
+              {isAuthenticated ? (
+                <div className={`${styles.fieldGroup} ${styles.checkboxField} second-passphrase`}>
+                  {hasSecondPassphrase
+                    ? <img
+                        className={`${styles.checkmark} second-passphrase-registered`}
+                        src={svgIcons.checkmark}
+                      />
+                    : null
+                  }
+                  <div className={isHwWalletClass}>
+                    <span className={styles.labelName}>{t('Second Passphrase')}</span>
+                    <p>
+                      {t('Every time you make a transaction you’ll need to enter your second passphrase in order to confirm it.')}
+                    </p>
+                    {!hasSecondPassphrase ?
+                      <React.Fragment>
+                        <p className={styles.highlight}>{t('Once activated can’t be turned off.')}</p>
+                        {hasPendingSecondPassphrase ? (
+                          <SpinnerV2
+                            className={styles.loading}
+                            label={t('Second Passphrase is being activated. Almost there!')}
+                          />
+                        ) : (
+                          <Link
+                            className={`register-second-passphrase ${styles.link}`}
+                            to={`${routes.secondPassphrase.path}`}>
+                            {t('Activate (5 LSK Fee)')}
+                          </Link>
+                        )}
+                      </React.Fragment>
+                    : null}
+                  </div>
+                </div>
+              ) : null}
+            </section>
+            <section>
+              <h1>{t('Advanced')}</h1>
+              <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+                <CheckBox
+                  name={'showNetwork'}
+                  className={`${styles.checkbox} showNetwork`}
+                  checked={settings.showNetwork}
+                  onChange={this.handleCheckboxChange}
+                />
+                <div>
+                  <span className={styles.labelName}>{t('Network switcher')}</span>
+                  <p>{t('Enable a network switcher that lets you select testnet or custom node when logging in.')}</p>
+                </div>
+              </label>
+              { // istanbul ignore next
+                localStorage.getItem('btc') ? ( // TODO: Remove when enabling BTC for final user
+              <label className={`${styles.fieldGroup} ${styles.checkboxField} enableBTC`}>
+                <CheckBox
+                  name={'BTC'}
+                  className={`${styles.checkbox}`}
+                  checked={!!(settings.token && settings.token.list.BTC)}
+                  onChange={this.handleTokenToggle}
+                />
+                <div>
+                  <span className={styles.labelName}>{t('BTC token')}</span>
+                  <p>{t('By enabling it, you will be able to manage your BTC tokens inside the application.')}</p>
+                </div>
+              </label>
+              ) : null}
+            </section>
+            <section>
+              <h1>{t('Privacy')}</h1>
+              <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+                <CheckBox
+                  name={'statistics'}
+                  className={`${styles.checkbox} statistics`}
+                  checked={settings.statistics}
+                  onChange={this.handleCheckboxChange}
+                />
+                <div>
+                  <span className={styles.labelName}>
+                    {t('Anonymous analytics collection')}
+                  </span>
+                  <p>{t('Help improve Lisk Hub by allowing Lisk to gather anonymous usage data used for analytical purposes.')}</p>
+                  <a target="_blank" href={links.privacyPolicy} className={styles.link}>
+                    {t('Privacy Policy')}
+                  </a>
+                </div>
+              </label>
+            </section>
           </div>
-          <div className={`${styles.item} ${styles.privatePolicy}`}>
-            {t('For more information refer to our ')}
-            <a href={links.privacyPolicy} target={'_blank'}>{t('Privacy Policy')}</a>
-          </div>
-        </div>
-        <h4>{t('Local')}</h4>
-        <div className={styles.item}>
-          <label>{t('Currency')}</label>
-          <ul className={styles.currencyList}>
-            {this.state.currencies.map(currency => (
-              <li
-                key={`currency-${currency}`}
-                className={`currency currency-${currency} ${currency === activeCurrency ? `${styles.active} active` : ''}`}
-                onClick={() => this.onUpdateSettings({ currency })}>
-                {currency}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-    </Box>);
+        </BoxV2>
+      </div>
+    );
   }
 }
 

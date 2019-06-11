@@ -1,10 +1,10 @@
 import {
-  getDelegate,
-} from '../utils/api/delegate';
+  getDelegates,
+} from '../utils/api/delegates';
 import actionTypes from '../constants/actions';
 
 /**
- * Pass response from getDelegate to reducers
+ * Pass response from getDelegates to reducers
  */
 export const delegateRetrieved = data => ({
   type: actionTypes.delegateRetrieved,
@@ -12,7 +12,7 @@ export const delegateRetrieved = data => ({
 });
 
 /**
- * Set a flag until response from getDelegate is resolved
+ * Set a flag until response from getDelegates is resolved
  */
 export const delegateRetrieving = data => ({
   type: actionTypes.delegateRetrieving,
@@ -26,7 +26,7 @@ export const delegatesFetched = ({ username }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     dispatch(delegateRetrieving());
-    getDelegate(liskAPIClient, { username })
+    getDelegates(liskAPIClient, { username })
       .then((response) => {
         if (response.data.length > 0) {
           dispatch(delegateRetrieved({ delegate: response.data[0], username }));

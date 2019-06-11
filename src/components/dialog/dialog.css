@@ -1,15 +1,27 @@
+@import '../app/variablesV2.css';
+@import '../app/mixins.css';
+
 .dialog {
+  border-radius: var(--border-radius-box);
+
+  & .title {
+    @mixin headingLarge;
+
+    color: var(--color-maastricht-blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 25px 0;
+  }
+
   & .x-button {
     right: -20px;
 
     & span {
       color: rgba(255, 255, 255, 0.87);
     }
-  }
-
-  & p {
-    color: rgba(0, 0, 0, 0.87);
-    line-height: 22px;
   }
 
   & header {
@@ -29,16 +41,6 @@
   }
 }
 
-.title {
-  padding: 20px 0;
-  font-size: 48px;
-  text-align: center;
-  color: black;
-  font-family: Gilroy, Open Sans, sans-serif;
-  font-weight: 800;
-  line-height: 59px;
-}
-
 .body {
   border-radius: 2px 2px 0 0;
   padding: 0px;
@@ -55,8 +57,8 @@
 }
 
 .overlay {
-  background-color: rgba(0, 26, 62);
-  opacity: 0.9 !important;
+  background-color: rgba(12, 21, 46, 0.52);
+  opacity: 1 !important;
 }
 
 @media screen and (min-width: 600px) {

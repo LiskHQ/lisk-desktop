@@ -1,46 +1,24 @@
 import to from 'await-to-js';
-import i18next from 'i18next';
 import {
-  listAccountDelegates,
-  listDelegates,
-  vote,
-} from '../utils/api/delegate';
+  getVotes,
+  getDelegates,
+  castVotes,
+} from '../utils/api/delegates';
+import { getVotingLists, getVotingError } from '../utils/voting';
 import { getTimeOffset } from '../utils/hacks';
 import { updateDelegateCache } from '../utils/delegates';
-import { voteWithHW } from '../utils/api/hwWallet';
 import { passphraseUsed } from './account';
 import { addPendingTransaction } from './transactions';
 import { errorToastDisplayed } from './toaster';
-import Fees from '../constants/fees';
-import votingConst from '../constants/voting';
 import actionTypes from '../constants/actions';
-import { loginType } from '../constants/hwConstants';
-
-/**
- * Add pending variable to the list of voted delegates and list of unvoted delegates
- */
-export const pendingVotesAdded = () => ({
-  type: actionTypes.pendingVotesAdded,
-});
-
-/**
- * Remove all data from the list of voted delegates and list of unvoted delegates
- */
-export const votesUpdated = data => ({
-  type: actionTypes.votesUpdated,
-  data,
-});
-
-/**
- * Add data to the list of voted delegates
- */
-export const votesAdded = data => ({
-  type: actionTypes.votesAdded,
-  data,
-});
+import { getAPIClient } from '../utils/api/network';
+import { tokenMap } from '../constants/tokens';
 
 /**
  * Add data to the list of all delegates
+ *
+ * This action is used in delegatesListView to clear delegates
+ * https://github.com/LiskHQ/lisk-hub/blob/d284b32f747e6b5c9189a3aeeff975b13a7a466b/src/components/delegatesListView/index.js#L21-L23
  */
 export const delegatesAdded = data => ({
   type: actionTypes.delegatesAdded,
@@ -75,14 +53,6 @@ export const clearVotes = () => ({
   type: actionTypes.votesCleared,
 });
 
-const handleVoteError = ({ error }) => {
-  if (error && error.message) {
-    return error.message;
-  } else if (typeof error === 'string') {
-    return error;
-  }
-  return i18next.t('An error occurred while placing your vote.');
-};
 
 /**
  * Makes Api call to register votes
@@ -90,70 +60,38 @@ const handleVoteError = ({ error }) => {
  * cleans the pending state
  */
 export const votePlaced = ({
-  passphrase, account, votes, secondPassphrase, goToNextStep,
+  account, votes, secondPassphrase, callback,
 }) =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
-    // account.loginType = 1;
-    let error;
-    let callResult;
-    const liskAPIClient = getState().peers.liskAPIClient;
-    const votedList = [];
-    const unvotedList = [];
+    const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
+    const { votedList, unvotedList } = getVotingLists(votes);
     const timeOffset = getTimeOffset(getState());
-    Object.keys(votes).forEach((username) => {
-      /* istanbul ignore else */
-      if (!votes[username].confirmed && votes[username].unconfirmed) {
-        votedList.push(votes[username].publicKey);
-      } else if (votes[username].confirmed && !votes[username].unconfirmed) {
-        unvotedList.push(votes[username].publicKey);
-      }
-    });
 
-    if (account.balance < Fees.vote) {
-      dispatch(errorToastDisplayed({
-        label: i18next.t('Not enough LSK to pay for the transaction.'),
-      }));
-      return;
-    }
-    if (unvotedList.length + votedList > votingConst.maxCountOfVotes) {
-      dispatch(errorToastDisplayed({
-        label: i18next.t('Max amount of delegates in one voting exceeded.'),
-      }));
+    const label = getVotingError(votes, account);
+    if (label) {
+      dispatch(errorToastDisplayed({ label }));
       return;
     }
 
-    switch (account.loginType) {
-      case loginType.normal:
-        [error, callResult] = await to(vote(
-          liskAPIClient, passphrase, account.publicKey,
-          votedList, unvotedList, secondPassphrase, timeOffset,
-        ));
-        break;
-      /* istanbul ignore next */
-      // eslint-disable-next-line no-case-declarations
-      case loginType.ledger:
-        [error, callResult] =
-          await to(voteWithHW(liskAPIClient, account, votedList, unvotedList));
-        break;
-      /* istanbul ignore next */
-      default:
-        dispatch({ data: { errorMessage: i18next.t('Login Type not recognized.') }, type: actionTypes.transactionFailed });
-    }
+    const [error, callResult] = await to(castVotes({
+      liskAPIClient,
+      account,
+      votedList,
+      unvotedList,
+      secondPassphrase,
+      timeOffset,
+    }));
 
     if (error) {
-      goToNextStep({
+      callback({
         success: false,
-        errorMessage: error.message,
-        text: handleVoteError({ error }),
+        error,
       });
     } else {
-      dispatch(pendingVotesAdded());
-      callResult.map(transaction => dispatch(addPendingTransaction({
-        ...transaction,
-        token: 'LSK',
-      })));
-      dispatch(passphraseUsed(passphrase));
-      goToNextStep({ success: true });
+      dispatch({ type: actionTypes.pendingVotesAdded });
+      callResult.map(transaction => dispatch(addPendingTransaction(transaction)));
+      dispatch(passphraseUsed(account.passphrase));
+      callback({ success: true });
     }
   };
 
@@ -161,41 +99,42 @@ export const votePlaced = ({
  * Gets the list of delegates current account has voted for
  *
  */
-export const votesFetched = ({ address, type }) =>
+export const loadVotes = ({ address, type }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    listAccountDelegates(liskAPIClient, address).then((response) => {
-      if (type === 'update') {
-        dispatch(votesUpdated({ list: response.data.votes }));
-      } else {
-        dispatch(votesAdded({ list: response.data.votes }));
-      }
-    });
+    const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
+    getVotes(liskAPIClient, { address })
+      .then((response) => {
+        dispatch({
+          type: type === 'update' ? actionTypes.votesUpdated : actionTypes.votesAdded,
+          data: { list: response.data.votes },
+        });
+      });
   };
 
 /**
  * Gets list of all delegates
  */
-export const delegatesFetched = ({
+export const loadDelegates = ({
   offset, refresh, q, callback = () => {},
 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
     let params = {
       offset,
       limit: '101',
       sort: 'rank:asc',
     };
     params = q ? { ...params, search: q } : params;
-    listDelegates(liskAPIClient, params).then((response) => {
-      updateDelegateCache(response.data, getState().peers);
-      dispatch(delegatesAdded({
-        list: response.data,
-        totalDelegates: response.data.length,
-        refresh,
-      }));
-      callback(response);
-    }).catch(callback);
+    getDelegates(liskAPIClient, params)
+      .then((response) => {
+        updateDelegateCache(response.data, getState().peers);
+        dispatch(delegatesAdded({
+          list: response.data,
+          refresh,
+        }));
+        callback(response);
+      })
+      .catch(callback);
   };
 
 
@@ -206,11 +145,14 @@ export const urlVotesFound = ({
   upvotes, unvotes, address,
 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
     const processUrlVotes = (votes) => {
-      dispatch(votesAdded({ list: votes, upvotes, unvotes }));
+      dispatch({
+        type: actionTypes.votesAdded,
+        data: { list: votes, upvotes, unvotes },
+      });
     };
-    listAccountDelegates(liskAPIClient, address)
+    getVotes(liskAPIClient, { address })
       .then((response) => { processUrlVotes(response.data.votes); })
       .catch(() => { processUrlVotes([]); });
   };

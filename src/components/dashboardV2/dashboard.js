@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import throttle from 'lodash.throttle';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '../../constants/routes';
-import Bookmarks from '../bookmarks';
-import QuickTips from '../quickTips';
+import BookmarksList from '../bookmarksList';
 import NewsFeed from '../newsFeedV2';
+import MyAccount from '../myAccount';
 import Piwik from '../../utils/piwik';
 import links from '../../constants/externalLinks';
 import { fromRawLsk } from '../../utils/lsk';
@@ -18,6 +18,7 @@ import ExtensionPoint from '../extensionPoint';
 import LiskHubExtensions from '../../utils/liskHubExtensions';
 import RecentTransactions from './recentTransactions';
 import styles from './dashboard.css';
+import Onboarding from '../toolbox/onboarding/onboarding';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -65,17 +66,44 @@ class Dashboard extends React.Component {
     this.setState({ showMore: !this.state.showMore });
   }
 
+  getOnboardingSlides() {
+    const { t } = this.props;
+    return [{
+      title: t('Lisk Hub is ready to go!'),
+      content: t('Your new Lisk Wallet enables you to take full control of your LSK tokens. Secure, intuitive and robust Hub is your ultimate gateway to Lisk Ecosystem.'),
+      illustration: 'hubReadyToGo',
+    }, {
+      title: t('Built around community'),
+      content: t('The  dashboard lets you track updates not only from Lisk, but also delegates. You can now explore delegate profile pages and follow them to get all the updates.'),
+      illustration: 'builtAroundCommunity',
+    }, {
+      title: t('Easily send and receive LSK tokens'),
+      content: t('Lisk Hub enables you to attach a personal message to each outgoing LSK transaction and to see the value of the LSK tokens you’re about to send in a currency of your chocie.'),
+      illustration: 'sendLSKTokens',
+    }, {
+      title: t('It’s your time to contribute'),
+      content: t('Search, view and vote for Lisk delegates on the network. Lisk Hub gives you the opportunity to request a Lisk feature and allows you to register to become a delegate.'),
+      illustration: 'timeToContribute',
+    }];
+  }
+
   render() {
     const {
       account,
       history,
       t,
     } = this.props;
+    const { isDesktop } = this.state;
 
     const isLoggedIn = account.address;
 
     return (
       <React.Fragment>
+        <Onboarding
+          slides={this.getOnboardingSlides()}
+          actionButtonLabel={t('Got it, thanks!')}
+          name={'dashboardOnboarding'}
+        />
         { isLoggedIn && this.shouldShowInitializatiion() &&
           <div className={`${grid.row} ${styles.bannerWrapper}`}>
             <Banner
@@ -110,21 +138,27 @@ class Dashboard extends React.Component {
           </header>
 
           <div className={`${styles.main}`}>
-            {
-              isLoggedIn
-              ? <RecentTransactions />
-              : <QuickTips />
-            }
+            <div className={styles.subContainer}>
+              {
+                isLoggedIn
+                ? <MyAccount className={styles.marginFix}/>
+                : null
+              }
+
+              <RecentTransactions className={styles.marginFix} isLoggedIn={isLoggedIn} />
+            </div>
 
             {
-            <div className={`${styles.newsFeedWrapper}`}>
-              <NewsFeed />
-              <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn3} />
-            </div>
+              isDesktop
+              ? <div className={`${styles.community}`}>
+                  <NewsFeed />
+                  <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn3} />
+                </div>
+              : null
             }
 
             <div className={`${styles.bookmarks} bookmarks`}>
-              <Bookmarks history={history}/>
+              <BookmarksList history={history}/>
               <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn1} />
             </div>
           </div>

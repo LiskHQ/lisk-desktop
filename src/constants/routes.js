@@ -8,8 +8,8 @@ import SignMessage from '../components/signMessage';
 import SearchResult from '../components/searchResult';
 import TransactionDashboard from '../components/transactionDashboard';
 import AccountTransactions from '../components/accountTransactions';
-import Delegates from '../components/delegatesV2';
-import Voting from '../components/votingV2';
+import Delegates from '../components/delegates';
+import Voting from '../components/voting';
 import SingleTransaction from '../components/singleTransactionV2';
 import HwWalletLogin from '../components/hwWalletLogin';
 // import NotFound from '../components/notFound';
@@ -20,6 +20,7 @@ import RegistrationV2 from '../components/registerV2/registerV2';
 import LoginV2 from '../components/loginV2';
 import Extensions from '../components/extensions';
 import TermsOfUse from '../components/termsOfUse';
+import ToolboxDemo from '../components/toolbox/demo';
 import DasboardV2 from '../components/dashboardV2';
 
 export default {
@@ -27,6 +28,12 @@ export default {
     path: '/account-visual-demo',
     component: AccountVisualDemo,
     isPrivate: true,
+    isV2Layout: true,
+  },
+  toolboxDemo: {
+    path: '/toolbox',
+    component: ToolboxDemo,
+    isPrivate: false,
   },
   dashboard: {
     path: '/dashboard',
@@ -70,7 +77,7 @@ export default {
     isPrivate: true,
   },
   setting: {
-    path: '/setting',
+    path: '/settings',
     component: Setting,
     isPrivate: false,
   },

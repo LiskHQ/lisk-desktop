@@ -1,0 +1,95 @@
+import React from 'react';
+import TransactionSummary from '../transactionSummary';
+import votingConst from '../../constants/voting';
+import {
+  getTotalVotesCount,
+  getVoteList,
+  getUnvoteList,
+  getTotalActions,
+} from '../../utils/voting';
+import routes from '../../constants/routes';
+import VoteUrlProcessor from './voteUrlProcessor';
+import VoteList from './voteList';
+
+const VotingSummary = ({
+  t, votes, history, account, nextStep, votePlaced, prevStep, voteLookupStatus,
+}) => {
+  const {
+    maxCountOfVotes,
+    fee,
+  } = votingConst;
+  const voteList = getVoteList(votes);
+  const unvoteList = getUnvoteList(votes);
+  const totalActions = getTotalActions(votes);
+  return (
+    <TransactionSummary
+      t={t}
+      account={account}
+      confirmButton={{
+        label: t('Confirm voting'),
+        disabled: totalActions === 0 ||
+          (voteLookupStatus.pending && voteLookupStatus.pending.length > 0),
+        onClick: ({ secondPassphrase }) => {
+          votePlaced({
+            account,
+            votes,
+            passphrase: account.passphrase,
+            secondPassphrase,
+            callback: ({ success, error }) => {
+              nextStep({
+                success,
+                ...(success ? {
+                  title: t('Voting submitted'),
+                  message: t('You will be notified when your votes are forged.'),
+                  primaryButon: {
+                    title: t('Back to Delegates'),
+                    className: 'back-to-delegates-button',
+                    onClick: () => {
+                      history.push(routes.delegates.path);
+                    },
+                  },
+                } : {
+                  title: t('Voting failed'),
+                  message: (error && error.message) || t('Oops, looks like something went wrong. Please try again.'),
+                  primaryButon: {
+                    title: t('Back to Voting summary'),
+                    onClick: prevStep,
+                  },
+                  error,
+                }),
+              });
+            },
+          });
+        },
+      }}
+      cancelButton={{
+        label: t('Edit voting'),
+        onClick: () => {
+          history.push(routes.delegates.path);
+        },
+      }}
+      fee={fee * totalActions}
+      title={t('Voting summary')} >
+      <VoteUrlProcessor
+        account={account}
+        votes={votes}
+        voteLookupStatus={voteLookupStatus}/>
+      <VoteList
+        title={t('Added votes')}
+        className='added-votes'
+        list={voteList}
+        votes={votes} />
+      <VoteList
+        title={t('Removed votes')}
+        className='removed-votes'
+        list={unvoteList}
+        votes={votes} />
+      <section>
+        <label>{t('Votes after confirmation')}</label>
+        <label>{getTotalVotesCount(votes)}/{maxCountOfVotes}</label>
+      </section>
+    </TransactionSummary>
+  );
+};
+
+export default VotingSummary;
