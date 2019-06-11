@@ -7,7 +7,6 @@
   display: flex;
   list-style: none;
   margin: 0;
-  margin-left: -20px;
   padding: 0;
 
   & > li {
@@ -24,11 +23,7 @@
     padding: 14px 20px;
     position: relative;
 
-    &:first-child {
-      border-top-left-radius: var(--border-radius-box);
-    }
-
-    &:last-child:not(.active) {
+    &:last-child {
       border-right: 0 none;
     }
 
@@ -36,6 +31,22 @@
       background: var(--color-white);
       border-bottom: 1px solid var(--color-white);
       color: var(--color-ultramarine-blue);
+    }
+  }
+
+  &:first-child {
+    margin-left: -20px;
+
+    & > li.active:last-child {
+      border-right: 1px solid var(--color-platinum);
+    }
+  }
+
+  &:last-child {
+    margin-right: -20px;
+
+    & > li.active:first-child {
+      border-left: 1px solid var(--color-platinum);
     }
   }
 }

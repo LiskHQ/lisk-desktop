@@ -1,5 +1,5 @@
-import { getDelegate } from '../../utils/api/delegate';
-import { voteLookupStatusUpdated, voteToggled, votesFetched } from '../../actions/voting';
+import { getDelegates } from '../../utils/api/delegates';
+import { voteLookupStatusUpdated, voteToggled, loadVotes, delegatesAdded } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
 import { loadDelegateCache } from '../../utils/delegates';
 
@@ -20,7 +20,7 @@ const lookupDelegate = (store, username) => {
       resolve({ data: [delegate] });
     });
   }
-  return getDelegate(liskAPIClient, { username });
+  return getDelegates(liskAPIClient, { username });
 };
 
 const processVote = (store, options, username) => {
@@ -64,7 +64,7 @@ const fetchVotes = (store) => {
   // or maybe it should be moved somewhere else (e.g. urlVotesFound action)
   const state = store.getState();
   const address = state.account.address;
-  store.dispatch(votesFetched({
+  store.dispatch(loadVotes({
     address,
     type: 'update',
   }));
@@ -76,6 +76,13 @@ const votingMiddleware = store => next => (action) => {
     case actionTypes.votesAdded:
       fetchVotes(store);
       lookupDelegatesFromUrl(store, action);
+      break;
+    case actionTypes.accountLoggedOut:
+      store.dispatch(delegatesAdded({ list: [] }));
+      store.dispatch({
+        type: actionTypes.votesAdded,
+        data: { list: [] },
+      });
       break;
     default: break;
   }

@@ -24,7 +24,6 @@ const validateToken = state => (
 
 // load setting data from localStorage if it exists
 export const initialState = JSON.parse(localStorage.getItem('settings')) || {
-  advancedMode: false,
   autoLog: true,
   showNetwork: false,
   channels,
@@ -51,7 +50,6 @@ const settings = (state = initialState, action) => {
     case actionTypes.settingsReset:
       return {
         ...state,
-        advancedMode: false,
         autoLog: true,
       };
     default:

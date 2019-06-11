@@ -1,7 +1,7 @@
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from '../actions/loading';
 import { getAccount } from '../utils/api/account';
-import { getDelegate, getVotes, listDelegates } from '../utils/api/delegate';
+import { getDelegates, getVotes } from '../utils/api/delegates';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import searchAll from '../utils/api/search';
@@ -14,7 +14,7 @@ const searchDelegate = ({ publicKey, address }) =>
     const liskAPIClient = getState().peers.liskAPIClient;
     const networkConfig = getState().network;
     const token = tokenMap.LSK.key;
-    const delegates = await getDelegate(liskAPIClient, { publicKey });
+    const delegates = await getDelegates(liskAPIClient, { publicKey });
     const transactions = await getTransactions({
       token, networkConfig, address, limit: 1, type: transactionTypes.registerDelegate,
     });
@@ -42,7 +42,7 @@ export const fetchVotedDelegateInfo = (votes, {
     /* istanbul ignore if */
     if (!liskAPIClient) return;
     dispatch(loadingStarted(actionTypes.searchVotes));
-    const delegates = await listDelegates(liskAPIClient, { limit, offset });
+    const delegates = await getDelegates(liskAPIClient, { limit, offset });
     const votesWithDelegateInfo = votes.map((vote) => {
       const delegate = delegates.data.find(d => d.username === vote.username) || {};
       return { ...vote, ...delegate };
@@ -71,13 +71,13 @@ export const fetchVotedDelegateInfo = (votes, {
     }
   };
 
-const searchVotes = ({ address, offset, limit }) =>
+const searchVotes = ({ address }) =>
   async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     /* istanbul ignore if */
     if (!liskAPIClient) return;
     dispatch(loadingStarted(actionTypes.searchVotes));
-    const votes = await getVotes(liskAPIClient, { address, offset, limit })
+    const votes = await getVotes(liskAPIClient, { address })
       .then(res => res.data.votes || [])
       .catch(() => dispatch(loadingFinished(actionTypes.searchVotes)));
 
@@ -103,7 +103,7 @@ export const searchAccount = ({ address }) =>
         dispatch({ data: accountData, type: actionTypes.searchAccount });
         dispatch(updateWallet(response, getState().peers));
         if (accountData.token === tokenMap.LSK.key) {
-          searchVotes({ address, offset: 0, limit: 101 })(dispatch, getState);
+          searchVotes({ address })(dispatch, getState);
         }
       });
     }

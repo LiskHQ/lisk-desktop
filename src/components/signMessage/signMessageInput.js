@@ -1,26 +1,26 @@
 import React from 'react';
-import styles from './signMessageInput.css';
-// eslint-disable-next-line import/no-named-as-default
-import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
-import { PrimaryButton } from '../toolbox/buttons/button';
 import { parseSearchParams } from './../../utils/searchParams';
-import TransitionWrapper from '../toolbox/transitionWrapper';
 import Piwik from '../../utils/piwik';
+import { AutoresizeTextarea } from '../toolbox/inputsV2';
+import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
+import styles from './signMessage.css';
 
 class SignMessageInput extends React.Component {
   constructor(props) {
     super(props);
 
-    const { message } = this.getSearchParams();
+    const { message } = parseSearchParams(props.history.location.search);
     this.state = {
-      step: 'introduction-step',
       message: {
         value: message || '',
       },
     };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.nextStep = this.nextStep.bind(this);
   }
 
-  handleChange(name, value) {
+  handleChange({ target: { name, value } }) {
     this.setState({
       [name]: {
         value,
@@ -28,53 +28,46 @@ class SignMessageInput extends React.Component {
     });
   }
 
-  getSearchParams() {
-    return parseSearchParams(this.props.history.location.search);
-  }
-
-  done() {
+  nextStep() {
     Piwik.trackingEvent('SignMessageInput', 'button', 'Next step');
     this.props.nextStep({ message: this.state.message.value });
   }
 
   render() {
-    const { t, header, message } = this.props;
+    const { t, history } = this.props;
+    const { message } = this.state;
     return (
-      <section className={`${styles.signMessageInput}`}>
-        <header className={styles.table}>
-          <div className={styles.tableCell}>
-            <TransitionWrapper current={this.state.step} step='introduction-step'>
-              <h2 className={`${styles.generatorHeader}`}
-                id="generatorHeader" >
-                {header}
-              </h2>
-            </TransitionWrapper>
-            <TransitionWrapper current={this.state.step} step='introduction-step'>
-              <p className={styles.info}>
-                {message}
-              </p>
-            </TransitionWrapper>
-          </div>
-        </header>
-        <section className={`${styles.table} ${styles.verify} ${styles.content}`}>
-          <TransitionWrapper current={this.state.step} step='introduction-step' animationName='fade'>
-            <ToolBoxInput
-              multiline
-              label={this.props.t('Write a message')}
-              className={`${styles.message} message`}
-              onChange={this.handleChange.bind(this, 'message')}
-              value={this.state.message.value}/>
-          </TransitionWrapper>
-          <TransitionWrapper current={this.state.step} step='introduction-step' animationName='fade'>
-            <PrimaryButton
-              className={`${styles.nextButton} next`}
-              label={t('Next')}
-              onClick={this.done.bind(this)}
-              type={'button'}
-              disabled={!this.state.message.value} />
-          </TransitionWrapper>
-        </section>
-      </section>);
+      <section>
+        <div className={styles.header}>
+          <span className={styles.step}>{t('Step 1 / 2')}</span>
+          <h1>{t('Sign a message')}</h1>
+          <p>{t('You can use your passphrase to sign a message. This signed message can prove that you are the owner of the account, since only your passphrase can produce it. We reccomend including date & time or a specific keyword.')}</p>
+        </div>
+        <div>
+          <label className={styles.fieldGroup}>
+            <span>{t('Message')}</span>
+            <AutoresizeTextarea
+              className={styles.textarea}
+              name={'message'}
+              onChange={this.handleChange}
+              value={message.value} />
+          </label>
+        </div>
+        <div className={styles.buttonsHolder}>
+          <PrimaryButtonV2
+            className={'next'}
+            onClick={this.nextStep}
+          >{
+            t('Continue')
+          }</PrimaryButtonV2>
+          <TertiaryButtonV2
+            onClick={history.goBack}
+          >{
+            t('Go Back')
+          }</TertiaryButtonV2>
+        </div>
+      </section>
+    );
   }
 }
 

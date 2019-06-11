@@ -12,7 +12,7 @@ describe('Onboarding component', () => {
         content: 'content',
         illustration: 'test.svg',
       }],
-      ctaLabel: 'cta label',
+      actionButtonLabel: 'cta label',
       finalCallback: jest.fn(),
       onClose: jest.fn(),
       name: 'onboaring name',
@@ -26,7 +26,7 @@ describe('Onboarding component', () => {
     const wrapper = mount(<Onboarding {...props} />);
     expect(wrapper).toContainMatchingElement('.slides');
     expect(wrapper).not.toContainMatchingElement('.bullets');
-    expect(wrapper.find('button').last()).toHaveText(props.ctaLabel);
+    expect(wrapper.find('button').last()).toHaveText(props.actionButtonLabel);
     wrapper.find('button').last().simulate('click');
     expect(props.finalCallback).toBeCalled();
   });
@@ -59,7 +59,7 @@ describe('Onboarding component', () => {
     wrapper.find('button').last().simulate('click');
     expect(wrapper.find('button').first()).toHaveText('Previous');
     expect(wrapper.find('button').first()).not.toBeDisabled();
-    expect(wrapper.find('button').last()).toHaveText(props.ctaLabel);
+    expect(wrapper.find('button').last()).toHaveText(props.actionButtonLabel);
     wrapper.find('button').first().simulate('click');
     expect(wrapper.find('button').first()).not.toHaveText('Previous');
     expect(wrapper.find('button').last()).toHaveText('Next');

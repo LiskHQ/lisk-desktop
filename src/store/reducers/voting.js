@@ -43,7 +43,6 @@ const mergeVotes = (newList, oldDict) => {
 const voting = (state = { // eslint-disable-line complexity
   votes: {},
   delegates: [],
-  totalDelegates: 0,
   voteLookupStatus: {},
 }, action) => {
   switch (action.type) {
@@ -62,7 +61,6 @@ const voting = (state = { // eslint-disable-line complexity
             };
             return votesDict;
           }, {}),
-        refresh: false,
       };
 
     case actionTypes.delegatesAdded:
@@ -70,15 +68,11 @@ const voting = (state = { // eslint-disable-line complexity
         ...state,
         delegates: action.data.refresh ? action.data.list :
           [...state.delegates, ...action.data.list],
-        totalDelegates: action.data.refresh ? action.data.list.length :
-          [...state.delegates, ...action.data.list].length,
-        refresh: true,
       };
 
     case actionTypes.voteToggled:
       return {
         ...state,
-        refresh: false,
         votes: {
           ...state.votes,
           [action.data.username]: {
@@ -94,59 +88,51 @@ const voting = (state = { // eslint-disable-line complexity
         },
       };
 
-
-    case actionTypes.accountLoading:
-      return {
-        ...state,
-        votes: {},
-        delegates: [],
-        refresh: true,
-      };
-
+    /**
+     * This action is used when user cancels voting. It sets 'unconfirmed' state
+     * of each vote to match it's 'confirmed' state.
+     */
     case actionTypes.votesCleared:
       return {
         ...state,
         votes: Object.keys(state.votes).reduce((votesDict, username) => {
           votesDict[username] = {
-            confirmed: state.votes[username].confirmed,
+            ...state.votes[username],
             unconfirmed: state.votes[username].confirmed,
-            publicKey: state.votes[username].publicKey,
-            address: state.votes[username].address,
-            productivity: state.votes[username].productivity,
-            rank: state.votes[username].rank,
             pending: false,
           };
           return votesDict;
         }, {}),
-        refresh: true,
       };
 
+    /**
+     * This action is used when voting transaction is confirmed. It updates votes
+     * based on response from votes API endpoint.
+     * https://lisk.io/documentation/lisk-core/api#/Votes
+     */
     case actionTypes.votesUpdated:
       return {
         ...state,
         votes: mergeVotes(action.data.list, state.votes),
-        refresh: false,
       };
 
+    /**
+     * This action is used when voting is submitted. It sets 'pending' status
+     * of all votes that have different 'confirmed' and 'unconfirmed' state
+     */
     case actionTypes.pendingVotesAdded:
       return {
         ...state,
-        refresh: false,
         votes: Object.keys(state.votes).reduce((votesDict, username) => {
           const {
-            confirmed, unconfirmed, publicKey,
-            pending, address, rank, productivity,
+            confirmed, unconfirmed, pending,
           } = state.votes[username];
           const nextPendingStatus = pending || (confirmed !== unconfirmed);
 
           votesDict[username] = {
+            ...state.votes[username],
             confirmed: nextPendingStatus ? !confirmed : confirmed,
-            unconfirmed,
             pending: nextPendingStatus,
-            publicKey,
-            address,
-            rank,
-            productivity,
           };
           return votesDict;
         }, {}),

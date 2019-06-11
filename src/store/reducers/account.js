@@ -12,7 +12,7 @@ const account = (state = {}, action) => {
     case actionTypes.removePassphrase:
       return { ...state, passphrase: null, expireTime: 0 };
     case actionTypes.accountUpdated:
-      return {
+      return action.data.token ? {
         ...state,
         info: {
           ...(state.info || {}),
@@ -21,6 +21,9 @@ const account = (state = {}, action) => {
             ...action.data,
           },
         },
+      } : {
+        ...state,
+        ...action.data,
       };
     case actionTypes.passphraseUsed:
       return { ...state, expireTime: Date.now() + lockDuration };

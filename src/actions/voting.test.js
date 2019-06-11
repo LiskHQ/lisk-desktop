@@ -2,30 +2,35 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import {
-  pendingVotesAdded,
-  votesUpdated,
-  votesAdded,
   voteToggled,
   voteLookupStatusUpdated,
   votePlaced,
-  votesFetched,
+  loadVotes,
   urlVotesFound,
-  delegatesFetched,
+  loadDelegates,
   delegatesAdded,
 } from './voting';
 import Fees from '../constants/fees';
 import networks from '../constants/networks';
 import { loginType } from '../constants/hwConstants';
-import * as delegateApi from '../utils/api/delegate';
+import * as delegateApi from '../utils/api/delegates';
 
 const delegateList = [
   { username: 'username1', publicKey: '123HG3452245L', address: '1234121321L' },
   { username: 'username2', publicKey: '123HG3522345L', address: '123L' },
 ];
 
+const votesAdded = data => ({
+  type: actionTypes.votesAdded,
+  data,
+});
+
 describe('actions: voting', () => {
   let getState = () => ({
     peers: { liskAPIClient: {} },
+    network: {
+      name: networks.mainnet.name,
+    },
   });
 
   describe('voteToggled', () => {
@@ -56,38 +61,6 @@ describe('actions: voting', () => {
     });
   });
 
-  describe('votesAdded', () => {
-    it('should create an action to remove data from vote list', () => {
-      const data = delegateList;
-      const expectedAction = {
-        data,
-        type: actionTypes.votesAdded,
-      };
-
-      expect(votesAdded(data)).to.be.deep.equal(expectedAction);
-    });
-  });
-
-  describe('votesUpdated', () => {
-    it('should create an action to update the votes dictionary', () => {
-      const expectedAction = {
-        type: actionTypes.votesUpdated,
-        data: { list: delegateList },
-      };
-      const createdAction = votesUpdated({ list: delegateList });
-      expect(createdAction).to.be.deep.equal(expectedAction);
-    });
-  });
-
-  describe('pendingVotesAdded', () => {
-    it('should create an action to remove all pending rows from vote list', () => {
-      const expectedAction = {
-        type: actionTypes.pendingVotesAdded,
-      };
-      expect(pendingVotesAdded()).to.be.deep.equal(expectedAction);
-    });
-  });
-
   describe('votePlaced', () => {
     let delegateApiMock;
     const account = {
@@ -103,18 +76,15 @@ describe('actions: voting', () => {
     };
 
     let dispatch;
-    let goToNextStep;
+    let callback;
     let actionFunction;
 
     beforeEach(() => {
-      delegateApiMock = sinon.stub(delegateApi, 'vote');
+      delegateApiMock = sinon.stub(delegateApi, 'castVotes');
       dispatch = sinon.spy();
-      goToNextStep = sinon.spy();
+      callback = sinon.spy();
       actionFunction = votePlaced({
-        account, votes, secondSecret, goToNextStep,
-      });
-      getState = () => ({
-        peers: { liskAPIClient: {} },
+        account, votes, secondSecret, callback,
       });
     });
 
@@ -143,29 +113,32 @@ describe('actions: voting', () => {
         .calledWith({ data: transaction, type: actionTypes.addPendingTransaction });
     });
 
-    it('should call goToNextStep with "success: false" if caught an error', async () => {
-      const message = 'sample message';
-      delegateApiMock.returnsPromise().rejects({ message });
+    it('should call callback with "success: false" if caught an error', async () => {
+      const error = { message: 'sample message' };
+      delegateApiMock.returnsPromise().rejects(error);
 
       await actionFunction(dispatch, getState);
-      const expectedAction = { success: false, text: message, errorMessage: message };
-      expect(goToNextStep).to.have.been.calledWith(expectedAction);
+      const expectedAction = { success: false, error };
+      expect(callback).to.have.been.calledWith(expectedAction);
     });
 
-    it('should call goToNextStep with "success: false" and default message if caught an error but no message returned', async () => {
-      delegateApiMock.returnsPromise().rejects({});
-
-      await actionFunction(dispatch, getState);
-      const expectedAction = {
-        success: false,
-        text: 'An error occurred while placing your vote.',
-        errorMessage: undefined,
-      };
-      expect(goToNextStep).to.have.been.calledWith(expectedAction);
+    it('should dispatch error toast if not enought balance', async () => {
+      await votePlaced({
+        account: {
+          ...account,
+          balance: 0,
+        },
+        votes,
+        secondSecret,
+        callback,
+      })(dispatch, getState);
+      expect(dispatch).to.have.been.calledWith(sinon.match({
+        type: actionTypes.toastDisplayed,
+      }));
     });
   });
 
-  describe('votesFetched', () => {
+  describe('loadVotes', () => {
     let delegateApiMock;
     const data = {
       address: '8096217735672704724L',
@@ -173,7 +146,7 @@ describe('actions: voting', () => {
     const delegates = delegateList;
 
     beforeEach(() => {
-      delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates').returnsPromise();
+      delegateApiMock = sinon.stub(delegateApi, 'getVotes').returnsPromise();
       getState = () => ({
         peers: { liskAPIClient: {} },
       });
@@ -185,7 +158,7 @@ describe('actions: voting', () => {
 
 
     it('should create an action function', () => {
-      const actionFunction = votesFetched(data);
+      const actionFunction = loadVotes(data);
       expect(typeof actionFunction).to.be.deep.equal('function');
     });
 
@@ -195,7 +168,7 @@ describe('actions: voting', () => {
       delegateApiMock.resolves({ data: { votes: delegates } });
       const expectedAction = { list: delegates };
 
-      votesFetched(data)(dispatch, getState);
+      loadVotes(data)(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(votesAdded(expectedAction));
     });
 
@@ -203,21 +176,24 @@ describe('actions: voting', () => {
       const dispatch = sinon.spy();
 
       delegateApiMock.resolves({ data: { votes: delegates } });
-      const expectedAction = { list: delegates };
+      const expectedAction = {
+        type: actionTypes.votesUpdated,
+        data: { list: delegates },
+      };
 
-      votesFetched({ ...data, type: 'update' })(dispatch, getState);
-      expect(dispatch).to.have.been.calledWith(votesUpdated(expectedAction));
+      loadVotes({ ...data, type: 'update' })(dispatch, getState);
+      expect(dispatch).to.have.been.calledWith(expectedAction);
     });
   });
 
-  describe('delegatesFetched', () => {
+  describe('loadDelegates', () => {
     const data = {
       q: '',
       offset: 0,
       refresh: true,
     };
     const delegates = delegateList;
-    const actionFunction = delegatesFetched(data);
+    const actionFunction = loadDelegates(data);
 
     getState = () => ({
       peers: {
@@ -234,7 +210,7 @@ describe('actions: voting', () => {
     });
 
     it('should dispatch delegatesAdded action if resolved', () => {
-      const delegateApiMock = sinon.stub(delegateApi, 'listDelegates');
+      const delegateApiMock = sinon.stub(delegateApi, 'getDelegates');
       const dispatch = sinon.spy();
       getState = () => ({
         peers: {
@@ -251,7 +227,7 @@ describe('actions: voting', () => {
       });
 
       delegateApiMock.returnsPromise().resolves({ data: delegates });
-      const expectedAction = { list: delegates, totalDelegates: delegates.length, refresh: true };
+      const expectedAction = { list: delegates, refresh: true };
 
       actionFunction(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(delegatesAdded(expectedAction));
@@ -278,7 +254,7 @@ describe('actions: voting', () => {
     });
 
     beforeEach(() => {
-      delegateApiMock = sinon.stub(delegateApi, 'listAccountDelegates').returnsPromise();
+      delegateApiMock = sinon.stub(delegateApi, 'getVotes').returnsPromise();
       getState = () => ({
         peers: { liskAPIClient: {} },
       });

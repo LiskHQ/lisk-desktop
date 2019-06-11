@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { spy, stub, mock, match } from 'sinon';
 
 import { voteLookupStatusUpdated } from '../../actions/voting';
-import * as delegateApi from '../../utils/api/delegate';
+import * as delegateApi from '../../utils/api/delegates';
 import actionTypes from '../../constants/actions';
 import middleware from './voting';
 import votingConst from '../../constants/voting';
@@ -82,15 +82,15 @@ describe('voting middleware', () => {
         },
       },
     };
-    let getDelegateMock;
+    let getDelegatesMock;
 
     beforeEach(() => {
-      getDelegateMock = mock(delegateApi).expects('getDelegate').returnsPromise();
+      getDelegatesMock = mock(delegateApi).expects('getDelegates').returnsPromise();
       store.getState = () => (state);
     });
 
     afterEach(() => {
-      getDelegateMock.restore();
+      getDelegatesMock.restore();
     });
 
     it('should do nothing if !action.upvotes or !action.dowvotes ', () => {
@@ -114,7 +114,7 @@ describe('voting middleware', () => {
       };
 
       middleware(store)(next)(givenAction);
-      getDelegateMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
+      getDelegatesMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
 
       expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
     });
@@ -131,7 +131,7 @@ describe('voting middleware', () => {
       };
 
       middleware(store)(next)(givenAction);
-      getDelegateMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
+      getDelegatesMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
 
       expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
     });
@@ -148,7 +148,7 @@ describe('voting middleware', () => {
       };
 
       middleware(store)(next)(givenAction);
-      getDelegateMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
+      getDelegatesMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
 
       expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
     });
@@ -165,7 +165,7 @@ describe('voting middleware', () => {
       };
 
       middleware(store)(next)(givenAction);
-      getDelegateMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
+      getDelegatesMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
 
       expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
     });
@@ -182,12 +182,12 @@ describe('voting middleware', () => {
       };
 
       middleware(store)(next)(givenAction);
-      getDelegateMock.rejects();
+      getDelegatesMock.rejects();
 
       expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
     });
 
-    it('should not call getDelegate API if given delegate is in store', () => {
+    it('should not call getDelegates API if given delegate is in store', () => {
       const username = 'delegate_in_store';
       const givenAction = {
         type: actionTypes.votesAdded,
@@ -198,9 +198,24 @@ describe('voting middleware', () => {
       };
 
       middleware(store)(next)(givenAction);
-      getDelegateMock.rejects();
+      getDelegatesMock.rejects();
 
-      expect(getDelegateMock).to.not.have.been.calledWith();
+      expect(getDelegatesMock).to.not.have.been.calledWith();
+    });
+
+    it('should clear delegates and votes on accountLoggedOut action', () => {
+      middleware(store)(next)({
+        type: actionTypes.accountLoggedOut,
+      });
+
+      expect(store.dispatch).to.have.been.calledWith({
+        data: { list: [] },
+        type: actionTypes.delegatesAdded,
+      });
+      expect(store.dispatch).to.have.been.calledWith({
+        data: { list: [] },
+        type: actionTypes.votesAdded,
+      });
     });
   });
 });

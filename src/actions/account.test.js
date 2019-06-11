@@ -18,7 +18,7 @@ import {
 import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { delegateRegisteredFailure } from './delegate';
 import * as accountApi from '../utils/api/account';
-import * as delegateApi from '../utils/api/delegate';
+import * as delegateApi from '../utils/api/delegates';
 import * as transactionsApi from '../utils/api/transactions';
 import * as blocksApi from '../utils/api/blocks';
 import Fees from '../constants/fees';
@@ -311,7 +311,7 @@ describe('actions: account', () => {
     let getState;
 
     beforeEach(() => {
-      stub(delegateApi, 'getDelegate').returnsPromise();
+      stub(delegateApi, 'getDelegates').returnsPromise();
       getState = () => ({
         peers: { liskAPIClient: {} },
         account: {
@@ -323,11 +323,11 @@ describe('actions: account', () => {
     });
 
     afterEach(() => {
-      delegateApi.getDelegate.restore();
+      delegateApi.getDelegates.restore();
     });
 
     it('should fetch delegate and update account', () => {
-      delegateApi.getDelegate.resolves({ data: [{ account: 'delegate data' }] });
+      delegateApi.getDelegates.resolves({ data: [{ account: 'delegate data' }] });
       const data = {
         publicKey: accounts.genesis.publicKey,
       };

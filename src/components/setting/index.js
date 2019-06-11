@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import Setting from './setting';
 import { settingsUpdated } from '../../actions/settings';
+import { toastDisplayed } from '../../actions/toaster';
 import { accountUpdated } from '../../actions/account';
 
 const mapStateToProps = state => ({
@@ -10,11 +11,13 @@ const mapStateToProps = state => ({
   settings: state.settings,
   account: state.account,
   isAuthenticated: !!state.account.info,
+  transactions: state.transactions,
 });
 
 const mapDispatchToProps = {
   accountUpdated,
   settingsUpdated,
+  toastDisplayed,
 };
 
 export default connect(
