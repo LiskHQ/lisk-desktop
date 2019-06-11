@@ -23,8 +23,8 @@
 
 .container {
   min-height: 578px;
-  overflow: hidden;
-  height: 660px;
+  overflow-y: scroll;
+  height: 695px;
 
   & > div {
     height: 100%;
@@ -33,6 +33,19 @@
   & .newsWrapper {
     box-sizing: border-box;
     padding: 0 20px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-ultramarine-blue);
+    border-radius: var(--border-radius-box);
   }
 }
 
