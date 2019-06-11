@@ -151,14 +151,15 @@ export const delegateRegistered = ({
 export const loadDelegate = ({ publicKey }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    getDelegates(liskAPIClient, { publicKey }).then((response) => {
-      dispatch({
-        data: {
-          delegate: response.delegate,
-        },
-        type: actionTypes.updateDelegate,
+    getDelegates(liskAPIClient, { publicKey })
+      .then((response) => {
+        dispatch({
+          data: {
+            delegate: response.delegate,
+          },
+          type: actionTypes.updateDelegate,
+        });
       });
-    });
   };
 
 export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocus) =>
@@ -185,22 +186,23 @@ export const accountDataUpdated = ({
 }) =>
   (dispatch, getState) => {
     const networkConfig = getState().network;
-    getAccount({ networkConfig, address: account.address }).then((result) => {
-      if (result.balance !== account.balance) {
-        dispatch(updateTransactionsIfNeeded(
-          {
-            transactions,
-            account,
-          },
-          !windowIsFocused,
-        ));
-      }
-      dispatch(accountUpdated(result));
-      dispatch(updateWallet(result, getState().peers));
-      dispatch(liskAPIClientUpdate({ online: true }));
-    }).catch((res) => {
-      dispatch(liskAPIClientUpdate({ online: false, code: res.error.code }));
-    });
+    getAccount({ networkConfig, address: account.address })
+      .then((result) => {
+        if (result.balance !== account.balance) {
+          dispatch(updateTransactionsIfNeeded(
+            {
+              transactions,
+              account,
+            },
+            !windowIsFocused,
+          ));
+        }
+        dispatch(accountUpdated(result));
+        dispatch(updateWallet(result, getState().peers));
+        dispatch(liskAPIClientUpdate({ online: true }));
+      }).catch((res) => {
+        dispatch(liskAPIClientUpdate({ online: false, code: res.error.code }));
+      });
   };
 
 export const updateAccountDelegateStats = account =>

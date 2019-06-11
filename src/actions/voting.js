@@ -101,12 +101,13 @@ export const votePlaced = ({
 export const loadVotes = ({ address, type }) =>
   (dispatch, getState) => {
     const liskAPIClient = getAPIClient('LSK', getState());
-    getVotes(liskAPIClient, { address }).then((response) => {
-      dispatch({
-        type: type === 'update' ? actionTypes.votesUpdated : actionTypes.votesAdded,
-        data: { list: response.data.votes },
+    getVotes(liskAPIClient, { address })
+      .then((response) => {
+        dispatch({
+          type: type === 'update' ? actionTypes.votesUpdated : actionTypes.votesAdded,
+          data: { list: response.data.votes },
+        });
       });
-    });
   };
 
 /**
@@ -123,14 +124,16 @@ export const loadDelegates = ({
       sort: 'rank:asc',
     };
     params = q ? { ...params, search: q } : params;
-    getDelegates(liskAPIClient, params).then((response) => {
-      updateDelegateCache(response.data, getState().peers);
-      dispatch(delegatesAdded({
-        list: response.data,
-        refresh,
-      }));
-      callback(response);
-    }).catch(callback);
+    getDelegates(liskAPIClient, params)
+      .then((response) => {
+        updateDelegateCache(response.data, getState().peers);
+        dispatch(delegatesAdded({
+          list: response.data,
+          refresh,
+        }));
+        callback(response);
+      })
+      .catch(callback);
   };
 
 
