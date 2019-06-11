@@ -29,21 +29,17 @@ class Dashboard extends React.Component {
       isDesktop: window.innerWidth > breakpoints.m,
     };
 
-    const isLoggedIn = props.account.address;
-
-    if (isLoggedIn) {
-      props.loadTransactions({
-        address: props.account.address,
-        publicKey: props.account.publicKey,
-      });
-    }
-
     this.resizeWindow = this.resizeWindow.bind(this);
     this.shouldShowInitializatiion = this.shouldShowInitializatiion.bind(this);
   }
 
   componentDidMount() {
+    const { account, loadTransactions } = this.props;
     window.addEventListener('resize', throttle(this.resizeWindow, 10));
+
+    if (account.address) {
+      loadTransactions({ address: account.address, publicKey: account.publicKey });
+    }
   }
 
   shouldShowInitializatiion() {

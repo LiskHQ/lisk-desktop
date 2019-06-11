@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Box from '../../boxV2';
-import removeDuplicateTransactions from '../../../utils/transactions';
 import TransactionList from './transactionList';
 import EmptyState from '../../emptyStateV2';
 import svg from '../../../utils/svgIcons';
@@ -17,10 +16,8 @@ class RecentTransactions extends Component {
   }
 
   getLatestTransactions() {
-    const { transactions, settings } = this.props;
-    const latestTx = removeDuplicateTransactions(transactions.pending, transactions.confirmed);
-    const filteredTxs = latestTx.filter(tx => tx.token === settings.token.active);
-    return filteredTxs.length >= 5 ? filteredTxs.slice(0, 5) : filteredTxs;
+    const { transactions } = this.props;
+    return [...transactions.pending, ...transactions.confirmed].slice(0, 5);
   }
 
   render() {

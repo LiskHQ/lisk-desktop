@@ -24,7 +24,7 @@
 .container {
   min-height: 578px;
   overflow: hidden;
-  height: 578px;
+  height: 660px;
 
   & > div {
     height: 100%;
