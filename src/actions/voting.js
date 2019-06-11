@@ -12,6 +12,7 @@ import { addPendingTransaction } from './transactions';
 import { errorToastDisplayed } from './toaster';
 import actionTypes from '../constants/actions';
 import { getAPIClient } from '../utils/api/network';
+import { tokenMap } from '../constants/tokens';
 
 /**
  * Add data to the list of all delegates
@@ -62,7 +63,7 @@ export const votePlaced = ({
   account, votes, secondPassphrase, callback,
 }) =>
   async (dispatch, getState) => { // eslint-disable-line max-statements
-    const liskAPIClient = getAPIClient('LSK', getState());
+    const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
     const { votedList, unvotedList } = getVotingLists(votes);
     const timeOffset = getTimeOffset(getState());
 
@@ -100,7 +101,7 @@ export const votePlaced = ({
  */
 export const loadVotes = ({ address, type }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getAPIClient('LSK', getState());
+    const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
     getVotes(liskAPIClient, { address })
       .then((response) => {
         dispatch({
@@ -117,7 +118,7 @@ export const loadDelegates = ({
   offset, refresh, q, callback = () => {},
 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getAPIClient('LSK', getState());
+    const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
     let params = {
       offset,
       limit: '101',
@@ -144,7 +145,7 @@ export const urlVotesFound = ({
   upvotes, unvotes, address,
 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getAPIClient('LSK', getState());
+    const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
     const processUrlVotes = (votes) => {
       dispatch({
         type: actionTypes.votesAdded,
