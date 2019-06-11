@@ -3,7 +3,7 @@ import actionTypes from '../../constants/actions';
 import voting from './voting';
 
 describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-statements
-  const initialState = { votes: {}, delegates: [], refresh: true };
+  const initialState = { votes: {}, delegates: [] };
   const delegate1 = {
     publicKey: 'sample_key_1', address: '100001L', rank: 1, productivity: 99,
   };
@@ -67,16 +67,6 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     expect(changedState).to.be.equal(state);
   });
 
-  it('should clean up with action: accountLoading', () => {
-    const action = {
-      type: actionTypes.accountLoading,
-    };
-    const state = { votes: cleanVotes, delegates: fullDelegates, refresh: false };
-    const changedState = voting(state, action);
-
-    expect(changedState).to.be.deep.equal(initialState);
-  });
-
   it('should fill votes object with action: votesAdded', () => {
     const action = {
       type: actionTypes.votesAdded,
@@ -90,7 +80,6 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
         username2: { confirmed: true, unconfirmed: true, ...delegate2 },
       },
       delegates: [],
-      refresh: false,
     };
     const changedState = voting(initialState, action);
 
@@ -111,8 +100,6 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     };
     const expectedState = {
       delegates: fullDelegates,
-      refresh: true,
-      totalDelegates: 100,
     };
     const changedState = voting(state, action);
 
@@ -132,8 +119,6 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     };
     const expectedState = {
       delegates: delegateList1,
-      refresh: true,
-      totalDelegates: 2,
     };
     const changedState = voting(state, action);
 
@@ -148,7 +133,6 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     const state = { votes: cleanVotes };
     const expectedState = {
       votes: dirtyVotes,
-      refresh: false,
     };
     const changedState = voting(state, action);
 
@@ -165,7 +149,6 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
         [delegateList1[0].username]: dirtyVotes[delegateList1[0].username],
       },
       delegates: [],
-      refresh: false,
     };
     const changedState = voting(initialState, action);
 
@@ -181,7 +164,6 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     };
     const expectedState = {
       votes: pendingVotes,
-      refresh: false,
     };
     const changedState = voting(state, action);
     expect(changedState).to.be.deep.equal(expectedState);
@@ -197,7 +179,6 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
 
     const expectedState = {
       votes: restoredVotes,
-      refresh: true,
     };
     const changedState = voting(state, action);
 
@@ -226,7 +207,6 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
           confirmed: true, unconfirmed: true, pending: false, ...delegate5,
         },
       },
-      refresh: false,
     };
     const saveNewUserInVotes = voting(state, action);
     expect(saveNewUserInVotes).to.be.deep.equal(newUserNameRegisteredInVotes);
@@ -249,7 +229,6 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     };
     const notChangedVotesRecords = {
       votes: { ...updateVotesUnvotedWithExistingUsername },
-      refresh: false,
     };
 
     const changedState = voting(state, updateVotesWithExistingUsernameAction);
@@ -278,7 +257,6 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
           confirmed: true, unconfirmed: true, pending: false, ...delegate5,
         },
       },
-      refresh: false,
     };
     const changedState = voting(state, action);
     expect(changedState).to.be.deep.equal(newUsernameAddedToVotes);
@@ -301,7 +279,6 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     };
     const votesRecordsUnchanged = {
       votes: { ...updateVotesDirtyNotVotedExistingUsername },
-      refresh: false,
     };
     const changedState = voting(state, action);
     expect(changedState).to.be.deep.equal(votesRecordsUnchanged);
@@ -328,7 +305,6 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
           confirmed: true, unconfirmed: true, pending: false, ...delegate1,
         },
       },
-      refresh: false,
     };
     const changedState = voting(state, action);
     expect(changedState).to.be.deep.equal(votesRecordsWithDefaultFlags);

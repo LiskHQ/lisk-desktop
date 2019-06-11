@@ -46,7 +46,12 @@ class Delegates extends React.Component {
     }];
   }
   render() {
-    const { t, votes } = this.props;
+    const {
+      t,
+      votes,
+      loadVotes,
+      loadDelegates,
+    } = this.props;
     const { votingModeEnabled } = this.state;
     return (
       <div className={`${grid.row} ${styles.wrapper}`} ref={(el) => { this.root = el; }}>
@@ -63,6 +68,8 @@ class Delegates extends React.Component {
           votes={votes}/>
         <section className={`${grid['col-sm-12']} ${grid['col-md-12']} ${styles.votingBox} ${styles.votes}`}>
           <DelegatesListView
+            loadVotes={loadVotes}
+            loadDelegates={loadDelegates}
             votingModeEnabled={votingModeEnabled}
           />
         </section>
