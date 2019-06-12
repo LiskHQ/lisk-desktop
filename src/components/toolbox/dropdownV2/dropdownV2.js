@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './dropdownV2.css';
+import Separator from './separator';
 import { flattenArray } from '../../../utils/helpers';
 
 const DropdownV2 = ({
@@ -17,7 +18,9 @@ const DropdownV2 = ({
       </span>}
       <div className={`${styles.dropdownContent} dropdown-content ${isSelectionList ? 'options' : ''}`}>
         { isSelectionList ? flattenArray(children).map((child, key) => (
-          React.cloneElement(child, { className: ` ${styles.option} ${active === key ? styles.active : ''} ${child.props.className || ''}`, key })
+          child.type === Separator
+            ? child
+            : React.cloneElement(child, { className: ` ${styles.option} ${active === key ? styles.active : ''} ${child.props.className || ''}`, key })
         )) : children }
       </div>
     </div>
@@ -46,7 +49,6 @@ DropdownV2.defaultProps = {
   active: -1,
 };
 
-DropdownV2.Separator = () => <span className={styles.separator} />;
-DropdownV2.Separator.displayName = 'Dropdown.Separator';
+DropdownV2.Separator = Separator;
 
 export default DropdownV2;

@@ -89,7 +89,7 @@
     display: block;
     height: 1px;
     margin: 0 auto;
-    width: calc(100% - 20px);
+    width: calc(100% - 40px);
   }
 }
 
@@ -99,7 +99,7 @@
   padding: 10px 0;
   width: 100%;
 
-  & .option {
+  & .option:not(.separator) {
     @mixin contentNormal;
 
     background-color: var(--color-white);
