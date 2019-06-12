@@ -24,6 +24,9 @@ const DropdownV2 = ({
   );
 };
 
+
+DropdownV2.displayName = 'Dropdown';
+
 DropdownV2.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
@@ -42,5 +45,8 @@ DropdownV2.defaultProps = {
   showArrow: true,
   active: -1,
 };
+
+DropdownV2.Separator = () => <span className={styles.separator} />;
+DropdownV2.Separator.displayName = 'Dropdown.Separator';
 
 export default DropdownV2;

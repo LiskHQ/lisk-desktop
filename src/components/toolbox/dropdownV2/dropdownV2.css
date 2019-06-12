@@ -83,6 +83,14 @@
       }
     }
   }
+
+  & .separator {
+    background: var(--color-mystic);
+    display: block;
+    height: 1px;
+    margin: 0 auto;
+    width: calc(100% - 20px);
+  }
 }
 
 .dropdownContent {
