@@ -2,7 +2,6 @@
 @import '../app/mixins.css';
 
 .wrapper {
-  cursor: pointer;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -23,6 +22,7 @@
 
 .accountInfo {
   align-items: center;
+  cursor: pointer;
   display: flex;
   padding: 0 24px;
 
@@ -51,19 +51,35 @@
 
     color: var(--color-slate-gray);
   }
+
+  & .activeLabel {
+    @mixin contentNormal bold;
+
+    align-items: center;
+    background: var(--color-ultramarine-blue);
+    border-radius: var(--border-radius-standard);
+    color: var(--color-white);
+    display: flex;
+    margin-left: auto;
+    padding: 0 8px;
+  }
 }
 
 .dropdown {
   cursor: initial;
   width: auto;
+
+  & .accountInfo {
+    min-width: 280px;
+    padding: 10px 0;
+  }
 }
 
 .dropdownOption {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
   text-decoration: none;
-  font-family: var(--content-font) !important;
   cursor: pointer;
 
   & > img {

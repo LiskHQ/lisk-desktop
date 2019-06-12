@@ -7,6 +7,8 @@ import styles from './userAccount.css';
 import OutsideClickHandler from '../toolbox/outsideClickHandler';
 import Icon from '../toolbox/icon';
 import { tokenMap, tokenKeys } from '../../constants/tokens';
+import routes from '../../constants/routes';
+import feedbackLinks from '../../constants/feedbackLinks';
 
 const UserAccount = ({
   token, t, account, onDropdownToggle, isDropdownEnable, onLogout,
@@ -32,26 +34,32 @@ const UserAccount = ({
         </div>
       </div>
       <DropdownV2
-        showArrow={false}
+        showArrow={true}
         className={styles.dropdown}
         showDropdown={isDropdownEnable}
       >
-        {enabledTokens.length > 1 && enabledTokens.map(tokenKey => (account.info[tokenKey] ? (
-          <div
-            key={tokenKey}
-            className={styles.accountInfo}
-            onClick={settingsUpdated.bind(this, { token: { active: tokenKey } })}
-          >
-            <Icon name={`${tokenMap[tokenKey].icon}Icon`} />
-            <div>
-              <p>{t('{{token}} Wallet', { token: tokenMap[tokenKey].label })}</p>
-              <span>
-                <LiskAmount val={account.info[tokenKey].balance}/> {tokenKey}
-              </span>
+        {localStorage.getItem('btc') && // TODO: Remove when enabling btc to endusers
+        enabledTokens.length > 1 && enabledTokens.map(tokenKey => (account.info[tokenKey] ? ([
+          <span key={tokenKey}>
+            <div
+              className={styles.accountInfo}
+              onClick={settingsUpdated.bind(this, { token: { active: tokenKey } })}
+            >
+              <Icon name={`${tokenMap[tokenKey].icon}Icon`} />
+              <div>
+                <p>{t('{{token}} Wallet', { token: tokenMap[tokenKey].label })}</p>
+                <span>
+                  <LiskAmount val={account.info[tokenKey].balance}/> {tokenKey}
+                </span>
+              </div>
+              {tokenKey === token.active
+                ? <span className={styles.activeLabel}>{t('Active')}</span>
+                : null
+              }
             </div>
-            {tokenKey === token.active ? 'Active' : ''}
-          </div>
-        ) : null))}
+          </span>,
+          <DropdownV2.Separator key={`separator-${tokenKey}`} />,
+        ]) : null))}
         <Link
           id={dropdownOptions.settings.id}
           to={dropdownOptions.settings.path}
@@ -61,6 +69,22 @@ const UserAccount = ({
           <img src={dropdownOptions.settings.icon_active} className={styles.activeIcon} />
           <span>{dropdownOptions.settings.label}</span>
         </Link>
+
+        <Link
+          className={styles.dropdownOption}
+          to={routes.help.path}
+        >
+          <span>{t('Help Center')}</span>
+        </Link>
+
+        <a
+          className={styles.dropdownOption}
+          href={feedbackLinks.general} target="_blank"
+        >
+          <span>{t('Give Feedback')}</span>
+        </a>
+
+        <DropdownV2.Separator />
 
         <span
           className={`${styles.dropdownOption} logout`}
