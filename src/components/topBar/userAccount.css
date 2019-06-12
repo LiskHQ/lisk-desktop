@@ -9,14 +9,8 @@
   align-items: center;
   margin-left: auto;
   position: relative;
-}
 
-.accountInfo {
-  align-items: center;
-  display: flex;
-  padding: 0 24px;
-
-  &::after {
+  & > .accountInfo::after {
     border-bottom: 2px solid var(--color-slate-gray);
     border-right: 2px solid var(--color-slate-gray);
     content: '';
@@ -25,6 +19,12 @@
     transform: rotate(45deg);
     width: 5px;
   }
+}
+
+.accountInfo {
+  align-items: center;
+  display: flex;
+  padding: 0 24px;
 
   & > div {
     align-items: flex-start;
@@ -54,7 +54,7 @@
 }
 
 .dropdown {
-  cursor: normal;
+  cursor: initial;
   width: auto;
 }
 

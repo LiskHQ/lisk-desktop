@@ -63,3 +63,13 @@ export const getErrorReportMailto = (error) => {
   return `mailto:${recipient}?&subject=${subject}&body=${error}`;
 };
 
+/**
+ * Flattens array to be one level deep.
+ * @param {Array} arr - Array to be flattened
+ * @returns {Array} Flattened array
+ */
+export const flattenArray = arr =>
+  arr.reduce((acc, item) =>
+    (Array.isArray(item)
+      ? [...acc, ...flattenArray(item)]
+      : [...acc, item]), []).filter(item => !!item);

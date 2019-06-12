@@ -23,8 +23,12 @@ class TopBar extends React.Component {
       openDropdown: '',
     };
 
+    this.searchInput = null;
+
     this.onLogout = this.onLogout.bind(this);
     this.onHandleClick = this.onHandleClick.bind(this);
+    this.handleSearchDropdown = this.onHandleClick.bind(this, 'search');
+    this.handleAccountDropdown = this.onHandleClick.bind(this, 'account');
   }
 
   onLogout() {
@@ -34,20 +38,28 @@ class TopBar extends React.Component {
   }
 
   onHandleClick(name) {
-    this.setState(prevState => ({
-      openDropdown: prevState.openDropdown === name ? '' : name,
-    }));
+    const { openDropdown } = this.state;
+
+    if (name === 'search' && openDropdown !== 'search') {
+      setTimeout(() => { this.searchInput.focus(); }, 150);
+    }
+    this.setState({
+      openDropdown: openDropdown === name ? '' : name,
+    });
   }
 
   render() {
     const {
-      t, account, history, peers,
+      t, account, history, peers, token, settingsUpdated,
     } = this.props;
     const { openDropdown } = this.state;
 
     const items = menuLinks(t);
     const isUserLogout = !!(Object.keys(account).length === 0 || account.afterLogout);
-    const isUserDataFetched = !!account.balance || account.balance === 0;
+    const isUserDataFetched = account.info && account.info[token.active] && (
+      !!account.info[token.active].balance
+      || account.info[token.active].balance === 0
+    );
 
     return (
       <div className={`${styles.wrapper} top-bar`}>
@@ -62,6 +74,7 @@ class TopBar extends React.Component {
           />
 
           <MenuItems
+            token={token}
             isUserLogout={isUserLogout}
             items={items}
             location={this.props.location}
@@ -78,11 +91,13 @@ class TopBar extends React.Component {
           {
             isUserDataFetched
               ? <UserAccount
+                token={token}
                 className={styles.userAccount}
-                account={this.props.account}
-                isDropdownEnable={openDropdown === 'avatar'}
-                onDropdownToggle={this.onHandleClick}
+                account={account}
+                isDropdownEnable={openDropdown === 'account'}
+                onDropdownToggle={this.handleAccountDropdown}
                 onLogout={this.onLogout}
+                settingsUpdated={settingsUpdated}
                 t={t}
               />
             : isUserLogout &&
@@ -97,12 +112,12 @@ class TopBar extends React.Component {
 
           <OutsideClickHandler
             className={`${styles.searchButton} search-section`}
-            onOutsideClick={() => this.onHandleClick('search')}
-            onClick={() => this.onHandleClick('search')}
+            onOutsideClick={this.handleSearchDropdown}
             disabled={openDropdown !== 'search'}
             wrapper={<label />}
           >
             <Icon
+              onClick={this.handleSearchDropdown}
               className={'search-icon'}
               name={`search_icon_${openDropdown === 'search' ? 'active' : 'inactive'}`}
             />
@@ -111,8 +126,9 @@ class TopBar extends React.Component {
               className={`${styles.searchDropdown}`}
             >
               <SearchBarV2
+                setSearchBarRef={(node) => { this.searchInput = node; } }
                 history={this.props.history}
-                onSearchClick={this.onHandleClick}
+                onSearchClick={this.handleSearchDropdown}
               />
             </DropdownV2>
           </OutsideClickHandler>
