@@ -17,13 +17,14 @@ class OutsideClickHandler extends React.Component {
   shouldComponentUpdate(nextProps) {
     const { disabled: wasDisabled } = this.props;
     const { disabled, useCapture: capture } = nextProps;
-    if (disabled && !wasDisabled) this.removeEventListeners();
+    if (disabled && !wasDisabled) this.removeEventListeners({ capture });
     if (wasDisabled && !disabled) this.addEventListeners({ capture });
     return true;
   }
 
   componentWillUnmount() {
-    this.removeEventListeners();
+    const { useCapture: capture } = this.props;
+    this.removeEventListeners({ capture });
   }
 
   handleClick({ target }) {
@@ -36,8 +37,8 @@ class OutsideClickHandler extends React.Component {
     document.addEventListener('click', this.handleClick, { capture });
   }
 
-  removeEventListeners() {
-    document.removeEventListener('click', this.handleClick);
+  removeEventListeners({ capture }) {
+    document.removeEventListener('click', this.handleClick, { capture });
   }
 
   setChildNodeRef(node) {
