@@ -141,6 +141,7 @@ export const loadDelegates = ({
 /**
  * Get list of delegates current account has voted for and dispatch it with votes from url
  */
+// TODO Move urlVotesFound inside VoteUrlProcessor component
 export const urlVotesFound = ({
   upvotes, unvotes, address,
 }) =>

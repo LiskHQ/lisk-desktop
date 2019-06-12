@@ -138,6 +138,7 @@ const voting = (state = { // eslint-disable-line complexity
         }, {}),
       };
 
+    // TODO Move voteLookupStatus inside VoteUrlProcessor component
     case actionTypes.voteLookupStatusUpdated:
       return {
         ...state,

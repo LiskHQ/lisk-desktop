@@ -75,6 +75,7 @@ const fetchVotes = (store) => {
 const votingMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
+    // TODO Move fetchVotes and lookupDelegatesFromUrl inside VoteUrlProcessor component
     case actionTypes.votesAdded:
       if (store.getState().account.info) {
         fetchVotes(store);
