@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LiskAmount from '../liskAmount';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
-import { dropdownLinks } from './constants';
 import styles from './userAccount.css';
 import OutsideClickHandler from '../toolbox/outsideClickHandler';
 import Icon from '../toolbox/icon';
@@ -14,7 +13,6 @@ const UserAccount = ({
   token, t, account, onDropdownToggle, isDropdownEnable, onLogout,
   settingsUpdated,
 }) => {
-  const dropdownOptions = dropdownLinks(t);
   const enabledTokens = tokenKeys.filter(key => token.list[key]);
 
   return (
@@ -59,22 +57,23 @@ const UserAccount = ({
               }
             </div>
           </span>,
-          <DropdownV2.Separator key={`separator-${tokenKey}`} />,
+          <DropdownV2.Separator key={`separator-${tokenKey}`} className={styles.separator} />,
         ]) : null))}
         <Link
-          id={dropdownOptions.settings.id}
-          to={dropdownOptions.settings.path}
+          to={routes.setting.path}
           className={styles.dropdownOption}
         >
-          <img src={dropdownOptions.settings.icon} className={styles.defaultIcon} />
-          <img src={dropdownOptions.settings.icon_active} className={styles.activeIcon} />
-          <span>{dropdownOptions.settings.label}</span>
+          <Icon name='settings' className={styles.defaultIcon} />
+          <Icon name='settingsActive' className={styles.activeIcon} />
+          <span>{t('Settings')}</span>
         </Link>
 
         <Link
           className={styles.dropdownOption}
           to={routes.help.path}
         >
+          <Icon name='help' className={styles.defaultIcon} />
+          <Icon name='helpActive' className={styles.activeIcon} />
           <span>{t('Help Center')}</span>
         </Link>
 
@@ -82,18 +81,20 @@ const UserAccount = ({
           className={styles.dropdownOption}
           href={feedbackLinks.general} target="_blank"
         >
+          <Icon name='feedback' className={styles.defaultIcon} />
+          <Icon name='feedbackActive' className={styles.activeIcon} />
           <span>{t('Give Feedback')}</span>
         </a>
 
-        <DropdownV2.Separator />
+        <DropdownV2.Separator className={styles.separator} />
 
         <span
           className={`${styles.dropdownOption} logout`}
           onClick={onLogout}
         >
-          <img src={dropdownOptions.logout.icon} className={styles.defaultIcon}/>
-          <img src={dropdownOptions.logout.icon_active} className={styles.activeIcon}/>
-          <span>{dropdownOptions.logout.label}</span>
+          <Icon name='logout' className={styles.defaultIcon} />
+          <Icon name='logoutActive' className={styles.activeIcon} />
+          <span>{t('Log out')}</span>
         </span>
       </DropdownV2>
     </OutsideClickHandler>

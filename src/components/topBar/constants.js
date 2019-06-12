@@ -1,5 +1,4 @@
 // istanbul ignore file
-import svg from '../../utils/svgIcons';
 import routes from '../../constants/routes';
 
 const menuLinks = t => ([
@@ -22,21 +21,5 @@ const menuLinks = t => ([
     path: routes.delegates.path,
   },
 ]);
-
-export const dropdownLinks = t => ({
-  settings: {
-    icon_active: svg.settings_active_icon,
-    icon: svg.settings_icon,
-    id: 'settings',
-    label: t('Settings'),
-    path: `${routes.setting.path}`,
-  },
-  logout: {
-    icon_active: svg.logout_active_icon,
-    icon: svg.logout_icon,
-    id: 'logout',
-    label: t('Log Out'),
-  },
-});
 
 export default menuLinks;

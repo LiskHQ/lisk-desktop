@@ -9,20 +9,22 @@ import delegatesIconActive from '../assets/images/icons-v2/delegates-active.svg'
 import delegatesIcon from '../assets/images/icons-v2/delegates.svg';
 import walletIconActive from '../assets/images/icons-v2/wallet-active.svg';
 import walletIcon from '../assets/images/icons-v2/wallet.svg';
-import Feedback from '../assets/images/icons-v2/feedback.svg';
-import Help from '../assets/images/icons-v2/help.svg';
+import feedbackActive from '../assets/images/icons-v2/feedback-active.svg';
+import feedback from '../assets/images/icons-v2/feedback.svg';
+import helpActive from '../assets/images/icons-v2/help-active.svg';
+import help from '../assets/images/icons-v2/help.svg';
 import icoLink from '../assets/images/icons-v2/link.svg';
 import Key from '../assets/images/icons-v2/key.svg';
 import Lock from '../assets/images/icons-v2/lock.svg';
-import logoutActiveIcon from '../assets/images/icons-v2/logout-active.svg';
-import logoutIcon from '../assets/images/icons-v2/logout.svg';
+import logoutActive from '../assets/images/icons-v2/logout-active.svg';
+import logout from '../assets/images/icons-v2/logout.svg';
 import okIcon from '../assets/images/icons-v2/icon-checkmark.svg';
 import Pdf from '../assets/images/icons-v2/pdf.svg';
 import questionMark from '../assets/images/icons-v2/question.svg';
 import searchIconActive from '../assets/images/icons-v2/search-active.svg';
 import searchIconInactive from '../assets/images/icons-v2/search.svg';
-import settingsActiveIcon from '../assets/images/icons-v2/settings-active.svg';
-import settingsIcon from '../assets/images/icons-v2/settings.svg';
+import settingsActive from '../assets/images/icons-v2/settings-active.svg';
+import settings from '../assets/images/icons-v2/settings.svg';
 import transactionError from '../assets/images/icons-v2/transactionError.svg';
 import transactionsDelegateIcon from '../assets/images/icons-v2/icon_delegate_vote.svg';
 import transactionsSendIcon from '../assets/images/icons-v2/icon_transaction.svg';
@@ -66,21 +68,23 @@ export default {
   dashboardIcon,
   delegatesIconActive,
   delegatesIcon,
-  feedback_icon: Feedback,
-  help_icon: Help,
+  feedback,
+  feedbackActive,
+  help,
+  helpActive,
   icoLink,
   iconWalletDetails,
   key_icon: Key,
   lock_icon: Lock,
-  logout_active_icon: logoutActiveIcon,
-  logout_icon: logoutIcon,
+  logoutActive,
+  logout,
   ok_icon: okIcon,
   pdf_icon: Pdf,
   question_icon: questionMark,
   search_icon_active: searchIconActive,
   search_icon_inactive: searchIconInactive,
-  settings_active_icon: settingsActiveIcon,
-  settings_icon: settingsIcon,
+  settingsActive,
+  settings,
   transaction_delegate_vote: transactionsDelegateIcon,
   transaction_send_icon: transactionsSendIcon,
   backArrow: backArrowActiveIcon,

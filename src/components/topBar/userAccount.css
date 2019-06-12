@@ -71,7 +71,11 @@
 
   & .accountInfo {
     min-width: 280px;
-    padding: 10px 0;
+    padding: 5px 0;
+  }
+
+  & .separator {
+    margin: 10px 0;
   }
 }
 
