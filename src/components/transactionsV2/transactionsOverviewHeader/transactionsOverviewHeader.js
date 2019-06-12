@@ -68,7 +68,7 @@ class transactionsHeader extends React.Component {
                 data-name={'requestDropdown'}
                 className={`${styles.requestContainer} tx-receive-bt`}>
                 { /* TODO remove this condition when Request BTC is implemented */ }
-                { activeToken !== 'BTC' ?
+                { /* istanbul ignore next */ activeToken === 'BTC' ? null :
                 <OutsideClickHandler
                   disabled={shownDropdown !== 'requestDropdown'}
                   onOutsideClick={this.toggleDropdown.bind(this, 'requestDropdown')}
@@ -82,7 +82,7 @@ class transactionsHeader extends React.Component {
                     <RequestV2 address={address} />
                   </DropdownV2>
                 </OutsideClickHandler>
-                : null }
+                }
               </span>
               <Link to={`${routes.send.path}?wallet`} className={'tx-send-bt'}>
                 <PrimaryButtonV2>
