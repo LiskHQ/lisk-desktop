@@ -189,8 +189,9 @@ class HeaderV2 extends React.Component {
                               status={'error'}
                               className={`${this.state.validationError ? styles.feedbackError : ''} ${styles.feedbackMessage} amount-feedback`}
                               showIcon={false}
-                              dark={dark}>
-  {t('Unable to connect to the node, please check the address and try again')}
+                              dark={dark}
+                            >
+                              {t('Unable to connect to the node, please check the address and try again')}
                             </Feedback> : ''}
                           {activeTab ?
                             <div>
