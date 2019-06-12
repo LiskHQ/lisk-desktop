@@ -3,7 +3,7 @@
 .v2Wrapper {
   bottom: 0;
   left: 0;
-  padding-top: var(--header-height-m);
+  padding-top: var(--header-height);
   position: absolute;
   right: 0;
   top: 0;
@@ -12,6 +12,6 @@
 
 @media (--small-viewport) {
   .v2Wrapper {
-    padding-top: var(--header-height-s);
+    padding-top: var(--header-height);
   }
 }
