@@ -6,10 +6,10 @@ import { getErrorReportMailto } from '../../utils/helpers';
 import styles from './transactionResult.css';
 
 const TransactionResult = ({
-  success, title, message, primaryButon, t, error, children,
+  success, title, message, primaryButon, t, error, children, illustration,
 }) => (
   <div className={styles.wrapper}>
-    <Illustration name={success ? 'transactionSuccess' : 'transactionError'} />
+    <Illustration name={illustration} />
     <h1 className='result-box-header'>{title}</h1>
     <p className='transaction-status'>{message}</p>
     {children}

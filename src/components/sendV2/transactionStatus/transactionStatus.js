@@ -120,13 +120,15 @@ class TransactionStatus extends React.Component {
     const token = getTokenFromAddress(fields.recipient.address);
     const shouldShowBookmark = !transactions.broadcastedTransactionsError.length
       && !fields.recipient.isBookmark;
+    const success = transactions.broadcastedTransactionsError.length === 0;
 
     return (
       <div className={`${styles.wrapper} transaction-status`}>
         <TransactionResult t={t}
           message={messageDetails.bodyText.paragraph}
-          title={ messageDetails.bodyText.title}
-          success={transactions.broadcastedTransactionsError.length === 0}
+          illustration={success ? 'transactionSuccess' : 'transactionError'}
+          title={messageDetails.bodyText.title}
+          success={success}
           primaryButon={{
             title: t('Back to Wallet'),
             className: 'on-goToWallet okay-button',
