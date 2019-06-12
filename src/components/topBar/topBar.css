@@ -43,7 +43,6 @@
 }
 
 .signIn {
-  min-width: 120px;
   display: flex;
   align-items: center;
   margin-left: auto;

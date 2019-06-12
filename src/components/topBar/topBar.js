@@ -26,7 +26,6 @@ class TopBar extends React.Component {
     this.searchInput = null;
 
     this.onLogout = this.onLogout.bind(this);
-    this.onHandleClick = this.onHandleClick.bind(this);
     this.handleSearchDropdown = this.onHandleClick.bind(this, 'search');
     this.handleAccountDropdown = this.onHandleClick.bind(this, 'account');
   }
@@ -40,8 +39,8 @@ class TopBar extends React.Component {
   onHandleClick(name) {
     const { openDropdown } = this.state;
 
-    if (name === 'search' && openDropdown !== 'search') {
-      setTimeout(() => { this.searchInput.focus(); }, 150);
+    if (name === 'search' && openDropdown !== name) {
+      setTimeout(() => this.searchInput.focus(), 150);
     }
     this.setState({
       openDropdown: openDropdown === name ? '' : name,
