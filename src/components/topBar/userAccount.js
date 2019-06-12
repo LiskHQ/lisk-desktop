@@ -38,8 +38,9 @@ const UserAccount = ({
         className={styles.dropdown}
         showDropdown={isDropdownEnable}
       >
-        {localStorage.getItem('btc') && // TODO: Remove when enabling btc to endusers
-        enabledTokens.length > 1 && enabledTokens.map(tokenKey => (account.info[tokenKey] ? ([
+        { /* istanbul ignore next */
+          localStorage.getItem('btc') && // TODO: Remove when enabling btc to endusers
+          enabledTokens.length > 1 && enabledTokens.map(tokenKey => (account.info[tokenKey] ? ([
           <span key={tokenKey}>
             <div
               className={styles.accountInfo}
