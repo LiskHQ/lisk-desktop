@@ -11,6 +11,7 @@ class CopyToClipboard extends React.Component {
     this.state = {
       copied: false,
     };
+    this.textIsCopied = this.textIsCopied.bind(this);
   }
 
   textIsCopied() {
@@ -33,7 +34,7 @@ class CopyToClipboard extends React.Component {
       <div onClick={(e) => {
         e.stopPropagation();
       }}>
-        <ReactCopyToClipboard text={value} onCopy={() => this.textIsCopied()}>
+        <ReactCopyToClipboard text={value} onCopy={this.textIsCopied}>
           {this.state.copied ? <span className={`${className} copied`}>
             {t('Copied!')}
           </span> :
@@ -47,5 +48,10 @@ class CopyToClipboard extends React.Component {
     );
   }
 }
+
+CopyToClipboard.defaultProps = {
+  className: '',
+  copyClassName: '',
+};
 
 export default (translate()(CopyToClipboard));
