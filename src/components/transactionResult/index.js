@@ -11,7 +11,7 @@ const TransactionResult = ({
   <div className={styles.wrapper}>
     <Illustration name={illustration} />
     <h1 className='result-box-header'>{title}</h1>
-    <p className='transaction-status'>{message}</p>
+    <p className='transaction-status body-message'>{message}</p>
     {children}
     <PrimaryButtonV2 onClick={primaryButon.onClick}
       className={`${styles.button} ${primaryButon.className}`}>
