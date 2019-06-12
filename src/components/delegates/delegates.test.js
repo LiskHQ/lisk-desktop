@@ -11,6 +11,7 @@ import votingReducer from '../../store/reducers/voting';
 import Delegates from './delegates';
 import history from '../../history';
 import i18n from '../../i18n';
+import accounts from '../../../test/constants/accounts';
 
 describe('Delegates', () => {
   let wrapper;
@@ -45,6 +46,7 @@ describe('Delegates', () => {
     t: key => key,
     history: { location: { search: '' } },
     clearVotes: jest.fn(),
+    account: { address: delegates[0].address },
     loadDelegates: jest.fn(),
     loadVotes: jest.fn(),
   };
@@ -64,6 +66,21 @@ describe('Delegates', () => {
 
     wrapper.find('.cancel-voting-button').at(0).simulate('click');
     expect(wrapper.find('.addedVotes')).to.have.lengthOf(0);
+  });
+
+  it('should show onboarding if not in guest mode', () => {
+    wrapper = mount(<Router>
+      <Delegates {...props} account={accounts.genesis} />
+    </Router>, options);
+    expect(wrapper.find('Onboarding')).to.have.lengthOf(1);
+  });
+
+  it('should not show "Register delegate" button if already delegate', () => {
+    wrapper = mount(<Router><Delegates {...{
+      ...props,
+      account: { delegate: delegates[0], address: delegates[0].address },
+    }} /></Router>, options);
+    expect(wrapper.find('.register-delegate')).to.have.lengthOf(0);
   });
 });
 

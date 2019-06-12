@@ -21,6 +21,7 @@ class VotingHeader extends React.Component {
       votes,
       toggleVotingMode,
       votingModeEnabled,
+      account,
     } = this.props;
     const voteList = getVoteList(votes);
     const unvoteList = getUnvoteList(votes);
@@ -76,13 +77,14 @@ class VotingHeader extends React.Component {
               </Link>
             </span> :
             <span>
-              <SignInTooltipWrapper>
+              { account.address && !account.delegate ?
                 <Link to={routes.registerDelegate.path} >
                   <SecondaryButtonV2 className={`register-delegate ${styles.btn}`}>
                     {t('Register as a Delegate')}
                   </SecondaryButtonV2>
-                </Link>
-              </SignInTooltipWrapper>
+                </Link> :
+                null
+              }
               <SignInTooltipWrapper>
                 <PrimaryButtonV2 onClick={toggleVotingMode} className={`start-voting-button ${styles.btn}`}>
                   {t('Start voting')}
@@ -94,5 +96,10 @@ class VotingHeader extends React.Component {
     );
   }
 }
+
+VotingHeader.defaultProps = {
+  account: {},
+  votes: {},
+};
 
 export default VotingHeader;

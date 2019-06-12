@@ -177,7 +177,11 @@ export const accountDataUpdated = ({
 }) =>
   (dispatch, getState) => {
     const networkConfig = getState().network;
-    getAccount({ networkConfig, address: account.address })
+    getAccount({
+      networkConfig,
+      address: account.address,
+      publicKey: account.publicKey,
+    })
       .then((result) => {
         if (result.balance !== account.balance) {
           dispatch(updateTransactionsIfNeeded(

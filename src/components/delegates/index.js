@@ -10,8 +10,9 @@ import {
 } from '../../actions/voting';
 
 const mapStateToProps = state => ({
-  votes: state.voting.votes,
+  account: state.account,
   delegates: state.voting.delegates,
+  votes: state.voting.votes,
 });
 
 const mapDispatchToProps = {
