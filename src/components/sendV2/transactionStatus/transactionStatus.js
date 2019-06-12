@@ -5,9 +5,7 @@ import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import { getTokenFromAddress } from '../../../utils/api/transactions';
 import Bookmark from '../../bookmark';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
-import Piwik from '../../../utils/piwik';
 import TransactionResult from '../../transactionResult';
-import routes from '../../../constants/routes';
 import statusMessage from './statusMessages';
 import styles from './transactionStatus.css';
 
@@ -20,7 +18,6 @@ class TransactionStatus extends React.Component {
     };
 
     this.bookmarkContainerRef = {};
-    this.backToWallet = this.backToWallet.bind(this);
     this.onErrorReport = this.onErrorReport.bind(this);
     this.onRetry = this.onRetry.bind(this);
     this.onBookmarkDropdownToggle = this.onBookmarkDropdownToggle.bind(this);
@@ -41,12 +38,6 @@ class TransactionStatus extends React.Component {
   transactionBroadcasted() {
     const { transactions: { transactionsCreated }, transactionBroadcasted } = this.props;
     transactionsCreated.forEach(tx => transactionBroadcasted(tx));
-  }
-
-  backToWallet() {
-    Piwik.trackingEvent('TransactionStatus', 'button', 'Back to wallet');
-    this.props.resetTransactionResult();
-    this.props.finalCallback();
   }
 
   onBookmarkDropdownToggle() {
