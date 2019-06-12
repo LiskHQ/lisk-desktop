@@ -122,7 +122,7 @@ class TransactionStatus extends React.Component {
 
   render() {
     const {
-      transactions, fields, t, history,
+      transactions, fields, t, finalCallback,
     } = this.props;
     const { isBookmarked, bookmarkButtonLabel } = this.bookmarkInformation();
     const { isHardwareWalletError, messageDetails } = this.getMessagesDetails();
@@ -139,9 +139,7 @@ class TransactionStatus extends React.Component {
           primaryButon={{
             title: t('Back to Wallet'),
             className: 'on-goToWallet okay-button',
-            onClick: () => {
-              history.push(routes.wallet.path);
-            },
+            onClick: finalCallback,
           }}
         >
           {
