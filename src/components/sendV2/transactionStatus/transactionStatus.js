@@ -18,7 +18,6 @@ class TransactionStatus extends React.Component {
     };
 
     this.bookmarkContainerRef = {};
-    this.onErrorReport = this.onErrorReport.bind(this);
     this.onRetry = this.onRetry.bind(this);
     this.onBookmarkDropdownToggle = this.onBookmarkDropdownToggle.bind(this);
     this.handleClickOutsideDropdown = this.handleClickOutsideDropdown.bind(this);
@@ -97,13 +96,6 @@ class TransactionStatus extends React.Component {
       isHardwareWalletError,
       messageDetails,
     };
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  onErrorReport() {
-    const recipient = 'hubdev@lisk.io';
-    const subject = `User Reported Error - Lisk Hub - ${VERSION}`; // eslint-disable-line no-undef
-    return `mailto:${recipient}?&subject=${subject}`;
   }
 
   onRetry() {
