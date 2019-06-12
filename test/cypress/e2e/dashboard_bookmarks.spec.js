@@ -94,8 +94,8 @@ describe('Dashboard Bookmarks', () => {
       cy.get(ss.nextTransferBtn).click();
       cy.get(ss.sendBtn).click();
       cy.visit(urls.dashboard);
-      cy.get(ss.transactionRow).eq(0).find(ss.spinner);
-      cy.get(ss.transactionRow).eq(0).find(ss.spinner, { timeout: txConfirmationTimeout }).should('not.exist');
+      cy.get(`${ss.transactionRow} ${ss.spinner}`).should('exist');
+      cy.get(`${ss.transactionRow} ${ss.spinner}`, { timeout: txConfirmationTimeout }).should('not.exist');
       cy.wait(1000); // To avoid updating lag
       cy.get(ss.bookmarkAccountBalance).invoke('text').as('balanceAfter').then(() => {
         compareBalances(this.balanceBefore, this.balanceAfter, 0.1);

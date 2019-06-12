@@ -14,6 +14,7 @@ jest.useFakeTimers();
 describe('Single Transaction V2 Component', () => {
   let wrapper;
   const peers = { liskAPIClient: {} };
+  const settings = {};
 
   const props = {
     match: { params: { id: 123 } },
@@ -40,6 +41,7 @@ describe('Single Transaction V2 Component', () => {
       transaction,
       peers,
       loadSingleTransaction: jest.fn(),
+      settings,
     });
 
     const options = {
@@ -88,6 +90,7 @@ describe('Single Transaction V2 Component', () => {
       transaction,
       peers,
       loadSingleTransaction: jest.fn(),
+      settings,
     });
 
     const options = {
@@ -118,6 +121,7 @@ describe('Single Transaction V2 Component', () => {
       transaction,
       peers,
       loadSingleTransaction: jest.fn(),
+      settings,
     });
 
     const options = {
@@ -149,6 +153,7 @@ describe('Single Transaction V2 Component', () => {
       transaction,
       peers,
       loadSingleTransaction: jest.fn(),
+      settings,
     });
 
     const options = {
@@ -173,6 +178,7 @@ describe('Single Transaction V2 Component', () => {
       transaction,
       peers,
       loadSingleTransaction: jest.fn(),
+      settings,
     });
 
     const options = {

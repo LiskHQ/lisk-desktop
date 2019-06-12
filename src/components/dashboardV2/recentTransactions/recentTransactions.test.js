@@ -75,6 +75,7 @@ describe('Recent Transactions', () => {
         },
       ],
     },
+    isLoggedIn: true,
     t: key => key,
   };
 
@@ -82,6 +83,7 @@ describe('Recent Transactions', () => {
     account: {
       address: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
     },
+    isLoggedIn: true,
     bookmarks: {
       BTC: [
         {

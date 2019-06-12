@@ -1,9 +1,9 @@
 import {
   accountDataUpdated,
-  updateTransactionsIfNeeded,
   updateDelegateAccount,
-} from '../../actions/account'; // eslint-disable-line
-import { votesFetched } from '../../actions/voting';
+  updateTransactionsIfNeeded,
+} from '../../actions/account';
+import { loadVotes } from '../../actions/voting';
 import {
   loadTransactions,
   cleanTransactions,
@@ -11,7 +11,7 @@ import {
 import actionTypes from '../../constants/actions';
 import transactionTypes from '../../constants/transactionTypes';
 
-import { extractAddress, extractPublicKey } from '../../utils/account';
+import { getActiveTokenAccount } from '../../utils/account';
 import { getAutoLogInData, shouldAutoLogIn } from '../../utils/login';
 import { liskAPIClientSet, liskAPIClientUpdate } from '../../actions/peers';
 import networks from '../../constants/networks';
@@ -25,7 +25,8 @@ import { getDeviceList, getHWPublicKeyFromIndex } from '../../utils/hwWallet';
 import { loginType } from '../../constants/hwConstants';
 
 const updateAccountData = (store, action) => {
-  const { account, transactions } = store.getState();
+  const { transactions } = store.getState();
+  const account = getActiveTokenAccount(store.getState());
 
   store.dispatch(accountDataUpdated({
     windowIsFocused: action.data.windowIsFocused,
@@ -41,10 +42,9 @@ const updateAccountData = (store, action) => {
    *  Ignoring coverage because autologin is a development feature not accessible by end users
    */
   /* istanbul ignore if */
-  if (shouldAutoLogIn(getAutoLogInData()) && action.data.passphrase) {
+  if (shouldAutoLogIn(getAutoLogInData())) {
     store.dispatch(loadTransactions({
-      address: extractAddress(extractPublicKey(action.data.passphrase)),
-      limit: 30,
+      address: account.address,
       filter: txFilters.all,
     }));
   }
@@ -79,7 +79,7 @@ const votePlaced = (store, action) => {
     const state = store.getState();
     const { account } = state;
 
-    store.dispatch(votesFetched({
+    store.dispatch(loadVotes({
       address: account.address,
       type: 'update',
     }));
@@ -88,7 +88,8 @@ const votePlaced = (store, action) => {
 
 const checkTransactionsAndUpdateAccount = (store, action) => {
   const state = store.getState();
-  const { account, transactions } = state;
+  const { transactions, settings: { token } } = state;
+  const account = getActiveTokenAccount(store.getState());
   // Adding timeout explained in
   // https://github.com/LiskHQ/lisk-hub/pull/1609
   setTimeout(() => {
@@ -101,15 +102,18 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     ));
   }, 500);
 
-  const tx = action.data.block.transactions || [];
-  const accountAddress = state.account.address;
-  const blockContainsRelevantTransaction = tx.filter((transaction) => {
+  const txs = action.data.block.transactions || [];
+  const blockContainsRelevantTransaction = txs.filter((transaction) => {
     const sender = transaction ? transaction.senderId : null;
     const recipient = transaction ? transaction.recipientId : null;
-    return accountAddress === recipient || accountAddress === sender;
+    return account.address === recipient || account.address === sender;
   }).length > 0;
 
-  if (blockContainsRelevantTransaction) {
+  // TODO remove the localStorage condition when enabling the BTC feature
+  const recentBtcTransaction = localStorage.getItem('btc') && token.active === 'BTC' &&
+    transactions.confirmed.filter(t => t.confirmations === 1).length > 0;
+
+  if (blockContainsRelevantTransaction || recentBtcTransaction) {
     // it was not getting the account with secondPublicKey right
     // after a new block with second passphrase registration transaction was received
     setTimeout(() => {

@@ -3,7 +3,7 @@ import networks from '../constants/networks';
 import txFilters from '../constants/transactionFilters';
 import * as searchAPI from '../utils/api/search';
 import * as accountAPI from '../utils/api/account';
-import * as delegateAPI from '../utils/api/delegate';
+import * as delegateAPI from '../utils/api/delegates';
 import * as transactionsAPI from '../utils/api/transactions';
 import accounts from '../../test/constants/accounts';
 import * as actions from './search';
@@ -18,7 +18,7 @@ const {
 
 jest.mock('../utils/api/search');
 jest.mock('../utils/api/account');
-jest.mock('../utils/api/delegate');
+jest.mock('../utils/api/delegates');
 jest.mock('../utils/api/transactions');
 
 describe('actions: search', () => {
@@ -78,7 +78,7 @@ describe('actions: search', () => {
       }];
       const fetchVotedDelegateInfoSpy = jest.spyOn(actions, 'fetchVotedDelegateInfo');
 
-      delegateAPI.listDelegates.mockResolvedValue(delegates);
+      delegateAPI.getDelegates.mockResolvedValue(delegates);
       await fetchVotedDelegateInfo(votes, { address })(dispatch, getState);
 
       // TODO figure out how to make this assertion work and remove the 'not'
@@ -89,7 +89,7 @@ describe('actions: search', () => {
     });
 
     it('should dispatch searchVotes action if we have all info for all votes', async () => {
-      delegateAPI.listDelegates.mockResolvedValue(delegates);
+      delegateAPI.getDelegates.mockResolvedValue(delegates);
       const votes = delegates.data;
       await fetchVotedDelegateInfo(votes, { address })(dispatch, getState);
       expect(dispatch).toHaveBeenNthCalledWith(1, {
@@ -218,6 +218,7 @@ describe('actions: search', () => {
         delegate: {
           username: accounts.delegate.username,
         },
+        token: 'LSK',
       };
       accountAPI.getAccount.mockResolvedValue(account);
       await searchAccount({ address: account.address })(dispatch, getState);

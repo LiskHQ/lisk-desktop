@@ -21,6 +21,7 @@ describe('TransactionsList V2', () => {
     confirmations: 4314504,
     address: '12345678L',
     asset: {},
+    token: 'LSK',
   }];
 
   const options = {
@@ -46,6 +47,7 @@ describe('TransactionsList V2', () => {
     loadMore: () => {},
     t: () => {},
     history: { location: { search: { id: transactions[0].id } } },
+    activeToken: 'LSK',
   };
 
   it('should render list of transactions', () => {

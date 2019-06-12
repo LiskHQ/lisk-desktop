@@ -38,13 +38,10 @@ describe('Transactions', () => {
   it('Incoming/Outgoing/All filtering works', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(urls.wallet);
-    cy.get(ss.transactionRow).contains(accounts.genesis.address);
     cy.get(ss.transactionsTable).contains('Second passphrase registration');
     cy.get(ss.filterIncoming).click().should('have.class', 'active');
-    cy.get(ss.transactionsTable).contains(accounts.genesis.address);
     cy.get(ss.transactionsTable).contains('Second passphrase registration').should('not.exist');
     cy.get(ss.filterAll).click().should('have.class', 'active');
-    cy.get(ss.transactionsTable).contains(accounts.genesis.address);
     cy.get(ss.transactionsTable).contains('Second passphrase registration');
     cy.get(ss.filterOutgoing).click().should('have.class', 'active');
     cy.get(ss.transactionsTable).contains(accounts.genesis.address).should('not.exist');

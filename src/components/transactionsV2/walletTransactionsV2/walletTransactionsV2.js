@@ -179,9 +179,10 @@ class WalletTransactionsV2 extends React.Component {
       changeFilters: this.changeFilters,
       detailAccount: this.props.account,
       updateCustomFilters: this.updateCustomFilters,
+      activeToken: this.props.activeToken,
     };
 
-    const { t, account } = this.props;
+    const { t, account, activeToken } = this.props;
 
     const delegate = account.isDelegate
       ? { account, ...account.delegate }
@@ -194,6 +195,7 @@ class WalletTransactionsV2 extends React.Component {
           address={this.props.address}
           match={this.props.match}
           account={account}
+          activeToken={activeToken}
         />
         { account.balance === 0 && localJSONStorage.get('closedWalletOnboarding') !== 'true' ?
           <Banner
@@ -219,13 +221,13 @@ class WalletTransactionsV2 extends React.Component {
         <TabsContainer>
           <WalletTab tabName={t('Wallet')}
             {...overviewProps}/>
-          <VotesTab
+          {this.props.activeToken !== 'BTC' ? <VotesTab
             history={this.props.history}
             address={this.props.account.address}
             fetchVotedDelegateInfo={this.props.fetchVotedDelegateInfo}
             loading={this.props.loading}
             votes={this.props.votes}
-            tabName={this.props.t('Votes')} />
+            tabName={this.props.t('Votes')} /> : null}
           {account.isDelegate && delegate.txDelegateRegister
             ? (<DelegateTab
               tabClassName={'delegate-statistics'}

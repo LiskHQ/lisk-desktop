@@ -69,7 +69,11 @@ export const getTransactions = ({
     ...(type !== undefined ? { type } : {}),
   };
 
-  return getAPIClient(networkConfig).transactions.get(params);
+  return new Promise((resolve, reject) => {
+    getAPIClient(networkConfig).transactions.get(params).then(response => (
+      resolve(response)
+    )).catch(reject);
+  });
 };
 
 export const getSingleTransaction = ({
@@ -82,7 +86,9 @@ export const getSingleTransaction = ({
       if (response.data.length !== 0) {
         resolve(response);
       } else {
-        apiClient.node.getTransactions('unconfirmed', { id }).then(resolve).catch(reject);
+        apiClient.node.getTransactions('unconfirmed', { id }).then(unconfirmedRes => (
+          resolve(unconfirmedRes)
+        )).catch(reject);
       }
     }).catch(reject);
 });

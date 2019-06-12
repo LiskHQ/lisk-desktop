@@ -66,3 +66,7 @@
     outline: none;
   }
 }
+
+.autoresize {
+  overflow: hidden;
+}

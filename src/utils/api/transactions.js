@@ -1,8 +1,8 @@
 import { validateAddress } from '../validators';
 import { tokenMap, tokenKeys } from '../../constants/tokens';
-import getMappedFunction from './functionMapper';
+import api from './';
 
-// TODO these imports are temporary until getMappedFunction is implemented for them
+// TODO these imports are temporary until api is implemented for them
 import { send as ss, unconfirmedTransactions as ut } from './lsk/transactions';
 
 export const send = ss;
@@ -31,7 +31,7 @@ export const getTransactions = ({
   token,
   ...params
 }) => (
-  getMappedFunction(token || getTokenFromAddress(params.address), 'transactions', 'getTransactions')({
+  api[token || getTokenFromAddress(params.address)].transactions.getTransactions({
     offset,
     limit,
     ...params,
@@ -39,7 +39,7 @@ export const getTransactions = ({
 );
 
 export const getSingleTransaction = async ({ token, ...params }) => (
-  getMappedFunction(token || getTokenFromTransactionId(params.id), 'transactions', 'getSingleTransaction')(params)
+  api[token || getTokenFromTransactionId(params.id)].transactions.getSingleTransaction(params)
 );
 
 /**
@@ -47,11 +47,12 @@ export const getSingleTransaction = async ({ token, ...params }) => (
  * pass parameters to another functions
  */
 // istanbul ignore file
-export const get = (tokenType, data) => getMappedFunction(tokenType, 'transactions', 'get')(data);
+export const get = (token, data) => api[token].transactions.get(data);
 // istanbul ignore next
-export const create = (tokenType, data) => getMappedFunction(tokenType, 'transactions', 'create')(data);
+export const create = (tokenType, data) => api[tokenType].transactions.create(data);
 // istanbul ignore next
-export const broadcast = (tokenType, transaction, networkConfig) => getMappedFunction(tokenType, 'transactions', 'broadcast')(transaction, networkConfig);
+export const broadcast = (tokenType, transaction, networkConfig) =>
+  api[tokenType].transactions.broadcast(transaction, networkConfig);
 
 export default {
   broadcast,

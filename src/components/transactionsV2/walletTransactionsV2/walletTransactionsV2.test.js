@@ -28,6 +28,7 @@ describe('WalletTransactions V2 Component', () => {
     confirmations: 4314504,
     address: '12345678L',
     asset: {},
+    token: 'LSK',
   }];
 
   const store = configureMockStore([thunk])({
@@ -35,6 +36,7 @@ describe('WalletTransactions V2 Component', () => {
     account: accounts.genesis,
     bookmarks: {
       LSK: [],
+      BTC: [],
     },
     settings: {},
   });
@@ -71,6 +73,7 @@ describe('WalletTransactions V2 Component', () => {
     t: key => key,
     searchAccount: jest.fn(),
     hideChart: true, // Props to hide chart on tests, due to no canvas support
+    activeToken: 'LSK',
   };
 
   beforeEach(() => {

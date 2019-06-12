@@ -28,17 +28,15 @@ describe('VotingListViewV2', () => {
   };
   const props = {
     account: {},
-    refreshDelegates: false,
     delegates,
-    totalDelegates: 10,
     votes,
     serverPublicKey: null,
     address: '16313739661670634666L',
     setActiveDialog: sinon.spy(),
     voteToggled: sinon.spy(),
     addTransaction: sinon.spy(),
-    votesFetched: sinon.spy(),
-    delegatesFetched: sinon.spy(),
+    loadVotes: sinon.spy(),
+    loadDelegates: sinon.spy(),
     t: key => key,
     history: { location: { search: '' } },
   };
@@ -72,14 +70,13 @@ describe('VotingListViewV2', () => {
   });
 
   it('should define search method to reload delegates based on given query', () => {
-    props.delegatesFetched.reset();
+    props.loadDelegates.reset();
     wrapper.find('.search input')
       .at(0).simulate('change', { nativeEvent: { target: { value: 'query' } } });
     clock.tick(251);
-    expect(props.delegatesFetched).to.be.calledWith({
+    expect(props.loadDelegates).to.be.calledWith({
       offset: 0,
       q: 'query',
-      refresh: true,
     });
     clock.restore();
   });
@@ -87,7 +84,6 @@ describe('VotingListViewV2', () => {
   it('should call loadMore and not loadDelegates if still loading', () => {
     const loadMoreProps = {
       ...props,
-      totalDelegates: 100,
     };
     wrapper = mountWithContext(<VotingListViewV2 {...loadMoreProps}/>, {});
     const Waypoint = wrapper.find('Waypoint').at(1);
@@ -99,7 +95,6 @@ describe('VotingListViewV2', () => {
   it('should call loadMore and loadDelegates if not still loading', () => {
     const loadMoreProps = {
       ...props,
-      totalDelegates: 100,
     };
     const loadDelegates = sinon.spy(VotingListViewV2.prototype, 'loadDelegates');
     wrapper = mountWithContext(<VotingListViewV2 {...props}/>, { ...store });

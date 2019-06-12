@@ -12,7 +12,7 @@ import VoteUrlProcessor from './voteUrlProcessor';
 import VoteList from './voteList';
 
 const VotingSummary = ({
-  t, votes, history, account, nextStep, votePlaced, prevStep, voteLookupStatus,
+  t, votes, history, account, nextStep, votePlaced, voteLookupStatus,
 }) => {
   const {
     maxCountOfVotes,
@@ -35,7 +35,7 @@ const VotingSummary = ({
             votes,
             passphrase: account.passphrase,
             secondPassphrase,
-            callback: ({ success, text, errorMessage }) => {
+            callback: ({ success, error }) => {
               nextStep({
                 success,
                 ...(success ? {
@@ -50,12 +50,14 @@ const VotingSummary = ({
                   },
                 } : {
                   title: t('Voting failed'),
-                  message: errorMessage || t('Oops, looks like something went wrong. Please try again.'),
+                  message: (error && error.message) || t('Oops, looks like something went wrong. Please try again.'),
                   primaryButon: {
-                    title: t('Back to Voting summary'),
-                    onClick: prevStep,
+                    title: t('Back to Voting Table'),
+                    onClick: () => {
+                      history.push(routes.delegates.path);
+                    },
                   },
-                  error: text,
+                  error,
                 }),
               });
             },

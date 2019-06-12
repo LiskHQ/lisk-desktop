@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import RequestV2 from '../../requestV2/requestV2';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
-import { getTokenFromAddress } from '../../../utils/api/transactions';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import HeaderAccountInfo from './headerAccountInfo';
 import Bookmark from '../../bookmark';
@@ -12,12 +11,11 @@ import styles from './transactionsOverviewHeader.css';
 import routes from '../../../constants/routes';
 
 class transactionsHeader extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
 
     this.state = {
       shownDropdown: '',
-      token: getTokenFromAddress(props.address),
     };
 
     this.dropdownRefs = {};
@@ -62,21 +60,23 @@ class transactionsHeader extends React.Component {
 
   render() {
     const {
-      bookmarks, address, t, delegate = {}, detailAccount,
+      bookmarks, address, t, delegate = {}, activeToken, detailAccount,
     } = this.props;
-    const { token } = this.state;
 
-    const isBookmark = getIndexOfBookmark(bookmarks, { address, token }) !== -1;
+    const isBookmark = getIndexOfBookmark(bookmarks, {
+      address, token: activeToken,
+    }) !== -1;
     const isWalletRoute = this.props.match.url === routes.wallet.path;
 
     return (
       <header className={`${styles.wrapper}`}>
         <HeaderAccountInfo
-          token={token}
+          token={activeToken}
           bookmarks={bookmarks}
           address={address}
           delegate={delegate}
           account={this.props.account}
+          toggleActiveToken={this.props.toggleActiveToken}
           />
         <div className={`${styles.buttonsHolder}`}>
         { isWalletRoute ? (
@@ -86,7 +86,7 @@ class transactionsHeader extends React.Component {
               data-name={'requestDropdown'}
               className={`${styles.requestContainer} tx-receive-bt`}>
               <SecondaryButtonV2 onClick={() => this.toggleDropdown('requestDropdown')}>
-                {t('Request LSK')}
+                {t('Request {{token}}', { token: activeToken })}
               </SecondaryButtonV2>
               <DropdownV2
                 showDropdown={this.state.shownDropdown === 'requestDropdown'}
@@ -96,7 +96,7 @@ class transactionsHeader extends React.Component {
             </span>
             <Link to={`${routes.send.path}?wallet`} className={'tx-send-bt'}>
               <PrimaryButtonV2>
-                {t('Send LSK')}
+                {t('Send {{token}}', { token: activeToken })}
               </PrimaryButtonV2>
             </Link>
           </React.Fragment>
@@ -105,7 +105,7 @@ class transactionsHeader extends React.Component {
             <Link to={`${routes.send.path}?wallet&recipient=${address}`}
               className={'send-to-address'}>
                 <SecondaryButtonV2>
-                  {t('Send LSK to this Account')}
+                  {t('Send {{token}} to this Account ', { token: activeToken })}
                 </SecondaryButtonV2>
             </Link>
             <span
@@ -128,9 +128,9 @@ class transactionsHeader extends React.Component {
             )}
             <DropdownV2
               showDropdown={this.state.shownDropdown === 'bookmarkDropdown'}
-              className={`${styles.bookmarkDropdown}`}>
+              className={`${styles.followDropdown}`}>
                 <Bookmark
-                  token={token}
+                  token={activeToken}
                   delegate={delegate}
                   address={address}
                   detailAccount={detailAccount}

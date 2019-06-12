@@ -47,11 +47,14 @@ import iconLedgerNanoDevice from '../assets/images/icons-v2/icon_ledger_device.s
 import iconEdit from '../assets/images/icons-v2/icon_edit.svg';
 import btcIcon from '../assets/images/icons-v2/icon-btc-48.svg';
 import iconEmptyRecentTransactions from '../assets/images/icons-v2/empty_recent_transactions.svg';
+import incoming from '../assets/images/icons-v2/incoming.svg';
+import outgoing from '../assets/images/icons-v2/outgoing.svg';
 import checkboxFilled from '../assets/images/icons-v2/checkmark-16-filled.svg';
 import checkmark from '../assets/images/icons-v2/checkmark.svg';
 import newsFeedAvatar from '../assets/images/icons-v2/newsFeedsAvatar.svg';
 import bookmarksIconEmptyState from '../assets/images/icons-v2/bookmarks_empty_state.svg';
 import liskLogo from '../assets/images/lisk-logo-v2.svg';
+import lskIcon from '../assets/images/icons-v2/icon-lsk.svg';
 
 export default {
   alert_icon: alertIcon,
@@ -107,7 +110,10 @@ export default {
   icon_empty_recent_transactions: iconEmptyRecentTransactions,
   checkboxFilled,
   checkmark,
+  incoming,
+  outgoing,
   newsFeedAvatar,
   bookmarksIconEmptyState,
   liskLogo,
+  lskIcon,
 };

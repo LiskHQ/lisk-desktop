@@ -9,18 +9,16 @@ import {
   delegateRegistered,
   removePassphrase,
   passphraseUsed,
-  loadDelegate,
   accountDataUpdated,
   updateTransactionsIfNeeded,
   updateDelegateAccount,
-  delegateStatsLoaded,
   updateAccountDelegateStats,
   login,
 } from './account';
 import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { delegateRegisteredFailure } from './delegate';
 import * as accountApi from '../utils/api/account';
-import * as delegateApi from '../utils/api/delegate';
+import * as delegateApi from '../utils/api/delegates';
 import * as transactionsApi from '../utils/api/transactions';
 import * as blocksApi from '../utils/api/blocks';
 import Fees from '../constants/fees';
@@ -100,6 +98,7 @@ describe('actions: account', () => {
         amount: 0,
         fee: Fees.setSecondPassphrase,
         type: transactionTypes.setSecondPassphrase,
+        token: 'LSK',
       };
 
       actionFunction(dispatch, getState);
@@ -166,6 +165,7 @@ describe('actions: account', () => {
         amount: 0,
         fee: Fees.registerDelegate,
         type: transactionTypes.registerDelegate,
+        token: 'LSK',
       };
 
       actionFunction(dispatch, getState);
@@ -187,41 +187,6 @@ describe('actions: account', () => {
       actionFunction(dispatch, getState);
       const passphraseUsedAction = passphraseUsed(accounts.genesis.passphrase);
       chaiExpect(dispatch).to.have.been.calledWith(passphraseUsedAction);
-    });
-  });
-
-  describe('loadDelegate', () => {
-    let delegateApiMock;
-    let dispatch;
-    let getState;
-
-    const data = {
-      publicKey: accounts.genesis.publicKey,
-    };
-    const actionFunction = loadDelegate(data);
-
-    beforeEach(() => {
-      delegateApiMock = stub(delegateApi, 'getDelegate');
-      dispatch = spy();
-      getState = () => ({
-        peers: { liskAPIClient: {} },
-      });
-    });
-
-    afterEach(() => {
-      delegateApiMock.restore();
-    });
-
-    it('should dispatch updateDelegate with delegate response', () => {
-      const delegateResponse = { delegate: { ...accounts['delegate candidate'] } };
-      delegateApiMock.returnsPromise().resolves(delegateResponse);
-
-      actionFunction(dispatch, getState);
-      const updateDelegateAction = {
-        data: delegateResponse,
-        type: actionTypes.updateDelegate,
-      };
-      chaiExpect(dispatch).to.have.been.calledWith(updateDelegateAction);
     });
   });
 
@@ -346,7 +311,7 @@ describe('actions: account', () => {
     let getState;
 
     beforeEach(() => {
-      stub(delegateApi, 'getDelegate').returnsPromise();
+      stub(delegateApi, 'getDelegates').returnsPromise();
       getState = () => ({
         peers: { liskAPIClient: {} },
         account: {
@@ -358,18 +323,22 @@ describe('actions: account', () => {
     });
 
     afterEach(() => {
-      delegateApi.getDelegate.restore();
+      delegateApi.getDelegates.restore();
     });
 
     it('should fetch delegate and update account', () => {
-      delegateApi.getDelegate.resolves({ data: [{ account: 'delegate data' }] });
+      delegateApi.getDelegates.resolves({ data: [{ account: 'delegate data' }] });
       const data = {
         publicKey: accounts.genesis.publicKey,
       };
 
       updateDelegateAccount(data)(dispatch, getState);
 
-      const accountUpdatedAction = accountUpdated({ delegate: { account: 'delegate data' }, isDelegate: true });
+      const accountUpdatedAction = accountUpdated({
+        token: 'LSK',
+        delegate: { account: 'delegate data' },
+        isDelegate: true,
+      });
       chaiExpect(dispatch).to.have.been.calledWith(accountUpdatedAction);
     });
   });
@@ -383,6 +352,11 @@ describe('actions: account', () => {
       stub(transactionsApi, 'getTransactions').returnsPromise();
       getState = () => ({
         peers: { liskAPIClient: {} },
+        account: {
+          info: {
+            LSK: {},
+          },
+        },
       });
     });
 
@@ -397,9 +371,12 @@ describe('actions: account', () => {
 
       await updateAccountDelegateStats(accounts.genesis)(dispatch, getState);
 
-      const delegateStatsLoadedAction = delegateStatsLoaded({
-        lastBlock: 1,
-        txDelegateRegister: { timestamp: 2 },
+      const delegateStatsLoadedAction = accountUpdated({
+        token: 'LSK',
+        delegate: {
+          lastBlock: 1,
+          txDelegateRegister: { timestamp: 2 },
+        },
       });
 
       chaiExpect(dispatch).to.have.been.calledWith(delegateStatsLoadedAction);

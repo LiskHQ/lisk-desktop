@@ -129,24 +129,24 @@ class TransactionSummary extends React.Component {
         <label> {fee } LSK </label>
       </section>
     </div>
-    <footer className='summary-footer'>
-      {isHardwareWalletConnected ?
-        null :
-        <PrimaryButtonV2
-          className={`${styles.confirmBtn} confirm-button`}
-          disabled={
-            (!!account.secondPublicKey && !secondPassphrase.isValid) ||
-            confirmButton.disabled}
-          onClick={this.confirmOnClick}>
-          {confirmButton.label}
-        </PrimaryButtonV2>
-      }
-      <TertiaryButtonV2
-        className={`${styles.editBtn} cancel-button`}
-        onClick={cancelButton.onClick}>
-        {cancelButton.label}
-      </TertiaryButtonV2>
-    </footer>
+    {isHardwareWalletConnected ?
+      null :
+      <footer className='summary-footer'>
+          <PrimaryButtonV2
+            className={`${styles.confirmBtn} confirm-button`}
+            disabled={
+              (!!account.secondPublicKey && !secondPassphrase.isValid) ||
+              confirmButton.disabled}
+            onClick={this.confirmOnClick}>
+            {confirmButton.label}
+          </PrimaryButtonV2>
+        <TertiaryButtonV2
+          className={`${styles.editBtn} cancel-button`}
+          onClick={cancelButton.onClick}>
+          {cancelButton.label}
+        </TertiaryButtonV2>
+      </footer>
+    }
   </div>;
   }
 }

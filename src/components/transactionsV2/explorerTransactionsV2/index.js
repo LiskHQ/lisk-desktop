@@ -6,6 +6,7 @@ import { searchTransactions, searchMoreTransactions, searchAccount, fetchVotedDe
 import actionTypes from '../../../constants/actions';
 import ExplorerTransactionsV2 from './explorerTransactionsV2';
 import txFilters from '../../../constants/transactionFilters';
+import { getTokenFromAddress } from '../../../utils/api/transactions';
 
 /* istanbul ignore next */
 const mapStateToProps = (state, ownProps) => ({
@@ -26,6 +27,7 @@ const mapStateToProps = (state, ownProps) => ({
   detailAccount: state.search.accounts[state.search.lastSearch],
   balance: state.search.accounts[state.search.lastSearch]
     && state.search.accounts[state.search.lastSearch].balance,
+  activeToken: getTokenFromAddress(ownProps.address),
 });
 
 /* istanbul ignore next */

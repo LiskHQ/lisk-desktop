@@ -1,5 +1,6 @@
+
 import Lisk from '@liskhq/lisk-client';
-import getMappedFunction from '../functionMapper';
+import api from '../';
 import { tokenMap } from '../../../constants/tokens';
 import { getAPIClient } from './network';
 import { extractAddress, extractPublicKey } from '../../account';
@@ -23,7 +24,12 @@ export const getAccount = ({
       if (res.data.length > 0) {
         resolve({
           ...res.data[0],
-          publicKey: publicKey || res.data[0].publicKey,
+          // It is necessary to disable this rule, because eslint --fix would
+          // change it to publicKey || res.data[0].publicKey
+          // but that is not equivalent to the ternary if the first value is
+          // defined and the second one not.
+          // eslint-disable-next-line no-unneeded-ternary
+          publicKey: publicKey ? publicKey : res.data[0].publicKey,
           serverPublicKey: res.data[0].publicKey,
           token: tokenMap.LSK.key,
         });
@@ -57,5 +63,5 @@ export const setSecondPassphrase = (
 
 export const btc = { // Temporary btc account utility while we don't normalize the apis calls.
   extractAddress: /* istanbul ignore next */ (passphrase, netCode) =>
-    getMappedFunction(tokenMap.BTC.key, 'account', 'extractAddress')(passphrase, netCode),
+    api.BTC.account.extractAddress(passphrase, netCode),
 };

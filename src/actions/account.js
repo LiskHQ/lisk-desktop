@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { getAccount, setSecondPassphrase } from '../utils/api/account';
-import { registerDelegate, getDelegate } from '../utils/api/delegate';
+import { registerDelegate, getDelegates } from '../utils/api/delegates';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import { updateTransactions } from './transactions';
@@ -72,11 +72,6 @@ export const passphraseUsed = data => ({
   data,
 });
 
-export const delegateStatsLoaded = data => ({
-  type: actionTypes.delegateStatsLoaded,
-  data,
-});
-
 /**
  *
  */
@@ -94,6 +89,7 @@ export const secondPassphraseRegistered = ({ secondPassphrase, account, passphra
             amount: 0,
             fee: Fees.setSecondPassphrase,
             type: transactionTypes.setSecondPassphrase,
+            token: 'LSK',
           },
           type: actionTypes.addPendingTransaction,
         });
@@ -107,15 +103,23 @@ export const secondPassphraseRegistered = ({ secondPassphrase, account, passphra
 export const updateDelegateAccount = ({ publicKey }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
-    return getDelegate(liskAPIClient, { publicKey })
+    return getDelegates(liskAPIClient, { publicKey })
       .then((response) => {
         dispatch(accountUpdated({
-          ...getState().account.info.LSK,
-          delegate: response.data[0],
+          token: 'LSK',
+          delegate: {
+            ...(getState().account.info.LSK.delegate || {}),
+            ...response.data[0],
+          },
           isDelegate: true,
         }));
       });
   };
+
+
+// TODO change all uses of loadDelegate to updateDelegateAccount
+export const loadDelegate = updateDelegateAccount;
+
 
 /**
  *
@@ -138,6 +142,7 @@ export const delegateRegistered = ({
             amount: 0,
             fee: Fees.registerDelegate,
             type: transactionTypes.registerDelegate,
+            token: 'LSK',
           },
           type: actionTypes.addPendingTransaction,
         });
@@ -146,19 +151,6 @@ export const delegateRegistered = ({
         dispatch(delegateRegisteredFailure(error));
       });
     dispatch(passphraseUsed(passphrase));
-  };
-
-export const loadDelegate = ({ publicKey }) =>
-  (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    getDelegate(liskAPIClient, { publicKey }).then((response) => {
-      dispatch({
-        data: {
-          delegate: response.delegate,
-        },
-        type: actionTypes.updateDelegate,
-      });
-    });
   };
 
 export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocus) =>
@@ -185,22 +177,27 @@ export const accountDataUpdated = ({
 }) =>
   (dispatch, getState) => {
     const networkConfig = getState().network;
-    getAccount({ networkConfig, address: account.address }).then((result) => {
-      if (result.balance !== account.balance) {
-        dispatch(updateTransactionsIfNeeded(
-          {
-            transactions,
-            account,
-          },
-          !windowIsFocused,
-        ));
-      }
-      dispatch(accountUpdated(result));
-      dispatch(updateWallet(result, getState().peers));
-      dispatch(liskAPIClientUpdate({ online: true }));
-    }).catch((res) => {
-      dispatch(liskAPIClientUpdate({ online: false, code: res.error.code }));
-    });
+    getAccount({
+      networkConfig,
+      address: account.address,
+      publicKey: account.publicKey,
+    })
+      .then((result) => {
+        if (result.balance !== account.balance) {
+          dispatch(updateTransactionsIfNeeded(
+            {
+              transactions,
+              account,
+            },
+            !windowIsFocused,
+          ));
+        }
+        dispatch(accountUpdated(result));
+        dispatch(updateWallet(result, getState().peers));
+        dispatch(liskAPIClientUpdate({ online: true }));
+      }).catch((res) => {
+        dispatch(liskAPIClientUpdate({ online: false, code: res.error.code }));
+      });
   };
 
 export const updateAccountDelegateStats = account =>
@@ -213,9 +210,13 @@ export const updateAccountDelegateStats = account =>
       token, networkConfig, address, limit: 1, type: transactionTypes.registerDelegate,
     });
     const block = await getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 });
-    dispatch(delegateStatsLoaded({
-      lastBlock: (block.data[0] && block.data[0].timestamp) || '-',
-      txDelegateRegister: transaction.data[0],
+    dispatch(accountUpdated({
+      token,
+      delegate: {
+        ...(getState().account.info.LSK.delegate || {}),
+        lastBlock: (block.data[0] && block.data[0].timestamp) || '-',
+        txDelegateRegister: transaction.data[0],
+      },
     }));
   };
 

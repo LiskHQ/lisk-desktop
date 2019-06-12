@@ -68,9 +68,9 @@
   background-color: var(--color-white);
 
   & > * {
-    @mixin contentSmall;
+    @mixin contentNormal bold;
 
-    color: var(--color-slate-gray);
+    color: var(--color-maastricht-blue);
     padding: 16px 20px;
   }
 }

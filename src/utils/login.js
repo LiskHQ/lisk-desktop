@@ -34,13 +34,14 @@ export const validateUrl = (value) => {
   return { address: value, addressValidity };
 };
 
-
-export const getAutoLogInData = () => ({
+// Ignore coverage because this is only development feature
+export const getAutoLogInData = /* istanbul ignore next */ () => ({
   [settings.keys.loginKey]: localStorage.getItem(settings.keys.loginKey),
   [settings.keys.liskCoreUrl]: localStorage.getItem(settings.keys.liskCoreUrl),
 });
 
-export const shouldAutoLogIn = autologin =>
+// Ignore coverage because this is only development feature
+export const shouldAutoLogIn = /* istanbul ignore next */ autologin =>
   autologin[settings.keys.liskCoreUrl] && autologin[settings.keys.liskCoreUrl] !== '' &&
     autologin[settings.keys.loginKey] && autologin[settings.keys.loginKey] !== '';
 

@@ -31,7 +31,7 @@ class VotingListViewV2 extends React.Component {
     if (account.serverPublicKey && !votingModeEnabled && getPendingVotesList(votes).length === 0) {
       this.loadVotedDelegates();
     }
-    this.loadDelegates('', true);
+    this.loadDelegates('');
   }
 
   componentDidUpdate(nextProps) {
@@ -44,7 +44,7 @@ class VotingListViewV2 extends React.Component {
   loadVotedDelegates() {
     /* istanbul-ignore-else */
     if (!this.freezeLoading) {
-      this.props.votesFetched({
+      this.props.loadVotes({
         address: this.props.address,
       });
     }
@@ -57,7 +57,7 @@ class VotingListViewV2 extends React.Component {
   search(query) {
     this.query = query;
     this.freezeLoading = false;
-    this.loadDelegates(query, true, 0);
+    this.loadDelegates(query);
   }
 
   /**
@@ -69,14 +69,14 @@ class VotingListViewV2 extends React.Component {
    *  should replace the old delegates list
    * @param {Number} limit - The maximum number of results
    */
-  loadDelegates(q = '', refresh, offset = 0) {
+  loadDelegates(q = '', offset = 0) {
     this.freezeLoading = true;
     this.setState({ isLoading: true });
 
-    this.props.delegatesFetched({
+    this.props.loadDelegates({
       offset,
       q,
-      refresh,
+      refresh: offset === 0,
       callback: () => {
         this.setState({ isLoading: false });
       },
@@ -84,8 +84,7 @@ class VotingListViewV2 extends React.Component {
   }
 
   loadMore() {
-    const list = this.filter(this.props.delegates);
-    this.loadDelegates(this.query, false, list[list.length - 1].rank);
+    this.loadDelegates(this.query, this.props.delegates.length);
   }
 
   setActiveFilter(filter) {
