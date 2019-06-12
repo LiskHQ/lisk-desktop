@@ -2,6 +2,7 @@
 @import '../app/mixins.css';
 
 .wrapper {
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -53,6 +54,7 @@
 }
 
 .dropdown {
+  cursor: normal;
   width: auto;
 }
 
