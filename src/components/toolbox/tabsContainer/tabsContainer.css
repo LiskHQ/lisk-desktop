@@ -17,7 +17,7 @@
   padding: 0;
 
   & > li {
-    @mixin contentSmall bold;
+    @mixin contentNormal bold;
 
     align-items: center;
     background: var(--color-white-smoke);

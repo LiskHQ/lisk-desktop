@@ -27,7 +27,7 @@ describe('Search', () => {
   function assertAccountPage(accountsAddress) {
     cy.wait('@requestAccount');
     cy.wait('@requestDelegate');
-    cy.get(ss.accountAddress).should('have.text', accountsAddress);
+    cy.get(ss.accountAddress).contains(accountsAddress);
   }
 
   function assertDelegatePage(accountsName) {
