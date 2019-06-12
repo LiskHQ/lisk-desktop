@@ -23,7 +23,7 @@ const validateToken = state => (
 );
 
 // load setting data from localStorage if it exists
-export const initialState = JSON.parse(localStorage.getItem('settings')) || {
+export const initialState = {
   autoLog: true,
   showNetwork: false,
   channels,
@@ -36,6 +36,7 @@ export const initialState = JSON.parse(localStorage.getItem('settings')) || {
     active: tokenKeys[0],
     list: tokenKeys.reduce((acc, key) => { acc[key] = true; return acc; }, {}),
   },
+  ...JSON.parse(localStorage.getItem('settings')) || {},
 };
 
 /**
