@@ -131,18 +131,4 @@ describe('NewsFeed', () => {
 
     expect(wrapper).to.have.descendants('.news-item');
   });
-
-  it('should render showMore button properly', () => {
-    const wrapper = mount(<MemoryRouter>
-      <NewsFeed {...props} />
-    </MemoryRouter>, options);
-    expect(wrapper.find('.show-more').exists()).to.equal(true);
-    expect(wrapper.find('.showMore').exists()).to.equal(false);
-    wrapper.find('.show-more').at(0).simulate('click');
-    wrapper.update();
-    expect(wrapper.find('.showMore').exists()).to.equal(true);
-    wrapper.find('.show-more').at(0).simulate('click');
-    wrapper.update();
-    expect(wrapper.find('.showMore').exists()).to.equal(false);
-  });
 });
