@@ -10,6 +10,7 @@ import keyCodes from './../../constants/keyCodes';
 import styles from './searchBar.css';
 
 class SearchBar extends React.Component {
+  // eslint-disable-next-line max-statements
   constructor() {
     super();
 
@@ -20,7 +21,8 @@ class SearchBar extends React.Component {
     };
 
     this.onChangeSearchTextValue = this.onChangeSearchTextValue.bind(this);
-    this.onSelectedRow = this.onSelectedRow.bind(this);
+    this.onSelectAccount = this.onSelectedRow.bind(this, 'accounts');
+    this.onSelectTransaction = this.onSelectedRow.bind(this, 'transactions');
     this.clearSearch = this.clearSearch.bind(this);
     this.isSubmittedStringValid = this.isSubmittedStringValid.bind(this);
     this.onHandleKeyPress = this.onHandleKeyPress.bind(this);
@@ -35,14 +37,13 @@ class SearchBar extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   isSubmittedStringValid(text) {
-    return text.match(regex.address)
-    || text.match(regex.transactionId)
-    || text.match(regex.delegateName);
+    return regex.address.test(text)
+      || regex.transactionId.test(text)
+      || regex.delegateName.test(text);
   }
 
-  onChangeSearchTextValue(e) {
+  onChangeSearchTextValue({ target: { value: searchTextValue } }) {
     const { searchSuggestions, clearSearchSuggestions } = this.props;
-    const searchTextValue = e.target.value;
     const isTextValid = this.isSubmittedStringValid(searchTextValue);
 
     this.setState({ searchTextValue, rowItemIndex: 0 });
@@ -62,26 +63,21 @@ class SearchBar extends React.Component {
     this.props.clearSearchSuggestions();
   }
 
-  onSelectedRow(value, type) {
-    let toUrl = '';
-
-    if (type === 'account') toUrl = `${routes.accounts.pathPrefix}${routes.accounts.path}/${value}`;
-    if (type === 'transaction') toUrl = `${routes.transactions.pathPrefix}${routes.transactions.path}/${value}`;
-
-    this.props.history.push(toUrl);
+  onSelectedRow(type, value) {
+    this.props.history.push(`${routes[type].pathPrefix}${routes[type].path}/${value}`);
     this.clearSearch();
-    this.props.onSearchClick('search');
+    this.props.onSearchClick();
   }
 
   onKeyPressDownOrUp(action, totalRows) {
     const { rowItemIndex } = this.state;
 
-    if (action === 'down' && rowItemIndex < totalRows - 1) {
-      this.setState(prevState => ({ rowItemIndex: prevState.rowItemIndex + 1 }));
+    if (action === keyCodes.arrowDown && rowItemIndex < totalRows - 1) {
+      this.setState({ rowItemIndex: rowItemIndex + 1 });
     }
 
-    if (action === 'up' && rowItemIndex > 0) {
-      this.setState(prevState => ({ rowItemIndex: prevState.rowItemIndex - 1 }));
+    if (action === keyCodes.arrowUp && rowItemIndex > 0) {
+      this.setState({ rowItemIndex: rowItemIndex - 1 });
     }
   }
 
@@ -90,15 +86,15 @@ class SearchBar extends React.Component {
     const { rowItemIndex } = this.state;
 
     if (suggestions.addresses.length) {
-      this.onSelectedRow(suggestions.addresses[rowItemIndex].address, 'account');
+      this.onSelectAccount(suggestions.addresses[rowItemIndex].address);
     }
 
     if (suggestions.delegates.length) {
-      this.onSelectedRow(suggestions.delegates[rowItemIndex].account.address, 'account');
+      this.onSelectAccount(suggestions.delegates[rowItemIndex].account.address);
     }
 
     if (suggestions.transactions.length) {
-      this.onSelectedRow(suggestions.transactions[rowItemIndex].id, 'transaction');
+      this.onSelectTransaction(suggestions.transactions[rowItemIndex].id);
     }
   }
 
@@ -112,10 +108,8 @@ class SearchBar extends React.Component {
     if (suggestionsLength >= 1) {
       switch (e.keyCode) {
         case keyCodes.arrowDown:
-          this.onKeyPressDownOrUp('down', suggestionsLength);
-          break;
         case keyCodes.arrowUp:
-          this.onKeyPressDownOrUp('up', suggestionsLength);
+          this.onKeyPressDownOrUp(e.keyCode, suggestionsLength);
           break;
         case keyCodes.enter:
           this.onKeyPress();
@@ -127,7 +121,8 @@ class SearchBar extends React.Component {
     }
   }
 
-  updateRowItemIndex(rowItemIndex) {
+  updateRowItemIndex({ target }) {
+    const rowItemIndex = +target.dataset.index;
     this.setState({ rowItemIndex });
   }
 
@@ -165,7 +160,7 @@ class SearchBar extends React.Component {
           suggestions.addresses.length
           ? (<Accounts
               accounts={suggestions.addresses}
-              onSelectedRow={this.onSelectedRow}
+              onSelectedRow={this.onSelectAccount}
               rowItemIndex={rowItemIndex}
               updateRowItemIndex={this.updateRowItemIndex}
               t={t}
@@ -176,7 +171,7 @@ class SearchBar extends React.Component {
           suggestions.delegates.length
           ? (<Delegates
               delegates={suggestions.delegates}
-              onSelectedRow={this.onSelectedRow}
+              onSelectedRow={this.onSelectAccount}
               rowItemIndex={rowItemIndex}
               updateRowItemIndex={this.updateRowItemIndex}
               t={t}
@@ -187,7 +182,7 @@ class SearchBar extends React.Component {
           suggestions.transactions.length
           ? (<Transactions
               transactions={suggestions.transactions}
-              onSelectedRow={this.onSelectedRow}
+              onSelectedRow={this.onSelectTransaction}
               rowItemIndex={rowItemIndex}
               updateRowItemIndex={this.updateRowItemIndex}
               t={t}
