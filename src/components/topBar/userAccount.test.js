@@ -13,7 +13,7 @@ describe('UserAccount', () => {
     token: {
       active: 'LSK',
       list: {
-        BTC: false,
+        BTC: true,
         LSK: true,
       },
     },
@@ -28,6 +28,7 @@ describe('UserAccount', () => {
     isDropdownEnable: false,
     onDropdownToggle: jest.fn(),
     onLogout: jest.fn(),
+    settingsUpdated: jest.fn(),
     setDropdownRef: () => {},
     t: val => val,
   };
@@ -75,5 +76,28 @@ describe('UserAccount', () => {
     wrapper = mountWithRouter(<UserAccount {...myProps} />, myOptions);
     wrapper.find('span.dropdownOption').simulate('click');
     expect(myProps.onLogout).toHaveBeenCalled();
+  });
+
+  it('should not render if no info in accounts', () => {
+    const info = {
+      ...myProps.account.info,
+      BTC: {
+        address: '12345L',
+        balance: 120,
+      },
+    };
+    localStorage.setItem('btc', true);
+    wrapper = mountWithRouter(<UserAccount {...myProps} />, myOptions);
+    expect(wrapper.find('DropdownV2')).toContainMatchingElements(1, '.accountInfo');
+    wrapper.setProps({
+      children: React.cloneElement(wrapper.props().children, {
+        account: {
+          ...myProps.account,
+          info,
+        },
+      }),
+    });
+    expect(wrapper.find('DropdownV2')).toContainMatchingElements(2, '.accountInfo');
+    localStorage.clear();
   });
 });

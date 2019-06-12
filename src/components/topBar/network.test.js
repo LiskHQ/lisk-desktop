@@ -44,7 +44,7 @@ describe('Network', () => {
   });
 
   it('renders nethash option as DEVENET', () => {
-    expect(wrapper.find('span').at(1)).to.have.text('devnet');
+    expect(wrapper.find('p span').at(1)).to.have.text('devnet');
   });
 
   it('renders nethash option as MAINNET', () => {
@@ -52,14 +52,14 @@ describe('Network', () => {
     data.peers.status.online = true;
     data.peers.options.nethash = mainnet;
     wrapper = setup(data);
-    expect(wrapper.find('span').at(1)).to.have.text('mainnet');
+    expect(wrapper.find('p span').at(1)).to.have.text('mainnet');
   });
 
   it('renders nethash option as TESTNET', () => {
     const testnet = 'da3ed6a45429278bac2666961289ca17ad86595d33b31037615d4b8e8f158bba';
     data.peers.options.nethash = testnet;
     wrapper = setup(data);
-    expect(wrapper.find('span').at(1)).to.have.text('testnet');
+    expect(wrapper.find('p span').at(1)).to.have.text('testnet');
   });
 
   it('not render a network', () => {

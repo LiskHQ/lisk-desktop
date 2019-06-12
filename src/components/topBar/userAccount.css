@@ -31,12 +31,13 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 0 12px;
+    margin-right: 12px;
   }
 
   & > img {
-    width: 36px;
     height: 36px;
+    margin-right: 12px;
+    width: 36px;
   }
 
   & p {
@@ -101,6 +102,16 @@
 
     & > img:nth-child(2) {
       display: block;
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    & > .accountInfo {
+      & > div {
+        display: none;
+      }
     }
   }
 }

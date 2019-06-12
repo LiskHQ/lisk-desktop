@@ -22,7 +22,7 @@ const Network = (props) => {
     <section className={`${styles.wrapper} network-status`}>
       <span className={`${styles.status} ${statusColor}`}></span>
       <p>
-        {t('Connected to:')}
+        <span>{t('Connected to:')}</span>
         <span>{activeNetwork[iconCode]}</span>
       </p>
     </section>

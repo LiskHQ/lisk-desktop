@@ -13,7 +13,10 @@ const UserAccount = ({
   token, t, account, onDropdownToggle, isDropdownEnable, onLogout,
   settingsUpdated,
 }) => {
-  const enabledTokens = tokenKeys.filter(key => token.list[key]);
+  /* istanbul ignore next */
+  const enabledTokens = localStorage.getItem('btc') // TODO: Remove when enabling BTC
+    ? tokenKeys.filter(key => token.list[key])
+    : [tokenMap.LSK.key];
 
   return (
     <OutsideClickHandler
@@ -26,7 +29,7 @@ const UserAccount = ({
         <Icon name={`${tokenMap[token.active].icon}Icon`} />
         <div>
           <p>{t('{{token}} Wallet', { token: tokenMap[token.active].label })}</p>
-          <span>
+          <span className={'balance'}>
             <LiskAmount val={account.info[token.active].balance}/> {tokenMap[token.active].key}
           </span>
         </div>
@@ -36,9 +39,7 @@ const UserAccount = ({
         className={styles.dropdown}
         showDropdown={isDropdownEnable}
       >
-        { /* istanbul ignore next */
-          localStorage.getItem('btc') && // TODO: Remove when enabling btc to endusers
-          enabledTokens.length > 1 && enabledTokens.map(tokenKey => (account.info[tokenKey] ? ([
+        {enabledTokens.map(tokenKey => (account.info[tokenKey] ? ([
           <span key={tokenKey}>
             <div
               className={styles.accountInfo}

@@ -55,6 +55,7 @@ describe('TopBar', () => {
         online: true,
       },
     },
+    settingsUpdated: jest.fn(),
   };
 
   const history = {
@@ -126,7 +127,7 @@ describe('TopBar', () => {
   });
 
   it('logout user when user do a click on logout function', () => {
-    wrapper.find('.accountInfo').simulate('click');
+    wrapper.find('.accountInfo').at(0).simulate('click');
     wrapper.update();
     wrapper.find('.logout').simulate('click');
     wrapper.update();

@@ -76,3 +76,9 @@
     padding: 0;
   }
 }
+
+@media (--medium-viewport) {
+  .logo {
+    display: none !important;
+  }
+}

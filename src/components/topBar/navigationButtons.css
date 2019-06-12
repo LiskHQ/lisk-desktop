@@ -22,3 +22,9 @@
     }
   }
 }
+
+@media (--medium-viewport) {
+  .wrapper {
+    width: 88px;
+  }
+}
