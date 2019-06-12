@@ -5,8 +5,8 @@ import throttle from 'lodash.throttle';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '../../constants/routes';
 import BookmarksList from '../bookmarksList';
-import NewsFeed from '../newsFeedV2';
-import MyAccount from '../myAccount';
+import NewsFeed from '../newsFeed';
+import WalletDetails from '../walletDetails';
 import Piwik from '../../utils/piwik';
 import links from '../../constants/externalLinks';
 import { fromRawLsk } from '../../utils/lsk';
@@ -132,7 +132,7 @@ class Dashboard extends React.Component {
             <div className={styles.subContainer}>
               {
                 isLoggedIn
-                ? <MyAccount className={styles.marginFix}/>
+                ? <WalletDetails className={styles.marginFix}/>
                 : null
               }
 

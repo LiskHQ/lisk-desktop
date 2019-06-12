@@ -25,7 +25,7 @@ const TransactionList = ({
         <Link
           key={index}
           to={`${routes.transactions.pathPrefix}${routes.transactions.path}/${tx.id}`}
-          className={styles.listRow}
+          className={`${styles.listRow} transactions-row`}
         >
           <TransactionTypeFigure
             address={tx.recipientId}
@@ -46,7 +46,7 @@ const TransactionList = ({
         </Link>)
     }
     </div>
-    <Link to={routes.wallet.path}>
+    <Link to={routes.wallet.path} className={'view-all'}>
       <SecondaryButtonV2>{t('View All')}</SecondaryButtonV2>
     </Link>
   </div>

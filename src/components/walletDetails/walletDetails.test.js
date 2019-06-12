@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { MemoryRouter as Router } from 'react-router-dom';
-import MyAccount from './myAccount';
+import WalletDetails from './walletDetails';
 
 
-describe('MyAccount', () => {
+describe('WalletDetails', () => {
   let wrapper;
 
   const props = {
@@ -33,7 +33,7 @@ describe('MyAccount', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<Router><MyAccount {...props} /></Router>);
+    wrapper = mount(<Router><WalletDetails {...props} /></Router>);
   });
 
   it('Should render properly', () => {
