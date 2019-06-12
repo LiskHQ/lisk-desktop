@@ -23,7 +23,6 @@ class transactionsHeader extends React.Component {
 
     this.dropdownRefs = {};
 
-    this.toggleDropdown = this.toggleDropdown.bind(this);
     this.setDropownRefs = this.setDropownRefs.bind(this);
   }
 
@@ -72,9 +71,9 @@ class transactionsHeader extends React.Component {
                 { activeToken !== 'BTC' ?
                 <OutsideClickHandler
                   disabled={shownDropdown !== 'requestDropdown'}
-                  onOutsideClick={() => this.toggleDropdown('requestDropdown')}
+                  onOutsideClick={this.toggleDropdown.bind(this, 'requestDropdown')}
                 >
-                  <SecondaryButtonV2 onClick={() => this.toggleDropdown('requestDropdown')}>
+                  <SecondaryButtonV2 onClick={this.toggleDropdown.bind(this, 'requestDropdown')}>
                     {t('Request {{token}}', { token: activeToken })}
                   </SecondaryButtonV2>
                   <DropdownV2
@@ -115,19 +114,16 @@ class transactionsHeader extends React.Component {
                 className={`${styles.bookmarkContainer} bookmark-account`}>
               <OutsideClickHandler
                 disabled={shownDropdown !== 'bookmarkDropdown'}
-                onOutsideClick={() => this.toggleDropdown('bookmarkDropdown')}
+                onOutsideClick={this.toggleDropdown.bind(this, 'bookmarkDropdown')}
               >
                 { isBookmark ? (
                   <SecondaryButtonV2
                     className={`${styles.bookmarkButton}`}
-                    onClick={
-                      /* istanbul ignore next */
-                      () => this.toggleDropdown('bookmarkDropdown')
-                    }>
+                    onClick={this.toggleDropdown.bind(this, 'bookmarkDropdown') }>
                     {t('Account bookmarked')}
                   </SecondaryButtonV2>
                 ) : (
-                  <PrimaryButtonV2 onClick={() => this.toggleDropdown('bookmarkDropdown')}>
+                  <PrimaryButtonV2 onClick={this.toggleDropdown.bind(this, 'bookmarkDropdown')}>
                     {t('Bookmark account')}
                   </PrimaryButtonV2>
                 )}
