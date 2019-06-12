@@ -1,6 +1,7 @@
 import actionTypes from '../../constants/actions';
 import { tokenKeys } from '../../constants/tokens';
 import { deepMergeObj } from '../../utils/helpers';
+import localJSONStorage from '../../utils/localJSONStorage';
 
 export const channels = {
   academy: false,
@@ -22,8 +23,8 @@ const validateToken = state => (
     : state
 );
 
-// load setting data from localStorage if it exists
-export const initialState = JSON.parse(localStorage.getItem('settings')) || {
+// load setting data from localStorage if it exists and merge with initial state
+export const initialState = {
   autoLog: true,
   showNetwork: false,
   channels,
@@ -36,6 +37,7 @@ export const initialState = JSON.parse(localStorage.getItem('settings')) || {
     active: tokenKeys[0],
     list: tokenKeys.reduce((acc, key) => { acc[key] = true; return acc; }, {}),
   },
+  ...localJSONStorage.get('settings', {}),
 };
 
 /**
