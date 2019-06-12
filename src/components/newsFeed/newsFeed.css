@@ -51,7 +51,7 @@
         var(--color-ultramarine-blue) 60%,
         transparent 100%
       );
-    border-radius: 0;
+    border-radius: var(--border-radius-box);
   }
 }
 
