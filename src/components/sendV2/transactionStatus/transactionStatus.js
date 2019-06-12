@@ -73,8 +73,8 @@ class TransactionStatus extends React.Component {
     ) !== -1;
 
     const bookmarkButtonLabel = isBookmarked
-      ? t('Account bookmarked')
-      : t('Bookmark account');
+      ? t('Bookmarked')
+      : t('Add address to bookmarks');
 
     return {
       isBookmarked,
@@ -169,11 +169,9 @@ class TransactionStatus extends React.Component {
                 className={`${styles.bookmarkDropdown}`}>
                 <Bookmark
                   delegate={this.getDelegateInformation()}
-                  balance={fields.recipient.balance}
                   address={fields.recipient.address}
                   detailAccount={this.props.detailAccount}
-                  token={token}
-                  isBookmarked={isBookmarked} />
+                  token={token} />
               </DropdownV2>
             </div> :
             null
