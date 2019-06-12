@@ -1,12 +1,15 @@
 import React from 'react';
-import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
-import Piwik from '../../../utils/piwik';
-import statusMessage from './statusMessages';
-import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
-import Bookmark from '../../bookmark';
+
+import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
-import styles from './transactionStatus.css';
 import { getTokenFromAddress } from '../../../utils/api/transactions';
+import Bookmark from '../../bookmark';
+import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
+import Piwik from '../../../utils/piwik';
+import TransactionResult from '../../transactionResult';
+import routes from '../../../constants/routes';
+import statusMessage from './statusMessages';
+import styles from './transactionStatus.css';
 
 class TransactionStatus extends React.Component {
   constructor(props) {
@@ -118,7 +121,9 @@ class TransactionStatus extends React.Component {
   }
 
   render() {
-    const { transactions, fields, t } = this.props;
+    const {
+      transactions, fields, t, history,
+    } = this.props;
     const { isBookmarked, bookmarkButtonLabel } = this.bookmarkInformation();
     const { isHardwareWalletError, messageDetails } = this.getMessagesDetails();
     const token = getTokenFromAddress(fields.recipient.address);
@@ -127,64 +132,53 @@ class TransactionStatus extends React.Component {
 
     return (
       <div className={`${styles.wrapper} transaction-status`}>
-        <header className={styles.header}>
-          <img src={messageDetails.headerIcon}/>
-        </header>
-        <div className={`${styles.content} transaction-status-content`}>
-          <h1>{messageDetails.bodyText.title}</h1>
-          <p className={'body-message'}>{messageDetails.bodyText.paragraph}</p>
-        </div>
-        <footer className={`${styles.footer} transaction-status-footer`}>
-          <div>
-            {
-              isHardwareWalletError || transactions.broadcastedTransactionsError.length
-              ? <SecondaryButtonV2 label={t('Retry')} className={`${styles.btn} retry`} onClick={this.onRetry} />
-              : null
-            }
-            {
-              shouldShowBookmark
-              ? (<div
-                  className={`${styles.bookmarkBtn} bookmark-container`} ref={(node) => { this.bookmarkContainerRef = node; }}>
-                  <SecondaryButtonV2
-                    className={`${styles.btn} ${isBookmarked ? styles.bookmarkButton : ''} bookmark-btn`}
-                    onClick={this.onBookmarkDropdownToggle}>
-                    {bookmarkButtonLabel}
-                  </SecondaryButtonV2>
-                  <DropdownV2
-                    showDropdown={this.state.isBookmarkDropdown}
-                    className={`${styles.bookmarkDropdown}`}>
-                    <Bookmark
-                      delegate={this.getDelegateInformation()}
-                      balance={fields.recipient.balance}
-                      address={fields.recipient.address}
-                      detailAccount={this.props.detailAccount}
-                      token={token}
-                      isBookmarked={isBookmarked} />
-                  </DropdownV2>
-                </div>)
-              : null
-            }
-
-            <PrimaryButtonV2
-              className={`${styles.btn} on-goToWallet okay-button`}
-              onClick={this.backToWallet}>
-              {t('Back to wallet')}
-            </PrimaryButtonV2>
-          </div>
+        <TransactionResult t={t}
+          message={messageDetails.bodyText.paragraph}
+          title={ messageDetails.bodyText.title}
+          success={transactions.broadcastedTransactionsError.length === 0}
+          primaryButon={{
+            title: t('Back to Wallet'),
+            className: 'on-goToWallet okay-button',
+            onClick: () => {
+              history.push(routes.wallet.path);
+            },
+          }}
+        >
           {
-            transactions.broadcastedTransactionsError.length
-            ? <div className={`${styles.errorReport} transaction-status-error`}>
-                <span>{t('Does the problem still persist?')}</span>
-                <a
-                  href={this.onErrorReport()}
-                  target='_top'
-                  rel='noopener noreferrer'>
-                {t('Report the error via E-Mail')}
-                </a>
-              </div>
-            : null
+            isHardwareWalletError || transactions.broadcastedTransactionsError.length ?
+            <SecondaryButtonV2
+              label={t('Retry')}
+              className={`${styles.btn} retry`}
+              onClick={this.onRetry}
+            /> :
+            null
           }
-        </footer>
+          {
+            shouldShowBookmark ?
+            <div
+              className={`${styles.bookmarkBtn} bookmark-container`}
+              ref={(node) => { this.bookmarkContainerRef = node; }}>
+              <SecondaryButtonV2
+                className={`${styles.btn} ${isBookmarked ? styles.bookmarkButton : ''} bookmark-btn`}
+                onClick={this.onBookmarkDropdownToggle}>
+                {bookmarkButtonLabel}
+              </SecondaryButtonV2>
+              <DropdownV2
+                showArrow={false}
+                showDropdown={this.state.isBookmarkDropdown}
+                className={`${styles.bookmarkDropdown}`}>
+                <Bookmark
+                  delegate={this.getDelegateInformation()}
+                  balance={fields.recipient.balance}
+                  address={fields.recipient.address}
+                  detailAccount={this.props.detailAccount}
+                  token={token}
+                  isBookmarked={isBookmarked} />
+              </DropdownV2>
+            </div> :
+            null
+          }
+        </TransactionResult>
       </div>
     );
   }

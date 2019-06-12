@@ -9,65 +9,14 @@
   justify-content: center;
   align-items: flex-start;
   box-sizing: border-box;
-}
-
-.footer,
-.header {
-  box-sizing: border-box;
-  width: 100%;
-  height: 100px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.content {
-  box-sizing: border-box;
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 15px 0 25px;
-
-  & > h1,
-  & > p {
-    margin: 0;
-    padding: 5px 0;
-  }
-
-  & > h1 {
-    @mixin headingLarge;
-
-    color: var(--color-maastricht-blue);
-  }
-
-  & > p {
-    @mixin contentLarge;
-
-    color: var(--color-slate-gray);
-  }
-}
-
-.footer {
-  height: auto;
-  padding: 0 16px;
-  flex-direction: column;
-
-  & > div:first-child {
-    display: flex;
-    flex-direction: column;
-  }
 
   & .btn {
-    width: 354px;
-    margin-bottom: 10px;
+    width: 431px;
   }
 
   & .bookmarkBtn {
     position: relative;
+    margin-top: 20px;
   }
 
   & .bookmarkDropdown {
@@ -91,27 +40,5 @@
 
   & :global(.dropdown-arrow) {
     right: calc(50% - 18px);
-  }
-}
-
-.errorReport {
-  width: 100%;
-  margin-top: 25px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  & > span,
-  & > a {
-    @mixin contentSmall;
-
-    color: var(--color-slate-gray);
-    margin: 2px 0;
-  }
-
-  & > a {
-    text-decoration: none;
-    color: var(--color-ultramarine-blue);
   }
 }
