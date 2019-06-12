@@ -1,7 +1,7 @@
 import { getDelegates } from '../../utils/api/delegates';
 import { loadDelegateCache } from '../../utils/delegates';
 import { persistVotes } from '../../utils/voting';
-import { voteLookupStatusUpdated, voteToggled, loadVotes, delegatesAdded } from '../../actions/voting';
+import { voteLookupStatusUpdated, voteToggled, delegatesAdded } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
 
 const updateLookupStatus = (store, list, username) => {
@@ -60,23 +60,11 @@ const lookupDelegatesFromUrl = (store, action) => {
   }
 };
 
-const fetchVotes = (store) => {
-  // TODO investigate if this function is needed here at all
-  // or maybe it should be moved somewhere else (e.g. urlVotesFound action)
-  const state = store.getState();
-  const address = state.account.address;
-  store.dispatch(loadVotes({
-    address,
-    type: 'update',
-  }));
-};
-
 const votingMiddleware = store => next => (action) => {
   next(action);
   const state = store.getState();
   switch (action.type) {
     case actionTypes.votesAdded:
-      fetchVotes(store);
       lookupDelegatesFromUrl(store, action);
       break;
     case actionTypes.votesUpdated:
