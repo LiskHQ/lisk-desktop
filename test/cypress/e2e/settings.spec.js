@@ -27,7 +27,7 @@ describe('Settings', () => {
   it('Opens by button', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit('/');
-    cy.get(ss.userAvatar).click();
+    cy.get(ss.userAccount).click();
     cy.get(ss.settingsBtn).click();
     cy.url().should('contain', urls.settings);
     checkSettingsPageLoaded();

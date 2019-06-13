@@ -26,6 +26,7 @@ describe('Help', () => {
   it('opens by help button', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit('/');
+    cy.get(ss.userAccount).click();
     cy.get(ss.sidebarMenuHelpBtn).click();
     cy.url().should('contain', urls.help);
     checkHelpPageLoaded();
