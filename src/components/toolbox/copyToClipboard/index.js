@@ -30,13 +30,14 @@ class CopyToClipboard extends React.Component {
     const {
       value, t, className, text, copyClassName, Container,
     } = this.props;
+    const { copied } = this.state;
     return (
       <div onClick={(e) => {
         e.stopPropagation();
       }}>
         <ReactCopyToClipboard text={value} onCopy={this.textIsCopied}>
-          <Container>
-          {this.state.copied ? <span className={`${className} copied`}>
+          <Container disabled={copied} >
+          {copied ? <span className={`${className} copied`}>
             {t('Copied!')}
           </span> :
             <span className={`${className} ${styles.clickable} default`}>

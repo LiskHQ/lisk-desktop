@@ -55,6 +55,7 @@ class RequestWrapper extends React.Component {
           {children}
           <footer className={`${styles.sectionFooter}`}>
             <CopyToClipboard
+              className='copy-button'
               Container={PrimaryButtonV2}
               value={copyValue}
               text={copyLabel}

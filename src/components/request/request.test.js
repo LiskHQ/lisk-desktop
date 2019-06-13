@@ -155,18 +155,18 @@ describe('Request', () => {
         toFake: ['setTimeout', 'clearTimeout'],
       });
 
-      expect(wrapper.find('CopyToClipboard button')).to.not.be.disabled();
-      wrapper.find('CopyToClipboard').simulate('click');
-      expect(wrapper.find('CopyToClipboard button')).to.be.disabled();
+      expect(wrapper.find('.copy-button button')).to.not.be.disabled();
+      wrapper.find('.copy-button button').simulate('click');
+      expect(wrapper.find('.copy-button button')).to.be.disabled();
       clock.tick(3000);
-      expect(wrapper.find('CopyToClipboard button')).to.not.be.disabled();
+      expect(wrapper.find('.copy-button button')).to.not.be.disabled();
 
       clock.restore();
     });
 
     it('Should render BTC reqest if props.token is BTC', () => {
       wrapper = mount(<Request {...props} token='BTC' />, options);
-      expect(wrapper.find('CopyToClipboard button').text()).to.equal('Copy address');
+      expect(wrapper.find('.copy-button button').text()).to.contain('Copy address');
     });
   });
 });
