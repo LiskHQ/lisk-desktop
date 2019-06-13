@@ -36,7 +36,7 @@ class CopyToClipboard extends React.Component {
         e.stopPropagation();
       }}>
         <ReactCopyToClipboard text={value} onCopy={this.textIsCopied}>
-          <Container disabled={copied} >
+          <Container { ...(Container !== React.Fragment ? { disabled: copied } : {}) } >
           {copied ? <span className={`${className} copied`}>
             {t('Copied!')}
           </span> :
