@@ -1,6 +1,6 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+import CopyToClipboard from '../toolbox/copyToClipboard';
 import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 import styles from './request.css';
 
@@ -55,17 +55,12 @@ class RequestWrapper extends React.Component {
           {children}
           <footer className={`${styles.sectionFooter}`}>
             <CopyToClipboard
-              onCopy={this.onCopy}
-              text={copyValue}>
-                <PrimaryButtonV2
-                  className={'extra-small'}
-                  disabled={this.state.linkCopied}>
-                  {this.state.linkCopied
-                    ? t('Copied')
-                    : copyLabel
-                  }
-                </PrimaryButtonV2>
-            </CopyToClipboard>
+              Container={PrimaryButtonV2}
+              value={copyValue}
+              text={copyLabel}
+              btnClassName='extra-small'
+              copyClassName={styles.copyIcon}
+            />
             <span className={`${styles.footerContent} ${showQRCode ? styles.hide : ''}`}>
               {t('Got the Lisk Mobile App?')} <span
                 className={`${styles.footerActionable} toggle-qrcode`}

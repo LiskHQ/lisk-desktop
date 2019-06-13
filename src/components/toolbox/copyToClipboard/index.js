@@ -28,13 +28,14 @@ class CopyToClipboard extends React.Component {
 
   render() {
     const {
-      value, t, className, text, copyClassName,
+      value, t, className, text, copyClassName, Container,
     } = this.props;
     return (
       <div onClick={(e) => {
         e.stopPropagation();
       }}>
         <ReactCopyToClipboard text={value} onCopy={this.textIsCopied}>
+          <Container>
           {this.state.copied ? <span className={`${className} copied`}>
             {t('Copied!')}
           </span> :
@@ -43,6 +44,7 @@ class CopyToClipboard extends React.Component {
               <Icon name='copy' className={copyClassName}/>
             </span>
           }
+          </Container>
         </ReactCopyToClipboard>
       </div>
     );
@@ -52,6 +54,7 @@ class CopyToClipboard extends React.Component {
 CopyToClipboard.defaultProps = {
   className: '',
   copyClassName: '',
+  Container: React.Fragment,
 };
 
 export default (translate()(CopyToClipboard));
