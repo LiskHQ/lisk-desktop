@@ -33,8 +33,7 @@ describe('Delegates', () => {
    * Become a delegate link absent if I am a delegate
    * @expect link does not exist
    */
-  // TODO Unskip after https://github.com/LiskHQ/lisk-hub/issues/2103 fix
-  xit('Become a delegate link absent if I am a delegate', () => {
+  it('Become a delegate link absent if I am a delegate', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
     cy.get(ss.startVotingButton).should('exist');
