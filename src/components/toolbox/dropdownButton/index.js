@@ -25,18 +25,21 @@ class DropdownButton extends React.Component {
 
   render() {
     const { shownDropdown } = this.state;
-    const { button, className, children } = this.props;
+    const {
+      ButtonComponent, buttonLabel, className, children,
+    } = this.props;
     return (
       <React.Fragment>
         <OutsideClickHandler
           className={styles.wrapper}
-          disabled={shownDropdown}
+          disabled={!shownDropdown}
           onOutsideClick={this.toggleDropdown}
         >
-          <SecondaryButtonV2 onClick={this.toggleDropdown}>
-            { button.label }
-          </SecondaryButtonV2>
+          <ButtonComponent onClick={this.toggleDropdown}>
+            { buttonLabel }
+          </ButtonComponent>
           <DropdownV2
+            showArrow={false}
             showDropdown={shownDropdown}
             className={`${className} ${styles.dropdown}`}
           >
@@ -50,9 +53,8 @@ class DropdownButton extends React.Component {
 
 DropdownButton.defaultProps = {
   className: '',
-  button: {
-    label: '',
-  },
+  buttonLabel: '',
+  ButtonComponent: SecondaryButtonV2,
 };
 
 export default DropdownButton;
