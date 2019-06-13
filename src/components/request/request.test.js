@@ -163,5 +163,10 @@ describe('Request', () => {
 
       clock.restore();
     });
+
+    it('Should render BTC reqest if props.token is BTC', () => {
+      wrapper = mount(<Request {...props} token='BTC' />, options);
+      expect(wrapper.find('CopyToClipboard button').text()).to.equal('Copy address');
+    });
   });
 });
