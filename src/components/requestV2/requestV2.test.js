@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import { useFakeTimers } from 'sinon';
 import { mount } from 'enzyme';
 import i18n from '../../i18n';
-import RequestV2 from './requestV2';
+import RequestV2 from './request';
 import accounts from '../../../test/constants/accounts';
 import { AutoresizeTextarea } from '../toolbox/inputsV2';
 import { tokenMap } from '../../constants/tokens';

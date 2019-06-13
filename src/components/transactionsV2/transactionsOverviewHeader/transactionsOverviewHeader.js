@@ -9,7 +9,7 @@ import Bookmark from '../../bookmark';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import HeaderAccountInfo from './headerAccountInfo';
 import OutsideClickHandler from '../../toolbox/outsideClickHandler';
-import RequestV2 from '../../requestV2/requestV2';
+import Request from '../../requestV2/request';
 import routes from '../../../constants/routes';
 import styles from './transactionsOverviewHeader.css';
 
@@ -77,7 +77,7 @@ class transactionsHeader extends React.Component {
                   <DropdownV2
                     showDropdown={this.state.shownDropdown === 'requestDropdown'}
                     className={`${styles.requestDropdown} request-dropdown`}>
-                    <RequestV2 address={address} />
+                    <Request address={address} token={activeToken} t={t} />
                   </DropdownV2>
                 </OutsideClickHandler>
               </span>
