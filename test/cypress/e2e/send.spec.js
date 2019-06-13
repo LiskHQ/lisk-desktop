@@ -89,10 +89,8 @@ describe('Send', () => {
     cy.get(ss.sendBtn).click();
     cy.get(ss.submittedTransactionMessage).should('have.text', msg.transferTxSuccess);
     cy.visit(urls.dashboard);
-    cy.get(`${ss.transactionRow} ${ss.spinner}`).should('be.visible');
-    cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).should('have.text', randomAddress);
-    cy.get(`${ss.transactionRow} ${ss.transactionAmount}`).eq(0).should('have.text', `-${randomAmount}`);
-    cy.get(`${ss.transactionRow} ${ss.spinner}`, { timeout: txConfirmationTimeout }).should('be.not.visible');
+    cy.get(ss.transactionAddress).eq(0).should('have.text', randomAddress);
+    cy.get(ss.transactionAmount).eq(0).should('have.text', `- ${randomAmount} LSK`);
   });
 
   /**
