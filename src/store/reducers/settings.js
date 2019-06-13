@@ -24,7 +24,7 @@ const validateToken = state => (
 );
 
 // load setting data from localStorage if it exists and merge with initial state
-export const initialState = {
+export const initialState = deepMergeObj({
   autoLog: true,
   showNetwork: false,
   channels,
@@ -37,8 +37,7 @@ export const initialState = {
     active: tokenKeys[0],
     list: tokenKeys.reduce((acc, key) => { acc[key] = true; return acc; }, {}),
   },
-  ...localJSONStorage.get('settings', {}),
-};
+}, localJSONStorage.get('settings', {}));
 
 /**
  *
