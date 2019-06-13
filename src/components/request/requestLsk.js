@@ -9,6 +9,8 @@ import SpinnerV2 from '../spinnerV2/spinnerV2';
 import styles from './request.css';
 import svg from '../../utils/svgIcons';
 
+const messageMaxLength = 64;
+
 class RequestLsk extends React.Component {
   constructor(props) {
     super();
@@ -58,7 +60,6 @@ class RequestLsk extends React.Component {
   // eslint-disable-next-line max-statements
   handleFieldChange({ target }) {
     const { t } = this.props;
-    const messageMaxLength = 64;
     const byteCount = encodeURI(target.value).split(/%..|./).length - 1;
     const error = target.name === 'amount'
       ? this.validateAmountField(target.value)
@@ -167,7 +168,7 @@ class RequestLsk extends React.Component {
                 value={fields.reference.value}
                 placeholder={t('Write message')}
                 className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
-              <CircularProgress max={64} value={byteCount}
+              <CircularProgress max={messageMaxLength} value={byteCount}
                 className={styles.byteCounter} />
               <img
                 className={`${styles.status} ${!fields.reference.loading && fields.reference.value ? styles.show : ''}`}
