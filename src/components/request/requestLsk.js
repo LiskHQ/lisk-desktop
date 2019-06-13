@@ -6,7 +6,7 @@ import ConverterV2 from '../converterV2';
 import Feedback from '../toolbox/feedback/feedback';
 import RequestWrapper from './requestWrapper';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
-import styles from './requestV2.css';
+import styles from './request.css';
 import svg from '../../utils/svgIcons';
 
 class RequestLsk extends React.Component {

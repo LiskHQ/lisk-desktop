@@ -9,7 +9,7 @@ import Bookmark from '../../bookmark';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import HeaderAccountInfo from './headerAccountInfo';
 import OutsideClickHandler from '../../toolbox/outsideClickHandler';
-import Request from '../../requestV2/request';
+import Request from '../../request';
 import routes from '../../../constants/routes';
 import styles from './transactionsOverviewHeader.css';
 

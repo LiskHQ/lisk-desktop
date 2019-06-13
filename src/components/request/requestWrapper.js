@@ -2,7 +2,7 @@ import React from 'react';
 import QRCode from 'qrcode.react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { PrimaryButtonV2 } from '../toolbox/buttons/button';
-import styles from './requestV2.css';
+import styles from './request.css';
 
 class RequestWrapper extends React.Component {
   constructor() {

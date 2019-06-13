@@ -6,12 +6,12 @@ import { expect } from 'chai';
 import { useFakeTimers } from 'sinon';
 import { mount } from 'enzyme';
 import i18n from '../../i18n';
-import RequestV2 from './request';
+import Request from './';
 import accounts from '../../../test/constants/accounts';
 import { AutoresizeTextarea } from '../toolbox/inputsV2';
 import { tokenMap } from '../../constants/tokens';
 
-describe('RequestV2', () => {
+describe('Request', () => {
   let wrapper;
 
   const store = configureMockStore([thunk])({
@@ -38,7 +38,7 @@ describe('RequestV2', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<RequestV2 {...props} />, options);
+    wrapper = mount(<Request {...props} />, options);
   });
 
   it('Should render without showing QRCode', () => {

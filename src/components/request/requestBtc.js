@@ -2,7 +2,7 @@ import React from 'react';
 
 import RequestWrapper from './requestWrapper';
 
-import styles from './requestV2.css';
+import styles from './request.css';
 
 const RequestBtc = ({
   address, t,
