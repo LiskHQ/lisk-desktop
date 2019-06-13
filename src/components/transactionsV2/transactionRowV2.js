@@ -65,7 +65,7 @@ class TransactionRowV2 extends React.Component {
             transactionType={value.type}
           />
           <TransactionAddress
-            address={value.recipientId}
+            address={props.address === value.senderId ? value.recipientId : value.senderId }
             bookmarks={props.bookmarks}
             t={props.t}
             token={token}
