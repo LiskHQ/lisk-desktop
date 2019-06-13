@@ -81,12 +81,10 @@ class TopBar extends React.Component {
           />
         </div>
         <div>
-          {!isUserLogout
-          ? <Network
-              peers={peers}
-              t={t}
-            />
-          : null}
+          <Network
+            peers={peers}
+            t={t}
+          />
           {
             isUserDataFetched
               ? <UserAccount

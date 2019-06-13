@@ -92,7 +92,7 @@ const ss = {
   accountBalance: '.balance span',
   transactionId: '.transaction-id .copy-title',
   logoutBtn: '.logout',
-  userAvatar: '.user-avatar',
+  userAccount: '.user-account',
   emptyResultsMessage: '.empty-message',
   revealCheckbox: '.reveal-checkbox',
   passphraseTextarea: 'textarea.passphrase',

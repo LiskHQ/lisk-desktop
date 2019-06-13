@@ -61,6 +61,7 @@ const UserAccount = ({
           <DropdownV2.Separator key={`separator-${tokenKey}`} className={styles.separator} />,
         ]) : null))}
         <Link
+          id='settings'
           to={routes.setting.path}
           className={styles.dropdownOption}
         >
@@ -70,6 +71,7 @@ const UserAccount = ({
         </Link>
 
         <Link
+          id='help'
           className={styles.dropdownOption}
           to={routes.help.path}
         >
