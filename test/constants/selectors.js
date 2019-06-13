@@ -174,7 +174,7 @@ const ss = {
   delegateStatsBlocks: '.blocks',
   delegateStatsLastBlock: '.last-forged',
   delegateStatsSince: '.delegate-since',
-  bookmarkAccountBtn: '.bookmark-account',
+  bookmarkAccountBtn: '.bookmark-account-button',
   bookmarkedAccountTitle: '.transactions .account-title',
   showMoreButton: '.show-more-button',
   chooseAvatar: '.choose-avatar span',
