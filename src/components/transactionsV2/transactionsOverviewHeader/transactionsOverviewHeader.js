@@ -6,6 +6,7 @@ import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import { tokenMap } from '../../../constants/tokens';
 import Bookmark from '../../bookmark';
+import DropdownButton from '../../toolbox/dropdownButton';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import HeaderAccountInfo from './headerAccountInfo';
 import OutsideClickHandler from '../../toolbox/outsideClickHandler';
@@ -63,24 +64,9 @@ class transactionsHeader extends React.Component {
               </span>
             </span>
             <div className={`${styles.buttonsHolder}`}>
-              <span
-                ref={this.setDropownRefs}
-                data-name={'requestDropdown'}
-                className={`${styles.requestContainer} tx-receive-bt`}>
-                <OutsideClickHandler
-                  disabled={shownDropdown !== 'requestDropdown'}
-                  onOutsideClick={this.toggleDropdown.bind(this, 'requestDropdown')}
-                >
-                  <SecondaryButtonV2 onClick={this.toggleDropdown.bind(this, 'requestDropdown')}>
-                    {t('Request {{token}}', { token: activeToken })}
-                  </SecondaryButtonV2>
-                  <DropdownV2
-                    showDropdown={this.state.shownDropdown === 'requestDropdown'}
-                    className={`${styles.requestDropdown} request-dropdown`}>
-                    <Request address={address} token={activeToken} t={t} />
-                  </DropdownV2>
-                </OutsideClickHandler>
-              </span>
+              <DropdownButton button={{ label: t('Request {{token}}', { token: activeToken }) }}>
+                <Request address={address} token={activeToken} t={t} />
+              </DropdownButton>
               <Link to={`${routes.send.path}?wallet`} className={'tx-send-bt'}>
                 <PrimaryButtonV2>
                   {t('Send {{token}}', { token: activeToken })}

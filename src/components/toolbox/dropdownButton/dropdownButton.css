@@ -1,0 +1,7 @@
+.wrapper {
+  position: relative;
+
+  & .dropdown {
+    width: auto;
+  }
+}
