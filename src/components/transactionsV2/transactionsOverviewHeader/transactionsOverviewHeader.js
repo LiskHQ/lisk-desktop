@@ -35,7 +35,7 @@ class transactionsHeader extends React.Component {
             </span>
             <div className={`${styles.buttonsHolder}`}>
               <DropdownButton
-                className='requestContainer'
+                className={`${styles.requestDropdown} requestContainer`}
                 buttonLabel={t('Request {{token}}', { token: activeToken })}
               >
                 <Request address={address} token={activeToken} t={t} />
@@ -65,7 +65,7 @@ class transactionsHeader extends React.Component {
                   </SecondaryButtonV2>
               </Link>
               <DropdownButton
-                className='bookmark-account'
+                className={`${styles.bookmarkDropdown} bookmark-account`}
                 buttonLabel={isBookmark ? t('Account bookmarked') : t('Bookmark account')}
                 ButtonComponent={isBookmark ? SecondaryButtonV2 : PrimaryButtonV2}
               >
