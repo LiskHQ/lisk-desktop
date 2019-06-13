@@ -41,6 +41,7 @@ describe('Send: Bookmarks', () => {
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
     cy.get(ss.okayBtn).click();
+    cy.wait(300);
     cy.get(ss.transactionRow).eq(0).as('tx');
     cy.get('@tx').find(ss.transactionAddress).eq(0).should('have.text', 'Alice');
     cy.get('@tx').find(ss.transactionAddress).eq(1).should('have.text', accounts.delegate.address);
