@@ -77,19 +77,31 @@ describe('Transactions Overview Header', () => {
       balance: accounts.delegate.balance,
       match: { urls: `${routes.accounts.pathPrefix}${routes.accounts.path}V2/${accounts.delegate.address}` },
     };
-
-    beforeEach(() => {
+    it('Should toggle bookmark dropdown', () => {
       wrapper = mount(<MemoryRouter>
         <TransactionHeader {...anotherUserProps} />
       </MemoryRouter>, options);
-    });
-
-    it('Should toggle bookmark dropdown', () => {
       expect(wrapper.find('.bookmark-account')).to.not.have.descendants('.show');
       wrapper.find('.bookmark-account button').first().simulate('click');
       expect(wrapper.find('.bookmark-account')).to.have.descendants('.show');
       wrapper.find('.bookmark-account button').first().simulate('click');
       expect(wrapper.find('.bookmark-account')).to.not.have.descendants('.show');
+    });
+
+    it('Should show Account bookmarked dropdown if already bookmarked', () => {
+      const bookmarks = {
+        LSK: [
+          accounts.delegate,
+        ],
+        BTC: [],
+      };
+      wrapper = mount(<MemoryRouter>
+        <TransactionHeader {...{
+          ...anotherUserProps,
+          bookmarks,
+        }}/>
+      </MemoryRouter>, options);
+      expect(wrapper.find('.bookmark-account button').first().text()).to.equal('Account bookmarked');
     });
   });
 });
