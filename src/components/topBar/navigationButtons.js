@@ -10,6 +10,7 @@ class NavigationButtons extends React.Component {
       firstPageIndex: 0,
       userLogout: false,
       counter: 0,
+      mounted: false,
     };
 
     this.onGoBack = this.onGoBack.bind(this);
@@ -21,6 +22,7 @@ class NavigationButtons extends React.Component {
     this.setState({
       firstPageIndex: this.props.history.length,
       counter: this.props.history.length,
+      mounted: true,
     });
   }
 
@@ -32,13 +34,14 @@ class NavigationButtons extends React.Component {
     });
   }
 
+  // eslint-disable-next-line max-statements
   shouldComponentUpdate(nextProps, nextState) {
     if (!!nextProps.account.afterLogout !== nextState.userLogout) {
       this.resetNavigationValues();
       return false;
     }
 
-    if (this.props.history.action === 'PUSH') {
+    if (this.props.history.action === 'PUSH' && this.state.mounted) {
       this.props.history.action = '';
       this.setState({
         counter: this.state.counter + 1,
