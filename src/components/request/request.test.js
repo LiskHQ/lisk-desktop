@@ -1,41 +1,23 @@
 import React from 'react';
-import thunk from 'redux-thunk';
-import configureMockStore from 'redux-mock-store';
-import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import i18n from '../../i18n';
 import Request from './';
 import accounts from '../../../test/constants/accounts';
-import { tokenMap } from '../../constants/tokens';
+
+jest.mock('../converterV2', () => (
+  function ConverterMock() {
+    return <span className='converted-price' />;
+  }
+));
 
 describe('Request', () => {
   let wrapper;
-
-  const store = configureMockStore([thunk])({
-    settings: { currency: 'USD', token: { active: tokenMap.LSK.key } },
-    settingsUpdated: () => {},
-    liskService: {
-      success: true,
-      LSK: {
-        USD: 1,
-      },
-    },
-  });
-
-  const options = {
-    context: { i18n, store },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-      store: PropTypes.object.isRequired,
-    },
-  };
 
   const props = {
     address: accounts.genesis.address,
   };
 
   beforeEach(() => {
-    wrapper = mount(<Request {...props} />, options);
+    wrapper = mount(<Request {...props} />);
   });
 
   it('Should render without showing QRCode', () => {
@@ -52,18 +34,12 @@ describe('Request', () => {
     expect(wrapper.find('.formSection .footerContent')).toHaveClassName('hide');
     wrapper.find('.qrSection .footerActionable').simulate('click');
     expect(wrapper.find('.qrSection')).toHaveClassName('hide');
-    expect(wrapper.find('.formSection .footerContent')).not.toHaveClassName('hide')
+    expect(wrapper.find('.formSection .footerContent')).not.toHaveClassName('hide');
   });
 
   describe('Amount field', () => {
-    it('Should show converter on correct input', () => {
-      const evt = { target: { name: 'amount', value: 1 } };
-      let amountField = wrapper.find('.fieldGroup').at(0);
-      expect(amountField.find('.converted-price')).not.toExist();
-      amountField.find('InputV2').simulate('change', evt);
-      wrapper.update();
-      amountField = wrapper.find('.fieldGroup').at(0);
-      expect(amountField.find('.converted-price')).toExist();
+    it('Should show converter', () => {
+      expect(wrapper.find('.amount .converted-price')).toExist();
     });
 
     it('Should add leading 0 if . is inserted as first character', () => {
@@ -154,7 +130,7 @@ describe('Request', () => {
     });
 
     it('Should render BTC reqest if props.token is BTC', () => {
-      wrapper = mount(<Request {...props} token='BTC' />, options);
+      wrapper = mount(<Request {...props} token='BTC' />);
       expect(wrapper.find('.copy-button button').text()).toMatch('Copy address');
     });
   });
