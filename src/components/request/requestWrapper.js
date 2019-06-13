@@ -10,30 +10,9 @@ class RequestWrapper extends React.Component {
 
     this.state = {
       showQRCode: false,
-      linkCopied: false,
-    };
-
-    this.timeout = {
-      copy: null,
     };
 
     this.toggleQRCode = this.toggleQRCode.bind(this);
-    this.onCopy = this.onCopy.bind(this);
-  }
-
-  onCopy() {
-    clearTimeout(this.timeout.copy);
-    this.timeout.copy = setTimeout(() => this.setState({
-      linkCopied: false,
-    }), 3000);
-
-    this.setState({
-      linkCopied: true,
-    });
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.timeout.copy);
   }
 
   toggleQRCode() {
@@ -41,7 +20,6 @@ class RequestWrapper extends React.Component {
       showQRCode: !prevState.showQRCode,
     }));
   }
-
 
   render() {
     const {
