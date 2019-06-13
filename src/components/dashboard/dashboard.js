@@ -90,11 +90,15 @@ class Dashboard extends React.Component {
 
     return (
       <React.Fragment>
-        <Onboarding
-          slides={this.getOnboardingSlides()}
-          actionButtonLabel={t('Got it, thanks!')}
-          name={'dashboardOnboarding'}
-        />
+        {
+          isLoggedIn
+          ? <Onboarding
+              slides={this.getOnboardingSlides()}
+              actionButtonLabel={t('Got it, thanks!')}
+              name={'dashboardOnboarding'}
+            />
+          : null
+        }
         { isLoggedIn && this.shouldShowInitializatiion() &&
           <div className={`${grid.row} ${styles.bannerWrapper}`}>
             <Banner

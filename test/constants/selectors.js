@@ -66,7 +66,7 @@ const ss = {
   spinner: '.spinner',
   transactionReference: '.transaction-reference',
   transactionAmount: '.transaction-amount',
-  transactionAmountPlaceholder: '.transactionAmount',
+  transactionAmountPlaceholder: '.transaction-amount',
   delegateDuplicateNameError: '.error-name-duplicate',
   headerBalance: '.balance span',
   nextBtn: '.next',
