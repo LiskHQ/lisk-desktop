@@ -2,13 +2,10 @@ import React from 'react';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
-import { expect } from 'chai';
-import { useFakeTimers } from 'sinon';
 import { mount } from 'enzyme';
 import i18n from '../../i18n';
 import Request from './';
 import accounts from '../../../test/constants/accounts';
-import { AutoresizeTextarea } from '../toolbox/inputsV2';
 import { tokenMap } from '../../constants/tokens';
 
 describe('Request', () => {
@@ -42,47 +39,46 @@ describe('Request', () => {
   });
 
   it('Should render without showing QRCode', () => {
-    expect(wrapper).to.have.descendants('.formSection');
-    expect(wrapper).to.have.descendants('.qrSection');
-    expect(wrapper.find('.qrSection')).to.have.className('hide');
+    expect(wrapper.find('.formSection')).toExist();
+    expect(wrapper.find('.qrSection')).toExist();
+    expect(wrapper.find('.qrSection.hide')).toExist();
+    expect(wrapper.find('.qrSection').hasClass('hide')).toBeTruthy();
   });
 
   it('Should toogle qrSection', () => {
-    expect(wrapper.find('.qrSection')).to.have.className('hide');
+    expect(wrapper.find('.qrSection').hasClass('hide')).toBeTruthy();
     wrapper.find('.formSection .footerActionable').simulate('click');
-    expect(wrapper.find('.qrSection')).to.not.have.className('hide');
-    expect(wrapper.find('.formSection .footerContent')).to.have.className('hide');
+    expect(wrapper.find('.qrSection').hasClass('hide')).toBeFalsy();
+    expect(wrapper.find('.formSection .footerContent').hasClass('hide')).toBeTruthy();
     wrapper.find('.qrSection .footerActionable').simulate('click');
-    expect(wrapper.find('.qrSection')).to.have.className('hide');
-    expect(wrapper.find('.formSection .footerContent')).to.not.have.className('hide');
+    expect(wrapper.find('.qrSection').hasClass('hide')).toBeTruthy();
+    expect(wrapper.find('.formSection .footerContent').hasClass('hide')).toBeFalsy();
   });
 
   describe('Amount field', () => {
     it('Should show converter on correct input', () => {
       const evt = { target: { name: 'amount', value: 1 } };
       let amountField = wrapper.find('.fieldGroup').at(0);
-      expect(amountField).to.not.have.descendants('.converted-price');
+      expect(amountField.find('.converted-price')).not.toExist();
       amountField.find('InputV2').simulate('change', evt);
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(0);
-      expect(amountField).to.have.descendants('.converted-price');
+      expect(amountField.find('.converted-price')).toExist();
     });
 
     it('Should add leading 0 if . is inserted as first character', () => {
       const evt = { target: { name: 'amount', value: '.1' } };
-      const input = wrapper.find('.fieldGroup').at(0).find('InputV2');
-      input.simulate('change', evt);
+      wrapper.find('.fieldGroup InputV2').simulate('change', evt);
       wrapper.update();
-      expect(input).to.have.attr('value', '0.1');
+      expect(wrapper.find('.fieldGroup InputV2').props().value).toEqual('0.1');
     });
 
     it('Should show error feedback if letters inserted', () => {
       const evt = { target: { name: 'amount', value: 'abc' } };
-      const amountField = wrapper.find('.fieldGroup').at(0);
-      expect(amountField.find('.feedback').first()).to.not.have.className('error');
-      amountField.find('InputV2').simulate('change', evt);
+      expect(wrapper.find('.fieldGroup .feedback.error')).not.toExist();
+      wrapper.find('.fieldGroup InputV2').simulate('change', evt);
       wrapper.update();
-      expect(amountField.find('.feedback').first()).to.have.className('error');
+      expect(wrapper.find('.fieldGroup .feedback.error')).toExist();
     });
 
     it('Should show error feedback if ending in . or multiples .', () => {
@@ -92,13 +88,13 @@ describe('Request', () => {
       const amountField = wrapper.find('.fieldGroup').at(0);
       amountField.find('InputV2').simulate('change', endingDotEvt);
       wrapper.update();
-      expect(amountField.find('.feedback').first()).to.have.className('error');
+      expect(wrapper.find('.fieldGroup .feedback.error')).toExist();
       amountField.find('InputV2').simulate('change', evt);
       wrapper.update();
-      expect(amountField.find('.feedback').first()).to.not.have.className('error');
+      expect(wrapper.find('.fieldGroup .feedback.error')).not.toExist();
       amountField.find('InputV2').simulate('change', multipleDotsEvt);
       wrapper.update();
-      expect(amountField.find('.feedback').first()).to.have.className('error');
+      expect(wrapper.find('.fieldGroup .feedback.error')).toExist();
     });
   });
 
@@ -106,16 +102,17 @@ describe('Request', () => {
     it('Should show feedback if some text inserted and hide if empty', () => {
       const referenceField = wrapper.find('.fieldGroup').at(1);
       let evt = { target: { name: 'reference', value: 'test' } };
-      expect(referenceField.find('.feedback').first()).to.not.have.className('show');
+      expect(wrapper.find('.fieldGroup .feedback.show')).not.toExist();
       referenceField.find('AutoresizeTextarea').simulate('change', evt);
       wrapper.update();
-      expect(referenceField.find('.feedback').first()).to.have.className('show');
-      expect(referenceField.find('.feedback').first()).to.not.have.className('error');
+      expect(wrapper.find('.fieldGroup .feedback.show')).toExist();
+      expect(wrapper.find('.fieldGroup .feedback.error')).not.toExist();
 
       evt = { target: { name: 'reference', value: '' } };
       referenceField.find('AutoresizeTextarea').simulate('change', evt);
       wrapper.update();
-      expect(referenceField.find('.feedback').first()).to.not.have.className('show');
+      // expect(referenceField.find('.feedback').first()).to.not.have.className('show');
+      expect(wrapper.find('.fieldGroup .feedback.show')).not.toExist();
     });
 
     it('Should show error feedback over limit of characters', () => {
@@ -128,45 +125,38 @@ describe('Request', () => {
       };
       referenceField.find('AutoresizeTextarea').simulate('change', evt);
       wrapper.update();
-      expect(referenceField.find('.feedback').first()).to.have.className('show');
-      expect(referenceField.find('.feedback').first()).to.have.className('error');
+      expect(wrapper.find('.fieldGroup .feedback.show')).toExist();
+      expect(wrapper.find('.fieldGroup .feedback.error')).toExist();
     });
   });
 
   describe('Share Link', () => {
     it('Should update share link with amount and reference', () => {
-      const linkField = wrapper.find('.fieldGroup').at(2);
       const shareLink = `lisk://wallet/send?recipient=${props.address}`;
       let evt;
-      expect(linkField.find(AutoresizeTextarea).html()).to.contain(shareLink);
+      expect(wrapper.find('.request-link').first().html()).toMatch(shareLink);
 
       evt = { target: { name: 'reference', value: 'test' } };
       wrapper.find('.fieldGroup').at(1).find('AutoresizeTextarea').simulate('change', evt);
-      expect(linkField.find(AutoresizeTextarea).html()).to.contain(`${evt.target.name}=${evt.target.value}`);
+      expect(wrapper.find('.request-link').first().html()).toContain(`${evt.target.name}=${evt.target.value}`);
 
       evt = { target: { name: 'amount', value: 1 } };
       wrapper.find('.fieldGroup').at(0).find('InputV2').simulate('change', evt);
-      expect(linkField.find(AutoresizeTextarea).html()).to.contain(`${evt.target.name}=${evt.target.value}`);
+      expect(wrapper.find('.request-link').first().html()).toContain(`${evt.target.name}=${evt.target.value}`);
     });
 
     it('Should copy and set timeout on click', () => {
-      const clock = useFakeTimers({
-        now: new Date(2018, 1, 1),
-        toFake: ['setTimeout', 'clearTimeout'],
-      });
-
-      expect(wrapper.find('.copy-button button')).to.not.be.disabled();
+      expect(wrapper.find('.copy-button button').props().disabled).toBeFalsy();
       wrapper.find('.copy-button button').simulate('click');
-      expect(wrapper.find('.copy-button button')).to.be.disabled();
-      clock.tick(3000);
-      expect(wrapper.find('.copy-button button')).to.not.be.disabled();
-
-      clock.restore();
+      expect(wrapper.find('.copy-button button').props().disabled).toBeTruthy();
+      jest.advanceTimersByTime(3100);
+      wrapper.update();
+      expect(wrapper.find('.copy-button button').props().disabled).toBeFalsy();
     });
 
     it('Should render BTC reqest if props.token is BTC', () => {
       wrapper = mount(<Request {...props} token='BTC' />, options);
-      expect(wrapper.find('.copy-button button').text()).to.contain('Copy address');
+      expect(wrapper.find('.copy-button button').text()).toMatch('Copy address');
     });
   });
 });
