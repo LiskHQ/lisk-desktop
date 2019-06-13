@@ -42,17 +42,17 @@ describe('Request', () => {
     expect(wrapper.find('.formSection')).toExist();
     expect(wrapper.find('.qrSection')).toExist();
     expect(wrapper.find('.qrSection.hide')).toExist();
-    expect(wrapper.find('.qrSection').hasClass('hide')).toBeTruthy();
+    expect(wrapper.find('.qrSection')).toHaveClassName('hide');
   });
 
   it('Should toogle qrSection', () => {
-    expect(wrapper.find('.qrSection').hasClass('hide')).toBeTruthy();
+    expect(wrapper.find('.qrSection')).toHaveClassName('hide');
     wrapper.find('.formSection .footerActionable').simulate('click');
-    expect(wrapper.find('.qrSection').hasClass('hide')).toBeFalsy();
-    expect(wrapper.find('.formSection .footerContent').hasClass('hide')).toBeTruthy();
+    expect(wrapper.find('.qrSection')).not.toHaveClassName('hide');
+    expect(wrapper.find('.formSection .footerContent')).toHaveClassName('hide');
     wrapper.find('.qrSection .footerActionable').simulate('click');
-    expect(wrapper.find('.qrSection').hasClass('hide')).toBeTruthy();
-    expect(wrapper.find('.formSection .footerContent').hasClass('hide')).toBeFalsy();
+    expect(wrapper.find('.qrSection')).toHaveClassName('hide');
+    expect(wrapper.find('.formSection .footerContent')).not.toHaveClassName('hide')
   });
 
   describe('Amount field', () => {
@@ -111,7 +111,6 @@ describe('Request', () => {
       evt = { target: { name: 'reference', value: '' } };
       referenceField.find('AutoresizeTextarea').simulate('change', evt);
       wrapper.update();
-      // expect(referenceField.find('.feedback').first()).to.not.have.className('show');
       expect(wrapper.find('.fieldGroup .feedback.show')).not.toExist();
     });
 
@@ -146,12 +145,12 @@ describe('Request', () => {
     });
 
     it('Should copy and set timeout on click', () => {
-      expect(wrapper.find('.copy-button button').props().disabled).toBeFalsy();
+      expect(wrapper.find('.copy-button button')).not.toBeDisabled();
       wrapper.find('.copy-button button').simulate('click');
-      expect(wrapper.find('.copy-button button').props().disabled).toBeTruthy();
+      expect(wrapper.find('.copy-button button')).toBeDisabled();
       jest.advanceTimersByTime(3100);
       wrapper.update();
-      expect(wrapper.find('.copy-button button').props().disabled).toBeFalsy();
+      expect(wrapper.find('.copy-button button')).not.toBeDisabled();
     });
 
     it('Should render BTC reqest if props.token is BTC', () => {
