@@ -10,7 +10,6 @@ import keyCodes from './../../constants/keyCodes';
 import styles from './searchBar.css';
 
 class SearchBar extends React.Component {
-  // eslint-disable-next-line max-statements
   constructor() {
     super();
 
@@ -23,11 +22,7 @@ class SearchBar extends React.Component {
     this.onChangeSearchTextValue = this.onChangeSearchTextValue.bind(this);
     this.onSelectAccount = this.onSelectedRow.bind(this, 'accounts');
     this.onSelectTransaction = this.onSelectedRow.bind(this, 'transactions');
-    this.clearSearch = this.clearSearch.bind(this);
-    this.isSubmittedStringValid = this.isSubmittedStringValid.bind(this);
     this.onHandleKeyPress = this.onHandleKeyPress.bind(this);
-    this.onKeyPressDownOrUp = this.onKeyPressDownOrUp.bind(this);
-    this.onKeyPress = this.onKeyPress.bind(this);
     this.updateRowItemIndex = this.updateRowItemIndex.bind(this);
   }
 
@@ -87,20 +82,12 @@ class SearchBar extends React.Component {
   }
 
   onKeyPress() {
-    const { suggestions } = this.props;
+    const { suggestions: { addresses, delegates, transactions } } = this.props;
     const { rowItemIndex } = this.state;
 
-    if (suggestions.addresses.length) {
-      this.onSelectAccount(suggestions.addresses[rowItemIndex].address);
-    }
-
-    if (suggestions.delegates.length) {
-      this.onSelectAccount(suggestions.delegates[rowItemIndex].account.address);
-    }
-
-    if (suggestions.transactions.length) {
-      this.onSelectTransaction(suggestions.transactions[rowItemIndex].id);
-    }
+    if (addresses.length) this.onSelectAccount(addresses[rowItemIndex].address);
+    if (delegates.length) this.onSelectAccount(delegates[rowItemIndex].account.address);
+    if (transactions.length) this.onSelectTransaction(transactions[rowItemIndex].id);
   }
 
   onHandleKeyPress(e) {

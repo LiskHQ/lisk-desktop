@@ -34,7 +34,6 @@ class NavigationButtons extends React.Component {
     });
   }
 
-  // eslint-disable-next-line max-statements
   shouldComponentUpdate(nextProps, nextState) {
     if (!!nextProps.account.afterLogout !== nextState.userLogout) {
       this.resetNavigationValues();

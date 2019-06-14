@@ -9,9 +9,3 @@
   top: 0;
   z-index: var(--normal-index);
 }
-
-@media (--small-viewport) {
-  .v2Wrapper {
-    padding-top: var(--header-height);
-  }
-}
