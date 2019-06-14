@@ -31,6 +31,7 @@ const UserAccount = ({
     >
       {!isUserLogout && isUserDataFetched ? (
         <AccountInfo
+          className={'active-info'}
           account={account.info[token.active]}
           token={token.active}
           t={t}
