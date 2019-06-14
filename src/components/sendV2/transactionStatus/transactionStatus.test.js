@@ -75,9 +75,6 @@ describe('TransactionStatus', () => {
 
   it('should render properly transactionStatus', () => {
     expect(wrapper).toContainMatchingElement('.transaction-status');
-    expect(wrapper).toContainMatchingElement('.transaction-status-content');
-    expect(wrapper).toContainMatchingElement('.transaction-status-footer');
-    expect(wrapper).not.toContainMatchingElement('.transaction-status-error');
   });
 
   it('should call finalCallback function', () => {
@@ -89,7 +86,7 @@ describe('TransactionStatus', () => {
   it('should show dropdown bookmark', () => {
     expect(wrapper).toContainMatchingElement('.bookmark-container');
     expect(wrapper).toContainMatchingElement('.bookmark-btn');
-    expect(wrapper.find('.bookmark-btn').at(0).text()).toEqual('Bookmark account');
+    expect(wrapper.find('.bookmark-btn').at(0).text()).toEqual('Add address to bookmarks');
     wrapper.find('.bookmark-btn').at(0).simulate('click');
     wrapper.find('input[name="accountName"]').simulate('change', { target: { name: 'accountName', value: 'ABC' } });
     wrapper.find('button').last().simulate('click');
@@ -102,7 +99,7 @@ describe('TransactionStatus', () => {
       },
     });
     wrapper.update();
-    expect(wrapper.find('.bookmark-btn').at(0).text()).toEqual('Account bookmarked');
+    expect(wrapper.find('.bookmark-btn').at(0).text()).toEqual('Bookmarked');
     wrapper.find('.bookmark-btn').at(0).simulate('click');
   });
 
@@ -110,7 +107,7 @@ describe('TransactionStatus', () => {
     const newProps = { ...props };
     newProps.transactions.broadcastedTransactionsError = [{ recipient: '123L', amount: 1, reference: 'test' }];
     wrapper = mount(<TransactionStatus {...newProps} />, options);
-    expect(wrapper).toContainMatchingElement('.transaction-status-error');
+    expect(wrapper).toContainMatchingElement('.report-error-link');
     wrapper.find('.on-goToWallet').at(0).simulate('click');
     wrapper.update();
     expect(props.finalCallback).toBeCalled();
@@ -120,9 +117,12 @@ describe('TransactionStatus', () => {
     const newProps = { ...props };
     newProps.fields.isHardwareWalletConnected = true;
     newProps.fields.hwTransactionStatus = 'error';
-    newProps.failedTransactions = [{ recipient: '123L', amount: 1, reference: 'test' }];
+    newProps.failedTransactions = [{
+      error: { message: 'errorMessage' },
+      transaction: { recipient: '123L', amount: 1, reference: 'test' },
+    }];
     wrapper = mount(<TransactionStatus {...newProps} />, options);
-    expect(wrapper).toContainMatchingElement('.transaction-status-error');
+    expect(wrapper).toContainMatchingElement('.report-error-link');
     wrapper.find('.retry').at(0).simulate('click');
     expect(props.transactionBroadcasted).toBeCalled();
   });

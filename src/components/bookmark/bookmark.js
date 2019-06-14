@@ -183,7 +183,7 @@ class Bookmark extends React.Component {
     return (
       <section className={`${styles.wrapper}`}>
         <label className={`${styles.fieldGroup}`}>
-          <span className={`${styles.fieldLabel}`}>{t('Account Name')}</span>
+          <span className={`${styles.fieldLabel}`}>{t('Account name')}</span>
           <span className={`${styles.fieldInput} account-title`}>
             <InputV2
               maxLength={40}
@@ -191,7 +191,7 @@ class Bookmark extends React.Component {
               onChange={this.handleAccountNameChange}
               name='accountName'
               value={fields.accountName.value}
-              placeholder={t('Account Name')}
+              placeholder={t('ie. Lisker123')}
               readOnly={fields.accountName.isReadOnly}
               className={`${styles.input} ${fields.accountName.error ? 'error' : ''}`} />
             {!fields.accountName.isReadOnly ?
