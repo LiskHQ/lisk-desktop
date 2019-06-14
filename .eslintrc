@@ -1,7 +1,7 @@
 {
   "parser": "babel-eslint",
   "extends": [
-    "airbnb-base",
+    "airbnb",
     "plugin:react/recommended"
   ],
   "plugins": [
