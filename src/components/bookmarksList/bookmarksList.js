@@ -67,14 +67,14 @@ class BookmarksList extends React.Component {
           </EmptyState>
         }
         {
+          /* TODO - pass the correct link when bookmarks page is avaiable  and enable this button
           selectedBookmarks.length
           ? <div className={styles.footer}>
-              { /* TODO - pass the correct link when bookmarks page is avaiable */ }
               <Link to={'#'}>
                 <SecondaryButtonV2>{t('View All')}</SecondaryButtonV2>
               </Link>
             </div>
-          : null
+          : null */
         }
         </div>
       </Box>
