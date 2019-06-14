@@ -1,11 +1,9 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import throttle from 'lodash.throttle';
 
 import actionTypes from '../constants/actions';
 import env from '../constants/env';
 import * as reducers from './reducers';
 import middleWares from './middlewares';
-import bookmarksSubscriber from './subscribers/bookmarks';
 import walletsSubscriber from './subscribers/wallets';
 
 const App = combineReducers(reducers);
@@ -19,7 +17,6 @@ if (!env.test) {
   store.dispatch({ type: actionTypes.storeCreated });
 }
 
-store.subscribe(throttle(bookmarksSubscriber.bind(null, store), 1000));
 store.subscribe(walletsSubscriber.bind(null, store));
 
 // ignore this in coverage as it is hard to test and does not run in production
