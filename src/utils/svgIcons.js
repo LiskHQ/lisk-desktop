@@ -18,6 +18,10 @@ import Key from '../assets/images/icons-v2/key.svg';
 import Lock from '../assets/images/icons-v2/lock.svg';
 import logoutActive from '../assets/images/icons-v2/logout-active.svg';
 import logout from '../assets/images/icons-v2/logout.svg';
+import userActive from '../assets/images/icons-v2/user-active.svg';
+import user from '../assets/images/icons-v2/user.svg';
+import signinActive from '../assets/images/icons-v2/signin-active.svg';
+import signin from '../assets/images/icons-v2/signin.svg';
 import okIcon from '../assets/images/icons-v2/icon-checkmark.svg';
 import Pdf from '../assets/images/icons-v2/pdf.svg';
 import questionMark from '../assets/images/icons-v2/question.svg';
@@ -77,6 +81,10 @@ export default {
   iconWalletDetails,
   key_icon: Key,
   lock_icon: Lock,
+  userActive,
+  user,
+  signinActive,
+  signin,
   logoutActive,
   logout,
   ok_icon: okIcon,

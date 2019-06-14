@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
 import MenuItems from './menuItems';
-import UserAccount from './userAccount';
+import UserAccount from './accountMenu/userAccount';
 import NavigationButtons from './navigationButtons';
 import Piwik from '../../utils/piwik';
 import menuLinks from './constants';
@@ -12,7 +11,6 @@ import Network from './network';
 import styles from './topBar.css';
 
 import OutsideClickHandler from '../toolbox/outsideClickHandler';
-import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 import Icon from '../toolbox/icon';
 
 class TopBar extends React.Component {
@@ -55,10 +53,6 @@ class TopBar extends React.Component {
 
     const items = menuLinks(t);
     const isUserLogout = !!(Object.keys(account).length === 0 || account.afterLogout);
-    const isUserDataFetched = account.info && account.info[token.active] && (
-      !!account.info[token.active].balance
-      || account.info[token.active].balance === 0
-    );
 
     return (
       <div className={`${styles.wrapper} top-bar`}>
@@ -85,27 +79,18 @@ class TopBar extends React.Component {
             peers={peers}
             t={t}
           />
-          {
-            isUserDataFetched
-              ? <UserAccount
-                token={token}
-                className={styles.userAccount}
-                account={account}
-                isDropdownEnable={openDropdown === 'account'}
-                onDropdownToggle={this.handleAccountDropdown}
-                onLogout={this.onLogout}
-                settingsUpdated={settingsUpdated}
-                t={t}
-              />
-            : isUserLogout &&
-              <div className={styles.signIn}>
-                <Link to={routes.loginV2.path}>
-                  <PrimaryButtonV2 className={'small'}>
-                    {t('Sign in')}
-                  </PrimaryButtonV2>
-                </Link>
-              </div>
-          }
+
+          <UserAccount
+            token={token}
+            className={styles.userAccount}
+            account={account}
+            isDropdownEnable={openDropdown === 'account'}
+            onDropdownToggle={this.handleAccountDropdown}
+            onLogout={this.onLogout}
+            settingsUpdated={settingsUpdated}
+            isUserLogout={isUserLogout}
+            t={t}
+          />
 
           <OutsideClickHandler
             className={`${styles.searchButton} search-section`}

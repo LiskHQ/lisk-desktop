@@ -2,9 +2,9 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { MemoryRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import i18n from '../../i18n';
+import i18n from '../../../i18n';
 import UserAccount from './userAccount';
-import routes from '../../constants/routes';
+import routes from '../../../constants/routes';
 
 describe('UserAccount', () => {
   let wrapper;
