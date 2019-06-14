@@ -68,6 +68,7 @@
 
 .dropdown {
   cursor: initial;
+  top: calc(100% + 15px);
   width: auto;
 
   & .accountInfo {
@@ -76,7 +77,7 @@
   }
 
   & .separator {
-    margin: 10px 0;
+    margin: 10px auto;
   }
 }
 
