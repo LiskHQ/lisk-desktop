@@ -117,7 +117,10 @@ describe('TransactionStatus', () => {
     const newProps = { ...props };
     newProps.fields.isHardwareWalletConnected = true;
     newProps.fields.hwTransactionStatus = 'error';
-    newProps.failedTransactions = [{ recipient: '123L', amount: 1, reference: 'test' }];
+    newProps.failedTransactions = [{
+      error: { message: 'errorMessage' },
+      transaction: { recipient: '123L', amount: 1, reference: 'test' },
+    }];
     wrapper = mount(<TransactionStatus {...newProps} />, options);
     expect(wrapper).toContainMatchingElement('.report-error-link');
     wrapper.find('.retry').at(0).simulate('click');

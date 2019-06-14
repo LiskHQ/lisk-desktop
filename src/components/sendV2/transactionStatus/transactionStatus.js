@@ -88,6 +88,13 @@ class TransactionStatus extends React.Component {
       ? messages.success
       : messages.error;
 
+
+    if (transactions.broadcastedTransactionsError[0] &&
+        transactions.broadcastedTransactionsError[0].error &&
+        transactions.broadcastedTransactionsError[0].error.message) {
+      messageDetails.paragraph = transactions.broadcastedTransactionsError[0].error.message;
+    }
+
     if (fields.isHardwareWalletConnected) {
       messageDetails = isHardwareWalletError ? messages.hw : messages.success;
     }
@@ -100,7 +107,7 @@ class TransactionStatus extends React.Component {
 
   onRetry() {
     const { transactions: { broadcastedTransactionsError }, transactionBroadcasted } = this.props;
-    broadcastedTransactionsError.forEach(tx => transactionBroadcasted(tx));
+    broadcastedTransactionsError.forEach(({ transaction }) => transactionBroadcasted(transaction));
   }
 
   render() {
@@ -117,9 +124,9 @@ class TransactionStatus extends React.Component {
     return (
       <div className={`${styles.wrapper} transaction-status`}>
         <TransactionResult t={t}
-          message={messageDetails.bodyText.paragraph}
+          title={messageDetails.title}
           illustration={success ? 'transactionSuccess' : 'transactionError'}
-          title={messageDetails.bodyText.title}
+          message={messageDetails.paragraph}
           success={success}
           primaryButon={{
             title: t('Back to Wallet'),

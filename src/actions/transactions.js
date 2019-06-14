@@ -365,7 +365,7 @@ export const transactionBroadcasted = transaction => async (dispatch, getState) 
 
   const [error, tx] = await to(transactionsAPI.broadcast(activeToken, transaction, network));
 
-  if (error) return dispatch(broadcastedTransactionError(transaction));
+  if (error) return dispatch(broadcastedTransactionError(({ error, transaction })));
 
   dispatch(broadcastedTransactionSuccess(transaction));
 
