@@ -63,7 +63,7 @@ class OutsideClickHandler extends React.Component {
   }
 }
 
-OutsideClickHandler.propTyypes = {
+OutsideClickHandler.propTypes = {
   children: PropTypes.node.isRequired,
   onOutsideClick: PropTypes.func.isRequired,
   className: PropTypes.string,
