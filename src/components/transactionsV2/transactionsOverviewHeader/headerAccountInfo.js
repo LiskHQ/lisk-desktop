@@ -37,7 +37,7 @@ const headerAccountInfo = ({
             ? <span className={`${styles.label} account-label`}>{label}</span>
             : null }
         </div>
-        <span className={`${styles.address} account-address`}>
+        <span className={`${styles.address}`}>
           {address}
         </span>
       </div>

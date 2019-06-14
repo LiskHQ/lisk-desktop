@@ -7,8 +7,8 @@ const Icon = ({ name, className, ...props }) => (
 );
 
 Icon.propTypes = {
-  name: PropTypes.string.isRequired,
   className: PropTypes.string,
+  name: PropTypes.oneOf(Object.keys(svgIcons)).isRequired,
 };
 
 Icon.defaultProps = {

@@ -3,7 +3,6 @@
 .wrapper {
   display: flex;
   height: calc(100% - 12px);
-  margin-bottom: 12px;
   overflow: initial;
   padding: 0;
 }
