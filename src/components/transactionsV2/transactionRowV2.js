@@ -51,51 +51,63 @@ class TransactionRowV2 extends React.Component {
   }
 
   render() {
-    const { props } = this;
-    const { value, token } = props;
-    const onClick = props.onClick || (() => {});
-    const hasConfirmations = props.value.confirmations && props.value.confirmations > 0;
+    const {
+      address,
+      bookmarks,
+      onClick,
+      t,
+      token,
+      value,
+    } = this.props;
+
     const { isConfirmed } = this.state;
+    const hasConfirmations = value.confirmations && value.confirmations > 0;
+
     return (
-      <TableRow className={`${grid.row} ${styles.row} ${!hasConfirmations ? styles.pending : ''} transactions-row`} onClick={() => onClick(props)}>
+      <TableRow className={`${grid.row} ${styles.row} ${!hasConfirmations ? styles.pending : ''} transactions-row`} onClick={() => onClick(this.props)}>
         <div className={`${grid['col-sm-4']} ${grid['col-lg-3']} transactions-cell`}>
-          <Icon name={props.address === value.senderId ? 'outgoing' : 'incoming' } className={styles.inOutIcon} />
+          <Icon name={address === value.senderId ? 'outgoing' : 'incoming' } className={styles.inOutIcon} />
           <TransactionTypeFigure
-            address={props.address === value.senderId ? value.recipientId : value.senderId }
+            address={address === value.senderId ? value.recipientId : value.senderId }
             transactionType={value.type}
           />
           <TransactionAddress
-            address={value.recipientId}
-            bookmarks={props.bookmarks}
-            t={props.t}
+            address={address === value.senderId ? value.recipientId : value.senderId }
+            bookmarks={bookmarks}
+            t={t}
             token={token}
             transactionType={value.type}
           />
         </div>
         <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
           <div className={`${styles.status} ${!isConfirmed ? styles.showSpinner : styles.showDate}`}>
-            <SpinnerV2 completed={hasConfirmations} label={props.t('Pending...')} />
-            <DateTimeFromTimestamp time={props.value.timestamp} token={token} />
+            <SpinnerV2 completed={hasConfirmations} label={t('Pending...')} />
+            <DateTimeFromTimestamp time={value.timestamp} token={token} />
           </div>
         </div>
         <div className={`${grid['col-sm-1']} ${grid['col-lg-2']} transactions-cell`}>
-          <LiskAmount val={props.value.fee}/>&nbsp;{token}
+          <LiskAmount val={value.fee}/>&nbsp;{token}
         </div>
           <div className={`${grid['col-sm-3']} ${grid['col-lg-3']} transactions-cell`}>
             <TransactionDetailV2
-              t={props.t}
-              transaction={props.value} />
+              t={t}
+              transaction={value} />
           </div>
         <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
           <TransactionAmount
-            address={props.address}
+            address={address}
             token={token}
-            transaction={props.value}
+            transaction={value}
           />
         </div>
       </TableRow>
     );
   }
 }
+
+/* istanbul ignore next */
+TransactionRowV2.defaultProps = {
+  onClick: () => {},
+};
 
 export default translate()(TransactionRowV2);

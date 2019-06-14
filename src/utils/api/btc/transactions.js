@@ -41,8 +41,9 @@ const normalizeTransactionsResponse = ({
     address = address || tx.inputs[0].txDetail.scriptPubKey.addresses[0];
     const output = tx.outputs.find(o => o.scriptPubKey.addresses.includes(address));
     const extractedAddress = tx.inputs[0].txDetail.scriptPubKey.addresses[0];
+    const recipientAddress = tx.outputs[0].scriptPubKey.addresses[0];
     data.senderId = validateAddress(tokenMap.BTC.key, extractedAddress) === 0 ? extractedAddress : 'Unparsed Address';
-    data.recipientId = address;
+    data.recipientId = validateAddress(tokenMap.BTC.key, recipientAddress) === 0 ? recipientAddress : 'Unparsed Address';
     data.amount = output.satoshi;
   }
 
