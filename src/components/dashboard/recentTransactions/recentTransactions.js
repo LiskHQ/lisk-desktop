@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Box from '../../boxV2';
 import TransactionList from './transactionList';
 import EmptyState from '../../emptyStateV2';
-import svg from '../../../utils/svgIcons';
+import Icon from '../../toolbox/icon';
 import links from '../../../constants/externalLinks';
 import { tokenMap } from '../../../constants/tokens';
 import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
@@ -50,7 +50,7 @@ class RecentTransactions extends Component {
         {
           isLoggedIn && !transactionList.length
           ? <EmptyState>
-              <img src={svg.icon_empty_recent_transactions} />
+              <Icon name={'icon_empty_recent_transactions'} />
               <h1>{t('No Transactions Yet')}</h1>
               <p>{t('A great way to start is to top up your account with some {{value}} tokens.', { value: activeToken.key })}</p>
               <div>
@@ -71,7 +71,7 @@ class RecentTransactions extends Component {
         {
           !isLoggedIn
           ? <EmptyState>
-              <img src={svg.icon_empty_recent_transactions} />
+              <Icon name={'icon_empty_recent_transactions'} />
               <h1>{t('Sign in to view recent transactions')}</h1>
               <p>{t('In order to see your recent transactions you need to sign in.')}</p>
             </EmptyState>

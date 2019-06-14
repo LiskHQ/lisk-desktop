@@ -3,7 +3,7 @@ import styles from './newsFeed.css';
 import News from './news';
 import Box from '../boxV2';
 import EmptyState from '../emptyStateV2';
-import svg from '../../utils/svgIcons';
+import Icon from '../toolbox/icon';
 
 class NewsFeed extends React.Component {
   componentDidMount() {
@@ -40,7 +40,7 @@ class NewsFeed extends React.Component {
             {
               showNewsFeedEmptyState && !filteredNewsFeed.length &&
               <EmptyState className={'empty-news'}>
-                <img src={svg.noTweetsIcon} />
+                <Icon name={'noTweetsIcon'} />
                 <h1>{t('No available tweets')}</h1>
                 <p>{t('At this moment there is a connection problem with the tweets feed')}</p>
               </EmptyState>

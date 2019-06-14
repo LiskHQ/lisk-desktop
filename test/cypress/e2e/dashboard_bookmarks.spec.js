@@ -83,7 +83,7 @@ describe('Dashboard Bookmarks', () => {
 
     /**
      * 4 bookmarks are shown by default in newsfeed
-     * @expect 4 bookmarks visible
+     * @expect 5 bookmarks visible
      */
     it('5 bookmarks are shown by default', () => {
       window.localStorage.setItem('bookmarks', `[

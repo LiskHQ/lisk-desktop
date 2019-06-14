@@ -1,5 +1,5 @@
 import React from 'react';
-import svg from '../../utils/svgIcons';
+import Icon from '../toolbox/icon';
 import styles from './news.css';
 
 class News extends React.Component {
@@ -27,7 +27,7 @@ class News extends React.Component {
     return (
       <a href={url} target={'_blank'} rel={'noopener noreferrer'} className={`${styles.news} news-item`}>
         <div className={styles.header}>
-          <img src={svg.newsFeedAvatar} />
+          <Icon name={'newsFeedAvatar'} />
           <div>
             <span className={styles.title}>{sourceName}</span>
             <span className={styles.subtitle}>{timestampMessage}</span>
