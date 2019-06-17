@@ -1,0 +1,65 @@
+@import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
+
+.box {
+  width: 100%;
+  max-width: 720px;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px;
+  margin: 0;
+
+  & > .description {
+    @mixin contentLargest;
+
+    color: var(--color-slate-gray);
+  }
+
+  & > .link {
+    @mixin contentLargest bold;
+
+    color: var(--color-ultramarine-blue);
+    margin-bottom: 24px;
+  }
+
+  & > .nicknameLabel {
+    @mixin contentNormal bold;
+
+    color: var(--color-maastricht-blue);
+    margin-bottom: 12px;
+  }
+
+  & > .inputRequirements {
+    @mixin contentNormal;
+
+    color: var(--color-slate-graywell);
+    margin-top: 8px;
+    user-select: none;
+    opacity: 0;
+    transition: opacity 0.5s, ease-in;
+  }
+
+  & > .inputNickname:focus + .inputRequirements {
+    opacity: 1;
+  }
+
+  & > footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+
+    & > .confirmBtn {
+      width: 100%;
+      max-width: 391px;
+    }
+  }
+}
