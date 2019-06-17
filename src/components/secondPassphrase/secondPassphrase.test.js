@@ -45,8 +45,9 @@ describe('SecondPassphrase', () => {
       wrapper = mount(<SecondPassphrase {...props} />, options);
     });
 
-    it('renders MultiStep component', () => {
+    it('renders MultiStep component and passphrase', () => {
       expect(wrapper.find('MultiStep')).to.have.length(1);
+      expect(wrapper.find('.passphrase')).to.have.length(1);
     });
 
     it('unmount remove contentFocused', () => {
