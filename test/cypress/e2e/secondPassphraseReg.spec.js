@@ -9,7 +9,7 @@ import compareBalances from '../utils/compareBalances';
 const txConfirmationTimeout = 20000;
 const txSecondPassphraseRegCost = 5;
 
-describe('Second Passphrase Registration', () => {
+describe.skip('Second Passphrase Registration', () => {
   /**
    * Delegate registration page can be opened by direct link
    * @expect url is correct

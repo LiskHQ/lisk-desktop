@@ -1,19 +1,16 @@
 import React from 'react';
-// import Fees from '../../constants/fees';
+
 import MultiStep from '../multiStep';
-// import Info from '../passphrase/info';
-import CreateSecond from '../passphrase/createSecond';
-import Safekeeping from '../passphrase/safekeeping';
-import Confirm from '../passphrase/confirm';
-import Box from '../box';
-import styles from './secondPassphrase.css';
 import routes from '../../constants/routes';
+
+import styles from './secondPassphrase.css';
 
 class SecondPassphrase extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   componentWillUnmount() {
     document.body.classList.remove('contentFocused');
   }
+
   componentDidMount() {
     document.body.classList.add('contentFocused');
     if (this.props.account.info.LSK.secondPublicKey) {
@@ -26,34 +23,15 @@ class SecondPassphrase extends React.Component {
   }
 
   render() {
-    const {
-      account, registerSecondPassphrase, t,
-    } = this.props;
-    const header = t('Secure the use of your Lisk ID with a second passphrase.');
-    const message = t('You will need it to use your Lisk ID, like sending and voting. You are responsible for keeping your second passphrase safe. No one can restore it, not even Lisk.');
-    const onPassphraseRegister = (secondPassphrase) => {
-      /* istanbul ignore next */
-      registerSecondPassphrase({
-        secondPassphrase,
-        passphrase: account.passphrase,
-        account: account.info.LSK,
-      });
-    };
+    const { account } = this.props;
     return (
-      <Box className={`${styles.hasPaddingTop} ${styles.register}`}>
-        <MultiStep
-          showNav={true}
-          finalCallback={onPassphraseRegister}
-          backButtonLabel={t('Back')}
-          prevPage={this.backToPreviousPage.bind(this)}
-        >
-          <CreateSecond title={t('Create')} t={t} icon='add' balance={account.info && account.info.LSK.balance} />
-          <Safekeeping title={t('Safekeeping')} t={t} step='revealing-step'
-            icon='checkmark' header={header} message={message} />
-          <Confirm title={t('Confirm')} t={t} confirmButton='Register'
-            icon='login' secondPassConfirmation={true} />
+      <div className={styles.wrapper}>
+        <MultiStep>
+          <h1>TODO</h1>
+          {account.address}
         </MultiStep>
-      </Box>);
+      </div>
+    );
   }
 }
 

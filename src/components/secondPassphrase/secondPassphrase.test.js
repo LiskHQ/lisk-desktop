@@ -10,7 +10,7 @@ import i18n from '../../i18n';
 import SecondPassphrase from './secondPassphrase';
 import routes from '../../constants/routes';
 
-describe('SecondPassphrase', () => {
+describe.skip('SecondPassphrase', () => {
   let wrapper;
   const account = {
     passphrase: accounts.delegate.passphrase,

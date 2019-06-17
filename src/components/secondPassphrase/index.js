@@ -13,7 +13,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  registerSecondPassphrase: secondPassphraseRegistered,
+  secondPassphraseRegistered,
 };
 
 export default withRouter(connect(
