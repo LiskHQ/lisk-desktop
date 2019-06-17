@@ -39,7 +39,7 @@ const bookmarks = (state = getBookmarksFromLocalStorage(), action) => {
       return {
         ...state,
         [action.data.token]:
-          state[action.data.token].filter(account => !(account.address === action.data.address)),
+          state[action.data.token].filter(account => account.address !== action.data.address),
       };
 
     default:
