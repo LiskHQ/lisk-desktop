@@ -1,10 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import PropTypes from 'prop-types';
-import configureMockStore from 'redux-mock-store';
 
 import accounts from '../../../test/constants/accounts';
-import i18n from '../../i18n';
 import SecondPassphrase from './secondPassphrase';
 import routes from '../../constants/routes';
 
@@ -14,16 +11,6 @@ describe('SecondPassphrase', () => {
     passphrase: accounts.delegate.passphrase,
     info: {
       LSK: accounts.delegate,
-    },
-  };
-  const store = configureMockStore([])({
-    account,
-  });
-  const options = {
-    context: { store, i18n },
-    childContextTypes: {
-      store: PropTypes.object.isRequired,
-      i18n: PropTypes.object.isRequired,
     },
   };
   const props = {
@@ -40,7 +27,7 @@ describe('SecondPassphrase', () => {
 
   describe('Authenticated', () => {
     beforeEach(() => {
-      wrapper = mount(<SecondPassphrase {...props} />, options);
+      wrapper = mount(<SecondPassphrase {...props} />);
     });
 
     it('renders MultiStep component and passphrase', () => {
@@ -63,7 +50,7 @@ describe('SecondPassphrase', () => {
       wrapper = mount(<SecondPassphrase {...props}
         account={{
           info: { LSK: accounts['second passphrase account'] },
-        }} />, options);
+        }} />);
       expect(props.history.push).toHaveBeenCalledWith(routes.dashboard.path);
     });
   });
