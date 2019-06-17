@@ -6,7 +6,6 @@ import Box from '../boxV2';
 import { tokenMap } from '../../constants/tokens';
 import regex from '../../utils/regex';
 import svg from '../../utils/svgIcons';
-import { SecondaryButtonV2 } from '../toolbox/buttons/button';
 import routes from '../../constants/routes';
 import styles from './bookmarksList.css';
 
@@ -59,10 +58,11 @@ class BookmarksList extends React.Component {
               <h1>{t('No Bookmarks added yet')}</h1>
               <p>{t('Start adding some addresses to bookmarks, to keep track of them.')}</p>
               <div>
-                { /* TODO - pass the correct link when bookmarks page is avaiable */ }
-                <Link to={'#'}>
-                  <SecondaryButtonV2>{t('Search Accounts')}</SecondaryButtonV2>
-                </Link>
+                { /* TODO - pass the correct link when bookmarks page is avaiable
+                  <Link to={'#'}>
+                    <SecondaryButtonV2>{t('Search Accounts')}</SecondaryButtonV2>
+                  </Link>
+                */ }
               </div>
           </EmptyState>
         }
