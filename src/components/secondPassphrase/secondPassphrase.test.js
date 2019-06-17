@@ -1,7 +1,5 @@
 import React from 'react';
-import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { spy } from 'sinon';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 
@@ -32,11 +30,11 @@ describe('SecondPassphrase', () => {
     account,
     closeDialog: () => {},
     passphrase: account.passphrase,
-    registerSecondPassphrase: spy(),
+    registerSecondPassphrase: jest.fn(),
     t: key => key,
     history: {
-      goBack: spy(),
-      push: spy(),
+      goBack: jest.fn(),
+      push: jest.fn(),
     },
   };
 
@@ -46,19 +44,19 @@ describe('SecondPassphrase', () => {
     });
 
     it('renders MultiStep component and passphrase', () => {
-      expect(wrapper.find('MultiStep')).to.have.length(1);
-      expect(wrapper.find('.passphrase')).to.have.length(1);
+      expect(wrapper).toContainMatchingElement('MultiStep');
+      expect(wrapper).toContainMatchingElement('.passphrase');
     });
 
     it('unmount remove contentFocused', () => {
-      expect(document.getElementsByClassName('contentFocused')).to.have.length(1);
+      expect(document.getElementsByClassName('contentFocused')).toHaveLength(1);
       wrapper.unmount();
-      expect(document.getElementsByClassName('contentFocused')).to.have.length(0);
+      expect(document.getElementsByClassName('contentFocused')).toHaveLength(0);
     });
 
     it('should go back in history when back button is clicked', () => {
       wrapper.find('.go-back').first().simulate('click');
-      expect(props.history.goBack).to.have.calledWith();
+      expect(props.history.goBack).toHaveBeenCalledWith();
     });
 
     it('should go to dashboard if account already has second passphrase', () => {
@@ -66,7 +64,7 @@ describe('SecondPassphrase', () => {
         account={{
           info: { LSK: accounts['second passphrase account'] },
         }} />, options);
-      expect(props.history.push).to.have.calledWith(routes.dashboard.path);
+      expect(props.history.push).toHaveBeenCalledWith(routes.dashboard.path);
     });
   });
 });
