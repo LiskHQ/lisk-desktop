@@ -6,7 +6,7 @@ import Fees from '../../constants/fees';
 import TransactionSummary from '../transactionSummary';
 
 const SummaryStep = ({
-  t, account, prevStep, registerSecondPassphrase,
+  t, account, prevStep, nextStep, secondPassphrase, secondPassphraseRegistered, finalCallback,
 }) => (
   <TransactionSummary
     title={t('Register 2nd passphrase summary')}
@@ -15,7 +15,35 @@ const SummaryStep = ({
     confirmButton={{
       label: t('Register'),
       onClick: () => {
-        registerSecondPassphrase();
+        secondPassphraseRegistered({
+          secondPassphrase,
+          passphrase: account.passphrase,
+          account: account.info.LSK,
+          callback: ({ success, error }) => {
+            nextStep({
+              success,
+              ...(success ? {
+                title: t('Registration completed'),
+                illustration: 'secondPassphraseSuccess',
+                message: t(''),
+                primaryButon: {
+                  title: t('Go to Wallet'),
+                  className: 'go-to-wallet',
+                  onClick: finalCallback,
+                },
+              } : {
+                title: t('Registration failed'),
+                illustration: 'secondPassphraseError',
+                message: (error && error.message) || t('Oops, looks like something went wrong. Please try again.'),
+                primaryButon: {
+                  title: t('Go to Wallet'),
+                  onClick: finalCallback,
+                },
+                error,
+              }),
+            });
+          },
+        });
       },
     }}
     cancelButton={{

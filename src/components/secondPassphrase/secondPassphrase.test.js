@@ -16,8 +16,9 @@ describe('SecondPassphrase', () => {
   const props = {
     account,
     closeDialog: () => {},
-    passphrase: account.passphrase,
-    registerSecondPassphrase: jest.fn(),
+    secondPassphraseRegistered: jest.fn(({ callback }) => {
+      callback({ success: true });
+    }),
     t: key => key,
     history: {
       goBack: jest.fn(),
@@ -52,6 +53,16 @@ describe('SecondPassphrase', () => {
           info: { LSK: accounts['second passphrase account'] },
         }} />);
       expect(props.history.push).toHaveBeenCalledWith(routes.dashboard.path);
+    });
+
+    it('should allow to registerSecondPassphrase and go to wallet', () => {
+      wrapper.find('.go-to-confirmation').first().simulate('click');
+      wrapper.find('.confirm-button').first().simulate('click');
+      expect(props.secondPassphraseRegistered).toHaveBeenCalledWith(expect.objectContaining({
+        passphrase: props.account.passphrase,
+      }));
+      wrapper.find('.go-to-wallet').first().simulate('click');
+      expect(props.history.push).toHaveBeenCalledWith(routes.wallet.path);
     });
   });
 });
