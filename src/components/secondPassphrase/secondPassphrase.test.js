@@ -10,7 +10,7 @@ import i18n from '../../i18n';
 import SecondPassphrase from './secondPassphrase';
 import routes from '../../constants/routes';
 
-describe.skip('SecondPassphrase', () => {
+describe('SecondPassphrase', () => {
   let wrapper;
   const account = {
     passphrase: accounts.delegate.passphrase,
@@ -56,7 +56,7 @@ describe.skip('SecondPassphrase', () => {
     });
 
     it('should go back in history when back button is clicked', () => {
-      wrapper.find('.multistep-back').simulate('click');
+      wrapper.find('.go-back').first().simulate('click');
       expect(props.history.goBack).to.have.calledWith();
     });
 
