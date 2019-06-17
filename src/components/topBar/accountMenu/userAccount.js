@@ -86,7 +86,9 @@ const UserAccount = ({
 
         <a
           className={styles.dropdownOption}
-          href={feedbackLinks.general} target="_blank"
+          href={feedbackLinks.general}
+          rel={'noopener noreferrer'}
+          target="_blank"
         >
           <Icon name='feedback' className={styles.defaultIcon} />
           <Icon name='feedbackActive' className={styles.activeIcon} />
