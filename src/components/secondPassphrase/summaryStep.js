@@ -1,16 +1,38 @@
 import React from 'react';
 
-import BoxV2 from '../boxV2';
+import { fromRawLsk } from '../../utils/lsk';
+import AccountVisual from '../accountVisual';
+import Fees from '../../constants/fees';
+import TransactionSummary from '../transactionSummary';
 
 const SummaryStep = ({
-  t,
+  t, account, prevStep, registerSecondPassphrase,
 }) => (
-  <BoxV2>
-    <header>
-      <h2>{t('Register 2nd passphrase summary')}</h2>
-    </header>
-  </BoxV2>
+  <TransactionSummary
+    title={t('Register 2nd passphrase summary')}
+    account={account}
+    t={t}
+    confirmButton={{
+      label: t('Register'),
+      onClick: () => {
+        registerSecondPassphrase();
+      },
+    }}
+    cancelButton={{
+      label: t('Go back'),
+      onClick: prevStep,
+    }}
+    fee={fromRawLsk(Fees.setSecondPassphrase)}
+    confirmation={t('I’m aware registering a 2nd passphrase is irreversible and it will be required to confirm transactions.')}
+  >
+   <section>
+    <label>{t('Account')}</label>
+    <label>
+      <AccountVisual address={account.address} size={25} />
+      {account.address}
+    </label>
+   </section>
+  </TransactionSummary>
 );
 
 export default SummaryStep;
-

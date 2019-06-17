@@ -35,7 +35,7 @@ class SecondPassphrase extends React.Component {
   }
 
   render() {
-    const { t, account } = this.props;
+    const { t, account, registerSecondPassphrase } = this.props;
     return (
       <div className={styles.wrapper}>
         <MultiStep showNav={false}>
@@ -47,7 +47,11 @@ class SecondPassphrase extends React.Component {
               passphrase: this.passphrase,
             }}
           />
-          <SummaryStep t={t} />
+          <SummaryStep
+            registerSecondPassphrase={registerSecondPassphrase}
+            account={account}
+            t={t}
+          />
         </MultiStep>
       </div>
     );
