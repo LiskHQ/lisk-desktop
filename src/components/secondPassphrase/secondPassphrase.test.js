@@ -7,27 +7,28 @@ import routes from '../../constants/routes';
 
 describe('SecondPassphrase', () => {
   let wrapper;
+  let props;
   const account = {
     passphrase: accounts.delegate.passphrase,
     info: {
       LSK: accounts.delegate,
     },
   };
-  const props = {
-    account,
-    closeDialog: () => {},
-    secondPassphraseRegistered: jest.fn(({ callback }) => {
-      callback({ success: true });
-    }),
-    t: key => key,
-    history: {
-      goBack: jest.fn(),
-      push: jest.fn(),
-    },
-  };
 
   describe('Authenticated', () => {
     beforeEach(() => {
+      props = {
+        account,
+        closeDialog: () => {},
+        secondPassphraseRegistered: jest.fn(({ callback }) => {
+          callback({ success: true });
+        }),
+        t: key => key,
+        history: {
+          goBack: jest.fn(),
+          push: jest.fn(),
+        },
+      };
       wrapper = mount(<SecondPassphrase {...props} />);
     });
 
@@ -61,8 +62,22 @@ describe('SecondPassphrase', () => {
       expect(props.secondPassphraseRegistered).toHaveBeenCalledWith(expect.objectContaining({
         passphrase: props.account.passphrase,
       }));
+      expect(wrapper.find('.result-box-header')).toHaveText('Registration completed');
       wrapper.find('.go-to-wallet').first().simulate('click');
       expect(props.history.push).toHaveBeenCalledWith(routes.wallet.path);
+    });
+
+    it('should handle registerSecondPassphrase failure', () => {
+      props.secondPassphraseRegistered = jest.fn(({ callback }) => {
+        callback({ success: false, error: { message: 'custom message' } });
+      });
+      wrapper = mount(<SecondPassphrase {...props} />);
+      wrapper.find('.go-to-confirmation').first().simulate('click');
+      wrapper.find('.confirm-button').first().simulate('click');
+      expect(props.secondPassphraseRegistered).toHaveBeenCalledWith(expect.objectContaining({
+        passphrase: props.account.passphrase,
+      }));
+      expect(wrapper.find('.result-box-header')).toHaveText('Registration failed');
     });
   });
 });
