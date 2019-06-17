@@ -2,7 +2,7 @@ import Dashboard from '../components/dashboard';
 import Help from '../components/help';
 import Sidechains from '../components/sidechains';
 import Setting from '../components/setting';
-import RegisterDelegate from '../components/registerDelegate';
+// import RegisterDelegate from '../components/registerDelegate';
 import SecondPassphrase from '../components/secondPassphrase';
 import SignMessage from '../components/signMessage';
 import SearchResult from '../components/searchResult';
@@ -22,6 +22,7 @@ import Extensions from '../components/extensions';
 import TermsOfUse from '../components/termsOfUse';
 import ToolboxDemo from '../components/toolbox/demo';
 import DasboardV2 from '../components/dashboardV2';
+import DelegateRegistration from '../components/registerDelegateV2';
 
 export default {
   accountVisualDemo: {
@@ -91,9 +92,15 @@ export default {
     component: SignMessage,
     isPrivate: true,
   },
+  // registerDelegate: {
+  //   path: '/register-delegate',
+  //   component: RegisterDelegate,
+  //   isLoaded: true,
+  //   isPrivate: false,
+  // },
   registerDelegate: {
     path: '/register-delegate',
-    component: RegisterDelegate,
+    component: DelegateRegistration,
     isLoaded: true,
     isPrivate: false,
   },
