@@ -1,3 +1,4 @@
+@import '../app/mixins.css';
 
 .wrapper {
   display: flex;
@@ -6,4 +7,34 @@
   min-height: 100%;
   align-items: center;
   width: 100%;
+  max-width: 720px;
+  margin: auto;
+
+  & p {
+    @mixin contentLargest;
+
+    letter-spacing: 0.21px;
+    line-height: 25px;
+    margin: 24px;
+  }
+
+  & footer {
+    width: 100%;
+    min-width: 572px;
+    margin: 36px 0 20px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+
+    & > .confirmBtn {
+      width: 431px;
+    }
+
+    & > .editBtn {
+      width: auto !important;
+    }
+  }
 }

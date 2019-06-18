@@ -50,4 +50,8 @@
       border-bottom: 1px solid var(--color-platinum);
     }
   }
+
+  & > p {
+    color: var(--color-blue-gray);
+  }
 }

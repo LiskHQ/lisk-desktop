@@ -11,14 +11,14 @@ import svgIcons from '../../utils/svgIcons';
 import styles from './passphraseBackup.css';
 
 class PassphraseBackup extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
 
     this.state = {
       passphraseCopied: false,
     };
 
-    this.walletName = `lisk_passphrase_${moment().format('YYYY_MM_DD_HH_mm')}.pdf`;
+    this.walletName = `${props.paperWalletName}_${moment().format('YYYY_MM_DD_HH_mm')}.pdf`;
     this.generatePaperwallet = this.generatePaperwallet.bind(this);
     this.setCanvasRef = this.setCanvasRef.bind(this);
   }
@@ -60,7 +60,7 @@ class PassphraseBackup extends React.Component {
 
     return (
       <React.Fragment>
-        <div className={`${styles.optionsHolder} ${grid['col-sm-10']}`}>
+        <div className={`${styles.optionsHolder}`}>
           <div className={`${styles.option}`}>
             <div className={`${styles.optionContent}`}>
               <h2>

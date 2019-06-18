@@ -3,13 +3,11 @@
 
 .optionsHolder {
   justify-content: center;
-  width: 100%;
+  margin: 0 24px;
 
   & .option {
     display: flex;
     justify-content: space-between;
-    margin: 20px 0;
-    width: 100%;
   }
 }
 
@@ -127,7 +125,7 @@
     margin: 10px 0;
 
     & input {
-      @mixin contentLarge bold;
+      @mixin contentLarge;
 
       color: var(--color-maastricht-blue) !important;
       text-align: center;

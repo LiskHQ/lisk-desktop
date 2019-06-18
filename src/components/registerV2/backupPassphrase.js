@@ -24,7 +24,9 @@ class BackupPassphrase extends React.Component {
             t('Keep it safe as it is the only way to access your wallet.')
           }</p>
         </div>
-        <PassphraseBackup account={account} t={t} />
+        <div className={grid['col-sm-10']}>
+          <PassphraseBackup account={account} t={t} paperWalletName='lisk_passphrase' />
+        </div>
 
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
           <span className={`${registerStyles.button} ${registerStyles.backButton}`}>

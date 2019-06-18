@@ -15,15 +15,15 @@ const FirstStep = ({
     <p>
      {t('After registration, your second passphrase will be required when confirming every transaction and every vote. You are responsible for safeeeping your second passphrase. No one can restore it, not even Lisk. Once activated a second passphrase can’t be turned off.')}
     </p>
-    <PassphraseBackup t={t} nextStep={nextStep} account={account} />
+    <PassphraseBackup account={account} t={t} paperWalletName='lisk_2nd_passphrase' />
     <footer className='summary-footer'>
         <PrimaryButtonV2
-          className={`${styles.confirmBtn} go-to-confirmation`}
+          className={`${styles.confirmBtn} large go-to-confirmation`}
           onClick={nextStep}>
           {t('Go to Confirmation')}
         </PrimaryButtonV2>
       <TertiaryButtonV2
-        className={`${styles.editBtn} go-back`}
+        className={`${styles.editBtn} large go-back`}
         onClick={goBack}>
           {t('Go back')}
       </TertiaryButtonV2>
