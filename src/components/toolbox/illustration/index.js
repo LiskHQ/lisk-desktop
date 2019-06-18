@@ -10,6 +10,8 @@ import transactionSuccess from '../../../assets/images/illustrations/transaction
 import transactionError from '../../../assets/images/illustrations/transaction_error.svg';
 import votingSuccess from '../../../assets/images/illustrations/voting-submitted.svg';
 import votingError from '../../../assets/images/illustrations/voting-failed.svg';
+import secondPassphraseSuccess from '../../../assets/images/illustrations/2nd-passphrase-submitted.svg';
+import secondPassphraseError from '../../../assets/images/illustrations/2nd-passphrase-failed.svg';
 import pageNotFound from '../../../assets/images/illustrations/illustration-page-not-found.svg';
 import errorBoundaryPage from '../../../assets/images/illustrations/illustration-error-boundary-page.svg';
 import hubReadyToGo from '../../../assets/images/illustrations/hub-ready-togo.svg';
@@ -29,6 +31,8 @@ export const illustrations = {
   transactionError,
   votingSuccess,
   votingError,
+  secondPassphraseSuccess,
+  secondPassphraseError,
   pageNotFound,
   errorBoundaryPage,
   hubReadyToGo,

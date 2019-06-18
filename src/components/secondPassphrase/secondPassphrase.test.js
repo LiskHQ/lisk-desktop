@@ -73,7 +73,8 @@ describe('SecondPassphrase', () => {
       expect(props.secondPassphraseRegistered).toHaveBeenCalledWith(expect.objectContaining({
         passphrase: props.account.passphrase,
       }));
-      expect(wrapper.find('.result-box-header')).toHaveText('Registration completed');
+      expect(wrapper.find('.result-box-header')).toHaveText('2nd passphrase registered');
+
       wrapper.find('.go-to-wallet').first().simulate('click');
       expect(props.history.push).toHaveBeenCalledWith(routes.wallet.path);
     });

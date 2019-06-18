@@ -25,9 +25,9 @@ const SummaryStep = ({
             nextStep({
               success,
               ...(success ? {
-                title: t('Registration completed'),
-                illustration: 'votingSuccess',
-                message: t(''),
+                title: t('2nd passphrase registered'),
+                illustration: 'secondPassphraseSuccess',
+                message: t('You will be notified when your transaction is confirmed.'),
                 primaryButon: {
                   title: t('Go to Wallet'),
                   className: 'go-to-wallet',
@@ -35,7 +35,7 @@ const SummaryStep = ({
                 },
               } : {
                 title: t('Registration failed'),
-                illustration: 'votingError',
+                illustration: 'secondPassphraseError',
                 message: (error && error.message) || t('Oops, looks like something went wrong. Please try again.'),
                 primaryButon: {
                   title: t('Go to Wallet'),
