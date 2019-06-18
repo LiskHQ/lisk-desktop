@@ -60,11 +60,8 @@ describe('actions: account', () => {
     const data = {
       passphrase: accounts['second passphrase account'].passphrase,
       secondPassphrase: accounts['second passphrase account'].secondPassphrase,
-      account: {
-        publicKey: accounts['second passphrase account'].publicKey,
-        address: accounts['second passphrase account'].address,
-      },
-      callback: spy(),
+      account: accounts['second passphrase account'],
+      callback: jest.fn(),
     };
     const actionFunction = secondPassphraseRegistered(data);
     let dispatch;
@@ -72,7 +69,7 @@ describe('actions: account', () => {
 
     beforeEach(() => {
       accountApiMock = stub(accountApi, 'setSecondPassphrase');
-      dispatch = spy();
+      dispatch = jest.fn();
       getState = () => ({
         peers: { liskAPIClient: {} },
       });
@@ -85,9 +82,19 @@ describe('actions: account', () => {
       i18nextMock.restore();
     });
 
-    it('should create an action function', () => {
-      chaiExpect(typeof actionFunction).to.be.deep.equal('function');
+    it('should dispatch errorToastDisplayed if insufficient balance', () => {
+      secondPassphraseRegistered({
+        ...data,
+        account: {
+          ...data.account,
+          balance: 0,
+        },
+      })(dispatch, getState);
+      expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+        type: actionTypes.toastDisplayed,
+      }));
     });
+
 
     it('should dispatch addPendingTransaction action if resolved', () => {
       const transaction = {
@@ -102,9 +109,10 @@ describe('actions: account', () => {
       accountApiMock.returnsPromise().resolves(transaction);
 
       actionFunction(dispatch, getState);
-      chaiExpect(dispatch).to.have.been
-        .calledWith({ data: transaction, type: actionTypes.addPendingTransaction });
-      chaiExpect(data.callback).to.have.been.calledWith({
+      expect(dispatch).toHaveBeenCalledWith({
+        data: transaction, type: actionTypes.addPendingTransaction,
+      });
+      expect(data.callback).toHaveBeenCalledWith({
         success: true,
         transaction,
       });
@@ -115,7 +123,7 @@ describe('actions: account', () => {
       accountApiMock.returnsPromise().rejects(error);
 
       actionFunction(dispatch, getState);
-      chaiExpect(data.callback).to.have.been.calledWith({
+      expect(data.callback).toHaveBeenCalledWith({
         success: false,
         error,
         message: error.message,

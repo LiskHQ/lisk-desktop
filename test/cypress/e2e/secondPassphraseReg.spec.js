@@ -2,7 +2,6 @@ import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
 import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
-import slideCheckbox from '../utils/slideCheckbox';
 import compareBalances from '../utils/compareBalances';
 
 const txConfirmationTimeout = 20000;
@@ -52,10 +51,12 @@ describe('Second Passphrase Registration', () => {
    * @expect choose name button is disabled
    * @expect error message
    */
-  it.skip('Try to register with insufficient balance', () => {
+  it('Try to register with insufficient balance', () => {
     cy.autologin(accounts['empty account'].passphrase, networks.devnet.node);
     cy.visit(urls.secondPassphrase);
-    cy.get(ss.nextBtn).should('be.disabled');
-    cy.get(ss.nextBtn).parent().contains('Insufficient funds');
+    cy.get(ss.goToConfirmationButton).click();
+    cy.get(ss.confirmationCheckbox).click();
+    cy.get(ss.confirmButton).click();
+    cy.get(ss.toast).contains('Not enough LSK to pay for the transaction.');
   });
 });

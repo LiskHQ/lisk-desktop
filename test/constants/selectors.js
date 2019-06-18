@@ -229,6 +229,7 @@ const ss = {
   termsOfUseLink: '.terms-of-use',
   connectButton: '.connect-button',
   walletHeader: '.wallet-header',
+  toast: '.toast',
 };
 
 export default ss;
