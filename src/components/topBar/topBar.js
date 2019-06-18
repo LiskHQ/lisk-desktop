@@ -1,4 +1,7 @@
 import React from 'react';
+import Countdown from 'react-countdown-now';
+import CountDownTemplate from '../header/countDownTemplate';
+import CustomCountDown from '../header/customCountDown';
 import routes from '../../constants/routes';
 import MenuItems from './menuItems';
 import UserAccount from './accountMenu/userAccount';
@@ -26,6 +29,7 @@ class TopBar extends React.Component {
     this.onLogout = this.onLogout.bind(this);
     this.handleSearchDropdown = this.onHandleClick.bind(this, 'search');
     this.handleAccountDropdown = this.onHandleClick.bind(this, 'account');
+    this.onCountdownComplete = this.onCountdownComplete.bind(this);
   }
 
   onLogout() {
@@ -45,9 +49,25 @@ class TopBar extends React.Component {
     });
   }
 
+  onCountdownComplete() {
+    this.props.logOut();
+    this.props.history.replace(routes.loginV2.path);
+  }
+
+  isTimerEnabled() {
+    const { autoLogout, account } = this.props;
+
+    return autoLogout &&
+      account.expireTime &&
+      account.expireTime !== 0 &&
+      account.passphrase &&
+      account.passphrase.length > 0;
+  }
+
   render() {
     const {
       t, account, history, peers, token, settingsUpdated,
+      autoLogout, closeDialog, resetTimer, setActiveDialog,
     } = this.props;
     const { openDropdown } = this.state;
 
@@ -71,7 +91,6 @@ class TopBar extends React.Component {
             isUserLogout={isUserLogout}
             items={items}
             location={this.props.location}
-            t={t}
           />
         </div>
         <div>
@@ -79,6 +98,29 @@ class TopBar extends React.Component {
             peers={peers}
             t={t}
           />
+
+          <div className={`${styles.timer}`}>
+          {
+            this.isTimerEnabled() ?
+            (
+              <Countdown
+                date={account.expireTime}
+                onComplete={this.onCountdownComplete}
+                renderer={CountDownTemplate}
+              >
+                <CustomCountDown
+                  autoLog={autoLogout}
+                  closeDialog={closeDialog}
+                  history={history}
+                  resetTimer={resetTimer}
+                  setActiveDialog={setActiveDialog}
+                  t={t}
+                />
+              </Countdown>
+            )
+          : null}
+        </div>
+
 
           <UserAccount
             token={token}

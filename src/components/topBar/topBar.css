@@ -49,6 +49,10 @@
   padding: 24px;
 }
 
+.timer {
+  display: none !important;
+}
+
 .searchButton {
   width: 87px;
   height: 100%;
