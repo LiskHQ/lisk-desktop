@@ -1,9 +1,9 @@
 import localJSONStorage from './localJSONStorage';
 import { tokenKeys, tokenMap } from '../constants/tokens';
 
-export const flattenBookmarks = accounts =>
-  Object.keys(accounts).reduce((acc, token) =>
-    [...acc, ...accounts[token]], []);
+export const flattenBookmarks = bookmarks =>
+  Object.keys(bookmarks).reduce((acc, token) =>
+    [...acc, ...bookmarks[token]], []);
 
 export const setBookmarksInLocalStorage = data => localJSONStorage.set('bookmarks', data);
 
@@ -20,5 +20,5 @@ export const getBookmarksFromLocalStorage = () => {
   return bookmarks;
 };
 
-export const getIndexOfBookmark = (accounts, { address, token = tokenMap.LSK.key }) =>
-  accounts[token].findIndex(account => (account.address === address));
+export const getIndexOfBookmark = (bookmarks, { address, token = tokenMap.LSK.key }) =>
+  bookmarks[token].findIndex(bookmark => (bookmark.address === address));
