@@ -36,7 +36,7 @@ describe('Middleware: Bookmarks', () => {
       data: { address: accounts.genesis.address },
     }];
 
-    actions.map((action, index) => {
+    actions.forEach((action, index) => {
       bookmarksMiddleware(store)(next)(action);
       expect(bookmarksUtils.setBookmarksInLocalStorage).toBeCalledTimes(index + 1);
     });
