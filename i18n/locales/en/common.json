@@ -286,7 +286,7 @@
   "Loading": "Loading",
   "Locale": "Locale",
   "Log out": "Log out",
-  "Log out automatically after a specified amount of time.": "Log out automatically after a specified amount of time.",
+  "Log out automatically after 10 minutes.": "Log out automatically after 10 minutes.",
   "Login Type not recognized.": "Login Type not recognized.",
   "Logout": "Logout",
   "Look at your Ledger for confirmation": "Look at your Ledger for confirmation",
