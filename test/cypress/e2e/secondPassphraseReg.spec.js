@@ -32,7 +32,7 @@ describe('Second Passphrase Registration', () => {
     cy.autologin(accounts['second passphrase candidate'].passphrase, networks.devnet.node);
     cy.visit(urls.secondPassphrase);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
-    cy.get(ss.goToConfirmationButton).click();
+    cy.get(ss.goToConfirmation).click();
     cy.get(ss.confirmationCheckbox).click();
     cy.get(ss.confirmButton).click();
     cy.get(ss.goToWallet, { timeout: txConfirmationTimeout }).click();
@@ -54,7 +54,7 @@ describe('Second Passphrase Registration', () => {
   it('Try to register with insufficient balance', () => {
     cy.autologin(accounts['empty account'].passphrase, networks.devnet.node);
     cy.visit(urls.secondPassphrase);
-    cy.get(ss.goToConfirmationButton).click();
+    cy.get(ss.goToConfirmation).click();
     cy.get(ss.confirmationCheckbox).click();
     cy.get(ss.confirmButton).click();
     cy.get(ss.toast).contains('Not enough LSK to pay for the transaction.');

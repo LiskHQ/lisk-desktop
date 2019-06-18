@@ -20,7 +20,7 @@ const votingPage = {
 };
 
 const secondPassphraseRegistrationPage = {
-  goToConfirmationButton: '.go-to-confirmation',
+  goToConfirmation: '.go-to-confirmation',
   confirmationCheckbox: '.confirmation-checkbox',
   confirmButton: '.confirm-button',
   goToWallet: '.go-to-wallet',
