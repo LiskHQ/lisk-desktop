@@ -15,31 +15,32 @@ const bookmarks = (state = getBookmarksFromLocalStorage(), action) => {
       };
 
     case actionTypes.bookmarkUpdated: {
-      const indexOfAccount = getIndexOfBookmark(state, {
-        address: action.data.account.address,
-        token: action.data.token,
+      const { account, token } = action.data;
+      const tokenBookmarks = state[token];
+      const indexOfBookmark = getIndexOfBookmark(state, {
+        address: account.address,
+        token,
       });
-      const accounts = state[action.data.token];
-      if (indexOfAccount !== -1) {
-        const changedAccount = {
-          ...accounts[indexOfAccount],
-          address: action.data.account.address,
-          title: action.data.account.title,
-          publicKey: action.data.account.publicKey,
-        };
-        accounts[indexOfAccount] = changedAccount;
-      }
-
-      return {
-        ...state,
-        [action.data.token]: accounts,
-      };
+      return (indexOfBookmark !== -1
+        ? ({
+          ...state,
+          [token]: [
+            ...tokenBookmarks.slice(0, indexOfBookmark),
+            {
+              ...tokenBookmarks[indexOfBookmark],
+              address: account.address,
+              title: account.title,
+              publicKey: account.publicKey,
+            },
+            ...tokenBookmarks.slice(indexOfBookmark + 1),
+          ],
+        }) : state);
     }
     case actionTypes.bookmarkRemoved:
       return {
         ...state,
         [action.data.token]:
-          state[action.data.token].filter(account => account.address !== action.data.address),
+          state[action.data.token].filter(bookmark => bookmark.address !== action.data.address),
       };
 
     default:
