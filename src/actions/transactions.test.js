@@ -199,15 +199,7 @@ describe('actions: transactions', () => {
             active: 'LSK',
           },
         },
-        account: {
-          info: {
-            LSK: {
-              publicKey: 'test_public-key',
-              address: 'test_address',
-            },
-          },
-          loginType: 0,
-        },
+        account: data.account,
       });
     });
 
