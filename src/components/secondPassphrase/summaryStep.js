@@ -5,6 +5,8 @@ import AccountVisual from '../accountVisual';
 import Fees from '../../constants/fees';
 import TransactionSummary from '../transactionSummary';
 
+import styles from './secondPassphrase.css';
+
 const SummaryStep = ({
   t, account, prevStep, nextStep, secondPassphrase, secondPassphraseRegistered, finalCallback,
 }) => (
@@ -24,7 +26,7 @@ const SummaryStep = ({
               success,
               ...(success ? {
                 title: t('Registration completed'),
-                illustration: 'secondPassphraseSuccess',
+                illustration: 'votingSuccess',
                 message: t(''),
                 primaryButon: {
                   title: t('Go to Wallet'),
@@ -33,7 +35,7 @@ const SummaryStep = ({
                 },
               } : {
                 title: t('Registration failed'),
-                illustration: 'secondPassphraseError',
+                illustration: 'votingError',
                 message: (error && error.message) || t('Oops, looks like something went wrong. Please try again.'),
                 primaryButon: {
                   title: t('Go to Wallet'),
@@ -55,8 +57,8 @@ const SummaryStep = ({
   >
    <section>
     <label>{t('Account')}</label>
-    <label>
-      <AccountVisual address={account.address} size={25} />
+    <label className={styles.account} >
+      <AccountVisual address={account.address} size={25} className={styles.avatar} />
       {account.address}
     </label>
    </section>

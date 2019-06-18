@@ -20,9 +20,6 @@ describe('SecondPassphrase', () => {
       props = {
         account,
         closeDialog: () => {},
-        secondPassphraseRegistered: jest.fn(({ callback }) => {
-          callback({ success: true });
-        }),
         t: key => key,
         history: {
           goBack: jest.fn(),
@@ -56,8 +53,22 @@ describe('SecondPassphrase', () => {
       expect(props.history.push).toHaveBeenCalledWith(routes.dashboard.path);
     });
 
-    it('should allow to registerSecondPassphrase and go to wallet', () => {
+    it('should require user to confirm awarenes of what 2nd passphrase is', () => {
       wrapper.find('.go-to-confirmation').first().simulate('click');
+      expect(wrapper.find('.confirm-button').first()).toBeDisabled();
+      wrapper.find('.confirmation-checkbox input').first().simulate('change');
+      expect(wrapper.find('.confirm-button').first()).not.toBeDisabled();
+    });
+
+    it('should allow to registerSecondPassphrase and go to wallet', () => {
+      props.secondPassphraseRegistered = jest.fn(({ callback }) => {
+        callback({ success: true });
+      });
+      wrapper = mount(<SecondPassphrase {...props} />);
+
+      wrapper.find('.go-to-confirmation').first().simulate('click');
+      wrapper.find('.confirmation-checkbox input').first().simulate('change');
+      expect(wrapper.find('.confirm-button').first()).not.toBeDisabled();
       wrapper.find('.confirm-button').first().simulate('click');
       expect(props.secondPassphraseRegistered).toHaveBeenCalledWith(expect.objectContaining({
         passphrase: props.account.passphrase,
@@ -73,6 +84,8 @@ describe('SecondPassphrase', () => {
       });
       wrapper = mount(<SecondPassphrase {...props} />);
       wrapper.find('.go-to-confirmation').first().simulate('click');
+      wrapper.find('.confirmation-checkbox input').first().simulate('change');
+      expect(wrapper.find('.confirm-button').first()).not.toBeDisabled();
       wrapper.find('.confirm-button').first().simulate('click');
       expect(props.secondPassphraseRegistered).toHaveBeenCalledWith(expect.objectContaining({
         passphrase: props.account.passphrase,

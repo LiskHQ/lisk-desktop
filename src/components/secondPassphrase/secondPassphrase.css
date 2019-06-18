@@ -37,4 +37,12 @@
       width: auto !important;
     }
   }
+
+  & .account {
+    display: flex;
+  }
+
+  & .avatar {
+    margin-right: 10px;
+  }
 }

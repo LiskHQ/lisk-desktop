@@ -85,4 +85,14 @@
       display: flex;
     }
   }
+
+  & .checkbox {
+    margin-right: 10px;
+  }
+
+  & .checkboxLabel {
+    @mixin contentNormal bold;
+
+    color: var(--color-maastricht-blue);
+  }
 }
