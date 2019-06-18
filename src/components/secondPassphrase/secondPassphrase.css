@@ -10,7 +10,7 @@
   max-width: 720px;
   margin: auto;
 
-  & p {
+  & .info {
     @mixin contentLargest;
 
     letter-spacing: 0.21px;
@@ -18,7 +18,7 @@
     margin: 24px;
   }
 
-  & footer {
+  & .footer {
     width: 100%;
     min-width: 572px;
     margin: 36px 0 20px;
