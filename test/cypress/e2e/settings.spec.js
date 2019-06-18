@@ -53,7 +53,7 @@ describe('Settings', () => {
     cy.get(ss.registerSecondPassphraseBtn).should('not.have.class', 'disabled');
     cy.get(ss.registerSecondPassphraseBtn).click();
     cy.url().should('contain', urls.secondPassphrase);
-    cy.get(ss.app).contains('Secure the use of your Lisk ID');
+    cy.get(ss.app).contains('Register 2nd passphrase');
   });
 
   /**
