@@ -2,13 +2,12 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { dynamicFeesRetrieved } from '../../../actions/service';
-import { tokenMap } from '../../../constants/tokens';
 import Form from './form';
 
 const mapStateToProps = state => ({
   account: state.account,
   bookmarks: state.bookmarks,
-  token: localStorage.getItem('btc') ? (state.settings.token && state.settings.token.active) : tokenMap.LSK.key,
+  token: state.settings.token && state.settings.token.active,
   dynamicFees: state.service.dynamicFees,
 });
 

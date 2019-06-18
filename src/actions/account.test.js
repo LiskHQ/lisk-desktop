@@ -394,12 +394,10 @@ describe('actions: account', () => {
           autoLog: true,
         },
       };
-      localStorage.setItem('btc', true); // TODO remove when enabling BTC
     });
 
     afterEach(() => {
       accountApi.getAccount.mockReset();
-      localStorage.removeItem('btc'); // TODO remove when enabling BTC
     });
 
     it('should call account api and dispatch accountLoggedIn ', async () => {

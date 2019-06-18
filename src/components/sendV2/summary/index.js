@@ -1,14 +1,15 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
+
+import { getActiveTokenAccount } from '../../../utils/account';
 import { transactionCreated, resetTransactionResult } from '../../../actions/transactions';
-import { tokenMap } from '../../../constants/tokens';
 import Summary from './summary';
 
 const mapStateToProps = state => ({
-  account: state.account,
+  account: getActiveTokenAccount(state),
   transactions: state.transactions,
-  token: localStorage.getItem('btc') ? state.settings.token.active : tokenMap.LSK.key,
+  token: state.settings.token && state.settings.token.active,
 });
 
 const mapDispatchToProps = {

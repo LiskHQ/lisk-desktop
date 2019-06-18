@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 import { settingsUpdated } from '../../actions/settings';
 import { pricesRetrieved } from '../../actions/service';
 import ConverterV2 from './converterV2';
-import { tokenMap } from '../../constants/tokens';
 
 const mapStateToProps = state => ({
   settings: state.settings,
-  token: localStorage.getItem('btc') ? (state.settings.token && state.settings.token.active) : tokenMap.LSK.key,
+  token: state.settings.token && state.settings.token.active,
   priceTicker: (state.service && state.service.priceTicker) ?
     state.service.priceTicker :
     {

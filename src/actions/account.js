@@ -237,17 +237,11 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
         LSK: accountData,
       },
     }));
-    // TODO remove this condition with enabling BTC feature
-    // istanbul ignore else
-    if (localStorage.getItem('btc')) {
-      await getAccount({
-        token: tokenMap.BTC.key, networkConfig, passphrase,
-      }).then((btcAccountData) => {
-        dispatch(accountUpdated(btcAccountData));
-      });
-      /*
-      */
-    }
+    await getAccount({
+      token: tokenMap.BTC.key, networkConfig, passphrase,
+    }).then((btcAccountData) => {
+      dispatch(accountUpdated(btcAccountData));
+    });
   }).catch((error) => {
     dispatch(errorToastDisplayed({
       label: getConnectionErrorMessage(error),

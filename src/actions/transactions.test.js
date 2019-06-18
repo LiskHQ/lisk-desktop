@@ -176,8 +176,12 @@ describe('actions: transactions', () => {
       dynamicFeePerByte: null, // for BTC
       fee: null, // for BTC
       account: {
-        publicKey: 'test_public-key',
-        address: 'test_address',
+        info: {
+          LSK: {
+            publicKey: 'test_public-key',
+            address: 'test_address',
+          },
+        },
         loginType: 0,
       },
       data: 'abc',
@@ -196,8 +200,12 @@ describe('actions: transactions', () => {
           },
         },
         account: {
-          publicKey: 'test_public-key',
-          address: 'test_address',
+          info: {
+            LSK: {
+              publicKey: 'test_public-key',
+              address: 'test_address',
+            },
+          },
           loginType: 0,
         },
       });

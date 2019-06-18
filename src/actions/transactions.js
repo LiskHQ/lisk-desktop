@@ -8,12 +8,12 @@ import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';
 import { getTimeOffset } from '../utils/hacks';
+import { tokenMap } from '../constants/tokens';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
 import { transactions as transactionsAPI, hardwareWallet as hwAPI } from '../utils/api';
-import { tokenMap } from '../constants/tokens';
 
 /**
  * This action is used on logout
@@ -105,7 +105,7 @@ export const loadSingleTransaction = ({ id }) =>
     const networkConfig = getState().network;
     dispatch({ type: actionTypes.transactionCleared });
     // TODO remove the btc condition
-    transactionsAPI.getSingleTransaction(localStorage.getItem('btc') ? { networkConfig, id } : { liskAPIClient, id })
+    transactionsAPI.getSingleTransaction({ networkConfig, id })
       .then((response) => { // eslint-disable-line max-statements
         let added = [];
         let deleted = [];
@@ -248,12 +248,8 @@ export const sent = data => async (dispatch, getState) => {
   let fail;
   const { account, network, settings } = getState();
   const timeOffset = getTimeOffset(getState());
-  const activeToken = localStorage.getItem('btc') // TODO: Refactor after enabling BTC
-    ? settings.token.active
-    : tokenMap.LSK.key;
-  const senderId = localStorage.getItem('btc') // TODO: Refactor after enabling BTC
-    ? account.info[activeToken].address
-    : account.address;
+  const activeToken = settings.token.active;
+  const senderId = account.info[activeToken].address;
 
   const txData = { ...data, timeOffset };
 
@@ -335,9 +331,7 @@ export const broadcastedTransactionSuccess = data => ({
 export const transactionCreated = data => async (dispatch, getState) => {
   const { account, settings, ...state } = getState();
   const timeOffset = getTimeOffset(state);
-  const activeToken = localStorage.getItem('btc') // TODO: Refactor after enabling BTC
-    ? settings.token.active
-    : tokenMap.LSK.key;
+  const activeToken = settings.token.active;
 
   const [error, tx] = account.loginType === loginType.normal
     ? await to(transactionsAPI.create(activeToken, { ...data, timeOffset }))
@@ -360,9 +354,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
 export const transactionBroadcasted = (transaction, callback = () => {}) =>
   async (dispatch, getState) => {
     const { network, settings } = getState();
-    const activeToken = localStorage.getItem('btc') // TODO: Refactor after enabling BTC
-      ? settings.token.active
-      : tokenMap.LSK.key;
+    const activeToken = settings.token.active;
 
     const [error] = await to(transactionsAPI.broadcast(activeToken, transaction, network));
 

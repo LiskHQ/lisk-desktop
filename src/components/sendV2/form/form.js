@@ -454,11 +454,7 @@ class Form extends React.Component {
     return (
       <div className={`${styles.wrapper}`}>
         <header className={styles.header}>
-          <h1>{
-            localStorage.getItem('btc')
-              ? t('Send Tokens')
-              : t('Send LSK')
-          }</h1>
+          <h1>{ t('Send Tokens') }</h1>
         </header>
         <div className={styles.formSection}>
           <span className={`${styles.fieldGroup} recipient`}>
@@ -483,11 +479,7 @@ class Form extends React.Component {
                 onChange={this.onAmountOrReferenceChange}
                 name='amount'
                 value={fields.amount.value}
-                placeholder={
-                  localStorage.getItem('btc')
-                    ? t('Insert the amount of transaction')
-                    : t('Amount LSK')
-                  }
+                placeholder={t('Insert the amount of transaction')}
                 className={`${styles.input} ${fields.amount.error ? 'error' : ''}`} />
               <ConverterV2
                 className={styles.converter}

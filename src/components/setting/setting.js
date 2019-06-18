@@ -135,8 +135,6 @@ class Setting extends React.Component {
                   <p>{t('Enable a network switcher that lets you select testnet or custom node when logging in.')}</p>
                 </div>
               </label>
-              { // istanbul ignore next
-                localStorage.getItem('btc') ? ( // TODO: Remove when enabling BTC for final user
               <label className={`${styles.fieldGroup} ${styles.checkboxField} enableBTC`}>
                 <CheckBox
                   name={'BTC'}
@@ -149,7 +147,6 @@ class Setting extends React.Component {
                   <p>{t('By enabling it, you will be able to manage your BTC tokens inside the application.')}</p>
                 </div>
               </label>
-              ) : null}
             </section>
             <section>
               <h1>{t('Privacy')}</h1>
