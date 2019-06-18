@@ -63,7 +63,7 @@ class VotingHeaderV2 extends React.Component {
       <React.Fragment>
         { account && account.address ?
           <Tabs tabs={this.filters} active={activeFilter} onClick={this.filterVotes} /> :
-          <h2>{t('All Delegates')}</h2>
+          <h2>{t('All delegates')}</h2>
         }
         <span>
           <InputV2
