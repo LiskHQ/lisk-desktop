@@ -34,9 +34,9 @@ class RecentTransactions extends Component {
 
     return (
       <Box className={`${styles.box} ${className}`}>
-      <header>
-        <h2 className={styles.title}>{t('Recent {{value}} transactions', { value: activeToken.label })}</h2>
-      </header>
+        <header>
+          <h2 className={styles.title}>{t('Recent {{value}} transactions', { value: activeToken.label })}</h2>
+        </header>
         {
           isLoggedIn && transactionList.length
             ? <TransactionList

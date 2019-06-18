@@ -54,9 +54,9 @@
 
     & > .community {
       width: 100%;
-      max-width: 541px;
       box-sizing: border-box;
       margin: 0 12px;
+      flex-grow: 1;
     }
 
     & > .bookmarks {

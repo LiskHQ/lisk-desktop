@@ -51,9 +51,9 @@
         margin-left: auto;
       }
     }
+  }
 
-    & > .listRow:last-child {
-      border-bottom: 1px solid transparent;
-    }
+  & .viewAllBtn {
+    margin-top: 15px;
   }
 }

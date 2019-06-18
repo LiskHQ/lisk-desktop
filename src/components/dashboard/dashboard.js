@@ -33,11 +33,21 @@ class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    const { account, loadTransactions } = this.props;
     window.addEventListener('resize', throttle(this.resizeWindow, 10));
+  }
 
-    if (account.address) {
-      loadTransactions({ address: account.address, publicKey: account.publicKey });
+  componentDidUpdate(prevProps) {
+    const { account, settings, loadTransactions } = this.props;
+    const oldToken = prevProps.settings.token.active;
+    const activeToken = settings.token.active;
+
+    if (account.info && account.info[activeToken] && account.info[activeToken].address
+      && (oldToken !== activeToken
+      || !prevProps.account.info[activeToken])) {
+      loadTransactions({
+        address: account.info[activeToken].address,
+        publicKey: account.publicKey,
+      });
     }
   }
 
