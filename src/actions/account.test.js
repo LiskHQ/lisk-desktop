@@ -15,7 +15,6 @@ import {
   updateAccountDelegateStats,
   login,
 } from './account';
-import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { delegateRegisteredFailure } from './delegate';
 import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegates';
