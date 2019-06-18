@@ -75,6 +75,7 @@
     "jsx-to-string": "1.4.0",
     "lodash.throttle": "4.1.1",
     "lolex": "=2.3.2",
+    "lottie-web": "5.5.5",
     "moment": "2.23.0",
     "numeral": "git+https://github.com/LiskHQ/Numeral-js.git",
     "parallax-js": "3.1.0",
