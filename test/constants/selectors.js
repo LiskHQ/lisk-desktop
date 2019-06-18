@@ -19,9 +19,17 @@ const votingPage = {
   loadMoreButton: '.loadMore',
 };
 
+const secondPassphraseRegistrationPage = {
+  goToConfirmationButton: '.go-to-confirmation',
+  confirmationCheckbox: '.confirmation-checkbox',
+  confirmButton: '.confirm-button',
+  goToWallet: '.go-to-wallet',
+};
+
 const ss = {
   ...delegatesPage,
   ...votingPage,
+  ...secondPassphraseRegistrationPage,
   app: '#app',
   transactionsTable: '.transaction-results',
   transactionRow: '.transactions-row',
