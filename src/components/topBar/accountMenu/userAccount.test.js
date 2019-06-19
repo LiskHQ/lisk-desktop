@@ -1,21 +1,23 @@
 import React from 'react';
-import { expect } from 'chai';
 import { mount } from 'enzyme';
-import sinon from 'sinon';
 import { MemoryRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import i18n from '../../i18n';
+import i18n from '../../../i18n';
 import UserAccount from './userAccount';
-import routes from '../../constants/routes';
+import routes from '../../../constants/routes';
 
 describe('UserAccount', () => {
   let wrapper;
 
   const myProps = {
+    token: {
+      active: 'LSK',
+      list: {
+        BTC: true,
+        LSK: true,
+      },
+    },
     account: {
-      address: '12345L',
-      balance: 120,
-      // TODO remove the props above after components are fully migrated to use the props below
       info: {
         LSK: {
           address: '12345L',
@@ -24,8 +26,9 @@ describe('UserAccount', () => {
       },
     },
     isDropdownEnable: false,
-    onDropdownToggle: sinon.spy(),
-    onLogout: sinon.spy(),
+    onDropdownToggle: jest.fn(),
+    onLogout: jest.fn(),
+    settingsUpdated: jest.fn(),
     setDropdownRef: () => {},
     t: val => val,
   };
@@ -52,38 +55,49 @@ describe('UserAccount', () => {
   });
 
   it('renders <UserAccount /> component', () => {
-    expect(wrapper.find('.user-account')).to.have.length(1);
-  });
-
-  it('renders correct address value', () => {
-    expect(wrapper.find('.copy-title')).to.have.text('12345L');
+    expect(wrapper).toContainMatchingElement('.user-account');
   });
 
   it('called properly onDropdownToggle when user click it', () => {
-    wrapper.find('.avatar').simulate('click');
-    wrapper.update();
-    expect(myProps.onDropdownToggle).to.have.been.calledWith();
+    wrapper.find('div.user-account').simulate('click');
+    expect(myProps.onDropdownToggle).toHaveBeenCalled();
   });
 
   it('called properly dropdown component', () => {
     myProps.isDropdownEnable = true;
     wrapper = mountWithRouter(<UserAccount {...myProps} />, myOptions);
-    expect(wrapper.find('DropdownV2')).to.have.length(1);
-    expect(wrapper.find('a.dropdownOption')).to.have.length(1);
-    expect(wrapper.find('span.dropdownOption')).to.have.length(1);
+    expect(wrapper).toContainExactlyOneMatchingElement('DropdownV2');
+    expect(wrapper).toContainExactlyOneMatchingElement('span.dropdownOption');
+    expect(wrapper).toContainMatchingElements(3, 'a.dropdownOption');
   });
 
   it('called properly onLogout when user click it', () => {
     myProps.isDropdownEnable = true;
     wrapper = mountWithRouter(<UserAccount {...myProps} />, myOptions);
     wrapper.find('span.dropdownOption').simulate('click');
-    wrapper.update();
-    expect(myProps.onLogout).to.have.been.calledWith();
+    expect(myProps.onLogout).toHaveBeenCalled();
   });
 
-  it('render no address as account has no address', () => {
-    myProps.account = { info: {} };
+  it('should not render if no info in accounts', () => {
+    const info = {
+      ...myProps.account.info,
+      BTC: {
+        address: '12345L',
+        balance: 120,
+      },
+    };
+    localStorage.setItem('btc', true);
     wrapper = mountWithRouter(<UserAccount {...myProps} />, myOptions);
-    expect(wrapper.find('.copy-title')).to.have.text('');
+    expect(wrapper.find('DropdownV2')).toContainMatchingElements(1, '.accountInfo');
+    wrapper.setProps({
+      children: React.cloneElement(wrapper.props().children, {
+        account: {
+          ...myProps.account,
+          info,
+        },
+      }),
+    });
+    expect(wrapper.find('DropdownV2')).toContainMatchingElements(2, '.accountInfo');
+    localStorage.clear();
   });
 });

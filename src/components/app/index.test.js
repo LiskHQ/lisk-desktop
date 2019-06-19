@@ -43,6 +43,13 @@ describe('App', () => {
         autoLog: true,
         advancedMode: true,
         areTermsOfUseAccepted: true,
+        token: {
+          active: 'LSK',
+          list: {
+            BTC: true,
+            LSK: true,
+          },
+        },
       },
       search: {
         suggestions: {

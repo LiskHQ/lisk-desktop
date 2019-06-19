@@ -2,7 +2,7 @@ export const tokenMap = {
   LSK: {
     key: 'LSK',
     label: 'Lisk',
-    icon: 'lisk',
+    icon: 'lsk',
   },
   BTC: {
     key: 'BTC',

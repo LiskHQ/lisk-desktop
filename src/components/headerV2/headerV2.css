@@ -53,8 +53,6 @@
 .settingButton > button {
   @mixin contentSmall bold;
 
-  height: var(--header-elements-height);
-  min-height: var(--header-elements-height);
   padding: 0 20px;
   width: auto;
 }
@@ -70,9 +68,8 @@
   color: var(--color-maastricht-blue);
   cursor: pointer;
   display: flex;
-  height: var(--header-elements-height);
+  height: 100%;
   justify-content: space-between;
-  min-height: var(--header-elements-height);
   min-width: 241px;
   padding: 0 20px;
   position: relative;
@@ -84,14 +81,6 @@
     border-top-color: var(--color-slate-gray);
     content: '';
   }
-}
-
-.spanHolder {
-  min-height: var(--header-elements-height);
-  min-width: 241px;
-  padding: 0 20px;
-  position: relative;
-  width: auto;
 }
 
 .dropdown {

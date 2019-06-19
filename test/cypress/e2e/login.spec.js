@@ -1,7 +1,6 @@
 import numeral from 'numeral';
 import { fromRawLsk } from '../../../src/utils/lsk';
 import accounts from '../../constants/accounts';
-import networks from '../../constants/networks';
 import ss from '../../constants/selectors';
 import urls from '../../constants/urls';
 import chooseNetwork from '../utils/chooseNetwork';
@@ -29,7 +28,6 @@ describe('Login Page', () => {
   it('Log in to Mainnet by default ("Switch Network" is not set)', () => {
     cy.visit(urls.login);
     loginUI(accounts.genesis.passphrase);
-    cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
     cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(0));
     cy.get(ss.networkStatus).contains('Connected to:mainnet');
   });
@@ -44,7 +42,6 @@ describe('Login Page', () => {
     cy.addObjectToLocalStorage('settings', 'showNetwork', false);
     cy.visit(urls.login);
     loginUI(accounts.genesis.passphrase);
-    cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
     cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(0));
     cy.get(ss.networkStatus).contains('Connected to:mainnet');
   });
@@ -61,7 +58,6 @@ describe('Login Page', () => {
     chooseNetwork('main');
     loginUI(accounts.genesis.passphrase);
     cy.get(ss.networkStatus).contains('Connected to:mainnet');
-    cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
     cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(0));
   });
 
@@ -77,7 +73,6 @@ describe('Login Page', () => {
     chooseNetwork('test');
     loginUI(accounts['testnet guy'].passphrase);
     cy.get(ss.networkStatus).contains('Connected to:testnet');
-    cy.get(ss.headerAddress).should('have.text', accounts['testnet guy'].address);
     cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(accounts['testnet guy'].balance));
   });
 
@@ -94,9 +89,7 @@ describe('Login Page', () => {
     chooseNetwork('dev');
     loginUI(accounts.genesis.passphrase);
     cy.get(ss.networkStatus).contains('Connected to:devnet');
-    cy.get(ss.headerAddress).should('have.text', accounts.genesis.address);
     cy.get(ss.headerBalance).should('contain', castNumberToBalanceString(accounts.genesis.balance).substring(0, 3));
-    cy.get(ss.nodeAddress).contains(networks.devnet.node);
   });
 
   /**

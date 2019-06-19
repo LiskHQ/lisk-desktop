@@ -1,6 +1,6 @@
 import React from 'react';
-import svg from '../../utils/svgIcons';
 import styles from './navigationButtons.css';
+import Icon from '../toolbox/icon';
 
 class NavigationButtons extends React.Component {
   constructor(props) {
@@ -10,6 +10,7 @@ class NavigationButtons extends React.Component {
       firstPageIndex: 0,
       userLogout: false,
       counter: 0,
+      mounted: false,
     };
 
     this.onGoBack = this.onGoBack.bind(this);
@@ -21,6 +22,7 @@ class NavigationButtons extends React.Component {
     this.setState({
       firstPageIndex: this.props.history.length,
       counter: this.props.history.length,
+      mounted: true,
     });
   }
 
@@ -38,7 +40,7 @@ class NavigationButtons extends React.Component {
       return false;
     }
 
-    if (this.props.history.action === 'PUSH') {
+    if (this.props.history.action === 'PUSH' && this.state.mounted) {
       this.props.history.action = '';
       this.setState({
         counter: this.state.counter + 1,
@@ -65,12 +67,6 @@ class NavigationButtons extends React.Component {
     const { counter, firstPageIndex } = this.state;
     const isBackActive = counter > firstPageIndex;
     const isForwardActive = counter < this.props.history.length;
-    const backArrow = isBackActive
-      ? svg.back_arrow_active_icon
-      : svg.back_arrow_inactive_icon;
-    const forwardArrow = isForwardActive
-      ? svg.foward_arrow_active_icon
-      : svg.foward_arrow_inactive_icon;
 
     return (
       <div className={`${styles.wrapper} navigation-buttons`}>
@@ -79,14 +75,14 @@ class NavigationButtons extends React.Component {
           disabled={!isBackActive}
           onClick={this.onGoBack}
         >
-          <img src={backArrow}/>
+          <Icon name={'backArrow'} />
         </button>
         <button
           className={'go-forward'}
           disabled={!isForwardActive}
           onClick={this.onGoForward}
         >
-          <img src={forwardArrow}/>
+          <Icon name={'forwardArrow'} />
         </button>
       </div>
     );

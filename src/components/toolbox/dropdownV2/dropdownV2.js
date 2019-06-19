@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './dropdownV2.css';
+import Separator from './separator';
+import { flattenArray } from '../../../utils/helpers';
 
 const DropdownV2 = ({
-  children, showDropdown, className, showArrow, active,
+  showDropdown, className, showArrow, active, children,
 }) => {
   const isSelectionList = children && Array.isArray(children);
+
   return (
     <div className={`${styles.dropdown} ${showDropdown ? styles.show : ''} ${className}`}>
       {showArrow && <span className={`${styles.dropdownArrow} dropdown-arrow`}>
@@ -14,18 +17,24 @@ const DropdownV2 = ({
         </svg>
       </span>}
       <div className={`${styles.dropdownContent} dropdown-content ${isSelectionList ? 'options' : ''}`}>
-        { isSelectionList ? children.map((child, key) => (
-          React.cloneElement(child, { className: ` ${styles.option} ${active === key ? styles.active : ''} ${child.props.className || ''}`, key })
+        { isSelectionList ? flattenArray(children).map((child, key) => (
+          child.type === Separator
+            ? child
+            : React.cloneElement(child, { className: ` ${styles.option} ${active === key ? styles.active : ''} ${child.props.className || ''}`, key })
         )) : children }
       </div>
     </div>
   );
 };
 
+
+DropdownV2.displayName = 'Dropdown';
+
 DropdownV2.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element),
+    PropTypes.arrayOf(PropTypes.arrayOf),
   ]).isRequired,
   showDropdown: PropTypes.bool,
   className: PropTypes.string,
@@ -39,5 +48,7 @@ DropdownV2.defaultProps = {
   showArrow: true,
   active: -1,
 };
+
+DropdownV2.Separator = Separator;
 
 export default DropdownV2;
