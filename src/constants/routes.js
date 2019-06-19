@@ -91,6 +91,12 @@ export default {
     isLoaded: true,
     isPrivate: false,
   },
+  delegateRegistration: {
+    path: '/delegate-register',
+    component: DelegateRegistration,
+    isLoaded: true,
+    isPrivate: false,
+  },
   addAccount: {
     path: '/add-account',
     component: LoginV2,
