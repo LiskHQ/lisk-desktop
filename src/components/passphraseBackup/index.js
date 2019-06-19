@@ -2,7 +2,6 @@ import QRCode from 'qrcode.react';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import moment from 'moment';
-
 import { InputV2 } from '../toolbox/inputsV2';
 import { SecondaryButtonV2 } from '../toolbox/buttons/button';
 import CopyToClipboard from '../toolbox/copyToClipboard';

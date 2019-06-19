@@ -1,7 +1,6 @@
 import { translate } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
 import PassphraseBackup from '../passphraseBackup';
 import registerStyles from './registerV2.css';
