@@ -45,12 +45,16 @@ describe('SecondPassphrase', () => {
       expect(props.history.goBack).toHaveBeenCalledWith();
     });
 
-    it('should go to dashboard if account already has second passphrase', () => {
+    it('should go to settings if account already has second passphrase', () => {
       wrapper = mount(<SecondPassphrase {...props}
-        account={{
-          info: { LSK: accounts['second passphrase account'] },
-        }} />);
-      expect(props.history.push).toHaveBeenCalledWith(routes.dashboard.path);
+        account={accounts['second passphrase account']} />);
+      expect(props.history.push).toHaveBeenCalledWith(routes.setting.path);
+    });
+
+    it('should go to settings if account has not enought balance', () => {
+      wrapper = mount(<SecondPassphrase {...props}
+        account={accounts['empty account']} />);
+      expect(props.history.push).toHaveBeenCalledWith(routes.setting.path);
     });
 
     it('should require user to confirm awarenes of what 2nd passphrase is', () => {

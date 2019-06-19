@@ -1,6 +1,6 @@
 import React from 'react';
-
 import { generatePassphrase } from '../../utils/passphrase';
+import Fees from '../../constants/fees';
 import FirstStep from './firstStep';
 import MultiStep from '../multiStep';
 import SummaryStep from './summaryStep';
@@ -23,9 +23,10 @@ class SecondPassphrase extends React.Component {
   }
 
   componentDidMount() {
+    const { account } = this.props;
     document.body.classList.add('contentFocused');
-    if (this.props.account.info.LSK.secondPublicKey) {
-      this.props.history.push(`${routes.dashboard.path}`);
+    if (account.secondPublicKey || account.balance < Fees.setSecondPassphrase) {
+      this.props.history.push(`${routes.setting.path}`);
     }
   }
 
