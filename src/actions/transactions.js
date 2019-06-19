@@ -14,6 +14,7 @@ import transactionTypes from '../constants/transactionTypes';
 import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
 import { transactions as transactionsAPI, hardwareWallet as hwAPI } from '../utils/api';
+import { tokenMap } from '../constants/tokens';
 
 /**
  * This action is used on logout
