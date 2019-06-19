@@ -111,6 +111,7 @@ const ss = {
   settingsBtn: '#settings',
   registerSecondPassphraseBtn: '.register-second-passphrase',
   secondPassphraseIsRegisteredLabel: '.second-passphrase-registered',
+  secondPassphraseSettingsSection: '.second-passphrase',
   currencySelect: '.currency input',
   currencyOptions: '.currency .option',
   autoLogoutTrigger: '.autoLog',

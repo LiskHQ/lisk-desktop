@@ -54,9 +54,7 @@ describe('Second Passphrase Registration', () => {
   it('Try to register with insufficient balance', () => {
     cy.autologin(accounts['empty account'].passphrase, networks.devnet.node);
     cy.visit(urls.secondPassphrase);
-    cy.get(ss.goToConfirmation).click();
-    cy.get(ss.confirmationCheckbox).click();
-    cy.get(ss.confirmButton).click();
-    cy.get(ss.toast).contains('Not enough LSK to pay for the transaction.');
+    cy.url().should('contain', urls.settings);
+    cy.get(ss.secondPassphraseSettingsSection).contains('You don’t have enough balance to enable it.');
   });
 });
