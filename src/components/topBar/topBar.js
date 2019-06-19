@@ -1,7 +1,4 @@
 import React from 'react';
-import Countdown from 'react-countdown-now';
-import CountDownTemplate from '../header/countDownTemplate';
-import CustomCountDown from '../header/customCountDown';
 import routes from '../../constants/routes';
 import MenuItems from './menuItems';
 import UserAccount from './accountMenu/userAccount';
@@ -15,6 +12,7 @@ import styles from './topBar.css';
 
 import OutsideClickHandler from '../toolbox/outsideClickHandler';
 import Icon from '../toolbox/icon';
+import Autologout from './autologout/autologout';
 
 class TopBar extends React.Component {
   constructor(props) {
@@ -49,11 +47,13 @@ class TopBar extends React.Component {
     });
   }
 
+  /* istanbul ignore next */
   onCountdownComplete() {
     this.props.logOut();
     this.props.history.replace(routes.loginV2.path);
   }
 
+  /* istanbul ignore next */
   isTimerEnabled() {
     const { autoLogout, account } = this.props;
 
@@ -67,7 +67,7 @@ class TopBar extends React.Component {
   render() {
     const {
       t, account, history, peers, token, settingsUpdated,
-      autoLogout, closeDialog, resetTimer, setActiveDialog,
+      closeDialog, resetTimer, setActiveDialog,
     } = this.props;
     const { openDropdown } = this.state;
 
@@ -99,27 +99,19 @@ class TopBar extends React.Component {
             t={t}
           />
 
-          <div className={`${styles.timer}`}>
-          {
-            this.isTimerEnabled() ?
-            (
-              <Countdown
-                date={account.expireTime}
-                onComplete={this.onCountdownComplete}
-                renderer={CountDownTemplate}
-              >
-                <CustomCountDown
-                  autoLog={autoLogout}
-                  closeDialog={closeDialog}
-                  history={history}
-                  resetTimer={resetTimer}
-                  setActiveDialog={setActiveDialog}
-                  t={t}
-                />
-              </Countdown>
-            )
-          : null}
-        </div>
+          {this.isTimerEnabled() ? (
+            <div className={styles.timer}>
+              <Autologout
+                onCountdownComplete={this.onCountdownComplete}
+                account={account}
+                closeDialog={closeDialog}
+                history={history}
+                resetTimer={resetTimer}
+                setActiveDialog={setActiveDialog}
+                t={t}
+              />
+            </div>
+          ) : null}
 
 
           <UserAccount

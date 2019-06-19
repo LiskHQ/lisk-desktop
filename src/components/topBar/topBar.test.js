@@ -6,10 +6,13 @@ import PropTypes from 'prop-types';
 import i18n from '../../i18n';
 import TopBar from './topBar';
 import routes from '../../constants/routes';
+import accounts from '../../../test/constants/accounts';
 
 describe('TopBar', () => {
   let wrapper;
   const account = {
+    passphrase: accounts.genesis.passphrase,
+    expireTime: Date.now() + 60000,
     address: '12345L',
     info: {
       LSK: {
@@ -21,6 +24,7 @@ describe('TopBar', () => {
 
   const props = {
     account,
+    autologout: true,
     setActiveDialog: jest.fn(),
     location: { pathname: routes.dashboard.path },
     showDelegate: false,
@@ -69,6 +73,7 @@ describe('TopBar', () => {
     account,
     history,
     settings: {
+      autloLog: true,
       token: {
         active: 'LSK',
         list: {
@@ -135,8 +140,11 @@ describe('TopBar', () => {
   });
 
   it('renders sign in component when user is logout', () => {
-    props.account = {};
-    wrapper = mount(<TopBar {...props} />, myOptions);
+    const logoutProps = {
+      ...props,
+      account: {},
+    };
+    wrapper = mount(<TopBar {...logoutProps} />, myOptions);
     expect(wrapper).toContainMatchingElement('.signIn');
   });
 
