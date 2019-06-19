@@ -54,7 +54,7 @@ describe('MenuItems', () => {
   it('renders 3 menu items elements', () => {
     const expectedLinks = [
       'Dashboard',
-      'My Wallet',
+      'Wallet',
       'Delegates',
     ];
     expect(wrapper).toContainMatchingElements(3, 'Link');
