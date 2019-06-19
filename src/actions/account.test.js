@@ -82,20 +82,6 @@ describe('actions: account', () => {
       i18nextMock.restore();
     });
 
-    it('should dispatch errorToastDisplayed if insufficient balance', () => {
-      secondPassphraseRegistered({
-        ...data,
-        account: {
-          ...data.account,
-          balance: 0,
-        },
-      })(dispatch, getState);
-      expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
-        type: actionTypes.toastDisplayed,
-      }));
-    });
-
-
     it('should dispatch addPendingTransaction action if resolved', () => {
       const transaction = {
         id: '15626650747375562521',

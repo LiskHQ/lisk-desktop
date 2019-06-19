@@ -78,11 +78,6 @@ export const secondPassphraseRegistered = ({
   secondPassphrase, account, passphrase, callback,
 }) =>
   (dispatch, getState) => {
-    if (account.balance < Fees.setSecondPassphrase) {
-      const label = i18next.t('Not enough LSK to pay for the transaction.');
-      dispatch(errorToastDisplayed({ label }));
-      return;
-    }
     const liskAPIClient = getState().peers.liskAPIClient;
     const timeOffset = getTimeOffset(getState());
     setSecondPassphrase(liskAPIClient, secondPassphrase, account.publicKey, passphrase, timeOffset)
