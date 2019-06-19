@@ -365,21 +365,23 @@ export const transactionBroadcasted = transaction => async (dispatch, getState) 
 
   const [error, tx] = await to(transactionsAPI.broadcast(activeToken, transaction, network));
 
-  if (error) return dispatch(broadcastedTransactionError(transaction));
+  if (error) return dispatch(broadcastedTransactionError(({ error, transaction })));
 
   dispatch(broadcastedTransactionSuccess(transaction));
 
-  dispatch(addPendingTransaction({
-    amount: transaction.amount,
-    asset: { reference: transaction.data },
-    fee: Fees.send,
-    id: tx.id,
-    recipientId: transaction.recipientId,
-    senderId: account.info[activeToken].address,
-    senderPublicKey: account.publicKey,
-    type: transactionTypes.send,
-    token: activeToken,
-  }));
+  if (activeToken !== tokenMap.BTC.key) {
+    dispatch(addPendingTransaction({
+      amount: transaction.amount,
+      asset: { reference: transaction.data },
+      fee: Fees.send,
+      id: tx.id,
+      recipientId: transaction.recipientId,
+      senderId: account.info[activeToken].address,
+      senderPublicKey: account.publicKey,
+      type: transactionTypes.send,
+      token: activeToken,
+    }));
+  }
 
   return dispatch(passphraseUsed(transaction.passphrase));
 };

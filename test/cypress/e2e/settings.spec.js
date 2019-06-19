@@ -47,12 +47,11 @@ describe('Settings', () => {
    * @expect url is correct
    * @expect some specific to page element is present on it
    */
-  // TODO figure out what is wrong, fix it and enable this test
-  // https://dashboard.cypress.io/#/projects/528xi2/runs/399/specs
-  it.skip('Second passphrase Register -> Second passphrase page', () => {
+  it('Second passphrase Register -> Second passphrase page', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.settings);
-    cy.get(ss.registerSecondPassphraseBtn).should('not.have.class', 'disabled').click();
+    cy.get(ss.registerSecondPassphraseBtn).should('not.have.class', 'disabled');
+    cy.get(ss.registerSecondPassphraseBtn).click();
     cy.url().should('contain', urls.secondPassphrase);
     cy.get(ss.app).contains('Secure the use of your Lisk ID');
   });

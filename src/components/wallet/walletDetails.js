@@ -1,88 +1,48 @@
 import React from 'react';
 import { translate } from 'react-i18next';
+import AccountVisual from '../accountVisual';
 import BoxV2 from '../boxV2';
-import styles from './walletDetails.css';
+import Icon from '../toolbox/icon';
 import LiskAmount from '../liskAmount';
-import svg from '../../utils/svgIcons';
-import { getNetworkIdentifier } from '../../utils/getNetwork';
-import transactionTypes from '../../constants/transactionTypes';
+import CopyToClipboard from '../toolbox/copyToClipboard';
+import styles from './walletDetails.css';
 
-class walletDetails extends React.Component {
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.balance !== this.props.balance) {
-      this.props.loadLastTransaction(this.props.address);
-      return false;
-    }
-    return true;
-  }
-
-  // eslint-disable-next-line complexity
+class WalletDetails extends React.Component {
   render() {
     const {
-      balance, t, address, wallets, peers, lastTransaction, activeToken,
+      balance, t, address, activeToken,
     } = this.props;
 
-    const lastTx = {
-      tx: { ...lastTransaction },
-      pre: lastTransaction.senderId && lastTransaction.senderId !== address ? '+' : '',
-      totalAmount: lastTransaction.senderId && lastTransaction.senderId !== address
-        ? lastTransaction.amount || 0
-        : parseInt(lastTransaction.amount, 10) + parseInt(lastTransaction.fee, 10),
-    };
-    lastTx.pre = lastTransaction.type === transactionTypes.send
-      && lastTransaction.recipientId !== address ? '-' : lastTx.pre;
-
-    const networkIdentifier = getNetworkIdentifier(peers);
-    const networkWallet = wallets[networkIdentifier] && wallets[networkIdentifier][address];
-    const lastBalance = networkWallet && networkWallet.lastBalance;
-    const lastVisitDifference = !Number.isNaN(parseInt(lastBalance, 10))
-      ? parseInt(balance, 10) - parseInt(lastBalance, 10)
-      : '-';
-
     return (
-      <BoxV2 className={`${styles.wrapper}`}>
+      <BoxV2 className={styles.wrapper}>
         <header>
-          <h1>{t('My Wallet Details')}</h1>
+          <h1>{t('Wallet Details')}</h1>
         </header>
-        <div className={`${styles.content}`}>
-          <div className={`${styles.iconHolder}`}>
-            <img className={`${styles.icon}`} src={svg.iconWalletDetails} />
-          </div>
-          <div className={`${styles.info} account-balance`}>
-            <span className={`${styles.value}`}>
-              <LiskAmount val={balance} />
-              <span className={`${styles.currency}`}> {activeToken}</span>
-            </span>
-            <span className={`${styles.label}`}>{t('Account Balance')}</span>
-          </div>
-          <div className={`${styles.moreInfoHolder}`}>
-            <div className={`${styles.info} last-transaction`}>
-              <span className={`${styles.value}`}>
-              {lastTx.tx && lastTx.tx.id ? (
-                <React.Fragment>
-                  {lastTx.pre}<LiskAmount val={lastTx.totalAmount} />
-                  <span className={`${styles.currency}`}> {activeToken}</span>
-                </React.Fragment>
-              ) : '-'}
-              </span>
-              <span className={`${styles.label}`}>{t('Last Transaction')}</span>
-            </div>
-            <div className={`${styles.info} last-visit`}>
-              <span className={`${styles.value}`}>
-              {lastVisitDifference !== '-' ? (
-                <React.Fragment>
-                  {lastVisitDifference > 0 ? '+' : ''}<LiskAmount val={lastVisitDifference} />
-                  <span className={`${styles.currency}`}> {activeToken}</span>
-                </React.Fragment>
-              ) : '-'}
-              </span>
-              <span className={`${styles.label}`}>{t('Since Last Login')}</span>
+        <section className={styles.row}>
+          <AccountVisual
+            address={address}
+            size={40}
+            />
+          <div>
+            <label>{t('Address')}</label>
+            <div className={styles.value} >
+            <CopyToClipboard
+              value={address}
+              className='account-address'
+            />
             </div>
           </div>
-        </div>
+        </section>
+        <section className={styles.row}>
+          <Icon name='balance' />
+          <div>
+            <label>{t('Balance')}</label>
+            <div className={styles.value} ><LiskAmount val={balance} /> {activeToken}</div>
+          </div>
+        </section>
       </BoxV2>
     );
   }
 }
 
-export default translate()(walletDetails);
+export default translate()(WalletDetails);

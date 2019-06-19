@@ -47,12 +47,14 @@ class DelegateRowV2 extends React.Component {
       data, voteStatus, voteToggled, className,
       votingModeEnabled, shouldShowVoteColumn,
       shouldHightlightCheckbox,
+      columnClassNames,
     } = this.props;
     const {
       username,
       rank,
       productivity,
       account,
+      rewards,
     } = data;
 
     return (
@@ -66,7 +68,7 @@ class DelegateRowV2 extends React.Component {
             address: account.address,
           }) : null
         )}>
-        {shouldShowVoteColumn ? <div className={`${grid['col-md-1']} ${grid['col-xs-2']} ${styles.leftText}`}>
+        {shouldShowVoteColumn ? <div className={`${columnClassNames.rank} ${styles.leftText}`}>
           <VoteCheckboxV2
             className={styles.checkbox}
             accent={shouldHightlightCheckbox}
@@ -77,8 +79,8 @@ class DelegateRowV2 extends React.Component {
             votingModeEnabled={votingModeEnabled}
           />
         </div> : null}
-        <div className={`${grid['col-md-1']} ${grid['col-xs-2']} delegate-rank`}>#{rank}</div>
-        <div className={`${grid['col-md-3']} ${grid['col-xs-5']} delegate-info`}>
+        <div className={`${columnClassNames.rank} delegate-rank`}>#{rank}</div>
+        <div className={`${columnClassNames.delegate} delegate-info`}>
           <Link className={styles.delegateLink}
             to={`${routes.accounts.pathPrefix}${routes.accounts.path}/${account.address}`}>
             <AccountVisual
@@ -91,8 +93,11 @@ class DelegateRowV2 extends React.Component {
             </div>
           </Link>
         </div>
-        <div className={`${grid[shouldShowVoteColumn ? 'col-md-3' : 'col-md-4']} ${grid['col-xs-3']} ${styles.productivity} delegate-productivity`}>{productivity} %</div>
-        <div className={`${grid['col-md-4']} ${styles.weight} vote-weight`}>
+        <div className={`${columnClassNames.forged} delegate-forged`}>
+          <LiskAmount val={rewards} />&nbsp;{this.props.t('LSK')}
+        </div>
+        <div className={`${columnClassNames.productivity} delegate-productivity`}>{productivity} %</div>
+        <div className={`${columnClassNames.voteWeight} ${styles.weight} vote-weight`}>
           <LiskAmount val={data.vote} />&nbsp;{this.props.t('LSK')}
         </div>
       </TableRow>

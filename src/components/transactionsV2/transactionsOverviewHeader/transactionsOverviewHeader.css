@@ -6,6 +6,19 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
+  margin-top: 10px;
+
+  & h1 {
+    @mixin headingNormalIntermediate;
+
+    margin: 0;
+  }
+
+  & .subtitle {
+    @mixin contentNormal;
+
+    color: var(--color-slate-gray);
+  }
 }
 
 .account {
@@ -64,23 +77,6 @@
   }
 }
 
-.requestContainer {
-  position: relative;
-
-  & .requestDropdown {
-    left: auto;
-    right: -110px;
-    transform-origin: calc(100% - 196px) -5px;
-    top: calc(100% + 10px);
-    width: auto;
-
-    & :global(.dropdown-arrow) {
-      right: 196px;
-      transform: translateX(50%);
-    }
-  }
-}
-
 .buttonsHolder {
   display: flex;
   justify-content: space-between;
@@ -104,18 +100,15 @@
       margin-top: 4px;
     }
   }
-}
 
-@media (--medium-viewport) {
-  .requestContainer {
-    & .requestDropdown {
-      right: -160px;
-      transform-origin: calc(100% - 246px) -5px;
+  & .requestDropdown {
+    left: auto;
+    right: -90px;
+    transform-origin: calc(100% - 196px) -5px;
+  }
 
-      & :global(.dropdown-arrow) {
-        right: 246px;
-      }
-    }
+  & .bookmarkDropdown {
+    right: 0;
   }
 }
 

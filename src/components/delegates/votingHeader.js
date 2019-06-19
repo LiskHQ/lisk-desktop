@@ -33,13 +33,19 @@ class VotingHeader extends React.Component {
     return (
       <div className={`${styles.wrapper} voting-header`}>
             <span>
-              <span className={styles.box}>
-                <h2>
-                  <span className='total-voting-number'>{getTotalVotesCount(votes)}</span>/
-                  {maxCountOfVotes}
-                </h2>
-                <div>{t('My votes after confirmation')}</div>
-              </span>
+              { account && account.address ?
+                <span className={styles.box}>
+                  <h2>
+                    <span className='total-voting-number'>{getTotalVotesCount(votes)}</span>/
+                    {maxCountOfVotes}
+                  </h2>
+                  <div>{t('My votes after confirmation')}</div>
+                </span> :
+                <span className={styles.box}>
+                  <h2> {t('Delegates')} </h2>
+                  <div>{t('All important information about delegates.')}</div>
+                </span>
+              }
               { votingModeEnabled ?
               <span className={`${styles.outlinedBox} ${styles.addedVotes}`}>
                <h3 className='added-votes-count'>{voteList.length}</h3>

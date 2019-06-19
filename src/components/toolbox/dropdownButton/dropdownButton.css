@@ -1,0 +1,11 @@
+.wrapper {
+  position: relative;
+  display: inline-block;
+
+  & .dropdown {
+    min-width: 349px;
+    width: auto;
+    right: auto;
+    top: calc(100% + 10px);
+  }
+}
