@@ -54,10 +54,12 @@ class CopyToClipboard extends React.Component {
   }
 }
 
+const DefaultContainer = ({ children, onClick }) => <span onClick={onClick} >{children}</span>;
+
 CopyToClipboard.defaultProps = {
   className: '',
   copyClassName: '',
-  Container: React.Fragment,
+  Container: DefaultContainer,
 };
 
 export default (translate()(CopyToClipboard));
