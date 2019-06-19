@@ -14,7 +14,7 @@
 
 .box,
 .outlinedBox {
-  @mixin contentSmallest;
+  @mixin contentNormal;
 
   display: inline-block;
   padding: 7px 10px;
@@ -43,7 +43,7 @@
 }
 
 .box:first-child {
-  @mixin contentSmall;
+  @mixin contentNormal;
 
   padding-left: 0;
 }

@@ -55,28 +55,10 @@ describe('Transactions Overview Header', () => {
       </MemoryRouter>, options);
     });
 
-    it('Should render Account Info and Request and Send LSK buttons', () => {
-      const accountInfo = wrapper.find('.accountInfo');
-      expect(accountInfo.text()).to.includes(accounts.genesis.address);
+    it('Should render header and Request and Send LSK buttons', () => {
+      const header = wrapper.find('h1');
+      expect(header.text()).to.includes('Wallet');
       expect(wrapper).to.have.descendants('.buttonsHolder');
-    });
-
-    it('Should render bookmark title instead of Wallet if address is in user bookmark', () => {
-      const bookmarkProps = {
-        ...props,
-        bookmarks: {
-          LSK: [{
-            ...props.account,
-            title: 'Some Title',
-          }],
-          BTC: [],
-        },
-      };
-      wrapper = mount(<MemoryRouter>
-        <TransactionHeader {...bookmarkProps} />
-      </MemoryRouter>, options);
-      const accountInfo = wrapper.find('.accountInfo');
-      expect(accountInfo.text()).to.includes('Some Title');
     });
 
     it('Should toggle request LSK dropdown', () => {
@@ -95,19 +77,31 @@ describe('Transactions Overview Header', () => {
       balance: accounts.delegate.balance,
       match: { urls: `${routes.accounts.pathPrefix}${routes.accounts.path}V2/${accounts.delegate.address}` },
     };
-
-    beforeEach(() => {
+    it('Should toggle bookmark dropdown', () => {
       wrapper = mount(<MemoryRouter>
         <TransactionHeader {...anotherUserProps} />
       </MemoryRouter>, options);
-    });
-
-    it('Should toggle bookmark dropdown', () => {
       expect(wrapper.find('.bookmark-account')).to.not.have.descendants('.show');
       wrapper.find('.bookmark-account button').first().simulate('click');
       expect(wrapper.find('.bookmark-account')).to.have.descendants('.show');
       wrapper.find('.bookmark-account button').first().simulate('click');
       expect(wrapper.find('.bookmark-account')).to.not.have.descendants('.show');
+    });
+
+    it('Should show Account bookmarked dropdown if already bookmarked', () => {
+      const bookmarks = {
+        LSK: [
+          accounts.delegate,
+        ],
+        BTC: [],
+      };
+      wrapper = mount(<MemoryRouter>
+        <TransactionHeader {...{
+          ...anotherUserProps,
+          bookmarks,
+        }}/>
+      </MemoryRouter>, options);
+      expect(wrapper.find('.bookmark-account button').first().text()).to.equal('Account bookmarked');
     });
   });
 });

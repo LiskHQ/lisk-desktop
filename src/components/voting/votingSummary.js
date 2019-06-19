@@ -40,7 +40,8 @@ const VotingSummary = ({
                 success,
                 ...(success ? {
                   title: t('Voting submitted'),
-                  message: t('You will be notified when your votes are forged.'),
+                  illustration: 'votingSuccess',
+                  message: t('You’ll see it in Delegates and it will be confirmed in a matter of minutes.'),
                   primaryButon: {
                     title: t('Back to Delegates'),
                     className: 'back-to-delegates-button',
@@ -50,6 +51,7 @@ const VotingSummary = ({
                   },
                 } : {
                   title: t('Voting failed'),
+                  illustration: 'votingError',
                   message: (error && error.message) || t('Oops, looks like something went wrong. Please try again.'),
                   primaryButon: {
                     title: t('Back to Voting Table'),

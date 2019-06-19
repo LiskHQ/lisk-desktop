@@ -2,97 +2,28 @@
 @import '../app/mixins.css';
 
 .wrapper {
-  display: flex;
-  margin-bottom: 12px;
-  padding: 0;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  padding: 0 10px;
-
-  & .icon {
-    display: block;
-    height: 48px;
-    width: 48px;
-  }
-
-  & > div {
-    border-bottom: 1px solid var(--color-platinum);
+  & .row {
     display: flex;
-    justify-content: center;
-    padding: 20px 0;
-  }
-
-  & .moreInfoHolder {
-    border-bottom: 0 none;
-    padding: 0;
-
-    & .value {
-      @mixin contentNormal bold;
-    }
-
-    & .info {
-      padding: 20px 0;
-
-      &:last-child {
-        border-left: 1px solid var(--color-platinum);
-      }
-    }
-  }
-
-  & .info {
+    flex-direction: row;
+    justify-content: flex-start;
     align-items: center;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    position: relative;
 
-    &:global(.account-balance) {
-      &::after {
-        background-color: var(--color-ultramarine-blue);
-        border-radius: 1px;
-        bottom: 0;
-        content: '';
-        height: 2px;
-        left: calc(50% - 22px);
-        position: absolute;
-        width: 44px;
-      }
+    & > * {
+      margin-right: 10px;
     }
+  }
+
+  & label {
+    @mixin contentNormal;
+
+    color: var(--color-slate-gray);
+    margin-bottom: 5px;
   }
 
   & .value {
-    @mixin headingNormal;
+    @mixin headingNormal bold;
 
     color: var(--color-maastricht-blue);
-  }
-
-  & .label {
-    @mixin contentSmall;
-
-    color: var(--color-slate-gray);
-  }
-}
-
-@media (--medium-viewport) {
-  .content {
-    & .iconHolder {
-      display: none;
-    }
-
-    & .moreInfoHolder {
-      display: flex;
-      flex-direction: column;
-
-      & .info {
-        &:last-child {
-          border-left: 0 none;
-          border-top: 1px solid var(--color-platinum);
-        }
-      }
-    }
+    word-break: break-all;
   }
 }

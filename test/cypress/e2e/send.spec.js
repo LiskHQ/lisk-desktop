@@ -179,15 +179,16 @@ describe('Send', () => {
    * @expect status code and error message are shown
    */
   it('Error message is shown if transfer tx fails', () => {
+    const message = 'Test error';
     cy.server({ status: 409 });
-    cy.route('POST', '/api/transactions', { message: 'Test error' });
+    cy.route('POST', '/api/transactions', { message });
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.send);
     cy.get(ss.recipientInput).type(randomAddress);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).click();
     cy.get(ss.sendBtn).click();
-    cy.get(ss.submittedTransactionMessage).contains('Oops, looks like something went wrong. Please try again.');
+    cy.get(ss.submittedTransactionMessage).contains(message);
   });
 
   it('Add to bookmarks button doesn’t exist if recipient is in Bookmarks', () => {

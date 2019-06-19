@@ -19,11 +19,11 @@ describe('Tx details', () => {
     cy.visit(`${urls.transactions}/${transferTxId}`);
     cy.get(ss.txSenderAddress).should('have.text', accounts.genesis.address)
       .click();
-    cy.get(ss.accountAddress).should('have.text', accounts.genesis.address);
+    cy.get(ss.accountAddress).contains(accounts.genesis.address);
     cy.go('back');
     cy.get(ss.txRecipientAddress).should('have.text', accounts['delegate candidate'].address)
       .click();
-    cy.get(ss.accountAddress).should('have.text', accounts['delegate candidate'].address);
+    cy.get(ss.accountAddress).contains(accounts['delegate candidate'].address);
     cy.go('back');
     cy.get(ss.txAddedVotes).should('not.exist');
     cy.get(ss.txRemovedVotes).should('not.exist');
@@ -46,7 +46,7 @@ describe('Tx details', () => {
     cy.get(ss.txHeader).contains('Vote Transaction');
     cy.get(ss.txSenderAddress).should('have.text', accounts.delegate.address)
       .click();
-    cy.get(ss.accountAddress).should('have.text', accounts.delegate.address);
+    cy.get(ss.accountAddress).contains(accounts.delegate.address);
     cy.go('back');
     cy.get(ss.txRecipientAddress).should('not.exist');
     cy.get(ss.txAddedVotes).contains(votedDelegateName)
@@ -74,7 +74,7 @@ describe('Tx details', () => {
     cy.get(ss.txHeader).contains('Delegate Registration');
     cy.get(ss.txSenderAddress).should('have.text', accounts.delegate.address)
       .click();
-    cy.get(ss.accountAddress).should('have.text', accounts.delegate.address);
+    cy.get(ss.accountAddress).contains(accounts.delegate.address);
     cy.go('back');
     cy.get(ss.txRecipientAddress).should('not.exist');
     cy.get(ss.txDate).contains(/20\d\d/);
@@ -96,7 +96,7 @@ describe('Tx details', () => {
     cy.get(ss.txHeader).contains('2nd Passphrase Registration');
     cy.get(ss.txSenderAddress).should('have.text', accounts['second passphrase account'].address)
       .click();
-    cy.get(ss.accountAddress).should('have.text', accounts['second passphrase account'].address);
+    cy.get(ss.accountAddress).contains(accounts['second passphrase account'].address);
     cy.go('back');
     cy.get(ss.txRecipientAddress).should('not.exist');
     cy.get(ss.txDate).contains(/20\d\d/);

@@ -4,17 +4,20 @@ import TableRow from '../toolbox/table/tableRow';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import styles from './votingListViewV2.css';
 
-const ListLabelsV2 = ({ shouldShowVoteColumn, t }) =>
+const ListLabelsV2 = ({
+  shouldShowVoteColumn, t, columnClassNames,
+}) =>
   (<TableRow isHeader={true} className={`${styles.header} ${grid.row}`} id="transactionsHeader">
       {
         shouldShowVoteColumn ?
-          <div className={`${grid['col-md-1']}  ${grid['col-xs-2']} ${styles.leftText}`}>
+          <div className={columnClassNames.vote}>
             {t('Vote', { context: 'verb' })}
           </div> : null
       }
-      <div className={`${grid['col-md-1']} ${grid['col-xs-2']}`}>{t('Rank')}</div>
-      <div className={`${grid['col-md-3']} ${grid['col-xs-5']}`}>{t('Delegate')}</div>
-      <div className={`${grid[shouldShowVoteColumn ? 'col-md-3' : 'col-md-4']} ${grid['col-xs-3']} ${styles.productivity}`}>
+      <div className={columnClassNames.rank}>{t('Rank')}</div>
+      <div className={columnClassNames.delegate}>{t('Delegate')}</div>
+      <div className={columnClassNames.forged}>{t('Forged LSK')}</div>
+      <div className={columnClassNames.productivity}>
         {t('Productivity')}
         <Tooltip>
           <p> {
@@ -22,7 +25,7 @@ const ListLabelsV2 = ({ shouldShowVoteColumn, t }) =>
           } </p>
         </Tooltip>
       </div>
-      <div className={`${grid['col-md-4']}`}>
+      <div className={columnClassNames.voteWeight}>
         {t('Vote weight')}
         <Tooltip className='showOnLeft' >
           <p> {
