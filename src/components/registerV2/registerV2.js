@@ -52,6 +52,7 @@ class RegisterV2 extends React.Component {
             <BackupPassphrase
               account={selectedAccount} />
             <ConfirmPassphrase
+              account={selectedAccount}
               passphrase={selectedAccount.passphrase} />
             <AccountCreated
               account={selectedAccount} />
