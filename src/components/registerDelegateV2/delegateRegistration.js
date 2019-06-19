@@ -21,10 +21,6 @@ class DelegateRegistration extends React.Component {
     });
   }
 
-  checkDelegateUsernameAvailable(username) {
-    this.props.delegatesFetched({ username });
-  }
-
   goBack() {
     this.props.history.goBack();
   }
@@ -39,9 +35,9 @@ class DelegateRegistration extends React.Component {
           prevPage={this.goBack}
           finalCallback={this.submitDelegate}
           backButtonLabel={t('Back')}>
-          <SelectName t={t} />
-          <SelectName t={t} />
-          <SelectName t={t} />
+          <SelectName />
+          <SelectName />
+          <SelectName />
         </MultiStep>
       </section>
     );

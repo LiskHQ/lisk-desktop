@@ -92,14 +92,14 @@ export default {
     component: SignMessage,
     isPrivate: true,
   },
-  // registerDelegate: {
-  //   path: '/register-delegate',
-  //   component: RegisterDelegate,
-  //   isLoaded: true,
-  //   isPrivate: false,
-  // },
   registerDelegate: {
     path: '/register-delegate',
+    component: DelegateRegistration,
+    isLoaded: true,
+    isPrivate: false,
+  },
+  delegateRegistration: {
+    path: '/delegate-register',
     component: DelegateRegistration,
     isLoaded: true,
     isPrivate: false,
