@@ -68,6 +68,18 @@ a {
   line-height: 23px;
 }
 
+.app::-webkit-scrollbar {
+  width: 3px;
+}
+
+.app::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.app::-webkit-scrollbar-thumb {
+  background: #4070f4;
+}
+
 .app ul {
   padding-inline-start: 0px;
   list-style: none;
