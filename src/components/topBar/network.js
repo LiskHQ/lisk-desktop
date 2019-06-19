@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Lisk from '@liskhq/lisk-client';
 import networks from '../../constants/networks';
 import styles from './network.css';
@@ -20,16 +20,11 @@ const Network = (props) => {
 
   return (
     <section className={`${styles.wrapper} network-status`}>
-      {
-        <Fragment>
-          <span className={`${styles.status} ${statusColor}`}></span>
-          <p>
-            {t('Connected to:')}
-            <span>{activeNetwork[iconCode]}</span>
-            <span className={'peer'}>{peers.liskAPIClient ? peers.liskAPIClient.currentNode : ''}</span>
-          </p>
-        </Fragment>
-      }
+      <span className={`${styles.status} ${statusColor}`}></span>
+      <p>
+        <span>{t('Connected to:')}</span>
+        <span>{activeNetwork[iconCode]}</span>
+      </p>
     </section>
   );
 };

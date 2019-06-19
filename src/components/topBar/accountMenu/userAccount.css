@@ -1,0 +1,135 @@
+@import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
+
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin-left: auto;
+  position: relative;
+
+  & > .accountInfo::after {
+    border-bottom: 2px solid var(--color-slate-gray);
+    border-right: 2px solid var(--color-slate-gray);
+    content: '';
+    display: block;
+    height: 5px;
+    transform: rotate(45deg);
+    width: 5px;
+  }
+}
+
+.accountInfo {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  padding: 0 24px;
+
+  & > div {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 12px;
+  }
+
+  & > img {
+    height: 36px;
+    margin-right: 12px;
+    width: 36px;
+  }
+
+  & p {
+    @mixin contentLargest bold;
+
+    color: var(--color-maastricht-blue);
+    margin: 0;
+  }
+
+  & span {
+    @mixin contentNormal;
+
+    color: var(--color-slate-gray);
+  }
+}
+
+.signInHolder {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  padding: 0 24px;
+}
+
+.accountHolder {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 280px;
+  padding: 5px 0;
+
+  & .accountInfo {
+    padding: 0;
+  }
+
+  & .activeLabel {
+    @mixin contentNormal bold;
+
+    align-items: center;
+    background: var(--color-ultramarine-blue);
+    border-radius: var(--border-radius-standard);
+    color: var(--color-white);
+    display: flex;
+    margin-left: auto;
+    padding: 0 8px;
+  }
+}
+
+.dropdown {
+  cursor: initial;
+  top: calc(100% + 15px);
+  min-width: 320px;
+  width: auto;
+
+  & .separator {
+    margin: 10px auto;
+  }
+}
+
+.dropdownOption {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+
+  & > img {
+    margin-right: 5px;
+  }
+
+  & > img:nth-child(2) {
+    display: none;
+  }
+
+  &:hover {
+    & > img:nth-child(1) {
+      display: none;
+    }
+
+    & > img:nth-child(2) {
+      display: block;
+    }
+  }
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    & > .accountInfo {
+      & > div {
+        display: none;
+      }
+    }
+  }
+}

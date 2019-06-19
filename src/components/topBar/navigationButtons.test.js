@@ -41,6 +41,7 @@ describe('Form', () => {
       history: {
         ...props.history,
         length: 3,
+        action: 'PUSH',
       },
     });
     wrapper.update();
