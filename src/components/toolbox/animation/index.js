@@ -62,8 +62,8 @@ class Animation extends React.Component {
     const nextName = nextProps.name;
     if (name !== nextName) {
       this.unbindListeners();
-      this.destroy();
     }
+    this.destroy();
     return true;
   }
 
