@@ -49,26 +49,6 @@
       margin-right: 10px;
     }
   }
-
-  & .action {
-    @mixin headingExtraSmall;
-
-    padding: 0 15px;
-    height: 32px;
-    border-radius: 3px;
-    border: solid 1px rgba(0, 0, 0, 0.15);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: var(--color-content-light);
-    cursor: pointer;
-    margin-top: 15px;
-
-    &.copied {
-      cursor: default;
-      text-decoration: none;
-    }
-  }
 }
 
 .passphraseField {
@@ -131,6 +111,10 @@
       text-align: center;
     }
   }
+}
+
+.copyIcon {
+  display: none;
 }
 
 @media (--medium-viewport) {

@@ -1,38 +1,24 @@
-import React from 'react';
 import QRCode from 'qrcode.react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import moment from 'moment';
+import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import links from '../../constants/externalLinks';
-import Tooltip from '../toolbox/tooltip/tooltip';
+import moment from 'moment';
+
 import { InputV2 } from '../toolbox/inputsV2';
+import { SecondaryButtonV2 } from '../toolbox/buttons/button';
+import CopyToClipboard from '../toolbox/copyToClipboard';
+import Icon from '../toolbox/icon';
+import Tooltip from '../toolbox/tooltip/tooltip';
+import links from '../../constants/externalLinks';
 import renderPaperwallet from '../../utils/paperwallet';
-import svgIcons from '../../utils/svgIcons';
 import styles from './passphraseBackup.css';
 
 class PassphraseBackup extends React.Component {
   constructor(props) {
     super();
 
-    this.state = {
-      passphraseCopied: false,
-    };
-
     this.walletName = `${props.paperWalletName}_${moment().format('YYYY_MM_DD_HH_mm')}.pdf`;
     this.generatePaperwallet = this.generatePaperwallet.bind(this);
     this.setCanvasRef = this.setCanvasRef.bind(this);
-  }
-
-  textIsCopied() {
-    this.setState({
-      passphraseCopied: true,
-    });
-
-    this.timeout = setTimeout(() => {
-      this.setState({
-        passphraseCopied: false,
-      });
-    }, 3000);
   }
 
   /* istanbul ignore next */
@@ -44,10 +30,6 @@ class PassphraseBackup extends React.Component {
     renderPaperwallet(data, this.walletName);
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.timeout);
-  }
-
   setCanvasRef(node) {
     this.canvasRef = node;
   }
@@ -56,7 +38,6 @@ class PassphraseBackup extends React.Component {
     const {
       t, account,
     } = this.props;
-    const { passphraseCopied } = this.state;
 
     return (
       <React.Fragment>
@@ -91,12 +72,12 @@ class PassphraseBackup extends React.Component {
                 ))}
               </div>
               <CopyToClipboard
-                text={account.passphrase}
-                onCopy={() => this.textIsCopied()}>
-                <span className={`${styles.action} ${passphraseCopied && styles.copied}`}>
-                  { !passphraseCopied ? t('Copy to Clipboard') : t('Copied!') }
-                </span>
-              </CopyToClipboard>
+                value={account.passphrase}
+                text={t('Copy to Clipboard')}
+                copyClassName={styles.copyIcon}
+                Container={SecondaryButtonV2}
+                containerClassName='extra-small'
+                />
             </div>
           </div>
           <div className={styles.hrSection}>
@@ -118,12 +99,12 @@ class PassphraseBackup extends React.Component {
                 <QRCode value={account.passphrase} />
               </div>
               <div className={styles.downloadLisk}>
-                <img src={svgIcons.fileOutline} />
+                <Icon name='fileOutline' />
                 <p className='option-value'>{this.walletName}</p>
               </div>
-              <span
-                onClick={this.generatePaperwallet}
-                className={`${styles.action}`}>{t('Download')}</span>
+              <SecondaryButtonV2 className='extra-small' onClick={this.generatePaperwallet} >
+                {t('Download')}
+              </SecondaryButtonV2>
             </div>
           </div>
         </div>
@@ -133,4 +114,3 @@ class PassphraseBackup extends React.Component {
 }
 
 export default PassphraseBackup;
-

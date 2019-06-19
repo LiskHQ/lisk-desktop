@@ -30,7 +30,7 @@ class CopyToClipboard extends React.Component {
 
   render() {
     const {
-      value, t, className, text, copyClassName, Container,
+      value, t, className, text, copyClassName, Container, containerClassName,
     } = this.props;
     const { copied } = this.state;
     return (
@@ -38,7 +38,7 @@ class CopyToClipboard extends React.Component {
         e.stopPropagation();
       }}>
         <ReactCopyToClipboard text={value} onCopy={this.textIsCopied}>
-          <Container { ...(Container !== React.Fragment ? { disabled: copied } : {}) } >
+          <Container disabled={copied} className={containerClassName} >
           {copied ? <span className={`${className} copied`}>
             {t('Copied!')}
           </span> :
@@ -58,6 +58,7 @@ CopyToClipboard.defaultProps = {
   className: '',
   copyClassName: '',
   Container: React.Fragment,
+  containerClassName: '',
 };
 
 export default (translate()(CopyToClipboard));
