@@ -22,12 +22,7 @@ class RegisterV2 extends React.Component {
   }
 
   componentDidMount() {
-    /* istanbul ignore next */
-    const crypotObj = window.crypto || window.msCrypto;
-    const passphrases = [...Array(5)].map(() =>
-      generatePassphrase({
-        seed: [...crypotObj.getRandomValues(new Uint16Array(16))].map(x => (`00${(x % 256).toString(16)}`).slice(-2)),
-      }));
+    const passphrases = [...Array(5)].map(generatePassphrase);
     const accounts = passphrases.map(pass => ({
       address: extractAddress(pass),
       passphrase: pass,

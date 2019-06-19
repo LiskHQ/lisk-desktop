@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 import i18n from '../../i18n';
-import { generatePassphrase } from '../../utils/passphrase';
+import { generatePassphraseFromSeed } from '../../utils/passphrase';
 import { extractAddress } from '../../utils/account';
 import AccountCreated from './accountCreated';
 
@@ -12,7 +12,7 @@ describe('V2 Register Process - Account created', () => {
   let wrapper;
 
   const crypotObj = window.crypto || window.msCrypto;
-  const passphrase = generatePassphrase({
+  const passphrase = generatePassphraseFromSeed({
     seed: [...crypotObj.getRandomValues(new Uint16Array(16))].map(x => (`00${(x % 256).toString(16)}`).slice(-2)),
   });
   const account = {

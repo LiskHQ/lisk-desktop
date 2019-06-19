@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 import sinon from 'sinon';
-import { generatePassphrase } from '../../utils/passphrase';
+import { generatePassphraseFromSeed } from '../../utils/passphrase';
 import { extractAddress } from '../../utils/account';
 import i18n from '../../i18n';
 import ChooseAvatar from './chooseAvatar';
@@ -14,7 +14,7 @@ describe('V2 Register Process - Choose Avatar', () => {
 
   const crypotObj = window.crypto || window.msCrypto;
   const passphrases = [...Array(5)].map(() =>
-    generatePassphrase({
+    generatePassphraseFromSeed({
       seed: [...crypotObj.getRandomValues(new Uint16Array(16))].map(x => (`00${(x % 256).toString(16)}`).slice(-2)),
     }));
   const accounts = passphrases.map(pass => ({

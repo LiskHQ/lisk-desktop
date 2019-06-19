@@ -12,11 +12,7 @@ class SecondPassphrase extends React.Component {
   constructor() {
     super();
 
-    // istanbul ignore next
-    const crypotObj = window.crypto || window.msCrypto;
-    this.secondPassphrase = generatePassphrase({
-      seed: [...crypotObj.getRandomValues(new Uint16Array(16))].map(x => (`00${(x % 256).toString(16)}`).slice(-2)),
-    });
+    this.secondPassphrase = generatePassphrase();
     this.backToPreviousPage = this.backToPreviousPage.bind(this);
     this.goToWallet = this.goToWallet.bind(this);
   }
