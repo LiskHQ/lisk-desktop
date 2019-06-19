@@ -44,14 +44,7 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background:
-      linear-gradient(
-        transparent 0%,
-        var(--color-ultramarine-blue) 30%,
-        var(--color-ultramarine-blue) 60%,
-        transparent 100%
-      );
-    border-radius: var(--border-radius-box);
+    background: var(--color-ultramarine-blue);
   }
 }
 
