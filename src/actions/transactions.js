@@ -330,12 +330,14 @@ export const broadcastedTransactionSuccess = data => ({
  */
 // eslint-disable-next-line max-statements
 export const transactionCreated = data => async (dispatch, getState) => {
-  const { account, settings, ...state } = getState();
+  const {
+    account, settings, network, ...state
+  } = getState();
   const timeOffset = getTimeOffset(state);
   const activeToken = settings.token.active;
 
   const [error, tx] = account.loginType === loginType.normal
-    ? await to(transactionsAPI.create(activeToken, { ...data, timeOffset }))
+    ? await to(transactionsAPI.create(activeToken, { ...data, timeOffset, network }))
     : await to(hwAPI.create(account, data));
 
   if (error) return dispatch(transactionCreatedError(error));

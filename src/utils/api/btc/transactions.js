@@ -1,9 +1,10 @@
 import * as bitcoin from 'bitcoinjs-lib';
-import getBtcConfig from './config';
 import { extractAddress, getDerivedPathFromPassphrase } from './account';
-import { validateAddress } from '../../validators';
-import { tokenMap } from '../../../constants/tokens';
 import { getAPIClient } from './network';
+import { tokenMap } from '../../../constants/tokens';
+import { validateAddress } from '../../validators';
+import getBtcConfig from './config';
+import networks from '../../../constants/networks';
 
 /**
  * Normalizes transaction data retrieved from Blockchain.info API
@@ -102,36 +103,39 @@ export const calculateTransactionFee = ({
  * @param {String} address
  * @returns {Promise<Array>}
  */
-export const getUnspentTransactionOutputs = address => new Promise(async (resolve, reject) => {
-  try {
-    const config = getBtcConfig(1); // TODO fix this to get config from redux
-    const response = await fetch(`${config.url}/utxo/${address}`);
-    const json = await response.json();
+export const getUnspentTransactionOutputs = (address, config) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch(`${config.url}/utxo/${address}`);
+      const json = await response.json();
 
-    if (response.ok) {
-      resolve(json.data);
-    } else {
-      reject(json);
+      if (response.ok) {
+        resolve(json.data);
+      } else {
+        reject(json);
+      }
+    } catch (error) {
+      reject(error);
     }
-  } catch (error) {
-    reject(error);
-  }
-});
+  });
 
 export const create = ({
   passphrase,
   recipientId: recipientAddress,
   amount,
   dynamicFeePerByte,
+  network,
   // eslint-disable-next-line max-statements
 }) => new Promise(async (resolve, reject) => {
   try {
-    const config = getBtcConfig(1); // TODO fix this to get config from redux
+    const config = getBtcConfig(network.name === networks.mainnet.name ?
+      networks.mainnet.code :
+      networks.testnet.code);
     amount = Number(amount);
     dynamicFeePerByte = Number(dynamicFeePerByte);
 
     const senderAddress = extractAddress(passphrase, config);
-    const unspentTxOuts = await exports.getUnspentTransactionOutputs(senderAddress);
+    const unspentTxOuts = await exports.getUnspentTransactionOutputs(senderAddress, config);
 
     // Estimate total cost (currently estimates max cost by assuming the worst case)
     const estimatedMinerFee = calculateTransactionFee({
@@ -202,9 +206,11 @@ export const create = ({
   }
 });
 
-export const broadcast = transactionHex => new Promise(async (resolve, reject) => {
+export const broadcast = (transactionHex, network) => new Promise(async (resolve, reject) => {
   try {
-    const config = getBtcConfig(1); // TODO fix this to get config from redux
+    const config = getBtcConfig(network.name === networks.mainnet.name ?
+      networks.mainnet.code :
+      networks.testnet.code);
     const response = await fetch(`${config.url}/transaction`, {
       ...config.requestOptions,
       method: 'POST',
@@ -222,14 +228,3 @@ export const broadcast = transactionHex => new Promise(async (resolve, reject) =
     reject(error);
   }
 });
-
-/**
- * Generates a Transaction Explorer URL for given transaction id
- * based on the configured network type
- * @param {String} - Transaction ID
- * @returns {String} - URL
- */
-export const getTransactionExplorerURL = (id) => {
-  const config = getBtcConfig(1); // TODO fix this to get config from redux
-  return `${config.transactionExplorerURL}/${id}`;
-};
