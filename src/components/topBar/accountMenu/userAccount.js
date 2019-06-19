@@ -64,15 +64,6 @@ const UserAccount = ({
           </span>,
           <DropdownV2.Separator key={`separator-${tokenKey}`} className={styles.separator} />,
         ]) : null))}
-        <Link
-          id='settings'
-          to={routes.setting.path}
-          className={styles.dropdownOption}
-        >
-          <Icon name='settings' className={styles.defaultIcon} />
-          <Icon name='settingsActive' className={styles.activeIcon} />
-          <span>{t('Settings')}</span>
-        </Link>
 
         <Link
           id='help'
@@ -95,6 +86,16 @@ const UserAccount = ({
           <span>{t('Give Feedback')}</span>
         </a>
 
+        <Link
+          id='settings'
+          to={routes.setting.path}
+          className={styles.dropdownOption}
+        >
+          <Icon name='settings' className={styles.defaultIcon} />
+          <Icon name='settingsActive' className={styles.activeIcon} />
+          <span>{t('Settings')}</span>
+        </Link>
+
         <DropdownV2.Separator className={styles.separator} />
 
         {isUserLogout ? (
@@ -113,7 +114,7 @@ const UserAccount = ({
           >
             <Icon name='logout' className={styles.defaultIcon} />
             <Icon name='logoutActive' className={styles.activeIcon} />
-            <span>{t('Log out')}</span>
+            <span>{t('Sign out')}</span>
           </span>
         )}
       </DropdownV2>

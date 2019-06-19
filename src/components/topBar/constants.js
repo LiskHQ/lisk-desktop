@@ -11,7 +11,7 @@ const menuLinks = t => ([
   {
     icon: 'walletIcon',
     id: 'transactions',
-    label: t('My Wallet'),
+    label: t('Wallet'),
     path: routes.wallet.path,
   },
   {

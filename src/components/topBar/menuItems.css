@@ -37,7 +37,8 @@
 }
 
 .item > img {
-  margin-right: 8px;
+  margin-bottom: 4px;
+  margin-right: 10px;
 }
 
 .item > span {
@@ -57,21 +58,6 @@
   }
 }
 
-@media (--large-viewport) {
-  .wrapper {
-    min-width: 238px;
-  }
-
-  .item {
-    flex-direction: column;
-  }
-
-  .item > img {
-    margin-bottom: 8px;
-    margin-right: 0;
-  }
-}
-
 @media (--medium-viewport) {
   .wrapper {
     min-width: 120px;
@@ -79,6 +65,7 @@
 
   .item {
     flex-direction: column;
+    padding: 0 26px;
   }
 
   .item > img {

@@ -8,6 +8,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin-right: 16px;
   padding: 0 24px;
 
   /* Message */
