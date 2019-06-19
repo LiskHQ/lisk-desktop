@@ -67,15 +67,29 @@ class CustomCountDown extends React.Component {
       minutes,
       autoLog,
       seconds,
+      t,
     } = this.props;
     const min = `0${minutes}`.slice(-2);
     const sec = `0${seconds}`.slice(-2);
 
+    const resetCondition = (minutes < 5);
     const timeoutCondition = (minutes === 0 && seconds === 0);
 
-    const timer = !timeoutCondition && <span>{min}:{sec}</span>;
+    const resetButton = resetCondition && !timeoutCondition ?
+      <div
+        onClick={() => this.onResetTimer()}
+        className={`${styles.reset} reset`}
+      >
+      {t('Reset')}
+      </div> :
+      <div></div>;
+
+    const resetStyle = resetCondition ? styles.timeout : styles.time;
+    const timer = !timeoutCondition &&
+      <p className={styles.default}>{t('Session timeout in')} <span className={resetStyle}>{min}:{sec}</span></p>;
 
     const renderComponent = autoLog ? (<div className={styles.timerRow}>
+      {resetButton}
       {timer}
     </div>) : null;
 
