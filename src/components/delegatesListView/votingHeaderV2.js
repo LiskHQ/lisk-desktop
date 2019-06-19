@@ -1,5 +1,4 @@
 import React from 'react';
-import { translate } from 'react-i18next';
 import voteFilters from './../../constants/voteFilters';
 import Piwik from '../../utils/piwik';
 import Tabs from '../toolbox/tabs';
@@ -57,12 +56,15 @@ class VotingHeaderV2 extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, account } = this.props;
     const { activeFilter } = this.state;
 
     return (
       <React.Fragment>
-        <Tabs tabs={this.filters} active={activeFilter} onClick={this.filterVotes} />
+        { account && account.address ?
+          <Tabs tabs={this.filters} active={activeFilter} onClick={this.filterVotes} /> :
+          <h2>{t('All delegates')}</h2>
+        }
         <span>
           <InputV2
             size='xs'
@@ -75,4 +77,4 @@ class VotingHeaderV2 extends React.Component {
     );
   }
 }
-export default translate()(VotingHeaderV2);
+export default VotingHeaderV2;

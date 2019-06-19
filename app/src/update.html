@@ -6,6 +6,16 @@
       <link href="dialog.css" rel="stylesheet">
       <style>
         @font-face {
+          font-family: 'basier-circle';
+          src:
+            url('../../assets/fonts/basier-circle/basiercircle-regular.woff2') format('woff2'),
+            url('../../assets/fonts/basier-circle//basiercircle-regular.woff') format('woff'),
+            url('../../assets/fonts/basier-circle//basiercircle-regular.otf');
+          font-weight: 400;
+          font-style: normal;
+        }
+
+        @font-face {
           font-family: 'gilroy';
           src:
             url('./assets/fonts/gilroy/gilroy-bold.woff2') format('woff2'),
@@ -17,12 +27,24 @@
       </style>
     </head>
     <body>
-      <h1 class="header" id="header"></h1>
-      <p class="description" id="description"></p>
-      <div class="app" id="app"></div>
+      <h1 class="header" id="header">New version is here!</h1>
+      <p class="description" id="description">
+        <!-- This is placeholder text, real text is inserted via Javascript below -->
+        Would you like to download it now?
+      </p>
+      <h3>Release Notes</h3>
+      <div class="app" id="app">
+        <!-- This is placeholder content, real text is inserted via Javascript below -->
+        Fixed bugs
+        <ul>
+          <li> Fixed loading voted delegates <a>#2093</a></li>
+          <li> Delegate features tumbler is not removed <a>#2094</a></li>
+        </ul>
+
+      </div>
       <div class="actionBar">
-        <button class="button isClose" id="close">Close</button>
-        <button class="button" id="update">Update</button>
+        <button class="button isClose" id="close">Remind me later</button>
+        <button class="button" id="update">Install update</button>
       </div>
     </body>
     <script>
@@ -35,7 +57,7 @@
         ipc.on('loadNotes', function (event, data) {
           app.innerHTML = data.message;
           header.innerText = data.title;
-          description.innerText = data.versions;
+          description.innerText = data.subtitle;
           updateElm.innerText = data.buttons[0];
           closeElm.innerText = data.buttons[1];
         });

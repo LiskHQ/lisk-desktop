@@ -115,6 +115,7 @@
 
 .weight {
   font-weight: bold;
+  text-align: right;
 }
 
 .delegatesList {
