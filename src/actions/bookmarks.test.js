@@ -5,6 +5,7 @@ import {
 } from './bookmarks';
 import actionTypes from '../constants/actions';
 import accounts from '../../test/constants/accounts';
+import { tokenMap } from '../constants/tokens';
 
 describe('actions: boomarks', () => {
   const data = {
@@ -14,7 +15,7 @@ describe('actions: boomarks', () => {
       balance: accounts.genesis.balance,
       title: accounts.genesis.address,
     },
-    token: 'LSK',
+    token: tokenMap.LSK.key,
   };
 
   it('should create an action to add a bookmark account', () => {
@@ -38,7 +39,7 @@ describe('actions: boomarks', () => {
   it('should create an action to remove a bookmark account', () => {
     const removedData = {
       address: accounts.genesis.address,
-      token: 'LSK',
+      token: tokenMap.LSK.key,
     };
     const expectedAction = {
       data: removedData,
