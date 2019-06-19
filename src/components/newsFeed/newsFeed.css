@@ -24,7 +24,7 @@
 .container {
   min-height: 578px;
   overflow-y: scroll;
-  height: 695px;
+  height: 719px;
 
   & > div {
     height: 100%;

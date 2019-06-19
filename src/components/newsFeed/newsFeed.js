@@ -29,13 +29,14 @@ class NewsFeed extends React.Component {
         <div className={`${styles.container}`}>
           <div>
             {
-              filteredNewsFeed.length &&
-              filteredNewsFeed.map((news, index) =>
+              filteredNewsFeed.length
+              ? filteredNewsFeed.map((news, index) =>
                 <div className={styles.newsWrapper} key={`newsWrapper-${index}`}>
                   <News
                     t={t}
                     {...news} />
                 </div>)
+              : null
             }
             {
               showNewsFeedEmptyState && !filteredNewsFeed.length &&

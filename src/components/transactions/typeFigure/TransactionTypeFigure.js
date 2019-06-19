@@ -23,6 +23,7 @@ const TransactionTypeFigure = ({
       case transactionTypes.vote:
         icon = svg.txVote;
         break;
+      // istanbul ignore next
       default:
         icon = svg.txDefault;
         break;
@@ -32,6 +33,7 @@ const TransactionTypeFigure = ({
   };
 
   const validateAddress = () => {
+    // istanbul ignore else
     if (reg.address.test(address)) return true;
     return false;
   };

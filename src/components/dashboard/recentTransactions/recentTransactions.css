@@ -53,7 +53,15 @@
     }
   }
 
+  & .viewAllLink {
+    margin-top: 22px;
+  }
+
   & .viewAllBtn {
-    margin-top: 15px;
+    @mixin contentNormal bold;
+
+    width: 85px;
+    height: 36px;
+    padding: 0;
   }
 }

@@ -3,7 +3,7 @@
 
 .container {
   width: 100%;
-  height: auto;
+  height: 166px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
