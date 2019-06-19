@@ -77,7 +77,7 @@ class WalletTransactionsV2 extends React.Component {
   /* istanbul ignore next */
   onLoadMore() {
     this.props.loadTransactions({
-      address: this.props.address,
+      address: this.props.account.address,
       offset: this.props.transactions.length,
       filters: {
         direction: this.props.activeFilter,
