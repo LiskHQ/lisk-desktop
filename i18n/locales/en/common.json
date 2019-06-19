@@ -561,6 +561,7 @@
   "You can share your Lisk ID with anyone you wish, but never reveal your passphrase to anyone as it would allow full access to your account.": "You can share your Lisk ID with anyone you wish, but never reveal your passphrase to anyone as it would allow full access to your account.",
   "You can use tab or space to go to the next field.": "You can use tab or space to go to the next field.",
   "You can use your passphrase to sign a message. This signed message can prove that you are the owner of the account, since only your passphrase can produce it. We reccomend including date & time or a specific keyword.": "You can use your passphrase to sign a message. This signed message can prove that you are the owner of the account, since only your passphrase can produce it. We reccomend including date & time or a specific keyword.",
+  "You don’t have enough balance to enable it. 5 LSK is required.": "You don’t have enough balance to enable it. 5 LSK is required.",
   "You have already registered as a delegate.": "You have already registered as a delegate.",
   "You have cancelled the transaction on your hardware wallet.": "You have cancelled the transaction on your hardware wallet.",
   "You have cancelled the transaction on your hardware wallet. You can either continue or retry.": "You have cancelled the transaction on your hardware wallet. You can either continue or retry.",

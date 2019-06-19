@@ -1,18 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-
-import styles from './setting.css';
-import accountConfig from '../../constants/account';
-import settingsConst from './../../constants/settings';
-import routes from '../../constants/routes';
-import links from './../../constants/externalLinks';
-import Piwik from '../../utils/piwik';
 import BoxV2 from '../boxV2';
-import Select from '../toolbox/select';
 import CheckBox from '../toolbox/checkBox';
-import svgIcons from '../../utils/svgIcons';
+import Piwik from '../../utils/piwik';
+import Select from '../toolbox/select';
+import accountConfig from '../../constants/account';
+import links from './../../constants/externalLinks';
+import settingsConst from './../../constants/settings';
+import styles from './setting.css';
 import txTypes from '../../constants/transactionTypes';
-import SpinnerV2 from '../spinnerV2/spinnerV2';
+import SecondPassphraseSetting from './secondPassphrase';
 
 class Setting extends React.Component {
   constructor() {
@@ -72,6 +68,7 @@ class Setting extends React.Component {
       hasSecondPassphrase,
       isAuthenticated,
       transactions: { pending },
+      account,
     } = this.props;
     const { currencies } = this.state;
 
@@ -117,40 +114,12 @@ class Setting extends React.Component {
                   <p>{t('Log out automatically after a specified amount of time.')}</p>
                   </div>
               </label>
-              {isAuthenticated ? (
-                <div className={`${styles.fieldGroup} ${styles.checkboxField} second-passphrase`}>
-                  {hasSecondPassphrase
-                    ? <img
-                        className={`${styles.checkmark} second-passphrase-registered`}
-                        src={svgIcons.checkmark}
-                      />
-                    : null
-                  }
-                  <div className={isHwWalletClass}>
-                    <span className={styles.labelName}>{t('Second Passphrase')}</span>
-                    <p>
-                      {t('Every time you make a transaction you’ll need to enter your second passphrase in order to confirm it.')}
-                    </p>
-                    {!hasSecondPassphrase ?
-                      <React.Fragment>
-                        <p className={styles.highlight}>{t('Once activated can’t be turned off.')}</p>
-                        {hasPendingSecondPassphrase ? (
-                          <SpinnerV2
-                            className={styles.loading}
-                            label={t('Second Passphrase is being activated. Almost there!')}
-                          />
-                        ) : (
-                          <Link
-                            className={`register-second-passphrase ${styles.link}`}
-                            to={`${routes.secondPassphrase.path}`}>
-                            {t('Activate (5 LSK Fee)')}
-                          </Link>
-                        )}
-                      </React.Fragment>
-                    : null}
-                  </div>
-                </div>
-              ) : null}
+              {isAuthenticated ?
+                <SecondPassphraseSetting
+                  {...{
+                    account, hasSecondPassphrase, isHwWalletClass, t, hasPendingSecondPassphrase,
+                  }} /> :
+                null}
             </section>
             <section>
               <h1>{t('Advanced')}</h1>
