@@ -103,20 +103,13 @@ export const calculateTransactionFee = ({
  * @param {String} address
  * @returns {Promise<Array>}
  */
-export const getUnspentTransactionOutputs = (address, config) =>
+export const getUnspentTransactionOutputs = (address, networkConfig) =>
   new Promise(async (resolve, reject) => {
-    try {
-      const response = await fetch(`${config.url}/utxo/${address}`);
-      const json = await response.json();
-
-      if (response.ok) {
-        resolve(json.data);
-      } else {
-        reject(json);
-      }
-    } catch (error) {
-      reject(error);
-    }
+    getAPIClient(networkConfig).get(`utxo/${address}`)
+      .then((response) => {
+        resolve(response.body.data);
+      })
+      .catch(reject);
   });
 
 export const create = ({

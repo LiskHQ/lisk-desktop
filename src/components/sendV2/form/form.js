@@ -93,13 +93,15 @@ class Form extends React.Component {
 
   componentDidUpdate() {
     const { fields, unspentTransactionOutputs } = this.state;
-    const { token, account, dynamicFees } = this.props;
+    const {
+      token, account, dynamicFees, networkConfig,
+    } = this.props;
     // istanbul ignore next
     if (token === tokenMap.BTC.key
         && account && account.info[token]
         && !unspentTransactionOutputs.length) {
       btcTransactionsAPI
-        .getUnspentTransactionOutputs(account.info[token].address)
+        .getUnspentTransactionOutputs(account.info[token].address, networkConfig)
         .then(data => this.setState({ unspentTransactionOutputs: data }))
         .catch(() => this.setState({ unspentTransactionOutputs: [] }));
     }

@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
   bookmarks: state.bookmarks,
   token: state.settings.token && state.settings.token.active,
   dynamicFees: state.service.dynamicFees,
+  networkConfig: state.network,
 });
 
 const mapDispatchToProps = {
