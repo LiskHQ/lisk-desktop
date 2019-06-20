@@ -24,10 +24,7 @@ class Choose extends React.Component {
   }
 
   hasEnoughLSK() {
-    return this.props.account.info && (
-      fromRawLsk(this.props.account.info.LSK.balance) * 1
-        >= fromRawLsk(Fees.registerDelegate) * 1
-    );
+    return fromRawLsk(this.props.account.balance) * 1 >= fromRawLsk(Fees.registerDelegate) * 1;
   }
 
   checkSufficientFunds(evt) {
@@ -78,7 +75,6 @@ class Choose extends React.Component {
   render() { // eslint-disable-line
     const { t, account } = this.props;
     const hasEnoughLSK = this.hasEnoughLSK();
-    const isDelegate = account.isDelegate;
     const delegateNameHasError = (typeof this.state.delegateName.error === 'string' &&
       this.state.delegateName.error !== '');
     const delegateNameDuplicated = !delegateNameHasError
@@ -114,7 +110,7 @@ class Choose extends React.Component {
             <div className={stepStyles.secondContainer}>
               <form className={stepStyles.form} onSubmit={this.checkSufficientFunds.bind(this)}>
                 <PrimaryButton
-                  disabled={!hasEnoughLSK || isDelegate}
+                  disabled={!hasEnoughLSK || account.delegate}
                   label={t('Choose a name')}
                   className={`${stepStyles.chooseNameBtn} choose-name`}
                   onClick={this.checkSufficientFunds.bind(this)}
@@ -122,7 +118,7 @@ class Choose extends React.Component {
                 {!hasEnoughLSK ? <p className={stepStyles.error}>
                   {t('Insufficient funds (Fee: {{fee}} LSK)', { fee: fromRawLsk(Fees.registerDelegate) })}
                 </p> : null }
-                {isDelegate ? <p className={stepStyles.error}>
+                {account.delegate ? <p className={stepStyles.error}>
                   {t('You have already registered as a delegate.')}
                 </p> : null }
               </form>

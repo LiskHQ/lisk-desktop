@@ -66,7 +66,7 @@ const delegateRegistration = (store, action) => {
 
   if (delegateRegistrationTx) {
     store.dispatch(updateDelegateAccount({
-      publicKey: state.account.publicKey,
+      publicKey: state.account.info.LSK.publicKey,
     }));
   }
 };

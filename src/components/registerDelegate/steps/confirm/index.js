@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
+import { getActiveTokenAccount } from '../../../../utils/account';
 import Confirm from './confirm';
 
 const mapStateToProps = state => ({
-  account: state.account,
+  account: getActiveTokenAccount(state),
   delegate: state.delegate,
 });
 
