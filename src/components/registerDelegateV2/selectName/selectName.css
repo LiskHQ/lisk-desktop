@@ -39,13 +39,15 @@
     margin-bottom: 12px;
   }
 
-  & > .inputRequirements {
+  & .inputRequirements {
     @mixin contentNormal;
 
     color: var(--color-slate-gray);
     margin-top: 8px;
     user-select: none;
     opacity: 0;
+    padding-left: 0;
+    padding-right: 0;
     transition: opacity 0.5s, ease-in;
   }
 
@@ -53,6 +55,7 @@
     width: 100%;
     box-sizing: border-box;
     display: flex;
+    flex-direction: column;
     position: relative;
 
     & .spinner {
@@ -69,8 +72,8 @@
     }
   }
 
-  & .inputContainer:focus + .inputRequirements {
-    opacity: 1;
+  & .inputNickname:focus ~ .inputRequirements {
+    opacity: 1 !important;
   }
 
   & .errorMessage {

@@ -14,8 +14,7 @@
   padding: 0 20px;
   transition:
     max-height var(--animation-speed-fast) linear,
-    opacity var(--animation-speed-fast) linear,
-    padding var(--animation-speed-fast) linear;
+    opacity var(--animation-speed-fast) linear;
   width: 100%;
 
   &:global(.error) {
