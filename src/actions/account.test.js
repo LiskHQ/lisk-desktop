@@ -392,6 +392,12 @@ describe('actions: account', () => {
         },
         settings: {
           autoLog: true,
+          token: {
+            list: {
+              LSK: true,
+              BTC: true,
+            },
+          },
         },
       };
     });
@@ -412,18 +418,9 @@ describe('actions: account', () => {
         data: expect.objectContaining({
           passphrase,
           info: {
-            LSK: expect.objectContaining({
-              address,
-              balance,
-            }),
+            LSK: expect.objectContaining({ address, balance }),
+            BTC: expect.objectContaining({ address, balance }),
           },
-        }),
-      }));
-      expect(dispatch).toHaveBeenNthCalledWith(3, expect.objectContaining({
-        type: actionTypes.accountUpdated,
-        data: expect.objectContaining({
-          address,
-          balance,
         }),
       }));
     });
@@ -435,10 +432,8 @@ describe('actions: account', () => {
         type: actionTypes.accountLoggedIn,
         data: expect.objectContaining({
           info: {
-            LSK: expect.objectContaining({
-              address,
-              balance,
-            }),
+            LSK: expect.objectContaining({ address, balance }),
+            BTC: expect.objectContaining({ address, balance }),
           },
         }),
       }));
