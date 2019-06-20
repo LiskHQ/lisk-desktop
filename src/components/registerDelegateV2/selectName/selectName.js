@@ -95,6 +95,14 @@ class SelectName extends React.Component {
 
     const isBtnDisabled = !!error || nickname.length === 0 || loading;
 
+    const feedbackInfo = error ? {
+      status: 'error',
+      className: styles.errorMessage,
+    } : {
+      status: '',
+      className: styles.inputRequirements,
+    };
+
     return (
       <Box className={styles.box}>
         <header>
@@ -142,19 +150,16 @@ class SelectName extends React.Component {
               className={`${styles.status} ${!loading && nickname.length ? styles.show : styles.hide}`}
               name={error ? 'alert_icon' : 'ok_icon'}
             />
+
+            <Feedback
+              show={true}
+              status={feedbackInfo.status}
+              className={feedbackInfo.className}
+              showIcon={false}>
+              {error || t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.')}
+            </Feedback>
           </div>
 
-          {
-            error
-            ? <Feedback
-                show={!!error}
-                status={'error'}
-                className={styles.errorMessage}
-                showIcon={false}>
-                {error}
-              </Feedback>
-            : <span className={styles.inputRequirements}>{t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.')}</span>
-          }
 
           <footer>
             <PrimaryButtonV2
