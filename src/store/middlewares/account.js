@@ -79,7 +79,7 @@ const votePlaced = (store, action) => {
     const { account } = state;
 
     store.dispatch(loadVotes({
-      address: account.address,
+      address: account.info.LSK.address,
       type: 'update',
     }));
   }

@@ -1,16 +1,17 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import Delegates from './delegates';
+import { getActiveTokenAccount } from '../../utils/account';
 import {
   voteToggled,
   loadVotes,
   loadDelegates,
   clearVotes,
 } from '../../actions/voting';
+import Delegates from './delegates';
 
 const mapStateToProps = state => ({
-  account: state.account,
+  account: getActiveTokenAccount(state),
   delegates: state.voting.delegates,
   votes: state.voting.votes,
 });
