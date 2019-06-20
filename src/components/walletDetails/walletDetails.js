@@ -3,7 +3,7 @@ import Box from '../boxV2';
 import LiskAmount from '../liskAmount';
 import { tokenMap } from '../../constants/tokens';
 import svg from '../../utils/svgIcons';
-import styles from './myAccount.css';
+import styles from './walletDetails.css';
 
 const MyAccount = ({
   t, account, settings, className,

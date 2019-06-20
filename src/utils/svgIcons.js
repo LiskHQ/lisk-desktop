@@ -62,6 +62,7 @@ import balance from '../assets/images/icons-v2/balance.svg';
 import bookmarksIconEmptyState from '../assets/images/icons-v2/bookmarks_empty_state.svg';
 import liskLogo from '../assets/images/lisk-logo-v2.svg';
 import lskIcon from '../assets/images/icons-v2/icon-lsk.svg';
+import noTweetsIcon from '../assets/images/icons-v2/no-tweets.svg';
 
 export default {
   alert_icon: alertIcon,
@@ -130,4 +131,5 @@ export default {
   bookmarksIconEmptyState,
   liskLogo,
   lskIcon,
+  noTweetsIcon,
 };

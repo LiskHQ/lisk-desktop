@@ -145,7 +145,7 @@ describe('Recent Transactions', () => {
 
     wrapper.update();
     expect(wrapper).toContainMatchingElement('TransactionList');
-    expect(wrapper).toContainMatchingElement('TransactionTypeFigure');
+    expect(wrapper).not.toContainMatchingElement('TransactionTypeFigure');
     expect(wrapper).toContainMatchingElement('TransactionAddress');
     expect(wrapper).toContainMatchingElement('TransactionAmount');
     expect(wrapper).not.toContainMatchingElement('AccountVisual');

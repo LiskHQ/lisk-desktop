@@ -35,7 +35,8 @@ describe('Wallet Others account', () => {
   });
 
   /* eslint-disable max-statements */
-  it('Bookmarked account -> Address, Name & Label are correct', () => {
+  // This test needs to be skipped until this task is implement (issue #2056)
+  it.skip('Bookmarked account -> Address, Name & Label are correct', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
     cy.get(ss.addBookmarkAccountButton).click();

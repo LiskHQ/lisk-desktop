@@ -9,7 +9,7 @@
   justify-content: center;
   align-items: flex-start;
   box-sizing: border-box;
-  margin: 0 15px;
+  margin: 0;
 
   & .subTitle {
     @mixin contentNormal;

@@ -18,15 +18,12 @@ describe('Latest activity', () => {
   });
 
   /**
-   * 30 transaction are shown in the latest activity component after clicking Show more
-   * @expect 30 transactions visible
+   * 5 transaction are shown in the latest activity component in total
+   * @expect 5 transactions visible
    */
-  it('30 tx are shown after Show More click', () => {
+  it('5 tx are shown', () => {
     cy.visit(urls.dashboard);
-    cy.get(ss.transactionRow).should('have.length', 30);
-    cy.get(ss.showMoreButton).eq(0).click();
-    cy.get(ss.transactionRow).eq(4).should('be.visible');
-    cy.get(ss.transactionRow).eq(29).trigger('mouseover').should('be.visible');
+    cy.get(ss.transactionRow).should('have.length', 5);
   });
 
   /**

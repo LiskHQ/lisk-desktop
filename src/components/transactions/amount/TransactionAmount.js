@@ -14,7 +14,7 @@ const TransactionAmount = ({ address, transaction, token }) => {
   };
 
   return (
-    <div className={`${styles.wrapper} transactionAmount`}>
+    <div className={`${styles.wrapper} transaction-amount`}>
     {
       transaction.type === transactionTypes.send
       ? getTransactionType()
