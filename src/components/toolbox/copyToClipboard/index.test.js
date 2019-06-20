@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import i18n from '../../../i18n';
 import CopyToClipboard from './index';
 
-// TODO Figure out why adding Container prop to CopyToClipboard breaks the tests and fix them
-describe.skip('CopyToClipboard', () => {
+describe('CopyToClipboard', () => {
   let wrapper;
   const props = {
     text: 'test',
