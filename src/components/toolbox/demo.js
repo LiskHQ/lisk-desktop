@@ -10,9 +10,11 @@ import InputDemo from './inputsV2/demo';
 import IllustrationDemo from './illustration/demo';
 import OnboardingDemo from './onboarding/demo';
 import TooltipDemo from './tooltip/demo';
+import AnimationDemo from './animation/demo';
 
 const ToolboxDemo = () => (
   <React.Fragment>
+    <AnimationDemo />
     <BoxV2Demo/> { /* TODO move BoxV2 into toolbox folder */ }
     <ButtonDemo />
     <CalendarDemo />
