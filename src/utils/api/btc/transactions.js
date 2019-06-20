@@ -1,6 +1,7 @@
 import * as bitcoin from 'bitcoinjs-lib';
+
 import { extractAddress, getDerivedPathFromPassphrase } from './account';
-import { getAPIClient } from './network';
+import { getAPIClient, getNetworkCode } from './network';
 import { tokenMap } from '../../../constants/tokens';
 import { validateAddress } from '../../validators';
 import getBtcConfig from './config';
@@ -32,11 +33,13 @@ const normalizeTransactionsResponse = ({
   };
 
   const ownedInput = tx.inputs.find(i => i.txDetail.scriptPubKey.addresses.includes(address));
+  const networkCode = getNetworkCode(networkConfig);
 
   if (ownedInput) {
     data.senderId = address;
     const extractedAddress = tx.outputs[0].scriptPubKey.addresses[0];
-    data.recipientId = validateAddress(tokenMap.BTC.key, extractedAddress) === 0 ? extractedAddress : 'Unparsed Address';
+    data.recipientId = validateAddress(tokenMap.BTC.key, extractedAddress, networkCode) === 0 ?
+      extractedAddress : 'Unparsed Address';
     data.amount = tx.outputs[0].satoshi;
   } else {
     address = address || tx.inputs[0].txDetail.scriptPubKey.addresses[0];
@@ -44,7 +47,10 @@ const normalizeTransactionsResponse = ({
     const extractedAddress = tx.inputs[0].txDetail.scriptPubKey.addresses[0];
     const recipientAddress = tx.outputs[0].scriptPubKey.addresses[0];
     data.senderId = validateAddress(tokenMap.BTC.key, extractedAddress) === 0 ? extractedAddress : 'Unparsed Address';
-    data.recipientId = validateAddress(tokenMap.BTC.key, recipientAddress) === 0 ? recipientAddress : 'Unparsed Address';
+    data.senderId = validateAddress(tokenMap.BTC.key, extractedAddress, networkCode) === 0 ?
+      extractedAddress : 'Unparsed Address';
+    data.recipientId = validateAddress(tokenMap.BTC.key, recipientAddress, networkCode) === 0 ?
+      recipientAddress : 'Unparsed Address';
     data.amount = output.satoshi;
   }
 
