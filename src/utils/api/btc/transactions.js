@@ -199,25 +199,9 @@ export const create = ({
   }
 });
 
-export const broadcast = (transactionHex, network) => new Promise(async (resolve, reject) => {
-  try {
-    const config = getBtcConfig(network.name === networks.mainnet.name ?
-      networks.mainnet.code :
-      networks.testnet.code);
-    const response = await fetch(`${config.url}/transaction`, {
-      ...config.requestOptions,
-      method: 'POST',
-      body: JSON.stringify({ tx: transactionHex }),
-    });
-
-    const json = await response.json();
-
-    if (response.ok) {
-      resolve(json.data);
-    } else {
-      reject(json);
-    }
-  } catch (error) {
-    reject(error);
-  }
+export const broadcast = (transactionHex, networkConfig) => new Promise(async (resolve, reject) => {
+  await getAPIClient(networkConfig).post('transaction', { tx: transactionHex })
+    .then((response) => {
+      resolve(response.body.data);
+    }).catch(reject);
 });

@@ -23,7 +23,10 @@ export const getAPIClient = (network) => {
       }
     })),
     post: (path, body) => (
-      popsicle.post(`${config.url}/${path}`, { body: JSON.stringify(body) })
+      popsicle.post(`${config.url}/${path}`, {
+        body: JSON.stringify(body),
+        ...config.requestOptions,
+      })
     ),
     config,
   };
