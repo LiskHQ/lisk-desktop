@@ -128,7 +128,7 @@ export const create = ({
     dynamicFeePerByte = Number(dynamicFeePerByte);
 
     const senderAddress = extractAddress(passphrase, config);
-    const unspentTxOuts = await exports.getUnspentTransactionOutputs(senderAddress, config);
+    const unspentTxOuts = await getUnspentTransactionOutputs(senderAddress, network);
 
     // Estimate total cost (currently estimates max cost by assuming the worst case)
     const estimatedMinerFee = calculateTransactionFee({

@@ -6,7 +6,7 @@ import { tokenMap } from '../../../constants/tokens';
 
 export const getDerivedPathFromPassphrase = (passphrase, config) => {
   const seed = Lisk.passphrase.Mnemonic.mnemonicToSeed(passphrase);
-  return bip32.fromSeed(seed).derivePath(config.derivationPath);
+  return bip32.fromSeed(seed, config.network).derivePath(config.derivationPath);
 };
 
 export const extractPublicKey = (passphrase, config) =>
