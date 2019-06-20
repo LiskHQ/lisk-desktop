@@ -25,14 +25,12 @@ class DelegateAnimation extends React.Component {
     const { status } = this.props;
     const { loop } = this.state;
     switch (status) {
-      case 'pending':
-        return loop ? 'delegatePending' : 'delegateCreated';
       case 'ok':
         return 'delegateConfirmed';
       case 'fail':
         return 'delegateDeclined';
       default:
-        return 'delegatePending';
+        return loop ? 'delegatePending' : 'delegateCreated';
     }
   }
 
@@ -66,13 +64,12 @@ class DelegateAnimation extends React.Component {
 DelegateAnimation.propTypes = {
   className: PropTypes.string,
   status: PropTypes.oneOf(['ok', 'pending', 'fail']),
-  onLoopComplete: PropTypes.func,
+  onLoopComplete: PropTypes.func.isRequired,
 };
 
 DelegateAnimation.defaultProps = {
   className: '',
   status: 'pending',
-  onLoopComplete: () => null,
 };
 
 export default DelegateAnimation;

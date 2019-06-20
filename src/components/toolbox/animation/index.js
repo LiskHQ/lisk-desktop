@@ -36,7 +36,7 @@ class Animation extends React.Component {
       autoplay,
       loop,
     };
-    if (this.el) this.anim = lottie.loadAnimation(this.options);
+    this.anim = lottie.loadAnimation(this.options);
   }
 
   bindListeners() {
