@@ -51,7 +51,7 @@ class WalletTransactionsV2 extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.account.isDelegate) {
+    if (this.props.account.delegate) {
       this.props.updateAccountDelegateStats(this.props.account);
     }
     this.props.searchAccount({
@@ -184,7 +184,7 @@ class WalletTransactionsV2 extends React.Component {
 
     const { t, account, activeToken } = this.props;
 
-    const delegate = account.isDelegate
+    const delegate = account.delegate
       ? { account, ...account.delegate }
       : {};
 
@@ -228,7 +228,7 @@ class WalletTransactionsV2 extends React.Component {
             loading={this.props.loading}
             votes={this.props.votes}
             tabName={this.props.t('Votes')} /> : null}
-          {account.isDelegate && delegate.txDelegateRegister
+          {account.delegate && delegate.txDelegateRegister
             ? (<DelegateTab
               tabClassName={'delegate-statistics'}
               tabName={t('Delegate')}
