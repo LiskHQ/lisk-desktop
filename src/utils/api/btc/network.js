@@ -3,12 +3,16 @@ import * as popsicle from 'popsicle';
 import networks from '../../../constants/networks';
 import getBtcConfig from './config';
 
+export const getNetworkCode = network => (
+  network.name === networks.mainnet.name ?
+    networks.mainnet.code :
+    networks.testnet.code
+);
+
 // eslint-disable-next-line import/prefer-default-export
 export const getAPIClient = (network) => {
   // TODO update getBtcConfig to accept network name instead of code
-  const config = getBtcConfig(network.name === networks.mainnet.name ?
-    networks.mainnet.code :
-    networks.testnet.code);
+  const config = getBtcConfig(getNetworkCode(network));
   return {
     get: path => (new Promise(async (resolve, reject) => {
       try {

@@ -4,6 +4,7 @@ import { BigNumber } from 'bignumber.js';
 import ConverterV2 from '../../converterV2';
 import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
 import { InputV2, AutoresizeTextarea } from '../../toolbox/inputsV2';
+import { getNetworkCode } from '../../../utils/api/btc/network';
 import Bookmark from '../../bookmarkV2';
 import SpinnerV2 from '../../spinnerV2/spinnerV2';
 import svg from '../../../utils/svgIcons';
@@ -191,7 +192,7 @@ class Form extends React.Component {
 
   // eslint-disable-next-line max-statements
   validateBookmark() {
-    const { token } = this.props;
+    const { token, networkConfig } = this.props;
     let recipient = this.state.fields.recipient;
     let isAccountValid = '';
     let isAddressValid = '';
@@ -202,7 +203,7 @@ class Form extends React.Component {
         .find(account => (account.title.toLowerCase() === recipient.value.toLowerCase()) ||
           account.address.toLowerCase() === recipient.value.toLowerCase()) || false;
     }
-    isAddressValid = validateAddress(token, recipient.value) === 0;
+    isAddressValid = validateAddress(token, recipient.value, getNetworkCode(networkConfig)) === 0;
 
     // istanbul ignore if
     if (!isAccountValid && !isAddressValid && recipient.value) {
