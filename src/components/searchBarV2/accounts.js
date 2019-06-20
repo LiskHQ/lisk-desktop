@@ -22,9 +22,10 @@ const Accounts = ({
         accounts.map((account, index) => (
           <div
             key={index}
+            data-index={index}
             className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} account-row`}
-            onClick={() => onSelectedRow(account.address, 'account')}
-            onMouseEnter={/* istanbul ignore next */ () => updateRowItemIndex(index)}
+            onClick={() => onSelectedRow(account.address)}
+            onMouseEnter={updateRowItemIndex}
           >
             <AccountVisual address={account.address} size={30} />
             <div className={styles.accountInformation}>

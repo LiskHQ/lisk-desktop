@@ -1,17 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
 import MenuItems from './menuItems';
-import UserAccount from './userAccount';
-import NavigationButton from './navigationButtons';
+import UserAccount from './accountMenu/userAccount';
+import NavigationButtons from './navigationButtons';
 import Piwik from '../../utils/piwik';
 import menuLinks from './constants';
-import svg from '../../utils/svgIcons';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
 import SearchBarV2 from '../searchBarV2';
+import Network from './network';
 import styles from './topBar.css';
 
-import liskLogo from '../../assets/images/lisk-logo-v2.svg';
+import OutsideClickHandler from '../toolbox/outsideClickHandler';
+import Icon from '../toolbox/icon';
+import Autologout from './autologout/autologout';
 
 class TopBar extends React.Component {
   constructor(props) {
@@ -21,16 +22,12 @@ class TopBar extends React.Component {
       openDropdown: '',
     };
 
-    this.elementsRef = {
-      avatar: null,
-      search: null,
-      searchInput: null,
-    };
+    this.searchInput = null;
 
     this.onLogout = this.onLogout.bind(this);
-    this.onHandleClick = this.onHandleClick.bind(this);
-    this.onHandleClickOutside = this.onHandleClickOutside.bind(this);
-    this.setElementsRefs = this.setElementsRefs.bind(this);
+    this.handleSearchDropdown = this.onHandleClick.bind(this, 'search');
+    this.handleAccountDropdown = this.onHandleClick.bind(this, 'account');
+    this.onCountdownComplete = this.onCountdownComplete.bind(this);
   }
 
   onLogout() {
@@ -40,108 +37,117 @@ class TopBar extends React.Component {
   }
 
   onHandleClick(name) {
-    if (this.state.openDropdown !== name) {
-      document.addEventListener('click', this.onHandleClickOutside, false);
-      if (name === 'search') setTimeout(() => { this.elementsRef.searchInput.focus(); }, 150);
-    } else {
-      document.removeEventListener('click', this.onHandleClickOutside, false);
-    }
-
-    this.setState(prevState => ({
-      openDropdown: prevState.openDropdown === name ? '' : name,
-    }));
-  }
-
-  setElementsRefs(node) {
-    const elementName = node && node.dataset && node.dataset.name;
-
-    this.elementsRef = elementName
-      ? {
-        ...this.elementsRef,
-        [elementName]: node,
-      }
-      : this.elementsRef;
-  }
-
-  // istanbul ignore next
-  onHandleClickOutside(e) {
     const { openDropdown } = this.state;
-    const elementRef = this.elementsRef[openDropdown];
 
-    if (elementRef && elementRef.contains(e.target)) return;
-    this.onHandleClick(openDropdown);
+    if (name === 'search' && openDropdown !== name) {
+      setTimeout(() => this.searchInput.focus(), 150);
+    }
+    this.setState({
+      openDropdown: openDropdown === name ? '' : name,
+    });
+  }
+
+  /* istanbul ignore next */
+  onCountdownComplete() {
+    this.props.logOut();
+    this.props.history.replace(routes.loginV2.path);
+  }
+
+  /* istanbul ignore next */
+  isTimerEnabled() {
+    const { autoLogout, account } = this.props;
+
+    return autoLogout &&
+      account.expireTime &&
+      account.expireTime !== 0 &&
+      account.passphrase &&
+      account.passphrase.length > 0;
   }
 
   render() {
-    const { t, account } = this.props;
+    const {
+      t, account, history, peers, token, settingsUpdated,
+      closeDialog, resetTimer, setActiveDialog,
+    } = this.props;
     const { openDropdown } = this.state;
 
     const items = menuLinks(t);
-    const isUserLogout = Object.keys(account).length === 0 || account.afterLogout;
-    const isUserDataFetched = (account.balance) || account.balance === 0;
+    const isUserLogout = !!(Object.keys(account).length === 0 || account.afterLogout);
 
     return (
       <div className={`${styles.wrapper} top-bar`}>
-        <div className={styles.elements}>
-          <img src={liskLogo} className={'topbar-logo'}/>
+        <div>
+          <div className={styles.logo}>
+            <Icon name={'liskLogo'} className={'topbar-logo'} />
+          </div>
 
-          <NavigationButton
-            account={this.props.account}
-            history={this.props.history}
+          <NavigationButtons
+            account={account}
+            history={history}
           />
 
           <MenuItems
+            token={token}
             isUserLogout={isUserLogout}
             items={items}
             location={this.props.location}
+          />
+        </div>
+        <div>
+          <Network
+            peers={peers}
             t={t}
           />
 
-          {
-            isUserDataFetched ?
-              <UserAccount
-                className={styles.userAccount}
-                account={this.props.account}
-                isDropdownEnable={openDropdown === 'avatar'}
-                onDropdownToggle={this.onHandleClick}
-                onLogout={this.onLogout}
-                setDropdownRef={this.setElementsRefs}
+          {this.isTimerEnabled() ? (
+            <div className={styles.timer}>
+              <Autologout
+                onCountdownComplete={this.onCountdownComplete}
+                account={account}
+                closeDialog={closeDialog}
+                history={history}
+                resetTimer={resetTimer}
+                setActiveDialog={setActiveDialog}
                 t={t}
               />
-              : null
-          }
+            </div>
+          ) : null}
 
-          {
-            isUserLogout &&
-              <div className={styles.signIn}>
-                <p>{t('Welcome back')}</p>
-                <span>
-                  <Link to={'/'}>{t('Sign in')}</Link>
-                  {t('for full access')}
-                </span>
-              </div>
-          }
 
-          <div className={`${styles.searchButton} search-section`}
-            data-name={'search'}
-            ref={this.setElementsRefs}
+          <UserAccount
+            token={token}
+            className={styles.userAccount}
+            account={account}
+            isDropdownEnable={openDropdown === 'account'}
+            onDropdownToggle={this.handleAccountDropdown}
+            onLogout={this.onLogout}
+            settingsUpdated={settingsUpdated}
+            isUserLogout={isUserLogout}
+            t={t}
+          />
+
+          <OutsideClickHandler
+            className={`${styles.searchButton} search-section`}
+            onOutsideClick={this.handleSearchDropdown}
+            disabled={openDropdown !== 'search'}
+            wrapper={<label />}
           >
-            <img
+            <Icon
+              onClick={this.handleSearchDropdown}
               className={'search-icon'}
-              src={openDropdown === 'search' ? svg.search_icon_active : svg.search_icon_inactive}
-              onClick={() => this.onHandleClick('search')}
+              name={`search_icon_${openDropdown === 'search' ? 'active' : 'inactive'}`}
             />
-
             <DropdownV2
               showDropdown={openDropdown === 'search'}
-              className={`${styles.searchDropdown}`}>
+              className={`${styles.searchDropdown}`}
+            >
               <SearchBarV2
-                setSearchBarRef={this.setElementsRefs}
+                setSearchBarRef={(node) => { this.searchInput = node; } }
                 history={this.props.history}
-                onSearchClick={this.onHandleClick}
+                onSearchClick={this.handleSearchDropdown}
               />
             </DropdownV2>
-          </div>
+          </OutsideClickHandler>
         </div>
       </div>
     );

@@ -111,7 +111,7 @@ class Setting extends React.Component {
                   />
                   <div>
                   <span className={styles.labelName}>{t('Auto Logout')}</span>
-                  <p>{t('Log out automatically after a specified amount of time.')}</p>
+                  <p>{t('Log out automatically after 10 minutes.')}</p>
                   </div>
               </label>
               {isAuthenticated ?

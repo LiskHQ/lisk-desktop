@@ -19,9 +19,10 @@ const Delegates = ({
       delegates.map((delegate, index) => (
         <div
           key={index}
+          data-index={index}
           className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} delegates-row`}
-          onClick={() => onSelectedRow(delegate.account.address, 'account')}
-          onMouseEnter={/* istanbul ignore next */ () => updateRowItemIndex(index)}
+          onClick={() => onSelectedRow(delegate.account.address)}
+          onMouseEnter={updateRowItemIndex}
         >
           <AccountVisual address={delegate.account.address} size={30} />
           <div className={styles.accountInformation}>
