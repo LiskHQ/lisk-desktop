@@ -4,6 +4,7 @@ import TransactionTypeFigure from '../../transactions/typeFigure/TransactionType
 import TransactionAddress from '../../transactions/address/TransactionAddress';
 import TransactionAmount from '../../transactions/amount/TransactionAmount';
 import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
+import { tokenMap } from '../../../constants/tokens';
 import routes from '../../../constants/routes';
 import styles from './recentTransactions.css';
 
@@ -22,11 +23,19 @@ const TransactionList = ({
     <div className={styles.list}>
     {
       transactions.map((tx, index) =>
-        <div key={index} className={styles.listRow}>
-          <TransactionTypeFigure
-            address={tx.recipientId}
-            transactionType={tx.type}
-          />
+        <Link
+          key={index}
+          to={`${routes.transactions.pathPrefix}${routes.transactions.path}/${tx.id}`}
+          className={`${styles.listRow} transactions-row`}
+        >
+          {
+            activeToken === tokenMap.LSK.key
+            ? <TransactionTypeFigure
+                address={tx.recipientId}
+                transactionType={tx.type}
+              />
+            : null
+          }
           <TransactionAddress
             address={tx.recipientId}
             bookmarks={bookmarks}
@@ -39,11 +48,11 @@ const TransactionList = ({
             token={activeToken}
             transaction={tx}
           />
-        </div>)
+        </Link>)
     }
     </div>
-    <Link to={routes.wallet.path}>
-      <SecondaryButtonV2>{t('View All')}</SecondaryButtonV2>
+    <Link to={routes.wallet.path} className={`${styles.viewAllLink} view-all`}>
+      <SecondaryButtonV2 className={styles.viewAllBtn}>{t('View All')}</SecondaryButtonV2>
     </Link>
   </div>
 );

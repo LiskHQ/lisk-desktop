@@ -1,7 +1,7 @@
 // istanbul ignore file
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import MyAccount from './myAccount';
+import WalletDetails from './walletDetails';
 
 
 const mapStateToProps = state => ({
@@ -9,4 +9,4 @@ const mapStateToProps = state => ({
   settings: state.settings,
 });
 
-export default connect(mapStateToProps)(translate()(MyAccount));
+export default connect(mapStateToProps)(translate()(WalletDetails));

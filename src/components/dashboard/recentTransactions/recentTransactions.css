@@ -43,14 +43,25 @@
       justify-content: flex-start;
       align-items: center;
       border-bottom: 1px solid var(--color-mystic);
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--color-maastricht-blue);
 
       & > span:last-child {
         margin-left: auto;
       }
     }
+  }
 
-    & > .listRow:last-child {
-      border-bottom: 1px solid transparent;
-    }
+  & .viewAllLink {
+    margin-top: 22px;
+  }
+
+  & .viewAllBtn {
+    @mixin contentNormal bold;
+
+    width: 85px;
+    height: 36px;
+    padding: 0;
   }
 }

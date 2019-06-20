@@ -2,65 +2,52 @@ import React from 'react';
 import styles from './newsFeed.css';
 import News from './news';
 import Box from '../boxV2';
-import logo from '../../assets/images/Lisk-Logo.svg';
-import ShowMore from '../showMore';
+import EmptyState from '../emptyStateV2';
+import Icon from '../toolbox/icon';
 
 class NewsFeed extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showMore: false,
-    };
-
-    props.getNewsFeed();
-  }
-
-  onShowMore() {
-    this.setState({ showMore: !this.state.showMore });
+  componentDidMount() {
+    this.props.getNewsFeed();
   }
 
   render() {
-    const onShowMore = this.state.showMore ? styles.showMore : '';
+    const {
+      channels,
+      newsFeed,
+      showNewsFeedEmptyState,
+      t,
+    } = this.props;
 
-    const filteredNewsFeed = this.props.newsFeed
-      ? this.props.newsFeed.filter(feed => this.props.channels[feed.source]) : [];
+    const filteredNewsFeed = newsFeed.filter(feed => channels[feed.source]) || [];
 
     return (
       <Box className={`newsFeed-box ${styles.newsFeedBox}`}>
-        <header className={styles.header}>
-          <h1>{this.props.t('News')}</h1>
+        <header>
+          <h1>{t('Community feed')}</h1>
         </header>
 
-        <div className={`${styles.container} ${onShowMore}`}>
-          {
-            <div>
-              {
-                filteredNewsFeed.length > 0 &&
-                filteredNewsFeed.map((news, index) =>
-                  <div className={styles.newsWrapper} key={`newsWrapper-${index}`}>
-                    <News
-                      t={this.props.t}
-                      {...news} />
-                  </div>)
-              }
-              {
-                this.props.showNewsFeedEmptyState && filteredNewsFeed.length === 0 &&
-                (<div className={`${styles.emptyNews} empty-news`}>
-                  {this.props.t('No newsfeed available')}
-                  <img className={styles.liskLogo} src={logo} />
+        <div className={`${styles.container}`}>
+          <div>
+            {
+              filteredNewsFeed.length
+              ? filteredNewsFeed.map((news, index) =>
+                <div className={styles.newsWrapper} key={`newsWrapper-${index}`}>
+                  <News
+                    t={t}
+                    {...news} />
                 </div>)
-              }
-            </div>
-          }
+              : null
+            }
+            {
+              showNewsFeedEmptyState && !filteredNewsFeed.length &&
+              <EmptyState className={'empty-news'}>
+                <Icon name={'noTweetsIcon'} />
+                <h1>{t('No available tweets')}</h1>
+                <p>{t('At this moment there is a connection problem with the tweets feed')}</p>
+              </EmptyState>
+            }
+          </div>
         </div>
-        {
-          filteredNewsFeed.length > 4 && !this.state.showSettings &&
-          <ShowMore
-            className={`${styles.showMoreAlign} show-more`}
-            onClick={() => this.onShowMore()}
-            text={this.state.showMore ? this.props.t('Show Less') : this.props.t('Show More')}
-          />
-        }
       </Box>
     );
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from '../toolbox/icon';
 import styles from './news.css';
 
 class News extends React.Component {
@@ -12,30 +13,30 @@ class News extends React.Component {
 
   render() {
     const {
-      source, content, timestamp, url, t,
+      source, content, timestamp, url,
     } = this.props;
 
     const hours = Math.floor(Math.abs(new Date() - new Date(timestamp)) / 36e5);
-    // hours, just now
+    // istanbul ignore next
     let timestampMessage = hours ? `${hours}h ago` : 'just now';
-    // more than day
+    // istanbul ignore next
     timestampMessage = hours > 24 ? `${Math.floor(hours / 24)}d ago` : timestampMessage;
 
     // Makes first letter capital
     const sourceName = source.charAt(0).toUpperCase() + source.substr(1);
     return (
-      <div className={`news-item ${styles.news}`}>
+      <a href={url} target={'_blank'} rel={'noopener noreferrer'} className={`${styles.news} news-item`}>
         <div className={styles.header}>
-          <div className={styles.source}>{sourceName}</div>
-          <div className={styles.timestampMessage}>{timestampMessage}</div>
+          <Icon name={'newsFeedAvatar'} />
+          <div>
+            <span className={styles.title}>{sourceName}</span>
+            <span className={styles.subtitle}>{timestampMessage}</span>
+          </div>
         </div>
         <div className={styles.description}>
           {url ? content.replace(url, '') : url}
         </div>
-        <div className={styles.readMore}>
-          <a href={url} target="_blank">{t('Show More')}</a>
-        </div>
-      </div>
+      </a>
     );
   }
 }
