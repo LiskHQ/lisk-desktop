@@ -51,10 +51,6 @@
       }
     }
 
-    & > a:nth-last-child(2) {
-      border-bottom: 0;
-    }
-
     & .footer {
       width: 100%;
       box-sizing: border-box;
