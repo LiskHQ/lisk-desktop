@@ -66,13 +66,13 @@ class TransactionRowV2 extends React.Component {
     return (
       <TableRow className={`${grid.row} ${styles.row} ${!hasConfirmations ? styles.pending : ''} transactions-row`} onClick={() => onClick(this.props)}>
         <div className={`${grid['col-sm-4']} ${grid['col-lg-3']} transactions-cell`}>
-          <Icon name={address === value.senderId ? 'outgoing' : 'incoming' } className={styles.inOutIcon} />
+          <Icon name={address === value.recipientId ? 'incoming' : 'outgoing' } className={styles.inOutIcon} />
           <TransactionTypeFigure
-            address={address === value.senderId ? value.recipientId : value.senderId }
+            address={address === value.recipientId ? value.senderId : value.recipientId }
             transactionType={value.type}
           />
           <TransactionAddress
-            address={address === value.senderId ? value.recipientId : value.senderId }
+            address={address === value.recipientId ? value.senderId : value.recipientId }
             bookmarks={bookmarks}
             t={t}
             token={token}

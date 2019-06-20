@@ -374,7 +374,10 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
     dispatch(broadcastedTransactionSuccess(transaction));
 
     if (activeToken !== tokenMap.BTC.key) {
-      dispatch(addPendingTransaction(transaction));
+      dispatch(addPendingTransaction({
+        ...transaction,
+        senderId: extractAddress(transaction.senderPublicKey),
+      }));
     }
 
     return dispatch(passphraseUsed(transaction.passphrase));
