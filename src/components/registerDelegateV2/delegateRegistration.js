@@ -1,7 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import MultiStep from '../multiStep';
-import SelectName from './selectName';
+import SelectName from './selectName/selectName';
+import DelegateRegistrationSummary from './summary/delegateRegistrationSummary';
 import styles from './delegateRegistration.css';
 
 class DelegateRegistration extends React.Component {
@@ -26,7 +27,12 @@ class DelegateRegistration extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const {
+      account,
+      delegate,
+      delegatesFetched,
+      t,
+    } = this.props;
 
     return (
       <section className={`${styles.wrapper}`}>
@@ -35,8 +41,14 @@ class DelegateRegistration extends React.Component {
           prevPage={this.goBack}
           finalCallback={this.submitDelegate}
           backButtonLabel={t('Back')}>
-          <SelectName />
-          <SelectName />
+          <SelectName
+            t={t}
+            account={account}
+            delegate={delegate}
+            delegatesFetched={delegatesFetched}/>
+          <DelegateRegistrationSummary
+            t={t}
+            account={account}/>
           <SelectName />
         </MultiStep>
       </section>

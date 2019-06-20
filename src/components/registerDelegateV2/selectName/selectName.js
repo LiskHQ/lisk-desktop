@@ -8,6 +8,7 @@ import SpinnerV2 from '../../spinnerV2/spinnerV2';
 import Icon from '../../toolbox/icon';
 import { fromRawLsk } from '../../../utils/lsk';
 import regex from '../../../utils/regex';
+import links from '../../../constants/externalLinks';
 import Fees from '../../../constants/fees';
 import styles from './selectName.css';
 
@@ -27,6 +28,12 @@ class SelectName extends React.Component {
   }
 
   componentDidMount() {
+    const { prevState } = this.props;
+
+    if (Object.entries(prevState).length) {
+      this.setState({ nickname: prevState.nickname });
+    }
+
     this.hasUserHasEnoughFunds();
   }
 
@@ -84,9 +91,9 @@ class SelectName extends React.Component {
       loading,
       nickname,
     } = this.state;
-    const { t } = this.props;
+    const { t, nextStep } = this.props;
 
-    const isBtnDisabled = !!error || nickname.length === 0;
+    const isBtnDisabled = !!error || nickname.length === 0 || loading;
 
     return (
       <Box className={styles.box}>
@@ -109,7 +116,13 @@ class SelectName extends React.Component {
             }
           </p>
 
-          <a className={styles.link}>{t('Learn more')}</a>
+          <a
+            className={styles.link}
+            href={links.votingAndDelegates}
+            target='_blank'
+            rel='noopener noreferrer'>
+            {t('Learn more')}
+          </a>
 
           <label className={styles.nicknameLabel}>{t('Your nickname')}</label>
 
@@ -145,6 +158,7 @@ class SelectName extends React.Component {
 
           <footer>
             <PrimaryButtonV2
+              onClick={() => nextStep({ nickname })}
               disabled={isBtnDisabled}
               className={`${styles.confirmBtn} confirm-btn`}>
               {t('Go to Confirmation')}
