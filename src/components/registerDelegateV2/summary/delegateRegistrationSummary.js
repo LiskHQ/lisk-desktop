@@ -22,6 +22,7 @@ class DelegateRegistrationSummary extends React.Component {
     };
 
     this.checkSecondPassphrase = this.checkSecondPassphrase.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -53,6 +54,22 @@ class DelegateRegistrationSummary extends React.Component {
         value: passphrase,
       },
     });
+  }
+
+  onSubmit() {
+    const { secondPassphrase } = this.state;
+    const {
+      account, nickname, delegateRegistered, nextStep,
+    } = this.props;
+
+    delegateRegistered({
+      account: account.info.LSK,
+      username: nickname,
+      passphrase: account.passphrase,
+      secondPassphrase: secondPassphrase.value,
+    });
+
+    nextStep();
   }
 
   render() {
@@ -104,6 +121,7 @@ class DelegateRegistrationSummary extends React.Component {
         <footer>
             <PrimaryButtonV2
               disabled={isConfirmBtnDisabled}
+              onClick={this.onSubmit}
               className={`${styles.confirmBtn} confirm-btn`}>
               {t('Become a delegate')}
             </PrimaryButtonV2>
