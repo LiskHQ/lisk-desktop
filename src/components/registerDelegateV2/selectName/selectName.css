@@ -29,6 +29,7 @@
 
     color: var(--color-ultramarine-blue);
     margin-bottom: 24px;
+    text-decoration: none;
   }
 
   & > .nicknameLabel {
