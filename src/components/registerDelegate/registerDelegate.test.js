@@ -32,7 +32,11 @@ describe('RegisterDelegate', () => {
   let wrapper;
 
   const peers = { data: {} };
+  const settings = {
+    token: { active: 'LSK' },
+  };
   store = configureMockStore([])({
+    settings,
     peers,
     account,
     delegate,
