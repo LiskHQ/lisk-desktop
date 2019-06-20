@@ -208,7 +208,7 @@ describe('Account middleware', () => {
       },
     };
     middleware(store)(next)(accountLoggedInAction);
-    expect(store.dispatch).to.have.been.calledWith({ type: actionTypes.walletUpdated, data: {} });
+    expect(accountActions.accountDataUpdated).to.have.been.calledWith();
   });
 
   it(`should clean up on ${actionTypes.accountLoggedOut} `, () => {

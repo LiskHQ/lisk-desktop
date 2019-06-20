@@ -246,7 +246,7 @@ describe('actions: account', () => {
       };
 
       accountDataUpdated(data)(dispatch, getState);
-      chaiExpect(dispatch).to.have.callCount(4);
+      chaiExpect(dispatch).to.have.callCount(3);
       chaiExpect(peersActionsStub).to.have.not.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
     });
 

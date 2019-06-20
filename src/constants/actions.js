@@ -75,7 +75,6 @@ const actionTypes = {
   votesCleared: 'VOTES_CLEARED',
   votesUpdated: 'VOTES_UPDATED',
   voteToggled: 'VOTE_TOGGLED',
-  walletUpdated: 'WALLET_UPDATED',
   deviceListUpdated: 'DEVICE_LIST_UPDATED',
   transactionCreatedSuccess: 'TRANSACTION_CREATED_SUCCESS',
   transactionCreatedError: 'TRANSACTION_CREATED_ERROR',

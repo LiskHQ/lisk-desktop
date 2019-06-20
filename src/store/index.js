@@ -4,7 +4,6 @@ import actionTypes from '../constants/actions';
 import env from '../constants/env';
 import * as reducers from './reducers';
 import middleWares from './middlewares';
-import walletsSubscriber from './subscribers/wallets';
 
 const App = combineReducers(reducers);
 
@@ -16,8 +15,6 @@ const store = createStore(App, composeEnhancers(applyMiddleware(...middleWares))
 if (!env.test) {
   store.dispatch({ type: actionTypes.storeCreated });
 }
-
-store.subscribe(walletsSubscriber.bind(null, store));
 
 // ignore this in coverage as it is hard to test and does not run in production
 /* istanbul ignore if */
