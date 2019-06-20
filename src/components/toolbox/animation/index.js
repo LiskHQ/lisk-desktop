@@ -41,9 +41,8 @@ class Animation extends React.Component {
 
   bindListeners() {
     const { events } = this.props;
-    Object.keys(events).forEach((event) => {
-      this.anim.addEventListener(event, events[event]);
-    });
+    Object.keys(events).forEach(event =>
+      this.anim.addEventListener(event, events[event]));
   }
 
   unbindListeners() {
