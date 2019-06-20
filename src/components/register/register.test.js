@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
 import i18n from '../../i18n';
-import RegisterV2 from './registerV2';
+import Register from './register';
 
 describe('V2 Register Process', () => {
   let wrapper;
@@ -20,7 +20,7 @@ describe('V2 Register Process', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<MemoryRouter><RegisterV2 /></MemoryRouter>, options);
+    wrapper = mount(<MemoryRouter><Register /></MemoryRouter>, options);
   });
 
   it('Should render on initial step -> Choose Avatar', () => {

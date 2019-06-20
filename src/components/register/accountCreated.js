@@ -5,7 +5,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '../../constants/routes';
 import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 import AccountVisual from '../accountVisual';
-import registerStyles from './registerV2.css';
+import registerStyles from './register.css';
 import styles from './accountCreated.css';
 
 const AccountCreated = ({ t, account }) => (

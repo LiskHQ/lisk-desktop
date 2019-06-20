@@ -8,9 +8,9 @@ import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
 import ConfirmPassphrase from './confirmPassphrase';
 import AccountCreated from './accountCreated';
-import styles from './registerV2.css';
+import styles from './register.css';
 
-class RegisterV2 extends React.Component {
+class Register extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -63,4 +63,4 @@ class RegisterV2 extends React.Component {
   }
 }
 
-export default RegisterV2;
+export default Register;

@@ -3,7 +3,7 @@ import fillWordsList from 'bitcore-mnemonic/lib/words/english';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
-import registerStyles from './registerV2.css';
+import registerStyles from './register.css';
 import styles from './confirmPassphrase.css';
 import Options from './confirmPassphraseOptions';
 

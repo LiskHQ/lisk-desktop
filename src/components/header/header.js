@@ -29,13 +29,13 @@ class Header extends React.Component {
     return !this.props.isAuthenticated
       && !this.props.account.loading
       && pathname !== routes.loginV2.path
-      && ![routes.registerV2.path, routes.addAccount.path]
+      && ![routes.register.path, routes.addAccount.path]
         .some(el => pathname.includes(el));
   }
 
   shouldShowSearchBar() {
     const { pathname } = this.props.location;
-    return ![routes.registerV2.path, routes.addAccount.path]
+    return ![routes.register.path, routes.addAccount.path]
       .some(el => pathname.includes(el));
   }
 
