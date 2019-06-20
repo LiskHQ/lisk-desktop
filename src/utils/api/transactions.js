@@ -1,6 +1,7 @@
 import { validateAddress } from '../validators';
 import { tokenMap, tokenKeys } from '../../constants/tokens';
 import api from './';
+import networks from '../../constants/networks';
 
 // TODO these imports are temporary until api is implemented for them
 import { send as ss, unconfirmedTransactions as ut } from './lsk/transactions';
@@ -9,7 +10,9 @@ export const send = ss;
 export const unconfirmedTransactions = ut;
 
 export const getTokenFromAddress = address => (
-  tokenKeys.find(tokenKey => validateAddress(tokenKey, address) === 0)
+  [networks.mainnet.code, networks.testnet.code]
+    .map(code => tokenKeys.find(tokenKey => validateAddress(tokenKey, address, code) === 0))
+    .find(key => key)
 );
 
 const getTokenFromTransactionId = id => (
