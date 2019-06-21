@@ -102,13 +102,12 @@ export const secondPassphraseRegistered = ({ secondPassphrase, account, passphra
 
 export const updateDelegateAccount = ({ publicKey }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const { peers: { liskAPIClient }, account } = getState();
     return getDelegates(liskAPIClient, { publicKey })
       .then((response) => {
         dispatch(accountUpdated({
-          token: 'LSK',
           delegate: {
-            ...(getState().account.info.LSK.delegate || {}),
+            ...(account.delegate || {}),
             ...response.data[0],
           },
           isDelegate: true,

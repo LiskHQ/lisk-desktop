@@ -5,7 +5,7 @@ import Fees from '../../../constants/fees';
 import TransactionSummary from '../../transactionSummary';
 import styles from './summary.css';
 
-class DelegateRegistrationSummary extends React.Component {
+class Summary extends React.Component {
   constructor(props) {
     super(props);
 
@@ -32,21 +32,22 @@ class DelegateRegistrationSummary extends React.Component {
       t, nickname, account, prevStep,
     } = this.props;
 
+    const onConfirmAction = {
+      label: t('Become a delegate'),
+      onClick: this.onSubmit,
+    };
+    const onCancelAction = {
+      label: t('Go back'),
+      onClick: () => { prevStep({ nickname }); },
+    };
+
     return (
       <TransactionSummary
         title={t('Become a delegate summary')}
         t={t}
         account={account}
-        confirmButton={{
-          label: t('Become a delegate'),
-          onClick: this.onSubmit,
-        }}
-        cancelButton={{
-          label: t('Go back'),
-          onClick: () => {
-            prevStep({ nickname });
-          },
-        }}
+        confirmButton={onConfirmAction}
+        cancelButton={onCancelAction}
         fee={fromRawLsk(Fees.registerDelegate)}
       >
         <section>
@@ -66,4 +67,4 @@ class DelegateRegistrationSummary extends React.Component {
   }
 }
 
-export default DelegateRegistrationSummary;
+export default Summary;

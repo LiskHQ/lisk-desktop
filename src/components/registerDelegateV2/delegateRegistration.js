@@ -1,8 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import MultiStep from '../multiStep';
-import SelectName from './selectName/selectName';
-import DelegateRegistrationSummary from './summary/delegateRegistrationSummary';
+import SelectName from './selectName/SelectName';
+import Summary from './summary/summary';
+import Status from './status/status';
 import styles from './delegateRegistration.css';
 
 class DelegateRegistration extends React.Component {
@@ -36,10 +37,11 @@ class DelegateRegistration extends React.Component {
             account={account}
             delegate={delegate}
             delegatesFetched={delegatesFetched}/>
-          <DelegateRegistrationSummary
+          <Summary
             t={t}
             account={account}
             delegateRegistered={delegateRegistered}/>
+          <Status t={t} delegate={delegate}/>
         </MultiStep>
       </section>
     );

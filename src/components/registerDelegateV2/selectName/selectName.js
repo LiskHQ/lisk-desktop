@@ -19,7 +19,7 @@ class SelectName extends React.Component {
     this.state = {
       nickname: '',
       error: false,
-      hasFunds: true,
+      inputDisabled: false,
       loading: false,
     };
 
@@ -28,12 +28,8 @@ class SelectName extends React.Component {
   }
 
   componentDidMount() {
-    const { prevState } = this.props;
-
-    if (Object.entries(prevState).length) {
-      this.setState({ nickname: prevState.nickname });
-    }
-
+    this.getNicknameFromPrevState();
+    this.checkIfUserIsDelegate();
     this.hasUserHasEnoughFunds();
   }
 
@@ -49,6 +45,11 @@ class SelectName extends React.Component {
     }
   }
 
+  getNicknameFromPrevState() {
+    const { prevState } = this.props;
+    if (Object.entries(prevState).length) this.setState({ nickname: prevState.nickname });
+  }
+
   hasUserHasEnoughFunds() {
     const { account, t } = this.props;
     const hasFunds = account.info &&
@@ -56,8 +57,18 @@ class SelectName extends React.Component {
 
     if (!hasFunds) {
       this.setState({
-        hasFunds: false,
+        inputDisabled: true,
         error: t('Insufficient funds (Fee: {{fee}} LSK)', { fee: fromRawLsk(Fees.registerDelegate) }),
+      });
+    }
+  }
+
+  checkIfUserIsDelegate() {
+    const { account, t } = this.props;
+    if (account && account.isDelegate) {
+      this.setState({
+        inputDisabled: true,
+        error: t('This account is a delegate already.'),
       });
     }
   }
@@ -87,7 +98,7 @@ class SelectName extends React.Component {
   render() {
     const {
       error,
-      hasFunds,
+      inputDisabled,
       loading,
       nickname,
     } = this.state;
@@ -143,7 +154,7 @@ class SelectName extends React.Component {
               value={nickname}
               placeholder={t('ie. Peter Pan')}
               className={`${styles.inputNickname} search-input`}
-              disabled={!hasFunds}
+              disabled={inputDisabled}
             />
             <SpinnerV2 className={`${styles.spinner} ${loading && nickname.length ? styles.show : styles.hide}`}/>
             <Icon
