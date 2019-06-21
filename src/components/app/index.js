@@ -59,8 +59,10 @@ class App extends React.Component {
                 {this.state.loaded &&
                   routesV2Layout.map((route, key) => (
                     <Route
-                      {...route}
+                      path={route.path}
                       key={key}
+                      component={route.component}
+                      exact={route.exact}
                     />
                   ))
                 }
@@ -82,7 +84,12 @@ class App extends React.Component {
                           <div>
                             {explorerRoutes.map((route, key) => (
                               <CustomRoute
-                                {...route}
+                                pathPrefix={route.pathPrefix}
+                                path={route.path}
+                                pathSuffix={route.pathSuffix}
+                                component={route.component}
+                                isPrivate={route.isPrivate}
+                                forbiddenTokens={route.forbiddenTokens}
                                 exact={true}
                                 key={key} />
                             ))}
@@ -93,7 +100,12 @@ class App extends React.Component {
                     {this.state.loaded &&
                       defaultRoutes.map((route, key) => (
                         <CustomRoute
-                          {...route}
+                          path={route.path}
+                          pathSuffix={route.pathSuffix}
+                          component={route.component}
+                          isPrivate={route.isPrivate}
+                          exact={route.exact}
+                          forbiddenTokens={route.forbiddenTokens}
                           key={key} />
                       ))
                     }
@@ -101,7 +113,8 @@ class App extends React.Component {
                     {
                       routesOutsideMainWrapper.map((route, key) => (
                         <CustomRoute
-                          {...route}
+                          path={routes[route].path}
+                          component={routes[route].component}
                           isPrivate={false}
                           exact={true}
                           key={key} />
