@@ -23,7 +23,7 @@ const BackupPassphrase = ({
       <PassphraseBackup
         account={account} t={t}
         paperWalletName='lisk_passphrase'
-        passphraseName={t('passphrase')}
+        passphraseName={t('Passphrase')}
       />
     </div>
 

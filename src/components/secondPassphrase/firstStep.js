@@ -22,7 +22,7 @@ const FirstStep = ({
       </p>
     </Trans>
     <PassphraseBackup account={account} t={t}
-      passphraseName={t('2nd passphrase')}
+      passphraseName={t('Second passphrase')}
       paperWalletName='lisk_2nd_passphrase' />
     <footer className={`${styles.footer} summary-footer`}>
         <PrimaryButtonV2
