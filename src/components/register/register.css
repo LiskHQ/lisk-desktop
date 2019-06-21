@@ -19,7 +19,7 @@
 
   & .button {
     margin-top: 12px;
-    width: 431px;
+    width: var(--footer-button-width);
 
     & > button {
       width: 100%;

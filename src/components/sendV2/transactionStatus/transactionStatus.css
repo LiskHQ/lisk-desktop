@@ -11,7 +11,7 @@
   box-sizing: border-box;
 
   & .btn {
-    width: 431px;
+    width: var(--footer-button-width);
   }
 
   & .bookmarkBtn {

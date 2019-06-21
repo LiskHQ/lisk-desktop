@@ -38,7 +38,7 @@
 }
 
 .reloadPageButton {
-  width: 431px;
+  width: var(--footer-button-width);
   margin-bottom: 6px;
   letter-spacing: 0.25px;
   line-height: 14px;
