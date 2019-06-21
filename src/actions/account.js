@@ -219,20 +219,16 @@ export const updateAccountDelegateStats = account =>
   };
 
 export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, getState) => {
-  const networkConfig = getState().network;
+  const { network: networkConfig, settings } = getState();
   dispatch(accountLoading());
 
   await getAccount({
     token: tokenMap.LSK.key, networkConfig, publicKey, passphrase,
   }).then(async (accountData) => {
-    const expireTime = (passphrase && getState().settings.autoLog) ?
+    const expireTime = (passphrase && settings.autoLog) ?
       Date.now() + accountConfig.lockDuration : 0;
-    let btcAccountData;
-    if (getState().settings.token.list.BTC) {
-      await getAccount({
-        token: tokenMap.BTC.key, networkConfig, passphrase,
-      }).then((response) => { btcAccountData = response; });
-    }
+    const btcAccountData = settings.token.list.BTC &&
+      await getAccount({ token: tokenMap.BTC.key, networkConfig, passphrase });
     dispatch(accountLoggedIn({
       passphrase,
       loginType: hwInfo ? loginType.ledger : loginType.normal,
