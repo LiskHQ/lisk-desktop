@@ -23,7 +23,7 @@
   }
 
   & .button {
-    width: 431px;
+    width: var(--footer-button-width);
     margin: 10px 0 20px;
   }
 }

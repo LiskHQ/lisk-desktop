@@ -9,7 +9,7 @@
 }
 
 .errorMessageContainer {
-  width: 431px;
+  width: var(--footer-button-width);
   margin: auto;
   text-align: center;
 

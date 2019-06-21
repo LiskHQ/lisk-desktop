@@ -6,7 +6,6 @@ import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import searchAll from '../utils/api/search';
 import transactionTypes from '../constants/transactionTypes';
-import { updateWallet } from './wallets';
 import { tokenMap } from '../constants/tokens';
 
 const searchDelegate = ({ publicKey, address }) =>
@@ -101,7 +100,6 @@ export const searchAccount = ({ address }) =>
           searchDelegate({ publicKey: accountData.publicKey, address })(dispatch, getState);
         }
         dispatch({ data: accountData, type: actionTypes.searchAccount });
-        dispatch(updateWallet(response, getState().peers));
         if (accountData.token === tokenMap.LSK.key) {
           searchVotes({ address })(dispatch, getState);
         }

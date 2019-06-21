@@ -1,49 +1,56 @@
-@import '../app/variables.css';
+@import '../app/variablesV2.css';
+@import '../app/mixins.css';
 
-:root {
-  --padding-top: 40px;
-}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+  align-items: center;
+  width: 100%;
+  max-width: 720px;
+  margin: auto;
 
-.register > div {
-  height: 100%;
-  overflow: hidden;
-  margin: 0 -48px;
-}
+  & .info {
+    @mixin contentLargest;
 
-.hasPaddingTop {
-  padding-top: var(--padding-top);
-}
+    letter-spacing: 0.21px;
+    line-height: 25px;
+    margin: 24px;
+    margin-bottom: 20px;
 
-@media (--medium-viewport) {
-  .hasPaddingTop {
-    height: 100vh; /* stylelint-disable-line */
+    & strong {
+      color: var(--color-maastricht-blue);
+    }
   }
-}
 
-@media (--small-viewport) {
-  .hasPaddingTop {
-    padding-top: var(--box-padding);
+  & .footer {
+    width: 100%;
+    min-width: 572px;
+    margin: 40px 0 20px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+
+    & > .confirmBtn {
+      width: var(--footer-button-width);
+    }
+
+    & > .editBtn {
+      margin-top: 5px;
+      width: auto !important;
+    }
   }
-}
 
-.hidden {
-  display: none;
-}
-
-@media (--xLarge-viewport) {
-  .register > div {
-    margin: 0 calc(var(--box-padding-left-XL) * -1);
+  & .account {
+    display: flex;
   }
-}
 
-@media (--large-viewport) {
-  .register > div {
-    margin: 0 calc(var(--box-padding-left-L) * -1);
-  }
-}
-
-@media (--medium-viewport) {
-  .register > div {
-    margin: 0 calc(var(--box-padding-left-M) * -1);
+  & .avatar {
+    margin-right: 10px;
+    margin-top: -1px;
   }
 }

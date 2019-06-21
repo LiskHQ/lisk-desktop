@@ -14,17 +14,20 @@ class Summary extends React.Component {
 
   onSubmit({ secondPassphrase }) {
     const {
-      account, nickname, delegateRegistered, nextStep,
+      account, nickname, submitDelegateRegistration, nextStep,
     } = this.props;
 
-    delegateRegistered({
-      account: account.info.LSK,
-      username: nickname,
-      passphrase: account.passphrase,
-      secondPassphrase,
-    });
+    const data = {
+      userInfo: {
+        account: account.info.LSK,
+        username: nickname,
+        passphrase: account.passphrase,
+        secondPassphrase,
+      },
+    };
 
-    nextStep();
+    submitDelegateRegistration(data.userInfo);
+    nextStep(data);
   }
 
   render() {

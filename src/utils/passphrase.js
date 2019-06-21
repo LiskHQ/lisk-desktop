@@ -83,7 +83,20 @@ export const generateSeed = ({
  * @returns {string} The generated passphrase
  */
 // eslint-disable-next-line no-buffer-constructor
-export const generatePassphrase = ({ seed }) => (new mnemonic(new Buffer(seed.join(''), 'hex'))).toString();
+export const generatePassphraseFromSeed = ({ seed }) => (new mnemonic(new Buffer(seed.join(''), 'hex'))).toString();
+
+/**
+ * Generates a random passphrase using browser crypto api
+ *
+ * @returns {string} The generated passphrase
+ */
+export const generatePassphrase = () => {
+  // istanbul ignore next
+  const crypotObj = window.crypto || window.msCrypto;
+  return generatePassphraseFromSeed({
+    seed: [...crypotObj.getRandomValues(new Uint16Array(16))].map(x => (`00${(x % 256).toString(16)}`).slice(-2)),
+  });
+};
 
 /**
    * Checks if passphrase is valid using mnemonic

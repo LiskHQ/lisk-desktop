@@ -9,7 +9,6 @@ app/*.map
 app/build
 app/build-testnet
 app/package-lock.json
-package-lock.json
 *.sw[pon]
 app/app.js
 .vscode
@@ -19,4 +18,3 @@ reports
 test/cypress/screenshots/
 test/cypress/videos/
 .history
-package-lock.json

@@ -7,6 +7,7 @@
   border-radius: var(--border-radius-standard);
   height: 48px;
   max-width: 100%;
+  min-width: 145px;
   outline: none;
   padding: 0 32px;
   text-transform: none;
@@ -18,14 +19,14 @@
   }
 
   &:global(.small) {
-    @mixin contentSmall bold;
+    @mixin contentNormal bold;
 
     height: 36px;
     padding: 0 20px;
   }
 
   &:global(.extra-small) {
-    @mixin contentSmall bold;
+    @mixin contentNormal bold;
 
     height: 32px;
     padding: 0 16px;

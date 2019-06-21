@@ -14,7 +14,7 @@ import HwWalletLogin from '../components/hwWalletLogin';
 import AccountVisualDemo from '../components/accountVisual/demo';
 import SendV2 from '../components/sendV2/send';
 import Splashscreen from '../components/splashscreen';
-import RegistrationV2 from '../components/registerV2/registerV2';
+import Register from '../components/register/register';
 import LoginV2 from '../components/loginV2';
 import Extensions from '../components/extensions';
 import TermsOfUse from '../components/termsOfUse';
@@ -157,9 +157,9 @@ export default {
     isV2Layout: true,
     exact: true,
   },
-  registerV2: {
+  register: {
     path: '/register',
-    component: RegistrationV2,
+    component: Register,
     isPrivate: false,
     isV2Layout: true,
   },

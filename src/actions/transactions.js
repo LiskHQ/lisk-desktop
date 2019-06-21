@@ -357,31 +357,28 @@ export const transactionCreated = data => async (dispatch, getState) => {
  * @param {Number} transaction.reference - Data field for LSK transactions
  * @param {String} transaction.secondPassphrase - Second passphrase for LSK transactions
  */
-export const transactionBroadcasted = transaction => async (dispatch, getState) => {
-  const { account, network, settings } = getState();
-  const activeToken = localStorage.getItem('btc') // TODO: Refactor after enabling BTC
-    ? settings.token.active
-    : tokenMap.LSK.key;
+export const transactionBroadcasted = (transaction, callback = () => {}) =>
+  async (dispatch, getState) => {
+    const { network, settings } = getState();
+    const activeToken = localStorage.getItem('btc') // TODO: Refactor after enabling BTC
+      ? settings.token.active
+      : tokenMap.LSK.key;
 
-  const [error, tx] = await to(transactionsAPI.broadcast(activeToken, transaction, network));
+    const [error] = await to(transactionsAPI.broadcast(activeToken, transaction, network));
 
-  if (error) return dispatch(broadcastedTransactionError(({ error, transaction })));
+    callback({ success: !error, error, transaction });
+    if (error) {
+      return dispatch(broadcastedTransactionError(({ error, transaction })));
+    }
 
-  dispatch(broadcastedTransactionSuccess(transaction));
+    dispatch(broadcastedTransactionSuccess(transaction));
 
-  if (activeToken !== tokenMap.BTC.key) {
-    dispatch(addPendingTransaction({
-      amount: transaction.amount,
-      asset: { reference: transaction.data },
-      fee: Fees.send,
-      id: tx.id,
-      recipientId: transaction.recipientId,
-      senderId: account.info[activeToken].address,
-      senderPublicKey: account.publicKey,
-      type: transactionTypes.send,
-      token: activeToken,
-    }));
-  }
+    if (activeToken !== tokenMap.BTC.key) {
+      dispatch(addPendingTransaction({
+        ...transaction,
+        senderId: extractAddress(transaction.senderPublicKey),
+      }));
+    }
 
-  return dispatch(passphraseUsed(transaction.passphrase));
-};
+    return dispatch(passphraseUsed(transaction.passphrase));
+  };

@@ -1,11 +1,12 @@
 import React from 'react';
+
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
+import { extractPublicKey } from '../../utils/account';
+import CheckBox from '../toolbox/checkBox';
 import Illustration from '../toolbox/illustration';
 import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
-import { extractPublicKey } from '../../utils/account';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import links from '../../constants/externalLinks';
-
 import styles from './transactionSummary.css';
 
 class TransactionSummary extends React.Component {
@@ -24,6 +25,7 @@ class TransactionSummary extends React.Component {
     this.checkSecondPassphrase = this.checkSecondPassphrase.bind(this);
     this.confirmOnClick = this.confirmOnClick.bind(this);
     this.getHwWalletIllustration = this.getHwWalletIllustration.bind(this);
+    this.onConfirmationChange = this.onConfirmationChange.bind(this);
   }
 
   componentDidMount() {
@@ -74,12 +76,18 @@ class TransactionSummary extends React.Component {
     }[this.props.account.hwInfo.deviceModel];
   }
 
+  onConfirmationChange() {
+    this.setState({
+      isConfirmed: !this.state.isConfirmed,
+    });
+  }
+
   render() {
     const {
-      title, children, confirmButton, cancelButton, account, t, fee,
+      title, children, confirmButton, cancelButton, account, t, fee, confirmation,
     } = this.props;
     const {
-      secondPassphrase, isHardwareWalletConnected,
+      secondPassphrase, isHardwareWalletConnected, isConfirmed,
     } = this.state;
     return <div className={styles.wrapper}>
     <header className='summary-header'>
@@ -128,6 +136,17 @@ class TransactionSummary extends React.Component {
         </label>
         <label> {fee } LSK </label>
       </section>
+      { confirmation ?
+        <label className={styles.checkboxLabel}>
+         <CheckBox
+           checked={isConfirmed}
+           onChange={this.onConfirmationChange}
+           className={`${styles.checkbox} confirmation-checkbox`}
+         />
+         {confirmation}
+        </label> :
+        null
+       }
     </div>
     {isHardwareWalletConnected ?
       null :
@@ -136,6 +155,7 @@ class TransactionSummary extends React.Component {
             className={`${styles.confirmBtn} confirm-button`}
             disabled={
               (!!account.secondPublicKey && !secondPassphrase.isValid) ||
+              (confirmation && !isConfirmed) ||
               confirmButton.disabled}
             onClick={this.confirmOnClick}>
             {confirmButton.label}

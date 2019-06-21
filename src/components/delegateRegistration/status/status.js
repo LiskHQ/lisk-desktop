@@ -12,6 +12,7 @@ class Status extends React.Component {
     };
 
     this.onCheckTransactionStatus = this.onCheckTransactionStatus.bind(this);
+    this.onRetry = this.onRetry.bind(this);
   }
 
   onCheckTransactionStatus() {
@@ -26,8 +27,14 @@ class Status extends React.Component {
     }
   }
 
+  onRetry() {
+    const { submitDelegateRegistration, userInfo } = this.props;
+    this.setState({ status: 'pending' });
+    submitDelegateRegistration(userInfo);
+  }
+
   render() {
-    const { t } = this.props;
+    const { t, goBackToDelegates } = this.props;
     const { status } = this.state;
 
     const isTransactionSuccess = status !== 'fail';
@@ -35,7 +42,7 @@ class Status extends React.Component {
       title: t('Delegate registration submitted'),
       message: t('You will be notified when your transaction is confirmed.'),
       button: {
-        onClick: () => {},
+        onClick: goBackToDelegates,
         title: t('Back to delegates'),
       },
     };
@@ -44,7 +51,7 @@ class Status extends React.Component {
       title: t('Delegate registration failed'),
       message: t('Something went wrong with the registration. Please try again below!'),
       button: {
-        onClick: () => {},
+        onClick: this.onRetry,
         title: t('Try again'),
       },
     };

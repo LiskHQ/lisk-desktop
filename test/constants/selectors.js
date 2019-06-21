@@ -19,9 +19,17 @@ const votingPage = {
   loadMoreButton: '.loadMore',
 };
 
+const secondPassphraseRegistrationPage = {
+  goToConfirmation: '.go-to-confirmation',
+  confirmationCheckbox: '.confirmation-checkbox',
+  confirmButton: '.confirm-button',
+  goToWallet: '.go-to-wallet',
+};
+
 const ss = {
   ...delegatesPage,
   ...votingPage,
+  ...secondPassphraseRegistrationPage,
   app: '#app',
   transactionsTable: '.transaction-results',
   transactionRow: '.transactions-row',
@@ -103,6 +111,7 @@ const ss = {
   settingsBtn: '#settings',
   registerSecondPassphraseBtn: '.register-second-passphrase',
   secondPassphraseIsRegisteredLabel: '.second-passphrase-registered',
+  secondPassphraseSettingsSection: '.second-passphrase',
   currencySelect: '.currency input',
   currencyOptions: '.currency .option',
   autoLogoutTrigger: '.autoLog',
@@ -221,6 +230,7 @@ const ss = {
   termsOfUseLink: '.terms-of-use',
   connectButton: '.connect-button',
   walletHeader: '.wallet-header',
+  toast: '.toast',
 };
 
 export default ss;

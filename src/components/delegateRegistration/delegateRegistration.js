@@ -4,6 +4,7 @@ import MultiStep from '../multiStep';
 import SelectName from './selectName/SelectName';
 import Summary from './summary/summary';
 import Status from './status/status';
+import routes from '../../constants/routes';
 import styles from './delegateRegistration.css';
 
 class DelegateRegistration extends React.Component {
@@ -11,10 +12,20 @@ class DelegateRegistration extends React.Component {
     super(props);
 
     this.goBack = this.goBack.bind(this);
+    this.goBackToDelegates = this.goBackToDelegates.bind(this);
+    this.submitDelegateRegistration = this.submitDelegateRegistration.bind(this);
   }
 
   goBack() {
     this.props.history.goBack();
+  }
+
+  goBackToDelegates() {
+    this.props.history.push(routes.delegates.path);
+  }
+
+  submitDelegateRegistration(userInformation) {
+    this.props.delegateRegistered(userInformation);
   }
 
   render() {
@@ -22,7 +33,6 @@ class DelegateRegistration extends React.Component {
       account,
       delegate,
       delegatesFetched,
-      delegateRegistered,
       t,
     } = this.props;
 
@@ -40,8 +50,12 @@ class DelegateRegistration extends React.Component {
           <Summary
             t={t}
             account={account}
-            delegateRegistered={delegateRegistered}/>
-          <Status t={t} delegate={delegate}/>
+            submitDelegateRegistration={this.submitDelegateRegistration}/>
+          <Status
+            t={t}
+            goBackToDelegates={this.goBackToDelegates}
+            submitDelegateRegistration={this.submitDelegateRegistration}
+            delegate={delegate}/>
         </MultiStep>
       </section>
     );
