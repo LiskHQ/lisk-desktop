@@ -8,7 +8,6 @@ import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';
 import { getTimeOffset } from '../utils/hacks';
-import { tokenMap } from '../constants/tokens';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import { sendWithHW } from '../utils/api/hwWallet';
