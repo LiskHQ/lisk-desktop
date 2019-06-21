@@ -40,13 +40,9 @@
       @mixin contentLarge bold;
 
       color: var(--color-dark-blue);
-      margin: 24px 0;
+      margin: 20px;
       text-align: left;
       word-spacing: 8px;
-    }
-
-    & > img {
-      margin-right: 10px;
     }
   }
 }
@@ -75,7 +71,7 @@
   color: var(--color-slate-gray);
 
   & > p {
-    @mixin contentSmall bold;
+    @mixin contentNormal;
 
     margin: 20px;
   }
@@ -99,7 +95,7 @@
 
 .inputs {
   flex-wrap: wrap;
-  margin-top: 14px;
+  margin-top: 4px;
   margin-bottom: 14px;
 
   & > span {
@@ -110,6 +106,7 @@
 
       color: var(--color-maastricht-blue) !important;
       text-align: center;
+      height: 48px;
     }
   }
 }
