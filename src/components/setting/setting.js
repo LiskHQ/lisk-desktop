@@ -1,4 +1,5 @@
 import React from 'react';
+import { tokenMap } from '../../constants/tokens';
 import BoxV2 from '../boxV2';
 import CheckBox from '../toolbox/checkBox';
 import Piwik from '../../utils/piwik';
@@ -112,7 +113,7 @@ class Setting extends React.Component {
                   <p>{t('Log out automatically after 10 minutes.')}</p>
                   </div>
               </label>
-              {isAuthenticated ?
+              {isAuthenticated && settings.token.active !== tokenMap.BTC.key ?
                 <SecondPassphraseSetting
                   {...{
                     account, hasSecondPassphrase, isHwWalletClass, t, hasPendingSecondPassphrase,
