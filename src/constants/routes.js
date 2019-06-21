@@ -20,7 +20,7 @@ import Extensions from '../components/extensions';
 import TermsOfUse from '../components/termsOfUse';
 import ToolboxDemo from '../components/toolbox/demo';
 import Dashboard from '../components/dashboard';
-import DelegateRegistration from '../components/registerDelegateV2';
+import DelegateRegistration from '../components/delegateRegistration';
 
 export default {
   accountVisualDemo: {
