@@ -79,12 +79,15 @@
     box-sizing: border-box;
     color: var(--color-maastricht-blue);
 
+    & > label {
+      display: flex;
+      align-items: center;
+    }
+
     & > label:first-child {
       @mixin contentNormal bold;
 
       margin-bottom: 10px;
-      display: flex;
-      align-items: center;
     }
   }
 

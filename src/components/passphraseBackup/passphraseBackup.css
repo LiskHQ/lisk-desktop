@@ -81,7 +81,7 @@
 .hrSection::after {
   content: "";
   flex-grow: 1;
-  background: var(--color-blue-gray);
+  background: rgba(0, 0, 0, 0.15);
   height: 1px;
   font-size: 0px;
   line-height: 0px;
