@@ -40,7 +40,7 @@
       @mixin contentLarge bold;
 
       color: var(--color-dark-blue);
-      margin: 15px 0;
+      margin: 24px 0;
       text-align: left;
       word-spacing: 8px;
     }

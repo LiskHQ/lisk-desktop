@@ -22,7 +22,6 @@ class PassphraseBackup extends React.Component {
 
   /* istanbul ignore next */
   generatePaperwallet() {
-    const { t } = this.props;
     const data = {
       ...this.props,
       qrcode: this.canvasRef.firstChild.toDataURL(),

@@ -12,15 +12,15 @@ const FirstStep = ({
     <header>
       <h2>{t('Register 2nd passphrase')}</h2>
     </header>
-    <p className={styles.info}>
-      <Trans>
-        After registration, your second passphrase will be <strong>required</strong>
+    <Trans>
+      <p className={styles.info}>
+        After registration, your second passphrase will be <strong>required </strong>
         when <strong>confirming every transaction</strong> and every vote.
         You are responsible for safekeeping your second passphrase.
         No one can restore it, not even Lisk.
         Once activated a second passphrase <strong>can’t be turned off.</strong>
-      </Trans>
-    </p>
+      </p>
+    </Trans>
     <PassphraseBackup account={account} t={t}
       passphraseName={t('2nd passphrase')}
       paperWalletName='lisk_2nd_passphrase' />
