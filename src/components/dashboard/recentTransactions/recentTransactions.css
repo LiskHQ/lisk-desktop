@@ -2,7 +2,7 @@
 @import '../../app/mixins.css';
 
 .box {
-  max-width: 431px;
+  max-width: var(--footer-button-width);
 }
 
 .wrapper {

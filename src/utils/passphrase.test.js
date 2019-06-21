@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { generateSeed, generatePassphrase, isValidPassphrase } from './passphrase';
+import { generateSeed, generatePassphraseFromSeed, isValidPassphrase } from './passphrase';
 import accounts from '../../test/constants/accounts';
 
 if (global._bitcore) delete global._bitcore;
@@ -112,11 +112,11 @@ describe('Passphrase', () => {
     });
   });
 
-  describe('generatePassphrase', () => {
+  describe('generatePassphraseFromSeed', () => {
     const seed = ['e6', '3c', 'd1', '36', 'e9', '70', '5f', 'c0', '4d', '31', 'ef', 'b8', 'd6', '53', '48', '11'];
 
     it('generates a valid random passphrase from a given seed', () => {
-      const passphrase = generatePassphrase({ seed });
+      const passphrase = generatePassphraseFromSeed({ seed });
       expect(mnemonic.isValid(passphrase)).to.be.equal(true);
     });
   });

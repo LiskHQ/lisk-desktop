@@ -1,23 +1,32 @@
 import React from 'react';
-// import Fees from '../../constants/fees';
+import { generatePassphrase } from '../../utils/passphrase';
+import Fees from '../../constants/fees';
+import FirstStep from './firstStep';
 import MultiStep from '../multiStep';
-// import Info from '../passphrase/info';
-import CreateSecond from '../passphrase/createSecond';
-import Safekeeping from '../passphrase/safekeeping';
-import Confirm from '../passphrase/confirm';
-import Box from '../box';
-import styles from './secondPassphrase.css';
+import SummaryStep from './summaryStep';
+import TransactionResult from '../transactionResult';
 import routes from '../../constants/routes';
+import styles from './secondPassphrase.css';
 
 class SecondPassphrase extends React.Component {
+  constructor() {
+    super();
+
+    this.secondPassphrase = generatePassphrase();
+    this.backToPreviousPage = this.backToPreviousPage.bind(this);
+    this.goToWallet = this.goToWallet.bind(this);
+  }
+
   // eslint-disable-next-line class-methods-use-this
   componentWillUnmount() {
     document.body.classList.remove('contentFocused');
   }
+
   componentDidMount() {
+    const { account } = this.props;
     document.body.classList.add('contentFocused');
-    if (this.props.account.info.LSK.secondPublicKey) {
-      this.props.history.push(`${routes.dashboard.path}`);
+    if (account.secondPublicKey || account.balance < Fees.setSecondPassphrase) {
+      this.props.history.push(`${routes.setting.path}`);
     }
   }
 
@@ -25,35 +34,33 @@ class SecondPassphrase extends React.Component {
     this.props.history.goBack();
   }
 
+  goToWallet() {
+    this.props.history.push(routes.wallet.path);
+  }
+
   render() {
-    const {
-      account, registerSecondPassphrase, t,
-    } = this.props;
-    const header = t('Secure the use of your Lisk ID with a second passphrase.');
-    const message = t('You will need it to use your Lisk ID, like sending and voting. You are responsible for keeping your second passphrase safe. No one can restore it, not even Lisk.');
-    const onPassphraseRegister = (secondPassphrase) => {
-      /* istanbul ignore next */
-      registerSecondPassphrase({
-        secondPassphrase,
-        passphrase: account.passphrase,
-        account: account.info.LSK,
-      });
-    };
+    const { t, account, secondPassphraseRegistered } = this.props;
     return (
-      <Box className={`${styles.hasPaddingTop} ${styles.register}`}>
-        <MultiStep
-          showNav={true}
-          finalCallback={onPassphraseRegister}
-          backButtonLabel={t('Back')}
-          prevPage={this.backToPreviousPage.bind(this)}
-        >
-          <CreateSecond title={t('Create')} t={t} icon='add' balance={account.info && account.info.LSK.balance} />
-          <Safekeeping title={t('Safekeeping')} t={t} step='revealing-step'
-            icon='checkmark' header={header} message={message} />
-          <Confirm title={t('Confirm')} t={t} confirmButton='Register'
-            icon='login' secondPassConfirmation={true} />
+      <div className={styles.wrapper}>
+        <MultiStep showNav={false} finalCallback={this.goToWallet} >
+          <FirstStep
+            t={t}
+            goBack={this.backToPreviousPage}
+            account={{
+              ...account,
+              passphrase: this.secondPassphrase,
+            }}
+          />
+          <SummaryStep
+            secondPassphrase={this.secondPassphrase}
+            secondPassphraseRegistered={secondPassphraseRegistered}
+            account={account}
+            t={t}
+          />
+          <TransactionResult t={t} />
         </MultiStep>
-      </Box>);
+      </div>
+    );
   }
 }
 

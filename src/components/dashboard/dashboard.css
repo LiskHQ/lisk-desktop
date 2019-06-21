@@ -44,7 +44,7 @@
 
     & > .subContainer {
       width: 100%;
-      max-width: 431px;
+      max-width: var(--footer-button-width);
       display: flex;
       flex-direction: column;
       justify-content: flex-start;

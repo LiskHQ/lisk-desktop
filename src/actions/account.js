@@ -6,7 +6,6 @@ import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import { updateTransactions } from './transactions';
 import { delegateRegisteredFailure } from './delegate';
-import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { liskAPIClientUpdate } from './peers';
 import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
@@ -74,27 +73,28 @@ export const passphraseUsed = data => ({
 /**
  *
  */
-export const secondPassphraseRegistered = ({ secondPassphrase, account, passphrase }) =>
+export const secondPassphraseRegistered = ({
+  secondPassphrase, account, passphrase, callback,
+}) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
     const timeOffset = getTimeOffset(getState());
     setSecondPassphrase(liskAPIClient, secondPassphrase, account.publicKey, passphrase, timeOffset)
-      .then((data) => {
+      .then((transaction) => {
         dispatch({
-          data: {
-            id: data.id,
-            senderPublicKey: account.publicKey,
-            senderId: account.address,
-            amount: 0,
-            fee: Fees.setSecondPassphrase,
-            type: transactionTypes.setSecondPassphrase,
-            token: 'LSK',
-          },
+          data: transaction,
           type: actionTypes.addPendingTransaction,
         });
+        callback({
+          success: true,
+          transaction,
+        });
       }).catch((error) => {
-        const text = (error && error.message) ? error.message : i18next.t('An error occurred while registering your second passphrase. Please try again.');
-        dispatch(secondPassphraseRegisteredFailure({ text }));
+        callback({
+          success: false,
+          error,
+          message: (error && error.message) ? error.message : i18next.t('An error occurred while registering your second passphrase. Please try again.'),
+        });
       });
     dispatch(passphraseUsed(passphrase));
   };

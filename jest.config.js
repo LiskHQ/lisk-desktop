@@ -20,7 +20,7 @@ module.exports = {
     'src/store/middlewares/socket.test.js',
     'src/store/middlewares/peers.test.js',
     'src/components/delegatesListView/*',
-    'src/components/registerV2/registerV2.test.js',
+    'src/components/register/register.test.js',
     'src/components/headerV2/headerV2.test.js',
   ],
   verbose: false,
@@ -131,7 +131,7 @@ module.exports = {
     'src/utils/hwWallet.js',
     'src/components/delegatesListView/*',
     'src/components/headerV2/headerV2.js',
-    'src/components/registerV2/registerV2.js',
+    'src/components/register/register.js',
   ],
   coverageThreshold: process.env.NO_COV ? {} : {
     global: {

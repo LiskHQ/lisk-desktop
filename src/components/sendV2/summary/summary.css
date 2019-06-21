@@ -127,7 +127,7 @@
   box-sizing: border-box;
 
   & > .confirmBtn {
-    width: 431px;
+    width: var(--footer-button-width);
   }
 
   & > .editBtn {

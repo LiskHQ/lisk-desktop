@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-// TODO Figure out why adding Container prop to CopyToClipboard breaks the tests and fix them
 import React from 'react';
 import { CopyToClipboard as ReactCopyToClipboard } from 'react-copy-to-clipboard';
 import { translate } from 'react-i18next';
@@ -30,7 +28,7 @@ class CopyToClipboard extends React.Component {
 
   render() {
     const {
-      value, t, className, text, copyClassName, Container,
+      value, t, className, text, copyClassName, Container, containerClassName,
     } = this.props;
     const { copied } = this.state;
     return (
@@ -38,7 +36,7 @@ class CopyToClipboard extends React.Component {
         e.stopPropagation();
       }}>
         <ReactCopyToClipboard text={value} onCopy={this.textIsCopied}>
-          <Container { ...(Container !== React.Fragment ? { disabled: copied } : {}) } >
+          <Container disabled={copied} className={containerClassName} >
           {copied ? <span className={`${className} copied`}>
             {t('Copied!')}
           </span> :
@@ -60,6 +58,7 @@ CopyToClipboard.defaultProps = {
   className: '',
   copyClassName: '',
   Container: DefaultContainer,
+  containerClassName: '',
 };
 
 export default (translate()(CopyToClipboard));

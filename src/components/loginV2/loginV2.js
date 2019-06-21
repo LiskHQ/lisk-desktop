@@ -147,7 +147,7 @@ class LoginV2 extends React.Component {
               <p>
                 {t('New to Lisk? ')}
                 <Link className={`${styles.link}`}
-                  to={routes.registerV2.path}>
+                  to={routes.register.path}>
                   {t('Create an Account')}
                 </Link>
               </p>

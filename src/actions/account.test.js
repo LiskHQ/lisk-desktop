@@ -15,7 +15,6 @@ import {
   updateAccountDelegateStats,
   login,
 } from './account';
-import { secondPassphraseRegisteredFailure } from './secondPassphrase';
 import { delegateRegisteredFailure } from './delegate';
 import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegates';
@@ -61,10 +60,8 @@ describe('actions: account', () => {
     const data = {
       passphrase: accounts['second passphrase account'].passphrase,
       secondPassphrase: accounts['second passphrase account'].secondPassphrase,
-      account: {
-        publicKey: accounts['second passphrase account'].publicKey,
-        address: accounts['second passphrase account'].address,
-      },
+      account: accounts['second passphrase account'],
+      callback: jest.fn(),
     };
     const actionFunction = secondPassphraseRegistered(data);
     let dispatch;
@@ -72,7 +69,7 @@ describe('actions: account', () => {
 
     beforeEach(() => {
       accountApiMock = stub(accountApi, 'setSecondPassphrase');
-      dispatch = spy();
+      dispatch = jest.fn();
       getState = () => ({
         peers: { liskAPIClient: {} },
       });
@@ -85,13 +82,8 @@ describe('actions: account', () => {
       i18nextMock.restore();
     });
 
-    it('should create an action function', () => {
-      chaiExpect(typeof actionFunction).to.be.deep.equal('function');
-    });
-
     it('should dispatch addPendingTransaction action if resolved', () => {
-      accountApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
-      const expectedAction = {
+      const transaction = {
         id: '15626650747375562521',
         senderPublicKey: accounts['second passphrase account'].publicKey,
         senderId: accounts['second passphrase account'].address,
@@ -100,26 +92,28 @@ describe('actions: account', () => {
         type: transactionTypes.setSecondPassphrase,
         token: 'LSK',
       };
+      accountApiMock.returnsPromise().resolves(transaction);
 
       actionFunction(dispatch, getState);
-      chaiExpect(dispatch).to.have.been
-        .calledWith({ data: expectedAction, type: actionTypes.addPendingTransaction });
+      expect(dispatch).toHaveBeenCalledWith({
+        data: transaction, type: actionTypes.addPendingTransaction,
+      });
+      expect(data.callback).toHaveBeenCalledWith({
+        success: true,
+        transaction,
+      });
     });
 
-    it('should dispatch secondPassphraseRegisteredFailure action if caught', () => {
-      accountApiMock.returnsPromise().rejects({ message: 'sample message' });
+    it('should call callback if api call fails', () => {
+      const error = { message: 'sample message' };
+      accountApiMock.returnsPromise().rejects(error);
 
       actionFunction(dispatch, getState);
-      const expectedAction = secondPassphraseRegisteredFailure({ text: 'sample message' });
-      chaiExpect(dispatch).to.have.been.calledWith(expectedAction);
-    });
-
-    it('should dispatch secondPassphraseRegisteredFailure action if caught but no message returned', () => {
-      accountApiMock.returnsPromise().rejects({});
-
-      actionFunction(dispatch, getState);
-      const expectedAction = secondPassphraseRegisteredFailure({ text: 'An error occurred while registering your second passphrase. Please try again.' });
-      chaiExpect(dispatch).to.have.been.calledWith(expectedAction);
+      expect(data.callback).toHaveBeenCalledWith({
+        success: false,
+        error,
+        message: error.message,
+      });
     });
   });
 

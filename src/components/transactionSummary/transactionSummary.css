@@ -15,7 +15,7 @@
   & > footer {
     width: 100%;
     min-width: 572px;
-    margin: 36px 0;
+    margin: 40px 0;
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -24,11 +24,12 @@
     box-sizing: border-box;
 
     & > .confirmBtn {
-      width: 431px;
+      width: var(--footer-button-width);
     }
 
     & > .editBtn {
       width: auto !important;
+      margin-top: 5px;
     }
   }
 
@@ -76,13 +77,30 @@
     align-items: flex-start;
     border-top: 1px solid rgba(111, 114, 118, 0.1);
     box-sizing: border-box;
+    color: var(--color-maastricht-blue);
+
+    & > label {
+      display: flex;
+      align-items: center;
+    }
 
     & > label:first-child {
       @mixin contentNormal bold;
 
-      color: var(--color-maastricht-blue);
       margin-bottom: 10px;
-      display: flex;
     }
+  }
+
+  & .checkbox {
+    margin-right: 10px;
+  }
+
+  & .checkboxLabel {
+    @mixin contentNormal bold;
+
+    color: var(--color-maastricht-blue);
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
   }
 }

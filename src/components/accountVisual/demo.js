@@ -1,7 +1,7 @@
 import React from 'react';
 import Waypoint from 'react-waypoint';
 
-import { generatePassphrase } from '../../utils/passphrase';
+import { generatePassphraseFromSeed } from '../../utils/passphrase';
 import { extractAddress } from '../../utils/account';
 import AccountVisual from '../accountVisual';
 import Box from '../box';
@@ -30,7 +30,7 @@ class AccountVisualDemo extends React.Component {
       }
       bytes.push(byte);
     }
-    let accounts = bytes.map(seed => generatePassphrase({ seed }))
+    let accounts = bytes.map(seed => generatePassphraseFromSeed({ seed }))
       .map(extractAddress);
 
     function onlyUnique(value, index, self) {
