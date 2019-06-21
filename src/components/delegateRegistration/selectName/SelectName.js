@@ -24,7 +24,7 @@ class SelectName extends React.Component {
     };
 
     this.onChangeNickname = this.onChangeNickname.bind(this);
-    this.debounceFetchUser = debounce(this.onUserFetch, 1500);
+    this.debounceFetchUser = debounce(this.onUserFetch, 1000);
   }
 
   componentDidMount() {
@@ -82,6 +82,7 @@ class SelectName extends React.Component {
   }
 
   onUserFetch(nickname, error) {
+    console.log(error, nickname);
     if (!error && nickname.length) {
       this.props.delegatesFetched({ username: nickname });
     }
@@ -120,8 +121,8 @@ class SelectName extends React.Component {
           <h1>{t('Become a delegate')}</h1>
         </header>
 
-        <div className={styles.container}>
-          <p className={styles.description}>
+        <div className={`${styles.container} select-name-container`}>
+          <p className={`${styles.description} select-name-text-description`}>
             {
               t(`Delegates are the most commited Lisk community members responsible for 
             securing the network and processing all the transactions on Lisk’s blockchain 
@@ -129,14 +130,14 @@ class SelectName extends React.Component {
             }
           </p>
 
-          <p className={styles.description}>
+          <p className={`${styles.description} select-name-text-description`}>
             {
               t('The top 101 delegates are able to forge new blocks and recieve forging rewards.')
             }
           </p>
 
           <a
-            className={styles.link}
+            className={`${styles.link} learm-more-link`}
             href={links.votingAndDelegates}
             target='_blank'
             rel='noopener noreferrer'>
@@ -153,19 +154,19 @@ class SelectName extends React.Component {
               name='delegate-nickname'
               value={nickname}
               placeholder={t('ie. Peter Pan')}
-              className={`${styles.inputNickname} search-input`}
+              className={`${styles.inputNickname} select-name-input`}
               disabled={inputDisabled}
             />
-            <SpinnerV2 className={`${styles.spinner} ${loading && nickname.length ? styles.show : styles.hide}`}/>
+            <SpinnerV2 className={`${styles.spinner} ${loading && nickname.length ? styles.show : styles.hide} spiner`}/>
             <Icon
-              className={`${styles.status} ${!loading && nickname.length ? styles.show : styles.hide}`}
+              className={`${styles.status} ${!loading && nickname.length ? styles.show : styles.hide} input-status-icon`}
               name={error ? 'alert_icon' : 'ok_icon'}
             />
 
             <Feedback
               show={true}
               status={feedbackInfo.status}
-              className={feedbackInfo.className}
+              className={`${feedbackInfo.className} input-feedback`}
               showIcon={false}>
               {error || t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.')}
             </Feedback>

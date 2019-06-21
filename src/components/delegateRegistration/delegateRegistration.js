@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router';
+
 import MultiStep from '../multiStep';
 import SelectName from './selectName/SelectName';
 import Summary from './summary/summary';
@@ -62,4 +62,4 @@ class DelegateRegistration extends React.Component {
   }
 }
 
-export default withRouter(DelegateRegistration);
+export default DelegateRegistration;
