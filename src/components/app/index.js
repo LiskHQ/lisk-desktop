@@ -59,10 +59,8 @@ class App extends React.Component {
                 {this.state.loaded &&
                   routesV2Layout.map((route, key) => (
                     <Route
-                      path={route.path}
+                      {...route}
                       key={key}
-                      component={route.component}
-                      exact={route.exact}
                     />
                   ))
                 }
@@ -84,11 +82,7 @@ class App extends React.Component {
                           <div>
                             {explorerRoutes.map((route, key) => (
                               <CustomRoute
-                                pathPrefix={route.pathPrefix}
-                                path={route.path}
-                                pathSuffix={route.pathSuffix}
-                                component={route.component}
-                                isPrivate={route.isPrivate}
+                                {...route}
                                 exact={true}
                                 key={key} />
                             ))}
@@ -99,11 +93,7 @@ class App extends React.Component {
                     {this.state.loaded &&
                       defaultRoutes.map((route, key) => (
                         <CustomRoute
-                          path={route.path}
-                          pathSuffix={route.pathSuffix}
-                          component={route.component}
-                          isPrivate={route.isPrivate}
-                          exact={route.exact}
+                          {...route}
                           key={key} />
                       ))
                     }
@@ -111,8 +101,7 @@ class App extends React.Component {
                     {
                       routesOutsideMainWrapper.map((route, key) => (
                         <CustomRoute
-                          path={routes[route].path}
-                          component={routes[route].component}
+                          {...route}
                           isPrivate={false}
                           exact={true}
                           key={key} />

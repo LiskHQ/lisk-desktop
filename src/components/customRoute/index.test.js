@@ -20,6 +20,9 @@ describe('CustomRoute', () => {
     component: Private,
     settings: {
       statistics: false,
+      token: {
+        active: 'LSK',
+      },
     },
     networkIsSet: true,
     accountLoading: false,
