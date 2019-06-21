@@ -11,7 +11,6 @@ import { liskAPIClientUpdate } from './peers';
 import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
-import { updateWallet } from './wallets';
 import accountConfig from '../constants/account';
 import { loginType } from '../constants/hwConstants';
 import { errorToastDisplayed } from './toaster';
@@ -193,7 +192,6 @@ export const accountDataUpdated = ({
           ));
         }
         dispatch(accountUpdated(result));
-        dispatch(updateWallet(result, getState().peers));
         dispatch(liskAPIClientUpdate({ online: true }));
       }).catch((res) => {
         dispatch(liskAPIClientUpdate({ online: false, code: res.error.code }));
