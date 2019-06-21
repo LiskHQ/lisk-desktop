@@ -1,4 +1,5 @@
 import React from 'react';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
 import TransactionsHeaderV2 from './transactionsHeaderV2';
 import TransactionRowV2 from './transactionRowV2';
@@ -37,6 +38,14 @@ class TransactionsListV2 extends React.Component {
     const isLoading = loading.filter(type =>
       actionTypes.transactionsLoaded === type).length > 0;
 
+    const columnClassNames = {
+      transaction: `${grid['col-lg-3']} ${grid['col-sm-4']}`,
+      date: `${grid['col-lg-2']} ${grid['col-sm-2']}`,
+      fee: `${grid['col-lg-2']} ${grid['col-sm-1']}`,
+      details: `${grid['col-lg-3']} ${grid['col-sm-3']}`,
+      amount: `${grid['col-lg-2']} ${grid['col-sm-2']}`,
+    };
+
     return <div className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} ${isLoading ? styles.isLoading : ''} transaction-results`}>
       {
         isLoading ? (
@@ -45,7 +54,11 @@ class TransactionsListV2 extends React.Component {
           </div>
         ) : null
       }
-      <TransactionsHeaderV2 isSmallScreen={isSmallScreen} activeToken={activeToken}/>
+      <TransactionsHeaderV2
+        isSmallScreen={isSmallScreen}
+        activeToken={activeToken}
+        columnClassNames={columnClassNames}
+      />
       {filteredTransactions.length
         ? filteredTransactions
             .map(transaction =>
@@ -55,6 +68,7 @@ class TransactionsListV2 extends React.Component {
                 address={address}
                 value={transaction}
                 token={activeToken}
+                columnClassNames={columnClassNames}
                 onClick={this.props.onClick}/>)
         : <p className={`${styles.empty} empty-message`}>
           {t('There are no transactions.')}

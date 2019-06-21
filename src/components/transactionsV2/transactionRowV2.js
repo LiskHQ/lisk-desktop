@@ -58,6 +58,7 @@ class TransactionRowV2 extends React.Component {
       t,
       token,
       value,
+      columnClassNames,
     } = this.props;
 
     const { isConfirmed } = this.state;
@@ -65,7 +66,7 @@ class TransactionRowV2 extends React.Component {
 
     return (
       <TableRow className={`${grid.row} ${styles.row} ${!hasConfirmations ? styles.pending : ''} transactions-row`} onClick={() => onClick(this.props)}>
-        <div className={`${grid['col-sm-4']} ${grid['col-lg-3']} transactions-cell`}>
+        <div className={`${columnClassNames.transaction} transactions-cell`}>
           <Icon name={address === value.recipientId ? 'incoming' : 'outgoing' } className={styles.inOutIcon} />
           <TransactionTypeFigure
             address={address === value.recipientId ? value.senderId : value.recipientId }
@@ -79,21 +80,21 @@ class TransactionRowV2 extends React.Component {
             transactionType={value.type}
           />
         </div>
-        <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
+        <div className={`${columnClassNames.date} transactions-cell`}>
           <div className={`${styles.status} ${!isConfirmed ? styles.showSpinner : styles.showDate}`}>
             <SpinnerV2 completed={hasConfirmations} label={t('Pending...')} />
             <DateTimeFromTimestamp time={value.timestamp} token={token} />
           </div>
         </div>
-        <div className={`${grid['col-sm-1']} ${grid['col-lg-2']} transactions-cell`}>
+        <div className={`${columnClassNames.fee} transactions-cell`}>
           <LiskAmount val={value.fee}/>&nbsp;{token}
         </div>
-          <div className={`${grid['col-sm-3']} ${grid['col-lg-3']} transactions-cell`}>
+          <div className={`${columnClassNames.details} transactions-cell`}>
             <TransactionDetailV2
               t={t}
               transaction={value} />
           </div>
-        <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-cell`}>
+        <div className={`${columnClassNames.amount} transactions-cell`}>
           <TransactionAmount
             address={address}
             token={token}
