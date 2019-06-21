@@ -1,5 +1,6 @@
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
+import { extractAddress } from '../utils/account';
 import { getAccount, setSecondPassphrase } from '../utils/api/account';
 import { registerDelegate, getDelegates } from '../utils/api/delegates';
 import { getTransactions } from '../utils/api/transactions';
@@ -82,7 +83,10 @@ export const secondPassphraseRegistered = ({
     setSecondPassphrase(liskAPIClient, secondPassphrase, account.publicKey, passphrase, timeOffset)
       .then((transaction) => {
         dispatch({
-          data: transaction,
+          data: {
+            ...transaction,
+            senderId: extractAddress(transaction.senderPublicKey),
+          },
           type: actionTypes.addPendingTransaction,
         });
         callback({
