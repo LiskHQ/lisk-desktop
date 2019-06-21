@@ -41,7 +41,7 @@ class Paperwallet {
   }
 
   renderHeader() {
-    const { t } = this.props;
+    const { t, passphraseName } = this.props;
     const textOptions = {
       ...this.textOptions,
       align: 'center',
@@ -56,7 +56,7 @@ class Paperwallet {
     this.doc.addImage(logo, 'PNG', 65, 55, 50, 19);
 
     this.doc.setFontStyle('bold').setFontSize(12)
-      .text(t('Lisk passphrase backup'), 300, 65, textOptions);
+      .text(t('Lisk {{passphraseName}} backup', { passphraseName }), 300, 65, textOptions);
     this.doc.setFontStyle('normal').setFontSize(10)
       .text(t('Keep this safe, never throw it away or share it with anyone.'), 300, 80, textOptions);
 
@@ -69,21 +69,21 @@ class Paperwallet {
   }
 
   renderInstructions() {
-    const { t } = this.props;
+    const { t, passphraseName } = this.props;
     const textOptions = this.textOptions;
 
     this.doc.addImage(printer, 'PNG', 65, 150, 27, 27);
     this.doc.addImage(usbStick, 'PNG', 65, 185, 27, 27);
 
     this.doc.setFontStyle('normal').setFontSize(10);
-    this.doc.text(t('How we recommend to store your passphrase.'), 65, 130, textOptions);
+    this.doc.text(t('How we recommend to store your {{passphraseName}}.', { passphraseName }), 65, 130, textOptions);
     this.doc.text(t('Print more than one copy and store them in two separate secure places.'), 97, 167, textOptions);
-    this.doc.text(t('Save your passphrase on an encrypted hard drive.'), 97, 202, textOptions);
+    this.doc.text(t('Save your {{passphraseName}} on an encrypted hard drive.', { passphraseName }), 97, 202, textOptions);
     return this;
   }
 
   renderAccount() {
-    const { account, t } = this.props;
+    const { account, t, passphraseName } = this.props;
     const textOptions = this.textOptions;
 
     this.doc.setFontStyle('normal').setFontSize(10)
@@ -92,7 +92,7 @@ class Paperwallet {
       .text(account.address, 65, 280, textOptions);
 
     this.doc.setFontStyle('normal').setFontSize(10)
-      .text(t('Your passphrase. This allows you to manually access your Lisk account.'), 65, 330, textOptions);
+      .text(t('Your {{passphraseName}}. This allows you to manually access your Lisk account.', { passphraseName }), 65, 330, textOptions);
     this.doc.setFontStyle('bold').setFontSize(18)
       .text(this.passphrase, 300, 385, {
         ...textOptions,

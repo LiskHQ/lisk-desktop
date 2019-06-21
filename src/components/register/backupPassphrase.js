@@ -20,7 +20,11 @@ const BackupPassphrase = ({
       }</p>
     </div>
     <div className={grid['col-sm-10']}>
-      <PassphraseBackup account={account} t={t} paperWalletName='lisk_passphrase' />
+      <PassphraseBackup
+        account={account} t={t}
+        paperWalletName='lisk_passphrase'
+        passphraseName={t('passphrase')}
+      />
     </div>
 
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
