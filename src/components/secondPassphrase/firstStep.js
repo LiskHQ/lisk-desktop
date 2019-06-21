@@ -1,5 +1,5 @@
+import { Trans } from 'react-i18next';
 import React from 'react';
-
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
 import BoxV2 from '../boxV2';
 import PassphraseBackup from '../passphraseBackup';
@@ -13,14 +13,22 @@ const FirstStep = ({
       <h2>{t('Register 2nd passphrase')}</h2>
     </header>
     <p className={styles.info}>
-     {t('After registration, your second passphrase will be required when confirming every transaction and every vote. You are responsible for safeeeping your second passphrase. No one can restore it, not even Lisk. Once activated a second passphrase can’t be turned off.')}
+      <Trans>
+        After registration, your second passphrase will be <strong>required</strong>
+        when <strong>confirming every transaction</strong> and every vote.
+        You are responsible for safekeeping your second passphrase.
+        No one can restore it, not even Lisk.
+        Once activated a second passphrase <strong>can’t be turned off.</strong>
+      </Trans>
     </p>
-    <PassphraseBackup account={account} t={t} paperWalletName='lisk_2nd_passphrase' />
+    <PassphraseBackup account={account} t={t}
+      passphraseName={t('2nd passphrase')}
+      paperWalletName='lisk_2nd_passphrase' />
     <footer className={`${styles.footer} summary-footer`}>
         <PrimaryButtonV2
           className={`${styles.confirmBtn} large go-to-confirmation`}
           onClick={nextStep}>
-          {t('Go to Confirmation')}
+          {t('Go to confirmation')}
         </PrimaryButtonV2>
       <TertiaryButtonV2
         className={`${styles.editBtn} large go-back`}

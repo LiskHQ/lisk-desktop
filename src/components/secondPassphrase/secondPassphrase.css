@@ -1,3 +1,4 @@
+@import '../app/variablesV2.css';
 @import '../app/mixins.css';
 
 .wrapper {
@@ -16,6 +17,10 @@
     letter-spacing: 0.21px;
     line-height: 25px;
     margin: 24px;
+
+    & strong {
+      color: var(--color-maastricht-blue);
+    }
   }
 
   & .footer {
@@ -30,7 +35,7 @@
     box-sizing: border-box;
 
     & > .confirmBtn {
-      width: 431px;
+      width: var(--footer-button-width);
     }
 
     & > .editBtn {

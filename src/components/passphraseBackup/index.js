@@ -22,6 +22,7 @@ class PassphraseBackup extends React.Component {
 
   /* istanbul ignore next */
   generatePaperwallet() {
+    const { t } = this.props;
     const data = {
       ...this.props,
       qrcode: this.canvasRef.firstChild.toDataURL(),
@@ -72,7 +73,7 @@ class PassphraseBackup extends React.Component {
               </div>
               <CopyToClipboard
                 value={account.passphrase}
-                text={t('Copy to Clipboard')}
+                text={t('Copy to clipboard')}
                 copyClassName={styles.copyIcon}
                 Container={SecondaryButtonV2}
                 containerClassName='extra-small'
@@ -87,7 +88,7 @@ class PassphraseBackup extends React.Component {
               <h2>
                 {t('Paper Wallet')}
                 <Tooltip
-                  title={'Paper Wallet'}>
+                  title={'Paper wallet'}>
                   <p>
                     {t('You can print your passphrase to store in a safe place. ')}
                     {t('It is highly recommended to delete the PDF file and remove it from your Trash Folder too after printing it.')}
