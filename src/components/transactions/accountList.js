@@ -35,7 +35,7 @@ class AccountList extends React.Component {
   getFormatedDelegates(dataName, filterQuery) {
     const data = this.props[dataName] ? this.props[dataName].map((user, key) => (
       <Link className={`${styles.addressLink} ${styles.clickable} voter-address ${filterQuery}-row`}
-        to={`${routes.explorer.path}${routes.accounts.path}/${user.address}`}
+        to={`${routes.accounts.path}/${user.address}`}
         key={`${key}-${dataName}`}>
         {`${user.username || user.address} `}
       </Link>
