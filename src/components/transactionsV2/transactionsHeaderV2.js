@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import TableRow from '../toolbox/table/tableRow';
 
 const TransactionsHeaderV2 = ({
-  t, isSmallScreen, activeToken, columnClassNames,
+  t, isSmallScreen, columnClassNames,
 }) => (
   <TableRow isHeader={true} className={`${grid.row}`} id="transactionsHeader">
     <div className={`${columnClassNames.transaction} transactions-header`}>
@@ -17,8 +17,7 @@ const TransactionsHeaderV2 = ({
       { isSmallScreen ? t('Fee') : t('Transaction Fee') }
     </div>
     <div className={`${columnClassNames.details} transactions-header`}>
-      {/* istanbul ignore next */}
-      {activeToken !== 'BTC' ? t('Details') : null}
+      {t('Details')}
     </div>
     <div className={`${columnClassNames.amount} transactions-header`}>
       {t('Amount')}

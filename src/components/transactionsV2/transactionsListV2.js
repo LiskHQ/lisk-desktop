@@ -1,6 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
+import { tokenMap } from '../../constants/tokens';
 import TransactionsHeaderV2 from './transactionsHeaderV2';
 import TransactionRowV2 from './transactionRowV2';
 import txFilters from '../../constants/transactionFilters';
@@ -38,12 +39,21 @@ class TransactionsListV2 extends React.Component {
     const isLoading = loading.filter(type =>
       actionTypes.transactionsLoaded === type).length > 0;
 
+    const showDetails = activeToken !== tokenMap.BTC.key;
+
     const columnClassNames = {
-      transaction: `${grid['col-lg-3']} ${grid['col-sm-4']}`,
-      date: `${grid['col-lg-2']} ${grid['col-sm-2']}`,
-      fee: `${grid['col-lg-2']} ${grid['col-sm-1']}`,
-      details: `${grid['col-lg-3']} ${grid['col-sm-3']}`,
-      amount: `${grid['col-lg-2']} ${grid['col-sm-2']}`,
+      ...(showDetails ? {
+        transaction: `${grid['col-md-4']} ${grid['col-xs-5']}`,
+        date: grid['col-xs-2'],
+        fee: `${styles.hideMedium} ${grid['col-xs-2']}`,
+        details: `${grid['col-md-2']} ${grid['col-xs-3']}`,
+      } : {
+        transaction: grid['col-xs-5'],
+        date: grid['col-xs-3'],
+        fee: grid['col-xs-2'],
+        details: styles.hide,
+      }),
+      amount: grid['col-xs-2'],
     };
 
     return <div className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} ${isLoading ? styles.isLoading : ''} transaction-results`}>
@@ -56,7 +66,6 @@ class TransactionsListV2 extends React.Component {
       }
       <TransactionsHeaderV2
         isSmallScreen={isSmallScreen}
-        activeToken={activeToken}
         columnClassNames={columnClassNames}
       />
       {filteredTransactions.length
