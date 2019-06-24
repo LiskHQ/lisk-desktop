@@ -1,3 +1,4 @@
+// istanbul ignore file
 import React from 'react';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
 import { getErrorReportMailto } from '../../utils/helpers';

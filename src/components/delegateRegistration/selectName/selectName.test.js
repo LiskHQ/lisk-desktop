@@ -2,7 +2,6 @@ import React from 'react';
 import debounce from 'lodash.debounce';
 import { mount } from 'enzyme';
 import SelectName from './SelectName';
-import { wrap } from 'module';
 
 jest.mock('lodash.debounce');
 

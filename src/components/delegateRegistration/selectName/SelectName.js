@@ -82,7 +82,6 @@ class SelectName extends React.Component {
   }
 
   onUserFetch(nickname, error) {
-    console.log(error, nickname);
     if (!error && nickname.length) {
       this.props.delegatesFetched({ username: nickname });
     }

@@ -15,6 +15,7 @@ class Status extends React.Component {
     this.onRetry = this.onRetry.bind(this);
   }
 
+  // istanbul ignore next
   onCheckTransactionStatus() {
     const { status } = this.state;
     const { delegate } = this.props;
@@ -27,6 +28,7 @@ class Status extends React.Component {
     }
   }
 
+  // istanbul ignore next
   onRetry() {
     const { submitDelegateRegistration, userInfo } = this.props;
     this.setState({ status: 'pending' });
@@ -38,26 +40,29 @@ class Status extends React.Component {
     const { status } = this.state;
 
     const isTransactionSuccess = status !== 'fail';
-    const onSuccess = {
-      title: t('Delegate registration submitted'),
-      message: t('You will be notified when your transaction is confirmed.'),
-      button: {
-        onClick: goBackToDelegates,
-        title: t('Back to delegates'),
-      },
-    };
-
-    const onFail = {
-      title: t('Delegate registration failed'),
-      message: t('Something went wrong with the registration. Please try again below!'),
-      button: {
-        onClick: this.onRetry,
-        title: t('Try again'),
-      },
-    };
+    // istanbul ignore next
+    const displayTemplate = isTransactionSuccess
+      ? {
+        title: t('Delegate registration submitted'),
+        message: t('You will be notified when your transaction is confirmed.'),
+        button: {
+          onClick: goBackToDelegates,
+          title: t('Back to delegates'),
+          className: 'go-back-to-delegates',
+        },
+      }
+      : {
+        title: t('Delegate registration failed'),
+        message: t('Something went wrong with the registration. Please try again below!'),
+        button: {
+          onClick: this.onRetry,
+          title: t('Try again'),
+          className: 'on-retry',
+        },
+      };
 
     return (
-      <div>
+      <div className={'status-container'}>
         <TransactionResult
           illustration={<DelegateAnimation
             className={styles.animation}
@@ -65,9 +70,9 @@ class Status extends React.Component {
             onLoopComplete={this.onCheckTransactionStatus} />
           }
           success={isTransactionSuccess}
-          title={isTransactionSuccess ? onSuccess.title : onFail.title}
-          message={isTransactionSuccess ? onSuccess.message : onFail.message}
-          primaryButon={isTransactionSuccess ? onSuccess.button : onFail.button}
+          title={displayTemplate.title}
+          message={displayTemplate.message}
+          primaryButon={displayTemplate.button}
           t={t}/>
       </div>
     );

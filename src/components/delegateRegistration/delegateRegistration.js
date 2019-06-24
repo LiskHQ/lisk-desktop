@@ -16,14 +16,17 @@ class DelegateRegistration extends React.Component {
     this.submitDelegateRegistration = this.submitDelegateRegistration.bind(this);
   }
 
+  // istanbul ignore next
   goBack() {
     this.props.history.goBack();
   }
 
+  // istanbul ignore next
   goBackToDelegates() {
     this.props.history.push(routes.delegates.path);
   }
 
+  // istanbul ignore next
   submitDelegateRegistration(userInformation) {
     this.props.delegateRegistered(userInformation);
   }
