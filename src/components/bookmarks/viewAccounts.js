@@ -36,7 +36,7 @@ class ViewAccounts extends React.Component {
     Piwik.trackingEvent('ViewAccounts', 'button', 'Bookmark');
 
     const { history } = this.props;
-    if (!this.state.edit) history.push(`${routes.explorer.path}${routes.accounts.path}/${account.address}`);
+    if (!this.state.edit) history.push(`${routes.accounts.path}/${account.address}`);
   }
 
   onRemoveAccount(account) {

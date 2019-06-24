@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import { isPathCorrect } from '../../utils/app';
 import styles from './app.css';
 import stylesV2 from './appV2.css';
 import Toaster from '../toaster';
@@ -32,9 +31,7 @@ class App extends React.Component {
     const allRoutes = Object.values(routes);
 
     const defaultRoutes = allRoutes.filter(routeObj =>
-      routeObj.component && !routeObj.pathPrefix && !routeObj.isLoaded);
-    const explorerRoutes = allRoutes.filter(routeObj =>
-      routeObj.pathPrefix && routeObj.pathPrefix === routes.explorer.path);
+      routeObj.component && !routeObj.isLoaded);
 
     const routesV2Layout = allRoutes.filter(routeObj => routeObj.isV2Layout);
 
@@ -78,24 +75,6 @@ class App extends React.Component {
               <section>
                 <div className={styles.mainBox}>
                   <Switch>
-                    {this.state.loaded &&
-                      <Route path={routes.explorer.path} component={() => (
-                        isPathCorrect(location, explorerRoutes) && (
-                          <div>
-                            {explorerRoutes.map((route, key) => (
-                              <CustomRoute
-                                pathPrefix={route.pathPrefix}
-                                path={route.path}
-                                pathSuffix={route.pathSuffix}
-                                component={route.component}
-                                isPrivate={route.isPrivate}
-                                exact={true}
-                                key={key} />
-                            ))}
-                          </div>
-                        )
-                      )} />
-                    }
                     {this.state.loaded &&
                       defaultRoutes.map((route, key) => (
                         <CustomRoute

@@ -1,6 +1,12 @@
 @import '../app/variablesV2.css';
 @import '../app/mixins.css';
 
+.container {
+  align-items: center;
+  display: flex;
+  height: 100%;
+}
+
 .wrapper {
   margin: 20px 0 40px;
   padding: 0;

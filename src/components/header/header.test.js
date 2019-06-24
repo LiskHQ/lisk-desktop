@@ -34,13 +34,13 @@ describe('Header', () => {
     history: { replace: sinon.spy() },
     account: { address: accounts.genesis.address },
     t: key => key,
-    location: { pathname: `${routes.explorer.path}${routes.search}` },
+    location: { pathname: `${routes.search}` },
     isAuthenticated: false,
     removePassphrase: sinon.spy(),
   };
 
   const history = {
-    location: { pathname: `${routes.explorer.path}${routes.search}` },
+    location: { pathname: `${routes.search}` },
     replace: sinon.spy(),
     createHref: sinon.spy(),
     push: sinon.spy(),
