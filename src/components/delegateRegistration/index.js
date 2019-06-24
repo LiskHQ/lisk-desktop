@@ -3,16 +3,15 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { delegateRegistered } from '../../actions/account';
-import { delegatesFetched } from '../../actions/delegate';
 import DelegateRegistration from './delegateRegistration';
 
 const mapStateToProps = state => ({
   account: state.account,
   delegate: state.delegate,
+  liskAPIClient: state.peers.liskAPIClient || {},
 });
 
 const mapDispatchToProps = {
-  delegatesFetched,
   delegateRegistered,
 };
 

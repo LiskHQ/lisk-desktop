@@ -24,15 +24,19 @@ describe('DelegateRegistration', () => {
     },
     prevState: {},
     delegate: {},
-    delegatesFetched: jest.fn(),
+    liskAPIClient: {
+      delegates: {
+        get: jest.fn(),
+      },
+    },
     delegateRegistered: jest.fn(),
     nextStep: jest.fn(),
     t: key => key,
   };
 
   beforeEach(() => {
-    props.delegatesFetched.mockClear();
-    debounce.mockReturnValue((name, error) => !error && props.delegatesFetched(name));
+    props.liskAPIClient.delegates.get.mockClear();
+    debounce.mockReturnValue((name, error) => !error && props.liskAPIClient.delegates.get(name));
     wrapper = mount(<DelegateRegistration {...props} />);
   });
 

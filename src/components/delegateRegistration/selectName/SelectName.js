@@ -33,21 +33,19 @@ class SelectName extends React.Component {
     this.hasUserHasEnoughFunds();
   }
 
-  componentDidUpdate(prevProps) {
-    const { delegate, t } = this.props;
-
-    if (prevProps.delegate !== delegate && delegate) {
-      if (delegate.delegateNameInvalid) {
-        this.setState({ loading: false, error: t('Name is already taken!') });
-      } else {
-        this.setState({ loading: false });
-      }
-    }
-  }
-
   getNicknameFromPrevState() {
     const { prevState } = this.props;
     if (Object.entries(prevState).length) this.setState({ nickname: prevState.nickname });
+  }
+
+  checkIfUserIsDelegate() {
+    const { account, t } = this.props;
+    if (account && account.isDelegate) {
+      this.setState({
+        inputDisabled: true,
+        error: t('You have already registered as a delegate.'),
+      });
+    }
   }
 
   hasUserHasEnoughFunds() {
@@ -63,16 +61,6 @@ class SelectName extends React.Component {
     }
   }
 
-  checkIfUserIsDelegate() {
-    const { account, t } = this.props;
-    if (account && account.isDelegate) {
-      this.setState({
-        inputDisabled: true,
-        error: t('You have already registered as a delegate.'),
-      });
-    }
-  }
-
   isNameInvalid(nickname) {
     const { t } = this.props;
     if (nickname.length > 20) return t('Nickname is too long.');
@@ -81,9 +69,22 @@ class SelectName extends React.Component {
     return false;
   }
 
-  onUserFetch(nickname, error) {
-    if (!error && nickname.length) {
-      this.props.delegatesFetched({ username: nickname });
+  onUserFetch(username, error) {
+    const { t, liskAPIClient } = this.props;
+
+    if (!error && username.length) {
+      liskAPIClient.delegates.get({ username })
+        .then((response) => {
+          if (response.data.length) {
+            this.setState({
+              loading: false,
+              error: t('Name is already taken!'),
+            });
+          } else {
+            this.setState({ loading: false });
+          }
+        })
+        .catch(() => this.setState({ loading: false }));
     }
   }
 

@@ -20,14 +20,18 @@ describe('DelegateRegistration', () => {
     },
     prevState: {},
     delegate: {},
-    delegatesFetched: jest.fn(),
+    liskAPIClient: {
+      delegates: {
+        get: jest.fn(),
+      },
+    },
     nextStep: jest.fn(),
     t: key => key,
   };
 
   beforeEach(() => {
-    props.delegatesFetched.mockClear();
-    debounce.mockReturnValue((name, error) => !error && props.delegatesFetched(name));
+    props.liskAPIClient.delegates.get.mockClear();
+    debounce.mockReturnValue((name, error) => !error && props.liskAPIClient.delegates.get(name));
     wrapper = mount(<SelectName {...props} />);
   });
 
@@ -45,14 +49,7 @@ describe('DelegateRegistration', () => {
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     wrapper.find('.select-name-input').at(0).simulate('change', { target: { value: 'mydelegate' } });
     jest.advanceTimersByTime(1000);
-    expect(props.delegatesFetched).toBeCalled();
-    wrapper.setProps({
-      delegate: {
-        delegateNameInvalid: false,
-        delegateNameQueried: false,
-      },
-    });
-    wrapper.update();
+    expect(props.liskAPIClient.delegates.get).toBeCalled();
     expect(wrapper.find('button.confirm-btn')).not.toBeDisabled();
     wrapper.find('button.confirm-btn').simulate('click');
     expect(props.nextStep).toBeCalled();
@@ -63,7 +60,26 @@ describe('DelegateRegistration', () => {
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     wrapper.find('.select-name-input').at(0).simulate('change', { target: { value: 'mydelegate+' } });
     jest.advanceTimersByTime(1000);
-    expect(props.delegatesFetched).not.toBeCalled();
+    expect(props.liskAPIClient.delegates.get).not.toBeCalled();
+    expect(wrapper.find('button.confirm-btn')).toBeDisabled();
+  });
+
+  it('disabled confirm button if user is already a delegate', () => {
+    wrapper.setProps({
+      account: {
+        ...props.account,
+        isDelegate: true,
+      },
+    });
+    expect(wrapper.find('button.confirm-btn')).toBeDisabled();
+  });
+
+  it('disabled confirm button if nickname is longer than 20 chars', () => {
+    expect(wrapper.find('button.confirm-btn')).toBeDisabled();
+    wrapper.find('.select-name-input').at(0).simulate('change', { target: { value: 'mydelegate' } });
+    expect(wrapper.find('button.confirm-btn')).not.toBeDisabled();
+    wrapper.find('.select-name-input').at(0).simulate('change', { target: { value: 'mydelegate_genesis_1023_gister_number_1' } });
+    jest.advanceTimersByTime(1000);
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
   });
 });

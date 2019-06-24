@@ -35,7 +35,7 @@ class DelegateRegistration extends React.Component {
     const {
       account,
       delegate,
-      delegatesFetched,
+      liskAPIClient,
       t,
     } = this.props;
 
@@ -49,7 +49,7 @@ class DelegateRegistration extends React.Component {
             t={t}
             account={account}
             delegate={delegate}
-            delegatesFetched={delegatesFetched}/>
+            liskAPIClient={liskAPIClient}/>
           <Summary
             t={t}
             account={account}
