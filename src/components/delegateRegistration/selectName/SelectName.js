@@ -68,7 +68,7 @@ class SelectName extends React.Component {
     if (account && account.isDelegate) {
       this.setState({
         inputDisabled: true,
-        error: t('This account is a delegate already.'),
+        error: t('You have already registered as a delegate.'),
       });
     }
   }
