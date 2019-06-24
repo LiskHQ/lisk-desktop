@@ -109,22 +109,22 @@ export default {
   // },
   search: {
     name: 'search',
-    pathPrefix: '/explorer',
-    path: '/result',
+    pathPrefix: '',
+    path: '/explorer/result',
     pathSuffix: '/:query?',
     component: SearchResult,
     isPrivate: false,
   },
   accounts: {
-    pathPrefix: '/explorer',
-    path: '/accounts',
+    pathPrefix: '',
+    path: '/explorer/accounts',
     pathSuffix: '/:address?',
     component: AccountTransactions,
     isPrivate: false,
   },
   transactions: {
-    pathPrefix: '/explorer',
-    path: '/transactions',
+    pathPrefix: '',
+    path: '/explorer/transactions',
     pathSuffix: '/:id?',
     component: SingleTransaction,
     isPrivate: false,
@@ -141,9 +141,6 @@ export default {
   //   component: NotFound,
   //   isPrivate: false,
   // },
-  explorer: {
-    path: '/explorer',
-  },
   splashscreen: {
     path: '/',
     component: Splashscreen,
