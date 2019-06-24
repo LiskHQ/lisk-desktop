@@ -109,6 +109,7 @@ class TransactionRowV2 extends React.Component {
 /* istanbul ignore next */
 TransactionRowV2.defaultProps = {
   onClick: () => {},
+  columnClassNames: {},
 };
 
 export default translate()(TransactionRowV2);
