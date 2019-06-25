@@ -95,6 +95,7 @@ class TopBar extends React.Component {
         </div>
         <div>
           <Network
+            token={token.active}
             peers={peers}
             t={t}
           />
