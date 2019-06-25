@@ -42,6 +42,7 @@ describe('Delegate Registration', () => {
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     // Enter delegate name
     cy.get(ss.delegateNameInput).click().type(randomDelegateName);
+    cy.wait(1200);
     cy.get(ss.chooseDelegateName).click();
     // Submit
     cy.get(ss.confirmDelegateButton).click();
@@ -66,6 +67,7 @@ describe('Delegate Registration', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
     cy.get(ss.delegateNameInput).click().type(randomDelegateName);
+    cy.wait(1200);
     cy.get(ss.chooseDelegateName).click();
     enterSecondPassphraseV2(accounts['second passphrase account'].secondPassphrase);
     cy.get(ss.confirmDelegateButton).click();
