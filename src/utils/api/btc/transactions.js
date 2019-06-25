@@ -1,4 +1,5 @@
 import * as bitcoin from 'bitcoinjs-lib';
+import { BigNumber } from 'bignumber.js';
 
 import { extractAddress, getDerivedPathFromPassphrase } from './account';
 import { getAPIClient, getNetworkCode } from './network';
@@ -204,6 +205,32 @@ export const create = ({
     reject(error);
   }
 });
+
+const getUnspentTransactionOutputCountToConsume = (satoshiValue, unspentTransactionOutputs) => {
+  const amount = new BigNumber(satoshiValue);
+  const [count] = unspentTransactionOutputs.reduce((result, output) => {
+    if (amount.isGreaterThan(result[1])) {
+      result[0] += 1;
+      result[1] = result[1].plus(output.value);
+    }
+
+    return result;
+  }, [0, new BigNumber(0)]);
+
+  return count;
+};
+
+export const getTransactionFeeFromUnspentOutputs = ({
+  dynamicFeePerByte, satoshiValue, unspentTransactionOutputs,
+}) => {
+  const feeInSatoshis = calculateTransactionFee({
+    inputCount: getUnspentTransactionOutputCountToConsume(satoshiValue, unspentTransactionOutputs),
+    outputCount: 2,
+    dynamicFeePerByte,
+  });
+
+  return feeInSatoshis;
+};
 
 export const broadcast = (transactionHex, network) => new Promise(async (resolve, reject) => {
   try {

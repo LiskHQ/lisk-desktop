@@ -1,6 +1,5 @@
 // eslint-disable-line max-lines
 import React from 'react';
-import { BigNumber } from 'bignumber.js';
 import ConverterV2 from '../../converterV2';
 import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
 import { InputV2, AutoresizeTextarea } from '../../toolbox/inputsV2';
@@ -10,7 +9,7 @@ import SpinnerV2 from '../../spinnerV2/spinnerV2';
 import svg from '../../../utils/svgIcons';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
-import { fromRawLsk } from '../../../utils/lsk';
+import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
 import fees from '../../../constants/fees';
 import Feedback from '../../toolbox/feedback/feedback';
 import CircularProgress from '../../toolbox/circularProgress/circularProgress';
@@ -300,30 +299,14 @@ class Form extends React.Component {
       : fromRawLsk(Math.max(0, account.balance - dynamicFee));
   }
 
-  getUnspentTransactionOutputCountToConsume(value) {
-    const { unspentTransactionOutputs } = this.state;
-    const amount = new BigNumber(value);
-    const [count] = unspentTransactionOutputs.reduce((result, output) => {
-      // istanbul ignore if
-      if (amount.isGreaterThan(result[1])) {
-        result[0] += 1;
-        result[1] = result[1].plus(fromRawLsk(output.value));
-      }
-
-      return result;
-    }, [0, new BigNumber(0)]);
-
-    return count;
-  }
-
   getCalculatedDynamicFee(dynamicFeePerByte, value) {
-    const { fields: { amount } } = this.state;
+    const { fields: { amount }, unspentTransactionOutputs } = this.state;
     if (this.validateAmountField(value || amount.value)) {
       return 0;
     }
-    const feeInSatoshis = btcTransactionsAPI.calculateTransactionFee({
-      inputCount: this.getUnspentTransactionOutputCountToConsume(value || amount.value),
-      outputCount: 2,
+    const feeInSatoshis = btcTransactionsAPI.getTransactionFeeFromUnspentOutputs({
+      unspentTransactionOutputs,
+      satoshiValue: toRawLsk(value || amount.value),
       dynamicFeePerByte,
     });
 
