@@ -94,7 +94,8 @@ export default {
     path: '/register-delegate',
     component: RegisterDelegate,
     isLoaded: true,
-    isPrivate: false,
+    isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   addAccount: {
     path: '/add-account',
