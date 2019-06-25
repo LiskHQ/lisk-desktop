@@ -26,7 +26,28 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.state = this.getInitialState(props);
+
+    this.loaderTimeout = null;
+
+    this.getMaxAmount = this.getMaxAmount.bind(this);
+    this.ifDataFromPrevState = this.ifDataFromPrevState.bind(this);
+    this.ifDataFromUrl = this.ifDataFromUrl.bind(this);
+    this.onAmountOrReferenceChange = this.onAmountOrReferenceChange.bind(this);
+    this.onGoNext = this.onGoNext.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onSelectedAccount = this.onSelectedAccount.bind(this);
+    this.validateAmountAndReference = this.validateAmountAndReference.bind(this);
+    this.validateBookmark = this.validateBookmark.bind(this);
+    this.checkIfBookmarkedAccount = this.checkIfBookmarkedAccount.bind(this);
+    this.setReferenceActive = this.setReferenceActive.bind(this);
+    this.selectProcessingSpeed = this.selectProcessingSpeed.bind(this);
+    this.getProcessingSpeedStatus = this.getProcessingSpeedStatus.bind(this);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  getInitialState(props) {
+    return {
       isLoading: false,
       fields: {
         recipient: {
@@ -64,22 +85,6 @@ class Form extends React.Component {
       },
       unspentTransactionOutputs: [],
     };
-
-    this.loaderTimeout = null;
-
-    this.getMaxAmount = this.getMaxAmount.bind(this);
-    this.ifDataFromPrevState = this.ifDataFromPrevState.bind(this);
-    this.ifDataFromUrl = this.ifDataFromUrl.bind(this);
-    this.onAmountOrReferenceChange = this.onAmountOrReferenceChange.bind(this);
-    this.onGoNext = this.onGoNext.bind(this);
-    this.onInputChange = this.onInputChange.bind(this);
-    this.onSelectedAccount = this.onSelectedAccount.bind(this);
-    this.validateAmountAndReference = this.validateAmountAndReference.bind(this);
-    this.validateBookmark = this.validateBookmark.bind(this);
-    this.checkIfBookmarkedAccount = this.checkIfBookmarkedAccount.bind(this);
-    this.setReferenceActive = this.setReferenceActive.bind(this);
-    this.selectProcessingSpeed = this.selectProcessingSpeed.bind(this);
-    this.getProcessingSpeedStatus = this.getProcessingSpeedStatus.bind(this);
   }
 
   componentDidMount() {
@@ -91,7 +96,7 @@ class Form extends React.Component {
     this.checkIfBookmarkedAccount();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(nextProps) {
     const { fields, unspentTransactionOutputs } = this.state;
     const {
       token, account, dynamicFees, networkConfig,
@@ -118,6 +123,10 @@ class Form extends React.Component {
           },
         },
       });
+    }
+
+    if (nextProps.token !== token) {
+      this.setState(this.getInitialState(this.props));
     }
   }
 
