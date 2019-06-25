@@ -156,11 +156,11 @@ class SelectName extends React.Component {
               className={`${styles.inputNickname} select-name-input`}
               disabled={inputDisabled}
             />
-            <SpinnerV2 className={`${styles.spinner} ${loading && nickname.length ? styles.show : styles.hide} spiner`}/>
+            { /* TODO <Spiner/> and <Icon/> will be incorporated into <InputV2/> in https://github.com/LiskHQ/lisk-hub/issues/2091 */ }
+            <SpinnerV2 className={`${styles.spinner} ${loading && nickname.length ? styles.show : styles.hide} spiner`} />
             <Icon
               className={`${styles.status} ${!loading && nickname.length ? styles.show : styles.hide} input-status-icon`}
-              name={error ? 'alert_icon' : 'ok_icon'}
-            />
+              name={error ? 'alert_icon' : 'ok_icon'}/>
 
             <Feedback
               show={true}

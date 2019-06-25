@@ -1,4 +1,3 @@
-// istanbul ignore file
 import React from 'react';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
 import { getErrorReportMailto } from '../../utils/helpers';
@@ -6,9 +5,9 @@ import styles from './transactionResult.css';
 import Illustration from '../toolbox/illustration';
 
 const TransactionResult = ({
-  success, title, message, primaryButon, t, error, children, illustration,
+  success, title, message, primaryButon, t, error, children, illustration, className,
 }) => (
-  <div className={styles.wrapper}>
+  <div className={`${styles.wrapper} ${className}`}>
     {
       typeof illustration === 'string'
       ? <Illustration name={illustration} />
