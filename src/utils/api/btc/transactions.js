@@ -229,7 +229,12 @@ export const getTransactionFeeFromUnspentOutputs = ({
     dynamicFeePerByte,
   });
 
-  return feeInSatoshis;
+  return calculateTransactionFee({
+    inputCount: getUnspentTransactionOutputCountToConsume(satoshiValue +
+      feeInSatoshis, unspentTransactionOutputs),
+    outputCount: 2,
+    dynamicFeePerByte,
+  });
 };
 
 export const broadcast = (transactionHex, network) => new Promise(async (resolve, reject) => {
