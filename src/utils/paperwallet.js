@@ -10,7 +10,7 @@ class Paperwallet {
     this.doc = new JSPDF({
       orientation: 'p',
       unit: 'pt',
-      format: [600, 845],
+      format: [600, 900],
     });
     this.props = props;
 
@@ -29,8 +29,9 @@ class Paperwallet {
 
     this.textOptions = {
       align: 'left',
-      baseline: 'bottom',
-      charSpace: 0.1,
+      baseline: 'top',
+      charSpace: 0.05,
+      lineHeightFactor: 1.57,
     };
 
     this.doc.addFileToVFS('gilroy-bold.ttf', fonts.GilroyBold)
@@ -42,24 +43,29 @@ class Paperwallet {
 
   renderHeader() {
     const { t, passphraseName } = this.props;
-    const now = new Date(Date.now());
+    const textOptions = this.textOptions;
+    const now = new Date();
     const date = [
       `0${now.getDate()}`.substr(-2),
       `0${now.getMonth() + 1}`.substr(-2),
       `${now.getFullYear()}`,
     ];
 
-    this.doc.addImage(logo, 'PNG', 65, 55, 50, 19);
+    this.doc.addImage(logo, 'PNG', 32, 72, 67, 26);
 
-    this.doc.setFontStyle('bold').setFontSize(12)
-      .text(t('{{passphraseName}} paper wallet', { passphraseName }), 150, 65, this.textOptions);
-    this.doc.setFontStyle('normal').setFontSize(10)
-      .text(t('Store this document in a safe place.'), 150, 80, this.textOptions);
+    this.doc.setFontStyle('bold').setFontSize(16)
+      .text(t('{{passphraseName}} paper wallet', { passphraseName }), 135, 64, {
+        ...textOptions,
+        lineHeightFactor: 1.18,
+      });
+    this.doc.setFontStyle('normal').setFontSize(14)
+      .text(t('Store this document in a safe place.'), 135, 84, textOptions);
 
-    this.doc.setFontStyle('bold').setFontSize(12)
-      .text(date.join('.'), 545, 70, {
-        ...this.textOptions,
+    this.doc.setFontStyle('bold').setFontSize(16)
+      .text(date.join('.'), 568, 75, {
+        ...textOptions,
         align: 'right',
+        lineHeightFactor: 1.18,
       });
     return this;
   }
@@ -68,36 +74,40 @@ class Paperwallet {
     const { t } = this.props;
     const textOptions = this.textOptions;
 
-    this.doc.addImage(printer, 'PNG', 65, 150, 27, 27);
-    this.doc.addImage(usbStick, 'PNG', 65, 185, 27, 27);
+    this.doc.addImage(printer, 'PNG', 32, 185, 36, 36);
+    this.doc.addImage(usbStick, 'PNG', 32, 229, 36, 36);
 
-    this.doc.setFontStyle('normal').setFontSize(10);
-    this.doc.text(t('How we recommend to store it'), 65, 130, textOptions);
-    this.doc.text(t('Print it on paper and store it in a safe place'), 97, 167, textOptions);
-    this.doc.text(t('Save it on a encrypted hard drive: USB key or a backup drive'), 97, 202, textOptions);
+    this.doc.setFontStyle('normal').setFontSize(14);
+    this.doc.text(t('How we recommend to store it.'), 32, 147, textOptions);
+    this.doc.text(t('Print it on paper and store it in a safe place'), 76, 194, textOptions);
+    this.doc.text(t('Save it on a encrypted hard drive: USB key or a backup drive'), 76, 238, textOptions);
     return this;
   }
 
   renderAccount() {
-    const { account, t, passphraseName } = this.props;
+    const { account, t } = this.props;
     const textOptions = this.textOptions;
 
-    this.doc.setFontStyle('normal').setFontSize(10)
-      .text(t('Wallet address:'), 65, 250, textOptions);
-    this.doc.setFontStyle('bold').setFontSize(14)
-      .text(account.address, 65, 280, textOptions);
-
-    this.doc.setFontStyle('normal').setFontSize(10)
-      .text(t('Passphrase:', { passphraseName }), 65, 330, textOptions);
+    this.doc.setFontStyle('normal').setFontSize(14)
+      .text(t('Wallet address:'), 32, 300, textOptions);
     this.doc.setFontStyle('bold').setFontSize(18)
-      .text(this.passphrase, 65, 385, {
+      .text(account.address, 32, 340, {
         ...textOptions,
+        lineHeightFactor: 2.22,
+      });
+
+    this.doc.setFontStyle('normal').setFontSize(14)
+      .text(t('Passphrase:'), 32, 406, textOptions);
+    this.doc.setFontStyle('bold').setFontSize(18)
+      .text(this.passphrase, 32.5, 464, {
+        ...textOptions,
+        align: 'justify',
         lineHeightFactor: 2,
       });
 
     this.doc.setFillColor('#BEC1CD')
-      .rect(65, 350, 470, 1, 'F')
-      .rect(65, (350 + (this.passphrase.length * 45)), 470, 1, 'F');
+      .rect(32, 443.5, 530, 1, 'F')
+      .rect(32, (464 + (this.passphrase.length * 40)), 530, 1, 'F');
     return this;
   }
 
@@ -105,9 +115,9 @@ class Paperwallet {
     const { qrcode, t } = this.props;
     const textOptions = this.textOptions;
     const marginTop = this.passphrase.length * 45;
-    this.doc.setFontSize(10).setFontStyle('normal');
-    this.doc.text(t('Access your account by scanning the QR code below with the Lisk Mobile App:'), 65, 400 + marginTop, textOptions);
-    this.doc.addImage(qrcode, 'PNG', 240, 420 + marginTop, 120, 120);
+    this.doc.setFontSize(14).setFontStyle('normal');
+    this.doc.text(t('Access your account by scanning the QR code below with the Lisk Mobile App:'), 32, 495 + marginTop, textOptions);
+    this.doc.addImage(qrcode, 'PNG', 240, 564 + marginTop, 120, 120);
     return this;
   }
 
@@ -116,7 +126,7 @@ class Paperwallet {
       .renderInstructions()
       .renderAccount()
       .renderFooter()
-      .doc.save(`${walletName}.pdf`);
+      .doc.save(`${walletName}`);
   }
 }
 
