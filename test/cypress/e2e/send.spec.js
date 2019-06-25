@@ -31,18 +31,6 @@ describe('Send', () => {
   });
 
   /**
-   * Send page can be opened by direct link
-   * @expect url is correct
-   * @expect some specific to page element is present on it
-   */
-  it(`Send page opens by url ${urls.send}`, () => {
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.send);
-    cy.url().should('contain', urls.send);
-    cy.get(ss.recipientInput);
-  });
-
-  /**
    * Make a transfer with empty reference
    * @expect successfully go through transfer process
    * @expect transaction appears in the activity list as pending
@@ -56,8 +44,11 @@ describe('Send', () => {
     cy.visit(urls.send);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     cy.get(ss.recipientInput).type(randomAddress);
+    cy.get(ss.sendReferenceText).click().type(randomReference);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).click();
+    cy.get(ss.recipientConfirmLabel).last().contains(randomAddress);
+    cy.get(ss.referenceConfirmLabel).contains(randomReference);
     cy.get(ss.sendBtn).click();
     cy.get(ss.submittedTransactionMessage).should('have.text', msg.transferTxSuccess);
     cy.get(ss.okayBtn).click();
@@ -68,29 +59,6 @@ describe('Send', () => {
     cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(function () {
       compareBalances(this.balanceBefore, this.balanceAfter, randomAmount + transactionFee);
     });
-  });
-
-  /**
-   * Make a transfer with reference
-   * @expect successfully go through transfer process
-   * @expect transaction appears in the activity list as pending
-   * @expect transaction appears in the activity list with correct data
-   * @expect transaction appears in the activity list as confirmed
-   */
-  it('Transfer tx with ref appears in dashboard activity pending -> approved', () => {
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(urls.send);
-    cy.get(ss.recipientInput).type(randomAddress);
-    cy.get(ss.sendReferenceText).click().type(randomReference);
-    cy.get(ss.amountInput).click().type(randomAmount);
-    cy.get(ss.nextTransferBtn).click();
-    cy.get(ss.recipientConfirmLabel).last().contains(randomAddress);
-    cy.get(ss.referenceConfirmLabel).contains(randomReference);
-    cy.get(ss.sendBtn).click();
-    cy.get(ss.submittedTransactionMessage).should('have.text', msg.transferTxSuccess);
-    cy.visit(urls.dashboard);
-    cy.get(ss.transactionAddress).eq(0).should('have.text', randomAddress);
-    cy.get(ss.transactionAmount).eq(0).should('have.text', `- ${randomAmount} LSK`);
   });
 
   /**
@@ -136,42 +104,6 @@ describe('Send', () => {
     cy.get(ss.recipientInput).should('have.value', '4995063339468361088L');
     cy.get(ss.amountInput).should('have.value', '5');
     cy.get(ss.sendReferenceText).should('have.value', 'test');
-  });
-
-  /**
-   * Fiat converter shows amount in USD if set to USD
-   * @expect amount in USD
-   */
-  it('Fiat converter shows amount in USD', () => {
-    cy.addObjectToLocalStorage('settings', 'currency', 'USD');
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(`${urls.send}?recipient=4995063339468361088L&amount=5`);
-    cy.get(ss.convertedPrice).contains(/\d{1,100}(\.\d{1,2})? USD$/);
-  });
-
-  /**
-   * Fiat converter shows amount in EUR if set to EUR
-   * @expect amount in EUR
-   */
-  it('Fiat converter shows amount in EUR', () => {
-    cy.addObjectToLocalStorage('settings', 'currency', 'EUR');
-    cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
-    cy.visit(`${urls.send}?recipient=4995063339468361088L&amount=5`);
-    cy.get(ss.convertedPrice).contains(/\d{1,100}(\.\d{1,2})? EUR$/);
-  });
-
-  /**
-   * Try to make a transfer if not enough funds
-   * @expect next button is disabled
-   * @expect error message shown
-   */
-  it('It\'s not allowed to make a transfer if not enough funds', () => {
-    cy.autologin(accounts['empty account'].passphrase, networks.devnet.node);
-    cy.visit(urls.send);
-    cy.get(ss.recipientInput).type(randomAddress);
-    cy.get(ss.amountInput).click().type(randomAmount);
-    cy.get(ss.nextTransferBtn).should('be.disabled');
-    cy.get(ss.sendFormAmountFeedback).contains('Provided amount is higher than your current balance.');
   });
 
   /**
