@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
 import BookmarksList from './bookmarksList';
 import { tokenMap } from '../../constants/tokens';
+import bookmarks from '../../../test/constants/bookmarks';
 
 describe('BookmarksList', () => {
   let wrapper;
@@ -15,38 +16,7 @@ describe('BookmarksList', () => {
     token: {
       active: tokenMap.LSK.key,
     },
-    bookmarks: {
-      LSK: [{
-        title: 'ABC',
-        address: '12345L',
-      },
-      {
-        title: 'FGHDFG',
-        address: '12375L',
-      },
-      {
-        title: 'DFGDFG',
-        address: '123753453L',
-      },
-      {
-        title: 'FGRT',
-        address: '12375345343L',
-      },
-      {
-        title: 'WERER',
-        address: '1237534523L',
-      },
-      {
-        title: 'KTG',
-        address: '12395L',
-      }],
-      BTC: [
-        {
-          title: 'BBTTCC',
-          address: '324jhg35hg345',
-        },
-      ],
-    },
+    bookmarks,
   };
 
   beforeEach(() => {
