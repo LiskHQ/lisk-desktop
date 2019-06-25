@@ -22,7 +22,3 @@
   max-width: 530px;
   height: auto;
 }
-
-:global(.offlineWrapper) {
-  height: 100%;
-}

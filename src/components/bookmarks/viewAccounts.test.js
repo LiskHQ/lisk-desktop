@@ -89,7 +89,7 @@ describe('Bookmarks list Component', () => {
 
     it('directs you to account page on click', () => {
       wrapper.find('.bookmark-account').at(0).simulate('click');
-      expect(props.history.push).to.have.been.calledWith(`${routes.explorer.path}${routes.accounts.path}/123L`);
+      expect(props.history.push).to.have.been.calledWith(`${routes.accounts.path}/123L`);
     });
 
     it('goes to next step on button click', () => {
