@@ -96,6 +96,11 @@ export default {
     isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },
+  addAccount: {
+    path: '/add-account',
+    component: LoginV2,
+    isPrivate: false,
+  },
   extensions: {
     path: '/extensions',
     component: Extensions,
