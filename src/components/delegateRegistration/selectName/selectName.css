@@ -3,6 +3,7 @@
 
 .box {
   width: 100%;
+  height: 445px;
   max-width: 720px;
   box-sizing: border-box;
 }
@@ -22,13 +23,23 @@
     @mixin contentLargest;
 
     color: var(--color-slate-gray);
+    margin: 0;
+    padding: 0;
+  }
+
+  & > .description:nth-of-type(1) {
+    margin-top: 2px;
+  }
+
+  & > .description:nth-of-type(2) {
+    margin-top: 25px;
   }
 
   & > .link {
     @mixin contentLargest bold;
 
     color: var(--color-ultramarine-blue);
-    margin-bottom: 24px;
+    margin-top: 18px;
     text-decoration: none;
   }
 
@@ -36,7 +47,7 @@
     @mixin contentNormal bold;
 
     color: var(--color-maastricht-blue);
-    margin-bottom: 12px;
+    margin: 22px 0 10px;
   }
 
   & .inputRequirements {
@@ -72,6 +83,10 @@
     }
   }
 
+  & .inputNickname {
+    padding: 8px 14px;
+  }
+
   & .inputNickname:focus ~ .inputRequirements {
     opacity: 1 !important;
   }
@@ -85,7 +100,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: auto;
+    margin-top: 6px;
 
     & > .confirmBtn {
       width: 100%;

@@ -4,13 +4,13 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { translate } from 'react-i18next';
 import { DateTimeFromTimestamp } from '../timestamp';
 import LiskAmount from '../liskAmount';
-import EmptyState from '../emptyState';
 import svg from '../../utils/svgIcons';
 import BoxV2 from '../boxV2';
 import { SecondaryButtonV2 } from '../toolbox/buttons/button';
 import TransactionDetailViewV2 from '../transactionsV2/transactionDetailViewV2/transactionDetailViewV2';
 import styles from './singleTransactionV2.css';
 import transactionTypes from '../../constants/transactionTypes';
+import NotFound from '../notFound';
 
 class SingleTransactionV2 extends React.Component {
   constructor(props) {
@@ -80,9 +80,8 @@ class SingleTransactionV2 extends React.Component {
         break;
     }
 
-
     return (
-      <div className={`${grid.row} ${grid['center-xs']}`}>
+      <div className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
       { transaction.id && !transaction.error ? (
         <BoxV2 className={`${grid['col-sm-8']} ${grid['col-md-4']} ${styles.wrapper}`}>
           <header className={`${styles.detailsHeader} tx-header`}>
@@ -158,11 +157,8 @@ class SingleTransactionV2 extends React.Component {
             </footer>
           </main>
         </BoxV2>
-      ) : typeof transaction === 'string' && (
-        <BoxV2 className={`${grid['col-sm-8']} ${grid['col-md-4']}`}>
-          <EmptyState title={this.props.t('No results')}
-            message={this.props.t('Search for Lisk ID, Delegate or Transaction ID')} />
-        </BoxV2>
+      ) : transaction.errors && transaction.errors.length && (
+        <NotFound />
       )}
       </div>
     );

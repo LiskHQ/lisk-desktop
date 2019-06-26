@@ -171,7 +171,11 @@ describe('Single Transaction V2 Component', () => {
   });
 
   describe('No results', () => {
-    const transaction = 'No transaction found';
+    const transaction = {
+      errors: [{
+        code: 'INVALID_REQUEST_PARAMETER',
+      }],
+    };
 
     const store = configureMockStore([thunk])({
       account: accounts.genesis,
@@ -194,7 +198,7 @@ describe('Single Transaction V2 Component', () => {
     });
 
     it('Should render no result screen', () => {
-      expect(wrapper).toContainMatchingElement('EmptyState');
+      expect(wrapper).toContainMatchingElement('NotFound');
     });
   });
 });

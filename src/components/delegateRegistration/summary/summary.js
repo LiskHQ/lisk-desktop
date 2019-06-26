@@ -18,16 +18,14 @@ class Summary extends React.Component {
     } = this.props;
 
     const data = {
-      userInfo: {
-        account: account.info.LSK,
-        username: nickname,
-        passphrase: account.passphrase,
-        secondPassphrase,
-      },
+      account: account.info.LSK,
+      username: nickname,
+      passphrase: account.passphrase,
+      secondPassphrase,
     };
 
-    submitDelegateRegistration(data.userInfo);
-    nextStep(data);
+    submitDelegateRegistration(data);
+    nextStep({ userinfo: data });
   }
 
   render() {
@@ -52,6 +50,7 @@ class Summary extends React.Component {
         confirmButton={onConfirmAction}
         cancelButton={onCancelAction}
         fee={fromRawLsk(Fees.registerDelegate)}
+        classNames={styles.summaryContainer}
       >
         <section className={'summary-container'}>
           <label className={'nickname-label'}>{t('Your nickname')}</label>

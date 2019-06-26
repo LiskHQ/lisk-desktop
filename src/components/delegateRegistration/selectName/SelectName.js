@@ -7,6 +7,7 @@ import Feedback from '../../toolbox/feedback/feedback';
 import SpinnerV2 from '../../spinnerV2/spinnerV2';
 import Icon from '../../toolbox/icon';
 import { fromRawLsk } from '../../../utils/lsk';
+import { getAPIClient } from '../../../utils/api/lsk/network';
 import regex from '../../../utils/regex';
 import links from '../../../constants/externalLinks';
 import Fees from '../../../constants/fees';
@@ -70,10 +71,10 @@ class SelectName extends React.Component {
   }
 
   onUserFetch(username, error) {
-    const { t, liskAPIClient } = this.props;
+    const { t, network } = this.props;
 
     if (!error && username.length) {
-      liskAPIClient.delegates.get({ username })
+      getAPIClient(network).delegates.get({ username })
         .then((response) => {
           if (response.data.length) {
             this.setState({
@@ -157,11 +158,11 @@ class SelectName extends React.Component {
               className={`${styles.inputNickname} select-name-input`}
               disabled={inputDisabled}
             />
-            <SpinnerV2 className={`${styles.spinner} ${loading && nickname.length ? styles.show : styles.hide} spiner`}/>
+            { /* TODO <Spiner/> and <Icon/> will be incorporated into <InputV2/> in https://github.com/LiskHQ/lisk-hub/issues/2091 */ }
+            <SpinnerV2 className={`${styles.spinner} ${loading && nickname.length ? styles.show : styles.hide} spiner`} />
             <Icon
               className={`${styles.status} ${!loading && nickname.length ? styles.show : styles.hide} input-status-icon`}
-              name={error ? 'alert_icon' : 'ok_icon'}
-            />
+              name={error ? 'alert_icon' : 'ok_icon'}/>
 
             <Feedback
               show={true}

@@ -8,7 +8,7 @@ import DelegateRegistration from './delegateRegistration';
 const mapStateToProps = state => ({
   account: state.account,
   delegate: state.delegate,
-  liskAPIClient: state.peers.liskAPIClient || {},
+  network: state.network,
 });
 
 const mapDispatchToProps = {

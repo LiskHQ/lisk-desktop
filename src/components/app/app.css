@@ -52,6 +52,10 @@ body {
   max-width: var(--main-box-width);
 }
 
+:global(.offlineWrapper) {
+  height: 100%;
+}
+
 @media (--medium-viewport) {
   body {
     background-color: var(--color-grayscale-mobile-background);

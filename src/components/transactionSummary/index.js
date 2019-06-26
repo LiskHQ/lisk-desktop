@@ -84,12 +84,13 @@ class TransactionSummary extends React.Component {
 
   render() {
     const {
-      title, children, confirmButton, cancelButton, account, t, fee, confirmation,
+      title, children, confirmButton, cancelButton, account, t, fee, confirmation, classNames,
     } = this.props;
     const {
       secondPassphrase, isHardwareWalletConnected, isConfirmed,
     } = this.state;
-    return <div className={styles.wrapper}>
+
+    return <div className={`${styles.wrapper} ${classNames}`}>
     <header className='summary-header'>
       { isHardwareWalletConnected ?
         <React.Fragment>

@@ -42,7 +42,7 @@ class BookmarksList extends React.Component {
             <Link
               key={bookmark.address}
               className={`${styles.row} bookmark-list-row`}
-              to={`${routes.explorer.path}/accounts/${bookmark.address}`}>
+              to={`${routes.accounts.path}/${bookmark.address}`}>
               {
                 token.active === tokenMap.LSK.key
                 ? <AccountVisual className={styles.avatar} address={bookmark.address} size={40}/>
