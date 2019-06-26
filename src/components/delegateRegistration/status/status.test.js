@@ -33,7 +33,7 @@ describe('Delegate Registration Status', () => {
     wrapper = mount(<Status {...props} />);
   });
 
-  it('renders properly Symmary component', () => {
+  it('renders properly Status component', () => {
     expect(wrapper).toContainMatchingElement('.status-container');
     expect(wrapper).toContainMatchingElement('.result-box-header');
     expect(wrapper).toContainMatchingElement('.body-message');

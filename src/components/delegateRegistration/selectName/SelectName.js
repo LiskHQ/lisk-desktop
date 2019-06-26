@@ -155,6 +155,7 @@ class SelectName extends React.Component {
               placeholder={t('ie. peter_pan')}
               className={`${styles.inputNickname} select-name-input`}
               disabled={inputDisabled}
+              error={error}
             />
             { /* TODO <Spiner/> and <Icon/> will be incorporated into <InputV2/> in https://github.com/LiskHQ/lisk-hub/issues/2091 */ }
             <SpinnerV2 className={`${styles.spinner} ${loading && nickname.length ? styles.show : styles.hide} spiner`} />

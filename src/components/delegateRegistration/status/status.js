@@ -1,7 +1,6 @@
 import React from 'react';
 import TransactionResult from '../../transactionResult';
 import DelegateAnimation from '../animations/delegateAnimation';
-import routes from '../../../constants/routes';
 import styles from './status.css';
 
 class Status extends React.Component {
@@ -47,7 +46,7 @@ class Status extends React.Component {
         title: t('Delegate registration submitted'),
         message: t('You will be notified when your transaction is confirmed.'),
         button: {
-          onClick: () => goBackToDelegates(routes.delegates.path),
+          onClick: goBackToDelegates,
           title: t('Back to delegates'),
           className: 'go-back-to-delegates',
         },

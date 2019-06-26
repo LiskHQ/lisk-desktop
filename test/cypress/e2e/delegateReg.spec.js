@@ -2,7 +2,7 @@ import accounts from '../../constants/accounts';
 import networks from '../../constants/networks';
 import ss from '../../constants/selectors';
 import urls from '../../constants/urls';
-import { enterSecondPassphraseV2 } from '../utils/enterSecondPassphrase';
+import enterSecondPassphrase from '../utils/enterSecondPassphrase';
 import compareBalances from '../utils/compareBalances';
 
 const txConfirmationTimeout = 12000;
@@ -69,7 +69,7 @@ describe('Delegate Registration', () => {
     cy.get(ss.delegateNameInput).click().type(randomDelegateName);
     cy.wait(1200);
     cy.get(ss.chooseDelegateName).click();
-    enterSecondPassphraseV2(accounts['second passphrase account'].secondPassphrase);
+    enterSecondPassphrase(accounts['second passphrase account'].secondPassphrase);
     cy.get(ss.confirmDelegateButton).click();
     cy.get(ss.app).contains('Delegate registration submitted');
     cy.visit(urls.wallet);
