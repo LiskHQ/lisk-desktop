@@ -21,6 +21,7 @@ import Extensions from '../components/extensions';
 import TermsOfUse from '../components/termsOfUse';
 import ToolboxDemo from '../components/toolbox/demo';
 import Dashboard from '../components/dashboard';
+import AddBookmark from '../components/bookmarks/addBookmark';
 
 export default {
   accountVisualDemo: {
@@ -37,6 +38,11 @@ export default {
   dashboard: {
     path: '/dashboard',
     component: Dashboard,
+    isPrivate: false,
+  },
+  addBookmark: {
+    path: '/bookmarks/add-bookmark',
+    component: AddBookmark,
     isPrivate: false,
   },
   send: {

@@ -1,0 +1,72 @@
+@import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  & .content {
+    width: 720px;
+
+    & header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    & h1 {
+      @mixin headingLarge;
+    }
+  }
+}
+
+.formHolder {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+
+  & > .buttonHolder {
+    display: flex;
+    margin: 16px auto 30px;
+    width: 390px;
+
+    & button {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  & label {
+    display: block;
+    margin-bottom: 24px;
+
+    & > .label {
+      @mixin contentNormal bold;
+
+      color: var(--color-maastricht-blue);
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    & .input:focus ~ .feedback {
+      opacity: 1 !important;
+    }
+  }
+
+  & .feedback {
+    margin-top: 5px;
+    min-height: 44px;
+    opacity: 0;
+    transition: none;
+
+    &.error {
+      opacity: 1;
+    }
+
+    &:not(:global(.error)) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
