@@ -10,10 +10,10 @@ class DelegateRegistration extends React.Component {
   render() {
     const {
       account,
-      delegate,
+      transactions,
       history,
       network,
-      delegateRegistered,
+      transactionBroadcasted,
       t,
     } = this.props;
 
@@ -29,13 +29,12 @@ class DelegateRegistration extends React.Component {
             network={network}/>
           <Summary
             t={t}
-            account={account}
-            submitDelegateRegistration={delegateRegistered}/>
+            account={account}/>
           <Status
             t={t}
             goBackToDelegates={history.push}
-            submitDelegateRegistration={delegateRegistered}
-            delegate={delegate}/>
+            transactionBroadcasted={transactionBroadcasted}
+            transactions={transactions}/>
         </MultiStep>
       </section>
     );

@@ -2,17 +2,17 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
-import { delegateRegistered } from '../../actions/account';
+import { transactionBroadcasted } from '../../actions/transactions';
 import DelegateRegistration from './delegateRegistration';
 
 const mapStateToProps = state => ({
   account: state.account,
-  delegate: state.delegate,
+  transactions: state.transactions,
   network: state.network,
 });
 
 const mapDispatchToProps = {
-  delegateRegistered,
+  transactionBroadcasted,
 };
 
 export default withRouter(connect(

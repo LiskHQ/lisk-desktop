@@ -12,7 +12,6 @@ export { default as transaction } from './transaction';
 export { default as bookmarks } from './bookmarks';
 export { default as search } from './search';
 export { default as settings } from './settings';
-export { default as delegate } from './delegate';
 export { default as liskService } from './liskService';
 export { default as filters } from './filters';
 export { default as extensions } from './extensions';

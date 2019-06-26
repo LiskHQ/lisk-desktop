@@ -1,14 +1,12 @@
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { getAccount, setSecondPassphrase } from '../utils/api/account';
-import { registerDelegate, getDelegates } from '../utils/api/delegates';
+import { getDelegates } from '../utils/api/delegates';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import { updateTransactions } from './transactions';
-import { delegateRegisteredFailure } from './delegate';
 import { liskAPIClientUpdate } from './peers';
 import { getTimeOffset } from '../utils/hacks';
-import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import accountConfig from '../constants/account';
 import { loginType } from '../constants/hwConstants';
@@ -117,39 +115,6 @@ export const updateDelegateAccount = ({ publicKey }) =>
 
 // TODO change all uses of loadDelegate to updateDelegateAccount
 export const loadDelegate = updateDelegateAccount;
-
-
-/**
- *
- */
-export const delegateRegistered = ({
-  account, passphrase, username, secondPassphrase,
-}) =>
-  (dispatch, getState) => {
-    const timeOffset = getTimeOffset(getState());
-    const liskAPIClient = getState().peers.liskAPIClient;
-    registerDelegate(liskAPIClient, username, passphrase, secondPassphrase, timeOffset)
-      .then((data) => {
-        // dispatch to add to pending transaction
-        dispatch({
-          data: {
-            id: data.id,
-            senderPublicKey: account.publicKey,
-            senderId: account.address,
-            username,
-            amount: 0,
-            fee: Fees.registerDelegate,
-            type: transactionTypes.registerDelegate,
-            token: 'LSK',
-          },
-          type: actionTypes.addPendingTransaction,
-        });
-      })
-      .catch((error) => {
-        dispatch(delegateRegisteredFailure(error));
-      });
-    dispatch(passphraseUsed(passphrase));
-  };
 
 export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocus) =>
   (dispatch) => {

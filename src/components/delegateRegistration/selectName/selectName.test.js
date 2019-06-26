@@ -20,9 +20,14 @@ describe('DelegateRegistration', () => {
     },
     prevState: {},
     delegate: {},
-    liskAPIClient: {
-      delegates: {
-        get: jest.fn(),
+    network: {
+      liskAPIClient: {
+        delegates: {
+          get: jest.fn(),
+        },
+        options: {
+          name: 'Mainnet',
+        },
       },
     },
     nextStep: jest.fn(),

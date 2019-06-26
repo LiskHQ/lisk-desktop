@@ -12,28 +12,35 @@ class Status extends React.Component {
       status: 'pending',
     };
 
-    this.onCheckTransactionStatus = this.onCheckTransactionStatus.bind(this);
     this.onRetry = this.onRetry.bind(this);
+    this.checkTransactionStatus = this.checkTransactionStatus.bind(this);
   }
 
-  // istanbul ignore next
-  onCheckTransactionStatus() {
-    const { status } = this.state;
-    const { delegate } = this.props;
-
-    if (delegate.registerStep && delegate.registerStep === 'register-success' && status === 'pending') {
-      this.setState({ status: 'ok' });
-    }
-    if (delegate.registerStep && delegate.registerStep === 'register-failure' && status === 'pending') {
-      this.setState({ status: 'fail' });
-    }
+  componentDidMount() {
+    const { transactionInfo } = this.props;
+    if (transactionInfo) this.broadcastTransaction();
   }
 
-  // istanbul ignore next
+  broadcastTransaction() {
+    const { transactionBroadcasted, transactionInfo } = this.props;
+    transactionBroadcasted(transactionInfo);
+  }
+
+  checkTransactionStatus() {
+    const { transactions, transactionInfo } = this.props;
+
+    const success = transactions.confirmed
+      .filter(tx => tx.id === transactionInfo.id);
+    const error = transactions.broadcastedTransactionsError
+      .filter(tx => tx.id === transactionInfo.id);
+
+    if (success.length) this.setState({ status: 'ok' });
+    if (error.length) this.setState({ status: 'fail' });
+  }
+
   onRetry() {
-    const { submitDelegateRegistration, userInfo } = this.props;
     this.setState({ status: 'pending' });
-    submitDelegateRegistration(userInfo);
+    this.broadcastTransaction();
   }
 
   render() {
@@ -41,7 +48,7 @@ class Status extends React.Component {
     const { status } = this.state;
 
     const isTransactionSuccess = status !== 'fail';
-    // istanbul ignore next
+
     const displayTemplate = isTransactionSuccess
       ? {
         title: t('Delegate registration submitted'),
@@ -68,7 +75,7 @@ class Status extends React.Component {
           illustration={<DelegateAnimation
             className={styles.animation}
             status={status}
-            onLoopComplete={this.onCheckTransactionStatus} />
+            onLoopComplete={this.checkTransactionStatus} />
           }
           success={isTransactionSuccess}
           title={displayTemplate.title}

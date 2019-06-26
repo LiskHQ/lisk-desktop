@@ -48,8 +48,11 @@ export const getSingleTransaction = async ({ token, ...params }) => (
  */
 // istanbul ignore file
 export const get = (token, data) => api[token].transactions.get(data);
+
 // istanbul ignore next
-export const create = (tokenType, data) => api[tokenType].transactions.create(data);
+export const create = (tokenType, data, transactionType) =>
+  api[tokenType].transactions.create(data, transactionType);
+
 // istanbul ignore next
 export const broadcast = (tokenType, transaction, networkConfig) =>
   api[tokenType].transactions.broadcast(transaction, networkConfig);

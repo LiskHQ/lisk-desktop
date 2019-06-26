@@ -9,7 +9,7 @@ import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';
 import { getTimeOffset } from '../utils/hacks';
 import Fees from '../constants/fees';
-import transactionTypes from '../constants/transactionTypes';
+import transactionTypes, { createTransactionType } from '../constants/transactionTypes';
 import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
 import { transactions as transactionsAPI, hardwareWallet as hwAPI } from '../utils/api';
@@ -259,7 +259,7 @@ export const sent = data => async (dispatch, getState) => {
 
   try {
     if (account.loginType === loginType.normal) {
-      tx = await transactionsAPI.create(activeToken, txData);
+      tx = await transactionsAPI.create(activeToken, txData, createTransactionType.transaction);
       broadcastTx = await transactionsAPI.broadcast(activeToken, tx, network);
     } else {
       [fail, broadcastTx] = await to(sendWithHW(
@@ -340,7 +340,11 @@ export const transactionCreated = data => async (dispatch, getState) => {
     : tokenMap.LSK.key;
 
   const [error, tx] = account.loginType === loginType.normal
-    ? await to(transactionsAPI.create(activeToken, { ...data, timeOffset }))
+    ? await to(transactionsAPI.create(
+      activeToken,
+      { ...data, timeOffset },
+      createTransactionType.transaction,
+    ))
     : await to(hwAPI.create(account, data));
 
   if (error) return dispatch(transactionCreatedError(error));

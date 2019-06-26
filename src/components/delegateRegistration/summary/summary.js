@@ -1,8 +1,11 @@
 import React from 'react';
+import to from 'await-to-js';
 import AccountVisual from '../../accountVisual/index';
 import { fromRawLsk } from '../../../utils/lsk';
 import Fees from '../../../constants/fees';
 import TransactionSummary from '../../transactionSummary';
+import { create } from '../../../utils/api/lsk/transactions';
+import { createTransactionType } from '../../../constants/transactionTypes';
 import styles from './summary.css';
 
 class Summary extends React.Component {
@@ -12,9 +15,9 @@ class Summary extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onSubmit({ secondPassphrase }) {
+  async onSubmit({ secondPassphrase }) {
     const {
-      account, nickname, submitDelegateRegistration, nextStep,
+      account, nickname, nextStep,
     } = this.props;
 
     const data = {
@@ -24,8 +27,11 @@ class Summary extends React.Component {
       secondPassphrase,
     };
 
-    submitDelegateRegistration(data);
-    nextStep({ userinfo: data });
+    const [error, tx] = await to(create(data, createTransactionType.delegate_registration));
+
+    if (!error) {
+      nextStep({ transactionInfo: tx });
+    }
   }
 
   render() {

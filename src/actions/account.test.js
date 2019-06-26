@@ -6,16 +6,13 @@ import {
   accountUpdated,
   accountLoggedOut,
   secondPassphraseRegistered,
-  delegateRegistered,
   removePassphrase,
-  passphraseUsed,
   accountDataUpdated,
   updateTransactionsIfNeeded,
   updateDelegateAccount,
   updateAccountDelegateStats,
   login,
 } from './account';
-import { delegateRegisteredFailure } from './delegate';
 import * as accountApi from '../utils/api/account';
 import * as delegateApi from '../utils/api/delegates';
 import * as transactionsApi from '../utils/api/transactions';
@@ -114,73 +111,6 @@ describe('actions: account', () => {
         error,
         message: error.message,
       });
-    });
-  });
-
-  describe('delegateRegistered', () => {
-    let delegateApiMock;
-    const data = {
-      username: 'test',
-      passphrase: accounts.genesis.passphrase,
-      secondPassphrase: null,
-      account: {
-        publicKey: accounts['second passphrase account'].publicKey,
-        address: accounts['second passphrase account'].address,
-      },
-    };
-    const actionFunction = delegateRegistered(data);
-    let dispatch;
-    let getState;
-
-    beforeEach(() => {
-      delegateApiMock = stub(delegateApi, 'registerDelegate');
-      dispatch = spy();
-      getState = () => ({
-        peers: { liskAPIClient: {} },
-        blocks: { latestBlocks: [] },
-      });
-    });
-
-    afterEach(() => {
-      delegateApiMock.restore();
-    });
-
-    it('should create an action function', () => {
-      chaiExpect(typeof actionFunction).to.be.deep.equal('function');
-    });
-
-    it('should dispatch addPendingTransaction action if resolved', () => {
-      delegateApiMock.returnsPromise().resolves({ id: '15626650747375562521' });
-      const expectedAction = {
-        id: '15626650747375562521',
-        senderPublicKey: accounts['second passphrase account'].publicKey,
-        senderId: accounts['second passphrase account'].address,
-        username: data.username,
-        amount: 0,
-        fee: Fees.registerDelegate,
-        type: transactionTypes.registerDelegate,
-        token: 'LSK',
-      };
-
-      actionFunction(dispatch, getState);
-      chaiExpect(dispatch).to.have.been
-        .calledWith({ data: expectedAction, type: actionTypes.addPendingTransaction });
-    });
-
-    it('should dispatch delegateRegisteredFailure action if caught', () => {
-      delegateApiMock.returnsPromise().rejects({ message: 'sample message.' });
-
-      actionFunction(dispatch, getState);
-      const delegateRegisteredFailureAction = delegateRegisteredFailure({ message: 'sample message.' });
-      chaiExpect(dispatch).to.have.been.calledWith(delegateRegisteredFailureAction);
-    });
-
-    it('should dispatch passphraseUsed action always', () => {
-      delegateApiMock.returnsPromise().rejects({ message: 'sample message.' });
-
-      actionFunction(dispatch, getState);
-      const passphraseUsedAction = passphraseUsed(accounts.genesis.passphrase);
-      chaiExpect(dispatch).to.have.been.calledWith(passphraseUsedAction);
     });
   });
 
