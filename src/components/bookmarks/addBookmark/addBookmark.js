@@ -48,21 +48,22 @@ class AddBookmark extends React.Component {
   componentDidUpdate(prevProps) {
     const { token, accounts } = this.props;
     const { token: prevToken } = prevProps;
-    const { fields } = this.state;
+    const { fields: { label, address } } = this.state;
 
-    const account = accounts[fields.address.value] || {};
-    if (account.delegate && account.delegate.username !== fields.label.value) {
+    const account = accounts[address.value] || {};
+    if (account.delegate && account.delegate.username !== label.value) {
       this.updateField({
         name: 'label',
         data: { value: account.delegate.username, readonly: true },
       });
     }
 
-    if (token.active === prevToken.active) {
-      return true;
+    if (token.active !== prevToken.active) {
+      this.updateField({
+        name: 'address',
+        data: { ...this.validateAddress(token.active, address.value) },
+      });
     }
-    this.revalidate(token.active);
-    return false;
   }
 
   updateField({ name, data }) {
@@ -75,12 +76,6 @@ class AddBookmark extends React.Component {
         },
       },
     }));
-  }
-
-  revalidate(token) {
-    const { fields: { label, address } } = this.state;
-    this.updateField({ name: 'address', data: { ...this.validateAddress(token, address.value) } });
-    this.updateField({ name: 'label', data: { ...this.validateLabel(label.value) } });
   }
 
   onLabelChange({ target: { name, value } }) {
@@ -101,7 +96,7 @@ class AddBookmark extends React.Component {
     return { feedback, error };
   }
 
-  checkDelegate(value) {
+  searchAccount(value) {
     const { searchAccount } = this.props;
     searchAccount({ address: value });
   }
@@ -109,8 +104,8 @@ class AddBookmark extends React.Component {
   onAddressChange({ target: { name, value } }) {
     const { token: { active } } = this.props;
     const { feedback, error } = this.validateAddress(active, value);
-    if (active === tokenMap.LSK.key && !error) {
-      this.checkDelegate(value);
+    if (active === tokenMap.LSK.key && !error && value.length) {
+      this.searchAccount(value);
     }
 
     this.updateField({
@@ -138,15 +133,16 @@ class AddBookmark extends React.Component {
     e.preventDefault();
     const { token: { active }, bookmarkAdded, accounts } = this.props;
     const { fields: { label, address } } = this.state;
-    const publicKey = active === tokenMap.LSK.key
-      ? accounts[address.value].publicKey
-      : null;
-    const account = {
-      title: label.value,
-      address: address.value,
-      publicKey,
-    };
-    bookmarkAdded({ token: active, account });
+    const { publicKey, delegate } = accounts[address.value];
+    bookmarkAdded({
+      token: active,
+      account: {
+        title: label.value,
+        address: address.value,
+        isDelegate: !!(delegate && delegate.username),
+        publicKey,
+      },
+    });
     this.props.history.push(routes.bookmarks.path);
   }
 
