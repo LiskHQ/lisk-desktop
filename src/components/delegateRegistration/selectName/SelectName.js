@@ -152,7 +152,7 @@ class SelectName extends React.Component {
               onChange={this.onChangeNickname}
               name='delegate-nickname'
               value={nickname}
-              placeholder={t('ie. Peter Pan')}
+              placeholder={t('ie. peter_pan')}
               className={`${styles.inputNickname} select-name-input`}
               disabled={inputDisabled}
             />
