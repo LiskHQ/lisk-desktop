@@ -1,7 +1,6 @@
 import Help from '../components/help';
 import Sidechains from '../components/sidechains';
 import Setting from '../components/setting';
-import RegisterDelegate from '../components/registerDelegate';
 import SecondPassphrase from '../components/secondPassphrase';
 import SignMessage from '../components/signMessage';
 import SearchResult from '../components/searchResult';
@@ -21,6 +20,7 @@ import Extensions from '../components/extensions';
 import TermsOfUse from '../components/termsOfUse';
 import ToolboxDemo from '../components/toolbox/demo';
 import Dashboard from '../components/dashboard';
+import DelegateRegistration from '../components/delegateRegistration';
 
 export default {
   accountVisualDemo: {
@@ -87,7 +87,13 @@ export default {
   },
   registerDelegate: {
     path: '/register-delegate',
-    component: RegisterDelegate,
+    component: DelegateRegistration,
+    isLoaded: true,
+    isPrivate: false,
+  },
+  delegateRegistration: {
+    path: '/delegate-register',
+    component: DelegateRegistration,
     isLoaded: true,
     isPrivate: false,
   },
