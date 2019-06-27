@@ -28,4 +28,13 @@ describe('Bookmarks', () => {
     expect(wrapper).toContainMatchingElement('.bookmark-list-container');
     expect(wrapper).not.toContainMatchingElement('EmptyState');
   });
+
+  it('should allow filtering bookmarks by title', () => {
+    expect(wrapper).toContainMatchingElements(bookmarks.LSK.length, 'a.bookmark-list-row');
+    wrapper.find('.bookmarks-filter-input').first().simulate(
+      'change',
+      { target: { value: bookmarks.LSK[0].title } },
+    );
+    expect(wrapper).toContainExactlyOneMatchingElement('a.bookmark-list-row');
+  });
 });

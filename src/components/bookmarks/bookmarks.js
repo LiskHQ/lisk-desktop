@@ -12,7 +12,12 @@ const Bookmarks = ({
         <h1>{t('Bookmarks')}</h1>
         <PrimaryButtonV2>{t('Add a new bookmark')}</PrimaryButtonV2>
       </header>
-      <BookmarksList bookmarks={bookmarks} token={token} />
+      <BookmarksList
+        enableFilter
+        bookmarks={bookmarks}
+        token={token}
+        t={t}
+      />
     </div>
   </div>
 );

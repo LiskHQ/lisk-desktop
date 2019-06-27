@@ -1,20 +1,34 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import AccountVisual from '../accountVisual';
-import EmptyState from '../emptyStateV2';
-import Box from '../boxV2';
+import React from 'react';
+import { InputV2 } from '../toolbox/inputsV2';
 import { tokenMap } from '../../constants/tokens';
+import AccountVisual from '../accountVisual';
+import Box from '../boxV2';
+import EmptyState from '../emptyStateV2';
 import regex from '../../utils/regex';
-import svg from '../../utils/svgIcons';
 import routes from '../../constants/routes';
 import styles from './bookmarksList.css';
+import svg from '../../utils/svgIcons';
 
 class BookmarksList extends React.Component {
-  getBookmarkListBasedOnSelectedToken() {
-    const { bookmarks, token } = this.props;
+  constructor(props) {
+    super(props);
 
-    const actualBookmarks = { ...bookmarks };
-    return actualBookmarks[token.active].slice(0, 5);
+    this.state = {
+      filter: '',
+    };
+
+    this.onFilterChange = this.onFilterChange.bind(this);
+  }
+  getBookmarkListBasedOnSelectedToken() {
+    const { bookmarks, token, limit } = this.props;
+    const { filter } = this.state;
+
+    return bookmarks[token.active].filter(({ title, address }) => (
+      filter === '' ||
+      title.toLowerCase().indexOf(filter.toLowerCase()) !== -1 ||
+      address.toLowerCase().indexOf(filter.toLowerCase()) !== -1
+    )).slice(0, limit);
   }
 
   displayAddressBasedOnSelectedToken(address) {
@@ -25,8 +39,17 @@ class BookmarksList extends React.Component {
       : address.replace(regex.btcAddressTrunk, '$1...$3');
   }
 
+  onFilterChange({ target }) {
+    this.setState({
+      filter: target.value,
+    });
+  }
+
   render() {
-    const { t, token, className } = this.props;
+    const {
+      t, token, className, enableFilter,
+    } = this.props;
+    const { filter } = this.state;
 
     const selectedBookmarks = this.getBookmarkListBasedOnSelectedToken();
 
@@ -34,6 +57,18 @@ class BookmarksList extends React.Component {
       <Box className={` ${styles.box} ${className} bookmarks-list`}>
         <header>
           <h2>Bookmarks</h2>
+          { enableFilter
+            ? <span>
+                <InputV2
+                  className='bookmarks-filter-input'
+                  size='s'
+                  onChange={this.onFilterChange}
+                  value={filter}
+                  placeholder={t('Filter by name...')}
+                />
+              </span>
+            : null
+          }
         </header>
         <div className={`${styles.bookmarkList} bookmark-list-container`}>
         {
