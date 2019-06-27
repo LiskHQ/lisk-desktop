@@ -13,6 +13,7 @@ const Bookmarks = ({
         <PrimaryButtonV2>{t('Add a new bookmark')}</PrimaryButtonV2>
       </header>
       <BookmarksList
+        title={t('All bookmarks')}
         enableFilter
         bookmarks={bookmarks}
         token={token}

@@ -17,6 +17,7 @@
     border var(--animation-speed-fast) linear,
     color var(--animation-speed-fast) linear;
   width: 100%;
+  min-width: 177px;
 
   &.l {
     @mixin contentLargest;

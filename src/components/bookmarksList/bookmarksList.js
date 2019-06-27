@@ -47,7 +47,7 @@ class BookmarksList extends React.Component {
 
   render() {
     const {
-      t, token, className, enableFilter,
+      t, token, className, enableFilter, title,
     } = this.props;
     const { filter } = this.state;
 
@@ -56,12 +56,12 @@ class BookmarksList extends React.Component {
     return (
       <Box className={` ${styles.box} ${className} bookmarks-list`}>
         <header>
-          <h2>Bookmarks</h2>
+          <h2>{title || t('Bookmarks')}</h2>
           { enableFilter
             ? <span>
                 <InputV2
                   className='bookmarks-filter-input'
-                  size='s'
+                  size='xs'
                   onChange={this.onFilterChange}
                   value={filter}
                   placeholder={t('Filter by name...')}
