@@ -14,6 +14,8 @@ class DelegateRegistration extends React.Component {
     this.goBackToDelegates = this.goBackToDelegates.bind(this);
   }
 
+  // TODO update test coverage in PR #2199
+  // istanbul ignore next
   goBackToDelegates() {
     this.props.history.push(routes.delegates.path);
   }

@@ -17,6 +17,7 @@ class Status extends React.Component {
 
   componentDidMount() {
     const { transactionInfo } = this.props;
+    // istanbul ignore else
     if (transactionInfo) this.broadcastTransaction();
   }
 
@@ -25,6 +26,7 @@ class Status extends React.Component {
     transactionBroadcasted(transactionInfo);
   }
 
+  // TODO update test coverage in PR #2199
   // istanbul ignore next
   checkTransactionStatus() {
     const { transactions, transactionInfo } = this.props;
@@ -38,6 +40,8 @@ class Status extends React.Component {
     if (error.length) this.setState({ status: 'fail' });
   }
 
+  // TODO update test coverage in PR #2199
+  // istanbul ignore next
   onRetry() {
     this.setState({ status: 'pending' });
     this.broadcastTransaction();
@@ -49,6 +53,8 @@ class Status extends React.Component {
 
     const isTransactionSuccess = status !== 'fail';
 
+    // TODO update test coverage in PR #2199
+    // istanbul ignore next
     const displayTemplate = isTransactionSuccess
       ? {
         title: t('Delegate registration submitted'),

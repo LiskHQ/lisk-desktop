@@ -65,7 +65,8 @@ describe('DelegateRegistration', () => {
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     wrapper.find('.select-name-input').at(0).simulate('change', { target: { value: 'mydelegate' } });
     expect(apiClient.delegates.get).toBeCalled();
-    wrapper.setState({ loading: false }); // TODO investigate why even when the state is update, the test fails
+    // TODO investigate why even when the state is update, the test fails - in PR #2199
+    wrapper.setState({ loading: false });
     expect(wrapper.find('button.confirm-btn')).not.toBeDisabled();
     wrapper.find('button.confirm-btn').simulate('click');
     expect(props.nextStep).toBeCalled();
@@ -92,6 +93,7 @@ describe('DelegateRegistration', () => {
   it('disabled confirm button if nickname is longer than 20 chars', () => {
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     wrapper.find('.select-name-input').at(0).simulate('change', { target: { value: 'mydelegate' } });
+    // TODO investigate why even when the state is update, the test fails - in PR #2199
     wrapper.setState({ loading: false });
     expect(wrapper.find('button.confirm-btn')).not.toBeDisabled();
     wrapper.find('.select-name-input').at(0).simulate('change', { target: { value: 'mydelegate_genesis_1023_gister_number_1' } });
