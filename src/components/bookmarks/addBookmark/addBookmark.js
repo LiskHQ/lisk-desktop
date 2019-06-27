@@ -176,7 +176,7 @@ class AddBookmark extends React.Component {
     e.preventDefault();
     const { token: { active }, bookmarkAdded, accounts } = this.props;
     const { fields: { label, address } } = this.state;
-    const { publicKey, delegate } = accounts[address.value];
+    const { publicKey, delegate } = accounts[address.value] || {};
     bookmarkAdded({
       token: active,
       account: {
