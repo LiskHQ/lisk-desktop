@@ -1,10 +1,6 @@
 import localJSONStorage from './localJSONStorage';
 import { tokenKeys, tokenMap } from '../constants/tokens';
 
-export const flattenBookmarks = bookmarks =>
-  Object.keys(bookmarks).reduce((acc, token) =>
-    [...acc, ...bookmarks[token]], []);
-
 export const setBookmarksInLocalStorage = data => localJSONStorage.set('bookmarks', data);
 
 export const getBookmarksFromLocalStorage = () => {
