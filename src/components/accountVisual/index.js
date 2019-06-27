@@ -181,7 +181,8 @@ class AccountVisual extends React.Component {
 
   shouldComponentUpdate(nextProps, state) {
     return this.state.isSBreakpoint !== state.isSBreakpoint
-      || nextProps.address !== this.props.address;
+      || nextProps.address !== this.props.address
+      || nextProps.placeholder !== this.props.placeholder;
   }
 
   resizeWindow() {
@@ -202,11 +203,20 @@ class AccountVisual extends React.Component {
 
   render() { // eslint-disable-line max-statements
     const {
-      address, size, sizeS, className,
+      address, size, sizeS, className, placeholder,
     } = this.props;
 
     const sizeL = size || 200;
     const newSize = this.state.isSBreakpoint && sizeS ? sizeS : sizeL;
+
+    if (placeholder) {
+      return (
+        <span
+          className={`${styles.placeholder} ${className}`}
+          style={{ height: newSize, width: newSize }}
+        />
+      );
+    }
 
     if (!reg.address.test(address)) {
       return <img
