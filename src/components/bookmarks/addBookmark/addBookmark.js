@@ -10,6 +10,7 @@ import styles from './addBookmark.css';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import { tokenMap } from '../../../constants/tokens';
 import routes from '../../../constants/routes';
+import AccountVisual from '../../accountVisual';
 
 class AddBookmark extends React.Component {
   constructor(props) {
@@ -18,10 +19,12 @@ class AddBookmark extends React.Component {
     this.fields = [{
       name: 'address',
       label: props.t('Address'),
+      placeholder: props.t('Insert public address'),
     }, {
       name: 'label',
       label: props.t('Label'),
       feedback: props.t('Max. 20 characters'),
+      placeholder: props.t('Insert label'),
     }];
 
     const fields = this.fields.reduce((acc, field) => ({
@@ -46,24 +49,54 @@ class AddBookmark extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { token, accounts } = this.props;
+    const { token } = this.props;
     const { token: prevToken } = prevProps;
+
+    this.updateLabelIfDelegate();
+
+    if (token.active !== prevToken.active) {
+      this.onTokenChange();
+    }
+  }
+
+  updateLabelIfDelegate() {
+    const { token, accounts } = this.props;
     const { fields: { label, address } } = this.state;
 
     const account = accounts[address.value] || {};
     if (account.delegate && account.delegate.username !== label.value) {
+      const data = token.active === tokenMap.LSK.key
+        ? { value: account.delegate.username, readonly: true }
+        : { readonly: false };
       this.updateField({
         name: 'label',
-        data: { value: account.delegate.username, readonly: true },
+        data,
       });
+    } else if (!account.delegate && label.readonly) {
+      this.updateField({
+        name: 'label',
+        data: { readonly: false },
+      });
+    }
+  }
+
+  onTokenChange() {
+    const { token, accounts } = this.props;
+    const { fields: { address } } = this.state;
+    const account = accounts[address.value] || {};
+
+    if (token.active === tokenMap.LSK.key && !account.address) {
+      this.searchAccount(address.value);
     }
 
-    if (token.active !== prevToken.active) {
-      this.updateField({
-        name: 'address',
-        data: { ...this.validateAddress(token.active, address.value) },
-      });
-    }
+    this.updateField({
+      name: 'address',
+      data: { ...this.validateAddress(token.active, address.value) },
+    });
+    this.updateField({
+      name: 'label',
+      data: { readonly: token.active === tokenMap.LSK.key },
+    });
   }
 
   updateField({ name, data }) {
@@ -82,7 +115,12 @@ class AddBookmark extends React.Component {
     const { error, feedback } = this.validateLabel(value);
     this.updateField({
       name,
-      data: { error, value, feedback },
+      data: {
+        error,
+        value,
+        feedback,
+        readonly: false,
+      },
     });
   }
 
@@ -92,7 +130,7 @@ class AddBookmark extends React.Component {
     const error = value.length > maxLength;
     const feedback = !error
       ? t('Max. 20 characters')
-      : t('Nickname is too long.');
+      : t('Label is too long.');
     return { feedback, error };
   }
 
@@ -103,14 +141,19 @@ class AddBookmark extends React.Component {
 
   onAddressChange({ target: { name, value } }) {
     const { token: { active } } = this.props;
-    const { feedback, error } = this.validateAddress(active, value);
+    const { feedback, error, isInvalid } = this.validateAddress(active, value);
     if (active === tokenMap.LSK.key && !error && value.length) {
       this.searchAccount(value);
     }
 
     this.updateField({
       name,
-      data: { error, value, feedback },
+      data: {
+        error,
+        value,
+        feedback,
+        isInvalid,
+      },
     });
   }
 
@@ -126,7 +169,7 @@ class AddBookmark extends React.Component {
       (isInvalid && 'Invalid address.')
       || (alreadyBookmarked && 'Address already bookmarked.')
       || '';
-    return { error: isInvalid || alreadyBookmarked, feedback };
+    return { error: isInvalid || alreadyBookmarked, isInvalid, feedback };
   }
 
   handleAddBookmark(e) {
@@ -169,20 +212,35 @@ class AddBookmark extends React.Component {
                   <span className={styles.label}>
                     {field.label}
                   </span>
-                  <InputV2
-                    className={styles.input}
-                    value={fields[field.name].value}
-                    onChange={this.onInputChange[field.name]}
-                    name={field.name}
-                    readOnly={field.readonly}
-                  />
-                  <Feedback
-                    className={`${styles.feedback} ${fields[field.name].error ? styles.error : ''}`}
-                    show={true}
-                    status={fields[field.name].error ? 'error' : ''}
-                  >
-                    {fields[field.name].feedback}
-                  </Feedback>
+                  <span className={styles.fieldGroup}>
+                    {field.name === 'address'
+                      ? (
+                        <AccountVisual
+                          className={styles.avatar}
+                          placeholder={fields[field.name].isInvalid || !fields[field.name].value}
+                          address={fields[field.name].value}
+                          size={25}
+                        />
+                      ) : null
+                    }
+                    <InputV2
+                      error={fields[field.name].error}
+                      className={styles.input}
+                      value={fields[field.name].value}
+                      onChange={this.onInputChange[field.name]}
+                      name={field.name}
+                      placeholder={field.placeholder}
+                      readOnly={fields[field.name].readonly}
+                      size={'l'}
+                    />
+                    <Feedback
+                      className={`${styles.feedback} ${fields[field.name].error ? styles.error : ''}`}
+                      show={true}
+                      status={fields[field.name].error ? 'error' : ''}
+                    >
+                      {fields[field.name].feedback}
+                    </Feedback>
+                  </span>
                 </label>
               ))}
               <div className={styles.buttonHolder}>

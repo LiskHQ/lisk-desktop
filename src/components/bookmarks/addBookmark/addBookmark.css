@@ -37,6 +37,17 @@
     }
   }
 
+  & .fieldGroup {
+    display: block;
+    position: relative;
+
+    & .avatar {
+      left: 16px;
+      position: absolute;
+      top: 12px;
+    }
+  }
+
   & label {
     display: block;
     margin-bottom: 24px;
@@ -47,6 +58,10 @@
       color: var(--color-maastricht-blue);
       display: block;
       margin-bottom: 12px;
+    }
+
+    & .input[name="address"] {
+      padding-left: 48px;
     }
 
     & .input:focus ~ .feedback {
