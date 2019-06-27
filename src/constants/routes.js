@@ -91,7 +91,7 @@ export default {
     forbiddenTokens: [tokenMap.BTC.key],
   },
   delegateRegistration: {
-    path: '/delegate-register',
+    path: '/register-delegate',
     component: DelegateRegistration,
     isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
