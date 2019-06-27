@@ -2,11 +2,15 @@ import React from 'react';
 import debounce from 'lodash.debounce';
 import { mount } from 'enzyme';
 import SelectName from './SelectName';
+import { getAPIClient } from '../../../utils/api/lsk/network';
+import networks from '../../../constants/networks';
 
 jest.mock('lodash.debounce');
+jest.mock('../../../utils/api/lsk/network');
 
 describe('DelegateRegistration', () => {
   let wrapper;
+  let apiClient;
 
   const props = {
     account: {
@@ -19,15 +23,10 @@ describe('DelegateRegistration', () => {
       isDelegate: false,
     },
     prevState: {},
-    delegate: {},
     network: {
-      liskAPIClient: {
-        delegates: {
-          get: jest.fn(),
-        },
-        options: {
-          name: 'Mainnet',
-        },
+      name: networks.mainnet.name,
+      networks: {
+        LSK: {},
       },
     },
     nextStep: jest.fn(),
@@ -35,9 +34,22 @@ describe('DelegateRegistration', () => {
   };
 
   beforeEach(() => {
-    props.liskAPIClient.delegates.get.mockClear();
-    debounce.mockReturnValue((name, error) => !error && props.liskAPIClient.delegates.get(name));
+    apiClient = {
+      delegates: {
+        get: jest.fn(),
+      },
+    };
+
+    apiClient.delegates.get.mockReturnValue({ data: [] });
+    getAPIClient.mockReturnValue(apiClient);
+
+    debounce.mockReturnValue((name, error) => !error && apiClient.delegates.get(name));
+
     wrapper = mount(<SelectName {...props} />);
+  });
+
+  afterEach(() => {
+    apiClient.delegates.get.mockClear();
   });
 
   it('renders properly SelectName component', () => {
@@ -54,7 +66,7 @@ describe('DelegateRegistration', () => {
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     wrapper.find('.select-name-input').at(0).simulate('change', { target: { value: 'mydelegate' } });
     jest.advanceTimersByTime(1000);
-    expect(props.liskAPIClient.delegates.get).toBeCalled();
+    expect(apiClient.delegates.get).toBeCalled();
     expect(wrapper.find('button.confirm-btn')).not.toBeDisabled();
     wrapper.find('button.confirm-btn').simulate('click');
     expect(props.nextStep).toBeCalled();
