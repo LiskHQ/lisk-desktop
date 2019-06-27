@@ -1,12 +1,23 @@
 import React from 'react';
 
 import MultiStep from '../multiStep';
+import routes from '../../constants/routes';
 import SelectName from './selectName/SelectName';
 import Summary from './summary/summary';
 import Status from './status/status';
 import styles from './delegateRegistration.css';
 
 class DelegateRegistration extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.goBackToDelegates = this.goBackToDelegates.bind(this);
+  }
+
+  goBackToDelegates() {
+    this.props.history.push(routes.delegates.path);
+  }
+
   render() {
     const {
       account,
@@ -32,7 +43,7 @@ class DelegateRegistration extends React.Component {
             account={account}/>
           <Status
             t={t}
-            goBackToDelegates={history.push}
+            goBackToDelegates={this.goBackToDelegates}
             transactionBroadcasted={transactionBroadcasted}
             transactions={transactions}/>
         </MultiStep>
