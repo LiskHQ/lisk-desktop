@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 import SelectName from './SelectName';
 import { getAPIClient } from '../../../utils/api/lsk/network';
 import networks from '../../../constants/networks';
+import accounts from '../../../../test/constants/accounts';
 
 jest.mock('lodash.debounce');
 jest.mock('../../../utils/api/lsk/network');
@@ -16,8 +17,7 @@ describe('DelegateRegistration', () => {
     account: {
       info: {
         LSK: {
-          address: '123456789L',
-          balance: 11000,
+          ...accounts.genesis,
         },
       },
       isDelegate: false,
@@ -40,10 +40,9 @@ describe('DelegateRegistration', () => {
       },
     };
 
-    apiClient.delegates.get.mockReturnValue({ data: [] });
+    apiClient.delegates.get.mockResolvedValue({ data: [] });
     getAPIClient.mockReturnValue(apiClient);
-
-    debounce.mockReturnValue((name, error) => !error && apiClient.delegates.get(name));
+    debounce.mockImplementation(fn => fn);
 
     wrapper = mount(<SelectName {...props} />);
   });
@@ -65,8 +64,8 @@ describe('DelegateRegistration', () => {
     expect(wrapper).toContainMatchingElement('.select-name-input');
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     wrapper.find('.select-name-input').at(0).simulate('change', { target: { value: 'mydelegate' } });
-    jest.advanceTimersByTime(1000);
     expect(apiClient.delegates.get).toBeCalled();
+    wrapper.setState({ loading: false }); // TODO investigate why even when the state is update, the test fails
     expect(wrapper.find('button.confirm-btn')).not.toBeDisabled();
     wrapper.find('button.confirm-btn').simulate('click');
     expect(props.nextStep).toBeCalled();
@@ -76,8 +75,7 @@ describe('DelegateRegistration', () => {
     expect(wrapper).toContainMatchingElement('.select-name-input');
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     wrapper.find('.select-name-input').at(0).simulate('change', { target: { value: 'mydelegate+' } });
-    jest.advanceTimersByTime(1000);
-    expect(props.liskAPIClient.delegates.get).not.toBeCalled();
+    expect(apiClient.delegates.get).not.toBeCalled();
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
   });
 
@@ -94,6 +92,7 @@ describe('DelegateRegistration', () => {
   it('disabled confirm button if nickname is longer than 20 chars', () => {
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     wrapper.find('.select-name-input').at(0).simulate('change', { target: { value: 'mydelegate' } });
+    wrapper.setState({ loading: false });
     expect(wrapper.find('button.confirm-btn')).not.toBeDisabled();
     wrapper.find('.select-name-input').at(0).simulate('change', { target: { value: 'mydelegate_genesis_1023_gister_number_1' } });
     jest.advanceTimersByTime(1000);

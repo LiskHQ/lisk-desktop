@@ -72,7 +72,7 @@ class SelectName extends React.Component {
 
   onUserFetch(username, error) {
     const { t, network } = this.props;
-    console.log('HOLA');
+
     if (!error && username.length) {
       getAPIClient(network).delegates.get({ username })
         .then((response) => {

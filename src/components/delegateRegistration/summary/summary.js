@@ -28,10 +28,7 @@ class Summary extends React.Component {
     };
 
     const [error, tx] = await to(create(data, createTransactionType.delegate_registration));
-
-    if (!error) {
-      nextStep({ transactionInfo: tx });
-    }
+    if (!error) nextStep({ transactionInfo: tx });
   }
 
   render() {
