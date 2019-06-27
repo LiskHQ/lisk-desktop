@@ -127,6 +127,7 @@ class TopBar extends React.Component {
             t={t}
           />
 
+          {token.active !== 'BTC' ?
           <OutsideClickHandler
             className={`${styles.searchButton} search-section`}
             onOutsideClick={this.handleSearchDropdown}
@@ -149,6 +150,7 @@ class TopBar extends React.Component {
               />
             </DropdownV2>
           </OutsideClickHandler>
+          : null }
         </div>
       </div>
     );
