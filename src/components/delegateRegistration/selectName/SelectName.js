@@ -31,7 +31,7 @@ class SelectName extends React.Component {
   componentDidMount() {
     this.getNicknameFromPrevState();
     this.checkIfUserIsDelegate();
-    this.hasUserHasEnoughFunds();
+    this.hasUserEnoughFunds();
   }
 
   getNicknameFromPrevState() {
@@ -49,7 +49,7 @@ class SelectName extends React.Component {
     }
   }
 
-  hasUserHasEnoughFunds() {
+  hasUserEnoughFunds() {
     const { account, t } = this.props;
     const hasFunds = account.info &&
       fromRawLsk(account.info.LSK.balance) * 1 >= fromRawLsk(Fees.registerDelegate) * 1;
