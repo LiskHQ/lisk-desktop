@@ -73,6 +73,7 @@ describe('Delegate Registration', () => {
     cy.get(ss.confirmDelegateButton).click();
     cy.get(ss.app).contains('Delegate registration submitted');
     cy.visit(urls.wallet);
+    cy.wait(1000);
     cy.get(ss.transactionRow).eq(0).as('tx');
     // cy.get('@tx').find(ss.spinner).should('not.exist');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', 'Delegate registration');
