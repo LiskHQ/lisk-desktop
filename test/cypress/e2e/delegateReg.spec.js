@@ -40,21 +40,17 @@ describe('Delegate Registration', () => {
     cy.visit(urls.registerDelegate);
     // Memorize the balance before test
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
-    // Choose delegate name
-    cy.get(ss.chooseDelegateName).click();
     // Enter delegate name
     cy.get(ss.delegateNameInput).click().type(randomDelegateName);
+    cy.wait(1200);
+    cy.get(ss.chooseDelegateName).click();
     // Submit
-    cy.get(ss.submitDelagateNameBtn).click();
-    cy.get(ss.confirmDelegateRegBtn).click();
+    cy.get(ss.confirmDelegateButton).click();
     // Wait for confirmation
     cy.wait(txConfirmationTimeout);
-    cy.get(ss.app).contains('Success');
-    cy.get(ss.goToDashboardAfterDelegateReg).click();
-    cy.url().should('contain', urls.dashboard);
-    // Check tx details
+    cy.get(ss.app).contains('Delegate registration submitted');
+    cy.visit(urls.wallet);
     cy.get(ss.transactionRow).eq(0).as('tx');
-    cy.get('@tx').find(ss.spinner).should('not.exist');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', 'Delegate registration');
     cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');
     cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(function () {
@@ -70,17 +66,16 @@ describe('Delegate Registration', () => {
   it('Register delegate with second passphrase', () => {
     cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
-    cy.get(ss.chooseDelegateName).click();
     cy.get(ss.delegateNameInput).click().type(randomDelegateName);
-    cy.get(ss.submitDelagateNameBtn).click();
+    cy.wait(1200);
+    cy.get(ss.chooseDelegateName).click();
     enterSecondPassphrase(accounts['second passphrase account'].secondPassphrase);
-    cy.get(ss.confirmDelegateRegBtn).click();
-    cy.wait(txConfirmationTimeout);
-    cy.get(ss.app).contains('Success');
-    cy.get(ss.goToDashboardAfterDelegateReg).click();
-    cy.url().should('contain', urls.dashboard);
+    cy.get(ss.confirmDelegateButton).click();
+    cy.get(ss.app).contains('Delegate registration submitted');
+    cy.visit(urls.wallet);
+    cy.wait(1000);
     cy.get(ss.transactionRow).eq(0).as('tx');
-    cy.get('@tx').find(ss.spinner).should('not.exist');
+    // cy.get('@tx').find(ss.spinner).should('not.exist');
     cy.get('@tx').find(ss.transactionAddress).should('have.text', 'Delegate registration');
     cy.get('@tx').find(ss.transactionAmountPlaceholder).should('have.text', '-');
   });
@@ -93,10 +88,9 @@ describe('Delegate Registration', () => {
   it('Try to register already existing delegate name', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
-    cy.get(ss.chooseDelegateName).click();
     cy.get(ss.delegateNameInput).click().type('genesis_51');
-    cy.get(ss.submitDelagateNameBtn).should('be.disabled');
-    cy.get(ss.delegateDuplicateNameError).should('have.text', 'Name is already taken!');
+    cy.get(ss.chooseDelegateName).should('be.disabled');
+    cy.get(ss.delegateFeedbackError).should('have.text', 'Name is already taken!');
   });
 
   /**
@@ -108,7 +102,7 @@ describe('Delegate Registration', () => {
     cy.autologin(accounts['empty account'].passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
     cy.get(ss.chooseDelegateName).should('be.disabled');
-    cy.get(ss.chooseDelegateName).parent().contains('Insufficient funds');
+    cy.get(ss.delegateFeedbackError).should('have.text', 'Insufficient funds (Fee: 25 LSK)');
   });
 
   /**
@@ -120,6 +114,6 @@ describe('Delegate Registration', () => {
     cy.autologin(accounts.delegate.passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
     cy.get(ss.chooseDelegateName).should('be.disabled');
-    cy.get(ss.chooseDelegateName).parent().contains('You have already registered as a delegate.');
+    cy.get(ss.delegateFeedbackError).should('have.text', 'You have already registered as a delegate.');
   });
 });

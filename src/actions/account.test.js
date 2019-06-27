@@ -329,7 +329,6 @@ describe('actions: account', () => {
       updateDelegateAccount(data)(dispatch, getState);
 
       const accountUpdatedAction = accountUpdated({
-        token: 'LSK',
         delegate: { account: 'delegate data' },
         isDelegate: true,
       });

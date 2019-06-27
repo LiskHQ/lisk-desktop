@@ -65,8 +65,8 @@ const ss = {
   nextTransferBtn: '.send-next-button',
   sendBtn: '.send-button',
   transactionAddress: '.transaction-address span',
-  chooseDelegateName: '.choose-name',
-  delegateNameInput: '.delegate-name input',
+  chooseDelegateName: '.confirm-btn',
+  delegateNameInput: '.select-name-input',
   submitDelagateNameBtn: '.submit-delegate-name',
   successText: '.success-description',
   goToDashboardAfterDelegateReg: '.registration-success',
@@ -75,7 +75,7 @@ const ss = {
   transactionReference: '.transaction-reference',
   transactionAmount: '.transaction-amount',
   transactionAmountPlaceholder: '.transaction-amount',
-  delegateDuplicateNameError: '.error-name-duplicate',
+  delegateFeedbackError: '.input-feedback',
   headerBalance: '.active-info .balance span',
   nextBtn: '.next',
   txHeader: '.tx-header',
@@ -231,6 +231,7 @@ const ss = {
   connectButton: '.connect-button',
   walletHeader: '.wallet-header',
   toast: '.toast',
+  confirmDelegateButton: '.confirm-button',
 };
 
 export default ss;
