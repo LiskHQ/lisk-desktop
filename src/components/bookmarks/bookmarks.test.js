@@ -13,6 +13,7 @@ describe('Bookmarks', () => {
     history: {
       push: jest.fn(),
     },
+    bookmarkRemoved: jest.fn(),
     token: {
       active: tokenMap.LSK.key,
     },
@@ -36,5 +37,14 @@ describe('Bookmarks', () => {
       { target: { value: bookmarks.LSK[0].title } },
     );
     expect(wrapper).toContainExactlyOneMatchingElement('a.bookmark-list-row');
+  });
+
+  it('should allow deleting a bookmark', () => {
+    expect(wrapper).toContainMatchingElements(bookmarks.LSK.length, 'a.bookmark-list-row');
+    wrapper.find('.bookmarks-delete-button').first().simulate('click');
+    expect(props.bookmarkRemoved).toHaveBeenCalledWith({
+      address: bookmarks.LSK[0].address,
+      token: props.token.active,
+    });
   });
 });

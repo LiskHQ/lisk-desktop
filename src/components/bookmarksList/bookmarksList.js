@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { InputV2 } from '../toolbox/inputsV2';
+import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 import { tokenMap } from '../../constants/tokens';
 import AccountVisual from '../accountVisual';
 import Box from '../boxV2';
@@ -45,9 +46,14 @@ class BookmarksList extends React.Component {
     });
   }
 
+  deleteBookmark(address) {
+    const { token, bookmarkRemoved } = this.props;
+    bookmarkRemoved({ address, token: token.active });
+  }
+
   render() {
     const {
-      t, token, className, enableFilter, title,
+      t, token, className, enableFilter, title, isEditable,
     } = this.props;
     const { filter } = this.state;
 
@@ -78,15 +84,27 @@ class BookmarksList extends React.Component {
               key={bookmark.address}
               className={`${styles.row} bookmark-list-row`}
               to={`${routes.accounts.path}/${bookmark.address}`}>
-              {
-                token.active === tokenMap.LSK.key
-                ? <AccountVisual className={styles.avatar} address={bookmark.address} size={40}/>
+              <div className={styles.avatarAndDescriptionWrapper}>
+                {
+                  token.active === tokenMap.LSK.key
+                  ? <AccountVisual className={styles.avatar} address={bookmark.address} size={40}/>
+                  : null
+                }
+                <span className={styles.description}>
+                  <span>{bookmark.title}</span>
+                  <span>{this.displayAddressBasedOnSelectedToken(bookmark.address)}</span>
+                </span>
+              </div>
+              { isEditable
+                ? <div>
+                   <PrimaryButtonV2
+                     onClick={() => this.deleteBookmark(bookmark.address)}
+                     className="medium bookmarks-delete-button">
+                     {t('Delete')}
+                   </PrimaryButtonV2>
+                  </div>
                 : null
               }
-              <div className={styles.description}>
-                <span>{bookmark.title}</span>
-                <span>{this.displayAddressBasedOnSelectedToken(bookmark.address)}</span>
-              </div>
             </Link>)
           : <EmptyState>
               <img src={svg.bookmarksIconEmptyState} />
