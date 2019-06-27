@@ -232,6 +232,7 @@ class AddBookmark extends React.Component {
                       placeholder={field.placeholder}
                       readOnly={fields[field.name].readonly}
                       size={'l'}
+                      autoComplete={'off'}
                     />
                     <Feedback
                       className={`${styles.feedback} ${fields[field.name].error ? styles.error : ''}`}
