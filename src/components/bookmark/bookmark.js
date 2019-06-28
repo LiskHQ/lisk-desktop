@@ -188,21 +188,25 @@ class Bookmark extends React.Component {
           <span className={`${styles.fieldInput} account-title`}>
             <InputV2
               maxLength={40}
-              autoComplete={'off'}
+              autoComplete="off"
               onChange={this.handleAccountNameChange}
-              name='accountName'
+              name="accountName"
               value={fields.accountName.value}
               placeholder={t('ie. Lisker123')}
               readOnly={fields.accountName.isReadOnly}
-              className={`${styles.input} ${fields.accountName.error ? 'error' : ''}`} />
-            {!fields.accountName.isReadOnly ?
-              <React.Fragment>
-                <SpinnerV2 className={`${styles.status} ${fields.accountName.loading && fields.accountName.value ? styles.show : ''}`}/>
-                <img
-                  className={`${styles.status} ${!fields.accountName.loading && fields.accountName.value ? styles.show : ''}`}
-                  src={ fields.accountName.error ? svg.alert_icon : svg.ok_icon} />
-              </React.Fragment>
-            : null}
+              className={`${styles.input} ${fields.accountName.error ? 'error' : ''}`}
+            />
+            {!fields.accountName.isReadOnly
+              ? (
+                <React.Fragment>
+                  <SpinnerV2 className={`${styles.status} ${fields.accountName.loading && fields.accountName.value ? styles.show : ''}`} />
+                  <img
+                    className={`${styles.status} ${!fields.accountName.loading && fields.accountName.value ? styles.show : ''}`}
+                    src={fields.accountName.error ? svg.alert_icon : svg.ok_icon}
+                  />
+                </React.Fragment>
+              )
+              : null}
           </span>
           <span className={`${styles.feedback} ${fields.accountName.error || fields.accountName.value.length >= 15 ? 'error' : ''} ${fields.accountName.value && !isBookmark ? styles.show : ''}`}>
             {fields.accountName.feedback}
@@ -223,15 +227,17 @@ class Bookmark extends React.Component {
         {isBookmark
           ? (
             <PrimaryButtonV2
-              className={'bookmark-button extra-small'}
-              onClick={this.handleUnbookmark}>
+              className="bookmark-button extra-small"
+              onClick={this.handleUnbookmark}
+            >
               {t('Remove from bookmarks')}
             </PrimaryButtonV2>
           ) : (
             <PrimaryButtonV2
-              className={'bookmark-button extra-small'}
+              className="bookmark-button extra-small"
               onClick={this.handleBookmark}
-              disabled={!isValid}>
+              disabled={!isValid}
+            >
               {t('Confirm')}
             </PrimaryButtonV2>
           )

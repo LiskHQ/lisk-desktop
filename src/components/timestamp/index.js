@@ -35,11 +35,14 @@ const Div = (props) => {
 export const TooltipWrapper = (props) => {
   const Tip = Tooltip(Div); // eslint-disable-line
   if (props.tooltip) {
-    return (<Tip
-      tooltipPosition="top"
-      tooltipDelay={350}
-      {...props}
-      theme={({ ...theme, ...props.theme || {} })} />);
+    return (
+      <Tip
+        tooltipPosition="top"
+        tooltipDelay={350}
+        {...props}
+        theme={({ ...theme, ...props.theme || {} })}
+      />
+    );
   }
   return <Div {...props} />;
 };
@@ -53,21 +56,23 @@ export const Time = translate()((props) => {
 export const DateFromTimestamp = translate()((props) => {
   moment.locale(i18n.language);
   const day = moment(_convertTimeFromFirstBlock(props.time));
-  return (<span className={'date'}>{day.format('ll')}</span>);
+  return (<span className="date">{day.format('ll')}</span>);
 });
 
 export const TimeFromTimestamp = translate()((props) => {
   moment.locale(i18n.language);
   const day = moment(_convertTimeFromFirstBlock(props.time));
-  return (<span className={'time'}>{day.format('LTS')}</span>);
+  return (<span className="time">{day.format('LTS')}</span>);
 });
 
 export const TooltipTime = translate()((props) => {
   moment.locale(i18n.language);
   const time = moment(_convertTimeFromFirstBlock(props.label));
-  return (<TooltipWrapper tooltip={time.format('LL LTS')} >
-    <Time label={props.label} lang={props.lang}></Time>
-  </TooltipWrapper>);
+  return (
+    <TooltipWrapper tooltip={time.format('LL LTS')}>
+      <Time label={props.label} lang={props.lang} />
+    </TooltipWrapper>
+  );
 });
 
 const timestampConverters = {
@@ -78,11 +83,13 @@ const timestampConverters = {
 export const DateTimeFromTimestamp = translate()((props) => {
   moment.locale(i18n.language);
   const datetime = moment(timestampConverters[props.token || 'LSK'](props.time));
-  return (<span className={`${props.className || ''}`}>{
+  return (
+    <span className={`${props.className || ''}`}>
+      {
     props.fulltime ? (
       datetime.format('DD MMM YYYY, HH:mm:ss')
     )
-    : datetime.calendar(null, {
+      : datetime.calendar(null, {
         lastDay: props.t('[Yesterday], HH:mm'),
         sameDay: props.t('[Today], HH:mm'),
         nextDay: props.t('[Tomorrow], HH:mm'),
@@ -90,5 +97,7 @@ export const DateTimeFromTimestamp = translate()((props) => {
         nextWeek: props.t('DD MMM YYYY, HH:mm'),
         sameElse: props.t('DD MMM YYYY, HH:mm'),
       })
-  }</span>);
+  }
+    </span>
+  );
 });

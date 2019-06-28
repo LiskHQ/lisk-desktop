@@ -2,9 +2,9 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '../box';
 import { FontIcon } from '../fontIcon';
-import { Button } from './../toolbox/buttons/button';
+import { Button } from '../toolbox/buttons/button';
 import styles from './help.css';
-import links from './../../constants/externalLinks';
+import links from '../../constants/externalLinks';
 import Piwik from '../../utils/piwik';
 
 /* eslint-disable class-methods-use-this */
@@ -19,8 +19,18 @@ class Help extends React.Component {
   }
 
   render() {
-    const fAQIcon = () => (<span className={styles.inlineIcon}><FontIcon>info</FontIcon><b>{this.props.t(' FAQ')}</b></span>);
-    const chatIcon = () => (<span className={styles.inlineIcon}><FontIcon>conversation</FontIcon><b>{this.props.t(' Chat')}</b></span>);
+    const fAQIcon = () => (
+      <span className={styles.inlineIcon}>
+        <FontIcon>info</FontIcon>
+        <b>{this.props.t(' FAQ')}</b>
+      </span>
+    );
+    const chatIcon = () => (
+      <span className={styles.inlineIcon}>
+        <FontIcon>conversation</FontIcon>
+        <b>{this.props.t(' Chat')}</b>
+      </span>
+    );
     return (
       <Box className={styles.wrapper}>
         <aside className={`${grid['col-sm-12']} ${grid['col-md-4']} ${styles.sideBar}`}>
@@ -29,11 +39,11 @@ class Help extends React.Component {
             <p>{this.props.t('Browse through our tutorials, check out the FAQ or connect with our knowledgeable community.')}</p>
 
             <a
-              className={'terms-of-use'}
+              className="terms-of-use"
               onClick={this.checkTermsAndConditions}
-              href={'https://lisk.io/terms-conditions'}
-              target='_blank'
-              rel='noopener noreferrer'
+              href="https://lisk.io/terms-conditions"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               {this.props.t('Terms of Use')}
               <FontIcon>arrow-right</FontIcon>
@@ -49,16 +59,19 @@ class Help extends React.Component {
             </h2>
             <div className={styles.articleContainer}>
               <div>
-                <p>{this.props.t('Search for answers in our extensive ')}
+                <p>
+                  {this.props.t('Search for answers in our extensive ')}
                   {fAQIcon()}
                   {this.props.t(' or get in touch in via ')}
-                  {chatIcon()}.
+                  {chatIcon()}
+.
                 </p>
               </div>
               <div>
-              <Button className='help-visit-center' onClick={() => this.visitHelpCenter() }>{this.props.t('Visit Help Center')}
-                <FontIcon>arrow-right</FontIcon>
-              </Button>
+                <Button className="help-visit-center" onClick={() => this.visitHelpCenter()}>
+                  {this.props.t('Visit Help Center')}
+                  <FontIcon>arrow-right</FontIcon>
+                </Button>
               </div>
             </div>
           </article>
@@ -70,25 +83,26 @@ class Help extends React.Component {
             </h2>
             <div className={styles.articleContainer}>
               <div>
-                <p>{this.props.t('Learn about blockchain with our comprehensive knowledge base.')}
+                <p>
+                  {this.props.t('Learn about blockchain with our comprehensive knowledge base.')}
                 </p>
               </div>
               <div>
                 <ul>
                   <li>
-                    <a target='_blank' href={links.explainBlockchain} rel='noopener noreferrer'>
+                    <a target="_blank" href={links.explainBlockchain} rel="noopener noreferrer">
                       {this.props.t('Explain Blockchain Like I\'m 5')}
                       <FontIcon>arrow-right</FontIcon>
                     </a>
                   </li>
                   <li>
-                    <a target='_blank' href={links.isBlockchainSecure} rel='noopener noreferrer'>
+                    <a target="_blank" href={links.isBlockchainSecure} rel="noopener noreferrer">
                       {this.props.t('Is Blockchain Secure?')}
                       <FontIcon>arrow-right</FontIcon>
                     </a>
                   </li>
                   <li>
-                    <a target='_blank' href={links.seeMore} rel='noopener noreferrer'>
+                    <a target="_blank" href={links.seeMore} rel="noopener noreferrer">
                       {this.props.t('See more')}
                       <FontIcon>arrow-right</FontIcon>
                     </a>
@@ -105,19 +119,20 @@ class Help extends React.Component {
             </h2>
             <div className={styles.articleContainer}>
               <div>
-                <p>{this.props.t('Don’t be a stranger! Connect with our worldwide community.')}
+                <p>
+                  {this.props.t('Don’t be a stranger! Connect with our worldwide community.')}
                 </p>
               </div>
               <div>
                 <ul>
                   <li>
-                    <a target='_blank' href={links.liskChat} rel='noopener noreferrer'>
+                    <a target="_blank" href={links.liskChat} rel="noopener noreferrer">
                       {this.props.t('Visit Lisk.Chat')}
                       <FontIcon>arrow-right</FontIcon>
                     </a>
                   </li>
                   <li>
-                    <a target='_blank' href={links.helpDeskChannel} rel='noopener noreferrer'>
+                    <a target="_blank" href={links.helpDeskChannel} rel="noopener noreferrer">
                       {this.props.t('See #help-desk channel')}
                       <FontIcon>arrow-right</FontIcon>
                     </a>

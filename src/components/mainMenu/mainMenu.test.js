@@ -88,7 +88,7 @@ describe('MainMenu', () => {
 
   it('should render 4 Button components if props.showDelegate', () => {
     const wrapper = mount(<MemoryRouter>
-      <MainMenu {...props} showDelegate={true}/>
+      <MainMenu {...props} showDelegate />
     </MemoryRouter>, options);
     expect(wrapper.find(Tab)).to.have.lengthOf(4);
   });

@@ -8,9 +8,9 @@ import ConverterV2 from './converterV2';
 const mapStateToProps = state => ({
   settings: state.settings,
   token: state.settings.token && state.settings.token.active,
-  priceTicker: (state.service && state.service.priceTicker) ?
-    state.service.priceTicker :
-    {
+  priceTicker: (state.service && state.service.priceTicker)
+    ? state.service.priceTicker
+    : {
       LSK: { USD: '0', EUR: '0' },
       BTC: { USD: '0', EUR: '0' },
     },

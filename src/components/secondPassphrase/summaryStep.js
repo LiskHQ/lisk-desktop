@@ -55,13 +55,13 @@ const SummaryStep = ({
     fee={fromRawLsk(Fees.setSecondPassphrase)}
     confirmation={t('I’m aware registering a 2nd passphrase is irreversible and it will be required to confirm transactions.')}
   >
-   <section>
-    <label>{t('Account')}</label>
-    <label className={styles.account} >
-      <AccountVisual address={account.address} size={25} className={styles.avatar} />
-      {account.address}
-    </label>
-   </section>
+    <section>
+      <label>{t('Account')}</label>
+      <label className={styles.account}>
+        <AccountVisual address={account.address} size={25} className={styles.avatar} />
+        {account.address}
+      </label>
+    </section>
   </TransactionSummary>
 );
 

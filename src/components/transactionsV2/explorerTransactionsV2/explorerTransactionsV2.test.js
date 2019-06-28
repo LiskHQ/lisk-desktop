@@ -86,8 +86,8 @@ describe('ExplorerTransactions V2 Component', () => {
   describe('Another account', () => {
     beforeEach(() => {
       wrapper = mount(<Router>
-          <ExplorerTransactionsV2 {...props} />
-        </Router>, options);
+        <ExplorerTransactionsV2 {...props} />
+      </Router>, options);
     });
 
     it('renders ExplorerTransactionsV2 Component and loads account transactions', () => {
@@ -164,7 +164,8 @@ describe('ExplorerTransactions V2 Component', () => {
         <ExplorerTransactionsV2 {...{
           ...props,
           activeToken: 'BTC',
-        }} />
+        }}
+        />
       </Router>, options);
       expect(wrapper).toContainExactlyOneMatchingElement('TabsContainer');
       expect(wrapper.find('TabsContainer')).not.toContainMatchingElement('VotesTab');

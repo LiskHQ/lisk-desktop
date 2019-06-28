@@ -1,5 +1,5 @@
 import React from 'react';
-import Illustration, { illustrations } from './';
+import Illustration, { illustrations } from '.';
 import DemoRenderer from '../demoRenderer';
 
 const IllustrationDemo = () => (
@@ -14,4 +14,3 @@ const IllustrationDemo = () => (
 );
 
 export default IllustrationDemo;
-

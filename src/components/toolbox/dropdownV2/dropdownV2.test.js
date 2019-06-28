@@ -4,10 +4,10 @@ import DropdownV2 from './dropdownV2';
 
 describe('Dropdown V2', () => {
   let wrapper;
-  const DummyChild = () => <span></span>;
+  const DummyChild = () => <span />;
 
   beforeEach(() => {
-    wrapper = mount(<DropdownV2 showDropdown={false} ><DummyChild /></DropdownV2>);
+    wrapper = mount(<DropdownV2 showDropdown={false}><DummyChild /></DropdownV2>);
   });
 
   it('Should render with dropdown closed', () => {
@@ -28,9 +28,9 @@ describe('Dropdown V2', () => {
     wrapper.setProps({
       showDropdown: true,
       children: [
-        <span key={'1'}>Option 1</span>,
-        <DropdownV2.Separator key={'separator'} />,
-        <span key={'2'}>Option 2</span>,
+        <span key="1">Option 1</span>,
+        <DropdownV2.Separator key="separator" />,
+        <span key="2">Option 2</span>,
       ],
     });
     expect(wrapper.find('.dropdown-content')).toContainMatchingElements(3, 'span');

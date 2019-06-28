@@ -34,10 +34,10 @@ describe.skip('VotingListViewV2', () => {
       loading: [],
     });
     wrapper = mount(<Provider store={store}>
-        <Router>
-          <VotingListViewV2 history={{ location: { search: '' } }} />
-        </Router>
-      </Provider>, {
+      <Router>
+        <VotingListViewV2 history={{ location: { search: '' } }} />
+      </Router>
+    </Provider>, {
       context: { store, history, i18n },
       childContextTypes: {
         store: PropTypes.object.isRequired,

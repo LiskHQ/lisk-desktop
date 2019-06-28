@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Options from '../dialog/options';
-import routes from './../../constants/routes';
+import routes from '../../constants/routes';
 import Piwik from '../../utils/piwik';
 import styles from './customCountDown.css';
 
@@ -75,23 +75,37 @@ class CustomCountDown extends React.Component {
     const resetCondition = (minutes < 5);
     const timeoutCondition = (minutes === 0 && seconds === 0);
 
-    const resetButton = resetCondition && !timeoutCondition ?
-      <div
-        onClick={() => this.onResetTimer()}
-        className={`${styles.reset} reset`}
-      >
-      {t('Reset')}
-      </div> :
-      <div></div>;
+    const resetButton = resetCondition && !timeoutCondition
+      ? (
+        <div
+          onClick={() => this.onResetTimer()}
+          className={`${styles.reset} reset`}
+        >
+          {t('Reset')}
+        </div>
+      )
+      : <div />;
 
     const resetStyle = resetCondition ? styles.timeout : styles.time;
-    const timer = !timeoutCondition &&
-      <p className={styles.default}>{t('Session timeout in')} <span className={resetStyle}>{min}:{sec}</span></p>;
+    const timer = !timeoutCondition
+      && (
+      <p className={styles.default}>
+        {t('Session timeout in')}
+        {' '}
+        <span className={resetStyle}>
+          {min}
+:
+          {sec}
+        </span>
+      </p>
+      );
 
-    const renderComponent = autoLog ? (<div className={styles.timerRow}>
-      {resetButton}
-      {timer}
-    </div>) : null;
+    const renderComponent = autoLog ? (
+      <div className={styles.timerRow}>
+        {resetButton}
+        {timer}
+      </div>
+    ) : null;
 
     return (<Fragment>{renderComponent}</Fragment>);
   }

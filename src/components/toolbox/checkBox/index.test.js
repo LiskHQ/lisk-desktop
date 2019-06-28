@@ -10,19 +10,18 @@ describe('CheckBox', () => {
   };
 
   it('should render checkmark icon if props.checked is true', () => {
-    const wrapper = mount(<CheckBox {...props} checked={true} />);
+    const wrapper = mount(<CheckBox {...props} checked />);
     expect(wrapper).toContainExactlyOneMatchingElement('.checked');
   });
 
   it('should render with "accent" class if props.accent is true', () => {
-    const wrapper = mount(<CheckBox {...props} accent={true} />);
+    const wrapper = mount(<CheckBox {...props} accent />);
     expect(wrapper).toContainExactlyOneMatchingElement('.unchecked');
     expect(wrapper).toContainExactlyOneMatchingElement('.accent');
   });
 
   it('should render with "removed" class if props.removed is true', () => {
-    const wrapper = mount(<CheckBox {...props} removed={true} />);
+    const wrapper = mount(<CheckBox {...props} removed />);
     expect(wrapper).toContainExactlyOneMatchingElement('.removed');
   });
 });
-

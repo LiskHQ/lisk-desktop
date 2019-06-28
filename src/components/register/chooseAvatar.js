@@ -65,16 +65,19 @@ class ChooseAvatar extends React.Component {
           <h1 className={styles.title}>
             {t('Choose your Avatar')}
           </h1>
-          <p className={styles.description}>{
+          <p className={styles.description}>
+            {
             t('An Avatar is a unique visual representation of your Lisk address.')
-          }</p>
+          }
+          </p>
         </div>
         <div
           ref={this.setWrapperRef}
           className={`
           ${styles.avatarsHolder} ${grid['col-xs-10']}
           ${selected.address ? styles.avatarSelected : ''}
-          choose-avatar`}>
+          choose-avatar`}
+        >
           {
             accounts.map((account, key) => (
               <span
@@ -86,11 +89,12 @@ class ChooseAvatar extends React.Component {
                   })
                 }
                 onClick={() => handleSelectAvatar(account)}
-                key={key}>
+                key={key}
+              >
                 <AccountVisual
                   address={account.address}
                   size={74}
-                  />
+                />
               </span>
             ))
           }
@@ -103,8 +107,9 @@ class ChooseAvatar extends React.Component {
           </Link>
           <span className={`${registerStyles.button}`}>
             <PrimaryButtonV2
-              className={'get-passphrase-button'}
-              onClick={this.handleNextStep}>
+              className="get-passphrase-button"
+              onClick={this.handleNextStep}
+            >
               {t('Continue')}
             </PrimaryButtonV2>
           </span>

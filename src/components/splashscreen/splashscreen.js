@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 
 import routes from '../../constants/routes';
 import { getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
-import { parseSearchParams } from './../../utils/searchParams';
+import { parseSearchParams } from '../../utils/searchParams';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import { getNetworksList } from '../../utils/getNetwork';
 import networks from '../../constants/networks';
@@ -37,6 +37,7 @@ class Splashscreen extends React.Component {
 
     this.networks = getNetworksList();
   }
+
   componentDidMount() {
     // istanbul ignore else
     if (!this.props.settings.areTermsOfUseAccepted) {
@@ -45,9 +46,9 @@ class Splashscreen extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.account &&
-      this.props.account.address &&
-      !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.peers.options)) {
+    if (this.props.account
+      && this.props.account.address
+      && !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.peers.options)) {
       this.redirectToReferrer();
     }
   }
@@ -65,11 +66,11 @@ class Splashscreen extends React.Component {
   }
 
   alreadyLoggedWithThisAddress(address, network) {
-    return this.props.account &&
-      this.props.peers.options &&
-      this.props.account.address === address &&
-      this.props.peers.options.code === network.code &&
-      this.props.peers.options.address === network.address;
+    return this.props.account
+      && this.props.peers.options
+      && this.props.account.address === address
+      && this.props.peers.options.code === network.code
+      && this.props.peers.options.address === network.address;
   }
 
   render() {
@@ -77,17 +78,19 @@ class Splashscreen extends React.Component {
 
     return (
       <React.Fragment>
-        <HeaderV2 dark={true} showSettings={true} />
+        <HeaderV2 dark showSettings />
         <div className={`${styles.splashscreen}`}>
           <div className={`${styles.wrapper}`}>
             <div className={`${styles.titleHolder}`}>
               <h1>{t('Welcome to the Lisk Hub!')}</h1>
-              <p>{
+              <p>
+                {
                 t('Create an Account or Sign in to manage your LSK Tokens, become a Delegate or vote for another Delegates.')
-              }</p>
+              }
+              </p>
             </div>
             <Link className={`${styles.button} login-button`} to={routes.loginV2.path}>
-              <SecondaryButtonV2 className={'light'}>{t('Sign In')}</SecondaryButtonV2>
+              <SecondaryButtonV2 className="light">{t('Sign In')}</SecondaryButtonV2>
             </Link>
             <Link className={`${styles.button} new-account-button`} to={routes.register.path}>
               <PrimaryButtonV2>{t('Create an Account')}</PrimaryButtonV2>
@@ -102,7 +105,8 @@ class Splashscreen extends React.Component {
               <Tooltip
                 className={`${styles.tooltip}`}
                 styles={{ infoIcon: styles.infoIcon }}
-                title={t('Guest mode')}>
+                title={t('Guest mode')}
+              >
                 <React.Fragment>
                   <p className={`${styles.tooltipText}`}>
                     {t('You can explore Lisk network using Hub without signing in.')}

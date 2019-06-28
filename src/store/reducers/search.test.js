@@ -252,4 +252,3 @@ describe('Reducer: search', () => {
     expect(changedState).toEqual(state);
   });
 });
-

@@ -42,43 +42,54 @@ class RecentTransactions extends Component {
         </header>
         {
           isLoggedIn && transactions.length
-            ? <TransactionList
+            ? (
+              <TransactionList
                 account={account}
                 activeToken={activeToken.key}
                 bookmarks={bookmarks}
                 transactions={transactions}
-                t={t}/>
+                t={t}
+              />
+            )
             : null
         }
         {
           isLoggedIn && !transactions.length
-          ? <EmptyState>
-              <Icon name={'icon_empty_recent_transactions'} />
-              <h1>{t('No Transactions Yet')}</h1>
-              <p>{t('A great way to start is to top up your account with some {{value}} tokens.', { value: activeToken.key })}</p>
-              <div>
-              {
+            ? (
+              <EmptyState>
+                <Icon name="icon_empty_recent_transactions" />
+                <h1>{t('No Transactions Yet')}</h1>
+                <p>{t('A great way to start is to top up your account with some {{value}} tokens.', { value: activeToken.key })}</p>
+                <div>
+                  {
                 // TODO this validation should be remove once we have the external link for BTC
                 activeToken.key === tokenMap.LSK.key
-                ? <a href={links.outgoingTransactions}
-                    rel="noopener noreferrer"
-                    target="_blank">
-                    <SecondaryButtonV2>{t('Learn more')}</SecondaryButtonV2>
-                  </a>
-                : null
+                  ? (
+                    <a
+                      href={links.outgoingTransactions}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      <SecondaryButtonV2>{t('Learn more')}</SecondaryButtonV2>
+                    </a>
+                  )
+                  : null
               }
-              </div>
-            </EmptyState>
-          : null
+                </div>
+              </EmptyState>
+            )
+            : null
         }
         {
           !isLoggedIn
-          ? <EmptyState>
-              <Icon name={'icon_empty_recent_transactions'} />
-              <h1>{t('Sign in to view recent transactions')}</h1>
-              <p>{t('In order to see your recent transactions you need to sign in.')}</p>
-            </EmptyState>
-          : null
+            ? (
+              <EmptyState>
+                <Icon name="icon_empty_recent_transactions" />
+                <h1>{t('Sign in to view recent transactions')}</h1>
+                <p>{t('In order to see your recent transactions you need to sign in.')}</p>
+              </EmptyState>
+            )
+            : null
         }
       </Box>
     );

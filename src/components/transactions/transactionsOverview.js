@@ -31,18 +31,18 @@ class TransactionsOverview extends React.Component {
   }
 
   componentDidUpdate() {
-    this.canLoadMore = this.props.count === null ||
-      this.props.count > this.props.transactions.length;
+    this.canLoadMore = this.props.count === null
+      || this.props.count > this.props.transactions.length;
   }
 
   isActiveFilter(filter) {
-    return (!this.props.activeFilter && filter === txFilters.all) ||
-      (this.props.activeFilter === filter);
+    return (!this.props.activeFilter && filter === txFilters.all)
+      || (this.props.activeFilter === filter);
   }
 
   shouldShowEmptyState() {
-    return this.props.transactions.length === 0 && !this.isLoading() &&
-      (!this.props.activeFilter || this.props.activeFilter === txFilters.all);
+    return this.props.transactions.length === 0 && !this.isLoading()
+      && (!this.props.activeFilter || this.props.activeFilter === txFilters.all);
   }
 
   isLoading() {
@@ -99,26 +99,41 @@ class TransactionsOverview extends React.Component {
       <div className={`transactions ${styles.activity}`}>
         <header>
           <h2 className={`${styles.title}`}>
-          {this.props.t('Transaction')}
-          {
-            hasTitle && (<span>{this.props.t(' of')} <span className={`${styles.accountTitle} account-title`}>{accountTitle}</span></span>)
+            {this.props.t('Transaction')}
+            {
+            hasTitle && (
+            <span>
+              {this.props.t(' of')}
+              {' '}
+              <span className={`${styles.accountTitle} account-title`}>{accountTitle}</span>
+            </span>
+            )
           }
           </h2>
         </header>
-        {this.shouldShowEmptyState() ?
-          <EmptyState title={this.props.t('No transactions yet')}
-            message={this.props.t('The Wallet will show your recent transactions.')} /> :
-          null }
-        {this.shouldShowEmptyState() ?
-          null :
-          <ul className={styles.list}>
-            {filters.map((filter, i) => (
-              <li key={i} className={`transaction-filter-item ${filter.className} ${styles.item} ${this.isActiveFilter(filter.value) ? styles.active : ''}`}
-                onClick={() => this.setTransactionsFilter(filter.value)}>
-                {filter.name}
-              </li>
-            ))}
-          </ul>
+        {this.shouldShowEmptyState()
+          ? (
+            <EmptyState
+              title={this.props.t('No transactions yet')}
+              message={this.props.t('The Wallet will show your recent transactions.')}
+            />
+          )
+          : null }
+        {this.shouldShowEmptyState()
+          ? null
+          : (
+            <ul className={styles.list}>
+              {filters.map((filter, i) => (
+                <li
+                  key={i}
+                  className={`transaction-filter-item ${filter.className} ${styles.item} ${this.isActiveFilter(filter.value) ? styles.active : ''}`}
+                  onClick={() => this.setTransactionsFilter(filter.value)}
+                >
+                  {filter.name}
+                </li>
+              ))}
+            </ul>
+          )
         }
         {
           <TransactionsList
@@ -141,8 +156,13 @@ class TransactionsOverview extends React.Component {
           // otherwise only the transaction list should be scrollable
           // (see transactionList.js)
           this.isSmallScreen()
-            ? <Waypoint bottomOffset='-80%' key={this.props.transactions.length}
-              onEnter={() => { this.loadMore(); }}></Waypoint>
+            ? (
+              <Waypoint
+                bottomOffset="-80%"
+                key={this.props.transactions.length}
+                onEnter={() => { this.loadMore(); }}
+              />
+            )
             : null
         }
       </div>
@@ -156,4 +176,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(TransactionsOverview);
-

@@ -25,9 +25,9 @@ class News extends React.Component {
     // Makes first letter capital
     const sourceName = source.charAt(0).toUpperCase() + source.substr(1);
     return (
-      <a href={url} target={'_blank'} rel={'noopener noreferrer'} className={`${styles.news} news-item`}>
+      <a href={url} target="_blank" rel="noopener noreferrer" className={`${styles.news} news-item`}>
         <div className={styles.header}>
-          <Icon name={'newsFeedAvatar'} />
+          <Icon name="newsFeedAvatar" />
           <div>
             <span className={styles.title}>{sourceName}</span>
             <span className={styles.subtitle}>{timestampMessage}</span>

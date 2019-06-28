@@ -1,9 +1,9 @@
 import React from 'react';
-import MultiStep from './../multiStep';
+import MultiStep from '../multiStep';
 import Form from './form';
 import Summary from './summary';
 import TransactionStatus from './transactionStatus';
-import { parseSearchParams } from './../../utils/searchParams';
+import { parseSearchParams } from '../../utils/searchParams';
 import routes from '../../constants/routes';
 import styles from './send.css';
 
@@ -35,12 +35,13 @@ class Send extends React.Component {
       <div className={styles.container}>
         <div className={`${styles.wrapper} send-box`}>
           <MultiStep
-            key='send'
+            key="send"
             finalCallback={this.backToWallet}
-            className={styles.wrapper}>
+            className={styles.wrapper}
+          >
             <Form fields={fields} />
             <Summary />
-            <TransactionStatus history={this.props.history}/>
+            <TransactionStatus history={this.props.history} />
           </MultiStep>
         </div>
       </div>

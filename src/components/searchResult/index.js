@@ -6,10 +6,11 @@ import styles from './search.css';
 
 const SearchResult = ({ t }) => (
   <Box className={styles.resultWrapper}>
-    <EmptyState title={t('No results')}
-      message={t('Search for Lisk ID, Delegate or Transaction ID')} />
+    <EmptyState
+      title={t('No results')}
+      message={t('Search for Lisk ID, Delegate or Transaction ID')}
+    />
   </Box>
 );
 
 export default translate()(SearchResult);
-

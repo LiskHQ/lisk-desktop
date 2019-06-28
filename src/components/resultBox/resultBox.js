@@ -66,49 +66,63 @@ class ResultBox extends React.Component {
           <header>
             <div className={styles.header}>
               {this.props.success
-                ? <img src={check} className={styles.icon}/>
-                : <FontIcon value='error' className={styles.icon}/>
+                ? <img src={check} className={styles.icon} />
+                : <FontIcon value="error" className={styles.icon} />
               }
             </div>
-            <h2 className='result-box-header'>{this.props.title}</h2>
+            <h2 className="result-box-header">{this.props.title}</h2>
           </header>
 
-          <p className='result-box-message'>
+          <p className="result-box-message">
             {this.props.body}
           </p>
-          {this.props.copy ?
-            <CopyToClipboard value={this.props.copy.value}
-              text={this.props.copy.title}
-              className={`${styles.copy}`} /> :
-            null
+          {this.props.copy
+            ? (
+              <CopyToClipboard
+                value={this.props.copy.value}
+                text={this.props.copy.title}
+                className={`${styles.copy}`}
+              />
+            )
+            : null
           }
         </div>
 
         <footer className={`${grid.row} ${grid['center-xs']} ${grid['center-sm']} ${grid['center-md']} ${grid['center-lg']}`}>
-          {this.props.success &&
-            this.props.recipientId && this.isNotYetBookmarked(this.props.recipientId) ?
-            <div className={`${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-5']} ${grid['col-lg-5']}`}>
-              <Button className={`add-to-bookmarks ${styles.addBookmarkButton}`}
-                onClick={this.onAddToBookmarks.bind(this)}>
-                {this.props.t('Add to bookmarks')}
-              </Button>
-            </div> : null
+          {this.props.success
+            && this.props.recipientId && this.isNotYetBookmarked(this.props.recipientId)
+            ? (
+              <div className={`${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-5']} ${grid['col-lg-5']}`}>
+                <Button
+                  className={`add-to-bookmarks ${styles.addBookmarkButton}`}
+                  onClick={this.onAddToBookmarks.bind(this)}
+                >
+                  {this.props.t('Add to bookmarks')}
+                </Button>
+              </div>
+            ) : null
           }
-          {!this.props.success && this.props.account && this.props.account.hwInfo ?
-            <div className={`${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-5']} ${grid['col-lg-5']}`}>
-              <Button className={`add-follwed-account-button ${styles.addBookmarkButton}`}
-                onClick={this.onAddToBookmarksList.bind(this)}>
-                {this.props.t('Retry')}
-              </Button>
-            </div> : null
+          {!this.props.success && this.props.account && this.props.account.hwInfo
+            ? (
+              <div className={`${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-5']} ${grid['col-lg-5']}`}>
+                <Button
+                  className={`add-follwed-account-button ${styles.addBookmarkButton}`}
+                  onClick={this.onAddToBookmarksList.bind(this)}
+                >
+                  {this.props.t('Retry')}
+                </Button>
+              </div>
+            ) : null
           }
           <div className={`${grid['col-xs-6']} ${grid['col-sm-6']} ${grid['col-md-5']} ${grid['col-lg-5']}`}>
-            <ActionButton className={`okay-button ${styles.okButton}`}
-              onClick={this.onOk.bind(this)}>
+            <ActionButton
+              className={`okay-button ${styles.okButton}`}
+              onClick={this.onOk.bind(this)}
+            >
               {this.props.t('Okay')}
             </ActionButton>
           </div>
-          <div className='subTitle'>{this.props.subTitle}</div>
+          <div className="subTitle">{this.props.subTitle}</div>
         </footer>
       </div>
 

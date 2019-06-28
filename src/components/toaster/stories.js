@@ -12,7 +12,7 @@ storiesOf('Toaster', module)
         label: 'Test toast',
         index: 0,
       }]}
-      hideToast={ action('onHide') }
+      hideToast={action('onHide')}
     />
   ))
   .add('success', () => (
@@ -22,7 +22,7 @@ storiesOf('Toaster', module)
         type: 'success',
         index: 0,
       }]}
-      hideToast={ action('onHide') }
+      hideToast={action('onHide')}
     />
   ))
   .add('error', () => (
@@ -32,6 +32,6 @@ storiesOf('Toaster', module)
         type: 'error',
         index: 0,
       }]}
-      hideToast={ action('onHide') }
+      hideToast={action('onHide')}
     />
   ));

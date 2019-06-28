@@ -12,31 +12,31 @@ import actionButtonTheme from './css/actionButton.css';
 
 class TBSecondaryBlueButton extends React.Component {
   render() {
-    return <ToolBoxButton {...this.props} theme={this.props.theme}/>;
+    return <ToolBoxButton {...this.props} theme={this.props.theme} />;
   }
 }
 
 class TBPrimaryButton extends React.Component {
   render() {
-    return <ToolBoxButton {...this.props} theme={this.props.theme}/>;
+    return <ToolBoxButton {...this.props} theme={this.props.theme} />;
   }
 }
 
 class TBSecondaryLightButton extends React.Component {
   render() {
-    return <ToolBoxButton {...this.props} theme={this.props.theme}/>;
+    return <ToolBoxButton {...this.props} theme={this.props.theme} />;
   }
 }
 
 class TBTertiaryButton extends React.Component {
   render() {
-    return <ToolBoxButton {...this.props} theme={this.props.theme}/>;
+    return <ToolBoxButton {...this.props} theme={this.props.theme} />;
   }
 }
 
 class TBActionButton extends React.Component {
   render() {
-    return <ToolBoxButton {...this.props} theme={this.props.theme}/>;
+    return <ToolBoxButton {...this.props} theme={this.props.theme} />;
   }
 }
 

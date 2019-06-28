@@ -54,12 +54,14 @@ class YearView extends Component {
       .shouldBeDisabled(day, minDate, maxDate, options);
 
     return (
-      <button key={`button-${day.format('MM.YYYY')}`}
+      <button
+        key={`button-${day.format('MM.YYYY')}`}
         disabled={isDisabled}
         value={month}
         onClick={this.selectMonth}
-        className={`${styles.item} ${styles.monthItem} ${selected ? styles.selected : ''}`}>
-          {month}
+        className={`${styles.item} ${styles.monthItem} ${selected ? styles.selected : ''}`}
+      >
+        {month}
       </button>
     );
   }
@@ -79,11 +81,11 @@ class YearView extends Component {
       <div className={`${!isShown ? styles.hidden : ''} yearView`}>
         <header className={styles.calendarHeader}>
           <span className={styles.navigationButton} onClick={this.previousYear}>
-            <img src={prevIcon}/>
+            <img src={prevIcon} />
           </span>
           <span className={styles.viewName}>{showingDate.format('YYYY')}</span>
           <span className={styles.navigationButton} onClick={this.nextYear}>
-            <img src={nextIcon}/>
+            <img src={nextIcon} />
           </span>
         </header>
         <div className={styles.contentWrapper}>

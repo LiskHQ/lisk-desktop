@@ -20,12 +20,12 @@ const mergeVotes = (newList, oldDict) => {
     // so here we just check unconfirmed flag.
     const { confirmed, unconfirmed, pending } = oldDict[username];
     if (// we've voted but it's not in the new list
-      (pending && unconfirmed && newDict[username] === undefined) ||
+      (pending && unconfirmed && newDict[username] === undefined)
       // we've un-voted but it still exists in the new list
-      (pending && !unconfirmed && newDict[username] !== undefined) ||
+      || (pending && !unconfirmed && newDict[username] !== undefined)
       // dirty, not voted for and not updated in other client
-      (!pending && unconfirmed !== confirmed &&
-        (newDict[username] === undefined || confirmed === newDict[username].confirmed))
+      || (!pending && unconfirmed !== confirmed
+        && (newDict[username] === undefined || confirmed === newDict[username].confirmed))
     ) {
       newDict[username] = { ...oldDict[username] };
     }
@@ -66,8 +66,8 @@ const voting = (state = { // eslint-disable-line complexity
     case actionTypes.delegatesAdded:
       return {
         ...state,
-        delegates: action.data.refresh ? action.data.list :
-          [...state.delegates, ...action.data.list],
+        delegates: action.data.refresh ? action.data.list
+          : [...state.delegates, ...action.data.list],
       };
 
     case actionTypes.voteToggled:
@@ -76,10 +76,10 @@ const voting = (state = { // eslint-disable-line complexity
         votes: {
           ...state.votes,
           [action.data.username]: {
-            confirmed: state.votes[action.data.username] ?
-              state.votes[action.data.username].confirmed : false,
-            unconfirmed: state.votes[action.data.username] ?
-              !state.votes[action.data.username].unconfirmed : true,
+            confirmed: state.votes[action.data.username]
+              ? state.votes[action.data.username].confirmed : false,
+            unconfirmed: state.votes[action.data.username]
+              ? !state.votes[action.data.username].unconfirmed : true,
             publicKey: action.data.publicKey,
             productivity: action.data.productivity,
             rank: action.data.rank,

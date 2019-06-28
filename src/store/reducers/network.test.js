@@ -48,4 +48,3 @@ describe('Reducer: network(state, action)', () => {
     expect(changedState).toEqual(newState);
   });
 });
-

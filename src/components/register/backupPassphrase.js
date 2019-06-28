@@ -15,14 +15,17 @@ const BackupPassphrase = ({
         {t('Save your Passphrase')}
       </h1>
       <p>{t('Your passphrase is your login and password combined.')}</p>
-      <p>{
+      <p>
+        {
         t('Keep it safe as it is the only way to access your wallet.')
-      }</p>
+      }
+      </p>
     </div>
     <div className={grid['col-sm-10']}>
       <PassphraseBackup
-        account={account} t={t}
-        paperWalletName='lisk_passphrase'
+        account={account}
+        t={t}
+        paperWalletName="lisk_passphrase"
         passphraseName={t('Passphrase')}
       />
     </div>
@@ -35,8 +38,9 @@ const BackupPassphrase = ({
       </span>
       <span className={`${registerStyles.button}`}>
         <PrimaryButtonV2
-          className={'yes-its-safe-button'}
-          onClick={nextStep}>
+          className="yes-its-safe-button"
+          onClick={nextStep}
+        >
           {t('Continue')}
         </PrimaryButtonV2>
       </span>

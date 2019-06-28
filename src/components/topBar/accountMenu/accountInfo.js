@@ -12,8 +12,10 @@ const AccountInfo = ({
     <Icon name={`${tokenMap[token].icon}Icon`} />
     <div>
       <p>{t('{{token}} Wallet', { token: tokenMap[token].label })}</p>
-      <span className={'balance'}>
-        <LiskAmount val={account.balance}/> {tokenMap[token].key}
+      <span className="balance">
+        <LiskAmount val={account.balance} />
+        {' '}
+        {tokenMap[token].key}
       </span>
     </div>
   </div>

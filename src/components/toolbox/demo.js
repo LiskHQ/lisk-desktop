@@ -15,17 +15,19 @@ import AnimationDemo from './animation/demo';
 const ToolboxDemo = () => (
   <React.Fragment>
     <AnimationDemo />
-    <BoxV2Demo/> { /* TODO move BoxV2 into toolbox folder */ }
+    <BoxV2Demo />
+    {' '}
+    { /* TODO move BoxV2 into toolbox folder */ }
     <ButtonDemo />
     <CalendarDemo />
-    <CheckBoxDemo/>
+    <CheckBoxDemo />
     <DropdownDemo />
     <DropdownButtonDemo />
-    <IconDemo/>
+    <IconDemo />
     <InputDemo />
-    <IllustrationDemo/>
+    <IllustrationDemo />
     <OnboardingDemo />
-    <TooltipDemo/>
+    <TooltipDemo />
   </React.Fragment>
 );
 

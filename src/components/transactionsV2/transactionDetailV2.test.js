@@ -24,7 +24,7 @@ describe('TransactionDetail V2', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<TransactionDetailV2 {...props}/>, options);
+    wrapper = mount(<TransactionDetailV2 {...props} />, options);
   });
 
   it('should render "-" if no data is provided', () => {

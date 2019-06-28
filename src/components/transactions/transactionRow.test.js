@@ -47,14 +47,14 @@ describe('TransactionRow', () => {
   it('should render 4 columns', () => {
     const wrapper = mount(<Provider store={store}>
       <Router>
-        <I18nextProvider i18n={ i18n }>
+        <I18nextProvider i18n={i18n}>
           <TransactionRow
             tableStyle={tableStyle}
             address={address}
             value={rowData}
             nextStep={() => {}}
             onClick={() => {}}
-          ></TransactionRow>
+          />
         </I18nextProvider>
       </Router>
     </Provider>, options);
@@ -65,12 +65,12 @@ describe('TransactionRow', () => {
   it('should not cause any error on click if props.onClick is not defined', () => {
     const wrapper = mount(<Provider store={store}>
       <Router>
-        <I18nextProvider i18n={ i18n }>
+        <I18nextProvider i18n={i18n}>
           <TransactionRow
             tableStyle={tableStyle}
             address={address}
             value={rowData}
-          ></TransactionRow>
+          />
         </I18nextProvider>
       </Router>
     </Provider>, options);
@@ -82,13 +82,13 @@ describe('TransactionRow', () => {
     rowData.confirmations = undefined;
     const wrapper = mount(<Provider store={store}>
       <Router>
-        <I18nextProvider i18n={ i18n }>
+        <I18nextProvider i18n={i18n}>
           <TransactionRow
             tableStyle={tableStyle}
             address={address}
             value={rowData}
-            nextStep={() => {}}>
-          </TransactionRow>
+            nextStep={() => {}}
+          />
         </I18nextProvider>
       </Router>
     </Provider>, options);

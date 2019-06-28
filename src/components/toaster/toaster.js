@@ -19,18 +19,20 @@ class Toaster extends Component {
   }
 
   render() {
-    return (<span>
-      {this.props.toasts.map(toast => (
-        <Snackbar
-          active={!!toast.label && !this.state.hidden[toast.index]}
-          key={toast.index}
-          label={toast.label}
-          timeout={4000}
-          className={`toast ${styles.toast} ${styles[toast.type]} ${styles[`index-${toast.index}`]}`}
-          onTimeout={this.hideToast.bind(this, toast)}
-        />
-      ))}
-    </span>);
+    return (
+      <span>
+        {this.props.toasts.map(toast => (
+          <Snackbar
+            active={!!toast.label && !this.state.hidden[toast.index]}
+            key={toast.index}
+            label={toast.label}
+            timeout={4000}
+            className={`toast ${styles.toast} ${styles[toast.type]} ${styles[`index-${toast.index}`]}`}
+            onTimeout={this.hideToast.bind(this, toast)}
+          />
+        ))}
+      </span>
+    );
   }
 }
 

@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import Lisk from '@liskhq/lisk-client';
 import { loginType } from '../../constants/hwConstants';
-import { voteWithHW } from '../../utils/api/hwWallet';
+import { voteWithHW } from './hwWallet';
 import { splitVotesIntoRounds } from '../voting';
 
 export const getDelegates = (liskAPIClient, options) => liskAPIClient.delegates.get(options);

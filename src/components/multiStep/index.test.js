@@ -6,20 +6,38 @@ import MultiStep from './index';
 describe('MultiStep', () => {
   let wrapper;
 
-  const Child1 = ({ children, nextStep, prevStep }) => (<div className='child1'
-    onClick={() => nextStep({ value: 'called from child1' })}
-    onMouseEnter={data => prevStep(data.config)}>{children}</div>);
-  const Child2 = ({ children, nextStep, prevStep }) => (<div className='child2'
-    onClick={() => nextStep({ value: 'called from child2' })}
-    onMouseEnter={data => prevStep(data.config)}>{children}</div>);
-  const Child3 = ({ children, prevStep }) => (<div className='child3'
-    onMouseEnter={data => prevStep(data.config)}>{children}</div>);
+  const Child1 = ({ children, nextStep, prevStep }) => (
+    <div
+      className="child1"
+      onClick={() => nextStep({ value: 'called from child1' })}
+      onMouseEnter={data => prevStep(data.config)}
+    >
+      {children}
+    </div>
+  );
+  const Child2 = ({ children, nextStep, prevStep }) => (
+    <div
+      className="child2"
+      onClick={() => nextStep({ value: 'called from child2' })}
+      onMouseEnter={data => prevStep(data.config)}
+    >
+      {children}
+    </div>
+  );
+  const Child3 = ({ children, prevStep }) => (
+    <div
+      className="child3"
+      onMouseEnter={data => prevStep(data.config)}
+    >
+      {children}
+    </div>
+  );
 
   beforeEach(() => {
     wrapper = mount(<MultiStep>
-      <Child1 title='Title 1' />
-      <Child2 title='Title 2' />
-      <Child3 title='Title 3' />
+      <Child1 title="Title 1" />
+      <Child2 title="Title 2" />
+      <Child3 title="Title 3" />
     </MultiStep>);
   });
 

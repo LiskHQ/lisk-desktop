@@ -1,5 +1,5 @@
 import React from 'react';
-import voteFilters from './../../constants/voteFilters';
+import voteFilters from '../../constants/voteFilters';
 import Piwik from '../../utils/piwik';
 import Tabs from '../toolbox/tabs';
 import { InputV2 } from '../toolbox/inputsV2';
@@ -61,17 +61,18 @@ class VotingHeaderV2 extends React.Component {
 
     return (
       <React.Fragment>
-        { account && account.address ?
-          <Tabs tabs={this.filters} active={activeFilter} onClick={this.filterVotes} /> :
-          <h2>{t('All delegates')}</h2>
+        { account && account.address
+          ? <Tabs tabs={this.filters} active={activeFilter} onClick={this.filterVotes} />
+          : <h2>{t('All delegates')}</h2>
         }
         <span>
           <InputV2
-            size='xs'
-            className='search'
+            size="xs"
+            className="search"
             value={this.state.query}
             onChange={this.search.bind(this)}
-            placeholder={t('Filter by name...')}/>
+            placeholder={t('Filter by name...')}
+          />
         </span>
       </React.Fragment>
     );

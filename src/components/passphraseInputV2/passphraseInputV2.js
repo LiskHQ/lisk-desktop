@@ -5,7 +5,7 @@ import { FontIcon } from '../fontIcon';
 import { isValidPassphrase, getPassphraseValidationErrors } from '../../utils/passphrase';
 import InputV2 from '../toolbox/inputsV2/inputV2';
 import Feedback from '../toolbox/feedback/feedback';
-import keyCodes from './../../constants/keyCodes';
+import keyCodes from '../../constants/keyCodes';
 import styles from './passphraseInputV2.css';
 
 class passphraseInputV2 extends React.Component {
@@ -85,8 +85,7 @@ class passphraseInputV2 extends React.Component {
     const passphrase = values.join(' ').trim();
     if (!isValidPassphrase(passphrase)) {
       errorState = getPassphraseValidationErrors(passphrase);
-      errorState.passphraseIsInvalid =
-        errorState.validationError === this.props.t('Passphrase is not valid');
+      errorState.passphraseIsInvalid = errorState.validationError === this.props.t('Passphrase is not valid');
     }
 
     if (!passphrase.length) {
@@ -135,12 +134,12 @@ class passphraseInputV2 extends React.Component {
           {[...Array(inputsLength)].map((x, i) => (
             <span key={i} className={`${grid['col-xs-2']}`}>
               <InputV2
-                setRef={ref => ref !== null && this.state.focus === i && ref.focus() }
-                placeholder={this.state.focus === i ? '' : i + 1 }
+                setRef={ref => ref !== null && this.state.focus === i && ref.focus()}
+                placeholder={this.state.focus === i ? '' : i + 1}
                 className={`${this.state.partialPassphraseError[i] || this.state.passphraseIsInvalid || secondPPFeedback !== '' ? 'error' : ''} ${this.state.focus === i ? 'selected' : ''}`}
                 value={values[i] || ''}
                 type={this.state.showPassphrase ? 'text' : 'password'}
-                autoComplete='off'
+                autoComplete="off"
                 onBlur={this.removeFocusedField}
                 onFocus={this.setFocusedField}
                 onPaste={this.handlePaste}
@@ -154,8 +153,11 @@ class passphraseInputV2 extends React.Component {
 
         <div className={styles.footerContent}>
           <label className={`${styles.showPassphrase}`}>
-            <input checked={this.state.showPassphrase}
-              type='checkbox' onChange={this.handleToggleShowPassphrase}/>
+            <input
+              checked={this.state.showPassphrase}
+              type="checkbox"
+              onChange={this.handleToggleShowPassphrase}
+            />
             <span className={`${styles.fakeCheckbox}`}>
               <FontIcon className={`${styles.icon}`}>checkmark</FontIcon>
             </span>
@@ -166,7 +168,8 @@ class passphraseInputV2 extends React.Component {
             className={styles.errorMessage}
             show={!!(this.state.validationError || secondPPFeedback !== '')}
             status={(this.state.validationError || secondPPFeedback !== '') ? 'error' : ''}
-            showIcon={true}>
+            showIcon
+          >
             { secondPPFeedback || this.state.validationError }
           </Feedback>
         </div>

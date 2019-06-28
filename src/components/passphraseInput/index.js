@@ -5,7 +5,7 @@ import { FontIcon } from '../fontIcon';
 import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
 import { isValidPassphrase, getPassphraseValidationErrors } from '../../utils/passphrase';
 import styles from './passphraseInput.css';
-import keyCodes from './../../constants/keyCodes';
+import keyCodes from '../../constants/keyCodes';
 import Piwik from '../../utils/piwik';
 
 class PassphraseInput extends React.Component {
@@ -97,53 +97,63 @@ class PassphraseInput extends React.Component {
     return (
       <div onClick={this.setFocused.bind(this)}>
         {this.state.isFocused
-          ?
-          <div className={styles.wrapper}>
-            <div
-              className={`show-passphrase-toggle ${styles.inputTypeToggle}`}
-              onClick={this.toggleInputType.bind(this)}>
-              <FontIcon className={styles.eyeIcon} value={this.state.inputType === 'password' ? 'hide' : 'show'}
-              /> <label>{this.state.inputType === 'password' ? this.props.t('Show passphrase') : this.props.t('Hide passphrase') }</label>
-            </div>
-            <div className={grid.row}>
-              {[...Array(12)].map((x, i) =>
-                <div className={`${grid[xs]} ${grid[sm]} ${grid[md]}`} key={i}>
-                  <ToolBoxInput
-                    shouldfocus={this.state.focus === i ? 1 : 0}
-                    placeholder={i === 0 ? this.props.t('Start here') : ''}
-                    className={`${this.props.className} ${styles.partial} ${this.state.partialPassphraseError[i] ? styles.error : ''}`}
-                    value={value[i] || ''}
-                    type={this.state.inputType}
-                    theme={this.props.theme}
-                    autoComplete='off'
-                    onFocus={(e) => {
-                      const val = e.target.value;
-                      e.target.value = '';
-                      e.target.value = val;
+          ? (
+            <div className={styles.wrapper}>
+              <div
+                className={`show-passphrase-toggle ${styles.inputTypeToggle}`}
+                onClick={this.toggleInputType.bind(this)}
+              >
+                <FontIcon
+                  className={styles.eyeIcon}
+                  value={this.state.inputType === 'password' ? 'hide' : 'show'}
+                />
+                {' '}
+                <label>{this.state.inputType === 'password' ? this.props.t('Show passphrase') : this.props.t('Hide passphrase') }</label>
+              </div>
+              <div className={grid.row}>
+                {[...Array(12)].map((x, i) => (
+                  <div className={`${grid[xs]} ${grid[sm]} ${grid[md]}`} key={i}>
+                    <ToolBoxInput
+                      shouldfocus={this.state.focus === i ? 1 : 0}
+                      placeholder={i === 0 ? this.props.t('Start here') : ''}
+                      className={`${this.props.className} ${styles.partial} ${this.state.partialPassphraseError[i] ? styles.error : ''}`}
+                      value={value[i] || ''}
+                      type={this.state.inputType}
+                      theme={this.props.theme}
+                      autoComplete="off"
+                      onFocus={(e) => {
+                        const val = e.target.value;
+                        e.target.value = '';
+                        e.target.value = val;
 
-                      this.setFocusedField(i);
-                    }}
-                    onBlur={this.setFocusedField.bind(this, null)}
-                    onChange={(val) => {
-                      this.handleValueChange(i, val);
-                    }}
-                    onKeyDown={(event) => {
-                      this.keyAction({ event, value: value[i], index: i });
-                    }}
-                    index={i}
-                  />
-                </div>)}
+                        this.setFocusedField(i);
+                      }}
+                      onBlur={this.setFocusedField.bind(this, null)}
+                      onChange={(val) => {
+                        this.handleValueChange(i, val);
+                      }}
+                      onKeyDown={(event) => {
+                        this.keyAction({ event, value: value[i], index: i });
+                      }}
+                      index={i}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className={styles.errorMessage}>{this.props.error}</div>
             </div>
-            <div className={styles.errorMessage}>{this.props.error}</div>
-          </div>
-          :
-          <ToolBoxInput label={this.props.label}
-            className={`${this.props.className} ${styles.inputWrapper}`}
-            type={this.state.inputType}
-            onChange={this.focusAndPaste.bind(this)}
-          />
+          )
+          : (
+            <ToolBoxInput
+              label={this.props.label}
+              className={`${this.props.className} ${styles.inputWrapper}`}
+              type={this.state.inputType}
+              onChange={this.focusAndPaste.bind(this)}
+            />
+          )
         }
-      </div>);
+      </div>
+    );
   }
 }
 

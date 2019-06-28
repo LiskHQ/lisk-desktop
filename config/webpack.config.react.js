@@ -5,10 +5,10 @@ const StyleLintPlugin = require('stylelint-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
-const reactToolboxVariables = require('./reactToolbox.config');
-const I18nScannerPlugin = require('../src/i18n-scanner');
 const fs = require('fs');
 const path = require('path');
+const reactToolboxVariables = require('./reactToolbox.config');
+const I18nScannerPlugin = require('../src/i18n-scanner');
 const bundleVersion = require('../package.json').version;
 
 const getLocales = (url) => {

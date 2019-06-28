@@ -15,9 +15,9 @@ import filtersReducer from '../../store/reducers/filters';
 import bookmarksReducer from '../../store/reducers/bookmarks';
 import settingsReducer from '../../store/reducers/settings';
 
-import { liskAPIClientSet } from './../../../src/actions/peers';
-import networks from './../../../src/constants/networks';
-import getNetwork from './../../../src/utils/getNetwork';
+import { liskAPIClientSet } from '../../actions/peers';
+import networks from '../../constants/networks';
+import getNetwork from '../../utils/getNetwork';
 
 import AccountTransactions from './index';
 import i18n from '../../i18n';
@@ -59,7 +59,7 @@ describe('AccountTransaction Component', () => {
 
     wrapper = mount(<Provider store={store}>
       <Router>
-        <AccountTransactions {...props} i18n={i18n}/>
+        <AccountTransactions {...props} i18n={i18n} />
       </Router>
     </Provider>);
   });

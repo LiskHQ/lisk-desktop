@@ -56,18 +56,20 @@ describe('TransactionRow V2', () => {
 
   it('should render 5 columns', () => {
     const wrapper = mount(<Router>
-        <TransactionRowV2
-          {...props} />
-      </Router>, options);
+      <TransactionRowV2
+        {...props}
+      />
+    </Router>, options);
 
     expect(wrapper.find('.transactions-cell')).to.have.lengthOf(5);
   });
 
   it('should not cause any error on click if props.onClick is not defined', () => {
     const wrapper = mount(<Router>
-        <TransactionRowV2
-          {...props} />
-      </Router>, options);
+      <TransactionRowV2
+        {...props}
+      />
+    </Router>, options);
 
     wrapper.find('.transactions-cell').at(0).simulate('click');
   });
@@ -75,9 +77,10 @@ describe('TransactionRow V2', () => {
   it('should render SpinnerV2 if no value.confirmations" ', () => {
     rowData.confirmations = undefined;
     const wrapper = mount(<Router>
-        <TransactionRowV2
-          {...props} />
-      </Router>, options);
+      <TransactionRowV2
+        {...props}
+      />
+    </Router>, options);
     expect(wrapper).to.have.className('pending');
     expect(wrapper.find('.status')).to.have.className('showSpinner');
   });
@@ -85,9 +88,10 @@ describe('TransactionRow V2', () => {
   it('should hide Spinner after first confirmation and timeout expires', () => {
     rowData.confirmations = undefined;
     const wrapper = mount(<Router>
-        <TransactionRowV2
-          {...props} />
-      </Router>, options);
+      <TransactionRowV2
+        {...props}
+      />
+    </Router>, options);
     expect(wrapper).to.have.className('pending');
     expect(wrapper.find('.status')).to.have.className('showSpinner');
     wrapper.setProps({

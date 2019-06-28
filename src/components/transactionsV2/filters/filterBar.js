@@ -33,19 +33,25 @@ const FilterBar = props => (
         return (
           <div
             className={`${styles.filter} filter`}
-            key={filter + index}>
-              <p className={styles.label}>{label}</p>
-              <span
-                className={`${styles.clearBtn} clear-filter`}
-                onClick={() => props.clearFilter(filter)} />
-          </div>);
-        })
+            key={filter + index}
+          >
+            <p className={styles.label}>{label}</p>
+            <span
+              className={`${styles.clearBtn} clear-filter`}
+              onClick={() => props.clearFilter(filter)}
+            />
+          </div>
+        );
+      })
       }
       <SecondaryButtonV2
-        className={'clear-all-filters extra-small'}
-        onClick={props.clearAllFilters}>{props.t('Clear All filters')}
+        className="clear-all-filters extra-small"
+        onClick={props.clearAllFilters}
+      >
+        {props.t('Clear All filters')}
       </SecondaryButtonV2>
     </div>
-  </div>);
+  </div>
+);
 
 export default FilterBar;

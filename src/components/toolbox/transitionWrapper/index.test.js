@@ -20,8 +20,8 @@ describe('TransitionWrapper', () => {
       animationDuration: 200,
     };
     wrapper = mount(<TransitionWrapper {...props}>
-        <h1>Child</h1>
-      </TransitionWrapper>);
+      <h1>Child</h1>
+    </TransitionWrapper>);
   });
 
   afterEach(() => {

@@ -17,18 +17,21 @@ const AmountV2 = ({
   if (props.address && props.value.senderId !== props.address) {
     params.className = 'greenLabel';
     params.pre = '+';
-  } else if (props.address && props.value.type === transactionTypes.send &&
-      props.value.recipientId !== props.address) {
+  } else if (props.address && props.value.type === transactionTypes.send
+      && props.value.recipientId !== props.address) {
     params.pre = '-';
   }
   const amount = props.value.type !== transactionTypes.send ? '-' : <LiskAmount val={props.value.amount} />;
-  return <span className={`${styles.amountLabel} ${styles[params.className]} ${className} transactionAmount`}>
-    <span className={'amount'}>
-      { params.pre }{amount}
+  return (
+    <span className={`${styles.amountLabel} ${styles[params.className]} ${className} transactionAmount`}>
+      <span className="amount">
+        { params.pre }
+        {amount}
+      </span>
+      <span className="currency">
+        { amount !== '-' && ` ${params.pos}` }
+      </span>
     </span>
-    <span className={'currency'}>
-      { amount !== '-' && ` ${params.pos}` }
-    </span>
-  </span>;
+  );
 };
 export default translate()(AmountV2);

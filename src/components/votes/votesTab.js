@@ -97,19 +97,20 @@ class VotesTab extends React.Component {
           <h1>{t('Voted delegates')}</h1>
           <div className={`${styles.filterHolder}`}>
             <InputV2
-              className={'search'}
+              className="search"
               disabled={votes && !votes.length}
-              name={'filter'}
+              name="filter"
               value={filterValue}
               placeholder={t('Filter by name')}
-              onChange={this.handleFilter} />
+              onChange={this.handleFilter}
+            />
           </div>
         </header>
         <main className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} ${isLoading ? styles.isLoading : ''}`}>
           {
             isLoading ? (
               <div className={styles.loadingOverlay}>
-                <ProgressBar type="linear" mode="indeterminate" theme={styles} className={'loading'}/>
+                <ProgressBar type="linear" mode="indeterminate" theme={styles} className="loading" />
               </div>
             ) : null
           }
@@ -125,7 +126,8 @@ class VotesTab extends React.Component {
                     <AccountVisual
                       className={`${styles.avatar}`}
                       address={vote.address}
-                      size={36} />
+                      size={36}
+                    />
                     <div className={styles.accountInfo}>
                       <span className={`${styles.title} vote-username`}>{vote.username}</span>
                       <span>{vote.address}</span>
@@ -134,7 +136,13 @@ class VotesTab extends React.Component {
                 </div>
                 <div className={`${grid['col-sm-2']} ${grid['col-lg-2']}`}>
                   {vote.rewards
-                    ? <span><LiskAmount val={vote.rewards}/> {t('LSK')}</span>
+                    ? (
+                      <span>
+                        <LiskAmount val={vote.rewards} />
+                        {' '}
+                        {t('LSK')}
+                      </span>
+                    )
                     : '-'}
                 </div>
                 <div className={`${grid['col-sm-2']} ${grid['col-lg-1']}`}>
@@ -142,7 +150,13 @@ class VotesTab extends React.Component {
                 </div>
                 <div className={`${grid['col-sm-4']} ${grid['col-lg-2']}`}>
                   {vote.vote
-                    ? <span className={styles.votes}><LiskAmount val={vote.vote}/> {t('LSK')}</span>
+                    ? (
+                      <span className={styles.votes}>
+                        <LiskAmount val={vote.vote} />
+                        {' '}
+                        {t('LSK')}
+                      </span>
+                    )
                     : '-'}
                 </div>
               </TableRow>
@@ -154,9 +168,14 @@ class VotesTab extends React.Component {
                 }
               </p>
             )}
-          {canLoadMore && <span
+          {canLoadMore && (
+          <span
             onClick={this.onShowMore}
-            className={`${styles.showMore} show-votes`}>{t('Show More')}</span>
+            className={`${styles.showMore} show-votes`}
+          >
+            {t('Show More')}
+          </span>
+          )
           }
         </main>
       </BoxV2>

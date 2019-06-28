@@ -15,7 +15,7 @@ const setRowClass = (voteStatus) => {
   const { pending, confirmed, unconfirmed } = voteStatus;
   if (pending) {
     return 'pendingRow';
-  } else if (confirmed !== unconfirmed) {
+  } if (confirmed !== unconfirmed) {
     return confirmed ? `${styles.downVoteRow} selected-row` : `${styles.upVoteRow} selected-row`;
   }
   return confirmed ? styles.votedRow : '';
@@ -26,12 +26,12 @@ class DelegateRowV2 extends React.Component {
     voteStatus, ...nextProps
   }) {
     const oldStatus = this.props.voteStatus;
-    return (!oldStatus && !!voteStatus) ||
-      (!!oldStatus && !voteStatus) ||
-      ((!!oldStatus && !!voteStatus) &&
-      (oldStatus.unconfirmed !== voteStatus.unconfirmed ||
-      oldStatus.pending !== voteStatus.pending)) ||
-      this.didPropsChange(nextProps, [
+    return (!oldStatus && !!voteStatus)
+      || (!!oldStatus && !voteStatus)
+      || ((!!oldStatus && !!voteStatus)
+      && (oldStatus.unconfirmed !== voteStatus.unconfirmed
+      || oldStatus.pending !== voteStatus.pending))
+      || this.didPropsChange(nextProps, [
         'votingModeEnabled',
         'shouldShowVoteColumn',
         'shouldHightlightCheckbox',
@@ -58,7 +58,8 @@ class DelegateRowV2 extends React.Component {
     } = data;
 
     return (
-      <TableRow className={`delegate-row ${className} ${grid.row} ${styles.row} ${setRowClass(voteStatus)}`}
+      <TableRow
+        className={`delegate-row ${className} ${grid.row} ${styles.row} ${setRowClass(voteStatus)}`}
         onClick={() => (
           votingModeEnabled ? voteToggled({
             username,
@@ -67,26 +68,35 @@ class DelegateRowV2 extends React.Component {
             productivity,
             address: account.address,
           }) : null
-        )}>
-        {shouldShowVoteColumn ? <div className={`${columnClassNames.rank} ${styles.leftText}`}>
-          <VoteCheckboxV2
-            className={styles.checkbox}
-            accent={shouldHightlightCheckbox}
-            toggle={voteToggled}
-            value={data.selected}
-            status={voteStatus}
-            data={data}
-            votingModeEnabled={votingModeEnabled}
-          />
-        </div> : null}
-        <div className={`${columnClassNames.rank} delegate-rank`}>#{rank}</div>
+        )}
+      >
+        {shouldShowVoteColumn ? (
+          <div className={`${columnClassNames.rank} ${styles.leftText}`}>
+            <VoteCheckboxV2
+              className={styles.checkbox}
+              accent={shouldHightlightCheckbox}
+              toggle={voteToggled}
+              value={data.selected}
+              status={voteStatus}
+              data={data}
+              votingModeEnabled={votingModeEnabled}
+            />
+          </div>
+        ) : null}
+        <div className={`${columnClassNames.rank} delegate-rank`}>
+#
+          {rank}
+        </div>
         <div className={`${columnClassNames.delegate} delegate-info`}>
-          <Link className={styles.delegateLink}
-            to={`${routes.accounts.pathPrefix}${routes.accounts.path}/${account.address}`}>
+          <Link
+            className={styles.delegateLink}
+            to={`${routes.accounts.pathPrefix}${routes.accounts.path}/${account.address}`}
+          >
             <AccountVisual
               className={`${styles.avatar} tx-avatar`}
               address={account.address}
-              size={36} />
+              size={36}
+            />
             <div className={styles.accountInfo}>
               <span className={`delegate-name ${styles.title}`}>{username}</span>
               <span className={`delegate-id ${styles.address}`}>{account.address}</span>
@@ -94,11 +104,17 @@ class DelegateRowV2 extends React.Component {
           </Link>
         </div>
         <div className={`${columnClassNames.forged} delegate-forged`}>
-          <LiskAmount val={rewards} />&nbsp;{this.props.t('LSK')}
+          <LiskAmount val={rewards} />
+          {this.props.t('LSK')}
         </div>
-        <div className={`${columnClassNames.productivity} delegate-productivity`}>{productivity} %</div>
+        <div className={`${columnClassNames.productivity} delegate-productivity`}>
+          {productivity}
+          {' '}
+%
+        </div>
         <div className={`${columnClassNames.voteWeight} ${styles.weight} vote-weight`}>
-          <LiskAmount val={data.vote} />&nbsp;{this.props.t('LSK')}
+          <LiskAmount val={data.vote} />
+          {this.props.t('LSK')}
         </div>
       </TableRow>
     );

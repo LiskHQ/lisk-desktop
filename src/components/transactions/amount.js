@@ -6,23 +6,26 @@ import transactionTypes from '../../constants/transactionTypes';
 
 const Amount = (props) => {
   const params = {};
-  if (props.value.type === transactionTypes.send &&
-    props.value.senderId === props.value.recipientId) {
+  if (props.value.type === transactionTypes.send
+    && props.value.senderId === props.value.recipientId) {
     params.className = 'greyLabel';
     params.pre = '';
   } else if (props.value.senderId !== props.address) {
     params.className = 'greenLabel';
     params.pre = '+';
-  } else if (props.value.type === transactionTypes.send &&
-      props.value.recipientId !== props.address) {
+  } else if (props.value.type === transactionTypes.send
+      && props.value.recipientId !== props.address) {
     params.pre = '-';
     params.className = 'greyLabel';
   }
   const amount = props.value.type !== transactionTypes.send ? '-' : <LiskAmount val={props.value.amount} />;
-  return <span className={`${styles[params.className]} transactionAmount`}>
-    <span className={'amount'}>
-      { params.pre }{amount}
+  return (
+    <span className={`${styles[params.className]} transactionAmount`}>
+      <span className="amount">
+        { params.pre }
+        {amount}
+      </span>
     </span>
-  </span>;
+  );
 };
 export default translate()(Amount);

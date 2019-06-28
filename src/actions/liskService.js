@@ -1,5 +1,5 @@
 import actionTypes from '../constants/actions';
-import liskServiceApi from '../../src/utils/api/lsk/liskService';
+import liskServiceApi from '../utils/api/lsk/liskService';
 
 export const addDataToCurrencyGraph = data => ({
   type: actionTypes.addDataToCurrencyGraph,

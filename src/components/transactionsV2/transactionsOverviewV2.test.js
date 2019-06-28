@@ -76,7 +76,7 @@ describe('TransactionsOverview V2', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<TransactionsOverviewV2 {...props}/>, options);
+    wrapper = mount(<TransactionsOverviewV2 {...props} />, options);
   });
 
   it('should call onInit on constructor call', () => {

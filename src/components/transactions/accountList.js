@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontIcon } from '../fontIcon';
-import routes from './../../constants/routes';
+import routes from '../../constants/routes';
 import Piwik from '../../utils/piwik';
 import styles from './delegateStatistics.css';
 
@@ -34,9 +34,11 @@ class AccountList extends React.Component {
 
   getFormatedDelegates(dataName, filterQuery) {
     const data = this.props[dataName] ? this.props[dataName].map((user, key) => (
-      <Link className={`${styles.addressLink} ${styles.clickable} voter-address ${filterQuery}-row`}
+      <Link
+        className={`${styles.addressLink} ${styles.clickable} voter-address ${filterQuery}-row`}
         to={`${routes.accounts.path}/${user.address}`}
-        key={`${key}-${dataName}`}>
+        key={`${key}-${dataName}`}
+      >
         {`${user.username || user.address} `}
       </Link>
     )) : [];
@@ -59,28 +61,32 @@ class AccountList extends React.Component {
   renderSearchFilter(filterQuery, placeholder) {
     return (
       <div className={`${styles.search} ${styles.filter} search ${filterQuery}`}>
-        <FontIcon className={styles.search} value='search' id='searchIcon'/>
-        <input type='text'
-          name='query'
+        <FontIcon className={styles.search} value="search" id="searchIcon" />
+        <input
+          type="text"
+          name="query"
           className={`search ${styles.desktopInput} ${this.state[filterQuery].length > 0 ? styles.dirty : ''} `}
           value={this.state[filterQuery]}
           onChange={this.search.bind(this, filterQuery)}
-          placeholder={placeholder}/>
-        <input type='text'
-          name='query'
+          placeholder={placeholder}
+        />
+        <input
+          type="text"
+          name="query"
           className={`${styles.mobileInput} ${this.state[filterQuery].length > 0 ? styles.dirty : ''} `}
           value={this.state[filterQuery]}
           onChange={this.search.bind(this, filterQuery)}
-          placeholder={this.props.t('Filter')}/>
+          placeholder={this.props.t('Filter')}
+        />
         <FontIcon
-          id='cleanIcon'
+          id="cleanIcon"
           className={`${styles.clean} clean-icon`}
-          value='close'
-          onClick={ this.clearSearch.bind(this, filterQuery) }/>
+          value="close"
+          onClick={this.clearSearch.bind(this, filterQuery)}
+        />
       </div>
     );
   }
 }
 
 export default AccountList;
-

@@ -152,8 +152,7 @@ class AddBookmark extends React.Component {
     const isInvalid = validateAddress(token, value, netCode) === 1;
     const alreadyBookmarked = !isInvalid
       && getIndexOfBookmark(bookmarks, { address: value, token }) !== -1;
-    const feedback =
-      (isInvalid && 'Invalid address.')
+    const feedback = (isInvalid && 'Invalid address.')
       || (alreadyBookmarked && 'Address already bookmarked.')
       || '';
     return { error: isInvalid || alreadyBookmarked, isInvalid, feedback };
@@ -220,7 +219,7 @@ class AddBookmark extends React.Component {
                       name={field.name}
                       placeholder={field.placeholder}
                       readOnly={fields[field.name].readonly}
-                      size={'l'}
+                      size="l"
                       autoComplete="off"
                     />
                     <Feedback

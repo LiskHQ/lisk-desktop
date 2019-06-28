@@ -145,4 +145,3 @@ describe('Socket middleware', () => {
     });
   });
 });
-

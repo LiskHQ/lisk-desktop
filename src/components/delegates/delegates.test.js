@@ -76,11 +76,13 @@ describe('Delegates', () => {
   });
 
   it('should not show "Register delegate" button if already delegate', () => {
-    wrapper = mount(<Router><Delegates {...{
-      ...props,
-      account: { delegate: delegates[0], address: delegates[0].address },
-    }} /></Router>, options);
+    wrapper = mount(<Router>
+      <Delegates {...{
+        ...props,
+        account: { delegate: delegates[0], address: delegates[0].address },
+      }}
+      />
+    </Router>, options);
     expect(wrapper.find('.register-delegate')).to.have.lengthOf(0);
   });
 });
-

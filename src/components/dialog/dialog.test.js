@@ -34,7 +34,7 @@ describe('Dialog', () => {
       dialogHidden: sinon.spy(),
       t: key => key,
     };
-    wrapper = shallow(<Dialog dialog={dialogProps} history={history} {...props}/>);
+    wrapper = shallow(<Dialog dialog={dialogProps} history={history} {...props} />);
   });
 
   it('renders Dialog component from react-toolbox', () => {
@@ -45,14 +45,14 @@ describe('Dialog', () => {
   it('doesn\'t render appBar if title not provided', () => {
     const propsWithoutTitle = { ...dialogProps };
     delete propsWithoutTitle.title;
-    wrapper = shallow(<Dialog dialog={propsWithoutTitle} history={history} {...props}/>);
+    wrapper = shallow(<Dialog dialog={propsWithoutTitle} history={history} {...props} />);
     expect(wrapper.find('AppBar')).to.have.length(0);
   });
 
   it('doesn\'t render body if not childComponents present', () => {
     const propsWithoutChildComponent = { ...dialogProps };
     delete propsWithoutChildComponent.childComponent;
-    wrapper = shallow(<Dialog dialog={propsWithoutChildComponent} history={history} {...props}/>);
+    wrapper = shallow(<Dialog dialog={propsWithoutChildComponent} history={history} {...props} />);
     expect(wrapper.find(EmptyState)).to.have.length(0);
   });
 

@@ -28,8 +28,9 @@ export const models = {
   trezorModelT: 'Trezor Model T',
 };
 
-export const calculateSecondPassphraseIndex =
-  (accountIndex, pin) => accountIndex + parseInt(pin, 10) + hwConstants.secondPassphraseOffset;
+export const calculateSecondPassphraseIndex = (accountIndex, pin) => (
+  accountIndex + parseInt(pin, 10) + hwConstants.secondPassphraseOffset
+);
 
 export const HW_MSG = {
   ERROR_OR_DEVICE_IS_NOT_CONNECTED: i18next.t('Error or Device Not Connected.'),

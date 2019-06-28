@@ -123,8 +123,8 @@ export const loadDelegate = updateDelegateAccount;
 export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocus) =>
   (dispatch) => {
     const hasRecentTransactions = txs => (
-      txs.confirmed.filter(tx => tx.confirmations < 1000).length !== 0 ||
-      txs.pending.length !== 0
+      txs.confirmed.filter(tx => tx.confirmations < 1000).length !== 0
+      || txs.pending.length !== 0
     );
 
     if (windowFocus || hasRecentTransactions(transactions)) {
@@ -193,10 +193,10 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
   await getAccount({
     token: tokenMap.LSK.key, networkConfig, publicKey, passphrase,
   }).then(async (accountData) => {
-    const expireTime = (passphrase && settings.autoLog) ?
-      Date.now() + accountConfig.lockDuration : 0;
-    const btcAccountData = settings.token.list.BTC &&
-      await getAccount({ token: tokenMap.BTC.key, networkConfig, passphrase });
+    const expireTime = (passphrase && settings.autoLog)
+      ? Date.now() + accountConfig.lockDuration : 0;
+    const btcAccountData = settings.token.list.BTC
+      && await getAccount({ token: tokenMap.BTC.key, networkConfig, passphrase });
     dispatch(accountLoggedIn({
       passphrase,
       loginType: hwInfo ? loginType.ledger : loginType.normal,

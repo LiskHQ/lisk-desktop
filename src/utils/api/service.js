@@ -4,7 +4,7 @@
  * because it just calling a function mapper
  * and the functionMapper file it is already tested
  */
-import api from './';
+import api from '.';
 
 /**
  * Contains conversion rate for a token.

@@ -77,26 +77,31 @@ class MessageFieldGroup extends React.Component {
         <span className={styles.fieldLabel}>{t('Message')}</span>
         <div className={`${styles.fieldRow} ${styles.fieldHolder} reference-field`}>
           <AutoresizeTextarea
-            autoComplete={'off'}
+            autoComplete="off"
             onChange={this.handleFieldChange}
-            name='message'
+            name="message"
             value={filters.message}
             placeholder={t('Write message')}
             maxLength={100}
             onKeyDown={handleKeyPress}
             className={`${styles.input} ${fields.message.error ? 'error' : ''}`}
           />
-          <CircularProgress max={62} value={byteCount}
-            className={styles.byteCounter} />
+          <CircularProgress
+            max={62}
+            value={byteCount}
+            className={styles.byteCounter}
+          />
           <img
             className={`${styles.status} ${!fields.message.loading && filters.message ? styles.show : ''}`}
-            src={ fields.message.error ? svg.alert_icon : svg.ok_icon} />
+            src={fields.message.error ? svg.alert_icon : svg.ok_icon}
+          />
         </div>
         <Feedback
           className={styles.feedback}
           show={fields.message.error}
           status={fields.message.error ? 'error' : ''}
-          showIcon={false}>
+          showIcon={false}
+        >
           { this.state.feedback }
         </Feedback>
       </label>

@@ -2,10 +2,10 @@ import BigNumber from 'bignumber.js';
 import React from 'react';
 import sha256 from 'js-sha256';
 import { Gradients, gradientSchemes } from './gradients';
-import generateUniqueId from './../../utils/generateUniqueId';
-import breakpoints from './../../constants/breakpoints';
+import generateUniqueId from '../../utils/generateUniqueId';
+import breakpoints from '../../constants/breakpoints';
 import styles from './accountVisual.css';
-import reg from './../../utils/regex';
+import reg from '../../utils/regex';
 import svg from '../../utils/svgIcons';
 
 
@@ -219,10 +219,13 @@ class AccountVisual extends React.Component {
     }
 
     if (!reg.address.test(address)) {
-      return <img
-        src={svg.btcIcon}
-        className={`${styles.wrapper} ${className}`}
-        style={{ height: newSize, width: newSize }}/>;
+      return (
+        <img
+          src={svg.btcIcon}
+          className={`${styles.wrapper} ${className}`}
+          style={{ height: newSize, width: newSize }}
+        />
+      );
     }
 
     const replaceUrlByHashOnScheme = gradientScheme => ({
@@ -250,9 +253,9 @@ class AccountVisual extends React.Component {
     return (
       <div style={{ height: newSize, width: newSize }} className={`${styles.wrapper} ${className}`}>
         <svg height={newSize} width={newSize} className={styles.accountVisual}>
-          <Gradients scheme={gradientsSchemesUrlsHashed}/>
+          <Gradients scheme={gradientsSchemesUrlsHashed} />
           {shapes.map((shape, i) => (
-            <shape.component {...shape.props} key={i}/>
+            <shape.component {...shape.props} key={i} />
           ))}
         </svg>
       </div>

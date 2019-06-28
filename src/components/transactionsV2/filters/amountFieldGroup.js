@@ -98,7 +98,7 @@ class AmountFieldGroup extends React.Component {
     return (
       <label className={styles.fieldHolder}>
         <InputV2
-          autoComplete={'off'}
+          autoComplete="off"
           onChange={this.handleFieldChange}
           name={data.name}
           value={filters[data.name]}
@@ -111,7 +111,7 @@ class AmountFieldGroup extends React.Component {
         />
         <img
           className={`${styles.status} ${!fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
-          src={ fields[data.name].error ? svg.alert_icon : svg.ok_icon}
+          src={fields[data.name].error ? svg.alert_icon : svg.ok_icon}
         />
       </label>
     );
@@ -132,7 +132,8 @@ class AmountFieldGroup extends React.Component {
           className={styles.feedback}
           show={!!this.state.feedback}
           status={this.state.feedback ? 'error' : ''}
-          showIcon={false}>
+          showIcon={false}
+        >
           { this.state.feedback }
         </Feedback>
       </div>

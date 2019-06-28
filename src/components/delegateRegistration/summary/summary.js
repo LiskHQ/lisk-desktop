@@ -55,8 +55,8 @@ class Summary extends React.Component {
         fee={fromRawLsk(Fees.registerDelegate)}
         classNames={styles.summaryContainer}
       >
-        <section className={'summary-container'}>
-          <label className={'nickname-label'}>{t('Your nickname')}</label>
+        <section className="summary-container">
+          <label className="nickname-label">{t('Your nickname')}</label>
           <label className={styles.userInformation}>
             <AccountVisual
               className={styles.accountVisual}

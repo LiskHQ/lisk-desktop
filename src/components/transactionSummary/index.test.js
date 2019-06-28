@@ -26,7 +26,7 @@ describe('TransactionSummary', () => {
   });
 
   it('should render title', () => {
-    const wrapper = mount(<TransactionSummary {...props}/>);
+    const wrapper = mount(<TransactionSummary {...props} />);
     expect(wrapper.find('h2').text()).toEqual(props.title);
   });
 
@@ -37,7 +37,8 @@ describe('TransactionSummary', () => {
         address: accounts['second passphrase account'].address,
         secondPublicKey: accounts['second passphrase account'].secondPublicKey,
       },
-      }}/>);
+    }}
+    />);
     expect(wrapper.find('.confirm-button').at(0).prop('disabled')).toBeTruthy();
     const clipboardData = {
       getData: () => accounts['second passphrase account'].secondPassphrase,
@@ -54,7 +55,8 @@ describe('TransactionSummary', () => {
     const wrapper = mount(<TransactionSummary {...{
       ...props,
       account: { hwInfo },
-      }}/>);
+    }}
+    />);
     expect(wrapper.find('h1')).toHaveLength(1);
     expect(wrapper.find('.confirm-button')).toHaveLength(0);
     expect(props.confirmButton.onClick).toHaveBeenCalled();
@@ -68,11 +70,11 @@ describe('TransactionSummary', () => {
         disabled: true,
       },
       account: { hwInfo },
-      }}/>);
+    }}
+    />);
     expect(wrapper.find('h1')).toHaveLength(1);
     expect(wrapper.find('.confirm-button')).toHaveLength(0);
     expect(props.confirmButton.onClick).not.toHaveBeenCalled();
     wrapper.unmount();
   });
 });
-

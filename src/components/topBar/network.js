@@ -9,10 +9,10 @@ const Network = ({ peers, t, token }) => {
 
   let iconCode = peers.options.code;
   if (iconCode === 2) {
-    iconCode = peers.options.nethash === Lisk.constants.MAINNET_NETHASH ?
-      networks.mainnet.code : iconCode;
-    iconCode = peers.options.nethash === Lisk.constants.TESTNET_NETHASH ?
-      networks.testnet.code : iconCode;
+    iconCode = peers.options.nethash === Lisk.constants.MAINNET_NETHASH
+      ? networks.mainnet.code : iconCode;
+    iconCode = peers.options.nethash === Lisk.constants.TESTNET_NETHASH
+      ? networks.testnet.code : iconCode;
     iconCode = token === 'BTC' ? networks.testnet.code : iconCode;
   }
 
@@ -20,7 +20,7 @@ const Network = ({ peers, t, token }) => {
 
   return (
     <section className={`${styles.wrapper} network-status`}>
-      <span className={`${styles.status} ${statusColor}`}></span>
+      <span className={`${styles.status} ${statusColor}`} />
       <p>
         <span>{t('Connected to:')}</span>
         <span>{activeNetwork[iconCode]}</span>

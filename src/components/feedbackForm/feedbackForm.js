@@ -20,9 +20,11 @@ class FeedbackForm extends Component {
   render() {
     return (
       <section className={`${grid.row} ${grid['between-xs']} ${styles.feedbackForm}`}>
-        <Questionare {...this.props}
+        <Questionare
+          {...this.props}
           onCancel={this.onCancel.bind(this)}
-          onSubmit={this.onSubmit.bind(this)}/>
+          onSubmit={this.onSubmit.bind(this)}
+        />
       </section>
     );
   }

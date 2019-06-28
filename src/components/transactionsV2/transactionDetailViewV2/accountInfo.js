@@ -13,7 +13,10 @@ const AccountInfo = ({ address, label, addressClass = '' }) => {
         <AccountVisual className={styles.avatar} address={address} size={24} />
         <Link
           to={`${addressLink}/${address}`}
-          className={`${styles.address} ${addressClass}`}>{address}</Link>
+          className={`${styles.address} ${addressClass}`}
+        >
+          {address}
+        </Link>
       </div>
     </div>
   );

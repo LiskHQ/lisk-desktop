@@ -42,7 +42,7 @@ class SecondPassphrase extends React.Component {
     const { t, account, secondPassphraseRegistered } = this.props;
     return (
       <div className={styles.wrapper}>
-        <MultiStep showNav={false} finalCallback={this.goToWallet} >
+        <MultiStep showNav={false} finalCallback={this.goToWallet}>
           <FirstStep
             t={t}
             goBack={this.backToPreviousPage}

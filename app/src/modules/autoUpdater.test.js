@@ -212,4 +212,3 @@ describe('autoUpdater', () => {
     expect(console.error).to.have.been.calledWith(error); // eslint-disable-line no-console
   });
 });
-

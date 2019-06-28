@@ -10,26 +10,30 @@ const ConfirmPassphraseOptions = ({
     <span
       className={`${styles.answer}`}
       onClick={() => !!answers[optionIndex] && !hasErrors
-        && !isCorrect && handleSelect(null, optionIndex)}>
+        && !isCorrect && handleSelect(null, optionIndex)}
+    >
       <span className={`${styles.choice}`}>
         {answers[optionIndex]}
         <span className={`${styles.checkmark}`}>
-          <FontIcon value='checkmark' />
+          <FontIcon value="checkmark" />
         </span>
       </span>
     </span>
     <span className={`${styles.options}`}>
-      {options.map((option, optionKey) =>
+      {options.map((option, optionKey) => (
         <span
           className={`${styles.option} ${answers[optionIndex] === option ? styles.selected : ''}`}
-          key={optionKey}>
+          key={optionKey}
+        >
           <PrimaryButtonV2
-            className={'small word-option'}
+            className="small word-option"
             onClick={() => handleSelect(option, optionIndex)}
-            disabled={!enabled}>
+            disabled={!enabled}
+          >
             { option }
           </PrimaryButtonV2>
-        </span>)}
+        </span>
+      ))}
     </span>
   </span>
 );

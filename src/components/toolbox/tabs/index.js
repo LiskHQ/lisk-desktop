@@ -6,12 +6,14 @@ const Tabs = ({
 }) => (
   <ul className={styles.wrapper}>
     {tabs.map((filter, i) => (
-      <li key={i}
+      <li
+        key={i}
         className={`${className}
           ${filter.className}
           ${(active === filter.value) || isActive(filter.value) ? `${styles.active} active` : ''}`
         }
-        onClick={() => onClick(filter)}>
+        onClick={() => onClick(filter)}
+      >
         {filter.name}
       </li>
     ))}

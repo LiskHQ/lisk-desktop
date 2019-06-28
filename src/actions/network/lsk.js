@@ -16,9 +16,9 @@ const generateAction = (data, config) => ({
 });
 
 export const getConnectionErrorMessage = error => (
-  error && error.message ?
-    i18next.t(`Unable to connect to the node, Error: ${error.message}`) :
-    i18next.t('Unable to connect to the node, no response from the server.')
+  error && error.message
+    ? i18next.t(`Unable to connect to the node, Error: ${error.message}`)
+    : i18next.t('Unable to connect to the node, no response from the server.')
 );
 
 const getNethash = async nodeUrl => (
@@ -51,4 +51,3 @@ export const networkSet = data =>
       dispatch(generateAction(data, { }));
     }
   };
-

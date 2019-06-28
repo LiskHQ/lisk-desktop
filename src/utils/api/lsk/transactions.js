@@ -1,5 +1,5 @@
 import Lisk from '@liskhq/lisk-client';
-import { toRawLsk } from '../../../utils/lsk';
+import { toRawLsk } from '../../lsk';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import txFilters from '../../../constants/transactionFilters';
 import { getAPIClient } from './network';

@@ -13,12 +13,26 @@ const CircularProgress = ({ max, value, className }) => {
   return (
     <div className={className}>
       <svg width="20" height="20" viewBox="0 0 20 20">
-        <circle r={radius} cx="10" cy="10" fill="transparent"
-          strokeDasharray={circunference} strokeWidth="1" strokeDashoffset="0"
-          className={styles.track} />
-        <circle r={radius} cx="10" cy="10" fill="transparent"
-          strokeDasharray={circunference} strokeWidth="1" strokeDashoffset={offset}
-          className={`${styles.bar} ${error ? styles.error : ''}`} />
+        <circle
+          r={radius}
+          cx="10"
+          cy="10"
+          fill="transparent"
+          strokeDasharray={circunference}
+          strokeWidth="1"
+          strokeDashoffset="0"
+          className={styles.track}
+        />
+        <circle
+          r={radius}
+          cx="10"
+          cy="10"
+          fill="transparent"
+          strokeDasharray={circunference}
+          strokeWidth="1"
+          strokeDashoffset={offset}
+          className={`${styles.bar} ${error ? styles.error : ''}`}
+        />
       </svg>
     </div>
   );

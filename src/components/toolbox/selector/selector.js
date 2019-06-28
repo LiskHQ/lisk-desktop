@@ -28,10 +28,13 @@ class Selector extends React.Component {
       <div className={`${styles.selector} ${className}`}>
         {options.map(({ title }, index) => (
           <label key={title}>
-            <input type="radio" name={name}
+            <input
+              type="radio"
+              name={name}
               onChange={this.setSelected}
               value={index}
-              checked={index === selectedIndex} />
+              checked={index === selectedIndex}
+            />
             <span>{title}</span>
           </label>
         ))}

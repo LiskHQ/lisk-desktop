@@ -27,8 +27,8 @@ class Select extends React.Component {
     const { options, onChange } = this.props;
     const selected = Number(index);
     this.setState({ selected, isOpen: false });
-    return this.state.selected !== selected ?
-      onChange(options[selected]) : null;
+    return this.state.selected !== selected
+      ? onChange(options[selected]) : null;
   }
 
   componentWillUnmount() {
@@ -48,7 +48,7 @@ class Select extends React.Component {
       >
         <label className={styles.inputHolder}>
           <InputV2
-            readOnly={true}
+            readOnly
             value={options[selected].label}
             onFocus={this.toggleIsOpen}
             size={size}
@@ -62,7 +62,7 @@ class Select extends React.Component {
         >
           {options.map((option, index) => (
             <span
-              className={'option'}
+              className="option"
               data-index={index}
               onClick={this.setSelected}
               key={`option-${index}`}

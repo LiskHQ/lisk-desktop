@@ -10,8 +10,8 @@ const MultiStepNav = ({
   const validateTitles = () => {
     const titlesAreValid = steps.reduce(
       (acc, step) =>
-        (acc && typeof step.props.title === 'string' && step.props.title.length > 0)
-      , true,
+        (acc && typeof step.props.title === 'string' && step.props.title.length > 0),
+      true,
     );
     return showNav !== false && titlesAreValid;
   };
@@ -37,31 +37,38 @@ const MultiStepNav = ({
     }
   };
 
-  return (validateTitles() ?
-    <nav className={styles.navigation}>
-      {
-        typeof backButtonLabel === 'string' ?
-          <a onClick={backButtonFn} className={`${styles.backButton} multistep-back`}>
-            <FontIcon className={styles.icon}>arrow-left</FontIcon>
-            <span className={styles.label}>{backButtonLabel}</span>
-          </a> : null
-      }
-      <section>
+  return (validateTitles()
+    ? (
+      <nav className={styles.navigation}>
         {
-          dashedSteps().map((step, index) =>
-            <div key={step.props.title}
-              onClick={() => { if (browsable) { prevStep({ to: (index / 2) }); } } }
-              className={`${current === (index / 2) ? styles.current : ''} ${styles.navEl} ${step.dash ? styles.dash : 'title'}`}>
+        typeof backButtonLabel === 'string'
+          ? (
+            <a onClick={backButtonFn} className={`${styles.backButton} multistep-back`}>
+              <FontIcon className={styles.icon}>arrow-left</FontIcon>
+              <span className={styles.label}>{backButtonLabel}</span>
+            </a>
+          ) : null
+      }
+        <section>
+          {
+          dashedSteps().map((step, index) => (
+            <div
+              key={step.props.title}
+              onClick={() => { if (browsable) { prevStep({ to: (index / 2) }); } }}
+              className={`${current === (index / 2) ? styles.current : ''} ${styles.navEl} ${step.dash ? styles.dash : 'title'}`}
+            >
               {
-                step.props.icon ?
-                  <FontIcon className={styles.icon} value={step.props.icon} /> : null
+                step.props.icon
+                  ? <FontIcon className={styles.icon} value={step.props.icon} /> : null
               }
               <b className={styles.label}><small>{ step.props.title }</small></b>
-            </div>)
+            </div>
+          ))
         }
-      </section>
-      <span className={styles.backButtonShadow}></span>
-    </nav> : <div className={styles.hidden}></div>);
+        </section>
+        <span className={styles.backButtonShadow} />
+      </nav>
+    ) : <div className={styles.hidden} />);
 };
 
 export default MultiStepNav;

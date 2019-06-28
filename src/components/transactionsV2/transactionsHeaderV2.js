@@ -6,7 +6,7 @@ import TableRow from '../toolbox/table/tableRow';
 const TransactionsHeaderV2 = ({
   t, isSmallScreen, columnClassNames,
 }) => (
-  <TableRow isHeader={true} className={`${grid.row}`} id="transactionsHeader">
+  <TableRow isHeader className={`${grid.row}`} id="transactionsHeader">
     <div className={`${columnClassNames.transaction} transactions-header`}>
       {t('Transaction')}
     </div>

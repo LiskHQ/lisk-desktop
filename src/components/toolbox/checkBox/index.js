@@ -6,10 +6,12 @@ const CheckBox = ({
   added, removed, onChange, accent, checked, className, name,
 }) => (
   <label className={`${styles.checkbox} ${className} ${checked ? 'checked' : 'unchecked'}`}>
-    <input type='checkbox'
+    <input
+      type="checkbox"
       checked={!!checked}
       name={name}
-      onChange={onChange} />
+      onChange={onChange}
+    />
     <span className={`${(accent || added) ? styles.accent : ''} ${removed ? styles.removed : ''}`}>
       <img src={svgIcons.checkboxFilled} />
     </span>

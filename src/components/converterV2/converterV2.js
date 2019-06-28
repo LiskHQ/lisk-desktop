@@ -25,7 +25,14 @@ class ConverterV2 extends React.Component {
     return (
       <div className={`${styles.wrapper} ${className}`}>
         {value !== '' && currencies[currency]
-          ? <span className={`${styles.price} converted-price`}>~{price} {currency}</span>
+          ? (
+            <span className={`${styles.price} converted-price`}>
+~
+              {price}
+              {' '}
+              {currency}
+            </span>
+          )
           : null
         }
       </div>

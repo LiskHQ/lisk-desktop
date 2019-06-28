@@ -89,9 +89,9 @@ class TransactionStatus extends React.Component {
       : messages.error;
 
 
-    if (transactions.broadcastedTransactionsError[0] &&
-        transactions.broadcastedTransactionsError[0].error &&
-        transactions.broadcastedTransactionsError[0].error.message) {
+    if (transactions.broadcastedTransactionsError[0]
+        && transactions.broadcastedTransactionsError[0].error
+        && transactions.broadcastedTransactionsError[0].error.message) {
       messageDetails.paragraph = transactions.broadcastedTransactionsError[0].error.message;
     }
 
@@ -123,7 +123,8 @@ class TransactionStatus extends React.Component {
 
     return (
       <div className={`${styles.wrapper} transaction-status`}>
-        <TransactionResult t={t}
+        <TransactionResult
+          t={t}
           title={messageDetails.title}
           illustration={success ? 'transactionSuccess' : 'transactionError'}
           message={messageDetails.paragraph}
@@ -135,38 +136,46 @@ class TransactionStatus extends React.Component {
           }}
         >
           {
-            isHardwareWalletError || transactions.broadcastedTransactionsError.length ?
-            <SecondaryButtonV2
-              label={t('Retry')}
-              className={`${styles.btn} retry`}
-              onClick={this.onRetry}
-            /> :
-            null
+            isHardwareWalletError || transactions.broadcastedTransactionsError.length
+              ? (
+                <SecondaryButtonV2
+                  label={t('Retry')}
+                  className={`${styles.btn} retry`}
+                  onClick={this.onRetry}
+                />
+              )
+              : null
           }
           {
-            shouldShowBookmark ?
-            <div
-              className={`${styles.bookmarkBtn} bookmark-container`}
-              ref={(node) => { this.bookmarkContainerRef = node; }}>
-              <SecondaryButtonV2
-                className={`${styles.btn} ${isBookmarked ? styles.bookmarkButton : ''} bookmark-btn`}
-                onClick={this.onBookmarkDropdownToggle}>
-                {bookmarkButtonLabel}
-              </SecondaryButtonV2>
-              <DropdownV2
-                showArrow={false}
-                showDropdown={this.state.isBookmarkDropdown}
-                className={`${styles.bookmarkDropdown}`}>
-                <Bookmark
-                  delegate={this.getDelegateInformation()}
-                  address={fields.recipient.address}
-                  detailAccount={this.props.detailAccount}
-                  onSubmitClick={this.onBookmarkDropdownToggle}
-                  isBookmark={isBookmarked}
-                  token={token} />
-              </DropdownV2>
-            </div> :
-            null
+            shouldShowBookmark
+              ? (
+                <div
+                  className={`${styles.bookmarkBtn} bookmark-container`}
+                  ref={(node) => { this.bookmarkContainerRef = node; }}
+                >
+                  <SecondaryButtonV2
+                    className={`${styles.btn} ${isBookmarked ? styles.bookmarkButton : ''} bookmark-btn`}
+                    onClick={this.onBookmarkDropdownToggle}
+                  >
+                    {bookmarkButtonLabel}
+                  </SecondaryButtonV2>
+                  <DropdownV2
+                    showArrow={false}
+                    showDropdown={this.state.isBookmarkDropdown}
+                    className={`${styles.bookmarkDropdown}`}
+                  >
+                    <Bookmark
+                      delegate={this.getDelegateInformation()}
+                      address={fields.recipient.address}
+                      detailAccount={this.props.detailAccount}
+                      onSubmitClick={this.onBookmarkDropdownToggle}
+                      isBookmark={isBookmarked}
+                      token={token}
+                    />
+                  </DropdownV2>
+                </div>
+              )
+              : null
           }
         </TransactionResult>
       </div>

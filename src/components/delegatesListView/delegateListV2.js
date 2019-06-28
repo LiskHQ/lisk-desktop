@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import DelegateRowV2 from './delegateRowV2';
 import ListLabelsV2 from './listLabelsV2';
 import { Button } from '../toolbox/buttons/button';
-import { getTotalVotesCount } from './../../utils/voting';
+import { getTotalVotesCount } from '../../utils/voting';
 
 import styles from './votingListViewV2.css';
 
@@ -35,16 +35,20 @@ class DelegateListV2 extends React.Component {
       productivity: `${grid['col-md-1']} ${grid['col-xs-2']}`,
       voteWeight: `${grid['col-md-2']}`,
     };
-    return (<div>
-      { this.state.didMount ? <div className={`${styles.results} delegate-list`}>
-        <ListLabelsV2
-          t={t}
-          columnClassNames={columnClassNames}
-          shouldShowVoteColumn={shouldShowVoteColumn}
-        />
-        {
-            this.props.list.map(item =>
-              <DelegateRowV2 key={item.account.address} data={item}
+    return (
+      <div>
+        { this.state.didMount ? (
+          <div className={`${styles.results} delegate-list`}>
+            <ListLabelsV2
+              t={t}
+              columnClassNames={columnClassNames}
+              shouldShowVoteColumn={shouldShowVoteColumn}
+            />
+            {
+            this.props.list.map(item => (
+              <DelegateRowV2
+                key={item.account.address}
+                data={item}
                 t={t}
                 className={this.props.safari}
                 voteToggled={this.props.voteToggled}
@@ -53,16 +57,22 @@ class DelegateListV2 extends React.Component {
                 shouldShowVoteColumn={shouldShowVoteColumn}
                 shouldHightlightCheckbox={firstTimeVotingActive}
                 columnClassNames={columnClassNames}
-              />)
+              />
+            ))
         }
-        {shouldLoadMore ? <Button
-          className={`${styles.loadMore} loadMore`}
-          type='button'
-          onClick={() => this.props.loadMore()}>
-          {t('Load More')}
-        </Button> : null}
-      </div> : null}
-    </div>);
+            {shouldLoadMore ? (
+              <Button
+                className={`${styles.loadMore} loadMore`}
+                type="button"
+                onClick={() => this.props.loadMore()}
+              >
+                {t('Load More')}
+              </Button>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
+    );
   }
 }
 
