@@ -51,11 +51,12 @@ class AddBookmark extends React.Component {
   }
 
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const { token } = this.props;
     const { token: prevToken } = prevProps;
+    const { fields: { address } } = prevState;
 
-    this.updateLabelIfDelegate();
+    this.updateLabelIfDelegate(address.value);
 
     if (token.active !== prevToken.active) {
       this.setState(state => ({
@@ -65,16 +66,22 @@ class AddBookmark extends React.Component {
     }
   }
 
-  updateLabelIfDelegate() {
+  updateLabelIfDelegate(prevAddress) {
     const { token, accounts } = this.props;
     const { fields: { label, address } } = this.state;
-
     const account = (token.active === tokenMap.LSK.key && accounts[address.value]) || {};
+    if (address.value === prevAddress && account.delegate) return;
+
     if (account.delegate && account.delegate.username !== label.value) {
       const data = { value: account.delegate.username, readonly: true };
       this.updateField({
         name: 'label',
         data,
+      });
+    } else if (label.readonly) {
+      this.updateField({
+        name: 'label',
+        data: { value: '', readonly: false },
       });
     }
   }
