@@ -7,8 +7,17 @@ const Feedback = ({
   showIcon, status, children, show, className, dark,
 }) => {
   const icon = status === 'error' && svg.alert_icon;
+  const classNames = [
+    dark && styles.dark,
+    className,
+    styles.feedback,
+    show && styles.show,
+    !!status && styles[status],
+  ].filter(name => name).join(' ');
   return (
-    <span className={`${dark ? styles.dark : ''} ${className} ${styles.feedback} ${status} ${show ? styles.show : ''}`}>
+    <span
+      className={classNames}
+    >
       {showIcon && icon && <img src={icon} />}
       {children}
     </span>

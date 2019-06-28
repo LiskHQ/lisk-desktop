@@ -8,7 +8,11 @@ const InputV2 = ({
   error,
   ...props
 }) =>
-  <input {...props} ref={setRef} className={`${styles.input} ${error ? styles.error : ''} ${className} ${styles[size]}`} />;
+  <input
+    {...props}
+    ref={setRef}
+    className={`${styles.input} ${error ? styles.error : ''} ${className} ${styles[size]}`}
+  />;
 
 InputV2.defaultProps = {
   className: '',
