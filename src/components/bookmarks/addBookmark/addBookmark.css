@@ -7,7 +7,7 @@
   width: 100%;
 
   & .content {
-    width: 720px;
+    width: var(--medium-box-width);
 
     & header {
       display: flex;
@@ -28,7 +28,7 @@
 
   & > .buttonHolder {
     display: flex;
-    margin: 16px auto 30px;
+    margin: 0 auto 30px;
     width: var(--footer-button-width);
 
     & button {
@@ -50,7 +50,7 @@
 
   & label {
     display: block;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
 
     & > .label {
       @mixin contentNormal bold;
@@ -71,15 +71,14 @@
 
   & .feedback {
     margin-top: 5px;
-    min-height: 44px;
+    min-height: 40px;
     opacity: 0;
-    transition: none;
 
     &.error {
       opacity: 1;
     }
 
-    &:not(:global(.error)) {
+    &:not(.error) {
       padding-left: 0;
       padding-right: 0;
     }
