@@ -13,7 +13,6 @@ const actionTypes = {
   addPriceTicker: 'ADD_PRICE_TICKER',
   cleanTransactions: 'CLEAN_TRANSACTIONS',
   clearDataOfCurrencyGraph: 'CLEAR_DATA_OF_CURRENCY_GRAPH',
-  delegateRegisteredFailure: 'DELEGATE_REGISTERED_FAILURE',
   delegateRegisteredSuccess: 'DELEGATE_REGISTERED_SUCCESS',
   delegateRetrieved: 'DELEGATE_RETRIEVED',
   delegateRetrieving: 'DELEGATE_RETRIEVING',

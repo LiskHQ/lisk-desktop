@@ -4,8 +4,7 @@ import { loginType } from '../../constants/hwConstants';
 import { voteWithHW } from '../../utils/api/hwWallet';
 import { splitVotesIntoRounds } from '../voting';
 
-export const getDelegates = (liskAPIClient, options) =>
-  liskAPIClient.delegates.get(options);
+export const getDelegates = (liskAPIClient, options) => liskAPIClient.delegates.get(options);
 
 const voteWithPassphrase = (
   liskAPIClient,

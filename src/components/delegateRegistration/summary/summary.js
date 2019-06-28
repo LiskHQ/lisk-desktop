@@ -1,8 +1,11 @@
 import React from 'react';
+import to from 'await-to-js';
 import AccountVisual from '../../accountVisual/index';
 import { fromRawLsk } from '../../../utils/lsk';
 import Fees from '../../../constants/fees';
 import TransactionSummary from '../../transactionSummary';
+import { create } from '../../../utils/api/lsk/transactions';
+import { createTransactionType } from '../../../constants/transactionTypes';
 import styles from './summary.css';
 
 class Summary extends React.Component {
@@ -12,22 +15,20 @@ class Summary extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onSubmit({ secondPassphrase }) {
+  async onSubmit({ secondPassphrase }) {
     const {
-      account, nickname, submitDelegateRegistration, nextStep,
+      account, nickname, nextStep,
     } = this.props;
 
     const data = {
-      userInfo: {
-        account: account.info.LSK,
-        username: nickname,
-        passphrase: account.passphrase,
-        secondPassphrase,
-      },
+      account,
+      username: nickname,
+      passphrase: account.passphrase,
+      secondPassphrase,
     };
 
-    submitDelegateRegistration(data.userInfo);
-    nextStep(data);
+    const [error, tx] = await to(create(data, createTransactionType.delegate_registration));
+    if (!error) nextStep({ transactionInfo: tx });
   }
 
   render() {
@@ -59,11 +60,11 @@ class Summary extends React.Component {
           <label className={styles.userInformation}>
             <AccountVisual
               className={styles.accountVisual}
-              address={account.info.LSK.address}
+              address={account.address}
               size={23}
             />
             <span className={`${styles.nickname} nickname`}>{nickname}</span>
-            <span className={`${styles.address} address`}>{account.info.LSK.address}</span>
+            <span className={`${styles.address} address`}>{account.address}</span>
           </label>
         </section>
       </TransactionSummary>

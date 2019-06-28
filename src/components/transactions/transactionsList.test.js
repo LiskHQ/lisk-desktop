@@ -10,7 +10,6 @@ import { prepareStore } from '../../../test/unit-test-utils/applicationInit';
 import peersReducer from '../../store/reducers/peers';
 import accountReducer from '../../store/reducers/account';
 import transactionReducer from '../../store/reducers/transaction';
-import delegateReducer from '../../store/reducers/delegate';
 import txFilters from '../../constants/transactionFilters';
 import i18n from '../../i18n';
 
@@ -33,7 +32,6 @@ describe('TransactionsList', () => {
     peers: peersReducer,
     account: accountReducer,
     transaction: transactionReducer,
-    delegate: delegateReducer,
   }, [
     thunk,
   ]);
