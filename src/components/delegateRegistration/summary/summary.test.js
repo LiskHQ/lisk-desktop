@@ -11,14 +11,10 @@ describe('Delegate Registration Summary', () => {
 
   const props = {
     account: {
-      info: {
-        LSK: {
-          address: '123456789L',
-          balance: 11000,
-        },
-      },
+      address: '123456789L',
+      balance: 11000,
       passphrase: accounts.genesis.passphrase,
-      isDelegate: false,
+      delegate: {},
     },
     prevState: {},
     nickname: 'mydelegate',
@@ -29,7 +25,7 @@ describe('Delegate Registration Summary', () => {
 
   const response = {
     id: 1,
-    account: props.account.info.LSK,
+    account: props.account,
     username: props.nickname,
     passphrase: props.passphrase,
     secondPassphrase: null,
@@ -66,7 +62,7 @@ describe('Delegate Registration Summary', () => {
 
   it('submit user data when click in confirm button', async () => {
     const data = {
-      account: props.account.info.LSK,
+      account: props.account,
       username: props.nickname,
       passphrase: props.account.passphrase,
       secondPassphrase: null,
@@ -86,7 +82,7 @@ describe('Delegate Registration Summary', () => {
     Lisk.transaction.registerDelegate.mockRejectedValue(new Error('please provide a username'));
 
     const data = {
-      account: props.account.info.LSK,
+      account: props.account,
       passphrase: props.account.passphrase,
       secondPassphrase: null,
     };

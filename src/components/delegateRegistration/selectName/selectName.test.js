@@ -15,11 +15,8 @@ describe('DelegateRegistration', () => {
 
   const props = {
     account: {
-      info: {
-        LSK: {
-          ...accounts.genesis,
-        },
-      },
+      ...accounts.genesis,
+      delegate: {},
     },
     prevState: {},
     network: {

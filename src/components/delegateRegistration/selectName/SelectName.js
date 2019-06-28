@@ -41,7 +41,7 @@ class SelectName extends React.Component {
 
   checkIfUserIsDelegate() {
     const { account, t } = this.props;
-    if (account && account.isDelegate) {
+    if (account && account.delegate) {
       this.setState({
         inputDisabled: true,
         error: t('You have already registered as a delegate.'),
@@ -51,8 +51,8 @@ class SelectName extends React.Component {
 
   hasUserEnoughFunds() {
     const { account, t } = this.props;
-    const hasFunds = account.info &&
-      fromRawLsk(account.info.LSK.balance) * 1 >= fromRawLsk(Fees.registerDelegate) * 1;
+    const hasFunds = account &&
+      fromRawLsk(account.balance) * 1 >= fromRawLsk(Fees.registerDelegate) * 1;
 
     if (!hasFunds) {
       this.setState({

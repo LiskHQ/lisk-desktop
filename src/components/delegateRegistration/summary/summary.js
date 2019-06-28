@@ -21,7 +21,7 @@ class Summary extends React.Component {
     } = this.props;
 
     const data = {
-      account: account.info.LSK,
+      account,
       username: nickname,
       passphrase: account.passphrase,
       secondPassphrase,
@@ -60,11 +60,11 @@ class Summary extends React.Component {
           <label className={styles.userInformation}>
             <AccountVisual
               className={styles.accountVisual}
-              address={account.info.LSK.address}
+              address={account.address}
               size={23}
             />
             <span className={`${styles.nickname} nickname`}>{nickname}</span>
-            <span className={`${styles.address} address`}>{account.info.LSK.address}</span>
+            <span className={`${styles.address} address`}>{account.address}</span>
           </label>
         </section>
       </TransactionSummary>
