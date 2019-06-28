@@ -40,6 +40,14 @@ describe('Bookmarks', () => {
     expect(wrapper).toContainExactlyOneMatchingElement('a.bookmark-list-row');
   });
 
+  it('should show filtering empty state if no bookmark matches', () => {
+    wrapper.find('.bookmarks-filter-input').first().simulate(
+      'change',
+      { target: { value: 'some random text' } },
+    );
+    expect(wrapper).toContainExactlyOneMatchingElement('img.bookmark-empty-filter-illustration');
+  });
+
   it('should allow deleting a bookmark', () => {
     expect(wrapper).toContainMatchingElements(bookmarks.LSK.length, 'a.bookmark-list-row');
     wrapper.find('.bookmarks-delete-button').first().simulate('click');
