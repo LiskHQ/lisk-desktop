@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Animation from '../../toolbox/animation';
 
-class DelegateAnimation extends React.Component {
+class DelegateAnimation extends React.PureComponent {
   constructor() {
     super();
 
@@ -47,6 +47,7 @@ class DelegateAnimation extends React.Component {
     const { className, onLoopComplete } = this.props;
     const { loop } = this.state;
     const animation = this.getAnimationName();
+
     return (
       <Animation
         loop={loop}

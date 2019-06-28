@@ -1,0 +1,120 @@
+@import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
+
+.box {
+  width: 100%;
+  height: 445px;
+  max-width: 720px;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  height: 410px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px;
+  margin: 0;
+
+  & > .description {
+    @mixin contentLargest;
+
+    color: var(--color-slate-gray);
+    margin: 0;
+    padding: 0;
+  }
+
+  & > .description:nth-of-type(1) {
+    margin-top: 2px;
+  }
+
+  & > .description:nth-of-type(2) {
+    margin-top: 25px;
+  }
+
+  & > .link {
+    @mixin contentLargest bold;
+
+    color: var(--color-ultramarine-blue);
+    margin-top: 18px;
+    text-decoration: none;
+  }
+
+  & > .nicknameLabel {
+    @mixin contentNormal bold;
+
+    color: var(--color-maastricht-blue);
+    margin: 22px 0 10px;
+  }
+
+  & .inputRequirements {
+    @mixin contentNormal;
+
+    color: var(--color-slate-gray);
+    margin-top: 8px;
+    user-select: none;
+    opacity: 0;
+    padding-left: 0;
+    padding-right: 0;
+    transition: opacity 0.5s, ease-in;
+  }
+
+  & > .inputContainer {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    & .spinner {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      color: var(--color-ultramarine-blue);
+    }
+
+    & .status {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+    }
+  }
+
+  & .inputNickname {
+    padding: 8px 14px;
+  }
+
+  & .inputNickname:focus ~ .inputRequirements {
+    opacity: 1 !important;
+  }
+
+  & .errorMessage {
+    margin-top: 10px;
+    height: 35px;
+  }
+
+  & > footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 6px;
+
+    & > .confirmBtn {
+      width: 100%;
+      max-width: 391px;
+    }
+  }
+}
+
+.show {
+  opacity: 1;
+  transition: opacity var(--animation-speed-fast) linear var(--animation-delay-standard);
+}
+
+.hide {
+  opacity: 0;
+  transition: opacity var(--animation-speed-fast) linear;
+}

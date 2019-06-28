@@ -12,7 +12,7 @@ import networks from '../../constants/networks';
 import urls from '../../constants/urls';
 import ss from '../../constants/selectors';
 import compareBalances from '../utils/compareBalances';
-import { enterSecondPassphraseV2 } from '../utils/enterSecondPassphrase';
+import enterSecondPassphrase from '../utils/enterSecondPassphrase';
 
 const txConfirmationTimeout = 20000;
 const txVotePrice = 1;
@@ -88,7 +88,7 @@ describe('Delegates Voting', () => {
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.voteCheckbox).click();
     cy.get(ss.goToConfirmationButton).click();
-    enterSecondPassphraseV2(accounts['second passphrase account'].secondPassphrase);
+    enterSecondPassphrase(accounts['second passphrase account'].secondPassphrase);
     cy.get(ss.confirmVotingButton).click();
     cy.get(ss.voteResultHeader).contains('Voting submitted');
     cy.get(ss.backToDelegatesButton).click();

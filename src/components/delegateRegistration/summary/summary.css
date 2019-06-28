@@ -1,0 +1,26 @@
+@import '../../app/variablesV2.css';
+
+.summaryContainer {
+  & > div > section > label {
+    font-weight: 400;
+  }
+}
+
+.userInformation {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  & .nickname {
+    color: var(--color-maastricht-blue);
+    font-weight: 400;
+    margin: 0 20px 0 10px;
+  }
+
+  & .address {
+    color: var(--color-blue-gray);
+    font-weight: 400;
+    margin: 0;
+  }
+}
