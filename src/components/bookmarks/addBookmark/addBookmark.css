@@ -29,7 +29,7 @@
   & > .buttonHolder {
     display: flex;
     margin: 16px auto 30px;
-    width: 390px;
+    width: var(--footer-button-width);
 
     & button {
       display: block;
