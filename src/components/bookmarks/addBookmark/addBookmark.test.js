@@ -136,8 +136,8 @@ describe('Add a new bookmark component', () => {
     });
   });
 
-  describe('Token switching validation', () => {
-    it('Should revalidate each time active token is changed', () => {
+  describe('Token switching', () => {
+    it('Should clear the fields each time active token is changed', () => {
       wrapper.setProps({ token: { active: tokenMap.LSK.key } });
       wrapper.find('input[name="address"]').first().simulate('change', {
         target: {
@@ -145,13 +145,10 @@ describe('Add a new bookmark component', () => {
           name: 'address',
         },
       });
-      expect(wrapper.find('input[name="address"]')).not.toHaveClassName('error');
+      expect(wrapper.find('input[name="address"]')).toHaveValue(accounts.delegate.address);
       wrapper.setProps({ token: { active: tokenMap.BTC.key } });
       wrapper.update();
-      expect(wrapper.find('input[name="address"]')).toHaveClassName('error');
-      wrapper.setProps({ token: { active: tokenMap.LSK.key } });
-      wrapper.update();
-      expect(wrapper.find('input[name="address"]')).not.toHaveClassName('error');
+      expect(wrapper.find('input[name="address"]')).toHaveValue('');
     });
   });
 });
