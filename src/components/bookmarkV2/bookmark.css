@@ -109,6 +109,7 @@
 }
 
 .spinner {
+  color: var(--color-ultramarine-blue);
   position: absolute;
   right: 11px;
 }
