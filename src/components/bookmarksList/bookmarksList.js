@@ -51,12 +51,19 @@ class BookmarksList extends React.Component {
     });
   }
 
-  editBookmark(e, { address, title }) {
+  editBookmark(e, bookmark) {
+    this.updateBookmark(e, bookmark);
+    e.preventDefault();
+    setTimeout(() => {
+      this.editInput.select();
+    }, 10);
+  }
+
+  updateBookmark(e, { address, title }) {
     this.setState({
       eddittedAddress: address,
       eddittedTitle: title,
     });
-    e.preventDefault();
   }
 
   deleteBookmark(e, { address }) {
@@ -75,7 +82,7 @@ class BookmarksList extends React.Component {
       },
       token: token.active,
     });
-    this.editBookmark(e, {});
+    this.updateBookmark(e, {});
   }
 
   onTitleChange({ target }) {
@@ -139,6 +146,7 @@ class BookmarksList extends React.Component {
                       size='m'
                       onChange={this.onTitleChange}
                       value={eddittedTitle}
+                      setRef={(input) => { this.editInput = input; } }
                       placeholder={t('Filter by name...')}
                     />
                   : <span className={styles.description}>
@@ -152,7 +160,7 @@ class BookmarksList extends React.Component {
                   { eddittedAddress === bookmark.address
                     ? <React.Fragment>
                         <SecondaryButtonV2
-                         onClick={e => this.editBookmark(e, {})}
+                         onClick={e => this.updateBookmark(e, {})}
                          className="medium bookmarks-cancel-button">
                          {t('Cancel')}
                        </SecondaryButtonV2>
