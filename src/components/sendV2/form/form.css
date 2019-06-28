@@ -62,10 +62,12 @@
   & .amountHint {
     @mixin contentSmallest;
 
+    box-sizing: border-box;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     color: var(--color-slate-gray);
+    padding-right: 10px;
     position: relative;
     top: -30px;
     width: 100%;
@@ -106,6 +108,14 @@
     resize: none;
     overflow: hidden;
     padding-right: 30px;
+
+    &:focus ~ .byteCounter {
+      opacity: 1;
+    }
+
+    &:focus ~ .referenceStatus {
+      opacity: 0;
+    }
   }
 
   & .status {
