@@ -215,8 +215,7 @@ class AddBookmark extends React.Component {
                       autoComplete="off"
                     />
                     <Feedback
-                      className={`${styles.feedback}`}
-                      show
+                      className={`${styles.feedback} ${fields[field.name].error ? styles.error : ''}`}
                       status={fields[field.name].error ? 'error' : ''}
                     >
                       {fields[field.name].feedback}
