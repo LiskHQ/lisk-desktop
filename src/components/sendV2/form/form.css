@@ -8,6 +8,7 @@
   align-items: center;
   box-sizing: border-box;
   width: 100%;
+  overflow: initial;
   height: auto;
 }
 
@@ -88,6 +89,10 @@
 
     &:focus ~ .byteCounter {
       opacity: 1;
+
+      &.hide ~ .referenceStatus {
+        opacity: 1;
+      }
     }
 
     &:focus ~ .referenceStatus {
@@ -202,6 +207,6 @@
 }
 
 .hide {
-  opacity: 0;
+  opacity: 0 !important;
   transition: opacity var(--animation-speed-fast) linear;
 }

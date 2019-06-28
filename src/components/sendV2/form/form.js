@@ -482,9 +482,9 @@ class Form extends React.Component {
                 className={styles.converter}
                 value={fields.amount.value}
                 error={fields.amount.error} />
-              <SpinnerV2 className={`${styles.spinner} ${this.state.isAmountLoading && fields.amount.value ? styles.show : styles.hide}`}/>
+              <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}/>
               <img
-                className={`${styles.status} ${!this.state.isAmountLoading && fields.amount.value ? styles.show : styles.hide}`}
+                className={`${styles.status} ${!this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}
                 src={ fields.amount.error ? svg.alert_icon : svg.ok_icon}
               />
             </span>
@@ -538,7 +538,7 @@ class Form extends React.Component {
                 <CircularProgress
                   max={64}
                   value={byteCount}
-                  className={`${styles.byteCounter}`}
+                  className={`${styles.byteCounter} ${fields.reference.error ? styles.hide : ''}`}
                 />
                 <img
                   className={`${styles.status} ${styles.referenceStatus} ${!fields.reference.value ? styles.hide : styles.show}`}
