@@ -232,11 +232,11 @@ class AddBookmark extends React.Component {
                       placeholder={field.placeholder}
                       readOnly={fields[field.name].readonly}
                       size={'l'}
-                      autoComplete={'off'}
+                      autoComplete="off"
                     />
                     <Feedback
                       className={`${styles.feedback} ${fields[field.name].error ? styles.error : ''}`}
-                      show={true}
+                      show
                       status={fields[field.name].error ? 'error' : ''}
                     >
                       {fields[field.name].feedback}
