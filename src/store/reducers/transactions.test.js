@@ -314,7 +314,7 @@ describe('Reducer: transactions(state, action)', () => {
       confirmed: [],
       transactionsCreated: [],
       transactionsCreatedFailed: [],
-      broadcastedTransactionsError: [tx],
+      broadcastedTransactionsError: [{ transaction: tx }],
     };
     const actionResult = broadcastedTransactionSuccess(tx);
     const changedState = transactions(newState, actionResult);
