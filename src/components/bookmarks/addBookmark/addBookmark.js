@@ -161,7 +161,9 @@ class AddBookmark extends React.Component {
 
   handleAddBookmark(e) {
     e.preventDefault();
-    const { token: { active }, bookmarkAdded, accounts } = this.props;
+    const {
+      token: { active }, bookmarkAdded, accounts, history,
+    } = this.props;
     const { fields: { label, address } } = this.state;
     const { publicKey, delegate } = accounts[address.value] || {};
     bookmarkAdded({
@@ -173,8 +175,7 @@ class AddBookmark extends React.Component {
         publicKey,
       },
     });
-    this.props.history.push(routes.dashboard.path);
-    // this.props.history.push(routes.bookmarks.path); // TODO: Update with correct path
+    history.push(routes.bookmarks.path);
   }
 
   render() {

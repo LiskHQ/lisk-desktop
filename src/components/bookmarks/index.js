@@ -1,16 +1,17 @@
-// istanbul ignore file
-import React from 'react';
+/* istanbul ignore file */
+import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
-import ViewAccounts from './viewAccounts';
-import AddAccountID from './addAccountID';
-import AddAccountTitle from './addAccountTitleHOC';
-import MultiStep from '../multiStep/index';
-import styles from './bookmarks.css';
+import { bookmarkRemoved, bookmarkUpdated } from '../../actions/bookmarks';
+import Bookmarks from './bookmarks';
 
-const Bookmarks = ({ history }) => (<MultiStep className={styles.bookmarksWrapper}>
-  <ViewAccounts history={history}/>
-  <AddAccountID />
-  <AddAccountTitle />
-</MultiStep>);
+const mapStateToProps = state => ({
+  bookmarks: state.bookmarks,
+  token: state.settings.token,
+});
 
-export default translate()(Bookmarks);
+const mapDispatchToProps = {
+  bookmarkRemoved,
+  bookmarkUpdated,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(Bookmarks));

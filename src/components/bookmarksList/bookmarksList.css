@@ -19,15 +19,24 @@
       height: auto;
       box-sizing: border-box;
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
       padding: 20px 0;
       border-bottom: 1px solid var(--color-mystic);
       cursor: pointer;
       text-decoration: none;
 
-      & > .avatar {
-        margin-right: 15px;
+      & .editInput {
+        width: 224px;
+      }
+
+      & .avatarAndDescriptionWrapper {
+        display: flex;
+        align-items: flex-start;
+
+        & > .avatar {
+          margin-right: 15px;
+        }
       }
 
       & .description {
@@ -48,6 +57,25 @@
 
           color: var(--color-slate-gray);
         }
+      }
+
+      & .buttonContainer {
+        opacity: 0;
+        transition: opacity var(--animation-speed-fast) ease;
+
+        & > button {
+          margin-left: 20px;
+          min-width: initial;
+        }
+
+        & .deleteButton {
+          background-color: #ec6868 !important;
+        }
+      }
+
+      &:hover .buttonContainer,
+      &.editting .buttonContainer {
+        opacity: 1;
       }
     }
 

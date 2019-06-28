@@ -157,7 +157,7 @@ class Dashboard extends React.Component {
               {
                 !isDesktop
                 ? <div className={`${styles.bookmarks} bookmarks`}>
-                    <BookmarksList history={history}/>
+                    <BookmarksList history={history} limit={5}/>
                     <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn1} />
                   </div>
                 : null
@@ -172,7 +172,7 @@ class Dashboard extends React.Component {
             {
               isDesktop
               ? <div className={`${styles.bookmarks} bookmarks`}>
-                  <BookmarksList history={history}/>
+                  <BookmarksList history={history} limit={5}/>
                   <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn1} />
                 </div>
               : null

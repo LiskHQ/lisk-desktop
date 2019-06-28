@@ -21,6 +21,7 @@ import Extensions from '../components/extensions';
 import TermsOfUse from '../components/termsOfUse';
 import ToolboxDemo from '../components/toolbox/demo';
 import Dashboard from '../components/dashboard';
+import Bookmarks from '../components/bookmarks';
 import AddBookmark from '../components/bookmarks/addBookmark';
 import DelegateRegistration from '../components/delegateRegistration';
 
@@ -44,6 +45,11 @@ export default {
   addBookmark: {
     path: '/bookmarks/add-bookmark',
     component: AddBookmark,
+    isPrivate: false,
+  },
+  bookmarks: {
+    path: '/bookmarks',
+    component: Bookmarks,
     isPrivate: false,
   },
   send: {
