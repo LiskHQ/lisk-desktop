@@ -166,7 +166,8 @@ class AddBookmark extends React.Component {
         publicKey,
       },
     });
-    this.props.history.push(routes.bookmarks.path);
+    this.props.history.push(routes.dashboard.path);
+    // this.props.history.push(routes.bookmarks.path); // TODO: Update with correct path
   }
 
   render() {
