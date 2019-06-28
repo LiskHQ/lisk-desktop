@@ -128,24 +128,21 @@ class Bookmark extends React.Component {
       placeholder,
     } = this.props;
     const { dropdownIndex } = this.state;
-    const showAccountVisual = recipient.address.length && !recipient.error;
+    const haveAvatar = recipient.address.length && !recipient.error;
     const selectedAccount = recipient.selected ? recipient.title : recipient.value;
 
     return (
       <Fragment>
         <span className={`${styles.recipientField} recipient`}>
-          {
-            showAccountVisual
-              ? <AccountVisual
-                  className={styles.accountVisual}
-                  address={recipient.address}
-                  size={25}
-                />
-              : null
-          }
+          <AccountVisual
+            className={styles.accountVisual}
+            address={recipient.address}
+            placeholder={!haveAvatar}
+            size={25}
+          />
           <InputV2
             autoComplete={'off'}
-            className={`${styles.input} ${recipient.error ? 'error' : ''} ${showAccountVisual ? styles.moveTextToRight : ''} recipient bookmark`}
+            className={`${styles.input} ${recipient.error ? 'error' : ''} recipient bookmark`}
             name={'recipient'}
             value={selectedAccount}
             placeholder={placeholder}

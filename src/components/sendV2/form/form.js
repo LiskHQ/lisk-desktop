@@ -94,6 +94,9 @@ class Form extends React.Component {
     const { fields, unspentTransactionOutputs } = this.state;
     const { token, account, dynamicFees } = this.props;
     // istanbul ignore next
+    if (this.props.token === tokenMap.BTC.key && !Object.keys(dynamicFees).length) {
+      this.props.dynamicFeesRetrieved();
+    }
     if (token === tokenMap.BTC.key
         && account && account.info[token]
         && !unspentTransactionOutputs.length) {
