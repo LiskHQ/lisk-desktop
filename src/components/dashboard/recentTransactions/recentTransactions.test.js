@@ -11,6 +11,7 @@ describe('Recent Transactions', () => {
     account: {
       address: '123456L',
     },
+    loadTransactions: jest.fn(),
     bookmarks: {
       LSK: [
         {
@@ -28,53 +29,43 @@ describe('Recent Transactions', () => {
         active: 'LSK',
       },
     },
-    transactions: {
-      pending: [],
-      confirmed: [
-        {
-          id: 0,
-          recipientId: '123456L',
-          amount: '0.001',
-          token: 'LSK',
-          type: 0,
-        },
-        {
-          id: 1,
-          recipientId: '2435345L',
-          amount: '0.0003',
-          token: 'LSK',
-          type: 0,
-        },
-        {
-          id: 2,
-          recipientId: '123456L',
-          amount: '0.008',
-          token: 'LSK',
-          type: 1,
-        },
-        {
-          id: 3,
-          recipientId: '234234234L',
-          amount: '0.0009',
-          token: 'LSK',
-          type: 2,
-        },
-        {
-          id: 4,
-          recipientId: '4564346346L',
-          amount: '25',
-          token: 'LSK',
-          type: 3,
-        },
-        {
-          id: 5,
-          recipientId: '345345345L',
-          amount: '0.78',
-          token: 'LSK',
-          type: 1,
-        },
-      ],
-    },
+    transactions: [
+      {
+        id: 0,
+        recipientId: '123456L',
+        amount: '0.001',
+        token: 'LSK',
+        type: 0,
+      },
+      {
+        id: 1,
+        recipientId: '2435345L',
+        amount: '0.0003',
+        token: 'LSK',
+        type: 0,
+      },
+      {
+        id: 2,
+        recipientId: '123456L',
+        amount: '0.008',
+        token: 'LSK',
+        type: 1,
+      },
+      {
+        id: 3,
+        recipientId: '234234234L',
+        amount: '0.0009',
+        token: 'LSK',
+        type: 2,
+      },
+      {
+        id: 4,
+        recipientId: '4564346346L',
+        amount: '25',
+        token: 'LSK',
+        type: 3,
+      },
+    ],
     isLoggedIn: true,
     t: key => key,
   };
@@ -101,25 +92,22 @@ describe('Recent Transactions', () => {
         active: 'BTC',
       },
     },
-    transactions: {
-      pending: [],
-      confirmed: [
-        {
-          id: 0,
-          recipientId: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
-          amount: '0.001',
-          token: 'BTC',
-          type: 0,
-        },
-        {
-          id: 1,
-          recipientId: 'mkakDp2f31b3eXdATtAggoqwXcdx1PqqFo',
-          amount: '0.0003',
-          token: 'BTC',
-          type: 0,
-        },
-      ],
-    },
+    transactions: [
+      {
+        id: 0,
+        recipientId: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
+        amount: '0.001',
+        token: 'BTC',
+        type: 0,
+      },
+      {
+        id: 1,
+        recipientId: 'mkakDp2f31b3eXdATtAggoqwXcdx1PqqFo',
+        amount: '0.0003',
+        token: 'BTC',
+        type: 0,
+      },
+    ],
   };
 
   beforeEach(() => {
@@ -161,14 +149,18 @@ describe('Recent Transactions', () => {
             active: 'BTC',
           },
         },
-        transactions: {
-          ...lskProps.transactions,
-          confirmed: [],
-        },
+        transactions: [],
       }),
     });
     wrapper.update();
     expect(wrapper).not.toContainMatchingElement('TransactionList');
     expect(wrapper).toContainMatchingElement('EmptyState');
+  });
+
+  it('Should loadTransactions if mounted with props.transactions empty', () => {
+    wrapper = mount(<Router><RecentTransactions {...lskProps} transactions={[]} /></Router>);
+    expect(lskProps.loadTransactions).toHaveBeenCalledWith(expect.objectContaining({
+      address: lskProps.account.address,
+    }));
   });
 });

@@ -13,6 +13,7 @@ import searchReducer from '../../store/reducers/search';
 import loadingReducer from '../../store/reducers/loading';
 import filtersReducer from '../../store/reducers/filters';
 import bookmarksReducer from '../../store/reducers/bookmarks';
+import settingsReducer from '../../store/reducers/settings';
 
 import { liskAPIClientSet } from './../../../src/actions/peers';
 import networks from './../../../src/constants/networks';
@@ -38,6 +39,7 @@ describe('AccountTransaction Component', () => {
     search: searchReducer,
     loading: loadingReducer,
     filters: filtersReducer,
+    settings: settingsReducer,
   }, [thunk]);
 
   beforeEach(() => {

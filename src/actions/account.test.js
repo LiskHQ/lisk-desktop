@@ -329,7 +329,6 @@ describe('actions: account', () => {
       updateDelegateAccount(data)(dispatch, getState);
 
       const accountUpdatedAction = accountUpdated({
-        token: 'LSK',
         delegate: { account: 'delegate data' },
         isDelegate: true,
       });
@@ -392,14 +391,18 @@ describe('actions: account', () => {
         },
         settings: {
           autoLog: true,
+          token: {
+            list: {
+              LSK: true,
+              BTC: true,
+            },
+          },
         },
       };
-      localStorage.setItem('btc', true); // TODO remove when enabling BTC
     });
 
     afterEach(() => {
       accountApi.getAccount.mockReset();
-      localStorage.removeItem('btc'); // TODO remove when enabling BTC
     });
 
     it('should call account api and dispatch accountLoggedIn ', async () => {
@@ -414,18 +417,9 @@ describe('actions: account', () => {
         data: expect.objectContaining({
           passphrase,
           info: {
-            LSK: expect.objectContaining({
-              address,
-              balance,
-            }),
+            LSK: expect.objectContaining({ address, balance }),
+            BTC: expect.objectContaining({ address, balance }),
           },
-        }),
-      }));
-      expect(dispatch).toHaveBeenNthCalledWith(3, expect.objectContaining({
-        type: actionTypes.accountUpdated,
-        data: expect.objectContaining({
-          address,
-          balance,
         }),
       }));
     });
@@ -437,10 +431,8 @@ describe('actions: account', () => {
         type: actionTypes.accountLoggedIn,
         data: expect.objectContaining({
           info: {
-            LSK: expect.objectContaining({
-              address,
-              balance,
-            }),
+            LSK: expect.objectContaining({ address, balance }),
+            BTC: expect.objectContaining({ address, balance }),
           },
         }),
       }));

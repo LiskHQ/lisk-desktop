@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { extractPublicKey } from '../../utils/account';
+import { extractPublicKey, getActiveTokenAccount } from '../../utils/account';
 import { Button } from './../toolbox/buttons/button';
 // eslint-disable-next-line import/no-named-as-default
 import PassphraseInput from '../passphraseInput';
@@ -198,7 +198,7 @@ class PassphraseSteps extends React.Component {
 
 
 const mapStateToProps = state => ({
-  account: state.account,
+  account: getActiveTokenAccount(state),
 });
 
 export default connect(mapStateToProps)(translate()(PassphraseSteps));

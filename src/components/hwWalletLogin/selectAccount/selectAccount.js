@@ -124,7 +124,14 @@ class SelectAccount extends React.Component {
   }
 
   onSelectAccount(account, index) {
-    const { login, device } = this.props;
+    const { login, device, settingsUpdated } = this.props;
+
+    settingsUpdated({
+      token: {
+        active: 'LSK',
+        list: { BTC: false, LSK: true },
+      },
+    });
 
     login({
       publicKey: account.publicKey,

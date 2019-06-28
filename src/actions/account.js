@@ -1,5 +1,6 @@
 import i18next from 'i18next';
 import actionTypes from '../constants/actions';
+import { extractAddress } from '../utils/account';
 import { getAccount, setSecondPassphrase } from '../utils/api/account';
 import { registerDelegate, getDelegates } from '../utils/api/delegates';
 import { getTransactions } from '../utils/api/transactions';
@@ -82,7 +83,10 @@ export const secondPassphraseRegistered = ({
     setSecondPassphrase(liskAPIClient, secondPassphrase, account.publicKey, passphrase, timeOffset)
       .then((transaction) => {
         dispatch({
-          data: transaction,
+          data: {
+            ...transaction,
+            senderId: extractAddress(transaction.senderPublicKey),
+          },
           type: actionTypes.addPendingTransaction,
         });
         callback({
@@ -101,13 +105,12 @@ export const secondPassphraseRegistered = ({
 
 export const updateDelegateAccount = ({ publicKey }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const { peers: { liskAPIClient }, account } = getState();
     return getDelegates(liskAPIClient, { publicKey })
       .then((response) => {
         dispatch(accountUpdated({
-          token: 'LSK',
           delegate: {
-            ...(getState().account.info.LSK.delegate || {}),
+            ...(account.delegate || {}),
             ...response.data[0],
           },
           isDelegate: true,
@@ -219,35 +222,26 @@ export const updateAccountDelegateStats = account =>
   };
 
 export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, getState) => {
-  const networkConfig = getState().network;
+  const { network: networkConfig, settings } = getState();
   dispatch(accountLoading());
 
   await getAccount({
     token: tokenMap.LSK.key, networkConfig, publicKey, passphrase,
   }).then(async (accountData) => {
-    const expireTime = (passphrase && getState().settings.autoLog) ?
+    const expireTime = (passphrase && settings.autoLog) ?
       Date.now() + accountConfig.lockDuration : 0;
+    const btcAccountData = settings.token.list.BTC &&
+      await getAccount({ token: tokenMap.BTC.key, networkConfig, passphrase });
     dispatch(accountLoggedIn({
-      ...accountData, // TODO remove this after all components are updated to use "info"
       passphrase,
       loginType: hwInfo ? loginType.ledger : loginType.normal,
       hwInfo: hwInfo || {},
       expireTime,
       info: {
         LSK: accountData,
+        ...(btcAccountData ? { BTC: btcAccountData } : {}),
       },
     }));
-    // TODO remove this condition with enabling BTC feature
-    // istanbul ignore else
-    if (localStorage.getItem('btc')) {
-      await getAccount({
-        token: tokenMap.BTC.key, networkConfig, passphrase,
-      }).then((btcAccountData) => {
-        dispatch(accountUpdated(btcAccountData));
-      });
-      /*
-      */
-    }
   }).catch((error) => {
     dispatch(errorToastDisplayed({
       label: getConnectionErrorMessage(error),

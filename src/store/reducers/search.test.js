@@ -182,6 +182,7 @@ describe('Reducer: search', () => {
           transactions: [
             {
               id: '1',
+              timestamp: 10,
             },
           ],
         },
@@ -195,6 +196,7 @@ describe('Reducer: search', () => {
         transactions: [
           {
             id: '2',
+            timestamp: 2,
           },
         ],
         count: 2,
@@ -210,9 +212,11 @@ describe('Reducer: search', () => {
           transactions: [
             {
               id: '1',
+              timestamp: 10,
             },
             {
               id: '2',
+              timestamp: 2,
             },
           ],
           count: 2,
@@ -223,9 +227,11 @@ describe('Reducer: search', () => {
       searchResults: [
         {
           id: '1',
+          timestamp: 10,
         },
         {
           id: '2',
+          timestamp: 2,
         },
       ],
     });

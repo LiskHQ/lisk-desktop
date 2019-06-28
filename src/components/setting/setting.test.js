@@ -149,8 +149,7 @@ describe('Setting', () => {
       .toBeGreaterThan(expectedCallToAccountUpdated.expireTime);
   });
 
-  // TODO Unskip after enabling BTC
-  it.skip('should enable and disable BTC token', () => {
+  it('should enable and disable BTC token', () => {
     localStorage.setItem('btc', true);
     wrapper.find('.enableBTC input').at(0).simulate('change', { target: { name: 'BTC' } });
     const expectedCallToSettingsUpdated = {

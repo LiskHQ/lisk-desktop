@@ -4,7 +4,7 @@ import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import styles from './userAccount.css';
 import OutsideClickHandler from '../../toolbox/outsideClickHandler';
 import Icon from '../../toolbox/icon';
-import { tokenMap, tokenKeys } from '../../../constants/tokens';
+import { tokenKeys } from '../../../constants/tokens';
 import routes from '../../../constants/routes';
 import feedbackLinks from '../../../constants/feedbackLinks';
 import AccountInfo from './accountInfo';
@@ -14,9 +14,7 @@ const UserAccount = ({
   settingsUpdated, isUserLogout,
 }) => {
   /* istanbul ignore next */
-  const enabledTokens = localStorage.getItem('btc') // TODO: Remove when enabling BTC
-    ? tokenKeys.filter(key => token.list[key])
-    : [tokenMap.LSK.key];
+  const enabledTokens = tokenKeys.filter(key => token.list[key]);
   const isUserDataFetched = account.info && account.info[token.active] && (
     !!account.info[token.active].balance
     || account.info[token.active].balance === 0

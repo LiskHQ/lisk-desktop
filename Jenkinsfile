@@ -108,6 +108,7 @@ pipeline {
 										cp $WORKSPACE/test/dev_blockchain.db.gz $WORKSPACE/$BRANCH_NAME/dev_blockchain.db.gz
 										cd $WORKSPACE/$BRANCH_NAME
 										cp .env.development .env
+										sed -i -r -e "s/ENV_LISK_VERSION=.*$/ENV_LISK_VERSION=$LISK_CORE_VERSION/" .env
 
 										sed -i -r -e '/ports:/,+2d' docker-compose.yml
 										# random port assignment
@@ -136,6 +137,11 @@ EOF
 										  echo $ret >.cypress_status
 										else
 										  FAILED_TESTS="$( awk '/Spec/{f=1}f' cypress.log |grep --only-matching '✖ .*.spec.js' |awk '{ print "test/cypress/e2e/"$2 }' |xargs| tr -s ' ' ',' )"
+										  cd $WORKSPACE/$BRANCH_NAME
+										  make coldstart
+										  export CYPRESS_coreUrl=http://127.0.0.1:$( docker-compose port lisk 4000 |cut -d ":" -f 2 )
+										  sleep 10
+										  cd -
 										  npm run cypress:run -- --record --spec $FAILED_TESTS |tee cypress.log
 										  ret=$?
 										  grep --extended-regexp --only-matching 'https://dashboard.cypress.io/#/projects/1it63b/runs/[0-9]+' cypress.log |tail --lines=1 >.cypress_url
