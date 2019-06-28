@@ -180,12 +180,13 @@
 }
 
 .footer {
-  width: 100%;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
   padding: 24px 16px;
 
   & > .confirmButton {
-    width: 100%;
+    width: var(--footer-button-width);
   }
 }
 
