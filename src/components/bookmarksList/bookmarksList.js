@@ -125,7 +125,7 @@ class BookmarksList extends React.Component {
             <Link
               onClick={this.onRowClick}
               key={bookmark.address}
-              className={`${styles.row} bookmark-list-row`}
+              className={`${styles.row} ${eddittedAddress === bookmark.address ? styles.editting : ''} bookmark-list-row`}
               to={`${routes.accounts.path}/${bookmark.address}`}>
               <div className={styles.avatarAndDescriptionWrapper}>
                 {
