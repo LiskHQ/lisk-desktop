@@ -8,25 +8,28 @@
   box-sizing: border-box;
   color: var(--color-slate-gray);
   display: flex;
+  height: auto;
   justify-content: flex-start;
   max-height: 0px;
   opacity: 0;
-  padding: 0 20px;
+  padding: 0;
   transition:
     max-height var(--animation-speed-fast) linear,
-    opacity var(--animation-speed-fast) linear;
+    opacity var(--animation-speed-fast) linear,
+    padding-bottom var(--animation-speed-fast) linear,
+    padding-top var(--animation-speed-fast) linear;
   width: 100%;
 
-  &:global(.error) {
-    color: var(--color-burnt-sienna);
+  &.error {
     background: var(--error-background-color);
+    color: var(--color-burnt-sienna);
+    padding: 8px 20px;
   }
 
   &.show {
     max-height: 40px;
     opacity: 1;
-    padding-bottom: 8px;
-    padding-top: 8px;
+    padding: 8px 20px;
   }
 
   & > img {

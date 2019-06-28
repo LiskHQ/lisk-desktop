@@ -1,3 +1,5 @@
+@import '../app/variablesV2.css';
+
 .wrapper {
   display: inline-block;
   border-radius: 100%;
@@ -7,5 +9,11 @@
 .accountVisual {
   border-radius: 100%;
   overflow: hidden;
+  display: inline-block;
+}
+
+.placeholder {
+  background-color: var(--color-platinum);
+  border-radius: 50%;
   display: inline-block;
 }
