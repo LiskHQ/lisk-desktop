@@ -244,7 +244,7 @@ class Summary extends React.Component {
                 </p>
               </Tooltip>
             </label>
-            <span>{t('{{fee}} {{token}}', { fee, token })}</span>
+            <span className={styles.information}>{t('{{fee}} {{token}}', { fee, token })}</span>
           </div>
 
           {
