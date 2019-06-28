@@ -18,7 +18,6 @@ InputV2.defaultProps = {
   className: '',
   setRef: null,
   error: false,
-  size: 'l',
 };
 
 export default InputV2;
