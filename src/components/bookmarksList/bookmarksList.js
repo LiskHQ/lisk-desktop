@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { InputV2 } from '../toolbox/inputsV2';
+import Illustration from '../toolbox/illustration';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import { tokenMap } from '../../constants/tokens';
 import AccountVisual from '../accountVisual';
@@ -100,7 +101,7 @@ class BookmarksList extends React.Component {
 
   render() {
     const {
-      t, token, className, enableFilter, title, isEditable,
+      t, token, className, enableFilter, title, isEditable, bookmarks, emptyStateClassName,
     } = this.props;
     const {
       filter, eddittedAddress, eddittedTitle,
@@ -187,18 +188,26 @@ class BookmarksList extends React.Component {
                 : null
               }
             </Link>)
-          : <EmptyState>
-              <img src={svg.bookmarksIconEmptyState} />
-              <h1>{t('No Bookmarks added yet')}</h1>
-              <p>{t('Start adding some addresses to bookmarks, to keep track of them.')}</p>
-              <div>
-                { /* TODO - pass the correct link when bookmarks page is avaiable
-                  <Link to={'#'}>
-                    <SecondaryButtonV2>{t('Search Accounts')}</SecondaryButtonV2>
-                  </Link>
-                */ }
-              </div>
-          </EmptyState>
+          : <React.Fragment>
+            { bookmarks[token.active].length
+              ? <EmptyState className={emptyStateClassName}>
+                  <Illustration name='emptyBookmarkFiler' className='bookmark-empty-filter-illustration'/>
+                  <p>{t('There are no results matching this filter.')}</p>
+                </EmptyState>
+              : <EmptyState>
+                <img src={svg.bookmarksIconEmptyState} />
+                <h1>{t('No Bookmarks added yet')}</h1>
+                <p>{t('Start adding some addresses to bookmarks, to keep track of them.')}</p>
+                <div>
+                  { /* TODO - pass the correct link when bookmarks page is avaiable
+                    <Link to={'#'}>
+                      <SecondaryButtonV2>{t('Search Accounts')}</SecondaryButtonV2>
+                    </Link>
+                  */ }
+                </div>
+              </EmptyState>
+            }
+          </React.Fragment>
         }
         {
           /* TODO - pass the correct link when bookmarks page is avaiable  and enable this button
@@ -215,5 +224,9 @@ class BookmarksList extends React.Component {
     );
   }
 }
+
+BookmarksList.defaultProps = {
+  emptyStateClassName: '',
+};
 
 export default BookmarksList;

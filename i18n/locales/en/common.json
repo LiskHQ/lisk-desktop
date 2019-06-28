@@ -461,6 +461,7 @@
   "The top 101 delegates are able to forge new blocks and recieve forging rewards.": "The top 101 delegates are able to forge new blocks and recieve forging rewards.",
   "The transaction has been canceled on your {{model}}": "The transaction has been canceled on your {{model}}",
   "There are no results matching this filter": "There are no results matching this filter",
+  "There are no results matching this filter.": "There are no results matching this filter.",
   "There are no transactions.": "There are no transactions.",
   "There are no {{filterName}} transactions.": "There are no {{filterName}} transactions.",
   "This account doesn’t have any votes": "This account doesn’t have any votes",

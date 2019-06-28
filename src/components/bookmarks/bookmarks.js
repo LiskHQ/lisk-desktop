@@ -24,6 +24,7 @@ const Bookmarks = ({
         bookmarkUpdated={bookmarkUpdated}
         token={token}
         t={t}
+        emptyStateClassName={styles.bookmarkList}
       />
     </div>
   </div>

@@ -29,4 +29,15 @@
       margin-bottom: 20px;
     }
   }
+
+  & .emptyState {
+    min-height: 430px;
+
+    & > p {
+      @mixin headingNormal bold;
+
+      max-width: initial;
+      color: var(--color-maastricht-blue);
+    }
+  }
 }
