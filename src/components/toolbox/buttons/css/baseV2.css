@@ -4,32 +4,33 @@
 @define-mixin buttonBasics {
   @mixin contentLarge bold;
 
+  letter-spacing: 0.7px;
   border-radius: var(--border-radius-standard);
   height: 48px;
   max-width: 100%;
   min-width: 145px;
   outline: none;
-  padding: 0 32px;
+  padding: 0 28px;
   text-transform: none;
   transition: var(--transition-button) !important;
 
   &:global(.medium) {
     height: 40px;
-    padding: 0 24px;
+    padding: 0 20px;
   }
 
   &:global(.small) {
     @mixin contentNormal bold;
 
     height: 36px;
-    padding: 0 20px;
+    padding: 0 16px;
   }
 
   &:global(.extra-small) {
     @mixin contentNormal bold;
 
     height: 32px;
-    padding: 0 16px;
+    padding: 0 12px;
   }
 
   & * {
