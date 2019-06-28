@@ -9,7 +9,10 @@ const Bookmarks = ({
   <div className={styles.wrapper}>
     <div className={styles.content}>
       <header>
-        <h1>{t('Bookmarks')}</h1>
+        <span>
+          <h1>{t('Bookmarks')}</h1>
+          <div className={styles.subtitle}>{t('Manage your most used accounts')}</div>
+        </span>
         <PrimaryButtonV2>{t('Add a new bookmark')}</PrimaryButtonV2>
       </header>
       <BookmarksList
