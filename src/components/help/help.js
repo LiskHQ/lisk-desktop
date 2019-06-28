@@ -5,11 +5,8 @@ import { PrimaryButtonV2 as Button } from './../toolbox/buttons/button';
 import styles from './help.css';
 import links from './../../constants/externalLinks';
 import Piwik from '../../utils/piwik';
-import academyIcon from '../../assets/images/help/academy.svg';
-import helpCenterIcon from '../../assets/images/help/help-center.svg';
-import liskChatIcon from '../../assets/images/help/lisk-chat.svg';
-import Illustration from '../../assets/images/help/Illustration.svg';
-import arrowIcon from '../../assets/images/help/arrow.svg';
+import Illustration from '../toolbox/illustration';
+import Icon from '../toolbox/icon';
 
 /* eslint-disable class-methods-use-this */
 class Help extends React.Component {
@@ -17,13 +14,13 @@ class Help extends React.Component {
     const win = window.open(links.helpCenter, '_blank');
     win.focus();
   }
-
-  checkTermsAndConditions() {
+  /* istanbul ignore next */
+  checkTermsAndConditions() { /* istanbul ignore next */
     Piwik.trackingEvent('Help', 'button', 'Terms and Conditions');
   }
 
-  render() {
-    const ArrowIcon = () => <img src={arrowIcon} className={styles.listArrow} />;
+  render() { /* istanbul ignore next */
+    const ArrowIcon = () => <Icon src='helpCenterArrow' className={styles.listArrow} />;
     return (
       <Box className={styles.wrapper}>
         <header>
@@ -45,14 +42,14 @@ class Help extends React.Component {
                 </a>
               </p>
             </article>
-            <img src={Illustration} />
+            <Illustration name='helpCenter' />
           </section>
         </section>
 
         <section className={`${grid.row} ${styles.helpSection} help-articles`}>
           <article className={`${grid['col-sm-12']} ${grid['col-md-4']} ${styles.articleContainer}`}>
             <h4>
-              <img src={helpCenterIcon} className={styles.titleIcon} />
+              <Icon name='helpCenter' className={styles.titleIcon} />
               {this.props.t('Help Center')}
             </h4>
             <p className={styles.faqWrapper}>
@@ -65,7 +62,7 @@ class Help extends React.Component {
 
           <article className={`${grid['col-sm-12']} ${grid['col-md-4']} ${styles.articleContainer}`}>
             <h4>
-              <img src={academyIcon} className={styles.titleIcon} />
+              <Icon name='academy' className={styles.titleIcon} />
               {this.props.t('Academy')}
             </h4>
               <p>{this.props.t('Learn about blockchain with our comprehensive knowledge base.')}
@@ -96,7 +93,7 @@ class Help extends React.Component {
 
           <article className={`${grid['col-sm-12']} ${grid['col-md-4']} ${styles.articleContainer}`}>
             <h4>
-              <img src={liskChatIcon} className={styles.titleIcon} />
+              <Icon name='liskChat' className={styles.titleIcon} />
               {this.props.t('Lisk.Chat')}
             </h4>
               <div>
