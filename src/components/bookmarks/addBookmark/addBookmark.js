@@ -27,18 +27,8 @@ class AddBookmark extends React.Component {
       placeholder: props.t('Insert label'),
     }];
 
-    const fields = this.fields.reduce((acc, field) => ({
-      ...acc,
-      [field.name]: {
-        value: '',
-        error: false,
-        feedback: field.feedback || '',
-        readonly: false,
-      },
-    }), {});
-
     this.state = {
-      fields,
+      fields: this.setupFields(),
     };
 
     this.onInputChange = {
@@ -48,6 +38,19 @@ class AddBookmark extends React.Component {
     this.handleAddBookmark = this.handleAddBookmark.bind(this);
   }
 
+  setupFields() {
+    return this.fields.reduce((acc, field) => ({
+      ...acc,
+      [field.name]: {
+        value: '',
+        error: false,
+        feedback: field.feedback || '',
+        readonly: false,
+      },
+    }), {});
+  }
+
+
   componentDidUpdate(prevProps) {
     const { token } = this.props;
     const { token: prevToken } = prevProps;
@@ -55,7 +58,10 @@ class AddBookmark extends React.Component {
     this.updateLabelIfDelegate();
 
     if (token.active !== prevToken.active) {
-      this.onTokenChange();
+      this.setState(state => ({
+        ...state,
+        fields: this.setupFields(),
+      }));
     }
   }
 
@@ -63,40 +69,14 @@ class AddBookmark extends React.Component {
     const { token, accounts } = this.props;
     const { fields: { label, address } } = this.state;
 
-    const account = accounts[address.value] || {};
+    const account = (token.active === tokenMap.LSK.key && accounts[address.value]) || {};
     if (account.delegate && account.delegate.username !== label.value) {
-      const data = token.active === tokenMap.LSK.key
-        ? { value: account.delegate.username, readonly: true }
-        : { readonly: false };
+      const data = { value: account.delegate.username, readonly: true };
       this.updateField({
         name: 'label',
         data,
       });
-    } else if (!account.delegate && label.readonly) {
-      this.updateField({
-        name: 'label',
-        data: { readonly: false },
-      });
     }
-  }
-
-  onTokenChange() {
-    const { token, accounts } = this.props;
-    const { fields: { address } } = this.state;
-    const account = accounts[address.value] || {};
-
-    if (token.active === tokenMap.LSK.key && !account.address) {
-      this.searchAccount(address.value);
-    }
-
-    this.updateField({
-      name: 'address',
-      data: { ...this.validateAddress(token.active, address.value) },
-    });
-    this.updateField({
-      name: 'label',
-      data: { readonly: token.active === tokenMap.LSK.key },
-    });
   }
 
   updateField({ name, data }) {
@@ -235,7 +215,7 @@ class AddBookmark extends React.Component {
                       autoComplete="off"
                     />
                     <Feedback
-                      className={`${styles.feedback} ${fields[field.name].error ? styles.error : ''}`}
+                      className={`${styles.feedback}`}
                       show
                       status={fields[field.name].error ? 'error' : ''}
                     >
