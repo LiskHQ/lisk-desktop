@@ -14,6 +14,7 @@ describe('Bookmarks', () => {
       push: jest.fn(),
     },
     bookmarkRemoved: jest.fn(),
+    bookmarkUpdated: jest.fn(),
     token: {
       active: tokenMap.LSK.key,
     },
@@ -44,6 +45,24 @@ describe('Bookmarks', () => {
     wrapper.find('.bookmarks-delete-button').first().simulate('click');
     expect(props.bookmarkRemoved).toHaveBeenCalledWith({
       address: bookmarks.LSK[0].address,
+      token: props.token.active,
+    });
+  });
+
+  it('should allow edditing a bookmark title', () => {
+    const newTitle = 'New title';
+    expect(wrapper).toContainMatchingElements(bookmarks.LSK.length, 'a.bookmark-list-row');
+    wrapper.find('.bookmarks-edit-button').first().simulate('click');
+    wrapper.find('.bookmarks-edit-input').first().simulate(
+      'change',
+      { target: { value: newTitle } },
+    );
+    wrapper.find('.bookmarks-save-changes-button').first().simulate('click');
+    expect(props.bookmarkUpdated).toHaveBeenCalledWith({
+      account: {
+        address: bookmarks.LSK[0].address,
+        title: newTitle,
+      },
       token: props.token.active,
     });
   });

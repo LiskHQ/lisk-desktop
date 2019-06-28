@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { InputV2 } from '../toolbox/inputsV2';
-import { PrimaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import { tokenMap } from '../../constants/tokens';
 import AccountVisual from '../accountVisual';
 import Box from '../boxV2';
@@ -20,6 +20,11 @@ class BookmarksList extends React.Component {
     };
 
     this.onFilterChange = this.onFilterChange.bind(this);
+    this.deleteBookmark = this.deleteBookmark.bind(this);
+    this.editBookmark = this.editBookmark.bind(this);
+    this.saveChanges = this.saveChanges.bind(this);
+    this.onTitleChange = this.onTitleChange.bind(this);
+    this.onRowClick = this.onRowClick.bind(this);
   }
   getBookmarkListBasedOnSelectedToken() {
     const { bookmarks, token, limit } = this.props;
@@ -46,16 +51,53 @@ class BookmarksList extends React.Component {
     });
   }
 
-  deleteBookmark(address) {
+  editBookmark(e, { address, title }) {
+    this.setState({
+      eddittedAddress: address,
+      eddittedTitle: title,
+    });
+    e.preventDefault();
+  }
+
+  deleteBookmark(e, { address }) {
     const { token, bookmarkRemoved } = this.props;
     bookmarkRemoved({ address, token: token.active });
+    e.preventDefault();
+  }
+
+  saveChanges(e) {
+    const { token, bookmarkUpdated } = this.props;
+    const { eddittedAddress, eddittedTitle } = this.state;
+    bookmarkUpdated({
+      account: {
+        address: eddittedAddress,
+        title: eddittedTitle,
+      },
+      token: token.active,
+    });
+    this.editBookmark(e, {});
+  }
+
+  onTitleChange({ target }) {
+    this.setState({
+      eddittedTitle: target.value,
+    });
+  }
+
+  onRowClick(e) {
+    const { eddittedAddress } = this.state;
+    if (eddittedAddress) {
+      e.preventDefault();
+    }
   }
 
   render() {
     const {
       t, token, className, enableFilter, title, isEditable,
     } = this.props;
-    const { filter } = this.state;
+    const {
+      filter, eddittedAddress, eddittedTitle,
+    } = this.state;
 
     const selectedBookmarks = this.getBookmarkListBasedOnSelectedToken();
 
@@ -81,6 +123,7 @@ class BookmarksList extends React.Component {
           selectedBookmarks.length
           ? selectedBookmarks.map(bookmark =>
             <Link
+              onClick={this.onRowClick}
               key={bookmark.address}
               className={`${styles.row} bookmark-list-row`}
               to={`${routes.accounts.path}/${bookmark.address}`}>
@@ -90,18 +133,48 @@ class BookmarksList extends React.Component {
                   ? <AccountVisual className={styles.avatar} address={bookmark.address} size={40}/>
                   : null
                 }
-                <span className={styles.description}>
-                  <span>{bookmark.title}</span>
-                  <span>{this.displayAddressBasedOnSelectedToken(bookmark.address)}</span>
-                </span>
+                { eddittedAddress === bookmark.address
+                  ? <InputV2
+                      className={`bookmarks-edit-input ${styles.editInput}` }
+                      size='m'
+                      onChange={this.onTitleChange}
+                      value={eddittedTitle}
+                      placeholder={t('Filter by name...')}
+                    />
+                  : <span className={styles.description}>
+                      <span>{bookmark.title}</span>
+                      <span>{this.displayAddressBasedOnSelectedToken(bookmark.address)}</span>
+                    </span>
+                }
               </div>
               { isEditable
-                ? <div>
-                   <PrimaryButtonV2
-                     onClick={() => this.deleteBookmark(bookmark.address)}
-                     className="medium bookmarks-delete-button">
-                     {t('Delete')}
-                   </PrimaryButtonV2>
+                ? <div className={styles.buttonContainer}>
+                  { eddittedAddress === bookmark.address
+                    ? <React.Fragment>
+                        <SecondaryButtonV2
+                         onClick={e => this.editBookmark(e, {})}
+                         className="medium bookmarks-cancel-button">
+                         {t('Cancel')}
+                       </SecondaryButtonV2>
+                       <PrimaryButtonV2
+                         onClick={e => this.saveChanges(e)}
+                         className="medium bookmarks-save-changes-button">
+                         {t('Save changes')}
+                       </PrimaryButtonV2>
+                     </React.Fragment>
+                   : <React.Fragment>
+                       <SecondaryButtonV2
+                         onClick={e => this.editBookmark(e, bookmark)}
+                         className="medium bookmarks-edit-button">
+                         {t('Edit')}
+                       </SecondaryButtonV2>
+                       <PrimaryButtonV2
+                         onClick={e => this.deleteBookmark(e, bookmark)}
+                         className={`medium bookmarks-delete-button ${styles.deleteButton}`}>
+                         {t('Delete')}
+                       </PrimaryButtonV2>
+                     </React.Fragment>
+                  }
                   </div>
                 : null
               }

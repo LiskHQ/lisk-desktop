@@ -4,7 +4,7 @@ import BookmarksList from '../bookmarksList/bookmarksList';
 import styles from './bookmarks.css';
 
 const Bookmarks = ({
-  bookmarks, token, t, bookmarkRemoved,
+  bookmarks, token, t, bookmarkRemoved, bookmarkUpdated,
 }) => (
   <div className={styles.wrapper}>
     <div className={styles.content}>
@@ -18,6 +18,7 @@ const Bookmarks = ({
         isEditable
         bookmarks={bookmarks}
         bookmarkRemoved={bookmarkRemoved}
+        bookmarkUpdated={bookmarkUpdated}
         token={token}
         t={t}
       />
