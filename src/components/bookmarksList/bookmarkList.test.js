@@ -17,6 +17,7 @@ describe('BookmarksList', () => {
       active: tokenMap.LSK.key,
     },
     bookmarks,
+    limit: 5,
   };
 
   beforeEach(() => {
@@ -31,7 +32,7 @@ describe('BookmarksList', () => {
 
   it('should render LSK bookmakrs ONLY', () => {
     expect(wrapper).toContainMatchingElement('.bookmark-list-container');
-    expect(wrapper).toContainMatchingElements(5, 'a.bookmark-list-row');
+    expect(wrapper).toContainMatchingElements(props.limit, 'a.bookmark-list-row');
   });
 
   it('should render BTC bookmakrs ONLY', () => {
