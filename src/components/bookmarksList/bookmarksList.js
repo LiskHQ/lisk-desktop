@@ -101,7 +101,7 @@ class BookmarksList extends React.Component {
 
   render() {
     const {
-      t, token, className, enableFilter, title, isEditable, bookmarks, emptyStateClassName,
+      t, token, className, enableFilter, title, isEditable, bookmarks, emptyStateClassName, limit,
     } = this.props;
     const {
       filter, eddittedAddress, eddittedTitle,
@@ -210,14 +210,13 @@ class BookmarksList extends React.Component {
           </React.Fragment>
         }
         {
-          /* TODO - pass the correct link when bookmarks page is avaiable  and enable this button
-          selectedBookmarks.length
+          selectedBookmarks.length && limit
           ? <div className={styles.footer}>
-              <Link to={'#'}>
+              <Link to={routes.bookmarks.path}>
                 <SecondaryButtonV2>{t('View All')}</SecondaryButtonV2>
               </Link>
             </div>
-          : null */
+          : null
         }
         </div>
       </Box>

@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom';
 import React from 'react';
 import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 import BookmarksList from '../bookmarksList/bookmarksList';
+import routes from '../../constants/routes';
 import styles from './bookmarks.css';
 
 const Bookmarks = ({
@@ -13,7 +15,9 @@ const Bookmarks = ({
           <h1>{t('Bookmarks')}</h1>
           <div className={styles.subtitle}>{t('Manage your most used accounts')}</div>
         </span>
-        <PrimaryButtonV2>{t('Add a new bookmark')}</PrimaryButtonV2>
+        <Link to={routes.addBookmark.path}>
+          <PrimaryButtonV2>{t('Add a new bookmark')}</PrimaryButtonV2>
+        </Link>
       </header>
       <BookmarksList
         title={t('All bookmarks')}
@@ -24,7 +28,7 @@ const Bookmarks = ({
         bookmarkUpdated={bookmarkUpdated}
         token={token}
         t={t}
-        emptyStateClassName={styles.bookmarkList}
+        emptyStateClassName={styles.emptyState}
       />
     </div>
   </div>
