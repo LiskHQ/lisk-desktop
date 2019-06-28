@@ -35,6 +35,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  padding: 0 24px;
 
   & .row {
     width: 100%;

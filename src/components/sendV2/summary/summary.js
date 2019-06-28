@@ -8,6 +8,7 @@ import PassphraseInputV2 from '../../passphraseInputV2/passphraseInputV2';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
 import Piwik from '../../../utils/piwik';
+import Box from '../../boxV2';
 import { extractPublicKey } from '../../../utils/account';
 import { tokenMap } from '../../../constants/tokens';
 import styles from './summary.css';
@@ -194,9 +195,9 @@ class Summary extends React.Component {
       : fromRawLsk(fields.processingSpeed.txFee);
 
     return (
-      <div className={`${styles.wrapper} summary`}>
+      <Box className={`${styles.wrapper} summary`}>
         <header className={`${styles.header} summary-header`}>
-          <h1>{this.getTitle()}</h1>
+          <h2>{this.getTitle()}</h2>
         </header>
 
         <div className={`${styles.content} summary-content`}>
@@ -278,7 +279,7 @@ class Summary extends React.Component {
               {t('Edit transaction')}
             </TertiaryButtonV2>}
         </footer>
-      </div>
+      </Box>
     );
   }
 }
