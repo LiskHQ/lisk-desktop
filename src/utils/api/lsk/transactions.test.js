@@ -43,13 +43,7 @@ describe('Utils: Transactions API', () => {
     apiClient.transactions.get.mockResolvedValue({ data: [{ id: 1 }, { id: 2 }] });
     apiClient.node.getTransactions.mockResolvedValue({ data: [] });
 
-    localStorage.setItem('btc', true); // TODO remove when enabling BTC
-
     getAPIClient.mockReturnValue(apiClient);
-  });
-
-  afterEach(() => {
-    localStorage.removeItem('btc'); // TODO remove when enabling BTC
   });
 
   // TODO: fix these tests for assert more than just a promise is returned

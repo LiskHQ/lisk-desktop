@@ -1,5 +1,11 @@
 import actionTypes from '../../constants/actions';
 import txFilters from '../../constants/transactionFilters';
+
+// TODO the sort should be removed when BTC api returns transactions sorted by timestamp
+const sortByTimestamp = (a, b) => (
+  (!a.timestamp || a.timestamp > b.timestamp) && b.timestamp ? -1 : 1
+);
+
 /**
  *
  * @param {Array} state
@@ -41,7 +47,8 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
     case actionTypes.transactionsLoaded:
       return {
         ...state,
-        confirmed: action.data.confirmed,
+        // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
+        confirmed: action.data.confirmed.sort(sortByTimestamp),
         count: action.data.count,
         filters: action.data.filters !== undefined ?
           action.data.filters : state.filters,
@@ -58,7 +65,8 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
           ...state.confirmed.filter(confirmedTransaction =>
             action.data.confirmed.filter(transaction =>
               transaction.id === confirmedTransaction.id).length === 0),
-        ],
+        // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
+        ].sort(sortByTimestamp),
         count: action.data.count,
         filters: action.data.filters !== undefined ?
           action.data.filters : state.filters,

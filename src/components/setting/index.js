@@ -5,11 +5,12 @@ import Setting from './setting';
 import { settingsUpdated } from '../../actions/settings';
 import { toastDisplayed } from '../../actions/toaster';
 import { accountUpdated } from '../../actions/account';
+import { getActiveTokenAccount } from '../../utils/account';
 
 const mapStateToProps = state => ({
   hasSecondPassphrase: !!(state.account.info && state.account.info.LSK.secondPublicKey),
   settings: state.settings,
-  account: state.account,
+  account: getActiveTokenAccount(state),
   isAuthenticated: !!state.account.info,
   transactions: state.transactions,
 });

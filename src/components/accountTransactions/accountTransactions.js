@@ -7,7 +7,7 @@ class AccountTransactions extends React.Component {
   render() {
     return (
       <div className={`${grid.row}`}>
-        <div className={`${grid['col-xs-10']} ${grid['col-sm-12']} ${grid['col-md-12']} ${grid['col-lg-12']} ${styles.transactions}`}>
+        <div className={`${grid['col-xs-12']} ${styles.transactions}`}>
           <ExplorerTransactionsV2
             history={this.props.history}
             address={this.props.match.params.address}

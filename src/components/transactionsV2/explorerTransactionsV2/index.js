@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
@@ -6,9 +7,7 @@ import { searchTransactions, searchMoreTransactions, searchAccount, fetchVotedDe
 import actionTypes from '../../../constants/actions';
 import ExplorerTransactionsV2 from './explorerTransactionsV2';
 import txFilters from '../../../constants/transactionFilters';
-import { getTokenFromAddress } from '../../../utils/api/transactions';
 
-/* istanbul ignore next */
 const mapStateToProps = (state, ownProps) => ({
   delegate: state.search.delegates[state.search.lastSearch],
   transaction: state.transaction,
@@ -27,10 +26,9 @@ const mapStateToProps = (state, ownProps) => ({
   detailAccount: state.search.accounts[state.search.lastSearch],
   balance: state.search.accounts[state.search.lastSearch]
     && state.search.accounts[state.search.lastSearch].balance,
-  activeToken: getTokenFromAddress(ownProps.address),
+  activeToken: state.settings.token ? state.settings.token.active : 'LSK',
 });
 
-/* istanbul ignore next */
 const mapDispatchToProps = {
   fetchVotedDelegateInfo,
   searchAccount,

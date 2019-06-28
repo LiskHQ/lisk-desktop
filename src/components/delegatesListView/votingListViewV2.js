@@ -45,7 +45,7 @@ class VotingListViewV2 extends React.Component {
     /* istanbul-ignore-else */
     if (!this.freezeLoading) {
       this.props.loadVotes({
-        address: this.props.address,
+        address: this.props.account.address,
       });
     }
   }

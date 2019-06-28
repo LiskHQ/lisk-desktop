@@ -20,7 +20,6 @@ describe('DelegateRegistration', () => {
           ...accounts.genesis,
         },
       },
-      isDelegate: false,
     },
     prevState: {},
     network: {

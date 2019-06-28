@@ -1,4 +1,5 @@
 import React from 'react';
+import { tokenMap } from '../../constants/tokens';
 import BoxV2 from '../boxV2';
 import CheckBox from '../toolbox/checkBox';
 import Piwik from '../../utils/piwik';
@@ -23,8 +24,6 @@ class Setting extends React.Component {
     this.handleTokenToggle = this.handleTokenToggle.bind(this);
   }
 
-  // TODO: Remove ignore comment when enabling BTC
-  // istanbul ignore next
   handleTokenToggle({ target: { name } }) {
     const { settings } = this.props;
     const newSettings = {
@@ -114,7 +113,7 @@ class Setting extends React.Component {
                   <p>{t('Log out automatically after 10 minutes.')}</p>
                   </div>
               </label>
-              {isAuthenticated ?
+              {isAuthenticated && settings.token.active !== tokenMap.BTC.key ?
                 <SecondPassphraseSetting
                   {...{
                     account, hasSecondPassphrase, isHwWalletClass, t, hasPendingSecondPassphrase,
@@ -135,8 +134,6 @@ class Setting extends React.Component {
                   <p>{t('Enable a network switcher that lets you select testnet or custom node when logging in.')}</p>
                 </div>
               </label>
-              { // istanbul ignore next
-                localStorage.getItem('btc') ? ( // TODO: Remove when enabling BTC for final user
               <label className={`${styles.fieldGroup} ${styles.checkboxField} enableBTC`}>
                 <CheckBox
                   name={'BTC'}
@@ -149,7 +146,6 @@ class Setting extends React.Component {
                   <p>{t('By enabling it, you will be able to manage your BTC tokens inside the application.')}</p>
                 </div>
               </label>
-              ) : null}
             </section>
             <section>
               <h1>{t('Privacy')}</h1>

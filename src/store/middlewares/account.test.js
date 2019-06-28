@@ -64,6 +64,11 @@ describe('Account middleware', () => {
       },
       account: {
         address: 'sample_address',
+        info: {
+          LSK: {
+            address: 'sample_address',
+          },
+        },
       },
       transactions: {
         pending: [{

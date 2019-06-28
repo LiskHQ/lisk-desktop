@@ -1,3 +1,4 @@
+import { tokenMap } from './tokens';
 import Help from '../components/help';
 import Sidechains from '../components/sidechains';
 import Setting from '../components/setting';
@@ -54,11 +55,13 @@ export default {
     path: '/delegates/vote',
     component: Voting,
     isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   delegates: {
     path: '/delegates',
     component: Delegates,
     isPrivate: false,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   help: {
     path: '/help',
@@ -79,28 +82,23 @@ export default {
     path: '/second-passphrase',
     component: SecondPassphrase,
     isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   signMessage: {
     path: '/sign-message',
     component: SignMessage,
     isPrivate: true,
-  },
-  registerDelegate: {
-    path: '/register-delegate',
-    component: DelegateRegistration,
-    isLoaded: true,
-    isPrivate: false,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   delegateRegistration: {
-    path: '/delegate-register',
+    path: '/register-delegate',
     component: DelegateRegistration,
-    isLoaded: true,
-    isPrivate: false,
+    isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   addAccount: {
     path: '/add-account',
     component: LoginV2,
-    isLoaded: true,
     isPrivate: false,
   },
   extensions: {

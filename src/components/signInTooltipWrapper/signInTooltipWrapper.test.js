@@ -35,9 +35,11 @@ describe('SignInTooltipWrapper', () => {
     expect(wrapper.find('Tooltip')).toHaveLength(1);
   });
 
-  it('should not render Tooltip if props.account.address exists', () => {
+  it('should not render Tooltip if props.account.info exists', () => {
     const account = {
-      address: '16313739661670634666L',
+      info: {
+        LSK: { address: '16313739661670634666L' },
+      },
     };
     const wrapper = mount(<Router>
         <SignInTooltipWrapper {...props} account={account} />

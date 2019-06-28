@@ -3,8 +3,7 @@ import Lisk from '@liskhq/lisk-client';
 import networks from '../../constants/networks';
 import styles from './network.css';
 
-const Network = (props) => {
-  const { peers, t } = props;
+const Network = ({ peers, t, token }) => {
   const net = ['mainnet', 'testnet', 'devnet'];
   const activeNetwork = net.map(code => t(code));
 
@@ -14,6 +13,7 @@ const Network = (props) => {
       networks.mainnet.code : iconCode;
     iconCode = peers.options.nethash === Lisk.constants.TESTNET_NETHASH ?
       networks.testnet.code : iconCode;
+    iconCode = token === 'BTC' ? networks.testnet.code : iconCode;
   }
 
   const statusColor = peers.status && peers.status.online ? styles.online : styles.offline;

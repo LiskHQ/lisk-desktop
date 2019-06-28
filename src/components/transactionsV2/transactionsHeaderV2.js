@@ -3,22 +3,23 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
 import TableRow from '../toolbox/table/tableRow';
 
-const TransactionsHeaderV2 = ({ t, isSmallScreen, activeToken }) => (
+const TransactionsHeaderV2 = ({
+  t, isSmallScreen, columnClassNames,
+}) => (
   <TableRow isHeader={true} className={`${grid.row}`} id="transactionsHeader">
-    <div className={`${grid['col-sm-4']} ${grid['col-lg-3']} transactions-header`}>
+    <div className={`${columnClassNames.transaction} transactions-header`}>
       {t('Transaction')}
     </div>
-    <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-header`}>
+    <div className={`${columnClassNames.date} transactions-header`}>
       {t('Date')}
     </div>
-    <div className={`${grid['col-sm-1']} ${grid['col-lg-2']} transactions-header`}>
+    <div className={`${columnClassNames.fee} transactions-header`}>
       { isSmallScreen ? t('Fee') : t('Transaction Fee') }
     </div>
-    <div className={`${grid['col-sm-3']} ${grid['col-lg-3']} transactions-header`}>
-      {/* istanbul ignore next */}
-      {activeToken !== 'BTC' ? t('Details') : null}
+    <div className={`${columnClassNames.details} transactions-header`}>
+      {t('Details')}
     </div>
-    <div className={`${grid['col-sm-2']} ${grid['col-lg-2']} transactions-header`}>
+    <div className={`${columnClassNames.amount} transactions-header`}>
       {t('Amount')}
     </div>
   </TableRow>

@@ -11,7 +11,9 @@ describe('Middleware: Settings', () => {
   const store = {
     dispatch: jest.fn(),
     getState: () => ({
-      settings: {},
+      settings: {
+        token: { },
+      },
     }),
   };
 
@@ -37,7 +39,9 @@ describe('Middleware: Settings', () => {
     const action = {
       type: actionTypes.settingsUpdated,
       data: {
-        token: {},
+        token: {
+          active: 'LSK',
+        },
       },
     };
 
