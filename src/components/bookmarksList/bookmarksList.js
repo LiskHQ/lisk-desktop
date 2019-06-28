@@ -194,17 +194,21 @@ class BookmarksList extends React.Component {
                   <Illustration name='emptyBookmarkFiler' className='bookmark-empty-filter-illustration'/>
                   <p>{t('There are no results matching this filter.')}</p>
                 </EmptyState>
-              : <EmptyState>
-                <img src={svg.bookmarksIconEmptyState} />
-                <h1>{t('No Bookmarks added yet')}</h1>
-                <p>{t('Start adding some addresses to bookmarks, to keep track of them.')}</p>
-                <div>
-                  { /* TODO - pass the correct link when bookmarks page is avaiable
-                    <Link to={'#'}>
-                      <SecondaryButtonV2>{t('Search Accounts')}</SecondaryButtonV2>
-                    </Link>
-                  */ }
-                </div>
+              : <EmptyState className={emptyStateClassName}>
+                  { limit
+                    ? <React.Fragment>
+                        <img src={svg.bookmarksIconEmptyState} />
+                        <h1>{t('No Bookmarks added yet')}</h1>
+                        <p>{t('Start adding some addresses to bookmarks, to keep track of them.')}</p>
+                        <Link to={routes.addBookmark.path}>
+                          <SecondaryButtonV2>{t('Add a new bookmark')}</SecondaryButtonV2>
+                        </Link>
+                      </React.Fragment>
+                    : <React.Fragment>
+                        <Illustration name='emptyBookmarksList' className='bookmarks-empty-illustration'/>
+                        <p>{t('You don’t have any bookmarks yet.')}</p>
+                      </React.Fragment>
+                  }
               </EmptyState>
             }
           </React.Fragment>
