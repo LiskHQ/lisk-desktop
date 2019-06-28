@@ -60,26 +60,28 @@
     background: var(--color-maastricht-blue);
     border: 1px solid var(--light-border-color);
 
-    & .option {
-      background: var(--color-maastricht-blue);
+    & .dropdownContent {
+      & .option {
+        background: var(--color-maastricht-blue);
 
-      &.active {
-        background-color: var(--color-maastricht-blue);
-        color: #4070f4;
-      }
+        &.active {
+          background-color: var(--color-maastricht-blue);
+          color: #4070f4;
+        }
 
-      &:hover {
-        background-color: rgba(64, 112, 244, 0.24);
-        color: #4070f4;
-      }
+        &:hover {
+          background-color: rgba(64, 112, 244, 0.24);
+          color: #4070f4;
+        }
 
-      & input {
-        @mixin contentNormal;
+        & input {
+          @mixin contentNormal;
 
-        border: 1px solid var(--light-border-color);
-        background-color: var(--color-maastricht-blue);
-        color: var(--color-white);
-        padding: 0 20px 0 10px;
+          border: 1px solid var(--light-border-color);
+          background-color: var(--color-maastricht-blue);
+          color: var(--color-white);
+          padding: 0 20px 0 10px;
+        }
       }
     }
   }

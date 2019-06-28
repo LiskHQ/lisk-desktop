@@ -7,13 +7,6 @@ import * as ChartUtils from '../../utils/balanceChart';
 import { tokenMap } from '../../constants/tokens';
 
 class BalanceGraph extends React.Component {
-  shouldComponentUpdate(nextProps) {
-    if (this.props.balance !== nextProps.balance || this.props.address !== nextProps.address) {
-      return true;
-    }
-    return false;
-  }
-
   render() {
     const {
       t, transactions, balance, address, token,

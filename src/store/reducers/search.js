@@ -1,5 +1,10 @@
 import actionTypes from '../../constants/actions';
 
+// TODO the sort should be removed when BTC api returns transactions sorted by timestamp
+const sortByTimestamp = (a, b) => (
+  (!a.timestamp || a.timestamp > b.timestamp) && b.timestamp ? -1 : 1
+);
+
 /**
  *
  * @param {Array} state
@@ -22,7 +27,8 @@ const search = (state = { // eslint-disable-line complexity
       const addressTransactions = [
         ...state.transactions[action.data.address].transactions,
         ...action.data.transactions,
-      ];
+      // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
+      ].sort(sortByTimestamp);
       return {
         ...state,
         transactions: {
@@ -43,7 +49,10 @@ const search = (state = { // eslint-disable-line complexity
         ...state,
         transactions: {
           ...state.transactions,
-          [action.data.address]: action.data,
+          [action.data.address]: {
+            ...action.data,
+            transactions: action.data.transactions.sort(sortByTimestamp),
+          },
         },
         lastSearch: action.data.address,
         searchResults: action.data.transactions,

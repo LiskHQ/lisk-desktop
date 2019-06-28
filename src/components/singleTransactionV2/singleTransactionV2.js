@@ -11,6 +11,7 @@ import TransactionDetailViewV2 from '../transactionsV2/transactionDetailViewV2/t
 import styles from './singleTransactionV2.css';
 import transactionTypes from '../../constants/transactionTypes';
 import NotFound from '../notFound';
+import routes from '../../constants/routes';
 
 class SingleTransactionV2 extends React.Component {
   constructor(props) {
@@ -28,6 +29,12 @@ class SingleTransactionV2 extends React.Component {
     }
 
     this.handleCopy = this.handleCopy.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.activeToken !== prevProps.activeToken) {
+      this.props.history.push(routes.dashboard.path);
+    }
   }
 
   shouldComponentUpdate(nextProps) {

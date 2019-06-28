@@ -1,6 +1,7 @@
 import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
+import { tokenMap } from '../../../constants/tokens';
 import localJSONStorage from '../../../utils/localJSONStorage';
 import txFilters from '../../../constants/transactionFilters';
 import Banner from '../../toolbox/banner/banner';
@@ -51,7 +52,7 @@ class WalletTransactionsV2 extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.account.isDelegate) {
+    if (this.props.account.delegate) {
       this.props.updateAccountDelegateStats(this.props.account);
     }
     this.props.searchAccount({
@@ -77,7 +78,7 @@ class WalletTransactionsV2 extends React.Component {
   /* istanbul ignore next */
   onLoadMore() {
     this.props.loadTransactions({
-      address: this.props.address,
+      address: this.props.account.address,
       offset: this.props.transactions.length,
       filters: {
         direction: this.props.activeFilter,
@@ -184,7 +185,7 @@ class WalletTransactionsV2 extends React.Component {
 
     const { t, account, activeToken } = this.props;
 
-    const delegate = account.isDelegate
+    const delegate = account.delegate
       ? { account, ...account.delegate }
       : {};
 
@@ -201,7 +202,7 @@ class WalletTransactionsV2 extends React.Component {
           <Banner
             className={`${styles.onboarding} wallet-onboarding`}
             onClose={this.closeOnboarding}
-            title={t('Add some LSK to your Lisk Hub account now!')}
+            title={t('Add some {{activeToken}} to your Lisk Hub account now!', { activeToken })}
             footer={(
               <div className={styles.copyAddress}>
                 <span className={styles.address}>{account.address}</span>
@@ -214,7 +215,7 @@ class WalletTransactionsV2 extends React.Component {
                 </CopyToClipboard>
               </div>
             )}>
-            <p>{t('You can find the LSK token on all of the worlds top exchanges and send them to your unique Lisk address:')}</p>
+            <p>{t('You can find the {{activeToken}} token on all of the worlds top exchanges and send them to your unique {{currency}} address:', { activeToken, currency: tokenMap[activeToken].label })}</p>
           </Banner> : null
         }
 
@@ -228,7 +229,7 @@ class WalletTransactionsV2 extends React.Component {
             loading={this.props.loading}
             votes={this.props.votes}
             tabName={this.props.t('Votes')} /> : null}
-          {account.isDelegate && delegate.txDelegateRegister
+          {account.delegate && delegate.txDelegateRegister
             ? (<DelegateTab
               tabClassName={'delegate-statistics'}
               tabName={t('Delegate')}

@@ -1,3 +1,4 @@
+@import '../app/variablesV2.css';
 
 .container {
   display: flex;
@@ -19,6 +20,5 @@
   align-items: center;
   background: transparent;
   width: 100%;
-  max-width: 530px;
   height: auto;
 }

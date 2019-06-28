@@ -161,6 +161,8 @@ class TransactionStatus extends React.Component {
                   delegate={this.getDelegateInformation()}
                   address={fields.recipient.address}
                   detailAccount={this.props.detailAccount}
+                  onSubmitClick={this.onBookmarkDropdownToggle}
+                  isBookmark={isBookmarked}
                   token={token} />
               </DropdownV2>
             </div> :

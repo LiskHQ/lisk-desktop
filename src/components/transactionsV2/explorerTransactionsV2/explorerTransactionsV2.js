@@ -53,6 +53,12 @@ class ExplorerTransactionsV2 extends React.Component {
     });
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.activeToken !== prevProps.activeToken) {
+      this.props.history.push(routes.dashboard.path);
+    }
+  }
+
   onLoadMore() {
     this.props.searchMoreTransactions({
       address: this.props.address,

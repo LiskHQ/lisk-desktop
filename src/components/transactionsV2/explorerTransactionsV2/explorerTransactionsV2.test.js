@@ -157,4 +157,17 @@ describe('ExplorerTransactions V2 Component', () => {
       expect(wrapper.find('TabsContainer')).toContainMatchingElement('.delegateStats');
     });
   });
+
+  describe('BTC account', () => {
+    it('should not render VotesTab', () => {
+      wrapper = mount(<Router>
+        <ExplorerTransactionsV2 {...{
+          ...props,
+          activeToken: 'BTC',
+        }} />
+      </Router>, options);
+      expect(wrapper).toContainExactlyOneMatchingElement('TabsContainer');
+      expect(wrapper.find('TabsContainer')).not.toContainMatchingElement('VotesTab');
+    });
+  });
 });

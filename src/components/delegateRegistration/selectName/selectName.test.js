@@ -16,7 +16,6 @@ describe('DelegateRegistration', () => {
           balance: 11000,
         },
       },
-      isDelegate: false,
     },
     prevState: {},
     delegate: {},

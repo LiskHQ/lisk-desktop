@@ -55,7 +55,11 @@ describe('voting middleware', () => {
   describe('on votesAdded action', () => {
     const state = {
       account: {
-        address: '1243987612489124L',
+        info: {
+          LSK: {
+            address: '1243987612489124L',
+          },
+        },
       },
       voting: {
         delegates: [

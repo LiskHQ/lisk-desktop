@@ -117,9 +117,8 @@ class LoginV2 extends React.Component {
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
       this.redirectToReferrer();
     } else {
-      this.props.liskAPIClientSet({
+      this.props.login({
         passphrase,
-        network,
       });
     }
   }

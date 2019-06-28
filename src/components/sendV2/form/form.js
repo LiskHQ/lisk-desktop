@@ -1,15 +1,15 @@
 // eslint-disable-line max-lines
 import React from 'react';
-import { BigNumber } from 'bignumber.js';
 import ConverterV2 from '../../converterV2';
 import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
 import { InputV2, AutoresizeTextarea } from '../../toolbox/inputsV2';
+import { getNetworkCode } from '../../../utils/api/btc/network';
 import Bookmark from '../../bookmarkV2';
 import SpinnerV2 from '../../spinnerV2/spinnerV2';
 import svg from '../../../utils/svgIcons';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
-import { fromRawLsk } from '../../../utils/lsk';
+import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
 import fees from '../../../constants/fees';
 import Feedback from '../../toolbox/feedback/feedback';
 import CircularProgress from '../../toolbox/circularProgress/circularProgress';
@@ -19,13 +19,35 @@ import { validateAddress } from '../../../utils/validators';
 import Selector from '../../toolbox/selector/selector';
 import { tokenMap } from '../../../constants/tokens';
 import * as btcTransactionsAPI from '../../../utils/api/btc/transactions';
+import BoxV2 from '../../boxV2';
 
 class Form extends React.Component {
   // eslint-disable-next-line max-statements
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.state = this.getInitialState(props);
+
+    this.loaderTimeout = null;
+
+    this.getMaxAmount = this.getMaxAmount.bind(this);
+    this.ifDataFromPrevState = this.ifDataFromPrevState.bind(this);
+    this.ifDataFromUrl = this.ifDataFromUrl.bind(this);
+    this.onAmountOrReferenceChange = this.onAmountOrReferenceChange.bind(this);
+    this.onGoNext = this.onGoNext.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+    this.onSelectedAccount = this.onSelectedAccount.bind(this);
+    this.validateAmountAndReference = this.validateAmountAndReference.bind(this);
+    this.validateBookmark = this.validateBookmark.bind(this);
+    this.checkIfBookmarkedAccount = this.checkIfBookmarkedAccount.bind(this);
+    this.setReferenceActive = this.setReferenceActive.bind(this);
+    this.selectProcessingSpeed = this.selectProcessingSpeed.bind(this);
+    this.getProcessingSpeedStatus = this.getProcessingSpeedStatus.bind(this);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  getInitialState(props) {
+    return {
       isLoading: false,
       fields: {
         recipient: {
@@ -63,22 +85,6 @@ class Form extends React.Component {
       },
       unspentTransactionOutputs: [],
     };
-
-    this.loaderTimeout = null;
-
-    this.getMaxAmount = this.getMaxAmount.bind(this);
-    this.ifDataFromPrevState = this.ifDataFromPrevState.bind(this);
-    this.ifDataFromUrl = this.ifDataFromUrl.bind(this);
-    this.onAmountOrReferenceChange = this.onAmountOrReferenceChange.bind(this);
-    this.onGoNext = this.onGoNext.bind(this);
-    this.onInputChange = this.onInputChange.bind(this);
-    this.onSelectedAccount = this.onSelectedAccount.bind(this);
-    this.validateAmountAndReference = this.validateAmountAndReference.bind(this);
-    this.validateBookmark = this.validateBookmark.bind(this);
-    this.checkIfBookmarkedAccount = this.checkIfBookmarkedAccount.bind(this);
-    this.setReferenceActive = this.setReferenceActive.bind(this);
-    this.selectProcessingSpeed = this.selectProcessingSpeed.bind(this);
-    this.getProcessingSpeedStatus = this.getProcessingSpeedStatus.bind(this);
   }
 
   componentDidMount() {
@@ -90,9 +96,11 @@ class Form extends React.Component {
     this.checkIfBookmarkedAccount();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(nextProps) {
     const { fields, unspentTransactionOutputs } = this.state;
-    const { token, account, dynamicFees } = this.props;
+    const {
+      token, account, dynamicFees, networkConfig,
+    } = this.props;
     // istanbul ignore next
     if (this.props.token === tokenMap.BTC.key && !Object.keys(dynamicFees).length) {
       this.props.dynamicFeesRetrieved();
@@ -101,7 +109,7 @@ class Form extends React.Component {
         && account && account.info[token]
         && !unspentTransactionOutputs.length) {
       btcTransactionsAPI
-        .getUnspentTransactionOutputs(account.info[token].address)
+        .getUnspentTransactionOutputs(account.info[token].address, networkConfig)
         .then(data => this.setState(() => ({ unspentTransactionOutputs: data })))
         .catch(() => this.setState(() => ({ unspentTransactionOutputs: [] })));
     }
@@ -118,6 +126,10 @@ class Form extends React.Component {
           },
         },
       }));
+    }
+
+    if (nextProps.token !== token) {
+      this.setState(this.getInitialState(this.props));
     }
   }
 
@@ -191,7 +203,7 @@ class Form extends React.Component {
 
   // eslint-disable-next-line max-statements
   validateBookmark() {
-    const { token } = this.props;
+    const { token, networkConfig } = this.props;
     let recipient = this.state.fields.recipient;
     let isAccountValid = '';
     let isAddressValid = '';
@@ -202,7 +214,7 @@ class Form extends React.Component {
         .find(account => (account.title.toLowerCase() === recipient.value.toLowerCase()) ||
           account.address.toLowerCase() === recipient.value.toLowerCase()) || false;
     }
-    isAddressValid = validateAddress(token, recipient.value) === 0;
+    isAddressValid = validateAddress(token, recipient.value, getNetworkCode(networkConfig)) === 0;
 
     // istanbul ignore if
     if (!isAccountValid && !isAddressValid && recipient.value) {
@@ -299,30 +311,14 @@ class Form extends React.Component {
       : fromRawLsk(Math.max(0, account.balance - dynamicFee));
   }
 
-  getUnspentTransactionOutputCountToConsume(value) {
-    const { unspentTransactionOutputs } = this.state;
-    const amount = new BigNumber(value);
-    const [count] = unspentTransactionOutputs.reduce((result, output) => {
-      // istanbul ignore if
-      if (amount.isGreaterThan(result[1])) {
-        result[0] += 1;
-        result[1] = result[1].plus(fromRawLsk(output.value));
-      }
-
-      return result;
-    }, [0, new BigNumber(0)]);
-
-    return count;
-  }
-
   getCalculatedDynamicFee(dynamicFeePerByte, value) {
-    const { fields: { amount } } = this.state;
+    const { fields: { amount }, unspentTransactionOutputs } = this.state;
     if (this.validateAmountField(value || amount.value)) {
       return 0;
     }
-    const feeInSatoshis = btcTransactionsAPI.calculateTransactionFee({
-      inputCount: this.getUnspentTransactionOutputCountToConsume(value || amount.value),
-      outputCount: 2,
+    const feeInSatoshis = btcTransactionsAPI.getTransactionFeeFromUnspentOutputs({
+      unspentTransactionOutputs,
+      satoshiValue: toRawLsk(value || amount.value),
       dynamicFeePerByte,
     });
 
@@ -453,13 +449,9 @@ class Form extends React.Component {
       && !fields.reference.error) && !this.state.isLoading;
 
     return (
-      <div className={`${styles.wrapper}`}>
-        <header className={styles.header}>
-          <h1>{
-            localStorage.getItem('btc')
-              ? t('Send Tokens')
-              : t('Send LSK')
-          }</h1>
+      <BoxV2 className={`${styles.wrapper}`}>
+        <header>
+          <h1>{ t('Send Tokens') }</h1>
         </header>
         <div className={styles.formSection}>
           <span className={`${styles.fieldGroup} recipient`}>
@@ -484,11 +476,7 @@ class Form extends React.Component {
                 onChange={this.onAmountOrReferenceChange}
                 name='amount'
                 value={fields.amount.value}
-                placeholder={
-                  localStorage.getItem('btc')
-                    ? t('Insert the amount of transaction')
-                    : t('Amount LSK')
-                  }
+                placeholder={t('Insert the amount of transaction')}
                 className={`${styles.input} ${fields.amount.error ? 'error' : ''}`} />
               <ConverterV2
                 className={styles.converter}
@@ -616,7 +604,7 @@ class Form extends React.Component {
             {t('Go to Confirmation')}
           </PrimaryButtonV2>
         </footer>
-      </div>
+      </BoxV2>
     );
   }
 }
