@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
+import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
+import { tokenMap } from '../../../constants/tokens';
 import Box from '../../boxV2';
-import TransactionList from './transactionList';
 import EmptyState from '../../emptyStateV2';
 import Icon from '../../toolbox/icon';
+import TransactionList from './transactionList';
 import links from '../../../constants/externalLinks';
-import { tokenMap } from '../../../constants/tokens';
-import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import styles from './recentTransactions.css';
+import txFilters from '../../../constants/transactionFilters';
 
 class RecentTransactions extends Component {
   constructor(props) {
     super(props);
 
-    this.getLatestTransactions = this.getLatestTransactions.bind(this);
-  }
-
-  getLatestTransactions() {
-    const { transactions } = this.props;
-    return [...transactions.pending, ...transactions.confirmed].slice(0, 5);
+    if (!props.transactions.length && props.account.address) {
+      props.loadTransactions({
+        address: props.account.address,
+        filters: {
+          direction: txFilters.all,
+        },
+      });
+    }
   }
 
   render() {
@@ -28,9 +31,9 @@ class RecentTransactions extends Component {
       isLoggedIn,
       settings,
       t,
+      transactions,
     } = this.props;
     const activeToken = tokenMap[settings.token.active];
-    const transactionList = this.getLatestTransactions();
 
     return (
       <Box className={`${styles.box} ${className}`}>
@@ -38,17 +41,17 @@ class RecentTransactions extends Component {
           <h2 className={styles.title}>{t('Recent {{value}} transactions', { value: activeToken.label })}</h2>
         </header>
         {
-          isLoggedIn && transactionList.length
+          isLoggedIn && transactions.length
             ? <TransactionList
                 account={account}
                 activeToken={activeToken.key}
                 bookmarks={bookmarks}
-                transactions={transactionList}
+                transactions={transactions}
                 t={t}/>
             : null
         }
         {
-          isLoggedIn && !transactionList.length
+          isLoggedIn && !transactions.length
           ? <EmptyState>
               <Icon name={'icon_empty_recent_transactions'} />
               <h1>{t('No Transactions Yet')}</h1>

@@ -137,17 +137,20 @@ export const getChartDateFormat = (transactions) => {
   return format;
 };
 
+
+const isIncomming = (tx, address) => tx.senderId === address;
+const isOutgoing = (tx, address) => tx.recipientId === address;
+
 /**
  * Returns value in interger format of the amount that was added or subtracted from the balance
  * @param {Object} tx Transaction Object
  * @param {String} address Account address
  */
-const getTxValue = (tx, address) => {
-  const txValue = tx.senderId && tx.senderId !== address
-    ? parseInt(tx.amount, 10) || 0
-    : parseInt(tx.amount, 10) + parseInt(tx.fee, 10);
-  return tx.recipientId !== address ? txValue : -txValue;
-};
+const getTxValue = (tx, address) => (
+  (isIncomming(tx, address) ? parseInt(tx.amount, 10) : 0)
+    - (isOutgoing(tx, address) ? parseInt(tx.amount, 10) : 0)
+    - (isOutgoing(tx, address) ? parseInt(tx.fee, 10) : 0)
+);
 
 /**
  * Returs balance data grouped by an specific amount

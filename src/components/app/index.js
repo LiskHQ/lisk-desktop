@@ -31,14 +31,9 @@ class App extends React.Component {
     const allRoutes = Object.values(routes);
 
     const defaultRoutes = allRoutes.filter(routeObj =>
-      routeObj.component && !routeObj.isLoaded);
+      routeObj.component);
 
     const routesV2Layout = allRoutes.filter(routeObj => routeObj.isV2Layout);
-
-    const routesOutsideMainWrapper = [
-      'registerDelegate',
-      'addAccount',
-    ];
 
     const { location } = this.props;
 
@@ -76,25 +71,15 @@ class App extends React.Component {
                 <div className={styles.mainBox}>
                   <Switch>
                     {this.state.loaded &&
-                      defaultRoutes.map((route, key) => (
+                      defaultRoutes.map(route => (
                         <CustomRoute
                           path={route.path}
                           pathSuffix={route.pathSuffix}
                           component={route.component}
                           isPrivate={route.isPrivate}
                           exact={route.exact}
-                          key={key} />
-                      ))
-                    }
-
-                    {
-                      routesOutsideMainWrapper.map((route, key) => (
-                        <CustomRoute
-                          path={routes[route].path}
-                          component={routes[route].component}
-                          isPrivate={false}
-                          exact={true}
-                          key={key} />
+                          forbiddenTokens={route.forbiddenTokens}
+                          key={route.path} />
                       ))
                     }
                     <Route path='*' component={NotFound} />

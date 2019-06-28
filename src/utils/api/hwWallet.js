@@ -394,7 +394,7 @@ const transactionSigned = async (transaction, account, pin) => {
  * @param {String} pin 
  */
 export const create = (account, data, pin = null) => new Promise(async (resolve, reject) => {
-  const txObject = createSendTX(account.publicKey, data.recipientId, data.amount, data.data);
+  const txObject = createSendTX(account.info.LSK.publicKey, data.recipientId, data.amount, data.data);
   const [error, tx] = await to(transactionSigned(txObject, account, pin));
   if (error) reject(error);
   resolve(tx);

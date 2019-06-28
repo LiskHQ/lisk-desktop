@@ -68,3 +68,13 @@
     height: 3px;
   }
 }
+
+.hide {
+  display: none;
+}
+
+@media (--medium-viewport) {
+  .hideMedium {
+    display: none;
+  }
+}

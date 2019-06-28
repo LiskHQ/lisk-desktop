@@ -74,8 +74,10 @@ const votingMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
     case actionTypes.votesAdded:
-      fetchVotes(store);
-      lookupDelegatesFromUrl(store, action);
+      if (store.getState().account.info) {
+        fetchVotes(store);
+        lookupDelegatesFromUrl(store, action);
+      }
       break;
     case actionTypes.accountLoggedOut:
       store.dispatch(delegatesAdded({ list: [] }));
