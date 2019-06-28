@@ -20,7 +20,7 @@ class Help extends React.Component {
   }
 
   render() { /* istanbul ignore next */
-    const ArrowIcon = () => <Icon src='helpCenterArrow' className={styles.listArrow} />;
+    const ArrowIcon = () => <Icon name='helpCenterArrow' className={styles.listArrow} />;
     return (
       <Box className={styles.wrapper}>
         <header>
