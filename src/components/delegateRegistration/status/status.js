@@ -34,7 +34,7 @@ class Status extends React.Component {
     const success = transactions.confirmed
       .filter(tx => tx.id === transactionInfo.id);
     const error = transactions.broadcastedTransactionsError
-      .filter(tx => tx.id === transactionInfo.id);
+      .filter(tx => tx.transaction.id === transactionInfo.id);
 
     if (success.length) this.setState({ status: 'ok' });
     if (error.length) this.setState({ status: 'fail' });
