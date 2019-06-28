@@ -26,11 +26,18 @@ const votesAdded = data => ({
 });
 
 describe('actions: voting', () => {
-  let getState = () => ({
-    peers: { liskAPIClient: {} },
-    network: {
-      name: networks.mainnet.name,
-    },
+  let getState;
+
+  beforeEach(() => {
+    getState = () => ({
+      network: {
+        name: networks.mainnet.name,
+        networks: {
+          LSK: {
+          },
+        },
+      },
+    });
   });
 
   describe('voteToggled', () => {
@@ -147,9 +154,6 @@ describe('actions: voting', () => {
 
     beforeEach(() => {
       delegateApiMock = sinon.stub(delegateApi, 'getVotes').returnsPromise();
-      getState = () => ({
-        peers: { liskAPIClient: {} },
-      });
     });
 
     afterEach(() => {
@@ -195,16 +199,6 @@ describe('actions: voting', () => {
     const delegates = delegateList;
     const actionFunction = loadDelegates(data);
 
-    getState = () => ({
-      peers: {
-        liskAPIClient: {
-          options: {
-            name: networks.mainnet.name,
-          },
-        },
-      },
-    });
-
     it('should create an action function', () => {
       expect(typeof actionFunction).to.be.deep.equal('function');
     });
@@ -224,6 +218,7 @@ describe('actions: voting', () => {
             code: networks.mainnet.code,
           },
         },
+        network: { name: networks.mainnet.name },
       });
 
       delegateApiMock.returnsPromise().resolves({ data: delegates });
@@ -249,15 +244,8 @@ describe('actions: voting', () => {
       unvotes: [],
     };
 
-    getState = () => ({
-      peers: { liskAPIClient: {} },
-    });
-
     beforeEach(() => {
       delegateApiMock = sinon.stub(delegateApi, 'getVotes').returnsPromise();
-      getState = () => ({
-        peers: { liskAPIClient: {} },
-      });
     });
 
     afterEach(() => {

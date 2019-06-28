@@ -1,5 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { loadSingleTransaction } from '../../actions/transactions';
 import SingleTransactionV2 from './singleTransactionV2';
 
@@ -14,4 +15,4 @@ const mapDispatchToProps = {
   loadSingleTransaction,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SingleTransactionV2);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleTransactionV2));

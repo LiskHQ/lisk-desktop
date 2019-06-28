@@ -53,7 +53,7 @@ describe('LoginV2', () => {
     accountsRetrieved: spy(),
     t: data => data,
     onAccountUpdated: () => {},
-    liskAPIClientSet: spy(),
+    login: spy(),
     settingsUpdated: spy(),
     settings,
   };
@@ -154,11 +154,11 @@ describe('LoginV2', () => {
   });
 
   describe('After submission', () => {
-    it('it should call liskAPIClientSet if not already logged with given passphrase', () => {
+    it('it should call props.login if not already logged with given passphrase', () => {
       wrapper.find('passphraseInputV2 input').first().simulate('change', { target: { value: passphrase, dataset: { index: 0 } } });
       wrapper.update();
       wrapper.find('form').simulate('submit');
-      expect(props.liskAPIClientSet).to.have.been.calledWith();
+      expect(props.login).to.have.been.calledWith();
     });
   });
 });

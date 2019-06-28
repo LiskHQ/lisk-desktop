@@ -4,10 +4,11 @@ import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { delegateRegistered } from '../../actions/account';
 import { delegatesFetched } from '../../actions/delegate';
+import { getActiveTokenAccount } from '../../utils/account';
 import DelegateRegistration from './delegateRegistration';
 
 const mapStateToProps = state => ({
-  account: state.account,
+  account: getActiveTokenAccount(state),
   delegate: state.delegate,
 });
 

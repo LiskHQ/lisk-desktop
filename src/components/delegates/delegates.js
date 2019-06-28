@@ -73,6 +73,7 @@ class Delegates extends React.Component {
           votes={votes}/>
         <section className={`${grid['col-sm-12']} ${grid['col-md-12']} ${styles.votingBox} ${styles.votes}`}>
           <DelegatesListView
+            account={account}
             loadVotes={loadVotes}
             loadDelegates={loadDelegates}
             votingModeEnabled={votingModeEnabled}

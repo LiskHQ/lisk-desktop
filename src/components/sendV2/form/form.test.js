@@ -38,6 +38,9 @@ describe('Form', () => {
     service: {
       dynamicFees: {},
     },
+    network: {
+      name: 'Mainnet',
+    },
   });
 
   const options = {
@@ -83,6 +86,9 @@ describe('Form', () => {
     },
     dynamicFees: {},
     dynamicFeesRetrieved: jest.fn(),
+    networkConfig: {
+      name: 'Mainnet',
+    },
   };
 
   beforeEach(() => {
