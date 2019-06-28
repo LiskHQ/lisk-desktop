@@ -92,26 +92,30 @@ class TransactionSummary extends React.Component {
 
     return <div className={`${styles.wrapper} ${classNames}`}>
     <header className='summary-header'>
-      { isHardwareWalletConnected ?
-        <React.Fragment>
-          <h1> {t('Confirm transaction on your {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })} </h1>
-          <p>{t('Please check if all the transaction details are correct.')}</p>
-          <Illustration name={this.getHwWalletIllustration()} />
-        </React.Fragment> : null }
+      {
+        isHardwareWalletConnected
+        ? <React.Fragment>
+            <h1> {t('Confirm transaction on your {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })} </h1>
+            <p>{t('Please check if all the transaction details are correct.')}</p>
+            <Illustration name={this.getHwWalletIllustration()} />
+          </React.Fragment>
+        : null
+      }
       <h2>{title}</h2>
     </header>
     <div className={styles.content}>
       {children}
-      {account.secondPublicKey ?
-        <section className='summary-second-passphrase'>
-          <label>{t('Second passphrase')}</label>
-          <PassphraseInputV2
-            isSecondPassphrase={!!account.secondPublicKey}
-            secondPPFeedback={secondPassphrase.feedback}
-            inputsLength={12}
-            maxInputsLength={24}
-            onFill={this.checkSecondPassphrase} />
-        </section>
+      {
+        account.secondPublicKey
+        ? <section className='summary-second-passphrase'>
+            <label>{t('Second passphrase')}</label>
+            <PassphraseInputV2
+              isSecondPassphrase={!!account.secondPublicKey}
+              secondPPFeedback={secondPassphrase.feedback}
+              inputsLength={12}
+              maxInputsLength={24}
+              onFill={this.checkSecondPassphrase} />
+          </section>
         : null
       }
       <section>
@@ -137,21 +141,23 @@ class TransactionSummary extends React.Component {
         </label>
         <label> {fee } LSK </label>
       </section>
-      { confirmation ?
-        <label className={styles.checkboxLabel}>
-         <CheckBox
-           checked={isConfirmed}
-           onChange={this.onConfirmationChange}
-           className={`${styles.checkbox} confirmation-checkbox`}
-         />
-         {confirmation}
-        </label> :
-        null
-       }
+      {
+        confirmation
+        ? <label className={styles.checkboxLabel}>
+            <CheckBox
+              checked={isConfirmed}
+              onChange={this.onConfirmationChange}
+              className={`${styles.checkbox} confirmation-checkbox`}
+            />
+            {confirmation}
+            </label>
+        : null
+      }
     </div>
-    {isHardwareWalletConnected ?
-      null :
-      <footer className='summary-footer'>
+    {
+      isHardwareWalletConnected
+      ? null
+      : <footer className='summary-footer'>
           <PrimaryButtonV2
             className={`${styles.confirmBtn} confirm-button`}
             disabled={
@@ -161,12 +167,12 @@ class TransactionSummary extends React.Component {
             onClick={this.confirmOnClick}>
             {confirmButton.label}
           </PrimaryButtonV2>
-        <TertiaryButtonV2
-          className={`${styles.editBtn} cancel-button`}
-          onClick={cancelButton.onClick}>
-          {cancelButton.label}
-        </TertiaryButtonV2>
-      </footer>
+          <TertiaryButtonV2
+            className={`${styles.editBtn} cancel-button`}
+            onClick={cancelButton.onClick}>
+            {cancelButton.label}
+          </TertiaryButtonV2>
+        </footer>
     }
   </div>;
   }

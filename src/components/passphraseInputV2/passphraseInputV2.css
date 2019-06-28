@@ -5,7 +5,7 @@
   flex-wrap: wrap;
 
   & > span {
-    margin: 10px 0;
+    margin: 0 0 12px 0;
 
     & input {
       text-align: center;
@@ -41,7 +41,7 @@
   }
 
   & > img {
-    width: 17px;
+    width: 19px;
     height: 17px;
   }
 }
