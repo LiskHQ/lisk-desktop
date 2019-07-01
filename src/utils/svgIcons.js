@@ -63,6 +63,10 @@ import bookmarksIconEmptyState from '../assets/images/icons-v2/bookmarks_empty_s
 import liskLogo from '../assets/images/lisk-logo-v2.svg';
 import lskIcon from '../assets/images/icons-v2/icon-lsk.svg';
 import noTweetsIcon from '../assets/images/icons-v2/no-tweets.svg';
+import academy from '../assets/images/help/academy.svg';
+import helpCenter from '../assets/images/help/help-center.svg';
+import liskChat from '../assets/images/help/lisk-chat.svg';
+import helpCenterArrow from '../assets/images/help/arrow.svg';
 
 export default {
   alert_icon: alertIcon,
@@ -132,4 +136,8 @@ export default {
   liskLogo,
   lskIcon,
   noTweetsIcon,
+  academy,
+  helpCenter,
+  liskChat,
+  helpCenterArrow,
 };
