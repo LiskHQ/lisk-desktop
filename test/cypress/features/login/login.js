@@ -15,17 +15,6 @@ Given(/^showNetwork setting is true$/, function () {
   cy.addObjectToLocalStorage('settings', 'showNetwork', true);
 });
 
-Given(/^I login as (.*)$/, function (accountName) {
-  const passphrase = accounts[accountName].passphrase;
-  cy.get(ss.passphraseInput).first().click();
-  cy.get(ss.passphraseInput).each(($el, index) => {
-    const passphraseWordsArray = passphrase.split(' ');
-    cy.wrap($el).type(passphraseWordsArray[index]);
-  });
-  cy.get(ss.loginBtn).should('be.enabled');
-  cy.get(ss.loginBtn).click();
-});
-
 Given(/^I should be connected to ([^\s]+)$/, function (networkName) {
   const castNumberToBalanceString = number => numeral(fromRawLsk(number)).format('0,0.[0000000000000]');
   switch (networkName) {
@@ -33,7 +22,7 @@ Given(/^I should be connected to ([^\s]+)$/, function (networkName) {
       cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(0));
       break;
     case 'testnet':
-      cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(accounts['testnet guy'].balance));
+      cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(accounts['testnet_guy'].balance));
       break;
     case 'devnet':
       cy.get(ss.headerBalance).should('contain', castNumberToBalanceString(accounts.genesis.balance).substring(0, 3));

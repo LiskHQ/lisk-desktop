@@ -12,6 +12,7 @@ const transactionFee = 0.1;
 const getRandomAddress = () => `23495548666${Math.floor((Math.random() * 8990000) + 1000000)}L`;
 const getRandomAmount = () => Math.floor((Math.random() * 10) + 1);
 const getRandomReference = () => Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+const errorMessage = 'Test error';
 
 let randomAddress;
 let randomAmount;
@@ -19,11 +20,6 @@ let randomReference;
 
 Given(/^I am on Send page$/, function () {
   cy.visit(urls.send);
-});
-
-Given(/^I autologin as ([^\s]+) to ([^\s]+)$/, function (account, network) {
-  localStorage.setItem('liskCoreUrl', networks[network].node);
-  localStorage.setItem('loginKey', accounts[account].passphrase);
 });
 
 Given(/^I remember my balance$/, function () {
@@ -70,6 +66,39 @@ Then(/^The balance is subtracted$/, function () {
     compareBalances(this.balanceBefore, this.balanceAfter, randomAmount + transactionFee);
   });
 });
+
+Then(/^I enter second passphrase of ([^\s]+)$/, function (account) {
+  cy.get(ss.passphraseInput).first().click();
+  cy.get(ss.passphraseInput).each(($el, index) => {
+    const passphraseWordsArray = accounts[account].secondPassphrase.split(' ');
+    cy.wrap($el).type(passphraseWordsArray[index]);
+  });
+});
+
+Then(/^I follow the launch protokol link$/, function () {
+  cy.visit(`${urls.send}/?recipient=4995063339468361088L&amount=5&reference=test`);
+});
+
+Then(/^I follow the launch protokol link$/, function () {
+  cy.visit(`${urls.send}/?recipient=4995063339468361088L&amount=5&reference=test`);
+});
+
+Then(/^Send form fields are prefilled$/, function () {
+  cy.get(ss.recipientInput).should('have.value', '4995063339468361088L');
+  cy.get(ss.amountInput).should('have.value', '5');
+  cy.get(ss.sendReferenceText).should('have.value', 'test');
+});
+
+Then(/^I mock api \/transactions$/, function () {
+  cy.server({ status: 409 });
+  cy.route('POST', '/api/transactions', { message: errorMessage });
+});
+
+Then(/^I see error message$/, function () {
+  cy.get(ss.submittedTransactionMessage).contains(errorMessage);
+});
+
+
 
 
 
