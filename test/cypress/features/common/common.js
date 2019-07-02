@@ -1,8 +1,10 @@
 /* eslint-disable */
-import { Given } from 'cypress-cucumber-preprocessor/steps';
+import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
 import accounts from '../../../constants/accounts';
 import ss from '../../../constants/selectors';
 import networks from '../../../constants/networks';
+import compareBalances from '../../utils/compareBalances';
+import urls from '../../../constants/urls';
 
 Given(/^I autologin as ([^\s]+) to ([^\s]+)$/, function (account, network) {
   localStorage.setItem('liskCoreUrl', networks[network].node);
@@ -18,4 +20,16 @@ Given(/^I login as ([^\s]+)$/, function (accountName) {
   });
   cy.get(ss.loginBtn).should('be.enabled');
   cy.get(ss.loginBtn).click();
+});
+
+Given(/^I am on Wallet page$/, function () {
+  cy.visit(urls.wallet);
+});
+
+Then(/^I enter second passphrase of ([^\s]+)$/, function (account) {
+  cy.get(ss.passphraseInput).first().click();
+  cy.get(ss.passphraseInput).each(($el, index) => {
+    const passphraseWordsArray = accounts[account].secondPassphrase.split(' ');
+    cy.wrap($el).type(passphraseWordsArray[index]);
+  });
 });
