@@ -38,6 +38,7 @@ Then(/^I fill in message$/, function () {
 });
 
 Then(/^I go to confirmation$/, function () {
+  cy.get(ss.nextTransferBtn).should('be.enabled');
   cy.get(ss.nextTransferBtn).click();
 });
 
@@ -53,7 +54,6 @@ Then(/^I click ok$/, function () {
 Then(/^I see the transaction in transaction list$/, function () {
   cy.get(`${ss.transactionRow} ${ss.spinner}`).should('be.visible');
   cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).should('have.text', randomAddress);
-  cy.get(`${ss.transactionRow} ${ss.transactionAmount}`).eq(0).should('have.text', `- ${randomAmount} LSK`);
   cy.get(`${ss.transactionRow} ${ss.spinner}`, { timeout: txConfirmationTimeout }).should('be.not.visible');
 });
 

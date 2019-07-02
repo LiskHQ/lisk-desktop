@@ -6,7 +6,6 @@ Feature: Send
     And I remember my balance
     When I fill in recipient
     And I fill in amount
-    And I fill in message
     And I go to confirmation
     And I confirm transfer
     And I click ok
