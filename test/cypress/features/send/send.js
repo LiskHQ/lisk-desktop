@@ -22,10 +22,6 @@ Given(/^I am on Send page$/, function () {
   cy.visit(urls.send);
 });
 
-Given(/^I remember my balance$/, function () {
-  cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
-});
-
 Then(/^I fill in recipient$/, function () {
   randomAddress = getRandomAddress();
   cy.get(ss.recipientInput).type(randomAddress);
@@ -61,20 +57,6 @@ Then(/^I see the transaction in transaction list$/, function () {
   cy.get(`${ss.transactionRow} ${ss.spinner}`, { timeout: txConfirmationTimeout }).should('be.not.visible');
 });
 
-Then(/^The balance is subtracted$/, function () {
-  cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(function () {
-    compareBalances(this.balanceBefore, this.balanceAfter, randomAmount + transactionFee);
-  });
-});
-
-Then(/^I enter second passphrase of ([^\s]+)$/, function (account) {
-  cy.get(ss.passphraseInput).first().click();
-  cy.get(ss.passphraseInput).each(($el, index) => {
-    const passphraseWordsArray = accounts[account].secondPassphrase.split(' ');
-    cy.wrap($el).type(passphraseWordsArray[index]);
-  });
-});
-
 Then(/^I follow the launch protokol link$/, function () {
   cy.visit(`${urls.send}/?recipient=4995063339468361088L&amount=5&reference=test`);
 });
@@ -98,6 +80,15 @@ Then(/^I see error message$/, function () {
   cy.get(ss.submittedTransactionMessage).contains(errorMessage);
 });
 
+Given(/^I remember my balance$/, function () {
+  cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
+});
+
+Then(/^The balance is subtracted$/, function () {
+  cy.get(ss.headerBalance).invoke('text').as('balanceAfter').then(function () {
+    compareBalances(this.balanceBefore, this.balanceAfter, randomAmount + transactionFee);
+  });
+});
 
 
 
