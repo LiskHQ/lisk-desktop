@@ -36,7 +36,7 @@ describe('Transactions', () => {
    */
   /* eslint-disable max-statements */
   it('Incoming/Outgoing/All filtering works', () => {
-    cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
+    cy.autologin(accounts.second_passphrase_account.passphrase, networks.devnet.node);
     cy.visit(urls.wallet);
     cy.get(ss.transactionsTable).contains('Second passphrase registration');
     cy.get(ss.filterIncoming).click().should('have.class', 'active');

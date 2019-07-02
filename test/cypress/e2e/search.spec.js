@@ -91,9 +91,9 @@ describe('Search', () => {
    * @expect account page with corresponding ID is a result
    */
   it('Search for Delegate using keyboard Enter, signed off', () => {
-    openSearchAndType(accounts['mainnet delegate'].username);
+    openSearchAndType(accounts.mainnet_delegate.username);
     cy.get(ss.searchDelegatesRow).eq(0).click();
-    assertDelegatePage(accounts['mainnet delegate'].username);
+    assertDelegatePage(accounts.mainnet_delegate.username);
   });
 
   /**

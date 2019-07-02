@@ -14,7 +14,7 @@ describe('Second Passphrase Registration', () => {
    * @expect some specific to page element is present on it
    */
   it(`Opens by url ${urls.secondPassphrase}`, () => {
-    cy.autologin(accounts['second passphrase candidate'].passphrase, networks.devnet.node);
+    cy.autologin(accounts.second_passphrase_candidate.passphrase, networks.devnet.node);
     cy.visit(urls.secondPassphrase);
     cy.url().should('not.contain', 'referrer', 'Check if you have registered passphrase already');
     cy.url().should('not.contain', urls.dashboard, 'Check if you have registered passphrase already');
@@ -29,7 +29,7 @@ describe('Second Passphrase Registration', () => {
    * @expect header balance value is decreased
    */
   it('Setup second passphrase + Header balance is affected', function () {
-    cy.autologin(accounts['second passphrase candidate'].passphrase, networks.devnet.node);
+    cy.autologin(accounts.second_passphrase_candidate.passphrase, networks.devnet.node);
     cy.visit(urls.secondPassphrase);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
     cy.get(ss.goToConfirmation).click();
@@ -52,7 +52,7 @@ describe('Second Passphrase Registration', () => {
    * @expect error message
    */
   it('Try to register with insufficient balance', () => {
-    cy.autologin(accounts['empty account'].passphrase, networks.devnet.node);
+    cy.autologin(accounts.empty_account.passphrase, networks.devnet.node);
     cy.visit(urls.secondPassphrase);
     cy.url().should('contain', urls.settings);
     cy.get(ss.secondPassphraseSettingsSection).contains('You don’t have enough balance to enable it.');

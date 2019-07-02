@@ -24,7 +24,7 @@ describe('Delegate Registration', () => {
    * @expect some specific to page element is present on it
    */
   it(`Opens by url ${urls.registerDelegate}`, () => {
-    cy.autologin(accounts['delegate candidate'].passphrase, networks.devnet.node);
+    cy.autologin(accounts.delegate_candidate.passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
     cy.url().should('contain', urls.registerDelegate);
     cy.get(ss.chooseDelegateName);
@@ -36,7 +36,7 @@ describe('Delegate Registration', () => {
    * @expect header balance value is decreased
    */
   it('Register delegate + Header balance is affected', () => {
-    cy.autologin(accounts['delegate candidate'].passphrase, networks.devnet.node);
+    cy.autologin(accounts.delegate_candidate.passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
     // Memorize the balance before test
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');
@@ -64,12 +64,12 @@ describe('Delegate Registration', () => {
    * @expect transaction appears in the activity list in the confirmed state with valid details
    */
   it('Register delegate with second passphrase', () => {
-    cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
+    cy.autologin(accounts.second_passphrase_account.passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
     cy.get(ss.delegateNameInput).click().type(randomDelegateName);
     cy.wait(1200);
     cy.get(ss.chooseDelegateName).click();
-    enterSecondPassphrase(accounts['second passphrase account'].secondPassphrase);
+    enterSecondPassphrase(accounts.second_passphrase_account.secondPassphrase);
     cy.get(ss.confirmDelegateButton).click();
     cy.get(ss.app).contains('Delegate registration submitted');
     cy.visit(urls.wallet);
@@ -99,7 +99,7 @@ describe('Delegate Registration', () => {
    * @expect error message
    */
   it('Try to register with insufficient balance', () => {
-    cy.autologin(accounts['empty account'].passphrase, networks.devnet.node);
+    cy.autologin(accounts.empty_account.passphrase, networks.devnet.node);
     cy.visit(urls.registerDelegate);
     cy.get(ss.chooseDelegateName).should('be.disabled');
     cy.get(ss.delegateFeedbackError).should('have.text', 'Insufficient funds (Fee: 25 LSK)');

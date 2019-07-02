@@ -41,7 +41,7 @@ describe('Reducer: account(state, action)', () => {
     });
   });
 
-  it('should return empty account object if action.type = actionTypes.accountLoggedOut', () => {
+  it('should return empty_account object if action.type = actionTypes.accountLoggedOut', () => {
     const action = {
       type: actionTypes.accountLoggedOut,
     };
@@ -82,12 +82,12 @@ describe('Reducer: account(state, action)', () => {
   it('should reduce account when accountLoggedIn has been triggered', () => {
     const action = {
       data: {
-        delegate: accounts['delegate candidate'],
+        delegate: accounts.delegate_candidate,
       },
       type: actionTypes.accountLoggedIn,
     };
     const accountWithDelegateUpdated = account(state, action);
-    expect(accountWithDelegateUpdated.delegate).to.be.equal(accounts['delegate candidate']);
+    expect(accountWithDelegateUpdated.delegate).to.be.equal(accounts.delegate_candidate);
   });
 
   it('should return state if action.type is none of the above', () => {

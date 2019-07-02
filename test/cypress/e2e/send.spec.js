@@ -69,13 +69,13 @@ describe('Send', () => {
    * @expect transaction appears in the activity list as confirmed
    */
   it('Transfer tx with second passphrase appears in wallet activity', () => {
-    cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
+    cy.autologin(accounts.second_passphrase_account.passphrase, networks.devnet.node);
     cy.visit(urls.send);
     cy.get(ss.recipientInput).type(randomAddress);
     cy.get(ss.sendReferenceText).click().type(randomReference);
     cy.get(ss.amountInput).click().type(randomAmount);
     cy.get(ss.nextTransferBtn).click();
-    enterSecondPassphrase(accounts['second passphrase account'].secondPassphrase);
+    enterSecondPassphrase(accounts.second_passphrase_account.secondPassphrase);
     cy.get(ss.sendBtn).click();
     cy.get(ss.submittedTransactionMessage).should('have.text', msg.transferTxSuccess);
     cy.get(ss.okayBtn).click();

@@ -78,8 +78,8 @@ describe('Utils: Delegate', () => {
         accounts.delegate.publicKey,
       ];
       const unvotes = [
-        accounts['empty account'].publicKey,
-        accounts['delegate candidate'].publicKey,
+        accounts.empty_account.publicKey,
+        accounts.delegate_candidate.publicKey,
       ];
       const transaction = { id: '1234' };
       const secondPassphrase = null;

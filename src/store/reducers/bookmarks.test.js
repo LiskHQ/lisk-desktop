@@ -22,9 +22,9 @@ describe('Reducer: bookmarks(state, action)', () => {
 
   it(`should return accounts with added account if action.type is ${actionTypes.bookmarkAdded}`, () => {
     const account3 = {
-      address: accounts['empty account'].address,
-      title: accounts['empty account'].address,
-      publicKey: accounts['empty account'].publicKey,
+      address: accounts.empty_account.address,
+      title: accounts.empty_account.address,
+      publicKey: accounts.empty_account.publicKey,
     };
 
     const state = { LSK: [account, account2], BTC: [] };

@@ -82,13 +82,13 @@ describe('Delegates Voting', () => {
  * @expect transaction is confirmed
  */
   it('Vote with second passphrase', () => {
-    cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
+    cy.autologin(accounts.second_passphrase_account.passphrase, networks.devnet.node);
     cy.visit(urls.delegates);
     cy.get(ss.startVotingButton).click();
     cy.get(ss.delegateRow).eq(0).as('dg');
     cy.get('@dg').find(ss.voteCheckbox).click();
     cy.get(ss.goToConfirmationButton).click();
-    enterSecondPassphrase(accounts['second passphrase account'].secondPassphrase);
+    enterSecondPassphrase(accounts.second_passphrase_account.secondPassphrase);
     cy.get(ss.confirmVotingButton).click();
     cy.get(ss.voteResultHeader).contains('Voting submitted');
     cy.get(ss.backToDelegatesButton).click();
@@ -105,7 +105,7 @@ describe('Delegates Voting', () => {
  * @expect already voted/unvoted delegates shown in pre-selection
  */
   it('Bulk vote/unvote delegates by URL', () => {
-    cy.autologin(accounts['delegate candidate'].passphrase, networks.devnet.node);
+    cy.autologin(accounts.delegate_candidate.passphrase, networks.devnet.node);
     cy.visit(urls.dashboard);
     cy.visit(`${urls.delegatesVote}?votes=genesis_12,genesis_14,genesis_16`);
     cy.get(ss.addedVotesContainer).contains('genesis_12');

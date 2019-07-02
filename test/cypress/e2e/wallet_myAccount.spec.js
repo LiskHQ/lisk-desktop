@@ -28,7 +28,7 @@ describe('Wallet My Account', () => {
      * @expect After clicking close doesn't show banner again
      */
   it('Shows onboarding banner', () => {
-    cy.autologin(accounts['empty account'].passphrase, networks.devnet.node);
+    cy.autologin(accounts.empty_account.passphrase, networks.devnet.node);
     cy.visit(urls.wallet);
     cy.get(ss.walletOnboarding).should('exist');
     cy.get(ss.walletOnboardingClose).click();

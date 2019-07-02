@@ -61,7 +61,7 @@ describe('Settings', () => {
    * @expect already registered label is there
    */
   it('Second passphrase registration is disabled if already registered', () => {
-    cy.autologin(accounts['second passphrase account'].passphrase, networks.devnet.node);
+    cy.autologin(accounts.second_passphrase_account.passphrase, networks.devnet.node);
     cy.visit(urls.settings);
     cy.get(ss.secondPassphraseIsRegisteredLabel).should('be.visible');
   });
