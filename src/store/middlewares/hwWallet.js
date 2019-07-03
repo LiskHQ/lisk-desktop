@@ -34,9 +34,10 @@ const hwWalletMiddleware = store => next => (action) => {
 
     ipc.on('hwDisconnected', (event, { model }) => {
       const state = store.getState();
-      const { account } = state;
+      const { account, settings } = state;
+      const activeToken = settings.token.active || 'LSK';
 
-      if (account.address) {
+      if (account.info[activeToken].address) {
         if (account.hwInfo && account.hwInfo.deviceId) {
           store.dispatch(dialogDisplayed({
             childComponent: Alert,
