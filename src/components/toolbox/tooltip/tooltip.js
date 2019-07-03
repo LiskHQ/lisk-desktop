@@ -39,9 +39,9 @@ class Tooltip extends React.Component {
 
   handleMouseLeave() {
     this.setState({
-      timeoutObj: !this.state.clicked && this.state.showTooltip
-        && setTimeout(this.handleClose, 1000),
+      timeoutObj: !this.state.clicked && this.state.showTooltip,
     });
+    this.handleClose();
   }
 
   handleClick() {
