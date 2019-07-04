@@ -1,9 +1,11 @@
+/* eslint-disable max-lines */
 import React from 'react';
 import ConverterV2 from '../../converterV2';
 import AccountVisual from '../../accountVisual/index';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../../toolbox/buttons/button';
 import fees from '../../../constants/fees';
 import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
+import { loginType } from '../../../constants/hwConstants';
 import PassphraseInputV2 from '../../passphraseInputV2/passphraseInputV2';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
@@ -108,7 +110,22 @@ class Summary extends React.Component {
   }
 
   checkForSuccessOrFailedTransactions() {
-    const { transactions, nextStep, fields } = this.props;
+    const {
+      account,
+      fields,
+      nextStep,
+      transactions,
+    } = this.props;
+
+    if (account.loginType !== loginType.normal && transactions.transactionsCreatedFailed.length) {
+      nextStep({
+        fields: {
+          ...fields,
+          hwTransactionStatus: 'error',
+          isHardwareWalletConnected: true,
+        },
+      });
+    }
 
     if (transactions.transactionsCreated.length && !transactions.transactionsCreatedFailed.length) {
       nextStep({

@@ -30,6 +30,7 @@ class Send extends React.Component {
 
   render() {
     const { fields } = this.state;
+    const { history } = this.props;
 
     return (
       <div className={styles.container}>
@@ -40,7 +41,7 @@ class Send extends React.Component {
             className={styles.wrapper}>
             <Form fields={fields} />
             <Summary />
-            <TransactionStatus history={this.props.history}/>
+            <TransactionStatus history={history}/>
           </MultiStep>
         </div>
       </div>
