@@ -19,18 +19,12 @@ class Tooltip extends React.Component {
     this.setWrapperRef = this.setWrapperRef.bind(this);
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.state.timeoutObj);
-  }
 
   setWrapperRef(node) {
     this.wrapperRef = node;
   }
 
   handleMouseMove() {
-    if (this.state.timeoutObj) {
-      clearTimeout(this.state.timeoutObj);
-    }
     this.setState({
       timeoutObj: null,
       showTooltip: true,
