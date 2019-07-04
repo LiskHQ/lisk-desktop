@@ -182,21 +182,6 @@ describe('Form', () => {
   });
 
   describe('Reference field', () => {
-    it('Should show feedback if some text inserted and hide if empty', () => {
-      const referenceField = wrapper.find('.fieldGroup').at(2);
-      let evt = { target: { name: 'reference', value: 'test' } };
-      expect(referenceField.find('.feedback')).not.toHaveClassName('show');
-      referenceField.find('AutoresizeTextarea').simulate('change', evt);
-      wrapper.update();
-      // expect(referenceField.find('.feedback')).toHaveClassName('show');
-      expect(referenceField.find('.feedback')).not.toHaveClassName('error');
-
-      evt = { target: { name: 'reference', value: '' } };
-      referenceField.find('AutoresizeTextarea').simulate('change', evt);
-      wrapper.update();
-      expect(referenceField.find('.feedback')).not.toHaveClassName('show');
-    });
-
     it('Should show error feedback over limit of characters', () => {
       let referenceField = wrapper.find('.fieldGroup').at(2);
       const evt = {
