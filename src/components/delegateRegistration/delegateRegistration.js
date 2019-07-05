@@ -1,10 +1,10 @@
 import React from 'react';
 
 import MultiStep from '../multiStep';
+import routes from '../../constants/routes';
 import SelectName from './selectName/SelectName';
 import Summary from './summary/summary';
 import Status from './status/status';
-import routes from '../../constants/routes';
 import styles from './delegateRegistration.css';
 
 class DelegateRegistration extends React.Component {
@@ -14,8 +14,8 @@ class DelegateRegistration extends React.Component {
     this.goBackToDelegates = this.goBackToDelegates.bind(this);
   }
 
-  // TODO this will be cover in PR #2186
-  /* istanbul ignore next */
+  // TODO update test coverage in PR #2199
+  // istanbul ignore next
   goBackToDelegates() {
     this.props.history.push(routes.delegates.path);
   }
@@ -23,10 +23,10 @@ class DelegateRegistration extends React.Component {
   render() {
     const {
       account,
-      delegate,
-      delegatesFetched,
-      delegateRegistered,
+      transactions,
       history,
+      network,
+      transactionBroadcasted,
       t,
     } = this.props;
 
@@ -39,19 +39,15 @@ class DelegateRegistration extends React.Component {
           <SelectName
             t={t}
             account={account}
-            delegate={delegate}
-            delegatesFetched={delegatesFetched}/>
-          { /* TODO submitDelegateRegistration this will be update in PR #2186 */}
+            network={network}/>
           <Summary
             t={t}
-            account={account}
-            submitDelegateRegistration={delegateRegistered}/>
-          { /* TODO submitDelegateRegistration this will be update in PR #2186 */}
+            account={account}/>
           <Status
             t={t}
             goBackToDelegates={this.goBackToDelegates}
-            submitDelegateRegistration={delegateRegistered}
-            delegate={delegate}/>
+            transactionBroadcasted={transactionBroadcasted}
+            transactions={transactions}/>
         </MultiStep>
       </section>
     );

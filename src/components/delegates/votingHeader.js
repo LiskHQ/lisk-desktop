@@ -84,7 +84,7 @@ class VotingHeader extends React.Component {
             </span> :
             <span>
               { account.address && !account.delegate ?
-                <Link to={routes.registerDelegate.path} >
+                <Link to={routes.delegateRegistration.path} >
                   <SecondaryButtonV2 className={`register-delegate ${styles.btn}`}>
                     {t('Register as a Delegate')}
                   </SecondaryButtonV2>

@@ -1,0 +1,86 @@
+@import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  & .content {
+    width: var(--medium-box-width);
+
+    & header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    & h1 {
+      @mixin headingLarge;
+    }
+  }
+}
+
+.formHolder {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+
+  & > .buttonHolder {
+    display: flex;
+    margin: 0 auto 30px;
+    width: var(--footer-button-width);
+
+    & button {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  & .fieldGroup {
+    display: block;
+    position: relative;
+
+    & .avatar {
+      left: 16px;
+      position: absolute;
+      top: 12px;
+    }
+  }
+
+  & label {
+    display: block;
+    margin-bottom: 12px;
+
+    & > .label {
+      @mixin contentNormal bold;
+
+      color: var(--color-maastricht-blue);
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    & .input[name="address"] {
+      padding-left: 48px;
+    }
+
+    & .input:focus ~ .feedback {
+      opacity: 1 !important;
+    }
+  }
+
+  & .feedback {
+    margin-top: 5px;
+    min-height: 40px;
+    opacity: 0;
+
+    &.error {
+      opacity: 1;
+    }
+
+    &:not(.error) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}

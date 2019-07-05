@@ -1,10 +1,12 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { setDefaults, translate } from 'react-i18next';
-import LoginV2 from './loginV2';
-import { liskAPIClientSet } from '../../actions/peers';
+
 import { errorToastDisplayed } from '../../actions/toaster';
+import { getActiveTokenAccount } from '../../utils/account';
+import { login } from '../../actions/account';
 import { settingsUpdated } from '../../actions/settings';
+import LoginV2 from './loginV2';
 
 setDefaults({
   wait: true,
@@ -16,14 +18,14 @@ setDefaults({
 });
 
 const mapStateToProps = state => ({
-  account: state.account,
+  account: getActiveTokenAccount(state),
   peers: state.peers,
   settings: state.settings,
   liskAPIClient: state.peers && state.peers.liskAPIClient,
 });
 
 const mapDispatchToProps = {
-  liskAPIClientSet,
+  login,
   settingsUpdated,
   errorToastDisplayed,
 };

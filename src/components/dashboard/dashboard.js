@@ -52,10 +52,12 @@ class Dashboard extends React.Component {
   }
 
   shouldShowInitializatiion() {
-    const { account, transactions } = this.props;
+    const { account, transactions, settings } = this.props;
+    const activeToken = settings.token.active;
     const needsNoAccountInit = (account.info && account.info.LSK.serverPublicKey)
       || (account.info && account.info.LSK.balance === 0)
-      || (transactions.pending && transactions.pending.length > 0);
+      || (transactions.pending && transactions.pending.length > 0)
+      || activeToken === 'BTC';
     return !needsNoAccountInit;
   }
 
@@ -155,7 +157,7 @@ class Dashboard extends React.Component {
               {
                 !isDesktop
                 ? <div className={`${styles.bookmarks} bookmarks`}>
-                    <BookmarksList history={history}/>
+                    <BookmarksList history={history} limit={5}/>
                     <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn1} />
                   </div>
                 : null
@@ -170,7 +172,7 @@ class Dashboard extends React.Component {
             {
               isDesktop
               ? <div className={`${styles.bookmarks} bookmarks`}>
-                  <BookmarksList history={history}/>
+                  <BookmarksList history={history} limit={5}/>
                   <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn1} />
                 </div>
               : null

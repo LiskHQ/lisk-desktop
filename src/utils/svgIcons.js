@@ -61,6 +61,10 @@ import txDefault from '../assets/images/icons-v2/tx-default.svg';
 import txDelegate from '../assets/images/icons-v2/tx-delegate.svg';
 import txSendArrow from '../assets/images/icons-v2/tx-send-arrow.svg';
 import txVote from '../assets/images/icons-v2/tx-vote.svg';
+import academy from '../assets/images/help/academy.svg';
+import helpCenter from '../assets/images/help/help-center.svg';
+import liskChat from '../assets/images/help/lisk-chat.svg';
+import helpCenterArrow from '../assets/images/help/arrow.svg';
 import user from '../assets/images/icons-v2/user.svg';
 import userActive from '../assets/images/icons-v2/user-active.svg';
 import walletIcon from '../assets/images/icons-v2/wallet.svg';
@@ -135,5 +139,9 @@ export default {
   user,
   userActive,
   walletIcon,
+  academy,
+  helpCenter,
+  liskChat,
+  helpCenterArrow,
   walletIconActive,
 };

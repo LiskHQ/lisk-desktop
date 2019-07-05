@@ -5,9 +5,6 @@ import { voteToggled, delegatesAdded } from '../../actions/voting';
 import VotingListViewV2 from './votingListViewV2';
 
 const mapStateToProps = state => ({
-  account: state.account,
-  address: state.account.address,
-  isDelegate: state.account.isDelegate,
   votes: state.voting.votes,
   delegates: state.voting.delegates,
 });

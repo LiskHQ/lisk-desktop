@@ -11,6 +11,7 @@ import accounts from '../../../../test/constants/accounts';
 import networks from '../../../constants/networks';
 import { getAPIClient } from './network';
 import txFilters from '../../../constants/transactionFilters';
+import { createTransactionType } from '../../../constants/transactionTypes';
 import { getTimestampFromFirstBlock } from '../../datetime';
 
 jest.mock('./network');
@@ -42,13 +43,7 @@ describe('Utils: Transactions API', () => {
     apiClient.transactions.get.mockResolvedValue({ data: [{ id: 1 }, { id: 2 }] });
     apiClient.node.getTransactions.mockResolvedValue({ data: [] });
 
-    localStorage.setItem('btc', true); // TODO remove when enabling BTC
-
     getAPIClient.mockReturnValue(apiClient);
-  });
-
-  afterEach(() => {
-    localStorage.removeItem('btc'); // TODO remove when enabling BTC
   });
 
   // TODO: fix these tests for assert more than just a promise is returned
@@ -154,7 +149,7 @@ describe('Utils: Transactions API', () => {
         secondPassphrase: null,
         timeOffset: 0,
       };
-      const txResult = await create(tx);
+      const txResult = await create(tx, createTransactionType.transaction);
       expect(txResult.recipientId).toEqual(tx.recipientId);
       expect(txResult.amount).toEqual(tx.amount);
       expect(txResult.signature).not.toBeNull();
@@ -176,7 +171,7 @@ describe('Utils: Transactions API', () => {
         timeOffset: 0,
       };
       try {
-        await create(tx);
+        await create(tx, createTransactionType.transaction);
       } catch (e) {
         expect(e).toBeInstanceOf(Error);
         expect(e.message).toEqual('sample error message');

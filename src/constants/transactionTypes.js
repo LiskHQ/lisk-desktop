@@ -5,3 +5,7 @@ export default {
   vote: 3,
 };
 
+export const createTransactionType = {
+  transaction: 'transfer',
+  delegate_registration: 'registerDelegate',
+};

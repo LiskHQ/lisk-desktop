@@ -1,3 +1,4 @@
+import { tokenMap } from './tokens';
 import Help from '../components/help';
 import Sidechains from '../components/sidechains';
 import Setting from '../components/setting';
@@ -20,6 +21,8 @@ import Extensions from '../components/extensions';
 import TermsOfUse from '../components/termsOfUse';
 import ToolboxDemo from '../components/toolbox/demo';
 import Dashboard from '../components/dashboard';
+import Bookmarks from '../components/bookmarks';
+import AddBookmark from '../components/bookmarks/addBookmark';
 import DelegateRegistration from '../components/delegateRegistration';
 
 export default {
@@ -39,6 +42,16 @@ export default {
     component: Dashboard,
     isPrivate: false,
   },
+  addBookmark: {
+    path: '/bookmarks/add-bookmark',
+    component: AddBookmark,
+    isPrivate: false,
+  },
+  bookmarks: {
+    path: '/bookmarks',
+    component: Bookmarks,
+    isPrivate: false,
+  },
   send: {
     path: '/wallet/send',
     component: SendV2,
@@ -54,11 +67,13 @@ export default {
     path: '/delegates/vote',
     component: Voting,
     isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   delegates: {
     path: '/delegates',
     component: Delegates,
     isPrivate: false,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   help: {
     path: '/help',
@@ -79,28 +94,23 @@ export default {
     path: '/second-passphrase',
     component: SecondPassphrase,
     isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   signMessage: {
     path: '/sign-message',
     component: SignMessage,
     isPrivate: true,
-  },
-  registerDelegate: {
-    path: '/register-delegate',
-    component: DelegateRegistration,
-    isLoaded: true,
-    isPrivate: false,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   delegateRegistration: {
-    path: '/delegate-register',
+    path: '/register-delegate',
     component: DelegateRegistration,
-    isLoaded: true,
-    isPrivate: false,
+    isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   addAccount: {
     path: '/add-account',
     component: LoginV2,
-    isLoaded: true,
     isPrivate: false,
   },
   extensions: {

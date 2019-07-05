@@ -10,6 +10,7 @@ const CustomRoute = ({
   settings,
   networkIsSet,
   accountLoading,
+  forbiddenTokens,
   isAuthenticated, pathSuffix = '', pathPrefix = '', t, ...rest
 }) => {
   if (!networkIsSet || accountLoading) {
@@ -20,6 +21,10 @@ const CustomRoute = ({
 
   Piwik.tracking(rest.history, settings);
 
+  if (forbiddenTokens.indexOf(settings.token.active) !== -1) {
+    return <Redirect to={`${routes.dashboard.path}`} />;
+  }
+
   return ((isPrivate && isAuthenticated) || !isPrivate ?
     <main className={`${isPrivate ? offlineStyle.disableWhenOffline : ''} offlineWrapper`}>
       <ErrorBoundary errorMessage={t('An error occoured while rendering this page')}>
@@ -28,6 +33,10 @@ const CustomRoute = ({
     </main>
     : <Redirect to={`${routes.loginV2.path}?referrer=${pathname}${encodeURIComponent(search)}`} />
   );
+};
+
+CustomRoute.defaultProps = {
+  forbiddenTokens: [],
 };
 
 export default CustomRoute;

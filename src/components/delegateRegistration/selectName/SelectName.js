@@ -7,6 +7,7 @@ import Feedback from '../../toolbox/feedback/feedback';
 import SpinnerV2 from '../../spinnerV2/spinnerV2';
 import Icon from '../../toolbox/icon';
 import { fromRawLsk } from '../../../utils/lsk';
+import { getAPIClient } from '../../../utils/api/lsk/network';
 import regex from '../../../utils/regex';
 import links from '../../../constants/externalLinks';
 import Fees from '../../../constants/fees';
@@ -30,19 +31,7 @@ class SelectName extends React.Component {
   componentDidMount() {
     this.getNicknameFromPrevState();
     this.checkIfUserIsDelegate();
-    this.hasUserHasEnoughFunds();
-  }
-
-  componentDidUpdate(prevProps) {
-    const { delegate, t } = this.props;
-
-    if (prevProps.delegate !== delegate && delegate) {
-      if (delegate.delegateNameInvalid) {
-        this.setState({ loading: false, error: t('Name is already taken!') });
-      } else {
-        this.setState({ loading: false });
-      }
-    }
+    this.hasUserEnoughFunds();
   }
 
   getNicknameFromPrevState() {
@@ -50,25 +39,25 @@ class SelectName extends React.Component {
     if (Object.entries(prevState).length) this.setState({ nickname: prevState.nickname });
   }
 
-  hasUserHasEnoughFunds() {
+  checkIfUserIsDelegate() {
     const { account, t } = this.props;
-    const hasFunds = account.info &&
-      fromRawLsk(account.info.LSK.balance) * 1 >= fromRawLsk(Fees.registerDelegate) * 1;
+    if (account && account.delegate) {
+      this.setState({
+        inputDisabled: true,
+        error: t('You have already registered as a delegate.'),
+      });
+    }
+  }
+
+  hasUserEnoughFunds() {
+    const { account, t } = this.props;
+    const hasFunds = account &&
+      fromRawLsk(account.balance) * 1 >= fromRawLsk(Fees.registerDelegate) * 1;
 
     if (!hasFunds) {
       this.setState({
         inputDisabled: true,
         error: t('Insufficient funds (Fee: {{fee}} LSK)', { fee: fromRawLsk(Fees.registerDelegate) }),
-      });
-    }
-  }
-
-  checkIfUserIsDelegate() {
-    const { account, t } = this.props;
-    if (account && account.isDelegate) {
-      this.setState({
-        inputDisabled: true,
-        error: t('You have already registered as a delegate.'),
       });
     }
   }
@@ -81,9 +70,22 @@ class SelectName extends React.Component {
     return false;
   }
 
-  onUserFetch(nickname, error) {
-    if (!error && nickname.length) {
-      this.props.delegatesFetched({ username: nickname });
+  onUserFetch(username, error) {
+    const { t, network } = this.props;
+
+    if (!error && username.length) {
+      getAPIClient(network).delegates.get({ username })
+        .then((response) => {
+          if (response.data.length) {
+            this.setState({
+              loading: false,
+              error: t('Name is already taken!'),
+            });
+          } else {
+            this.setState({ loading: false });
+          }
+        })
+        .catch(() => this.setState({ loading: false }));
     }
   }
 

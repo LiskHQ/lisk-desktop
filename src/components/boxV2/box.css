@@ -26,7 +26,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
-    height: 56px;
+    height: 48px;
     justify-content: space-between;
     margin: 0;
     padding: 16px 20px;
@@ -39,6 +39,10 @@
       color: var(--color-maastricht-blue);
       margin: 0;
       padding: 0;
+    }
+
+    & input {
+      min-width: 177px;
     }
   }
 

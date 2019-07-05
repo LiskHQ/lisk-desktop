@@ -103,9 +103,9 @@ export const unconfirmedTransactions = (liskAPIClient, address, limit = 20, offs
   });
 
 
-export const create = transaction => new Promise((resolve, reject) => {
+export const create = (transaction, transactionType) => new Promise((resolve, reject) => {
   try {
-    const tx = Lisk.transaction.transfer(transaction);
+    const tx = Lisk.transaction[transactionType](transaction);
     resolve(tx);
   } catch (error) {
     reject(error);

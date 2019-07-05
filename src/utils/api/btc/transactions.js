@@ -1,9 +1,12 @@
 import * as bitcoin from 'bitcoinjs-lib';
-import getBtcConfig from './config';
+import { BigNumber } from 'bignumber.js';
+
 import { extractAddress, getDerivedPathFromPassphrase } from './account';
-import { validateAddress } from '../../validators';
+import { getAPIClient, getNetworkCode } from './network';
 import { tokenMap } from '../../../constants/tokens';
-import { getAPIClient } from './network';
+import { validateAddress } from '../../validators';
+import getBtcConfig from './config';
+import networks from '../../../constants/networks';
 
 /**
  * Normalizes transaction data retrieved from Blockchain.info API
@@ -31,11 +34,13 @@ const normalizeTransactionsResponse = ({
   };
 
   const ownedInput = tx.inputs.find(i => i.txDetail.scriptPubKey.addresses.includes(address));
+  const networkCode = getNetworkCode(networkConfig);
 
   if (ownedInput) {
     data.senderId = address;
     const extractedAddress = tx.outputs[0].scriptPubKey.addresses[0];
-    data.recipientId = validateAddress(tokenMap.BTC.key, extractedAddress) === 0 ? extractedAddress : 'Unparsed Address';
+    data.recipientId = validateAddress(tokenMap.BTC.key, extractedAddress, networkCode) === 0 ?
+      extractedAddress : 'Unparsed Address';
     data.amount = tx.outputs[0].satoshi;
   } else {
     address = address || tx.inputs[0].txDetail.scriptPubKey.addresses[0];
@@ -43,7 +48,10 @@ const normalizeTransactionsResponse = ({
     const extractedAddress = tx.inputs[0].txDetail.scriptPubKey.addresses[0];
     const recipientAddress = tx.outputs[0].scriptPubKey.addresses[0];
     data.senderId = validateAddress(tokenMap.BTC.key, extractedAddress) === 0 ? extractedAddress : 'Unparsed Address';
-    data.recipientId = validateAddress(tokenMap.BTC.key, recipientAddress) === 0 ? recipientAddress : 'Unparsed Address';
+    data.senderId = validateAddress(tokenMap.BTC.key, extractedAddress, networkCode) === 0 ?
+      extractedAddress : 'Unparsed Address';
+    data.recipientId = validateAddress(tokenMap.BTC.key, recipientAddress, networkCode) === 0 ?
+      recipientAddress : 'Unparsed Address';
     data.amount = output.satoshi;
   }
 
@@ -102,36 +110,32 @@ export const calculateTransactionFee = ({
  * @param {String} address
  * @returns {Promise<Array>}
  */
-export const getUnspentTransactionOutputs = address => new Promise(async (resolve, reject) => {
-  try {
-    const config = getBtcConfig(1); // TODO fix this to get config from redux
-    const response = await fetch(`${config.url}/utxo/${address}`);
-    const json = await response.json();
-
-    if (response.ok) {
-      resolve(json.data);
-    } else {
-      reject(json);
-    }
-  } catch (error) {
-    reject(error);
-  }
-});
+export const getUnspentTransactionOutputs = (address, networkConfig) =>
+  new Promise(async (resolve, reject) => {
+    getAPIClient(networkConfig).get(`utxo/${address}`)
+      .then((response) => {
+        resolve(response.body.data);
+      })
+      .catch(reject);
+  });
 
 export const create = ({
   passphrase,
   recipientId: recipientAddress,
   amount,
   dynamicFeePerByte,
+  network,
   // eslint-disable-next-line max-statements
 }) => new Promise(async (resolve, reject) => {
   try {
-    const config = getBtcConfig(1); // TODO fix this to get config from redux
+    const config = getBtcConfig(network.name === networks.mainnet.name ?
+      networks.mainnet.code :
+      networks.testnet.code);
     amount = Number(amount);
     dynamicFeePerByte = Number(dynamicFeePerByte);
 
     const senderAddress = extractAddress(passphrase, config);
-    const unspentTxOuts = await exports.getUnspentTransactionOutputs(senderAddress);
+    const unspentTxOuts = await getUnspentTransactionOutputs(senderAddress, network);
 
     // Estimate total cost (currently estimates max cost by assuming the worst case)
     const estimatedMinerFee = calculateTransactionFee({
@@ -202,9 +206,42 @@ export const create = ({
   }
 });
 
-export const broadcast = transactionHex => new Promise(async (resolve, reject) => {
+const getUnspentTransactionOutputCountToConsume = (satoshiValue, unspentTransactionOutputs) => {
+  const amount = new BigNumber(satoshiValue);
+  const [count] = unspentTransactionOutputs.reduce((result, output) => {
+    if (amount.isGreaterThan(result[1])) {
+      result[0] += 1;
+      result[1] = result[1].plus(output.value);
+    }
+
+    return result;
+  }, [0, new BigNumber(0)]);
+
+  return count;
+};
+
+export const getTransactionFeeFromUnspentOutputs = ({
+  dynamicFeePerByte, satoshiValue, unspentTransactionOutputs,
+}) => {
+  const feeInSatoshis = calculateTransactionFee({
+    inputCount: getUnspentTransactionOutputCountToConsume(satoshiValue, unspentTransactionOutputs),
+    outputCount: 2,
+    dynamicFeePerByte,
+  });
+
+  return calculateTransactionFee({
+    inputCount: getUnspentTransactionOutputCountToConsume(satoshiValue +
+      feeInSatoshis, unspentTransactionOutputs),
+    outputCount: 2,
+    dynamicFeePerByte,
+  });
+};
+
+export const broadcast = (transactionHex, network) => new Promise(async (resolve, reject) => {
   try {
-    const config = getBtcConfig(1); // TODO fix this to get config from redux
+    const config = getBtcConfig(network.name === networks.mainnet.name ?
+      networks.mainnet.code :
+      networks.testnet.code);
     const response = await fetch(`${config.url}/transaction`, {
       ...config.requestOptions,
       method: 'POST',
@@ -222,14 +259,3 @@ export const broadcast = transactionHex => new Promise(async (resolve, reject) =
     reject(error);
   }
 });
-
-/**
- * Generates a Transaction Explorer URL for given transaction id
- * based on the configured network type
- * @param {String} - Transaction ID
- * @returns {String} - URL
- */
-export const getTransactionExplorerURL = (id) => {
-  const config = getBtcConfig(1); // TODO fix this to get config from redux
-  return `${config.transactionExplorerURL}/${id}`;
-};

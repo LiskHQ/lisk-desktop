@@ -1,10 +1,13 @@
 import React from 'react';
+import to from 'await-to-js';
 import AccountVisual from '../../accountVisual/index';
 import { fromRawLsk } from '../../../utils/lsk';
 import PassphraseInputV2 from '../../passphraseInputV2/passphraseInputV2';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../../toolbox/buttons/button';
 import { extractPublicKey } from '../../../utils/account';
 import Fees from '../../../constants/fees';
+import { create } from '../../../utils/api/lsk/transactions';
+import { createTransactionType } from '../../../constants/transactionTypes';
 import styles from './summary.css';
 
 class Summary extends React.Component {
@@ -29,7 +32,7 @@ class Summary extends React.Component {
     const { account } = this.props;
 
     // istanbul ignore else
-    if (account.info && account.info.LSK.secondPublicKey) {
+    if (account && account.secondPublicKey) {
       this.setState({
         secondPassphrase: {
           ...this.state.secondPassphrase,
@@ -44,7 +47,7 @@ class Summary extends React.Component {
 
     let feedback = error || '';
     const expectedPublicKey = !error && extractPublicKey(passphrase);
-    const isPassphraseValid = account.info.LSK.secondPublicKey === expectedPublicKey;
+    const isPassphraseValid = account.secondPublicKey === expectedPublicKey;
 
     if (feedback === '' && !isPassphraseValid) {
       feedback = this.props.t('Oops! Wrong passphrase');
@@ -59,26 +62,23 @@ class Summary extends React.Component {
     });
   }
 
-  onSubmit() {
+  async onSubmit() {
     const {
       account,
       nextStep,
       nickname,
-      submitDelegateRegistration,
     } = this.props;
     const { secondPassphrase } = this.state;
 
     const data = {
-      userInfo: {
-        account: account.info.LSK,
-        username: nickname,
-        passphrase: account.passphrase,
-        secondPassphrase: secondPassphrase.value,
-      },
+      account,
+      username: nickname,
+      passphrase: account.passphrase,
+      secondPassphrase: secondPassphrase.value,
     };
 
-    submitDelegateRegistration(data.userInfo);
-    nextStep(data);
+    const [error, tx] = await to(create(data, createTransactionType.delegate_registration));
+    if (!error) nextStep({ transactionInfo: tx });
   }
 
   render() {
@@ -101,9 +101,9 @@ class Summary extends React.Component {
           <div className={styles.row}>
             <label className={'nickname-label'}>{t('Your nickname')}</label>
             <div className={styles.userInformation}>
-              <AccountVisual address={account.info.LSK.address} size={25} />
+              <AccountVisual address={account.address} size={25} />
               <span className={`${styles.nickname} nickname`}>{nickname}</span>
-              <span className={`${styles.address} address`}>{account.info.LSK.address}</span>
+              <span className={`${styles.address} address`}>{account.address}</span>
             </div>
           </div>
 

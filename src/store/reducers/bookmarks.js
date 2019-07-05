@@ -7,10 +7,10 @@ const bookmarks = (state = getBookmarksFromLocalStorage(), action) => {
       return {
         ...state,
         [action.data.token]: [
-          ...state[action.data.token],
           {
             ...action.data.account,
           },
+          ...state[action.data.token],
         ],
       };
 

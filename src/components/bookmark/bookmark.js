@@ -85,7 +85,7 @@ class Bookmark extends React.Component {
   handleBookmark() {
     const {
       address, bookmarks, delegate, bookmarkAdded,
-      token, detailAccount,
+      token, detailAccount, onSubmitClick,
     } = this.props;
     const title = this.state.fields.accountName.value;
     const account = {
@@ -108,6 +108,7 @@ class Bookmark extends React.Component {
         },
       },
     });
+    onSubmitClick();
   }
 
   handleUnbookmark() {
@@ -248,6 +249,7 @@ Bookmark.propTypes = {
   bookmarkAdded: PropTypes.func.isRequired,
   bookmarkRemoved: PropTypes.func.isRequired,
   delegate: PropTypes.object.isRequired,
+  onSubmitClick: PropTypes.func,
 };
 
 /* istanbul ignore next */
@@ -258,6 +260,7 @@ Bookmark.defaultProps = {
   bookmarkAdded: () => null,
   bookmarkRemoved: () => null,
   delegate: {},
+  onSubmitClick: () => null,
 };
 
 export default Bookmark;

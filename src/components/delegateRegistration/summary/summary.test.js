@@ -1,5 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import Lisk from '@liskhq/lisk-client';
+import to from 'await-to-js';
+import { create } from '../../../utils/api/lsk/transactions';
 import accounts from '../../../../test/constants/accounts';
 import Summary from './summary';
 
@@ -8,25 +11,38 @@ describe('Delegate Registration Summary', () => {
 
   const props = {
     account: {
-      info: {
-        LSK: {
-          address: '123456789L',
-          balance: 11000,
-          secondPublicKey: '',
-        },
-      },
+      address: '123456789L',
+      balance: 11000,
+      secondPublicKey: '',
       isDelegate: false,
     },
     prevState: {},
     nickname: 'mydelegate',
     nextStep: jest.fn(),
     prevStep: jest.fn(),
-    submitDelegateRegistration: jest.fn(),
     t: key => key,
   };
 
+  const response = {
+    id: 1,
+    account: props.account,
+    username: props.nickname,
+    passphrase: props.passphrase,
+    secondPassphrase: null,
+    recipientId: '123123L',
+    amount: 0,
+    timeOffset: 0,
+  };
+
   beforeEach(() => {
+    Lisk.transaction.registerDelegate = jest.fn();
+    Lisk.transaction.registerDelegate.mockResolvedValue(response);
+
     wrapper = mount(<Summary {...props} />);
+  });
+
+  afterEach(() => {
+    Lisk.transaction.registerDelegate.mockRestore();
   });
 
   it('renders properly Symmary component', () => {
@@ -44,24 +60,43 @@ describe('Delegate Registration Summary', () => {
     expect(props.prevStep).toBeCalled();
   });
 
-  it('submit user data when click in confirm button', () => {
+  it('submit user data when click in confirm button', async () => {
+    const data = {
+      account: props.account,
+      username: props.nickname,
+      passphrase: props.account.passphrase,
+      secondPassphrase: null,
+    };
+
     expect(props.nextStep).not.toBeCalled();
-    expect(props.submitDelegateRegistration).not.toBeCalled();
     wrapper.find('button.confirm-button').simulate('click');
+    const [err, tx] = await to(create(data, 'registerDelegate'));
+    expect(err).toEqual(null);
+    expect(tx.id).toEqual(response.id);
+    expect(tx.recipientId).toEqual(response.recipientId);
+    expect(data.username).toEqual(response.username);
     expect(props.nextStep).toBeCalled();
-    expect(props.submitDelegateRegistration).toBeCalled();
   });
 
-  it('submit user data after enter second passphrase', () => {
-    const newProps = { ...props };
-    newProps.account = {
-      info: {
-        LSK: {
-          address: accounts['second passphrase account'].address,
-          secondPublicKey: accounts['second passphrase account'].secondPublicKey,
-        },
-      },
+  it('submit user data when click in confirm button but fails', async () => {
+    Lisk.transaction.registerDelegate.mockRejectedValue(new Error('please provide a username'));
+
+    const data = {
+      account: props.account,
+      passphrase: props.account.passphrase,
+      secondPassphrase: null,
     };
+
+    expect(props.nextStep).toBeCalled();
+    wrapper.find('button.confirm-button').simulate('click');
+    const [err, tx] = await to(create(data, 'registerDelegate'));
+    expect(tx).toEqual(undefined);
+    expect(err).toBeInstanceOf(Error);
+  });
+
+  it('submit user data after enter second passphrase', async () => {
+    const newProps = { ...props };
+    newProps.account = accounts['second passphrase account'];
 
     wrapper = mount(<Summary {...newProps} />);
 
@@ -72,7 +107,7 @@ describe('Delegate Registration Summary', () => {
     wrapper.find('passphraseInputV2 input').first().simulate('paste', { clipboardData });
     wrapper.update();
     wrapper.find('button.confirm-button').simulate('click');
-    expect(props.submitDelegateRegistration).toBeCalled();
+    await to(create(newProps.account, 'registerDelegate'));
     expect(props.nextStep).toBeCalled();
   });
 });

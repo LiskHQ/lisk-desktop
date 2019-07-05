@@ -2,12 +2,10 @@ import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import serviceAPI from '../utils/api/service';
 import { errorToastDisplayed } from './toaster';
-import { tokenMap } from '../constants/tokens';
 
 export const pricesRetrieved = () => (dispatch, getState) => {
   const { settings: { token } } = getState();
-  // istanbul ignore next
-  const activeToken = localStorage.getItem('btc') ? token.active : tokenMap.LSK.key; // TODO: Refactor after enabling BTC
+  const activeToken = token.active;
 
   serviceAPI.getPriceTicker(activeToken)
     .then(priceTicker => dispatch({
@@ -22,8 +20,7 @@ export const pricesRetrieved = () => (dispatch, getState) => {
 
 export const dynamicFeesRetrieved = () => (dispatch, getState) => {
   const { settings: { token } } = getState();
-  // istanbul ignore next
-  const activeToken = localStorage.getItem('btc') ? token.active : tokenMap.LSK.key; // TODO: Refactor after enabling BTC
+  const activeToken = token.active;
 
   serviceAPI.getDynamicFees(activeToken)
     .then(dynamicFees => dispatch({

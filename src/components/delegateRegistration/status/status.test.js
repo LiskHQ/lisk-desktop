@@ -1,31 +1,28 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import accounts from '../../../../test/constants/accounts';
 import Status from './status';
 
 describe('Delegate Registration Status', () => {
   let wrapper;
 
   const props = {
-    account: {
-      info: {
-        LSK: {
-          address: '123456789L',
-          balance: 11000,
-        },
-      },
-      isDelegate: false,
+    transactionInfo: {
+      id: 1,
+      account: accounts.genesis,
+      username: 'my_delegate_account',
+      passphrase: accounts.genesis.passphrase,
+      secondPassphrase: null,
+      recipientId: '123123L',
+      amount: 0,
+      timeOffset: 0,
     },
-    delegate: {
-      registerStep: 'register-success',
+    transactions: {
+      confirmed: [],
+      broadcastedTransactionsError: [],
     },
-    userInfo: {
-      nickname: 'mydelegate',
-    },
-    prevState: {},
-    nextStep: jest.fn(),
-    prevStep: jest.fn(),
     goBackToDelegates: jest.fn(),
-    submitDelegateRegistration: jest.fn(),
+    transactionBroadcasted: jest.fn(),
     t: key => key,
   };
 
@@ -39,6 +36,41 @@ describe('Delegate Registration Status', () => {
     expect(wrapper).toContainMatchingElement('.body-message');
     expect(wrapper).toContainMatchingElement('button.go-back-to-delegates');
     expect(wrapper).not.toContainMatchingElement('button.on-retry');
+  });
+
+  it('broadcast the transaction properly', () => {
+    const newProps = {
+      transactionInfo: {
+        id: 1,
+        account: accounts.genesis,
+        username: 'my_delegate_account',
+        passphrase: accounts.genesis.passphrase,
+        secondPassphrase: null,
+        recipientId: '123123L',
+        amount: 0,
+        timeOffset: 0,
+      },
+      ...props,
+    };
+    wrapper = mount(<Status {...newProps} />);
+
+    expect(props.transactionBroadcasted).toBeCalled();
+    wrapper.setProps({
+      transactions: {
+        confirmed: [{
+          id: 1,
+          account: accounts.genesis,
+          username: 'my_delegate_account',
+          passphrase: accounts.genesis.passphrase,
+          secondPassphrase: null,
+          recipientId: '123123L',
+          amount: 0,
+          timeOffset: 0,
+        }],
+        broadcastedTransactionsError: [],
+      },
+    });
+    wrapper.update();
     wrapper.find('button.go-back-to-delegates').simulate('click');
     expect(props.goBackToDelegates).toBeCalled();
   });

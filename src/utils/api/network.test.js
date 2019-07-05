@@ -19,12 +19,10 @@ describe('Utils: network API', () => {
         }
       };
       Lisk.APIClient.constants = APIClientBackup.constants;
-      localStorage.setItem('btc', true);
     });
 
     afterEach(() => {
       Lisk.APIClient = APIClientBackup;
-      localStorage.removeItem('btc');
     });
 
     it('should create a new Lisk APIClient instance if called with LSK token', () => {

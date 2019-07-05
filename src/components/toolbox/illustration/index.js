@@ -18,6 +18,9 @@ import hubReadyToGo from '../../../assets/images/illustrations/hub-ready-togo.sv
 import builtAroundCommunity from '../../../assets/images/illustrations/built-around-community.svg';
 import sendLSKTokens from '../../../assets/images/illustrations/send-lsk-tokens.svg';
 import timeToContribute from '../../../assets/images/illustrations/time-to-contribute.svg';
+import emptyBookmarkFiler from '../../../assets/images/illustrations/empty-bookmark-filter.svg';
+import emptyBookmarksList from '../../../assets/images/illustrations/empty-bookmarks-list.svg';
+import helpCenter from '../../../assets/images/help/Illustration.svg';
 
 
 export const illustrations = {
@@ -39,6 +42,9 @@ export const illustrations = {
   builtAroundCommunity,
   sendLSKTokens,
   timeToContribute,
+  emptyBookmarkFiler,
+  emptyBookmarksList,
+  helpCenter,
 };
 
 const Illustration = ({ name, className }) => (
