@@ -113,7 +113,7 @@ describe('TransactionStatus', () => {
     expect(props.finalCallback).toBeCalled();
   });
 
-  it('should call onPrevStep function', () => {
+  it('should call onPrevStep function on hwWallet', () => {
     const newProps = { ...props };
     newProps.fields.isHardwareWalletConnected = true;
     newProps.fields.hwTransactionStatus = 'error';
@@ -121,6 +121,23 @@ describe('TransactionStatus', () => {
       error: { message: 'errorMessage' },
       transaction: { recipient: '123L', amount: 1, reference: 'test' },
     }];
+    wrapper = mount(<TransactionStatus {...newProps} />, options);
+    expect(wrapper).toContainMatchingElement('.report-error-link');
+    wrapper.find('.retry').at(0).simulate('click');
+    expect(props.prevStep).toBeCalled();
+  });
+
+  it('should call broadcast function again in retry', () => {
+    const newProps = { ...props };
+    newProps.transactions = {
+      broadcastedTransactionsError: [{
+        error: { message: 'errorMessage' },
+        transaction: { recipient: '123L', amount: 1, reference: 'test' },
+      }],
+      transactionsCreated: [{ id: 1 }],
+      transactionsCreatedFailed: [{ id: 2 }],
+    };
+
     wrapper = mount(<TransactionStatus {...newProps} />, options);
     expect(wrapper).toContainMatchingElement('.report-error-link');
     wrapper.find('.retry').at(0).simulate('click');
