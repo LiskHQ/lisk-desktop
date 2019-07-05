@@ -4,6 +4,7 @@ import AccountVisual from '../../accountVisual/index';
 import { fromRawLsk } from '../../../utils/lsk';
 import PassphraseInputV2 from '../../passphraseInputV2/passphraseInputV2';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../../toolbox/buttons/button';
+import Tooltip from '../../toolbox/tooltip/tooltip';
 import { extractPublicKey } from '../../../utils/account';
 import Fees from '../../../constants/fees';
 import { create } from '../../../utils/api/lsk/transactions';
@@ -114,8 +115,20 @@ class Summary extends React.Component {
 
           {
             secondPassphrase.hasSecondPassphrase
-            ? <div className={`${styles.row} summary-second-passphrase`}>
+            ? <div className={`${styles.row} ${styles.tooltipContainer} summary-second-passphrase`}>
                 <label>{t('Second passphrase')}</label>
+                <Tooltip
+                  className={`${styles.tooltip}`}
+                  title={t('What is your second passphrase?')}>
+                  <React.Fragment>
+                    <p className={`${styles.tooltupText}`}>
+                      {t('Second passphrase is an optional extra layer of protection to your account. You can register at anytime, but you can not remove it.')}
+                    </p>
+                    <p className={`${styles.tooltipText}`}>
+                      {t('If you see this field, you have registered a second passphrase in past and it is required to confirm transactions.')}
+                    </p>
+                  </React.Fragment>
+                </Tooltip>
                 <PassphraseInputV2
                   isSecondPassphrase={secondPassphrase.hasSecondPassphrase}
                   secondPPFeedback={secondPassphrase.feedback}

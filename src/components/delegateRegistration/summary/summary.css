@@ -96,3 +96,21 @@
     }
   }
 }
+
+.tooltipContainer {
+  position: relative;
+}
+
+.tooltip {
+  position: absolute;
+  top: 19px;
+  left: 123px;
+
+  & :global(.tooltip-window) {
+    max-width: 464px;
+  }
+
+  & .tooltipText {
+    margin-bottom: 8px;
+  }
+}
