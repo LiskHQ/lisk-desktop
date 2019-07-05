@@ -1,26 +1,98 @@
 @import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
 
-.summaryContainer {
-  & > div > section > label {
-    font-weight: 400;
-  }
-}
-
-.userInformation {
+.wrapper {
+  width: 100%;
+  max-width: 720px;
   box-sizing: border-box;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
 
-  & .nickname {
-    color: var(--color-maastricht-blue);
-    font-weight: 400;
-    margin: 0 20px 0 10px;
+  & > .header {
+    width: 100%;
+    height: 63px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+
+    & > h1 {
+      @mixin headingNormal bold;
+
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
   }
 
-  & .address {
-    color: var(--color-blue-gray);
-    font-weight: 400;
-    margin: 0;
+  & > .content {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    & .row {
+      width: 100%;
+      padding: 16px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      border-top: 1px solid rgba(111, 114, 118, 0.1);
+      box-sizing: border-box;
+
+      & > label:first-child {
+        @mixin contentNormal bold;
+
+        color: var(--color-maastricht-blue);
+        margin-bottom: 10px;
+      }
+
+      & .userInformation {
+        width: 100%;
+        height: 27px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        box-sizing: border-box;
+
+        & .nickname {
+          @mixin contentLargest;
+
+          color: var(--color-maastricht-blue);
+          margin: 0 0 0 15px;
+        }
+
+        & .address {
+          @mixin contentLargest;
+
+          color: var(--color-blue-gray);
+          margin: 0 0 0 10px;
+        }
+      }
+
+      & .feeInformation {
+        @mixin contentLargest;
+
+        color: var(--color-maastricht-blue);
+      }
+    }
+  }
+
+  & > footer {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+
+    & .confirmBtn,
+    & .editBtn {
+      width: 100%;
+      max-width: 391px;
+    }
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import accounts from '../../../../test/constants/accounts';
 import Summary from './summary';
 
 describe('Delegate Registration Summary', () => {
@@ -11,6 +12,7 @@ describe('Delegate Registration Summary', () => {
         LSK: {
           address: '123456789L',
           balance: 11000,
+          secondPublicKey: '',
         },
       },
       isDelegate: false,
@@ -48,5 +50,29 @@ describe('Delegate Registration Summary', () => {
     wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toBeCalled();
     expect(props.submitDelegateRegistration).toBeCalled();
+  });
+
+  it('submit user data after enter second passphrase', () => {
+    const newProps = { ...props };
+    newProps.account = {
+      info: {
+        LSK: {
+          address: accounts['second passphrase account'].address,
+          secondPublicKey: accounts['second passphrase account'].secondPublicKey,
+        },
+      },
+    };
+
+    wrapper = mount(<Summary {...newProps} />);
+
+    const clipboardData = {
+      getData: () => accounts['second passphrase account'].secondPassphrase,
+    };
+
+    wrapper.find('passphraseInputV2 input').first().simulate('paste', { clipboardData });
+    wrapper.update();
+    wrapper.find('button.confirm-button').simulate('click');
+    expect(props.submitDelegateRegistration).toBeCalled();
+    expect(props.nextStep).toBeCalled();
   });
 });

@@ -154,8 +154,8 @@ class passphraseInputV2 extends React.Component {
         </div>
 
         <div className={styles.footerContent}>
-          <label className={`${styles.showPassphrase}`}>
-            <Icon name={iconName} onClick={this.handleToggleShowPassphrase} />
+          <label className={`${styles.showPassphrase}`} onClick={this.handleToggleShowPassphrase}>
+            <Icon name={iconName} />
             <span className={`${styles.label}`}>{showPassphrase ? t('Hide passphrase') : t('Show passphrase')}</span>
           </label>
 

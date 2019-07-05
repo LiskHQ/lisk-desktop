@@ -1,28 +1,79 @@
 import React from 'react';
 import AccountVisual from '../../accountVisual/index';
 import { fromRawLsk } from '../../../utils/lsk';
+import PassphraseInputV2 from '../../passphraseInputV2/passphraseInputV2';
+import { PrimaryButtonV2, TertiaryButtonV2 } from '../../toolbox/buttons/button';
+import { extractPublicKey } from '../../../utils/account';
 import Fees from '../../../constants/fees';
-import TransactionSummary from '../../transactionSummary';
 import styles from './summary.css';
 
 class Summary extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      secondPassphrase: {
+        error: false,
+        feedback: '',
+        hasSecondPassphrase: false,
+        isValid: false,
+        value: null,
+      },
+    };
+
     this.onSubmit = this.onSubmit.bind(this);
+    this.checkSecondPassphrase = this.checkSecondPassphrase.bind(this);
   }
 
-  onSubmit({ secondPassphrase }) {
+  componentDidMount() {
+    const { account } = this.props;
+
+    // istanbul ignore else
+    if (account.info && account.info.LSK.secondPublicKey) {
+      this.setState({
+        secondPassphrase: {
+          ...this.state.secondPassphrase,
+          hasSecondPassphrase: true,
+        },
+      });
+    }
+  }
+
+  checkSecondPassphrase(passphrase, error) {
+    const { account } = this.props;
+
+    let feedback = error || '';
+    const expectedPublicKey = !error && extractPublicKey(passphrase);
+    const isPassphraseValid = account.info.LSK.secondPublicKey === expectedPublicKey;
+
+    if (feedback === '' && !isPassphraseValid) {
+      feedback = this.props.t('Oops! Wrong passphrase');
+    }
+    this.setState({
+      secondPassphrase: {
+        ...this.state.secondPassphrase,
+        isValid: feedback === '' && passphrase !== '',
+        feedback,
+        value: passphrase,
+      },
+    });
+  }
+
+  onSubmit() {
     const {
-      account, nickname, submitDelegateRegistration, nextStep,
+      account,
+      nextStep,
+      nickname,
+      submitDelegateRegistration,
     } = this.props;
+    const { secondPassphrase } = this.state;
 
     const data = {
       userInfo: {
         account: account.info.LSK,
         username: nickname,
         passphrase: account.passphrase,
-        secondPassphrase,
+        secondPassphrase: secondPassphrase.value,
       },
     };
 
@@ -32,41 +83,65 @@ class Summary extends React.Component {
 
   render() {
     const {
-      t, nickname, account, prevStep,
+      account,
+      nickname,
+      prevStep,
+      t,
     } = this.props;
-
-    const onConfirmAction = {
-      label: t('Become a delegate'),
-      onClick: this.onSubmit,
-    };
-    const onCancelAction = {
-      label: t('Go back'),
-      onClick: () => { prevStep({ nickname }); },
-    };
+    const { secondPassphrase } = this.state;
 
     return (
-      <TransactionSummary
-        title={t('Become a delegate summary')}
-        t={t}
-        account={account}
-        confirmButton={onConfirmAction}
-        cancelButton={onCancelAction}
-        fee={fromRawLsk(Fees.registerDelegate)}
-        classNames={styles.summaryContainer}
-      >
-        <section className={'summary-container'}>
-          <label className={'nickname-label'}>{t('Your nickname')}</label>
-          <label className={styles.userInformation}>
-            <AccountVisual
-              className={styles.accountVisual}
-              address={account.info.LSK.address}
-              size={23}
-            />
-            <span className={`${styles.nickname} nickname`}>{nickname}</span>
-            <span className={`${styles.address} address`}>{account.info.LSK.address}</span>
-          </label>
-        </section>
-      </TransactionSummary>
+      <div className={`${styles.wrapper} summary-container`}>
+        <header className={`${styles.header} summary-header`}>
+          <h1>{t('Become a delegate summary')}</h1>
+        </header>
+
+        <div className={`${styles.content} summary-content`}>
+
+          <div className={styles.row}>
+            <label className={'nickname-label'}>{t('Your nickname')}</label>
+            <div className={styles.userInformation}>
+              <AccountVisual address={account.info.LSK.address} size={25} />
+              <span className={`${styles.nickname} nickname`}>{nickname}</span>
+              <span className={`${styles.address} address`}>{account.info.LSK.address}</span>
+            </div>
+          </div>
+
+          <div className={styles.row}>
+            <label>{t('Transaction fee')}</label>
+            <span className={styles.feeInformation}>{t('{{fee}} LSK', { fee: fromRawLsk(Fees.registerDelegate) })}</span>
+          </div>
+
+          {
+            secondPassphrase.hasSecondPassphrase
+            ? <div className={`${styles.row} summary-second-passphrase`}>
+                <label>{t('Second passphrase')}</label>
+                <PassphraseInputV2
+                  isSecondPassphrase={secondPassphrase.hasSecondPassphrase}
+                  secondPPFeedback={secondPassphrase.feedback}
+                  inputsLength={12}
+                  maxInputsLength={24}
+                  onFill={this.checkSecondPassphrase} />
+              </div>
+            : null
+          }
+        </div>
+
+        <footer className={'summary-footer'}>
+          <PrimaryButtonV2
+            className={`${styles.confirmBtn} confirm-button`}
+            onClick={this.onSubmit}
+            disabled={secondPassphrase.hasSecondPassphrase && !secondPassphrase.isValid}>
+            {t('Become a delegate')}
+          </PrimaryButtonV2>
+
+          <TertiaryButtonV2
+            className={`${styles.editBtn} cancel-button`}
+            onClick={() => prevStep({ nickname })}>
+            {t('Go back')}
+          </TertiaryButtonV2>
+        </footer>
+      </div>
     );
   }
 }
