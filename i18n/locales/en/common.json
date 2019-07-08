@@ -585,7 +585,6 @@
   "or": "or",
   "to": "to",
   "{{deviceModel}} connected! Open the Lisk app on the device": "{{deviceModel}} connected! Open the Lisk app on the device",
-  "{{fee}} LSK": "{{fee}} LSK",
   "{{fee}} {{token}}": "{{fee}} {{token}}",
   "{{length}} bytes left": "{{length}} bytes left",
   "{{length}} extra characters": "{{length}} extra characters",

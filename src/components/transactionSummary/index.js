@@ -105,19 +105,6 @@ class TransactionSummary extends React.Component {
     </header>
     <div className={styles.content}>
       {children}
-      {
-        account.secondPublicKey
-        ? <section className='summary-second-passphrase'>
-            <label>{t('Second passphrase')}</label>
-            <PassphraseInputV2
-              isSecondPassphrase={!!account.secondPublicKey}
-              secondPPFeedback={secondPassphrase.feedback}
-              inputsLength={12}
-              maxInputsLength={24}
-              onFill={this.checkSecondPassphrase} />
-          </section>
-        : null
-      }
       <section>
         <label>
           {t('Transaction fee')}
@@ -139,7 +126,7 @@ class TransactionSummary extends React.Component {
             </p>
           </Tooltip>
         </label>
-        <label> {fee } LSK </label>
+        <label className={styles.feeValue}> {fee } LSK </label>
       </section>
       {
         confirmation
@@ -151,6 +138,31 @@ class TransactionSummary extends React.Component {
             />
             {confirmation}
             </label>
+        : null
+      }
+      {
+        account.secondPublicKey
+        ? <section className={`${styles.tooltipContainer} summary-second-passphrase`}>
+            <label>{t('Second passphrase')}</label>
+            <Tooltip
+              className={`${styles.tooltip}`}
+              title={t('What is your second passphrase?')}>
+              <React.Fragment>
+                <p className={`${styles.tooltupText}`}>
+                  {t('Second passphrase is an optional extra layer of protection to your account. You can register at anytime, but you can not remove it.')}
+                </p>
+                <p className={`${styles.tooltipText}`}>
+                  {t('If you see this field, you have registered a second passphrase in past and it is required to confirm transactions.')}
+                </p>
+              </React.Fragment>
+            </Tooltip>
+            <PassphraseInputV2
+              isSecondPassphrase={!!account.secondPublicKey}
+              secondPPFeedback={secondPassphrase.feedback}
+              inputsLength={12}
+              maxInputsLength={24}
+              onFill={this.checkSecondPassphrase} />
+          </section>
         : null
       }
     </div>

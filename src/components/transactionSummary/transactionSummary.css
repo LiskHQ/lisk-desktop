@@ -9,13 +9,13 @@
   align-items: flex-start;
   box-sizing: border-box;
   background: transparent;
-  max-width: 670px;
+  max-width: 720px;
   height: auto;
 
   & > footer {
     width: 100%;
     min-width: 572px;
-    margin: 40px 0;
+    margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -89,6 +89,10 @@
 
       margin-bottom: 10px;
     }
+
+    & > .feeValue {
+      @mixin contentLargest;
+    }
   }
 
   & .checkbox {
@@ -102,5 +106,23 @@
     display: flex;
     align-items: center;
     margin-top: 5px;
+  }
+}
+
+.tooltipContainer {
+  position: relative;
+}
+
+.tooltip {
+  position: absolute;
+  top: 19px;
+  left: 123px;
+
+  & :global(.tooltip-window) {
+    max-width: 464px;
+  }
+
+  & .tooltipText {
+    margin-bottom: 8px;
   }
 }
