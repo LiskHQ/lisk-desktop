@@ -33,3 +33,7 @@ Then(/^I enter second passphrase of ([^\s]+)$/, function (account) {
     cy.wrap($el).type(passphraseWordsArray[index]);
   });
 });
+
+Then(/^The latest transaction is voting$/, function () {
+  cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).should('have.text', 'Delegate vote');
+});
