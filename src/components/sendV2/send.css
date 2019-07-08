@@ -6,10 +6,6 @@
   height: 100%;
   align-items: center;
   width: 100%;
-
-  & > div {
-    padding-bottom: 70px;
-  }
 }
 
 .wrapper {
@@ -19,6 +15,6 @@
   align-items: center;
   background: transparent;
   width: 100%;
-  max-width: 530px;
+  max-width: 720px;
   height: auto;
 }

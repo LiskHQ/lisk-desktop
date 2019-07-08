@@ -118,7 +118,7 @@
 .footer {
   width: 100%;
   min-width: 572px;
-  margin: 36px 0 0;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -132,5 +132,23 @@
 
   & > .editBtn {
     width: auto !important;
+  }
+}
+
+.tooltipContainer {
+  position: relative;
+}
+
+.tooltip {
+  position: absolute;
+  top: 19px;
+  left: 123px;
+
+  & :global(.tooltip-window) {
+    max-width: 464px;
+  }
+
+  & .tooltipText {
+    margin-bottom: 8px;
   }
 }
