@@ -82,9 +82,9 @@ describe('V2 passphraseInput', () => {
 
     it('Should be able to toggle show/hide password', () => {
       expect(wrapper.find('.inputs input').first()).toHaveProp('type', 'password');
-      wrapper.find('.showPassphrase input').simulate('change');
+      wrapper.find('.showPassphrase img').simulate('click');
       expect(wrapper.find('.inputs input').first()).toHaveProp('type', 'text');
-      wrapper.find('.showPassphrase input').simulate('change');
+      wrapper.find('.showPassphrase img').simulate('click');
       expect(wrapper.find('.inputs input').first()).toHaveProp('type', 'password');
     });
 

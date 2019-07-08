@@ -1,26 +1,41 @@
 @import '../../app/variablesV2.css';
-
-.summaryContainer {
-  & > div > section > label {
-    font-weight: 400;
-  }
-}
+@import '../../app/mixins.css';
 
 .userInformation {
-  box-sizing: border-box;
+  width: 100%;
+  height: 27px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  box-sizing: border-box;
 
   & .nickname {
+    @mixin contentLargest;
+
     color: var(--color-maastricht-blue);
-    font-weight: 400;
-    margin: 0 20px 0 10px;
+    margin: 0 0 0 15px;
   }
 
   & .address {
+    @mixin contentLargest;
+
     color: var(--color-blue-gray);
-    font-weight: 400;
-    margin: 0;
+    margin: 0 0 0 10px;
+  }
+}
+
+footer {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+
+  & .confirmBtn,
+  & .editBtn {
+    width: 100%;
+    max-width: 391px;
   }
 }
