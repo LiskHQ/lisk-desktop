@@ -1,13 +1,16 @@
+/* eslint-disable max-lines */
 import React from 'react';
 import ConverterV2 from '../../converterV2';
 import AccountVisual from '../../accountVisual/index';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../../toolbox/buttons/button';
 import fees from '../../../constants/fees';
 import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
+import { loginType } from '../../../constants/hwConstants';
 import PassphraseInputV2 from '../../passphraseInputV2/passphraseInputV2';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
 import Piwik from '../../../utils/piwik';
+import Box from '../../boxV2';
 import { extractPublicKey } from '../../../utils/account';
 import { tokenMap } from '../../../constants/tokens';
 import styles from './summary.css';
@@ -108,7 +111,22 @@ class Summary extends React.Component {
   }
 
   checkForSuccessOrFailedTransactions() {
-    const { transactions, nextStep, fields } = this.props;
+    const {
+      account,
+      fields,
+      nextStep,
+      transactions,
+    } = this.props;
+
+    if (account.loginType !== loginType.normal && transactions.transactionsCreatedFailed.length) {
+      nextStep({
+        fields: {
+          ...fields,
+          hwTransactionStatus: 'error',
+          isHardwareWalletConnected: true,
+        },
+      });
+    }
 
     if (transactions.transactionsCreated.length && !transactions.transactionsCreatedFailed.length) {
       nextStep({
@@ -194,9 +212,9 @@ class Summary extends React.Component {
       : fromRawLsk(fields.processingSpeed.txFee);
 
     return (
-      <div className={`${styles.wrapper} summary`}>
+      <Box className={`${styles.wrapper} summary`}>
         <header className={`${styles.header} summary-header`}>
-          <h1>{this.getTitle()}</h1>
+          <h2>{this.getTitle()}</h2>
         </header>
 
         <div className={`${styles.content} summary-content`}>
@@ -243,7 +261,7 @@ class Summary extends React.Component {
                 </p>
               </Tooltip>
             </label>
-            <span>{t('{{fee}} {{token}}', { fee, token })}</span>
+            <span className={styles.information}>{t('{{fee}} {{token}}', { fee, token })}</span>
           </div>
 
           {
@@ -290,7 +308,7 @@ class Summary extends React.Component {
               {t('Edit transaction')}
             </TertiaryButtonV2>}
         </footer>
-      </div>
+      </Box>
     );
   }
 }

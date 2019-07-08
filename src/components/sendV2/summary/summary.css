@@ -7,6 +7,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  overflow: initial;
   box-sizing: border-box;
 }
 
@@ -35,6 +36,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  padding: 0 24px;
 
   & .row {
     width: 100%;
