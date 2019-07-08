@@ -51,20 +51,14 @@
     @mixin contentSmall bold;
 
     align-items: center;
-    background-color: var(--color-white);
+    background-color: var(--color-slate-gray);
     border-radius: var(--border-radius-standard);
-    color: var(--color-slate-gray);
+    color: var(--color-white);
     display: flex;
-    height: 16px;
+    height: 18px;
     margin: 0 5px;
     padding: 0 5px;
     white-space: nowrap;
-  }
-
-  & .address {
-    @mixin contentSmallest semi-bold;
-
-    color: var(--color-slate-gray);
   }
 }
 

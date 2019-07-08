@@ -101,7 +101,7 @@ describe('Transactions Overview Header', () => {
           bookmarks,
         }}/>
       </MemoryRouter>, options);
-      expect(wrapper.find('.bookmark-account button').first().text()).to.equal('Account bookmarked');
+      expect(wrapper.find('.bookmark-account button').first().text()).to.equal('Edit bookmarked');
     });
   });
 });

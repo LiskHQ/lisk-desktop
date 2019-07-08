@@ -17,9 +17,7 @@ describe('HeaderAccountInfo Component', () => {
     const props = { ...defaultProps };
     const wrapper = mount(<HeaderAccountInfo {...props} />);
     expect(wrapper).toContainExactlyOneMatchingElement('.label');
-    expect(wrapper.find('.title')).toHaveText('Account');
     expect(wrapper.find('.label')).toHaveText('My Account');
-    expect(wrapper.find('.address')).toHaveText(props.address);
   });
 
   it('Should show information for bookmark', () => {
@@ -59,6 +57,5 @@ describe('HeaderAccountInfo Component', () => {
     };
     const wrapper = mount(<HeaderAccountInfo {...props} />);
     expect(wrapper).not.toContainMatchingElement('.label');
-    expect(wrapper.find('.title')).toHaveText('Account');
   });
 });
