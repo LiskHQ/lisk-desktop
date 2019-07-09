@@ -20,10 +20,6 @@ Then(/^I click the transaction row$/, function () {
   cy.get(ss.transactionRow).eq(0).click();
 });
 
-Then(/^I am on transaction details page$/, function () {
-  cy.get(ss.app).contains('Confirmations');
-});
-
 Then(/^I see outgoing transaction in table$/, function () {
   cy.get(ss.transactionsTable).contains('Second passphrase registration');
 });

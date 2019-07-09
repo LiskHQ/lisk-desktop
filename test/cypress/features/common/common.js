@@ -37,3 +37,11 @@ Then(/^I enter second passphrase of ([^\s]+)$/, function (account) {
 Then(/^The latest transaction is voting$/, function () {
   cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).should('have.text', 'Delegate vote');
 });
+
+Then(/^I am on transaction details page$/, function () {
+  cy.get(ss.app).contains('Confirmations');
+});
+
+Then(/^I am on account page$/, function () {
+  cy.get(ss.accountName).should('be.visible');
+});
