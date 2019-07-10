@@ -121,24 +121,3 @@ export const loadDelegates = ({
       })
       .catch(callback);
   };
-
-
-/**
- * Get list of delegates current account has voted for and dispatch it with votes from url
- */
-// TODO Move urlVotesFound inside VoteUrlProcessor component
-export const urlVotesFound = ({
-  upvotes, unvotes, address,
-}) =>
-  (dispatch, getState) => {
-    const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
-    const processUrlVotes = (votes) => {
-      dispatch({
-        type: actionTypes.votesAdded,
-        data: { list: votes, upvotes, unvotes },
-      });
-    };
-    getVotes(liskAPIClient, { address })
-      .then((response) => { processUrlVotes(response.data.votes); })
-      .catch(() => { processUrlVotes([]); });
-  };
