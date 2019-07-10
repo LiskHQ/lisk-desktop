@@ -10,6 +10,7 @@ import InputDemo from './inputsV2/demo';
 import IllustrationDemo from './illustration/demo';
 import OnboardingDemo from './onboarding/demo';
 import TooltipDemo from './tooltip/demo';
+import PageHeaderDemo from './pageHeader/demo';
 import AnimationDemo from './animation/demo';
 
 const ToolboxDemo = () => (
@@ -27,6 +28,7 @@ const ToolboxDemo = () => (
     <InputDemo />
     <IllustrationDemo />
     <OnboardingDemo />
+    <PageHeaderDemo />
     <TooltipDemo />
   </React.Fragment>
 );
