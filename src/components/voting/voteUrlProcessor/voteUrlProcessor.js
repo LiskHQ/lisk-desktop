@@ -4,16 +4,12 @@ import { getDelegateByName } from '../../../utils/api/delegates';
 import { getVote } from '../../../utils/voting';
 import { parseSearchParams } from '../../../utils/searchParams';
 import VoteList from '../voteList';
-import routes from '../../../constants/routes';
 
 export default class VoteUrlProcessor extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      votes: [],
-      unvotes: [],
-      params: '',
       voteLookupStatus: { },
     };
   }
@@ -24,18 +20,14 @@ export default class VoteUrlProcessor extends React.Component {
       this.setVotesFromParams(params);
     }
 
-    this.props.history.listen((location) => {
-      if (location.pathname === routes.voting.path) {
-        params = parseSearchParams(location.search);
-
-        if (location.search && location.search !== this.state.params) {
-          this.setVotesFromParams(params);
-          this.setState({
-            params: location.search,
-          });
-        }
-      }
+    this.unlisten = this.props.history.listen((location) => {
+      params = parseSearchParams(location.search);
+      this.setVotesFromParams(params);
     });
+  }
+
+  componentWillUnmount() {
+    this.unlisten();
   }
 
   setVoteLookupStatus(name, status) {
@@ -64,7 +56,7 @@ export default class VoteUrlProcessor extends React.Component {
         this.props.voteToggled(getVote(votes, name));
       } else {
         getDelegateByName(liskAPIClient, name).then(() => {
-          this.setVoteLookupStatus(name, 'alreadyVoted');
+          this.setVoteLookupStatus(name, 'nothingToChange');
         }).catch(() => {
           this.setVoteLookupStatus(name, 'notFound');
         });
@@ -81,7 +73,7 @@ export default class VoteUrlProcessor extends React.Component {
             address: delegate.account.address,
           });
         } else {
-          this.setVoteLookupStatus(name, 'alreadyVoted');
+          this.setVoteLookupStatus(name, 'nothingToChange');
         }
       }).catch(() => {
         this.setVoteLookupStatus(name, 'notFound');
@@ -104,11 +96,6 @@ export default class VoteUrlProcessor extends React.Component {
         },
       });
     }
-
-    this.setState({
-      votes: params.votes,
-      unvotes: params.unvotes,
-    });
   }
 
   render() {
@@ -116,11 +103,11 @@ export default class VoteUrlProcessor extends React.Component {
     const sections = {
       pending: t('Processing...'),
       notFound: t('Check spelling – delegate name does not exist'),
-      alreadyVoted: t('Nothing to change – already voted/unvoted'),
+      nothingToChange: t('Nothing to change – already voted/unvoted'),
     };
     const voteLookupStatus = {
       pending: filterObjectPropsWithValue(this.state.voteLookupStatus, 'pending'),
-      alreadyVoted: filterObjectPropsWithValue(this.state.voteLookupStatus, 'alreadyVoted'),
+      nothingToChange: filterObjectPropsWithValue(this.state.voteLookupStatus, 'nothingToChange'),
       notFound: filterObjectPropsWithValue(this.state.voteLookupStatus, 'notFound'),
     };
 
