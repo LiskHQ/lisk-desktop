@@ -17,7 +17,7 @@ const TransactionAmount = ({ address, transaction, token }) => {
 
     return (
       <span>
--
+        {'- '}
         <LiskAmount val={transaction.amount} />
         {' '}
         {token}
