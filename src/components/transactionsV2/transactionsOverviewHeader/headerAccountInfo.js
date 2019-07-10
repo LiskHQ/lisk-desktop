@@ -19,8 +19,7 @@ const headerAccountInfo = ({
     || (index > -1 && accounts[index] && accounts[index].title);
   const label =
     (address === account.address && t('My Account'))
-    || (delegate.username && t('Delegate #{{rank}}', { rank: delegate.rank }))
-    || (!!accountTitle && t('Bookmarked Account'));
+    || (delegate.username && t('Delegate #{{rank}}', { rank: delegate.rank }));
 
   return (
     <div className={`${styles.account}`}>

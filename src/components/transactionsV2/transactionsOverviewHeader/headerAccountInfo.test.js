@@ -33,9 +33,7 @@ describe('HeaderAccountInfo Component', () => {
       address: accounts['empty account'].address,
     };
     const wrapper = mount(<HeaderAccountInfo {...props} />);
-    expect(wrapper).toContainExactlyOneMatchingElement('.label');
     expect(wrapper.find('.title')).toHaveText('bookmark-test');
-    expect(wrapper.find('.label')).toHaveText('Bookmarked Account');
   });
 
   it('Should show information for delegate account', () => {
