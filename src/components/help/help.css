@@ -94,8 +94,7 @@
   }
 
   & p {
-    margin: 0;
-    padding: 0;
+    margin-top: 0;
     margin-bottom: 29px;
   }
 
@@ -103,6 +102,7 @@
     text-align: center;
     width: 228px;
     border-radius: 3px;
+    margin-left: 8px;
   }
 
   & ul {
@@ -132,6 +132,14 @@
   .articleContainer {
     padding-right: 0 !important;
     padding-left: 0 !important;
+
+    & p {
+      padding-right: 85px;
+    }
+
+    & button {
+      margin-left: 0;
+    }
   }
 
   .wrapper {

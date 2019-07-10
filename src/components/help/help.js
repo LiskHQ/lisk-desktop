@@ -46,79 +46,80 @@ class Help extends React.Component {
             <Illustration name="helpCenter" />
           </section>
         </section>
-
         <section className={`${grid.row} ${styles.helpSection} help-articles`}>
           <article className={`${grid['col-sm-12']} ${grid['col-md-4']} ${styles.articleContainer}`}>
             <h4>
               <Icon name="helpCenter" className={styles.titleIcon} />
               {this.props.t('Help Center')}
             </h4>
-            <p className={styles.faqWrapper}>
-              {this.props.t('Perhaps your question has already been raised in our FAQ')}
-            </p>
-            <Button className="help-visit-center" onClick={() => this.visitHelpCenter()}>
-              {this.props.t('Visit Help Center')}
-            </Button>
+            <section className={grid.row}>
+              <p className={`${grid['col-sm-6']} ${grid['col-md-12']}`}>
+                {this.props.t('Perhaps your question has already been raised in our FAQ')}
+              </p>
+              <Button className="help-visit-center" onClick={() => this.visitHelpCenter()}>
+                {this.props.t('Visit Help Center')}
+              </Button>
+            </section>
           </article>
-
           <article className={`${grid['col-sm-12']} ${grid['col-md-4']} ${styles.articleContainer}`}>
             <h4>
               <Icon name="academy" className={styles.titleIcon} />
               {this.props.t('Academy')}
             </h4>
-            <p>
-              {this.props.t('Learn about blockchain with our comprehensive knowledge base.')}
-            </p>
-            <div>
-              <ul>
-                <li>
-                  <a target="_blank" href={links.explainBlockchain} rel="noopener noreferrer">
-                    {this.props.t('Explain Blockchain Like I\'m 5')}
-                    <ArrowIcon />
-                  </a>
-                </li>
-                <li>
-                  <a target="_blank" href={links.isBlockchainSecure} rel="noopener noreferrer">
-                    {this.props.t('Is Blockchain Secure?')}
-                    <ArrowIcon />
-                  </a>
-                </li>
-                <li>
-                  <a target="_blank" href={links.seeMore} rel="noopener noreferrer">
-                    {this.props.t('See more')}
-                    <ArrowIcon />
-                  </a>
-                </li>
-              </ul>
-            </div>
+            <section className={grid.row}>
+              <p className={`${grid['col-sm-6']} ${grid['col-md-12']}`}>
+                {this.props.t('Learn about blockchain with our comprehensive knowledge base.')}
+              </p>
+              <div className={grid['col-sm-6']}>
+                <ul>
+                  <li>
+                    <a target="_blank" href={links.explainBlockchain} rel="noopener noreferrer">
+                      {this.props.t('Explain Blockchain Like I\'m 5')}
+                      <ArrowIcon />
+                    </a>
+                  </li>
+                  <li>
+                    <a target="_blank" href={links.isBlockchainSecure} rel="noopener noreferrer">
+                      {this.props.t('Is Blockchain Secure?')}
+                      <ArrowIcon />
+                    </a>
+                  </li>
+                  <li>
+                    <a target="_blank" href={links.seeMore} rel="noopener noreferrer">
+                      {this.props.t('See more')}
+                      <ArrowIcon />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </section>
           </article>
-
           <article className={`${grid['col-sm-12']} ${grid['col-md-4']} ${styles.articleContainer}`}>
             <h4>
               <Icon name="liskChat" className={styles.titleIcon} />
               {this.props.t('Lisk.Chat')}
             </h4>
-            <div>
-              <p>
+            <section className={grid.row}>
+              <p className={`${grid['col-sm-6']} ${grid['col-md-12']}`}>
                 {this.props.t('Don’t be a stranger! Connect with our worldwide community.')}
               </p>
-            </div>
-            <div>
-              <ul>
-                <li>
-                  <a target="_blank" href={links.liskChat} rel="noopener noreferrer">
-                    {this.props.t('Visit Lisk.Chat')}
-                    <ArrowIcon />
-                  </a>
-                </li>
-                <li>
-                  <a target="_blank" href={links.helpDeskChannel} rel="noopener noreferrer">
-                    {this.props.t('See #help-desk channel')}
-                    <ArrowIcon />
-                  </a>
-                </li>
-              </ul>
-            </div>
+              <div className={grid['col-sm-6']}>
+                <ul>
+                  <li>
+                    <a target="_blank" href={links.liskChat} rel="noopener noreferrer">
+                      {this.props.t('Visit Lisk.Chat')}
+                      <ArrowIcon />
+                    </a>
+                  </li>
+                  <li>
+                    <a target="_blank" href={links.helpDeskChannel} rel="noopener noreferrer">
+                      {this.props.t('See #help-desk channel')}
+                      <ArrowIcon />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </section>
           </article>
         </section>
       </Box>
