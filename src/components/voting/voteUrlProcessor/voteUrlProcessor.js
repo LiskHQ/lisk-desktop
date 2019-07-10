@@ -13,6 +13,7 @@ export default class VoteUrlProcessor extends React.Component {
       params: '',
     };
   }
+
   componentDidMount() {
     this.props.voteLookupStatusCleared();
     let params = parseSearchParams(this.props.history.location.search);
@@ -58,18 +59,20 @@ export default class VoteUrlProcessor extends React.Component {
       alreadyVoted: t('Nothing to change – already voted/unvoted'),
     };
 
-    return <React.Fragment>
-      {Object.keys(sections).map((list, key) => (
-        voteLookupStatus[list].length ? (
-          <VoteList
-            className={`${list}-message`}
-            title={sections[list]}
-            list={voteLookupStatus[list]}
-            votes={votes}
-            key={key}
-          />
-        ) : null
-      ))}
-    </React.Fragment>;
+    return (
+      <React.Fragment>
+        {Object.keys(sections).map((list, key) => (
+          voteLookupStatus[list].length ? (
+            <VoteList
+              className={`${list}-message`}
+              title={sections[list]}
+              list={voteLookupStatus[list]}
+              votes={votes}
+              key={key}
+            />
+          ) : null
+        ))}
+      </React.Fragment>
+    );
   }
 }

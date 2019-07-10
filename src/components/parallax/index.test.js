@@ -7,9 +7,9 @@ describe('Parallax', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Parallax className='parent' originX='0px'>
-      <div className='child'>Child 1</div>
-      <div className='child'>Child 2</div>
+    wrapper = mount(<Parallax className="parent" originX="0px">
+      <div className="child">Child 1</div>
+      <div className="child">Child 2</div>
     </Parallax>);
   });
 

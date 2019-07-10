@@ -28,4 +28,3 @@ describe('Reducer: loading(state, action)', () => {
     expect(changedState).to.deep.equal(['test2']);
   });
 });
-

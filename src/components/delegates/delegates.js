@@ -4,7 +4,7 @@ import styles from './delegates.css';
 import DelegatesListView from '../delegatesListView';
 import VotingHeader from './votingHeader';
 import Onboarding from '../toolbox/onboarding/onboarding';
-import { getTotalActions } from './../../utils/voting';
+import { getTotalActions } from '../../utils/voting';
 
 class Delegates extends React.Component {
   constructor(props) {
@@ -45,6 +45,7 @@ class Delegates extends React.Component {
       illustration: 'expandYourKnowledge',
     }];
   }
+
   render() {
     const {
       account,
@@ -56,21 +57,24 @@ class Delegates extends React.Component {
     const { votingModeEnabled } = this.state;
     return (
       <div className={`${grid.row} ${styles.wrapper}`} ref={(el) => { this.root = el; }}>
-        { account && account.address ?
-          <Onboarding
-            slides={this.getOnboardingSlides()}
-            finalCallback={this.toggleVotingMode}
-            actionButtonLabel={t('Start voting')}
-            name={'delegateOnboarding'}
-          /> :
-          null
+        { account && account.address
+          ? (
+            <Onboarding
+              slides={this.getOnboardingSlides()}
+              finalCallback={this.toggleVotingMode}
+              actionButtonLabel={t('Start voting')}
+              name="delegateOnboarding"
+            />
+          )
+          : null
         }
         <VotingHeader
           t={t}
           votingModeEnabled={votingModeEnabled}
           toggleVotingMode={this.toggleVotingMode}
           account={account}
-          votes={votes}/>
+          votes={votes}
+        />
         <section className={`${grid['col-sm-12']} ${grid['col-md-12']} ${styles.votingBox} ${styles.votes}`}>
           <DelegatesListView
             account={account}

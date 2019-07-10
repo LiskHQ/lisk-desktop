@@ -5,7 +5,7 @@ import configureMockStore from 'redux-mock-store';
 import { MemoryRouter as Router } from 'react-router-dom';
 import Setting from './setting';
 import accounts from '../../../test/constants/accounts';
-import settingsConst from './../../constants/settings';
+import settingsConst from '../../constants/settings';
 
 describe('Setting', () => {
   const settings = {
@@ -63,14 +63,14 @@ describe('Setting', () => {
 
   beforeEach(() => {
     wrapper = mount(<Router>
-      <Setting {...props} store={store}/>
+      <Setting {...props} store={store} />
     </Router>, options);
   });
 
   it('should disable 2nd passphrase when hardwareWallet', () => {
     const newProps = { ...props, account: { hwInfo: { deviceId: '123' } } };
     wrapper = mount(<Router>
-      <Setting {...newProps} store={store}/>
+      <Setting {...newProps} store={store} />
     </Router>, options);
     expect(wrapper).toContainMatchingElements(1, '.disabled');
   });
@@ -85,7 +85,7 @@ describe('Setting', () => {
     const account2ndPassphrase = { info: { LSK: accounts['second passphrase account'] } };
     const newProps = { ...props, account: account2ndPassphrase, hasSecondPassphrase: true };
     wrapper = mount(<Router>
-      <Setting {...newProps}/>
+      <Setting {...newProps} />
     </Router>, options);
     expect(wrapper.find('.second-passphrase')).not.toContainMatchingElement('.link');
     expect(wrapper.find('.second-passphrase')).toContainMatchingElement('.second-passphrase-registered');

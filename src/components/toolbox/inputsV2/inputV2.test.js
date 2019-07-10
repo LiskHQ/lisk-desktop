@@ -31,7 +31,7 @@ describe('InputV2', () => {
     const propWithError = {
       error: true,
     };
-    wrapper = mount(<InputV2 { ...propWithError } />);
+    wrapper = mount(<InputV2 {...propWithError} />);
     expect(wrapper.find('input')).toHaveClassName('error');
   });
 });

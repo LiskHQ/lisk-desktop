@@ -51,8 +51,8 @@ class SelectName extends React.Component {
 
   hasUserEnoughFunds() {
     const { account, t } = this.props;
-    const hasFunds = account &&
-      fromRawLsk(account.balance) * 1 >= fromRawLsk(Fees.registerDelegate) * 1;
+    const hasFunds = account
+      && fromRawLsk(account.balance) * 1 >= fromRawLsk(Fees.registerDelegate) * 1;
 
     if (!hasFunds) {
       this.setState({
@@ -140,8 +140,9 @@ class SelectName extends React.Component {
           <a
             className={`${styles.link} learm-more-link`}
             href={links.votingAndDelegates}
-            target='_blank'
-            rel='noopener noreferrer'>
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {t('Learn more')}
           </a>
 
@@ -149,10 +150,10 @@ class SelectName extends React.Component {
 
           <div className={styles.inputContainer}>
             <InputV2
-              data-name={'delegate-nickname'}
-              autoComplete={'off'}
+              data-name="delegate-nickname"
+              autoComplete="off"
               onChange={this.onChangeNickname}
-              name='delegate-nickname'
+              name="delegate-nickname"
               value={nickname}
               placeholder={t('ie. peter_pan')}
               className={`${styles.inputNickname} select-name-input`}
@@ -163,13 +164,15 @@ class SelectName extends React.Component {
             <SpinnerV2 className={`${styles.spinner} ${loading && nickname.length ? styles.show : styles.hide} spiner`} />
             <Icon
               className={`${styles.status} ${!loading && nickname.length ? styles.show : styles.hide} input-status-icon`}
-              name={error ? 'alert_icon' : 'ok_icon'}/>
+              name={error ? 'alert_icon' : 'ok_icon'}
+            />
 
             <Feedback
-              show={true}
+              show
               status={feedbackInfo.status}
               className={`${feedbackInfo.className} input-feedback`}
-              showIcon={false}>
+              showIcon={false}
+            >
               {error || t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.')}
             </Feedback>
           </div>
@@ -179,7 +182,8 @@ class SelectName extends React.Component {
             <PrimaryButtonV2
               onClick={() => nextStep({ nickname })}
               disabled={isBtnDisabled}
-              className={`${styles.confirmBtn} confirm-btn`}>
+              className={`${styles.confirmBtn} confirm-btn`}
+            >
               {t('Go to Confirmation')}
             </PrimaryButtonV2>
           </footer>

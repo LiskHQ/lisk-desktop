@@ -2,15 +2,15 @@
 import React from 'react';
 import Input from 'react-toolbox/lib/input';
 import styles from './autoSuggest.css';
-import LiskAmount from './../liskAmount';
+import LiskAmount from '../liskAmount';
 import { FontIcon } from '../fontIcon';
 import ResultsList from './resultsList';
-import routes from './../../constants/routes';
-import keyCodes from './../../constants/keyCodes';
-import localJSONStorage from './../../utils/localJSONStorage';
-import regex from './../../utils/regex';
-import { saveSearch } from './../searchResult/keyAction';
-import { searchEntities } from './../../constants/search';
+import routes from '../../constants/routes';
+import keyCodes from '../../constants/keyCodes';
+import localJSONStorage from '../../utils/localJSONStorage';
+import regex from '../../utils/regex';
+import { saveSearch } from '../searchResult/keyAction';
+import { searchEntities } from '../../constants/search';
 import Piwik from '../../utils/piwik';
 
 class AutoSuggest extends React.Component {
@@ -143,12 +143,12 @@ class AutoSuggest extends React.Component {
     let currentIdx = this.state.selectedIdx;
     let placeholder = '';
     if (this.state.resultsLength === 0) {
-      currentIdx = (currentIdx === this.recentSearches.length - 1) ?
-        this.recentSearches.length - 1 : currentIdx += 1;
+      currentIdx = (currentIdx === this.recentSearches.length - 1)
+        ? this.recentSearches.length - 1 : currentIdx += 1;
       placeholder = this.recentSearches[currentIdx].valueLeft;
     } else {
-      currentIdx = (currentIdx === this.state.resultsLength) ?
-        this.state.resultsLength : currentIdx += 1;
+      currentIdx = (currentIdx === this.state.resultsLength)
+        ? this.state.resultsLength : currentIdx += 1;
       placeholder = this.getValueFromCurrentIdx(currentIdx, this.props.results);
     }
     this.setState({ selectedIdx: currentIdx, placeholder });
@@ -256,7 +256,11 @@ class AutoSuggest extends React.Component {
     return this.props.results.addresses.map((account, idx) => ({
       id: account.address,
       valueLeft: account.address,
-      valueRight: <span><LiskAmount val={account.balance}/> LSK</span>,
+      valueRight: <span>
+        <LiskAmount val={account.balance} />
+        {' '}
+LSK
+      </span>,
       isSelected: this.props.results.delegates.length + idx === this.state.selectedIdx,
       type: searchEntities.addresses,
     }));
@@ -267,8 +271,8 @@ class AutoSuggest extends React.Component {
       id: transaction.id,
       valueLeft: transaction.id,
       valueRight: transaction.height,
-      isSelected: this.props.results.delegates.length +
-      this.props.results.addresses.length + idx === this.state.selectedIdx,
+      isSelected: this.props.results.delegates.length
+      + this.props.results.addresses.length + idx === this.state.selectedIdx,
       type: searchEntities.transactions,
     }));
   }
@@ -320,11 +324,13 @@ class AutoSuggest extends React.Component {
           onChange={() => {
           }}
           className={`${styles.placeholder} autosuggest-placeholder`}
-          type='text'
-          name='autosuggest-placeholder'/>
-        <Input type='text'
-          id='autosuggest-input'
-          name='searchBarInput'
+          type="text"
+          name="autosuggest-placeholder"
+        />
+        <Input
+          type="text"
+          id="autosuggest-input"
+          name="searchBarInput"
           value={this.state.value}
           innerRef={(el) => {
             this.inputRef = el;
@@ -336,13 +342,24 @@ class AutoSuggest extends React.Component {
           onBlur={this.closeDropdown.bind(this)}
           onKeyDown={this.handleKey.bind(this)}
           onChange={this.search.bind(this)}
-          autoComplete='off'>
+          autoComplete="off"
+        >
           {
-            this.state.value !== '' || this.state.placeholder !== '' ?
-              <FontIcon value='close' className={`${styles.icon} autosuggest-btn-close`}
-                        onClick={this.resetSearch.bind(this)}/> :
-              <FontIcon value='search' className={`${styles.icon} ${styles.iconSearch} autosuggest-btn-search`}
-                        onClick={this.submitSearch.bind(this)}/>
+            this.state.value !== '' || this.state.placeholder !== ''
+              ? (
+                <FontIcon
+                  value="close"
+                  className={`${styles.icon} autosuggest-btn-close`}
+                  onClick={this.resetSearch.bind(this)}
+                />
+              )
+              : (
+                <FontIcon
+                  value="search"
+                  className={`${styles.icon} ${styles.iconSearch} autosuggest-btn-search`}
+                  onClick={this.submitSearch.bind(this)}
+                />
+              )
           }
         </Input>
         <div className={`${styles.autoSuggest} ${this.state.show ? styles.show : ''} autosuggest-dropdown`}>
@@ -376,17 +393,19 @@ class AutoSuggest extends React.Component {
             onMouseDown={this.onResultClick.bind(this)}
             setSelectedRow={this.setSelectedRow.bind(this)}
           />
-          {this.state.value === '' && this.state.resultsLength === 0 ?
-            <ResultsList
-              key='recent'
-              results={this.getRecentSearchResults()}
-              header={{
-                titleLeft: t('Recent searches'),
-                titleRight: '',
-              }}
-              onMouseDown={this.onResultClick.bind(this)}
-              setSelectedRow={this.setSelectedRow.bind(this)}
-            />
+          {this.state.value === '' && this.state.resultsLength === 0
+            ? (
+              <ResultsList
+                key="recent"
+                results={this.getRecentSearchResults()}
+                header={{
+                  titleLeft: t('Recent searches'),
+                  titleRight: '',
+                }}
+                onMouseDown={this.onResultClick.bind(this)}
+                setSelectedRow={this.setSelectedRow.bind(this)}
+              />
+            )
             : null
           }
           <p className={`${styles.noResults} no-result-message`}>{this.getNoResultMessage()}</p>

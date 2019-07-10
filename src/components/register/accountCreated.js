@@ -23,7 +23,7 @@ const AccountCreated = ({ t, account }) => (
         <AccountVisual
           address={account.address}
           size={67}
-          />
+        />
       </span>
       <p className={`${styles.address}`}>{account.address}</p>
       <p className={`${styles.titleHolder}`}>{t('Address')}</p>
@@ -32,7 +32,8 @@ const AccountCreated = ({ t, account }) => (
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
       <Link
         className={`${registerStyles.button} login-button`}
-        to={routes.loginV2.path}>
+        to={routes.loginV2.path}
+      >
         <PrimaryButtonV2>
           {t('Sign In')}
         </PrimaryButtonV2>

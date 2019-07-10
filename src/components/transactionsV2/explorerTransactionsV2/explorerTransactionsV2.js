@@ -68,6 +68,7 @@ class ExplorerTransactionsV2 extends React.Component {
       customFilters: this.state.activeCustomFilters,
     });
   }
+
   /*
     Transactions from tabs are filtered based on filter number
     It applys to All, Incoming and Outgoing
@@ -154,21 +155,29 @@ class ExplorerTransactionsV2 extends React.Component {
           detailAccount={detailAccount}
         />
         <TabsContainer>
-          <WalletTab tabName={this.props.t('Wallet')}
-            {...overviewProps}/>
-          {this.props.activeToken !== 'BTC' ? <VotesTab
-            history={this.props.history}
-            address={this.props.address}
-            fetchVotedDelegateInfo={this.props.fetchVotedDelegateInfo}
-            loading={this.props.loading}
-            votes={this.props.votes}
-            tabClassName={'account-info'}
-            tabName={this.props.t('Votes')} /> : null}
+          <WalletTab
+            tabName={this.props.t('Wallet')}
+            {...overviewProps}
+          />
+          {this.props.activeToken !== 'BTC' ? (
+            <VotesTab
+              history={this.props.history}
+              address={this.props.address}
+              fetchVotedDelegateInfo={this.props.fetchVotedDelegateInfo}
+              loading={this.props.loading}
+              votes={this.props.votes}
+              tabClassName="account-info"
+              tabName={this.props.t('Votes')}
+            />
+          ) : null}
           {delegate.username
-            ? (<DelegateTab
-              tabClassName={'delegate-statistics'}
-              tabName={this.props.t('Delegate')}
-              delegate={this.props.delegate} />)
+            ? (
+              <DelegateTab
+                tabClassName="delegate-statistics"
+                tabName={this.props.t('Delegate')}
+                delegate={this.props.delegate}
+              />
+            )
             : null}
         </TabsContainer>
       </React.Fragment>

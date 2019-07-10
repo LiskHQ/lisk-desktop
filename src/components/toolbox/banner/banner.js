@@ -10,9 +10,12 @@ const Banner = ({
       <h1 className={`${styles.title}`}>
         {title}
       </h1>
-      { onClose ? <span
-        onClick={onClose}
-        className={`${styles.closeBtn} banner-close`} /> : null}
+      { onClose ? (
+        <span
+          onClick={onClose}
+          className={`${styles.closeBtn} banner-close`}
+        />
+      ) : null}
     </header>
     <main className={`${styles.content}`}>
       { children }

@@ -20,9 +20,8 @@ export const extractAddress = (data) => {
 export const getActiveTokenAccount = state => ({
   ...state.account,
   ...((state.account.info && state.account.info[
-    state.settings.token && state.settings.token.active ?
-      state.settings.token.active :
-      tokenMap.LSK.key
+    state.settings.token && state.settings.token.active
+      ? state.settings.token.active
+      : tokenMap.LSK.key
   ]) || {}),
 });
-

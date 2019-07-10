@@ -78,8 +78,8 @@ describe('WalletTransactions V2 Component', () => {
 
   beforeEach(() => {
     wrapper = mount(<Router>
-        <WalletTransactionsV2 {...props} />
-      </Router>, options);
+      <WalletTransactionsV2 {...props} />
+    </Router>, options);
   });
 
   it('renders WalletTransactionV2 Component and loads account transactions', () => {

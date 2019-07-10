@@ -19,4 +19,3 @@ const links = {
   outgoingTransactions: 'https://lisk.io/help-center/transactions/how-to-make-an-outgoing-lsk-transaction',
 };
 export default links;
-

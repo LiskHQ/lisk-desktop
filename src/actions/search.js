@@ -1,5 +1,5 @@
 import actionTypes from '../constants/actions';
-import { loadingStarted, loadingFinished } from '../actions/loading';
+import { loadingStarted, loadingFinished } from './loading';
 import { getAccount } from '../utils/api/account';
 import { getDelegates, getVotes } from '../utils/api/delegates';
 import { getTransactions } from '../utils/api/transactions';
@@ -52,8 +52,8 @@ export const fetchVotedDelegateInfo = (votes, {
     });
 
     const filteredVotes = votesWithDelegateInfo.filter(vote => RegExp(filter, 'i').test(vote.username));
-    const lastIndex = showingVotes > filteredVotes.length ?
-      filteredVotes.length : showingVotes;
+    const lastIndex = showingVotes > filteredVotes.length
+      ? filteredVotes.length : showingVotes;
     if (filteredVotes.length && !filteredVotes[lastIndex - 1].rank) {
       dispatch(fetchVotedDelegateInfo(votesWithDelegateInfo, {
         offset: offset + limit,

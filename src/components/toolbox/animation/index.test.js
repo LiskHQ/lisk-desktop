@@ -1,7 +1,7 @@
 import React from 'react';
 import lottie from 'lottie-web';
 import { mount } from 'enzyme';
-import Animation from './';
+import Animation from '.';
 
 jest.mock('lottie-web');
 

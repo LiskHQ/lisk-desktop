@@ -59,9 +59,9 @@ class MultiStep extends React.Component {
   prev(config) {
     const getTarget = (current) => {
       if (current === 0) return current;
-      else if (config && config.jump) return current - config.jump;
-      else if (!config || !config.reset) return current - 1;
-      else if (config.reset) return 0;
+      if (config && config.jump) return current - config.jump;
+      if (!config || !config.reset) return current - 1;
+      if (config.reset) return 0;
       return current;
     };
     const newState = { ...this.state };
@@ -90,15 +90,22 @@ class MultiStep extends React.Component {
 
     extraProps.prevState = { ...step.data[step.current + 1] };
 
-    return (<div className={className}>
-      <MultiStepNav steps={children} showNav={this.props.showNav}
-        prevPage={prevPage}
-        browsable={browsable} backButtonLabel={backButtonLabel}
-        current={step.current} prevStep={step.prevStep} />
-      {
+    return (
+      <div className={className}>
+        <MultiStepNav
+          steps={children}
+          showNav={this.props.showNav}
+          prevPage={prevPage}
+          browsable={browsable}
+          backButtonLabel={backButtonLabel}
+          current={step.current}
+          prevStep={step.prevStep}
+        />
+        {
         React.cloneElement(children[step.current], extraProps)
       }
-    </div>);
+      </div>
+    );
   }
 }
 

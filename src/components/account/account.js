@@ -17,32 +17,35 @@ const Account = ({ peers, t, showNetworkIndicator }) => {
 
   let iconCode = peers.options.code;
   if (iconCode === 2) {
-    iconCode = (peers.options.nethash === Lisk.constants.MAINNET_NETHASH) ?
-      networks.mainnet.code : iconCode;
-    iconCode = (peers.options.nethash === Lisk.constants.TESTNET_NETHASH) ?
-      networks.testnet.code : iconCode;
+    iconCode = (peers.options.nethash === Lisk.constants.MAINNET_NETHASH)
+      ? networks.mainnet.code : iconCode;
+    iconCode = (peers.options.nethash === Lisk.constants.TESTNET_NETHASH)
+      ? networks.testnet.code : iconCode;
   }
 
-  const status = (peers.status && peers.status.online) ?
-    <FontIcon className={`${styles.network} online`} value={iconMap[iconCode]} /> :
-    <FontIcon className='offline' value='error' />;
+  const status = (peers.status && peers.status.online)
+    ? <FontIcon className={`${styles.network} online`} value={iconMap[iconCode]} />
+    : <FontIcon className="offline" value="error" />;
 
-  const shouldShowNetworkIndicator = (peers.liskAPIClient &&
-      (showNetworkIndicator || peers.options.code !== networks.mainnet.code));
+  const shouldShowNetworkIndicator = (peers.liskAPIClient
+      && (showNetworkIndicator || peers.options.code !== networks.mainnet.code));
 
-  return (shouldShowNetworkIndicator ?
-    <section className={styles.peer}>
-      <div className={`${styles.title} ${`${styles[`${iconMap[iconCode]}Title`]}`} inner primary peer-network ${iconMap[iconCode]}-title`}>
-        <span id="accountStatus" className={`${styles.status} network-status`}>
-          {status}
-          {t('Connected to ')}{translations[iconCode]}
-        </span>
-        <span className={`${styles.current} inner secondary peer`}>
-          {peers.liskAPIClient.currentNode}
-        </span>
-      </div>
-    </section> :
-    null
+  return (shouldShowNetworkIndicator
+    ? (
+      <section className={styles.peer}>
+        <div className={`${styles.title} ${`${styles[`${iconMap[iconCode]}Title`]}`} inner primary peer-network ${iconMap[iconCode]}-title`}>
+          <span id="accountStatus" className={`${styles.status} network-status`}>
+            {status}
+            {t('Connected to ')}
+            {translations[iconCode]}
+          </span>
+          <span className={`${styles.current} inner secondary peer`}>
+            {peers.liskAPIClient.currentNode}
+          </span>
+        </div>
+      </section>
+    )
+    : null
   );
 };
 

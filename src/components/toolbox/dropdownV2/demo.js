@@ -5,12 +5,12 @@ import DemoRenderer from '../demoRenderer';
 const DropdownDemo = () => (
   <div>
     <h2>Dropdown</h2>
-    <DemoRenderer >
+    <DemoRenderer>
       {/* TODO improve DropdownV2 so that position: relative is not needed here */}
       <span style={{ position: 'relative' }}>
         <span>Dropdown holder</span>
         <DropdownV2
-          showDropdown={true}
+          showDropdown
         >
           <span>Dropdown content</span>
         </DropdownV2>
@@ -20,4 +20,3 @@ const DropdownDemo = () => (
 );
 
 export default DropdownDemo;
-

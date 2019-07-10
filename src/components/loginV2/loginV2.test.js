@@ -81,7 +81,7 @@ describe('LoginV2', () => {
       toFake: ['setTimeout', 'clearTimeout'],
     });
 
-    wrapper = mount(<MemoryRouter><LoginV2 {...props}/></MemoryRouter>, options);
+    wrapper = mount(<MemoryRouter><LoginV2 {...props} /></MemoryRouter>, options);
   });
 
   afterEach(() => {

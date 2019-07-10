@@ -3,7 +3,7 @@ import Waypoint from 'react-waypoint';
 
 import { generatePassphraseFromSeed } from '../../utils/passphrase';
 import { extractAddress } from '../../utils/account';
-import AccountVisual from '../accountVisual';
+import AccountVisual from '.';
 import Box from '../box';
 
 /**
@@ -47,7 +47,8 @@ class AccountVisualDemo extends React.Component {
       <Box>
         <div style={{ whiteSpace: 'no-break' }}>
           {this.state.accounts.map(account => (
-            <div key={account}
+            <div
+              key={account}
               style={{
                 display: 'inline-block',
                 overflow: 'hidden',
@@ -55,8 +56,12 @@ class AccountVisualDemo extends React.Component {
                 width: size,
                 padding: 20,
                 fontSize: 14,
-              }}>
-              {account}<br /> <br />
+              }}
+            >
+              {account}
+              <br />
+              {' '}
+              <br />
               <AccountVisual address={account} size={size} />
             </div>
           ))}
@@ -65,7 +70,8 @@ class AccountVisualDemo extends React.Component {
           this.setState({
             accounts: this.loadMore(this.state.accounts),
           });
-        }}></Waypoint>
+        }}
+        />
       </Box>
     );
   }

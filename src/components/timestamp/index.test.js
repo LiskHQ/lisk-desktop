@@ -14,7 +14,7 @@ describe('Time', () => {
   it('shows "5 months" for the equivalent timestamp (35929631)', () => {
     const inputValue = 35929631;
     const expectedValue = '5 months';
-    const wrapper = mount(<Time label = {inputValue} />, {
+    const wrapper = mount(<Time label={inputValue} />, {
       context: { i18n },
       childContextTypes: {
         i18n: PropTypes.object.isRequired,
@@ -29,7 +29,7 @@ describe('TooltipWrapper', () => {
   it('simulates mouseenter events with tooltip', () => {
     const onMouseEnter = sinon.spy();
     const wrapper = mount((
-      <TooltipWrapper onMouseEnter={onMouseEnter} tooltip='text'/>
+      <TooltipWrapper onMouseEnter={onMouseEnter} tooltip="text" />
     ));
     wrapper.find(TooltipWrapper).simulate('mouseEnter');
     expect(onMouseEnter.callCount).to.be.equal(1);
@@ -38,7 +38,7 @@ describe('TooltipWrapper', () => {
   it('simulates mouseenter events without tooltip', () => {
     const onMouseEnter = sinon.spy();
     const wrapper = mount((
-      <TooltipWrapper/>
+      <TooltipWrapper />
     ));
     wrapper.find(TooltipWrapper).simulate('mouseEnter');
     expect(onMouseEnter.callCount).to.be.equal(0);
@@ -49,7 +49,7 @@ describe('TooltipTime', () => {
   it('has innerHTML equal to "<span>5 months</span>" for equivalent timestamp (35929631)', () => {
     const inputValue = 35929631;
     const expectedValue = '<span>5 months</span>';
-    const wrapper = mount(<TooltipTime label = {inputValue} />, {
+    const wrapper = mount(<TooltipTime label={inputValue} />, {
       context: { i18n },
       childContextTypes: {
         i18n: PropTypes.object.isRequired,

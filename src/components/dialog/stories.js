@@ -14,7 +14,7 @@ storiesOf('Dialog', module)
         title: 'Title',
         childComponent: dialogContent,
       }}
-      onCancelClick={ action('onCancelClick') }
+      onCancelClick={action('onCancelClick')}
     />
   ))
   .add('Success alert', () => (
@@ -27,7 +27,7 @@ storiesOf('Dialog', module)
           text: 'Custom success message',
         },
       }}
-      onCancelClick={ action('onCancelClick') }
+      onCancelClick={action('onCancelClick')}
     />
   ))
   .add('Error alert', () => (
@@ -40,6 +40,6 @@ storiesOf('Dialog', module)
           text: 'Custom error message',
         },
       }}
-      onCancelClick={ action('onCancelClick') }
+      onCancelClick={action('onCancelClick')}
     />
   ));

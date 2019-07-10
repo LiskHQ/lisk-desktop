@@ -27,8 +27,8 @@ const VotingSummary = ({
       account={account}
       confirmButton={{
         label: t('Confirm voting'),
-        disabled: totalActions === 0 ||
-          (voteLookupStatus.pending && voteLookupStatus.pending.length > 0),
+        disabled: totalActions === 0
+          || (voteLookupStatus.pending && voteLookupStatus.pending.length > 0),
         onClick: ({ secondPassphrase }) => {
           votePlaced({
             account,
@@ -73,24 +73,32 @@ const VotingSummary = ({
         },
       }}
       fee={fee * totalActions}
-      title={t('Voting summary')} >
+      title={t('Voting summary')}
+    >
       <VoteUrlProcessor
         account={account}
         votes={votes}
-        voteLookupStatus={voteLookupStatus}/>
+        voteLookupStatus={voteLookupStatus}
+      />
       <VoteList
         title={t('Added votes')}
-        className='added-votes'
+        className="added-votes"
         list={voteList}
-        votes={votes} />
+        votes={votes}
+      />
       <VoteList
         title={t('Removed votes')}
-        className='removed-votes'
+        className="removed-votes"
         list={unvoteList}
-        votes={votes} />
+        votes={votes}
+      />
       <section>
         <label>{t('Votes after confirmation')}</label>
-        <label>{getTotalVotesCount(votes)}/{maxCountOfVotes}</label>
+        <label>
+          {getTotalVotesCount(votes)}
+/
+          {maxCountOfVotes}
+        </label>
       </section>
     </TransactionSummary>
   );

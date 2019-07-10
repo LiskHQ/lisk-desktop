@@ -75,6 +75,7 @@ class WalletTransactionsV2 extends React.Component {
       value: txFilters.all,
     });
   }
+
   /* istanbul ignore next */
   onLoadMore() {
     this.props.loadTransactions({
@@ -86,6 +87,7 @@ class WalletTransactionsV2 extends React.Component {
       },
     });
   }
+
   /*
     Transactions from tabs are filtered based on filter number
     It applys to All, Incoming and Outgoing
@@ -198,42 +200,54 @@ class WalletTransactionsV2 extends React.Component {
           account={account}
           activeToken={activeToken}
         />
-        { account.balance === 0 && localJSONStorage.get('closedWalletOnboarding') !== 'true' ?
-          <Banner
-            className={`${styles.onboarding} wallet-onboarding`}
-            onClose={this.closeOnboarding}
-            title={t('Add some {{activeToken}} to your Lisk Hub account now!', { activeToken })}
-            footer={(
-              <div className={styles.copyAddress}>
-                <span className={styles.address}>{account.address}</span>
-                <CopyToClipboard
-                  text={account.address}
-                  onCopy={this.onCopy}>
-                    <SecondaryButtonV2 className={'light'} disabled={this.state.copied}>
+        { account.balance === 0 && localJSONStorage.get('closedWalletOnboarding') !== 'true'
+          ? (
+            <Banner
+              className={`${styles.onboarding} wallet-onboarding`}
+              onClose={this.closeOnboarding}
+              title={t('Add some {{activeToken}} to your Lisk Hub account now!', { activeToken })}
+              footer={(
+                <div className={styles.copyAddress}>
+                  <span className={styles.address}>{account.address}</span>
+                  <CopyToClipboard
+                    text={account.address}
+                    onCopy={this.onCopy}
+                  >
+                    <SecondaryButtonV2 className="light" disabled={this.state.copied}>
                       <span>{this.state.copied ? t('Copied') : t('Copy')}</span>
                     </SecondaryButtonV2>
-                </CopyToClipboard>
-              </div>
-            )}>
-            <p>{t('You can find the {{activeToken}} token on all of the worlds top exchanges and send them to your unique {{currency}} address:', { activeToken, currency: tokenMap[activeToken].label })}</p>
-          </Banner> : null
+                  </CopyToClipboard>
+                </div>
+            )}
+            >
+              <p>{t('You can find the {{activeToken}} token on all of the worlds top exchanges and send them to your unique {{currency}} address:', { activeToken, currency: tokenMap[activeToken].label })}</p>
+            </Banner>
+          ) : null
         }
 
         <TabsContainer>
-          <WalletTab tabName={t('Wallet')}
-            {...overviewProps}/>
-          {this.props.activeToken !== 'BTC' ? <VotesTab
-            history={this.props.history}
-            address={this.props.account.address}
-            fetchVotedDelegateInfo={this.props.fetchVotedDelegateInfo}
-            loading={this.props.loading}
-            votes={this.props.votes}
-            tabName={this.props.t('Votes')} /> : null}
+          <WalletTab
+            tabName={t('Wallet')}
+            {...overviewProps}
+          />
+          {this.props.activeToken !== 'BTC' ? (
+            <VotesTab
+              history={this.props.history}
+              address={this.props.account.address}
+              fetchVotedDelegateInfo={this.props.fetchVotedDelegateInfo}
+              loading={this.props.loading}
+              votes={this.props.votes}
+              tabName={this.props.t('Votes')}
+            />
+          ) : null}
           {account.delegate && delegate.txDelegateRegister
-            ? (<DelegateTab
-              tabClassName={'delegate-statistics'}
-              tabName={t('Delegate')}
-              delegate={delegate} />)
+            ? (
+              <DelegateTab
+                tabClassName="delegate-statistics"
+                tabName={t('Delegate')}
+                delegate={delegate}
+              />
+            )
             : null}
         </TabsContainer>
       </React.Fragment>

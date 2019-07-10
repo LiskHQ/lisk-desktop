@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { extractPublicKey, getActiveTokenAccount } from '../../utils/account';
-import { Button } from './../toolbox/buttons/button';
+import { Button } from '../toolbox/buttons/button';
 // eslint-disable-next-line import/no-named-as-default
 import PassphraseInput from '../passphraseInput';
 import { passphraseIsValid, authStatePrefill } from '../../utils/form';
@@ -33,9 +33,9 @@ class PassphraseSteps extends React.Component {
       });
     }
 
-    if ((this.props.account.hwInfo && this.props.account.hwInfo.deviceId) ||
-      (this.props.account.passphrase &&
-      !this.props.account.secondPublicKey)) {
+    if ((this.props.account.hwInfo && this.props.account.hwInfo.deviceId)
+      || (this.props.account.passphrase
+      && !this.props.account.secondPublicKey)) {
       this.props.nextStep({
         ...this.props,
         ...authStatePrefill(this.props.account),
@@ -106,8 +106,8 @@ class PassphraseSteps extends React.Component {
   }
 
   getCurrentStep() {
-    if (this.props.account.secondPublicKey &&
-      (this.state.done.passphrase || this.props.account.passphrase)) {
+    if (this.props.account.secondPublicKey
+      && (this.state.done.passphrase || this.props.account.passphrase)) {
       return 'secondPassphrase';
     }
 
@@ -157,42 +157,44 @@ class PassphraseSteps extends React.Component {
       updatedStyles = { ...updatedStyles, ...this.props.styles };
     }
 
-    return <div className={`${updatedStyles.wrapper}`}>
-      <header className={updatedStyles.headerWrapper}>
-        <h2>{updatedValues[this.getCurrentStep()].header}</h2>
-      </header>
-      <PassphraseInput
-        className={updatedValues[this.getCurrentStep()].className}
-        error={values[this.getCurrentStep()].state.error}
-        value={values[this.getCurrentStep()].state.value}
-        onChange={this.onChange.bind(this, values[this.getCurrentStep()].key)}
-        columns={updatedValues.columns}
-        theme={updatedStyles}
-        isFocused={true}
-      />
-      <footer>
-        <section className={grid.row} >
-          <div className={updatedValues.footer.firstGrid}>
-            <Button
-              label={this.props.t('Back')}
-              onClick={() => this.onPrevStep()}
-              type='button'
-              theme={updatedStyles}
-            />
-          </div>
-          <div className={updatedValues.footer.secondGrid}>
-            <Button
-              className={values[this.getCurrentStep()].buttonClassName}
-              label={this.props.t('Next')}
-              theme={updatedStyles}
-              onClick={this.setDone.bind(this, values[this.getCurrentStep()].key)}
-              disabled={!passphraseIsValid(values[this.getCurrentStep()].state)}
-            />
-            <div className='subTitle'>{this.props.subTitle}</div>
-          </div>
-        </section>
-      </footer>
-    </div>;
+    return (
+      <div className={`${updatedStyles.wrapper}`}>
+        <header className={updatedStyles.headerWrapper}>
+          <h2>{updatedValues[this.getCurrentStep()].header}</h2>
+        </header>
+        <PassphraseInput
+          className={updatedValues[this.getCurrentStep()].className}
+          error={values[this.getCurrentStep()].state.error}
+          value={values[this.getCurrentStep()].state.value}
+          onChange={this.onChange.bind(this, values[this.getCurrentStep()].key)}
+          columns={updatedValues.columns}
+          theme={updatedStyles}
+          isFocused
+        />
+        <footer>
+          <section className={grid.row}>
+            <div className={updatedValues.footer.firstGrid}>
+              <Button
+                label={this.props.t('Back')}
+                onClick={() => this.onPrevStep()}
+                type="button"
+                theme={updatedStyles}
+              />
+            </div>
+            <div className={updatedValues.footer.secondGrid}>
+              <Button
+                className={values[this.getCurrentStep()].buttonClassName}
+                label={this.props.t('Next')}
+                theme={updatedStyles}
+                onClick={this.setDone.bind(this, values[this.getCurrentStep()].key)}
+                disabled={!passphraseIsValid(values[this.getCurrentStep()].state)}
+              />
+              <div className="subTitle">{this.props.subTitle}</div>
+            </div>
+          </section>
+        </footer>
+      </div>
+    );
   }
 }
 
@@ -202,4 +204,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(translate()(PassphraseSteps));
-

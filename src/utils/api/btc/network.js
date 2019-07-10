@@ -4,9 +4,9 @@ import networks from '../../../constants/networks';
 import getBtcConfig from './config';
 
 export const getNetworkCode = network => (
-  network.name === networks.mainnet.name ?
-    networks.mainnet.code :
-    networks.testnet.code
+  network.name === networks.mainnet.name
+    ? networks.mainnet.code
+    : networks.testnet.code
 );
 
 // eslint-disable-next-line import/prefer-default-export

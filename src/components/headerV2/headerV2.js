@@ -8,7 +8,7 @@ import Feedback from '../toolbox/feedback/feedback';
 import { InputV2 } from '../toolbox/inputsV2';
 import { addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import getNetwork, { getNetworksList } from '../../utils/getNetwork';
-import { parseSearchParams } from './../../utils/searchParams';
+import { parseSearchParams } from '../../utils/searchParams';
 
 import darkLogo from '../../assets/images/logo/lisk-logo-dark.svg';
 import whiteLogo from '../../assets/images/logo/lisk-logo-white.svg';
@@ -67,8 +67,8 @@ class HeaderV2 extends React.Component {
   changeNetwork(network) {
     this.setState({
       network,
-      address: network === networks.mainnet.code || network === networks.testnet.code ?
-        '' : this.state.address,
+      address: network === networks.mainnet.code || network === networks.testnet.code
+        ? '' : this.state.address,
     });
     this.props.settingsUpdated({ network });
   }
@@ -123,6 +123,7 @@ class HeaderV2 extends React.Component {
     }
     this.setState({ showDropdown: value });
   }
+
   /* istanbul ignore next */
   /* eslint-disable complexity */
   render() {
@@ -140,65 +141,76 @@ class HeaderV2 extends React.Component {
             <img src={dark ? whiteLogo : darkLogo} />
           </div>
           <div className={`${styles.buttonsHolder}`}>
-            {showNetworkOptions &&
+            {showNetworkOptions
+              && (
               <div>
-                <span className={`${this.state.validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
-                      onClick={() => this.toggleDropdown(!this.state.showDropdown)}>
-                      { selectedNetwork !== networks.customNode.code
-                        ? networkList[selectedNetwork].label
-                        : address || this.state.address }</span>
+                <span
+                  className={`${this.state.validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
+                  onClick={() => this.toggleDropdown(!this.state.showDropdown)}
+                >
+                  { selectedNetwork !== networks.customNode.code
+                    ? networkList[selectedNetwork].label
+                    : address || this.state.address }
+                </span>
                 <DropdownV2
                   className={`${styles.dropdown} ${dark ? 'dark' : ''} network-dropdown`}
                   showArrow={false}
                   showDropdown={this.state.showDropdown}
-                  active={selectedNetwork}>
+                  active={selectedNetwork}
+                >
                   {networkList && networkList.map((network, key) => {
                     const activeTab = this.state.network === networks.customNode.code;
                     if (network.value === networks.customNode.code) {
-                      return <span
-                      className={`${styles.networkSpan} address`}
-                      key={key}
-                      onClick={() => {
-                        this.changeNetwork(network.value);
-                      }}>
-                        {network.label}
+                      return (
+                        <span
+                          className={`${styles.networkSpan} address`}
+                          key={key}
+                          onClick={() => {
+                            this.changeNetwork(network.value);
+                          }}
+                        >
+                          {network.label}
                           <InputV2
-                            autoComplete={'off'}
+                            autoComplete="off"
                             onChange={(value) => {
                               this.changeAddress(value);
                             }}
-                            name='customNetwork'
+                            name="customNetwork"
                             value={this.state.address}
                             placeholder={this.props.t('ie. 192.168.0.1')}
                             className={`
                               custom-network
                               ${formStyles.input}
                               ${autoSuggestInputStyles.input}
-                              ${this.state.validationError ? styles.errorInput : ''}`} />
+                              ${this.state.validationError ? styles.errorInput : ''}`}
+                          />
                           <div className={styles.icons}>
-                            <SpinnerV2 className={`${styles.spinner} ${this.state.isValidationLoading && this.state.address ? styles.show : styles.hide}`}/>
+                            <SpinnerV2 className={`${styles.spinner} ${this.state.isValidationLoading && this.state.address ? styles.show : styles.hide}`} />
                             <img
                               className={`${styles.status} ${!this.state.isValidationLoading && this.state.address && !this.state.isFirstTime
                                 ? styles.show : styles.hide}`}
-                              src={ !this.state.connected ? svg.iconWarning : svg.ok_icon}
+                              src={!this.state.connected ? svg.iconWarning : svg.ok_icon}
                             />
                           </div>
-                          {activeTab ?
-                            <Feedback
-                              show={this.state.validationError}
-                              status={'error'}
-                              className={`${this.state.validationError ? styles.feedbackError : ''} ${styles.feedbackMessage} amount-feedback`}
-                              showIcon={false}
-                              dark={dark}
-                            >
-                              {t('Unable to connect to the node, please check the address and try again')}
-                            </Feedback> : ''}
-                          {activeTab ?
-                            <div>
-                              <PrimaryButtonV2
-                                disabled={this.state.connected}
+                          {activeTab
+                            ? (
+                              <Feedback
+                                show={this.state.validationError}
+                                status="error"
+                                className={`${this.state.validationError ? styles.feedbackError : ''} ${styles.feedbackMessage} amount-feedback`}
+                                showIcon={false}
+                                dark={dark}
+                              >
+                                {t('Unable to connect to the node, please check the address and try again')}
+                              </Feedback>
+                            ) : ''}
+                          {activeTab
+                            ? (
+                              <div>
+                                <PrimaryButtonV2
+                                  disabled={this.state.connected}
                                 /* istanbul ignore next */
-                                onClick={(e) => {
+                                  onClick={(e) => {
                                     e.stopPropagation();
 
                                     this.setState({ isValidationLoading: true });
@@ -209,12 +221,15 @@ class HeaderV2 extends React.Component {
                                       );
                                       this.changeNetwork(networks.customNode.code);
                                     }, 300);
-                                }}
-                                className={`${styles.button} ${styles.backButton} connect-button`}>
-                                {this.state.connected ? t('Connected') : t('Connect')}
-                              </PrimaryButtonV2>
-                            </div> : ''}
-                      </span>;
+                                  }}
+                                  className={`${styles.button} ${styles.backButton} connect-button`}
+                                >
+                                  {this.state.connected ? t('Connected') : t('Connect')}
+                                </PrimaryButtonV2>
+                              </div>
+                            ) : ''}
+                        </span>
+                      );
                     }
 
                     return (
@@ -225,19 +240,24 @@ class HeaderV2 extends React.Component {
                           this.toggleDropdown(false);
                           this.setState({ connected: false, isFirstTime: true });
                         }}
-                        key={key}>{network.label}
+                        key={key}
+                      >
+                        {network.label}
                       </span>
                     );
                   })}
                 </DropdownV2>
               </div>
+              )
             }
             {showSettings
-              && <Link className={styles.settingButton} to={routes.setting.path}>
+              && (
+              <Link className={styles.settingButton} to={routes.setting.path}>
                 <SecondaryButtonV2 className={`${dark ? 'light' : ''} small`}>
                   {t('Settings')}
                 </SecondaryButtonV2>
               </Link>
+              )
             }
           </div>
         </div>

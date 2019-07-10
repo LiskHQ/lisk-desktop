@@ -10,4 +10,3 @@ describe('IconButton wrapper', () => {
     expect(wrappedButton.find(ToolBoxIconButton)).to.have.lengthOf(1);
   });
 });
-

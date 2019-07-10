@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import WalletTransactionsV2 from './../transactionsV2/walletTransactionsV2';
+import WalletTransactionsV2 from '../transactionsV2/walletTransactionsV2';
 import { tokenMap } from '../../constants/tokens';
 
 import styles from './transactionDasboard.css';
@@ -10,19 +10,21 @@ import styles from './transactionDasboard.css';
 class TransactionsDashboard extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   render() {
-    return <div className={`${grid.row} ${styles.wrapper}`}>
-      <div className={`${grid['col-xs-10']} ${grid['col-sm-12']} ${grid['col-md-12']} ${grid['col-lg-12']} ${styles.transactions}`}>
-        <WalletTransactionsV2 {...this.props} />
+    return (
+      <div className={`${grid.row} ${styles.wrapper}`}>
+        <div className={`${grid['col-xs-10']} ${grid['col-sm-12']} ${grid['col-md-12']} ${grid['col-lg-12']} ${styles.transactions}`}>
+          <WalletTransactionsV2 {...this.props} />
+        </div>
       </div>
-    </div>;
+    );
   }
 }
 
 const getActiveTokenAccount = state => (
   (state.account.info && state.account.info[
-    state.settings.token && state.settings.token.active ?
-      state.settings.token.active :
-      tokenMap.LSK.key
+    state.settings.token && state.settings.token.active
+      ? state.settings.token.active
+      : tokenMap.LSK.key
   ]) || {}
 );
 

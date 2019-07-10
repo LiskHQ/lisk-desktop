@@ -4,8 +4,7 @@ import ss from '../../constants/selectors';
 import urls from '../../constants/urls';
 
 const messageToSign = 'my message';
-const signedMessage =
-`-----BEGIN LISK SIGNED MESSAGE-----
+const signedMessage = `-----BEGIN LISK SIGNED MESSAGE-----
 -----MESSAGE-----
 my message
 -----PUBLIC KEY-----

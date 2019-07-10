@@ -17,10 +17,10 @@ const CalendarDemo = () => (
         dateFormat={dateFormat}
         minDate={moment(firstBlockTime).format(dateFormat)}
         maxDate={moment().format(dateFormat)}
-        date={moment().format(dateFormat)} />
+        date={moment().format(dateFormat)}
+      />
     </DemoRenderer>
   </div>
 );
 
 export default CalendarDemo;
-

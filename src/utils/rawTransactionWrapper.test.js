@@ -1,9 +1,11 @@
 import { expect } from 'chai';
 import Lisk from '@liskhq/lisk-client';
 import transactionTypes from '../constants/transactionTypes';
-import { createDelegateTX, createSendTX, createSecondPassphraseTX,
+import {
+  createDelegateTX, createSendTX, createSecondPassphraseTX,
   createRawVoteTX, concatVoteLists,
-  calculateTxId, getBufferToHex } from './rawTransactionWrapper';
+  calculateTxId, getBufferToHex,
+} from './rawTransactionWrapper';
 
 describe('Raw Transaction Wrapper', () => {
   it('should return create send transaction with createSendTX with data', () => {

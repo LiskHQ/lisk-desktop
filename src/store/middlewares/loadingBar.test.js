@@ -64,4 +64,3 @@ describe('LoadingBar middleware', () => {
     expect(next).to.have.been.calledWith(action);
   });
 });
-

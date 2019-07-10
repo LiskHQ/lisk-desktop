@@ -1,5 +1,5 @@
 import React from 'react';
-import Animation, { animations } from './';
+import Animation, { animations } from '.';
 import DemoRenderer from '../demoRenderer';
 
 const AnimationDemo = () => (
@@ -9,7 +9,7 @@ const AnimationDemo = () => (
       <DemoRenderer key={name}>
         <Animation
           name={name}
-          loop={true}
+          loop
         />
       </DemoRenderer>
     )) }

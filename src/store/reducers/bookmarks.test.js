@@ -63,4 +63,3 @@ describe('Reducer: bookmarks(state, action)', () => {
     expect(changedState.LSK[1]).to.deep.equal(undefined);
   });
 });
-

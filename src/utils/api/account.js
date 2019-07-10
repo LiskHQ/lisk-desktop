@@ -1,5 +1,5 @@
 import { getTokenFromAddress } from './transactions';
-import api from './';
+import api from '.';
 
 // TODO this import is temporary until api is implemented for it
 import { setSecondPassphrase as ssp } from './lsk/account';

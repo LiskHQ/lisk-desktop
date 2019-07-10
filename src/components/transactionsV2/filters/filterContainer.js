@@ -102,31 +102,39 @@ class filterContainer extends React.Component {
       <React.Fragment>
         <SecondaryButtonV2
           className={`${styles.filterTransactions} filterTransactions extra-small`}
-          onClick={this.toggleFilters}>
-            {t('Filter Transactions')}
-            <img className={'button-icon'} src={svg.iconFilter} />
+          onClick={this.toggleFilters}
+        >
+          {t('Filter Transactions')}
+          <img className="button-icon" src={svg.iconFilter} />
         </SecondaryButtonV2>
         <div className={styles.dropdownContainer}>
           <DropdownV2 className={styles.bigDropdown} showDropdown={this.state.showFilters}>
             <div
               className={`${styles.container} filter-container`}
-              ref={(node) => { this.dropdownRef = node; }}>
+              ref={(node) => { this.dropdownRef = node; }}
+            >
               <DateFieldGroup
                 filters={{ dateFrom, dateTo }}
                 updateCustomFilters={this.updateCustomFilters}
-                handleKeyPress={this.handleKey} />
+                handleKeyPress={this.handleKey}
+              />
               <AmountFieldGroup
                 filters={{ amountFrom, amountTo }}
                 updateCustomFilters={this.updateCustomFilters}
-                handleKeyPress={this.handleKey} />
+                handleKeyPress={this.handleKey}
+              />
               <MessageFieldGroup
                 filters={{ message }}
                 updateCustomFilters={this.updateCustomFilters}
-                handleKeyPress={this.handleKey} />
+                handleKeyPress={this.handleKey}
+              />
               <PrimaryButtonV2
                 disabled={this.state.hasErrors}
-                className='saveButton small'
-                onClick={this.saveFilters}>{this.props.t('Apply Filters')}</PrimaryButtonV2>
+                className="saveButton small"
+                onClick={this.saveFilters}
+              >
+                {this.props.t('Apply Filters')}
+              </PrimaryButtonV2>
             </div>
           </DropdownV2>
         </div>

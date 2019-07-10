@@ -17,8 +17,7 @@ const headerAccountInfo = ({
   const accountTitle = delegate.username
     || (index > -1 && accounts[index] && accounts[index].title);
 
-  const label =
-    (address === account.address && t('My Account'))
+  const label = (address === account.address && t('My Account'))
     || (delegate.username && t('Delegate #{{rank}}', { rank: delegate.rank }))
     || (!!accountTitle && t('Bookmarked Account'));
 
@@ -27,7 +26,7 @@ const headerAccountInfo = ({
       <AccountVisual
         address={address}
         size={48}
-        />
+      />
       <div className={styles.accountInfo}>
         <div>
           <h2 className={`${styles.title} account-name`}>

@@ -7,12 +7,15 @@ import styles from './votingListViewV2.css';
 const ListLabelsV2 = ({
   shouldShowVoteColumn, t, columnClassNames,
 }) =>
-  (<TableRow isHeader={true} className={`${styles.header} ${grid.row}`} id="transactionsHeader">
+  (
+    <TableRow isHeader className={`${styles.header} ${grid.row}`} id="transactionsHeader">
       {
-        shouldShowVoteColumn ?
-          <div className={columnClassNames.vote}>
-            {t('Vote', { context: 'verb' })}
-          </div> : null
+        shouldShowVoteColumn
+          ? (
+            <div className={columnClassNames.vote}>
+              {t('Vote', { context: 'verb' })}
+            </div>
+          ) : null
       }
       <div className={columnClassNames.rank}>{t('Rank')}</div>
       <div className={columnClassNames.delegate}>{t('Delegate')}</div>
@@ -20,19 +23,28 @@ const ListLabelsV2 = ({
       <div className={columnClassNames.productivity}>
         {t('Productivity')}
         <Tooltip>
-          <p> {
+          <p>
+            {' '}
+            {
             t('Percentage of successfully forged blocks of when the delegate should have forged a block of transactions.')
-          } </p>
+          }
+            {' '}
+          </p>
         </Tooltip>
       </div>
       <div className={columnClassNames.voteWeight}>
         {t('Vote weight')}
-        <Tooltip className='showOnLeft' >
-          <p> {
+        <Tooltip className="showOnLeft">
+          <p>
+            {' '}
+            {
             t('Sum of LSK balance of all accounts who voted for this delegate')
-          } </p>
+          }
+            {' '}
+          </p>
         </Tooltip>
       </div>
-    </TableRow>);
+    </TableRow>
+  );
 
 export default ListLabelsV2;

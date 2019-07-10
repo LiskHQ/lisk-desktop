@@ -4,9 +4,9 @@ import networks from '../constants/networks';
 
 const getNetworkKey = liskAPIClient => (
   `delegateCache-${
-    liskAPIClient.options.code === networks.customNode.code ?
-      liskAPIClient.currentNode :
-      liskAPIClient.options.code
+    liskAPIClient.options.code === networks.customNode.code
+      ? liskAPIClient.currentNode
+      : liskAPIClient.options.code
   }`
 );
 

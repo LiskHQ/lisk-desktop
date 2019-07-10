@@ -32,16 +32,21 @@ class CopyToClipboard extends React.Component {
     return (
       <div onClick={(e) => {
         e.stopPropagation();
-      }}>
+      }}
+      >
         <ReactCopyToClipboard text={value} onCopy={() => this.textIsCopied()}>
-          {this.state.copied ? <span className={`${className} copied`}>
-            <FontIcon value='copy-to-clipboard' className={copyClassName}></FontIcon> {t('Copied!')}
-          </span> :
-            <span className={`${className} ${styles.clickable} default`}>
-              <FontIcon value='copy-to-clipboard' className={copyClassName}></FontIcon>
-              <span className='copy-title'>{text || value}</span>
+          {this.state.copied ? (
+            <span className={`${className} copied`}>
+              <FontIcon value="copy-to-clipboard" className={copyClassName} />
+              {' '}
+              {t('Copied!')}
             </span>
-          }
+          ) : (
+            <span className={`${className} ${styles.clickable} default`}>
+              <FontIcon value="copy-to-clipboard" className={copyClassName} />
+              <span className="copy-title">{text || value}</span>
+            </span>
+          )}
         </ReactCopyToClipboard>
       </div>
     );

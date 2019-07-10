@@ -30,7 +30,8 @@ class BalanceGraph extends React.Component {
           <div className={`${styles.graphHolder}`}>
             <LineChart
               options={ChartUtils.graphOptions(format)}
-              data={data} />
+              data={data}
+            />
           </div>
         </main>
       </BoxV2>

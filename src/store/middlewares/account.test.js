@@ -1,5 +1,7 @@
 import { expect } from 'chai';
-import { spy, stub, useFakeTimers, match } from 'sinon';
+import {
+  spy, stub, useFakeTimers, match,
+} from 'sinon';
 import * as accountActions from '../../actions/account';
 import * as transactionsActions from '../../actions/transactions';
 import * as votingActions from '../../actions/voting';

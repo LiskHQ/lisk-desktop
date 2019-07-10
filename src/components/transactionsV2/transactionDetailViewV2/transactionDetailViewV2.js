@@ -33,53 +33,59 @@ class TransactionDetailViewV2 extends React.Component {
 
     return (transaction.id ? (
       <React.Fragment>
-        {transaction.type === transactionTypes.send ||
-          transaction.type === transactionTypes.registerDelegate ? (
-          <div className={styles.summaryHeader}>
-            <h2>{title}</h2>
-            <p>
-            {transaction.type === transactionTypes.send ? (
-              <span className={'tx-amount'}>
-                <AmountV2
-                  className={styles.txAmount}
-                  token={activeToken}
-                  value={transaction} />
-              </span>
-              ) : value
+        {transaction.type === transactionTypes.send
+          || transaction.type === transactionTypes.registerDelegate ? (
+            <div className={styles.summaryHeader}>
+              <h2>{title}</h2>
+              <p>
+                {transaction.type === transactionTypes.send ? (
+                  <span className="tx-amount">
+                    <AmountV2
+                      className={styles.txAmount}
+                      token={activeToken}
+                      value={transaction}
+                    />
+                  </span>
+                ) : value
             }
-            </p>
-          </div>
-        ) : null}
+              </p>
+            </div>
+          ) : null}
         <div className={styles.accountWrapper}>
           <AccountInfo
             address={transaction.senderId}
-            addressClass={'sender-address'}
-            label={label} />
-          {transaction.type === transactionTypes.send ?
-            <AccountInfo
-              address={transaction.recipientId}
-              addressClass={'receiver-address'}
-              label={'Recipient'} /> :
-            null
+            addressClass="sender-address"
+            label={label}
+          />
+          {transaction.type === transactionTypes.send
+            ? (
+              <AccountInfo
+                address={transaction.recipientId}
+                addressClass="receiver-address"
+                label="Recipient"
+              />
+            )
+            : null
           }
         </div>
-        { transaction.type === transactionTypes.send ||
-          transaction.type === transactionTypes.vote ? (
-          <React.Fragment>
-          { transaction.type === transactionTypes.send &&
-            (transaction.asset && transaction.asset.data) ? (
-            <div className={styles.detailsWrapper}>
-              <span className={styles.label}>{t('Message')}</span>
-              <div className={`${styles.message} tx-reference`}>
-                {transaction.asset.data}
+        { transaction.type === transactionTypes.send
+          || transaction.type === transactionTypes.vote ? (
+            <React.Fragment>
+              { transaction.type === transactionTypes.send
+            && (transaction.asset && transaction.asset.data) ? (
+              <div className={styles.detailsWrapper}>
+                <span className={styles.label}>{t('Message')}</span>
+                <div className={`${styles.message} tx-reference`}>
+                  {transaction.asset.data}
+                </div>
               </div>
-            </div>
+                ) : null}
+              { transaction.type === transactionTypes.vote && transaction.votesName ? (
+                <TransactionVotes votes={transaction.votesName} />
+              ) : null}
+            </React.Fragment>
           ) : null}
-          { transaction.type === transactionTypes.vote && transaction.votesName ? (
-            <TransactionVotes votes={transaction.votesName} />
-          ) : null}
-          </React.Fragment>) : null}
-        </React.Fragment>
+      </React.Fragment>
     ) : null);
   }
 }

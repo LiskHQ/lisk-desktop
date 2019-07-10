@@ -31,16 +31,15 @@ export const levenshteinDistance = (word1, word2) => {
 export const inDictionary = word =>
   mnemonic.Words.ENGLISH.indexOf(word) !== -1;
 
-export const reducedDictByWordLength =
-  mnemonic.Words.ENGLISH.reduce((acc, el) => {
-    const len = el.length;
-    if (acc[len]) {
-      acc[len].push(el);
-    } else {
-      acc[len] = [el];
-    }
-    return acc;
-  }, {});
+export const reducedDictByWordLength = mnemonic.Words.ENGLISH.reduce((acc, el) => {
+  const len = el.length;
+  if (acc[len]) {
+    acc[len].push(el);
+  } else {
+    acc[len] = [el];
+  }
+  return acc;
+}, {});
 
 const getByKey = key =>
   [

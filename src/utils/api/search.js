@@ -1,14 +1,14 @@
 import { getAccount } from './account';
 import { getSingleTransaction } from './lsk/transactions';
 import { getDelegates } from './delegates';
-import regex from './../../utils/regex';
+import regex from '../regex';
 
 const filterAndOrderByMatch = (searchTerm, delegates) =>
   [...delegates].filter(result =>
     result.username.toLowerCase().indexOf(searchTerm.toLowerCase()) === 0).sort((first, second) => {
     if (first.username < second.username) {
       return -1;
-    } else if (first.username > second.username) {
+    } if (first.username > second.username) {
       return 1;
     }
     return 0;
@@ -41,10 +41,10 @@ const searchTransactions = ({ liskAPIClient, searchTerm }) => new Promise((resol
     .catch(() => reject({ transactions: [] })));
 
 const getSearches = search => ([
-  ...(search.match(regex.address) ?
-    [searchAddresses] : [() => new Promise(resolve => resolve({ addresses: [] }))]),
-  ...(search.match(regex.transactionId) ?
-    [searchTransactions] : [() => new Promise(resolve => resolve({ transactions: [] }))]),
+  ...(search.match(regex.address)
+    ? [searchAddresses] : [() => new Promise(resolve => resolve({ addresses: [] }))]),
+  ...(search.match(regex.transactionId)
+    ? [searchTransactions] : [() => new Promise(resolve => resolve({ transactions: [] }))]),
   searchDelegates, // allways add delegates promise as they share format (address, tx)
 ]);
 

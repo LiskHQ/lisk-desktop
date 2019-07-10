@@ -17,8 +17,8 @@ describe('Outside Click Handler Compnent', () => {
   });
 
   it('Should not add Event Listener and add afterwards if props disabled is set to false', () => {
-    const wrapper = mount(<OutsideClickHandler {...props} disabled={true}>
-      <div className={'child'}></div>
+    const wrapper = mount(<OutsideClickHandler {...props} disabled>
+      <div className="child" />
     </OutsideClickHandler>);
     expect(wrapper).toContainExactlyOneMatchingElement('.child');
     expect(document.addEventListener).not.toBeCalled();
@@ -30,7 +30,7 @@ describe('Outside Click Handler Compnent', () => {
 
   it('Should add Event Listener and remove after prop disabled is changed to true', () => {
     const wrapper = mount(<OutsideClickHandler {...props} disabled={false}>
-      <span></span>
+      <span />
     </OutsideClickHandler>);
     expect(document.addEventListener).toBeCalled();
     wrapper.setProps({ disabled: true });
@@ -39,7 +39,7 @@ describe('Outside Click Handler Compnent', () => {
 
   it('Should call click outside if target is outside wrapper', () => {
     const wrapper = mount(<OutsideClickHandler {...props} disabled={false}>
-      <div></div>
+      <div />
     </OutsideClickHandler>);
     expect(document.addEventListener).toBeCalled();
     eventsMap.click({ target: document.createElement('span') });

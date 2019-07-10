@@ -1,4 +1,6 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import {
+  createStore, combineReducers, applyMiddleware, compose,
+} from 'redux';
 
 import actionTypes from '../constants/actions';
 import env from '../constants/env';

@@ -1,6 +1,6 @@
 import React from 'react';
 import DemoRenderer, { DarkWrapper } from '../demoRenderer';
-import { InputV2, AutoresizeTextarea } from './';
+import { InputV2, AutoresizeTextarea } from '.';
 import Feedback from '../feedback/feedback';
 import Icon from '../icon';
 import SpinnerV2 from '../../spinnerV2/spinnerV2';
@@ -14,56 +14,57 @@ const InputsDemo = () => (
     <DemoRenderer>
       <InputV2
         onChange={onChange}
-        value=''
-        placeholder='Input demo placeholder (default: size L)'
+        value=""
+        placeholder="Input demo placeholder (default: size L)"
       />
       <InputV2
-        size='m'
+        size="m"
         onChange={onChange}
-        value=''
-        placeholder='Input demo placeholder (size M)'
+        value=""
+        placeholder="Input demo placeholder (size M)"
       />
       <InputV2
-        size='s'
+        size="s"
         onChange={onChange}
-        value=''
-        placeholder='Input demo placeholder (size S)'
+        value=""
+        placeholder="Input demo placeholder (size S)"
       />
       <InputV2
-        size='xs'
+        size="xs"
         onChange={onChange}
-        value=''
-        placeholder='Input demo placeholder (size XS)'
+        value=""
+        placeholder="Input demo placeholder (size XS)"
       />
     </DemoRenderer>
     <DemoRenderer>
       <InputV2
         onChange={onChange}
-        name='demo'
-        value='ok value'
+        name="demo"
+        value="ok value"
       />
       {/* TODO fix InputV2 to accept props.status='ok' so that next line is not needed */}
-      <Icon name='ok_icon' />
+      <Icon name="ok_icon" />
       <InputV2
         onChange={onChange}
-        name='demo'
-        value='validating...'
+        name="demo"
+        value="validating..."
       />
       {/* TODO fix InputV2 to accept props.status='pending' so that next line is not needed */}
       <SpinnerV2 />
       <InputV2
         onChange={onChange}
-        name='demo'
-        value='0alkawja;jk'
-        className='error'
+        name="demo"
+        value="0alkawja;jk"
+        className="error"
       />
       {/* TODO fix InputV2 to accept props.status='error' so that next line is not needed */}
-      <Icon name='alert_icon' />
+      <Icon name="alert_icon" />
       {/* TODO fix InputV2 to accept props.error='<message>' so that next line is not needed */}
       <Feedback
         show
-        status={'error'}
-        showIcon>
+        status="error"
+        showIcon
+      >
         There was something wrong typed.
       </Feedback>
     </DemoRenderer>
@@ -71,42 +72,44 @@ const InputsDemo = () => (
       <DarkWrapper>
         {/* TODO fix InputV2 to change to dark mode when props.dark={true} */}
         <InputV2
-          dark={true}
+          dark
           onChange={onChange}
-          name='demo'
-          value='ok value'
+          name="demo"
+          value="ok value"
         />
-        <Icon name='ok_icon' />
+        <Icon name="ok_icon" />
         <InputV2
           dark
           onChange={onChange}
-          name='demo'
-          value='validating...'
+          name="demo"
+          value="validating..."
         />
         <SpinnerV2 />
         <InputV2
           dark
           onChange={onChange}
-          name='demo'
-          value='0alkawja;jk'
-          className='error'
+          name="demo"
+          value="0alkawja;jk"
+          className="error"
         />
-        <Icon name='alert_icon' />
+        <Icon name="alert_icon" />
         <Feedback
           dark
           show
-          status={'error'}
-          showIcon>
+          status="error"
+          showIcon
+        >
           There was something wrong typed.
         </Feedback>
       </DarkWrapper>
     </DemoRenderer>
     <DemoRenderer>
       <AutoresizeTextarea
-        name='shareLink'
-        value='text in the text area'
-        className='whatever'
-        readOnly />
+        name="shareLink"
+        value="text in the text area"
+        className="whatever"
+        readOnly
+      />
     </DemoRenderer>
   </div>
 );

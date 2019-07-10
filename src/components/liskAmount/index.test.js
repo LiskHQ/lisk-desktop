@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
-import LiskAmount from './';
+import LiskAmount from '.';
 
 describe('LiskAmount', () => {
   const normalizeNumber = 100000000;

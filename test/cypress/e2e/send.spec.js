@@ -50,8 +50,8 @@ describe('Send', () => {
    * @expect transaction appears in the activity list as confirmed
    * @expect header balance value is decreased
    */
-  it('Transfer tx with empty ref appears in activity pending -> approved,' +
-    'Header balance is affected', () => {
+  it('Transfer tx with empty ref appears in activity pending -> approved,'
+    + 'Header balance is affected', () => {
     cy.autologin(accounts.genesis.passphrase, networks.devnet.node);
     cy.visit(urls.send);
     cy.get(ss.headerBalance).invoke('text').as('balanceBefore');

@@ -25,9 +25,9 @@ const getIndex = (history, tabs) => {
 const TabTemplate = ({ img, label, isFontIcon }) => (
   <div>
     {
-      !isFontIcon ?
-      <img src={img} /> :
-      <FontIcon className={styles.bottomIcon} value={img} />
+      !isFontIcon
+        ? <img src={img} />
+        : <FontIcon className={styles.bottomIcon} value={img} />
     }
     <span>{label}</span>
   </div>
@@ -123,80 +123,96 @@ class MainMenu extends React.Component {
       <Fragment>
         <aside className={styles.aside}>
           <div className={styles.sideBarWrapper}>
-            <Link to={`${routes.dashboard.path}`} className='home-link'><img src={logo} className={styles.logo} /></Link>
-            <ToolboxTabs index={getIndex(history, tabs)}
+            <Link to={`${routes.dashboard.path}`} className="home-link"><img src={logo} className={styles.logo} /></Link>
+            <ToolboxTabs
+              index={getIndex(history, tabs)}
               theme={styles}
               onChange={this.navigate.bind(this, history, tabs)}
-              disableAnimatedBottomBorder={true}
-              className={`${styles.tabs} ${styles.topTabs} main-tabs`}>
+              disableAnimatedBottomBorder
+              className={`${styles.tabs} ${styles.topTabs} main-tabs`}
+            >
               {tabs.map(({
-                   label, image, id, enabledWhenNotLoggedIn,
-                  }, index) =>
+                label, image, id, enabledWhenNotLoggedIn,
+              }, index) => (
                 <Tab
                   key={index}
                   label={<TabTemplate label={label} img={image} />}
                   className={styles.tab}
                   id={id}
                   disabled={!account.address && !enabledWhenNotLoggedIn}
-                />)}
+                />
+              ))}
             </ToolboxTabs>
             <div className={`${styles.tabs} ${styles.bottomTabs} main-tabs`}>
               {bottomMenuTabs.map(({
-                   label, image, id, route,
-                  }, index) => (
-                <Link to={route}
-                    id={id}
-                    key={index}
-                    className={`${styles.bottomTab} ${styles.label}`} >
+                label, image, id, route,
+              }, index) => (
+                <Link
+                  to={route}
+                  id={id}
+                  key={index}
+                  className={`${styles.bottomTab} ${styles.label}`}
+                >
                   <TabTemplate label={label} img={image} isFontIcon />
                 </Link>
               ))}
-              <a target='_blank' href={feedbackLinks.general}
-                  className={`${styles.bottomTab} ${styles.label}`}
-                  rel='noopener noreferrer'>
-                <TabTemplate label={this.props.t('Feedback')} img='conversation' isFontIcon />
+              <a
+                target="_blank"
+                href={feedbackLinks.general}
+                className={`${styles.bottomTab} ${styles.label}`}
+                rel="noopener noreferrer"
+              >
+                <TabTemplate label={this.props.t('Feedback')} img="conversation" isFontIcon />
               </a>
             </div>
-            <Drawer theme={styles}
-              className='drawer'
+            <Drawer
+              theme={styles}
+              className="drawer"
               active={this.state.active}
-              onOverlayClick={this.menuToggle.bind(this)}>
+              onOverlayClick={this.menuToggle.bind(this)}
+            >
               <div>
                 <header className={styles.header}>
                   <Link className={styles.homeLink} to={`${routes.dashboard.path}`}><img src={logo} className={styles.logo} /></Link>
-                  <FontIcon value='close' className={styles.close} onClick={this.menuToggle.bind(this)} />
+                  <FontIcon value="close" className={styles.close} onClick={this.menuToggle.bind(this)} />
                 </header>
-                <ToolboxTabs index={getIndex(history, tabs)}
+                <ToolboxTabs
+                  index={getIndex(history, tabs)}
                   theme={styles}
                   onChange={this.navigate.bind(this, history, tabs)}
-                  disableAnimatedBottomBorder={true}
-                  className={`${styles.tabs} main-tabs`}>
+                  disableAnimatedBottomBorder
+                  className={`${styles.tabs} main-tabs`}
+                >
                   {tabs.map(({
-                       label, image, id, enabledWhenNotLoggedIn,
-                      }, index) =>
+                    label, image, id, enabledWhenNotLoggedIn,
+                  }, index) => (
                     <Tab
                       key={index}
                       label={<TabTemplate label={label} img={image} />}
                       id={id}
                       disabled={!account.address && !enabledWhenNotLoggedIn}
-                    />)}
+                    />
+                  ))}
                 </ToolboxTabs>
 
-                <ToolboxTabs index={getIndex(history, bottomMenuTabs)}
+                <ToolboxTabs
+                  index={getIndex(history, bottomMenuTabs)}
                   theme={styles}
                   onChange={this.navigate.bind(this, history, bottomMenuTabs)}
-                  disableAnimatedBottomBorder={true}
-                  className={`${styles.tabs} ${styles.bottomTabs} main-tabs`}>
+                  disableAnimatedBottomBorder
+                  className={`${styles.tabs} ${styles.bottomTabs} main-tabs`}
+                >
                   {bottomMenuTabs.map(({
-                      label, image, id, enabledWhenNotLoggedIn,
-                      }, index) =>
+                    label, image, id, enabledWhenNotLoggedIn,
+                  }, index) => (
                     <Tab
                       key={index}
                       label={<TabTemplate label={label} img={image} isFontIcon />}
                       className={styles.bottomTab}
                       id={id}
                       disabled={!account.address && !enabledWhenNotLoggedIn}
-                    />)}
+                    />
+                  ))}
                 </ToolboxTabs>
               </div>
             </Drawer>
@@ -206,7 +222,8 @@ class MainMenu extends React.Component {
           menuToggle={this.menuToggle.bind(this)}
           settingToggle={this.settingToggle.bind(this)}
           menuStatus={this.state.active}
-          settingStatus={this.state.setting} />
+          settingStatus={this.state.setting}
+        />
       </Fragment>
     );
   }

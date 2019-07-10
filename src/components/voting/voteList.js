@@ -5,24 +5,37 @@ const VoteList = ({
   list, title, className, votes,
 }) => (
   <React.Fragment>
-  {list.length ?
-    <section>
-      <label>{title} ({list.length})</label>
-      <label>
-        <div className={`${styles.votesContainer} ${className}`} >
-          {list.map(vote => (
-           <span key={vote} className={`${styles.voteTag} vote`}>
-            { votes[vote] ?
-              <span className={styles.rank}>#{votes[vote].rank}</span> :
-              null
+    {list.length
+      ? (
+        <section>
+          <label>
+            {title}
+            {' '}
+(
+            {list.length}
+)
+          </label>
+          <label>
+            <div className={`${styles.votesContainer} ${className}`}>
+              {list.map(vote => (
+                <span key={vote} className={`${styles.voteTag} vote`}>
+                  { votes[vote]
+                    ? (
+                      <span className={styles.rank}>
+#
+                        {votes[vote].rank}
+                      </span>
+                    )
+                    : null
             }
-            <span className={styles.username}>{vote}</span>
-           </span>
-          ))}
-        </div>
-      </label>
-    </section> :
-    null }
+                  <span className={styles.username}>{vote}</span>
+                </span>
+              ))}
+            </div>
+          </label>
+        </section>
+      )
+      : null }
   </React.Fragment>
 );
 

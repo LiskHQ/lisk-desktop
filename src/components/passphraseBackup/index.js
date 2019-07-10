@@ -47,16 +47,22 @@ class PassphraseBackup extends React.Component {
                 {t('Passphrase')}
 
                 <Tooltip
-                  title={'Save the passphrase'}
-                  footer={
-                    <a href={links.howToStorePassphrase}
+                  title="Save the passphrase"
+                  footer={(
+                    <a
+                      href={links.howToStorePassphrase}
                       rel="noopener noreferrer"
-                      target="_blank">
-                        {t('Read More')}
-                    </a>}>
-                  <p>{
+                      target="_blank"
+                    >
+                      {t('Read More')}
+                    </a>
+)}
+                >
+                  <p>
+                    {
                     t('Store your passphrase in a safe place, possibly having more than one copy. You can use a password manager or a paperwallet. It is very important to ensure you do not lose access to your passphrase.')
-                  }</p>
+                  }
+                  </p>
                 </Tooltip>
 
               </h2>
@@ -75,8 +81,8 @@ class PassphraseBackup extends React.Component {
                 text={t('Copy to clipboard')}
                 copyClassName={styles.copyIcon}
                 Container={SecondaryButtonV2}
-                containerClassName='extra-small'
-                />
+                containerClassName="extra-small"
+              />
             </div>
           </div>
           <div className={styles.hrSection}>
@@ -87,7 +93,8 @@ class PassphraseBackup extends React.Component {
               <h2>
                 {t('Paper Wallet')}
                 <Tooltip
-                  title={'Paper wallet'}>
+                  title="Paper wallet"
+                >
                   <p>
                     {t('You can print your passphrase to store in a safe place. ')}
                     {t('It is highly recommended to delete the PDF file and remove it from your Trash Folder too after printing it.')}
@@ -98,10 +105,10 @@ class PassphraseBackup extends React.Component {
                 <QRCode value={account.passphrase} />
               </div>
               <div className={styles.downloadLisk}>
-                <Icon name='fileOutline' />
-                <p className='option-value'>{this.walletName}</p>
+                <Icon name="fileOutline" />
+                <p className="option-value">{this.walletName}</p>
               </div>
-              <SecondaryButtonV2 className='extra-small' onClick={this.generatePaperwallet} >
+              <SecondaryButtonV2 className="extra-small" onClick={this.generatePaperwallet}>
                 {t('Download')}
               </SecondaryButtonV2>
             </div>

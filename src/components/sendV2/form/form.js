@@ -210,8 +210,8 @@ class Form extends React.Component {
 
     if (bookmarks.length && recipient.value !== '') {
       isAccountValid = bookmarks
-        .find(account => (account.title.toLowerCase() === recipient.value.toLowerCase()) ||
-          account.address.toLowerCase() === recipient.value.toLowerCase()) || false;
+        .find(account => (account.title.toLowerCase() === recipient.value.toLowerCase())
+          || account.address.toLowerCase() === recipient.value.toLowerCase()) || false;
     }
     isAddressValid = validateAddress(token, recipient.value, getNetworkCode(networkConfig)) === 0;
 
@@ -430,10 +430,22 @@ class Form extends React.Component {
     const { fields, isLoading } = this.state;
     const { amount: { value } } = fields;
     if (value === '') return <span>-</span>;
-    if (isLoading) return <span>{t('Loading')} <SpinnerV2 className={styles.loading} /></span>;
-    return <span>{!this.validateAmountField(value)
-      ? `${fromRawLsk(fields.processingSpeed.txFee)} ${token}`
-      : t('Invalid amount')}</span>;
+    if (isLoading) {
+      return (
+        <span>
+          {t('Loading')}
+          {' '}
+          <SpinnerV2 className={styles.loading} />
+        </span>
+      );
+    }
+    return (
+      <span>
+        {!this.validateAmountField(value)
+          ? `${fromRawLsk(fields.processingSpeed.txFee)} ${token}`
+          : t('Invalid amount')}
+      </span>
+    );
   }
 
   // eslint-disable-next-line complexity
@@ -442,8 +454,7 @@ class Form extends React.Component {
     const { t, token, dynamicFees } = this.props;
     const messageMaxLength = 64;
     const byteCount = encodeURI(fields.reference.value).split(/%..|./).length - 1;
-    const isBtnEnabled =
-      ((fields.recipient.value !== '' && !fields.recipient.error)
+    const isBtnEnabled = ((fields.recipient.value !== '' && !fields.recipient.error)
       && (fields.amount.value !== '' && !fields.amount.error)
       && !fields.reference.error) && !this.state.isLoading;
 
@@ -471,28 +482,31 @@ class Form extends React.Component {
             <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
             <span className={`${styles.amountField} amount`}>
               <InputV2
-                autoComplete={'off'}
+                autoComplete="off"
                 onChange={this.onAmountOrReferenceChange}
-                name='amount'
+                name="amount"
                 value={fields.amount.value}
                 placeholder={t('Insert the amount of transaction')}
-                className={`${styles.input} ${fields.amount.error ? 'error' : ''}`} />
+                className={`${styles.input} ${fields.amount.error ? 'error' : ''}`}
+              />
               <ConverterV2
                 className={styles.converter}
                 value={fields.amount.value}
-                error={fields.amount.error} />
-              <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}/>
+                error={fields.amount.error}
+              />
+              <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`} />
               <img
                 className={`${styles.status} ${!this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}
-                src={ fields.amount.error ? svg.alert_icon : svg.ok_icon}
+                src={fields.amount.error ? svg.alert_icon : svg.ok_icon}
               />
             </span>
 
             <Feedback
               show={fields.amount.error}
-              status={'error'}
+              status="error"
               className={`${styles.feedbackMessage} amount-feedback`}
-              showIcon={false}>
+              showIcon={false}
+            >
               {fields.amount.feedback}
             </Feedback>
 
@@ -500,18 +514,20 @@ class Form extends React.Component {
               <span className={styles.amountHint}>
                 {t('+ Transaction fee {{fee}} LSK', { fee: fromRawLsk(fees.send) })}
                 <Tooltip
-                  className={'showOnTop'}
+                  className="showOnTop"
                   title={t('Transaction fee')}
-                  footer={
-                    <a href={links.transactionFee}
+                  footer={(
+                    <a
+                      href={links.transactionFee}
                       rel="noopener noreferrer"
-                      target="_blank">
-                        {t('Read More')}
+                      target="_blank"
+                    >
+                      {t('Read More')}
                     </a>
-                  }
+)}
                 >
                   <p className={styles.tooltipText}>
-                  {
+                    {
                     t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
                     Such operations require hardware resources and because of that there is a small fee for processing those.`)
                   }
@@ -529,7 +545,7 @@ class Form extends React.Component {
                   maxLength={100}
                   spellCheck={false}
                   onChange={this.onAmountOrReferenceChange}
-                  name='reference'
+                  name="reference"
                   value={fields.reference.value}
                   placeholder={t('Write message')}
                   className={`${styles.textarea} ${fields.reference.error ? 'error' : ''} message`}
@@ -541,24 +557,26 @@ class Form extends React.Component {
                 />
                 <img
                   className={`${styles.status} ${styles.referenceStatus} ${!fields.reference.value ? styles.hide : styles.show}`}
-                  src={ fields.reference.error ? svg.alert_icon : svg.ok_icon}
+                  src={fields.reference.error ? svg.alert_icon : svg.ok_icon}
                 />
               </span>
               <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${styles.show}`}>
                 {fields.reference.feedback}
                 <Tooltip
-                  className={'showOnTop'}
+                  className="showOnTop"
                   title={t('Bytes counter')}
-                  footer={
-                    <a href={links.transactionFee}
+                  footer={(
+                    <a
+                      href={links.transactionFee}
                       rel="noopener noreferrer"
-                      target="_blank">
-                        {t('Read More')}
+                      target="_blank"
+                    >
+                      {t('Read More')}
                     </a>
-                  }
+)}
                 >
                   <p className={styles.tooltipText}>
-                  {
+                    {
                     t(`LISK Hub counts your message by bytes so keep in mind 
                     that the length on your message may vary in different languages. 
                     Different characters may consume different amount of bytes space.`)
@@ -572,15 +590,17 @@ class Form extends React.Component {
               <span className={`${styles.fieldLabel}`}>
                 {t('Processing Speed')}
                 <Tooltip>
-                  <p className={styles.tooltipText}>{
+                  <p className={styles.tooltipText}>
+                    {
                     t('Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.')
-                  }</p>
+                  }
+                  </p>
                 </Tooltip>
               </span>
               <Selector
                 className={styles.selector}
                 onSelectorChange={this.selectProcessingSpeed}
-                name={'speedSelector'}
+                name="speedSelector"
                 selectedIndex={fields.processingSpeed.selectedIndex}
                 options={[
                   { title: t('Low'), value: dynamicFees.Low },
@@ -588,7 +608,9 @@ class Form extends React.Component {
                 ]}
               />
               <span className={styles.processingInfo}>
-                {t('Transaction fee: ')} {this.getProcessingSpeedStatus()}
+                {t('Transaction fee: ')}
+                {' '}
+                {this.getProcessingSpeedStatus()}
               </span>
             </div>
           )}

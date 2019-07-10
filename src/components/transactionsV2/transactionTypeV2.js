@@ -54,22 +54,25 @@ const TransactionTypeV2 = (props) => { // eslint-disable-line complexity
     <div className={`${styles.transactionType} transaction-address`}>
       <img src={icon} className={`${styles.icon} tx-icon`} />
       <div className={styles.info}>
-      { type || props.showTransaction
-        ? (
-          <span className={styles.title}>{type || t('Transaction')}</span>
-        ) : (
-          <React.Fragment>
-            <AccountVisual
-              className={`${styles.avatar} tx-avatar`}
-              address={address}
-              size={36} />
-            <div className={styles.accountInfo}>
-              <span className={`${styles.title}`}>{
+        { type || props.showTransaction
+          ? (
+            <span className={styles.title}>{type || t('Transaction')}</span>
+          ) : (
+            <React.Fragment>
+              <AccountVisual
+                className={`${styles.avatar} tx-avatar`}
+                address={address}
+                size={36}
+              />
+              <div className={styles.accountInfo}>
+                <span className={`${styles.title}`}>
+                  {
                 hasTitle ? accountTitle : address
-              }</span>
-              { hasTitle && <span className={styles.address}>{address}</span> }
-            </div>
-          </React.Fragment>
+              }
+                </span>
+                { hasTitle && <span className={styles.address}>{address}</span> }
+              </div>
+            </React.Fragment>
           )}
       </div>
     </div>

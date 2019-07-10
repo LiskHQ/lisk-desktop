@@ -71,18 +71,18 @@ class NavigationButtons extends React.Component {
     return (
       <div className={`${styles.wrapper} navigation-buttons`}>
         <button
-          className={'go-back'}
+          className="go-back"
           disabled={!isBackActive}
           onClick={this.onGoBack}
         >
-          <Icon name={'backArrow'} />
+          <Icon name="backArrow" />
         </button>
         <button
-          className={'go-forward'}
+          className="go-forward"
           disabled={!isForwardActive}
           onClick={this.onGoForward}
         >
-          <Icon name={'forwardArrow'} />
+          <Icon name="forwardArrow" />
         </button>
       </div>
     );

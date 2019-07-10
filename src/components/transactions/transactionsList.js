@@ -49,28 +49,34 @@ class TransactionsList extends React.Component {
     if (transactions.length === 0) {
       // istanbul ignore else
       if (dashboard || (tabObj && tabObj.value !== txFilters.all)) {
-        return <p className={`${styles.empty} hasPaddingRow empty-message`}>
-          {t('There are no {{filterName}} transactions.', {
-            filterName: tabObj && tabObj.name ? tabObj.name.toLowerCase() : '',
-          })}
-        </p>;
+        return (
+          <p className={`${styles.empty} hasPaddingRow empty-message`}>
+            {t('There are no {{filterName}} transactions.', {
+              filterName: tabObj && tabObj.name ? tabObj.name.toLowerCase() : '',
+            })}
+          </p>
+        );
       }
       return null;
     }
 
-    return <div className={`${styles.results} ${this.props.isBarEnabledTransactions ? styles.onBarEnabled : ''} ${showMore && styles.onShowMore} transaction-results`}>
-      {
+    return (
+      <div className={`${styles.results} ${this.props.isBarEnabledTransactions ? styles.onBarEnabled : ''} ${showMore && styles.onShowMore} transaction-results`}>
+        {
         transactions
-        .filter(fixIncomingFilter)
-        .map(transaction =>
-          <Rows address={address}
-            key={transaction.id}
-            t={t}
-            value={transaction}
-            onClick={onClick}
-          />)
+          .filter(fixIncomingFilter)
+          .map(transaction => (
+            <Rows
+              address={address}
+              key={transaction.id}
+              t={t}
+              value={transaction}
+              onClick={onClick}
+            />
+          ))
       }
-    </div>;
+      </div>
+    );
   }
 }
 

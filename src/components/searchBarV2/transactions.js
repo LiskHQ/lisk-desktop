@@ -55,7 +55,7 @@ const Transactions = ({
         </div>
       </header>
       <div className={`${styles.content} transactions-content`}>
-      {
+        {
         transactions.map((transaction, index) => (
           <div
             key={transaction.id}

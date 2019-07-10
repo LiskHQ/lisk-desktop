@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import AccountVisual from '../accountVisual/index';
 import { InputV2 } from '../toolbox/inputsV2';
-import keyCodes from './../../constants/keyCodes';
+import keyCodes from '../../constants/keyCodes';
 import svg from '../../utils/svgIcons';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
 import Feedback from '../toolbox/feedback/feedback';
@@ -41,8 +41,8 @@ class Bookmark extends React.Component {
 
     return accounts
       .filter(account =>
-        account.title.toLowerCase().includes(recipient.value.toLowerCase()) ||
-        account.address.toLowerCase().includes(recipient.value.toLowerCase()));
+        account.title.toLowerCase().includes(recipient.value.toLowerCase())
+        || account.address.toLowerCase().includes(recipient.value.toLowerCase()));
   }
 
   resetListIndex() {
@@ -141,35 +141,37 @@ class Bookmark extends React.Component {
             size={25}
           />
           <InputV2
-            autoComplete={'off'}
+            autoComplete="off"
             className={`${styles.input} ${recipient.error ? 'error' : ''} recipient bookmark`}
-            name={'recipient'}
+            name="recipient"
             value={selectedAccount}
             placeholder={placeholder}
             onKeyDown={this.onHandleKeyPress}
             onChange={this.onChange}
           />
-          <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && recipient.value ? styles.show : styles.hide}`}/>
+          <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && recipient.value ? styles.show : styles.hide}`} />
           <img
             className={`${styles.status} ${!this.state.isLoading && recipient.value ? styles.show : styles.hide}`}
-            src={ recipient.error ? svg.alert_icon : svg.ok_icon}
+            src={recipient.error ? svg.alert_icon : svg.ok_icon}
           />
           <div className={`${styles.bookmarkContainer}`}>
             <div ref={(node) => { this.listContainerRef = node; }}>
               <ul className={`${styles.bookmarkList} bookmark-list`}>
-              {
+                {
                 this.getFilterList()
-                .map((account, index) =>
-                  <li
-                    key={index}
-                    onMouseEnter={() => this.handleUpdateIndex(index)}
-                    onClick={() => this.onSelectedAccount(account)}
-                    onKeyPress={this.onHandleKeyPress}
-                    className={`${dropdownIndex === index ? styles.active : ''}`}>
-                    <AccountVisual address={account.address} size={25} />
-                    <span>{account.title}</span>
-                    <span>{account.address}</span>
-                  </li>)
+                  .map((account, index) => (
+                    <li
+                      key={index}
+                      onMouseEnter={() => this.handleUpdateIndex(index)}
+                      onClick={() => this.onSelectedAccount(account)}
+                      onKeyPress={this.onHandleKeyPress}
+                      className={`${dropdownIndex === index ? styles.active : ''}`}
+                    >
+                      <AccountVisual address={account.address} size={25} />
+                      <span>{account.title}</span>
+                      <span>{account.address}</span>
+                    </li>
+                  ))
               }
               </ul>
             </div>
@@ -178,9 +180,10 @@ class Bookmark extends React.Component {
 
         <Feedback
           show={recipient.error || false}
-          status={'error'}
+          status="error"
           className={styles.feedbackMessage}
-          showIcon={false}>
+          showIcon={false}
+        >
           {recipient.feedback}
         </Feedback>
       </Fragment>

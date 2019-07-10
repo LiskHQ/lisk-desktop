@@ -21,15 +21,20 @@ const MyAccount = ({
         <h1>{t('Wallet details')}</h1>
       </header>
       <div className={`${styles.container} coin-container`}>
-      {
-        coins.map((coin, index) =>
+        {
+        coins.map((coin, index) => (
           <div key={index} className={`${styles.row} coin-row`}>
             <img src={coin.token === tokenMap.LSK.key ? svg.lskIcon : svg.btcIcon} />
             <div className={styles.details}>
               <span>{t('{{token}} Balance', { token: tokenMap[coin.token].label })}</span>
-              <span><LiskAmount val={coin.balance} /> {coin.token}</span>
+              <span>
+                <LiskAmount val={coin.balance} />
+                {' '}
+                {coin.token}
+              </span>
             </div>
-          </div>)
+          </div>
+        ))
       }
       </div>
     </Box>

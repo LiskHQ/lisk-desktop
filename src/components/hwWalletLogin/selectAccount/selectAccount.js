@@ -147,41 +147,44 @@ class SelectAccount extends React.Component {
     const { t, device, history } = this.props;
     const { accountOnEditMode, hwAccounts } = this.state;
 
-    return <div>
-      <h1>{t('Lisk accounts on {{WalletModel}}', { WalletModel: device.model })}</h1>
-      <p>
-        {t('Please select the account you’d like to sign in to or')}
-        <TertiaryButtonV2
-          className={`${styles.createAccountBtn} create-account`}
-          onClick={this.onAddNewAccount}
-        >
-          {t('Create account')}
-        </TertiaryButtonV2>
-      </p>
+    return (
+      <div>
+        <h1>{t('Lisk accounts on {{WalletModel}}', { WalletModel: device.model })}</h1>
+        <p>
+          {t('Please select the account you’d like to sign in to or')}
+          <TertiaryButtonV2
+            className={`${styles.createAccountBtn} create-account`}
+            onClick={this.onAddNewAccount}
+          >
+            {t('Create account')}
+          </TertiaryButtonV2>
+        </p>
 
-      <div className={`${styles.deviceContainer} hw-container`}>
-        {
+        <div className={`${styles.deviceContainer} hw-container`}>
+          {
           hwAccounts.length
-          ? hwAccounts.map((hwAccount, index) =>
-            <AccountCard
-              key={index}
-              account={hwAccount}
-              accountOnEditMode={accountOnEditMode}
-              index={index}
-              onChangeAccountTitle={this.onChangeAccountTitle}
-              onEditAccount={this.onEditAccount}
-              onSaveNameAccounts={this.onSaveNameAccounts}
-              onSelectAccount={this.onSelectAccount}
-              t={t}
-            />)
-          : <LoadingIcon />
+            ? hwAccounts.map((hwAccount, index) => (
+              <AccountCard
+                key={index}
+                account={hwAccount}
+                accountOnEditMode={accountOnEditMode}
+                index={index}
+                onChangeAccountTitle={this.onChangeAccountTitle}
+                onEditAccount={this.onEditAccount}
+                onSaveNameAccounts={this.onSaveNameAccounts}
+                onSelectAccount={this.onSelectAccount}
+                t={t}
+              />
+            ))
+            : <LoadingIcon />
         }
-      </div>
+        </div>
 
-      <TertiaryButtonV2 className={'go-back'} onClick={() => history.push(routes.splashscreen.path)}>
-        {t('Go Back')}
-      </TertiaryButtonV2>
-    </div>;
+        <TertiaryButtonV2 className="go-back" onClick={() => history.push(routes.splashscreen.path)}>
+          {t('Go Back')}
+        </TertiaryButtonV2>
+      </div>
+    );
   }
 }
 

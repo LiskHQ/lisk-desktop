@@ -9,7 +9,8 @@ const generateVotes = (asset, t) => {
   return (
     <React.Fragment>
       <span>
-        {`↑ ${votes.upvotes} ${t('Upvotes')}`},
+        {`↑ ${votes.upvotes} ${t('Upvotes')}`}
+,
       </span>
       <span>
         {` ↓ ${votes.downvotes} ${t('Downvotes')}`}
@@ -39,9 +40,11 @@ const TransactionDetailV2 = ({
       break;
   }
 
-  return <div className={'transaction-reference'}>
-    <span className={`${styles.txDetails} ${className}`}>{data}</span>
-  </div>;
+  return (
+    <div className="transaction-reference">
+      <span className={`${styles.txDetails} ${className}`}>{data}</span>
+    </div>
+  );
 };
 
 export default TransactionDetailV2;

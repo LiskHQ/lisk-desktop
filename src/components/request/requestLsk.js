@@ -51,7 +51,7 @@ class RequestLsk extends React.Component {
   validateAmountField(value) {
     if (/([^\d.])/g.test(value)) {
       return this.props.t('Please use only digits and dots');
-    } else if (/(\.)(.*\1){1}/g.test(value) || /\.$/.test(value)) {
+    } if (/(\.)(.*\1){1}/g.test(value) || /\.$/.test(value)) {
       return this.props.t('Invalid amount');
     }
     return false;
@@ -127,69 +127,80 @@ class RequestLsk extends React.Component {
 
     return (
       <RequestWrapper copyLabel={t('Copy Link')} copyValue={shareLink} t={t}>
-          <span className={`${styles.label}`}>
-            {t('Use the sharing link to easily request any amount of LSK from Lisk Hub or Lisk Mobile users.')}
+        <span className={`${styles.label}`}>
+          {t('Use the sharing link to easily request any amount of LSK from Lisk Hub or Lisk Mobile users.')}
+        </span>
+        <label className={`${styles.fieldGroup}`}>
+          <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
+          <span className={`${styles.amountField} amount`}>
+            <InputV2
+              autoComplete="off"
+              onChange={this.handleFieldChange}
+              name="amount"
+              value={fields.amount.value}
+              placeholder={t('Requested amount')}
+              className={`${styles.input} ${fields.amount.error ? 'error' : ''}`}
+            />
+            <ConverterV2
+              className={styles.converter}
+              value={fields.amount.value}
+              error={fields.amount.error}
+            />
+            <SpinnerV2 className={`${styles.status} ${fields.amount.loading && fields.amount.value ? styles.show : ''}`} />
+            <img
+              className={`${styles.status} ${!fields.amount.loading && fields.amount.value ? styles.show : ''}`}
+              src={fields.amount.error ? svg.alert_icon : svg.ok_icon}
+            />
           </span>
-          <label className={`${styles.fieldGroup}`}>
-            <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
-            <span className={`${styles.amountField} amount`}>
-              <InputV2
-                autoComplete={'off'}
-                onChange={this.handleFieldChange}
-                name='amount'
-                value={fields.amount.value}
-                placeholder={t('Requested amount')}
-                className={`${styles.input} ${fields.amount.error ? 'error' : ''}`} />
-              <ConverterV2
-                className={styles.converter}
-                value={fields.amount.value}
-                error={fields.amount.error} />
-              <SpinnerV2 className={`${styles.status} ${fields.amount.loading && fields.amount.value ? styles.show : ''}`}/>
-              <img
-                className={`${styles.status} ${!fields.amount.loading && fields.amount.value ? styles.show : ''}`}
-                src={ fields.amount.error ? svg.alert_icon : svg.ok_icon} />
-            </span>
-            <Feedback
-              className={styles.feedback}
-              show={fields.amount.error}
-              status={fields.amount.error ? 'error' : ''}
-              showIcon={false}>
-              { fields.amount.feedback }
-            </Feedback>
-          </label>
-          <label className={`${styles.fieldGroup} reference`}>
-            <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
-            <span className={`${styles.referenceField}`}>
-              <AutoresizeTextarea
-                maxLength={100}
-                spellCheck={false}
-                onChange={this.handleFieldChange}
-                name='reference'
-                value={fields.reference.value}
-                placeholder={t('Write message')}
-                className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`} />
-              <CircularProgress max={messageMaxLength} value={byteCount}
-                className={styles.byteCounter} />
-              <img
-                className={`${styles.status} ${!fields.reference.loading && fields.reference.value ? styles.show : ''}`}
-                src={ fields.reference.error ? svg.alert_icon : svg.ok_icon} />
-            </span>
-            <Feedback
-              className={`${styles.feedback} ${styles.referenceFeedback}`}
-              show={!!fields.reference.feedback}
-              status={fields.reference.error ? 'error' : ''}
-              showIcon={false}>
-              { fields.reference.feedback }
-            </Feedback>
-          </label>
-          <label className={`${styles.fieldGroup}`}>
-            <span className={`${styles.fieldLabel}`}>{t('Sharing link')}</span>
+          <Feedback
+            className={styles.feedback}
+            show={fields.amount.error}
+            status={fields.amount.error ? 'error' : ''}
+            showIcon={false}
+          >
+            { fields.amount.feedback }
+          </Feedback>
+        </label>
+        <label className={`${styles.fieldGroup} reference`}>
+          <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
+          <span className={`${styles.referenceField}`}>
             <AutoresizeTextarea
-              name='shareLink'
-              value={shareLink}
-              className={`${styles.textarea} request-link`}
-              readOnly />
-          </label>
+              maxLength={100}
+              spellCheck={false}
+              onChange={this.handleFieldChange}
+              name="reference"
+              value={fields.reference.value}
+              placeholder={t('Write message')}
+              className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`}
+            />
+            <CircularProgress
+              max={messageMaxLength}
+              value={byteCount}
+              className={styles.byteCounter}
+            />
+            <img
+              className={`${styles.status} ${!fields.reference.loading && fields.reference.value ? styles.show : ''}`}
+              src={fields.reference.error ? svg.alert_icon : svg.ok_icon}
+            />
+          </span>
+          <Feedback
+            className={`${styles.feedback} ${styles.referenceFeedback}`}
+            show={!!fields.reference.feedback}
+            status={fields.reference.error ? 'error' : ''}
+            showIcon={false}
+          >
+            { fields.reference.feedback }
+          </Feedback>
+        </label>
+        <label className={`${styles.fieldGroup}`}>
+          <span className={`${styles.fieldLabel}`}>{t('Sharing link')}</span>
+          <AutoresizeTextarea
+            name="shareLink"
+            value={shareLink}
+            className={`${styles.textarea} request-link`}
+            readOnly
+          />
+        </label>
       </RequestWrapper>
     );
   }

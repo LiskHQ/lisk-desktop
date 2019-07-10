@@ -53,7 +53,8 @@ class Authenticate extends React.Component {
         <AuthInputs
           passphrase={this.state.passphrase}
           secondPassphrase={this.state.secondPassphrase}
-          onChange={handleChange.bind(this)} />
+          onChange={handleChange.bind(this)}
+        />
 
         <ActionBar
           secondaryButton={{
@@ -65,8 +66,10 @@ class Authenticate extends React.Component {
             onClick: this.update.bind(this),
             className: 'authenticate-button',
             disabled: (!authStateIsValid(this.state)),
-          }} />
-      </form>);
+          }}
+        />
+      </form>
+    );
   }
 }
 

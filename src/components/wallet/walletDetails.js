@@ -22,22 +22,26 @@ class WalletDetails extends React.Component {
           <AccountVisual
             address={address}
             size={40}
-            />
+          />
           <div>
             <label>{t('Address')}</label>
-            <div className={styles.value} >
-            <CopyToClipboard
-              value={address}
-              className='account-address'
-            />
+            <div className={styles.value}>
+              <CopyToClipboard
+                value={address}
+                className="account-address"
+              />
             </div>
           </div>
         </section>
         <section className={styles.row}>
-          <Icon name='balance' />
+          <Icon name="balance" />
           <div>
             <label>{t('Balance')}</label>
-            <div className={styles.value} ><LiskAmount val={balance} /> {activeToken}</div>
+            <div className={styles.value}>
+              <LiskAmount val={balance} />
+              {' '}
+              {activeToken}
+            </div>
           </div>
         </section>
       </BoxV2>

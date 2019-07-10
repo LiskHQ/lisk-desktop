@@ -92,9 +92,9 @@ class Summary extends React.Component {
 
     const hasPendingTransaction = isHardwareWalletConnected
       ? transactions.pending.find(transaction => (
-        transaction.senderId === this.props.account.address &&
-        transaction.recipientId === this.props.fields.recipient.address &&
-        fromRawLsk(transaction.amount) === this.props.fields.amount.value
+        transaction.senderId === this.props.account.address
+        && transaction.recipientId === this.props.fields.recipient.address
+        && fromRawLsk(transaction.amount) === this.props.fields.amount.value
       ))
       : transactions.pending.length;
 
@@ -186,11 +186,13 @@ class Summary extends React.Component {
     return {
       LSK: {
         title: t('Transaction fee'),
-        footer: <a href={links.transactionFee}
-            rel="noopener noreferrer"
-            target="_blank">
-              {t('Read More')}
-          </a>,
+        footer: <a
+          href={links.transactionFee}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {t('Read More')}
+        </a>,
         children: t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
                     Such operations require hardware resources and because of that there is a small fee for processing those.`),
       },
@@ -199,6 +201,7 @@ class Summary extends React.Component {
       },
     }[token];
   }
+
   /* eslint-disable complexity */
   render() {
     const {
@@ -252,7 +255,7 @@ class Summary extends React.Component {
             <label className={styles.transactionFee}>
               {t('Transaction fee')}
               <Tooltip
-                className={'showOnTop'}
+                className="showOnTop"
                 title={tooltip.title}
                 footer={tooltip.footer}
               >
@@ -266,28 +269,32 @@ class Summary extends React.Component {
 
           {
             secondPassphrase.hasSecondPassphrase
-            ? <div className={`${styles.row} ${styles.passphrase} ${styles.tooltipContainer} summary-second-passphrase`}>
-                <label>{t('Second passphrase')}</label>
-                <Tooltip
-                  className={`${styles.tooltip}`}
-                  title={t('What is your second passphrase?')}>
-                  <React.Fragment>
-                    <p className={`${styles.tooltupText}`}>
-                      {t('Second passphrase is an optional extra layer of protection to your account. You can register at anytime, but you can not remove it.')}
-                    </p>
-                    <p className={`${styles.tooltipText}`}>
-                      {t('If you see this field, you have registered a second passphrase in past and it is required to confirm transactions.')}
-                    </p>
-                  </React.Fragment>
-                </Tooltip>
-                <PassphraseInputV2
-                  isSecondPassphrase={secondPassphrase.hasSecondPassphrase}
-                  secondPPFeedback={secondPassphrase.feedback}
-                  inputsLength={12}
-                  maxInputsLength={24}
-                  onFill={this.checkSecondPassphrase} />
-              </div>
-            : null
+              ? (
+                <div className={`${styles.row} ${styles.passphrase} ${styles.tooltipContainer} summary-second-passphrase`}>
+                  <label>{t('Second passphrase')}</label>
+                  <Tooltip
+                    className={`${styles.tooltip}`}
+                    title={t('What is your second passphrase?')}
+                  >
+                    <React.Fragment>
+                      <p className={`${styles.tooltupText}`}>
+                        {t('Second passphrase is an optional extra layer of protection to your account. You can register at anytime, but you can not remove it.')}
+                      </p>
+                      <p className={`${styles.tooltipText}`}>
+                        {t('If you see this field, you have registered a second passphrase in past and it is required to confirm transactions.')}
+                      </p>
+                    </React.Fragment>
+                  </Tooltip>
+                  <PassphraseInputV2
+                    isSecondPassphrase={secondPassphrase.hasSecondPassphrase}
+                    secondPPFeedback={secondPassphrase.feedback}
+                    inputsLength={12}
+                    maxInputsLength={24}
+                    onFill={this.checkSecondPassphrase}
+                  />
+                </div>
+              )
+              : null
           }
         </div>
 
@@ -296,17 +303,20 @@ class Summary extends React.Component {
             className={`${styles.confirmBtn} on-nextStep send-button`}
             onClick={this.submitTransaction}
             disabled={
-              (secondPassphrase.hasSecondPassphrase &&
-                !secondPassphrase.isValid)
+              (secondPassphrase.hasSecondPassphrase
+                && !secondPassphrase.isValid)
               || isHardwareWalletConnected
-            }>
+            }
+          >
             {this.getConfirmButtonLabel()}
           </PrimaryButtonV2>
 
-          {this.props.account.hwInfo && this.props.account.hwInfo.deviceId ? null :
-            <TertiaryButtonV2 className={`${styles.editBtn} on-prevStep`} onClick={this.prevStep}>
-              {t('Edit transaction')}
-            </TertiaryButtonV2>}
+          {this.props.account.hwInfo && this.props.account.hwInfo.deviceId ? null
+            : (
+              <TertiaryButtonV2 className={`${styles.editBtn} on-prevStep`} onClick={this.prevStep}>
+                {t('Edit transaction')}
+              </TertiaryButtonV2>
+            )}
         </footer>
       </Box>
     );

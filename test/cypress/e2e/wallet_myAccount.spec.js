@@ -59,4 +59,3 @@ describe('Wallet My Account', () => {
     cy.get(ss.requestDropdown).should('be.visible');
   });
 });
-

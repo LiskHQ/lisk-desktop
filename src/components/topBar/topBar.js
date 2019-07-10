@@ -57,11 +57,11 @@ class TopBar extends React.Component {
   isTimerEnabled() {
     const { autoLogout, account } = this.props;
 
-    return autoLogout &&
-      account.expireTime &&
-      account.expireTime !== 0 &&
-      account.passphrase &&
-      account.passphrase.length > 0;
+    return autoLogout
+      && account.expireTime
+      && account.expireTime !== 0
+      && account.passphrase
+      && account.passphrase.length > 0;
   }
 
   render() {
@@ -78,7 +78,7 @@ class TopBar extends React.Component {
       <div className={`${styles.wrapper} top-bar`}>
         <div>
           <div className={styles.logo}>
-            <Icon name={'liskLogo'} className={'topbar-logo'} />
+            <Icon name="liskLogo" className="topbar-logo" />
           </div>
 
           <NavigationButtons
@@ -127,30 +127,32 @@ class TopBar extends React.Component {
             t={t}
           />
 
-          {token.active !== 'BTC' ?
-          <OutsideClickHandler
-            className={`${styles.searchButton} search-section`}
-            onOutsideClick={this.handleSearchDropdown}
-            disabled={openDropdown !== 'search'}
-            wrapper={<label />}
-          >
-            <Icon
-              onClick={this.handleSearchDropdown}
-              className={'search-icon'}
-              name={`search_icon_${openDropdown === 'search' ? 'active' : 'inactive'}`}
-            />
-            <DropdownV2
-              showDropdown={openDropdown === 'search'}
-              className={`${styles.searchDropdown}`}
-            >
-              <SearchBarV2
-                setSearchBarRef={(node) => { this.searchInput = node; } }
-                history={this.props.history}
-                onSearchClick={this.handleSearchDropdown}
-              />
-            </DropdownV2>
-          </OutsideClickHandler>
-          : null }
+          {token.active !== 'BTC'
+            ? (
+              <OutsideClickHandler
+                className={`${styles.searchButton} search-section`}
+                onOutsideClick={this.handleSearchDropdown}
+                disabled={openDropdown !== 'search'}
+                wrapper={<label />}
+              >
+                <Icon
+                  onClick={this.handleSearchDropdown}
+                  className="search-icon"
+                  name={`search_icon_${openDropdown === 'search' ? 'active' : 'inactive'}`}
+                />
+                <DropdownV2
+                  showDropdown={openDropdown === 'search'}
+                  className={`${styles.searchDropdown}`}
+                >
+                  <SearchBarV2
+                    setSearchBarRef={(node) => { this.searchInput = node; }}
+                    history={this.props.history}
+                    onSearchClick={this.handleSearchDropdown}
+                  />
+                </DropdownV2>
+              </OutsideClickHandler>
+            )
+            : null }
         </div>
       </div>
     );

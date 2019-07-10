@@ -29,8 +29,8 @@ export const displayAccounts = async ({ liskAPIClient, loginType, hwAccounts, t,
     } catch (error) {
       return;
     }
-    if ((!unInitializedAdded && (index === 0 || accountInfo.isInitialized)) ||
-      (unInitializedAdded && !accountInfo.isInitialized)) {
+    if ((!unInitializedAdded && (index === 0 || accountInfo.isInitialized))
+      || (unInitializedAdded && !accountInfo.isInitialized)) {
       accounts.push(accountInfo);
     }
     index++;
