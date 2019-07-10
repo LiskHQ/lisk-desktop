@@ -120,7 +120,7 @@ class BookmarksList extends React.Component {
                   size='xs'
                   onChange={this.onFilterChange}
                   value={filter}
-                  placeholder={t('Filter by name...')}
+                  placeholder={t('Filter by name or address...')}
                 />
               </span>
             : null
@@ -148,7 +148,7 @@ class BookmarksList extends React.Component {
                       onChange={this.onTitleChange}
                       value={eddittedTitle}
                       setRef={(input) => { this.editInput = input; } }
-                      placeholder={t('Filter by name...')}
+                      placeholder={t('Insert label')}
                     />
                   : <span className={styles.description}>
                       <span>{bookmark.title}</span>
@@ -166,6 +166,7 @@ class BookmarksList extends React.Component {
                          {t('Cancel')}
                        </SecondaryButtonV2>
                        <PrimaryButtonV2
+                         disabled={!eddittedTitle}
                          onClick={e => this.saveChanges(e)}
                          className="medium bookmarks-save-changes-button">
                          {t('Save changes')}

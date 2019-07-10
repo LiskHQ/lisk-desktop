@@ -1,0 +1,23 @@
+@import '../../app/mixins.css';
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & h1 {
+    @mixin headingLarge;
+
+    margin-bottom: -2px;
+    margin-top: 22px;
+  }
+
+  & .subtitle {
+    @mixin contentNormal;
+
+    letter-spacing: 0.3px;
+    color: var(--color-slate-gray);
+    margin-bottom: 20px;
+    display: inline-block;
+  }
+}
