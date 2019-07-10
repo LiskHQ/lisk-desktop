@@ -3,7 +3,6 @@ import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import {
   voteToggled,
-  voteLookupStatusUpdated,
   votePlaced,
   loadVotes,
   urlVotesFound,
@@ -51,20 +50,6 @@ describe('actions: voting', () => {
       };
 
       expect(voteToggled(data)).to.be.deep.equal(expectedAction);
-    });
-  });
-
-  describe('voteLookupStatusUpdated', () => {
-    it('should create an action to update lookup status of any given delegate name', () => {
-      const data = {
-        label: 'dummy',
-      };
-      const expectedAction = {
-        data,
-        type: actionTypes.voteLookupStatusUpdated,
-      };
-
-      expect(voteLookupStatusUpdated(data)).to.be.deep.equal(expectedAction);
     });
   });
 

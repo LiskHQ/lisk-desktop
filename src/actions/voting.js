@@ -33,22 +33,6 @@ export const voteToggled = data => ({
   data,
 });
 
-
-/**
- * Updates vote lookup status of the given delegate name
- */
-export const voteLookupStatusUpdated = data => ({
-  type: actionTypes.voteLookupStatusUpdated,
-  data,
-});
-
-/**
- * Clears all vote lookup statuses
- */
-export const voteLookupStatusCleared = () => ({
-  type: actionTypes.voteLookupStatusCleared,
-});
-
 export const clearVotes = () => ({
   type: actionTypes.votesCleared,
 });
