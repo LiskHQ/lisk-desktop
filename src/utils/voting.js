@@ -38,6 +38,8 @@ export const getVotingError = (votes, account) => {
   return error;
 };
 
+export const getVote = (votes, name) => votes.find(v => v.username === name);
+
 export const splitVotesIntoRounds = ({ votes, unvotes }) => {
   const rounds = [];
   const maxCountOfVotesInOneTurn = 33;

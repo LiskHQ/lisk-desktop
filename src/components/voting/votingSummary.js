@@ -12,7 +12,7 @@ import VoteUrlProcessor from './voteUrlProcessor';
 import VoteList from './voteList';
 
 const VotingSummary = ({
-  t, votes, history, account, nextStep, votePlaced, voteLookupStatus,
+  t, votes, history, account, nextStep, votePlaced, voteLookupStatus, liskAPIClient,
 }) => {
   const {
     maxCountOfVotes,
@@ -79,6 +79,7 @@ const VotingSummary = ({
         account={account}
         votes={votes}
         voteLookupStatus={voteLookupStatus}
+        liskAPIClient={liskAPIClient}
       />
       <VoteList
         title={t('Added votes')}

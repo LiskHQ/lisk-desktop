@@ -15,6 +15,7 @@ const mapStateToProps = state => ({
     alreadyVoted: filterObjectPropsWithValue(state.voting.voteLookupStatus, 'alreadyVoted').concat(filterObjectPropsWithValue(state.voting.voteLookupStatus, 'notVotedYet')),
     notFound: filterObjectPropsWithValue(state.voting.voteLookupStatus, 'notFound'),
   },
+  liskAPIClient: state.peers.liskAPIClient,
 });
 
 const mapDispatchToProps = {

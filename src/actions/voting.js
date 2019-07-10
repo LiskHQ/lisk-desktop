@@ -99,7 +99,7 @@ export const votePlaced = ({
  * Gets the list of delegates current account has voted for
  *
  */
-export const loadVotes = ({ address, type }) =>
+export const loadVotes = ({ address, type, callback = () => null }) =>
   (dispatch, getState) => {
     const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
     getVotes(liskAPIClient, { address })
@@ -108,6 +108,7 @@ export const loadVotes = ({ address, type }) =>
           type: type === 'update' ? actionTypes.votesUpdated : actionTypes.votesAdded,
           data: { list: response.data.votes },
         });
+        callback(response.data.votes);
       });
   };
 
