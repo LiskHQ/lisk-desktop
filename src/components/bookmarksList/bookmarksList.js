@@ -165,6 +165,7 @@ class BookmarksList extends React.Component {
                          {t('Cancel')}
                        </SecondaryButtonV2>
                        <PrimaryButtonV2
+                         disabled={!eddittedTitle}
                          onClick={e => this.saveChanges(e)}
                          className="medium bookmarks-save-changes-button">
                          {t('Save changes')}
