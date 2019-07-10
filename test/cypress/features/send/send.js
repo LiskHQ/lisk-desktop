@@ -38,6 +38,7 @@ Then(/^I fill in message$/, function () {
 });
 
 Then(/^I go to confirmation$/, function () {
+
   cy.get(ss.nextTransferBtn).should('be.enabled');
   cy.get(ss.nextTransferBtn).click();
 });

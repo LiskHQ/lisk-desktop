@@ -1,9 +1,9 @@
-Feature: Transaction table
+Feature: Wallet
 
   Scenario: 30 tx are shown, clicking show more loads more transactions
     Given I autologin as genesis to devnet
     Given I am on Wallet page
-    Then I should see 30 transactions
+    Then I see 30 transactions
     When I click show more
     Then I see more than 30 transactions
 

@@ -4,7 +4,7 @@ import networks from '../../../constants/networks';
 import ss from '../../../constants/selectors';
 import accounts from '../../../constants/accounts';
 
-Given(/^I should see 30 transactions$/, function () {
+Given(/^I see 30 transactions$/, function () {
   cy.get(ss.transactionRow).should('have.length', 30);
 });
 
