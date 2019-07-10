@@ -492,11 +492,12 @@ class Form extends React.Component {
               <ConverterV2
                 className={styles.converter}
                 value={fields.amount.value}
-                error={fields.amount.error} />
-              <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}/>
+                error={fields.amount.error}
+              />
+              <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`} />
               <img
                 className={`${styles.status} ${!this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}
-                src={ fields.amount.error ? svg.alert_icon : svg.ok_icon}
+                src={fields.amount.error ? svg.alert_icon : svg.ok_icon}
               />
             </span>
 
@@ -544,7 +545,7 @@ class Form extends React.Component {
                   maxLength={100}
                   spellCheck={false}
                   onChange={this.onAmountOrReferenceChange}
-                  name='reference'
+                  name="reference"
                   value={fields.reference.value}
                   placeholder={t('Write message')}
                   className={`${styles.textarea} ${fields.reference.error ? 'error' : ''} message`}
@@ -556,7 +557,7 @@ class Form extends React.Component {
                 />
                 <img
                   className={`${styles.status} ${styles.referenceStatus} ${!fields.reference.value ? styles.hide : styles.show}`}
-                  src={ fields.reference.error ? svg.alert_icon : svg.ok_icon}
+                  src={fields.reference.error ? svg.alert_icon : svg.ok_icon}
                 />
               </span>
               <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${styles.show}`}>

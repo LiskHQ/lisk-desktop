@@ -42,7 +42,7 @@ class Send extends React.Component {
           >
             <Form fields={fields} />
             <Summary />
-            <TransactionStatus history={history}/>
+            <TransactionStatus history={history} />
           </MultiStep>
         </div>
       </div>

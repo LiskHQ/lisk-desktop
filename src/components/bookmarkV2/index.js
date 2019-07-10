@@ -141,9 +141,9 @@ class Bookmark extends React.Component {
             size={25}
           />
           <InputV2
-            autoComplete={'off'}
+            autoComplete="off"
             className={`${styles.input} ${recipient.error ? 'error' : ''} recipient bookmark`}
-            name={'recipient'}
+            name="recipient"
             value={selectedAccount}
             placeholder={placeholder}
             onKeyDown={this.onHandleKeyPress}
