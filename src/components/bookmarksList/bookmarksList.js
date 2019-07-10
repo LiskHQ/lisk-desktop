@@ -31,9 +31,10 @@ class BookmarksList extends React.Component {
     const { bookmarks, token, limit } = this.props;
     const { filter } = this.state;
 
-    return bookmarks[token.active].filter(({ title }) => (
+    return bookmarks[token.active].filter(({ title, address }) => (
       filter === '' ||
-      title.toLowerCase().indexOf(filter.toLowerCase()) !== -1
+      title.toLowerCase().indexOf(filter.toLowerCase()) !== -1 ||
+      address.toLowerCase().indexOf(filter.toLowerCase()) !== -1
     )).slice(0, limit);
   }
 
@@ -119,7 +120,7 @@ class BookmarksList extends React.Component {
                   size='xs'
                   onChange={this.onFilterChange}
                   value={filter}
-                  placeholder={t('Filter by name...')}
+                  placeholder={t('Filter by name or address...')}
                 />
               </span>
             : null
@@ -147,7 +148,7 @@ class BookmarksList extends React.Component {
                       onChange={this.onTitleChange}
                       value={eddittedTitle}
                       setRef={(input) => { this.editInput = input; } }
-                      placeholder={t('Filter by name...')}
+                      placeholder={t('Filter by name or address...')}
                     />
                   : <span className={styles.description}>
                       <span>{bookmark.title}</span>

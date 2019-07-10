@@ -181,6 +181,7 @@
   "Filter": "Filter",
   "Filter Transactions": "Filter Transactions",
   "Filter by name": "Filter by name",
+  "Filter by name or address...": "Filter by name or address...",
   "Filter by name...": "Filter by name...",
   "Filtered results: {{results}}": "Filtered results: {{results}}",
   "For longer passphrases, simply paste it in the first input field.": "For longer passphrases, simply paste it in the first input field.",
