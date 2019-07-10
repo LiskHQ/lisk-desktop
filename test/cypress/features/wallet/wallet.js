@@ -47,3 +47,7 @@ Then(/^I see incoming transaction in table$/, function () {
 Then(/^I don't see incoming transaction in table$/, function () {
   cy.get(ss.transactionsTable).contains(accounts.genesis.address).should('not.exist');
 });
+
+Then(/^I send LSK$/, function () {
+  cy.get(ss.sendToThisAccountBtn).click();
+});

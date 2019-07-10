@@ -24,3 +24,10 @@ Feature: Wallet
     Then I click filter outgoing
     Then I see outgoing transaction in table
     Then I don't see incoming transaction in table
+
+  Scenario: Send LSK to this account
+    Given I autologin as genesis to devnet
+    Given I am on Wallet page of delegate
+    When I send LSK
+    Then I see delegate in recipient
+

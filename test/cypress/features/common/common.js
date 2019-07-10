@@ -45,3 +45,14 @@ Then(/^I am on transaction details page$/, function () {
 Then(/^I am on account page$/, function () {
   cy.get(ss.accountName).should('be.visible');
 });
+
+Then(/^I am on Wallet page of ([^s]+)$/, function (accountName) {
+  cy.server();
+  cy.route('/api/accounts?address=**').as('requestAccountData');
+  cy.visit(`${urls.accounts}/${accounts[accountName].address}`);
+  cy.wait('@requestAccountData');
+});
+
+Then(/^I see ([^s]+) in recipient$/, function (accountName) {
+  cy.get(ss.recipientInput).should('have.value', accounts[accountName].address);
+});
