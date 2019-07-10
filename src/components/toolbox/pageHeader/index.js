@@ -5,13 +5,13 @@ const PageHeader = ({
   title, subtitle, children,
 }) => (
   <header className={styles.wrapper}>
-    <span>
+    <div>
       <h1>{title}</h1>
-      <div className={styles.subtitle}>{subtitle}</div>
-    </span>
-    <span>
+      <span className={styles.subtitle}>{subtitle}</span>
+    </div>
+    <div>
       {children}
-    </span>
+    </div>
   </header>
 );
 
