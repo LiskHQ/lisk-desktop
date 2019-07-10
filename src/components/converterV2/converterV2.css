@@ -2,12 +2,15 @@
 @import '../app/mixins.css';
 
 .wrapper {
+  @mixin contentNormal;
+
+  color: var(--color-blue-gray);
   display: flex;
 
   & .price {
-    @mixin contentNormal;
-
-    color: var(--color-blue-gray);
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
     text-align: right;
   }
 }

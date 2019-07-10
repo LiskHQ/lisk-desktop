@@ -13,8 +13,8 @@ describe('Delegate Registration Summary', () => {
     account: {
       address: '123456789L',
       balance: 11000,
-      passphrase: accounts.genesis.passphrase,
-      delegate: {},
+      secondPublicKey: '',
+      isDelegate: false,
     },
     prevState: {},
     nickname: 'mydelegate',
@@ -92,5 +92,22 @@ describe('Delegate Registration Summary', () => {
     const [err, tx] = await to(create(data, 'registerDelegate'));
     expect(tx).toEqual(undefined);
     expect(err).toBeInstanceOf(Error);
+  });
+
+  it('submit user data after enter second passphrase', async () => {
+    const newProps = { ...props };
+    newProps.account = accounts['second passphrase account'];
+
+    wrapper = mount(<Summary {...newProps} />);
+
+    const clipboardData = {
+      getData: () => accounts['second passphrase account'].secondPassphrase,
+    };
+
+    wrapper.find('passphraseInputV2 input').first().simulate('paste', { clipboardData });
+    wrapper.update();
+    wrapper.find('button.confirm-button').simulate('click');
+    await to(create(newProps.account, 'registerDelegate'));
+    expect(props.nextStep).toBeCalled();
   });
 });

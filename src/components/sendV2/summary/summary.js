@@ -1,13 +1,16 @@
+/* eslint-disable max-lines */
 import React from 'react';
 import ConverterV2 from '../../converterV2';
 import AccountVisual from '../../accountVisual/index';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../../toolbox/buttons/button';
 import fees from '../../../constants/fees';
 import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
+import { loginType } from '../../../constants/hwConstants';
 import PassphraseInputV2 from '../../passphraseInputV2/passphraseInputV2';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
 import Piwik from '../../../utils/piwik';
+import Box from '../../boxV2';
 import { extractPublicKey } from '../../../utils/account';
 import { tokenMap } from '../../../constants/tokens';
 import styles from './summary.css';
@@ -108,7 +111,22 @@ class Summary extends React.Component {
   }
 
   checkForSuccessOrFailedTransactions() {
-    const { transactions, nextStep, fields } = this.props;
+    const {
+      account,
+      fields,
+      nextStep,
+      transactions,
+    } = this.props;
+
+    if (account.loginType !== loginType.normal && transactions.transactionsCreatedFailed.length) {
+      nextStep({
+        fields: {
+          ...fields,
+          hwTransactionStatus: 'error',
+          isHardwareWalletConnected: true,
+        },
+      });
+    }
 
     if (transactions.transactionsCreated.length && !transactions.transactionsCreatedFailed.length) {
       nextStep({
@@ -197,9 +215,9 @@ class Summary extends React.Component {
       : fromRawLsk(fields.processingSpeed.txFee);
 
     return (
-      <div className={`${styles.wrapper} summary`}>
+      <Box className={`${styles.wrapper} summary`}>
         <header className={`${styles.header} summary-header`}>
-          <h1>{this.getTitle()}</h1>
+          <h2>{this.getTitle()}</h2>
         </header>
 
         <div className={`${styles.content} summary-content`}>
@@ -246,24 +264,33 @@ class Summary extends React.Component {
                 </p>
               </Tooltip>
             </label>
-            <span>{t('{{fee}} {{token}}', { fee, token })}</span>
+            <span className={styles.information}>{t('{{fee}} {{token}}', { fee, token })}</span>
           </div>
 
           {
             secondPassphrase.hasSecondPassphrase
-              ? (
-                <div className={`${styles.row} ${styles.passphrase} summary-second-passphrase`}>
-                  <label>{t('Second passphrase')}</label>
-                  <PassphraseInputV2
-                    isSecondPassphrase={secondPassphrase.hasSecondPassphrase}
-                    secondPPFeedback={secondPassphrase.feedback}
-                    inputsLength={12}
-                    maxInputsLength={24}
-                    onFill={this.checkSecondPassphrase}
-                  />
-                </div>
-              )
-              : null
+            ? <div className={`${styles.row} ${styles.passphrase} ${styles.tooltipContainer} summary-second-passphrase`}>
+                <label>{t('Second passphrase')}</label>
+                <Tooltip
+                  className={`${styles.tooltip}`}
+                  title={t('What is your second passphrase?')}>
+                  <React.Fragment>
+                    <p className={`${styles.tooltupText}`}>
+                      {t('Second passphrase is an optional extra layer of protection to your account. You can register at anytime, but you can not remove it.')}
+                    </p>
+                    <p className={`${styles.tooltipText}`}>
+                      {t('If you see this field, you have registered a second passphrase in past and it is required to confirm transactions.')}
+                    </p>
+                  </React.Fragment>
+                </Tooltip>
+                <PassphraseInputV2
+                  isSecondPassphrase={secondPassphrase.hasSecondPassphrase}
+                  secondPPFeedback={secondPassphrase.feedback}
+                  inputsLength={12}
+                  maxInputsLength={24}
+                  onFill={this.checkSecondPassphrase} />
+              </div>
+            : null
           }
         </div>
 
@@ -287,7 +314,7 @@ class Summary extends React.Component {
               </TertiaryButtonV2>
             )}
         </footer>
-      </div>
+      </Box>
     );
   }
 }

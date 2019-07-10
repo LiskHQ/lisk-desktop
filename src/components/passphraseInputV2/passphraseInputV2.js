@@ -1,7 +1,7 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { FontIcon } from '../fontIcon';
+import Icon from '../toolbox/icon';
 import { isValidPassphrase, getPassphraseValidationErrors } from '../../utils/passphrase';
 import InputV2 from '../toolbox/inputsV2/inputV2';
 import Feedback from '../toolbox/feedback/feedback';
@@ -126,7 +126,8 @@ class passphraseInputV2 extends React.Component {
   render() {
     const { t } = this.props;
     const secondPPFeedback = (this.props.isSecondPassphrase && this.props.secondPPFeedback) || '';
-    const { values, inputsLength } = this.state;
+    const { values, inputsLength, showPassphrase } = this.state;
+    const iconName = showPassphrase ? 'showPassphraseIcon' : 'hidePassphraseIcon';
 
     return (
       <React.Fragment>
@@ -152,16 +153,9 @@ class passphraseInputV2 extends React.Component {
         </div>
 
         <div className={styles.footerContent}>
-          <label className={`${styles.showPassphrase}`}>
-            <input
-              checked={this.state.showPassphrase}
-              type="checkbox"
-              onChange={this.handleToggleShowPassphrase}
-            />
-            <span className={`${styles.fakeCheckbox}`}>
-              <FontIcon className={`${styles.icon}`}>checkmark</FontIcon>
-            </span>
-            <span className={`${styles.label}`}>{t('Show passphrase')}</span>
+          <label className={`${styles.showPassphrase}`} onClick={this.handleToggleShowPassphrase}>
+            <Icon name={iconName} />
+            <span className={`${styles.label}`}>{showPassphrase ? t('Hide passphrase') : t('Show passphrase')}</span>
           </label>
 
           <Feedback

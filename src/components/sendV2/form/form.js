@@ -102,18 +102,20 @@ class Form extends React.Component {
       token, account, dynamicFees, networkConfig,
     } = this.props;
     // istanbul ignore next
-    if (token === tokenMap.BTC.key
-        && account && account.info[token]
+    if (this.props.token === tokenMap.BTC.key) {
+      if (!Object.keys(dynamicFees).length) this.props.dynamicFeesRetrieved();
+      if (account && account.info[token]
         && !unspentTransactionOutputs.length) {
-      btcTransactionsAPI
-        .getUnspentTransactionOutputs(account.info[token].address, networkConfig)
-        .then(data => this.setState({ unspentTransactionOutputs: data }))
-        .catch(() => this.setState({ unspentTransactionOutputs: [] }));
+        btcTransactionsAPI
+          .getUnspentTransactionOutputs(account.info[token].address, networkConfig)
+          .then(data => this.setState(() => ({ unspentTransactionOutputs: data })))
+          .catch(() => this.setState(() => ({ unspentTransactionOutputs: [] })));
+      }
     }
 
     // istanbul ignore if
     if (!fields.processingSpeed.loaded && dynamicFees.Low) {
-      this.setState({
+      this.setState(() => ({
         fields: {
           ...fields,
           processingSpeed: {
@@ -122,7 +124,7 @@ class Form extends React.Component {
             txFee: this.getCalculatedDynamicFee(dynamicFees.Low),
           },
         },
-      });
+      }));
     }
 
     if (nextProps.token !== token) {
@@ -134,11 +136,11 @@ class Form extends React.Component {
     const { prevState } = this.props;
     // istanbul ignore if
     if (prevState.fields && Object.entries(prevState.fields).length) {
-      this.setState({
+      this.setState(() => ({
         fields: {
           ...prevState.fields,
         },
-      });
+      }));
     }
   }
 
@@ -183,7 +185,7 @@ class Form extends React.Component {
     const txFee = target.name === 'amount'
       ? this.getCalculatedDynamicFee(fields.processingSpeed.value, target.value)
       : fields.processingSpeed.txFee;
-    this.setState({
+    this.setState(() => ({
       fields: {
         ...fields,
         [target.name]: {
@@ -195,7 +197,7 @@ class Form extends React.Component {
           txFee,
         },
       },
-    });
+    }));
   }
 
   // eslint-disable-next-line max-statements
@@ -269,24 +271,24 @@ class Form extends React.Component {
       };
     }
 
-    this.setState({
+    this.setState(({ fields }) => ({
       fields: {
-        ...this.state.fields,
+        ...fields,
         recipient: {
-          ...this.state.fields.recipient,
+          ...fields.recipient,
           ...recipient,
         },
       },
-    });
+    }));
   }
 
   // istanbul ignore next
   onSelectedAccount(account) {
-    this.setState(prevState => ({
+    this.setState(({ fields }) => ({
       fields: {
-        ...prevState.fields,
+        ...fields,
         recipient: {
-          ...this.state.fields.recipient,
+          ...fields.recipient,
           ...account,
           value: account.address,
           selected: true,
@@ -334,8 +336,7 @@ class Form extends React.Component {
 
   // istanbul ignore next
   selectProcessingSpeed({ item, index }) {
-    const { fields } = this.state;
-    this.setState({
+    this.setState(({ fields }) => ({
       fields: {
         ...fields,
         processingSpeed: {
@@ -345,13 +346,12 @@ class Form extends React.Component {
           txFee: this.getCalculatedDynamicFee(item.value),
         },
       },
-    });
+    }));
   }
 
   // eslint-disable-next-line max-statements
   validateAmountAndReference(name, value) {
     const { t } = this.props;
-    const { fields } = this.state;
     const messageMaxLength = 64;
     let feedback = '';
     let error = '';
@@ -370,7 +370,7 @@ class Form extends React.Component {
       feedback = t('{{length}} bytes left', { length: messageMaxLength - byteCount });
     }
 
-    this.setState({
+    this.setState(({ fields }) => ({
       fields: {
         ...fields,
         [name]: {
@@ -380,25 +380,25 @@ class Form extends React.Component {
           feedback,
         },
       },
-    });
+    }));
   }
 
   onAmountOrReferenceChange({ target }) {
     clearTimeout(this.loaderTimeout);
 
     if (target.name === 'amount') {
-      this.setState({ isLoading: true });
+      this.setState(() => ({ isLoading: true }));
       this.loaderTimeout = setTimeout(() => {
-        this.setState({ isLoading: false });
+        this.setState(() => ({ isLoading: false }));
         this.validateAmountAndReference(target.name, target.value);
       }, 300);
     }
 
     if (target.name === 'reference') {
       this.validateAmountAndReference(target.name, target.value);
+    } else {
+      this.onInputChange({ target });
     }
-
-    this.onInputChange({ target });
   }
 
   // istanbul ignore next
@@ -410,11 +410,11 @@ class Form extends React.Component {
   }
 
   setReferenceActive(isActive) {
-    this.setState(prevState => ({
+    this.setState(({ fields }) => ({
       fields: {
-        ...prevState.fields,
+        ...fields,
         reference: {
-          ...prevState.fields.reference,
+          ...fields.reference,
           isActive,
         },
       },
@@ -492,12 +492,11 @@ class Form extends React.Component {
               <ConverterV2
                 className={styles.converter}
                 value={fields.amount.value}
-                error={fields.amount.error}
-              />
-              <SpinnerV2 className={`${styles.spinner} ${this.state.isAmountLoading && fields.amount.value ? styles.show : styles.hide}`} />
+                error={fields.amount.error} />
+              <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}/>
               <img
-                className={`${styles.status} ${!this.state.isAmountLoading && fields.amount.value ? styles.show : styles.hide}`}
-                src={fields.amount.error ? svg.alert_icon : svg.ok_icon}
+                className={`${styles.status} ${!this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}
+                src={ fields.amount.error ? svg.alert_icon : svg.ok_icon}
               />
             </span>
 
@@ -545,20 +544,22 @@ class Form extends React.Component {
                   maxLength={100}
                   spellCheck={false}
                   onChange={this.onAmountOrReferenceChange}
-                  onFocus={() => this.setReferenceActive(true)}
-                  onBlur={() => this.setReferenceActive(false)}
-                  name="reference"
+                  name='reference'
                   value={fields.reference.value}
                   placeholder={t('Write message')}
                   className={`${styles.textarea} ${fields.reference.error ? 'error' : ''} message`}
                 />
-                <CircularProgress max={64} value={byteCount} className={`${styles.byteCounter} ${fields.reference.isActive ? styles.show : styles.hide}`} />
+                <CircularProgress
+                  max={64}
+                  value={byteCount}
+                  className={`${styles.byteCounter} ${fields.reference.error ? styles.hide : ''}`}
+                />
                 <img
-                  className={`${styles.status} ${styles.referenceStatus} ${fields.reference.isActive || !fields.reference.value ? styles.hide : styles.show}`}
-                  src={fields.reference.error ? svg.alert_icon : svg.ok_icon}
+                  className={`${styles.status} ${styles.referenceStatus} ${!fields.reference.value ? styles.hide : styles.show}`}
+                  src={ fields.reference.error ? svg.alert_icon : svg.ok_icon}
                 />
               </span>
-              <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${fields.reference.isActive || fields.reference.value ? styles.show : ''}`}>
+              <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${styles.show}`}>
                 {fields.reference.feedback}
                 <Tooltip
                   className="showOnTop"

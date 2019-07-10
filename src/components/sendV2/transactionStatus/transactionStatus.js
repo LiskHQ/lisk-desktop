@@ -25,7 +25,8 @@ class TransactionStatus extends React.Component {
   }
 
   componentDidMount() {
-    this.props.searchAccount({ address: this.props.fields.recipient.address });
+    const { searchAccount, fields } = this.props;
+    searchAccount({ address: fields.recipient.address });
     this.transactionBroadcasted();
   }
 
@@ -35,8 +36,15 @@ class TransactionStatus extends React.Component {
   }
 
   transactionBroadcasted() {
-    const { transactions: { transactionsCreated }, transactionBroadcasted } = this.props;
-    transactionsCreated.forEach(tx => transactionBroadcasted(tx));
+    const {
+      transactions: { transactionsCreated, transactionsCreatedFailed },
+      transactionBroadcasted,
+    } = this.props;
+
+    if (transactionsCreated.length) transactionsCreated.forEach(tx => transactionBroadcasted(tx));
+    if (transactionsCreatedFailed.length) {
+      transactionsCreatedFailed.forEach(tx => transactionBroadcasted(tx));
+    }
   }
 
   onBookmarkDropdownToggle() {
@@ -106,8 +114,21 @@ class TransactionStatus extends React.Component {
   }
 
   onRetry() {
-    const { transactions: { broadcastedTransactionsError }, transactionBroadcasted } = this.props;
-    broadcastedTransactionsError.forEach(({ transaction }) => transactionBroadcasted(transaction));
+    const {
+      transactions: { broadcastedTransactionsError },
+      transactionBroadcasted,
+      fields,
+      prevStep,
+      resetTransactionResult,
+    } = this.props;
+
+    if (fields.isHardwareWalletConnected) {
+      resetTransactionResult();
+      prevStep({ ...fields, hwTransactionStatus: false });
+    } else {
+      broadcastedTransactionsError.forEach(({ transaction }) =>
+        transactionBroadcasted(transaction));
+    }
   }
 
   render() {

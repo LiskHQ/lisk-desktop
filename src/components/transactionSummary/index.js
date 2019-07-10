@@ -90,107 +90,101 @@ class TransactionSummary extends React.Component {
       secondPassphrase, isHardwareWalletConnected, isConfirmed,
     } = this.state;
 
-    return (
-      <div className={`${styles.wrapper} ${classNames}`}>
-        <header className="summary-header">
-          { isHardwareWalletConnected
-            ? (
-              <React.Fragment>
-                <h1>
-                  {' '}
-                  {t('Confirm transaction on your {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })}
-                  {' '}
-                </h1>
-                <p>{t('Please check if all the transaction details are correct.')}</p>
-                <Illustration name={this.getHwWalletIllustration()} />
-              </React.Fragment>
-            ) : null }
-          <h2>{title}</h2>
-        </header>
-        <div className={styles.content}>
-          {children}
-          {account.secondPublicKey
-            ? (
-              <section className="summary-second-passphrase">
-                <label>{t('Second passphrase')}</label>
-                <PassphraseInputV2
-                  isSecondPassphrase={!!account.secondPublicKey}
-                  secondPPFeedback={secondPassphrase.feedback}
-                  inputsLength={12}
-                  maxInputsLength={24}
-                  onFill={this.checkSecondPassphrase}
-                />
-              </section>
-            )
-            : null
+    return <div className={`${styles.wrapper} ${classNames}`}>
+    <header className='summary-header'>
+      {
+        isHardwareWalletConnected
+        ? <React.Fragment>
+            <h1> {t('Confirm transaction on your {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })} </h1>
+            <p>{t('Please check if all the transaction details are correct.')}</p>
+            <Illustration name={this.getHwWalletIllustration()} />
+          </React.Fragment>
+        : null
       }
-          <section>
-            <label>
-              {t('Transaction fee')}
-              <Tooltip
-                title={t('Transaction fee')}
-                footer={(
-                  <a
-                    href={links.transactionFee}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    {t('Read More')}
-                  </a>
-)}
-              >
-                <p className={styles.tooltipText}>
-                  {
+      <h2>{title}</h2>
+    </header>
+    <div className={styles.content}>
+      {children}
+      <section>
+        <label>
+          {t('Transaction fee')}
+          <Tooltip
+            title={t('Transaction fee')}
+            footer={
+              <a href={links.transactionFee}
+                rel="noopener noreferrer"
+                target="_blank">
+                  {t('Read More')}
+              </a>
+            }
+          >
+            <p className={styles.tooltipText}>
+            {
               t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
                   Such operations require hardware resources and because of that there is a small fee for processing those.`)
             }
+            </p>
+          </Tooltip>
+        </label>
+        <label className={styles.feeValue}> {fee } LSK </label>
+      </section>
+      {
+        confirmation
+        ? <label className={styles.checkboxLabel}>
+            <CheckBox
+              checked={isConfirmed}
+              onChange={this.onConfirmationChange}
+              className={`${styles.checkbox} confirmation-checkbox`}
+            />
+            {confirmation}
+            </label>
+        : null
+      }
+      {
+        account.secondPublicKey
+        ? <section className={`${styles.tooltipContainer} summary-second-passphrase`}>
+            <label>{t('Second passphrase')}</label>
+            <Tooltip
+              className={`${styles.tooltip}`}
+              title={t('What is your second passphrase?')}>
+              <React.Fragment>
+                <p className={`${styles.tooltupText}`}>
+                  {t('Second passphrase is an optional extra layer of protection to your account. You can register at anytime, but you can not remove it.')}
                 </p>
-              </Tooltip>
-            </label>
-            <label>
-              {' '}
-              {fee }
-              {' '}
-LSK
-              {' '}
-            </label>
+                <p className={`${styles.tooltipText}`}>
+                  {t('If you see this field, you have registered a second passphrase in past and it is required to confirm transactions.')}
+                </p>
+              </React.Fragment>
+            </Tooltip>
+            <PassphraseInputV2
+              isSecondPassphrase={!!account.secondPublicKey}
+              secondPPFeedback={secondPassphrase.feedback}
+              inputsLength={12}
+              maxInputsLength={24}
+              onFill={this.checkSecondPassphrase} />
           </section>
-          { confirmation
-            ? (
-              <label className={styles.checkboxLabel}>
-                <CheckBox
-                  checked={isConfirmed}
-                  onChange={this.onConfirmationChange}
-                  className={`${styles.checkbox} confirmation-checkbox`}
-                />
-                {confirmation}
-              </label>
-            )
-            : null
-       }
-        </div>
-        {isHardwareWalletConnected
-          ? null
-          : (
-            <footer className="summary-footer">
-              <PrimaryButtonV2
-                className={`${styles.confirmBtn} confirm-button`}
-                disabled={
-              (!!account.secondPublicKey && !secondPassphrase.isValid)
-              || (confirmation && !isConfirmed)
-              || confirmButton.disabled}
-                onClick={this.confirmOnClick}
-              >
-                {confirmButton.label}
-              </PrimaryButtonV2>
-              <TertiaryButtonV2
-                className={`${styles.editBtn} cancel-button`}
-                onClick={cancelButton.onClick}
-              >
-                {cancelButton.label}
-              </TertiaryButtonV2>
-            </footer>
-          )
+        : null
+      }
+    </div>
+    {
+      isHardwareWalletConnected
+      ? null
+      : <footer className='summary-footer'>
+          <PrimaryButtonV2
+            className={`${styles.confirmBtn} confirm-button`}
+            disabled={
+              (!!account.secondPublicKey && !secondPassphrase.isValid) ||
+              (confirmation && !isConfirmed) ||
+              confirmButton.disabled}
+            onClick={this.confirmOnClick}>
+            {confirmButton.label}
+          </PrimaryButtonV2>
+          <TertiaryButtonV2
+            className={`${styles.editBtn} cancel-button`}
+            onClick={cancelButton.onClick}>
+            {cancelButton.label}
+          </TertiaryButtonV2>
+        </footer>
     }
       </div>
     );

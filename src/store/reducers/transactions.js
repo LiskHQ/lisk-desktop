@@ -101,7 +101,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
       return {
         ...state,
         transactionsCreated: [],
-        transactionsFailed: [],
+        transactionsCreatedFailed: [],
         broadcastedTransactionsError: [],
       };
     case (actionTypes.accountSwitched):

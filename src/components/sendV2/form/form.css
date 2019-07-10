@@ -8,6 +8,7 @@
   align-items: center;
   box-sizing: border-box;
   width: 100%;
+  overflow: initial;
   height: auto;
 }
 
@@ -39,10 +40,12 @@
   & .amountHint {
     @mixin contentSmallest;
 
+    box-sizing: border-box;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     color: var(--color-slate-gray);
+    padding-right: 10px;
     position: relative;
     top: -30px;
     width: 100%;
@@ -83,6 +86,18 @@
     resize: none;
     overflow: hidden;
     padding-right: 30px;
+
+    &:focus ~ .byteCounter {
+      opacity: 1;
+
+      &.hide ~ .referenceStatus {
+        opacity: 1;
+      }
+    }
+
+    &:focus ~ .referenceStatus {
+      opacity: 0;
+    }
   }
 
   & .status {
@@ -170,12 +185,13 @@
 }
 
 .footer {
-  width: 100%;
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
   padding: 24px 16px;
 
   & > .confirmButton {
-    width: 100%;
+    width: var(--footer-button-width);
   }
 }
 
@@ -191,6 +207,6 @@
 }
 
 .hide {
-  opacity: 0;
+  opacity: 0 !important;
   transition: opacity var(--animation-speed-fast) linear;
 }

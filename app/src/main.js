@@ -68,7 +68,8 @@ app.on('activate', () => {
 app.setAsDefaultProtocolClient('lisk');
 
 // Force single instance application
-const isSecondInstance = app.makeSingleInstance((argv) => {
+app.requestSingleInstanceLock();
+app.on('second-instance', (argv) => {
   if (process.platform !== 'darwin') {
     win.send({ event: 'openUrl', value: argv[1] || '/' });
   }
@@ -77,10 +78,6 @@ const isSecondInstance = app.makeSingleInstance((argv) => {
     win.browser.focus();
   }
 });
-
-if (isSecondInstance) {
-  app.exit();
-}
 
 // ToDo - enable this feature when it is implemented in the new design
 app.on('will-finish-launching', () => {

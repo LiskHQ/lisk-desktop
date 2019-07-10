@@ -4,7 +4,7 @@
 .fieldGroup {
   display: flex;
   flex-direction: column;
-  margin-bottom: 12px;
+  margin-bottom: 7px;
 
   & .fieldLabel {
     @mixin contentNormal bold;

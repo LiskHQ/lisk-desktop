@@ -34,23 +34,26 @@ const hwWalletMiddleware = store => next => (action) => {
 
     ipc.on('hwDisconnected', (event, { model }) => {
       const state = store.getState();
-      const { account } = state;
+      const { account, settings } = state;
+      const activeToken = settings.token.active || 'LSK';
 
-      if (account.address) {
-        if (account.hwInfo && account.hwInfo.deviceId) {
-          store.dispatch(dialogDisplayed({
-            childComponent: Alert,
-            childComponentProps: {
-              title: 'You are disconnected',
-              text: `There is no connection to the ${model}. Please check the cables if it happened by accident.`,
-              closeDialog: () => {
-                store.dispatch(dialogHidden());
-                location.reload(); // eslint-disable-line
-              },
+      if (account.info[activeToken].address
+        && account.hwInfo
+        && account.hwInfo.deviceId
+        && account.hwInfo.deviceModel === model
+      ) {
+        store.dispatch(dialogDisplayed({
+          childComponent: Alert,
+          childComponentProps: {
+            title: 'You are disconnected',
+            text: `There is no connection to the ${model}. Please check the cables if it happened by accident.`,
+            closeDialog: () => {
+              store.dispatch(dialogHidden());
+              location.reload(); // eslint-disable-line
             },
-          }));
-          store.dispatch(accountLoggedOut());
-        }
+          },
+        }));
+        store.dispatch(accountLoggedOut());
       }
 
       store.dispatch({

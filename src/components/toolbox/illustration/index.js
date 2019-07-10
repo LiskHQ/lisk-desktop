@@ -20,6 +20,7 @@ import sendLSKTokens from '../../../assets/images/illustrations/send-lsk-tokens.
 import timeToContribute from '../../../assets/images/illustrations/time-to-contribute.svg';
 import emptyBookmarkFiler from '../../../assets/images/illustrations/empty-bookmark-filter.svg';
 import emptyBookmarksList from '../../../assets/images/illustrations/empty-bookmarks-list.svg';
+import helpCenter from '../../../assets/images/help/Illustration.svg';
 
 
 export const illustrations = {
@@ -43,6 +44,7 @@ export const illustrations = {
   timeToContribute,
   emptyBookmarkFiler,
   emptyBookmarksList,
+  helpCenter,
 };
 
 const Illustration = ({ name, className }) => (
