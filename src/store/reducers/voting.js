@@ -138,22 +138,6 @@ const voting = (state = { // eslint-disable-line complexity
         }, {}),
       };
 
-    // TODO Move voteLookupStatus inside VoteUrlProcessor component
-    case actionTypes.voteLookupStatusUpdated:
-      return {
-        ...state,
-        voteLookupStatus: {
-          ...state.voteLookupStatus,
-          [action.data.username]: action.data.status,
-        },
-      };
-
-    case actionTypes.voteLookupStatusCleared:
-      return {
-        ...state,
-        voteLookupStatus: { },
-      };
-
     default:
       return state;
   }
