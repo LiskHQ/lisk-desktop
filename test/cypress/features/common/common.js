@@ -38,12 +38,24 @@ Then(/^The latest transaction is voting$/, function () {
   cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).should('have.text', 'Delegate vote');
 });
 
-Then(/^I am on transaction details page$/, function () {
+Then(/^I should be on Tx Details page$/, function () {
   cy.get(ss.app).contains('Confirmations');
 });
 
-Then(/^I am on account page$/, function () {
+Then(/^I should be on Account page$/, function () {
   cy.get(ss.accountName).should('be.visible');
+});
+
+Then(/^I should be on Account page of ([^s]+)$/, function (accountAddress) {
+  cy.get(ss.accountAddress).contains(accountAddress);
+});
+
+Then(/^I should be on Delegate page of ([^s]+)$/, function (delegateName) {
+  cy.get(ss.delegateName).should('have.text', accountsName);
+});
+
+Then(/^I should be on Tx Details page of ([^s]+)$/, function (transactionId) {
+  cy.get(ss.transactionId).should('have.text', transactionId);
 });
 
 Then(/^I am on Wallet page of ([^s]+)$/, function (accountName) {
@@ -55,4 +67,12 @@ Then(/^I am on Wallet page of ([^s]+)$/, function (accountName) {
 
 Then(/^I see ([^s]+) in recipient$/, function (accountName) {
   cy.get(ss.recipientInput).should('have.value', accounts[accountName].address);
+});
+
+Then(/^I am on Dashboard page$/, function () {
+  cy.server();
+  cy.route('/api/node/constants').as('constants');
+  cy.visit(urls.dashboard).then(() => {
+    if (window.localStorage.getItem('liskCoreUrl')) cy.wait('@constants');
+  });
 });

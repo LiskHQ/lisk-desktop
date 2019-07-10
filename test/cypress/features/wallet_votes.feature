@@ -16,6 +16,6 @@ Feature: Wallet
 
   Scenario: Click on voted delegate leads to account page
     When I click on delegate
-    Then I am on account page
+    Then I should be on Account page
 
 

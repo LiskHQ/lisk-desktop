@@ -4,11 +4,11 @@ Feature: Dashboard
     Given I autologin as genesis to devnet
     Given I am on Dashboard page
     When I click on recent transaction
-    Then I am on transaction details page
+    Then I should be on Tx Details page
 
   Scenario: Open bookmark
     Given I autologin as genesis to devnet
     Given I have a bookmark saved
     Given I am on Dashboard page
     When I click on bookmark
-    Then I am on account page
+    Then I should be on Account page

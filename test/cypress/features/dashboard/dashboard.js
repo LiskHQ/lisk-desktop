@@ -5,10 +5,6 @@ import ss from '../../../constants/selectors';
 import accounts from '../../../constants/accounts';
 import urls from '../../../constants/urls';
 
-Then(/^I am on Dashboard page$/, function () {
-  cy.visit(urls.dashboard);
-});
-
 Then(/^I click on recent transaction$/, function () {
   cy.get(ss.transactionRow).eq(0).click();
 });

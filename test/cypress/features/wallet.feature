@@ -11,7 +11,7 @@ Feature: Wallet
     Given I autologin as genesis to devnet
     Given I am on Wallet page
     When I click the transaction row
-    Then I am on transaction details page
+    Then I should be on Tx Details page
 
   Scenario: Incoming/Outgoing/All filtering works
     Given I autologin as second_passphrase_account to devnet
