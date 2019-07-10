@@ -31,10 +31,9 @@ class BookmarksList extends React.Component {
     const { bookmarks, token, limit } = this.props;
     const { filter } = this.state;
 
-    return bookmarks[token.active].filter(({ title, address }) => (
+    return bookmarks[token.active].filter(({ title }) => (
       filter === '' ||
-      title.toLowerCase().indexOf(filter.toLowerCase()) !== -1 ||
-      address.toLowerCase().indexOf(filter.toLowerCase()) !== -1
+      title.toLowerCase().indexOf(filter.toLowerCase()) !== -1
     )).slice(0, limit);
   }
 
