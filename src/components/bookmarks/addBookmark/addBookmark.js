@@ -11,6 +11,7 @@ import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import { tokenMap } from '../../../constants/tokens';
 import routes from '../../../constants/routes';
 import AccountVisual from '../../accountVisual';
+import PageHeader from '../../toolbox/pageHeader';
 
 class AddBookmark extends React.Component {
   constructor(props) {
@@ -185,9 +186,10 @@ class AddBookmark extends React.Component {
     return (
       <div className={styles.wrapper}>
         <div className={styles.content}>
-          <header>
-            <h1>{t('Bookmarks')}</h1>
-          </header>
+          <PageHeader
+            title={t('Bookmarks')}
+            subtitle={t('Manage your most used accounts')} >
+          </PageHeader>
           <Box>
             <header>
               <h2>
