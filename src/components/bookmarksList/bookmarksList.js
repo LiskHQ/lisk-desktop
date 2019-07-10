@@ -148,7 +148,7 @@ class BookmarksList extends React.Component {
                       onChange={this.onTitleChange}
                       value={eddittedTitle}
                       setRef={(input) => { this.editInput = input; } }
-                      placeholder={t('Filter by name or address...')}
+                      placeholder={t('Insert label')}
                     />
                   : <span className={styles.description}>
                       <span>{bookmark.title}</span>
