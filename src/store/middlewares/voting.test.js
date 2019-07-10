@@ -1,14 +1,10 @@
 import { expect } from 'chai';
-import {
-  spy, stub, mock, match,
-} from 'sinon';
-
-import { voteLookupStatusUpdated } from '../../actions/voting';
-import * as delegateApi from '../../utils/api/delegates';
+import { spy, stub, mock } from 'sinon';
 import actionTypes from '../../constants/actions';
+import * as delegateApi from '../../utils/api/delegates';
 import middleware from './voting';
-import votingConst from '../../constants/voting';
 import networks from '../../constants/networks';
+import votingConst from '../../constants/voting';
 
 describe('voting middleware', () => {
   let store;
@@ -54,7 +50,7 @@ describe('voting middleware', () => {
     expect(next).to.have.been.calledWith(givenAction);
   });
 
-  describe('on votesAdded action', () => {
+  describe('on accountLoggedOut action', () => {
     const state = {
       account: {
         info: {
@@ -97,116 +93,6 @@ describe('voting middleware', () => {
 
     afterEach(() => {
       getDelegatesMock.restore();
-    });
-
-    it('should do nothing if !action.upvotes or !action.dowvotes ', () => {
-      const givenAction = {
-        type: actionTypes.votesAdded,
-        data: { },
-      };
-      middleware(store)(next)(givenAction);
-      expect(store.dispatch).to.not.have.been.calledWith(match.hasNested('type', actionTypes.voteLookupStatusUpdated));
-    });
-
-    it('should dispatch voteLookupStatusUpdated with username from action.data.upvotes and status \'upvotes\'', () => {
-      const username = 'delegate_unvoted';
-      const status = 'upvotes';
-      const givenAction = {
-        type: actionTypes.votesAdded,
-        data: {
-          upvotes: [username],
-          unvotes: [],
-        },
-      };
-
-      middleware(store)(next)(givenAction);
-      getDelegatesMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
-
-      expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
-    });
-
-    it('should dispatch voteLookupStatusUpdated with username from action.data.upvotes and status \'alreadyVoted\'', () => {
-      const username = 'delegate_voted';
-      const status = 'alreadyVoted';
-      const givenAction = {
-        type: actionTypes.votesAdded,
-        data: {
-          upvotes: [username],
-          unvotes: [],
-        },
-      };
-
-      middleware(store)(next)(givenAction);
-      getDelegatesMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
-
-      expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
-    });
-
-    it('should dispatch voteLookupStatusUpdated with username from action.data.unvotes and status \'unvotes\'', () => {
-      const username = 'delegate_voted';
-      const status = 'unvotes';
-      const givenAction = {
-        type: actionTypes.votesAdded,
-        data: {
-          upvotes: [],
-          unvotes: [username],
-        },
-      };
-
-      middleware(store)(next)(givenAction);
-      getDelegatesMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
-
-      expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
-    });
-
-    it('should dispatch voteLookupStatusUpdated with username from action.data.unvotes and status \'notVotedYet\'', () => {
-      const username = 'delegate_unvoted';
-      const status = 'notVotedYet';
-      const givenAction = {
-        type: actionTypes.votesAdded,
-        data: {
-          upvotes: [],
-          unvotes: [username],
-        },
-      };
-
-      middleware(store)(next)(givenAction);
-      getDelegatesMock.resolves({ data: [{ username, account: { publicKey: 'whatever' } }] });
-
-      expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
-    });
-
-    it('should dispatch voteLookupStatusUpdated with username from action.data.unvotes and status \'notFound\' if delegate not found', () => {
-      const username = 'delegate_invalid';
-      const status = 'notFound';
-      const givenAction = {
-        type: actionTypes.votesAdded,
-        data: {
-          upvotes: [],
-          unvotes: [username],
-        },
-      };
-
-      middleware(store)(next)(givenAction);
-      getDelegatesMock.rejects();
-
-      expect(store.dispatch).to.have.been.calledWith(voteLookupStatusUpdated({ username, status }));
-    });
-
-    it('should not call getDelegates API if given delegate is in store', () => {
-      const username = 'delegate_in_store';
-      const givenAction = {
-        type: actionTypes.votesAdded,
-        data: {
-          upvotes: [username],
-          unvotes: [],
-        },
-      };
-
-      middleware(store)(next)(givenAction);
-      getDelegatesMock.rejects();
-
-      expect(getDelegatesMock).to.not.have.been.calledWith();
     });
 
     it('should clear delegates and votes on accountLoggedOut action', () => {
