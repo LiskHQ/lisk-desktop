@@ -39,6 +39,10 @@ Then(/^I open account suggestion$/, function () {
   cy.get(ss.searchAccountRow).eq(0).click();
 });
 
+Then(/^I open delegate suggestion$/, function () {
+  cy.get(ss.searchDelegatesRow).eq(0).click();
+});
+
 Then(/^I open transaction suggestion$/, function () {
   cy.get(ss.searchTransactionRow).eq(0).click();
 });

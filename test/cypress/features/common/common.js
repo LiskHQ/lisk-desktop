@@ -51,7 +51,7 @@ Then(/^I should be on Account page of ([^s]+)$/, function (accountAddress) {
 });
 
 Then(/^I should be on Delegate page of ([^s]+)$/, function (delegateName) {
-  cy.get(ss.delegateName).should('have.text', accountsName);
+  cy.get(ss.accountName).should('have.text', delegateName);
 });
 
 Then(/^I should be on Tx Details page of ([^s]+)$/, function (transactionId) {

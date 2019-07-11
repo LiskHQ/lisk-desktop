@@ -9,17 +9,17 @@ Feature: Search
     And I open transaction suggestion
     Then I should be on Tx Details page of 881002485778658401
 
-  Scenario: Search for Transaction in testnet, signed in
-    Given I autologin as genesis to testnet
-    When I search for transaction 755251579479131174
-    And I open transaction suggestion
-    Then I should be on Tx Details page of 755251579479131174
-
-  Scenario: Search for Delegate in devnet, signed in devnet
+  Scenario: Search for Transaction in devnet, signed in
     Given I autologin as genesis to devnet
-    When I search for delegate genesis_17
-    And I open account suggestion
-    Then I should be on Delegate page of genesis_17
+    When I search for transaction 18173130528211925456
+    And I open transaction suggestion
+    Then I should be on Tx Details page of 18173130528211925456
+
+  Scenario: Search for Delegate in testnet, signed in
+    Given I autologin as genesis to testnet
+    When I search for delegate zero
+    And I open delegate suggestion
+    Then I should be on Delegate page of zero
 
   Scenario: Search for Lisk ID
     When I search for account 537318935439898807L
