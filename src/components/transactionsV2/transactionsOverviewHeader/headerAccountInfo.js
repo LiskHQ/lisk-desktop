@@ -17,15 +17,15 @@ const headerAccountInfo = ({
   const accounts = bookmarks[token];
   const accountTitle = delegate.username
     || (index > -1 && accounts[index] && accounts[index].title);
-  const label =
-    (address === account.address && t('My Account'))
+  const label = (address === account.address && t('My Account'))
     || (delegate.username && t('Delegate #{{rank}}', { rank: delegate.rank }));
 
   return (
     <div className={`${styles.account}`}>
       <AccountVisual
         address={address}
-        size={48}/>
+        size={48}
+      />
       <div className={styles.accountInfo}>
         <div>
           <h2 className={`${styles.title} account-name`}>

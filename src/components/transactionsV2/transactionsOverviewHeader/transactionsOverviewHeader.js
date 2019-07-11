@@ -59,11 +59,13 @@ class transactionsHeader extends React.Component {
               toggleActiveToken={this.props.toggleActiveToken}
             />
             <div className={`${styles.buttonsHolder}`}>
-              <Link to={`${routes.send.path}?wallet&recipient=${address}`}
-                className={'send-to-address'}>
-                  <SecondaryButtonV2>
-                    {t('Send {{token}} to this wallet ', { token: activeToken })}
-                  </SecondaryButtonV2>
+              <Link
+                to={`${routes.send.path}?wallet&recipient=${address}`}
+                className="send-to-address"
+              >
+                <SecondaryButtonV2>
+                  {t('Send {{token}} to this wallet ', { token: activeToken })}
+                </SecondaryButtonV2>
               </Link>
               <DropdownButton
                 buttonClassName={`${styles.bookmarkBtn} bookmark-account-button`}
