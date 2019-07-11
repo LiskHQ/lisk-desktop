@@ -43,7 +43,6 @@ const mergeVotes = (newList, oldDict) => {
 const voting = (state = { // eslint-disable-line complexity
   votes: {},
   delegates: [],
-  voteLookupStatus: {},
 }, action) => {
   switch (action.type) {
     case actionTypes.votesAdded:

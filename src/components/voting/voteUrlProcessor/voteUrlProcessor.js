@@ -11,6 +11,7 @@ export default class VoteUrlProcessor extends React.Component {
 
     this.state = {
       voteLookupStatus: { },
+      pendingVotes: [],
     };
   }
 
@@ -30,13 +31,24 @@ export default class VoteUrlProcessor extends React.Component {
     this.unlisten();
   }
 
-  setVoteLookupStatus(name, status) {
-    const { voteLookupStatus } = this.state;
+  setVoteLookupStatus(name, status, vote) {
+    const { voteLookupStatus, pendingVotes } = this.state;
     this.setState({
       voteLookupStatus: {
         ...voteLookupStatus,
         [name]: status,
       },
+      pendingVotes: [
+        ...pendingVotes,
+        ...(vote ? [vote] : []),
+      ],
+    }, () => {
+      if (filterObjectPropsWithValue(this.state.voteLookupStatus, 'pending').length === 0) {
+        this.state.pendingVotes.map(this.props.voteToggled);
+        this.setState({
+          pendingVotes: [],
+        });
+      }
     });
   }
 
@@ -45,8 +57,7 @@ export default class VoteUrlProcessor extends React.Component {
 
     unvotes.forEach((name) => {
       if (getVote(votes, name)) {
-        this.setVoteLookupStatus(name, 'downvote');
-        this.props.voteToggled(getVote(votes, name));
+        this.setVoteLookupStatus(name, 'downvote', getVote(votes, name));
       } else {
         getDelegateByName(liskAPIClient, name).then(() => {
           this.setVoteLookupStatus(name, 'alreadyVoted');
@@ -59,8 +70,7 @@ export default class VoteUrlProcessor extends React.Component {
     upvotes.forEach((name) => {
       getDelegateByName(liskAPIClient, name).then((delegate) => {
         if (!getVote(votes, name)) {
-          this.setVoteLookupStatus(name, 'upvote');
-          this.props.voteToggled({
+          this.setVoteLookupStatus(name, 'upvote', {
             ...delegate,
             publicKey: delegate.account.publicKey,
             address: delegate.account.address,
@@ -83,6 +93,7 @@ export default class VoteUrlProcessor extends React.Component {
           accumulator[vote] = 'pending';
           return accumulator;
         }, {}),
+        pendingVotes: [],
       });
 
       this.props.loadVotes({

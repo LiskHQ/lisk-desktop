@@ -15,6 +15,9 @@ describe('VotingV2', () => {
     voting: {
       votes,
     },
+    peers: {
+      liskAPIClient: {},
+    },
   });
   const options = {
     context: { i18n, store },
