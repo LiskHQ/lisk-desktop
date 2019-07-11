@@ -43,20 +43,13 @@ export default class VoteUrlProcessor extends React.Component {
   processUrlVotes({ upvotes, unvotes, votes }) {
     const liskAPIClient = this.props.liskAPIClient;
 
-    this.setState({
-      voteLookupStatus: [...upvotes, ...unvotes].reduce((accumulator, vote) => {
-        accumulator[vote] = 'pending';
-        return accumulator;
-      }, {}),
-    });
-
     unvotes.forEach((name) => {
       if (getVote(votes, name)) {
         this.setVoteLookupStatus(name, 'downvote');
         this.props.voteToggled(getVote(votes, name));
       } else {
         getDelegateByName(liskAPIClient, name).then(() => {
-          this.setVoteLookupStatus(name, 'nothingToChange');
+          this.setVoteLookupStatus(name, 'alreadyVoted');
         }).catch(() => {
           this.setVoteLookupStatus(name, 'notFound');
         });
@@ -73,7 +66,7 @@ export default class VoteUrlProcessor extends React.Component {
             address: delegate.account.address,
           });
         } else {
-          this.setVoteLookupStatus(name, 'nothingToChange');
+          this.setVoteLookupStatus(name, 'alreadyVoted');
         }
       }).catch(() => {
         this.setVoteLookupStatus(name, 'notFound');
@@ -85,6 +78,13 @@ export default class VoteUrlProcessor extends React.Component {
     const upvotes = params.votes ? params.votes.split(',') : [];
     const unvotes = params.unvotes ? params.unvotes.split(',') : [];
     if (upvotes.length + unvotes.length) {
+      this.setState({
+        voteLookupStatus: [...upvotes, ...unvotes].reduce((accumulator, vote) => {
+          accumulator[vote] = 'pending';
+          return accumulator;
+        }, {}),
+      });
+
       this.props.loadVotes({
         address: this.props.account.address,
         callback: (votes) => {
@@ -100,25 +100,28 @@ export default class VoteUrlProcessor extends React.Component {
 
   render() {
     const { t, votes } = this.props;
-    const sections = {
-      pending: t('Processing...'),
-      notFound: t('Check spelling – delegate name does not exist'),
-      nothingToChange: t('Nothing to change – already voted/unvoted'),
-    };
-    const voteLookupStatus = {
-      pending: filterObjectPropsWithValue(this.state.voteLookupStatus, 'pending'),
-      nothingToChange: filterObjectPropsWithValue(this.state.voteLookupStatus, 'nothingToChange'),
-      notFound: filterObjectPropsWithValue(this.state.voteLookupStatus, 'notFound'),
-    };
+    const voteLookupStatus = [{
+      key: 'pending',
+      title: t('Processing...'),
+      list: filterObjectPropsWithValue(this.state.voteLookupStatus, 'pending'),
+    }, {
+      key: 'notFound',
+      title: t('Check spelling – delegate name does not exist'),
+      list: filterObjectPropsWithValue(this.state.voteLookupStatus, 'notFound'),
+    }, {
+      key: 'alreadyVoted',
+      title: t('Nothing to change – already voted/unvoted'),
+      list: filterObjectPropsWithValue(this.state.voteLookupStatus, 'alreadyVoted'),
+    }];
 
     return (
       <React.Fragment>
-        {Object.keys(sections).map((list, key) => (
-          voteLookupStatus[list].length ? (
+        {voteLookupStatus.map(({ key, title, list }) => (
+          list.length ? (
             <VoteList
-              className={`${list}-message`}
-              title={sections[list]}
-              list={voteLookupStatus[list]}
+              className={`${key}-message`}
+              title={title}
+              list={list}
               votes={votes}
               key={key}
             />
