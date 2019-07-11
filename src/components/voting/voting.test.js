@@ -14,6 +14,7 @@ describe('VotingV2', () => {
   const store = configureMockStore([])({
     voting: {
       votes,
+      delegates: [],
     },
     peers: {
       liskAPIClient: {},

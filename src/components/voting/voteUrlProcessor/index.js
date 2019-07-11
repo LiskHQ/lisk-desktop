@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
 import {
+  loadDelegates,
   loadVotes,
   voteLookupStatusCleared,
   voteToggled,
@@ -13,9 +14,11 @@ const mapDispatchToProps = {
   voteLookupStatusCleared,
   voteToggled,
   loadVotes,
+  loadDelegates,
 };
 
 const mapStateToProps = state => ({
+  delegates: state.voting.delegates,
   liskAPIClient: state.peers.liskAPIClient,
 });
 

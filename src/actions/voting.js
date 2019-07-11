@@ -100,7 +100,7 @@ export const loadVotes = ({ address, type, callback = () => null }) =>
  * Gets list of all delegates
  */
 export const loadDelegates = ({
-  offset, refresh, q, callback = () => {},
+  offset = 0, refresh, q, callback = () => {},
 }) =>
   (dispatch, getState) => {
     const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());

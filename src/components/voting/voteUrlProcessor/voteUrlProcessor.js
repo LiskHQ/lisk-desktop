@@ -52,14 +52,24 @@ export default class VoteUrlProcessor extends React.Component {
     });
   }
 
-  processUrlVotes({ upvotes, unvotes, votes }) {
-    const liskAPIClient = this.props.liskAPIClient;
+  getDelegateByName(name) {
+    return new Promise((resolve, reject) => {
+      const { liskAPIClient, delegates } = this.props;
+      const delegate = getVote(delegates, name);
+      if (delegate) {
+        resolve(delegate);
+      } else {
+        getDelegateByName(liskAPIClient, name).then(resolve).catch(reject);
+      }
+    });
+  }
 
+  processUrlVotes({ upvotes, unvotes, votes }) {
     unvotes.forEach((name) => {
       if (getVote(votes, name)) {
         this.setVoteLookupStatus(name, 'downvote', getVote(votes, name));
       } else {
-        getDelegateByName(liskAPIClient, name).then(() => {
+        this.getDelegateByName(name).then(() => {
           this.setVoteLookupStatus(name, 'alreadyVoted');
         }).catch(() => {
           this.setVoteLookupStatus(name, 'notFound');
@@ -68,7 +78,7 @@ export default class VoteUrlProcessor extends React.Component {
     });
 
     upvotes.forEach((name) => {
-      getDelegateByName(liskAPIClient, name).then((delegate) => {
+      this.getDelegateByName(name).then((delegate) => {
         if (!getVote(votes, name)) {
           this.setVoteLookupStatus(name, 'upvote', {
             ...delegate,
@@ -96,13 +106,17 @@ export default class VoteUrlProcessor extends React.Component {
         pendingVotes: [],
       });
 
-      this.props.loadVotes({
-        address: this.props.account.address,
-        callback: (votes) => {
-          this.processUrlVotes({
-            upvotes,
-            unvotes,
-            votes,
+      this.props.loadDelegates({
+        callback: () => {
+          this.props.loadVotes({
+            address: this.props.account.address,
+            callback: (votes) => {
+              this.processUrlVotes({
+                upvotes,
+                unvotes,
+                votes,
+              });
+            },
           });
         },
       });

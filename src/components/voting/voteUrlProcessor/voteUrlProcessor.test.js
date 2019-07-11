@@ -24,7 +24,9 @@ describe('VoteUrlProcessor', () => {
 
     props = {
       account,
+      delegates: [],
       loadVotes: jest.fn(({ callback }) => callback(votes.slice(0, 3))),
+      loadDelegates: jest.fn(({ callback }) => callback()),
       voteToggled: jest.fn(),
       history: {
         location,
