@@ -42,14 +42,17 @@ export default class VoteUrlProcessor extends React.Component {
         ...pendingVotes,
         ...(vote ? [vote] : []),
       ],
-    }, () => {
-      if (filterObjectPropsWithValue(this.state.voteLookupStatus, 'pending').length === 0) {
-        this.state.pendingVotes.map(this.props.voteToggled);
-        this.setState({
-          pendingVotes: [],
-        });
-      }
     });
+  }
+
+  componentDidUpdate() {
+    if (filterObjectPropsWithValue(this.state.voteLookupStatus, 'pending').length === 0
+        && this.state.pendingVotes.length > 0) {
+      this.state.pendingVotes.map(v => this.props.voteToggled(v));
+      this.setState({
+        pendingVotes: [],
+      });
+    }
   }
 
   getDelegateByName(name) {

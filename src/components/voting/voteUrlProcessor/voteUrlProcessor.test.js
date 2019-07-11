@@ -38,7 +38,6 @@ describe('VoteUrlProcessor', () => {
       },
       t: key => key,
     };
-    delegateApi.getDelegateByName.mockResolvedValue({});
   });
 
   afterEach(() => {
@@ -84,6 +83,7 @@ describe('VoteUrlProcessor', () => {
       },
     }}
     />);
+    delegateApi.getDelegateByName.mockResolvedValue(votes[0]);
     expect(props.voteToggled).toHaveBeenCalledWith(expect.objectContaining({
       username: votes[0].username,
     }));
