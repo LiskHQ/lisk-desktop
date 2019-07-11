@@ -68,14 +68,13 @@
   }
 
   &.withIcon {
-    padding-left: 40px;
+    padding-left: 36px;
   }
 }
 
 .icon {
   position: absolute;
-  top: 30px;
-  left: 30px;
+  left: 31px;
 }
 
 .autoresize {

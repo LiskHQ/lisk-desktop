@@ -11,12 +11,12 @@ const InputV2 = ({
   ...props
 }) => (
   <React.Fragment>
+    { icon ? <Icon name={icon} className={styles.icon} /> : null }
     <input
       {...props}
       ref={setRef}
       className={`${styles.input} ${error ? styles.error : ''} ${className} ${styles[size]} ${icon ? styles.withIcon : ''}`}
     />
-    { icon ? <Icon name={icon} className={styles.icon} /> : null }
   </React.Fragment>
 );
 

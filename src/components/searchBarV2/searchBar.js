@@ -132,7 +132,7 @@ class SearchBar extends React.Component {
     return (
       <div className={`${styles.wrapper} search-bar`}>
         <InputV2
-          icon="search_icon_inactive"
+          icon="searchInput"
           size="m"
           data-name="searchInput"
           setRef={setSearchBarRef}
