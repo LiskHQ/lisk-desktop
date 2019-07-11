@@ -15,7 +15,11 @@ const mapDispatchToProps = {
   loadVotes,
 };
 
+const mapStateToProps = state => ({
+  liskAPIClient: state.peers.liskAPIClient,
+});
+
 export default withRouter(connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(translate()(VoteUrlProcessor)));
