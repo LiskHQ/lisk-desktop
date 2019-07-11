@@ -64,14 +64,14 @@ class transactionsHeader extends React.Component {
                 className="send-to-address"
               >
                 <SecondaryButtonV2>
-                  {t('Send {{token}} to this Account ', { token: activeToken })}
+                  {t('Send {{token}} to this wallet ', { token: activeToken })}
                 </SecondaryButtonV2>
               </Link>
               <DropdownButton
-                buttonClassName="bookmark-account-button"
+                buttonClassName={`${styles.bookmarkBtn} bookmark-account-button`}
                 className={`${styles.bookmarkDropdown} bookmark-account`}
-                buttonLabel={isBookmark ? t('Account bookmarked') : t('Bookmark account')}
-                ButtonComponent={isBookmark ? SecondaryButtonV2 : PrimaryButtonV2}
+                buttonLabel={isBookmark ? t('Edit bookmark') : t('Bookmark')}
+                ButtonComponent={PrimaryButtonV2}
               >
                 <Bookmark
                   token={activeToken}
