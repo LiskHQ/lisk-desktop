@@ -132,13 +132,14 @@ class SearchBar extends React.Component {
     return (
       <div className={`${styles.wrapper} search-bar`}>
         <InputV2
+          size="m"
           data-name="searchInput"
           setRef={setSearchBarRef}
           autoComplete="off"
           onChange={this.onChangeSearchTextValue}
           name="searchText"
           value={searchTextValue}
-          placeholder={t('Search for Address, Transaction ID or Delegate name')}
+          placeholder={t('Search within the network...')}
           className={`${styles.input} search-input`}
           onKeyDown={this.onHandleKeyPress}
         />

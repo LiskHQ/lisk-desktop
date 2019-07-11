@@ -32,12 +32,10 @@
     visibility: visible;
     opacity: 1;
   }
-}
 
-.input {
-  @mixin contentNormal;
-
-  height: 30px;
+  & .input {
+    padding-left: 36px;
+  }
 }
 
 .linear {
