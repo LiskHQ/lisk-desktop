@@ -1,14 +1,16 @@
+import Lisk from '@liskhq/lisk-client';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import Lisk from '@liskhq/lisk-client';
 import {
   getDelegates,
+  getDelegateByName,
   castVotes,
   getVotes,
   registerDelegate,
 } from './delegates';
-import accounts from '../../../test/constants/accounts';
 import { loginType } from '../../constants/hwConstants';
+import accounts from '../../../test/constants/accounts';
+import delegates from '../../../test/constants/delegates';
 
 describe('Utils: Delegate', () => {
   let liskAPIClientMockDelegates;
@@ -68,6 +70,28 @@ describe('Utils: Delegate', () => {
 
       const returnedPromise = getDelegates(liskAPIClient, options);
       return expect(returnedPromise).to.eventually.equal(response);
+    });
+  });
+
+  describe('getDelegateByName', () => {
+    it('should resolve delegate genesis_3 if name = genesis_3', () => {
+      const name = delegates[0].username;
+      liskAPIClientMockDelegates.expects('get').withArgs({
+        search: name, limit: 101,
+      }).returnsPromise().resolves({ data: delegates });
+
+      const returnedPromise = getDelegateByName(liskAPIClient, name);
+      expect(returnedPromise).to.eventually.equal(delegates[0]);
+    });
+
+    it('should reject if given name does not exist', () => {
+      const name = `${delegates[0].username}_not_exist`;
+      liskAPIClientMockDelegates.expects('get').withArgs({
+        search: name, limit: 101,
+      }).returnsPromise().resolves({ data: [] });
+
+      const returnedPromise = getDelegateByName(liskAPIClient, name);
+      expect(returnedPromise).to.be.rejectedWith();
     });
   });
 
