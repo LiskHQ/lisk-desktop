@@ -1,83 +1,89 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import accounts from '../../../../test/constants/accounts';
 import VoteUrlProcessor from './voteUrlProcessor';
+import accounts from '../../../../test/constants/accounts';
+import * as delegateApi from '../../../utils/api/delegates';
 import routes from '../../../constants/routes';
+import votes from '../../../../test/constants/votes';
 
-describe.skip('VoteUrlProcessor', () => {
+jest.mock('../../../utils/api/delegates');
+
+describe('VoteUrlProcessor', () => {
   let wrapper;
   let props;
+  let unlistenSpy;
 
   beforeEach(() => {
     const account = accounts.delegate;
     const location = {
-      search: '?votes=delegate_name',
+      search: '',
       pathname: routes.voting.path,
     };
 
+    unlistenSpy = jest.fn();
+
     props = {
       account,
-      voteLookupStatusCleared: jest.fn(),
-      urlVotesFound: jest.fn(),
-      voteLookupStatus: {
-        notVotedYet: [],
-        pending: [],
-        notFound: [],
-        alreadyVoted: [],
-      },
+      loadVotes: jest.fn(({ callback }) => callback(votes.slice(0, 3))),
+      voteToggled: jest.fn(),
       history: {
         location,
-        listen: callback => callback(location),
+        listen: (callback) => {
+          callback(location);
+          return unlistenSpy;
+        },
         push: () => {},
       },
-      urlVoteCount: 0,
       t: key => key,
     };
+    delegateApi.getDelegateByName.mockResolvedValue({});
   });
 
-  it('calls props.urlVotesFound with upvotes if URL contains ?votes=delegate_name', () => {
-    wrapper = mount(<VoteUrlProcessor {...{
-      ...props,
-      history: {
-        ...props.history,
-        location: {
-          search: '?votes=delegate_name',
-        },
-      },
-    }}
-    />);
-    expect(props.urlVotesFound).toHaveBeenCalledWith({
-      upvotes: ['delegate_name'],
-      unvotes: [],
-      address: props.account.address,
-    });
+  afterEach(() => {
+    delegateApi.getDelegateByName.mockReset();
   });
 
-  it('calls props.urlVotesFound with unvotes if URL contains ?unvotes=delegate_name', () => {
-    wrapper = mount(<VoteUrlProcessor {...{
-      ...props,
-      history: {
-        ...props.history,
-        location: {
-          search: '?unvotes=delegate_name',
-        },
-      },
-    }}
-    />);
-    expect(props.urlVotesFound).toHaveBeenCalledWith({
-      upvotes: [],
-      unvotes: ['delegate_name'],
-      address: props.account.address,
-    });
-  });
-
-  it('displays the selected votes', () => {
-    props.voteLookupStatus.alreadyVoted = ['delegate_1', 'delegate_3'];
-    props.voteLookupStatus.notFound = ['delegate_2'];
-
+  it('does not call props.loadVotes if URL does not contain votes or unvotes search param', () => {
     wrapper = mount(<VoteUrlProcessor {...props} />);
+    expect(props.loadVotes).not.toHaveBeenCalled();
+  });
 
-    expect(wrapper.find('.alreadyVoted-message .votesContainer').text()).toEqual('delegate_1delegate_3');
-    expect(wrapper.find('.notFound-message .votesContainer').text()).toEqual('delegate_2');
+  it('removes history listener on unmount', () => {
+    wrapper = mount(<VoteUrlProcessor {...props} />);
+    expect(unlistenSpy).not.toHaveBeenCalled();
+    wrapper.unmount();
+    expect(unlistenSpy).toHaveBeenCalled();
+  });
+
+  it('calls props.loadVotes with account.address if URL contains ?votes=delegate_name', () => {
+    wrapper = mount(<VoteUrlProcessor {...{
+      ...props,
+      history: {
+        ...props.history,
+        location: {
+          search: `?votes=${votes[0].username}`,
+        },
+      },
+    }}
+    />);
+    expect(props.loadVotes).toHaveBeenCalledWith(expect.objectContaining({
+      address: props.account.address,
+    }));
+  });
+
+  it('calls props.voteToggled if URL contains ?unvotes=delegate_name which was voted before', () => {
+    wrapper = mount(<VoteUrlProcessor {...{
+      ...props,
+      history: {
+        ...props.history,
+        location: {
+          search: `?unvotes=${votes[0].username}`,
+        },
+      },
+    }}
+    />);
+    expect(props.voteToggled).toHaveBeenCalledWith(expect.objectContaining({
+      username: votes[0].username,
+    }));
   });
 });
