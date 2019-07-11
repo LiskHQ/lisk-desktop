@@ -21,6 +21,13 @@ Then(/^I search for account ([^s]+)$/, function (string) {
   cy.wait('@requestDelegate');
 });
 
+Then(/^I search for delegate ([^s]+)$/, function (string) {
+  cy.server();
+  cy.route('/api/delegates**').as('requestDelegate');
+  cy.get(ss.searchInput).type(string);
+  cy.wait('@requestDelegate');
+});
+
 Then(/^I search for transaction ([^s]+)$/, function (string) {
   cy.server();
   cy.route('/api/transactions**').as('requestTransaction');
@@ -34,6 +41,10 @@ Then(/^I open account suggestion$/, function () {
 
 Then(/^I open transaction suggestion$/, function () {
   cy.get(ss.searchTransactionRow).eq(0).click();
+});
+
+Then(/^I should see no results$/, function () {
+  cy.get(ss.searchMessage).eq(0).should('have.text', 'No results found.');
 });
 
 
