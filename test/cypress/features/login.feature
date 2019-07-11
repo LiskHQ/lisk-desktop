@@ -16,7 +16,7 @@ Feature: Login
     Given showNetwork setting is true
     Given I am on Login page
     When I choose testnet
-    When I login as testnet guy
+    When I login as testnet_guy
     Then I should be connected to testnet
 
   Scenario: Log in to Devnet

@@ -24,6 +24,7 @@ Given(/^I confirm transaction$/, function () {
 });
 
 Given(/^I see the transaction in transaction list$/, function () {
-  cy.get(ss.transactionRow).eq(0).as('tx');
-  cy.get('@tx').find(ss.transactionAddress).should('have.text', 'Second passphrase registration');
+  cy.wait(1000);
+  cy.get(`${ss.transactionRow} ${ss.spinner}`).should('be.visible');
+  cy.get(ss.transactionRow).eq(0).find(ss.transactionAddress).contains('Second passphrase registration');
 });
