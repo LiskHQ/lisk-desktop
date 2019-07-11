@@ -34,19 +34,19 @@ describe('SearchBar', () => {
   });
 
   it('should render accounts data properly based on user data input', () => {
-    wrapper.find('.search-input').at(0).simulate('change', { target: { value: '123456L' } });
+    wrapper.find('.search-input input').at(0).simulate('change', { target: { value: '123456L' } });
     jest.advanceTimersByTime(500);
     wrapper.update();
     expect(props.searchSuggestions).toBeCalled();
 
-    wrapper.find('.search-input').at(0).simulate('change', { target: { value: '12' } });
+    wrapper.find('.search-input input').at(0).simulate('change', { target: { value: '12' } });
     jest.advanceTimersByTime(500);
     wrapper.update();
     expect(props.clearSearchSuggestions).toBeCalled();
   });
 
   it('should redirect to a different page if user do a click on selected row for address', () => {
-    wrapper.find('.search-input').at(0).simulate('change', { target: { value: '123456L' } });
+    wrapper.find('.search-input input').at(0).simulate('change', { target: { value: '123456L' } });
     jest.advanceTimersByTime(500);
     wrapper.update();
     expect(props.searchSuggestions).toBeCalled();
@@ -68,7 +68,7 @@ describe('SearchBar', () => {
   });
 
   it('should redirect to a different page if user do a click on selected row for transaction', () => {
-    wrapper.find('.search-input').at(0).simulate('change', { target: { value: '123456123234234' } });
+    wrapper.find('.search-input input').at(0).simulate('change', { target: { value: '123456123234234' } });
     jest.advanceTimersByTime(500);
     wrapper.update();
     expect(props.searchSuggestions).toBeCalled();
@@ -92,7 +92,7 @@ describe('SearchBar', () => {
   });
 
   it('should redirect to a delegate page if user do a click on selected row for delegates', () => {
-    wrapper.find('.search-input').at(0).simulate('change', { target: { value: 'genesis' } });
+    wrapper.find('.search-input input').at(0).simulate('change', { target: { value: 'genesis' } });
     jest.advanceTimersByTime(500);
     wrapper.update();
     expect(props.searchSuggestions).toBeCalled();
@@ -122,9 +122,9 @@ describe('SearchBar', () => {
       },
     });
 
-    wrapper.find('InputV2.input').simulate('keyDown', { keyCode: keyCodes.arrowDown });
-    wrapper.find('InputV2.input').simulate('keyDown', { keyCode: keyCodes.arrowUp });
-    wrapper.find('InputV2.input').simulate('keyDown', { keyCode: keyCodes.enter });
+    wrapper.find('.search-input input').simulate('keyDown', { keyCode: keyCodes.arrowDown });
+    wrapper.find('.search-input input').simulate('keyDown', { keyCode: keyCodes.arrowUp });
+    wrapper.find('.search-input input').simulate('keyDown', { keyCode: keyCodes.enter });
     expect(props.clearSearchSuggestions).toBeCalled();
     expect(props.onSearchClick).toBeCalled();
   });
