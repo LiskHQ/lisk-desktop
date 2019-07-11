@@ -17,7 +17,7 @@ describe('HW Wallet -> Loading', () => {
       { deviceId: 0, model: 'Ledger Nano S' },
       { deviceId: 1, model: 'Trezro Model T' },
     ];
-    wrapper = mount(<Router><Loading {...props}/></Router>);
+    wrapper = mount(<Router><Loading {...props} /></Router>);
     expect(wrapper).toIncludeText('Looking for a device...');
     wrapper.setProps({
       children: React.cloneElement(wrapper.props().children, {

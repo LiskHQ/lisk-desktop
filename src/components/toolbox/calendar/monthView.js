@@ -54,13 +54,17 @@ class MonthView extends Component {
       && day.format(dateFormat) === selectedDate.format(dateFormat);
     const isDisabled = validations.shouldBeDisabled(day, minDate, maxDate, options);
 
-    return <button key={`button-${day.format(dateFormat)}`}
-      onClick={this.handleSelectDate}
-      value={day.format(dateFormat)}
-      disabled={isDisabled}
-      className={`${styles.item} ${styles.dayItem} ${selected ? styles.selected : ''}`}>
+    return (
+      <button
+        key={`button-${day.format(dateFormat)}`}
+        onClick={this.handleSelectDate}
+        value={day.format(dateFormat)}
+        disabled={isDisabled}
+        className={`${styles.item} ${styles.dayItem} ${selected ? styles.selected : ''}`}
+      >
         {day.format('D')}
-      </button>;
+      </button>
+    );
   }
 
   render() {
@@ -79,15 +83,16 @@ class MonthView extends Component {
       <div className={`${!isShown ? styles.hidden : ''} monthView`}>
         <header className={styles.calendarHeader}>
           <span className={styles.navigationButton} onClick={this.previousMonth}>
-            <img src={prevIcon}/>
+            <img src={prevIcon} />
           </span>
           <span
             onClick={this.showYearView}
-            className={`${styles.viewName} ${styles.clickable}`}>
+            className={`${styles.viewName} ${styles.clickable}`}
+          >
             {showingDate.format('MMMM YYYY')}
           </span>
           <span className={styles.navigationButton} onClick={this.nextMonth}>
-            <img src={nextIcon}/>
+            <img src={nextIcon} />
           </span>
         </header>
         <div className={styles.contentWrapper}>

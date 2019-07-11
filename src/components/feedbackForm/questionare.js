@@ -68,40 +68,47 @@ class Questionare extends React.Component {
   }
 
   render() {
-    return (<div>
-      <div className={styles.main}>
-        <label className={styles.label} htmlFor='rating'>
-          {`${this.props.t('How do you like the hub?')}*`}
-          <RadioSelector {...this.ratingProps} />
-        </label>
-        <ToolBoxInput
-          multiline
-          label={'Is there something different from what you expected?'}
-          className={styles.textInput}
-          value={this.state.expected}
-          onChange={val => this.setFeedbackValue(val, 'expected')} >
-        </ToolBoxInput>
-        <ToolBoxInput
-          multiline
-          label={'Do you have other input for us?'}
-          className={styles.textInput}
-          value={this.state.otherInput}
-          onChange={val => this.setFeedbackValue(val, 'otherInput')} >
-        </ToolBoxInput>
-        <label className={styles.label} htmlFor='metadata'>
-          {`${this.props.t('Include your operating system and screen resolution in your report')}`}
-          <RadioSelector {...this.metadataProps} />
-        </label>
+    return (
+      <div>
+        <div className={styles.main}>
+          <label className={styles.label} htmlFor="rating">
+            {`${this.props.t('How do you like the hub?')}*`}
+            <RadioSelector {...this.ratingProps} />
+          </label>
+          <ToolBoxInput
+            multiline
+            label="Is there something different from what you expected?"
+            className={styles.textInput}
+            value={this.state.expected}
+            onChange={val => this.setFeedbackValue(val, 'expected')}
+          />
+          <ToolBoxInput
+            multiline
+            label="Do you have other input for us?"
+            className={styles.textInput}
+            value={this.state.otherInput}
+            onChange={val => this.setFeedbackValue(val, 'otherInput')}
+          />
+          <label className={styles.label} htmlFor="metadata">
+            {`${this.props.t('Include your operating system and screen resolution in your report')}`}
+            <RadioSelector {...this.metadataProps} />
+          </label>
+        </div>
+        <div className={styles.actions}>
+          <Button
+            label={this.props.t('Cancel')}
+            onClick={() => this.onCancel()}
+            className="cancel-button"
+          />
+          <PrimaryButton
+            label={this.props.t('Send')}
+            disabled={!this.state.rating}
+            onClick={() => this.onSubmit()}
+            className="send-button"
+          />
+        </div>
       </div>
-      <div className={styles.actions}>
-        <Button label={this.props.t('Cancel')}
-          onClick={() => this.onCancel()}
-          className='cancel-button' />
-        <PrimaryButton label={this.props.t('Send')} disabled={!this.state.rating}
-          onClick={() => this.onSubmit()}
-          className='send-button'/>
-      </div>
-    </div>);
+    );
   }
 }
 

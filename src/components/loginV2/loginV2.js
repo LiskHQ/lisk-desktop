@@ -6,7 +6,7 @@ import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
-import { parseSearchParams } from './../../utils/searchParams';
+import { parseSearchParams } from '../../utils/searchParams';
 import { extractAddress } from '../../utils/account';
 import { getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import { getNetworksList } from '../../utils/getNetwork';
@@ -71,9 +71,9 @@ class LoginV2 extends React.Component {
       || params.shownetwork
       || (this.props.settings && this.props.settings.showNetwork);
 
-    if (this.props.account &&
-      this.props.account.address && (showNetworkParam !== 'true' || this.secondIteration) &&
-      !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.peers.options)) {
+    if (this.props.account
+      && this.props.account.address && (showNetworkParam !== 'true' || this.secondIteration)
+      && !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.peers.options)) {
       this.redirectToReferrer();
     }
   }
@@ -91,11 +91,11 @@ class LoginV2 extends React.Component {
   }
 
   alreadyLoggedWithThisAddress(address, network) {
-    return this.props.account &&
-      this.props.peers.options &&
-      this.props.account.address === address &&
-      this.props.peers.options.code === network.code &&
-      this.props.peers.options.address === network.address;
+    return this.props.account
+      && this.props.peers.options
+      && this.props.account.address === address
+      && this.props.peers.options.code === network.code
+      && this.props.peers.options.address === network.address;
   }
 
   checkPassphrase(passphrase, validationError) {
@@ -130,11 +130,12 @@ class LoginV2 extends React.Component {
     return (
       <React.Fragment>
         { match.url === routes.loginV2.path ? (
-        <HeaderV2 showSettings={true} />
+          <HeaderV2 showSettings />
         ) : null }
         <div className={`${styles.login} ${grid.row}`}>
           <div
-            className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}>
+            className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}
+          >
 
             <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
               <span className={styles.stepsLabel}>
@@ -145,8 +146,10 @@ class LoginV2 extends React.Component {
               </h1>
               <p>
                 {t('New to Lisk? ')}
-                <Link className={`${styles.link}`}
-                  to={routes.register.path}>
+                <Link
+                  className={`${styles.link}`}
+                  to={routes.register.path}
+                >
                   {t('Create an Account')}
                 </Link>
               </p>
@@ -159,13 +162,17 @@ class LoginV2 extends React.Component {
                   <Tooltip
                     className={`${styles.tooltip}`}
                     title={t('What is your passphrase?')}
-                    footer={
-                      <a href={links.whatIsAnPassphrase}
-                        tabIndex={'-1'}
+                    footer={(
+                      <a
+                        href={links.whatIsAnPassphrase}
+                        tabIndex="-1"
                         rel="noopener noreferrer"
-                        target="_blank">
-                          {t('Read More')}
-                      </a>}>
+                        target="_blank"
+                      >
+                        {t('Read More')}
+                      </a>
+)}
+                  >
                     <React.Fragment>
                       <p className={`${styles.tooltipText}`}>
                         {t('Your passphrase is both your login and passphrase to your Lisk Hub. It is provided during account registration.')}
@@ -183,17 +190,19 @@ class LoginV2 extends React.Component {
                 <PassphraseInputV2
                   inputsLength={12}
                   maxInputsLength={24}
-                  onFill={this.checkPassphrase} />
+                  onFill={this.checkPassphrase}
+                />
               </div>
 
               <div className={`${styles.buttonsHolder}`}>
                 <PrimaryButtonV2
                   className={`${styles.button} login-button`}
-                  type='submit'
+                  type="submit"
                   disabled={(this.state.network === networks.customNode.code
                     && !!this.state.addressValidity)
                     || !this.state.isValid
-                    || this.state.passphrase === ''}>
+                    || this.state.passphrase === ''}
+                >
                   {t('Sign In')}
                 </PrimaryButtonV2>
                 <Link to={routes.splashscreen.path}>

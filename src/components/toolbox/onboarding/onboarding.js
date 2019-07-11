@@ -58,30 +58,39 @@ class Onboarding extends React.Component {
       <div className={`${styles.onboarding} ${className}`}>
         <span className={styles.closeBtn} onClick={this.handleClose} />
         <div className={styles.illustrations}>
-          {slides.map(({ illustration }, i) =>
+          {slides.map(({ illustration }, i) => (
             <Illustration
               className={`${i === currentSlide ? styles.active : ''}`}
               key={`illustration-${i}`}
-              name={illustration} />)
+              name={illustration}
+            />
+          ))
           }
         </div>
 
         <div className={styles.content}>
-          {slides.length > 1 ?
-            <span className={styles.bullets}>
-              {slides.map((_, i) =>
-                <span key={`bullet-${i}`}
-                  data-index={i}
-                  className={i === currentSlide ? styles.active : ''}/>)
+          {slides.length > 1
+            ? (
+              <span className={styles.bullets}>
+                {slides.map((_, i) => (
+                  <span
+                    key={`bullet-${i}`}
+                    data-index={i}
+                    className={i === currentSlide ? styles.active : ''}
+                  />
+                ))
               }
-            </span> : null
+              </span>
+            ) : null
           }
           <div className={styles.slides}>
             {slides.map((slide, index) => (
-              <section key={`slides-${index}`}
-                className={`${slide.className || ''} ${index === currentSlide ? styles.active : ''}`}>
-                  <h1 className={styles.title}>{slide.title}</h1>
-                  <p>{slide.content}</p>
+              <section
+                key={`slides-${index}`}
+                className={`${slide.className || ''} ${index === currentSlide ? styles.active : ''}`}
+              >
+                <h1 className={styles.title}>{slide.title}</h1>
+                <p>{slide.content}</p>
               </section>
             ))}
           </div>
@@ -89,8 +98,8 @@ class Onboarding extends React.Component {
             {currentSlide !== 0
               ? (
                 <SecondaryButtonV2
-                  className={'light medium'}
-                  name={'prev'}
+                  className="light medium"
+                  name="prev"
                   onClick={this.handleButtonClick}
                 >
                   {t('Previous')}
@@ -98,20 +107,22 @@ class Onboarding extends React.Component {
               ) : null
             }
             {(currentSlide !== slides.length - 1 && actionButtonLabel !== '')
-              ? (<PrimaryButtonV2
-                  className='medium'
-                  name={'next'}
+              ? (
+                <PrimaryButtonV2
+                  className="medium"
+                  name="next"
                   onClick={this.handleButtonClick}
                 >
                   {t('Next')}
                 </PrimaryButtonV2>
               ) : (
                 <PrimaryButtonV2
-                  className='medium'
-                  onClick={this.handleFinalCallback}>
+                  className="medium"
+                  onClick={this.handleFinalCallback}
+                >
                   {actionButtonLabel}
                 </PrimaryButtonV2>
-            )}
+              )}
           </div>
         </div>
       </div>

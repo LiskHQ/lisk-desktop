@@ -8,9 +8,12 @@ const FontIcon = ({
   children, className, value, ...other
 }) => {
   const icon = value || children;
-  return (<span
-    className={`${style.icon} ${style[icon]} ${className}`}
-    {...other}></span>);
+  return (
+    <span
+      className={`${style.icon} ${style[icon]} ${className}`}
+      {...other}
+    />
+  );
 };
 
 FontIcon.defaultProps = {

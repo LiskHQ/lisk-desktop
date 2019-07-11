@@ -8,7 +8,7 @@ const Box = (props) => {
 
   return (
     <div className={`${styles.wrapper} ${hasHeader ? styles.withHeader : ''} ${props.className}`}>
-    { props.children }
+      { props.children }
     </div>
   );
 };

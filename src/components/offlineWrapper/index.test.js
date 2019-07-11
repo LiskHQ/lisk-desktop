@@ -11,9 +11,9 @@ const fakeStore = configureStore();
 
 describe('OfflineWrapper', () => {
   it('renders props.children inside a span with "offline" class if props.offline', () => {
-    const wrapper = shallow(<OfflineWrapper offline={true}>
+    const wrapper = shallow(<OfflineWrapper offline>
       <h1 />
-      </OfflineWrapper>);
+    </OfflineWrapper>);
     expect(wrapper).to.contain(<h1 />);
     expect(wrapper).to.have.className(styles.isOffline);
   });
@@ -21,7 +21,7 @@ describe('OfflineWrapper', () => {
   it('renders without "offline" class if props.offline', () => {
     const wrapper = shallow(<OfflineWrapper offline={false}>
       <h1 />
-      </OfflineWrapper>);
+    </OfflineWrapper>);
     expect(wrapper).not.to.have.className(styles.isOffline);
   });
 });

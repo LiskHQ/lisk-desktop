@@ -44,18 +44,23 @@ class Register extends React.Component {
         <HeaderV2 showSettings={false} />
         <div className={`${styles.register} ${grid.row}`}>
           <MultiStep
-            className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}>
+            className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}
+          >
             <ChooseAvatar
               accounts={accounts}
               selected={selectedAccount}
-              handleSelectAvatar={this.handleSelectAvatar} />
+              handleSelectAvatar={this.handleSelectAvatar}
+            />
             <BackupPassphrase
-              account={selectedAccount} />
+              account={selectedAccount}
+            />
             <ConfirmPassphrase
               account={selectedAccount}
-              passphrase={selectedAccount.passphrase} />
+              passphrase={selectedAccount.passphrase}
+            />
             <AccountCreated
-              account={selectedAccount} />
+              account={selectedAccount}
+            />
           </MultiStep>
         </div>
       </React.Fragment>

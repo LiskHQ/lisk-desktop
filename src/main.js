@@ -25,14 +25,15 @@ if (env.production) {
 const rootElement = document.getElementById('app');
 
 
-const renderWithRouter = Component =>
+const renderWithRouter = Component => (
   <Provider store={store}>
     <Router>
-      <I18nextProvider i18n={ i18n }>
+      <I18nextProvider i18n={i18n}>
         <Component />
       </I18nextProvider>
     </Router>
-  </Provider>;
+  </Provider>
+);
 
 ReactDOM.render(renderWithRouter(App), rootElement);
 

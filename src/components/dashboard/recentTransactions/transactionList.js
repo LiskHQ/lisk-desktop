@@ -21,8 +21,8 @@ const TransactionList = ({
       <label>{t('Amount')}</label>
     </header>
     <div className={styles.list}>
-    {
-      transactions.map((tx, index) =>
+      {
+      transactions.map((tx, index) => (
         <Link
           key={index}
           to={`${routes.transactions.pathPrefix}${routes.transactions.path}/${tx.id}`}
@@ -30,11 +30,13 @@ const TransactionList = ({
         >
           {
             activeToken === tokenMap.LSK.key
-            ? <TransactionTypeFigure
-                address={tx.recipientId}
-                transactionType={tx.type}
-              />
-            : null
+              ? (
+                <TransactionTypeFigure
+                  address={tx.recipientId}
+                  transactionType={tx.type}
+                />
+              )
+              : null
           }
           <TransactionAddress
             address={tx.recipientId}
@@ -48,7 +50,8 @@ const TransactionList = ({
             token={activeToken}
             transaction={tx}
           />
-        </Link>)
+        </Link>
+      ))
     }
     </div>
     <Link to={routes.wallet.path} className={`${styles.viewAllLink} view-all`}>

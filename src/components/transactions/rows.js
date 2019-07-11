@@ -3,7 +3,7 @@ import TransactionType from './transactionType';
 import styles from './rows.css';
 import Amount from './amount';
 import Spinner from '../spinner';
-import { DateFromTimestamp } from './../timestamp/index';
+import { DateFromTimestamp } from '../timestamp/index';
 
 class Row extends React.Component {
   // eslint-disable-next-line class-methods-use-this
@@ -20,19 +20,19 @@ class Row extends React.Component {
         onClick={() => props.onClick(this.props)}
       >
         <div className={`${styles.cellAddress} transactions-cell`}>
-          <div className={'transaction-address'}>
-            <TransactionType {...props.value} address={props.address}></TransactionType>
+          <div className="transaction-address">
+            <TransactionType {...props.value} address={props.address} />
           </div>
         </div>
         <div className={`${styles.date} transactions-cell`}>
           {
             props.value.confirmations
-            ? <DateFromTimestamp time={props.value.timestamp} />
-            : <Spinner />
+              ? <DateFromTimestamp time={props.value.timestamp} />
+              : <Spinner />
           }
         </div>
         <div className={`${styles.amount} transactions-cell`}>
-          <Amount {...props}></Amount>
+          <Amount {...props} />
           <span>{props.t('LSK')}</span>
         </div>
       </div>

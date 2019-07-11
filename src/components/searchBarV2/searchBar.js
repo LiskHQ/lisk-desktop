@@ -4,9 +4,9 @@ import Accounts from './accounts';
 import Delegates from './delegates';
 import Transactions from './transactions';
 import ProgressBar from '../toolbox/progressBar/progressBar';
-import routes from './../../constants/routes';
+import routes from '../../constants/routes';
 import regex from '../../utils/regex';
-import keyCodes from './../../constants/keyCodes';
+import keyCodes from '../../constants/keyCodes';
 import styles from './searchBar.css';
 
 class SearchBar extends React.Component {
@@ -132,11 +132,11 @@ class SearchBar extends React.Component {
     return (
       <div className={`${styles.wrapper} search-bar`}>
         <InputV2
-          data-name={'searchInput'}
+          data-name="searchInput"
           setRef={setSearchBarRef}
-          autoComplete={'off'}
+          autoComplete="off"
           onChange={this.onChangeSearchTextValue}
-          name='searchText'
+          name="searchText"
           value={searchTextValue}
           placeholder={t('Search for Address, Transaction ID or Delegate name')}
           className={`${styles.input} search-input`}
@@ -150,41 +150,47 @@ class SearchBar extends React.Component {
         </div>
         {
           suggestions.addresses.length
-          ? (<Accounts
-              accounts={suggestions.addresses}
-              onSelectedRow={this.onSelectAccount}
-              rowItemIndex={rowItemIndex}
-              updateRowItemIndex={this.updateRowItemIndex}
-              t={t}
-            />)
-          : null
+            ? (
+              <Accounts
+                accounts={suggestions.addresses}
+                onSelectedRow={this.onSelectAccount}
+                rowItemIndex={rowItemIndex}
+                updateRowItemIndex={this.updateRowItemIndex}
+                t={t}
+              />
+            )
+            : null
         }
         {
           suggestions.delegates.length
-          ? (<Delegates
-              delegates={suggestions.delegates}
-              onSelectedRow={this.onSelectAccount}
-              rowItemIndex={rowItemIndex}
-              updateRowItemIndex={this.updateRowItemIndex}
-              t={t}
-            />)
-          : null
+            ? (
+              <Delegates
+                delegates={suggestions.delegates}
+                onSelectedRow={this.onSelectAccount}
+                rowItemIndex={rowItemIndex}
+                updateRowItemIndex={this.updateRowItemIndex}
+                t={t}
+              />
+            )
+            : null
         }
         {
           suggestions.transactions.length
-          ? (<Transactions
-              transactions={suggestions.transactions}
-              onSelectedRow={this.onSelectTransaction}
-              rowItemIndex={rowItemIndex}
-              updateRowItemIndex={this.updateRowItemIndex}
-              t={t}
-            />)
-          : null
+            ? (
+              <Transactions
+                transactions={suggestions.transactions}
+                onSelectedRow={this.onSelectTransaction}
+                rowItemIndex={rowItemIndex}
+                updateRowItemIndex={this.updateRowItemIndex}
+                t={t}
+              />
+            )
+            : null
         }
         {
           isLoading
-          ? <ProgressBar type="linear" mode="indeterminate" theme={styles} className={'loading'}/>
-          : null
+            ? <ProgressBar type="linear" mode="indeterminate" theme={styles} className="loading" />
+            : null
         }
       </div>
     );

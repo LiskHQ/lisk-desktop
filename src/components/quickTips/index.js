@@ -38,35 +38,43 @@ class QuickTips extends React.Component {
 
     return (
       <Box className={`quickTips ${styles.quickTips}`}>
-        {slides.map(slide =>
+        {slides.map(slide => (
           <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-title-${slide.title}`}>
             <div className={styles.picture}>
               <img src={slide.picture} />
             </div>
-          </TransitionWrapper>)
+          </TransitionWrapper>
+        ))
         }
-        {slides.map(slide =>
+        {slides.map(slide => (
           <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-title-${slide.title}`}>
             <div className={styles.header}>
               <h2>{slide.title}</h2>
             </div>
-          </TransitionWrapper>)
+          </TransitionWrapper>
+        ))
         }
         <div className={styles.quickTipBody}>
-          {slides.map(slide =>
+          {slides.map(slide => (
             <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-body-${slide.title}`}>
               <div className={`${styles.descriptionRow}`}>
                 <div className={`${styles.description}`}>
-                  {slide.description.map((desc, key) =>
-                    <span key={`desc-${key}`}>{desc}<br/><br/></span>)}
+                  {slide.description.map((desc, key) => (
+                    <span key={`desc-${key}`}>
+                      {desc}
+                      <br />
+                      <br />
+                    </span>
+                  ))}
                 </div>
               </div>
-            </TransitionWrapper>)
+            </TransitionWrapper>
+          ))
           }
-          {slides.map(slide =>
+          {slides.map(slide => (
             <TransitionWrapper current={currentSlide.title} step={slide.title} key={`transition-goto-${slide.title}`}>
               <div className={styles.footer}>
-                <a href={slide.goTo.link} className={styles.goTo} target='_blank'>
+                <a href={slide.goTo.link} className={styles.goTo} target="_blank">
                   {slide.goTo.title}
                 </a>
 
@@ -75,7 +83,7 @@ class QuickTips extends React.Component {
                     onClick={() => this.previousStep()}
                     className={`previousStep ${styles.previousStep} ${currentIndex === 0 ? `${styles.disabled} disabled` : ''}`}
                   >
-                    <FontIcon className={styles.arrow} value='arrow-left'/>
+                    <FontIcon className={styles.arrow} value="arrow-left" />
                     {this.props.t('Previous')}
                   </div>
                   <div className="pagination">
@@ -86,15 +94,16 @@ class QuickTips extends React.Component {
                     className={`nextStep ${styles.nextStep} ${currentIndex + 1 === quickTips(this.props.t).length ? `${styles.disabled} disabled` : ''}`}
                   >
                     {this.props.t('Next')}
-                    <FontIcon className={styles.arrow} value='arrow-right'/>
+                    <FontIcon className={styles.arrow} value="arrow-right" />
                   </div>
                 </div>
               </div>
-            </TransitionWrapper>)
+            </TransitionWrapper>
+          ))
           }
         </div>
-      </Box>);
+      </Box>
+    );
   }
 }
 export default translate()(QuickTips);
-

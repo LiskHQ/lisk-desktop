@@ -13,7 +13,7 @@ describe('SignInTooltipWrapper', () => {
     },
   };
   const props = {
-    children: <span></span>,
+    children: <span />,
     t: key => key,
     history,
     router: { route: history, history },
@@ -42,8 +42,8 @@ describe('SignInTooltipWrapper', () => {
       },
     };
     const wrapper = mount(<Router>
-        <SignInTooltipWrapper {...props} account={account} />
-      </Router>, options);
+      <SignInTooltipWrapper {...props} account={account} />
+    </Router>, options);
     expect(wrapper.find('Tooltip')).toHaveLength(0);
     expect(wrapper.find('span')).toHaveLength(1);
   });

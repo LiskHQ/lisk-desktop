@@ -89,84 +89,100 @@ class SingleTransactionV2 extends React.Component {
 
     return (
       <div className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
-      { transaction.id && !transaction.error ? (
-        <BoxV2 className={`${grid['col-sm-8']} ${grid['col-md-4']} ${styles.wrapper}`}>
-          <header className={`${styles.detailsHeader} tx-header`}>
-            <h1>{title}</h1>
+        { transaction.id && !transaction.error ? (
+          <BoxV2 className={`${grid['col-sm-8']} ${grid['col-md-4']} ${styles.wrapper}`}>
+            <header className={`${styles.detailsHeader} tx-header`}>
+              <h1>{title}</h1>
               <CopyToClipboard
                 text={this.getLinkToCopy()}
-                onCopy={() => this.handleCopy('link')}>
-                <SecondaryButtonV2 className={'extra-small'} disabled={this.state.linkCopied}>
+                onCopy={() => this.handleCopy('link')}
+              >
+                <SecondaryButtonV2 className="extra-small" disabled={this.state.linkCopied}>
                   {this.state.linkCopied
                     ? <span className={`${styles.txLink} tx-link`}>{t('Copied!')}</span>
-                    : (<span className={`${styles.txLink} tx-link`}>
+                    : (
+                      <span className={`${styles.txLink} tx-link`}>
                         {t('Copy link')}
-                        <img className={'button-icon'} src={svg.icoLink} />
-                      </span>)
+                        <img className="button-icon" src={svg.icoLink} />
+                      </span>
+                    )
                   }
                 </SecondaryButtonV2>
               </CopyToClipboard>
-          </header>
-          <main className={styles.mainContent}>
-            <TransactionDetailViewV2
-              address={this.props.address}
-              activeToken={activeToken}
-              transaction={transaction} />
-            <footer className={styles.detailsFooter}>
-              <div>
-                <p className={styles.value}>
-                  <span className={styles.label}>{t('Date')}</span>
-                  <span className={`${styles.date} tx-date`}>
-                    <DateTimeFromTimestamp
-                      fulltime={true}
-                      className={'date'}
-                      time={transaction.timestamp}
-                      token={activeToken}
-                      showSeconds={true} />
-                  </span>
-                </p>
-                <p className={styles.value}>
-                  <span className={styles.label}>{t('Transaction fee')} </span>
-                  <span className={'tx-fee'}>
-                    <LiskAmount val={transaction.fee} /> {t('LSK')}
-                  </span>
-                </p>
-              </div>
-              <div>
-                <p className={`${styles.value}`}>
-                  <span className={styles.label}>{t('Confirmations')} </span>
-                  <span className={'tx-confirmation'}>
-                    {transaction.confirmations || 0}
-                  </span>
-                </p>
-              </div>
-              <div>
-              <CopyToClipboard
-                className={`${styles.clickable} ${styles.value} tx-id`}
-                text={transaction.id}
-                onCopy={() => this.handleCopy('id')}>
-                  <p>
-                    <span className={styles.label}>
-                      {t('Transaction ID')}
-                    </span>
-                    <span className={'transaction-id'}>
-                      {this.state.idCopied
-                        ? t('Copied!')
-                        : <span>
-                            <span className={'copy-title'}>{transaction.id}</span>
-                            <img src={svg.icoLink} />
-                          </span>
-                      }
+            </header>
+            <main className={styles.mainContent}>
+              <TransactionDetailViewV2
+                address={this.props.address}
+                activeToken={activeToken}
+                transaction={transaction}
+              />
+              <footer className={styles.detailsFooter}>
+                <div>
+                  <p className={styles.value}>
+                    <span className={styles.label}>{t('Date')}</span>
+                    <span className={`${styles.date} tx-date`}>
+                      <DateTimeFromTimestamp
+                        fulltime
+                        className="date"
+                        time={transaction.timestamp}
+                        token={activeToken}
+                        showSeconds
+                      />
                     </span>
                   </p>
-                </CopyToClipboard>
-              </div>
-            </footer>
-          </main>
-        </BoxV2>
-      ) : transaction.errors && transaction.errors.length && (
+                  <p className={styles.value}>
+                    <span className={styles.label}>
+                      {t('Transaction fee')}
+                      {' '}
+                    </span>
+                    <span className="tx-fee">
+                      <LiskAmount val={transaction.fee} />
+                      {' '}
+                      {t('LSK')}
+                    </span>
+                  </p>
+                </div>
+                <div>
+                  <p className={`${styles.value}`}>
+                    <span className={styles.label}>
+                      {t('Confirmations')}
+                      {' '}
+                    </span>
+                    <span className="tx-confirmation">
+                      {transaction.confirmations || 0}
+                    </span>
+                  </p>
+                </div>
+                <div>
+                  <CopyToClipboard
+                    className={`${styles.clickable} ${styles.value} tx-id`}
+                    text={transaction.id}
+                    onCopy={() => this.handleCopy('id')}
+                  >
+                    <p>
+                      <span className={styles.label}>
+                        {t('Transaction ID')}
+                      </span>
+                      <span className="transaction-id">
+                        {this.state.idCopied
+                          ? t('Copied!')
+                          : (
+                            <span>
+                              <span className="copy-title">{transaction.id}</span>
+                              <img src={svg.icoLink} />
+                            </span>
+                          )
+                      }
+                      </span>
+                    </p>
+                  </CopyToClipboard>
+                </div>
+              </footer>
+            </main>
+          </BoxV2>
+        ) : transaction.errors && transaction.errors.length && (
         <NotFound />
-      )}
+        )}
       </div>
     );
   }

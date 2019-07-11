@@ -213,7 +213,7 @@ class DateFieldGroup extends React.Component {
       <label className={styles.fieldHolder}>
         <InputV2
           setRef={this.setInputRefs}
-          autoComplete={'off'}
+          autoComplete="off"
           onChange={this.handleFieldChange}
           name={data.name}
           value={filters[data.name]}
@@ -223,13 +223,13 @@ class DateFieldGroup extends React.Component {
           onKeyDown={this.handleKey}
           className={`${styles.input} ${fields[data.name].error ? 'error' : ''} ${data.name}Input`}
         />
-      <SpinnerV2
-        className={`${styles.status} ${fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
-      />
-      <img
-        className={`${styles.status} ${!fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
-        src={ fields[data.name].error ? svg.alert_icon : svg.ok_icon}
-      />
+        <SpinnerV2
+          className={`${styles.status} ${fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
+        />
+        <img
+          className={`${styles.status} ${!fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
+          src={fields[data.name].error ? svg.alert_icon : svg.ok_icon}
+        />
       </label>
     );
   }
@@ -245,42 +245,49 @@ class DateFieldGroup extends React.Component {
           <label
             className={styles.dropdownWrapper}
             ref={this.setDropownRefs}
-            data-name={'dateFromDropdown'}>
-              { this.generateField({ name: 'dateFrom' }) }
-              <DropdownV2
-                className={`showLeft ${styles.calendarDropdown}`}
-                showDropdown={shownDropdown === 'dateFromDropdown'}>
-                <Calendar
-                  onDateSelected={date => this.dateSelected(date, 'dateFrom')}
-                  dateFormat={this.dateFormat}
-                  minDate={moment(firstBlockTime).format(this.dateFormat)}
-                  maxDate={filters.dateTo}
-                  date={filters.dateFrom} />
-              </DropdownV2>
+            data-name="dateFromDropdown"
+          >
+            { this.generateField({ name: 'dateFrom' }) }
+            <DropdownV2
+              className={`showLeft ${styles.calendarDropdown}`}
+              showDropdown={shownDropdown === 'dateFromDropdown'}
+            >
+              <Calendar
+                onDateSelected={date => this.dateSelected(date, 'dateFrom')}
+                dateFormat={this.dateFormat}
+                minDate={moment(firstBlockTime).format(this.dateFormat)}
+                maxDate={filters.dateTo}
+                date={filters.dateFrom}
+              />
+            </DropdownV2>
           </label>
           <span className={styles.separator} />
           <label
             className={styles.dropdownWrapper}
             ref={this.setDropownRefs}
-            data-name={'dateToDropdown'}>
+            data-name="dateToDropdown"
+          >
             { this.generateField({ name: 'dateTo' }) }
             <DropdownV2
               className={`showLeft ${styles.calendarDropdown}`}
-              showDropdown={shownDropdown === 'dateToDropdown'}>
-            <Calendar
-              onDateSelected={date => this.dateSelected(date, 'dateTo')}
-              dateFormat={this.dateFormat}
-              minDate={filters.dateFrom
+              showDropdown={shownDropdown === 'dateToDropdown'}
+            >
+              <Calendar
+                onDateSelected={date => this.dateSelected(date, 'dateTo')}
+                dateFormat={this.dateFormat}
+                minDate={filters.dateFrom
                 || moment(firstBlockTime).format(this.dateFormat)}
-              date={filters.dateTo} />
-          </DropdownV2>
+                date={filters.dateTo}
+              />
+            </DropdownV2>
           </label>
         </div>
         <Feedback
           className={styles.feedback}
           show={!!this.state.feedback}
           status={this.state.feedback ? 'error' : ''}
-          showIcon={false}>
+          showIcon={false}
+        >
           { this.state.feedback }
         </Feedback>
       </div>

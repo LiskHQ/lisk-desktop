@@ -4,8 +4,8 @@ import styles from './transactions.css';
 
 const Status = (props) => {
   let iconProps = {};
-  if (props.value.type === 0 &&
-    props.value.senderId === props.value.recipientId) {
+  if (props.value.type === 0
+    && props.value.senderId === props.value.recipientId) {
     iconProps = {
       icon: 'replay',
     };
@@ -20,7 +20,7 @@ const Status = (props) => {
       className: styles.out,
     };
   }
-  return <IconButton {...iconProps} disabled={true}/>;
+  return <IconButton {...iconProps} disabled />;
 };
 
 export default Status;

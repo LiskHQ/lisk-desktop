@@ -56,4 +56,3 @@ describe('Notification middleware', () => {
     spyFn.restore();
   });
 });
-

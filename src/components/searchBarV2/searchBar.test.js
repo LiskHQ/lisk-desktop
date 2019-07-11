@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import keyCodes from './../../constants/keyCodes';
+import keyCodes from '../../constants/keyCodes';
 import SearchBar from './searchBar';
 
 describe('SearchBar', () => {

@@ -18,10 +18,10 @@ class ReferenceInput extends React.Component {
         label={label}
         error={reference.error}
         value={reference.value}
-        onChange={val => handleChange(val)} />
+        onChange={val => handleChange(val)}
+      />
     );
   }
 }
 
 export default ReferenceInput;
-

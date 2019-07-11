@@ -29,18 +29,18 @@ const UserAccount = ({
     >
       {!isUserLogout && isUserDataFetched ? (
         <AccountInfo
-          className={'active-info'}
+          className="active-info"
           account={account.info[token.active]}
           token={token.active}
           t={t}
         />
       ) : (
         <span className={styles.signInHolder}>
-          <Icon name={`user${isDropdownEnable ? 'Active' : ''}` } />
+          <Icon name={`user${isDropdownEnable ? 'Active' : ''}`} />
         </span>
       )}
       <DropdownV2
-        showArrow={true}
+        showArrow
         className={styles.dropdown}
         showDropdown={isDropdownEnable}
       >
@@ -64,33 +64,33 @@ const UserAccount = ({
         ]) : null))}
 
         <Link
-          id='help'
+          id="help"
           className={styles.dropdownOption}
           to={routes.help.path}
         >
-          <Icon name='help' className={styles.defaultIcon} />
-          <Icon name='helpActive' className={styles.activeIcon} />
+          <Icon name="help" className={styles.defaultIcon} />
+          <Icon name="helpActive" className={styles.activeIcon} />
           <span>{t('Help Center')}</span>
         </Link>
 
         <a
           className={styles.dropdownOption}
           href={feedbackLinks.general}
-          rel={'noopener noreferrer'}
+          rel="noopener noreferrer"
           target="_blank"
         >
-          <Icon name='feedback' className={styles.defaultIcon} />
-          <Icon name='feedbackActive' className={styles.activeIcon} />
+          <Icon name="feedback" className={styles.defaultIcon} />
+          <Icon name="feedbackActive" className={styles.activeIcon} />
           <span>{t('Give Feedback')}</span>
         </a>
 
         <Link
-          id='settings'
+          id="settings"
           to={routes.setting.path}
           className={styles.dropdownOption}
         >
-          <Icon name='settings' className={styles.defaultIcon} />
-          <Icon name='settingsActive' className={styles.activeIcon} />
+          <Icon name="settings" className={styles.defaultIcon} />
+          <Icon name="settingsActive" className={styles.activeIcon} />
           <span>{t('Settings')}</span>
         </Link>
 
@@ -101,8 +101,8 @@ const UserAccount = ({
             className={`${styles.dropdownOption} signIn`}
             to={routes.loginV2.path}
           >
-            <Icon name='signin' className={styles.defaultIcon} />
-            <Icon name='signinActive' className={styles.activeIcon} />
+            <Icon name="signin" className={styles.defaultIcon} />
+            <Icon name="signinActive" className={styles.activeIcon} />
             <span>{t('Sign in')}</span>
           </Link>
         ) : (
@@ -110,8 +110,8 @@ const UserAccount = ({
             className={`${styles.dropdownOption} logout`}
             onClick={onLogout}
           >
-            <Icon name='logout' className={styles.defaultIcon} />
-            <Icon name='logoutActive' className={styles.activeIcon} />
+            <Icon name="logout" className={styles.defaultIcon} />
+            <Icon name="logoutActive" className={styles.activeIcon} />
             <span>{t('Sign out')}</span>
           </span>
         )}

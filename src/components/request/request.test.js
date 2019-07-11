@@ -1,11 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Request from './';
+import Request from '.';
 import accounts from '../../../test/constants/accounts';
 
 jest.mock('../converterV2', () => (
   function ConverterMock() {
-    return <span className='converted-price' />;
+    return <span className="converted-price" />;
   }
 ));
 
@@ -130,7 +130,7 @@ describe('Request', () => {
     });
 
     it('Should render BTC reqest if props.token is BTC', () => {
-      wrapper = mount(<Request {...props} token='BTC' />);
+      wrapper = mount(<Request {...props} token="BTC" />);
       expect(wrapper.find('.copy-button button').text()).toMatch('Copy address');
     });
   });

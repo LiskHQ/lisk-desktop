@@ -9,16 +9,17 @@ import routes from '../../constants/routes';
 const NotFound = ({ t }) => (
   <section className={styles.notFoundPage}>
     <div className={styles.errorMessageContainer}>
-      <Illustration name={ 'pageNotFound' }/>
-      <h2 className='empty-message'>{t('Whoops, that page is gone.')}</h2>
+      <Illustration name="pageNotFound" />
+      <h2 className="empty-message">{t('Whoops, that page is gone.')}</h2>
       <p>{t('Sorry, we couldn’t find the page you were looking for. We suggest that you return to the main dashboard.')}</p>
-      <Link className={'go-to-dashboard-button'} to={routes.dashboard.path}>
+      <Link className="go-to-dashboard-button" to={routes.dashboard.path}>
         <PrimaryButtonV2 className={styles.goToDashboardButton}>
           {t('Go to Dashboard')}
         </PrimaryButtonV2>
       </Link>
 
     </div>
-</section>);
+  </section>
+);
 
 export default translate()(NotFound);

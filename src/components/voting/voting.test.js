@@ -43,7 +43,7 @@ describe('VotingV2', () => {
   });
 
   it('should go to result box with confirm button and then back to delegates', () => {
-    const wrapper = mount(<Router><VotingV2 {...{ ...props, votes } } /></Router>, options);
+    const wrapper = mount(<Router><VotingV2 {...{ ...props, votes }} /></Router>, options);
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(wrapper.find('.result-box-header')).toHaveLength(1);
     wrapper.find('.back-to-delegates-button').at(0).simulate('click');
@@ -52,7 +52,7 @@ describe('VotingV2', () => {
 
   it('should show report error link when confirm button is clicked and voting fails', () => {
     voteResult = { success: false };
-    const wrapper = mount(<Router><VotingV2 {...{ ...props, votes } } /></Router>, options);
+    const wrapper = mount(<Router><VotingV2 {...{ ...props, votes }} /></Router>, options);
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(wrapper.find('.report-error-link')).toHaveLength(1);
   });

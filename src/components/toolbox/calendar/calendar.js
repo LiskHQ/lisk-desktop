@@ -12,8 +12,8 @@ class Calendar extends React.Component {
 
     const locale = Array.isArray(props.locale) ? [...props.locale, 'en'] : [props.locale, 'en'];
     moment.locale(locale);
-    const showingDate =
-      (moment(props.date, props.dateFormat).isValid() && moment(props.date, props.dateFormat))
+    const showingDate = (
+      moment(props.date, props.dateFormat).isValid() && moment(props.date, props.dateFormat))
       || moment();
 
     this.state = {
@@ -65,7 +65,8 @@ class Calendar extends React.Component {
           minDate={this.props.minDate}
           maxDate={this.props.maxDate}
           locale={this.state.locale}
-          showingDate={this.state.showingDate} />
+          showingDate={this.state.showingDate}
+        />
         <MonthView
           isShown={currentView === 'month'}
           setCurrentView={this.setCurrentView}
@@ -76,7 +77,8 @@ class Calendar extends React.Component {
           minDate={this.props.minDate}
           maxDate={this.props.maxDate}
           locale={this.state.locale}
-          showingDate={this.state.showingDate} />
+          showingDate={this.state.showingDate}
+        />
       </section>
     );
   }

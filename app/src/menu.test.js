@@ -1,5 +1,7 @@
 import { expect } from 'chai'; // eslint-disable-line import/no-extraneous-dependencies
-import { spy, match, useFakeTimers, mock } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
+import { // eslint-disable-line import/no-extraneous-dependencies
+  spy, match, useFakeTimers, mock,
+} from 'sinon';
 import menu from './menu';
 import process from './modules/process';
 

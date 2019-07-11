@@ -24,35 +24,40 @@ export default class ExtensionPoint extends React.Component {
     // e.g. localStorage.setItem('highlightExtensionPoints', true)
     // and this component will get a red border and title with its 'identifier'
 
-    return <React.Fragment>
-      { modules.map(({ moduleId }, i) => {
-        const Component = LiskHubExtensions._modules[moduleId];
-        if (Component) {
-          return <Component
-            data = {{
-              latestBlocks: this.props.blocks && this.props.blocks.latestBlocks,
-              transactions: this.props.transactions,
-              time: this.props.test,
-              accountAddress: this.props.account && this.props.account.address,
-              search: this.props.search,
-            }}
-            actions={{
-              sent,
-              loadSingleTransaction,
-              loadTransactions,
-              searchDelegate,
-              searchVotes,
-              searchAccount,
-              searchTransactions,
-            }}
-            t={this.props.t}
-            identifier={this.props.identifier}
-            key={i} />;
-        }
-        // eslint-disable-next-line no-console
-        console.error(new Error(`Invalid component in extension point ${this.props.identifier}`));
-        return null;
-      })}
-    </React.Fragment>;
+    return (
+      <React.Fragment>
+        { modules.map(({ moduleId }, i) => {
+          const Component = LiskHubExtensions._modules[moduleId];
+          if (Component) {
+            return (
+              <Component
+                data={{
+                  latestBlocks: this.props.blocks && this.props.blocks.latestBlocks,
+                  transactions: this.props.transactions,
+                  time: this.props.test,
+                  accountAddress: this.props.account && this.props.account.address,
+                  search: this.props.search,
+                }}
+                actions={{
+                  sent,
+                  loadSingleTransaction,
+                  loadTransactions,
+                  searchDelegate,
+                  searchVotes,
+                  searchAccount,
+                  searchTransactions,
+                }}
+                t={this.props.t}
+                identifier={this.props.identifier}
+                key={i}
+              />
+            );
+          }
+          // eslint-disable-next-line no-console
+          console.error(new Error(`Invalid component in extension point ${this.props.identifier}`));
+          return null;
+        })}
+      </React.Fragment>
+    );
   }
 }

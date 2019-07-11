@@ -10,33 +10,38 @@ const TransactionResult = ({
   <div className={`${styles.wrapper} ${className}`}>
     {
       typeof illustration === 'string'
-      ? <Illustration name={illustration} />
-      : React.cloneElement(illustration)
+        ? <Illustration name={illustration} />
+        : React.cloneElement(illustration)
     }
-    <h1 className='result-box-header'>{title}</h1>
-    <p className='transaction-status body-message'>{message}</p>
+    <h1 className="result-box-header">{title}</h1>
+    <p className="transaction-status body-message">{message}</p>
     {children}
-    <PrimaryButtonV2 onClick={primaryButon.onClick}
-      className={`${styles.button} ${primaryButon.className}`}>
+    <PrimaryButtonV2
+      onClick={primaryButon.onClick}
+      className={`${styles.button} ${primaryButon.className}`}
+    >
       {primaryButon.title}
     </PrimaryButtonV2>
     {
       !success
-      ? <React.Fragment>
-          <p>{t('Does the problem still persist?')}</p>
-          <a className='report-error-link'
-            href={getErrorReportMailto(error)}
-            target='_top'
-            rel='noopener noreferrer'>
-            <TertiaryButtonV2>
-              {t('Report the error via E-Mail')}
-            </TertiaryButtonV2>
-          </a>
-        </React.Fragment>
-      : null
+        ? (
+          <React.Fragment>
+            <p>{t('Does the problem still persist?')}</p>
+            <a
+              className="report-error-link"
+              href={getErrorReportMailto(error)}
+              target="_top"
+              rel="noopener noreferrer"
+            >
+              <TertiaryButtonV2>
+                {t('Report the error via E-Mail')}
+              </TertiaryButtonV2>
+            </a>
+          </React.Fragment>
+        )
+        : null
     }
   </div>
 );
 
 export default TransactionResult;
-

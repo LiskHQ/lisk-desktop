@@ -39,8 +39,8 @@ const normalizeTransactionsResponse = ({
   if (ownedInput) {
     data.senderId = address;
     const extractedAddress = tx.outputs[0].scriptPubKey.addresses[0];
-    data.recipientId = validateAddress(tokenMap.BTC.key, extractedAddress, networkCode) === 0 ?
-      extractedAddress : 'Unparsed Address';
+    data.recipientId = validateAddress(tokenMap.BTC.key, extractedAddress, networkCode) === 0
+      ? extractedAddress : 'Unparsed Address';
     data.amount = tx.outputs[0].satoshi;
   } else {
     address = address || tx.inputs[0].txDetail.scriptPubKey.addresses[0];
@@ -48,10 +48,10 @@ const normalizeTransactionsResponse = ({
     const extractedAddress = tx.inputs[0].txDetail.scriptPubKey.addresses[0];
     const recipientAddress = tx.outputs[0].scriptPubKey.addresses[0];
     data.senderId = validateAddress(tokenMap.BTC.key, extractedAddress) === 0 ? extractedAddress : 'Unparsed Address';
-    data.senderId = validateAddress(tokenMap.BTC.key, extractedAddress, networkCode) === 0 ?
-      extractedAddress : 'Unparsed Address';
-    data.recipientId = validateAddress(tokenMap.BTC.key, recipientAddress, networkCode) === 0 ?
-      recipientAddress : 'Unparsed Address';
+    data.senderId = validateAddress(tokenMap.BTC.key, extractedAddress, networkCode) === 0
+      ? extractedAddress : 'Unparsed Address';
+    data.recipientId = validateAddress(tokenMap.BTC.key, recipientAddress, networkCode) === 0
+      ? recipientAddress : 'Unparsed Address';
     data.amount = output.satoshi;
   }
 
@@ -128,9 +128,9 @@ export const create = ({
   // eslint-disable-next-line max-statements
 }) => new Promise(async (resolve, reject) => {
   try {
-    const config = getBtcConfig(network.name === networks.mainnet.name ?
-      networks.mainnet.code :
-      networks.testnet.code);
+    const config = getBtcConfig(network.name === networks.mainnet.name
+      ? networks.mainnet.code
+      : networks.testnet.code);
     amount = Number(amount);
     dynamicFeePerByte = Number(dynamicFeePerByte);
 
@@ -230,8 +230,8 @@ export const getTransactionFeeFromUnspentOutputs = ({
   });
 
   return calculateTransactionFee({
-    inputCount: getUnspentTransactionOutputCountToConsume(satoshiValue +
-      feeInSatoshis, unspentTransactionOutputs),
+    inputCount: getUnspentTransactionOutputCountToConsume(satoshiValue
+      + feeInSatoshis, unspentTransactionOutputs),
     outputCount: 2,
     dynamicFeePerByte,
   });
@@ -239,9 +239,9 @@ export const getTransactionFeeFromUnspentOutputs = ({
 
 export const broadcast = (transactionHex, network) => new Promise(async (resolve, reject) => {
   try {
-    const config = getBtcConfig(network.name === networks.mainnet.name ?
-      networks.mainnet.code :
-      networks.testnet.code);
+    const config = getBtcConfig(network.name === networks.mainnet.name
+      ? networks.mainnet.code
+      : networks.testnet.code);
     const response = await fetch(`${config.url}/transaction`, {
       ...config.requestOptions,
       method: 'POST',

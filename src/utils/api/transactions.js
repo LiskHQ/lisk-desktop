@@ -1,6 +1,6 @@
 import { validateAddress } from '../validators';
 import { tokenMap, tokenKeys } from '../../constants/tokens';
-import api from './';
+import api from '.';
 import networks from '../../constants/networks';
 
 // TODO these imports are temporary until api is implemented for them

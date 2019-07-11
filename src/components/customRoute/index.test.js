@@ -40,11 +40,12 @@ describe('CustomRoute', () => {
     mount(
       <MemoryRouter initialEntries={['/private/test']}>
         <div>
-          <Route path='/' component={Public} />
+          <Route path="/" component={Public} />
           <CustomRoute
-            { ...props }
+            {...props}
             isAuthenticated={isAuthenticated}
-            isPrivate={isPrivate} />
+            isPrivate={isPrivate}
+          />
         </div>
       </MemoryRouter>,
       options,

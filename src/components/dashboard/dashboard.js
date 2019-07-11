@@ -104,14 +104,17 @@ class Dashboard extends React.Component {
       <React.Fragment>
         {
           isLoggedIn
-          ? <Onboarding
-              slides={this.getOnboardingSlides()}
-              actionButtonLabel={t('Got it, thanks!')}
-              name={'dashboardOnboarding'}
-            />
-          : null
+            ? (
+              <Onboarding
+                slides={this.getOnboardingSlides()}
+                actionButtonLabel={t('Got it, thanks!')}
+                name="dashboardOnboarding"
+              />
+            )
+            : null
         }
-        { isLoggedIn && this.shouldShowInitializatiion() &&
+        { isLoggedIn && this.shouldShowInitializatiion()
+          && (
           <div className={`${grid.row} ${styles.bannerWrapper}`}>
             <Banner
               className={`${grid['col-xs-12']} initialize-banner`}
@@ -119,24 +122,27 @@ class Dashboard extends React.Component {
               footer={(
                 <Fragment>
                   <Link to={`${routes.send.path}?recipient=${account.address}&amount=0.1&reference=Account initialization`}>
-                    <SecondaryButtonV2 className={'light'}>{t('Create First Transaction')}</SecondaryButtonV2>
+                    <SecondaryButtonV2 className="light">{t('Create First Transaction')}</SecondaryButtonV2>
                   </Link>
                   <a
                     className={styles.initLink}
-                    target='_blank'
+                    target="_blank"
                     href={links.accountInitialization}
                     /* istanbul ignore next */
                     onClick={() => Piwik.trackingEvent('AccountInit', 'link', 'Initialize my lisk account')}
-                    rel='noopener noreferrer'
+                    rel="noopener noreferrer"
                   >
                     {this.props.t('Learn more about Lisk ID initialization')}
                   </a>
-                </Fragment>)}>
+                </Fragment>
+)}
+            >
               <p>{t('It is recommended that you initialize your Lisk ID.')}</p>
               <p>{t('The easiest way to do this is to send LSK to yourself by clicking this button.')}</p>
               <p>{t('It will cost you only the usual {{fee}} LSK transaction fee.', { fee: fromRawLsk(fees.send) })}</p>
             </Banner>
           </div>
+          )
         }
         <div className={`${styles.wrapper} dashboard-container`}>
           <header>
@@ -148,19 +154,21 @@ class Dashboard extends React.Component {
             <div className={styles.subContainer}>
               {
                 isLoggedIn
-                ? <WalletDetails className={styles.marginFix}/>
-                : null
+                  ? <WalletDetails className={styles.marginFix} />
+                  : null
               }
 
               <RecentTransactions className={styles.marginFix} isLoggedIn={isLoggedIn} />
 
               {
                 !isDesktop
-                ? <div className={`${styles.bookmarks} bookmarks`}>
-                    <BookmarksList history={history} limit={5}/>
-                    <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn1} />
-                  </div>
-                : null
+                  ? (
+                    <div className={`${styles.bookmarks} bookmarks`}>
+                      <BookmarksList history={history} limit={5} />
+                      <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn1} />
+                    </div>
+                  )
+                  : null
               }
             </div>
 
@@ -171,11 +179,13 @@ class Dashboard extends React.Component {
 
             {
               isDesktop
-              ? <div className={`${styles.bookmarks} bookmarks`}>
-                  <BookmarksList history={history} limit={5}/>
-                  <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn1} />
-                </div>
-              : null
+                ? (
+                  <div className={`${styles.bookmarks} bookmarks`}>
+                    <BookmarksList history={history} limit={5} />
+                    <ExtensionPoint identifier={LiskHubExtensions.identifiers.dashboardColumn1} />
+                  </div>
+                )
+                : null
             }
           </div>
         </div>

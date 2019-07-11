@@ -1,7 +1,7 @@
 import React from 'react';
 import VotingHeaderV2 from './votingHeaderV2';
 import styles from './votingListViewV2.css';
-import voteFilters from './../../constants/voteFilters';
+import voteFilters from '../../constants/voteFilters';
 import DelegateListV2 from './delegateListV2';
 import ProgressBar from '../toolbox/progressBar/progressBar';
 import Tooltip from '../toolbox/tooltip/tooltip';
@@ -9,7 +9,7 @@ import {
   getTotalVotesCount,
   getPendingVotesList,
   getVotedList,
-} from './../../utils/voting';
+} from '../../utils/voting';
 import BoxV2 from '../boxV2';
 
 // Create a new Table component injecting Head and Row
@@ -117,8 +117,8 @@ class VotingListViewV2 extends React.Component {
 
     if (!this.isInitial && this.props.delegates.length === 0) {
       message = t('No delegates found.');
-    } else if (this.state.activeFilter === voteFilters.voted &&
-      getTotalVotesCount(this.props.votes) === 0) {
+    } else if (this.state.activeFilter === voteFilters.voted
+      && getTotalVotesCount(this.props.votes) === 0) {
       message = t('You have not voted yet.');
     } else if (this.query !== '' && Object.keys(filteredList).length === 0) {
       message = t('No search results in given criteria.');
@@ -142,53 +142,62 @@ class VotingListViewV2 extends React.Component {
             account={this.props.account}
             setActiveFilter={this.setActiveFilter.bind(this)}
             voteToggled={voteToggled}
-            search={ value => this.search(value) }
+            search={value => this.search(value)}
           />
         </header>
         {this.state.isLoading ? (
           <div className={styles.loadingOverlay}>
-            <ProgressBar type="linear" mode="indeterminate" theme={styles} className={'loading'}/>
+            <ProgressBar type="linear" mode="indeterminate" theme={styles} className="loading" />
           </div>
         ) : null}
-        {firstTimeVotingActive ?
-          <div className={styles.loadingOverlay}>
-            <Tooltip
-              styles={{
-                infoIcon: styles.infoIcon,
-                tooltip: styles.tooltipClass,
-              }}
-              tooltipClassName={styles.tooltipClassName}
-              className={styles.selectingDelegates}
-              alwaysShow={true}
-              title={t('Selecting Delegates')} >
-              <p>{t('Start by Selecting the delegates you’d like to vote for.')}</p>
-            </Tooltip>
-          </div> :
-        null}
-          <div className={styles.wrapper}>
-            <DelegateListV2 t={t} list={filteredList} votes={votes}
-              firstTimeVotingActive={firstTimeVotingActive}
-              votingModeEnabled={votingModeEnabled}
-              voteToggled={voteToggled}
-              shouldLoadMore={
-                filteredList.length > 0 &&
-                (
-                  (this.state.activeFilter !== voteFilters.voted &&
-                    delegates.length % 101 === 0) ||
-                  (this.state.activeFilter === voteFilters.voted &&
-                    filteredList.length < getVotedList(votes).length)
+        {firstTimeVotingActive
+          ? (
+            <div className={styles.loadingOverlay}>
+              <Tooltip
+                styles={{
+                  infoIcon: styles.infoIcon,
+                  tooltip: styles.tooltipClass,
+                }}
+                tooltipClassName={styles.tooltipClassName}
+                className={styles.selectingDelegates}
+                alwaysShow
+                title={t('Selecting Delegates')}
+              >
+                <p>{t('Start by Selecting the delegates you’d like to vote for.')}</p>
+              </Tooltip>
+            </div>
+          )
+          : null}
+        <div className={styles.wrapper}>
+          <DelegateListV2
+            t={t}
+            list={filteredList}
+            votes={votes}
+            firstTimeVotingActive={firstTimeVotingActive}
+            votingModeEnabled={votingModeEnabled}
+            voteToggled={voteToggled}
+            shouldLoadMore={
+                filteredList.length > 0
+                && (
+                  (this.state.activeFilter !== voteFilters.voted
+                    && delegates.length % 101 === 0)
+                  || (this.state.activeFilter === voteFilters.voted
+                    && filteredList.length < getVotedList(votes).length)
                 )
               }
-              safari={this.state.safariClass}
-              loadMore={this.loadMore.bind(this)} />
-          </div>
-          {
-            (filteredList.length === 0) ?
-              <div className={`empty-message ${styles.emptyMessage}`}>
-                {t(this.getEmptyStateMessage(filteredList))}
-              </div> : null
+            safari={this.state.safariClass}
+            loadMore={this.loadMore.bind(this)}
+          />
+        </div>
+        {
+            (filteredList.length === 0)
+              ? (
+                <div className={`empty-message ${styles.emptyMessage}`}>
+                  {t(this.getEmptyStateMessage(filteredList))}
+                </div>
+              ) : null
           }
-    </BoxV2>
+      </BoxV2>
     );
   }
 }

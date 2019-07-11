@@ -33,17 +33,21 @@ class RequestWrapper extends React.Component {
           {children}
           <footer className={`${styles.sectionFooter}`}>
             <CopyToClipboard
-              className='copy-button'
+              className="copy-button"
               Container={PrimaryButtonV2}
               value={copyValue}
               text={copyLabel}
-              btnClassName='extra-small'
+              btnClassName="extra-small"
               copyClassName={styles.copyIcon}
             />
             <span className={`${styles.footerContent} ${showQRCode ? styles.hide : ''}`}>
-              {t('Got the Lisk Mobile App?')} <span
+              {t('Got the Lisk Mobile App?')}
+              {' '}
+              <span
                 className={`${styles.footerActionable} toggle-qrcode`}
-                onClick={this.toggleQRCode}>{t('Show the QR code')}
+                onClick={this.toggleQRCode}
+              >
+                {t('Show the QR code')}
               </span>
             </span>
           </footer>
@@ -58,7 +62,10 @@ class RequestWrapper extends React.Component {
           <footer className={`${styles.sectionFooter}`}>
             <span
               className={`${styles.footerContent} ${styles.footerActionable}`}
-              onClick={this.toggleQRCode}>{t('Hide the QR code')}</span>
+              onClick={this.toggleQRCode}
+            >
+              {t('Hide the QR code')}
+            </span>
           </footer>
         </section>
       </div>
@@ -67,4 +74,3 @@ class RequestWrapper extends React.Component {
 }
 
 export default RequestWrapper;
-

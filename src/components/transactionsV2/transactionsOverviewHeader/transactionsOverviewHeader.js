@@ -28,7 +28,7 @@ class transactionsHeader extends React.Component {
         { isWalletRoute ? (
           <React.Fragment>
             <span>
-              <h1 className='wallet-header'>{t('{{token}} Wallet', { token: tokenMap[activeToken].label })}</h1>
+              <h1 className="wallet-header">{t('{{token}} Wallet', { token: tokenMap[activeToken].label })}</h1>
               <span className={styles.subtitle}>
                 {t('All important information at a glance')}
               </span>
@@ -36,12 +36,12 @@ class transactionsHeader extends React.Component {
             <div className={`${styles.buttonsHolder}`}>
               <DropdownButton
                 className={`${styles.requestDropdown} requestContainer request-dropdown`}
-                buttonClassName='tx-receive-bt'
+                buttonClassName="tx-receive-bt"
                 buttonLabel={t('Request {{token}}', { token: activeToken })}
               >
                 <Request address={address} token={activeToken} t={t} />
               </DropdownButton>
-              <Link to={`${routes.send.path}?wallet`} className={'tx-send-bt'}>
+              <Link to={`${routes.send.path}?wallet`} className="tx-send-bt">
                 <PrimaryButtonV2>
                   {t('Send {{token}}', { token: activeToken })}
                 </PrimaryButtonV2>
@@ -57,7 +57,7 @@ class transactionsHeader extends React.Component {
               delegate={delegate}
               account={this.props.account}
               toggleActiveToken={this.props.toggleActiveToken}
-              />
+            />
             <div className={`${styles.buttonsHolder}`}>
               <Link to={`${routes.send.path}?wallet&recipient=${address}`}
                 className={'send-to-address'}>
@@ -76,7 +76,8 @@ class transactionsHeader extends React.Component {
                   delegate={delegate}
                   address={address}
                   detailAccount={detailAccount}
-                  isBookmark={isBookmark} />
+                  isBookmark={isBookmark}
+                />
               </DropdownButton>
             </div>
           </React.Fragment>

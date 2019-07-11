@@ -37,4 +37,3 @@ describe('Reducer: settings(state, action)', () => {
     expect(FinalStep).toEqual(initializeState);
   });
 });
-

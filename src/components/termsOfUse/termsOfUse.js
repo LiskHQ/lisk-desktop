@@ -49,14 +49,14 @@ class TermsOfUse extends React.Component {
             {this.props.t('Before you continue using Lisk Hub, please read and accept the')}
             <a
               onClick={this.checkTermsOfUse}
-              href={'https://lisk.io/terms-conditions'}
-              target='_blank'
-              rel='noopener noreferrer'
+              href="https://lisk.io/terms-conditions"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               {this.props.t('Terms of Use')}
             </a>
           </p>
-          <PrimaryButtonV2 onClick={this.onAccept} className={'accept-terms'}>
+          <PrimaryButtonV2 onClick={this.onAccept} className="accept-terms">
             {this.props.t('I have read and agree to the Terms of Use')}
           </PrimaryButtonV2>
         </div>

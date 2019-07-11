@@ -24,8 +24,8 @@ class TransactionsOverviewV2 extends React.Component {
 
   isActiveFilter(filter) {
     const { activeFilter } = this.props;
-    return (!activeFilter && filter === txFilters.all) ||
-      (activeFilter === filter);
+    return (!activeFilter && filter === txFilters.all)
+      || (activeFilter === filter);
   }
 
   setTransactionsFilter(filter) {
@@ -62,26 +62,34 @@ class TransactionsOverviewV2 extends React.Component {
     return (
       <div className={`${styles.transactions} transactions`}>
         <div className={styles.container}>
-          <Tabs tabs={filters}
-            className='transaction-filter-item'
+          <Tabs
+            tabs={filters}
+            className="transaction-filter-item"
             isActive={this.isActiveFilter}
-            onClick={this.setTransactionsFilter} />
-          {this.props.activeToken !== 'BTC' ?
-          <div className={styles.items}>
-            <FilterContainer
-              updateCustomFilters={this.props.updateCustomFilters}
-              saveFilters={this.props.saveFilters}
-              customFilters={this.props.customFilters} />
-          </div> :
-          null}
+            onClick={this.setTransactionsFilter}
+          />
+          {this.props.activeToken !== 'BTC'
+            ? (
+              <div className={styles.items}>
+                <FilterContainer
+                  updateCustomFilters={this.props.updateCustomFilters}
+                  saveFilters={this.props.saveFilters}
+                  customFilters={this.props.customFilters}
+                />
+              </div>
+            )
+            : null}
         </div>
-        {this.props.activeCustomFilters &&
-          Object.values(this.props.activeCustomFilters).find(filter => filter) ? <FilterBar
-          clearFilter={this.props.clearFilter}
-          clearAllFilters={this.props.clearAllFilters}
-          customFilters={this.props.activeCustomFilters}
-          results={this.props.count}
-          t={this.props.t} /> : null}
+        {this.props.activeCustomFilters
+          && Object.values(this.props.activeCustomFilters).find(filter => filter) ? (
+            <FilterBar
+              clearFilter={this.props.clearFilter}
+              clearAllFilters={this.props.clearAllFilters}
+              customFilters={this.props.activeCustomFilters}
+              results={this.props.count}
+              t={this.props.t}
+            />
+          ) : null}
         <TransactionsListV2
           bookmarks={this.props.bookmarks}
           canLoadMore={this.props.canLoadMore}
@@ -107,4 +115,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(TransactionsOverviewV2);
-

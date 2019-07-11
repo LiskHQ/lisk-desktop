@@ -35,19 +35,23 @@ class DelegateRegistration extends React.Component {
         <MultiStep
           className={styles.multiStep}
           prevPage={history.goBack}
-          backButtonLabel={t('Back')}>
+          backButtonLabel={t('Back')}
+        >
           <SelectName
             t={t}
             account={account}
-            network={network}/>
+            network={network}
+          />
           <Summary
             t={t}
-            account={account}/>
+            account={account}
+          />
           <Status
             t={t}
             goBackToDelegates={this.goBackToDelegates}
             transactionBroadcasted={transactionBroadcasted}
-            transactions={transactions}/>
+            transactions={transactions}
+          />
         </MultiStep>
       </section>
     );

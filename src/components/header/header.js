@@ -13,7 +13,7 @@ import PrivateWrapper from '../privateWrapper';
 import styles from './header.css';
 import CustomCountDown from './customCountDown';
 import Options from '../dialog/options';
-import routes from './../../constants/routes';
+import routes from '../../constants/routes';
 import Piwik from '../../utils/piwik';
 
 class Header extends React.Component {
@@ -65,24 +65,24 @@ class Header extends React.Component {
       <header className={`${styles.wrapper} mainHeader`}>
         <div>
           <div className={`${styles.searchBar}`}>
-            {this.shouldShowSearchBar() && <SearchBar/>}
+            {this.shouldShowSearchBar() && <SearchBar />}
           </div>
           {this.props.account.loading
-                ? null
-                : <Account {...{ peers, t, showNetworkIndicator }} />}
+            ? null
+            : <Account {...{ peers, t, showNetworkIndicator }} />}
         </div>
 
         <div className={`${styles.loginInfo}`}>
           <div>
             <div>
-              <img src={logo} className={`${styles.logo}`}/>
+              <img src={logo} className={`${styles.logo}`} />
             </div>
             <div style={{ display: 'inline-block' }}>
               <PrivateWrapper>
                 <div className={`account ${styles.account}`}>
                   <div className={styles.information} align="right">
                     <div className={`balance ${styles.balance}`}>
-                      <LiskAmount val={this.props.account.balance}/>
+                      <LiskAmount val={this.props.account.balance} />
                       <small> LSK</small>
                     </div>
                     <CopyToClipboard
@@ -93,60 +93,68 @@ class Header extends React.Component {
 
                     <div className={styles.timer}>
                       {this.props.autoLog
-                        ? <div>
-                          {((this.props.account.expireTime &&
-                            this.props.account.expireTime !== 0) &&
-                            this.props.account.passphrase)
-                            ? <div className={styles.logoutInfo}>
-                              <Countdown
-                                date={this.props.account.expireTime}
-                                renderer={CountDownTemplate}
-                                onComplete={() => {
-                                  this.props.logOut();
-                                  this.props.history.replace(routes.loginV2.path);
-                                }}
-                              >
-                                <CustomCountDown
-                                  closeDialog={this.props.closeDialog}
-                                  history={this.props.history}
-                                  setActiveDialog={this.props.setActiveDialog}
-                                  resetTimer={this.props.resetTimer}
-                                  autoLog={this.props.autoLog}
-                                  t={this.props.t}
-                                />
-                              </Countdown>
-                            </div>
-                            : null
+                        ? (
+                          <div>
+                            {((this.props.account.expireTime
+                            && this.props.account.expireTime !== 0)
+                            && this.props.account.passphrase)
+                              ? (
+                                <div className={styles.logoutInfo}>
+                                  <Countdown
+                                    date={this.props.account.expireTime}
+                                    renderer={CountDownTemplate}
+                                    onComplete={() => {
+                                      this.props.logOut();
+                                      this.props.history.replace(routes.loginV2.path);
+                                    }}
+                                  >
+                                    <CustomCountDown
+                                      closeDialog={this.props.closeDialog}
+                                      history={this.props.history}
+                                      setActiveDialog={this.props.setActiveDialog}
+                                      resetTimer={this.props.resetTimer}
+                                      autoLog={this.props.autoLog}
+                                      t={this.props.t}
+                                    />
+                                  </Countdown>
+                                </div>
+                              )
+                              : null
                           }
-                        </div>
+                          </div>
+                        )
                         : null
                       }
                     </div>
                   </div>
                   <AccountVisual
                     address={this.props.account.address}
-                    size={69} sizeS={40}
+                    size={69}
+                    sizeS={40}
                   />
                   <div
                     className={`${styles.logout} logout`}
-                    onClick={() => this.openLogoutDialog()}>
+                    onClick={() => this.openLogoutDialog()}
+                  >
                     {this.props.t('Logout')}
-                    <FontIcon value='logout' className={styles.logoutIcon} />
+                    <FontIcon value="logout" className={styles.logoutIcon} />
                   </div>
                 </div>
               </PrivateWrapper>
               {
-                this.shouldShowActionButton() &&
+                this.shouldShowActionButton()
+                && (
                 <div className={styles.login}>
                   <p>{this.props.t('Welcome back')}</p>
-                  <Link className={styles.link} to='/'>
-                    <FontIcon value='login'/>
+                  <Link className={styles.link} to="/">
+                    <FontIcon value="login" />
                     {this.props.t('Sign in')}
-                    <span >
+                    <span>
                       {this.props.t('for full access')}
                     </span>
                   </Link>
                 </div>
+                )
               }
             </div>
           </div>

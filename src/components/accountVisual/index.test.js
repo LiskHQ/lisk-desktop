@@ -4,7 +4,7 @@ import { shallow, mount } from 'enzyme';
 import sinon from 'sinon';
 import AccountVisual from './index';
 import accounts from '../../../test/constants/accounts';
-import breakpoints from './../../constants/breakpoints';
+import breakpoints from '../../constants/breakpoints';
 
 describe('AccountVisual', () => {
   it('should create account visual of an address', () => {
@@ -78,7 +78,7 @@ describe('AccountVisual', () => {
 
   it('should removeEventListener on unmount', () => {
     sinon.spy(window, 'removeEventListener');
-    const wrapper = shallow(<AccountVisual address='sadasdasfsg43r43wt35t' />);
+    const wrapper = shallow(<AccountVisual address="sadasdasfsg43r43wt35t" />);
     expect(window.removeEventListener).to.not.have.been.calledWith();
     wrapper.unmount();
     expect(window.removeEventListener).to.have.been.calledWith('resize');

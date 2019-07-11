@@ -9,13 +9,13 @@ import TransactionsHeader from './transactionsHeader';
 describe('TransactionsHeader', () => {
   it('should have 3 header columns', () => {
     const wrapper = mount(
-<TransactionsHeader tableStyle={tableStyle}></TransactionsHeader>,
-{
-  context: { i18n },
-  childContextTypes: {
-    i18n: PropTypes.object.isRequired,
-  },
-},
+      <TransactionsHeader tableStyle={tableStyle} />,
+      {
+        context: { i18n },
+        childContextTypes: {
+          i18n: PropTypes.object.isRequired,
+        },
+      },
     );
 
     expect(wrapper.find('.transactions-header')).to.have.lengthOf(4);

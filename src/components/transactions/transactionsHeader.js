@@ -9,7 +9,8 @@ const TransactionsHeader = ({ t }) => (
     <div className={`${styles.rightText} ${grid['col-xs-0']} ${grid['col-sm-3']} ${styles.header} transactions-header ${styles.hiddenXs}`}>{t('Reference')}</div>
     <div className={`${styles.rightText} ${grid['col-xs-0']} ${grid['col-sm-2']} ${styles.header} transactions-header ${styles.hiddenXs}`}>{t('Date')}</div>
     <div className={`${styles.rightText} ${grid['col-xs-5']} ${grid['col-sm-2']} ${styles.header} transactions-header`}>{t('Amount (LSK)')}</div>
-    <div className={`${grid['col-xs-1']} ${grid['col-sm-1']}`}></div>
-  </div>);
+    <div className={`${grid['col-xs-1']} ${grid['col-sm-1']}`} />
+  </div>
+);
 
 export default translate()(TransactionsHeader);

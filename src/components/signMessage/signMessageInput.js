@@ -1,5 +1,5 @@
 import React from 'react';
-import { parseSearchParams } from './../../utils/searchParams';
+import { parseSearchParams } from '../../utils/searchParams';
 import Piwik from '../../utils/piwik';
 import { AutoresizeTextarea } from '../toolbox/inputsV2';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
@@ -48,23 +48,28 @@ class SignMessageInput extends React.Component {
             <span>{t('Message')}</span>
             <AutoresizeTextarea
               className={styles.textarea}
-              name={'message'}
+              name="message"
               onChange={this.handleChange}
-              value={message.value} />
+              value={message.value}
+            />
           </label>
         </div>
         <div className={styles.buttonsHolder}>
           <PrimaryButtonV2
-            className={'next'}
+            className="next"
             onClick={this.nextStep}
-          >{
+          >
+            {
             t('Continue')
-          }</PrimaryButtonV2>
+          }
+          </PrimaryButtonV2>
           <TertiaryButtonV2
             onClick={history.goBack}
-          >{
+          >
+            {
             t('Go Back')
-          }</TertiaryButtonV2>
+          }
+          </TertiaryButtonV2>
         </div>
       </section>
     );

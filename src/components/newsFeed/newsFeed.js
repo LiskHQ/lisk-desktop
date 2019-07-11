@@ -30,21 +30,25 @@ class NewsFeed extends React.Component {
           <div>
             {
               filteredNewsFeed.length
-              ? filteredNewsFeed.map((news, index) =>
-                <div className={styles.newsWrapper} key={`newsWrapper-${index}`}>
-                  <News
-                    t={t}
-                    {...news} />
-                </div>)
-              : null
+                ? filteredNewsFeed.map((news, index) => (
+                  <div className={styles.newsWrapper} key={`newsWrapper-${index}`}>
+                    <News
+                      t={t}
+                      {...news}
+                    />
+                  </div>
+                ))
+                : null
             }
             {
-              showNewsFeedEmptyState && !filteredNewsFeed.length &&
-              <EmptyState className={'empty-news'}>
-                <Icon name={'noTweetsIcon'} />
+              showNewsFeedEmptyState && !filteredNewsFeed.length
+              && (
+              <EmptyState className="empty-news">
+                <Icon name="noTweetsIcon" />
                 <h1>{t('No available tweets')}</h1>
                 <p>{t('At this moment there is a connection problem with the tweets feed')}</p>
               </EmptyState>
+              )
             }
           </div>
         </div>

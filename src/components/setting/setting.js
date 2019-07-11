@@ -5,8 +5,8 @@ import CheckBox from '../toolbox/checkBox';
 import Piwik from '../../utils/piwik';
 import Select from '../toolbox/select';
 import accountConfig from '../../constants/account';
-import links from './../../constants/externalLinks';
-import settingsConst from './../../constants/settings';
+import links from '../../constants/externalLinks';
+import settingsConst from '../../constants/settings';
 import styles from './setting.css';
 import txTypes from '../../constants/transactionTypes';
 import SecondPassphraseSetting from './secondPassphrase';
@@ -95,7 +95,7 @@ class Setting extends React.Component {
                   }))}
                   selected={activeCurrency}
                   onChange={this.setCurrency}
-                  className={'currency'}
+                  className="currency"
                 />
               </div>
             </section>
@@ -103,28 +103,31 @@ class Setting extends React.Component {
               <h1>{t('Security')}</h1>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <CheckBox
-                  name={'autoLog'}
+                  name="autoLog"
                   className={`${styles.checkbox} autoLog`}
                   checked={settings.autoLog}
                   onChange={this.toggleAutoLog}
-                  />
-                  <div>
+                />
+                <div>
                   <span className={styles.labelName}>{t('Auto Logout')}</span>
                   <p>{t('Log out automatically after 10 minutes.')}</p>
-                  </div>
+                </div>
               </label>
-              {isAuthenticated && settings.token.active !== tokenMap.BTC.key ?
-                <SecondPassphraseSetting
-                  {...{
-                    account, hasSecondPassphrase, isHwWalletClass, t, hasPendingSecondPassphrase,
-                  }} /> :
-                null}
+              {isAuthenticated && settings.token.active !== tokenMap.BTC.key
+                ? (
+                  <SecondPassphraseSetting
+                    {...{
+                      account, hasSecondPassphrase, isHwWalletClass, t, hasPendingSecondPassphrase,
+                    }}
+                  />
+                )
+                : null}
             </section>
             <section>
               <h1>{t('Advanced')}</h1>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <CheckBox
-                  name={'showNetwork'}
+                  name="showNetwork"
                   className={`${styles.checkbox} showNetwork`}
                   checked={settings.showNetwork}
                   onChange={this.handleCheckboxChange}
@@ -136,7 +139,7 @@ class Setting extends React.Component {
               </label>
               <label className={`${styles.fieldGroup} ${styles.checkboxField} enableBTC`}>
                 <CheckBox
-                  name={'BTC'}
+                  name="BTC"
                   className={`${styles.checkbox}`}
                   checked={!!(settings.token && settings.token.list.BTC)}
                   onChange={this.handleTokenToggle}
@@ -151,7 +154,7 @@ class Setting extends React.Component {
               <h1>{t('Privacy')}</h1>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <CheckBox
-                  name={'statistics'}
+                  name="statistics"
                   className={`${styles.checkbox} statistics`}
                   checked={settings.statistics}
                   onChange={this.handleCheckboxChange}

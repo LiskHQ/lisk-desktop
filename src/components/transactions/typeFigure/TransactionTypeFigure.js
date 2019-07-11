@@ -13,7 +13,7 @@ const TransactionTypeFigure = ({
 
     switch (transactionType) {
       case transactionTypes.send:
-        return <AccountVisual address={address} size={avatarSize}/>;
+        return <AccountVisual address={address} size={avatarSize} />;
       case transactionTypes.setSecondPassphrase:
         icon = svg.tx2ndPassphrase;
         break;

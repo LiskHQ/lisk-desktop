@@ -17,17 +17,24 @@ class DialogElement extends Component {
 
     const { childComponentProps } = this.props.dialog;
     return (
-      <Dialog active={this.props.dialog.childComponent !== undefined && !this.state.hidden}
+      <Dialog
+        active={this.props.dialog.childComponent !== undefined && !this.state.hidden}
         theme={theme}
-        type='fullscreen' className='modal-dialog'>
+        type="fullscreen"
+        className="modal-dialog"
+      >
         <div className={styles.dialog}>
-          {this.props.dialog.childComponent ?
-            <div className={`modal-dialog-body ${theme.innerBody}`}>
-              <div className={styles.title}>{childComponentProps && childComponentProps.title}</div>
+          {this.props.dialog.childComponent
+            ? (
+              <div className={`modal-dialog-body ${theme.innerBody}`}>
+                <div className={styles.title}>
+                  {childComponentProps && childComponentProps.title}
+                </div>
                 <this.props.dialog.childComponent
                   {...(this.props.dialog.childComponentProps || {})}
                 />
-            </div> : null }
+              </div>
+            ) : null }
         </div>
       </Dialog>
     );

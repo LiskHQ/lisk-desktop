@@ -1,6 +1,6 @@
 import React from 'react';
 import Options from '../../dialog/options';
-import routes from './../../../constants/routes';
+import routes from '../../../constants/routes';
 import Piwik from '../../../utils/piwik';
 
 class CustomCountDown extends React.Component {

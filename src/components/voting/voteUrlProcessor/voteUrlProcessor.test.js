@@ -44,7 +44,8 @@ describe('VoteUrlProcessor', () => {
           search: '?votes=delegate_name',
         },
       },
-    }} />);
+    }}
+    />);
     expect(props.urlVotesFound).toHaveBeenCalledWith({
       upvotes: ['delegate_name'],
       unvotes: [],
@@ -61,7 +62,8 @@ describe('VoteUrlProcessor', () => {
           search: '?unvotes=delegate_name',
         },
       },
-    }} />);
+    }}
+    />);
     expect(props.urlVotesFound).toHaveBeenCalledWith({
       upvotes: [],
       unvotes: ['delegate_name'],

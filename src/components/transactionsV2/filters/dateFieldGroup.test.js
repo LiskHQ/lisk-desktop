@@ -66,7 +66,7 @@ describe('DateFieldGroup', () => {
           dateFrom: '11.03.19',
         },
       };
-      wrapper = mount(<DateFieldGroup {...newProps}/>, options);
+      wrapper = mount(<DateFieldGroup {...newProps} />, options);
       wrapper.find('.dropdownWrapper input').first().simulate('click');
       wrapper.find('Calendar .dayItem').filter('[value="12.03.19"]').first().simulate('click', { target: { value: '12.03.19' } });
       jest.advanceTimersByTime(300);

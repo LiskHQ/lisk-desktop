@@ -8,10 +8,6 @@
   align-items: center;
   overflow: initial;
   width: 100%;
-
-  & > div {
-    padding-bottom: 70px;
-  }
 }
 
 .wrapper {
@@ -20,6 +16,7 @@
   justify-content: center;
   align-items: center;
   background: transparent;
-  width: var(--medium-box-width);
+  width: 100%;
+  max-width: 720px;
   height: auto;
 }

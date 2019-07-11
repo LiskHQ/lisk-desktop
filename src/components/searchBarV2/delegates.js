@@ -15,7 +15,7 @@ const Delegates = ({
       </div>
     </header>
     <div className={`${styles.content} delegates-content`}>
-    {
+      {
       delegates.map((delegate, index) => (
         <div
           key={index}

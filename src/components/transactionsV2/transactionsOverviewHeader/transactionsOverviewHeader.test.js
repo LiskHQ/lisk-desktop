@@ -99,7 +99,8 @@ describe('Transactions Overview Header', () => {
         <TransactionHeader {...{
           ...anotherUserProps,
           bookmarks,
-        }}/>
+        }}
+        />
       </MemoryRouter>, options);
       expect(wrapper.find('.bookmark-account button').first().text()).to.equal('Edit bookmark');
     });

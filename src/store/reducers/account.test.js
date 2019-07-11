@@ -107,4 +107,3 @@ describe('Reducer: account(state, action)', () => {
     expect(changedAccount).to.deep.equal({ votes: action.votes });
   });
 });
-

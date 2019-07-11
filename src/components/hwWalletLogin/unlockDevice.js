@@ -60,11 +60,14 @@ class UnlockDevice extends React.Component {
       <div>
         <h1>{t('{{deviceModel}} connected! Open the Lisk app on the device', { deviceModel })}</h1>
         <p>
-        {
+          {
           t('If you’re not sure how to do this please follow the')
-        } <a href="https://support.ledger.com/hc/en-us/categories/115000820045-Ledger-Nano-S"
-          target="_blank"
-          rel='noopener noreferrer'
+        }
+          {' '}
+          <a
+            href="https://support.ledger.com/hc/en-us/categories/115000820045-Ledger-Nano-S"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             {t('Official guidelines')}
           </a>

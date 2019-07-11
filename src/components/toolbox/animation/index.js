@@ -81,7 +81,7 @@ class Animation extends React.Component {
     return (
       <div
         className={className}
-        ref={(el) => { this.el = el; } }
+        ref={(el) => { this.el = el; }}
       />
     );
   }

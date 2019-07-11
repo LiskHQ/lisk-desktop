@@ -56,21 +56,22 @@ class TransactionsListV2 extends React.Component {
       amount: grid['col-xs-2'],
     };
 
-    return <div className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} ${isLoading ? styles.isLoading : ''} transaction-results`}>
-      {
+    return (
+      <div className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} ${isLoading ? styles.isLoading : ''} transaction-results`}>
+        {
         isLoading ? (
           <div className={styles.loadingOverlay}>
-            <ProgressBar type="linear" mode="indeterminate" theme={styles} className={'loading'}/>
+            <ProgressBar type="linear" mode="indeterminate" theme={styles} className="loading" />
           </div>
         ) : null
       }
-      <TransactionsHeaderV2
-        isSmallScreen={isSmallScreen}
-        columnClassNames={columnClassNames}
-      />
-      {filteredTransactions.length
-        ? filteredTransactions
-            .map(transaction =>
+        <TransactionsHeaderV2
+          isSmallScreen={isSmallScreen}
+          columnClassNames={columnClassNames}
+        />
+        {filteredTransactions.length
+          ? filteredTransactions
+            .map(transaction => (
               <TransactionRowV2
                 key={transaction.id}
                 bookmarks={bookmarks}
@@ -78,16 +79,26 @@ class TransactionsListV2 extends React.Component {
                 value={transaction}
                 token={activeToken}
                 columnClassNames={columnClassNames}
-                onClick={this.props.onClick}/>)
-        : <p className={`${styles.empty} empty-message`}>
-          {t('There are no transactions.')}
-        </p>
+                onClick={this.props.onClick}
+              />
+            ))
+          : (
+            <p className={`${styles.empty} empty-message`}>
+              {t('There are no transactions.')}
+            </p>
+          )
       }
-      { canLoadMore && <span
-        onClick={this.props.onLoadMore}
-        className={`${styles.showMore} show-more-button`}>{t('Show More')}</span>
+        { canLoadMore && (
+        <span
+          onClick={this.props.onLoadMore}
+          className={`${styles.showMore} show-more-button`}
+        >
+          {t('Show More')}
+        </span>
+        )
       }
-    </div>;
+      </div>
+    );
   }
 }
 

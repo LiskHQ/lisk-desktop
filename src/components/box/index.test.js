@@ -9,7 +9,7 @@ describe('Box', () => {
   };
   let wrapper;
   beforeEach(() => {
-    wrapper = mount(<Box {...props} ><span>text</span></Box>);
+    wrapper = mount(<Box {...props}><span>text</span></Box>);
   });
 
   it("Should className include 'test' and it should render child tags", () => {
@@ -23,4 +23,3 @@ describe('Box', () => {
     expect(wrapper.find('span').html()).to.be.equal('<span>text</span>');
   });
 });
-

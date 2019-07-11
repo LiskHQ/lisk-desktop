@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from './';
+import Icon from '.';
 import DemoRenderer from '../demoRenderer';
 import svgIcons from '../../../utils/svgIcons';
 import styles from './demo.css';
@@ -16,4 +16,3 @@ const IconDemo = () => (
 );
 
 export default IconDemo;
-

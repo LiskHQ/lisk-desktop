@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import VotingListViewV2 from './votingListViewV2';
 import { mountWithContext } from '../../../test/unit-test-utils/mountHelpers';
 import store from '../../store';
-import voteFilters from './../../constants/voteFilters';
+import voteFilters from '../../constants/voteFilters';
 
 describe('VotingListViewV2', () => {
   let wrapper;
@@ -49,7 +49,7 @@ describe('VotingListViewV2', () => {
       toFake: ['setTimeout', 'clearTimeout', 'Date'],
     });
     loadMoreSpy = sinon.spy(VotingListViewV2.prototype, 'loadMore');
-    wrapper = mountWithContext(<VotingListViewV2 {...props}/>, {});
+    wrapper = mountWithContext(<VotingListViewV2 {...props} />, {});
   });
 
   afterEach(() => {
@@ -85,7 +85,7 @@ describe('VotingListViewV2', () => {
     const loadMoreProps = {
       ...props,
     };
-    wrapper = mountWithContext(<VotingListViewV2 {...loadMoreProps}/>, {});
+    wrapper = mountWithContext(<VotingListViewV2 {...loadMoreProps} />, {});
     const Waypoint = wrapper.find('Waypoint').at(1);
     Waypoint.props().onEnter();
     expect(loadMoreSpy).to.have.been.calledWith();
@@ -97,7 +97,7 @@ describe('VotingListViewV2', () => {
       ...props,
     };
     const loadDelegates = sinon.spy(VotingListViewV2.prototype, 'loadDelegates');
-    wrapper = mountWithContext(<VotingListViewV2 {...props}/>, { ...store });
+    wrapper = mountWithContext(<VotingListViewV2 {...props} />, { ...store });
     const Waypoint = wrapper.find('Waypoint').at(1);
 
     const nextProps = {
@@ -128,7 +128,7 @@ describe('VotingListViewV2', () => {
     const filterVotedProps = {
       ...props,
     };
-    wrapper = mountWithContext(<VotingListViewV2 {...filterVotedProps}/>, {});
+    wrapper = mountWithContext(<VotingListViewV2 {...filterVotedProps} />, {});
     wrapper.find('.transaction-filter-item').at(voteFilters.voted).simulate('click');
     wrapper.update();
     const delegateRow = wrapper.find('.delegate-row');
@@ -140,7 +140,7 @@ describe('VotingListViewV2', () => {
     const filterVotedProps = {
       ...props,
     };
-    wrapper = mountWithContext(<VotingListViewV2 {...filterVotedProps}/>, {});
+    wrapper = mountWithContext(<VotingListViewV2 {...filterVotedProps} />, {});
     wrapper.find('.transaction-filter-item').at(voteFilters.notVoted).simulate('click');
     wrapper.update();
     const delegateRow = wrapper.find('.delegate-row');
@@ -154,7 +154,7 @@ describe('VotingListViewV2', () => {
     };
     emptyMessageProps.delegates = [];
     emptyMessageProps.votes = {};
-    wrapper = mountWithContext(<VotingListViewV2 {...emptyMessageProps}/>, {});
+    wrapper = mountWithContext(<VotingListViewV2 {...emptyMessageProps} />, {});
     const nextProps = {
       delegates: [],
     };
@@ -177,7 +177,7 @@ describe('VotingListViewV2', () => {
     };
     emptyMessageProps.delegates = [];
     emptyMessageProps.votes = {};
-    wrapper = mountWithContext(<VotingListViewV2 {...emptyMessageProps}/>, {});
+    wrapper = mountWithContext(<VotingListViewV2 {...emptyMessageProps} />, {});
     const nextProps = {
       delegates: [delegates[1]],
     };

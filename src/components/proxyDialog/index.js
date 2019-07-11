@@ -39,25 +39,40 @@ class ProxyDialog extends React.Component {
       <form className={styles.form} onSubmit={this.handleSubmit.bind(this)}>
         <p className={styles.text}>
           {this.props.text}
-          <b> {this.props.authInfo.host} </b>
+          <b>
+            {' '}
+            {this.props.authInfo.host}
+            {' '}
+          </b>
         </p>
-        <ToolBoxInput label={this.props.t('Username')} required
-          className='username'
+        <ToolBoxInput
+          label={this.props.t('Username')}
+          required
+          className="username"
           onChange={this.handleChange.bind(this, 'username')}
           error={this.state.username.error}
-          value={this.state.username.value}/>
-        <ToolBoxInput label={this.props.t('Password')} required type='password'
-          className='password'
+          value={this.state.username.value}
+        />
+        <ToolBoxInput
+          label={this.props.t('Password')}
+          required
+          type="password"
+          className="password"
           onChange={this.handleChange.bind(this, 'password')}
           error={this.state.password.error}
-          value={this.state.password.value}/>
+          value={this.state.password.value}
+        />
         <div className={styles.submitButton}>
-          <Button primary raised
-            disabled = {this.state.password.value === '' || this.state.username.value === ''}
-            label={this.props.t('Submit')} type='submit' />
+          <Button
+            primary
+            raised
+            disabled={this.state.password.value === '' || this.state.username.value === ''}
+            label={this.props.t('Submit')}
+            type="submit"
+          />
         </div>
-      </form>);
+      </form>
+    );
   }
 }
 export default translate()(ProxyDialog);
-

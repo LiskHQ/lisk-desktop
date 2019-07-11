@@ -24,7 +24,7 @@ class AutoresizeTextarea extends React.Component {
     if (nextProps.value !== this.props.value) {
       this.textRef.style.height = `${this.height}px`;
       return true;
-    } else if (!deepEquals(this.props, nextProps)) {
+    } if (!deepEquals(this.props, nextProps)) {
       return true;
     }
     return false;
@@ -41,11 +41,14 @@ class AutoresizeTextarea extends React.Component {
 
   render() {
     const { value, className, ...props } = this.props;
-    return <TextareaV2
-      className={`${styles.autoresize} ${className}`}
-      setRef={this.setRef}
-      value={value}
-      {...props} />;
+    return (
+      <TextareaV2
+        className={`${styles.autoresize} ${className}`}
+        setRef={this.setRef}
+        value={value}
+        {...props}
+      />
+    );
   }
 }
 

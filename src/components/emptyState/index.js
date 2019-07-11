@@ -7,7 +7,7 @@ const EmptyState = ({
 }) => (
   <div className={`${styles.emptyState} ${className}`}>
     <img src={cubeImage} />
-    <h2 className='empty-message'>{title}</h2>
+    <h2 className="empty-message">{title}</h2>
     <p>{message}</p>
     { children }
   </div>

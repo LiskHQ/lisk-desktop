@@ -25,12 +25,14 @@ const CustomRoute = ({
     return <Redirect to={`${routes.dashboard.path}`} />;
   }
 
-  return ((isPrivate && isAuthenticated) || !isPrivate ?
-    <main className={`${isPrivate ? offlineStyle.disableWhenOffline : ''} offlineWrapper`}>
-      <ErrorBoundary errorMessage={t('An error occoured while rendering this page')}>
-        <Route path={fullPath} component={component} exact={exact} />
-      </ErrorBoundary>
-    </main>
+  return ((isPrivate && isAuthenticated) || !isPrivate
+    ? (
+      <main className={`${isPrivate ? offlineStyle.disableWhenOffline : ''} offlineWrapper`}>
+        <ErrorBoundary errorMessage={t('An error occoured while rendering this page')}>
+          <Route path={fullPath} component={component} exact={exact} />
+        </ErrorBoundary>
+      </main>
+    )
     : <Redirect to={`${routes.loginV2.path}?referrer=${pathname}${encodeURIComponent(search)}`} />
   );
 };

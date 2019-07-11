@@ -71,8 +71,8 @@ class ConfirmPassphrase extends React.Component {
     };
     const cb = status
       ? () => this.props.nextStep({ passphrase: this.props.passphrase })
-      : () => !state.outOfTries &&
-        this.getRandomIndexesFromPassphrase(this.props.passphrase, numberOfWords);
+      : () => !state.outOfTries
+        && this.getRandomIndexesFromPassphrase(this.props.passphrase, numberOfWords);
     this.setState(state);
     this.timeout = setTimeout(cb, 1500);
   }
@@ -130,20 +130,24 @@ class ConfirmPassphrase extends React.Component {
         </div>
 
         <div className={`${styles.confirmHolder} passphrase-holder`}>
-          {passphrase.split(/\s/).map((word, key) =>
+          {passphrase.split(/\s/).map((word, key) => (
             <span className={styles.word} key={key}>
               { !words.includes(key)
                 ? word
-                : <Options
-                  isCorrect={isCorrect}
-                  hasErrors={hasErrors}
-                  options={options[optionIndex]}
-                  answers={answers}
-                  handleSelect={this.handleSelect}
-                  enabled={optionIndex === 0 || answers[optionIndex - 1]}
-                  optionIndex={optionIndex++} />
+                : (
+                  <Options
+                    isCorrect={isCorrect}
+                    hasErrors={hasErrors}
+                    options={options[optionIndex]}
+                    answers={answers}
+                    handleSelect={this.handleSelect}
+                    enabled={optionIndex === 0 || answers[optionIndex - 1]}
+                    optionIndex={optionIndex++}
+                  />
+                )
               }
-            </span>)
+            </span>
+          ))
           }
           {
             <div className={`${styles.errorMessage} ${outOfTries ? styles.showError : ''}`}>
@@ -157,15 +161,17 @@ class ConfirmPassphrase extends React.Component {
           <span className={`${registerStyles.button}`}>
             <SecondaryButtonV2
               className={registerStyles.backButton}
-              onClick={prevStep}>
+              onClick={prevStep}
+            >
               {t('Go Back')}
             </SecondaryButtonV2>
           </span>
           <span className={`${registerStyles.button}`}>
             <PrimaryButtonV2
-              className={'passphrase-is-correct-button'}
+              className="passphrase-is-correct-button"
               onClick={() => this.handleConfirm(this.verifyChoices())}
-              disabled={!this.enableConfirmButton()}>
+              disabled={!this.enableConfirmButton()}
+            >
               {t('Confirm')}
             </PrimaryButtonV2>
           </span>

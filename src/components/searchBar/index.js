@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { translate } from 'react-i18next';
-import { searchSuggestions } from './../../actions/search';
-import actionTypes from './../../constants/actions';
-import AutoSuggest from './../autoSuggestV2';
+import { searchSuggestions } from '../../actions/search';
+import actionTypes from '../../constants/actions';
+import AutoSuggest from '../autoSuggestV2';
 import styles from './searchBar.css';
 
 class SearchBar extends React.Component {
@@ -14,16 +14,18 @@ class SearchBar extends React.Component {
   }
 
   render() {
-    return (<div className={`${styles.searchBar} searchBar search-bar-input ${this.shouldShowSearchBarOnMobile() ? styles.show : ''}`}>
-      <AutoSuggest
-        account={this.props.account}
-        history={this.props.history}
-        t={this.props.t}
-        results={this.props.suggestions}
-        searchClearSuggestions={this.props.searchClearSuggestions}
-        searchSuggestions={this.props.searchSuggestions}
-      />
-    </div>);
+    return (
+      <div className={`${styles.searchBar} searchBar search-bar-input ${this.shouldShowSearchBarOnMobile() ? styles.show : ''}`}>
+        <AutoSuggest
+          account={this.props.account}
+          history={this.props.history}
+          t={this.props.t}
+          results={this.props.suggestions}
+          searchClearSuggestions={this.props.searchClearSuggestions}
+          searchSuggestions={this.props.searchSuggestions}
+        />
+      </div>
+    );
   }
 }
 

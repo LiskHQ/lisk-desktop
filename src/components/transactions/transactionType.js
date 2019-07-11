@@ -32,9 +32,9 @@ const TransactionType = (props) => { // eslint-disable-line complexity
       break;
   }
   const address = props.address !== props.senderId ? props.senderId : props.recipientId;
-  const template = type || props.showTransaction ?
-    <span className={styles.smallButton}>{type || t('Transaction')}</span> :
-    <span className={`${styles.ordinaryText}`}>{address}</span>;
+  const template = type || props.showTransaction
+    ? <span className={styles.smallButton}>{type || t('Transaction')}</span>
+    : <span className={`${styles.ordinaryText}`}>{address}</span>;
   return template;
 };
 

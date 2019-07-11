@@ -22,7 +22,7 @@ describe('VoteCheckboxV2', () => {
   describe('General', () => {
     let wrapper;
     beforeEach(() => {
-      wrapper = mount(<VoteCheckboxV2 {...props} status={ voteStatus } />);
+      wrapper = mount(<VoteCheckboxV2 {...props} status={voteStatus} />);
     });
 
     it('should render an checkbox input', () => {
@@ -37,14 +37,14 @@ describe('VoteCheckboxV2', () => {
 
   describe('To show vote', () => {
     it('should check the checkbox input', () => {
-      const wrapper = mount(<VoteCheckboxV2 {...props} status={ voteStatus } />);
+      const wrapper = mount(<VoteCheckboxV2 {...props} status={voteStatus} />);
       expect(wrapper.find('input').props().checked).to.equal(true);
     });
   });
 
   describe('To show unvote', () => {
     it('should uncheck the checkbox input', () => {
-      const wrapper = mount(<VoteCheckboxV2 {...props} status={ unvoteStatus } />);
+      const wrapper = mount(<VoteCheckboxV2 {...props} status={unvoteStatus} />);
       expect(wrapper.find('input').props().checked).to.equal(false);
     });
 
@@ -56,7 +56,7 @@ describe('VoteCheckboxV2', () => {
 
   describe('To show pending', () => {
     it('should render a Spinner When pending is true', () => {
-      const wrapper = mount(<VoteCheckboxV2 {...props} status={ pendingStatus } />);
+      const wrapper = mount(<VoteCheckboxV2 {...props} status={pendingStatus} />);
       expect(wrapper.find('Spinner').exists()).to.be.equal(true);
     });
   });

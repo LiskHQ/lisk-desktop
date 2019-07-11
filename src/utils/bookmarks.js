@@ -5,8 +5,7 @@ export const setBookmarksInLocalStorage = data => localJSONStorage.set('bookmark
 
 export const getBookmarksFromLocalStorage = () => {
   const bookmarksObj = tokenKeys.reduce((acc, token) => ({ ...acc, [token]: [] }), {});
-  const localStorageBookmarks =
-    localJSONStorage.get('bookmarks', localJSONStorage.get('followedAccounts', bookmarksObj));
+  const localStorageBookmarks = localJSONStorage.get('bookmarks', localJSONStorage.get('followedAccounts', bookmarksObj));
   const bookmarks = Array.isArray(localStorageBookmarks)
     ? { ...bookmarksObj, LSK: localStorageBookmarks }
     : localStorageBookmarks;

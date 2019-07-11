@@ -68,6 +68,7 @@ class ExplorerTransactionsV2 extends React.Component {
       customFilters: this.state.activeCustomFilters,
     });
   }
+
   /*
     Transactions from tabs are filtered based on filter number
     It applys to All, Incoming and Outgoing

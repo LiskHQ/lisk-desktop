@@ -1,5 +1,5 @@
 import actionTypes from '../constants/actions';
-import txFilters from './../constants/transactionFilters';
+import txFilters from '../constants/transactionFilters';
 import {
   sent,
   loadTransactions,

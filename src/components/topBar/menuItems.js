@@ -13,18 +13,19 @@ const MenuItems = ({
       items && items.map(item =>
         (
           item.id === 'delegates' && token.active === tokenMap.BTC.key
-          ? null
-          :
-          <NavLink
-            key={item.id}
-            to={item.path}
-            className={`${styles.item} ${(isUserLogout && item.id === 'transactions') ? styles.notActive : ''}`}
-            id={item.id}
-            activeClassName={styles.selected}
-          >
-            <Icon name={`${item.icon}${pathname.includes(item.path) ? 'Active' : ''}`} />
-            <span>{item.label}</span>
-          </NavLink>
+            ? null
+            : (
+              <NavLink
+                key={item.id}
+                to={item.path}
+                className={`${styles.item} ${(isUserLogout && item.id === 'transactions') ? styles.notActive : ''}`}
+                id={item.id}
+                activeClassName={styles.selected}
+              >
+                <Icon name={`${item.icon}${pathname.includes(item.path) ? 'Active' : ''}`} />
+                <span>{item.label}</span>
+              </NavLink>
+            )
         ))
     }
   </div>

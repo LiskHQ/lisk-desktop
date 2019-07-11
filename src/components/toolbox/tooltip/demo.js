@@ -7,9 +7,10 @@ const IllustrationDemo = () => (
     <h2>Tooltip</h2>
     <DemoRenderer>
       <Tooltip
-        title='Tooltip title'
-        className={'showOnTop'}
-        footer={<a>Learn more</a>} >
+        title="Tooltip title"
+        className="showOnTop"
+        footer={<a>Learn more</a>}
+      >
         <p>
           Tooltip content
         </p>
@@ -17,7 +18,8 @@ const IllustrationDemo = () => (
     </DemoRenderer>
     <DemoRenderer>
       <Tooltip
-        alwaysShow={true} >
+        alwaysShow
+      >
         <p>
           Tooltip content
         </p>
@@ -25,10 +27,11 @@ const IllustrationDemo = () => (
     </DemoRenderer>
     <DemoRenderer>
       <Tooltip
-        title='Tooltip title'
-        className={'showOnBottom'}
+        title="Tooltip title"
+        className="showOnBottom"
         content={<span>Something else than the icon</span>}
-        footer={<a>Learn more</a>} >
+        footer={<a>Learn more</a>}
+      >
         <p>
           Tooltip content
         </p>

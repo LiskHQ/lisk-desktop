@@ -27,7 +27,7 @@ describe('DelegateRow', () => {
 
   it('should have a list item with class name of "pendingRow" when props.data.pending is true', () => {
     const wrapper = mount(
-      <DelegateRowV2 {...props} voteStatus={pendingStatus}></DelegateRowV2>,
+      <DelegateRowV2 {...props} voteStatus={pendingStatus} />,
       options,
     );
     const expectedClass = 'pendingRow';
@@ -37,7 +37,7 @@ describe('DelegateRow', () => {
 
   it.skip('should have a list item with class name of "votedRow" when voteStatus.unconfirmed and confirmed are true', () => {
     const wrapper = mount(
-      <DelegateRowV2 {...props} voteStatus={votedStatus}></DelegateRowV2>,
+      <DelegateRowV2 {...props} voteStatus={votedStatus} />,
       options,
     );
     const expectedClass = 'votedRow';
@@ -47,7 +47,7 @@ describe('DelegateRow', () => {
 
   it('should have a list item with class name of "downVoteRow" when voteStatus.unconfirmed is false but confirmed is true', () => {
     const wrapper = mount(
-      <DelegateRowV2 {...props} voteStatus={unvoteStatus}></DelegateRowV2>,
+      <DelegateRowV2 {...props} voteStatus={unvoteStatus} />,
       options,
     );
     const expectedClass = 'downVoteRow';
@@ -57,7 +57,7 @@ describe('DelegateRow', () => {
 
   it('should have a list item with class name of "upVoteRow" when voteStatus.unconfirmed is false but confirmed is true', () => {
     const wrapper = mount(
-      <DelegateRowV2 {...props} voteStatus={voteStatus}></DelegateRowV2>,
+      <DelegateRowV2 {...props} voteStatus={voteStatus} />,
       options,
     );
     const expectedClass = 'upVoteRow';

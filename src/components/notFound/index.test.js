@@ -37,15 +37,14 @@ describe('notFound', () => {
   };
 
   it('should render correctly', () => {
-    const wrapper = mountWithRouter(<NotFound/>, options);
+    const wrapper = mountWithRouter(<NotFound />, options);
     expect(wrapper.find('section')).toHaveLength(1);
     expect(wrapper).toContainMatchingElement('Illustration');
     expect(wrapper).toContainMatchingElement('.go-to-dashboard-button');
   });
 
   it('should go to Dashboard on button link', () => {
-    const wrapper = mount(<NotFound/>, options);
+    const wrapper = mount(<NotFound />, options);
     expect(wrapper.find('.go-to-dashboard-button').at(0).props().to).toBe('/dashboard');
   });
 });
-

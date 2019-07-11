@@ -8,7 +8,7 @@ import TransactionDetailV2 from './transactionDetailV2';
 import styles from './transactionRowV2.css';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
 import LiskAmount from '../liskAmount';
-import { DateTimeFromTimestamp } from './../timestamp/index';
+import { DateTimeFromTimestamp } from '../timestamp/index';
 import TableRow from '../toolbox/table/tableRow';
 import Icon from '../toolbox/icon';
 
@@ -67,13 +67,13 @@ class TransactionRowV2 extends React.Component {
     return (
       <TableRow className={`${grid.row} ${styles.row} ${!hasConfirmations ? styles.pending : ''} transactions-row`} onClick={() => onClick(this.props)}>
         <div className={`${columnClassNames.transaction} transactions-cell`}>
-          <Icon name={address === value.recipientId ? 'incoming' : 'outgoing' } className={styles.inOutIcon} />
+          <Icon name={address === value.recipientId ? 'incoming' : 'outgoing'} className={styles.inOutIcon} />
           <TransactionTypeFigure
-            address={address === value.recipientId ? value.senderId : value.recipientId }
+            address={address === value.recipientId ? value.senderId : value.recipientId}
             transactionType={value.type}
           />
           <TransactionAddress
-            address={address === value.recipientId ? value.senderId : value.recipientId }
+            address={address === value.recipientId ? value.senderId : value.recipientId}
             bookmarks={bookmarks}
             t={t}
             token={token}
@@ -87,13 +87,15 @@ class TransactionRowV2 extends React.Component {
           </div>
         </div>
         <div className={`${columnClassNames.fee} transactions-cell`}>
-          <LiskAmount val={value.fee}/>&nbsp;{token}
+          <LiskAmount val={value.fee} />
+          {token}
         </div>
-          <div className={`${columnClassNames.details} transactions-cell`}>
-            <TransactionDetailV2
-              t={t}
-              transaction={value} />
-          </div>
+        <div className={`${columnClassNames.details} transactions-cell`}>
+          <TransactionDetailV2
+            t={t}
+            transaction={value}
+          />
+        </div>
         <div className={`${columnClassNames.amount} transactions-cell`}>
           <TransactionAmount
             address={address}

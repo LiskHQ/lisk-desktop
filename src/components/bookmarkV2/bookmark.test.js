@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
-import keyCodes from './../../constants/keyCodes';
+import keyCodes from '../../constants/keyCodes';
 import i18n from '../../i18n';
 import Bookmark from './index';
 import { tokenMap } from '../../constants/tokens';

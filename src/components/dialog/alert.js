@@ -10,7 +10,7 @@ const Alert = ({ text, closeDialog, t }) => (
     <p className={`alert-dialog-message ${styles.description}`}>{text}</p>
     <br />
     <section className={`${grid.row} ${grid['between-xs']} ${styles.okButton}`}>
-      <Button label={t('Ok')} onClick={closeDialog} className='ok-button'/>
+      <Button label={t('Ok')} onClick={closeDialog} className="ok-button" />
     </section>
   </div>
 );

@@ -1,5 +1,5 @@
 import localeHandler from './localeHandler';
-import menu from './../menu';
+import menu from '../menu';
 import process from './process';
 
 const win = {

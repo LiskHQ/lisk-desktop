@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import ExplorerTransactionsV2 from './../transactionsV2/explorerTransactionsV2';
+import ExplorerTransactionsV2 from '../transactionsV2/explorerTransactionsV2';
 import styles from './accountTransactions.css';
 
 class AccountTransactions extends React.Component {
@@ -11,7 +11,8 @@ class AccountTransactions extends React.Component {
           <ExplorerTransactionsV2
             history={this.props.history}
             address={this.props.match.params.address}
-            delegate={this.props.delegate} />
+            delegate={this.props.delegate}
+          />
         </div>
       </div>
     );

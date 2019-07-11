@@ -56,19 +56,26 @@ class TabsContainer extends React.Component {
       <div className={styles.wrapper}>
         <ul className={styles.tabs}>
           {React.Children.map(children, tab => (
-            React.isValidElement(tab) &&
-            <li className={`${tab.props.tabName === activeTab ? styles.active : ''} ${tab.props.tabClassName || ''}`}
+            React.isValidElement(tab)
+            && (
+            <li
+              className={`${tab.props.tabName === activeTab ? styles.active : ''} ${tab.props.tabClassName || ''}`}
               data-tabname={tab.props.tabName}
               onClick={this.setTab}
-            >{tab.props.tabName}</li>
+            >
+              {tab.props.tabName}
+            </li>
+            )
           ))}
         </ul>
         <div className={styles.contentHolder}>
           {React.Children.map(children, tab => (
-            React.isValidElement(tab) &&
+            React.isValidElement(tab)
+            && (
             <div className={`${tab.props.tabName === activeTab ? styles.active : ''}`}>
               { tab }
             </div>
+            )
           ))}
         </div>
       </div>

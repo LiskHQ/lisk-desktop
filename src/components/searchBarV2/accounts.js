@@ -18,7 +18,7 @@ const Accounts = ({
         </div>
       </header>
       <div className={`${styles.content} account-content`}>
-      {
+        {
         accounts.map((account, index) => (
           <div
             key={index}
@@ -31,7 +31,8 @@ const Accounts = ({
             <div className={styles.accountInformation}>
               {
                 isDelegate
-                  ? <Fragment>
+                  ? (
+                    <Fragment>
                       <div>
                         <span className={`${styles.accountTitle} account-title`}>
                           {account.delegate.username}
@@ -42,9 +43,12 @@ const Accounts = ({
                       </div>
                       <span className={styles.accountSubtitle}>{account.address}</span>
                     </Fragment>
-                  : <span className={`${styles.accountTitle} account-title`}>
+                  )
+                  : (
+                    <span className={`${styles.accountTitle} account-title`}>
                       {account.address}
                     </span>
+                  )
               }
             </div>
             <span className={styles.accountBalance}>

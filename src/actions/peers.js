@@ -4,7 +4,7 @@
 import Lisk from '@liskhq/lisk-client';
 import actionTypes from '../constants/actions';
 import networks from '../constants/networks';
-import { loadingStarted, loadingFinished } from '../actions/loading';
+import { loadingStarted, loadingFinished } from './loading';
 import { login } from './account';
 import { getConnectionErrorMessage } from './network/lsk';
 import { errorToastDisplayed } from './toaster';

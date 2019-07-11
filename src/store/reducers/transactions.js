@@ -50,8 +50,8 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
         // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
         confirmed: action.data.confirmed.sort(sortByTimestamp),
         count: action.data.count,
-        filters: action.data.filters !== undefined ?
-          action.data.filters : state.filters,
+        filters: action.data.filters !== undefined
+          ? action.data.filters : state.filters,
       };
     case actionTypes.updateTransactions:
       return {
@@ -68,8 +68,8 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
         // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
         ].sort(sortByTimestamp),
         count: action.data.count,
-        filters: action.data.filters !== undefined ?
-          action.data.filters : state.filters,
+        filters: action.data.filters !== undefined
+          ? action.data.filters : state.filters,
       };
     case actionTypes.transactionCreatedSuccess:
       return {

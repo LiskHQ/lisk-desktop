@@ -1,7 +1,7 @@
 import { liskAPIClientSet, liskAPIClientUpdate } from '../../actions/peers';
 import actionTypes from '../../constants/actions';
-import networks from './../../constants/networks';
-import { shouldAutoLogIn, getAutoLogInData, findMatchingLoginNetwork } from './../../utils/login';
+import networks from '../../constants/networks';
+import { shouldAutoLogIn, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 
 const peersMiddleware = store => next => (action) => {
   next(action);

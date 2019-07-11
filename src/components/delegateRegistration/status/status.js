@@ -78,17 +78,21 @@ class Status extends React.Component {
     return (
       <div className={`${styles.wrapper} status-container`}>
         <TransactionResult
-          illustration={<DelegateAnimation
-            className={styles.animation}
-            status={status}
-            onLoopComplete={this.checkTransactionStatus} />
+          illustration={(
+            <DelegateAnimation
+              className={styles.animation}
+              status={status}
+              onLoopComplete={this.checkTransactionStatus}
+            />
+)
           }
           success={isTransactionSuccess}
           title={displayTemplate.title}
           message={displayTemplate.message}
           primaryButon={displayTemplate.button}
           className={styles.content}
-          t={t}/>
+          t={t}
+        />
       </div>
     );
   }

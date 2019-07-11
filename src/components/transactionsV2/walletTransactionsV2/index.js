@@ -7,7 +7,7 @@ import { searchAccount, fetchVotedDelegateInfo } from '../../../actions/search';
 import { updateAccountDelegateStats } from '../../../actions/account';
 import WalletTransactionsV2 from './walletTransactionsV2';
 import actionTypes from '../../../constants/actions';
-import txFilters from './../../../constants/transactionFilters';
+import txFilters from '../../../constants/transactionFilters';
 import removeDuplicateTransactions from '../../../utils/transactions';
 import { getActiveTokenAccount } from '../../../utils/account';
 

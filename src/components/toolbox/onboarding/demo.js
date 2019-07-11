@@ -22,11 +22,11 @@ const OnboardingDemo = () => (
       <Onboarding
         slides={getOnboardingSlides()}
         finalCallback={finalCallback}
-        ctaLabel={'Start voting'}
-        name={'delegateOnboarding'} />
+        ctaLabel="Start voting"
+        name="delegateOnboarding"
+      />
     </DemoRenderer>
   </div>
 );
 
 export default OnboardingDemo;
-

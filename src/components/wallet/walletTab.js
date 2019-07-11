@@ -13,22 +13,26 @@ const WalletTab = ({ ...props }) => (
             balance={props.balance}
             address={props.address}
             activeToken={props.activeToken}
-            />
+          />
         </div>
         <div className={`${grid['col-xs-5']} ${grid['col-md-6']} ${grid['col-lg-7']}`}>
-        { // istanbul ignore next
-          !props.hideChart || props.transactions.length ?
-          <BalanceChart
-            token={props.activeToken}
-            balance={props.balance}
-            address={props.address}
-            transactions={props.transactions} />
-        : null }
+          { // istanbul ignore next
+          !props.hideChart || props.transactions.length
+            ? (
+              <BalanceChart
+                token={props.activeToken}
+                balance={props.balance}
+                address={props.address}
+                transactions={props.transactions}
+              />
+            )
+            : null }
         </div>
       </div>
     ) : null}
     <TransactionsOverviewV2
-      {...props} />
+      {...props}
+    />
   </React.Fragment>
 );
 
