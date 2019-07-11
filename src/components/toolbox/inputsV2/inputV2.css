@@ -66,6 +66,16 @@
     color: var(--color-blue-gray);
     outline: none;
   }
+
+  &.withIcon {
+    padding-left: 40px;
+  }
+}
+
+.icon {
+  position: absolute;
+  top: 30px;
+  left: 30px;
 }
 
 .autoresize {

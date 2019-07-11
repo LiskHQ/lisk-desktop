@@ -32,10 +32,6 @@
     visibility: visible;
     opacity: 1;
   }
-
-  & .input {
-    padding-left: 36px;
-  }
 }
 
 .linear {

@@ -132,6 +132,7 @@ class SearchBar extends React.Component {
     return (
       <div className={`${styles.wrapper} search-bar`}>
         <InputV2
+          icon="search_icon_inactive"
           size="m"
           data-name="searchInput"
           setRef={setSearchBarRef}
@@ -140,7 +141,7 @@ class SearchBar extends React.Component {
           name="searchText"
           value={searchTextValue}
           placeholder={t('Search within the network...')}
-          className={`${styles.input} search-input`}
+          className="search-input"
           onKeyDown={this.onHandleKeyPress}
         />
         <div className={`${styles.searchMessage} ${(isSearchTextError || isEmptyResults) && styles.searchMessageError} search-message`}>
