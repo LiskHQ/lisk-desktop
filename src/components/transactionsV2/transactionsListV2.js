@@ -1,14 +1,16 @@
+import { translate } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { translate } from 'react-i18next';
 import { tokenMap } from '../../constants/tokens';
-import TransactionsHeaderV2 from './transactionsHeaderV2';
+import EmptyState from '../emptyStateV2';
+import Illustration from '../toolbox/illustration';
+import ProgressBar from '../toolbox/progressBar/progressBar';
 import TransactionRowV2 from './transactionRowV2';
+import TransactionsHeaderV2 from './transactionsHeaderV2';
+import actionTypes from '../../constants/actions';
+import styles from './transactionsListV2.css';
 import txFilters from '../../constants/transactionFilters';
 import txTypes from '../../constants/transactionTypes';
-import styles from './transactionsListV2.css';
-import ProgressBar from '../toolbox/progressBar/progressBar';
-import actionTypes from '../../constants/actions';
 
 class TransactionsListV2 extends React.Component {
   render() {
@@ -64,12 +66,13 @@ class TransactionsListV2 extends React.Component {
           </div>
         ) : null
       }
-      <TransactionsHeaderV2
-        isSmallScreen={isSmallScreen}
-        columnClassNames={columnClassNames}
-      />
       {filteredTransactions.length
-        ? filteredTransactions
+        ? <React.Fragment>
+            <TransactionsHeaderV2
+              isSmallScreen={isSmallScreen}
+              columnClassNames={columnClassNames}
+            />
+            {filteredTransactions
             .map(transaction =>
               <TransactionRowV2
                 key={transaction.id}
@@ -79,9 +82,11 @@ class TransactionsListV2 extends React.Component {
                 token={activeToken}
                 columnClassNames={columnClassNames}
                 onClick={this.props.onClick}/>)
-        : <p className={`${styles.empty} empty-message`}>
-          {t('There are no transactions.')}
-        </p>
+            }
+          </React.Fragment>
+        : <EmptyState className={styles.emptyState}>
+            <Illustration name='emptyWallet' />
+          </EmptyState>
       }
       { canLoadMore && <span
         onClick={this.props.onLoadMore}

@@ -1,15 +1,8 @@
 @import '../app/variablesV2.css';
 @import '../app/mixins.css';
 
-.empty {
-  @mixin contentSmall;
-
-  align-items: center;
-  display: flex;
-  flex-grow: 1;
-  justify-content: center;
-  text-align: center;
-  color: var(--color-slate-gray);
+.emptyState {
+  height: 300px;
 }
 
 .results {
