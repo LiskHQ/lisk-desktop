@@ -21,7 +21,7 @@ class WalletDetails extends React.Component {
         <section className={styles.row}>
           <AccountVisual
             address={address}
-            size={40}
+            size={35}
             />
           <div>
             <label>{t('Address')}</label>
