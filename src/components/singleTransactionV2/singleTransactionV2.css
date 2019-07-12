@@ -11,6 +11,7 @@
   margin: 20px 0 40px;
   padding: 0;
   width: auto;
+  max-width: var(--medium-box-width);
 
   & .txLink {
     align-items: center;
@@ -46,6 +47,8 @@
 
   & .mainContent {
     padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   & .detailsFooter {
