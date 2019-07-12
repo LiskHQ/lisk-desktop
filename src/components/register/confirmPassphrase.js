@@ -126,7 +126,7 @@ class ConfirmPassphrase extends React.Component {
           <h1>
             {t('Confirm your passphrase')}
           </h1>
-          <p>{t('Based on your passphrase that was generated in the previous step, select the missing words below.')}</p>
+          <p className={styles.text}>{t('Based on your passphrase that was generated in the previous step, select the missing words below.')}</p>
         </div>
 
         <div className={`${styles.confirmHolder} passphrase-holder`}>

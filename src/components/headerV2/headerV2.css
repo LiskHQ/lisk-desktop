@@ -33,7 +33,7 @@
 
   & .logo {
     height: 100%;
-    padding: 0 27px;
+    padding: 0 30px;
     border-right: 1px solid rgba(225, 227, 235, 0.3);
 
     & > img {

@@ -108,7 +108,7 @@ class PassphraseBackup extends React.Component {
                 <Icon name="fileOutline" />
                 <p className="option-value">{this.walletName}</p>
               </div>
-              <SecondaryButtonV2 className="extra-small" onClick={this.generatePaperwallet}>
+              <SecondaryButtonV2 className={`${styles.downloadBtn} extra-small`} onClick={this.generatePaperwallet}>
                 {t('Download')}
               </SecondaryButtonV2>
             </div>

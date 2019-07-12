@@ -32,12 +32,13 @@
     @mixin contentSmall bold;
 
     border: none;
+    margin: 0;
     color: var(--color-ultramarine-blue) !important;
   }
 }
 
 .stepsLabel {
-  @mixin contentSmallest;
+  @mixin contentNormal;
 
   color: var(--color-slate-gray);
   height: 18px;
@@ -50,7 +51,10 @@
   color: var(--color-content);
   font-family: var(--heading-font);
   text-align: center;
-  margin-bottom: 10px;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   & > h1 {
     @mixin headingLarge;
@@ -67,16 +71,16 @@
   }
 
   & > p {
-    @mixin contentLarge;
+    @mixin contentLargest;
 
     margin: 0;
     color: var(--color-slate-gray);
-    width: 480px;
-
-    &.short {
-      width: 350px; 
-    }
+    width: 450px;
   }
+}
+
+.PassphraseBackupContainer {
+  margin: 20px 0;
 }
 
 .buttonsHolder {
