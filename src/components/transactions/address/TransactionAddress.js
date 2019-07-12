@@ -42,7 +42,7 @@ const TransactionAddress = ({
     <div className={`${styles.wrapper} transaction-address`}>
       <span>{checkTransactionType()}</span>
       {
-        account.length
+        account.length && transactionType === transactionTypes.send
         ? <span className={styles.subTitle}>
           {
             token === tokenMap.LSK.key ? address : address.replace(regex.btcAddressTrunk, '$1...$3')
