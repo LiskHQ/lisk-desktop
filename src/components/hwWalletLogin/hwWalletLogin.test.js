@@ -10,10 +10,46 @@ jest.mock('../../utils/hwWallet');
 
 describe('HwWalletLogin', () => {
   let wrapper;
-  const store = configureMockStore([])({});
+  const store = configureMockStore([])({
+    account: {
+      address: '123456L',
+      info: {
+        LSK: {
+          address: '123456L',
+          balance: 100,
+        },
+        BTC: {
+          address: 'jhagsd676587',
+          balance: 100,
+        },
+      },
+    },
+    settings: {
+      token: {
+        active: 'LSK',
+        list: {
+          LSK: true,
+          BTC: true,
+        },
+      },
+    },
+  });
   const props = {
     devices: [],
     updateDeviceList: jest.fn(),
+    account: {
+      address: '123456L',
+      info: {
+        LSK: {
+          address: '123456L',
+          balance: 100,
+        },
+        BTC: {
+          address: 'jhagsd676587',
+          balance: 100,
+        },
+      },
+    },
     t: key => key,
   };
 
