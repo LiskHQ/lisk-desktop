@@ -20,7 +20,8 @@
   max-width: 878px;
 
   & .button {
-    margin-top: 12px;
+    @mixin contentLargest bold;
+
     width: var(--footer-button-width);
 
     & > button {
@@ -29,7 +30,7 @@
   }
 
   & .backButton {
-    @mixin contentSmall bold;
+    @mixin contentLargest bold;
 
     border: none;
     margin: 0;
@@ -94,4 +95,8 @@
 
 .disabledLink {
   pointer-events: none;
+}
+
+.continueBtn {
+  @mixin contentLargest bold;
 }

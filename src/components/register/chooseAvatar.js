@@ -103,7 +103,7 @@ class ChooseAvatar extends React.Component {
           </Link>
           <span className={`${registerStyles.button}`}>
             <PrimaryButtonV2
-              className="get-passphrase-button"
+              className={`${registerStyles.continueBtn} get-passphrase-button`}
               onClick={this.handleNextStep}
             >
               {t('Continue')}

@@ -34,7 +34,7 @@ const AccountCreated = ({ t, account }) => (
         className={`${registerStyles.button} login-button`}
         to={routes.loginV2.path}
       >
-        <PrimaryButtonV2>
+        <PrimaryButtonV2 className={registerStyles.continueBtn}>
           {t('Sign In')}
         </PrimaryButtonV2>
       </Link>
