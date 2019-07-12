@@ -126,7 +126,7 @@ class ConfirmPassphrase extends React.Component {
           <h1>
             {t('Confirm your passphrase')}
           </h1>
-          <p>{t('Choose the missing word to complete your passphrase. This was provided in the previous step.')}</p>
+          <p>{t('Based on your passphrase that was generated in the previous step, select the missing words below.')}</p>
         </div>
 
         <div className={`${styles.confirmHolder} passphrase-holder`}>
@@ -163,7 +163,7 @@ class ConfirmPassphrase extends React.Component {
               className={registerStyles.backButton}
               onClick={prevStep}
             >
-              {t('Go Back')}
+              {t('Go back')}
             </SecondaryButtonV2>
           </span>
           <span className={`${registerStyles.button}`}>

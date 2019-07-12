@@ -54,13 +54,13 @@ class PassphraseBackup extends React.Component {
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      {t('Read More')}
+                      {t('Read more')}
                     </a>
 )}
                 >
                   <p>
                     {
-                    t('Store your passphrase in a safe place, possibly having more than one copy. You can use a password manager or a paperwallet. It is very important to ensure you do not lose access to your passphrase.')
+                    t('Be sure to store your passphrase in a safe place. We highly recommend using a password manager or paperwallet.')
                   }
                   </p>
                 </Tooltip>
@@ -91,13 +91,13 @@ class PassphraseBackup extends React.Component {
           <div className={`${styles.option}`}>
             <div className={`${styles.optionContent}`}>
               <h2>
-                {t('Paper Wallet')}
+                {t('Paper wallet')}
                 <Tooltip
                   title="Paper wallet"
                 >
                   <p>
-                    {t('You can print your passphrase to store in a safe place. ')}
-                    {t('It is highly recommended to delete the PDF file and remove it from your Trash Folder too after printing it.')}
+                    {t('You can print your passphrase and store it in a safe place. ')}
+                    {t('We highly recommend deleting the PDF file after printing.')}
                   </p>
                 </Tooltip>
               </h2>
