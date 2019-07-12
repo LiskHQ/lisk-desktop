@@ -6,7 +6,7 @@
   border-bottom: 1px solid var(--color-platinum);
   box-sizing: border-box;
   height: var(--header-height);
-  padding: 0 24px;
+  padding: 0;
   position: absolute;
   top: 0;
   width: 100%;
@@ -28,11 +28,14 @@
   display: flex;
   height: 100%;
   justify-content: space-between;
-  margin: 0 auto;
-  max-width: 1226px;
+  margin: 0;
   width: 100%;
 
   & .logo {
+    height: 100%;
+    padding: 0 27px;
+    border-right: 1px solid rgba(225, 227, 235, 0.3);
+
     & > img {
       display: block;
       height: 100%;
@@ -41,12 +44,22 @@
   }
 
   & .buttonsHolder {
+    height: 100%;
     display: flex;
     justify-content: space-between;
+
+    & > div:first-child {
+      height: 36px;
+      margin: auto;
+    }
 
     & > * {
       margin-left: 24px;
     }
+  }
+
+  & .settings {
+    border-left: 1px solid rgba(225, 227, 235, 0.3);
   }
 }
 
