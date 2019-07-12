@@ -3,13 +3,13 @@
 .wrapper {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  margin-top: 16px;
 
   & h1 {
-    @mixin headingLarge;
+    @mixin headingNormalIntermediate;
 
-    margin-bottom: -2px;
-    margin-top: 22px;
+    margin-bottom: -4px;
+    margin-top: 0;
   }
 
   & .subtitle {
@@ -17,7 +17,7 @@
 
     letter-spacing: 0.3px;
     color: var(--color-slate-gray);
-    margin-bottom: 20px;
+    margin-bottom: 27px;
     display: inline-block;
   }
 }
