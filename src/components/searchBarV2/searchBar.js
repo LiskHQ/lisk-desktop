@@ -3,7 +3,6 @@ import { InputV2 } from '../toolbox/inputsV2';
 import Accounts from './accounts';
 import Delegates from './delegates';
 import Transactions from './transactions';
-import ProgressBar from '../toolbox/progressBar/progressBar';
 import routes from '../../constants/routes';
 import regex from '../../utils/regex';
 import keyCodes from '../../constants/keyCodes';
@@ -146,6 +145,7 @@ class SearchBar extends React.Component {
           placeholder={t('Search within the network...')}
           className="search-input"
           onKeyDown={this.onHandleKeyPress}
+          isLoading={isLoading}
         />
         {error
           ? (
@@ -191,11 +191,6 @@ class SearchBar extends React.Component {
                 t={t}
               />
             )
-            : null
-        }
-        {
-          isLoading
-            ? <ProgressBar type="linear" mode="indeterminate" theme={styles} className="loading" />
             : null
         }
       </div>

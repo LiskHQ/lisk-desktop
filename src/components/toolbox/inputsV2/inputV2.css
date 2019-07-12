@@ -78,6 +78,12 @@
   left: 31px;
 }
 
+.loading {
+  position: absolute;
+  top: 32px;
+  right: 31px;
+}
+
 .autoresize {
   overflow: hidden;
 }
