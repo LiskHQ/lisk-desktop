@@ -227,60 +227,63 @@ export const executeTrezorCommand = (device, command) => {
   if (!tDevice) {
     return Promise.reject('DEVICE_IS_NOT_CONNECTED');
   }
-  return tDevice.waitForSessionAndRun(async (session) => {
-    try {
-      let res;
 
-      if (command.action === 'GET_PUBLICKEY') {
-        const resTrezor = await session.typedCall(
-          'LiskGetPublicKey',
-          'LiskPublicKey',
-          {
-            address_n: getHardenedPath(command.data.index),
-            show_display: command.data.showOnDevice,
-          });
-        res = resTrezor.message.public_key;
+  return new Promise((resolve, reject) => {
+    tDevice.waitForSessionAndRun(async (session) => {
+      try {
+        let res;
+  
+        if (command.action === 'GET_PUBLICKEY') {
+          const resTrezor = await session.typedCall(
+            'LiskGetPublicKey',
+            'LiskPublicKey',
+            {
+              address_n: getHardenedPath(command.data.index),
+              show_display: command.data.showOnDevice,
+            });
+          res = resTrezor.message.public_key;
+        }
+  
+        if (command.action === 'GET_ACCOUNT') {
+          const resTrezor = await session.typedCall(
+            'LiskGetPublicKey',
+            'LiskPublicKey',
+            {
+              address_n: getHardenedPath(command.data.index),
+              show_display: false,
+            });
+          res = { publicKey: resTrezor.message.public_key };
+        }
+        if (command.action === 'SIGN_MSG') {
+          const resTrezor = await session.typedCall(
+            'LiskSignMessage',
+            'LiskMessageSignature',
+            {
+              address_n: getHardenedPath(command.data.index),
+              message: new Buffer(command.data.message, 'utf8').toString('hex'),
+            });
+          res = resTrezor.message.signature;
+        }
+        if (command.action === 'SIGN_TX') {
+          const resTrezor = await session.typedCall(
+            'LiskSignTx',
+            'LiskSignedTx',
+            {
+              address_n: getHardenedPath(command.data.index),
+              transaction: toTrezorGrammar(command.data.tx),
+            });
+          res = resTrezor.message.signature;
+        }
+        return resolve(res);
+      } catch (e) {
+        logDebug('Error during execution of command', e);
+        if (e.message === 'PIN cancelled' ||
+          e.message === 'Cancelled' ||
+          e.message === 'Signing cancelled') {
+          return reject('TREZOR_ACTION_DENIED_BY_USER');
+        }
+        return reject('ERROR_OR_DEVICE_IS_NOT_CONNECTED');
       }
-
-      if (command.action === 'GET_ACCOUNT') {
-        const resTrezor = await session.typedCall(
-          'LiskGetPublicKey',
-          'LiskPublicKey',
-          {
-            address_n: getHardenedPath(command.data.index),
-            show_display: false,
-          });
-        res = { publicKey: resTrezor.message.public_key };
-      }
-      if (command.action === 'SIGN_MSG') {
-        const resTrezor = await session.typedCall(
-          'LiskSignMessage',
-          'LiskMessageSignature',
-          {
-            address_n: getHardenedPath(command.data.index),
-            message: new Buffer(command.data.message, 'utf8').toString('hex'),
-          });
-        res = resTrezor.message.signature;
-      }
-      if (command.action === 'SIGN_TX') {
-        const resTrezor = await session.typedCall(
-          'LiskSignTx',
-          'LiskSignedTx',
-          {
-            address_n: getHardenedPath(command.data.index),
-            transaction: toTrezorGrammar(command.data.tx),
-          });
-        res = resTrezor.message.signature;
-      }
-      return Promise.resolve(res);
-    } catch (e) {
-      logDebug('Error during execution of command', e);
-      if (e.message === 'PIN cancelled' ||
-        e.message === 'Cancelled' ||
-        e.message === 'Signing cancelled') {
-        return Promise.reject('TREZOR_ACTION_DENIED_BY_USER');
-      }
-      return Promise.reject('ERROR_OR_DEVICE_IS_NOT_CONNECTED');
-    }
+    });
   });
 };
