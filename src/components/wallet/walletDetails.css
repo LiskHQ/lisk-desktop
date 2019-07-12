@@ -29,4 +29,8 @@
     word-break: break-all;
     margin-bottom: -4px;
   }
+
+  & .copyIcon {
+    vertical-align: -2px;
+  }
 }
