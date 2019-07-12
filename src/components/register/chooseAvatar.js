@@ -63,11 +63,11 @@ class ChooseAvatar extends React.Component {
         <span className={`${registerStyles.stepsLabel}`}>{t('Step 1 / 4')}</span>
         <div className={`${registerStyles.titleHolder} ${grid['col-xs-10']}`}>
           <h1 className={styles.title}>
-            {t('Choose your Avatar')}
+            {t('Choose your avatar')}
           </h1>
-          <p className={styles.description}>
+          <p className={registerStyles.short}>
             {
-            t('An Avatar is a unique visual representation of your Lisk address.')
+            t('Each avatar is a unique visual representation of your Lisk address.')
           }
           </p>
         </div>
@@ -102,7 +102,7 @@ class ChooseAvatar extends React.Component {
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
           <Link className={`${registerStyles.button} ${registerStyles.backButton}`} to={routes.splashscreen.path}>
             <TertiaryButtonV2>
-              {t('Go Back')}
+              {t('Go back')}
             </TertiaryButtonV2>
           </Link>
           <span className={`${registerStyles.button}`}>
