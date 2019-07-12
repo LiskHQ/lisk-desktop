@@ -90,7 +90,7 @@ class TransactionsListV2 extends React.Component {
       }
       { canLoadMore && <span
         onClick={this.props.onLoadMore}
-        className={`${styles.showMore} show-more-button`}>{t('Show More')}</span>
+        className={`${styles.showMore} show-more-button`}>{t('Load more')}</span>
       }
     </div>;
   }
