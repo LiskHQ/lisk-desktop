@@ -21,6 +21,7 @@ import timeToContribute from '../../../assets/images/illustrations/time-to-contr
 import emptyBookmarkFiler from '../../../assets/images/illustrations/empty-bookmark-filter.svg';
 import emptyBookmarksList from '../../../assets/images/illustrations/empty-bookmarks-list.svg';
 import helpCenter from '../../../assets/images/help/Illustration.svg';
+import emptyWallet from '../../../assets/images/illustrations/empty-wallet.svg';
 
 
 export const illustrations = {
@@ -44,6 +45,7 @@ export const illustrations = {
   timeToContribute,
   emptyBookmarkFiler,
   emptyBookmarksList,
+  emptyWallet,
   helpCenter,
 };
 
