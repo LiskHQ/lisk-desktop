@@ -95,15 +95,12 @@ class TransactionsListV2 extends React.Component {
             </EmptyState>
           )
       }
-        { canLoadMore && (
-        <span
-          onClick={this.props.onLoadMore}
-          className={`${styles.showMore} show-more-button`}
-        >
-          {t('Show More')}
-        </span>
-        )
-      }
+        { canLoadMore ? (
+          <span
+            onClick={this.props.onLoadMore}
+            className={`${styles.showMore} show-more-button`}>{t('Load more')}</span>
+        ) : null
+        }
       </div>
     );
   }
