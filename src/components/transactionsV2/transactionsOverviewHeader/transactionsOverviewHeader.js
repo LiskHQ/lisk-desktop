@@ -26,6 +26,7 @@ class transactionsHeader extends React.Component {
     return (isWalletRoute
       ? (
         <PageHeader
+          className='wallet-header'
           title={t('{{token}} Wallet', { token: tokenMap[activeToken].label })}
           subtitle={t('All important information at a glance')}
         >
