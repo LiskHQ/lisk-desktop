@@ -25,6 +25,13 @@ describe('LoginV2', () => {
 
   const settings = {
     areTermsOfUseAccepted: false,
+    token: {
+      active: 'LSK',
+      list: {
+        LSK: true,
+        BTC: true,
+      },
+    },
   };
 
   const store = configureMockStore([])({

@@ -12,16 +12,11 @@ const BackupPassphrase = ({
     <span className={`${registerStyles.stepsLabel}`}>{t('Step 2 / 4')}</span>
     <div className={`${registerStyles.titleHolder}`}>
       <h1>
-        {t('Save your Passphrase')}
+        {t('Save your passphrase')}
       </h1>
-      <p>{t('Your passphrase is your login and password combined.')}</p>
-      <p>
-        {
-        t('Keep it safe as it is the only way to access your wallet.')
-      }
-      </p>
+      <p>{t('Your passphrase is your login and password combined. Keep it \nsafe as it is the only way to access your wallet.')}</p>
     </div>
-    <div className={grid['col-sm-10']}>
+    <div className={`${grid['col-sm-10']} ${registerStyles.PassphraseBackupContainer}`}>
       <PassphraseBackup
         account={account}
         t={t}
@@ -33,12 +28,12 @@ const BackupPassphrase = ({
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
       <span className={`${registerStyles.button} ${registerStyles.backButton}`}>
         <TertiaryButtonV2 onClick={prevStep}>
-          {t('Go Back')}
+          {t('Go back')}
         </TertiaryButtonV2>
       </span>
       <span className={`${registerStyles.button}`}>
         <PrimaryButtonV2
-          className="yes-its-safe-button"
+          className={`${registerStyles.continueBtn} yes-its-safe-button`}
           onClick={nextStep}
         >
           {t('Continue')}
