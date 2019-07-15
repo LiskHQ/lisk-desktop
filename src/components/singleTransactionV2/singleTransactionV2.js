@@ -1,15 +1,16 @@
+import { translate } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { translate } from 'react-i18next';
 import { DateTimeFromTimestamp } from '../timestamp';
+import { SecondaryButtonV2 } from '../toolbox/buttons/button';
+import BoxV2 from '../boxV2';
 import CopyToClipboard from '../toolbox/copyToClipboard';
 import LiskAmount from '../liskAmount';
-import BoxV2 from '../boxV2';
-import { SecondaryButtonV2 } from '../toolbox/buttons/button';
-import TransactionDetailViewV2 from '../transactionsV2/transactionDetailViewV2/transactionDetailViewV2';
-import styles from './singleTransactionV2.css';
 import NotFound from '../notFound';
+import TransactionDetailViewV2 from '../transactionsV2/transactionDetailViewV2/transactionDetailViewV2';
 import routes from '../../constants/routes';
+import styles from './singleTransactionV2.css';
+import transactionTypes from '../../constants/transactionTypes';
 
 class SingleTransactionV2 extends React.Component {
   constructor(props) {
@@ -72,10 +73,24 @@ class SingleTransactionV2 extends React.Component {
                       />
                     </span>
                   </p>
+                  { transaction.type === transactionTypes.send
+                    ? (
+                      <p className={styles.value}>
+                        <span className={styles.label}>
+                          {t('Amount')}
+                        </span>
+                        <span className="tx-amount">
+                          <LiskAmount val={transaction.amount} />
+                          {' '}
+                          {t('LSK')}
+                        </span>
+                      </p>
+                    ) : null }
+                </div>
+                <div>
                   <p className={styles.value}>
                     <span className={styles.label}>
                       {t('Transaction fee')}
-                      {' '}
                     </span>
                     <span className="tx-fee">
                       <LiskAmount val={transaction.fee} />
@@ -83,12 +98,9 @@ class SingleTransactionV2 extends React.Component {
                       {t('LSK')}
                     </span>
                   </p>
-                </div>
-                <div>
                   <p className={`${styles.value}`}>
                     <span className={styles.label}>
                       {t('Confirmations')}
-                      {' '}
                     </span>
                     <span className="tx-confirmation">
                       {transaction.confirmations || 0}
