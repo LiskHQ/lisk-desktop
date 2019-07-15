@@ -178,7 +178,7 @@ describe('Search', () => {
    */
   it('Type 2 chars - dropdown shows not enough chars message', () => {
     openSearchAndType('43');
-    cy.get(ss.searchMessage).eq(0).should('have.text', 'Type at least 3 characters');
+    cy.get(ss.searchMessage).eq(0).should('have.text', 'A bit more. Make sure to type at least 3 characters.');
   });
 
   /**
@@ -187,6 +187,6 @@ describe('Search', () => {
    */
   it('Type nonexistent thing - dropdown shows not results found message', () => {
     openSearchAndType('43th3j4bt324');
-    cy.get(ss.searchMessage).eq(0).should('have.text', 'No results found.');
+    cy.get(ss.searchMessage).eq(0).should('have.text', 'Nothing has been found. Make sure to double check the ID you typed.');
   });
 });
