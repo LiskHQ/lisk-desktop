@@ -10,8 +10,7 @@
 .wrapper {
   margin: 20px 0 40px;
   padding: 0;
-  width: auto;
-  max-width: var(--medium-box-width);
+  width: var(--medium-box-width);
 
   & .txLink {
     align-items: center;
@@ -71,11 +70,12 @@
     }
 
     & .label {
-      @mixin contentSmall;
+      @mixin contentNormal bold;
 
       align-items: center;
-      color: var(--color-slate-gray);
+      color: var(--color-maastricht-blue);
       display: flex;
+      margin-top: 0;
       margin-bottom: 10px;
     }
 

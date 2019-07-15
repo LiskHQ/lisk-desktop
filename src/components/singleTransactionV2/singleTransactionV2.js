@@ -9,7 +9,6 @@ import BoxV2 from '../boxV2';
 import { SecondaryButtonV2 } from '../toolbox/buttons/button';
 import TransactionDetailViewV2 from '../transactionsV2/transactionDetailViewV2/transactionDetailViewV2';
 import styles from './singleTransactionV2.css';
-import transactionTypes from '../../constants/transactionTypes';
 import NotFound from '../notFound';
 import routes from '../../constants/routes';
 
@@ -72,27 +71,12 @@ class SingleTransactionV2 extends React.Component {
   // eslint-disable-next-line complexity
   render() {
     const { t, transaction, activeToken } = this.props;
-    let title = t('Transfer Transaction');
-    switch (transaction.type) {
-      case transactionTypes.setSecondPassphrase:
-        title = t('2nd Passphrase Registration');
-        break;
-      case transactionTypes.registerDelegate:
-        title = t('Delegate Registration');
-        break;
-      case transactionTypes.vote:
-        title = t('Vote Transaction');
-        break;
-      default:
-        break;
-    }
-
     return (
       <div className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
         { transaction.id && !transaction.error ? (
           <BoxV2 className={styles.wrapper}>
             <header className={`${styles.detailsHeader} tx-header`}>
-              <h1>{title}</h1>
+              <h1>{t('Transaction details')}</h1>
               <CopyToClipboard
                 text={this.getLinkToCopy()}
                 onCopy={() => this.handleCopy('link')}

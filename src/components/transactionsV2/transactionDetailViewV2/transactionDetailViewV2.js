@@ -11,20 +11,22 @@ class TransactionDetailViewV2 extends React.Component {
   render() {
     const { transaction, t, activeToken } = this.props;
     let label = t('Sender');
-    let title = t('Amount transfered');
+    let title;
     let value = transaction.amount;
     switch (transaction.type) {
       case transactionTypes.setSecondPassphrase:
-        label = t('Registrant');
+        title = t('2nd passphrase pegistration');
+        label = t('Account');
         break;
       case transactionTypes.registerDelegate:
-        label = t('Registrant');
-        title = t('Username');
+        title = t('Delegate registration');
+        label = t('Account');
         value = transaction.asset
           && transaction.asset.delegate
           && transaction.asset.delegate.username;
         break;
       case transactionTypes.vote:
+        title = t('Delegate vote');
         label = t('Voter');
         break;
       default:
@@ -33,41 +35,42 @@ class TransactionDetailViewV2 extends React.Component {
 
     return (transaction.id ? (
       <React.Fragment>
-        {transaction.type === transactionTypes.send
-          || transaction.type === transactionTypes.registerDelegate ? (
-            <div className={styles.summaryHeader}>
-              <h2>{title}</h2>
-              <p>
-                {transaction.type === transactionTypes.send ? (
-                  <span className="tx-amount">
-                    <AmountV2
-                      className={styles.txAmount}
-                      token={activeToken}
-                      value={transaction}
-                    />
-                  </span>
-                ) : value
+        {title ? (
+          <div className={styles.summaryHeader}>
+            <h2>{title}</h2>
+            <p>
+              {transaction.type === transactionTypes.send ? (
+                <span className="tx-amount">
+                  <AmountV2
+                    className={styles.txAmount}
+                    token={activeToken}
+                    value={transaction}
+                  />
+                </span>
+              ) : value
             }
-              </p>
-            </div>
-          ) : null}
-        <div className={styles.accountWrapper}>
+            </p>
+          </div>
+        ) : null}
+        <div className={styles.detailsWrapper}>
           <AccountInfo
             address={transaction.senderId}
             addressClass="sender-address"
             label={label}
           />
-          {transaction.type === transactionTypes.send
-            ? (
+        </div>
+        {transaction.type === transactionTypes.send
+          ? (
+            <div className={styles.detailsWrapper}>
               <AccountInfo
                 address={transaction.recipientId}
                 addressClass="receiver-address"
                 label="Recipient"
               />
-            )
-            : null
+            </div>
+          )
+          : null
           }
-        </div>
         { transaction.type === transactionTypes.send
           || transaction.type === transactionTypes.vote ? (
             <React.Fragment>
