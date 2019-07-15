@@ -21,7 +21,7 @@ describe('Splashscreen', () => {
     cy.visit('/');
     cy.get(ss.createLiskIdBtn).click();
     cy.url().should('include', urls.register);
-    cy.get(ss.app).contains('Choose your Avatar');
+    cy.get(ss.app).contains('Choose your avatar');
   });
 
   it('Explore as guest connects to mainnet by default', () => {
@@ -38,12 +38,5 @@ describe('Splashscreen', () => {
     cy.get(ss.exploreAsGuestBtn).click();
     cy.url().should('include', urls.dashboard);
     cy.get(ss.networkStatus).contains('testnet');
-  });
-
-  it('Settings button', () => {
-    cy.visit('/');
-    cy.get(ss.app).contains('Settings').click();
-    cy.url().should('contain', urls.settings);
-    cy.get(ss.switchNetworksTrigger);
   });
 });

@@ -23,12 +23,16 @@
   }
 }
 
+.text {
+  width: 475px !important;
+}
+
 .confirmHolder {
   align-items: flex-start;
   display: flex;
   font-size: var(--subtitle-font-size);
   min-height: 210px;
-  margin: 70px 0;
+  margin: 25px 0;
   justify-content: space-evenly;
   position: relative;
   width: 100%;

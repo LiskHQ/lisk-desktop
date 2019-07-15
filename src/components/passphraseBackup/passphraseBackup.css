@@ -45,6 +45,10 @@
       word-spacing: 8px;
     }
   }
+
+  & .downloadBtn {
+    min-width: 89px;
+  }
 }
 
 .passphraseField {

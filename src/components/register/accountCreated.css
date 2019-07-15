@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 40px 0;
+  margin: 40px 0 30px;
 
   & .avatar {
     background: var(--color-white);
@@ -33,8 +33,12 @@
   }
 }
 
+.text {
+  width: 350px !important;
+}
+
 .titleHolder {
-  @mixin contentSmall;
+  @mixin contentNormal;
 
   margin: 0;
   color: var(--color-slate-gray);

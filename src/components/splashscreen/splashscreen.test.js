@@ -21,6 +21,19 @@ describe('V2 SplashScreen', () => {
       pathname: '',
       search: '',
     },
+    account: {
+      address: '123456L',
+      info: {
+        LSK: {
+          address: '123456L',
+          balance: 100,
+        },
+        BTC: {
+          address: 'jhagsd676587',
+          balance: 100,
+        },
+      },
+    },
     push: jest.fn(),
     replace: jest.fn(),
   };
@@ -29,6 +42,13 @@ describe('V2 SplashScreen', () => {
 
   const settings = {
     areTermsOfUseAccepted: false,
+    token: {
+      active: 'LSK',
+      list: {
+        LSK: true,
+        BTC: true,
+      },
+    },
   };
 
   const store = configureMockStore([])({

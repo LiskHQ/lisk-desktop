@@ -2,7 +2,7 @@ import React from 'react';
 import fillWordsList from 'bitcore-mnemonic/lib/words/english';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
 import registerStyles from './register.css';
 import styles from './confirmPassphrase.css';
 import Options from './confirmPassphraseOptions';
@@ -126,7 +126,7 @@ class ConfirmPassphrase extends React.Component {
           <h1>
             {t('Confirm your passphrase')}
           </h1>
-          <p>{t('Choose the missing word to complete your passphrase. This was provided in the previous step.')}</p>
+          <p className={styles.text}>{t('Based on your passphrase that was generated in the previous step, select the missing words below.')}</p>
         </div>
 
         <div className={`${styles.confirmHolder} passphrase-holder`}>
@@ -159,20 +159,20 @@ class ConfirmPassphrase extends React.Component {
 
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
           <span className={`${registerStyles.button}`}>
-            <SecondaryButtonV2
+            <TertiaryButtonV2
               className={registerStyles.backButton}
               onClick={prevStep}
             >
-              {t('Go Back')}
-            </SecondaryButtonV2>
+              {t('Go back')}
+            </TertiaryButtonV2>
           </span>
           <span className={`${registerStyles.button}`}>
             <PrimaryButtonV2
-              className="passphrase-is-correct-button"
+              className={`${registerStyles.continueBtn} passphrase-is-correct-button`}
               onClick={() => this.handleConfirm(this.verifyChoices())}
               disabled={!this.enableConfirmButton()}
             >
-              {t('Confirm')}
+              {t('Continue')}
             </PrimaryButtonV2>
           </span>
         </div>
