@@ -1,52 +1,38 @@
 import React from 'react';
-import svg from '../../utils/svgIcons';
 import LiskAmount from '../liskAmount';
 import styles from './transactions.css';
+import svg from '../../utils/svgIcons';
+import transactionTypes from '../../constants/transactionTypes';
 
 const Transactions = ({
   t, transactions, onSelectedRow, rowItemIndex, updateRowItemIndex,
 }) => {
   function selectTransactionType() {
-    const type = transactions[0].type;
-    let transaction;
-    switch (type) {
-      case 0:
-        transaction = {
-          subTitle: t('Amount'),
-          value: transactions[0].amount,
-        };
-        break;
-      case 1:
-        transaction = {
-          icon: svg.tx2ndPassphrase,
-          subTitle: t('Fee'),
-          value: transactions[0].fee,
-        };
-        break;
-      case 2:
-        transaction = {
-          icon: svg.txDelegate,
-          subTitle: t('Fee'),
-          value: transactions[0].fee,
-        };
-        break;
-      case 3:
-        transaction = {
-          icon: svg.txVote,
-          subTitle: t('Fee'),
-          value: transactions[0].fee,
-        };
-        break;
-      default:
-        transaction = {
-          icon: svg.txDefault,
-          subTitle: t('Amount'),
-          value: transactions[0].amount,
-        };
-        break;
-    }
-
-    return transaction;
+    return {
+      [transactionTypes.send]: {
+        subTitle: t('Amount'),
+        value: transactions[0].amount,
+      },
+      [transactionTypes.setSecondPassphrase]: {
+        icon: svg.tx2ndPassphrase,
+        subTitle: t('Fee'),
+        value: transactions[0].fee,
+      },
+      [transactionTypes.registerDelegate]: {
+        icon: svg.txDelegate,
+        subTitle: t('Fee'),
+        value: transactions[0].fee,
+      },
+      [transactionTypes.vote]: {
+        icon: svg.txVote,
+        subTitle: t('Fee'),
+        value: transactions[0].fee,
+      },
+    }[transactions[0].type] || {
+      icon: svg.txDefault,
+      subTitle: t('Amount'),
+      value: transactions[0].amount,
+    };
   }
 
   const transactionType = selectTransactionType();
