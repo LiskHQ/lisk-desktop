@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import AccountVisual from '../accountVisual';
-import LiskAmount from '../liskAmount';
 import styles from './accountsAndDeletegates.css';
 
 const Accounts = ({
@@ -11,11 +10,7 @@ const Accounts = ({
   return (
     <div className={`${styles.wrapper} accounts`}>
       <header className={`${styles.header} accounts-header`}>
-        <label>{t('Accounts')}</label>
-        <div className={`${styles.subTitles} accounts-subtitle`}>
-          <label>{t('Address')}</label>
-          <label>{t('Balance')}</label>
-        </div>
+        <label>{t('Account')}</label>
       </header>
       <div className={`${styles.content} account-content`}>
         {
@@ -27,7 +22,7 @@ const Accounts = ({
             onClick={() => onSelectedRow(account.address)}
             onMouseEnter={updateRowItemIndex}
           >
-            <AccountVisual address={account.address} size={30} />
+            <AccountVisual address={account.address} size={40} />
             <div className={styles.accountInformation}>
               {
                 isDelegate
@@ -36,9 +31,6 @@ const Accounts = ({
                       <div>
                         <span className={`${styles.accountTitle} account-title`}>
                           {account.delegate.username}
-                        </span>
-                        <span className={`${styles.tag} tag`}>
-                          {`#${account.delegate.rank} ${t('Delegate')}`}
                         </span>
                       </div>
                       <span className={styles.accountSubtitle}>{account.address}</span>
@@ -52,8 +44,9 @@ const Accounts = ({
               }
             </div>
             <span className={styles.accountBalance}>
-              <LiskAmount val={account.balance} />
-              <span>{t(' LSK')}</span>
+              <span className={`${styles.tag} tag`}>
+                {t('Delegate #{{rank}}', { rank: account.delegate.rank })}
+              </span>
             </span>
           </div>
         ))

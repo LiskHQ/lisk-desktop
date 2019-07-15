@@ -21,42 +21,25 @@
   align-items: flex-start;
 
   & > label {
-    @mixin contentNormal bold;
-  }
-}
-
-.subTitles {
-  width: 100%;
-  height: auto;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-
-  & > label {
-    @mixin contentNormal bold;
-
-    color: var(--color-blue-gray);
+    @mixin contentLargest bold;
   }
 }
 
 .content {
   width: calc(100% + 40px);
   height: auto;
-  max-height: 220px;
+  max-height: 310px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 0 -20px;
+  padding-bottom: 20px;
+  margin: 0 -20px -20px -20px;
 
   & .accountRow {
     width: 100%;
-    height: auto;
-    min-height: 53px;
-    padding: 5px 20px;
+    padding: 16px 20px;
     box-sizing: border-box;
     display: flex;
     justify-content: flex-start;
@@ -65,6 +48,10 @@
 
     &:hover {
       background-color: var(--primary-background-color);
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--color-platinum);
     }
   }
 
@@ -85,11 +72,11 @@
   }
 
   & .tag {
-    @mixin contentSmall bold;
+    @mixin contentNormal bold;
 
     background: var(--color-slate-gray);
     color: var(--color-white);
-    padding: 3px;
+    padding: 3px 7px;
     box-sizing: border-box;
     margin-left: 7px;
     border-radius: 3px;
@@ -97,16 +84,15 @@
   }
 
   & .accountTitle {
-    @mixin headingSmall;
+    @mixin contentLargest bold;
 
     color: var(--color-maastricht-blue);
   }
 
   & .accountSubtitle {
-    @mixin contentSmallest;
+    @mixin contentNormal;
 
     color: var(--color-slate-gray);
-    padding-top: 5px;
   }
 
   & .accountBalance {
