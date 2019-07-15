@@ -89,6 +89,17 @@
     color: var(--color-maastricht-blue);
   }
 
+  & .delegateName {
+    @mixin contentLargest bold;
+
+    color: var(--color-ghost);
+  }
+
+  & .highlight {
+    color: var(--color-maastricht-blue);
+    background-color: initial;
+  }
+
   & .accountSubtitle {
     @mixin contentNormal;
 

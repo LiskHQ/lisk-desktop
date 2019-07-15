@@ -171,6 +171,7 @@ class SearchBar extends React.Component {
           suggestions.delegates.length
             ? (
               <Delegates
+                searchTextValue={searchTextValue}
                 delegates={suggestions.delegates}
                 onSelectedRow={this.onSelectAccount}
                 rowItemIndex={rowItemIndex}

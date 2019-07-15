@@ -1,9 +1,10 @@
 import React from 'react';
+import Highlighter from 'react-highlight-words';
 import AccountVisual from '../accountVisual';
 import styles from './accountsAndDeletegates.css';
 
 const Delegates = ({
-  delegates, onSelectedRow, t, rowItemIndex, updateRowItemIndex,
+  delegates, onSelectedRow, t, rowItemIndex, updateRowItemIndex, searchTextValue,
 }) => (
   <div className={`${styles.wrapper} delegates`}>
     <header className={`${styles.header} delegates-header`}>
@@ -22,8 +23,13 @@ const Delegates = ({
           <AccountVisual address={delegate.account.address} size={40} />
           <div className={styles.accountInformation}>
             <div>
-              <span className={`${styles.accountTitle} delegate-name`}>
-                {delegate.username}
+              <span className={`${styles.delegateName} delegate-name`}>
+                <Highlighter
+                  highlightClassName={styles.highlight}
+                  searchWords={[searchTextValue]}
+                  autoEscape
+                  textToHighlight={delegate.username}
+                />
               </span>
             </div>
             <span className={styles.accountSubtitle}>{delegate.account.address}</span>
