@@ -29,7 +29,6 @@ describe('SearchBar', () => {
   it('should render properly SearchBar', () => {
     expect(wrapper).toContainMatchingElement('.search-bar');
     expect(wrapper).toContainMatchingElement('.search-input');
-    expect(wrapper).toContainMatchingElement('.search-message');
     expect(wrapper).not.toContainMatchingElement('.loading');
   });
 

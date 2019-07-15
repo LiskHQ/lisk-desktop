@@ -44,9 +44,13 @@ const Accounts = ({
               }
             </div>
             <span className={styles.accountBalance}>
-              <span className={`${styles.tag} tag`}>
-                {t('Delegate #{{rank}}', { rank: account.delegate.rank })}
-              </span>
+              {isDelegate
+                ? (
+                  <span className={`${styles.tag} tag`}>
+                    {t('Delegate #{{rank}}', { rank: account.delegate.rank })}
+                  </span>
+                )
+                : null }
             </span>
           </div>
         ))
