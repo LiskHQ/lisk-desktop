@@ -188,8 +188,8 @@ class AddBookmark extends React.Component {
         <div className={styles.content}>
           <PageHeader
             title={t('Bookmarks')}
-            subtitle={t('Manage your most used accounts')} >
-          </PageHeader>
+            subtitle={t('Manage your most used accounts')}
+          />
           <Box>
             <header>
               <h2>

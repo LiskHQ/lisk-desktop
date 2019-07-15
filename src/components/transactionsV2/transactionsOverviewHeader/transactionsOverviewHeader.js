@@ -26,7 +26,7 @@ class transactionsHeader extends React.Component {
     return (isWalletRoute
       ? (
         <PageHeader
-          className='wallet-header'
+          className="wallet-header"
           title={t('{{token}} Wallet', { token: tokenMap[activeToken].label })}
           subtitle={t('All important information at a glance')}
         >
@@ -55,7 +55,7 @@ class transactionsHeader extends React.Component {
             delegate={delegate}
             account={this.props.account}
             toggleActiveToken={this.props.toggleActiveToken}
-            />
+          />
           <div className={`${styles.buttonsHolder}`}>
             <Link
               to={`${routes.send.path}?wallet&recipient=${address}`}

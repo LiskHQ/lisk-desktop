@@ -84,7 +84,8 @@ class TransactionsListV2 extends React.Component {
                       value={transaction}
                       token={activeToken}
                       columnClassNames={columnClassNames}
-                      onClick={this.props.onClick}/>
+                      onClick={this.props.onClick}
+                    />
                   ))
               }
             </React.Fragment>
@@ -98,7 +99,10 @@ class TransactionsListV2 extends React.Component {
         { canLoadMore ? (
           <span
             onClick={this.props.onLoadMore}
-            className={`${styles.showMore} show-more-button`}>{t('Load more')}</span>
+            className={`${styles.showMore} show-more-button`}
+          >
+            {t('Load more')}
+          </span>
         ) : null
         }
       </div>

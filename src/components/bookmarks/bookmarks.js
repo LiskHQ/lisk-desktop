@@ -13,14 +13,14 @@ const Bookmarks = ({
     <div className={styles.content}>
       <PageHeader
         title={t('Bookmarks')}
-        subtitle={t('Manage your most used accounts')} >
+        subtitle={t('Manage your most used accounts')}
+      >
         <Link to={routes.addBookmark.path}>
           <PrimaryButtonV2>{t('Add a new bookmark')}</PrimaryButtonV2>
         </Link>
       </PageHeader>
       <header>
-        <span>
-        </span>
+        <span />
       </header>
       <BookmarksList
         title={t('All bookmarks')}
