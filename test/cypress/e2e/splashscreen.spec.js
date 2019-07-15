@@ -11,7 +11,7 @@ describe('Splashscreen', () => {
     cy.visit('/');
     cy.get(ss.loginBtn).click();
     cy.url().should('include', urls.login);
-    cy.get(ss.app).contains('Sign in with a Passphrase');
+    cy.get(ss.app).contains('Sign in with a passphrase');
   });
   /**
    * 'Create an account' link leads to registration page
