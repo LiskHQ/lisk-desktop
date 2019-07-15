@@ -86,7 +86,7 @@ const ss = {
   txTime: '.tx-time .time',
   txAddedVotes: '.tx-added-votes .voter-address',
   txRemovedVotes: '.tx-removed-votes .voter-address',
-  txAmount: '.tx-amount .transactionAmount',
+  txAmount: '.tx-amount',
   txFee: '.tx-fee span',
   txConfirmations: '.tx-confirmation',
   txId: '.tx-id .copy-title',

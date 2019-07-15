@@ -46,8 +46,8 @@ class CopyToClipboard extends React.Component {
               <span className={`${className} ${styles.clickable} default`}>
                 <span className="copy-title">
                   {text || value}
-                  {' '}
                 </span>
+                {' '}
                 <Icon name="copy" className={copyClassName} />
               </span>
             )}

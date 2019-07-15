@@ -43,7 +43,7 @@ class SingleTransactionV2 extends React.Component {
       <div className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
         { transaction.id && !transaction.error ? (
           <BoxV2 className={styles.wrapper}>
-            <header className={`${styles.detailsHeader} tx-header`}>
+            <header className={`${styles.detailsHeader}`}>
               <h1>{t('Transaction details')}</h1>
               <CopyToClipboard
                 value={this.getLinkToCopy()}
@@ -116,7 +116,7 @@ class SingleTransactionV2 extends React.Component {
                       <CopyToClipboard
                         value={transaction.id}
                         className="tx-id"
-                        containerClassName="extra-small"
+                        containerClassName="extra-small copy-title"
                         copyClassName={styles.copyIcon}
                       />
                     </span>

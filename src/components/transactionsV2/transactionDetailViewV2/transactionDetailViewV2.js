@@ -38,7 +38,7 @@ class TransactionDetailViewV2 extends React.Component {
               address={transaction.senderId}
               transactionType={transaction.type}
             />
-            <h2>{title}</h2>
+            <h2 className="tx-header">{title}</h2>
           </div>
         ) : null}
         <div className={styles.detailsWrapper}>
