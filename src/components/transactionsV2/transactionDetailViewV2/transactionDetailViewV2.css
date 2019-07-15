@@ -2,20 +2,11 @@
 @import '../../app/mixins.css';
 
 .summaryHeader {
-  align-items: center;
   display: flex;
-  flex-direction: column;
-  margin: 20px 0;
+  align-items: center;
+  margin: 30px 0 10px 0;
 
   & > h2 {
-    @mixin contentSmall;
-
-    color: var(--color-slate-gray);
-    margin-bottom: 10px;
-  }
-
-  & > p,
-  & .txAmount {
     @mixin headingNormal;
 
     color: var(--color-maastricht-blue);
