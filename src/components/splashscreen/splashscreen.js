@@ -85,22 +85,22 @@ class Splashscreen extends React.Component {
               <h1>{t('Welcome to the Lisk Hub!')}</h1>
               <p>
                 {
-                t('Create an Account or Sign in to manage your LSK Tokens, become a Delegate or vote for another Delegates.')
+                t('Create an account or sign in to manage your LSK, vote for who secures the network or become a delegate.')
               }
               </p>
             </div>
             <Link className={`${styles.button} login-button`} to={routes.loginV2.path}>
-              <SecondaryButtonV2 className="light">{t('Sign In')}</SecondaryButtonV2>
+              <SecondaryButtonV2 className="light">{t('Sign in')}</SecondaryButtonV2>
             </Link>
             <Link className={`${styles.button} new-account-button`} to={routes.register.path}>
-              <PrimaryButtonV2>{t('Create an Account')}</PrimaryButtonV2>
+              <PrimaryButtonV2>{t('Create an account')}</PrimaryButtonV2>
             </Link>
             <span className={styles.separator}>
               <span>{t('or')}</span>
             </span>
             <span className={styles.linkWrapper}>
               <Link className={`${styles.link} explore-as-guest-button`} to={routes.dashboard.path}>
-                {t('Explore as a Guest')}
+                {t('Explore as a guest')}
               </Link>
               <Tooltip
                 className={`${styles.tooltip}`}
@@ -120,7 +120,7 @@ class Splashscreen extends React.Component {
 
             <span className={styles.linkWrapper}>
               <Link className={`${styles.link} signin-hwWallet-button`} to={routes.hwWallet.path}>
-                {t('Sign in with a Hardware Wallet')}
+                {t('Sign in with a hardware wallet')}
               </Link>
             </span>
           </div>

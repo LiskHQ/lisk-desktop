@@ -17,7 +17,7 @@ describe('Login Page', () => {
   it(`Opens by url ${urls.login}`, () => {
     cy.visit(urls.login);
     cy.url().should('include', urls.login);
-    cy.get(ss.app).contains('Sign in with a Passphrase');
+    cy.get(ss.app).contains('Sign in with a passphrase');
   });
   /**
    * First time app is opened sign in happens to mainnet

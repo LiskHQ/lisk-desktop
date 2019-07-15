@@ -75,7 +75,7 @@ describe('Wallet Others account', () => {
     cy.reload();
     cy.wait('@requestDelegatesData');
     cy.get(ss.accountName).contains('Bob');
-    cy.get(ss.bookmarkAccountBtn).contains('Edit bookmark');
+    cy.get(ss.bookmarkAccountBtn).contains('Account bookmarked');
     cy.get(ss.bookmarkAccountBtn).click();
     cy.get(ss.confirmAddToBookmarks).click()
       .should(() => {
