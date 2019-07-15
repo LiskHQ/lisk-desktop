@@ -8,13 +8,14 @@ const Transactions = ({
 }) => {
   function selectTransactionType() {
     const type = transactions[0].type;
-    let transaction = {
-      icon: svg.txDefault,
-      subTitle: t('Amount'),
-      value: transactions[0].amount,
-    };
-
+    let transaction;
     switch (type) {
+      case 0:
+        transaction = {
+          subTitle: t('Amount'),
+          value: transactions[0].amount,
+        };
+        break;
       case 1:
         transaction = {
           icon: svg.tx2ndPassphrase,
@@ -37,6 +38,11 @@ const Transactions = ({
         };
         break;
       default:
+        transaction = {
+          icon: svg.txDefault,
+          subTitle: t('Amount'),
+          value: transactions[0].amount,
+        };
         break;
     }
 
@@ -48,31 +54,30 @@ const Transactions = ({
   return (
     <div className={`${styles.wrapper} transactions`}>
       <header className={`${styles.header} transactions-header`}>
-        <label>{t('Transactions')}</label>
         <div className={`${styles.subTitles} transactions-subtitle`}>
-          <label>{t('Type')}</label>
+          <label>{t('Transaction')}</label>
           <label>{transactionType.subTitle}</label>
         </div>
       </header>
       <div className={`${styles.content} transactions-content`}>
         {
-        transactions.map((transaction, index) => (
-          <div
-            key={transaction.id}
-            data-index={index}
-            className={`${styles.transactionRow} ${rowItemIndex === index ? styles.active : ''} search-transaction-row`}
-            onClick={() => onSelectedRow(transaction.id)}
-            onMouseEnter={updateRowItemIndex}
-          >
-            <img src={transactionType.icon} />
-            <span className={`${styles.transactionId} transaction-id`}>{transaction.id}</span>
-            <span className={styles.transactionMessage}>
-              <LiskAmount val={transactionType.value} />
-              <span>{t(' LSK')}</span>
-            </span>
-          </div>
-        ))
-      }
+          transactions.map((transaction, index) => (
+            <div
+              key={transaction.id}
+              data-index={index}
+              className={`${styles.transactionRow} ${rowItemIndex === index ? styles.active : ''} search-transaction-row`}
+              onClick={() => onSelectedRow(transaction.id)}
+              onMouseEnter={updateRowItemIndex}
+            >
+              {transactionType.icon ? <img src={transactionType.icon} /> : null }
+              <span className={`${styles.transactionId} transaction-id`}>{transaction.id}</span>
+              <span className={styles.transactionMessage}>
+                <LiskAmount val={transactionType.value} />
+                <span>{t(' LSK')}</span>
+              </span>
+            </div>
+          ))
+        }
       </div>
     </div>
   );
