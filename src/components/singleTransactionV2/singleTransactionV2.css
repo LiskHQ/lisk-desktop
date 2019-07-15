@@ -50,6 +50,10 @@
     box-sizing: border-box;
   }
 
+  & .copyIcon {
+    vertical-align: -3px;
+  }
+
   & .detailsFooter {
     display: flex;
     flex-wrap: wrap;
@@ -93,14 +97,6 @@
       word-break: break-all;
       text-align: left;
 
-      & img {
-        display: inline-block;
-        height: 14px;
-        margin-left: 5px;
-        vertical-align: middle;
-        width: 14px;
-      }
-
       &:first-child {
         padding-left: 0;
         position: relative;
@@ -118,16 +114,6 @@
           width: 1px;
         }
       }
-    }
-
-    & .clickable {
-      cursor: pointer;
-    }
-
-    & .copied {
-      cursor: initial;
-      opacity: 0.6;
-      text-decoration: none;
     }
   }
 }

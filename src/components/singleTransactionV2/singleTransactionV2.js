@@ -1,10 +1,9 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { translate } from 'react-i18next';
 import { DateTimeFromTimestamp } from '../timestamp';
+import CopyToClipboard from '../toolbox/copyToClipboard';
 import LiskAmount from '../liskAmount';
-import svg from '../../utils/svgIcons';
 import BoxV2 from '../boxV2';
 import { SecondaryButtonV2 } from '../toolbox/buttons/button';
 import TransactionDetailViewV2 from '../transactionsV2/transactionDetailViewV2/transactionDetailViewV2';
@@ -16,18 +15,11 @@ class SingleTransactionV2 extends React.Component {
   constructor(props) {
     super();
 
-    this.state = {
-      idCopied: false,
-      linkCopied: false,
-    };
-
     if (props.peers.liskAPIClient) {
       props.loadSingleTransaction({
         id: props.match.params.id,
       });
     }
-
-    this.handleCopy = this.handleCopy.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -47,20 +39,6 @@ class SingleTransactionV2 extends React.Component {
     return true;
   }
 
-  // istanbul ignore next
-  componentWillUnmount() {
-    clearTimeout(this.idTimeout);
-    clearTimeout(this.linkTimeout);
-  }
-
-  handleCopy(name) {
-    clearTimeout(this[`${name}Timeout`]);
-    this[`${name}Timeout`] = setTimeout(() => {
-      this.setState({ [`${name}Copied`]: false });
-    }, 3000);
-    this.setState({ [`${name}Copied`]: true });
-  }
-
   getLinkToCopy() {
     return {
       LSK: `lisk:/${this.props.match.url}`,
@@ -78,21 +56,12 @@ class SingleTransactionV2 extends React.Component {
             <header className={`${styles.detailsHeader} tx-header`}>
               <h1>{t('Transaction details')}</h1>
               <CopyToClipboard
-                text={this.getLinkToCopy()}
-                onCopy={() => this.handleCopy('link')}
-              >
-                <SecondaryButtonV2 className="extra-small" disabled={this.state.linkCopied}>
-                  {this.state.linkCopied
-                    ? <span className={`${styles.txLink} tx-link`}>{t('Copied!')}</span>
-                    : (
-                      <span className={`${styles.txLink} tx-link`}>
-                        {t('Copy link')}
-                        <img className="button-icon" src={svg.icoLink} />
-                      </span>
-                    )
-                  }
-                </SecondaryButtonV2>
-              </CopyToClipboard>
+                value={this.getLinkToCopy()}
+                text={t('Copy link')}
+                Container={SecondaryButtonV2}
+                containerClassName="extra-small"
+                copyClassName={styles.copyIcon}
+              />
             </header>
             <main className={styles.mainContent}>
               <TransactionDetailViewV2
@@ -138,28 +107,19 @@ class SingleTransactionV2 extends React.Component {
                   </p>
                 </div>
                 <div>
-                  <CopyToClipboard
-                    className={`${styles.clickable} ${styles.value} tx-id`}
-                    text={transaction.id}
-                    onCopy={() => this.handleCopy('id')}
-                  >
-                    <p>
-                      <span className={styles.label}>
-                        {t('Transaction ID')}
-                      </span>
-                      <span className="transaction-id">
-                        {this.state.idCopied
-                          ? t('Copied!')
-                          : (
-                            <span>
-                              <span className="copy-title">{transaction.id}</span>
-                              <img src={svg.icoLink} />
-                            </span>
-                          )
-                      }
-                      </span>
-                    </p>
-                  </CopyToClipboard>
+                  <div className={`${styles.value}`}>
+                    <span className={styles.label}>
+                      {t('Transaction ID')}
+                    </span>
+                    <span className="transaction-id">
+                      <CopyToClipboard
+                        value={transaction.id}
+                        className="tx-id"
+                        containerClassName="extra-small"
+                        copyClassName={styles.copyIcon}
+                      />
+                    </span>
+                  </div>
                 </div>
               </footer>
             </main>
