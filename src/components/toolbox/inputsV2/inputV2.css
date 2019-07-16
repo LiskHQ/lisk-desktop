@@ -79,6 +79,7 @@
 }
 
 .loading {
+  color: var(--color-ultramarine-blue);
   position: absolute;
   top: 32px;
   right: 31px;
