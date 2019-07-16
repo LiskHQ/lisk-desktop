@@ -9,10 +9,10 @@ import LiskAmount from '../liskAmount';
 import NotFound from '../notFound';
 import TransactionDetailViewV2 from './transactionDetailView/transactionDetailViewV2';
 import routes from '../../constants/routes';
-import styles from './singleTransactionV2.css';
+import styles from './singleTransaction.css';
 import transactionTypes from '../../constants/transactionTypes';
 
-class SingleTransactionV2 extends React.Component {
+class SingleTransaction extends React.Component {
   constructor(props) {
     super();
 
@@ -133,4 +133,4 @@ class SingleTransactionV2 extends React.Component {
   }
 }
 
-export default translate()(SingleTransactionV2);
+export default translate()(SingleTransaction);

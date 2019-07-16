@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import { MemoryRouter as Router } from 'react-router-dom';
 import i18n from '../../i18n';
-import SingleTransactionV2 from './index';
+import SingleTransaction from './index';
 import accounts from '../../../test/constants/accounts';
 import fees from '../../constants/fees';
 
-describe('Single Transaction V2 Component', () => {
+describe('Single Transaction Component', () => {
   let wrapper;
   const peers = { liskAPIClient: {} };
   const settings = {};
@@ -63,7 +63,7 @@ describe('Single Transaction V2 Component', () => {
     };
 
     beforeEach(() => {
-      wrapper = mount(<SingleTransactionV2 {...props} />, options);
+      wrapper = mount(<SingleTransaction {...props} />, options);
     });
 
     it('Should render transaction details', () => {
@@ -106,7 +106,7 @@ describe('Single Transaction V2 Component', () => {
     };
 
     beforeEach(() => {
-      wrapper = mount(<Router><SingleTransactionV2 {...props} /></Router>, options);
+      wrapper = mount(<Router><SingleTransaction {...props} /></Router>, options);
     });
 
     it('Should render no result screen', () => {

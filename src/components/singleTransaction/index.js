@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { loadSingleTransaction } from '../../actions/transactions';
-import SingleTransactionV2 from './singleTransactionV2';
+import SingleTransaction from './singleTransaction';
 
 const mapStateToProps = state => ({
   address: state.account.address,
@@ -15,4 +15,4 @@ const mapDispatchToProps = {
   loadSingleTransaction,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleTransactionV2));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleTransaction));
