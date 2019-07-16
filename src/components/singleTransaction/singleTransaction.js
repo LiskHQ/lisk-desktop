@@ -7,7 +7,7 @@ import BoxV2 from '../boxV2';
 import CopyToClipboard from '../toolbox/copyToClipboard';
 import LiskAmount from '../liskAmount';
 import NotFound from '../notFound';
-import TransactionDetailViewV2 from './transactionDetailView/transactionDetailViewV2';
+import TransactionDetailView from './transactionDetailView/transactionDetailView';
 import routes from '../../constants/routes';
 import styles from './singleTransaction.css';
 import transactionTypes from '../../constants/transactionTypes';
@@ -54,7 +54,7 @@ class SingleTransaction extends React.Component {
               />
             </header>
             <main className={styles.mainContent}>
-              <TransactionDetailViewV2
+              <TransactionDetailView
                 address={this.props.address}
                 activeToken={activeToken}
                 transaction={transaction}

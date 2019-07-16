@@ -2,10 +2,10 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { MemoryRouter as Router } from 'react-router-dom';
 import i18n from '../../../i18n';
-import TransactionDetailViewV2 from './transactionDetailViewV2';
+import TransactionDetailView from './transactionDetailView';
 import accounts from '../../../../test/constants/accounts';
 
-describe('Transaction Detail View V2', () => {
+describe('Transaction Detail View', () => {
   let wrapper;
   const options = {
     context: { i18n },
@@ -29,7 +29,7 @@ describe('Transaction Detail View V2', () => {
     };
 
     it('Should render transfer transaction with message', () => {
-      wrapper = mount(<Router><TransactionDetailViewV2 {...props} /></Router>, options);
+      wrapper = mount(<Router><TransactionDetailView {...props} /></Router>, options);
       expect(wrapper).toContainMatchingElements(2, '.accountInfo');
       expect(wrapper.find('.accountInfo .sender-address').first().text()).toBe(transaction.senderId);
       expect(wrapper.find('.accountInfo .receiver-address').at(1).text()).toBe(transaction.recipientId);
@@ -38,7 +38,7 @@ describe('Transaction Detail View V2', () => {
 
     it('Should render transfer transaction without message', () => {
       props.transaction.asset = {};
-      wrapper = mount(<Router><TransactionDetailViewV2 {...props} /></Router>, options);
+      wrapper = mount(<Router><TransactionDetailView {...props} /></Router>, options);
       expect(wrapper).not.toContainMatchingElement('.message');
     });
   });
@@ -57,7 +57,7 @@ describe('Transaction Detail View V2', () => {
     };
 
     it('Should render delegate vote details', () => {
-      wrapper = mount(<Router><TransactionDetailViewV2 {...props} /></Router>, options);
+      wrapper = mount(<Router><TransactionDetailView {...props} /></Router>, options);
       expect(wrapper).toContainExactlyOneMatchingElement('.accountInfo');
       expect(wrapper.find('.accountInfo .label').text()).toBe('Voter');
     });
@@ -77,7 +77,7 @@ describe('Transaction Detail View V2', () => {
     };
 
     it('Should render register 2nd passphrase details', () => {
-      wrapper = mount(<Router><TransactionDetailViewV2 {...props} /></Router>, options);
+      wrapper = mount(<Router><TransactionDetailView {...props} /></Router>, options);
       expect(wrapper).toContainExactlyOneMatchingElement('.accountInfo');
       expect(wrapper.find('.accountInfo .label').text()).toBe('Account');
     });
@@ -98,7 +98,7 @@ describe('Transaction Detail View V2', () => {
     };
 
     it('Should render register delegate details', () => {
-      wrapper = mount(<Router><TransactionDetailViewV2 {...props} /></Router>, options);
+      wrapper = mount(<Router><TransactionDetailView {...props} /></Router>, options);
       expect(wrapper).toContainExactlyOneMatchingElement('.accountInfo');
       // commented out while waiting for answer to whether this should be kept in place
       // https://projects.invisionapp.com/d/main#/console/17570736/368355792/comments/118391923

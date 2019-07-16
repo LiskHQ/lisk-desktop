@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
-import styles from './transactionDetailViewV2.css';
+import styles from './transactionDetailView.css';
 import routes from '../../../constants/routes';
 
 const transactionVotes = ({ votes, t }) => {

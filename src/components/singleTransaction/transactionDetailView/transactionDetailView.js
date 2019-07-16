@@ -4,10 +4,10 @@ import AccountInfo from './accountInfo';
 import TransactionTypeFigure from
   '../../transactions/typeFigure/TransactionTypeFigure';
 import TransactionVotes from './transactionVotes';
-import styles from './transactionDetailViewV2.css';
+import styles from './transactionDetailView.css';
 import transactionTypes from '../../../constants/transactionTypes';
 
-class TransactionDetailViewV2 extends React.Component {
+class TransactionDetailView extends React.Component {
   render() {
     const { transaction, t } = this.props;
     const { senderLabel, title } = {
@@ -76,4 +76,4 @@ class TransactionDetailViewV2 extends React.Component {
   }
 }
 
-export default translate()(TransactionDetailViewV2);
+export default translate()(TransactionDetailView);

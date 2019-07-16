@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AccountVisual from '../../accountVisual';
-import styles from './transactionDetailViewV2.css';
+import styles from './transactionDetailView.css';
 import routes from '../../../constants/routes';
 
 const AccountInfo = ({ address, label, addressClass = '' }) => {
