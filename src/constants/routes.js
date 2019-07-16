@@ -9,7 +9,7 @@ import TransactionDashboard from '../components/transactionDashboard';
 import AccountTransactions from '../components/accountTransactions';
 import Delegates from '../components/delegates';
 import Voting from '../components/voting';
-import SingleTransaction from '../components/singleTransactionV2';
+import SingleTransaction from '../components/singleTransaction';
 import HwWalletLogin from '../components/hwWalletLogin';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
