@@ -7,7 +7,7 @@ import BoxV2 from '../boxV2';
 import CopyToClipboard from '../toolbox/copyToClipboard';
 import LiskAmount from '../liskAmount';
 import NotFound from '../notFound';
-import TransactionDetailViewV2 from '../transactionsV2/transactionDetailViewV2/transactionDetailViewV2';
+import TransactionDetailViewV2 from './transactionDetailView/transactionDetailViewV2';
 import routes from '../../constants/routes';
 import styles from './singleTransactionV2.css';
 import transactionTypes from '../../constants/transactionTypes';
