@@ -8,27 +8,24 @@ import styles from './transactionDetailViewV2.css';
 import transactionTypes from '../../../constants/transactionTypes';
 
 class TransactionDetailViewV2 extends React.Component {
-  // eslint-disable-next-line complexity
   render() {
     const { transaction, t } = this.props;
-    let senderLabel = t('Sender');
-    let title;
-    switch (transaction.type) {
-      case transactionTypes.setSecondPassphrase:
-        title = t('2nd passphrase registration');
-        senderLabel = t('Account');
-        break;
-      case transactionTypes.registerDelegate:
-        title = t('Delegate registration');
-        senderLabel = t('Account');
-        break;
-      case transactionTypes.vote:
-        title = t('Delegate vote');
-        senderLabel = t('Voter');
-        break;
-      default:
-        break;
-    }
+    const { senderLabel, title } = {
+      [transactionTypes.setSecondPassphrase]: {
+        title: t('2nd passphrase registration'),
+        senderLabel: t('Account'),
+      },
+      [transactionTypes.registerDelegate]: {
+        title: t('Delegate registration'),
+        senderLabel: t('Account'),
+      },
+      [transactionTypes.vote]: {
+        title: t('Delegate vote'),
+        senderLabel: t('Voter'),
+      },
+    }[transaction.type] || {
+      senderLabel: t('Sender'),
+    };
 
     return (transaction.id ? (
       <React.Fragment>
