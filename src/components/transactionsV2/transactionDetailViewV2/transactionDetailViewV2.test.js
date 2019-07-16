@@ -43,6 +43,26 @@ describe('Transaction Detail View V2', () => {
     });
   });
 
+  describe('Delegate vote transaction', () => {
+    const transaction = {
+      type: 3,
+      senderId: accounts.genesis.address,
+      recipientId: '',
+      amount: 0,
+      id: 123,
+    };
+    const props = {
+      transaction,
+      t: v => v,
+    };
+
+    it('Should render delegate vote details', () => {
+      wrapper = mount(<Router><TransactionDetailViewV2 {...props} /></Router>, options);
+      expect(wrapper).toContainExactlyOneMatchingElement('.accountInfo');
+      expect(wrapper.find('.accountInfo .label').text()).toBe('Voter');
+    });
+  });
+
   describe('2nd Passphrase transaction', () => {
     const transaction = {
       type: 1,
