@@ -1,7 +1,7 @@
 import React from 'react';
-
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
 import { extractPublicKey } from '../../utils/account';
+import BoxV2 from '../boxV2';
 import CheckBox from '../toolbox/checkBox';
 import Illustration from '../toolbox/illustration';
 import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
@@ -91,7 +91,7 @@ class TransactionSummary extends React.Component {
     } = this.state;
 
     return (
-      <div className={`${styles.wrapper} ${classNames}`}>
+      <BoxV2 className={`${styles.wrapper} ${classNames}`}>
         <header className="summary-header">
           {
         isHardwareWalletConnected
@@ -211,7 +211,7 @@ LSK
           </footer>
         )
     }
-      </div>
+      </BoxV2>
     );
   }
 }
