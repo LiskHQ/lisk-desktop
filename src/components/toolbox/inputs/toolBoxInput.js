@@ -7,11 +7,6 @@ const ToolBoxInput = props => (
   <Input
     {...props}
     theme={props.theme}
-    innerRef={(ref) => {
-      if (ref !== null && props.shouldfocus) {
-        ref.focus();
-      }
-    }}
   >
     {props.children}
   </Input>
