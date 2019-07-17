@@ -20,7 +20,6 @@ describe('Delegates', () => {
   it('should render properly empty accounts', () => {
     expect(wrapper).toContainMatchingElement('.delegates');
     expect(wrapper).toContainMatchingElement('.delegates-header');
-    expect(wrapper).toContainMatchingElement('.delegates-subtitle');
     expect(wrapper).toContainMatchingElement('.delegates-content');
     expect(wrapper).not.toContainMatchingElement('.delegates-row');
   });
@@ -51,7 +50,6 @@ describe('Delegates', () => {
 
     expect(wrapper).toContainMatchingElement('.delegates');
     expect(wrapper).toContainMatchingElement('.delegates-header');
-    expect(wrapper).toContainMatchingElement('.delegates-subtitle');
     expect(wrapper).toContainMatchingElement('.delegates-content');
     expect(wrapper).toContainMatchingElement('.delegates-row');
   });
