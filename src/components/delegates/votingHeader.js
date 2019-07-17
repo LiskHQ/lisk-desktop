@@ -14,6 +14,10 @@ import {
 
 import styles from './votingHeader.css';
 
+function shouldShowRegisterDelagteButton(account) {
+  return account.address && !account.delegate && !account.hwInfo;
+}
+
 class VotingHeader extends React.Component {
   render() {
     const {
@@ -110,7 +114,7 @@ LSK
           )
           : (
             <span>
-              { account.address && !account.delegate
+              { shouldShowRegisterDelagteButton(account)
                 ? (
                   <Link to={routes.delegateRegistration.path}>
                     <SecondaryButtonV2 className={`register-delegate ${styles.btn}`}>
