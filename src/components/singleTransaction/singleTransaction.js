@@ -7,6 +7,7 @@ import BoxV2 from '../boxV2';
 import CopyToClipboard from '../toolbox/copyToClipboard';
 import LiskAmount from '../liskAmount';
 import NotFound from '../notFound';
+import Tooltip from '../toolbox/tooltip/tooltip';
 import TransactionDetailView from './transactionDetailView/transactionDetailView';
 import routes from '../../constants/routes';
 import styles from './singleTransaction.css';
@@ -101,6 +102,11 @@ class SingleTransaction extends React.Component {
                   <p className={`${styles.value}`}>
                     <span className={styles.label}>
                       {t('Confirmations')}
+                      <Tooltip className="showOnTop">
+                        <p>
+                          { t('Confirmations refer to the number of blocks added to the Lisk blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.') }
+                        </p>
+                      </Tooltip>
                     </span>
                     <span className="tx-confirmation">
                       {transaction.confirmations || 0}
