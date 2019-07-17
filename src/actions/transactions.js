@@ -338,7 +338,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
   const [error, tx] = account.loginType === loginType.normal
     ? await to(transactionsAPI.create(
       activeToken,
-      { ...data, timeOffset },
+      { ...data, timeOffset, network },
       createTransactionType.transaction,
     ))
     : await to(hwAPI.create(account, data));
