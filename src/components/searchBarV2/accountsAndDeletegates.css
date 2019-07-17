@@ -19,6 +19,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  margin-bottom: 8px;
 
   & > label {
     @mixin contentLargest bold;
@@ -39,7 +40,7 @@
 
   & .accountRow {
     width: 100%;
-    padding: 16px 20px;
+    padding: 8px 20px;
     box-sizing: border-box;
     display: flex;
     justify-content: flex-start;
@@ -48,10 +49,6 @@
 
     &:hover {
       background-color: var(--primary-background-color);
-    }
-
-    &:not(:last-child) {
-      border-bottom: 1px solid var(--color-platinum);
     }
   }
 
