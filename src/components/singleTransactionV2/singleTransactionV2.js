@@ -90,7 +90,7 @@ class SingleTransactionV2 extends React.Component {
     return (
       <div className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
         { transaction.id && !transaction.error ? (
-          <BoxV2 className={`${grid['col-sm-8']} ${grid['col-md-4']} ${styles.wrapper}`}>
+          <BoxV2 className={styles.wrapper}>
             <header className={`${styles.detailsHeader} tx-header`}>
               <h1>{title}</h1>
               <CopyToClipboard
