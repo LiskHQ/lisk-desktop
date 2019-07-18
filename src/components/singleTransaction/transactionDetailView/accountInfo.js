@@ -1,10 +1,13 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import React from 'react';
 import AccountVisual from '../../accountVisual';
-import styles from './transactionDetailView.css';
 import routes from '../../../constants/routes';
+import styles from './transactionDetailView.css';
 
-const AccountInfo = ({ address, label, addressClass = '' }) => {
+const AccountInfo = ({
+  address, label, addressClass, name,
+}) => {
   const addressLink = `${routes.accounts.pathPrefix}${routes.accounts.path}`;
   return (
     <div className={styles.accountInfo}>
@@ -13,13 +16,26 @@ const AccountInfo = ({ address, label, addressClass = '' }) => {
         <AccountVisual className={styles.avatar} address={address} size={24} />
         <Link
           to={`${addressLink}/${address}`}
-          className={`${styles.address} ${addressClass}`}
+          className={`${styles.link} ${name ? styles.hasName : ''}`}
         >
-          {address}
+          {name}
+          <span className={`${styles.address} ${addressClass}`}>{address}</span>
         </Link>
       </div>
     </div>
   );
+};
+
+AccountInfo.propTypes = {
+  address: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  addressClass: PropTypes.string,
+  name: PropTypes.string,
+};
+
+AccountInfo.defaultProps = {
+  addressClass: '',
+  name: '',
 };
 
 export default AccountInfo;

@@ -7,6 +7,11 @@ import TransactionVotes from './transactionVotes';
 import styles from './transactionDetailView.css';
 import transactionTypes from '../../../constants/transactionTypes';
 
+
+function getDelegateName(transaction) {
+  return transaction.asset && transaction.asset.delegate && transaction.asset.delegate.username;
+}
+
 class TransactionDetailView extends React.Component {
   render() {
     const { transaction, t } = this.props;
@@ -17,7 +22,7 @@ class TransactionDetailView extends React.Component {
       },
       [transactionTypes.registerDelegate]: {
         title: t('Delegate registration'),
-        senderLabel: t('Account'),
+        senderLabel: t('Account nickname'),
       },
       [transactionTypes.vote]: {
         title: t('Delegate vote'),
@@ -40,6 +45,7 @@ class TransactionDetailView extends React.Component {
         ) : null}
         <div className={styles.detailsWrapper}>
           <AccountInfo
+            name={getDelegateName(transaction)}
             address={transaction.senderId}
             addressClass="sender-address"
             label={senderLabel}

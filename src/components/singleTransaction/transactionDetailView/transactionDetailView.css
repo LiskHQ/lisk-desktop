@@ -37,11 +37,16 @@
       align-items: center;
     }
 
-    & .address {
+    & .link {
       @mixin contentLargest;
 
       color: var(--color-maastricht-blue);
       text-decoration: none;
+
+      &.hasName .address {
+        color: var(--color-blue-gray);
+        margin-left: 16px;
+      }
     }
   }
 
