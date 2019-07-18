@@ -42,7 +42,7 @@ describe('Recent Transactions', () => {
         recipientId: '2435345L',
         amount: '0.0003',
         token: 'LSK',
-        type: 0,
+        type: 4,
       },
       {
         id: 2,
@@ -119,8 +119,8 @@ describe('Recent Transactions', () => {
     expect(wrapper).toContainMatchingElement('TransactionTypeFigure');
     expect(wrapper).toContainMatchingElement('TransactionAddress');
     expect(wrapper).toContainMatchingElement('TransactionAmount');
-    expect(wrapper).toContainMatchingElements(2, 'AccountVisual');
-    expect(wrapper).toContainMatchingElements(3, 'img');
+    expect(wrapper).toContainMatchingElements(1, 'AccountVisual');
+    expect(wrapper).toContainMatchingElements(4, 'img');
     expect(wrapper).not.toContainMatchingElement('EmptyState');
   });
 
