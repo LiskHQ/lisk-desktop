@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { settingsUpdated } from '../../actions/settings';
 import { pricesRetrieved } from '../../actions/service';
-import ConverterV2 from './converterV2';
+import Converter from './converter';
 
 const mapStateToProps = state => ({
   settings: state.settings,
@@ -24,4 +24,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ConverterV2);
+)(Converter);

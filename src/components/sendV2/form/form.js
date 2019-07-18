@@ -1,6 +1,6 @@
 // eslint-disable-line max-lines
 import React from 'react';
-import ConverterV2 from '../../converterV2';
+import Converter from '../../converter';
 import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
 import { InputV2, AutoresizeTextarea } from '../../toolbox/inputsV2';
 import { getNetworkCode } from '../../../utils/api/btc/network';
@@ -489,7 +489,7 @@ class Form extends React.Component {
                 placeholder={t('Insert the amount of transaction')}
                 className={`${styles.input} ${fields.amount.error ? 'error' : ''}`}
               />
-              <ConverterV2
+              <Converter
                 className={styles.converter}
                 value={fields.amount.value}
                 error={fields.amount.error}

@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import React from 'react';
-import ConverterV2 from '../../converterV2';
+import Converter from '../../converter';
 import AccountVisual from '../../accountVisual/index';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../../toolbox/buttons/button';
 import fees from '../../../constants/fees';
@@ -240,7 +240,7 @@ class Summary extends React.Component {
             <label>{t('Amount')}</label>
             <label className={`${styles.information} ${styles.amount} amount-summary`}>
               {`${fields.amount.value} ${token}`}
-              <ConverterV2 className={`${styles.secondText} ${styles.amountSecondText}`} value={fields.amount.value} />
+              <Converter className={`${styles.secondText} ${styles.amountSecondText}`} value={fields.amount.value} />
             </label>
           </div>
 

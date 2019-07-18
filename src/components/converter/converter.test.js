@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
-import ConverterV2 from './converterV2';
+import Converter from './converter';
 import { tokenMap } from '../../constants/tokens';
 
 describe('Converter V2', () => {
@@ -20,8 +20,8 @@ describe('Converter V2', () => {
     pricesRetrieved: spy(),
   };
 
-  it('shold render ConverterV2 component', () => {
-    wrapper = mount(<ConverterV2 {...props} />);
+  it('shold render Converter component', () => {
+    wrapper = mount(<Converter {...props} />);
     expect(props.pricesRetrieved).to.have.been.calledWith();
     expect(wrapper.find('.wrapper')).to.have.className(props.className);
     expect(wrapper.find('.price')).to.include.text(props.priceTicker.LSK.EUR);
@@ -33,7 +33,7 @@ describe('Converter V2', () => {
       ...props,
       settings: {},
     };
-    wrapper = mount(<ConverterV2 {...noSettingsProps} />);
+    wrapper = mount(<Converter {...noSettingsProps} />);
     expect(wrapper.find('.price')).to.include.text(props.priceTicker.LSK.USD);
     expect(wrapper.find('.price')).to.include.text('USD');
   });
@@ -44,7 +44,7 @@ describe('Converter V2', () => {
       value: 'aaa',
       error: true,
     };
-    wrapper = mount(<ConverterV2 {...invalidProps} />);
+    wrapper = mount(<Converter {...invalidProps} />);
     expect(wrapper.find('.price')).to.include.text('0.00');
   });
 
@@ -54,7 +54,7 @@ describe('Converter V2', () => {
       className: undefined,
       value: '',
     };
-    wrapper = mount(<ConverterV2 {...newProps} />);
+    wrapper = mount(<Converter {...newProps} />);
     expect(wrapper).to.not.have.descendants('.price');
     expect(wrapper).to.not.have.descendants('.undefined');
   });
