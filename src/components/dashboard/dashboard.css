@@ -48,6 +48,11 @@
   margin: 0px;
   padding-bottom: 20px;
   width: 100%;
+
+  & footer {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
 }
 
 .initLink {
