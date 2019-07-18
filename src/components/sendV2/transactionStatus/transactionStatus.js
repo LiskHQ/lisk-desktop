@@ -3,7 +3,7 @@ import React from 'react';
 import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import { getTokenFromAddress } from '../../../utils/api/transactions';
-import Bookmark from '../../bookmark';
+import BookmarkDropdown from '../../bookmarks/bookmarkDropdown';
 import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import TransactionResult from '../../transactionResult';
 import statusMessage from './statusMessages';
@@ -185,7 +185,7 @@ class TransactionStatus extends React.Component {
                     showDropdown={this.state.isBookmarkDropdown}
                     className={`${styles.bookmarkDropdown}`}
                   >
-                    <Bookmark
+                    <BookmarkDropdown
                       delegate={this.getDelegateInformation()}
                       address={fields.recipient.address}
                       detailAccount={this.props.detailAccount}

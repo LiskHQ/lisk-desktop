@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
-import { InputV2 } from '../toolbox/inputsV2';
-import Illustration from '../toolbox/illustration';
-import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
-import { tokenMap } from '../../constants/tokens';
-import AccountVisual from '../accountVisual';
-import Box from '../boxV2';
-import EmptyState from '../emptyStateV2';
-import regex from '../../utils/regex';
-import routes from '../../constants/routes';
+import { InputV2 } from '../../toolbox/inputsV2';
+import Illustration from '../../toolbox/illustration';
+import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
+import { tokenMap } from '../../../constants/tokens';
+import AccountVisual from '../../accountVisual';
+import Box from '../../boxV2';
+import EmptyState from '../../emptyStateV2';
+import regex from '../../../utils/regex';
+import routes from '../../../constants/routes';
 import styles from './bookmarksList.css';
-import svg from '../../utils/svgIcons';
+import svg from '../../../utils/svgIcons';
 
 class BookmarksList extends React.Component {
   constructor(props) {

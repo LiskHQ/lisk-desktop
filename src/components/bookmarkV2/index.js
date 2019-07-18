@@ -9,7 +9,6 @@ import styles from './bookmark.css';
 
 // eslint-disable-next-line complexity
 class Bookmark extends React.Component {
-  // eslint-disable-next-line max-statements
   constructor(props) {
     super(props);
 
@@ -22,6 +21,10 @@ class Bookmark extends React.Component {
     this.listContainerRef = null;
     this.input = null;
 
+    this.bindAll();
+  }
+
+  bindAll() {
     this.onHandleKeyPress = this.onHandleKeyPress.bind(this);
     this.getFilterList = this.getFilterList.bind(this);
     this.onKeyPressDownOrUp = this.onKeyPressDownOrUp.bind(this);
