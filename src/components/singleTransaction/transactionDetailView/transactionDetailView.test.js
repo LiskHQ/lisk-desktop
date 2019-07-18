@@ -31,8 +31,8 @@ describe('Transaction Detail View', () => {
     it('Should render transfer transaction with message', () => {
       wrapper = mount(<Router><TransactionDetailView {...props} /></Router>, options);
       expect(wrapper).toContainMatchingElements(2, '.accountInfo');
-      expect(wrapper.find('.accountInfo .sender-address').first().text()).toBe(transaction.senderId);
-      expect(wrapper.find('.accountInfo .receiver-address').at(1).text()).toBe(transaction.recipientId);
+      expect(wrapper.find('.accountInfo .sender-address').text()).toBe(transaction.senderId);
+      expect(wrapper.find('.accountInfo .receiver-address').text()).toBe(transaction.recipientId);
       expect(wrapper).toContainExactlyOneMatchingElement('.message');
     });
 
