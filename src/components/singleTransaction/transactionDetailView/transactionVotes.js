@@ -7,10 +7,10 @@ import routes from '../../../constants/routes';
 const transactionVotes = ({ votes, t }) => {
   const accountPath = `${routes.accounts.pathPrefix}${routes.accounts.path}`;
   return (
-    <div className={styles.detailsWrapper}>
+    <React.Fragment>
       {votes.added
         ? (
-          <React.Fragment>
+          <div className={styles.detailsWrapper}>
             <span className={styles.label}>
               {t('Added Votes')}
               {' '}
@@ -33,11 +33,11 @@ const transactionVotes = ({ votes, t }) => {
                 </Link>
               ))}
             </div>
-          </React.Fragment>
+          </div>
         ) : null}
       {votes.deleted
         ? (
-          <React.Fragment>
+          <div className={styles.detailsWrapper}>
             <span className={styles.label}>
               {t('Removed Votes')}
               {' '}
@@ -60,9 +60,9 @@ const transactionVotes = ({ votes, t }) => {
                 </Link>
               ))}
             </div>
-          </React.Fragment>
+          </div>
         ) : null}
-    </div>
+    </React.Fragment>
   );
 };
 
