@@ -145,7 +145,7 @@ class Setting extends React.Component {
                   onChange={this.handleTokenToggle}
                 />
                 <div>
-                  <span className={styles.labelName}>{t('BTC token')}</span>
+                  <span className={styles.labelName}>{t('Enable BTC')}</span>
                   <p>{t('By enabling it, you will be able to manage your BTC tokens inside the application.')}</p>
                 </div>
               </label>
