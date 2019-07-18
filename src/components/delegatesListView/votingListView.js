@@ -1,8 +1,8 @@
 import React from 'react';
-import VotingHeaderV2 from './votingHeaderV2';
-import styles from './votingListViewV2.css';
+import VotingHeader from './votingHeader';
+import styles from './votingListView.css';
 import voteFilters from '../../constants/voteFilters';
-import DelegateListV2 from './delegateListV2';
+import DelegateList from './delegateList';
 import ProgressBar from '../toolbox/progressBar/progressBar';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import {
@@ -13,7 +13,7 @@ import {
 import Box from '../box';
 
 // Create a new Table component injecting Head and Row
-class VotingListViewV2 extends React.Component {
+class VotingListView extends React.Component {
   constructor() {
     super();
     this.freezeLoading = false;
@@ -137,7 +137,7 @@ class VotingListViewV2 extends React.Component {
     return (
       <Box>
         <header>
-          <VotingHeaderV2
+          <VotingHeader
             t={t}
             account={this.props.account}
             setActiveFilter={this.setActiveFilter.bind(this)}
@@ -169,7 +169,7 @@ class VotingListViewV2 extends React.Component {
           )
           : null}
         <div className={styles.wrapper}>
-          <DelegateListV2
+          <DelegateList
             t={t}
             list={filteredList}
             votes={votes}
@@ -202,4 +202,4 @@ class VotingListViewV2 extends React.Component {
   }
 }
 
-export default VotingListViewV2;
+export default VotingListView;
