@@ -93,7 +93,7 @@
   "Confirm your passphrase": "Confirm your passphrase",
   "Confirmation in the next step": "Confirmation in the next step",
   "Confirmations": "Confirmations",
-  "Confirmations refer to the number of blocks added to the Lisk blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.": "Confirmations refer to the number of blocks added to the Lisk blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.",
+  "Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.": "Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.",
   "Connect": "Connect",
   "Connect your Hardware Wallet": "Connect your Hardware Wallet",
   "Connected": "Connected",

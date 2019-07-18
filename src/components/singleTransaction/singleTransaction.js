@@ -3,6 +3,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../timestamp';
 import { SecondaryButtonV2 } from '../toolbox/buttons/button';
+import { tokenMap } from '../../constants/tokens';
 import BoxV2 from '../boxV2';
 import CopyToClipboard from '../toolbox/copyToClipboard';
 import LiskAmount from '../liskAmount';
@@ -104,7 +105,7 @@ class SingleTransaction extends React.Component {
                       {t('Confirmations')}
                       <Tooltip className="showOnTop">
                         <p>
-                          { t('Confirmations refer to the number of blocks added to the Lisk blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.') }
+                          { t('Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.', { token: tokenMap[activeToken].label })}
                         </p>
                       </Tooltip>
                     </span>
