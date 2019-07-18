@@ -1,4 +1,5 @@
 {
+  " - Confirm transaction on your {{deviceModel}}": " - Confirm transaction on your {{deviceModel}}",
   " LSK": " LSK",
   " Make sure that you are using the latest version of Lisk Hub.": " Make sure that you are using the latest version of Lisk Hub.",
   " of": " of",
@@ -90,8 +91,6 @@
   "Community feed": "Community feed",
   "Confirm": "Confirm",
   "Confirm on {{deviceModel}}": "Confirm on {{deviceModel}}",
-  "Confirm transaction on your {{deviceModel}}": "Confirm transaction on your {{deviceModel}}",
-  "Confirm transaction on {{deviceModel}}": "Confirm transaction on {{deviceModel}}",
   "Confirm voting": "Confirm voting",
   "Confirm your passphrase": "Confirm your passphrase",
   "Confirmation in the next step": "Confirmation in the next step",
@@ -340,7 +339,6 @@
   "Pending...": "Pending...",
   "Percentage of successfully forged blocks of when the delegate should have forged a block of transactions.": "Percentage of successfully forged blocks of when the delegate should have forged a block of transactions.",
   "Perhaps your question has already been raised in our FAQ": "Perhaps your question has already been raised in our FAQ",
-  "Please check if all the transaction details are correct.": "Please check if all the transaction details are correct.",
   "Please check the address": "Please check the address",
   "Please check the highlighted words": "Please check the highlighted words",
   "Please select the account you’d like to sign in to or": "Please select the account you’d like to sign in to or",
