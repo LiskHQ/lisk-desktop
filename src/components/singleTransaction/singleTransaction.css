@@ -10,6 +10,7 @@
 .wrapper {
   margin: 20px 0 40px;
   padding: 0;
+  padding-bottom: 20px;
   width: var(--medium-box-width);
 
   & .txLink {
@@ -91,7 +92,7 @@
       flex-direction: column;
       justify-content: center;
       margin: 0;
-      padding-left: 20px;
+      padding-left: 64px;
       width: 100%;
       word-break: break-all;
       text-align: left;
@@ -102,7 +103,7 @@
       }
 
       &:not(:last-child) {
-        padding-right: 20px;
+        padding-right: 64px;
 
         &::after {
           background-color: var(--color-platinum);
