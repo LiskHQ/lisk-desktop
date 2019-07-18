@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import { tokenMap } from '../../../constants/tokens';
-import Box from '../../boxV2';
+import Box from '../../box';
 import EmptyState from '../../emptyStateV2';
 import Icon from '../../toolbox/icon';
 import TransactionList from './transactionList';

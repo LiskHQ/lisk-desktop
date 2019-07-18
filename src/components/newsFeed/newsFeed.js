@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './newsFeed.css';
 import News from './news';
-import Box from '../boxV2';
+import Box from '../box';
 import EmptyState from '../emptyStateV2';
 import Icon from '../toolbox/icon';
 

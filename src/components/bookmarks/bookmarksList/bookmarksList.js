@@ -5,7 +5,7 @@ import Illustration from '../../toolbox/illustration';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import { tokenMap } from '../../../constants/tokens';
 import AccountVisual from '../../accountVisual';
-import Box from '../../boxV2';
+import Box from '../../box';
 import EmptyState from '../../emptyStateV2';
 import regex from '../../../utils/regex';
 import routes from '../../../constants/routes';

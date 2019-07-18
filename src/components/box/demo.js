@@ -1,27 +1,27 @@
 import React from 'react';
-import BoxV2 from '.';
+import Box from '.';
 import Tabs from '../toolbox/tabs';
 import DemoRenderer from '../toolbox/demoRenderer';
 
 /* eslint-disable-next-line no-console */
 const onClick = console.log;
 
-const BoxV2Demo = () => (
+const BoxDemo = () => (
   <React.Fragment>
-    <h2>BoxV2</h2>
+    <h2>Box</h2>
     <DemoRenderer>
-      <BoxV2> Content </BoxV2>
+      <Box> Content </Box>
     </DemoRenderer>
     <DemoRenderer>
-      <BoxV2>
+      <Box>
         <header>
           <h1>Custom header</h1>
         </header>
         <div>Content</div>
-      </BoxV2>
+      </Box>
     </DemoRenderer>
     <DemoRenderer>
-      <BoxV2>
+      <Box>
         <header>
           <Tabs
             tabs={[
@@ -34,9 +34,9 @@ const BoxV2Demo = () => (
           <span>Some other stuff</span>
         </header>
         <div>Content</div>
-      </BoxV2>
+      </Box>
     </DemoRenderer>
   </React.Fragment>
 );
 
-export default BoxV2Demo;
+export default BoxDemo;

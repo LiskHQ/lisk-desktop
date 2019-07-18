@@ -19,7 +19,7 @@ import { validateAddress } from '../../../utils/validators';
 import Selector from '../../toolbox/selector/selector';
 import { tokenMap } from '../../../constants/tokens';
 import * as btcTransactionsAPI from '../../../utils/api/btc/transactions';
-import BoxV2 from '../../boxV2';
+import Box from '../../box';
 
 class Form extends React.Component {
   // eslint-disable-next-line max-statements
@@ -459,7 +459,7 @@ class Form extends React.Component {
       && !fields.reference.error) && !this.state.isLoading;
 
     return (
-      <BoxV2 className={`${styles.wrapper}`}>
+      <Box className={`${styles.wrapper}`}>
         <header>
           <h1>{ t('Send Tokens') }</h1>
         </header>
@@ -625,7 +625,7 @@ class Form extends React.Component {
             {t('Go to Confirmation')}
           </PrimaryButtonV2>
         </footer>
-      </BoxV2>
+      </Box>
     );
   }
 }

@@ -4,7 +4,7 @@ import Waypoint from 'react-waypoint';
 import { generatePassphraseFromSeed } from '../../utils/passphrase';
 import { extractAddress } from '../../utils/account';
 import AccountVisual from '.';
-import Box from '../boxV2';
+import Box from '../box';
 
 /**
  * Ignored the unit test coverage of this component

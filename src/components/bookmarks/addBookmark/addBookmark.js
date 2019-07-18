@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { validateAddress } from '../../../utils/validators';
 import networks from '../../../constants/networks';
-import Box from '../../boxV2';
+import Box from '../../box';
 import { InputV2 } from '../../toolbox/inputsV2';
 import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
 import Feedback from '../../toolbox/feedback/feedback';

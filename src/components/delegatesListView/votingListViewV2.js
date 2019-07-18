@@ -10,7 +10,7 @@ import {
   getPendingVotesList,
   getVotedList,
 } from '../../utils/voting';
-import BoxV2 from '../boxV2';
+import Box from '../box';
 
 // Create a new Table component injecting Head and Row
 class VotingListViewV2 extends React.Component {
@@ -135,7 +135,7 @@ class VotingListViewV2 extends React.Component {
     const filteredList = this.filter(delegates);
     const firstTimeVotingActive = votingModeEnabled && getTotalVotesCount(votes) === 0;
     return (
-      <BoxV2>
+      <Box>
         <header>
           <VotingHeaderV2
             t={t}
@@ -197,7 +197,7 @@ class VotingListViewV2 extends React.Component {
                 </div>
               ) : null
           }
-      </BoxV2>
+      </Box>
     );
   }
 }

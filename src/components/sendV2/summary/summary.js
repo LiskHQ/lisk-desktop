@@ -10,7 +10,7 @@ import PassphraseInputV2 from '../../passphraseInputV2/passphraseInputV2';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
 import Piwik from '../../../utils/piwik';
-import Box from '../../boxV2';
+import Box from '../../box';
 import { extractPublicKey } from '../../../utils/account';
 import { tokenMap } from '../../../constants/tokens';
 import styles from './summary.css';
