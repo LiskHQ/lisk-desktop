@@ -1,34 +1,44 @@
 @import '../app/variablesV2.css';
+@import '../app/mixins.css';
+
+.container {
+  align-items: center;
+  height: 100%;
+  display: flex;
+}
+
+.wrapper {
+  margin: 0 auto;
+  width: var(--medium-box-width);
+}
 
 .headerWrapper {
   display: flex;
-  padding: 0 32px 20px;
 }
 
-.feedbackWrapper {
-  padding: 0 32px 160px;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-}
-
-.container {
-  min-height: 670px;
+.content {
+  box-sizing: border-box;
   overflow: hidden;
-  height: 723px;
+  padding: 20px;
+  width: 100%;
 
   & .extentionsWrapper {
-    padding: 0 32px;
-    height: 250px;
+    display: block;
+
+    & > span {
+      @mixin contentNormal bold;
+
+      color: var(--color-maastricht-blue);
+      display: block;
+      margin-bottom: 8px;
+    }
   }
 }
 
 .footer {
   display: flex;
   justify-content: center;
-  padding: 0 32px;
+  margin-top: 24px;
 
   & button {
     margin: 10px;
@@ -36,28 +46,22 @@
 }
 
 .error {
-  color: var(--color-error);
-  padding-bottom: 20px;
+  margin-top: 24px;
 }
 
 .link {
+  @mixin contentNormal bold;
+
   color: var(--color-link);
   cursor: pointer;
   display: inline-block;
-  font-family: var(--heading-font);
-  font-size: var(--paragraph-font-size-l);
-  font-weight: var(--font-weight-bold);
-  line-height: 1.47;
   margin-bottom: 20px;
   text-align: center;
   text-decoration: underline;
 }
 
 .label {
-  color: var(--color-content-light);
-  font-family: var(--content-font);
-  font-size: var(--paragraph-font-size-l);
-  font-weight: var(--font-weight-semi-bold);
-  line-height: 1.47;
+  @mixin contentLargest;
+
   margin-bottom: 8px;
 }
