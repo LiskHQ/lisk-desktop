@@ -143,6 +143,7 @@ class TopBar extends React.Component {
                 <DropdownV2
                   showDropdown={openDropdown === 'search'}
                   className={`${styles.searchDropdown}`}
+                  showArrow={false}
                 >
                   <SearchBarV2
                     setSearchBarRef={(node) => { this.searchInput = node; }}

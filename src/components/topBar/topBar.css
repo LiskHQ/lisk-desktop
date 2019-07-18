@@ -69,9 +69,9 @@
 }
 
 .searchDropdown {
-  right: 10px;
-  top: calc(100% + 15px);
-  width: 500px;
+  right: 20px;
+  top: calc(100% + 13px);
+  width: 502px;
   padding: 20px;
   box-sizing: border-box;
 

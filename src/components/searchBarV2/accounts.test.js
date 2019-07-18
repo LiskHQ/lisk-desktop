@@ -20,7 +20,6 @@ describe('Accounts', () => {
   it('should render properly empty accounts', () => {
     expect(wrapper).toContainMatchingElement('.accounts');
     expect(wrapper).toContainMatchingElement('.accounts-header');
-    expect(wrapper).toContainMatchingElement('.accounts-subtitle');
     expect(wrapper).toContainMatchingElement('.account-content');
     expect(wrapper).not.toContainMatchingElement('.account-row');
   });
@@ -40,7 +39,6 @@ describe('Accounts', () => {
     wrapper = mount(<Accounts {...newProps} />);
     expect(wrapper).toContainMatchingElement('.accounts');
     expect(wrapper).toContainMatchingElement('.accounts-header');
-    expect(wrapper).toContainMatchingElement('.accounts-subtitle');
     expect(wrapper).toContainMatchingElement('.account-content');
     expect(wrapper).toContainMatchingElement('.tag');
   });
@@ -63,7 +61,6 @@ describe('Accounts', () => {
 
     expect(wrapper).toContainMatchingElement('.accounts');
     expect(wrapper).toContainMatchingElement('.accounts-header');
-    expect(wrapper).toContainMatchingElement('.accounts-subtitle');
     expect(wrapper).toContainMatchingElement('.account-content');
     expect(wrapper).toContainMatchingElement('.account-row');
   });

@@ -48,6 +48,7 @@ import questionIcon from '../assets/images/icons-v2/ico-question.svg';
 import questionMark from '../assets/images/icons-v2/question.svg';
 import searchIconActive from '../assets/images/icons-v2/search-active.svg';
 import searchIconInactive from '../assets/images/icons-v2/search.svg';
+import searchInput from '../assets/images/icons-v2/search-input.svg';
 import settings from '../assets/images/icons-v2/settings.svg';
 import settingsActive from '../assets/images/icons-v2/settings-active.svg';
 import showPassphraseIcon from '../assets/images/icons-v2/icon-show-passphrase.svg';
@@ -124,6 +125,7 @@ export default {
   questionIcon,
   search_icon_active: searchIconActive,
   search_icon_inactive: searchIconInactive,
+  searchInput,
   settings,
   settingsActive,
   showPassphraseIcon,
