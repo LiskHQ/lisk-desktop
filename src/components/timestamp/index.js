@@ -87,15 +87,15 @@ export const DateTimeFromTimestamp = translate()((props) => {
     <span className={`${props.className || ''}`}>
       {
     props.fulltime ? (
-      datetime.format('DD MMM YYYY, HH:mm:ss')
+      datetime.format('DD MMM YYYY, hh:mm:ss a')
     )
       : datetime.calendar(null, {
-        lastDay: props.t('[Yesterday], HH:mm'),
-        sameDay: props.t('[Today], HH:mm'),
-        nextDay: props.t('[Tomorrow], HH:mm'),
-        lastWeek: props.t('DD MMM YYYY, HH:mm'),
-        nextWeek: props.t('DD MMM YYYY, HH:mm'),
-        sameElse: props.t('DD MMM YYYY, HH:mm'),
+        lastDay: props.t('[Yesterday], hh:mm a'),
+        sameDay: props.t('[Today], hh:mm a'),
+        nextDay: props.t('[Tomorrow], hh:mm a'),
+        lastWeek: props.t('DD MMM YYYY, hh:mm a'),
+        nextWeek: props.t('DD MMM YYYY, hh:mm a'),
+        sameElse: props.t('DD MMM YYYY, hh:mm a'),
       })
   }
     </span>
