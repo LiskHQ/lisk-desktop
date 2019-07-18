@@ -84,7 +84,7 @@ class SingleTransaction extends React.Component {
                         <span className="tx-amount">
                           <LiskAmount val={transaction.amount} />
                           {' '}
-                          {t('LSK')}
+                          {activeToken}
                         </span>
                       </div>
                     ) : null }
@@ -97,7 +97,7 @@ class SingleTransaction extends React.Component {
                     <span className="tx-fee">
                       <LiskAmount val={transaction.fee} />
                       {' '}
-                      {t('LSK')}
+                      {activeToken}
                     </span>
                   </div>
                   <div className={`${styles.value}`}>
