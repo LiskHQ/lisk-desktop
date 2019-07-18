@@ -63,7 +63,7 @@ class SingleTransaction extends React.Component {
               />
               <footer className={styles.detailsFooter}>
                 <div>
-                  <p className={styles.value}>
+                  <div className={styles.value}>
                     <span className={styles.label}>{t('Date')}</span>
                     <span className={`${styles.date} tx-date`}>
                       <DateTimeFromTimestamp
@@ -74,10 +74,10 @@ class SingleTransaction extends React.Component {
                         showSeconds
                       />
                     </span>
-                  </p>
+                  </div>
                   { transaction.type === transactionTypes.send
                     ? (
-                      <p className={styles.value}>
+                      <div className={styles.value}>
                         <span className={styles.label}>
                           {t('Amount')}
                         </span>
@@ -86,11 +86,11 @@ class SingleTransaction extends React.Component {
                           {' '}
                           {t('LSK')}
                         </span>
-                      </p>
+                      </div>
                     ) : null }
                 </div>
                 <div>
-                  <p className={styles.value}>
+                  <div className={styles.value}>
                     <span className={styles.label}>
                       {t('Transaction fee')}
                     </span>
@@ -99,8 +99,8 @@ class SingleTransaction extends React.Component {
                       {' '}
                       {t('LSK')}
                     </span>
-                  </p>
-                  <p className={`${styles.value}`}>
+                  </div>
+                  <div className={`${styles.value}`}>
                     <span className={styles.label}>
                       {t('Confirmations')}
                       <Tooltip className="showOnTop">
@@ -112,7 +112,7 @@ class SingleTransaction extends React.Component {
                     <span className="tx-confirmation">
                       {transaction.confirmations || 0}
                     </span>
-                  </p>
+                  </div>
                 </div>
                 <div>
                   <div className={`${styles.value}`}>
