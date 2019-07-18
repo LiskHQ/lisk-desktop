@@ -4,7 +4,7 @@ import Converter from '../../converter';
 import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
 import { InputV2, AutoresizeTextarea } from '../../toolbox/inputsV2';
 import { getNetworkCode } from '../../../utils/api/btc/network';
-import Bookmark from '../../bookmarkV2';
+import AutoSuggest from '../autoSuggest';
 import SpinnerV2 from '../../spinnerV2/spinnerV2';
 import svg from '../../../utils/svgIcons';
 import Tooltip from '../../toolbox/tooltip/tooltip';
@@ -466,7 +466,7 @@ class Form extends React.Component {
         <div className={styles.formSection}>
           <span className={`${styles.fieldGroup} recipient`}>
             <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
-            <Bookmark
+            <AutoSuggest
               validateBookmark={this.validateBookmark}
               bookmarks={this.props.bookmarks}
               onChange={this.onInputChange}
