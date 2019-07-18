@@ -6,33 +6,6 @@
   margin: 0px;
   padding-bottom: 50px;
 
-  & > header {
-    width: 100%;
-    height: auto;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 15px 0 30px;
-
-    & > h1 {
-      @mixin headingNormalIntermediate;
-
-      color: var(--color-maastricht-blue);
-      margin: 1px 0;
-      padding: 0;
-    }
-
-    & > h2 {
-      @mixin contentNormal;
-
-      color: var(--color-slate-gray);
-      margin: 1px 0;
-      padding: 0;
-    }
-  }
-
   & .main {
     width: 100%;
     height: auto;

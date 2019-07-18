@@ -7,6 +7,7 @@ import routes from '../../constants/routes';
 import BookmarksList from '../bookmarksList';
 import NewsFeed from '../newsFeed';
 import WalletDetails from '../walletDetails';
+import PageHeader from '../toolbox/pageHeader';
 import Piwik from '../../utils/piwik';
 import links from '../../constants/externalLinks';
 import { fromRawLsk } from '../../utils/lsk';
@@ -145,11 +146,10 @@ class Dashboard extends React.Component {
           )
         }
         <div className={`${styles.wrapper} dashboard-container`}>
-          <header>
-            <h1>{t('Dashboard')}</h1>
-            <h2>{t('All important information at a glance')}</h2>
-          </header>
-
+          <PageHeader
+            title={t('Dashboard')}
+            subtitle={t('All important information at a glance')}
+          />
           <div className={`${styles.main}`}>
             <div className={styles.subContainer}>
               {
