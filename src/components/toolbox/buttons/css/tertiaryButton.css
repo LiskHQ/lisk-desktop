@@ -1,6 +1,0 @@
-@import './base.css';
-
-.button {
-  @mixin buttonBasics;
-  @mixin buttonTertiary;
-}

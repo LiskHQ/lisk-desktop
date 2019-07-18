@@ -13,7 +13,6 @@ import Icon from '../toolbox/icon';
 import UserAccount from '../topBar/accountMenu/userAccount';
 import networks from '../../constants/networks';
 import styles from './headerV2.css';
-import autoSuggestInputStyles from '../autoSuggestV2/autoSuggest.css';
 import formStyles from '../sendV2/form/form.css';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
@@ -191,11 +190,8 @@ class HeaderV2 extends React.Component {
                             name="customNetwork"
                             value={this.state.address}
                             placeholder={this.props.t('ie. 192.168.0.1')}
-                            className={`
-                              custom-network
-                              ${formStyles.input}
-                              ${autoSuggestInputStyles.input}
-                              ${this.state.validationError ? styles.errorInput : ''}`}
+                            size="s"
+                            className={`custom-network ${formStyles.input} ${this.state.validationError ? styles.errorInput : ''}`}
                           />
                           <div className={styles.icons}>
                             <SpinnerV2 className={`${styles.spinner} ${this.state.isValidationLoading && this.state.address ? styles.show : styles.hide}`} />
