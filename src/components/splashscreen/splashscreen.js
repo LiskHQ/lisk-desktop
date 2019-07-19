@@ -89,7 +89,7 @@ class Splashscreen extends React.Component {
               }
               </p>
             </div>
-            <Link className={`${styles.button} login-button`} to={routes.loginV2.path}>
+            <Link className={`${styles.button} login-button`} to={routes.login.path}>
               <SecondaryButtonV2 className="light">{t('Sign in')}</SecondaryButtonV2>
             </Link>
             <Link className={`${styles.button} new-account-button`} to={routes.register.path}>

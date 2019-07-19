@@ -16,11 +16,11 @@ import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import Header from '../header/index';
 import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
-import styles from './loginV2.css';
+import styles from './login.css';
 import Piwik from '../../utils/piwik';
 import { getDeviceList } from '../../utils/hwWallet';
 
-class LoginV2 extends React.Component {
+class Login extends React.Component {
   constructor() { // eslint-disable-line max-statements
     super();
     const { liskCoreUrl } = getAutoLogInData();
@@ -129,7 +129,7 @@ class LoginV2 extends React.Component {
 
     return (
       <React.Fragment>
-        { match.url === routes.loginV2.path ? (
+        { match.url === routes.login.path ? (
           <Header showSettings />
         ) : null }
         <div className={`${styles.login} ${grid.row}`}>
@@ -219,4 +219,4 @@ class LoginV2 extends React.Component {
   }
 }
 
-export default translate()(LoginV2);
+export default translate()(Login);

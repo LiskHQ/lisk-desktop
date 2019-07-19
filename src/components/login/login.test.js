@@ -6,11 +6,11 @@ import configureMockStore from 'redux-mock-store';
 import { MemoryRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
-import LoginV2 from './loginV2';
+import Login from './login';
 import accounts from '../../../test/constants/accounts';
 import routes from '../../constants/routes';
 
-describe('LoginV2', () => {
+describe('Login', () => {
   let wrapper;
   let clock;
   const account = {
@@ -49,7 +49,7 @@ describe('LoginV2', () => {
   };
 
   const match = {
-    url: routes.loginV2.path,
+    url: routes.login.path,
   };
 
   const props = {
@@ -88,7 +88,7 @@ describe('LoginV2', () => {
       toFake: ['setTimeout', 'clearTimeout'],
     });
 
-    wrapper = mount(<MemoryRouter><LoginV2 {...props} /></MemoryRouter>, options);
+    wrapper = mount(<MemoryRouter><Login {...props} /></MemoryRouter>, options);
   });
 
   afterEach(() => {

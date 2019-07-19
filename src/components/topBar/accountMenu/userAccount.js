@@ -99,7 +99,7 @@ const UserAccount = ({
         {isUserLogout ? (
           <Link
             className={`${styles.dropdownOption} signIn`}
-            to={routes.loginV2.path}
+            to={routes.login.path}
           >
             <Icon name="signin" className={styles.defaultIcon} />
             <Icon name="signinActive" className={styles.activeIcon} />

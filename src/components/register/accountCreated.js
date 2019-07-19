@@ -32,7 +32,7 @@ const AccountCreated = ({ t, account }) => (
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
       <Link
         className={`${registerStyles.button} login-button`}
-        to={routes.loginV2.path}
+        to={routes.login.path}
       >
         <PrimaryButtonV2 className={registerStyles.continueBtn}>
           {t('Sign In')}

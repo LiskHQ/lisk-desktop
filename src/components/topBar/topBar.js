@@ -50,7 +50,7 @@ class TopBar extends React.Component {
   /* istanbul ignore next */
   onCountdownComplete() {
     this.props.logOut();
-    this.props.history.replace(routes.loginV2.path);
+    this.props.history.replace(routes.login.path);
   }
 
   /* istanbul ignore next */

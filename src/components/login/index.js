@@ -6,7 +6,7 @@ import { errorToastDisplayed } from '../../actions/toaster';
 import { getActiveTokenAccount } from '../../utils/account';
 import { login } from '../../actions/account';
 import { settingsUpdated } from '../../actions/settings';
-import LoginV2 from './loginV2';
+import Login from './login';
 
 setDefaults({
   wait: true,
@@ -33,4 +33,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(translate()(LoginV2));
+)(translate()(Login));

@@ -125,7 +125,7 @@ module.exports = {
     'src/utils/platform.js',
     'src/components/hwWallet/ledgerLogin.js',
     'src/components/hwWallet/trezorLogin.js',
-    'src/components/loginV2/loginV2.js',
+    'src/components/login/login.js',
     'src/utils/hwWallet.js',
     'src/components/delegatesListView/*',
     'src/components/header/header.js',
