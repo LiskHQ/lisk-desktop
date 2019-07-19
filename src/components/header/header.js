@@ -13,7 +13,7 @@ import Icon from '../toolbox/icon';
 import UserAccount from '../topBar/accountMenu/userAccount';
 import networks from '../../constants/networks';
 import styles from './header.css';
-import formStyles from '../sendV2/form/form.css';
+import formStyles from '../send/form/form.css';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
 import svg from '../../utils/svgIcons';

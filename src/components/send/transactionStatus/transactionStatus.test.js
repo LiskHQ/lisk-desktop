@@ -12,7 +12,7 @@ describe('TransactionStatus', () => {
   const store = configureMockStore([thunk])({
     history: {
       location: {
-        path: '/wallet/sendV2/send',
+        path: '/wallet/send/send',
         search: '?recipient=16313739661670634666L&amount=10&reference=test',
       },
       push: jest.fn(),
