@@ -11,20 +11,22 @@ Given(/^I autologin as ([^\s]+) to ([^\s]+)$/, function (account, network) {
   localStorage.setItem('loginKey', accounts[account].passphrase);
 });
 
-Given(/^I login as ([^\s]+)$/, function (accountName) {
-  const passphrase = accounts[accountName].passphrase;
+Given(/^I login$/, function () {
+  cy.get(ss.loginBtn).should('be.enabled');
+  cy.get(ss.loginBtn).click();
+});
+
+Then(/^I enter ([^\s]+) passphrase of ([^\s]+)$/, function (passphraseType, accountName) {
+  const passphrase = accounts[accountName][(passphraseType === 'second') ?  'secondPassphrase' : 'passphrase'];
   cy.get(ss.passphraseInput).first().click();
   cy.get(ss.passphraseInput).each(($el, index) => {
     const passphraseWordsArray = passphrase.split(' ');
     cy.wrap($el).type(passphraseWordsArray[index]);
   });
-  cy.get(ss.loginBtn).should('be.enabled');
-  cy.get(ss.loginBtn).click();
 });
 
 Given(/^I am on (.*?) page$/, function (page) {
   page = page.toLowerCase();
-  cy.log(page + '!');
   switch (page) {
     case 'dashboard':
       cy.server();
@@ -47,14 +49,6 @@ Given(/^I am on (.*?) page$/, function (page) {
       cy.visit(urls[page]);
       break;
   }
-});
-
-Then(/^I enter second passphrase of ([^\s]+)$/, function (account) {
-  cy.get(ss.passphraseInput).first().click();
-  cy.get(ss.passphraseInput).each(($el, index) => {
-    const passphraseWordsArray = accounts[account].secondPassphrase.split(' ');
-    cy.wrap($el).type(passphraseWordsArray[index]);
-  });
 });
 
 Then(/^The latest transaction is voting$/, function () {
