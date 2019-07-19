@@ -22,8 +22,31 @@ Given(/^I login as ([^\s]+)$/, function (accountName) {
   cy.get(ss.loginBtn).click();
 });
 
-Given(/^I am on Wallet page$/, function () {
-  cy.visit(urls.wallet);
+Given(/^I am on (.*?) page$/, function (page) {
+  page = page.toLowerCase();
+  cy.log(page + '!');
+  switch (page) {
+    case 'dashboard':
+      cy.server();
+      cy.route('/api/node/constants').as('constants');
+      cy.visit(urls.dashboard).then(() => {
+        if (window.localStorage.getItem('liskCoreUrl')) cy.wait('@constants');
+      });
+      break;
+    case 'second passphrase registration':
+      cy.visit(urls.secondPassphrase);
+      break;
+    case 'register delegate':
+      cy.visit(urls.registerDelegate);
+      break;
+    case 'delegates':
+      cy.visit(urls.delegates);
+      cy.get(ss.delegateName);
+      break;
+    default:
+      cy.visit(urls[page]);
+      break;
+  }
 });
 
 Then(/^I enter second passphrase of ([^\s]+)$/, function (account) {
@@ -67,12 +90,4 @@ Then(/^I am on Wallet page of ([^s]+)$/, function (accountName) {
 
 Then(/^I see ([^s]+) in recipient$/, function (accountName) {
   cy.get(ss.recipientInput).should('have.value', accounts[accountName].address);
-});
-
-Then(/^I am on Dashboard page$/, function () {
-  cy.server();
-  cy.route('/api/node/constants').as('constants');
-  cy.visit(urls.dashboard).then(() => {
-    if (window.localStorage.getItem('liskCoreUrl')) cy.wait('@constants');
-  });
 });

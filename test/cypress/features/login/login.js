@@ -7,10 +7,6 @@ import ss from '../../../constants/selectors';
 import numeral from 'numeral';
 import { fromRawLsk } from '../../../../src/utils/lsk';
 
-Given(/^I am on Login page$/, function () {
-  cy.visit(urls.login);
-});
-
 Given(/^showNetwork setting is true$/, function () {
   cy.addObjectToLocalStorage('settings', 'showNetwork', true);
 });

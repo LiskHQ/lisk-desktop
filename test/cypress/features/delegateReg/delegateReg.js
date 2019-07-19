@@ -7,10 +7,6 @@ const txConfirmationTimeout = 12000;
 const txDelegateRegPrice = 25;
 const getRandomDelegateName = () => Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
 
-Given(/^I am on Register delegate page$/, function () {
-  cy.visit(urls.registerDelegate);
-});
-
 Given(/^I enter the delegate name$/, function () {
   const randomDelegateName = getRandomDelegateName();
   cy.get(ss.delegateNameInput).click().type(randomDelegateName);

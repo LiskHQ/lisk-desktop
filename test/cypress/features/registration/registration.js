@@ -3,10 +3,6 @@ import { Given } from 'cypress-cucumber-preprocessor/steps';
 import urls from '../../../constants/urls';
 import ss from '../../../constants/selectors';
 
-Given(/^I am on Registration page$/, function () {
-  cy.visit(urls.register);
-});
-
 When(/^I pick an avatar$/, function () {
   cy.get(ss.chooseAvatar).first().click();
   cy.get(ss.getPassphraseButton).click();

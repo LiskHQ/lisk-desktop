@@ -5,10 +5,6 @@ import ss from '../../../constants/selectors';
 
 const randomDelegateName = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
 
-Given(/^I am on Second passphrase registration page$/, function () {
-  cy.visit(urls.secondPassphrase);
-});
-
 Given(/^I enter the delegate name$/, function () {
   cy.get(ss.delegateNameInput).click().type(randomDelegateName);
   cy.wait(1200);

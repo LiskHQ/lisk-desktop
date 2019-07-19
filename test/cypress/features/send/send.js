@@ -18,10 +18,6 @@ let randomAddress;
 let randomAmount;
 let randomReference;
 
-Given(/^I am on Send page$/, function () {
-  cy.visit(urls.send);
-});
-
 Then(/^I fill in recipient$/, function () {
   randomAddress = getRandomAddress();
   cy.get(ss.recipientInput).type(randomAddress);

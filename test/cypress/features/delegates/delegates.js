@@ -8,11 +8,6 @@ import urls from '../../../constants/urls';
 
 const txConfirmationTimeout = 20000;
 
-Given(/^I am on Delegates page$/, function () {
-  cy.visit(urls.delegates);
-  cy.get(ss.delegateName);
-});
-
 Then(/^I see (\d+) delegates on page$/, function (number) {
   cy.get(ss.delegateRow).should('have.length', number);
 });

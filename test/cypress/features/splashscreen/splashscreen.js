@@ -3,10 +3,6 @@ import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 import networks from '../../../constants/networks';
 import ss from '../../../constants/selectors';
 
-Given(/^I am on Splashscreen page$/, function () {
-  cy.visit('/');
-});
-
 Given(/^showNetwork setting is true$/, function () {
   cy.addObjectToLocalStorage('settings', 'showNetwork', true);
 });
