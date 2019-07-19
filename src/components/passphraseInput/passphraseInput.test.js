@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
 import i18n from '../../i18n';
-import PassphraseInputV2 from './passphraseInputV2';
+import PassphraseInput from './passphraseInput';
 import keyCodes from '../../constants/keyCodes';
 import accounts from '../../../test/constants/accounts';
 
@@ -23,7 +23,7 @@ describe('V2 passphraseInput', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<PassphraseInputV2 {...props} />, options);
+    wrapper = mount(<PassphraseInput {...props} />, options);
   });
 
   describe('Show 24 inputs when needed', () => {

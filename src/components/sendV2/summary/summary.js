@@ -8,7 +8,7 @@ import { PrimaryButtonV2, TertiaryButtonV2 } from '../../toolbox/buttons/button'
 import fees from '../../../constants/fees';
 import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
 import { loginType } from '../../../constants/hwConstants';
-import PassphraseInputV2 from '../../passphraseInputV2/passphraseInputV2';
+import PassphraseInput from '../../passphraseInput/passphraseInput';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
 import Piwik from '../../../utils/piwik';
@@ -288,7 +288,7 @@ class Summary extends React.Component {
                       </p>
                     </React.Fragment>
                   </Tooltip>
-                  <PassphraseInputV2
+                  <PassphraseInput
                     isSecondPassphrase={secondPassphrase.hasSecondPassphrase}
                     secondPPFeedback={secondPassphrase.feedback}
                     inputsLength={12}

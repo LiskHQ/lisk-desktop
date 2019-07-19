@@ -4,7 +4,7 @@ import { extractPublicKey } from '../../utils/account';
 import Box from '../box';
 import CheckBox from '../toolbox/checkBox';
 import HardwareWalletIllustration from '../toolbox/hardwareWalletIllustration';
-import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
+import PassphraseInput from '../passphraseInput/passphraseInput';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import links from '../../constants/externalLinks';
 import styles from './transactionSummary.css';
@@ -156,7 +156,7 @@ LSK
                   </p>
                 </React.Fragment>
               </Tooltip>
-              <PassphraseInputV2
+              <PassphraseInput
                 isSecondPassphrase={!!account.secondPublicKey}
                 secondPPFeedback={secondPassphrase.feedback}
                 inputsLength={12}

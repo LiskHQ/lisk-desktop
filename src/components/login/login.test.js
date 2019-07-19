@@ -108,8 +108,8 @@ describe('Login', () => {
       const clipboardData = {
         getData: () => passphrase.substring(0, lastIndex),
       };
-      wrapper.find('passphraseInputV2 input').first().simulate('paste', { clipboardData });
-      expect(wrapper.find('passphraseInputV2 Feedback')).to.contain(expectedError);
+      wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
+      expect(wrapper.find('passphraseInput Feedback')).to.contain(expectedError);
     });
 
     // it('Should show the address input when custom node is selected', () => {
@@ -162,7 +162,7 @@ describe('Login', () => {
 
   describe('After submission', () => {
     it('it should call props.login if not already logged with given passphrase', () => {
-      wrapper.find('passphraseInputV2 input').first().simulate('change', { target: { value: passphrase, dataset: { index: 0 } } });
+      wrapper.find('passphraseInput input').first().simulate('change', { target: { value: passphrase, dataset: { index: 0 } } });
       wrapper.update();
       wrapper.find('form').simulate('submit');
       expect(props.login).to.have.been.calledWith();

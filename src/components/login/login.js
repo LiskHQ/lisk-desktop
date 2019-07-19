@@ -15,7 +15,7 @@ import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import Header from '../header/index';
-import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
+import PassphraseInput from '../passphraseInput/passphraseInput';
 import styles from './login.css';
 import Piwik from '../../utils/piwik';
 import { getDeviceList } from '../../utils/hwWallet';
@@ -187,7 +187,7 @@ class Login extends React.Component {
                   </Tooltip>
                 </h2>
 
-                <PassphraseInputV2
+                <PassphraseInput
                   inputsLength={12}
                   maxInputsLength={24}
                   onFill={this.checkPassphrase}

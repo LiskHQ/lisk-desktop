@@ -121,7 +121,7 @@ describe('Summary', () => {
     const clipboardData = {
       getData: () => accounts.second_passphrase_account.passphrase,
     };
-    wrapper.find('passphraseInputV2 input').first().simulate('paste', { clipboardData });
+    wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
     expect(wrapper.find('.send-button').at(0).prop('disabled')).toBeTruthy();
   });
 
@@ -129,7 +129,7 @@ describe('Summary', () => {
     const clipboardData = {
       getData: () => accounts.second_passphrase_account.secondPassphrase,
     };
-    wrapper.find('passphraseInputV2 input').first().simulate('paste', { clipboardData });
+    wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
     wrapper.update();
     wrapper.find('.on-nextStep').at(0).simulate('click');
     wrapper.update();

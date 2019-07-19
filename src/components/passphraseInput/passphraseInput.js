@@ -6,9 +6,9 @@ import { isValidPassphrase, getPassphraseValidationErrors } from '../../utils/pa
 import InputV2 from '../toolbox/inputsV2/inputV2';
 import Feedback from '../toolbox/feedback/feedback';
 import keyCodes from '../../constants/keyCodes';
-import styles from './passphraseInputV2.css';
+import styles from './passphraseInput.css';
 
-class passphraseInputV2 extends React.Component {
+class passphraseInput extends React.Component {
   constructor(props) {
     super(props);
 
@@ -172,4 +172,4 @@ class passphraseInputV2 extends React.Component {
   }
 }
 
-export default translate()(passphraseInputV2);
+export default translate()(passphraseInput);
