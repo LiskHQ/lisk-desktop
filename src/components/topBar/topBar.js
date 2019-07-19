@@ -6,7 +6,7 @@ import NavigationButtons from './navigationButtons';
 import Piwik from '../../utils/piwik';
 import menuLinks from './constants';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
-import SearchBarV2 from '../searchBarV2';
+import SearchBar from '../searchBar';
 import Network from './network';
 import styles from './topBar.css';
 
@@ -145,7 +145,7 @@ class TopBar extends React.Component {
                   className={`${styles.searchDropdown}`}
                   showArrow={false}
                 >
-                  <SearchBarV2
+                  <SearchBar
                     setSearchBarRef={(node) => { this.searchInput = node; }}
                     history={this.props.history}
                     onSearchClick={this.handleSearchDropdown}

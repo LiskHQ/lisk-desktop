@@ -63,7 +63,6 @@ module.exports = {
     'src/components/request/index.js',
     'src/components/request/index.js',
     'src/components/request/specifyRequest.js',
-    'src/components/searchBar/index.js', // Passing in mocha but not in Jest
     'src/components/send/steps/form/stories.js',
     'src/components/spinner/stories.js',
     'src/components/toaster/stories.js',
