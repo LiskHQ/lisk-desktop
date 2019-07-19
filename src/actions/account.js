@@ -199,7 +199,7 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
       && await getAccount({ token: tokenMap.BTC.key, networkConfig, passphrase });
     dispatch(accountLoggedIn({
       passphrase,
-      loginType: hwInfo ? loginType.ledger : loginType.normal,
+      loginType: hwInfo ? loginType[hwInfo.deviceModel.replace(/\s.+$/, '').toLowerCase()] : loginType.normal,
       hwInfo: hwInfo || {},
       expireTime,
       info: {
