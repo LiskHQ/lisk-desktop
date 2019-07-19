@@ -4,10 +4,9 @@ import { spy, useFakeTimers } from 'sinon';
 import { expect } from 'chai';
 import { mountWithContext } from '../../../test/unit-test-utils/mountHelpers';
 import i18n from '../../i18n';
-import HeaderV2 from './index';
-// import networks from '../../constants/networks';
+import Header from './index';
 
-describe.skip('V2 Header', () => {
+describe.skip('Header', () => {
   let wrapper;
   let clock;
   const options = {
@@ -56,7 +55,7 @@ describe.skip('V2 Header', () => {
       toFake: ['setTimeout', 'clearTimeout'],
     });
 
-    wrapper = mountWithContext(<HeaderV2 {...props} />, options);
+    wrapper = mountWithContext(<Header {...props} />, options);
   });
 
   afterEach(() => {

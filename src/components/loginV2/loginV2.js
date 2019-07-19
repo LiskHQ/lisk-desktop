@@ -14,7 +14,7 @@ import networks from '../../constants/networks';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
-import HeaderV2 from '../headerV2/index';
+import Header from '../header/index';
 import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
 import styles from './loginV2.css';
 import Piwik from '../../utils/piwik';
@@ -130,7 +130,7 @@ class LoginV2 extends React.Component {
     return (
       <React.Fragment>
         { match.url === routes.loginV2.path ? (
-          <HeaderV2 showSettings />
+          <Header showSettings />
         ) : null }
         <div className={`${styles.login} ${grid.row}`}>
           <div

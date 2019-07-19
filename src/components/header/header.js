@@ -12,13 +12,13 @@ import { parseSearchParams } from '../../utils/searchParams';
 import Icon from '../toolbox/icon';
 import UserAccount from '../topBar/accountMenu/userAccount';
 import networks from '../../constants/networks';
-import styles from './headerV2.css';
+import styles from './header.css';
 import formStyles from '../sendV2/form/form.css';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
 import svg from '../../utils/svgIcons';
 
-class HeaderV2 extends React.Component {
+class Header extends React.Component {
   // eslint-disable-next-line max-statements
   constructor() {
     super();
@@ -283,4 +283,4 @@ class HeaderV2 extends React.Component {
   }
 }
 
-export default translate()(withRouter(HeaderV2));
+export default translate()(withRouter(Header));

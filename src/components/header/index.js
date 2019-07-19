@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import HeaderV2 from './headerV2';
+import Header from './header';
 import { liskAPIClientSet } from '../../actions/peers';
 import { errorToastDisplayed } from '../../actions/toaster';
 import { settingsUpdated } from '../../actions/settings';
@@ -23,4 +23,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(HeaderV2);
+)(Header);

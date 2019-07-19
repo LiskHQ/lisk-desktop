@@ -116,7 +116,7 @@ describe('LoginV2', () => {
     //   history.location.search = '?showNetwork=true';
     //   wrapper.setProps({ history });
 
-    //   wrapper.find('HeaderV2 .option').at(2).simulate('click');
+    //   wrapper.find('Header .option').at(2).simulate('click');
     //   expect(wrapper.find('ThemedTBPrimaryButton').at(0)).to.have.className('connect-button');
     // });
 
@@ -126,7 +126,7 @@ describe('LoginV2', () => {
           match: { url: routes.addAccount.path },
         }),
       });
-      expect(wrapper).to.not.have.descendants('HeaderV2');
+      expect(wrapper).to.not.have.descendants('Header');
     });
   });
 
@@ -156,7 +156,7 @@ describe('LoginV2', () => {
     //   props.history.replace.reset();
     //   history.location.search = '?showNetwork=true';
     //   wrapper.setProps({ history });
-    //   expect(wrapper.find('HeaderV2')).to.have.prop('showNetwork');
+    //   expect(wrapper.find('Header')).to.have.prop('showNetwork');
     // });
   });
 

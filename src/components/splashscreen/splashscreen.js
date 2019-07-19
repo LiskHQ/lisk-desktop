@@ -8,7 +8,7 @@ import { parseSearchParams } from '../../utils/searchParams';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import { getNetworksList } from '../../utils/getNetwork';
 import networks from '../../constants/networks';
-import HeaderV2 from '../headerV2/index';
+import Header from '../header/index';
 import styles from './splashscreen.css';
 import Tooltip from '../toolbox/tooltip/tooltip';
 
@@ -78,7 +78,7 @@ class Splashscreen extends React.Component {
 
     return (
       <React.Fragment>
-        <HeaderV2 dark showSettings />
+        <Header dark showSettings />
         <div className={`${styles.splashscreen}`}>
           <div className={`${styles.wrapper}`}>
             <div className={`${styles.titleHolder}`}>
