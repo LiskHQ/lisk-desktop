@@ -30,7 +30,8 @@ Feature: Send
 
   Scenario: Launch protocol prefills fields  - from logged out state
     Given I follow the launch protokol link
-    When I login as genesis
+    When I enter first passphrase of genesis
+    When I login
     Then Send form fields are prefilled
 
   Scenario: Error message is shown if transfer tx fails

@@ -6,7 +6,7 @@ Feature: Delegate
     And I see 101 delegates on page
     When I click load more button
     And I see 202 delegates on page
-
+    
   Scenario: Unvote and Vote
     Given I autologin as genesis to devnet
     Given I am on Delegates page
@@ -34,7 +34,7 @@ Feature: Delegate
     When I start voting
     And Voted delegate become checked
     Given I am on Wallet page
-    Then The latest transaction is voting
+    Then The latest transaction is Delegate vote
 
   Scenario: Vote with second passphrase
     Given I autologin as second_passphrase_account to devnet

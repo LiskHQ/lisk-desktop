@@ -51,8 +51,13 @@ Given(/^I am on (.*?) page$/, function (page) {
   }
 });
 
-Then(/^The latest transaction is voting$/, function () {
-  cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).should('have.text', 'Delegate vote');
+Then(/^The latest transaction is (.*?)$/, function (transactionType) {
+  if (transactionType.indexOf('transfer') > 0) {
+    const transactionAddress = transactionType.split(' ').pop(); // For uses like: 'transfer to 123456L'
+    cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).should('have.text', transactionAddress);
+  } else {
+    cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains(/delegate vote/i);
+  }
 });
 
 Then(/^I should be on Tx Details page$/, function () {
