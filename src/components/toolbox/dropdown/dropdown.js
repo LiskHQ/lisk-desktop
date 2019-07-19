@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './dropdownV2.css';
+import styles from './dropdown.css';
 import Separator from './separator';
 import { flattenArray } from '../../../utils/helpers';
 
-const DropdownV2 = ({
+const Dropdown = ({
   showDropdown, className, showArrow, active, children,
 }) => {
   const isSelectionList = children && Array.isArray(children);
@@ -30,9 +30,9 @@ const DropdownV2 = ({
 };
 
 
-DropdownV2.displayName = 'Dropdown';
+Dropdown.displayName = 'Dropdown';
 
-DropdownV2.propTypes = {
+Dropdown.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element),
@@ -44,13 +44,13 @@ DropdownV2.propTypes = {
   active: PropTypes.number,
 };
 
-DropdownV2.defaultProps = {
+Dropdown.defaultProps = {
   showDropdown: false,
   className: '',
   showArrow: true,
   active: -1,
 };
 
-DropdownV2.Separator = Separator;
+Dropdown.Separator = Separator;
 
-export default DropdownV2;
+export default Dropdown;

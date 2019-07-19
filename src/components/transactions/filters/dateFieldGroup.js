@@ -6,7 +6,7 @@ import { getDateTimestampFromFirstBlock, formatInputToDate } from '../../../util
 import { InputV2 } from '../../toolbox/inputsV2';
 import { getInputSelection, setInputSelection } from '../../../utils/selection';
 import styles from './filters.css';
-import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
+import Dropdown from '../../toolbox/dropdown/dropdown';
 import Calendar from '../../toolbox/calendar/calendar';
 import Feedback from '../../toolbox/feedback/feedback';
 import keyCodes from '../../../constants/keyCodes';
@@ -248,7 +248,7 @@ class DateFieldGroup extends React.Component {
             data-name="dateFromDropdown"
           >
             { this.generateField({ name: 'dateFrom' }) }
-            <DropdownV2
+            <Dropdown
               className={`showLeft ${styles.calendarDropdown}`}
               showDropdown={shownDropdown === 'dateFromDropdown'}
             >
@@ -259,7 +259,7 @@ class DateFieldGroup extends React.Component {
                 maxDate={filters.dateTo}
                 date={filters.dateFrom}
               />
-            </DropdownV2>
+            </Dropdown>
           </label>
           <span className={styles.separator} />
           <label
@@ -268,7 +268,7 @@ class DateFieldGroup extends React.Component {
             data-name="dateToDropdown"
           >
             { this.generateField({ name: 'dateTo' }) }
-            <DropdownV2
+            <Dropdown
               className={`showLeft ${styles.calendarDropdown}`}
               showDropdown={shownDropdown === 'dateToDropdown'}
             >
@@ -279,7 +279,7 @@ class DateFieldGroup extends React.Component {
                 || moment(firstBlockTime).format(this.dateFormat)}
                 date={filters.dateTo}
               />
-            </DropdownV2>
+            </Dropdown>
           </label>
         </div>
         <Feedback

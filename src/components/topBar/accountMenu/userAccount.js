@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
+import Dropdown from '../../toolbox/dropdown/dropdown';
 import styles from './userAccount.css';
 import OutsideClickHandler from '../../toolbox/outsideClickHandler';
 import Icon from '../../toolbox/icon';
@@ -39,7 +39,7 @@ const UserAccount = ({
           <Icon name={`user${isDropdownEnable ? 'Active' : ''}`} />
         </span>
       )}
-      <DropdownV2
+      <Dropdown
         showArrow
         className={styles.dropdown}
         showDropdown={isDropdownEnable}
@@ -60,7 +60,7 @@ const UserAccount = ({
               : null
             }
           </span>,
-          <DropdownV2.Separator key={`separator-${tokenKey}`} className={styles.separator} />,
+          <Dropdown.Separator key={`separator-${tokenKey}`} className={styles.separator} />,
         ]) : null))}
 
         <Link
@@ -94,7 +94,7 @@ const UserAccount = ({
           <span>{t('Settings')}</span>
         </Link>
 
-        <DropdownV2.Separator className={styles.separator} />
+        <Dropdown.Separator className={styles.separator} />
 
         {isUserLogout ? (
           <Link
@@ -115,7 +115,7 @@ const UserAccount = ({
             <span>{t('Sign out')}</span>
           </span>
         )}
-      </DropdownV2>
+      </Dropdown>
     </OutsideClickHandler>
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { InputV2 } from '../inputsV2';
-import DropdownV2 from '../dropdownV2/dropdownV2';
+import Dropdown from '../dropdown/dropdown';
 import styles from './select.css';
 import OutsideClickHandler from '../outsideClickHandler';
 
@@ -54,7 +54,7 @@ class Select extends React.Component {
             size={size}
           />
         </label>
-        <DropdownV2
+        <Dropdown
           className={styles.dropdown}
           showArrow={false}
           showDropdown={isOpen}
@@ -70,7 +70,7 @@ class Select extends React.Component {
               {option.label}
             </span>
           ))}
-        </DropdownV2>
+        </Dropdown>
       </OutsideClickHandler>
     );
   }

@@ -14,7 +14,7 @@ import UserAccount from '../topBar/accountMenu/userAccount';
 import networks from '../../constants/networks';
 import styles from './header.css';
 import formStyles from '../send/form/form.css';
-import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
+import Dropdown from '../toolbox/dropdown/dropdown';
 import Spinner from '../spinner/spinner';
 import svg from '../../utils/svgIcons';
 
@@ -164,7 +164,7 @@ class Header extends React.Component {
                     ? networkList[selectedNetwork].label
                     : address || this.state.address }
                 </span>
-                <DropdownV2
+                <Dropdown
                   className={`${styles.dropdown} ${dark ? 'dark' : ''} network-dropdown`}
                   showArrow={false}
                   showDropdown={this.state.showDropdown}
@@ -255,7 +255,7 @@ class Header extends React.Component {
                       </span>
                     );
                   })}
-                </DropdownV2>
+                </Dropdown>
               </div>
               )
             }

@@ -1,19 +1,19 @@
 import React from 'react';
-import DropdownV2 from './dropdownV2';
+import Dropdown from './dropdown';
 import DemoRenderer from '../demoRenderer';
 
 const DropdownDemo = () => (
   <div>
     <h2>Dropdown</h2>
     <DemoRenderer>
-      {/* TODO improve DropdownV2 so that position: relative is not needed here */}
+      {/* TODO improve Dropdown so that position: relative is not needed here */}
       <span style={{ position: 'relative' }}>
         <span>Dropdown holder</span>
-        <DropdownV2
+        <Dropdown
           showDropdown
         >
           <span>Dropdown content</span>
-        </DropdownV2>
+        </Dropdown>
       </span>
     </DemoRenderer>
   </div>

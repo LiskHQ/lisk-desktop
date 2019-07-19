@@ -83,17 +83,17 @@ describe.skip('Header', () => {
     const { networkList } = props;
     expect(wrapper.find('.dropdownHandler')).to.be.present();
     wrapper.find('.dropdownHandler').simulate('click');
-    expect(wrapper.find('DropdownV2')).to.have.prop('showDropdown', true);
-    wrapper.find('DropdownV2 .dropdown-content').children().at(networkList[0].value).simulate('click');
-    expect(wrapper.find('DropdownV2')).to.have.prop('showDropdown', false);
+    expect(wrapper.find('Dropdown')).to.have.prop('showDropdown', true);
+    wrapper.find('Dropdown .dropdown-content').children().at(networkList[0].value).simulate('click');
+    expect(wrapper.find('Dropdown')).to.have.prop('showDropdown', false);
   });
 
   it('Should open dropdown on Network switcher click and show Connect button', () => {
     const { networkList } = props;
     expect(wrapper.find('.dropdownHandler')).to.be.present();
     wrapper.find('.dropdownHandler').simulate('click');
-    expect(wrapper.find('DropdownV2')).to.have.prop('showDropdown', true);
-    wrapper.find('DropdownV2 .dropdown-content').children().at(networkList[2].value).simulate('click');
+    expect(wrapper.find('Dropdown')).to.have.prop('showDropdown', true);
+    wrapper.find('Dropdown .dropdown-content').children().at(networkList[2].value).simulate('click');
     wrapper.find('.custom-network').first().simulate('change', { target: { value: 'localhost:4000' } });
 
     expect(wrapper).to.have.descendants('.connect-button');
@@ -103,8 +103,8 @@ describe.skip('Header', () => {
     const { networkList } = props;
     expect(wrapper.find('.dropdownHandler')).to.be.present();
     wrapper.find('.dropdownHandler').simulate('click');
-    expect(wrapper.find('DropdownV2')).to.have.prop('showDropdown', true);
-    wrapper.find('DropdownV2 .dropdown-content').children().at(networkList[2].value).simulate('click');
+    expect(wrapper.find('Dropdown')).to.have.prop('showDropdown', true);
+    wrapper.find('Dropdown .dropdown-content').children().at(networkList[2].value).simulate('click');
     wrapper.find('.custom-network').first().simulate('change', { target: { value: 'localhost:4000' } });
 
     expect(wrapper).to.have.descendants('.connect-button');

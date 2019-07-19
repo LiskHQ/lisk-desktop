@@ -4,7 +4,7 @@ import { SecondaryButton } from '../../toolbox/buttons/button';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import { getTokenFromAddress } from '../../../utils/api/transactions';
 import BookmarkDropdown from '../../bookmarks/bookmarkDropdown';
-import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
+import Dropdown from '../../toolbox/dropdown/dropdown';
 import TransactionResult from '../../transactionResult';
 import statusMessage from './statusMessages';
 import styles from './transactionStatus.css';
@@ -180,7 +180,7 @@ class TransactionStatus extends React.Component {
                   >
                     {bookmarkButtonLabel}
                   </SecondaryButton>
-                  <DropdownV2
+                  <Dropdown
                     showArrow={false}
                     showDropdown={this.state.isBookmarkDropdown}
                     className={`${styles.bookmarkDropdown}`}
@@ -193,7 +193,7 @@ class TransactionStatus extends React.Component {
                       isBookmark={isBookmarked}
                       token={token}
                     />
-                  </DropdownV2>
+                  </Dropdown>
                 </div>
               )
               : null

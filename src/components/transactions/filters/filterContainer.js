@@ -2,7 +2,7 @@ import React from 'react';
 import { translate } from 'react-i18next';
 import moment from 'moment';
 import keyCodes from '../../../constants/keyCodes';
-import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
+import Dropdown from '../../toolbox/dropdown/dropdown';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import DateFieldGroup from './dateFieldGroup';
 import MessageFieldGroup from './messageFieldGroup';
@@ -108,7 +108,7 @@ class filterContainer extends React.Component {
           <img className="button-icon" src={svg.iconFilter} />
         </SecondaryButton>
         <div className={styles.dropdownContainer}>
-          <DropdownV2 className={styles.bigDropdown} showDropdown={this.state.showFilters}>
+          <Dropdown className={styles.bigDropdown} showDropdown={this.state.showFilters}>
             <div
               className={`${styles.container} filter-container`}
               ref={(node) => { this.dropdownRef = node; }}
@@ -136,7 +136,7 @@ class filterContainer extends React.Component {
                 {this.props.t('Apply Filters')}
               </PrimaryButton>
             </div>
-          </DropdownV2>
+          </Dropdown>
         </div>
       </React.Fragment>
     );

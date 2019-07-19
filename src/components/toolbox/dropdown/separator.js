@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './dropdownV2.css';
+import styles from './dropdown.css';
 
 const Separator = ({ className }) =>
   <span className={`${styles.separator} ${className}`} />;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { SecondaryButton } from '../buttons/button';
-import DropdownV2 from '../dropdownV2/dropdownV2';
+import Dropdown from '../dropdown/dropdown';
 import OutsideClickHandler from '../outsideClickHandler';
 
 import styles from './dropdownButton.css';
@@ -38,13 +38,13 @@ class DropdownButton extends React.Component {
           <ButtonComponent onClick={this.toggleDropdown} className={buttonClassName}>
             { buttonLabel }
           </ButtonComponent>
-          <DropdownV2
+          <Dropdown
             showArrow={false}
             showDropdown={shownDropdown}
             className={`${className} ${styles.dropdown}`}
           >
             {children}
-          </DropdownV2>
+          </Dropdown>
         </OutsideClickHandler>
       </React.Fragment>
     );
