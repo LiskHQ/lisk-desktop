@@ -1,8 +1,8 @@
-@import './baseV2.css';
+@import './base.css';
 
 .button {
   min-height: 48px;
 
   @mixin buttonBasics;
-  @mixin buttonTertiaryV2;
+  @mixin buttonTertiary;
 }

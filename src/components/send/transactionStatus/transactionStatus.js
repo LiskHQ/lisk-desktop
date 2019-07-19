@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
+import { SecondaryButton } from '../../toolbox/buttons/button';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import { getTokenFromAddress } from '../../../utils/api/transactions';
 import BookmarkDropdown from '../../bookmarks/bookmarkDropdown';
@@ -159,7 +159,7 @@ class TransactionStatus extends React.Component {
           {
             isHardwareWalletError || transactions.broadcastedTransactionsError.length
               ? (
-                <SecondaryButtonV2
+                <SecondaryButton
                   label={t('Retry')}
                   className={`${styles.btn} retry`}
                   onClick={this.onRetry}
@@ -174,12 +174,12 @@ class TransactionStatus extends React.Component {
                   className={`${styles.bookmarkBtn} bookmark-container`}
                   ref={(node) => { this.bookmarkContainerRef = node; }}
                 >
-                  <SecondaryButtonV2
+                  <SecondaryButton
                     className={`${styles.btn} ${isBookmarked ? styles.bookmarkButton : ''} bookmark-btn`}
                     onClick={this.onBookmarkDropdownToggle}
                   >
                     {bookmarkButtonLabel}
-                  </SecondaryButtonV2>
+                  </SecondaryButton>
                   <DropdownV2
                     showArrow={false}
                     showDropdown={this.state.isBookmarkDropdown}

@@ -2,7 +2,7 @@ import React from 'react';
 import debounce from 'lodash.debounce';
 import Box from '../../box';
 import { InputV2 } from '../../toolbox/inputsV2';
-import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
+import { PrimaryButton } from '../../toolbox/buttons/button';
 import Feedback from '../../toolbox/feedback/feedback';
 import Spinner from '../../spinner/spinner';
 import Icon from '../../toolbox/icon';
@@ -179,13 +179,13 @@ class SelectName extends React.Component {
 
 
           <footer>
-            <PrimaryButtonV2
+            <PrimaryButton
               onClick={() => nextStep({ nickname })}
               disabled={isBtnDisabled}
               className={`${styles.confirmBtn} confirm-btn`}
             >
               {t('Go to Confirmation')}
-            </PrimaryButtonV2>
+            </PrimaryButton>
           </footer>
         </div>
       </Box>

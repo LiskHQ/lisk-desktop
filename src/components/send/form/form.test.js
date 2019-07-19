@@ -99,7 +99,7 @@ describe('Form', () => {
     expect(wrapper).toContainMatchingElement('span.recipient');
     expect(wrapper).toContainMatchingElement('span.amount');
     expect(wrapper).toContainMatchingElement('label.reference');
-    expect(wrapper).not.toContainMatchingElement('PrimaryButtonV2.btn-submit');
+    expect(wrapper).not.toContainMatchingElement('PrimaryButton.btn-submit');
   });
 
   it('should render properly with data from prevState', () => {
@@ -116,7 +116,7 @@ describe('Form', () => {
     expect(wrapper).toContainMatchingElement('span.recipient');
     expect(wrapper).toContainMatchingElement('span.amount');
     expect(wrapper).toContainMatchingElement('label.reference');
-    expect(wrapper).not.toContainMatchingElement('PrimaryButtonV2.btn-submit');
+    expect(wrapper).not.toContainMatchingElement('PrimaryButton.btn-submit');
   });
 
   it('should validate bookmark', () => {

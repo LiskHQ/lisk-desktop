@@ -2,7 +2,7 @@ import React from 'react';
 import fillWordsList from 'bitcore-mnemonic/lib/words/english';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import registerStyles from './register.css';
 import styles from './confirmPassphrase.css';
 import Options from './confirmPassphraseOptions';
@@ -159,21 +159,21 @@ class ConfirmPassphrase extends React.Component {
 
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
           <span className={`${registerStyles.button}`}>
-            <TertiaryButtonV2
+            <TertiaryButton
               className={registerStyles.backButton}
               onClick={prevStep}
             >
               {t('Go back')}
-            </TertiaryButtonV2>
+            </TertiaryButton>
           </span>
           <span className={`${registerStyles.button}`}>
-            <PrimaryButtonV2
+            <PrimaryButton
               className={`${registerStyles.continueBtn} passphrase-is-correct-button`}
               onClick={() => this.handleConfirm(this.verifyChoices())}
               disabled={!this.enableConfirmButton()}
             >
               {t('Continue')}
-            </PrimaryButtonV2>
+            </PrimaryButton>
           </span>
         </div>
       </React.Fragment>

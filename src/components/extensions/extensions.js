@@ -2,7 +2,7 @@ import React from 'react';
 
 import { InputV2 } from '../toolbox/inputsV2';
 import Box from '../box';
-import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../toolbox/buttons/button';
 import Feedback from '../toolbox/feedback/feedback';
 import localJSONStorage from '../../utils/localJSONStorage';
 import loadRemoteComponent from '../../utils/extensions';
@@ -95,13 +95,13 @@ class Extensions extends React.Component {
               </Feedback>
             ) : (
               <div className={styles.footer}>
-                <SecondaryButtonV2
+                <SecondaryButton
                   disabled={PRODUCTION || this.state.url.length === 0}
                   label={this.props.t('Remove Extension')}
                   onClick={this.removeExtension}
                 />
 
-                <PrimaryButtonV2
+                <PrimaryButton
                   disabled={PRODUCTION || (this.state.error !== ''
                     || this.state.url === localJSONStorage.get('url', ''))}
                   label={this.props.t('Add Extension')}

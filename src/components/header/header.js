@@ -2,7 +2,7 @@ import React from 'react';
 import Lisk from '@liskhq/lisk-client';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
-import { PrimaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButton } from '../toolbox/buttons/button';
 import Feedback from '../toolbox/feedback/feedback';
 import { InputV2 } from '../toolbox/inputsV2';
 import { addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
@@ -216,7 +216,7 @@ class Header extends React.Component {
                           {activeTab
                             ? (
                               <div>
-                                <PrimaryButtonV2
+                                <PrimaryButton
                                   disabled={this.state.connected}
                                 /* istanbul ignore next */
                                   onClick={(e) => {
@@ -234,7 +234,7 @@ class Header extends React.Component {
                                   className={`${styles.button} ${styles.backButton} connect-button`}
                                 >
                                   {this.state.connected ? t('Connected') : t('Connect')}
-                                </PrimaryButtonV2>
+                                </PrimaryButton>
                               </div>
                             ) : ''}
                         </span>

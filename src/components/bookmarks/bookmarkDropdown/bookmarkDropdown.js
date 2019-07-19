@@ -4,7 +4,7 @@ import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import Spinner from '../../spinner/spinner';
 import svg from '../../../utils/svgIcons';
 import { InputV2 } from '../../toolbox/inputsV2';
-import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
+import { PrimaryButton } from '../../toolbox/buttons/button';
 import styles from './bookmarkDropdown.css';
 
 class Bookmark extends React.Component {
@@ -226,20 +226,20 @@ class Bookmark extends React.Component {
           </label> */}
         {isBookmark
           ? (
-            <PrimaryButtonV2
+            <PrimaryButton
               className="bookmark-button extra-small"
               onClick={this.handleUnbookmark}
             >
               {t('Remove from bookmarks')}
-            </PrimaryButtonV2>
+            </PrimaryButton>
           ) : (
-            <PrimaryButtonV2
+            <PrimaryButton
               className="bookmark-button extra-small"
               onClick={this.handleBookmark}
               disabled={!isValid}
             >
               {t('Confirm')}
-            </PrimaryButtonV2>
+            </PrimaryButton>
           )
         }
       </section>

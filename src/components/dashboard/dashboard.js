@@ -13,7 +13,7 @@ import links from '../../constants/externalLinks';
 import { fromRawLsk } from '../../utils/lsk';
 import breakpoints from '../../constants/breakpoints';
 import fees from '../../constants/fees';
-import { SecondaryButtonV2 } from '../toolbox/buttons/button';
+import { SecondaryButton } from '../toolbox/buttons/button';
 import Banner from '../toolbox/banner/banner';
 import ExtensionPoint from '../extensionPoint';
 import LiskHubExtensions from '../../utils/liskHubExtensions';
@@ -123,7 +123,7 @@ class Dashboard extends React.Component {
               footer={(
                 <Fragment>
                   <Link to={`${routes.send.path}?recipient=${account.address}&amount=0.1&reference=Account initialization`}>
-                    <SecondaryButtonV2 className="light">{t('Create First Transaction')}</SecondaryButtonV2>
+                    <SecondaryButton className="light">{t('Create First Transaction')}</SecondaryButton>
                   </Link>
                   <a
                     className={styles.initLink}

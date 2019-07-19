@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
-import { PrimaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButton } from '../toolbox/buttons/button';
 import BookmarksList from './bookmarksList/bookmarksList';
 import PageHeader from '../toolbox/pageHeader';
 import routes from '../../constants/routes';
@@ -16,7 +16,7 @@ const Bookmarks = ({
         subtitle={t('Manage your most used accounts')}
       >
         <Link to={routes.addBookmark.path}>
-          <PrimaryButtonV2>{t('Add a new bookmark')}</PrimaryButtonV2>
+          <PrimaryButton>{t('Add a new bookmark')}</PrimaryButton>
         </Link>
       </PageHeader>
       <header>

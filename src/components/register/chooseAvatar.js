@@ -3,7 +3,7 @@ import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '../../constants/routes';
-import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import AccountVisual from '../accountVisual';
 import registerStyles from './register.css';
 import styles from './chooseAvatar.css';
@@ -97,17 +97,17 @@ class ChooseAvatar extends React.Component {
         </div>
         <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
           <Link className={`${registerStyles.button} ${registerStyles.backButton}`} to={routes.splashscreen.path}>
-            <TertiaryButtonV2>
+            <TertiaryButton>
               {t('Go back')}
-            </TertiaryButtonV2>
+            </TertiaryButton>
           </Link>
           <span className={`${registerStyles.button}`}>
-            <PrimaryButtonV2
+            <PrimaryButton
               className={`${registerStyles.continueBtn} get-passphrase-button`}
               onClick={this.handleNextStep}
             >
               {t('Continue')}
-            </PrimaryButtonV2>
+            </PrimaryButton>
           </span>
         </div>
       </React.Fragment>

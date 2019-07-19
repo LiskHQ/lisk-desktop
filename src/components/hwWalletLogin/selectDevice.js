@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import { models } from '../../constants/hwConstants';
 import routes from '../../constants/routes';
 import svgIcons from '../../utils/svgIcons';
@@ -51,21 +51,21 @@ class SelectDevice extends React.Component {
               />
               <p>{device.model}</p>
 
-              <PrimaryButtonV2
+              <PrimaryButton
                 className={`${styles.device_button} hw-device-button`}
                 onClick={() => this.onSelectDevice(device.deviceId)}
               >
                 {t('Select device')}
-              </PrimaryButtonV2>
+              </PrimaryButton>
             </div>
           ))
         }
         </div>
 
         <Link to={routes.splashscreen.path}>
-          <TertiaryButtonV2>
+          <TertiaryButton>
             {t('Go Back')}
-          </TertiaryButtonV2>
+          </TertiaryButton>
         </Link>
       </div>
     );

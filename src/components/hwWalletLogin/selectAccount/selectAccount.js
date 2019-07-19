@@ -1,5 +1,5 @@
 import React from 'react';
-import { TertiaryButtonV2 } from '../../toolbox/buttons/button';
+import { TertiaryButton } from '../../toolbox/buttons/button';
 import { displayAccounts } from '../../../utils/ledger';
 import { loginType } from '../../../constants/hwConstants';
 import routes from '../../../constants/routes';
@@ -152,12 +152,12 @@ class SelectAccount extends React.Component {
         <h1>{t('Lisk accounts on {{WalletModel}}', { WalletModel: device.model })}</h1>
         <p>
           {t('Please select the account you’d like to sign in to or')}
-          <TertiaryButtonV2
+          <TertiaryButton
             className={`${styles.createAccountBtn} create-account`}
             onClick={this.onAddNewAccount}
           >
             {t('Create account')}
-          </TertiaryButtonV2>
+          </TertiaryButton>
         </p>
 
         <div className={`${styles.deviceContainer} hw-container`}>
@@ -180,9 +180,9 @@ class SelectAccount extends React.Component {
         }
         </div>
 
-        <TertiaryButtonV2 className="go-back" onClick={() => history.push(routes.splashscreen.path)}>
+        <TertiaryButton className="go-back" onClick={() => history.push(routes.splashscreen.path)}>
           {t('Go Back')}
-        </TertiaryButtonV2>
+        </TertiaryButton>
       </div>
     );
   }

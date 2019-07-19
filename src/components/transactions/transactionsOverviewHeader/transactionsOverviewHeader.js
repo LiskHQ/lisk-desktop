@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import React from 'react';
-import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import { tokenMap } from '../../../constants/tokens';
 import BookmarkDropdown from '../../bookmarks/bookmarkDropdown';
@@ -39,9 +39,9 @@ class transactionsHeader extends React.Component {
               <Request address={address} token={activeToken} t={t} />
             </DropdownButton>
             <Link to={`${routes.send.path}?wallet`} className="tx-send-bt">
-              <PrimaryButtonV2>
+              <PrimaryButton>
                 {t('Send {{token}}', { token: activeToken })}
-              </PrimaryButtonV2>
+              </PrimaryButton>
             </Link>
           </div>
         </PageHeader>
@@ -61,15 +61,15 @@ class transactionsHeader extends React.Component {
               to={`${routes.send.path}?wallet&recipient=${address}`}
               className="send-to-address"
             >
-              <SecondaryButtonV2>
+              <SecondaryButton>
                 {t('Send {{token}} to this Account ', { token: activeToken })}
-              </SecondaryButtonV2>
+              </SecondaryButton>
             </Link>
             <DropdownButton
               buttonClassName="bookmark-account-button"
               className={`${styles.bookmarkDropdown} bookmark-account`}
               buttonLabel={isBookmark ? t('Account bookmarked') : t('Bookmark account')}
-              ButtonComponent={isBookmark ? SecondaryButtonV2 : PrimaryButtonV2}
+              ButtonComponent={isBookmark ? SecondaryButton : PrimaryButton}
             >
               <BookmarkDropdown
                 token={activeToken}

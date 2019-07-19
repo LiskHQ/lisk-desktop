@@ -4,7 +4,7 @@ import Converter from '../../converter';
 import HardwareWalletIllustration from
   '../../toolbox/hardwareWalletIllustration';
 import AccountVisual from '../../accountVisual/index';
-import { PrimaryButtonV2, TertiaryButtonV2 } from '../../toolbox/buttons/button';
+import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 import fees from '../../../constants/fees';
 import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
 import { loginType } from '../../../constants/hwConstants';
@@ -305,7 +305,7 @@ class Summary extends React.Component {
           {this.props.account.hwInfo && this.props.account.hwInfo.deviceId ? null
             : (
               <React.Fragment>
-                <PrimaryButtonV2
+                <PrimaryButton
                   className={`${styles.confirmBtn} on-nextStep send-button`}
                   onClick={this.submitTransaction}
                   disabled={
@@ -314,10 +314,10 @@ class Summary extends React.Component {
                   }
                 >
                   {this.getConfirmButtonLabel()}
-                </PrimaryButtonV2>
-                <TertiaryButtonV2 className={`${styles.editBtn} on-prevStep`} onClick={this.prevStep}>
+                </PrimaryButton>
+                <TertiaryButton className={`${styles.editBtn} on-prevStep`} onClick={this.prevStep}>
                   {t('Edit transaction')}
-                </TertiaryButtonV2>
+                </TertiaryButton>
               </React.Fragment>
             )}
         </footer>

@@ -1,7 +1,7 @@
 // eslint-disable-line max-lines
 import React from 'react';
 import Converter from '../../converter';
-import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
+import { PrimaryButton } from '../../toolbox/buttons/button';
 import { InputV2, AutoresizeTextarea } from '../../toolbox/inputsV2';
 import { getNetworkCode } from '../../../utils/api/btc/network';
 import AutoSuggest from '../autoSuggest';
@@ -617,13 +617,13 @@ class Form extends React.Component {
         </div>
 
         <footer className={`${styles.footer}`}>
-          <PrimaryButtonV2
+          <PrimaryButton
             className={`${styles.confirmButton} btn-submit send-next-button`}
             disabled={!isBtnEnabled}
             onClick={this.onGoNext}
           >
             {t('Go to Confirmation')}
-          </PrimaryButtonV2>
+          </PrimaryButton>
         </footer>
       </Box>
     );

@@ -4,7 +4,7 @@ import { validateAddress } from '../../../utils/validators';
 import networks from '../../../constants/networks';
 import Box from '../../box';
 import { InputV2 } from '../../toolbox/inputsV2';
-import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
+import { PrimaryButton } from '../../toolbox/buttons/button';
 import Feedback from '../../toolbox/feedback/feedback';
 import styles from './addBookmark.css';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
@@ -234,12 +234,12 @@ class AddBookmark extends React.Component {
                 </label>
               ))}
               <div className={styles.buttonHolder}>
-                <PrimaryButtonV2
+                <PrimaryButton
                   disabled={isDisabled}
                   onClick={this.handleAddBookmark}
                 >
                   {t('Add bookmark')}
-                </PrimaryButtonV2>
+                </PrimaryButton>
               </div>
             </div>
           </Box>

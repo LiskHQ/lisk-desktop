@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SecondaryButtonV2 } from '../buttons/button';
+import { SecondaryButton } from '../buttons/button';
 import DropdownV2 from '../dropdownV2/dropdownV2';
 import OutsideClickHandler from '../outsideClickHandler';
 
@@ -55,7 +55,7 @@ DropdownButton.defaultProps = {
   className: '',
   buttonLabel: '',
   buttonClassName: '',
-  ButtonComponent: SecondaryButtonV2,
+  ButtonComponent: SecondaryButton,
 };
 
 export default DropdownButton;
