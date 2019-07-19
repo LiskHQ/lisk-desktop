@@ -304,21 +304,22 @@ class Summary extends React.Component {
         <footer className={`${styles.footer} summary-footer`}>
           {this.props.account.hwInfo && this.props.account.hwInfo.deviceId ? null
             : (
-              <PrimaryButtonV2
-                className={`${styles.confirmBtn} on-nextStep send-button`}
-                onClick={this.submitTransaction}
-                disabled={
-                  (secondPassphrase.hasSecondPassphrase
-                    && !secondPassphrase.isValid)
-                }
-              >
-                {this.getConfirmButtonLabel()}
-              </PrimaryButtonV2>
+              <React.Fragment>
+                <PrimaryButtonV2
+                  className={`${styles.confirmBtn} on-nextStep send-button`}
+                  onClick={this.submitTransaction}
+                  disabled={
+                    (secondPassphrase.hasSecondPassphrase
+                      && !secondPassphrase.isValid)
+                  }
+                >
+                  {this.getConfirmButtonLabel()}
+                </PrimaryButtonV2>
+                <TertiaryButtonV2 className={`${styles.editBtn} on-prevStep`} onClick={this.prevStep}>
+                  {t('Edit transaction')}
+                </TertiaryButtonV2>
+              </React.Fragment>
             )}
-
-          <TertiaryButtonV2 className={`${styles.editBtn} on-prevStep`} onClick={this.prevStep}>
-            {t('Edit transaction')}
-          </TertiaryButtonV2>
         </footer>
       </Box>
     );
