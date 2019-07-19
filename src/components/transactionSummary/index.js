@@ -1,9 +1,9 @@
 import React from 'react';
-
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
 import { extractPublicKey } from '../../utils/account';
+import BoxV2 from '../boxV2';
 import CheckBox from '../toolbox/checkBox';
-import Illustration from '../toolbox/illustration';
+import HardwareWalletIllustration from '../toolbox/hardwareWalletIllustration';
 import PassphraseInputV2 from '../passphraseInputV2/passphraseInputV2';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import links from '../../constants/externalLinks';
@@ -24,7 +24,6 @@ class TransactionSummary extends React.Component {
     };
     this.checkSecondPassphrase = this.checkSecondPassphrase.bind(this);
     this.confirmOnClick = this.confirmOnClick.bind(this);
-    this.getHwWalletIllustration = this.getHwWalletIllustration.bind(this);
     this.onConfirmationChange = this.onConfirmationChange.bind(this);
   }
 
@@ -69,13 +68,6 @@ class TransactionSummary extends React.Component {
     });
   }
 
-  getHwWalletIllustration() {
-    return {
-      'Trezor Model T': 'trezorLight',
-      'Ledger Nano S': 'ledgerNanoLight',
-    }[this.props.account.hwInfo.deviceModel];
-  }
-
   onConfirmationChange() {
     this.setState({
       isConfirmed: !this.state.isConfirmed,
@@ -91,26 +83,15 @@ class TransactionSummary extends React.Component {
     } = this.state;
 
     return (
-      <div className={`${styles.wrapper} ${classNames}`}>
+      <BoxV2 className={`${styles.wrapper} ${classNames}`}>
         <header className="summary-header">
-          {
-        isHardwareWalletConnected
-          ? (
-            <React.Fragment>
-              <h1>
-                {' '}
-                {t('Confirm transaction on your {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })}
-                {' '}
-              </h1>
-              <p>{t('Please check if all the transaction details are correct.')}</p>
-              <Illustration name={this.getHwWalletIllustration()} />
-            </React.Fragment>
-          )
-          : null
-      }
-          <h2>{title}</h2>
+          <h2>
+            {title}
+            {isHardwareWalletConnected ? t(' - Confirm transaction on your {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel }) : ''}
+          </h2>
         </header>
         <div className={styles.content}>
+          <HardwareWalletIllustration account={account} size="s" />
           {children}
           <section>
             <label>
@@ -211,7 +192,7 @@ LSK
           </footer>
         )
     }
-      </div>
+      </BoxV2>
     );
   }
 }

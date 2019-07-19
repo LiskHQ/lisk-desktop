@@ -215,6 +215,7 @@ const handleSentError = ({
       text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
       break;
     case loginType.ledger:
+    case loginType.trezor:
       text = i18next.t('You have cancelled the transaction on your hardware wallet. You can either continue or retry.');
       break;
     default:

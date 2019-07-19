@@ -8,6 +8,7 @@ import DropdownButtonDemo from './dropdownButton/demo';
 import IconDemo from './icon/demo';
 import InputDemo from './inputsV2/demo';
 import IllustrationDemo from './illustration/demo';
+import HardwareWalletIllustrationDemo from './hardwareWalletIllustration/demo';
 import OnboardingDemo from './onboarding/demo';
 import TooltipDemo from './tooltip/demo';
 import PageHeaderDemo from './pageHeader/demo';
@@ -27,6 +28,7 @@ const ToolboxDemo = () => (
     <IconDemo />
     <InputDemo />
     <IllustrationDemo />
+    <HardwareWalletIllustrationDemo />
     <OnboardingDemo />
     <PageHeaderDemo />
     <TooltipDemo />
