@@ -5,7 +5,7 @@ import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
 import { InputV2, AutoresizeTextarea } from '../../toolbox/inputsV2';
 import { getNetworkCode } from '../../../utils/api/btc/network';
 import AutoSuggest from '../autoSuggest';
-import SpinnerV2 from '../../spinnerV2/spinnerV2';
+import Spinner from '../../spinner/spinner';
 import svg from '../../../utils/svgIcons';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
@@ -435,7 +435,7 @@ class Form extends React.Component {
         <span>
           {t('Loading')}
           {' '}
-          <SpinnerV2 className={styles.loading} />
+          <Spinner className={styles.loading} />
         </span>
       );
     }
@@ -494,7 +494,7 @@ class Form extends React.Component {
                 value={fields.amount.value}
                 error={fields.amount.error}
               />
-              <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`} />
+              <Spinner className={`${styles.spinner} ${this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`} />
               <img
                 className={`${styles.status} ${!this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}
                 src={fields.amount.error ? svg.alert_icon : svg.ok_icon}

@@ -6,7 +6,7 @@ import TransactionAddress from '../transactions/address/TransactionAddress';
 import TransactionAmount from '../transactions/amount/TransactionAmount';
 import TransactionDetailV2 from './transactionDetailV2';
 import styles from './transactionRowV2.css';
-import SpinnerV2 from '../spinnerV2/spinnerV2';
+import Spinner from '../spinner/spinner';
 import LiskAmount from '../liskAmount';
 import { DateTimeFromTimestamp } from '../timestamp/index';
 import TableRow from '../toolbox/table/tableRow';
@@ -82,7 +82,7 @@ class TransactionRowV2 extends React.Component {
         </div>
         <div className={`${columnClassNames.date} transactions-cell`}>
           <div className={`${styles.status} ${!isConfirmed ? styles.showSpinner : styles.showDate}`}>
-            <SpinnerV2 completed={hasConfirmations} label={t('Pending...')} />
+            <Spinner completed={hasConfirmations} label={t('Pending...')} />
             <DateTimeFromTimestamp time={value.timestamp} token={token} />
           </div>
         </div>

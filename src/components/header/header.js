@@ -15,7 +15,7 @@ import networks from '../../constants/networks';
 import styles from './header.css';
 import formStyles from '../send/form/form.css';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
-import SpinnerV2 from '../spinnerV2/spinnerV2';
+import Spinner from '../spinner/spinner';
 import svg from '../../utils/svgIcons';
 
 class Header extends React.Component {
@@ -194,7 +194,7 @@ class Header extends React.Component {
                             className={`custom-network ${formStyles.input} ${this.state.validationError ? styles.errorInput : ''}`}
                           />
                           <div className={styles.icons}>
-                            <SpinnerV2 className={`${styles.spinner} ${this.state.isValidationLoading && this.state.address ? styles.show : styles.hide}`} />
+                            <Spinner className={`${styles.spinner} ${this.state.isValidationLoading && this.state.address ? styles.show : styles.hide}`} />
                             <img
                               className={`${styles.status} ${!this.state.isValidationLoading && this.state.address && !this.state.isFirstTime
                                 ? styles.show : styles.hide}`}

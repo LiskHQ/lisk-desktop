@@ -58,7 +58,7 @@ describe('Recipient Input', () => {
   it('should render properly', () => {
     expect(wrapper).toContainMatchingElement('.recipient');
     expect(wrapper).toContainMatchingElement('InputV2.input');
-    expect(wrapper).toContainMatchingElement('SpinnerV2.spinner');
+    expect(wrapper).toContainMatchingElement('Spinner.spinner');
     expect(wrapper).toContainMatchingElement('.bookmark-list');
   });
 

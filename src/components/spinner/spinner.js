@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './spinnerV2.css';
+import styles from './spinner.css';
 
-const SpinnerV2 = ({ label, className, completed }) => (
+const Spinner = ({ label, className, completed }) => (
   <span className={`${styles.wrapper} ${className}`}>
     <span className={`${styles.spinner} ${completed ? styles.completed : ''} spinner`} />
     {label
@@ -11,10 +11,10 @@ const SpinnerV2 = ({ label, className, completed }) => (
   </span>
 );
 
-SpinnerV2.defaultProps = {
+Spinner.defaultProps = {
   label: '',
   className: '',
   completed: false,
 };
 
-export default SpinnerV2;
+export default Spinner;

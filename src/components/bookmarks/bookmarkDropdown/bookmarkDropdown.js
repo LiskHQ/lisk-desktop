@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
-import SpinnerV2 from '../../spinnerV2/spinnerV2';
+import Spinner from '../../spinner/spinner';
 import svg from '../../../utils/svgIcons';
 import { InputV2 } from '../../toolbox/inputsV2';
 import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
@@ -199,7 +199,7 @@ class Bookmark extends React.Component {
             {!fields.accountName.isReadOnly
               ? (
                 <React.Fragment>
-                  <SpinnerV2 className={`${styles.status} ${fields.accountName.loading && fields.accountName.value ? styles.show : ''}`} />
+                  <Spinner className={`${styles.status} ${fields.accountName.loading && fields.accountName.value ? styles.show : ''}`} />
                   <img
                     className={`${styles.status} ${!fields.accountName.loading && fields.accountName.value ? styles.show : ''}`}
                     src={fields.accountName.error ? svg.alert_icon : svg.ok_icon}

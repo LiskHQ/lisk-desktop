@@ -2,7 +2,7 @@ import React from 'react';
 import { translate } from 'react-i18next';
 import { InputV2 } from '../../toolbox/inputsV2';
 import Feedback from '../../toolbox/feedback/feedback';
-import SpinnerV2 from '../../spinnerV2/spinnerV2';
+import Spinner from '../../spinner/spinner';
 import svg from '../../../utils/svgIcons';
 import styles from './filters.css';
 
@@ -106,7 +106,7 @@ class AmountFieldGroup extends React.Component {
           onKeyDown={handleKeyPress}
           className={`${styles.input} ${fields[data.name].error ? 'error' : ''} ${data.name}Input`}
         />
-        <SpinnerV2
+        <Spinner
           className={`${styles.status} ${fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
         />
         <img

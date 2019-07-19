@@ -74,6 +74,6 @@ describe('TransactionsList V2', () => {
       loading: [actionTypes.loadTransactions],
     };
     wrapper = mount(<TransactionsListV2 {...loadingProps} />, options);
-    expect(wrapper).to.have.descendants('SpinnerV2');
+    expect(wrapper).to.have.descendants('Spinner');
   });
 });

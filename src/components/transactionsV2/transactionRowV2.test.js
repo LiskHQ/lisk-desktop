@@ -74,7 +74,7 @@ describe('TransactionRow V2', () => {
     wrapper.find('.transactions-cell').at(0).simulate('click');
   });
 
-  it('should render SpinnerV2 if no value.confirmations" ', () => {
+  it('should render Spinner if no value.confirmations" ', () => {
     rowData.confirmations = undefined;
     const wrapper = mount(<Router>
       <TransactionRowV2

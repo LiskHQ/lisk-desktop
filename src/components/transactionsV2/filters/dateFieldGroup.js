@@ -10,7 +10,7 @@ import DropdownV2 from '../../toolbox/dropdownV2/dropdownV2';
 import Calendar from '../../toolbox/calendar/calendar';
 import Feedback from '../../toolbox/feedback/feedback';
 import keyCodes from '../../../constants/keyCodes';
-import SpinnerV2 from '../../spinnerV2/spinnerV2';
+import Spinner from '../../spinner/spinner';
 import svg from '../../../utils/svgIcons';
 
 class DateFieldGroup extends React.Component {
@@ -223,7 +223,7 @@ class DateFieldGroup extends React.Component {
           onKeyDown={this.handleKey}
           className={`${styles.input} ${fields[data.name].error ? 'error' : ''} ${data.name}Input`}
         />
-        <SpinnerV2
+        <Spinner
           className={`${styles.status} ${fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
         />
         <img

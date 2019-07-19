@@ -3,7 +3,7 @@ import AccountVisual from '../../accountVisual/index';
 import { InputV2 } from '../../toolbox/inputsV2';
 import keyCodes from '../../../constants/keyCodes';
 import svg from '../../../utils/svgIcons';
-import SpinnerV2 from '../../spinnerV2/spinnerV2';
+import Spinner from '../../spinner/spinner';
 import Feedback from '../../toolbox/feedback/feedback';
 import styles from './autoSuggest.css';
 
@@ -152,7 +152,7 @@ class AutoSuggest extends React.Component {
             onKeyDown={this.onHandleKeyPress}
             onChange={this.onChange}
           />
-          <SpinnerV2 className={`${styles.spinner} ${this.state.isLoading && recipient.value ? styles.show : styles.hide}`} />
+          <Spinner className={`${styles.spinner} ${this.state.isLoading && recipient.value ? styles.show : styles.hide}`} />
           <img
             className={`${styles.status} ${!this.state.isLoading && recipient.value ? styles.show : styles.hide}`}
             src={recipient.error ? svg.alert_icon : svg.ok_icon}
