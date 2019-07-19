@@ -6,7 +6,7 @@ import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button
 import { tokenMap } from '../../../constants/tokens';
 import AccountVisual from '../../accountVisual';
 import Box from '../../box';
-import EmptyState from '../../emptyStateV2';
+import EmptyState from '../../emptyState';
 import regex from '../../../utils/regex';
 import routes from '../../../constants/routes';
 import styles from './bookmarksList.css';
