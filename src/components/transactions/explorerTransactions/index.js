@@ -46,7 +46,8 @@ export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
 )(translate()(withData({
-  apiUtil: getVotes,
-  getApiParams: state => ({ address: state.account.address }),
-  propName: 'votes',
+  votes: {
+    apiUtil: getVotes,
+    getApiParams: state => ({ address: state.account.address }),
+  },
 })(ExplorerTransactions))));
