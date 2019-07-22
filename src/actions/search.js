@@ -32,6 +32,7 @@ const searchDelegate = ({ publicKey, address }) =>
   };
 
 
+// TODO remove this action and use src/utils/withData.js instead
 export const fetchVotedDelegateInfo = (votes, {
   showingVotes = 30, address, offset = 0, limit = 101, filter = '',
 }) =>
@@ -87,6 +88,7 @@ const searchVotes = ({ address }) =>
     dispatch(loadingFinished(actionTypes.searchVotes));
   };
 
+// TODO remove this action and use src/utils/withData.js instead
 export const searchAccount = ({ address }) =>
   (dispatch, getState) => {
     const networkConfig = getState().network;
@@ -107,6 +109,7 @@ export const searchAccount = ({ address }) =>
     }
   };
 
+// TODO remove this action and use src/utils/withData.js instead
 export const searchTransactions = ({
   address, limit, filter, showLoading = true, customFilters = {},
   actionType = actionTypes.searchTransactions,
@@ -149,6 +152,7 @@ export const searchTransactions = ({
     }
   };
 
+// TODO remove this action and use src/utils/withData.js instead
 export const searchMoreTransactions = params => (
   searchTransactions({
     ...params,
@@ -156,11 +160,13 @@ export const searchMoreTransactions = params => (
   })
 );
 
+// TODO remove this action and use src/utils/withData.js instead
 export const clearSearchSuggestions = () => ({
   data: {},
   type: actionTypes.searchClearSuggestions,
 });
 
+// TODO remove this action and use src/utils/withData.js instead
 export const searchSuggestions = ({ searchTerm, callback = () => {} }) =>
   (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;

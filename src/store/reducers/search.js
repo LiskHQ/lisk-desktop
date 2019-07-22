@@ -1,3 +1,4 @@
+// TODO remove this reducer and use src/utils/withData.js instead
 import actionTypes from '../../constants/actions';
 
 // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
