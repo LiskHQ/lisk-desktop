@@ -74,6 +74,12 @@ function withData(apis = {}) {
       }
     }
 
+    function getDisplayName() {
+      return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+    }
+
+    DataProvider.displayName = `DataProvider(${getDisplayName()})`;
+
     const mapStateToProps = (state, ownProps) => ({
       apiClient: getAPIClient(state.settings.token.active, state),
       apiParams: Object.keys(apis).reduce((acc, key) => {
