@@ -177,8 +177,8 @@ class ExplorerTransactions extends React.Component {
                   history={this.props.history}
                   address={this.props.address}
                   fetchVotedDelegateInfo={this.props.fetchVotedDelegateInfo}
-                  loading={this.props.loading}
-                  votes={this.props.votes}
+                  loading={this.props.votes.loading}
+                  votes={this.props.votes.data}
                   tabClassName="account-info"
                   tabName={this.props.t('Votes')}
                 />
