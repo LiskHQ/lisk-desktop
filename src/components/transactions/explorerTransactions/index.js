@@ -48,6 +48,6 @@ export default withRouter(connect(
 )(translate()(withData({
   votes: {
     apiUtil: getVotes,
-    getApiParams: state => ({ address: state.account.address }),
+    getApiParams: (state, ownProps) => ({ address: ownProps.match.params.address }),
   },
 })(ExplorerTransactions))));
