@@ -30,15 +30,14 @@ class App extends React.Component {
   }
 
   render() {
-    const { t, history } = this.props;
+    const {
+      history,
+      location,
+      t,
+    } = this.props;
     const allRoutes = Object.values(routes);
-
-    const defaultRoutes = allRoutes.filter(routeObj =>
-      routeObj.component);
-
+    const defaultRoutes = allRoutes.filter(routeObj => routeObj.component);
     const routesV2Layout = allRoutes.filter(routeObj => routeObj.isV2Layout);
-
-    const { location } = this.props;
 
     return (
       <OfflineWrapper>
@@ -48,31 +47,30 @@ class App extends React.Component {
             ? (
               <main
                 className={this.state.loaded
-                  ? `${stylesV2.v2Wrapper} ${stylesV2.loaded} appLoaded`
-                  : `${styles.v2Wrapper}`
-            }
+                  ? `${stylesV2.v2Wrapper} ${styles.loaded} appLoaded`
+                  : `${styles.v2Wrapper}`}
                 ref={(el) => { this.main = el; }}
               >
                 <Switch>
-                  {this.state.loaded
-                  && routesV2Layout.map((route, key) => (
-                    <Route
-                      path={route.path}
-                      key={key}
-                      component={route.component}
-                      exact={route.exact}
-                    />
-                  ))
-                }
+                  {
+                    this.state.loaded && routesV2Layout.map((route, key) => (
+                      <Route
+                        path={route.path}
+                        key={key}
+                        component={route.component}
+                        exact={route.exact}
+                      />
+                    ))
+                  }
                 </Switch>
                 <Toaster />
               </main>
-            ) : (
+            )
+            : (
               <main
                 className={this.state.loaded
                   ? `${styles.bodyWrapper} ${styles.loaded} appLoaded`
-                  : `${styles.bodyWrapper}`
-            }
+                  : `${styles.bodyWrapper}`}
                 ref={(el) => { this.main = el; }}
               >
                 <TopBar />
@@ -87,19 +85,19 @@ class App extends React.Component {
                   />
                   <div className={styles.mainBox}>
                     <Switch>
-                      {this.state.loaded
-                      && defaultRoutes.map(route => (
-                        <CustomRoute
-                          path={route.path}
-                          pathSuffix={route.pathSuffix}
-                          component={route.component}
-                          isPrivate={route.isPrivate}
-                          exact={route.exact}
-                          forbiddenTokens={route.forbiddenTokens}
-                          key={route.path}
-                        />
-                      ))
-                    }
+                      {
+                        this.state.loaded && defaultRoutes.map(route => (
+                          <CustomRoute
+                            path={route.path}
+                            pathSuffix={route.pathSuffix}
+                            component={route.component}
+                            isPrivate={route.isPrivate}
+                            exact={route.exact}
+                            forbiddenTokens={route.forbiddenTokens}
+                            key={route.path}
+                          />
+                        ))
+                      }
                       <Route path="*" component={NotFound} />
                     </Switch>
                   </div>
