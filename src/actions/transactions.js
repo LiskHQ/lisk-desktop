@@ -30,7 +30,10 @@ export const cleanTransactions = () => ({
  * @param {Object} data - the transaction object
  */
 export const addPendingTransaction = data => ({
-  data,
+  data: {
+    ...data,
+    senderId: extractAddress(data.senderPublicKey),
+  },
   type: actionTypes.addPendingTransaction,
 });
 
@@ -372,10 +375,7 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
     dispatch(broadcastedTransactionSuccess(transaction));
 
     if (activeToken !== tokenMap.BTC.key) {
-      dispatch(addPendingTransaction({
-        ...transaction,
-        senderId: extractAddress(transaction.senderPublicKey),
-      }));
+      dispatch(addPendingTransaction(transaction));
     }
 
     return dispatch(passphraseUsed(transaction.passphrase));
