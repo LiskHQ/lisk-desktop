@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
+import { translate } from 'react-i18next';
 import styles from './app.css';
 import stylesV2 from './appV2.css';
 import Toaster from '../toaster';
@@ -8,8 +9,9 @@ import LoadingBar from '../loadingBar';
 import OfflineWrapper from '../offlineWrapper';
 import CustomRoute from '../customRoute';
 import Dialog from '../dialog';
+import FlashMessage from '../toolbox/flashMessage/flashMessage';
 import NotFound from '../notFound';
-
+import externalLinks from '../../constants/externalLinks';
 import routes from '../../constants/routes';
 // eslint-disable-next-line import/no-named-as-default
 
@@ -28,6 +30,7 @@ class App extends React.Component {
   }
 
   render() {
+    const { t, history } = this.props;
     const allRoutes = Object.values(routes);
 
     const defaultRoutes = allRoutes.filter(routeObj =>
@@ -74,6 +77,14 @@ class App extends React.Component {
               >
                 <TopBar />
                 <section>
+                  <FlashMessage
+                    iconName="warningIcon"
+                    displayText={t('We advise all users to initialize their account as soon as possible. To do so, simply make one outgoing transaction.')}
+                    buttonText={t('Initialize account')}
+                    linkCaption={t('Learn more')}
+                    linkUrl={externalLinks.accountInitialization}
+                    onButtonClick={() => { history.push(routes.send.path); }}
+                  />
                   <div className={styles.mainBox}>
                     <Switch>
                       {this.state.loaded
@@ -103,4 +114,4 @@ class App extends React.Component {
   }
 }
 
-export default withRouter(App);
+export default translate()(withRouter(App));

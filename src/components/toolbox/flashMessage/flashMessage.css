@@ -1,0 +1,42 @@
+@import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
+
+.wrapper {
+  width: 100%;
+  height: 56px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 24px;
+  background-color: var(--color-maastricht-blue);
+  box-sizing: border-box;
+
+  & img {
+    margin-right: 7px;
+  }
+
+  & .text,
+  & .externalLink,
+  & .button {
+    @mixin contentNormal;
+
+    color: var(--color-mystic);
+  }
+
+  & .externalLink {
+    @mixin contentNormal bold;
+
+    text-decoration: none;
+    margin-left: 10px;
+  }
+
+  & .button {
+    @mixin contentNormal bold;
+
+    color: var(--color-mystic) !important;
+    height: 36px !important;
+    border: 1px solid var(--light-border-color);
+    margin-left: auto;
+  }
+}

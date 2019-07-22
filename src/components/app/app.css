@@ -22,7 +22,7 @@ body {
   z-index: 0;
 
   & > section {
-    margin-top: 85px;
+    margin-top: 73px;
     width: 100%;
     opacity: 0;
     transition: all ease 250ms;
