@@ -6,7 +6,7 @@ import CheckBoxDemo from './checkBox/demo';
 import DropdownDemo from './dropdown/demo';
 import DropdownButtonDemo from './dropdownButton/demo';
 import IconDemo from './icon/demo';
-import InputDemo from './inputsV2/demo';
+import InputDemo from './inputs/demo';
 import IllustrationDemo from './illustration/demo';
 import HardwareWalletIllustrationDemo from './hardwareWalletIllustration/demo';
 import OnboardingDemo from './onboarding/demo';

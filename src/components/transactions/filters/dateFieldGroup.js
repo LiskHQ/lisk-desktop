@@ -3,7 +3,7 @@ import moment from 'moment';
 import { translate } from 'react-i18next';
 import { firstBlockTime } from '../../../constants/datetime';
 import { getDateTimestampFromFirstBlock, formatInputToDate } from '../../../utils/datetime';
-import { InputV2 } from '../../toolbox/inputsV2';
+import { Input } from '../../toolbox/inputs';
 import { getInputSelection, setInputSelection } from '../../../utils/selection';
 import styles from './filters.css';
 import Dropdown from '../../toolbox/dropdown/dropdown';
@@ -211,7 +211,7 @@ class DateFieldGroup extends React.Component {
 
     return (
       <label className={styles.fieldHolder}>
-        <InputV2
+        <Input
           setRef={this.setInputRefs}
           autoComplete="off"
           onChange={this.handleFieldChange}

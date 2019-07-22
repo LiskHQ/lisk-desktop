@@ -2,7 +2,7 @@
 import React from 'react';
 import Converter from '../../converter';
 import { PrimaryButton } from '../../toolbox/buttons/button';
-import { InputV2, AutoresizeTextarea } from '../../toolbox/inputsV2';
+import { Input, AutoresizeTextarea } from '../../toolbox/inputs';
 import { getNetworkCode } from '../../../utils/api/btc/network';
 import AutoSuggest from '../autoSuggest';
 import Spinner from '../../spinner/spinner';
@@ -481,7 +481,7 @@ class Form extends React.Component {
           <label className={`${styles.fieldGroup}`}>
             <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
             <span className={`${styles.amountField} amount`}>
-              <InputV2
+              <Input
                 autoComplete="off"
                 onChange={this.onAmountOrReferenceChange}
                 name="amount"

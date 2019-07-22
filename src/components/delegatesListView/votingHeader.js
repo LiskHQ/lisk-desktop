@@ -2,7 +2,7 @@ import React from 'react';
 import voteFilters from '../../constants/voteFilters';
 import Piwik from '../../utils/piwik';
 import Tabs from '../toolbox/tabs';
-import { InputV2 } from '../toolbox/inputsV2';
+import { Input } from '../toolbox/inputs';
 
 
 class VotingHeader extends React.Component {
@@ -66,7 +66,7 @@ class VotingHeader extends React.Component {
           : <h2>{t('All delegates')}</h2>
         }
         <span>
-          <InputV2
+          <Input
             size="xs"
             className="search"
             value={this.state.query}

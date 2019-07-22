@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Lisk from '@liskhq/lisk-client';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import styles from './signMessage.css';
-import { AutoresizeTextarea } from '../toolbox/inputsV2';
+import { AutoresizeTextarea } from '../toolbox/inputs';
 import { SecondaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import routes from '../../constants/routes';
 

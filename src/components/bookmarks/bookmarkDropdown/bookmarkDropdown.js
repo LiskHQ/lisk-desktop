@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import Spinner from '../../spinner/spinner';
 import svg from '../../../utils/svgIcons';
-import { InputV2 } from '../../toolbox/inputsV2';
+import { Input } from '../../toolbox/inputs';
 import { PrimaryButton } from '../../toolbox/buttons/button';
 import styles from './bookmarkDropdown.css';
 
@@ -186,7 +186,7 @@ class Bookmark extends React.Component {
         <label className={`${styles.fieldGroup}`}>
           <span className={`${styles.fieldLabel}`}>{t('Account name')}</span>
           <span className={`${styles.fieldInput} account-title`}>
-            <InputV2
+            <Input
               maxLength={40}
               autoComplete="off"
               onChange={this.handleAccountNameChange}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputV2 } from '../toolbox/inputsV2';
+import { Input } from '../toolbox/inputs';
 import Accounts from './accounts';
 import Delegates from './delegates';
 import Transactions from './transactions';
@@ -133,7 +133,7 @@ class SearchBar extends React.Component {
 
     return (
       <div className={`${styles.wrapper} search-bar`}>
-        <InputV2
+        <Input
           icon="searchInput"
           size="m"
           data-name="searchInput"

@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import { AutoresizeTextarea } from '../../toolbox/inputsV2';
+import { AutoresizeTextarea } from '../../toolbox/inputs';
 import Feedback from '../../toolbox/feedback/feedback';
 import CircularProgress from '../../toolbox/circularProgress/circularProgress';
 import svg from '../../../utils/svgIcons';

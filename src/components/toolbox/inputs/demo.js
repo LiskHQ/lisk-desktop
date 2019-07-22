@@ -1,6 +1,6 @@
 import React from 'react';
 import DemoRenderer, { DarkWrapper } from '../demoRenderer';
-import { InputV2, AutoresizeTextarea } from '.';
+import { Input, AutoresizeTextarea } from '.';
 import Feedback from '../feedback/feedback';
 import Icon from '../icon';
 import Spinner from '../../spinner/spinner';
@@ -10,26 +10,26 @@ const onChange = console.log;
 
 const InputsDemo = () => (
   <div>
-    <h2>InputV2</h2>
+    <h2>Input</h2>
     <DemoRenderer>
-      <InputV2
+      <Input
         onChange={onChange}
         value=""
         placeholder="Input demo placeholder (default: size L)"
       />
-      <InputV2
+      <Input
         size="m"
         onChange={onChange}
         value=""
         placeholder="Input demo placeholder (size M)"
       />
-      <InputV2
+      <Input
         size="s"
         onChange={onChange}
         value=""
         placeholder="Input demo placeholder (size S)"
       />
-      <InputV2
+      <Input
         size="xs"
         onChange={onChange}
         value=""
@@ -37,29 +37,29 @@ const InputsDemo = () => (
       />
     </DemoRenderer>
     <DemoRenderer>
-      <InputV2
+      <Input
         onChange={onChange}
         name="demo"
         value="ok value"
       />
-      {/* TODO fix InputV2 to accept props.status='ok' so that next line is not needed */}
+      {/* TODO fix Input to accept props.status='ok' so that next line is not needed */}
       <Icon name="ok_icon" />
-      <InputV2
+      <Input
         onChange={onChange}
         name="demo"
         value="validating..."
       />
-      {/* TODO fix InputV2 to accept props.status='pending' so that next line is not needed */}
+      {/* TODO fix Input to accept props.status='pending' so that next line is not needed */}
       <Spinner />
-      <InputV2
+      <Input
         onChange={onChange}
         name="demo"
         value="0alkawja;jk"
         className="error"
       />
-      {/* TODO fix InputV2 to accept props.status='error' so that next line is not needed */}
+      {/* TODO fix Input to accept props.status='error' so that next line is not needed */}
       <Icon name="alert_icon" />
-      {/* TODO fix InputV2 to accept props.error='<message>' so that next line is not needed */}
+      {/* TODO fix Input to accept props.error='<message>' so that next line is not needed */}
       <Feedback
         show
         status="error"
@@ -70,22 +70,22 @@ const InputsDemo = () => (
     </DemoRenderer>
     <DemoRenderer>
       <DarkWrapper>
-        {/* TODO fix InputV2 to change to dark mode when props.dark={true} */}
-        <InputV2
+        {/* TODO fix Input to change to dark mode when props.dark={true} */}
+        <Input
           dark
           onChange={onChange}
           name="demo"
           value="ok value"
         />
         <Icon name="ok_icon" />
-        <InputV2
+        <Input
           dark
           onChange={onChange}
           name="demo"
           value="validating..."
         />
         <Spinner />
-        <InputV2
+        <Input
           dark
           onChange={onChange}
           name="demo"

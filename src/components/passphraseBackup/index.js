@@ -2,7 +2,7 @@ import QRCode from 'qrcode.react';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import moment from 'moment';
-import { InputV2 } from '../toolbox/inputsV2';
+import { Input } from '../toolbox/inputs';
 import { SecondaryButton } from '../toolbox/buttons/button';
 import CopyToClipboard from '../toolbox/copyToClipboard';
 import Icon from '../toolbox/icon';
@@ -69,7 +69,7 @@ class PassphraseBackup extends React.Component {
               <div className={`${styles.inputs} ${grid.row} passphrase`}>
                 {account.passphrase.split(' ').map((value, i) => (
                   <span key={i} className={`${grid['col-xs-2']}`}>
-                    <InputV2
+                    <Input
                       readOnly
                       value={value}
                     />

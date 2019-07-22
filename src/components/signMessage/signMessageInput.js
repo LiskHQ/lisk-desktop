@@ -1,7 +1,7 @@
 import React from 'react';
 import { parseSearchParams } from '../../utils/searchParams';
 import Piwik from '../../utils/piwik';
-import { AutoresizeTextarea } from '../toolbox/inputsV2';
+import { AutoresizeTextarea } from '../toolbox/inputs';
 import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import styles from './signMessage.css';
 

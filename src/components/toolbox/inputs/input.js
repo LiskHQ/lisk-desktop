@@ -1,9 +1,9 @@
 import React from 'react';
 import Icon from '../icon';
 import Spinner from '../../spinner/spinner';
-import styles from './inputV2.css';
+import styles from './input.css';
 
-const InputV2 = ({
+const Input = ({
   className,
   setRef,
   size,
@@ -23,11 +23,11 @@ const InputV2 = ({
   </React.Fragment>
 );
 
-InputV2.defaultProps = {
+Input.defaultProps = {
   className: '',
   setRef: null,
   error: false,
   isLoading: false,
 };
 
-export default InputV2;
+export default Input;

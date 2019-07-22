@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { validateAddress } from '../../../utils/validators';
 import networks from '../../../constants/networks';
 import Box from '../../box';
-import { InputV2 } from '../../toolbox/inputsV2';
+import { Input } from '../../toolbox/inputs';
 import { PrimaryButton } from '../../toolbox/buttons/button';
 import Feedback from '../../toolbox/feedback/feedback';
 import styles from './addBookmark.css';
@@ -213,7 +213,7 @@ class AddBookmark extends React.Component {
                         />
                       ) : null
                     }
-                    <InputV2
+                    <Input
                       error={fields[field.name].error}
                       className={styles.input}
                       value={fields[field.name].value}

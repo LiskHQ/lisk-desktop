@@ -2,9 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import { mount } from 'enzyme';
-import TextareaV2 from './textareaV2';
+import Textarea from './textarea';
 
-describe('TextareaV2', () => {
+describe('Textarea', () => {
   let wrapper;
   const props = {
     className: '',
@@ -14,7 +14,7 @@ describe('TextareaV2', () => {
   };
 
   it('should render with passed props', () => {
-    wrapper = mount(<TextareaV2 {...props} />);
+    wrapper = mount(<Textarea {...props} />);
     expect(wrapper).to.have.className(props.className);
     expect(wrapper.html()).to.be.contain(props.defaultValue);
     wrapper.simulate('change', { target: { value: 'test' } });
@@ -25,7 +25,7 @@ describe('TextareaV2', () => {
     const propWithoutClassName = {
       defaultValue: 'test',
     };
-    wrapper = mount(<TextareaV2 {...propWithoutClassName} />);
+    wrapper = mount(<Textarea {...propWithoutClassName} />);
     expect(wrapper).not.to.have.className('undefined');
   });
 });

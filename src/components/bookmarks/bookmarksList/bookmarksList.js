@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
-import { InputV2 } from '../../toolbox/inputsV2';
+import { Input } from '../../toolbox/inputs';
 import Illustration from '../../toolbox/illustration';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import { tokenMap } from '../../../constants/tokens';
@@ -117,7 +117,7 @@ class BookmarksList extends React.Component {
           { enableFilter
             ? (
               <span>
-                <InputV2
+                <Input
                   className="bookmarks-filter-input"
                   size="xs"
                   onChange={this.onFilterChange}
@@ -154,7 +154,7 @@ class BookmarksList extends React.Component {
                   {
                     eddittedAddress === bookmark.address
                       ? (
-                        <InputV2
+                        <Input
                           className={`bookmarks-edit-input ${styles.editInput}`}
                           size="m"
                           onChange={this.onTitleChange}

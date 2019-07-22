@@ -3,7 +3,7 @@ import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import AccountVisual from '../../accountVisual';
 import LiskAmount from '../../liskAmount';
 import svg from '../../../utils/svgIcons';
-import { InputV2 } from '../../toolbox/inputsV2';
+import { Input } from '../../toolbox/inputs';
 import styles from './selectAccount.css';
 
 const AccountCard = ({
@@ -21,7 +21,7 @@ const AccountCard = ({
       { accountOnEditMode === index
         ? (
           <React.Fragment>
-            <InputV2
+            <Input
               value={account.name}
               size="xs"
               onChange={event => onChangeAccountTitle(event.target.value, index)}

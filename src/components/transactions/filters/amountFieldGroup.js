@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import { InputV2 } from '../../toolbox/inputsV2';
+import { Input } from '../../toolbox/inputs';
 import Feedback from '../../toolbox/feedback/feedback';
 import Spinner from '../../spinner/spinner';
 import svg from '../../../utils/svgIcons';
@@ -97,7 +97,7 @@ class AmountFieldGroup extends React.Component {
 
     return (
       <label className={styles.fieldHolder}>
-        <InputV2
+        <Input
           autoComplete="off"
           onChange={this.handleFieldChange}
           name={data.name}

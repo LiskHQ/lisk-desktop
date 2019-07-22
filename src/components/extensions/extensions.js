@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { InputV2 } from '../toolbox/inputsV2';
+import { Input } from '../toolbox/inputs';
 import Box from '../box';
 import { PrimaryButton, SecondaryButton } from '../toolbox/buttons/button';
 import Feedback from '../toolbox/feedback/feedback';
@@ -78,7 +78,7 @@ class Extensions extends React.Component {
             </div>
             <label className={styles.extentionsWrapper}>
               <span>{this.props.t('Enter URL of the *.js file with the extension')}</span>
-              <InputV2
+              <Input
                 error={this.state.error}
                 value={this.state.url}
                 onChange={this.handleInput}

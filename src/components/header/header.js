@@ -4,7 +4,7 @@ import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { PrimaryButton } from '../toolbox/buttons/button';
 import Feedback from '../toolbox/feedback/feedback';
-import { InputV2 } from '../toolbox/inputsV2';
+import { Input } from '../toolbox/inputs';
 import { addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import getNetwork, { getNetworksList } from '../../utils/getNetwork';
 import { parseSearchParams } from '../../utils/searchParams';
@@ -182,7 +182,7 @@ class Header extends React.Component {
                           }}
                         >
                           {network.label}
-                          <InputV2
+                          <Input
                             autoComplete="off"
                             onChange={(value) => {
                               this.changeAddress(value);
