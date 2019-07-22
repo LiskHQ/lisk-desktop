@@ -17,17 +17,17 @@ const FlashMessage = ({
   <section className={`${styles.wrapper} ${className}`}>
     {
       iconName
-        ? <Icon name={iconName} />
+        ? <Icon name={iconName} className="icon" />
         : null
     }
-    <span className={styles.text}>
+    <span className={`${styles.text} display-text`}>
       {displayText}
     </span>
     {
-      linkUrl
+      linkUrl && linkCaption
         ? (
           <a
-            className={`${styles.externalLink} ${linkClassName}`}
+            className={`${styles.externalLink} ${linkClassName} url-link`}
             href={linkUrl}
             rel="noopener noreferrer"
             target="_blank"
@@ -41,7 +41,7 @@ const FlashMessage = ({
       buttonText
         ? (
           <SecondaryButtonV2
-            className={`${styles.button} ${buttonClassName}`}
+            className={`${styles.button} ${buttonClassName} button`}
             onClick={onButtonClick}
           >
             {buttonText}
