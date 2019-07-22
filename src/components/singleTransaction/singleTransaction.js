@@ -60,76 +60,77 @@ class SingleTransaction extends React.Component {
                 address={this.props.address}
                 activeToken={activeToken}
                 transaction={transaction}
-              />
-              <footer className={styles.detailsFooter}>
-                <div>
-                  <div className={styles.value}>
-                    <span className={styles.label}>{t('Date')}</span>
-                    <span className={`${styles.date} tx-date`}>
-                      <DateTimeFromTimestamp
-                        fulltime
-                        className="date"
-                        time={transaction.timestamp}
-                        token={activeToken}
-                        showSeconds
-                      />
-                    </span>
+              >
+                <footer className={styles.detailsFooter}>
+                  <div>
+                    <div className={styles.value}>
+                      <span className={styles.label}>{t('Date')}</span>
+                      <span className={`${styles.date} tx-date`}>
+                        <DateTimeFromTimestamp
+                          fulltime
+                          className="date"
+                          time={transaction.timestamp}
+                          token={activeToken}
+                          showSeconds
+                        />
+                      </span>
+                    </div>
+                    <div className={`${styles.value}`}>
+                      <span className={styles.label}>
+                        {t('Confirmations')}
+                        <Tooltip className="showOnTop">
+                          <p>
+                            { t('Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.', { token: tokenMap[activeToken].label })}
+                          </p>
+                        </Tooltip>
+                      </span>
+                      <span className="tx-confirmation">
+                        {transaction.confirmations || 0}
+                      </span>
+                    </div>
                   </div>
-                  { transaction.type === transactionTypes.send
-                    ? (
-                      <div className={styles.value}>
-                        <span className={styles.label}>
-                          {t('Amount')}
-                        </span>
-                        <span className="tx-amount">
-                          <LiskAmount val={transaction.amount} />
-                          {' '}
-                          {activeToken}
-                        </span>
-                      </div>
-                    ) : null }
-                </div>
-                <div>
-                  <div className={styles.value}>
-                    <span className={styles.label}>
-                      {t('Transaction fee')}
-                    </span>
-                    <span className="tx-fee">
-                      <LiskAmount val={transaction.fee} />
-                      {' '}
-                      {activeToken}
-                    </span>
+                  <div>
+                    <div className={`${styles.value}`}>
+                      <span className={styles.label}>
+                        {t('Transaction ID')}
+                      </span>
+                      <span className="transaction-id">
+                        <CopyToClipboard
+                          value={transaction.id}
+                          className="tx-id"
+                          containerClassName="extra-small copy-title"
+                          copyClassName={styles.copyIcon}
+                        />
+                      </span>
+                    </div>
                   </div>
-                  <div className={`${styles.value}`}>
-                    <span className={styles.label}>
-                      {t('Confirmations')}
-                      <Tooltip className="showOnTop">
-                        <p>
-                          { t('Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.', { token: tokenMap[activeToken].label })}
-                        </p>
-                      </Tooltip>
-                    </span>
-                    <span className="tx-confirmation">
-                      {transaction.confirmations || 0}
-                    </span>
+                  <div>
+                    { transaction.type === transactionTypes.send
+                      ? (
+                        <div className={styles.value}>
+                          <span className={styles.label}>
+                            {t('Amount')}
+                          </span>
+                          <span className="tx-amount">
+                            <LiskAmount val={transaction.amount} />
+                            {' '}
+                            {activeToken}
+                          </span>
+                        </div>
+                      ) : null }
+                    <div className={styles.value}>
+                      <span className={styles.label}>
+                        {t('Transaction fee')}
+                      </span>
+                      <span className="tx-fee">
+                        <LiskAmount val={transaction.fee} />
+                        {' '}
+                        {activeToken}
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <div className={`${styles.value}`}>
-                    <span className={styles.label}>
-                      {t('Transaction ID')}
-                    </span>
-                    <span className="transaction-id">
-                      <CopyToClipboard
-                        value={transaction.id}
-                        className="tx-id"
-                        containerClassName="extra-small copy-title"
-                        copyClassName={styles.copyIcon}
-                      />
-                    </span>
-                  </div>
-                </div>
-              </footer>
+                </footer>
+              </TransactionDetailView>
             </main>
           </BoxV2>
         ) : transaction.errors && transaction.errors.length && (

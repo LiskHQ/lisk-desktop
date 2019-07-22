@@ -14,7 +14,7 @@ function getDelegateName(transaction) {
 
 class TransactionDetailView extends React.Component {
   render() {
-    const { transaction, t } = this.props;
+    const { transaction, t, children } = this.props;
     const { senderLabel, title } = {
       [transactionTypes.setSecondPassphrase]: {
         title: t('2nd passphrase registration'),
@@ -63,6 +63,7 @@ class TransactionDetailView extends React.Component {
           )
           : null
         }
+        {children}
         { transaction.type === transactionTypes.send
           && (transaction.asset && transaction.asset.data) ? (
             <div className={styles.detailsWrapper}>
@@ -81,5 +82,9 @@ class TransactionDetailView extends React.Component {
     ) : null);
   }
 }
+
+TransactionDetailView.defaultProps = {
+  children: null,
+};
 
 export default translate()(TransactionDetailView);
