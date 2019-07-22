@@ -10,7 +10,8 @@
 .wrapper {
   margin: 20px 0 40px;
   padding: 0;
-  width: auto;
+  padding-bottom: 20px;
+  width: var(--medium-box-width);
 
   & .txLink {
     align-items: center;
@@ -46,6 +47,12 @@
 
   & .mainContent {
     padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  & .copyIcon {
+    vertical-align: -3px;
   }
 
   & .detailsFooter {
@@ -57,22 +64,22 @@
 
     & > div {
       align-items: flex-start;
-      border-top: 1px solid var(--color-platinum);
       display: flex;
-      padding: 20px 0;
+      padding: 16px 0;
       width: 100%;
 
-      &:last-child {
-        align-items: flex-end;
+      &:not(:last-child) {
+        border-bottom: 1px solid var(--color-platinum);
       }
     }
 
     & .label {
-      @mixin contentSmall;
+      @mixin contentNormal bold;
 
       align-items: center;
-      color: var(--color-slate-gray);
+      color: var(--color-maastricht-blue);
       display: flex;
+      margin-top: 0;
       margin-bottom: 10px;
     }
 
@@ -85,18 +92,10 @@
       flex-direction: column;
       justify-content: center;
       margin: 0;
-      padding-left: 20px;
+      padding-left: 64px;
       width: 100%;
       word-break: break-all;
       text-align: left;
-
-      & img {
-        display: inline-block;
-        height: 14px;
-        margin-left: 5px;
-        vertical-align: middle;
-        width: 14px;
-      }
 
       &:first-child {
         padding-left: 0;
@@ -104,7 +103,7 @@
       }
 
       &:not(:last-child) {
-        padding-right: 20px;
+        padding-right: 64px;
 
         &::after {
           background-color: var(--color-platinum);
@@ -115,16 +114,6 @@
           width: 1px;
         }
       }
-    }
-
-    & .clickable {
-      cursor: pointer;
-    }
-
-    & .copied {
-      cursor: initial;
-      opacity: 0.6;
-      text-decoration: none;
     }
   }
 }

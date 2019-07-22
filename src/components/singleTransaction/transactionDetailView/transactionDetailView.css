@@ -2,20 +2,11 @@
 @import '../../app/mixins.css';
 
 .summaryHeader {
-  align-items: center;
   display: flex;
-  flex-direction: column;
-  margin: 20px 0;
+  align-items: center;
+  margin: 30px 0 10px 0;
 
   & > h2 {
-    @mixin contentSmall;
-
-    color: var(--color-slate-gray);
-    margin-bottom: 10px;
-  }
-
-  & > p,
-  & .txAmount {
     @mixin headingNormal;
 
     color: var(--color-maastricht-blue);
@@ -23,25 +14,17 @@
   }
 }
 
-.accountWrapper {
-  align-items: center;
+.detailsWrapper {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  margin: 20px 0;
+  padding: 20px 0;
 
-  & .separator {
-    flex-grow: 0;
-    flex-shrink: 0;
-    height: 14px;
-    margin: 0 auto;
-    width: 7px;
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--color-platinum);
   }
 
   & .accountInfo {
-    align-items: center;
     display: flex;
-    flex-basis: 40%;
     flex-direction: column;
 
     & .avatar {
@@ -54,33 +37,24 @@
       align-items: center;
     }
 
-    & .label {
-      @mixin contentSmall;
-
-      color: var(--color-slate-gray);
-      margin-bottom: 10px;
-    }
-
-    & .address {
+    & .link {
       @mixin contentLargest;
 
       color: var(--color-maastricht-blue);
       text-decoration: none;
+
+      &.hasName .address {
+        color: var(--color-blue-gray);
+        margin-left: 16px;
+      }
     }
   }
-}
-
-.detailsWrapper {
-  border-top: 1px solid var(--color-platinum);
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-  padding: 20px 0;
 
   & .label {
-    @mixin contentSmall;
+    @mixin contentNormal bold;
 
-    color: var(--color-slate-gray);
+    color: var(--color-maastricht-blue);
+    margin-top: 0;
     margin-bottom: 10px;
     text-align: left;
 
