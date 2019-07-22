@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+// TODO create unit tests for this file
 import { connect } from 'react-redux';
 import React from 'react';
 import { getAPIClient } from './api/network';

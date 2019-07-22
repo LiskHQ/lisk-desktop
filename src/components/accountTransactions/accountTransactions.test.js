@@ -14,6 +14,7 @@ import loadingReducer from '../../store/reducers/loading';
 import filtersReducer from '../../store/reducers/filters';
 import bookmarksReducer from '../../store/reducers/bookmarks';
 import settingsReducer from '../../store/reducers/settings';
+import networkReducer from '../../store/reducers/network';
 
 import { liskAPIClientSet } from '../../actions/peers';
 import networks from '../../constants/networks';
@@ -40,6 +41,7 @@ describe('AccountTransaction Component', () => {
     loading: loadingReducer,
     filters: filtersReducer,
     settings: settingsReducer,
+    network: networkReducer,
   }, [thunk]);
 
   beforeEach(() => {
