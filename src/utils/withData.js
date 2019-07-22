@@ -78,7 +78,7 @@ function withData(apis = {}) {
     }
 
     function getDisplayName() {
-      return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+      return (WrappedComponent && (WrappedComponent.displayName || WrappedComponent.name)) || 'Component';
     }
 
     DataProvider.displayName = `DataProvider(${getDisplayName()})`;
