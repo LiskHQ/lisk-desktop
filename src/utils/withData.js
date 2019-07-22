@@ -5,13 +5,16 @@ import React from 'react';
 import { getAPIClient } from './api/network';
 
 function withData(apis = {}) {
+  const keys = Object.keys(apis);
+
   return function (WrappedComponent) {
     class DataProvider extends React.Component {
       constructor() {
         super();
 
+
         this.state = {
-          apis: Object.keys(apis).reduce((acc, key) => {
+          apis: keys.reduce((acc, key) => {
             acc[key] = {
               data: [],
               error: '',
@@ -26,7 +29,7 @@ function withData(apis = {}) {
       }
 
       componentDidMount() {
-        Object.keys(apis).forEach((key) => {
+        keys.forEach((key) => {
           if (apis[key].autoload) {
             this.loadData(key);
           }
@@ -60,7 +63,7 @@ function withData(apis = {}) {
         return (
           <WrappedComponent
             {...{
-              ...Object.keys(this.state.apis).reduce((acc, key) => {
+              ...keys.reduce((acc, key) => {
                 acc[key] = {
                   ...this.state.apis[key],
                   loadData: (...args) => this.loadData(key, ...args),
@@ -82,7 +85,7 @@ function withData(apis = {}) {
 
     const mapStateToProps = (state, ownProps) => ({
       apiClient: getAPIClient(state.settings.token.active, state),
-      apiParams: Object.keys(apis).reduce((acc, key) => {
+      apiParams: keys.reduce((acc, key) => {
         acc[key] = apis[key].getApiParams(state, ownProps);
         return acc;
       }, {}),
