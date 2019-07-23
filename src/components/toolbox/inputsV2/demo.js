@@ -3,7 +3,7 @@ import DemoRenderer, { DarkWrapper } from '../demoRenderer';
 import { InputV2, AutoresizeTextarea } from '.';
 import Feedback from '../feedback/feedback';
 import Icon from '../icon';
-import SpinnerV2 from '../../spinnerV2/spinnerV2';
+import Spinner from '../../spinner/spinner';
 
 /* eslint-disable-next-line no-console */
 const onChange = console.log;
@@ -50,7 +50,7 @@ const InputsDemo = () => (
         value="validating..."
       />
       {/* TODO fix InputV2 to accept props.status='pending' so that next line is not needed */}
-      <SpinnerV2 />
+      <Spinner />
       <InputV2
         onChange={onChange}
         name="demo"
@@ -84,7 +84,7 @@ const InputsDemo = () => (
           name="demo"
           value="validating..."
         />
-        <SpinnerV2 />
+        <Spinner />
         <InputV2
           dark
           onChange={onChange}

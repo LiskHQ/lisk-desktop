@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from '../icon';
-import SpinnerV2 from '../../spinnerV2/spinnerV2';
+import Spinner from '../../spinner/spinner';
 import styles from './inputV2.css';
 
 const InputV2 = ({
@@ -14,7 +14,7 @@ const InputV2 = ({
 }) => (
   <React.Fragment>
     { icon ? <Icon name={icon} className={styles.icon} /> : null }
-    { isLoading ? <SpinnerV2 className={styles.loading} /> : null }
+    { isLoading ? <Spinner className={styles.loading} /> : null }
     <input
       {...props}
       ref={setRef}

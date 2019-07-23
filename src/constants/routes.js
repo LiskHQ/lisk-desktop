@@ -11,10 +11,10 @@ import SingleTransaction from '../components/singleTransaction';
 import HwWalletLogin from '../components/hwWalletLogin';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
-import SendV2 from '../components/sendV2/send';
+import Send from '../components/send/send';
 import Splashscreen from '../components/splashscreen';
 import Register from '../components/register';
-import LoginV2 from '../components/loginV2';
+import Login from '../components/login';
 import Extensions from '../components/extensions';
 import TermsOfUse from '../components/termsOfUse';
 import ToolboxDemo from '../components/toolbox/demo';
@@ -52,7 +52,7 @@ export default {
   },
   send: {
     path: '/wallet/send',
-    component: SendV2,
+    component: Send,
     isPrivate: true,
   },
   wallet: {
@@ -103,7 +103,7 @@ export default {
   },
   addAccount: {
     path: '/add-account',
-    component: LoginV2,
+    component: Login,
     isPrivate: false,
   },
   extensions: {
@@ -155,9 +155,9 @@ export default {
     isPrivate: false,
     isV2Layout: true,
   },
-  loginV2: {
+  login: {
     path: '/login',
-    component: LoginV2,
+    component: Login,
     isPrivate: false,
     isV2Layout: true,
   },

@@ -33,7 +33,7 @@ const CustomRoute = ({
         </ErrorBoundary>
       </main>
     )
-    : <Redirect to={`${routes.loginV2.path}?referrer=${pathname}${encodeURIComponent(search)}`} />
+    : <Redirect to={`${routes.login.path}?referrer=${pathname}${encodeURIComponent(search)}`} />
   );
 };
 

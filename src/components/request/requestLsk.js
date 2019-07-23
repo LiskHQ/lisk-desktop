@@ -5,7 +5,7 @@ import CircularProgress from '../toolbox/circularProgress/circularProgress';
 import Converter from '../converter';
 import Feedback from '../toolbox/feedback/feedback';
 import RequestWrapper from './requestWrapper';
-import SpinnerV2 from '../spinnerV2/spinnerV2';
+import Spinner from '../spinner/spinner';
 import styles from './request.css';
 import svg from '../../utils/svgIcons';
 
@@ -146,7 +146,7 @@ class RequestLsk extends React.Component {
               value={fields.amount.value}
               error={fields.amount.error}
             />
-            <SpinnerV2 className={`${styles.status} ${fields.amount.loading && fields.amount.value ? styles.show : ''}`} />
+            <Spinner className={`${styles.status} ${fields.amount.loading && fields.amount.value ? styles.show : ''}`} />
             <img
               className={`${styles.status} ${!fields.amount.loading && fields.amount.value ? styles.show : ''}`}
               src={fields.amount.error ? svg.alert_icon : svg.ok_icon}

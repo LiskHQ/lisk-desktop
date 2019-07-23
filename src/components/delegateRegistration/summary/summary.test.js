@@ -104,7 +104,7 @@ describe('Delegate Registration Summary', () => {
       getData: () => accounts.second_passphrase_account.secondPassphrase,
     };
 
-    wrapper.find('passphraseInputV2 input').first().simulate('paste', { clipboardData });
+    wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
     wrapper.update();
     wrapper.find('button.confirm-button').simulate('click');
     await to(create(newProps.account, 'registerDelegate'));

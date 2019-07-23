@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import WalletTransactionsV2 from '../transactionsV2/walletTransactionsV2';
+import WalletTransactions from '../transactions/walletTransactions';
 import { tokenMap } from '../../constants/tokens';
 
 import styles from './transactionDasboard.css';
@@ -13,7 +13,7 @@ class TransactionsDashboard extends React.Component {
     return (
       <div className={`${grid.row} ${styles.wrapper}`}>
         <div className={`${grid['col-xs-10']} ${grid['col-sm-12']} ${grid['col-md-12']} ${grid['col-lg-12']} ${styles.transactions}`}>
-          <WalletTransactionsV2 {...this.props} />
+          <WalletTransactions {...this.props} />
         </div>
       </div>
     );
