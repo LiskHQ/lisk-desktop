@@ -14,7 +14,7 @@ const FlashMessage = ({
   linkUrl,
   onButtonClick,
 }) => (
-  <section className={`${styles.wrapper} ${className}`}>
+  <div className={`${styles.wrapper} ${className}`}>
     {
       iconName
         ? <Icon name={iconName} className="icon" />
@@ -49,7 +49,7 @@ const FlashMessage = ({
         )
         : null
     }
-  </section>
+  </div>
 );
 
 FlashMessage.defaultProps = {

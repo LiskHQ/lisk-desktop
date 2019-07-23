@@ -1,0 +1,16 @@
+@import '../app/variablesV2.css';
+@import '../app/mixins.css';
+
+.wrapper {
+  box-sizing: border-box;
+  min-height: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--animation-speed-standard) ease-in-out;
+  width: 100%;
+
+  &.show {
+    min-height: 56px;
+    max-height: 56px;
+  }
+}
