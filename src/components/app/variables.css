@@ -45,118 +45,122 @@ or "warn/action" ineastd of "red/green"
   --font-size-h4: 26px;
   --font-size-h5: 20px;
   --font-size-h6: 16px;
-  --font-size-small: 14px;
+  --font-size-small: 10px;
+  --font-size-large: 24px;
   --heading-font: 'gilroy', 'Open Sans', sans-serif;
-  --content-font: 'Open Sans', sans-serif;
+  --content-font: 'basier-circle', sans-serif;
   --font-weight-normal: 400;
   --font-weight-semi-bold: 500;
   --font-weight-bold: 600;
   --font-weight-very-bold: 700;
-  --subtitle-font-size: 16px;
-  --main-menu-font-size: 15px;
+  --subtitle-font-size: 18px;
+  --subtitle-font-size-s: 16px;
   --paragraph-font-size-l: 15px;
   --paragraph-font-size-s: 14px;
-  --input-font-size: 16px;
-  --button-font-size: 16px;
-
-  /* Font xl breakpoint */
-  --font-size-h2-xl: 32px;
-
-  /* Font l breakpoint */
-  --font-size-h2-l: 28px;
-
-  /* Font m breakpoint */
-  --font-size-h2-m: 28px;
-  --font-size-h3-m: 30px;
-  --font-size-h5-m: 16px;
-
-  /* Font s breakpoint */
-  --font-size-h2-s: 24px;
-  --font-size-h5-s: 16px;
+  --button-font-size: var(--paragraph-font-size-s);
+  --button-font-size-s: 12px;
+  --footnote-font-size: 12px;
+  --font-size-extra-small: 11px;
+  --font-size-title: 18px;
+  --font-size-small-secondary: 13px;
 
   /*************************
         Sizes
   *************************/
-  --sidebar-width: 115px;
-  --sidebar-width-xl: 142px;
+  --border-radius-standard: 3px;
+  --border-radius-box: 6px;
+  --header-height: 73px;
+  --header-logo-size: 56px;
+  --search-box-width-l: 597px;
+  --footer-button-width: 400px;
   --main-box-width: 1318px;
-  --main-box-height: 80vh; /* stylelint-disable-line */
-  --border-radius-normal: 3px;
-  --header-height-m: 100px;
-  --header-height-s: 67px;
-  --m-menu-bar-height: 72px;
-  --s-menu-bar-height: 62px;
-  --m-top-bar-height: 90px;
-  --s-top-bar-height: 57px;
-  --footer-height-m: 72px;
-  --footer-height-s: 62px;
+  --medium-box-width: 720px;
 
   /*************************
-        Colors
+        Padding
   *************************/
-  --color-primary-dark: #001a3e;
-  --color-primary-less-dark: #002449;
-  --color-primary-semi-dark: #013165;
-  --color-primary-medium: #3c7fb4;
-  --color-primary-standard: #2475b9;
-  --color-primary-light: #008bff;
-  --color-primary-very-light: #e8f0fa;
-  --color-black: #000;
-  --color-grayscale-dark: #3c5068;
-  --color-grayscale-medium: #74869b;
-  --color-grayscale-light: #ccd9e4;
-  --color-grayscale-mobile-background: #f9fbfd;
-  --color-grayscale-darker-mobile-background: #eff4f9;
-  --color-console-text: #9bf436;
-  --color-console-background: #06213b;
+  --header-padding: 0 32px;
+
+  /*************************
+      Base Colors
+  *************************/
+  --color-ultramarine-blue: #4070f4;
+  --color-maastricht-blue: #0c152e;
+  --color-slate-gray: #70778b;
+  --color-blue-gray: #8a8ca2;
+  --color-dark-blue: #19224d;
+  --color-ghost: #bec1cd;
+  --color-platinum: #e1e3eb;
+  --color-mystic: #edf0f5;
+  --color-white-smoke: #f5f7fa;
+  --color-burnt-sienna: #ec6868;
+  --color-ufo-green: #2bd67b;
+  --color-deep-green: #00d563;
+
+  /*************************
+      Other Colors
+  *************************/
+  --light-border-color: rgba(255, 255, 255, 0.24);
+  --dark-border-color: rgba(0, 0, 0, 0.08);
+  --primary-background-color: color(var(--color-ultramarine-blue) a(8%));
+  --error-background-color: color(var(--color-burnt-sienna) a(8%));
+  --color-primary-standard: var(--color-ultramarine-blue);
+  --color-primary-light: #9db8fa;
   --color-white: #fff;
-  --color-error: #da1d00;
-  --color-action-dark: #c80039;
-  --color-action-medium: #ed4537;
-  --color-action-light: #ff6236;
-  --color-success-dark: #008722;
-  --color-action-light-2: #93f4fe;
-  --color-action-medium-2: #004aff;
-  --color-link: #0077bd;
-  --color-tertiary-medium: #17499b;
-  --color-form-bg: #f6f8fb;
-  --gradient-theme: linear-gradient(27deg, var(--color-tertiary-medium) 0%, var(--color-grayscale-light) 100%);
-  --gradient-action-orange: linear-gradient(-27deg, var(--color-action-dark) 0%, var(--color-action-light) 100%);
-  --gradient-action-blue: linear-gradient(136deg, var(--color-tertiary-medium) 0%, var(--color-primary-medium) 100%);
-  --gradient-action-blue-hover: linear-gradient(224deg, var(--color-primary-medium) 0%, var(--color-tertiary-medium) 100%);
-  --gradient-greyscale: linear-gradient(to right, var(--color-white), #f5f8fc);
-  --gradient-greyscale-mobile: linear-gradient(to right, var(--color-grayscale-mobile-background), var(--color-grayscale-darker-mobile-background));
-  --gradient-tertiary: linear-gradient(45deg, var(--color-tertiary-medium) 0%, var(--color-primary-medium) 100%);
+  --color-danger: #ff7721;
+  --color-error: #ec6868;
+  --color-content: #19224d;
+  --color-content-light: #0c152e;
+  --color-primary-very-light: #e8f0fa;
+  --color-content-lighter: rgba(46, 44, 59, 0.6);
+  --color-background-dark: #1e194d;
+  --color-dark-gray: #868ba1;
+  --color-light-gray: #e6e6e6;
+  --color-content-grayblue: #7383a7;
+  --color-background-wrapper: var(--color-mystic);
+  --color-background-header: #fbfcfd;
+  --color-background-menu: var(--color-white-smoke);
+  --color-link-active: #4070f4;
+  --color-title-header-box: #4c4c4c;
+  --color-link: var(--color-primary-standard);
+  --color-rows-hover: var(--primary-background-color);
+  --color-highlight-checkboxes: rgba(64, 112, 244, 0.08);
+
+  /*************************
+        Box
+  *************************/
+  --box-shadow-standard: 0 2px 4px 0 rgba(6, 22, 48, 0.06);
+  --box-shadow-button: var(--box-shadow-standard), 0px 0px 12px 0 rgba(72, 77, 97, 0.05);
+  --box-shadow-header: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
+  --box-shadow-avatar: var(--box-shadow-standard);
+  --box-shadow-search: 0 2px 4px 0 rgba(8, 24, 49, 0.06);
+  --box-shadow-graph-selector: 0 1px 5px 0 rgba(30, 25, 77, 0.06);
+  --box-shadow-top: 0 -2px 8px 0 rgba(72, 77, 97, 0.1);
+
+  /*************************
+        Animation
+  *************************/
+  --animation-speed-fastest: 150ms;
+  --animation-speed-fast: 250ms;
+  --animation-speed-standard: 500ms;
+  --animation-speed-slow: 700ms;
+  --animation-speed-slowest: 1000ms;
+  --animation-delay-standard: 100ms;
+
+  /*************************
+        Transitions
+  *************************/
+  --transition-button:
+    background-color var(--animation-speed-fast) ease-in-out,
+    border-color var(--animation-speed-fast) ease-in-out,
+    box-shadow var(--animation-speed-fast) ease-in-out,
+    color var(--animation-speed-fast) ease-in-out;
 
   /*************************
         Z-Indexes
   *************************/
   --normal-index: 1;
-  --menubar-index: 4;
-  --headerbar-index: 20;
-  --autosuggest-index: 21;
-  --searchbar-input-index: 22;
-  --searchbar-placeholder-index: 23;
-  --accounts-index: 24;
-
-  /*************************
-        Margins
-  *************************/
-  --box-overflow-y: -23px;
-
-  /*************************
-        Paddings
-  *************************/
-  --box-padding: 16px;
-  --box-padding-top: 50px;
-  --box-padding-left-XL: 48px;
-  --box-padding-left-L: 32px;
-  --box-padding-left-M: 19px;
-
-  /*************************
-        Box props
-  *************************/
-  --normal-shadow: 0 8px 14px 0 rgba(216, 221, 230, 0.4), 0 4px 8px 0 rgba(13, 27, 52, 0.16);
+  --overlay-index: 20;
 
   /*************************
         Media Queries

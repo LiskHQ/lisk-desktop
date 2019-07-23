@@ -1,4 +1,4 @@
-@import './variablesV2.css';
+@import './variables.css';
 
 @define-mixin contentSmallest {
   font-family: var(--content-font);

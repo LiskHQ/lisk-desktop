@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import styles from './app.css';
-import stylesV2 from './appV2.css';
 import Toaster from '../toaster';
 import TopBar from '../topBar';
 import LoadingBar from '../loadingBar';
@@ -45,8 +44,8 @@ class App extends React.Component {
             ? (
               <main
                 className={this.state.loaded
-                  ? `${stylesV2.v2Wrapper} ${stylesV2.loaded} appLoaded`
-                  : `${styles.v2Wrapper}`
+                  ? `${styles.wrapper} ${styles.loaded} appLoaded`
+                  : `${styles.wrapper}`
             }
                 ref={(el) => { this.main = el; }}
               >
