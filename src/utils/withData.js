@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-// TODO create unit tests for this file
 import { connect } from 'react-redux';
 import React from 'react';
 import { getAPIClient } from './api/network';
@@ -41,7 +39,7 @@ function withData(apis = {}) {
           apis: {
             ...this.state.apis,
             [key]: {
-              ...this.state.api[key],
+              ...this.state.apis[key],
               ...newState,
             },
           },
