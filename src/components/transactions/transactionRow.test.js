@@ -6,10 +6,10 @@ import { MemoryRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import accounts from '../../../test/constants/accounts';
-import TransactionRowV2 from './transactionRowV2';
+import TransactionRow from './transactionRow';
 import history from '../../history';
 
-describe('TransactionRow V2', () => {
+describe('TransactionRow', () => {
   let clock;
 
   const rowData = {
@@ -56,7 +56,7 @@ describe('TransactionRow V2', () => {
 
   it('should render 5 columns', () => {
     const wrapper = mount(<Router>
-      <TransactionRowV2
+      <TransactionRow
         {...props}
       />
     </Router>, options);
@@ -66,7 +66,7 @@ describe('TransactionRow V2', () => {
 
   it('should not cause any error on click if props.onClick is not defined', () => {
     const wrapper = mount(<Router>
-      <TransactionRowV2
+      <TransactionRow
         {...props}
       />
     </Router>, options);
@@ -77,7 +77,7 @@ describe('TransactionRow V2', () => {
   it('should render Spinner if no value.confirmations" ', () => {
     rowData.confirmations = undefined;
     const wrapper = mount(<Router>
-      <TransactionRowV2
+      <TransactionRow
         {...props}
       />
     </Router>, options);
@@ -88,7 +88,7 @@ describe('TransactionRow V2', () => {
   it('should hide Spinner after first confirmation and timeout expires', () => {
     rowData.confirmations = undefined;
     const wrapper = mount(<Router>
-      <TransactionRowV2
+      <TransactionRow
         {...props}
       />
     </Router>, options);

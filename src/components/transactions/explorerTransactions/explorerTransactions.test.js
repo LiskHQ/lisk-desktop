@@ -4,12 +4,12 @@ import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import { MemoryRouter as Router } from 'react-router-dom';
-import ExplorerTransactionsV2 from './explorerTransactionsV2';
+import ExplorerTransactions from './explorerTransactions';
 import i18n from '../../../i18n';
 import accounts from '../../../../test/constants/accounts';
 import routes from '../../../constants/routes';
 
-describe('ExplorerTransactions V2 Component', () => {
+describe('ExplorerTransactions Component', () => {
   let wrapper;
   const peers = {
     data: {},
@@ -86,12 +86,12 @@ describe('ExplorerTransactions V2 Component', () => {
   describe('Another account', () => {
     beforeEach(() => {
       wrapper = mount(<Router>
-        <ExplorerTransactionsV2 {...props} />
+        <ExplorerTransactions {...props} />
       </Router>, options);
     });
 
-    it('renders ExplorerTransactionsV2 Component and loads account transactions', () => {
-      const renderedWalletTransactions = wrapper.find(ExplorerTransactionsV2);
+    it('renders ExplorerTransactions Component and loads account transactions', () => {
+      const renderedWalletTransactions = wrapper.find(ExplorerTransactions);
       expect(renderedWalletTransactions).toExist();
       expect(wrapper).toContainExactlyOneMatchingElement('div.transactions-row');
     });
@@ -148,7 +148,7 @@ describe('ExplorerTransactions V2 Component', () => {
 
     beforeEach(() => {
       wrapper = mount(<Router>
-        <ExplorerTransactionsV2 {...delegateProps} />
+        <ExplorerTransactions {...delegateProps} />
       </Router>, options);
     });
 
@@ -161,7 +161,7 @@ describe('ExplorerTransactions V2 Component', () => {
   describe('BTC account', () => {
     it('should not render VotesTab', () => {
       wrapper = mount(<Router>
-        <ExplorerTransactionsV2 {...{
+        <ExplorerTransactions {...{
           ...props,
           activeToken: 'BTC',
         }}

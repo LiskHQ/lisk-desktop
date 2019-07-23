@@ -7,7 +7,7 @@ import {
   searchTransactions, searchMoreTransactions, searchAccount, fetchVotedDelegateInfo,
 } from '../../../actions/search';
 import actionTypes from '../../../constants/actions';
-import ExplorerTransactionsV2 from './explorerTransactionsV2';
+import ExplorerTransactions from './explorerTransactions';
 import txFilters from '../../../constants/transactionFilters';
 
 const mapStateToProps = (state, ownProps) => ({
@@ -44,4 +44,4 @@ const mapDispatchToProps = {
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(translate()(ExplorerTransactionsV2)));
+)(translate()(ExplorerTransactions)));

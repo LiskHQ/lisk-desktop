@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './transactionsV2.css';
+import styles from './transactions.css';
 
 const generateVotes = (asset, t) => {
   const votes = asset.votes.reduce((acc, curr) => ({
@@ -19,7 +19,7 @@ const generateVotes = (asset, t) => {
   );
 };
 
-const TransactionDetailV2 = ({
+const TransactionDetail = ({
   transaction, t,
 }) => {
   const {
@@ -47,4 +47,4 @@ const TransactionDetailV2 = ({
   );
 };
 
-export default TransactionDetailV2;
+export default TransactionDetail;

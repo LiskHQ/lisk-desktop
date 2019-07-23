@@ -2,12 +2,12 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
-import TransactionsListV2 from './transactionsListV2';
+import TransactionsList from './transactionsList';
 import actionTypes from '../../constants/actions';
 import txFilters from '../../constants/transactionFilters';
 import i18n from '../../i18n';
 
-describe('TransactionsList V2', () => {
+describe('TransactionsList ', () => {
   let wrapper;
   const emptyTx = [];
   const transactions = [{
@@ -51,7 +51,7 @@ describe('TransactionsList V2', () => {
   };
 
   it('should render list of transactions', () => {
-    wrapper = mount(<TransactionsListV2 {...props} />, options);
+    wrapper = mount(<TransactionsList {...props} />, options);
     expect(wrapper).to.have.descendants('.transactions-row');
   });
 
@@ -64,7 +64,7 @@ describe('TransactionsList V2', () => {
         name: 'All',
       },
     };
-    wrapper = mount(<TransactionsListV2 {...propsNoTx} />, options);
+    wrapper = mount(<TransactionsList {...propsNoTx} />, options);
     expect(wrapper).to.have.descendants('.empty-state');
   });
 
@@ -73,7 +73,7 @@ describe('TransactionsList V2', () => {
       ...props,
       loading: [actionTypes.loadTransactions],
     };
-    wrapper = mount(<TransactionsListV2 {...loadingProps} />, options);
+    wrapper = mount(<TransactionsList {...loadingProps} />, options);
     expect(wrapper).to.have.descendants('Spinner');
   });
 });

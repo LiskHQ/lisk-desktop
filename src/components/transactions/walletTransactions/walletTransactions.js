@@ -7,13 +7,13 @@ import txFilters from '../../../constants/transactionFilters';
 import Banner from '../../toolbox/banner/banner';
 import TransactionsOverviewHeader from '../transactionsOverviewHeader/transactionsOverviewHeader';
 import routes from '../../../constants/routes';
-import styles from './walletTransactionsV2.css';
+import styles from './walletTransactions.css';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import WalletTab from '../../wallet/walletTab';
 import DelegateTab from '../../delegate/delegateTab';
 import VotesTab from '../../votes/votesTab';
 
-class WalletTransactionsV2 extends React.Component {
+class WalletTransactions extends React.Component {
   // eslint-disable-next-line max-statements
   constructor() {
     super();
@@ -255,4 +255,4 @@ class WalletTransactionsV2 extends React.Component {
   }
 }
 
-export default WalletTransactionsV2;
+export default WalletTransactions;

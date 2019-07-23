@@ -4,11 +4,11 @@ import txFilters from '../../constants/transactionFilters';
 import Piwik from '../../utils/piwik';
 import FilterContainer from './filters/filterContainer';
 import FilterBar from './filters/filterBar';
-import TransactionsListV2 from './transactionsListV2';
+import TransactionsList from './transactionsList';
 import Tabs from '../toolbox/tabs';
-import styles from './transactionsV2.css';
+import styles from './transactions.css';
 
-class TransactionsOverviewV2 extends React.Component {
+class TransactionsOverview extends React.Component {
   constructor(props) {
     super(props);
 
@@ -90,7 +90,7 @@ class TransactionsOverviewV2 extends React.Component {
               t={this.props.t}
             />
           ) : null}
-        <TransactionsListV2
+        <TransactionsList
           bookmarks={this.props.bookmarks}
           canLoadMore={this.props.canLoadMore}
           transactions={this.props.transactions}
@@ -114,4 +114,4 @@ const mapStateToProps = state => ({
   account: state.account,
 });
 
-export default connect(mapStateToProps)(TransactionsOverviewV2);
+export default connect(mapStateToProps)(TransactionsOverview);

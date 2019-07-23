@@ -1,18 +1,18 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
-import TransactionTypeFigure from '../transactions/typeFigure/TransactionTypeFigure';
-import TransactionAddress from '../transactions/address/TransactionAddress';
-import TransactionAmount from '../transactions/amount/TransactionAmount';
-import TransactionDetailV2 from './transactionDetailV2';
-import styles from './transactionRowV2.css';
+import TransactionTypeFigure from './typeFigure/TransactionTypeFigure';
+import TransactionAddress from './address/TransactionAddress';
+import TransactionAmount from './amount/TransactionAmount';
+import TransactionDetail from './transactionDetail';
+import styles from './transactionRow.css';
 import Spinner from '../spinner/spinner';
 import LiskAmount from '../liskAmount';
 import { DateTimeFromTimestamp } from '../timestamp/index';
 import TableRow from '../toolbox/table/tableRow';
 import Icon from '../toolbox/icon';
 
-class TransactionRowV2 extends React.Component {
+class TransactionRow extends React.Component {
   constructor() {
     super();
 
@@ -92,7 +92,7 @@ class TransactionRowV2 extends React.Component {
           {`${token}`}
         </div>
         <div className={`${columnClassNames.details} transactions-cell`}>
-          <TransactionDetailV2
+          <TransactionDetail
             t={t}
             transaction={value}
           />
@@ -110,9 +110,9 @@ class TransactionRowV2 extends React.Component {
 }
 
 /* istanbul ignore next */
-TransactionRowV2.defaultProps = {
+TransactionRow.defaultProps = {
   onClick: () => {},
   columnClassNames: {},
 };
 
-export default translate()(TransactionRowV2);
+export default translate()(TransactionRow);

@@ -3,9 +3,9 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n';
-import TransactionDetailV2 from './transactionDetailV2';
+import TransactionDetail from './transactionDetail';
 
-describe('TransactionDetail V2', () => {
+describe('TransactionDetail ', () => {
   let wrapper;
 
   const props = {
@@ -24,7 +24,7 @@ describe('TransactionDetail V2', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<TransactionDetailV2 {...props} />, options);
+    wrapper = mount(<TransactionDetail {...props} />, options);
   });
 
   it('should render "-" if no data is provided', () => {

@@ -5,14 +5,14 @@ import { tokenMap } from '../../constants/tokens';
 import EmptyState from '../emptyState';
 import Illustration from '../toolbox/illustration';
 import ProgressBar from '../toolbox/progressBar/progressBar';
-import TransactionRowV2 from './transactionRowV2';
-import TransactionsHeaderV2 from './transactionsHeaderV2';
+import TransactionRow from './transactionRow';
+import TransactionsHeader from './transactionsHeader';
 import actionTypes from '../../constants/actions';
-import styles from './transactionsListV2.css';
+import styles from './transactionsList.css';
 import txFilters from '../../constants/transactionFilters';
 import txTypes from '../../constants/transactionTypes';
 
-class TransactionsListV2 extends React.Component {
+class TransactionsList extends React.Component {
   render() {
     const {
       transactions,
@@ -70,14 +70,14 @@ class TransactionsListV2 extends React.Component {
         {filteredTransactions.length
           ? (
             <React.Fragment>
-              <TransactionsHeaderV2
+              <TransactionsHeader
                 isSmallScreen={isSmallScreen}
                 columnClassNames={columnClassNames}
               />
               {
                 filteredTransactions
                   .map(transaction => (
-                    <TransactionRowV2
+                    <TransactionRow
                       key={transaction.id}
                       bookmarks={bookmarks}
                       address={address}
@@ -110,4 +110,4 @@ class TransactionsListV2 extends React.Component {
   }
 }
 
-export default translate()(TransactionsListV2);
+export default translate()(TransactionsList);

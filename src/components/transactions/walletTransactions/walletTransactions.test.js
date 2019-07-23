@@ -4,12 +4,12 @@ import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import { MemoryRouter as Router } from 'react-router-dom';
-import WalletTransactionsV2 from './walletTransactionsV2';
+import WalletTransactions from './walletTransactions';
 import i18n from '../../../i18n';
 import accounts from '../../../../test/constants/accounts';
 import routes from '../../../constants/routes';
 
-describe('WalletTransactions V2 Component', () => {
+describe('WalletTransactions Component', () => {
   let wrapper;
   const peers = {
     data: {},
@@ -78,12 +78,12 @@ describe('WalletTransactions V2 Component', () => {
 
   beforeEach(() => {
     wrapper = mount(<Router>
-      <WalletTransactionsV2 {...props} />
+      <WalletTransactions {...props} />
     </Router>, options);
   });
 
-  it('renders WalletTransactionV2 Component and loads account transactions', () => {
-    const renderedWalletTransactions = wrapper.find(WalletTransactionsV2);
+  it('renders WalletTransaction Component and loads account transactions', () => {
+    const renderedWalletTransactions = wrapper.find(WalletTransactions);
     expect(renderedWalletTransactions).toExist();
     expect(wrapper).toContainExactlyOneMatchingElement('div.transactions-row');
   });
@@ -102,7 +102,7 @@ describe('WalletTransactions V2 Component', () => {
       };
 
       wrapper = mount(<Router>
-        <WalletTransactionsV2 {...newProps} />
+        <WalletTransactions {...newProps} />
       </Router>, options);
     });
 
@@ -146,7 +146,7 @@ describe('WalletTransactions V2 Component', () => {
 
     beforeEach(() => {
       wrapper = mount(<Router>
-        <WalletTransactionsV2 {...delegateProps} />
+        <WalletTransactions {...delegateProps} />
       </Router>, options);
     });
 

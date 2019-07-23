@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import ExplorerTransactionsV2 from '../transactionsV2/explorerTransactionsV2';
+import ExplorerTransactions from '../transactions/explorerTransactions';
 import styles from './accountTransactions.css';
 
 class AccountTransactions extends React.Component {
@@ -8,7 +8,7 @@ class AccountTransactions extends React.Component {
     return (
       <div className={`${grid.row}`}>
         <div className={`${grid['col-xs-12']} ${styles.transactions}`}>
-          <ExplorerTransactionsV2
+          <ExplorerTransactions
             history={this.props.history}
             address={this.props.match.params.address}
             delegate={this.props.delegate}

@@ -5,10 +5,10 @@ import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import i18n from '../../i18n';
-import TransactionsOverviewV2 from './transactionsOverviewV2';
+import TransactionsOverview from './transactionsOverview';
 import accounts from '../../../test/constants/accounts';
 
-describe('TransactionsOverview V2', () => {
+describe('TransactionsOverview ', () => {
   let wrapper;
 
   const peers = {
@@ -76,7 +76,7 @@ describe('TransactionsOverview V2', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<TransactionsOverviewV2 {...props} />, options);
+    wrapper = mount(<TransactionsOverview {...props} />, options);
   });
 
   it('should call onInit on constructor call', () => {

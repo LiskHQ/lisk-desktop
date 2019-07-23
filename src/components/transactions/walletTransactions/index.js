@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { loadLastTransaction, loadTransactions } from '../../../actions/transactions';
 import { searchAccount, fetchVotedDelegateInfo } from '../../../actions/search';
 import { updateAccountDelegateStats } from '../../../actions/account';
-import WalletTransactionsV2 from './walletTransactionsV2';
+import WalletTransactions from './walletTransactions';
 import actionTypes from '../../../constants/actions';
 import txFilters from '../../../constants/transactionFilters';
 import removeDuplicateTransactions from '../../../utils/transactions';
@@ -41,4 +41,4 @@ const mapDispatchToProps = {
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(translate()(WalletTransactionsV2)));
+)(translate()(WalletTransactions)));

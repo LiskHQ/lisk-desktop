@@ -7,7 +7,7 @@ import WalletTab from '../../wallet/walletTab';
 import DelegateTab from '../../delegate/delegateTab';
 import VotesTab from '../../votes/votesTab';
 
-class ExplorerTransactionsV2 extends React.Component {
+class ExplorerTransactions extends React.Component {
   // eslint-disable-next-line max-statements
   constructor() {
     super();
@@ -191,4 +191,4 @@ class ExplorerTransactionsV2 extends React.Component {
   }
 }
 
-export default ExplorerTransactionsV2;
+export default ExplorerTransactions;
