@@ -2,12 +2,12 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { getActiveTokenAccount } from '../../utils/account';
-import Message from './message';
+import InitializationMessage from './initializationMessage';
 
 const mapStateToProps = state => ({
-  transactions: state.transactions.pending,
+  pendingTransactions: state.transactions.pending,
   account: getActiveTokenAccount(state),
   settings: state.settings,
 });
 
-export default connect(mapStateToProps)(translate()(Message));
+export default connect(mapStateToProps)(translate()(InitializationMessage));

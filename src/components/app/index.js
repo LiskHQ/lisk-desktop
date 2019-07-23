@@ -9,7 +9,7 @@ import OfflineWrapper from '../offlineWrapper';
 import CustomRoute from '../customRoute';
 import Dialog from '../dialog';
 import NotFound from '../notFound';
-import Message from '../message';
+import InitializationMessage from '../initializationMessage';
 import routes from '../../constants/routes';
 // eslint-disable-next-line import/no-named-as-default
 
@@ -69,7 +69,7 @@ class App extends React.Component {
               >
                 <TopBar />
                 <section>
-                  <Message history={history} />
+                  <InitializationMessage history={history} />
                   <div className={styles.mainBox}>
                     <Switch>
                       {
