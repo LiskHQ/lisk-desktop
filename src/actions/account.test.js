@@ -356,7 +356,7 @@ describe('actions: account', () => {
 
     it('should call account api and dispatch accountLoggedIn with ledger loginType', async () => {
       accountApi.getAccount.mockResolvedValue({ balance, address });
-      await login({ hwInfo: {}, publicKey })(dispatch, getState);
+      await login({ hwInfo: { deviceModel: 'Ledger Nano S' }, publicKey })(dispatch, getState);
       expect(dispatch).toHaveBeenNthCalledWith(2, expect.objectContaining({
         type: actionTypes.accountLoggedIn,
         data: expect.objectContaining({

@@ -57,7 +57,7 @@ describe('TransactionSummary', () => {
       account: { hwInfo },
     }}
     />);
-    expect(wrapper.find('h1')).toHaveLength(1);
+    expect(wrapper.find('h2')).toIncludeText('Confirm transaction on your');
     expect(wrapper.find('.confirm-button')).toHaveLength(0);
     expect(props.confirmButton.onClick).toHaveBeenCalled();
   });
@@ -72,7 +72,7 @@ describe('TransactionSummary', () => {
       account: { hwInfo },
     }}
     />);
-    expect(wrapper.find('h1')).toHaveLength(1);
+    expect(wrapper.find('h2')).toIncludeText('Confirm transaction on your');
     expect(wrapper.find('.confirm-button')).toHaveLength(0);
     expect(props.confirmButton.onClick).not.toHaveBeenCalled();
     wrapper.unmount();

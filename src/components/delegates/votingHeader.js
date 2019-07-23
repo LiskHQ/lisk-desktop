@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { loginType } from '../../constants/hwConstants';
 import { SecondaryButtonV2, PrimaryButtonV2 } from '../toolbox/buttons/button';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import SignInTooltipWrapper from '../signInTooltipWrapper';
@@ -13,6 +14,10 @@ import {
 } from '../../utils/voting';
 
 import styles from './votingHeader.css';
+
+function shouldShowRegisterDelagteButton(account) {
+  return account.address && !account.delegate && account.loginType === loginType.normal;
+}
 
 class VotingHeader extends React.Component {
   render() {
@@ -110,7 +115,7 @@ LSK
           )
           : (
             <span>
-              { account.address && !account.delegate
+              { shouldShowRegisterDelagteButton(account)
                 ? (
                   <Link to={routes.delegateRegistration.path}>
                     <SecondaryButtonV2 className={`register-delegate ${styles.btn}`}>

@@ -272,7 +272,7 @@ export const getHWAccountInfo = async (activePeer, deviceId, loginType, accountI
   const address = extractAddress(publicKey);
   let resAccount = await getAccount({ liskAPIClient: activePeer, address });
 
-  const isInitialized = !!resAccount.unconfirmedBalance;
+  const isInitialized = resAccount.serverPublicKey;
   Object.assign(resAccount, { isInitialized });
   Object.assign(resAccount, { isInitialized, publicKey });
 
