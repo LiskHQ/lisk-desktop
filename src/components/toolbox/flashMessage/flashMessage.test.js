@@ -12,6 +12,7 @@ describe('FlashMessage', () => {
     linkCaption: 'Learn more',
     linkUrl: externalLinks.accountInitialization,
     onButtonClick: jest.fn(),
+    shouldShow: true,
   };
 
   beforeEach(() => {
