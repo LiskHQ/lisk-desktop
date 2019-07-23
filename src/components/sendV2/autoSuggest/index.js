@@ -1,15 +1,14 @@
 import React, { Fragment } from 'react';
-import AccountVisual from '../accountVisual/index';
-import { InputV2 } from '../toolbox/inputsV2';
-import keyCodes from '../../constants/keyCodes';
-import svg from '../../utils/svgIcons';
-import SpinnerV2 from '../spinnerV2/spinnerV2';
-import Feedback from '../toolbox/feedback/feedback';
-import styles from './bookmark.css';
+import AccountVisual from '../../accountVisual/index';
+import { InputV2 } from '../../toolbox/inputsV2';
+import keyCodes from '../../../constants/keyCodes';
+import svg from '../../../utils/svgIcons';
+import SpinnerV2 from '../../spinnerV2/spinnerV2';
+import Feedback from '../../toolbox/feedback/feedback';
+import styles from './autoSuggest.css';
 
 // eslint-disable-next-line complexity
-class Bookmark extends React.Component {
-  // eslint-disable-next-line max-statements
+class AutoSuggest extends React.Component {
   constructor(props) {
     super(props);
 
@@ -22,6 +21,10 @@ class Bookmark extends React.Component {
     this.listContainerRef = null;
     this.input = null;
 
+    this.bindAll();
+  }
+
+  bindAll() {
     this.onHandleKeyPress = this.onHandleKeyPress.bind(this);
     this.getFilterList = this.getFilterList.bind(this);
     this.onKeyPressDownOrUp = this.onKeyPressDownOrUp.bind(this);
@@ -191,4 +194,4 @@ class Bookmark extends React.Component {
   }
 }
 
-export default Bookmark;
+export default AutoSuggest;

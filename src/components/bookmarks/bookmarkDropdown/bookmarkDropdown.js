@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getIndexOfBookmark } from '../../utils/bookmarks';
-import SpinnerV2 from '../spinnerV2/spinnerV2';
-import svg from '../../utils/svgIcons';
-import { InputV2 } from '../toolbox/inputsV2';
-import { PrimaryButtonV2 } from '../toolbox/buttons/button';
-import styles from './bookmark.css';
+import { getIndexOfBookmark } from '../../../utils/bookmarks';
+import SpinnerV2 from '../../spinnerV2/spinnerV2';
+import svg from '../../../utils/svgIcons';
+import { InputV2 } from '../../toolbox/inputsV2';
+import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
+import styles from './bookmarkDropdown.css';
 
 class Bookmark extends React.Component {
   constructor(props) {

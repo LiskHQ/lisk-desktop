@@ -1,5 +1,5 @@
-@import '../app/variablesV2.css';
-@import '../app/mixins.css';
+@import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
 
 .box {
   width: 100%;

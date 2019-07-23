@@ -1,12 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
-import keyCodes from '../../constants/keyCodes';
-import i18n from '../../i18n';
-import Bookmark from './index';
-import { tokenMap } from '../../constants/tokens';
+import keyCodes from '../../../constants/keyCodes';
+import i18n from '../../../i18n';
+import AutoSuggest from './index';
+import { tokenMap } from '../../../constants/tokens';
 
-describe('BookmarkV2', () => {
+describe('Recipient Input', () => {
   let wrapper;
   const options = {
     context: { i18n },
@@ -52,7 +52,7 @@ describe('BookmarkV2', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<Bookmark {...props} />, options);
+    wrapper = mount(<AutoSuggest {...props} />, options);
   });
 
   it('should render properly', () => {
@@ -74,14 +74,14 @@ describe('BookmarkV2', () => {
     props.recipient.address = '12345L';
     props.recipient.title = 'John Cena';
     props.recipient.balance = '10';
-    wrapper = mount(<Bookmark {...props} />, options);
+    wrapper = mount(<AutoSuggest {...props} />, options);
     expect(wrapper).toContainMatchingElement('AccountVisual');
   });
 
   it('should select an account from the available list', () => {
     props.showSuggestions = true;
     props.recipient.value = 'L';
-    wrapper = mount(<Bookmark {...props} />, options);
+    wrapper = mount(<AutoSuggest {...props} />, options);
     expect(wrapper).toContainMatchingElement('.bookmark-list');
     expect(wrapper).toContainMatchingElements(3, 'li');
     wrapper.find('InputV2.input').simulate('keyDown', { keyCode: keyCodes.arrowDown });

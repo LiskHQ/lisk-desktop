@@ -24,20 +24,18 @@ class AccountVisualDemo extends React.Component {
     const offset = acc.length;
     const bytes = [];
     for (let j = 1 + offset; j <= 152 + offset; j += 1) {
-      const byte = [];
-      for (let i = 1; i <= 16; i += 1) {
-        byte.push(((j + i) % i) % 2);
-      }
+      const crypotObj = window.crypto || window.msCrypto;
+      const byte = [...crypotObj.getRandomValues(new Uint16Array(16))].map(x => (`00${(x % 256).toString(16)}`).slice(-2));
       bytes.push(byte);
     }
-    let accounts = bytes.map(seed => generatePassphraseFromSeed({ seed }))
+
+    const accounts = bytes.map(seed => generatePassphraseFromSeed({ seed }))
       .map(extractAddress);
 
     function onlyUnique(value, index, self) {
       return self.indexOf(value) === index;
     }
-    accounts = [...acc, ...accounts].filter(onlyUnique);
-    return accounts;
+    return [...acc, ...accounts].filter(onlyUnique);
   }
 
   render() {

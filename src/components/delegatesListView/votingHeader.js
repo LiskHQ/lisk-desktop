@@ -5,7 +5,7 @@ import Tabs from '../toolbox/tabs';
 import { InputV2 } from '../toolbox/inputsV2';
 
 
-class VotingHeaderV2 extends React.Component {
+class VotingHeader extends React.Component {
   constructor(props) {
     super();
     this.state = {
@@ -78,4 +78,4 @@ class VotingHeaderV2 extends React.Component {
     );
   }
 }
-export default VotingHeaderV2;
+export default VotingHeader;

@@ -2,10 +2,10 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { mount } from 'enzyme';
-import VoteCheckboxV2 from './voteCheckboxV2';
-import styles from './votingListViewV2.css';
+import VoteCheckbox from './voteCheckbox';
+import styles from './votingListView.css';
 
-describe('VoteCheckboxV2', () => {
+describe('VoteCheckbox', () => {
   const props = {
     data: {
       account: {},
@@ -22,7 +22,7 @@ describe('VoteCheckboxV2', () => {
   describe('General', () => {
     let wrapper;
     beforeEach(() => {
-      wrapper = mount(<VoteCheckboxV2 {...props} status={voteStatus} />);
+      wrapper = mount(<VoteCheckbox {...props} status={voteStatus} />);
     });
 
     it('should render an checkbox input', () => {
@@ -37,26 +37,26 @@ describe('VoteCheckboxV2', () => {
 
   describe('To show vote', () => {
     it('should check the checkbox input', () => {
-      const wrapper = mount(<VoteCheckboxV2 {...props} status={voteStatus} />);
+      const wrapper = mount(<VoteCheckbox {...props} status={voteStatus} />);
       expect(wrapper.find('input').props().checked).to.equal(true);
     });
   });
 
   describe('To show unvote', () => {
     it('should uncheck the checkbox input', () => {
-      const wrapper = mount(<VoteCheckboxV2 {...props} status={unvoteStatus} />);
+      const wrapper = mount(<VoteCheckbox {...props} status={unvoteStatus} />);
       expect(wrapper.find('input').props().checked).to.equal(false);
     });
 
     it('should render a checkbox input even if status is not passed', () => {
-      const wrapper = mount(<VoteCheckboxV2 {...props} />);
+      const wrapper = mount(<VoteCheckbox {...props} />);
       expect(wrapper.find('input').props().checked).to.equal(false);
     });
   });
 
   describe('To show pending', () => {
     it('should render a Spinner When pending is true', () => {
-      const wrapper = mount(<VoteCheckboxV2 {...props} status={pendingStatus} />);
+      const wrapper = mount(<VoteCheckbox {...props} status={pendingStatus} />);
       expect(wrapper.find('Spinner').exists()).to.be.equal(true);
     });
   });

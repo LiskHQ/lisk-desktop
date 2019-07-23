@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import styles from './votingListViewV2.css';
-import VoteCheckboxV2 from './voteCheckboxV2';
+import styles from './votingListView.css';
+import VoteCheckbox from './voteCheckbox';
 import TableRow from '../toolbox/table/tableRow';
 import AccountVisual from '../accountVisual';
 import LiskAmount from '../liskAmount';
@@ -21,7 +21,7 @@ const setRowClass = (voteStatus) => {
   return confirmed ? styles.votedRow : '';
 };
 
-class DelegateRowV2 extends React.Component {
+class DelegateRow extends React.Component {
   shouldComponentUpdate({
     voteStatus, ...nextProps
   }) {
@@ -72,7 +72,7 @@ class DelegateRowV2 extends React.Component {
       >
         {shouldShowVoteColumn ? (
           <div className={`${columnClassNames.rank} ${styles.leftText}`}>
-            <VoteCheckboxV2
+            <VoteCheckbox
               className={styles.checkbox}
               accent={shouldHightlightCheckbox}
               toggle={voteToggled}
@@ -121,4 +121,4 @@ class DelegateRowV2 extends React.Component {
   }
 }
 
-export default DelegateRowV2;
+export default DelegateRow;

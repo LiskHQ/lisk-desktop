@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import throttle from 'lodash.throttle';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '../../constants/routes';
-import BookmarksList from '../bookmarksList';
+import BookmarksList from '../bookmarks/bookmarksList';
 import NewsFeed from '../newsFeed';
 import WalletDetails from '../walletDetails';
 import Piwik from '../../utils/piwik';

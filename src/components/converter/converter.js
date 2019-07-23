@@ -1,8 +1,8 @@
 import React from 'react';
 import converter from '../../constants/converter';
-import styles from './converterV2.css';
+import styles from './converter.css';
 
-class ConverterV2 extends React.Component {
+class Converter extends React.Component {
   constructor(props) {
     super(props);
 
@@ -40,4 +40,4 @@ class ConverterV2 extends React.Component {
   }
 }
 
-export default ConverterV2;
+export default Converter;

@@ -2,9 +2,9 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import TableRow from '../toolbox/table/tableRow';
 import Tooltip from '../toolbox/tooltip/tooltip';
-import styles from './votingListViewV2.css';
+import styles from './votingListView.css';
 
-const ListLabelsV2 = ({
+const ListLabels = ({
   shouldShowVoteColumn, t, columnClassNames,
 }) =>
   (
@@ -47,4 +47,4 @@ const ListLabelsV2 = ({
     </TableRow>
   );
 
-export default ListLabelsV2;
+export default ListLabels;

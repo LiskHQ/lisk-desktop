@@ -4,7 +4,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../timestamp';
 import { SecondaryButtonV2 } from '../toolbox/buttons/button';
 import { tokenMap } from '../../constants/tokens';
-import BoxV2 from '../boxV2';
+import Box from '../box';
 import CopyToClipboard from '../toolbox/copyToClipboard';
 import LiskAmount from '../liskAmount';
 import NotFound from '../notFound';
@@ -44,7 +44,7 @@ class SingleTransaction extends React.Component {
     return (
       <div className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
         { transaction.id && !transaction.error ? (
-          <BoxV2 className={styles.wrapper}>
+          <Box className={styles.wrapper}>
             <header className={`${styles.detailsHeader}`}>
               <h1>{t('Transaction details')}</h1>
               <CopyToClipboard
@@ -132,7 +132,7 @@ class SingleTransaction extends React.Component {
                 </footer>
               </TransactionDetailView>
             </main>
-          </BoxV2>
+          </Box>
         ) : transaction.errors && transaction.errors.length && (
         <NotFound />
         )}
