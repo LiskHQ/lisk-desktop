@@ -88,7 +88,8 @@ class TransactionRowV2 extends React.Component {
         </div>
         <div className={`${columnClassNames.fee} transactions-cell`}>
           <LiskAmount val={value.fee} />
-          {token}
+          &nbsp;
+          {`${token}`}
         </div>
         <div className={`${columnClassNames.details} transactions-cell`}>
           <TransactionDetailV2

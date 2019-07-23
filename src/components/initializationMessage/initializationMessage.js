@@ -12,10 +12,10 @@ const InitializationMessage = ({
 }) => {
   const shouldShowInitialization = () => {
     const activeToken = settings.token.active;
-    return account.info && !(account.info.LSK.serverPublicKey
+    return !!(account.info && !(account.info.LSK.serverPublicKey
     || account.info.LSK.balance === 0
     || pendingTransactions.length > 0
-    || activeToken === 'BTC');
+    || activeToken === 'BTC'));
   };
 
   const onButtonClick = () => {

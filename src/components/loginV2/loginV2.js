@@ -142,7 +142,7 @@ class LoginV2 extends React.Component {
                 {t('Sign in')}
               </span>
               <h1>
-                {t('Sign in with a Passphrase')}
+                {t('Sign in with a passphrase')}
               </h1>
               <p>
                 {t('New to Lisk? ')}
@@ -150,7 +150,7 @@ class LoginV2 extends React.Component {
                   className={`${styles.link}`}
                   to={routes.register.path}
                 >
-                  {t('Create an Account')}
+                  {t('Create an account')}
                 </Link>
               </p>
             </div>
@@ -161,7 +161,7 @@ class LoginV2 extends React.Component {
                   {t('Passphrase')}
                   <Tooltip
                     className={`${styles.tooltip}`}
-                    title={t('What is your passphrase?')}
+                    title={t('What is a passphrase?')}
                     footer={(
                       <a
                         href={links.whatIsAnPassphrase}
@@ -169,19 +169,19 @@ class LoginV2 extends React.Component {
                         rel="noopener noreferrer"
                         target="_blank"
                       >
-                        {t('Read More')}
+                        {t('Read more')}
                       </a>
 )}
                   >
                     <React.Fragment>
                       <p className={`${styles.tooltipText}`}>
-                        {t('Your passphrase is both your login and passphrase to your Lisk Hub. It is provided during account registration.')}
+                        {t('A passphrase is a combination of a username and password. You saved your passphrase when registering your Lisk account.')}
                       </p>
                       <p className={`${styles.tooltipText}`}>
-                        {t('You can use tab or space to go to the next field.')}
+                        {t('If you are typing out your passphrase you can use tab or space to go to the next field.')}
                       </p>
                       <p className={`${styles.tooltupText}`}>
-                        {t('For longer passphrases, simply paste it in the first input field.')}
+                        {t('For longer passphrases, simply paste them in the first input field.')}
                       </p>
                     </React.Fragment>
                   </Tooltip>
@@ -203,11 +203,11 @@ class LoginV2 extends React.Component {
                     || !this.state.isValid
                     || this.state.passphrase === ''}
                 >
-                  {t('Sign In')}
+                  {t('Sign in')}
                 </PrimaryButtonV2>
                 <Link to={routes.splashscreen.path}>
                   <TertiaryButtonV2 className={`${styles.button} ${styles.backButton}`}>
-                    {t('Go Back')}
+                    {t('Go back')}
                   </TertiaryButtonV2>
                 </Link>
               </div>

@@ -25,12 +25,12 @@ describe('HeaderAccountInfo Component', () => {
       ...defaultProps,
       bookmarks: {
         LSK: [{
-          address: accounts['empty account'].address,
+          address: accounts.empty_account.address,
           title: 'bookmark-test',
         }],
         BTC: [],
       },
-      address: accounts['empty account'].address,
+      address: accounts.empty_account.address,
     };
     const wrapper = mount(<HeaderAccountInfo {...props} />);
     expect(wrapper.find('.title')).toHaveText('bookmark-test');
@@ -51,7 +51,7 @@ describe('HeaderAccountInfo Component', () => {
   it('Should show information for not bookmark', () => {
     const props = {
       ...defaultProps,
-      address: accounts['empty account'].address,
+      address: accounts.empty_account.address,
     };
     const wrapper = mount(<HeaderAccountInfo {...props} />);
     expect(wrapper).not.toContainMatchingElement('.label');

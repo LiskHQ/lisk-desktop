@@ -4,6 +4,7 @@ import throttle from 'lodash.throttle';
 import BookmarksList from '../bookmarks/bookmarksList';
 import NewsFeed from '../newsFeed';
 import WalletDetails from '../walletDetails';
+import PageHeader from '../toolbox/pageHeader';
 import breakpoints from '../../constants/breakpoints';
 import ExtensionPoint from '../extensionPoint';
 import LiskHubExtensions from '../../utils/liskHubExtensions';
@@ -94,11 +95,10 @@ class Dashboard extends React.Component {
             : null
         }
         <div className={`${styles.wrapper} dashboard-container`}>
-          <header>
-            <h1>{t('Dashboard')}</h1>
-            <h2>{t('All important information at a glance')}</h2>
-          </header>
-
+          <PageHeader
+            title={t('Dashboard')}
+            subtitle={t('All important information at a glance')}
+          />
           <div className={`${styles.main}`}>
             <div className={styles.subContainer}>
               {
