@@ -57,8 +57,8 @@ describe('Summary', () => {
   const props = {
     t: v => v,
     account: {
-      address: accounts['second passphrase account'].address,
-      secondPublicKey: accounts['second passphrase account'].secondPublicKey,
+      address: accounts.second_passphrase_account.address,
+      secondPublicKey: accounts.second_passphrase_account.secondPublicKey,
       hwInfo: {
         deviceModel: 'Ledger Nano S',
       },
@@ -119,7 +119,7 @@ describe('Summary', () => {
   it('should disable "Next" button if secondPassphrase invalid for active account', () => {
     expect(wrapper.find('.send-button').at(0).prop('disabled')).toBeTruthy();
     const clipboardData = {
-      getData: () => accounts['second passphrase account'].passphrase,
+      getData: () => accounts.second_passphrase_account.passphrase,
     };
     wrapper.find('passphraseInputV2 input').first().simulate('paste', { clipboardData });
     expect(wrapper.find('.send-button').at(0).prop('disabled')).toBeTruthy();
@@ -127,7 +127,7 @@ describe('Summary', () => {
 
   it('should call transactionCreated function after do a click in confirm button', () => {
     const clipboardData = {
-      getData: () => accounts['second passphrase account'].secondPassphrase,
+      getData: () => accounts.second_passphrase_account.secondPassphrase,
     };
     wrapper.find('passphraseInputV2 input').first().simulate('paste', { clipboardData });
     wrapper.update();

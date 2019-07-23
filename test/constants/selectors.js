@@ -13,7 +13,7 @@ const votingPage = {
   confirmVotingButton: '.confirm-button',
   voteResultHeader: '.result-box-header',
   backToDelegatesButton: '.back-to-delegates-button',
-  alreadyVotedPreselection: '.alreadyVoted-message',
+  alreadyVotedPreselection: '.alreadyVoted-message .vote',
   addedVotesContainer: '.added-votes',
   becomeDelegateLink: '.register-delegate',
   loadMoreButton: '.loadMore',

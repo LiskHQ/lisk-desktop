@@ -48,7 +48,7 @@ describe('SecondPassphrase', () => {
     it('should go to settings if account already has second passphrase', () => {
       wrapper = mount(<SecondPassphrase
         {...props}
-        account={accounts['second passphrase account']}
+        account={accounts.second_passphrase_account}
       />);
       expect(props.history.push).toHaveBeenCalledWith(routes.setting.path);
     });
@@ -56,7 +56,7 @@ describe('SecondPassphrase', () => {
     it('should go to settings if account has not enought balance', () => {
       wrapper = mount(<SecondPassphrase
         {...props}
-        account={accounts['empty account']}
+        account={accounts.empty_account}
       />);
       expect(props.history.push).toHaveBeenCalledWith(routes.setting.path);
     });

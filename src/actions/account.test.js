@@ -55,9 +55,9 @@ describe('actions: account', () => {
     let accountApiMock;
     let i18nextMock;
     const data = {
-      passphrase: accounts['second passphrase account'].passphrase,
-      secondPassphrase: accounts['second passphrase account'].secondPassphrase,
-      account: accounts['second passphrase account'],
+      passphrase: accounts.second_passphrase_account.passphrase,
+      secondPassphrase: accounts.second_passphrase_account.secondPassphrase,
+      account: accounts.second_passphrase_account,
       callback: jest.fn(),
     };
     const actionFunction = secondPassphraseRegistered(data);
@@ -82,8 +82,8 @@ describe('actions: account', () => {
     it('should dispatch addPendingTransaction action if resolved', () => {
       const transaction = {
         id: '15626650747375562521',
-        senderPublicKey: accounts['second passphrase account'].publicKey,
-        senderId: accounts['second passphrase account'].address,
+        senderPublicKey: accounts.second_passphrase_account.publicKey,
+        senderId: accounts.second_passphrase_account.address,
         amount: 0,
         fee: Fees.setSecondPassphrase,
         type: transactionTypes.setSecondPassphrase,
@@ -164,7 +164,7 @@ describe('actions: account', () => {
             id: 12498250891724098,
           }],
           confirmed: [],
-          account: { address: accounts['second passphrase account'].address, balance: 0 },
+          account: { address: accounts.second_passphrase_account.address, balance: 0 },
         },
         account: { address: accounts.genesis.address, balance: 0 },
       };
@@ -182,7 +182,7 @@ describe('actions: account', () => {
         transactions: {
           pending: [{ id: 12498250891724098 }],
           confirmed: [],
-          account: { address: accounts['second passphrase account'].address, balance: 0 },
+          account: { address: accounts.second_passphrase_account.address, balance: 0 },
         },
         account: { address: accounts.genesis.address },
       };
