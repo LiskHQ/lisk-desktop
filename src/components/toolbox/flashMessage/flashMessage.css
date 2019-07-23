@@ -36,6 +36,8 @@
 
     color: var(--color-mystic) !important;
     height: 36px !important;
+    width: 143px;
+    padding: 0;
     border: 1px solid var(--light-border-color);
     margin-left: auto;
   }
