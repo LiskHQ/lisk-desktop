@@ -14,6 +14,7 @@ import Fees from '../constants/fees';
 import networks from '../constants/networks';
 import { loginType } from '../constants/hwConstants';
 import * as delegateApi from '../utils/api/delegates';
+import accounts from '../../test/constants/accounts';
 
 const delegateList = [
   { username: 'username1', publicKey: '123HG3452245L', address: '1234121321L' },
@@ -71,8 +72,8 @@ describe('actions: voting', () => {
   describe('votePlaced', () => {
     let delegateApiMock;
     const account = {
-      publicKey: 'test_public-key',
-      address: 'test_address',
+      publicKey: accounts.genesis.publicKey,
+      address: accounts.genesis.address,
       loginType: loginType.normal,
     };
 

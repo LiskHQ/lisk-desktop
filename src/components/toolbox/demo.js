@@ -1,5 +1,5 @@
 import React from 'react';
-import BoxV2Demo from '../boxV2/demo';
+import BoxDemo from '../box/demo';
 import ButtonDemo from './buttons/demo';
 import CalendarDemo from './calendar/demo';
 import CheckBoxDemo from './checkBox/demo';
@@ -15,9 +15,9 @@ import AnimationDemo from './animation/demo';
 const ToolboxDemo = () => (
   <React.Fragment>
     <AnimationDemo />
-    <BoxV2Demo />
+    <BoxDemo />
     {' '}
-    { /* TODO move BoxV2 into toolbox folder */ }
+    { /* TODO move Box into toolbox folder */ }
     <ButtonDemo />
     <CalendarDemo />
     <CheckBoxDemo />

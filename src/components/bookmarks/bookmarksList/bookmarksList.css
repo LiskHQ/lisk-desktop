@@ -1,0 +1,91 @@
+@import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
+
+.box {
+  width: 100%;
+
+  & .bookmarkList {
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 20px;
+
+    & > .row {
+      width: 100%;
+      height: auto;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--color-mystic);
+      cursor: pointer;
+      text-decoration: none;
+
+      & .editInput {
+        width: 224px;
+      }
+
+      & .avatarAndDescriptionWrapper {
+        display: flex;
+        align-items: flex-start;
+
+        & > .avatar {
+          margin-right: 15px;
+        }
+      }
+
+      & .description {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+
+        & > span:first-child {
+          @mixin headingSmall;
+
+          color: var(--color-maastricht-blue);
+        }
+
+        & > span:last-child {
+          @mixin contentNormal;
+
+          color: var(--color-slate-gray);
+        }
+      }
+
+      & .buttonContainer {
+        opacity: 0;
+        transition: opacity var(--animation-speed-fast) ease;
+
+        & > button {
+          margin-left: 20px;
+          min-width: initial;
+        }
+
+        & .deleteButton {
+          background-color: #ec6868 !important;
+        }
+      }
+
+      &:hover .buttonContainer,
+      &.editting .buttonContainer {
+        opacity: 1;
+      }
+    }
+
+    & .footer {
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px 0;
+    }
+  }
+}

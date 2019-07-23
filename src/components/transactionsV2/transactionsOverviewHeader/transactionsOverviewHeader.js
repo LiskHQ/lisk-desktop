@@ -5,7 +5,7 @@ import React from 'react';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import { tokenMap } from '../../../constants/tokens';
-import Bookmark from '../../bookmark';
+import BookmarkDropdown from '../../bookmarks/bookmarkDropdown';
 import DropdownButton from '../../toolbox/dropdownButton';
 import HeaderAccountInfo from './headerAccountInfo';
 import Request from '../../request';
@@ -73,7 +73,7 @@ class transactionsHeader extends React.Component {
                 buttonLabel={isBookmark ? t('Edit bookmark') : t('Bookmark')}
                 ButtonComponent={PrimaryButtonV2}
               >
-                <Bookmark
+                <BookmarkDropdown
                   token={activeToken}
                   delegate={delegate}
                   address={address}

@@ -107,6 +107,7 @@
   visibility: hidden;
   width: 45vw; /* stylelint-disable-line */
   z-index: var(--overlay-index);
+  word-break: initial;
 
   & .tooltipArrow {
     color: var(--color-white);

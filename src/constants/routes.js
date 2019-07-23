@@ -1,15 +1,13 @@
 import { tokenMap } from './tokens';
 import Help from '../components/help';
-import Sidechains from '../components/sidechains';
 import Setting from '../components/setting';
 import SecondPassphrase from '../components/secondPassphrase';
 import SignMessage from '../components/signMessage';
-import SearchResult from '../components/searchResult';
 import TransactionDashboard from '../components/transactionDashboard';
 import AccountTransactions from '../components/accountTransactions';
 import Delegates from '../components/delegates';
 import Voting from '../components/voting';
-import SingleTransaction from '../components/singleTransactionV2';
+import SingleTransaction from '../components/singleTransaction';
 import HwWalletLogin from '../components/hwWalletLogin';
 // import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
@@ -80,11 +78,6 @@ export default {
     component: Help,
     isPrivate: false,
   },
-  sidechains: {
-    path: '/sidechains',
-    component: Sidechains,
-    isPrivate: true,
-  },
   setting: {
     path: '/settings',
     component: Setting,
@@ -123,14 +116,6 @@ export default {
   //   component: NotFound,
   //   isPrivate: false,
   // },
-  search: {
-    name: 'search',
-    pathPrefix: '',
-    path: '/explorer/result',
-    pathSuffix: '/:query?',
-    component: SearchResult,
-    isPrivate: false,
-  },
   accounts: {
     pathPrefix: '',
     path: '/explorer/accounts',

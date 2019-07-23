@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { InputV2 } from '../toolbox/inputsV2';
-import Box from '../boxV2';
+import Box from '../box';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
 import Feedback from '../toolbox/feedback/feedback';
 import localJSONStorage from '../../utils/localJSONStorage';
