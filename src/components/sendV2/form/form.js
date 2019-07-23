@@ -1,10 +1,10 @@
 // eslint-disable-line max-lines
 import React from 'react';
-import ConverterV2 from '../../converterV2';
+import Converter from '../../converter';
 import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
 import { InputV2, AutoresizeTextarea } from '../../toolbox/inputsV2';
 import { getNetworkCode } from '../../../utils/api/btc/network';
-import Bookmark from '../../bookmarkV2';
+import AutoSuggest from '../autoSuggest';
 import SpinnerV2 from '../../spinnerV2/spinnerV2';
 import svg from '../../../utils/svgIcons';
 import Tooltip from '../../toolbox/tooltip/tooltip';
@@ -19,7 +19,7 @@ import { validateAddress } from '../../../utils/validators';
 import Selector from '../../toolbox/selector/selector';
 import { tokenMap } from '../../../constants/tokens';
 import * as btcTransactionsAPI from '../../../utils/api/btc/transactions';
-import BoxV2 from '../../boxV2';
+import Box from '../../box';
 
 class Form extends React.Component {
   // eslint-disable-next-line max-statements
@@ -459,14 +459,14 @@ class Form extends React.Component {
       && !fields.reference.error) && !this.state.isLoading;
 
     return (
-      <BoxV2 className={`${styles.wrapper}`}>
+      <Box className={`${styles.wrapper}`}>
         <header>
           <h1>{ t('Send Tokens') }</h1>
         </header>
         <div className={styles.formSection}>
           <span className={`${styles.fieldGroup} recipient`}>
             <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
-            <Bookmark
+            <AutoSuggest
               validateBookmark={this.validateBookmark}
               bookmarks={this.props.bookmarks}
               onChange={this.onInputChange}
@@ -489,7 +489,7 @@ class Form extends React.Component {
                 placeholder={t('Insert the amount of transaction')}
                 className={`${styles.input} ${fields.amount.error ? 'error' : ''}`}
               />
-              <ConverterV2
+              <Converter
                 className={styles.converter}
                 value={fields.amount.value}
                 error={fields.amount.error}
@@ -625,7 +625,7 @@ class Form extends React.Component {
             {t('Go to Confirmation')}
           </PrimaryButtonV2>
         </footer>
-      </BoxV2>
+      </Box>
     );
   }
 }

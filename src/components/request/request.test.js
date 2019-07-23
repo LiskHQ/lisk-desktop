@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import Request from '.';
 import accounts from '../../../test/constants/accounts';
 
-jest.mock('../converterV2', () => (
+jest.mock('../converter', () => (
   function ConverterMock() {
     return <span className="converted-price" />;
   }

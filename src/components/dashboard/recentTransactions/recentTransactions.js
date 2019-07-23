@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
 import { tokenMap } from '../../../constants/tokens';
-import Box from '../../boxV2';
-import EmptyState from '../../emptyStateV2';
+import Box from '../../box';
+import EmptyState from '../../emptyState';
 import Icon from '../../toolbox/icon';
 import TransactionList from './transactionList';
 import links from '../../../constants/externalLinks';

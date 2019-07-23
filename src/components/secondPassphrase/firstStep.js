@@ -1,14 +1,14 @@
 import { Trans } from 'react-i18next';
 import React from 'react';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
-import BoxV2 from '../boxV2';
+import Box from '../box';
 import PassphraseBackup from '../passphraseBackup';
 import styles from './secondPassphrase.css';
 
 const FirstStep = ({
   t, goBack, nextStep, account,
 }) => (
-  <BoxV2>
+  <Box>
     <header>
       <h2>{t('Register 2nd passphrase')}</h2>
     </header>
@@ -49,7 +49,7 @@ and every vote.
         {t('Go back')}
       </TertiaryButtonV2>
     </footer>
-  </BoxV2>
+  </Box>
 );
 
 export default FirstStep;

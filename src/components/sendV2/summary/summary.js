@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import React from 'react';
-import ConverterV2 from '../../converterV2';
+import Converter from '../../converter';
 import HardwareWalletIllustration from
   '../../toolbox/hardwareWalletIllustration';
 import AccountVisual from '../../accountVisual/index';
@@ -12,7 +12,7 @@ import PassphraseInputV2 from '../../passphraseInputV2/passphraseInputV2';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
 import Piwik from '../../../utils/piwik';
-import Box from '../../boxV2';
+import Box from '../../box';
 import { extractPublicKey } from '../../../utils/account';
 import { tokenMap } from '../../../constants/tokens';
 import styles from './summary.css';
@@ -243,7 +243,7 @@ class Summary extends React.Component {
             <label>{t('Amount')}</label>
             <label className={`${styles.information} ${styles.amount} amount-summary`}>
               {`${fields.amount.value} ${token}`}
-              <ConverterV2 className={`${styles.secondText} ${styles.amountSecondText}`} value={fields.amount.value} />
+              <Converter className={`${styles.secondText} ${styles.amountSecondText}`} value={fields.amount.value} />
             </label>
           </div>
 

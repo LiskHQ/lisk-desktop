@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { PrimaryButtonV2 } from '../toolbox/buttons/button';
-import BookmarksList from '../bookmarksList/bookmarksList';
+import BookmarksList from './bookmarksList/bookmarksList';
 import PageHeader from '../toolbox/pageHeader';
 import routes from '../../constants/routes';
 import styles from './bookmarks.css';

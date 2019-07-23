@@ -4,7 +4,7 @@ import svgIcons from '../../utils/svgIcons';
 
 import CheckBox from '../toolbox/checkBox';
 
-const VoteCheckboxV2 = ({
+const VoteCheckbox = ({
   data, status = {}, toggle, votingModeEnabled, accent, className,
 }) => {
   const {
@@ -43,4 +43,4 @@ const VoteCheckboxV2 = ({
   return template;
 };
 
-export default VoteCheckboxV2;
+export default VoteCheckbox;

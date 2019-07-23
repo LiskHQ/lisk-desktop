@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { voteToggled, delegatesAdded } from '../../actions/voting';
-import VotingListViewV2 from './votingListViewV2';
+import VotingListView from './votingListView';
 
 const mapStateToProps = state => ({
   votes: state.voting.votes,
@@ -16,4 +16,4 @@ const mapDispatchToProps = {
   }),
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(VotingListViewV2));
+export default connect(mapStateToProps, mapDispatchToProps)(translate()(VotingListView));

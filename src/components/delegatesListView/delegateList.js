@@ -1,13 +1,13 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import DelegateRowV2 from './delegateRowV2';
-import ListLabelsV2 from './listLabelsV2';
+import DelegateRow from './delegateRow';
+import ListLabels from './listLabels';
 import { Button } from '../toolbox/buttons/button';
 import { getTotalVotesCount } from '../../utils/voting';
 
-import styles from './votingListViewV2.css';
+import styles from './votingListView.css';
 
-class DelegateListV2 extends React.Component {
+class DelegateList extends React.Component {
   constructor() {
     super();
     this.state = { didMount: false };
@@ -39,14 +39,14 @@ class DelegateListV2 extends React.Component {
       <div>
         { this.state.didMount ? (
           <div className={`${styles.results} delegate-list`}>
-            <ListLabelsV2
+            <ListLabels
               t={t}
               columnClassNames={columnClassNames}
               shouldShowVoteColumn={shouldShowVoteColumn}
             />
             {
             this.props.list.map(item => (
-              <DelegateRowV2
+              <DelegateRow
                 key={item.account.address}
                 data={item}
                 t={t}
@@ -76,4 +76,4 @@ class DelegateListV2 extends React.Component {
   }
 }
 
-export default DelegateListV2;
+export default DelegateList;

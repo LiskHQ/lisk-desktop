@@ -1,5 +1,5 @@
 import React from 'react';
-import Box from '../boxV2';
+import Box from '../box';
 import LiskAmount from '../liskAmount';
 import { tokenMap } from '../../constants/tokens';
 import svg from '../../utils/svgIcons';

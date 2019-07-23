@@ -1,10 +1,10 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import { Line as LineChart } from 'react-chartjs-2';
-import BoxV2 from '../boxV2';
+import Box from '../box';
 import styles from './balanceChart.css';
 import * as ChartUtils from '../../utils/balanceChart';
-import EmptyState from '../emptyStateV2';
+import EmptyState from '../emptyState';
 import { tokenMap } from '../../constants/tokens';
 
 class BalanceGraph extends React.Component {
@@ -23,7 +23,7 @@ class BalanceGraph extends React.Component {
     });
 
     return (
-      <BoxV2 className={`${styles.wrapper}`}>
+      <Box className={`${styles.wrapper}`}>
         <header>
           <h1>{t('{{token}} balance', { token: tokenMap[token].label })}</h1>
         </header>
@@ -46,7 +46,7 @@ class BalanceGraph extends React.Component {
             }
           </div>
         </main>
-      </BoxV2>
+      </Box>
     );
   }
 }
