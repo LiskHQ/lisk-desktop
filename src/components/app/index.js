@@ -8,9 +8,7 @@ import OfflineWrapper from '../offlineWrapper';
 import CustomRoute from '../customRoute';
 import Dialog from '../dialog';
 import NotFound from '../notFound';
-
 import routes from '../../constants/routes';
-// eslint-disable-next-line import/no-named-as-default
 
 class App extends React.Component {
   constructor() {
@@ -29,10 +27,8 @@ class App extends React.Component {
   render() {
     const allRoutes = Object.values(routes);
 
-    const defaultRoutes = allRoutes.filter(routeObj =>
-      routeObj.component);
-
-    const routesV2Layout = allRoutes.filter(routeObj => routeObj.isV2Layout);
+    const defaultRoutes = allRoutes.filter(routeObj => routeObj.component);
+    const signinFlowRoutes = allRoutes.filter(routeObj => routeObj.isSigninFlow);
 
     const { location } = this.props;
 
@@ -40,18 +36,18 @@ class App extends React.Component {
       <OfflineWrapper>
         <Dialog />
         {
-          routesV2Layout.filter(route => route.path === location.pathname).length > 0
+          signinFlowRoutes.filter(route => route.path === location.pathname).length > 0
             ? (
               <main
                 className={this.state.loaded
                   ? `${styles.wrapper} ${styles.loaded} appLoaded`
                   : `${styles.wrapper}`
-            }
+                }
                 ref={(el) => { this.main = el; }}
               >
                 <Switch>
                   {this.state.loaded
-                  && routesV2Layout.map((route, key) => (
+                  && signinFlowRoutes.map((route, key) => (
                     <Route
                       path={route.path}
                       key={key}
