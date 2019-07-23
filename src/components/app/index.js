@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import { translate } from 'react-i18next';
 import styles from './app.css';
 import stylesV2 from './appV2.css';
 import Toaster from '../toaster';
@@ -29,10 +28,7 @@ class App extends React.Component {
   }
 
   render() {
-    const {
-      history,
-      location,
-    } = this.props;
+    const { history, location } = this.props;
     const allRoutes = Object.values(routes);
     const defaultRoutes = allRoutes.filter(routeObj => routeObj.component);
     const routesV2Layout = allRoutes.filter(routeObj => routeObj.isV2Layout);
@@ -103,4 +99,4 @@ class App extends React.Component {
   }
 }
 
-export default translate()(withRouter(App));
+export default withRouter(App);
