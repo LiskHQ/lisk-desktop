@@ -122,7 +122,7 @@ class BookmarksList extends React.Component {
                   size="xs"
                   onChange={this.onFilterChange}
                   value={filter}
-                  placeholder={t('Filter by name...')}
+                  placeholder={t('Filter by name or address...')}
                 />
               </span>
             )
@@ -141,34 +141,35 @@ class BookmarksList extends React.Component {
               >
                 <div className={styles.avatarAndDescriptionWrapper}>
                   {
-                  token.active === tokenMap.LSK.key
-                    ? (
-                      <AccountVisual
-                        className={styles.avatar}
-                        address={bookmark.address}
-                        size={40}
-                      />
-                    )
-                    : null
-                }
-                  { eddittedAddress === bookmark.address
-                    ? (
-                      <InputV2
-                        className={`bookmarks-edit-input ${styles.editInput}`}
-                        size="m"
-                        onChange={this.onTitleChange}
-                        value={eddittedTitle}
-                        setRef={(input) => { this.editInput = input; }}
-                        placeholder={t('Filter by name...')}
-                      />
-                    )
-                    : (
-                      <span className={styles.description}>
-                        <span>{bookmark.title}</span>
-                        <span>{this.displayAddressBasedOnSelectedToken(bookmark.address)}</span>
-                      </span>
-                    )
-                }
+                    token.active === tokenMap.LSK.key
+                      ? (
+                        <AccountVisual
+                          className={styles.avatar}
+                          address={bookmark.address}
+                          size={40}
+                        />
+                      )
+                      : null
+                  }
+                  {
+                    eddittedAddress === bookmark.address
+                      ? (
+                        <InputV2
+                          className={`bookmarks-edit-input ${styles.editInput}`}
+                          size="m"
+                          onChange={this.onTitleChange}
+                          value={eddittedTitle}
+                          setRef={(input) => { this.editInput = input; }}
+                          placeholder={t('Filter by name or address...')}
+                        />
+                      )
+                      : (
+                        <span className={styles.description}>
+                          <span>{bookmark.title}</span>
+                          <span>{this.displayAddressBasedOnSelectedToken(bookmark.address)}</span>
+                        </span>
+                      )
+                  }
                 </div>
                 { isEditable
                   ? (

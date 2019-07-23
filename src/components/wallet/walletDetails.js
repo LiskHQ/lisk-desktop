@@ -16,7 +16,7 @@ class WalletDetails extends React.Component {
     return (
       <BoxV2 className={styles.wrapper}>
         <header>
-          <h1>{t('Wallet Details')}</h1>
+          <h1>{t('Wallet details')}</h1>
         </header>
         <section className={styles.row}>
           <AccountVisual

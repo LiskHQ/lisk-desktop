@@ -9,7 +9,8 @@
     align-items: center;
 
     & > * {
-      margin-right: 10px;
+      margin-right: 15px;
+      margin-left: -2px;
     }
   }
 
@@ -18,6 +19,7 @@
 
     color: var(--color-slate-gray);
     margin-bottom: 5px;
+    display: block;
   }
 
   & .value {
@@ -25,5 +27,10 @@
 
     color: var(--color-maastricht-blue);
     word-break: break-all;
+    margin-bottom: -4px;
+  }
+
+  & .copyIcon {
+    vertical-align: -2px;
   }
 }

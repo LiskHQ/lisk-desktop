@@ -73,6 +73,10 @@
       }
     }
 
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--color-platinum);
+    }
+
     & .label {
       @mixin contentNormal bold;
 

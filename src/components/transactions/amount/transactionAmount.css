@@ -7,8 +7,10 @@
   align-items: center;
   box-sizing: border-box;
   margin-left: auto;
+  font-weight: var(--font-weight-bold);
 
   & .recieve {
+    border-radius: var(--border-radius-normal);
     display: inline-block;
     height: 29px;
     padding: 6px 12px;

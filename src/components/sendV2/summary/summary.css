@@ -46,8 +46,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    border-top: 1px solid rgba(111, 114, 118, 0.1);
     box-sizing: border-box;
+
+    &:not(:first-child) {
+      border-top: 1px solid rgba(111, 114, 118, 0.1);
+    }
 
     & > label:first-child {
       @mixin contentNormal bold;
@@ -122,6 +125,7 @@
   min-width: 572px;
   margin: 0;
   padding: 0;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
