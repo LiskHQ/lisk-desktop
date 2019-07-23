@@ -23,7 +23,7 @@ describe('Reducer: dialogs(state, action)', () => {
     });
   });
 
-  it('should return empty account obejct if action.type = actionTypes.accountLoggedOut', () => {
+  it('should return empty_account obejct if action.type = actionTypes.accountLoggedOut', () => {
     const action = {
       type: actionTypes.dialogHidden,
     };

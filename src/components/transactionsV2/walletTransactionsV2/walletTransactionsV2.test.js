@@ -98,7 +98,7 @@ describe('WalletTransactions V2 Component', () => {
     beforeEach(() => {
       const newProps = {
         ...props,
-        account: accounts['empty account'],
+        account: accounts.empty_account,
       };
 
       wrapper = mount(<Router>

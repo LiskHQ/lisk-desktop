@@ -56,7 +56,7 @@ describe('ExplorerTransactions V2 Component', () => {
       [accounts.genesis.address]: accounts.genesis,
     },
     address: accounts.genesis.address,
-    account: accounts['empty account'],
+    account: accounts.empty_account,
     match: { params: { address: accounts.genesis.address } },
     history: { push: jest.fn(), location: { search: ' ' } },
     bookmarks: {
