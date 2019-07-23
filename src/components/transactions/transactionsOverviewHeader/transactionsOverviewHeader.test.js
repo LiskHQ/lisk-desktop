@@ -75,7 +75,7 @@ describe('Transactions Overview Header', () => {
       ...props,
       address: accounts.delegate.address,
       balance: accounts.delegate.balance,
-      match: { urls: `${routes.accounts.pathPrefix}${routes.accounts.path}V2/${accounts.delegate.address}` },
+      match: { urls: `${routes.accounts.pathPrefix}${routes.accounts.path}/${accounts.delegate.address}` },
     };
     it('Should toggle bookmark dropdown', () => {
       wrapper = mount(<MemoryRouter>

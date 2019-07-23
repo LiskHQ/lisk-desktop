@@ -6,7 +6,7 @@ import PassphraseInput from './passphraseInput';
 import keyCodes from '../../constants/keyCodes';
 import accounts from '../../../test/constants/accounts';
 
-describe('V2 passphraseInput', () => {
+describe('passphraseInput', () => {
   let wrapper;
 
   const options = {

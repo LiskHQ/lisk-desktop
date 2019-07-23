@@ -42,12 +42,12 @@ describe('Voting', () => {
   };
 
   it('should render VotingSummary', () => {
-    const wrapper = mount(<Router>< {...props} /></Router>, options);
+    const wrapper = mount(<Router><Voting {...props} /></Router>, options);
     expect(wrapper.find('VotingSummary')).toHaveLength(1);
   });
 
   it('should go to result box with confirm button and then back to delegates', () => {
-    const wrapper = mount(<Router>< {...{ ...props, votes }} /></Router>, options);
+    const wrapper = mount(<Router><Voting {...{ ...props, votes }} /></Router>, options);
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(wrapper.find('.result-box-header')).toHaveLength(1);
     wrapper.find('.back-to-delegates-button').at(0).simulate('click');
@@ -56,13 +56,13 @@ describe('Voting', () => {
 
   it('should show report error link when confirm button is clicked and voting fails', () => {
     voteResult = { success: false };
-    const wrapper = mount(<Router>< {...{ ...props, votes }} /></Router>, options);
+    const wrapper = mount(<Router><Voting {...{ ...props, votes }} /></Router>, options);
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(wrapper.find('.report-error-link')).toHaveLength(1);
   });
 
   it('should go to Delegates page when cancel button is clicked', () => {
-    const wrapper = mount(<Router>< {...props} /></Router>, options);
+    const wrapper = mount(<Router><Voting {...props} /></Router>, options);
     wrapper.find('.cancel-button').at(0).simulate('click');
     expect(props.history.push).toHaveBeenCalledWith('/delegates');
   });

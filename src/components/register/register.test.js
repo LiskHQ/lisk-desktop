@@ -8,7 +8,7 @@ import { MemoryRouter } from 'react-router-dom';
 import i18n from '../../i18n';
 import Register from './register';
 
-describe('V2 Register Process', () => {
+describe('Register Process', () => {
   let wrapper;
   const store = configureMockStore([thunk])({});
   const options = {
