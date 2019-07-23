@@ -34,6 +34,7 @@ import iconWarning from '../assets/images/icons-v2/icon-warning.svg';
 import incoming from '../assets/images/icons-v2/incoming.svg';
 import Key from '../assets/images/icons-v2/key.svg';
 import liskLogo from '../assets/images/lisk-logo-v2.svg';
+import liskLogoWhite from '../assets/images/lisk-logo-white-v2.svg';
 import Lock from '../assets/images/icons-v2/lock.svg';
 import logout from '../assets/images/icons-v2/logout.svg';
 import logoutActive from '../assets/images/icons-v2/logout-active.svg';
@@ -47,6 +48,7 @@ import questionIcon from '../assets/images/icons-v2/ico-question.svg';
 import questionMark from '../assets/images/icons-v2/question.svg';
 import searchIconActive from '../assets/images/icons-v2/search-active.svg';
 import searchIconInactive from '../assets/images/icons-v2/search.svg';
+import searchInput from '../assets/images/icons-v2/search-input.svg';
 import settings from '../assets/images/icons-v2/settings.svg';
 import settingsActive from '../assets/images/icons-v2/settings-active.svg';
 import showPassphraseIcon from '../assets/images/icons-v2/icon-show-passphrase.svg';
@@ -109,6 +111,7 @@ export default {
   incoming,
   key_icon: Key,
   liskLogo,
+  liskLogoWhite,
   lock_icon: Lock,
   logout,
   logoutActive,
@@ -122,6 +125,7 @@ export default {
   questionIcon,
   search_icon_active: searchIconActive,
   search_icon_inactive: searchIconInactive,
+  searchInput,
   settings,
   settingsActive,
   showPassphraseIcon,

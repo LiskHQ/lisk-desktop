@@ -1,6 +1,6 @@
 import React from 'react';
 import debounce from 'lodash.debounce';
-import Box from '../../boxV2';
+import Box from '../../box';
 import { InputV2 } from '../../toolbox/inputsV2';
 import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
 import Feedback from '../../toolbox/feedback/feedback';

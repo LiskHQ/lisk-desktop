@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { translate } from 'react-i18next';
 import voting from '../../constants/voting';
-import BoxV2 from '../boxV2';
+import Box from '../box';
 import { getUnixTimestampFromValue } from '../../utils/datetime';
 import LiskAmount from '../liskAmount';
 import i18n from '../../i18n';
@@ -18,7 +18,7 @@ const DelegateTab = ({ delegate, t }) => {
   const delegateSince = getUnixTimestampFromValue(delegate.txDelegateRegister.timestamp);
 
   return (
-    <BoxV2>
+    <Box>
       <header>
         <h1>{t('Delegate stats')}</h1>
       </header>
@@ -85,7 +85,7 @@ const DelegateTab = ({ delegate, t }) => {
           </li>
         </ul>
       </main>
-    </BoxV2>
+    </Box>
   );
 };
 

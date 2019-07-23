@@ -34,14 +34,14 @@ describe('TransactionSummary', () => {
     const wrapper = mount(<TransactionSummary {...{
       ...props,
       account: {
-        address: accounts['second passphrase account'].address,
-        secondPublicKey: accounts['second passphrase account'].secondPublicKey,
+        address: accounts.second_passphrase_account.address,
+        secondPublicKey: accounts.second_passphrase_account.secondPublicKey,
       },
     }}
     />);
     expect(wrapper.find('.confirm-button').at(0).prop('disabled')).toBeTruthy();
     const clipboardData = {
-      getData: () => accounts['second passphrase account'].secondPassphrase,
+      getData: () => accounts.second_passphrase_account.secondPassphrase,
     };
     wrapper.find('passphraseInputV2 input').first().simulate('paste', { clipboardData });
     expect(wrapper.find('.confirm-button').at(0).prop('disabled')).toBeFalsy();
@@ -57,7 +57,7 @@ describe('TransactionSummary', () => {
       account: { hwInfo },
     }}
     />);
-    expect(wrapper.find('h1')).toHaveLength(1);
+    expect(wrapper.find('h2')).toIncludeText('Confirm transaction on your');
     expect(wrapper.find('.confirm-button')).toHaveLength(0);
     expect(props.confirmButton.onClick).toHaveBeenCalled();
   });
@@ -72,7 +72,7 @@ describe('TransactionSummary', () => {
       account: { hwInfo },
     }}
     />);
-    expect(wrapper.find('h1')).toHaveLength(1);
+    expect(wrapper.find('h2')).toIncludeText('Confirm transaction on your');
     expect(wrapper.find('.confirm-button')).toHaveLength(0);
     expect(props.confirmButton.onClick).not.toHaveBeenCalled();
     wrapper.unmount();

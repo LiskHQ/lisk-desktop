@@ -8,6 +8,7 @@ import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
 import ConfirmPassphrase from './confirmPassphrase';
 import AccountCreated from './accountCreated';
+import routes from '../../constants/routes';
 import styles from './register.css';
 
 class Register extends React.Component {
@@ -32,6 +33,13 @@ class Register extends React.Component {
     });
   }
 
+  componentDidUpdate() {
+    const { account, token, history } = this.props;
+    if (account && account.info && account.info[token.active].address) {
+      history.push(routes.dashboard.path);
+    }
+  }
+
   /* istanbul ignore next */
   handleSelectAvatar(selectedAccount) {
     this.setState({ selectedAccount });
@@ -41,7 +49,7 @@ class Register extends React.Component {
     const { accounts, selectedAccount } = this.state;
     return (
       <React.Fragment>
-        <HeaderV2 showSettings={false} />
+        <HeaderV2 showSettings />
         <div className={`${styles.register} ${grid.row}`}>
           <MultiStep
             className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}

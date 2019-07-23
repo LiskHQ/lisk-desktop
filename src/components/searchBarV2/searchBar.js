@@ -3,7 +3,6 @@ import { InputV2 } from '../toolbox/inputsV2';
 import Accounts from './accounts';
 import Delegates from './delegates';
 import Transactions from './transactions';
-import ProgressBar from '../toolbox/progressBar/progressBar';
 import routes from '../../constants/routes';
 import regex from '../../utils/regex';
 import keyCodes from '../../constants/keyCodes';
@@ -129,25 +128,32 @@ class SearchBar extends React.Component {
       && searchTextValue.length
       && !isSearchTextError;
 
+    let error = isSearchTextError ? t('A bit more. Make sure to type at least 3 characters.') : null;
+    error = isEmptyResults ? t('Nothing has been found. Make sure to double check the ID you typed.') : error;
+
     return (
       <div className={`${styles.wrapper} search-bar`}>
         <InputV2
+          icon="searchInput"
+          size="m"
           data-name="searchInput"
           setRef={setSearchBarRef}
           autoComplete="off"
           onChange={this.onChangeSearchTextValue}
           name="searchText"
           value={searchTextValue}
-          placeholder={t('Search for Address, Transaction ID or Delegate name')}
-          className={`${styles.input} search-input`}
+          placeholder={t('Search within the network...')}
+          className="search-input"
           onKeyDown={this.onHandleKeyPress}
+          isLoading={isLoading}
         />
-        <div className={`${styles.searchMessage} ${(isSearchTextError || isEmptyResults) && styles.searchMessageError} search-message`}>
-          <span className={`${styles.errorMessage} search-message`}>
-            {isSearchTextError ? t('Type at least 3 characters') : null}
-            {(isEmptyResults) ? t('No results found.') : null}
-          </span>
-        </div>
+        {error
+          ? (
+            <div className={`${styles.searchMessage} search-message`}>
+              <span className="search-message">{error}</span>
+            </div>
+          )
+          : null }
         {
           suggestions.addresses.length
             ? (
@@ -165,6 +171,7 @@ class SearchBar extends React.Component {
           suggestions.delegates.length
             ? (
               <Delegates
+                searchTextValue={searchTextValue}
                 delegates={suggestions.delegates}
                 onSelectedRow={this.onSelectAccount}
                 rowItemIndex={rowItemIndex}
@@ -185,11 +192,6 @@ class SearchBar extends React.Component {
                 t={t}
               />
             )
-            : null
-        }
-        {
-          isLoading
-            ? <ProgressBar type="linear" mode="indeterminate" theme={styles} className="loading" />
             : null
         }
       </div>

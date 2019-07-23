@@ -6,11 +6,11 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import store from '../../store';
-import VotingListViewV2 from './index';
+import VotingListView from './index';
 import i18n from '../../i18n';
 import history from '../../history';
 
-describe.skip('VotingListViewV2', () => {
+describe.skip('VotingListView', () => {
   let wrapper;
   const account = { address: '16313739661670634666L' };
   const voting = {
@@ -35,7 +35,7 @@ describe.skip('VotingListViewV2', () => {
     });
     wrapper = mount(<Provider store={store}>
       <Router>
-        <VotingListViewV2 history={{ location: { search: '' } }} />
+        <VotingListView history={{ location: { search: '' } }} />
       </Router>
     </Provider>, {
       context: { store, history, i18n },
@@ -48,6 +48,6 @@ describe.skip('VotingListViewV2', () => {
   });
 
   it('should render delegate list', () => {
-    expect(wrapper.find(VotingListViewV2)).to.have.lengthOf(1);
+    expect(wrapper.find(VotingListView)).to.have.lengthOf(1);
   });
 });

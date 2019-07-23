@@ -2,7 +2,7 @@ import React from 'react';
 
 import { InputV2, AutoresizeTextarea } from '../toolbox/inputsV2';
 import CircularProgress from '../toolbox/circularProgress/circularProgress';
-import ConverterV2 from '../converterV2';
+import Converter from '../converter';
 import Feedback from '../toolbox/feedback/feedback';
 import RequestWrapper from './requestWrapper';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
@@ -141,7 +141,7 @@ class RequestLsk extends React.Component {
               placeholder={t('Requested amount')}
               className={`${styles.input} ${fields.amount.error ? 'error' : ''}`}
             />
-            <ConverterV2
+            <Converter
               className={styles.converter}
               value={fields.amount.value}
               error={fields.amount.error}

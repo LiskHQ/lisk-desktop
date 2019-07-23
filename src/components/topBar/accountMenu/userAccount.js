@@ -11,7 +11,7 @@ import AccountInfo from './accountInfo';
 
 const UserAccount = ({
   token, t, account, onDropdownToggle, isDropdownEnable, onLogout,
-  settingsUpdated, isUserLogout,
+  settingsUpdated, isUserLogout, signInHolderClassName,
 }) => {
   /* istanbul ignore next */
   const enabledTokens = tokenKeys.filter(key => token.list[key]);
@@ -35,7 +35,7 @@ const UserAccount = ({
           t={t}
         />
       ) : (
-        <span className={styles.signInHolder}>
+        <span className={`${styles.signInHolder} ${signInHolderClassName}`}>
           <Icon name={`user${isDropdownEnable ? 'Active' : ''}`} />
         </span>
       )}

@@ -68,9 +68,12 @@
     visibility: hidden;
     transition: opacity var(--animation-speed-fast) linear, visibility var(--animation-speed-fast) linear;
 
+    &:first-child {
+      position: absolute;
+    }
+
     &:last-child {
       transition-delay: var(--animation-delay-standard);
-      position: absolute;
     }
   }
 

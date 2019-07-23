@@ -21,6 +21,19 @@ describe('V2 SplashScreen', () => {
       pathname: '',
       search: '',
     },
+    account: {
+      address: '123456L',
+      info: {
+        LSK: {
+          address: '123456L',
+          balance: 100,
+        },
+        BTC: {
+          address: 'jhagsd676587',
+          balance: 100,
+        },
+      },
+    },
     push: jest.fn(),
     replace: jest.fn(),
   };
@@ -29,6 +42,13 @@ describe('V2 SplashScreen', () => {
 
   const settings = {
     areTermsOfUseAccepted: false,
+    token: {
+      active: 'LSK',
+      list: {
+        LSK: true,
+        BTC: true,
+      },
+    },
   };
 
   const store = configureMockStore([])({
@@ -58,9 +78,9 @@ describe('V2 SplashScreen', () => {
   });
 
   it('Should render all links, Sign in, Create an Account and Explre as Guest', () => {
-    expect(wrapper.find('.login-button button').text()).toEqual('Sign In');
-    expect(wrapper.find('.new-account-button button').text()).toEqual('Create an Account');
-    expect(wrapper.find('.link').at(0).text()).toEqual('Explore as a Guest');
+    expect(wrapper.find('.login-button button').text()).toEqual('Sign in');
+    expect(wrapper.find('.new-account-button button').text()).toEqual('Create an account');
+    expect(wrapper.find('.link').at(0).text()).toEqual('Explore as a guest');
   });
 
   describe('History management', () => {

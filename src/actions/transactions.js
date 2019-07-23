@@ -30,7 +30,10 @@ export const cleanTransactions = () => ({
  * @param {Object} data - the transaction object
  */
 export const addPendingTransaction = data => ({
-  data,
+  data: {
+    ...data,
+    senderId: extractAddress(data.senderPublicKey),
+  },
   type: actionTypes.addPendingTransaction,
 });
 
@@ -215,6 +218,7 @@ const handleSentError = ({
       text = error && error.message ? `${error.message}.` : i18next.t('An error occurred while creating the transaction.');
       break;
     case loginType.ledger:
+    case loginType.trezor:
       text = i18next.t('You have cancelled the transaction on your hardware wallet. You can either continue or retry.');
       break;
     default:
@@ -338,7 +342,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
   const [error, tx] = account.loginType === loginType.normal
     ? await to(transactionsAPI.create(
       activeToken,
-      { ...data, timeOffset },
+      { ...data, timeOffset, network },
       createTransactionType.transaction,
     ))
     : await to(hwAPI.create(account, data));
@@ -372,10 +376,7 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
     dispatch(broadcastedTransactionSuccess(transaction));
 
     if (activeToken !== tokenMap.BTC.key) {
-      dispatch(addPendingTransaction({
-        ...transaction,
-        senderId: extractAddress(transaction.senderPublicKey),
-      }));
+      dispatch(addPendingTransaction(transaction));
     }
 
     return dispatch(passphraseUsed(transaction.passphrase));

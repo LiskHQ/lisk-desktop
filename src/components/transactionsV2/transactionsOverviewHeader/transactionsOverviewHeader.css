@@ -6,7 +6,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
-  margin-top: 10px;
+  margin-top: 18px;
 
   & h1 {
     @mixin headingNormalIntermediate;
@@ -51,20 +51,14 @@
     @mixin contentSmall bold;
 
     align-items: center;
-    background-color: var(--color-white);
+    background-color: var(--color-slate-gray);
     border-radius: var(--border-radius-standard);
-    color: var(--color-slate-gray);
+    color: var(--color-white);
     display: flex;
-    height: 16px;
-    margin: 0 5px;
-    padding: 0 5px;
+    height: 18px;
+    margin: 0 15px;
+    padding: 0 7px;
     white-space: nowrap;
-  }
-
-  & .address {
-    @mixin contentSmallest semi-bold;
-
-    color: var(--color-slate-gray);
   }
 }
 
@@ -81,12 +75,12 @@
   display: flex;
   justify-content: space-between;
 
-  & > * {
-    margin-left: 10px;
+  & button {
+    min-width: initial;
+  }
 
-    &:first-child {
-      margin-left: 0;
-    }
+  & > *:not(:first-child) {
+    margin-left: 20px;
   }
 
   & .bookmarkButton {
@@ -109,6 +103,11 @@
 
   & .bookmarkDropdown {
     right: 0;
+  }
+
+  & .bookmarkBtn {
+    min-width: 109px;
+    padding: 0 18px;
   }
 }
 

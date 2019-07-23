@@ -43,7 +43,6 @@ module.exports = {
     'app/src/ledger.js',
     'src/actions/liskService.js',
     'src/actions/transactions.js',
-    'src/components/account/stories.js',
     'src/components/accountInitialization/index.js',
     'src/components/backgroundMaker/index.js',
     'src/components/dashboard/currencyGraph.js', // This should be unskipped in issue #1499
@@ -64,7 +63,6 @@ module.exports = {
     'src/components/request/index.js',
     'src/components/request/index.js',
     'src/components/request/specifyRequest.js',
-    'src/components/resultBox/index.js',
     'src/components/searchBar/index.js', // Passing in mocha but not in Jest
     'src/components/send/steps/form/stories.js',
     'src/components/spinner/stories.js',

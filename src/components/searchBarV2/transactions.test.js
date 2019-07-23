@@ -93,6 +93,26 @@ describe('Transactions', () => {
     expect(wrapper).toContainMatchingElement('.search-transaction-row');
   });
 
+  it('should render properly with transactions data type 7', () => {
+    const newProps = { ...props };
+    newProps.transactions = [
+      {
+        asset: {
+          data: 'testing',
+        },
+        id: 123,
+        type: 7,
+      },
+    ];
+    wrapper = mount(<Transactions {...newProps} />);
+
+    expect(wrapper).toContainMatchingElement('.transactions');
+    expect(wrapper).toContainMatchingElement('.transactions-header');
+    expect(wrapper).toContainMatchingElement('.transactions-subtitle');
+    expect(wrapper).toContainMatchingElement('.transactions-content');
+    expect(wrapper).toContainMatchingElement('.search-transaction-row');
+  });
+
   it('should call onClick function on selected row', () => {
     const newProps = { ...props };
     newProps.transactions = [

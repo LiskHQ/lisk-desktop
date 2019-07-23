@@ -1,8 +1,9 @@
 import React from 'react';
 
-import ToolBoxInput from '../toolbox/inputs/toolBoxInput';
+import { InputV2 } from '../toolbox/inputsV2';
 import Box from '../box';
 import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
+import Feedback from '../toolbox/feedback/feedback';
 import localJSONStorage from '../../utils/localJSONStorage';
 import loadRemoteComponent from '../../utils/extensions';
 import routes from '../../constants/routes';
@@ -18,9 +19,13 @@ class Extensions extends React.Component {
       url: localJSONStorage.get('url', ''),
       error: '',
     };
+
+    this.handleInput = this.handleInput.bind(this);
+    this.addExtension = this.addExtension.bind(this);
+    this.removeExtension = this.removeExtension.bind(this);
   }
 
-  handleInput(value, key) {
+  handleInput({ target: { value } }) {
     // const regex = /^(https:\/\/raw.githubusercontent.
     // com\/michaeltomasik\/extensions-lisk\/master\/)/g;
     const error = '';
@@ -28,7 +33,7 @@ class Extensions extends React.Component {
     //   error = this.props.t('Use extensions from https://raw.githubusercontent.com/michaeltomasik/extensions-lisk/master/');
     // }
 
-    this.setState({ [key]: value, error });
+    this.setState({ url: value, error });
   }
 
   removeExtension() {
@@ -50,53 +55,63 @@ class Extensions extends React.Component {
 
   render() {
     return (
-      <Box>
-        <div className={styles.container}>
+      <div className={styles.container}>
+        <Box className={styles.wrapper}>
           <header className={styles.headerWrapper}>
             <h2>{this.props.t('Add Extension')}</h2>
           </header>
-          <div className={styles.feedbackWrapper}>
-            <div
-              className={styles.label}
-            >
-              {this.props.t('Beta: in order to see changes fully please reload the app when removing extension')}
+          <div className={styles.content}>
+            <div className={styles.feedbackWrapper}>
+              <div
+                className={styles.label}
+              >
+                {this.props.t('Beta: in order to see changes fully please reload the app when removing extension')}
+              </div>
+              <a
+                className={styles.link}
+                target="_blank"
+                href={feedbackLinks.extensions}
+                rel="noopener noreferrer"
+              >
+                {this.props.t('Give feedback about this feature')}
+              </a>
             </div>
-            <a
-              className={styles.link}
-              target="_blank"
-              href={feedbackLinks.extensions}
-              rel="noopener noreferrer"
-            >
-              {this.props.t('Give feedback about this feature')}
-            </a>
-          </div>
-          <div className={styles.extentionsWrapper}>
-            <ToolBoxInput
-              error={this.state.error}
-              label={this.props.t('Enter URL of the *.js file with the extension')}
-              value={this.state.url}
-              onChange={val => this.handleInput(val, 'url')}
-            />
-          </div>
-          <div className={styles.footer}>
-            <SecondaryButtonV2
-              disabled={PRODUCTION || this.state.url.length === 0}
-              label={this.props.t('Remove Extension')}
-              onClick={() => this.removeExtension()}
-            />
+            <label className={styles.extentionsWrapper}>
+              <span>{this.props.t('Enter URL of the *.js file with the extension')}</span>
+              <InputV2
+                error={this.state.error}
+                value={this.state.url}
+                onChange={this.handleInput}
+                disabled={PRODUCTION}
+              />
+            </label>
+            {PRODUCTION ? (
+              <Feedback
+                show
+                status="error"
+                className={styles.error}
+              >
+                {this.props.t('Adding extensions is currently disabled in production version of Lisk Hub')}
+              </Feedback>
+            ) : (
+              <div className={styles.footer}>
+                <SecondaryButtonV2
+                  disabled={PRODUCTION || this.state.url.length === 0}
+                  label={this.props.t('Remove Extension')}
+                  onClick={this.removeExtension}
+                />
 
-            <PrimaryButtonV2
-              disabled={PRODUCTION || (this.state.error !== ''
-                || this.state.url === localJSONStorage.get('url', ''))}
-              label={this.props.t('Add Extension')}
-              onClick={() => this.addExtension()}
-            />
+                <PrimaryButtonV2
+                  disabled={PRODUCTION || (this.state.error !== ''
+                    || this.state.url === localJSONStorage.get('url', ''))}
+                  label={this.props.t('Add Extension')}
+                  onClick={this.addExtension}
+                />
+              </div>
+            )}
           </div>
-          <div className={`${styles.footer} ${styles.error}`}>
-            {(PRODUCTION) ? this.props.t('Adding extensions is currently disabled in production version of Lisk Hub') : ''}
-          </div>
-        </div>
-      </Box>
+        </Box>
+      </div>
     );
   }
 }

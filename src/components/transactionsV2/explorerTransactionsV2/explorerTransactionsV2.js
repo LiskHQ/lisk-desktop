@@ -159,26 +159,32 @@ class ExplorerTransactionsV2 extends React.Component {
             tabName={this.props.t('Wallet')}
             {...overviewProps}
           />
-          {this.props.activeToken !== 'BTC' ? (
-            <VotesTab
-              history={this.props.history}
-              address={this.props.address}
-              fetchVotedDelegateInfo={this.props.fetchVotedDelegateInfo}
-              loading={this.props.loading}
-              votes={this.props.votes}
-              tabClassName="account-info"
-              tabName={this.props.t('Votes')}
-            />
-          ) : null}
-          {delegate.username
-            ? (
-              <DelegateTab
-                tabClassName="delegate-statistics"
-                tabName={this.props.t('Delegate')}
-                delegate={this.props.delegate}
-              />
-            )
-            : null}
+          {
+            delegate.username
+              ? (
+                <DelegateTab
+                  tabClassName="delegate-statistics"
+                  tabName={this.props.t('Delegate')}
+                  delegate={this.props.delegate}
+                />
+              )
+              : null
+          }
+          {
+            this.props.activeToken !== 'BTC'
+              ? (
+                <VotesTab
+                  history={this.props.history}
+                  address={this.props.address}
+                  fetchVotedDelegateInfo={this.props.fetchVotedDelegateInfo}
+                  loading={this.props.loading}
+                  votes={this.props.votes}
+                  tabClassName="account-info"
+                  tabName={this.props.t('Votes')}
+                />
+              )
+              : null
+          }
         </TabsContainer>
       </React.Fragment>
     );

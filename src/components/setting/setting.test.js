@@ -82,7 +82,7 @@ describe('Setting', () => {
   });
 
   it('should render 2nd passphrase as active', () => {
-    const account2ndPassphrase = { info: { LSK: accounts['second passphrase account'] } };
+    const account2ndPassphrase = { info: { LSK: accounts.second_passphrase_account } };
     const newProps = { ...props, account: account2ndPassphrase, hasSecondPassphrase: true };
     wrapper = mount(<Router>
       <Setting {...newProps} />

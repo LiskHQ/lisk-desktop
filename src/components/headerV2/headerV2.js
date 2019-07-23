@@ -1,21 +1,18 @@
 import React from 'react';
 import Lisk from '@liskhq/lisk-client';
-import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
-import { SecondaryButtonV2, PrimaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButtonV2 } from '../toolbox/buttons/button';
 import Feedback from '../toolbox/feedback/feedback';
 import { InputV2 } from '../toolbox/inputsV2';
 import { addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import getNetwork, { getNetworksList } from '../../utils/getNetwork';
 import { parseSearchParams } from '../../utils/searchParams';
 
-import darkLogo from '../../assets/images/logo/lisk-logo-dark.svg';
-import whiteLogo from '../../assets/images/logo/lisk-logo-white.svg';
-import routes from '../../constants/routes';
+import Icon from '../toolbox/icon';
+import UserAccount from '../topBar/accountMenu/userAccount';
 import networks from '../../constants/networks';
 import styles from './headerV2.css';
-import autoSuggestInputStyles from '../autoSuggestV2/autoSuggest.css';
 import formStyles from '../sendV2/form/form.css';
 import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
 import SpinnerV2 from '../spinnerV2/spinnerV2';
@@ -39,11 +36,13 @@ class HeaderV2 extends React.Component {
     this.state = {
       address,
       showDropdown: false,
+      showSettingDrowdown: false,
       network: loginNetwork.code,
       isFirstTime: true,
     };
 
     this.toggleDropdown = this.toggleDropdown.bind(this);
+    this.handleSettingsToggle = this.handleSettingsToggle.bind(this);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -124,21 +123,34 @@ class HeaderV2 extends React.Component {
     this.setState({ showDropdown: value });
   }
 
+  handleSettingsToggle() {
+    this.setState({ showSettingDrowdown: !this.state.showSettingDrowdown });
+  }
+
   /* istanbul ignore next */
   /* eslint-disable complexity */
   render() {
     const {
-      t, showSettings, hideNetwork = false,
-      dark, selectedNetwork, address,
+      account,
+      address,
+      dark,
+      hideNetwork = false,
+      selectedNetwork,
+      settings,
+      settingsUpdated,
+      showSettings,
+      t,
     } = this.props;
+    const { showSettingDrowdown } = this.state;
     const showNetworkOptions = !hideNetwork && this.showNetworkOptions();
     const networkList = getNetworksList();
+    const isUserLogout = !!(Object.keys(account).length === 0 || account.afterLogout);
 
     return (
       <header className={`${styles.wrapper} mainHeader ${dark ? 'dark' : ''}`}>
         <div className={`${styles.headerContent}`}>
           <div className={`${styles.logo}`}>
-            <img src={dark ? whiteLogo : darkLogo} />
+            <Icon name={dark ? 'liskLogoWhite' : 'liskLogo'} className="topbar-logo" />
           </div>
           <div className={`${styles.buttonsHolder}`}>
             {showNetworkOptions
@@ -178,11 +190,8 @@ class HeaderV2 extends React.Component {
                             name="customNetwork"
                             value={this.state.address}
                             placeholder={this.props.t('ie. 192.168.0.1')}
-                            className={`
-                              custom-network
-                              ${formStyles.input}
-                              ${autoSuggestInputStyles.input}
-                              ${this.state.validationError ? styles.errorInput : ''}`}
+                            size="s"
+                            className={`custom-network ${formStyles.input} ${this.state.validationError ? styles.errorInput : ''}`}
                           />
                           <div className={styles.icons}>
                             <SpinnerV2 className={`${styles.spinner} ${this.state.isValidationLoading && this.state.address ? styles.show : styles.hide}`} />
@@ -250,14 +259,22 @@ class HeaderV2 extends React.Component {
               </div>
               )
             }
-            {showSettings
-              && (
-              <Link className={styles.settingButton} to={routes.setting.path}>
-                <SecondaryButtonV2 className={`${dark ? 'light' : ''} small`}>
-                  {t('Settings')}
-                </SecondaryButtonV2>
-              </Link>
-              )
+            {
+              showSettings
+                ? (
+                  <UserAccount
+                    token={settings.token}
+                    signInHolderClassName={styles.settings}
+                    account={account}
+                    isDropdownEnable={showSettingDrowdown}
+                    onDropdownToggle={this.handleSettingsToggle}
+                    onLogout={this.onLogout}
+                    settingsUpdated={settingsUpdated}
+                    isUserLogout={isUserLogout}
+                    t={t}
+                  />
+                )
+                : null
             }
           </div>
         </div>

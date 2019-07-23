@@ -26,7 +26,27 @@ describe.skip('V2 Header', () => {
       { label: 'Testnet', value: 1 },
       { label: 'Custom Node', value: 2 },
     ],
-
+    settings: {
+      token: {
+        active: 'LSK',
+      },
+    },
+    account: {
+      address: '123456L',
+      info: {
+        LSK: {
+          address: '123456L',
+          balance: 100,
+        },
+        BTC: {
+          address: 'jhagsd676587',
+          balance: 100,
+        },
+      },
+    },
+    history: {
+      push: spy(),
+    },
     settingsUpdated: spy(),
     liskAPIClientSet: spy(),
   };

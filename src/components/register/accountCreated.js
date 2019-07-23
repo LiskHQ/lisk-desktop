@@ -13,9 +13,9 @@ const AccountCreated = ({ t, account }) => (
     <span className={`${registerStyles.stepsLabel}`}>{t('Step 4 / 4')}</span>
     <div className={`${registerStyles.titleHolder}`}>
       <h1>
-        {t('Your Account is Ready!')}
+        {t('Your account was created!')}
       </h1>
-      <p>{t('You can now securely store and manage your LSK tokens.')}</p>
+      <p className={styles.text}>{t('Here’s your address! You can now securely store and manage your LSK tokens.')}</p>
     </div>
 
     <div className={`${styles.accountHolder}`}>
@@ -34,7 +34,7 @@ const AccountCreated = ({ t, account }) => (
         className={`${registerStyles.button} login-button`}
         to={routes.loginV2.path}
       >
-        <PrimaryButtonV2>
+        <PrimaryButtonV2 className={registerStyles.continueBtn}>
           {t('Sign In')}
         </PrimaryButtonV2>
       </Link>

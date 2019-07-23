@@ -55,7 +55,7 @@ describe('TransactionsList V2', () => {
     expect(wrapper).to.have.descendants('.transactions-row');
   });
 
-  it('should render only the table header and error message if transaction list is empty', () => {
+  it('should render only the empty state if transaction list is empty', () => {
     const propsNoTx = {
       ...props,
       transactions: emptyTx,
@@ -65,8 +65,7 @@ describe('TransactionsList V2', () => {
       },
     };
     wrapper = mount(<TransactionsListV2 {...propsNoTx} />, options);
-    expect(wrapper).to.have.descendants('TransactionsHeaderV2');
-    expect(wrapper).to.have.descendants('.empty-message');
+    expect(wrapper).to.have.descendants('.empty-state');
   });
 
   it('should render loading spinner', () => {

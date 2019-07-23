@@ -11,33 +11,13 @@
   align-items: flex-start;
 
   & > .searchMessage {
+    @mixin contentNormal;
+
     width: 100%;
-    max-height: 0px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    visibility: hidden;
-    opacity: 0;
-
-    & .errorMessage {
-      @mixin contentSmall;
-
-      margin: 25px 0 3px;
-      color: var(--color-slate-gray);
-    }
+    margin: 18px 0 11px;
+    color: var(--color-slate-gray);
   }
-
-  & > .searchMessageError {
-    max-height: 40px;
-    visibility: visible;
-    opacity: 1;
-  }
-}
-
-.input {
-  @mixin contentNormal;
-
-  height: 30px;
 }
 
 .linear {

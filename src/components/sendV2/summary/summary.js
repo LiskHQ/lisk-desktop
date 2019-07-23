@@ -1,6 +1,8 @@
 /* eslint-disable max-lines */
 import React from 'react';
-import ConverterV2 from '../../converterV2';
+import Converter from '../../converter';
+import HardwareWalletIllustration from
+  '../../toolbox/hardwareWalletIllustration';
 import AccountVisual from '../../accountVisual/index';
 import { PrimaryButtonV2, TertiaryButtonV2 } from '../../toolbox/buttons/button';
 import fees from '../../../constants/fees';
@@ -10,7 +12,7 @@ import PassphraseInputV2 from '../../passphraseInputV2/passphraseInputV2';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
 import Piwik from '../../../utils/piwik';
-import Box from '../../boxV2';
+import Box from '../../box';
 import { extractPublicKey } from '../../../utils/account';
 import { tokenMap } from '../../../constants/tokens';
 import styles from './summary.css';
@@ -176,9 +178,9 @@ class Summary extends React.Component {
     const {
       account, t,
     } = this.props;
-    return this.state.isHardwareWalletConnected
-      ? t('Confirm transaction on {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })
-      : t('Transaction summary');
+    return t('Transaction summary') + (account.hwInfo.deviceModel
+      ? t(' - Confirm transaction on your {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })
+      : '');
   }
 
   getTooltip() {
@@ -205,9 +207,9 @@ class Summary extends React.Component {
   /* eslint-disable complexity */
   render() {
     const {
-      fields, t, token,
+      fields, t, token, account,
     } = this.props;
-    const { secondPassphrase, isHardwareWalletConnected } = this.state;
+    const { secondPassphrase } = this.state;
     const tooltip = this.getTooltip();
 
     const fee = token === tokenMap.LSK.key
@@ -219,6 +221,7 @@ class Summary extends React.Component {
         <header className={`${styles.header} summary-header`}>
           <h2>{this.getTitle()}</h2>
         </header>
+        <HardwareWalletIllustration account={account} size="s" />
 
         <div className={`${styles.content} summary-content`}>
           <div className={styles.row}>
@@ -240,7 +243,7 @@ class Summary extends React.Component {
             <label>{t('Amount')}</label>
             <label className={`${styles.information} ${styles.amount} amount-summary`}>
               {`${fields.amount.value} ${token}`}
-              <ConverterV2 className={`${styles.secondText} ${styles.amountSecondText}`} value={fields.amount.value} />
+              <Converter className={`${styles.secondText} ${styles.amountSecondText}`} value={fields.amount.value} />
             </label>
           </div>
 
@@ -299,23 +302,23 @@ class Summary extends React.Component {
         </div>
 
         <footer className={`${styles.footer} summary-footer`}>
-          <PrimaryButtonV2
-            className={`${styles.confirmBtn} on-nextStep send-button`}
-            onClick={this.submitTransaction}
-            disabled={
-              (secondPassphrase.hasSecondPassphrase
-                && !secondPassphrase.isValid)
-              || isHardwareWalletConnected
-            }
-          >
-            {this.getConfirmButtonLabel()}
-          </PrimaryButtonV2>
-
           {this.props.account.hwInfo && this.props.account.hwInfo.deviceId ? null
             : (
-              <TertiaryButtonV2 className={`${styles.editBtn} on-prevStep`} onClick={this.prevStep}>
-                {t('Edit transaction')}
-              </TertiaryButtonV2>
+              <React.Fragment>
+                <PrimaryButtonV2
+                  className={`${styles.confirmBtn} on-nextStep send-button`}
+                  onClick={this.submitTransaction}
+                  disabled={
+                    (secondPassphrase.hasSecondPassphrase
+                      && !secondPassphrase.isValid)
+                  }
+                >
+                  {this.getConfirmButtonLabel()}
+                </PrimaryButtonV2>
+                <TertiaryButtonV2 className={`${styles.editBtn} on-prevStep`} onClick={this.prevStep}>
+                  {t('Edit transaction')}
+                </TertiaryButtonV2>
+              </React.Fragment>
             )}
         </footer>
       </Box>

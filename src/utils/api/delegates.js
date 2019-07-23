@@ -60,6 +60,7 @@ export const castVotes = async ({
         votedList, unvotedList, secondPassphrase, timeOffset,
       );
     case loginType.ledger:
+    case loginType.trezor:
       return voteWithHW(liskAPIClient, account, votedList, unvotedList);
     default:
       return new Promise((resolve, reject) => {

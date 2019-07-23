@@ -1,0 +1,136 @@
+@import '../../app/variablesV2.css';
+@import '../../app/mixins.css';
+
+.wrapper {
+  box-sizing: border-box;
+  padding: 24px;
+  width: 100%;
+
+  & .fieldGroup {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  & .fieldLabel {
+    @mixin contentNormal bold;
+
+    color: var(--color-maastricht-blue);
+    margin-bottom: 8px;
+  }
+
+  & .fieldInput {
+    align-items: center;
+    display: flex;
+    position: relative;
+    width: 100%;
+
+    & .status {
+      color: var(--color-ultramarine-blue);
+      opacity: 0;
+      position: absolute;
+      right: 10px;
+      transition: opacity var(--animation-speed-fast) linear;
+
+      &.show {
+        opacity: 1;
+        transition: opacity var(--animation-speed-fast) linear var(--animation-delay-standard);
+      }
+    }
+  }
+
+  & .feedback {
+    @mixin contentNormal;
+
+    box-sizing: border-box;
+    color: var(--color-slate-gray);
+    display: none;
+    margin-top: 10px;
+    padding: 6px 10px;
+    text-align: left;
+    width: 100%;
+
+    &:global(.error) {
+      background-color: var(--error-background-color);
+      color: var(--color-burnt-sienna);
+    }
+
+    &.show {
+      display: flex;
+    }
+  }
+
+  & .input {
+    @mixin contentNormal;
+
+    height: 36px;
+    padding-left: 10px;
+    padding-right: 30px;
+  }
+
+  & button {
+    height: 36px;
+    width: 100%;
+  }
+
+  & .checkboxGroup {
+    display: flex;
+    flex-direction: row;
+
+    & > input {
+      display: none;
+
+      &:checked + .fakeCheckbox {
+        background-color: var(--color-primary-standard);
+        border-color: var(--color-primary-standard);
+      }
+    }
+
+    & .fakeCheckbox {
+      align-items: center;
+      background-color: var(--color-white);
+      border: 1px solid var(--color-dark-gray);
+      border-radius: var(--border-radius-standard);
+      box-sizing: border-box;
+      color: var(--color-white);
+      display: flex;
+      flex-shrink: 0;
+      justify-content: center;
+      margin-right: 16px;
+      height: 24px;
+      transition:
+        background var(--animation-speed-fast) linear,
+        border var(--animation-speed-fast) linear,
+        color var(--animation-speed-fast) linear;
+      width: 24px;
+
+      & > .icon {
+        font-size: var(--paragraph-font-size-s);
+      }
+    }
+
+    & .checkboxInfo {
+      display: flex;
+      flex-direction: column;
+    }
+
+    & .label {
+      color: var(--color-content-light);
+      font-family: var(--content-font);
+      font-size: var(--paragraph-font-size-l);
+      font-weight: var(--font-weight-semi-bold);
+      line-height: 1.6;
+    }
+
+    & .note {
+      color: var(--color-dark-gray);
+      font-family: var(--content-font);
+      font-size: var(--footnote-font-size);
+      font-weight: var(--font-weight-semi-bold);
+      line-height: 1.83;
+      margin-top: 3px;
+      width: 80%;
+    }
+  }
+}
