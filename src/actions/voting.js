@@ -33,22 +33,6 @@ export const voteToggled = data => ({
   data,
 });
 
-
-/**
- * Updates vote lookup status of the given delegate name
- */
-export const voteLookupStatusUpdated = data => ({
-  type: actionTypes.voteLookupStatusUpdated,
-  data,
-});
-
-/**
- * Clears all vote lookup statuses
- */
-export const voteLookupStatusCleared = () => ({
-  type: actionTypes.voteLookupStatusCleared,
-});
-
 export const clearVotes = () => ({
   type: actionTypes.votesCleared,
 });
@@ -99,7 +83,7 @@ export const votePlaced = ({
  * Gets the list of delegates current account has voted for
  *
  */
-export const loadVotes = ({ address, type }) =>
+export const loadVotes = ({ address, type, callback = () => null }) =>
   (dispatch, getState) => {
     const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
     getVotes(liskAPIClient, { address })
@@ -108,6 +92,7 @@ export const loadVotes = ({ address, type }) =>
           type: type === 'update' ? actionTypes.votesUpdated : actionTypes.votesAdded,
           data: { list: response.data.votes },
         });
+        callback(response.data.votes);
       });
   };
 
@@ -115,7 +100,7 @@ export const loadVotes = ({ address, type }) =>
  * Gets list of all delegates
  */
 export const loadDelegates = ({
-  offset, refresh, q, callback = () => {},
+  offset = 0, refresh, q, callback = () => {},
 }) =>
   (dispatch, getState) => {
     const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
@@ -135,24 +120,4 @@ export const loadDelegates = ({
         callback(response);
       })
       .catch(callback);
-  };
-
-
-/**
- * Get list of delegates current account has voted for and dispatch it with votes from url
- */
-export const urlVotesFound = ({
-  upvotes, unvotes, address,
-}) =>
-  (dispatch, getState) => {
-    const liskAPIClient = getAPIClient(tokenMap.LSK.key, getState());
-    const processUrlVotes = (votes) => {
-      dispatch({
-        type: actionTypes.votesAdded,
-        data: { list: votes, upvotes, unvotes },
-      });
-    };
-    getVotes(liskAPIClient, { address })
-      .then((response) => { processUrlVotes(response.data.votes); })
-      .catch(() => { processUrlVotes([]); });
   };

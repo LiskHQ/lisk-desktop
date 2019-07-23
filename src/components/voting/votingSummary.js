@@ -12,7 +12,7 @@ import VoteUrlProcessor from './voteUrlProcessor';
 import VoteList from './voteList';
 
 const VotingSummary = ({
-  t, votes, history, account, nextStep, votePlaced, voteLookupStatus,
+  t, votes, history, account, nextStep, votePlaced,
 }) => {
   const {
     maxCountOfVotes,
@@ -27,8 +27,7 @@ const VotingSummary = ({
       account={account}
       confirmButton={{
         label: t('Confirm voting'),
-        disabled: totalActions === 0
-          || (voteLookupStatus.pending && voteLookupStatus.pending.length > 0),
+        disabled: totalActions === 0,
         onClick: ({ secondPassphrase }) => {
           votePlaced({
             account,
@@ -78,7 +77,6 @@ const VotingSummary = ({
       <VoteUrlProcessor
         account={account}
         votes={votes}
-        voteLookupStatus={voteLookupStatus}
       />
       <VoteList
         title={t('Added votes')}

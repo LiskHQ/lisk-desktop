@@ -6,7 +6,7 @@ import MultiStep from '../multiStep';
 import styles from './voting.css';
 
 const VotingV2 = ({
-  t, votes, history, account, votePlaced, voteLookupStatus,
+  t, votes, history, account, votePlaced,
 }) => (
   <div className={styles.wrapper}>
     <MultiStep>
@@ -16,7 +16,6 @@ const VotingV2 = ({
         history={history}
         account={account}
         votePlaced={votePlaced}
-        voteLookupStatus={voteLookupStatus}
       />
       <TransactionResult t={t} />
     </MultiStep>

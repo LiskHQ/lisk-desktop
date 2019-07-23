@@ -6,6 +6,19 @@ import { splitVotesIntoRounds } from '../voting';
 
 export const getDelegates = (liskAPIClient, options) => liskAPIClient.delegates.get(options);
 
+export const getDelegateByName = (liskAPIClient, name) => new Promise((resolve, reject) => {
+  liskAPIClient.delegates.get({ search: name, limit: 101 })
+    .then((response) => {
+      const delegate = response.data.find(({ username }) => username === name);
+      if (delegate) {
+        resolve(delegate);
+      } else {
+        reject(new Error(`No delegate with name ${name} found.`));
+      }
+    })
+    .catch(reject);
+});
+
 const voteWithPassphrase = (
   liskAPIClient,
   passphrase,
