@@ -20,8 +20,7 @@
   }
 
   & .text,
-  & .externalLink,
-  & .button {
+  & .externalLink {
     @mixin contentNormal;
 
     color: var(--color-mystic);
@@ -35,7 +34,7 @@
   }
 
   & .button {
-    width: 143px;
+    min-width: 143px;
     margin-left: auto;
   }
 
