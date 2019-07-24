@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { InputV2, AutoresizeTextarea } from '../toolbox/inputsV2';
+import { Input, AutoresizeTextarea } from '../toolbox/inputs';
 import CircularProgress from '../toolbox/circularProgress/circularProgress';
 import Converter from '../converter';
 import Feedback from '../toolbox/feedback/feedback';
@@ -133,7 +133,7 @@ class RequestLsk extends React.Component {
         <label className={`${styles.fieldGroup}`}>
           <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
           <span className={`${styles.amountField} amount`}>
-            <InputV2
+            <Input
               autoComplete="off"
               onChange={this.handleFieldChange}
               name="amount"

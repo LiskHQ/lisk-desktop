@@ -6,7 +6,7 @@ import { mount } from 'enzyme';
 import i18n from '../../i18n';
 import ConfirmPassphrase from './confirmPassphrase';
 
-describe('V2 Register Process - Confirm Passphrase', () => {
+describe('Register Process - Confirm Passphrase', () => {
   let wrapper;
   let clock;
 

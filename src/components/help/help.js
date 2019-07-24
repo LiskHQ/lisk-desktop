@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '../box';
-import { PrimaryButtonV2 as Button } from '../toolbox/buttons/button';
+import { PrimaryButton as Button } from '../toolbox/buttons/button';
 import styles from './help.css';
 import links from '../../constants/externalLinks';
 import Piwik from '../../utils/piwik';

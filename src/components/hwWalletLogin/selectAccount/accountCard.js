@@ -1,9 +1,9 @@
 import React from 'react';
-import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import AccountVisual from '../../accountVisual';
 import LiskAmount from '../../liskAmount';
 import svg from '../../../utils/svgIcons';
-import { InputV2 } from '../../toolbox/inputsV2';
+import { Input } from '../../toolbox/inputs';
 import styles from './selectAccount.css';
 
 const AccountCard = ({
@@ -21,23 +21,23 @@ const AccountCard = ({
       { accountOnEditMode === index
         ? (
           <React.Fragment>
-            <InputV2
+            <Input
               value={account.name}
               size="xs"
               onChange={event => onChangeAccountTitle(event.target.value, index)}
               className="account-name"
               placeholder={t('Account name')}
             />
-            <PrimaryButtonV2 className={`${styles.saveBtn} save-account`} onClick={() => onSaveNameAccounts()}>{t('Save')}</PrimaryButtonV2>
+            <PrimaryButton className={`${styles.saveBtn} save-account`} onClick={() => onSaveNameAccounts()}>{t('Save')}</PrimaryButton>
           </React.Fragment>
         )
         : (
           <React.Fragment>
             <span className={`${styles.accountTitle} account-name`}>{account.name === null ? t('Unnamed account') : account.name}</span>
-            <SecondaryButtonV2 className={`${styles.editBtn} edit-account`} onClick={() => onEditAccount(index)}>
+            <SecondaryButton className={`${styles.editBtn} edit-account`} onClick={() => onEditAccount(index)}>
               {t('Edit')}
               <img src={svg.icon_edit} />
-            </SecondaryButtonV2>
+            </SecondaryButton>
           </React.Fragment>
         )
       }
@@ -61,9 +61,9 @@ const AccountCard = ({
         <span>{t('Balance')}</span>
       </div>
 
-      <PrimaryButtonV2 className="select-account" onClick={() => onSelectAccount(account, index)}>
+      <PrimaryButton className="select-account" onClick={() => onSelectAccount(account, index)}>
         {t('Select this account')}
-      </PrimaryButtonV2>
+      </PrimaryButton>
     </div>
   </div>
 );

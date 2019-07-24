@@ -5,7 +5,7 @@ import { spy } from 'sinon';
 import Converter from './converter';
 import { tokenMap } from '../../constants/tokens';
 
-describe('Converter V2', () => {
+describe('Converter', () => {
   let wrapper;
 
   const props = {

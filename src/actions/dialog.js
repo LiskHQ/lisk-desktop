@@ -1,5 +1,4 @@
 import i18next from 'i18next';
-import FeedbackForm from '../components/feedbackForm';
 import Alert from '../components/dialog/alert';
 import actionTypes from '../constants/actions';
 
@@ -10,13 +9,6 @@ import actionTypes from '../constants/actions';
 export const dialogDisplayed = data => ({
   data,
   type: actionTypes.dialogDisplayed,
-});
-
-export const feedbackDialogDisplayed = data => dialogDisplayed({
-  title: data.title,
-  type: data.type,
-  childComponent: FeedbackForm,
-  ...data,
 });
 
 /**

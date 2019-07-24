@@ -1,6 +1,6 @@
 import { Trans } from 'react-i18next';
 import React from 'react';
-import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import Box from '../box';
 import PassphraseBackup from '../passphraseBackup';
 import styles from './secondPassphrase.css';
@@ -36,18 +36,18 @@ and every vote.
       paperWalletName="lisk_2nd_passphrase"
     />
     <footer className={`${styles.footer} summary-footer`}>
-      <PrimaryButtonV2
+      <PrimaryButton
         className={`${styles.confirmBtn} large go-to-confirmation`}
         onClick={nextStep}
       >
         {t('Go to confirmation')}
-      </PrimaryButtonV2>
-      <TertiaryButtonV2
+      </PrimaryButton>
+      <TertiaryButton
         className={`${styles.editBtn} large go-back`}
         onClick={goBack}
       >
         {t('Go back')}
-      </TertiaryButtonV2>
+      </TertiaryButton>
     </footer>
   </Box>
 );

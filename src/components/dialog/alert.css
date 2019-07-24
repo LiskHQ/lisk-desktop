@@ -1,5 +1,5 @@
 @import '../app/mixins.css';
-@import '../app/variablesV2.css';
+@import '../app/variables.css';
 
 .alertBox {
   display: flex;

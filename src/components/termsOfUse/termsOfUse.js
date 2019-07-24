@@ -1,6 +1,6 @@
 import React from 'react';
 import Piwik from '../../utils/piwik';
-import { PrimaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButton } from '../toolbox/buttons/button';
 import logo from '../../assets/images/lisk-logo-v2.svg';
 import routes from '../../constants/routes';
 import styles from './termsOfUse.css';
@@ -56,9 +56,9 @@ class TermsOfUse extends React.Component {
               {this.props.t('Terms of Use')}
             </a>
           </p>
-          <PrimaryButtonV2 onClick={this.onAccept} className="accept-terms">
+          <PrimaryButton onClick={this.onAccept} className="accept-terms">
             {this.props.t('I have read and agree to the Terms of Use')}
-          </PrimaryButtonV2>
+          </PrimaryButton>
         </div>
       </div>
     );

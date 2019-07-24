@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
+import { SecondaryButton } from '../../toolbox/buttons/button';
 import styles from './filterBar.css';
 
 const FilterBar = props => (
@@ -44,12 +44,12 @@ const FilterBar = props => (
         );
       })
       }
-      <SecondaryButtonV2
+      <SecondaryButton
         className="clear-all-filters extra-small"
         onClick={props.clearAllFilters}
       >
         {props.t('Clear All filters')}
-      </SecondaryButtonV2>
+      </SecondaryButton>
     </div>
   </div>
 );

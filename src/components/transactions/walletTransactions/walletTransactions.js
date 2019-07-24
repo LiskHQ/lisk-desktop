@@ -1,6 +1,6 @@
 import React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
+import { SecondaryButton } from '../../toolbox/buttons/button';
 import { tokenMap } from '../../../constants/tokens';
 import localJSONStorage from '../../../utils/localJSONStorage';
 import txFilters from '../../../constants/transactionFilters';
@@ -213,9 +213,9 @@ class WalletTransactions extends React.Component {
                     text={account.address}
                     onCopy={this.onCopy}
                   >
-                    <SecondaryButtonV2 className="light" disabled={this.state.copied}>
+                    <SecondaryButton className="light" disabled={this.state.copied}>
                       <span>{this.state.copied ? t('Copied') : t('Copy')}</span>
-                    </SecondaryButtonV2>
+                    </SecondaryButton>
                   </CopyToClipboard>
                 </div>
             )}

@@ -3,7 +3,7 @@ import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from '../toolbox/icon';
 import { isValidPassphrase, getPassphraseValidationErrors } from '../../utils/passphrase';
-import InputV2 from '../toolbox/inputsV2/inputV2';
+import Input from '../toolbox/inputs/input';
 import Feedback from '../toolbox/feedback/feedback';
 import keyCodes from '../../constants/keyCodes';
 import styles from './passphraseInput.css';
@@ -134,7 +134,7 @@ class passphraseInput extends React.Component {
         <div className={`${styles.inputs} ${grid.row} passphrase`}>
           {[...Array(inputsLength)].map((x, i) => (
             <span key={i} className={`${grid['col-xs-2']}`}>
-              <InputV2
+              <Input
                 setRef={ref => ref !== null && this.state.focus === i && ref.focus()}
                 placeholder={this.state.focus === i ? '' : i + 1}
                 className={`${this.state.partialPassphraseError[i] || this.state.passphraseIsInvalid || secondPPFeedback !== '' ? 'error' : ''} ${this.state.focus === i ? 'selected' : ''}`}

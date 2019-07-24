@@ -9,7 +9,7 @@ import i18n from '../../i18n';
 import BackupPassphrase from './backupPassphrase';
 
 
-describe('V2 Register Process - Backup Passphrase', () => {
+describe('Register Process - Backup Passphrase', () => {
   let wrapper;
 
   const passphrase = generatePassphrase();

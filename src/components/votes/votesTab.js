@@ -7,7 +7,7 @@ import AccountVisual from '../accountVisual';
 import VotesTableHeader from './votesTableHeader';
 import TableRow from '../toolbox/table/tableRow';
 import ProgressBar from '../toolbox/progressBar/progressBar';
-import { InputV2 } from '../toolbox/inputsV2';
+import { Input } from '../toolbox/inputs';
 import LiskAmount from '../liskAmount';
 import routes from '../../constants/routes';
 import actionTypes from '../../constants/actions';
@@ -96,7 +96,7 @@ class VotesTab extends React.Component {
         <header>
           <h1>{t('Voted delegates')}</h1>
           <div className={`${styles.filterHolder}`}>
-            <InputV2
+            <Input
               className="search"
               disabled={votes && !votes.length}
               name="filter"

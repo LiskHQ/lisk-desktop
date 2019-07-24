@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
-import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
+import { PrimaryButton } from '../../toolbox/buttons/button';
 import FilterContainer from './filterContainer';
 import i18n from '../../../i18n';
 import keyCodes from '../../../constants/keyCodes';
@@ -29,7 +29,7 @@ describe('filterContainer', () => {
   it('should call saveFilters', () => {
     wrapper.find('.message-field textarea').simulate('change', { target: { name: 'message', value: 'test' } });
     expect(props.updateCustomFilters).toBeCalledWith({ message: 'test' });
-    wrapper.find(PrimaryButtonV2).simulate('click');
+    wrapper.find(PrimaryButton).simulate('click');
     expect(props.saveFilters).toBeCalled();
   });
 

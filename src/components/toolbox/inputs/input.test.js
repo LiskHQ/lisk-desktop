@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import InputV2 from './inputV2';
+import Input from './input';
 
-describe('InputV2', () => {
+describe('Input', () => {
   let wrapper;
   const props = {
     className: 'test',
@@ -11,7 +11,7 @@ describe('InputV2', () => {
   };
 
   it('should render with passed props', () => {
-    wrapper = mount(<InputV2 {...props} />);
+    wrapper = mount(<Input {...props} />);
     expect(wrapper.find('input')).toHaveValue(props.defaultValue);
     expect(wrapper.find('input')).toHaveClassName(props.className);
     wrapper.simulate('change', { target: { value: 'test' } });
@@ -23,7 +23,7 @@ describe('InputV2', () => {
       defaultValue: 'test',
       size: 'l',
     };
-    wrapper = mount(<InputV2 {...propWithoutClassName} />);
+    wrapper = mount(<Input {...propWithoutClassName} />);
     expect(wrapper.find('input')).toHaveClassName('l');
   });
 
@@ -31,7 +31,7 @@ describe('InputV2', () => {
     const propWithError = {
       error: true,
     };
-    wrapper = mount(<InputV2 {...propWithError} />);
+    wrapper = mount(<Input {...propWithError} />);
     expect(wrapper.find('input')).toHaveClassName('error');
   });
 });

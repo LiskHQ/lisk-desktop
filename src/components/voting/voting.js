@@ -5,7 +5,7 @@ import MultiStep from '../multiStep';
 
 import styles from './voting.css';
 
-const VotingV2 = ({
+const Voting = ({
   t, votes, history, account, votePlaced,
 }) => (
   <div className={styles.wrapper}>
@@ -22,4 +22,4 @@ const VotingV2 = ({
   </div>
 );
 
-export default VotingV2;
+export default Voting;

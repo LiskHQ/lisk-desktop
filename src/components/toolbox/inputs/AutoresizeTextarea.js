@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextareaV2 from './textareaV2';
-import styles from './inputV2.css';
+import Textarea from './textarea';
+import styles from './input.css';
 import { deepEquals } from '../../../utils/polyfills';
 
 class AutoresizeTextarea extends React.Component {
@@ -42,7 +42,7 @@ class AutoresizeTextarea extends React.Component {
   render() {
     const { value, className, ...props } = this.props;
     return (
-      <TextareaV2
+      <Textarea
         className={`${styles.autoresize} ${className}`}
         setRef={this.setRef}
         value={value}

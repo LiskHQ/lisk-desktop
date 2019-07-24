@@ -1,5 +1,6 @@
 import React from 'react';
-import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
+
+import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import { extractPublicKey } from '../../utils/account';
 import Box from '../box';
 import CheckBox from '../toolbox/checkBox';
@@ -173,7 +174,7 @@ LSK
         ? null
         : (
           <footer className="summary-footer">
-            <PrimaryButtonV2
+            <PrimaryButton
               className={`${styles.confirmBtn} confirm-button`}
               disabled={
               (!!account.secondPublicKey && !secondPassphrase.isValid)
@@ -182,13 +183,13 @@ LSK
               onClick={this.confirmOnClick}
             >
               {confirmButton.label}
-            </PrimaryButtonV2>
-            <TertiaryButtonV2
+            </PrimaryButton>
+            <TertiaryButton
               className={`${styles.editBtn} cancel-button`}
               onClick={cancelButton.onClick}
             >
               {cancelButton.label}
-            </TertiaryButtonV2>
+            </TertiaryButton>
           </footer>
         )
     }

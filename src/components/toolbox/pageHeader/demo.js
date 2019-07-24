@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { PrimaryButtonV2 } from '../buttons/button';
+import { PrimaryButton } from '../buttons/button';
 import DemoRenderer from '../demoRenderer';
 import PageHeader from '.';
 
@@ -11,9 +11,9 @@ const PageHeaderDemo = () => (
         title="Title"
         subtitle="Subtitle of the page"
       >
-        <PrimaryButtonV2>
+        <PrimaryButton>
           Some button
-        </PrimaryButtonV2>
+        </PrimaryButton>
       </PageHeader>
     </DemoRenderer>
   </Fragment>

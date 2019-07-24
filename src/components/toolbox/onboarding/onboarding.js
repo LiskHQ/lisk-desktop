@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 import styles from './onboarding.css';
-import { PrimaryButtonV2, SecondaryButtonV2 } from '../buttons/button';
+import { PrimaryButton, SecondaryButton } from '../buttons/button';
 import Illustration from '../illustration';
 
 class Onboarding extends React.Component {
@@ -97,31 +97,31 @@ class Onboarding extends React.Component {
           <div className={styles.buttonsHolder}>
             {currentSlide !== 0
               ? (
-                <SecondaryButtonV2
+                <SecondaryButton
                   className="light medium"
                   name="prev"
                   onClick={this.handleButtonClick}
                 >
                   {t('Previous')}
-                </SecondaryButtonV2>
+                </SecondaryButton>
               ) : null
             }
             {(currentSlide !== slides.length - 1 && actionButtonLabel !== '')
               ? (
-                <PrimaryButtonV2
+                <PrimaryButton
                   className="medium"
                   name="next"
                   onClick={this.handleButtonClick}
                 >
                   {t('Next')}
-                </PrimaryButtonV2>
+                </PrimaryButton>
               ) : (
-                <PrimaryButtonV2
+                <PrimaryButton
                   className="medium"
                   onClick={this.handleFinalCallback}
                 >
                   {actionButtonLabel}
-                </PrimaryButtonV2>
+                </PrimaryButton>
               )}
           </div>
         </div>

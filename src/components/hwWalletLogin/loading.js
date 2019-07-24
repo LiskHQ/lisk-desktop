@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { TertiaryButtonV2 } from '../toolbox/buttons/button';
+import { TertiaryButton } from '../toolbox/buttons/button';
 import routes from '../../constants/routes';
 import LoadingIcon from './loadingIcon';
 
@@ -28,9 +28,9 @@ class Loading extends React.Component {
         <LoadingIcon />
         <p>{t('Looking for a device...')}</p>
         <Link to={routes.splashscreen.path}>
-          <TertiaryButtonV2>
+          <TertiaryButton>
             {t('Go Back')}
-          </TertiaryButtonV2>
+          </TertiaryButton>
         </Link>
       </div>
     );

@@ -11,7 +11,7 @@ import { extractAddress } from '../../utils/account';
 import { getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import { getNetworksList } from '../../utils/getNetwork';
 import networks from '../../constants/networks';
-import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import Header from '../header/index';
@@ -111,7 +111,7 @@ class Login extends React.Component {
   }
 
   onLoginSubmission(passphrase) {
-    Piwik.trackingEvent('Login V2', 'button', 'Login submission');
+    Piwik.trackingEvent('Login', 'button', 'Login submission');
     const network = this.props.peers.options;
     this.secondIteration = true;
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
@@ -195,7 +195,7 @@ class Login extends React.Component {
               </div>
 
               <div className={`${styles.buttonsHolder}`}>
-                <PrimaryButtonV2
+                <PrimaryButton
                   className={`${styles.button} login-button`}
                   type="submit"
                   disabled={(this.state.network === networks.customNode.code
@@ -204,11 +204,11 @@ class Login extends React.Component {
                     || this.state.passphrase === ''}
                 >
                   {t('Sign in')}
-                </PrimaryButtonV2>
+                </PrimaryButton>
                 <Link to={routes.splashscreen.path}>
-                  <TertiaryButtonV2 className={`${styles.button} ${styles.backButton}`}>
+                  <TertiaryButton className={`${styles.button} ${styles.backButton}`}>
                     {t('Go back')}
-                  </TertiaryButtonV2>
+                  </TertiaryButton>
                 </Link>
               </div>
             </form>

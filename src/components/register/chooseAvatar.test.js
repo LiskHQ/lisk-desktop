@@ -9,7 +9,7 @@ import { extractAddress } from '../../utils/account';
 import i18n from '../../i18n';
 import ChooseAvatar from './chooseAvatar';
 
-describe('V2 Register Process - Choose Avatar', () => {
+describe('Register Process - Choose Avatar', () => {
   let wrapper;
 
   const crypotObj = window.crypto || window.msCrypto;

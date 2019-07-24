@@ -5,7 +5,7 @@ import UserAccount from './accountMenu/userAccount';
 import NavigationButtons from './navigationButtons';
 import Piwik from '../../utils/piwik';
 import menuLinks from './constants';
-import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
+import Dropdown from '../toolbox/dropdown/dropdown';
 import SearchBar from '../searchBar';
 import Network from './network';
 import styles from './topBar.css';
@@ -140,7 +140,7 @@ class TopBar extends React.Component {
                   className="search-icon"
                   name={`search_icon_${openDropdown === 'search' ? 'active' : 'inactive'}`}
                 />
-                <DropdownV2
+                <Dropdown
                   showDropdown={openDropdown === 'search'}
                   className={`${styles.searchDropdown}`}
                   showArrow={false}
@@ -150,7 +150,7 @@ class TopBar extends React.Component {
                     history={this.props.history}
                     onSearchClick={this.handleSearchDropdown}
                   />
-                </DropdownV2>
+                </Dropdown>
               </OutsideClickHandler>
             )
             : null }

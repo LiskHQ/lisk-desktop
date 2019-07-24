@@ -1,13 +1,13 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import DropdownV2 from './dropdownV2';
+import Dropdown from './dropdown';
 
-describe('Dropdown V2', () => {
+describe('Dropdow', () => {
   let wrapper;
   const DummyChild = () => <span />;
 
   beforeEach(() => {
-    wrapper = mount(<DropdownV2 showDropdown={false}><DummyChild /></DropdownV2>);
+    wrapper = mount(<Dropdown showDropdown={false}><DummyChild /></Dropdown>);
   });
 
   it('Should render with dropdown closed', () => {
@@ -29,7 +29,7 @@ describe('Dropdown V2', () => {
       showDropdown: true,
       children: [
         <span key="1">Option 1</span>,
-        <DropdownV2.Separator key="separator" />,
+        <Dropdown.Separator key="separator" />,
         <span key="2">Option 2</span>,
       ],
     });

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import AccountVisual from '../../accountVisual/index';
-import { InputV2 } from '../../toolbox/inputsV2';
+import { Input } from '../../toolbox/inputs';
 import keyCodes from '../../../constants/keyCodes';
 import svg from '../../../utils/svgIcons';
 import Spinner from '../../spinner/spinner';
@@ -143,7 +143,7 @@ class AutoSuggest extends React.Component {
             placeholder={!haveAvatar}
             size={25}
           />
-          <InputV2
+          <Input
             autoComplete="off"
             className={`${styles.input} ${recipient.error ? 'error' : ''} recipient bookmark`}
             name="recipient"
