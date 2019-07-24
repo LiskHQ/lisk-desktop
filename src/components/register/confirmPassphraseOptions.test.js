@@ -6,7 +6,7 @@ import sinon from 'sinon';
 import i18n from '../../i18n';
 import Options from './confirmPassphraseOptions';
 
-describe('V2 Register Process - Confirm Passphrase Options', () => {
+describe('Register Process - Confirm Passphrase Options', () => {
   let wrapper;
   const handleSelect = sinon.spy();
 

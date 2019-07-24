@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import styles from './errorBoundary.css';
 import Piwik from '../../utils/piwik';
 import Illustration from '../toolbox/illustration';
@@ -36,13 +36,13 @@ class ErrorBoundary extends React.Component {
           <Illustration name="errorBoundaryPage" />
           <h2>{t('An error occurred.')}</h2>
           <p>{t('To recover, you can try to reload the page, by clicking the button below. If the problem persists, report the error via email.')}</p>
-          <PrimaryButtonV2 className={`${styles.reloadPageButton} error-reload-btn`} onClick={this.reloadPage}>
+          <PrimaryButton className={`${styles.reloadPageButton} error-reload-btn`} onClick={this.reloadPage}>
             {t('Reload the page')}
-          </PrimaryButtonV2>
+          </PrimaryButton>
           <a target="_blank" href={getMailReference()} rel="noopener noreferrer">
-            <TertiaryButtonV2 className={styles.reportButton}>
+            <TertiaryButton className={styles.reportButton}>
               {t('Report the error via E-Mail')}
-            </TertiaryButtonV2>
+            </TertiaryButton>
           </a>
         </div>
       </section>

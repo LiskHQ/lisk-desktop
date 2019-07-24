@@ -9,12 +9,11 @@ import Delegates from '../components/delegates';
 import Voting from '../components/voting';
 import SingleTransaction from '../components/singleTransaction';
 import HwWalletLogin from '../components/hwWalletLogin';
-// import NotFound from '../components/notFound';
 import AccountVisualDemo from '../components/accountVisual/demo';
-import SendV2 from '../components/sendV2/send';
+import Send from '../components/send/send';
 import Splashscreen from '../components/splashscreen';
 import Register from '../components/register';
-import LoginV2 from '../components/loginV2';
+import Login from '../components/login';
 import Extensions from '../components/extensions';
 import TermsOfUse from '../components/termsOfUse';
 import ToolboxDemo from '../components/toolbox/demo';
@@ -28,7 +27,7 @@ export default {
     path: '/account-visual-demo',
     component: AccountVisualDemo,
     isPrivate: true,
-    isV2Layout: true,
+    isSigninFlow: true,
   },
   toolboxDemo: {
     path: '/toolbox',
@@ -52,7 +51,7 @@ export default {
   },
   send: {
     path: '/wallet/send',
-    component: SendV2,
+    component: Send,
     isPrivate: true,
   },
   wallet: {
@@ -103,7 +102,7 @@ export default {
   },
   addAccount: {
     path: '/add-account',
-    component: LoginV2,
+    component: Login,
     isPrivate: false,
   },
   extensions: {
@@ -111,11 +110,6 @@ export default {
     component: Extensions,
     isPrivate: false,
   },
-  // notFound: {
-  //   path: '*',
-  //   component: NotFound,
-  //   isPrivate: false,
-  // },
   accounts: {
     pathPrefix: '',
     path: '/explorer/accounts',
@@ -133,38 +127,32 @@ export default {
   hwWallet: {
     path: '/hw-wallet-login',
     component: HwWalletLogin,
-    isV2Layout: true,
+    isSigninFlow: true,
     isPrivate: false,
   },
-  // notFoundExplorer: {
-  //   pathPrefix: '/explorer',
-  //   path: '*',
-  //   component: NotFound,
-  //   isPrivate: false,
-  // },
   splashscreen: {
     path: '/',
     component: Splashscreen,
     isPrivate: false,
-    isV2Layout: true,
+    isSigninFlow: true,
     exact: true,
   },
   register: {
     path: '/register',
     component: Register,
     isPrivate: false,
-    isV2Layout: true,
+    isSigninFlow: true,
   },
-  loginV2: {
+  login: {
     path: '/login',
-    component: LoginV2,
+    component: Login,
     isPrivate: false,
-    isV2Layout: true,
+    isSigninFlow: true,
   },
   termsOfUse: {
     path: '/terms-of-use',
     component: TermsOfUse,
     isPrivate: false,
-    isV2Layout: true,
+    isSigninFlow: true,
   },
 };

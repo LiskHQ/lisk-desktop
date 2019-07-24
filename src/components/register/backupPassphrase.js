@@ -1,7 +1,7 @@
 import { translate } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import PassphraseBackup from '../passphraseBackup';
 import registerStyles from './register.css';
 
@@ -27,17 +27,17 @@ const BackupPassphrase = ({
 
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
       <span className={`${registerStyles.button} ${registerStyles.backButton}`}>
-        <TertiaryButtonV2 onClick={prevStep}>
+        <TertiaryButton onClick={prevStep}>
           {t('Go back')}
-        </TertiaryButtonV2>
+        </TertiaryButton>
       </span>
       <span className={`${registerStyles.button}`}>
-        <PrimaryButtonV2
+        <PrimaryButton
           className={`${registerStyles.continueBtn} yes-its-safe-button`}
           onClick={nextStep}
         >
           {t('Continue')}
-        </PrimaryButtonV2>
+        </PrimaryButton>
       </span>
     </div>
   </React.Fragment>

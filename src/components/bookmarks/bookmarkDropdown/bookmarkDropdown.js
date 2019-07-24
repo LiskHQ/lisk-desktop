@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
-import SpinnerV2 from '../../spinnerV2/spinnerV2';
+import Spinner from '../../spinner/spinner';
 import svg from '../../../utils/svgIcons';
-import { InputV2 } from '../../toolbox/inputsV2';
-import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
+import { Input } from '../../toolbox/inputs';
+import { PrimaryButton } from '../../toolbox/buttons/button';
 import styles from './bookmarkDropdown.css';
 
 class Bookmark extends React.Component {
@@ -186,7 +186,7 @@ class Bookmark extends React.Component {
         <label className={`${styles.fieldGroup}`}>
           <span className={`${styles.fieldLabel}`}>{t('Account name')}</span>
           <span className={`${styles.fieldInput} account-title`}>
-            <InputV2
+            <Input
               maxLength={40}
               autoComplete="off"
               onChange={this.handleAccountNameChange}
@@ -199,7 +199,7 @@ class Bookmark extends React.Component {
             {!fields.accountName.isReadOnly
               ? (
                 <React.Fragment>
-                  <SpinnerV2 className={`${styles.status} ${fields.accountName.loading && fields.accountName.value ? styles.show : ''}`} />
+                  <Spinner className={`${styles.status} ${fields.accountName.loading && fields.accountName.value ? styles.show : ''}`} />
                   <img
                     className={`${styles.status} ${!fields.accountName.loading && fields.accountName.value ? styles.show : ''}`}
                     src={fields.accountName.error ? svg.alert_icon : svg.ok_icon}
@@ -226,20 +226,20 @@ class Bookmark extends React.Component {
           </label> */}
         {isBookmark
           ? (
-            <PrimaryButtonV2
+            <PrimaryButton
               className="bookmark-button extra-small"
               onClick={this.handleUnbookmark}
             >
               {t('Remove from bookmarks')}
-            </PrimaryButtonV2>
+            </PrimaryButton>
           ) : (
-            <PrimaryButtonV2
+            <PrimaryButton
               className="bookmark-button extra-small"
               onClick={this.handleBookmark}
               disabled={!isValid}
             >
               {t('Confirm')}
-            </PrimaryButtonV2>
+            </PrimaryButton>
           )
         }
       </section>

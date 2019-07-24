@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import TransactionsOverviewV2 from '../transactionsV2/transactionsOverviewV2';
+import TransactionsOverview from '../transactions/transactionsOverview';
 import BalanceChart from './balanceChart';
 import WalletDetails from './walletDetails';
 
@@ -30,7 +30,7 @@ const WalletTab = ({ ...props }) => (
         </div>
       </div>
     ) : null}
-    <TransactionsOverviewV2
+    <TransactionsOverview
       {...props}
     />
   </React.Fragment>

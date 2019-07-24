@@ -43,9 +43,9 @@ describe('TransactionSummary', () => {
     const clipboardData = {
       getData: () => accounts.second_passphrase_account.secondPassphrase,
     };
-    wrapper.find('passphraseInputV2 input').first().simulate('paste', { clipboardData });
+    wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
     expect(wrapper.find('.confirm-button').at(0).prop('disabled')).toBeFalsy();
-    wrapper.find('passphraseInputV2 input').first().simulate('paste', {
+    wrapper.find('passphraseInput input').first().simulate('paste', {
       clipboardData: { getData: () => 'invalid passphrase' },
     });
     expect(wrapper.find('.confirm-button').at(0).prop('disabled')).toBeTruthy();

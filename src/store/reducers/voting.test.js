@@ -309,49 +309,4 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     const changedState = voting(state, action);
     expect(changedState).to.be.deep.equal(votesRecordsWithDefaultFlags);
   });
-
-  it('should set voteLookupStatus of given username to given status, with action: voteLookupStatusUpdated', () => {
-    const action = {
-      type: actionTypes.voteLookupStatusUpdated,
-      data: {
-        username: 'username1',
-        status: 'upvoted',
-      },
-    };
-    const state = {
-      voteLookupStatus: {
-        [action.data.username]: 'pending',
-        username2: 'pending',
-      },
-    };
-
-    const expectedState = {
-      voteLookupStatus: {
-        [action.data.username]: action.data.status,
-        username2: 'pending',
-      },
-    };
-    const changedState = voting(state, action);
-
-    expect(changedState).to.be.deep.equal(expectedState);
-  });
-
-  it('should set voteLookupStatus to {}, with action: voteLookupStatusCleared', () => {
-    const action = {
-      type: actionTypes.voteLookupStatusCleared,
-    };
-    const state = {
-      voteLookupStatus: {
-        username1: 'upvoted',
-        username2: 'unvoted',
-      },
-    };
-
-    const expectedState = {
-      voteLookupStatus: {},
-    };
-    const changedState = voting(state, action);
-
-    expect(changedState).to.be.deep.equal(expectedState);
-  });
 });

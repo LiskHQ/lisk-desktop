@@ -1,5 +1,5 @@
 import React from 'react';
-import Spinner from '../spinnerV2/spinnerV2';
+import Spinner from '../spinner/spinner';
 import svgIcons from '../../utils/svgIcons';
 
 import CheckBox from '../toolbox/checkBox';

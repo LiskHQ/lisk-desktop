@@ -5,10 +5,10 @@ import { translate } from 'react-i18next';
 import routes from '../../constants/routes';
 import { getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import { parseSearchParams } from '../../utils/searchParams';
-import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../toolbox/buttons/button';
 import { getNetworksList } from '../../utils/getNetwork';
 import networks from '../../constants/networks';
-import HeaderV2 from '../headerV2/index';
+import Header from '../header/index';
 import styles from './splashscreen.css';
 import Tooltip from '../toolbox/tooltip/tooltip';
 
@@ -78,7 +78,7 @@ class Splashscreen extends React.Component {
 
     return (
       <React.Fragment>
-        <HeaderV2 dark showSettings />
+        <Header dark showSettings />
         <div className={`${styles.splashscreen}`}>
           <div className={`${styles.wrapper}`}>
             <div className={`${styles.titleHolder}`}>
@@ -89,11 +89,11 @@ class Splashscreen extends React.Component {
               }
               </p>
             </div>
-            <Link className={`${styles.button} login-button`} to={routes.loginV2.path}>
-              <SecondaryButtonV2 className="light">{t('Sign in')}</SecondaryButtonV2>
+            <Link className={`${styles.button} login-button`} to={routes.login.path}>
+              <SecondaryButton className="light">{t('Sign in')}</SecondaryButton>
             </Link>
             <Link className={`${styles.button} new-account-button`} to={routes.register.path}>
-              <PrimaryButtonV2>{t('Create an account')}</PrimaryButtonV2>
+              <PrimaryButton>{t('Create an account')}</PrimaryButton>
             </Link>
             <span className={styles.separator}>
               <span>{t('or')}</span>

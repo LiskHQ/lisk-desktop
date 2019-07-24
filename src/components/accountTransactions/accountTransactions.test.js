@@ -24,7 +24,7 @@ import i18n from '../../i18n';
 import accounts from '../../../test/constants/accounts';
 import routes from '../../constants/routes';
 
-import ExplorerTransactionsV2 from '../transactionsV2/explorerTransactionsV2';
+import ExplorerTransactions from '../transactions/explorerTransactions';
 
 describe('AccountTransaction Component', () => {
   let wrapper;
@@ -69,7 +69,7 @@ describe('AccountTransaction Component', () => {
     searchAccountSpy.restore();
   });
 
-  it('renders ExplorerTransactionsV2', () => {
-    expect(wrapper).to.have.descendants(ExplorerTransactionsV2);
+  it('renders ExplorerTransactions', () => {
+    expect(wrapper).to.have.descendants(ExplorerTransactions);
   });
 });

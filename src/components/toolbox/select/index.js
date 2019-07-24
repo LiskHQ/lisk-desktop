@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { InputV2 } from '../inputsV2';
-import DropdownV2 from '../dropdownV2/dropdownV2';
+import { Input } from '../inputs';
+import Dropdown from '../dropdown/dropdown';
 import styles from './select.css';
 import OutsideClickHandler from '../outsideClickHandler';
 
@@ -47,14 +47,14 @@ class Select extends React.Component {
         className={`${styles.wrapper} ${className}`}
       >
         <label className={styles.inputHolder}>
-          <InputV2
+          <Input
             readOnly
             value={options[selected].label}
             onFocus={this.toggleIsOpen}
             size={size}
           />
         </label>
-        <DropdownV2
+        <Dropdown
           className={styles.dropdown}
           showArrow={false}
           showDropdown={isOpen}
@@ -70,7 +70,7 @@ class Select extends React.Component {
               {option.label}
             </span>
           ))}
-        </DropdownV2>
+        </Dropdown>
       </OutsideClickHandler>
     );
   }

@@ -8,7 +8,6 @@ import App from './components/app';
 // import history from './history';
 import store from './store';
 import i18n from './i18n'; // initialized i18next instance
-import proxyLogin from './utils/proxyLogin';
 import externalLinks from './utils/externalLinks';
 import localJSONStorage from './utils/localJSONStorage';
 import loadRemoteComponent from './utils/extensions';
@@ -17,7 +16,6 @@ import ipcLocale from './utils/ipcLocale';
 import LiskHubExtensions from './utils/liskHubExtensions';
 
 if (env.production) {
-  proxyLogin.init();
   ipcLocale.init(i18n);
   externalLinks.init();
 }

@@ -1,0 +1,24 @@
+@import '../../app/variables.css';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+}
+
+.filterTransactions {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
+  height: 100%;
+}
+
+.bigDropdown {
+  width: 342px;
+}
+
+.dropdownContainer {
+  position: relative;
+}

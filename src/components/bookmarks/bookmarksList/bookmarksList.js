@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
-import { InputV2 } from '../../toolbox/inputsV2';
+import { Input } from '../../toolbox/inputs';
 import Illustration from '../../toolbox/illustration';
-import { PrimaryButtonV2, SecondaryButtonV2 } from '../../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import { tokenMap } from '../../../constants/tokens';
 import AccountVisual from '../../accountVisual';
 import Box from '../../box';
@@ -117,7 +117,7 @@ class BookmarksList extends React.Component {
           { enableFilter
             ? (
               <span>
-                <InputV2
+                <Input
                   className="bookmarks-filter-input"
                   size="xs"
                   onChange={this.onFilterChange}
@@ -154,7 +154,7 @@ class BookmarksList extends React.Component {
                   {
                     eddittedAddress === bookmark.address
                       ? (
-                        <InputV2
+                        <Input
                           className={`bookmarks-edit-input ${styles.editInput}`}
                           size="m"
                           onChange={this.onTitleChange}
@@ -177,34 +177,34 @@ class BookmarksList extends React.Component {
                       { eddittedAddress === bookmark.address
                         ? (
                           <React.Fragment>
-                            <SecondaryButtonV2
+                            <SecondaryButton
                               onClick={e => this.updateBookmark(e, {})}
                               className="medium bookmarks-cancel-button"
                             >
                               {t('Cancel')}
-                            </SecondaryButtonV2>
-                            <PrimaryButtonV2
+                            </SecondaryButton>
+                            <PrimaryButton
                               onClick={e => this.saveChanges(e)}
                               className="medium bookmarks-save-changes-button"
                             >
                               {t('Save changes')}
-                            </PrimaryButtonV2>
+                            </PrimaryButton>
                           </React.Fragment>
                         )
                         : (
                           <React.Fragment>
-                            <SecondaryButtonV2
+                            <SecondaryButton
                               onClick={e => this.editBookmark(e, bookmark)}
                               className="medium bookmarks-edit-button"
                             >
                               {t('Edit')}
-                            </SecondaryButtonV2>
-                            <PrimaryButtonV2
+                            </SecondaryButton>
+                            <PrimaryButton
                               onClick={e => this.deleteBookmark(e, bookmark)}
                               className={`medium bookmarks-delete-button ${styles.deleteButton}`}
                             >
                               {t('Delete')}
-                            </PrimaryButtonV2>
+                            </PrimaryButton>
                           </React.Fragment>
                         )
                   }
@@ -232,7 +232,7 @@ class BookmarksList extends React.Component {
                             <h1>{t('No Bookmarks added yet')}</h1>
                             <p>{t('Start adding some addresses to bookmarks, to keep track of them.')}</p>
                             <Link to={routes.addBookmark.path}>
-                              <SecondaryButtonV2>{t('Add a new bookmark')}</SecondaryButtonV2>
+                              <SecondaryButton>{t('Add a new bookmark')}</SecondaryButton>
                             </Link>
                           </React.Fragment>
                         )
@@ -254,7 +254,7 @@ class BookmarksList extends React.Component {
             ? (
               <div className={styles.footer}>
                 <Link to={routes.bookmarks.path}>
-                  <SecondaryButtonV2>{t('View All')}</SecondaryButtonV2>
+                  <SecondaryButton>{t('View All')}</SecondaryButton>
                 </Link>
               </div>
             )

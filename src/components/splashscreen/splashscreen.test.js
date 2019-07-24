@@ -8,7 +8,7 @@ import SplashScreen from './splashscreen';
 import accounts from '../../../test/constants/accounts';
 import routes from '../../constants/routes';
 
-describe('V2 SplashScreen', () => {
+describe('SplashScreen', () => {
   let wrapper;
 
   const peers = {

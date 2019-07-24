@@ -44,7 +44,7 @@ describe('Add a new bookmark component', () => {
 
   it('Should render properly and with pristine state', () => {
     expect(wrapper).not.toContainMatchingElement('.error');
-    expect(wrapper).toContainMatchingElements(2, 'InputV2');
+    expect(wrapper).toContainMatchingElements(2, 'Input');
     expect(wrapper.find('button').at(0)).toBeDisabled();
   });
 

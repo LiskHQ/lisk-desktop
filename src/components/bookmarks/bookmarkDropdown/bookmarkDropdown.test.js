@@ -67,10 +67,10 @@ describe('Bookmark Component', () => {
         token: props.token,
       };
       wrapper.find('input[name="accountName"]').simulate('change', evt);
-      expect(wrapper.find('.fieldInput')).toContainMatchingElement('SpinnerV2.show');
+      expect(wrapper.find('.fieldInput')).toContainMatchingElement('Spinner.show');
       jest.advanceTimersByTime(300);
       wrapper.update();
-      expect(wrapper.find('.fieldInput')).not.toContainMatchingElement('SpinnerV2.show');
+      expect(wrapper.find('.fieldInput')).not.toContainMatchingElement('Spinner.show');
       expect(wrapper.find('.fieldInput')).toContainMatchingElement('img.show');
       expect(wrapper.find('button').last()).not.toBeDisabled();
       wrapper.find('button').last().simulate('click');

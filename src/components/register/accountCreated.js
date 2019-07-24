@@ -3,7 +3,7 @@ import { translate } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '../../constants/routes';
-import { PrimaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButton } from '../toolbox/buttons/button';
 import AccountVisual from '../accountVisual';
 import registerStyles from './register.css';
 import styles from './accountCreated.css';
@@ -32,11 +32,11 @@ const AccountCreated = ({ t, account }) => (
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
       <Link
         className={`${registerStyles.button} login-button`}
-        to={routes.loginV2.path}
+        to={routes.login.path}
       >
-        <PrimaryButtonV2 className={registerStyles.continueBtn}>
+        <PrimaryButton className={registerStyles.continueBtn}>
           {t('Sign In')}
-        </PrimaryButtonV2>
+        </PrimaryButton>
       </Link>
     </div>
   </React.Fragment>

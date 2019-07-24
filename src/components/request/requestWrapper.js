@@ -1,7 +1,7 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
 import CopyToClipboard from '../toolbox/copyToClipboard';
-import { PrimaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButton } from '../toolbox/buttons/button';
 import styles from './request.css';
 
 class RequestWrapper extends React.Component {
@@ -34,7 +34,7 @@ class RequestWrapper extends React.Component {
           <footer className={`${styles.sectionFooter}`}>
             <CopyToClipboard
               className="copy-button"
-              Container={PrimaryButtonV2}
+              Container={PrimaryButton}
               value={copyValue}
               text={copyLabel}
               btnClassName="extra-small"

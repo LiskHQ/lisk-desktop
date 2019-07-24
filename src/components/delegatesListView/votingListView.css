@@ -1,22 +1,5 @@
 @import '../app/variables.css';
-@import '../app/variablesV2.css';
 @import '../app/mixins.css';
-
-:root {
-  --grid-padding-L: var(--box-padding-left-L);
-  --grid-padding-M: var(--box-padding-left-M);
-  --grid-padding-XS: var(--box-padding-left-M);
-  --list-bottom-padding-m: 120px;
-  --list-bottom-padding-s: 90px;
-}
-
-.box {
-  box-shadow: none;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-  min-height: 80vh; /* stylelint-disable-line */
-  height: 100%;
-}
 
 .leftText {
   text-align: left;
@@ -29,65 +12,6 @@
 
 .wrapper {
   width: 100%;
-}
-
-.table {
-  & :global thead th:first-child {
-    display: none !important;
-  }
-
-  & ul {
-    list-style-type: none;
-    line-height: 48px;
-    margin: 0;
-  }
-}
-
-.actionBar {
-  margin-top: 9px;
-  display: inline-block;
-}
-
-.votesMenuButton {
-  margin-right: 16px;
-  margin-top: 8px;
-
-  & span {
-    vertical-align: top;
-    line-height: 24px;
-    margin-left: 6px;
-  }
-}
-
-.menuItem {
-  flex-direction: row-reverse;
-  width: 241px;
-}
-
-.icon {
-  text-align: right;
-  width: auto;
-}
-
-.menuInner {
-  height: 306px;
-  overflow-y: auto;
-}
-
-.button {
-  width: auto;
-  margin-top: 18px;
-  margin-right: 16px;
-}
-
-.rotated {
-  transform: rotate(45deg);
-}
-
-.voteButton {
-  color: var(--color-black) !important;
-  position: relative;
-  top: 3px;
 }
 
 .loadMore {
@@ -109,77 +33,9 @@
   }
 }
 
-.productivity {
-  text-align: left;
-}
-
 .weight {
   font-weight: bold;
   text-align: right;
-}
-
-.delegatesList {
-  overflow-y: auto;
-
-  & .tableHead {
-    flex-wrap: nowrap;
-
-    & li {
-      color: var(--color-dark-blue) !important;
-      font-size: 15px !important;
-      transition: all ease 200ms;
-      font-weight: 700;
-    }
-  }
-
-  & .row {
-    background: var(--color-white);
-    flex-wrap: nowrap;
-    height: 72px;
-
-    &:hover {
-      background: rgba(64, 112, 244, 0.08) !important;
-    }
-
-    & li {
-      color: var(--color-dark-blue);
-      font-size: 16px;
-      font-weight: 400;
-
-      &:last-child {
-        font-weight: 300;
-      }
-    }
-  }
-}
-
-.safariHack {
-  transform: translateZ(0);
-}
-
-.username {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.showChangeSummery {
-  & .filters .filter:not(.search) {
-    display: none;
-  }
-
-  & .delegatesList {
-    & .input,
-    & .row:not(.upVoteRow):not(.downVoteRow) {
-      display: none;
-    }
-  }
-
-  & .row li,
-  & .tableHead li {
-    &:first-child {
-      display: none !important;
-    }
-  }
 }
 
 .emptyMessage {
@@ -268,90 +124,9 @@
   }
 }
 
-@media (--xLarge-viewport) {
-  .delegatesList {
-    margin: 0px calc(0 - var(--box-padding-left-XL));
-
-    & .table {
-      & ul {
-        padding: 0 var(--box-padding-left-XL);
-      }
-    }
-
-    & .row {
-      padding: 11px 5px;
-    }
-  }
-}
-
-@media (--large-viewport) {
-  .delegatesList {
-    margin: 0px calc(0 - var(--box-padding-left-L));
-    overflow-x: hidden;
-
-    & .table {
-      & ul {
-        padding: 0 var(--box-padding-left-L);
-        height: 77px;
-      }
-    }
-  }
-}
-
 @media (--medium-viewport) {
   .wrapper {
     height: 100%;
     min-height: 100%;
-  }
-
-  .delegatesList {
-    height: auto;
-    overflow-y: visible;
-    margin: 0px calc(0 - var(--box-padding-left-M));
-
-    & .table {
-      & ul {
-        padding: 0 var(--box-padding-left-M);
-      }
-    }
-
-    & .row,
-    & .tableHead {
-      /* padding-right: var(--grid-padding-M); */
-    }
-
-    & .tableHead li:nth-child(4),
-    & .row li:nth-child(4) {
-      display: none;
-    }
-
-    & .tableHead li {
-      font-size: 12px !important;
-    }
-  }
-
-  .showChangeSummery {
-    & .filters .search {
-      display: none;
-    }
-
-    & .delegatesList {
-      & .row li:nth-child(3),
-      & .tableHead li:nth-child(3) {
-        flex-basis: 58.3% !important;
-        max-width: 58.3% !important;
-      }
-    }
-  }
-
-  footer {
-    margin: 0px calc(0 - var(--box-padding-left-M));
-    padding: 0 var(--box-padding-left-M);
-  }
-}
-
-@media (--small-viewport) {
-  .delegatesList {
-    padding-bottom: var(--list-bottom-padding-s);
   }
 }

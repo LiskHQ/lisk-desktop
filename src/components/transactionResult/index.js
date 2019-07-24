@@ -1,5 +1,5 @@
 import React from 'react';
-import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import { getErrorReportMailto } from '../../utils/helpers';
 import styles from './transactionResult.css';
 import Illustration from '../toolbox/illustration';
@@ -16,12 +16,12 @@ const TransactionResult = ({
     <h1 className="result-box-header">{title}</h1>
     <p className="transaction-status body-message">{message}</p>
     {children}
-    <PrimaryButtonV2
+    <PrimaryButton
       onClick={primaryButon.onClick}
       className={`${styles.button} ${primaryButon.className}`}
     >
       {primaryButon.title}
-    </PrimaryButtonV2>
+    </PrimaryButton>
     {
       !success
         ? (
@@ -33,9 +33,9 @@ const TransactionResult = ({
               target="_top"
               rel="noopener noreferrer"
             >
-              <TertiaryButtonV2>
+              <TertiaryButton>
                 {t('Report the error via E-Mail')}
-              </TertiaryButtonV2>
+              </TertiaryButton>
             </a>
           </React.Fragment>
         )

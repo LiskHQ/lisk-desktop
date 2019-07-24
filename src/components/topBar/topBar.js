@@ -5,8 +5,8 @@ import UserAccount from './accountMenu/userAccount';
 import NavigationButtons from './navigationButtons';
 import Piwik from '../../utils/piwik';
 import menuLinks from './constants';
-import DropdownV2 from '../toolbox/dropdownV2/dropdownV2';
-import SearchBarV2 from '../searchBarV2';
+import Dropdown from '../toolbox/dropdown/dropdown';
+import SearchBar from '../searchBar';
 import Network from './network';
 import styles from './topBar.css';
 
@@ -50,7 +50,7 @@ class TopBar extends React.Component {
   /* istanbul ignore next */
   onCountdownComplete() {
     this.props.logOut();
-    this.props.history.replace(routes.loginV2.path);
+    this.props.history.replace(routes.login.path);
   }
 
   /* istanbul ignore next */
@@ -140,17 +140,17 @@ class TopBar extends React.Component {
                   className="search-icon"
                   name={`search_icon_${openDropdown === 'search' ? 'active' : 'inactive'}`}
                 />
-                <DropdownV2
+                <Dropdown
                   showDropdown={openDropdown === 'search'}
                   className={`${styles.searchDropdown}`}
                   showArrow={false}
                 >
-                  <SearchBarV2
+                  <SearchBar
                     setSearchBarRef={(node) => { this.searchInput = node; }}
                     history={this.props.history}
                     onSearchClick={this.handleSearchDropdown}
                   />
-                </DropdownV2>
+                </Dropdown>
               </OutsideClickHandler>
             )
             : null }

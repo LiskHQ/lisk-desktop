@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import styles from './app.css';
-import stylesV2 from './appV2.css';
 import Toaster from '../toaster';
 import TopBar from '../topBar';
 import LoadingBar from '../loadingBar';
@@ -11,7 +10,6 @@ import Dialog from '../dialog';
 import NotFound from '../notFound';
 import InitializationMessage from '../initializationMessage';
 import routes from '../../constants/routes';
-// eslint-disable-next-line import/no-named-as-default
 
 class App extends React.Component {
   constructor() {
@@ -31,31 +29,32 @@ class App extends React.Component {
     const { history, location } = this.props;
     const allRoutes = Object.values(routes);
     const defaultRoutes = allRoutes.filter(routeObj => routeObj.component);
-    const routesV2Layout = allRoutes.filter(routeObj => routeObj.isV2Layout);
+    const signinFlowRoutes = allRoutes.filter(routeObj => routeObj.isSigninFlow);
 
     return (
       <OfflineWrapper>
         <Dialog />
         {
-          routesV2Layout.filter(route => route.path === location.pathname).length > 0
+          signinFlowRoutes.filter(route => route.path === location.pathname).length > 0
             ? (
               <main
                 className={this.state.loaded
-                  ? `${stylesV2.v2Wrapper} ${styles.loaded} appLoaded`
-                  : `${styles.v2Wrapper}`}
+                  ? `${styles.wrapper} ${styles.loaded} appLoaded`
+                  : `${styles.wrapper}`
+                }
                 ref={(el) => { this.main = el; }}
               >
                 <Switch>
-                  {
-                    this.state.loaded && routesV2Layout.map((route, key) => (
-                      <Route
-                        path={route.path}
-                        key={key}
-                        component={route.component}
-                        exact={route.exact}
-                      />
-                    ))
-                  }
+                  {this.state.loaded
+                  && signinFlowRoutes.map((route, key) => (
+                    <Route
+                      path={route.path}
+                      key={key}
+                      component={route.component}
+                      exact={route.exact}
+                    />
+                  ))
+                }
                 </Switch>
                 <Toaster />
               </main>

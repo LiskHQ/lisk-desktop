@@ -3,10 +3,8 @@ import sinon from 'sinon';
 import actionTypes from '../constants/actions';
 import {
   voteToggled,
-  voteLookupStatusUpdated,
   votePlaced,
   loadVotes,
-  urlVotesFound,
   loadDelegates,
   delegatesAdded,
 } from './voting';
@@ -52,20 +50,6 @@ describe('actions: voting', () => {
       };
 
       expect(voteToggled(data)).to.be.deep.equal(expectedAction);
-    });
-  });
-
-  describe('voteLookupStatusUpdated', () => {
-    it('should create an action to update lookup status of any given delegate name', () => {
-      const data = {
-        label: 'dummy',
-      };
-      const expectedAction = {
-        data,
-        type: actionTypes.voteLookupStatusUpdated,
-      };
-
-      expect(voteLookupStatusUpdated(data)).to.be.deep.equal(expectedAction);
     });
   });
 
@@ -228,55 +212,6 @@ describe('actions: voting', () => {
       actionFunction(dispatch, getState);
       expect(dispatch).to.have.been.calledWith(delegatesAdded(expectedAction));
       delegateApiMock.restore();
-    });
-  });
-
-  describe('urlVotesFound', () => {
-    let delegateApiMock;
-    const data = {
-      address: '8096217735672704724L',
-      upvotes: [],
-      unvotes: [],
-    };
-    const delegates = delegateList;
-    let expectedAction = {
-      list: delegates,
-      upvotes: [],
-      unvotes: [],
-    };
-
-    beforeEach(() => {
-      delegateApiMock = sinon.stub(delegateApi, 'getVotes').returnsPromise();
-    });
-
-    afterEach(() => {
-      delegateApiMock.restore();
-    });
-
-    it('should create an action function', () => {
-      expect(typeof urlVotesFound(data)).to.be.deep.equal('function');
-    });
-
-    it('should dispatch votesAdded action when resolved', () => {
-      const dispatch = sinon.spy();
-
-
-      urlVotesFound(data)(dispatch, getState);
-      delegateApiMock.resolves({ data: { votes: delegates } });
-      expect(dispatch).to.have.been.calledWith(votesAdded(expectedAction));
-    });
-
-    it('should dispatch votesAdded action when rejected', () => {
-      const dispatch = sinon.spy();
-
-      expectedAction = {
-        ...expectedAction,
-        list: [],
-      };
-
-      urlVotesFound(data)(dispatch, getState);
-      delegateApiMock.rejects();
-      expect(dispatch).to.have.been.calledWith(votesAdded(expectedAction));
     });
   });
 });

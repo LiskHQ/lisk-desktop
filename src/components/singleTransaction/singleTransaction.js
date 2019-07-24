@@ -2,7 +2,7 @@ import { translate } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../timestamp';
-import { SecondaryButtonV2 } from '../toolbox/buttons/button';
+import { SecondaryButton } from '../toolbox/buttons/button';
 import { tokenMap } from '../../constants/tokens';
 import Box from '../box';
 import CopyToClipboard from '../toolbox/copyToClipboard';
@@ -50,7 +50,7 @@ class SingleTransaction extends React.Component {
               <CopyToClipboard
                 value={this.getLinkToCopy()}
                 text={t('Copy link')}
-                Container={SecondaryButtonV2}
+                Container={SecondaryButton}
                 containerClassName="extra-small"
                 copyClassName={styles.copyIcon}
               />

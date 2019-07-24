@@ -1,8 +1,8 @@
 import React from 'react';
 import { parseSearchParams } from '../../utils/searchParams';
 import Piwik from '../../utils/piwik';
-import { AutoresizeTextarea } from '../toolbox/inputsV2';
-import { PrimaryButtonV2, TertiaryButtonV2 } from '../toolbox/buttons/button';
+import { AutoresizeTextarea } from '../toolbox/inputs';
+import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import styles from './signMessage.css';
 
 class SignMessageInput extends React.Component {
@@ -55,21 +55,21 @@ class SignMessageInput extends React.Component {
           </label>
         </div>
         <div className={styles.buttonsHolder}>
-          <PrimaryButtonV2
+          <PrimaryButton
             className="next"
             onClick={this.nextStep}
           >
             {
             t('Continue')
           }
-          </PrimaryButtonV2>
-          <TertiaryButtonV2
+          </PrimaryButton>
+          <TertiaryButton
             onClick={history.goBack}
           >
             {
             t('Go Back')
           }
-          </TertiaryButtonV2>
+          </TertiaryButton>
         </div>
       </section>
     );
