@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from '../icon';
-import { SecondaryButtonV2 } from '../buttons/button';
+import { SecondaryButton } from '../buttons/button';
 import styles from './flashMessage.css';
 
 const FlashMessage = ({
@@ -42,12 +42,12 @@ const FlashMessage = ({
     {
       buttonText && onButtonClick
         ? (
-          <SecondaryButtonV2
+          <SecondaryButton
             className={`${styles.button} ${buttonClassName} small light button`}
             onClick={onButtonClick}
           >
             {buttonText}
-          </SecondaryButtonV2>
+          </SecondaryButton>
         )
         : null
     }
