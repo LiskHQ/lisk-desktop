@@ -55,13 +55,16 @@ const resolveAll = (liskAPIClient, apiCalls, searchTerm) => {
 
   return new Promise((resolve, reject) => {
     Promise.all(promises)
-      .then(result => resolve(result))
+      .then(results => resolve(results.reduce((accumulator, r) => {
+        accumulator = { ...accumulator, ...r };
+        return accumulator;
+      }, {})))
       .catch(error => reject(error));
   });
 };
 /* eslint-enable prefer-promise-reject-errors */
 
-const searchAll = ({ liskAPIClient, searchTerm }) => {
+const searchAll = (liskAPIClient, { searchTerm }) => {
   const apiCalls = getSearches(searchTerm);
   return resolveAll(liskAPIClient, apiCalls, searchTerm);
 };

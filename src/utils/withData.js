@@ -5,6 +5,14 @@ import { getAPIClient } from './api/network';
 function withData(apis = {}) {
   const keys = Object.keys(apis);
 
+  function getDefaultState(key) {
+    return {
+      data: apis[key].defaultData || {},
+      error: '',
+      isLoading: false,
+    };
+  }
+
   return function (WrappedComponent) {
     class DataProvider extends React.Component {
       constructor() {
@@ -13,16 +21,13 @@ function withData(apis = {}) {
 
         this.state = {
           apis: keys.reduce((acc, key) => {
-            acc[key] = {
-              data: [],
-              error: '',
-              isLoading: false,
-            };
+            acc[key] = getDefaultState(key);
             return acc;
           }, {}),
         };
 
         this.loadData = this.loadData.bind(this);
+        this.clearData = this.clearData.bind(this);
         this.setApiState = this.setApiState.bind(this);
       }
 
@@ -46,13 +51,17 @@ function withData(apis = {}) {
         });
       }
 
+      clearData(key) {
+        this.setApiState(key, getDefaultState(key));
+      }
+
       loadData(key, params = {}, ...args) {
         const { apiClient, apiParams } = this.props;
         this.setApiState(key, { isLoading: true });
         apis[key].apiUtil(apiClient, { ...apiParams[key], ...params }, ...args).then((data) => {
-          this.setApiState(key, { data, isLoading: false });
+          this.setApiState(key, { ...getDefaultState(key), data });
         }).catch((error) => {
-          this.setApiState(key, { error, isLoading: false });
+          this.setApiState(key, { ...getDefaultState(key), error });
         });
       }
 
@@ -65,6 +74,7 @@ function withData(apis = {}) {
                 acc[key] = {
                   ...this.state.apis[key],
                   loadData: (...args) => this.loadData(key, ...args),
+                  clearData: () => this.clearData(key),
                 };
                 return acc;
               }, {}),
@@ -84,7 +94,7 @@ function withData(apis = {}) {
     const mapStateToProps = (state, ownProps) => ({
       apiClient: getAPIClient(state.settings.token.active, state),
       apiParams: keys.reduce((acc, key) => {
-        acc[key] = apis[key].getApiParams(state, ownProps);
+        acc[key] = apis[key].getApiParams ? apis[key].getApiParams(state, ownProps) : {};
         return acc;
       }, {}),
     });
