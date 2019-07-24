@@ -12,6 +12,8 @@ const IllustrationDemo = () => (
         footer={<a>Learn more</a>}
       >
         <p>
+
+
           Tooltip content
         </p>
       </Tooltip>
@@ -21,6 +23,8 @@ const IllustrationDemo = () => (
         alwaysShow
       >
         <p>
+
+
           Tooltip content
         </p>
       </Tooltip>
@@ -33,6 +37,8 @@ const IllustrationDemo = () => (
         footer={<a>Learn more</a>}
       >
         <p>
+
+
           Tooltip content
         </p>
       </Tooltip>

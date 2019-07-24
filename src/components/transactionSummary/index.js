@@ -118,11 +118,7 @@ class TransactionSummary extends React.Component {
               </Tooltip>
             </label>
             <label className={styles.feeValue}>
-              {' '}
-              {fee }
-              {' '}
-LSK
-              {' '}
+              {`${fee} LSK`}
             </label>
           </section>
           {

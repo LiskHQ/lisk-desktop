@@ -27,10 +27,7 @@ class Converter extends React.Component {
         {value !== '' && currencies[currency]
           ? (
             <span className={`${styles.price} converted-price`}>
-~
-              {price}
-              {' '}
-              {currency}
+              {`~${price} ${currency}`}
             </span>
           )
           : null

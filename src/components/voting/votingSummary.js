@@ -93,9 +93,7 @@ const VotingSummary = ({
       <section>
         <label>{t('Votes after confirmation')}</label>
         <label>
-          {getTotalVotesCount(votes)}
-/
-          {maxCountOfVotes}
+          {`${getTotalVotesCount(votes)}/${maxCountOfVotes}`}
         </label>
       </section>
     </TransactionSummary>

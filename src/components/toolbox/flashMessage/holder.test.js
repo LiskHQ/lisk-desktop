@@ -7,6 +7,7 @@ describe('Flash Message Holder', () => {
   let wrapper;
   const DummyMessage = (
     <FlashMessage shouldShow>
+
       Dummy text
     </FlashMessage>
   );
