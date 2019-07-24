@@ -24,8 +24,7 @@ const FlashMessage = ({
     }
     <span className={`${styles.text} display-text`}>
       {displayText}
-    </span>
-    {
+      {
       linkUrl && linkCaption
         ? (
           <a
@@ -38,7 +37,8 @@ const FlashMessage = ({
           </a>
         )
         : null
-    }
+      }
+    </span>
     {
       buttonText && onButtonClick
         ? (
