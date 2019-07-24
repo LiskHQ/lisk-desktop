@@ -30,7 +30,7 @@ const InitializationMessage = ({
       linkCaption={t('Learn more')}
       linkUrl={externalLinks.accountInitialization}
       onButtonClick={onButtonClick}
-      shouldShow={shouldShowInitialization() || false}
+      shouldShow={shouldShowInitialization()}
     />
   );
 };
