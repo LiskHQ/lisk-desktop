@@ -3,8 +3,9 @@
  * @param {Object} options -> Object data to update generated settings as needed.
  * @returns Object with default settings to put into localStorage.
  */
-const getSettings = ({ btc = false }) => ({
+const getSettings = ({ btc = false, showNetwork = false }) => ({
   areTermsOfUseAccepted: true,
+  showNetwork,
   token: {
     list: {
       BTC: btc,
@@ -21,4 +22,5 @@ export default {
   settings,
   settingsWithBtc,
   setSettings,
+  getSettings,
 };
