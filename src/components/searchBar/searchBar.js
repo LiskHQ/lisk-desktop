@@ -42,6 +42,7 @@ class SearchBar extends React.Component {
         suggestions.loadData({
           searchTerm: this.state.searchTextValue,
         });
+        this.timeout = null;
       }, 500);
     } else {
       suggestions.clearData();
@@ -72,7 +73,7 @@ class SearchBar extends React.Component {
   }
 
   onKeyPress() {
-    const { suggestions: { addresses, delegates, transactions } } = this.props;
+    const { suggestions: { data: { addresses, delegates, transactions } } } = this.props;
     const { rowItemIndex } = this.state;
 
     if (addresses.length) this.onSelectAccount(addresses[rowItemIndex].address);
@@ -136,7 +137,7 @@ class SearchBar extends React.Component {
           placeholder={t('Search within the network...')}
           className="search-input"
           onKeyDown={this.onHandleKeyPress}
-          isLoading={suggestions.isLoading}
+          isLoading={suggestions.isLoading || this.timeout}
         />
         {error
           ? (
