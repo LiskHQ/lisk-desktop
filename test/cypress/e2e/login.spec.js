@@ -3,6 +3,7 @@ import { fromRawLsk } from '../../../src/utils/lsk';
 import accounts from '../../constants/accounts';
 import ss from '../../constants/selectors';
 import urls from '../../constants/urls';
+import { settingsWithBtc, setSettings } from '../../constants/settings';
 import chooseNetwork from '../utils/chooseNetwork';
 import loginUI from '../utils/loginUI';
 
@@ -111,5 +112,23 @@ describe('Login Page', () => {
     chooseNetwork('invalid');
     loginUI(accounts.genesis.passphrase);
     cy.get(ss.errorPopup).contains('Unable to connect to the node');
+  });
+
+  describe('Login with BTC enabled', () => {
+    beforeEach(() => {
+      cy.server();
+      cy.route('/account/**').as('btcAccount');
+      setSettings({ ...settingsWithBtc, showNetwork: true });
+    });
+
+    ['main', 'test', 'dev'].forEach((name) => {
+      it(`Login to ${name}net with BTC enable`, () => {
+        cy.visit(urls.login);
+        chooseNetwork(name);
+        loginUI(accounts.genesis.passphrase);
+        cy.wait('@btcAccount');
+        cy.get(ss.coinRow).should('have.length', 2);
+      });
+    });
   });
 });
