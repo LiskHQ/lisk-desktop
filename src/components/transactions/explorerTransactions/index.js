@@ -46,7 +46,8 @@ export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
 )(translate()(withData({
-  votes: {
+  // TODO rename newVotes to votes and update votesTab component to use it
+  newVotes: {
     apiUtil: getVotes,
     getApiParams: (state, ownProps) => ({ address: ownProps.match.params.address }),
   },

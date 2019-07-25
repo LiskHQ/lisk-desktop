@@ -62,7 +62,10 @@ describe('App', () => {
         pending: [],
       },
       network: {
-        name: 'mainnet',
+        name: 'Mainnet',
+        networks: {
+          LSK: {},
+        },
       },
     });
     publicComponent.forEach(({ route, component }) => {
