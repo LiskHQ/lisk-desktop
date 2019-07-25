@@ -38,7 +38,9 @@ body {
     transition: all ease 250ms;
     position: relative;
     z-index: -1;
-    height: calc(100% - 105px);
+    height: calc(100% - 73px);
+    display: flex;
+    flex-direction: column;
   }
 
   &.loaded > section {
@@ -59,6 +61,7 @@ body {
   margin: 0 auto;
   width: 100%;
   max-width: var(--main-box-width);
+  flex-grow: 1;
 }
 
 :global(.offlineWrapper) {
