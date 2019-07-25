@@ -1,3 +1,4 @@
+// TODO File can be removed after actions are refactored
 import BigNumber from 'bignumber.js';
 import actionTypes from '../../constants/actions';
 
