@@ -42,9 +42,9 @@ const searchTransactions = ({ liskAPIClient, searchTerm }) => new Promise((resol
 
 const getSearches = search => ([
   ...(search.match(regex.address)
-    ? [searchAddresses] : [() => new Promise(resolve => resolve({ addresses: [] }))]),
+    ? [searchAddresses] : [() => Promise.resolve({ addresses: [] })]),
   ...(search.match(regex.transactionId)
-    ? [searchTransactions] : [() => new Promise(resolve => resolve({ transactions: [] }))]),
+    ? [searchTransactions] : [() => Promise.resolve({ transactions: [] })]),
   searchDelegates, // allways add delegates promise as they share format (address, tx)
 ]);
 
