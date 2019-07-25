@@ -3,93 +3,72 @@ import React from 'react';
 import { getAPIClient } from './api/network';
 
 function withData(apis = {}) {
-  const keys = Object.keys(apis);
-
-  function getDefaultState(key) {
-    return {
-      data: apis[key].defaultData || {},
-      error: '',
-      isLoading: false,
-    };
-  }
-
   return function (WrappedComponent) {
-    class DataProvider extends React.Component {
-      constructor() {
-        super();
+    function getHOC(ChildComponent, {
+      key, autoload, apiUtil, defaultData = {},
+    }) {
+      class DataProvider extends React.Component {
+        constructor() {
+          super();
+          this.defaultState = {
+            data: defaultData,
+            error: '',
+            isLoading: false,
+          };
 
 
-        this.state = {
-          apis: keys.reduce((acc, key) => {
-            acc[key] = getDefaultState(key);
-            return acc;
-          }, {}),
-        };
+          this.state = this.defaultState;
 
-        this.loadData = this.loadData.bind(this);
-        this.clearData = this.clearData.bind(this);
-        this.setApiState = this.setApiState.bind(this);
-      }
+          this.loadData = this.loadData.bind(this);
+          this.clearData = this.clearData.bind(this);
+        }
 
-      componentDidMount() {
-        keys.forEach((key) => {
-          if (apis[key].autoload) {
-            this.loadData(key);
+        componentDidMount() {
+          if (autoload) {
+            this.loadData();
           }
-        });
-      }
+        }
 
-      setApiState(key, newState) {
-        this.setState({
-          apis: {
-            ...this.state.apis,
-            [key]: {
-              ...this.state.apis[key],
-              ...newState,
-            },
-          },
-        });
-      }
+        clearData() {
+          this.setState(this.defaultState);
+        }
 
-      clearData(key) {
-        this.setApiState(key, getDefaultState(key));
-      }
+        loadData(params = {}, ...args) {
+          const { apiClient, apiParams } = this.props;
+          this.setState({ isLoading: true });
+          apiUtil(apiClient, { ...apiParams[key], ...params }, ...args).then((data) => {
+            this.setState({ ...this.defaultState, data });
+          }).catch((error) => {
+            this.setState({ ...this.defaultState, error });
+          });
+        }
 
-      loadData(key, params = {}, ...args) {
-        const { apiClient, apiParams } = this.props;
-        this.setApiState(key, { isLoading: true });
-        apis[key].apiUtil(apiClient, { ...apiParams[key], ...params }, ...args).then((data) => {
-          this.setApiState(key, { ...getDefaultState(key), data });
-        }).catch((error) => {
-          this.setApiState(key, { ...getDefaultState(key), error });
-        });
-      }
-
-      render() {
-        const { apiClient, apiParams, ...restOfProps } = this.props;
-        return (
-          <WrappedComponent
-            {...{
-              ...keys.reduce((acc, key) => {
-                acc[key] = {
-                  ...this.state.apis[key],
-                  loadData: (...args) => this.loadData(key, ...args),
-                  clearData: () => this.clearData(key),
-                };
-                return acc;
-              }, {}),
+        render() {
+          const { apiClient, apiParams, ...restOfProps } = this.props;
+          return (
+            <ChildComponent {...{
+              [key]: {
+                ...this.state,
+                loadData: this.loadData,
+                clearData: this.clearData,
+              },
               ...restOfProps,
             }}
-          />
-        );
+            />
+          );
+        }
       }
+
+      function getDisplayName(child) {
+        return (child && (child.displayName || child.name)) || 'Component';
+      }
+
+      DataProvider.displayName = `DataProvider-${key}(${getDisplayName(ChildComponent)})`;
+
+      return DataProvider;
     }
 
-    function getDisplayName() {
-      return (WrappedComponent && (WrappedComponent.displayName || WrappedComponent.name)) || 'Component';
-    }
-
-    DataProvider.displayName = `DataProvider(${getDisplayName()})`;
+    const keys = Object.keys(apis);
 
     const mapStateToProps = (state, ownProps) => ({
       apiClient: getAPIClient(state.settings.token.active, state),
@@ -99,9 +78,12 @@ function withData(apis = {}) {
       }, {}),
     });
 
+    const HOCWithData = keys.reduce((acc, key) => (
+      getHOC(acc, { ...apis[key], key })), WrappedComponent);
+
     return connect(
       mapStateToProps,
-    )(DataProvider);
+    )(HOCWithData);
   };
 }
 
