@@ -58,6 +58,9 @@ describe('App', () => {
           transactions: [],
         },
       },
+      transactions: {
+        pending: [],
+      },
       network: {
         name: 'mainnet',
       },

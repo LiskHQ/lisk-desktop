@@ -52,6 +52,7 @@
 .selected {
   background: var(--color-white);
   border-bottom: 2px solid var(--color-ultramarine-blue);
+  margin-bottom: -1px;
 
   & > span {
     color: var(--color-ultramarine-blue);

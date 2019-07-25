@@ -71,6 +71,7 @@ import user from '../assets/images/icons-v2/user.svg';
 import userActive from '../assets/images/icons-v2/user-active.svg';
 import walletIcon from '../assets/images/icons-v2/wallet.svg';
 import walletIconActive from '../assets/images/icons-v2/wallet-active.svg';
+import warningIcon from '../assets/images/icons-v2/warningIcon.svg';
 
 export default {
   alert_icon: alertIcon,
@@ -148,4 +149,5 @@ export default {
   liskChat,
   helpCenterArrow,
   walletIconActive,
+  warningIcon,
 };
