@@ -1,8 +1,6 @@
 @import '../app/variables';
 
 :root {
-  --link-color: var(--color-primary-medium);
-  --back-button-color: var(--color-grayscale-dark);
   --nav-line-height: 32px;
   --back-button-width-l: 75px;
   --back-button-width-s: 65px;
@@ -37,7 +35,7 @@
   & .backButton {
     width: var(--back-button-width-l); /* to have equal width with its shadow */
     cursor: pointer;
-    color: var(--link-color);
+    color: var(--color-link);
     font-weight: bold;
 
     & .icon {
@@ -52,13 +50,13 @@
   }
 
   & .navEl {
-    color: var(--link-color);
+    color: var(--color-link);
     opacity: 0.4;
 
     &.dash b {
       width: 50px;
       height: 0;
-      border-bottom: solid 2px var(--link-color);
+      border-bottom: solid 2px var(--color-link);
       opacity: 0.5;
       font-size: 0 !important;
 

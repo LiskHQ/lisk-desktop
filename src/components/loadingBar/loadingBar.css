@@ -3,7 +3,7 @@
 .fixedAtTop {
   position: fixed;
   top: -9px;
-  left: var(--sidebar-width);
+  left: 0;
   width: 100vw; /* stylelint-disable-line */
   z-index: 201;
 }
@@ -14,17 +14,5 @@
 
   & .value {
     height: 8px;
-  }
-}
-
-@media (--xLarge-viewport) {
-  .fixedAtTop {
-    left: var(--sidebar-width-xl);
-  }
-}
-
-@media (--medium-viewport) {
-  .fixedAtTop {
-    left: 0;
   }
 }

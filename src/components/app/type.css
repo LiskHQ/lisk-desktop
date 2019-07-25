@@ -145,39 +145,3 @@ textarea,
 select {
   font-family: var(--content-font);
 }
-
-@media (--xLarge-viewport) {
-  h2 {
-    font-size: var(--font-size-h2-xl);
-  }
-}
-
-@media (--large-viewport) {
-  h2 {
-    font-size: var(--font-size-h2-l);
-  }
-}
-
-@media (--medium-viewport) {
-  h2 {
-    font-size: var(--font-size-h2-m);
-  }
-
-  h5 {
-    font-size: var(--font-size-h5-m);
-  }
-}
-
-@media (--small-viewport) {
-  h2 {
-    font-size: var(--font-size-h2-s);
-  }
-
-  h5 {
-    font-size: var(--font-size-h5-s);
-  }
-
-  p {
-    font-size: var(--paragraph-font-size-s);
-  }
-}
