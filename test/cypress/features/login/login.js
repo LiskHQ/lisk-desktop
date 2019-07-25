@@ -3,13 +3,13 @@ import { Given } from 'cypress-cucumber-preprocessor/steps';
 import urls from '../../../constants/urls';
 import accounts from '../../../constants/accounts';
 import networks from '../../../constants/networks';
-import { setSettings, getSettings } from '../../../constants/settings';
+import { setSettingsInLocalStorage } from '../../../constants/settings';
 import ss from '../../../constants/selectors';
 import numeral from 'numeral';
 import { fromRawLsk } from '../../../../src/utils/lsk';
 
 Given(/^showNetwork setting is true$/, function () {
-  setSettings(getSettings({ showNetwork: true }));
+  setSettingsInLocalStorage({ showNetwork: true });
 });
 
 Given(/^I should be connected to ([^\s]+)$/, function (networkName) {

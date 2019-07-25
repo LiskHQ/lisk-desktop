@@ -24,7 +24,7 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 import networks from '../../constants/networks';
-import { settings, setSettings } from '../../constants/settings';
+import { settingsWithBtc, setSettingsInLocalStorage } from '../../constants/settings';
 
 before(() => {
   // Check if lisk core is running
@@ -32,7 +32,7 @@ before(() => {
 });
 
 beforeEach(() => {
-  setSettings(settings);
+  setSettingsInLocalStorage(settingsWithBtc);
 });
 
 Cypress.Commands.add('addToLocalStorage', (item, value) => {
