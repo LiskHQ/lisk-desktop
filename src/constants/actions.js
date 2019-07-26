@@ -38,7 +38,6 @@ const actionTypes = {
   searchClearSuggestions: 'SEARCH_CLEAR_SUGGESTIONS',
   searchDelegate: 'SEARCH_DELEGATE',
   searchMoreTransactions: 'SEARCH_MORE_TRANSACTIONS',
-  searchSuggestions: 'SEARCH_SUGGESTIONS',
   searchTransactions: 'SEARCH_TRANSACTIONS',
   searchUpdateLast: 'SEARCH_UPDATE_LAST',
   searchVotes: 'SEARCH_VOTES',

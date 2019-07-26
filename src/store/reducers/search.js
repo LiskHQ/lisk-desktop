@@ -82,24 +82,6 @@ const search = (state = { // eslint-disable-line complexity
           [action.data.address]: action.data.votes,
         },
       };
-    case actionTypes.searchSuggestions:
-      return {
-        ...state,
-        suggestions: {
-          ...action.data[0],
-          ...action.data[1],
-          ...action.data[2],
-        },
-      };
-    case actionTypes.searchClearSuggestions:
-      return {
-        ...state,
-        suggestions: {
-          delegates: [],
-          addresses: [],
-          transactions: [],
-        },
-      };
     default:
       return state;
   }

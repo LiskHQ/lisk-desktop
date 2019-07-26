@@ -1,7 +1,6 @@
 import actionTypes from '../constants/actions';
 import networks from '../constants/networks';
 import txFilters from '../constants/transactionFilters';
-import * as searchAPI from '../utils/api/search';
 import * as accountAPI from '../utils/api/account';
 import * as delegateAPI from '../utils/api/delegates';
 import * as transactionsAPI from '../utils/api/transactions';
@@ -13,10 +12,8 @@ const {
   searchMoreTransactions,
   searchTransactions,
   searchAccount,
-  searchSuggestions,
 } = actions;
 
-jest.mock('../utils/api/search');
 jest.mock('../utils/api/account');
 jest.mock('../utils/api/delegates');
 jest.mock('../utils/api/transactions');
@@ -36,17 +33,6 @@ describe('actions: search', () => {
   beforeEach(() => {
     jest.resetModules();
     dispatch = jest.fn();
-  });
-
-  it('should clear suggestions and search for {delegates,addresses,transactions}', async () => {
-    searchAPI.default.mockResolvedValue({});
-    const data = { liskAPIClient: {}, searchTerm: '' };
-    const action = searchSuggestions(data);
-    await action(dispatch, getState);
-    expect(dispatch).toHaveBeenNthCalledWith(1, {
-      data: {},
-      type: actionTypes.searchSuggestions,
-    });
   });
 
   describe('fetchVotedDelegateInfo', () => {

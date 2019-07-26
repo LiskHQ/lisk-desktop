@@ -4,7 +4,6 @@ import { getAccount } from '../utils/api/account';
 import { getDelegates, getVotes } from '../utils/api/delegates';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
-import searchAll from '../utils/api/search';
 import transactionTypes from '../constants/transactionTypes';
 import { tokenMap } from '../constants/tokens';
 
@@ -159,22 +158,3 @@ export const searchMoreTransactions = params => (
     actionType: actionTypes.searchMoreTransactions,
   })
 );
-
-// TODO remove this action and use src/utils/withData.js instead
-export const clearSearchSuggestions = () => ({
-  data: {},
-  type: actionTypes.searchClearSuggestions,
-});
-
-// TODO remove this action and use src/utils/withData.js instead
-export const searchSuggestions = ({ searchTerm, callback = () => {} }) =>
-  (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    searchAll({ liskAPIClient, searchTerm }).then((response) => {
-      dispatch({
-        data: response,
-        type: actionTypes.searchSuggestions,
-      });
-      callback(response);
-    }).catch(callback);
-  };
