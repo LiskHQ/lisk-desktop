@@ -2,7 +2,6 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import { getVotes } from '../../../utils/api/delegates';
 import { loadLastTransaction } from '../../../actions/transactions';
 import {
   searchTransactions, searchMoreTransactions, searchAccount, fetchVotedDelegateInfo,
@@ -10,12 +9,12 @@ import {
 import actionTypes from '../../../constants/actions';
 import ExplorerTransactions from './explorerTransactions';
 import txFilters from '../../../constants/transactionFilters';
-import withData from '../../../utils/withData';
 
 const mapStateToProps = (state, ownProps) => ({
   delegate: state.search.delegates[state.search.lastSearch],
   transaction: state.transaction,
   transactions: state.search.searchResults,
+  votes: state.search.votes[state.search.lastSearch],
   count: state.search.transactions[state.search.lastSearch]
     && (state.search.transactions[state.search.lastSearch].count || 0),
   offset: state.search.searchResults.length,
@@ -45,10 +44,4 @@ const mapDispatchToProps = {
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(translate()(withData({
-  // TODO rename newVotes to votes and update votesTab component to use it
-  newVotes: {
-    apiUtil: getVotes,
-    getApiParams: (state, ownProps) => ({ address: ownProps.match.params.address }),
-  },
-})(ExplorerTransactions))));
+)(translate()(ExplorerTransactions)));

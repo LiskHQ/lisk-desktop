@@ -81,11 +81,6 @@ describe('ExplorerTransactions Component', () => {
     hideChart: true, // Props to hide chart on tests, due to no canvas support
     fetchVotedDelegateInfo: jest.fn(),
     activeToken: 'LSK',
-    votes: {
-      data: [],
-      error: '',
-      loading: [],
-    },
   };
 
   describe('Another account', () => {
