@@ -52,12 +52,11 @@ class AddBookmark extends React.Component {
   }
 
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const { token } = this.props;
     const { token: prevToken } = prevProps;
-    const { fields: { address } } = prevState;
 
-    this.updateLabelIfDelegate(address.value);
+    this.updateLabelIfDelegate(prevProps);
 
     if (token.active !== prevToken.active) {
       this.setState(state => ({
@@ -67,14 +66,13 @@ class AddBookmark extends React.Component {
     }
   }
 
-  updateLabelIfDelegate(prevAddress) {
-    const { token, accounts } = this.props;
-    const { fields: { label, address } } = this.state;
-    const account = (token.active === tokenMap.LSK.key && accounts[address.value]) || {};
-    if (address.value === prevAddress && account.delegate) return;
+  updateLabelIfDelegate(prevProps) {
+    const { account } = this.props;
+    const { fields: { label } } = this.state;
+    if (account.data.delegate === prevProps.account.data.delegate) return;
 
-    if (account.delegate && account.delegate.username !== label.value) {
-      const data = { value: account.delegate.username, readonly: true };
+    if (account.data.delegate && account.data.delegate.username !== label.value) {
+      const data = { value: account.data.delegate.username, readonly: true };
       this.updateField({
         name: 'label',
         data,
@@ -122,16 +120,11 @@ class AddBookmark extends React.Component {
     return { feedback, error };
   }
 
-  searchAccount(value) {
-    const { searchAccount } = this.props;
-    searchAccount({ address: value });
-  }
-
   onAddressChange({ target: { name, value } }) {
-    const { token: { active } } = this.props;
+    const { token: { active }, account } = this.props;
     const { feedback, error, isInvalid } = this.validateAddress(active, value);
     if (active === tokenMap.LSK.key && !error && value.length) {
-      this.searchAccount(value);
+      account.loadData({ address: value });
     }
 
     this.updateField({
@@ -162,10 +155,10 @@ class AddBookmark extends React.Component {
   handleAddBookmark(e) {
     e.preventDefault();
     const {
-      token: { active }, bookmarkAdded, accounts, history,
+      token: { active }, bookmarkAdded, account, history,
     } = this.props;
     const { fields: { label, address } } = this.state;
-    const { publicKey, delegate } = accounts[address.value] || {};
+    const { publicKey, delegate } = account.data;
     bookmarkAdded({
       token: active,
       account: {

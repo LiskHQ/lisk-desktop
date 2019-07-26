@@ -20,9 +20,11 @@ describe('Add a new bookmark component', () => {
     history: {
       push: jest.fn(),
     },
-    accounts: {},
+    account: {
+      data: {},
+      loadData: jest.fn(),
+    },
     bookmarkAdded: jest.fn(),
-    searchAccount: jest.fn(),
   };
   const addresses = {
     BTC: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
@@ -39,7 +41,7 @@ describe('Add a new bookmark component', () => {
   afterEach(() => {
     props.history.push.mockClear();
     props.bookmarkAdded.mockClear();
-    props.searchAccount.mockReset();
+    props.account.loadData.mockReset();
   });
 
   it('Should render properly and with pristine state', () => {
@@ -73,9 +75,9 @@ describe('Add a new bookmark component', () => {
     });
 
     it('should not be possible to change delegate label', () => {
-      props.searchAccount.mockImplementation(({ address }) => {
+      props.account.loadData.mockImplementation(({ address }) => {
         const account = { address, delegate: { username: accounts.delegate.username } };
-        wrapper.setProps({ accounts: { ...props.accounts, [address]: account } });
+        wrapper.setProps({ account: { ...props.account, data: account } });
       });
       wrapper.find('input[name="address"]').first().simulate('change', {
         target: {
