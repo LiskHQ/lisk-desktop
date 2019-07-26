@@ -10,7 +10,7 @@
   font-weight: var(--font-weight-bold);
 
   & .recieve {
-    border-radius: var(--border-radius-normal);
+    border-radius: var(--border-radius-standard);
     display: inline-block;
     height: 29px;
     padding: 6px 12px;
