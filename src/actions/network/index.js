@@ -13,7 +13,7 @@ export const networkSet = data =>
 /**
  * Returns required action object to update offline/online status of network
  *
- * @param {Object} data - Active peer data
+ * @param {Object} data - Active network data
  * @returns {Object} Action object
  */
 export const networkStatusUpdated = data => ({
