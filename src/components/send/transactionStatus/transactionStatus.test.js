@@ -23,9 +23,6 @@ describe('TransactionStatus', () => {
     bookmarks: {
       LSK: [],
     },
-    search: {
-      delegates: {},
-    },
   });
 
   const options = {
@@ -44,8 +41,6 @@ describe('TransactionStatus', () => {
     bookmarks: {
       LSK: [],
     },
-    delegates: {},
-    searchAccount: jest.fn(),
     prevStep: jest.fn(),
     fields: {
       recipient: {
@@ -66,6 +61,10 @@ describe('TransactionStatus', () => {
       transactionsCreated: [],
       transactionsCreatedFailed: [],
       broadcastedTransactionsError: [],
+    },
+    recipientAccount: {
+      data: {},
+      loadData: jest.fn(),
     },
   };
 

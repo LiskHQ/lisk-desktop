@@ -21,12 +21,11 @@ class TransactionStatus extends React.Component {
     this.onRetry = this.onRetry.bind(this);
     this.onBookmarkDropdownToggle = this.onBookmarkDropdownToggle.bind(this);
     this.handleClickOutsideDropdown = this.handleClickOutsideDropdown.bind(this);
-    this.getDelegateInformation = this.getDelegateInformation.bind(this);
   }
 
   componentDidMount() {
-    const { searchAccount, fields } = this.props;
-    searchAccount({ address: fields.recipient.address });
+    const { recipientAccount, fields } = this.props;
+    recipientAccount.loadData({ address: fields.recipient.address });
     this.transactionBroadcasted();
   }
 
@@ -80,13 +79,6 @@ class TransactionStatus extends React.Component {
     };
   }
 
-  getDelegateInformation() {
-    const { delegates, fields } = this.props;
-    return Object.entries(delegates).length
-      ? delegates[fields.recipient.address]
-      : {};
-  }
-
   getMessagesDetails() {
     const { transactions, fields } = this.props;
 
@@ -133,7 +125,7 @@ class TransactionStatus extends React.Component {
 
   render() {
     const {
-      transactions, fields, t, finalCallback,
+      transactions, fields, t, finalCallback, recipientAccount,
     } = this.props;
     const { isBookmarked, bookmarkButtonLabel } = this.bookmarkInformation();
     const { isHardwareWalletError, messageDetails } = this.getMessagesDetails();
@@ -186,7 +178,7 @@ class TransactionStatus extends React.Component {
                     className={`${styles.bookmarkDropdown}`}
                   >
                     <BookmarkDropdown
-                      delegate={this.getDelegateInformation()}
+                      delegate={recipientAccount.data.delegate || {}}
                       address={fields.recipient.address}
                       detailAccount={this.props.detailAccount}
                       onSubmitClick={this.onBookmarkDropdownToggle}
