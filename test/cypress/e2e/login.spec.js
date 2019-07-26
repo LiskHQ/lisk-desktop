@@ -112,4 +112,26 @@ describe('Login Page', () => {
     loginUI(accounts.genesis.passphrase);
     cy.get(ss.errorPopup).contains('Unable to connect to the node');
   });
+
+  describe('Login with BTC enabled', () => {
+    beforeEach(() => {
+      const btcSettings = {
+        showNetwork: true,
+        token: { list: { BTC: true } },
+      };
+      cy.server();
+      cy.route('/account/**').as('btcAccount');
+      cy.mergeObjectWithLocalStorage('settings', btcSettings);
+    });
+
+    ['main', 'test', 'dev'].forEach((name) => {
+      it(`Login to ${name}net with BTC enable`, () => {
+        cy.visit(urls.login);
+        chooseNetwork(name);
+        loginUI(accounts.genesis.passphrase);
+        cy.wait('@btcAccount');
+        cy.get(ss.coinRow).should('have.length', 2);
+      });
+    });
+  });
 });

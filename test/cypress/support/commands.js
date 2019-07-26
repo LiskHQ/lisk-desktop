@@ -24,6 +24,8 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 import networks from '../../constants/networks';
+import settings from '../../constants/settings';
+import { deepMergeObj } from '../../../src/utils/helpers';
 
 before(() => {
   // Check if lisk core is running
@@ -31,11 +33,17 @@ before(() => {
 });
 
 beforeEach(() => {
-  window.localStorage.setItem('settings', '{"areTermsOfUseAccepted": true}');
+  window.localStorage.setItem('settings', JSON.stringify(settings));
 });
 
 Cypress.Commands.add('addToLocalStorage', (item, value) => {
   window.localStorage.setItem(item, value);
+});
+
+Cypress.Commands.add('mergeObjectWithLocalStorage', (item, data) => {
+  const localStorageData = JSON.parse(window.localStorage.getItem(item)) || {};
+  const newData = JSON.stringify(deepMergeObj(localStorageData, data));
+  window.localStorage.setItem(item, newData);
 });
 
 Cypress.Commands.add('addObjectToLocalStorage', (item, key, value) => {
