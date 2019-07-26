@@ -8,7 +8,8 @@ import NewsFeed from './newsFeed';
 
 const mapStateToProps = state => ({
   channels: (state.settings && state.settings.channels) ? state.settings.channels : channels,
-  newsFeed: (state.liskService && state.liskService.newsFeed) ? state.liskService.newsFeed : [],
+  newsFeed: (state.liskService && state.liskService.newsFeed && !state.liskService.newsFeed.error)
+    ? state.liskService.newsFeed : [],
   showNewsFeedEmptyState: (state.liskService && state.liskService.showNewsFeedEmptyState) || false,
 });
 

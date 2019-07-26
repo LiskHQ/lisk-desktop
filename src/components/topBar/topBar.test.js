@@ -8,6 +8,12 @@ import TopBar from './topBar';
 import routes from '../../constants/routes';
 import accounts from '../../../test/constants/accounts';
 
+jest.mock('../searchBar', () => function SearchBarMock() {
+  return (
+    <div className="searchBarMock" />
+  );
+});
+
 describe('TopBar', () => {
   let wrapper;
   const account = {
@@ -34,14 +40,7 @@ describe('TopBar', () => {
       replace: () => {},
       push: jest.fn(),
     },
-    suggestions: {
-      addresses: [],
-      transactions: [],
-      delegates: [],
-    },
     transactions: [],
-    searchSuggestions: jest.fn(),
-    clearSearchSuggestions: jest.fn(),
     token: {
       active: 'LSK',
       list: {

@@ -1,20 +1,11 @@
 // istanbul ignore file
-import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import throttle from 'lodash.throttle';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import routes from '../../constants/routes';
 import BookmarksList from '../bookmarks/bookmarksList';
 import NewsFeed from '../newsFeed';
 import WalletDetails from '../walletDetails';
 import PageHeader from '../toolbox/pageHeader';
-import Piwik from '../../utils/piwik';
-import links from '../../constants/externalLinks';
-import { fromRawLsk } from '../../utils/lsk';
 import breakpoints from '../../constants/breakpoints';
-import fees from '../../constants/fees';
-import { SecondaryButton } from '../toolbox/buttons/button';
-import Banner from '../toolbox/banner/banner';
 import ExtensionPoint from '../extensionPoint';
 import LiskHubExtensions from '../../utils/liskHubExtensions';
 import RecentTransactions from './recentTransactions';
@@ -30,7 +21,6 @@ class Dashboard extends React.Component {
     };
 
     this.resizeWindow = this.resizeWindow.bind(this);
-    this.shouldShowInitializatiion = this.shouldShowInitializatiion.bind(this);
   }
 
   componentDidMount() {
@@ -50,16 +40,6 @@ class Dashboard extends React.Component {
         publicKey: account.publicKey,
       });
     }
-  }
-
-  shouldShowInitializatiion() {
-    const { account, transactions, settings } = this.props;
-    const activeToken = settings.token.active;
-    const needsNoAccountInit = (account.info && account.info.LSK.serverPublicKey)
-      || (account.info && account.info.LSK.balance === 0)
-      || (transactions.pending && transactions.pending.length > 0)
-      || activeToken === 'BTC';
-    return !needsNoAccountInit;
   }
 
   componentWillUnmount() {
@@ -113,37 +93,6 @@ class Dashboard extends React.Component {
               />
             )
             : null
-        }
-        { isLoggedIn && this.shouldShowInitializatiion()
-          && (
-          <div className={`${grid.row} ${styles.bannerWrapper}`}>
-            <Banner
-              className={`${grid['col-xs-12']} initialize-banner`}
-              title={t('Initialize Lisk ID')}
-              footer={(
-                <Fragment>
-                  <Link to={`${routes.send.path}?recipient=${account.address}&amount=0.1&reference=Account initialization`}>
-                    <SecondaryButton className="light">{t('Create First Transaction')}</SecondaryButton>
-                  </Link>
-                  <a
-                    className={styles.initLink}
-                    target="_blank"
-                    href={links.accountInitialization}
-                    /* istanbul ignore next */
-                    onClick={() => Piwik.trackingEvent('AccountInit', 'link', 'Initialize my lisk account')}
-                    rel="noopener noreferrer"
-                  >
-                    {this.props.t('Learn more about Lisk ID initialization')}
-                  </a>
-                </Fragment>
-)}
-            >
-              <p>{t('It is recommended that you initialize your Lisk ID.')}</p>
-              <p>{t('The easiest way to do this is to send LSK to yourself by clicking this button.')}</p>
-              <p>{t('It will cost you only the usual {{fee}} LSK transaction fee.', { fee: fromRawLsk(fees.send) })}</p>
-            </Banner>
-          </div>
-          )
         }
         <div className={`${styles.wrapper} dashboard-container`}>
           <PageHeader

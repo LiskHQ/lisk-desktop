@@ -14,7 +14,6 @@ class SearchBar extends React.Component {
 
     this.state = {
       searchTextValue: '',
-      isLoading: false,
       rowItemIndex: 0,
     };
 
@@ -25,10 +24,6 @@ class SearchBar extends React.Component {
     this.updateRowItemIndex = this.updateRowItemIndex.bind(this);
   }
 
-  componentDidMount() {
-    if (!this.state.searchTextValue.length) this.props.clearSearchSuggestions();
-  }
-
   // eslint-disable-next-line class-methods-use-this
   isSubmittedStringValid(text) {
     return regex.address.test(text)
@@ -37,29 +32,26 @@ class SearchBar extends React.Component {
   }
 
   onChangeSearchTextValue({ target: { value: searchTextValue } }) {
-    const { searchSuggestions, clearSearchSuggestions } = this.props;
+    const { suggestions } = this.props;
     const isTextValid = this.isSubmittedStringValid(searchTextValue);
 
     this.setState({ searchTextValue, rowItemIndex: 0 });
     if (searchTextValue.length > 2 && isTextValid) {
-      this.setState({ isLoading: true });
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
-        searchSuggestions({
+        suggestions.loadData({
           searchTerm: this.state.searchTextValue,
-          callback: () => {
-            this.setState({ isLoading: false });
-          },
         });
+        this.timeout = null;
       }, 500);
     } else {
-      clearSearchSuggestions();
+      suggestions.clearData();
     }
   }
 
   clearSearch() {
     this.setState({ searchTextValue: '' });
-    this.props.clearSearchSuggestions();
+    this.props.suggestions.clearData();
   }
 
   onSelectedRow(type, value) {
@@ -81,7 +73,7 @@ class SearchBar extends React.Component {
   }
 
   onKeyPress() {
-    const { suggestions: { addresses, delegates, transactions } } = this.props;
+    const { suggestions: { data: { addresses, delegates, transactions } } } = this.props;
     const { rowItemIndex } = this.state;
 
     if (addresses.length) this.onSelectAccount(addresses[rowItemIndex].address);
@@ -91,9 +83,9 @@ class SearchBar extends React.Component {
 
   onHandleKeyPress(e) {
     const { suggestions } = this.props;
-    const suggestionsLength = suggestions.addresses.length
-      || suggestions.delegates.length
-      || suggestions.transactions.length;
+    const suggestionsLength = suggestions.data.addresses.length
+      || suggestions.data.delegates.length
+      || suggestions.data.transactions.length;
 
     // istanbul ignore else
     if (suggestionsLength >= 1) {
@@ -119,12 +111,12 @@ class SearchBar extends React.Component {
 
   // eslint-disable-next-line complexity
   render() {
-    const { searchTextValue, isLoading, rowItemIndex } = this.state;
+    const { searchTextValue, rowItemIndex } = this.state;
     const { t, suggestions, setSearchBarRef } = this.props;
     const isSearchTextError = searchTextValue.length && searchTextValue.length < 3;
-    const isEmptyResults = !isLoading && !suggestions.addresses.length
-      && !suggestions.delegates.length
-      && !suggestions.transactions.length
+    const isEmptyResults = !suggestions.isLoading && !suggestions.data.addresses.length
+      && !suggestions.data.delegates.length
+      && !suggestions.data.transactions.length
       && searchTextValue.length
       && !isSearchTextError;
 
@@ -145,7 +137,7 @@ class SearchBar extends React.Component {
           placeholder={t('Search within the network...')}
           className="search-input"
           onKeyDown={this.onHandleKeyPress}
-          isLoading={isLoading}
+          isLoading={suggestions.isLoading || this.timeout}
         />
         {error
           ? (
@@ -155,10 +147,10 @@ class SearchBar extends React.Component {
           )
           : null }
         {
-          suggestions.addresses.length
+          suggestions.data.addresses.length
             ? (
               <Accounts
-                accounts={suggestions.addresses}
+                accounts={suggestions.data.addresses}
                 onSelectedRow={this.onSelectAccount}
                 rowItemIndex={rowItemIndex}
                 updateRowItemIndex={this.updateRowItemIndex}
@@ -168,11 +160,11 @@ class SearchBar extends React.Component {
             : null
         }
         {
-          suggestions.delegates.length
+          suggestions.data.delegates.length
             ? (
               <Delegates
                 searchTextValue={searchTextValue}
-                delegates={suggestions.delegates}
+                delegates={suggestions.data.delegates}
                 onSelectedRow={this.onSelectAccount}
                 rowItemIndex={rowItemIndex}
                 updateRowItemIndex={this.updateRowItemIndex}
@@ -182,10 +174,10 @@ class SearchBar extends React.Component {
             : null
         }
         {
-          suggestions.transactions.length
+          suggestions.data.transactions.length
             ? (
               <Transactions
-                transactions={suggestions.transactions}
+                transactions={suggestions.data.transactions}
                 onSelectedRow={this.onSelectTransaction}
                 rowItemIndex={rowItemIndex}
                 updateRowItemIndex={this.updateRowItemIndex}

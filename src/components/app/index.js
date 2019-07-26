@@ -8,6 +8,7 @@ import OfflineWrapper from '../offlineWrapper';
 import CustomRoute from '../customRoute';
 import Dialog from '../dialog';
 import NotFound from '../notFound';
+import InitializationMessage from '../initializationMessage';
 import routes from '../../constants/routes';
 
 class App extends React.Component {
@@ -25,12 +26,10 @@ class App extends React.Component {
   }
 
   render() {
+    const { history, location } = this.props;
     const allRoutes = Object.values(routes);
-
     const defaultRoutes = allRoutes.filter(routeObj => routeObj.component);
     const signinFlowRoutes = allRoutes.filter(routeObj => routeObj.isSigninFlow);
-
-    const { location } = this.props;
 
     return (
       <OfflineWrapper>
@@ -59,31 +58,32 @@ class App extends React.Component {
                 </Switch>
                 <Toaster />
               </main>
-            ) : (
+            )
+            : (
               <main
                 className={this.state.loaded
                   ? `${styles.bodyWrapper} ${styles.loaded} appLoaded`
-                  : `${styles.bodyWrapper}`
-            }
+                  : `${styles.bodyWrapper}`}
                 ref={(el) => { this.main = el; }}
               >
                 <TopBar />
                 <section>
+                  <InitializationMessage history={history} />
                   <div className={styles.mainBox}>
                     <Switch>
-                      {this.state.loaded
-                      && defaultRoutes.map(route => (
-                        <CustomRoute
-                          path={route.path}
-                          pathSuffix={route.pathSuffix}
-                          component={route.component}
-                          isPrivate={route.isPrivate}
-                          exact={route.exact}
-                          forbiddenTokens={route.forbiddenTokens}
-                          key={route.path}
-                        />
-                      ))
-                    }
+                      {
+                        this.state.loaded && defaultRoutes.map(route => (
+                          <CustomRoute
+                            path={route.path}
+                            pathSuffix={route.pathSuffix}
+                            component={route.component}
+                            isPrivate={route.isPrivate}
+                            exact={route.exact}
+                            forbiddenTokens={route.forbiddenTokens}
+                            key={route.path}
+                          />
+                        ))
+                      }
                       <Route path="*" component={NotFound} />
                     </Switch>
                   </div>

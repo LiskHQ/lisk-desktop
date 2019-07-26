@@ -9,6 +9,7 @@ describe('Utils: Search', () => {
   let getAccountStub;
   let getDelegatesStub;
   let getSingleTransactionStub;
+  const liskAPIClient = 'apiClientMock';
 
   const accountsResponse = { address: '1337L', balance: 1110 };
 
@@ -52,14 +53,14 @@ describe('Utils: Search', () => {
     getSingleTransactionStub = stub(transactionsAPI, 'getSingleTransaction');
 
     // address match
-    getAccountStub.withArgs({ liskAPIClient: undefined, address: '1337L' }).returnsPromise().resolves(accountsResponse);
-    getDelegatesStub.withArgs(undefined, delegatesUrlParams)
+    getAccountStub.withArgs({ liskAPIClient, address: '1337L' }).returnsPromise().resolves(accountsResponse);
+    getDelegatesStub.withArgs(liskAPIClient, delegatesUrlParams)
       .returnsPromise().resolves(delegatesResponse);
     getSingleTransactionStub.returnsPromise().resolves(transactionsResponse);
 
     // txSearch match
-    getAccountStub.withArgs({ liskAPIClient: undefined, address: '1337' }).returnsPromise().resolves(accountsResponse);
-    getDelegatesStub.withArgs(undefined, delegatesUrlParamsTxMatch)
+    getAccountStub.withArgs({ liskAPIClient, address: '1337' }).returnsPromise().resolves(accountsResponse);
+    getDelegatesStub.withArgs(liskAPIClient, delegatesUrlParamsTxMatch)
       .returnsPromise().resolves(delegatesResponse);
   });
 
@@ -70,45 +71,45 @@ describe('Utils: Search', () => {
   });
 
   it('should search {addresses,delegates} when only address pattern matched', () =>
-    expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
-      { addresses: [accountsResponse] },
-      { transactions: [] },
-      { delegates: delegatesResponseOrderedAddressMatch.delegates },
-    ]));
+    expect(searchAll(liskAPIClient, { searchTerm: '1337L' })).to.eventually.deep.equal({
+      addresses: [accountsResponse],
+      transactions: [],
+      delegates: delegatesResponseOrderedAddressMatch.delegates,
+    }));
 
   it('should search {transactions,delegates} when only transaction pattern matched', () =>
-    expect(searchAll({ searchTerm: '1337' })).to.eventually.deep.equal([
-      { addresses: [] },
-      { transactions: transactionsResponse.data },
-      { delegates: delegatesResponseOrdered.delegates },
-    ]));
+    expect(searchAll(liskAPIClient, { searchTerm: '1337' })).to.eventually.deep.equal({
+      addresses: [],
+      transactions: transactionsResponse.data,
+      delegates: delegatesResponseOrdered.delegates,
+    }));
 
   it('should still search for {addresses} when failing {delegates} request', () => {
-    getDelegatesStub.withArgs(undefined, delegatesUrlParams)
+    getDelegatesStub.withArgs(liskAPIClient, delegatesUrlParams)
       .returnsPromise().rejects({ success: false });
-    return expect(searchAll({ searchTerm: '1337L' })).to.eventually.deep.equal([
-      { addresses: [accountsResponse] },
-      { transactions: [] },
-      { delegates: [] },
-    ]);
+    return expect(searchAll(liskAPIClient, { searchTerm: '1337L' })).to.eventually.deep.equal({
+      addresses: [accountsResponse],
+      transactions: [],
+      delegates: [],
+    });
   });
 
   it('should still search for {delegates} when failing {addresses} request', async () => {
-    getAccountStub.withArgs({ liskAPIClient: undefined, address: '1337L' }).returnsPromise().rejects({ success: false });
-    const result = await searchAll({ searchTerm: '1337L' });
-    expect(result).to.deep.equal([
-      { addresses: [] },
-      { transactions: [] },
-      { delegates: delegatesResponseOrderedAddressMatch.delegates },
-    ]);
+    getAccountStub.withArgs({ liskAPIClient, address: '1337L' }).returnsPromise().rejects({ success: false });
+    const result = await searchAll(liskAPIClient, { searchTerm: '1337L' });
+    expect(result).to.deep.equal({
+      addresses: [],
+      transactions: [],
+      delegates: delegatesResponseOrderedAddressMatch.delegates,
+    });
   });
 
   it('should still search for {delegates} when failing {transactions} request', () => {
     getSingleTransactionStub.returnsPromise().rejects({ success: false });
-    return expect(searchAll({ searchTerm: '1337' })).to.eventually.deep.equal([
-      { addresses: [] },
-      { transactions: [] },
-      { delegates: delegatesResponseOrdered.delegates },
-    ]);
+    return expect(searchAll(liskAPIClient, { searchTerm: '1337' })).to.eventually.deep.equal({
+      addresses: [],
+      transactions: [],
+      delegates: delegatesResponseOrdered.delegates,
+    });
   });
 });

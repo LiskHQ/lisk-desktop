@@ -58,8 +58,14 @@ describe('App', () => {
           transactions: [],
         },
       },
+      transactions: {
+        pending: [],
+      },
       network: {
-        name: 'mainnet',
+        name: 'Mainnet',
+        networks: {
+          LSK: {},
+        },
       },
     });
     publicComponent.forEach(({ route, component }) => {

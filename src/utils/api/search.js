@@ -42,9 +42,9 @@ const searchTransactions = ({ liskAPIClient, searchTerm }) => new Promise((resol
 
 const getSearches = search => ([
   ...(search.match(regex.address)
-    ? [searchAddresses] : [() => new Promise(resolve => resolve({ addresses: [] }))]),
+    ? [searchAddresses] : [() => Promise.resolve({ addresses: [] })]),
   ...(search.match(regex.transactionId)
-    ? [searchTransactions] : [() => new Promise(resolve => resolve({ transactions: [] }))]),
+    ? [searchTransactions] : [() => Promise.resolve({ transactions: [] })]),
   searchDelegates, // allways add delegates promise as they share format (address, tx)
 ]);
 
@@ -55,13 +55,16 @@ const resolveAll = (liskAPIClient, apiCalls, searchTerm) => {
 
   return new Promise((resolve, reject) => {
     Promise.all(promises)
-      .then(result => resolve(result))
+      .then(results => resolve(results.reduce((accumulator, r) => {
+        accumulator = { ...accumulator, ...r };
+        return accumulator;
+      }, {})))
       .catch(error => reject(error));
   });
 };
 /* eslint-enable prefer-promise-reject-errors */
 
-const searchAll = ({ liskAPIClient, searchTerm }) => {
+const searchAll = (liskAPIClient, { searchTerm }) => {
   const apiCalls = getSearches(searchTerm);
   return resolveAll(liskAPIClient, apiCalls, searchTerm);
 };

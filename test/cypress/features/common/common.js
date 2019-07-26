@@ -7,13 +7,15 @@ import compareBalances from '../../utils/compareBalances';
 import urls from '../../../constants/urls';
 
 Given(/^I autologin as ([^\s]+) to ([^\s]+)$/, function (account, network) {
-  localStorage.setItem('liskCoreUrl', networks[network].node);
-  localStorage.setItem('loginKey', accounts[account].passphrase);
+  cy.autologin(accounts[account].passphrase, networks[network].node);
 });
 
 Given(/^I login$/, function () {
+  cy.server();
+  cy.route('/account/**').as('btcAccount');
   cy.get(ss.loginBtn).should('be.enabled');
   cy.get(ss.loginBtn).click();
+  cy.wait('@btcAccount');
 });
 
 Then(/^I enter ([^\s]+) passphrase of ([^\s]+)$/, function (passphraseType, accountName) {

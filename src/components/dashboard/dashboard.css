@@ -4,7 +4,7 @@
 .wrapper {
   width: 100%;
   margin: 0px;
-  padding-bottom: 50px;
+  overflow: hidden;
 
   & .main {
     width: 100%;
