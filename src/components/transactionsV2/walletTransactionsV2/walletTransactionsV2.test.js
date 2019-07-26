@@ -11,11 +11,6 @@ import routes from '../../../constants/routes';
 
 describe('WalletTransactions V2 Component', () => {
   let wrapper;
-  const peers = {
-    data: {},
-    options: {},
-    liskAPIClient: {},
-  };
 
   const transactions = [{
     id: '11327666066806006572',
@@ -32,7 +27,6 @@ describe('WalletTransactions V2 Component', () => {
   }];
 
   const store = configureMockStore([thunk])({
-    peers,
     account: accounts.genesis,
     bookmarks: {
       LSK: [],
@@ -69,7 +63,6 @@ describe('WalletTransactions V2 Component', () => {
     addFilter: jest.fn(),
     loading: [],
     wallets: {},
-    peers: { options: { code: 0 } },
     t: key => key,
     searchAccount: jest.fn(),
     hideChart: true, // Props to hide chart on tests, due to no canvas support

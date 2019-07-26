@@ -2,12 +2,13 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { loadSingleTransaction } from '../../actions/transactions';
+import { getAPIClient } from '../../utils/api/network';
 import SingleTransaction from './singleTransaction';
 
 const mapStateToProps = state => ({
   address: state.account.address,
   transaction: state.transaction,
-  peers: state.peers,
+  liskAPIClient: getAPIClient(state.settings.token ? state.settings.token.active : 'LSK', state),
   activeToken: state.settings.token ? state.settings.token.active : 'LSK',
 });
 

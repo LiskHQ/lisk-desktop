@@ -34,8 +34,8 @@ const socketSetup = (store) => {
     ipc.on('blur', () => { windowIsFocused = false; });
     ipc.on('focus', () => { windowIsFocused = true; });
   }
-
-  connection = io.connect(store.getState().peers.liskAPIClient.currentNode);
+  const state = store.getState();
+  connection = io.connect(state.network.networks[state.settings.token.active].nodeUrl);
   connection.on('blocks/change', (block) => {
     if (shouldUpdateBtc(store.getState())) {
       store.dispatch({

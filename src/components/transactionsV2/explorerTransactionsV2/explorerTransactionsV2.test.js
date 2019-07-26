@@ -11,11 +11,6 @@ import routes from '../../../constants/routes';
 
 describe('ExplorerTransactions V2 Component', () => {
   let wrapper;
-  const peers = {
-    data: {},
-    options: {},
-    liskAPIClient: {},
-  };
 
   const transactions = [{
     id: '11327666066806006572',
@@ -32,7 +27,6 @@ describe('ExplorerTransactions V2 Component', () => {
   }];
 
   const store = configureMockStore([thunk])({
-    peers,
     account: accounts.genesis,
     bookmarks: {
       LSK: [],
@@ -75,7 +69,6 @@ describe('ExplorerTransactions V2 Component', () => {
     t: key => key,
     loadLastTransaction: jest.fn(),
     wallets: {},
-    peers: { options: { code: 0 } },
     balance: accounts.genesis.balance,
     detailAccount: accounts.genesis,
     hideChart: true, // Props to hide chart on tests, due to no canvas support

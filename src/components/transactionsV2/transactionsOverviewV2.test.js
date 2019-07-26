@@ -11,12 +11,6 @@ import accounts from '../../../test/constants/accounts';
 describe('TransactionsOverview V2', () => {
   let wrapper;
 
-  const peers = {
-    data: {},
-    options: {},
-    liskAPIClient: {},
-  };
-
   const transactions = [{
     id: '11327666066806006572',
     type: 0,
@@ -31,7 +25,6 @@ describe('TransactionsOverview V2', () => {
   }];
 
   const store = configureMockStore([])({
-    peers,
     account: accounts.genesis,
     bookmarks: {
       LSK: [],
@@ -51,7 +44,6 @@ describe('TransactionsOverview V2', () => {
       BTC: [],
     },
     transactions,
-    peers,
     loading: [],
     history: {
       push: spy(),

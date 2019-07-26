@@ -13,9 +13,7 @@ const CustomRoute = ({
   forbiddenTokens,
   isAuthenticated, pathSuffix = '', pathPrefix = '', t, ...rest
 }) => {
-  if (!networkIsSet || accountLoading) {
-    return null;
-  }
+  if (!networkIsSet || accountLoading) return null;
   const { pathname, search } = rest.history.location;
   const fullPath = pathPrefix + path + pathSuffix;
 

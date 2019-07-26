@@ -1,8 +1,12 @@
 import { getDelegates } from '../../utils/api/delegates';
 import {
-  voteLookupStatusUpdated, voteToggled, loadVotes, delegatesAdded,
+  delegatesAdded,
+  loadVotes,
+  voteLookupStatusUpdated,
+  voteToggled,
 } from '../../actions/voting';
 import actionTypes from '../../constants/actions';
+import { getAPIClient } from '../../utils/api/network';
 import { loadDelegateCache } from '../../utils/delegates';
 
 const updateLookupStatus = (store, list, username) => {
@@ -13,8 +17,8 @@ const updateLookupStatus = (store, list, username) => {
 
 const lookupDelegate = (store, username) => {
   const state = store.getState();
-  const liskAPIClient = state.peers.liskAPIClient;
-  const localStorageDelegates = loadDelegateCache(state.peers);
+  const liskAPIClient = getAPIClient(state.settings.token.active || 'LSK', state);
+  const localStorageDelegates = loadDelegateCache(state.network);
   const delegate = localStorageDelegates[username]
     || state.voting.delegates.find(d => d.username === username);
   if (delegate) {

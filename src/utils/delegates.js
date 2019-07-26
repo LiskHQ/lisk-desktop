@@ -1,17 +1,18 @@
 
 import localJSONStorage from './localJSONStorage';
 import networks from '../constants/networks';
+import { tokenMap } from '../constants/tokens';
 
-const getNetworkKey = liskAPIClient => (
+const getNetworkKey = network => (
   `delegateCache-${
-    liskAPIClient.options.code === networks.customNode.code
-      ? liskAPIClient.currentNode
-      : liskAPIClient.options.code
+    network.name === networks.customNode.name
+      ? network.networks[tokenMap.LSK.key].nodeUrl
+      : network.name
   }`
 );
 
-export const updateDelegateCache = (delegates, liskAPIClient) => {
-  const savedDelegates = localJSONStorage.get(getNetworkKey(liskAPIClient), {});
+export const updateDelegateCache = (delegates, network) => {
+  const savedDelegates = localJSONStorage.get(getNetworkKey(network), {});
   const formatedDelegates = delegates
     .reduce((newDelegates, delegate) => {
       const delegateObj = { [delegate.username]: delegate };
@@ -19,8 +20,8 @@ export const updateDelegateCache = (delegates, liskAPIClient) => {
     }, {});
   const updatedDelegates = { ...formatedDelegates, ...savedDelegates };
 
-  localJSONStorage.set(getNetworkKey(liskAPIClient), updatedDelegates);
+  localJSONStorage.set(getNetworkKey(network), updatedDelegates);
 };
 
-export const loadDelegateCache = liskAPIClient =>
-  localJSONStorage.get(getNetworkKey(liskAPIClient), {});
+export const loadDelegateCache = network =>
+  localJSONStorage.get(getNetworkKey(network), {});

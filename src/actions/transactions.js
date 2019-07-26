@@ -13,6 +13,7 @@ import transactionTypes, { createTransactionType } from '../constants/transactio
 import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
 import { transactions as transactionsAPI, hardwareWallet as hwAPI } from '../utils/api';
+import { getAPIClient } from '../utils/api/network';
 import { tokenMap } from '../constants/tokens';
 
 /**
@@ -104,7 +105,8 @@ export const loadLastTransaction = address => (dispatch, getState) => {
  */
 export const loadSingleTransaction = ({ id }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const { settings } = getState();
+    const liskAPIClient = getAPIClient(settings.token.active, getState());
     const networkConfig = getState().network;
     dispatch({ type: actionTypes.transactionCleared });
     // TODO remove the btc condition
@@ -125,7 +127,7 @@ export const loadSingleTransaction = ({ id }) =>
           deleted = response.data[0].asset.votes.filter(item => item.startsWith('-')).map(item => item.replace('-', ''));
         }
 
-        const localStorageDelegates = loadDelegateCache(getState().peers);
+        const localStorageDelegates = loadDelegateCache(getState().network);
         deleted.forEach((publicKey) => {
           const address = extractAddress(publicKey);
           const storedDelegate = localStorageDelegates[address];

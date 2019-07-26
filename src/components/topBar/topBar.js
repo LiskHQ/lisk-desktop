@@ -66,7 +66,7 @@ class TopBar extends React.Component {
 
   render() {
     const {
-      t, account, history, peers, token, settingsUpdated,
+      t, account, history, network, token, settingsUpdated,
       closeDialog, resetTimer, setActiveDialog,
     } = this.props;
     const { openDropdown } = this.state;
@@ -96,7 +96,7 @@ class TopBar extends React.Component {
         <div>
           <Network
             token={token.active}
-            peers={peers}
+            network={network}
             t={t}
           />
 
