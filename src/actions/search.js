@@ -108,7 +108,7 @@ export const searchAccount = ({ address }) =>
   };
 
 export const searchTransactions = ({
-  address, limit, filter, showLoading = true, customFilters = {},
+  address, limit, offset, filter, showLoading = true, customFilters = {},
   actionType = actionTypes.searchTransactions,
 }) =>
   (dispatch, getState) => {
@@ -123,7 +123,7 @@ export const searchTransactions = ({
     /* istanbul ignore else */
     if (networkConfig) {
       getTransactions({
-        networkConfig, address, limit, filters,
+        networkConfig, address, limit, offset, filters,
       })
         .then((transactionsResponse) => {
           dispatch({
