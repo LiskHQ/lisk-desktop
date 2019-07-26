@@ -10,7 +10,7 @@ import TopBar from './topBar';
 
 const mapStateToProps = state => ({
   account: state.account,
-  peers: state.peers,
+  network: state.network,
   token: state.settings.token,
   autoLogout: state.settings.autoLog,
 });

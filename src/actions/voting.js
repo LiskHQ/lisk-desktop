@@ -112,7 +112,7 @@ export const loadDelegates = ({
     params = q ? { ...params, search: q } : params;
     getDelegates(liskAPIClient, params)
       .then((response) => {
-        updateDelegateCache(response.data, getState().peers);
+        updateDelegateCache(response.data, getState().network);
         dispatch(delegatesAdded({
           list: response.data,
           refresh,

@@ -110,7 +110,6 @@ class TransactionsOverview extends React.Component {
 }
 const mapStateToProps = state => ({
   bookmarks: state.bookmarks,
-  peers: state.peers,
   account: state.account,
 });
 
