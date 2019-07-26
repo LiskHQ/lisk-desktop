@@ -3,13 +3,12 @@ import { Given } from 'cypress-cucumber-preprocessor/steps';
 import urls from '../../../constants/urls';
 import accounts from '../../../constants/accounts';
 import networks from '../../../constants/networks';
-import { setSettingsInLocalStorage } from '../../../constants/settings';
 import ss from '../../../constants/selectors';
 import numeral from 'numeral';
 import { fromRawLsk } from '../../../../src/utils/lsk';
 
 Given(/^showNetwork setting is true$/, function () {
-  setSettingsInLocalStorage({ showNetwork: true });
+  cy.mergeObjectWithLocalStorage('settings', { showNetwork: true });
 });
 
 Given(/^I should be connected to ([^\s]+)$/, function (networkName) {

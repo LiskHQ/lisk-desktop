@@ -1,29 +1,10 @@
-import { deepMergeObj } from '../../src/utils/helpers';
-
-/**
- * Generates setting object as needed.
- * @param {Object} options -> Object data to update generated settings as needed.
- * @returns Object with default settings to put into localStorage.
- */
-const getSettings = ({ btc = false, showNetwork = false }) => ({
+const settings = {
   areTermsOfUseAccepted: true,
-  showNetwork,
   token: {
     list: {
-      BTC: btc,
+      BTC: false,
     },
   },
-});
-
-const settingsWithBtc = getSettings({ btc: true });
-
-const setSettingsInLocalStorage = (data) => {
-  const localSettings = JSON.parse(window.localStorage.getItem('settings')) || {};
-  window.localStorage.setItem('settings', JSON.stringify(deepMergeObj(localSettings, data)));
 };
 
-export default {
-  settingsWithBtc,
-  setSettingsInLocalStorage,
-  getSettings,
-};
+export default settings;
