@@ -76,11 +76,9 @@ class Dashboard extends React.Component {
       account,
       history,
       t,
-      settings,
     } = this.props;
     const { isDesktop } = this.state;
-
-    const isLoggedIn = !!(account.info && account.info[settings.token.active].address);
+    const isLoggedIn = !!(account.address);
 
     return (
       <React.Fragment>
