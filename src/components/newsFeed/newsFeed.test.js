@@ -1,66 +1,13 @@
 import React from 'react';
-import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
-import sinon from 'sinon';
-import PropTypes from 'prop-types';
-import i18n from '../../i18n';
 import NewsFeed from './newsFeed';
-import liskServiceApi from '../../utils/api/lsk/liskService';
 
 describe('NewsFeed', () => {
-  let liskServiceApiMock;
-
-  const options = {
-    context: { i18n },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-    },
-  };
-  let clock;
-
   const t = key => key;
-
-  const props = {
-    channels: { test: true },
-    t,
-    getNewsFeed: () => {},
-    newsFeed: [
-      {
-        source: 'test',
-        content: '',
-        timestamp: '',
-        url: '',
-      },
-      {
-        source: 'test',
-        content: '',
-        timestamp: '',
-        url: 'https://test.io',
-      },
-      {
-        source: 'test',
-        content: '',
-        timestamp: '',
-        url: '',
-      },
-      {
-        source: 'test',
-        content: '',
-        timestamp: '',
-        url: '',
-      },
-      {
-        source: 'test',
-        content: '',
-        timestamp: '',
-        url: '',
-      },
-    ],
-  };
   const timestampNow = 1483228800000;
-  const newsFeed = [
-    {
+  const newsFeed = {
+    data: [{
       source: 'test',
       content: 'test',
       timestamp: new Date(timestampNow),
@@ -89,46 +36,36 @@ describe('NewsFeed', () => {
       content: 'test',
       timestamp: new Date(),
       url: 'test',
-    },
-  ];
+    }],
+  };
 
-  beforeEach(() => {
-    clock = sinon.useFakeTimers({
-      now: timestampNow,
-      toFake: ['Date'],
-    });
-
-    liskServiceApiMock = sinon.stub(liskServiceApi, 'getNewsFeed').returnsPromise();
-  });
-
-  afterEach(() => {
-    liskServiceApiMock.restore();
-    clock.restore();
-  });
+  const props = {
+    channels: { test: true },
+    t,
+    newsFeed,
+  };
 
   it('should render empty state', () => {
     const newProps = {
-      channels: { test: true },
-      t,
-      getNewsFeed: () => {},
-      newsFeed: [],
-      showNewsFeedEmptyState: true,
+      ...props,
+      newsFeed: {
+        error: 'Some error',
+        data: [],
+      },
     };
 
     const wrapper = mount(<MemoryRouter>
       <NewsFeed {...newProps} />
-    </MemoryRouter>, options);
+    </MemoryRouter>);
 
-    expect(wrapper.find('.empty-news').exists()).to.equal(true);
+    expect(wrapper.find('.empty-news').exists()).toEqual(true);
   });
 
   it('should render News', () => {
     const wrapper = mount(<MemoryRouter>
       <NewsFeed {...props} />
-    </MemoryRouter>, options);
-    liskServiceApiMock.resolves(newsFeed);
-    wrapper.update();
+    </MemoryRouter>);
 
-    expect(wrapper).to.have.descendants('.news-item');
+    expect(wrapper).toContainMatchingElements(2, '.news-item');
   });
 });
