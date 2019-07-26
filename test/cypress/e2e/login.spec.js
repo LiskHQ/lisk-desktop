@@ -3,7 +3,6 @@ import { fromRawLsk } from '../../../src/utils/lsk';
 import accounts from '../../constants/accounts';
 import ss from '../../constants/selectors';
 import urls from '../../constants/urls';
-import { settingsWithBtc, setSettings } from '../../constants/settings';
 import chooseNetwork from '../utils/chooseNetwork';
 import loginUI from '../utils/loginUI';
 
@@ -116,9 +115,13 @@ describe('Login Page', () => {
 
   describe('Login with BTC enabled', () => {
     beforeEach(() => {
+      const btcSettings = {
+        showNetwork: true,
+        token: { list: { BTC: true } },
+      };
       cy.server();
       cy.route('/account/**').as('btcAccount');
-      setSettings({ ...settingsWithBtc, showNetwork: true });
+      cy.mergeObjectWithLocalStorage('settings', btcSettings);
     });
 
     ['main', 'test', 'dev'].forEach((name) => {
