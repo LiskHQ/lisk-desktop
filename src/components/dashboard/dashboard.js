@@ -53,20 +53,20 @@ class Dashboard extends React.Component {
   getOnboardingSlides() {
     const { t } = this.props;
     return [{
-      title: t('Lisk Hub is ready to go!'),
-      content: t('Your new Lisk Wallet enables you to take full control of your LSK tokens. Secure, intuitive and robust Hub is your ultimate gateway to Lisk Ecosystem.'),
+      title: t('Ready to go!'),
+      content: t('The ultimate gateway to the ecosystem. Hub’s new design lets you easily manage your tokens (and much, much more).'),
       illustration: 'hubReadyToGo',
     }, {
-      title: t('Built around community'),
-      content: t('The  dashboard lets you track updates not only from Lisk, but also delegates. You can now explore delegate profile pages and follow them to get all the updates.'),
+      title: t('Stay Informed'),
+      content: t('Keep up-to-date with announcements from the Lisk Foundation. Check what network delegates have been up to with dedicated profile pages.'),
       illustration: 'builtAroundCommunity',
     }, {
-      title: t('Easily send and receive LSK tokens'),
-      content: t('Lisk Hub enables you to attach a personal message to each outgoing LSK transaction and to see the value of the LSK tokens you’re about to send in a currency of your chocie.'),
+      title: t('Send LSK and BTC'),
+      content: t('Personalize each transaction with a custom message. Look up its value in a fiat currency of your choice.'),
       illustration: 'sendLSKTokens',
     }, {
-      title: t('It’s your time to contribute'),
-      content: t('Search, view and vote for Lisk delegates on the network. Lisk Hub gives you the opportunity to request a Lisk feature and allows you to register to become a delegate.'),
+      title: t('Get Involved'),
+      content: t('Community is key. Vote for delegates, or register as one yourself. Feel like a feature is missing? Request it directly from the Hub.'),
       illustration: 'timeToContribute',
     }];
   }
@@ -76,10 +76,11 @@ class Dashboard extends React.Component {
       account,
       history,
       t,
+      settings,
     } = this.props;
     const { isDesktop } = this.state;
 
-    const isLoggedIn = account.address;
+    const isLoggedIn = !!(account.info && account.info[settings.token.active].address);
 
     return (
       <React.Fragment>
