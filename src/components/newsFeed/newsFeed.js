@@ -6,19 +6,14 @@ import EmptyState from '../emptyState';
 import Icon from '../toolbox/icon';
 
 class NewsFeed extends React.Component {
-  componentDidMount() {
-    this.props.getNewsFeed();
-  }
-
   render() {
     const {
       channels,
       newsFeed,
-      showNewsFeedEmptyState,
       t,
     } = this.props;
 
-    const filteredNewsFeed = newsFeed.filter(feed => channels[feed.source]) || [];
+    const filteredNewsFeed = newsFeed.data.filter(feed => channels[feed.source]) || [];
 
     return (
       <Box className={`newsFeed-box ${styles.newsFeedBox}`}>
@@ -41,13 +36,12 @@ class NewsFeed extends React.Component {
                 : null
             }
             {
-              showNewsFeedEmptyState && !filteredNewsFeed.length
-              && (
-              <EmptyState className="empty-news">
-                <Icon name="noTweetsIcon" />
-                <h1>{t('No available tweets')}</h1>
-                <p>{t('At this moment there is a connection problem with the tweets feed')}</p>
-              </EmptyState>
+              newsFeed.error && (
+                <EmptyState className="empty-news">
+                  <Icon name="noTweetsIcon" />
+                  <h1>{t('No available tweets')}</h1>
+                  <p>{t('At this moment there is a connection problem with the tweets feed')}</p>
+                </EmptyState>
               )
             }
           </div>
