@@ -8,7 +8,7 @@ import numeral from 'numeral';
 import { fromRawLsk } from '../../../../src/utils/lsk';
 
 Given(/^showNetwork setting is true$/, function () {
-  cy.addObjectToLocalStorage('settings', 'showNetwork', true);
+  cy.mergeObjectWithLocalStorage('settings', { showNetwork: true });
 });
 
 Given(/^I should be connected to ([^\s]+)$/, function (networkName) {
