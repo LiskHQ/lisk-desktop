@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { getDelegates } from '../../utils/api/delegates';
 import {
   delegatesAdded,
@@ -75,16 +76,14 @@ const fetchVotes = (store) => {
     type: 'update',
   }));
 };
+=======
+import { delegatesAdded } from '../../actions/voting';
+import actionTypes from '../../constants/actions';
+>>>>>>> fe471010d8066b1ebb63b7f4700755426f0f4040
 
 const votingMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
-    case actionTypes.votesAdded:
-      if (store.getState().account.info) {
-        fetchVotes(store);
-        lookupDelegatesFromUrl(store, action);
-      }
-      break;
     case actionTypes.accountLoggedOut:
       store.dispatch(delegatesAdded({ list: [] }));
       store.dispatch({

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { InputV2 } from '../toolbox/inputsV2';
-import Box from '../boxV2';
-import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
+import { Input } from '../toolbox/inputs';
+import Box from '../box';
+import { PrimaryButton, SecondaryButton } from '../toolbox/buttons/button';
 import Feedback from '../toolbox/feedback/feedback';
 import localJSONStorage from '../../utils/localJSONStorage';
 import loadRemoteComponent from '../../utils/extensions';
@@ -78,7 +78,7 @@ class Extensions extends React.Component {
             </div>
             <label className={styles.extentionsWrapper}>
               <span>{this.props.t('Enter URL of the *.js file with the extension')}</span>
-              <InputV2
+              <Input
                 error={this.state.error}
                 value={this.state.url}
                 onChange={this.handleInput}
@@ -95,13 +95,13 @@ class Extensions extends React.Component {
               </Feedback>
             ) : (
               <div className={styles.footer}>
-                <SecondaryButtonV2
+                <SecondaryButton
                   disabled={PRODUCTION || this.state.url.length === 0}
                   label={this.props.t('Remove Extension')}
                   onClick={this.removeExtension}
                 />
 
-                <PrimaryButtonV2
+                <PrimaryButton
                   disabled={PRODUCTION || (this.state.error !== ''
                     || this.state.url === localJSONStorage.get('url', ''))}
                   label={this.props.t('Add Extension')}

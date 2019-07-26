@@ -1,4 +1,4 @@
-@import '../app/variablesV2.css';
+@import '../app/variables.css';
 @import '../app/mixins.css';
 
 .container {
@@ -71,6 +71,10 @@
       &:not(:last-child) {
         border-bottom: 1px solid var(--color-platinum);
       }
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--color-platinum);
     }
 
     & .label {

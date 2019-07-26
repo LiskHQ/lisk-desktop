@@ -43,7 +43,6 @@ const mergeVotes = (newList, oldDict) => {
 const voting = (state = { // eslint-disable-line complexity
   votes: {},
   delegates: [],
-  voteLookupStatus: {},
 }, action) => {
   switch (action.type) {
     case actionTypes.votesAdded:
@@ -136,21 +135,6 @@ const voting = (state = { // eslint-disable-line complexity
           };
           return votesDict;
         }, {}),
-      };
-
-    case actionTypes.voteLookupStatusUpdated:
-      return {
-        ...state,
-        voteLookupStatus: {
-          ...state.voteLookupStatus,
-          [action.data.username]: action.data.status,
-        },
-      };
-
-    case actionTypes.voteLookupStatusCleared:
-      return {
-        ...state,
-        voteLookupStatus: { },
       };
 
     default:

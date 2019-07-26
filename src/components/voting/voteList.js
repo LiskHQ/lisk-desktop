@@ -19,7 +19,7 @@ const VoteList = ({
             <div className={`${styles.votesContainer} ${className}`}>
               {list.map(vote => (
                 <span key={vote} className={`${styles.voteTag} vote`}>
-                  { votes[vote]
+                  { votes[vote] && votes[vote].rank
                     ? (
                       <span className={styles.rank}>
 #

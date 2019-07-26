@@ -1,0 +1,182 @@
+@import '../app/variables.css';
+@import '../app/mixins.css';
+
+.wrapper {
+  background: var(--color-white-smoke);
+  border-bottom: 1px solid var(--color-platinum);
+  box-sizing: border-box;
+  height: var(--header-height);
+  padding: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  &:global(.dark) {
+    background: var(--color-maastricht-blue);
+    border-bottom: 1px solid var(--light-border-color);
+
+    & .dropdownHandler {
+      background: var(--color-maastricht-blue);
+      color: var(--color-white);
+      border: 1px solid var(--light-border-color);
+    }
+  }
+}
+
+.headerContent {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: space-between;
+  margin: 0;
+  width: 100%;
+
+  & .logo {
+    height: 100%;
+    padding: 0 30px;
+    border-right: 1px solid rgba(225, 227, 235, 0.3);
+
+    & > img {
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  & .buttonsHolder {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    & > div:first-child {
+      height: 36px;
+      margin: auto;
+    }
+
+    & > * {
+      margin-left: 24px;
+    }
+  }
+
+  & .settings {
+    border-left: 1px solid rgba(225, 227, 235, 0.3);
+  }
+}
+
+.settingButton > button {
+  @mixin contentSmall bold;
+
+  padding: 0 20px;
+  width: auto;
+}
+
+.dropdownHandler {
+  @mixin contentSmall bold;
+
+  align-items: center;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-light-gray);
+  border-radius: var(--border-radius-standard);
+  box-sizing: border-box;
+  color: var(--color-maastricht-blue);
+  cursor: pointer;
+  display: flex;
+  height: 100%;
+  justify-content: space-between;
+  min-width: 241px;
+  padding: 0 20px;
+  position: relative;
+  width: auto;
+
+  &::after {
+    border: 3px solid transparent;
+    border-bottom: 0;
+    border-top-color: var(--color-slate-gray);
+    content: '';
+  }
+}
+
+.dropdown {
+  max-width: 241px;
+  right: auto;
+  top: calc(100% + -10px);
+}
+
+.button {
+  @mixin contentSmall bold;
+
+  margin-bottom: 5px;
+  height: 32px;
+  width: 100%;
+}
+
+.networkInput {
+  height: 32px !important;
+  margin: 10px 0;
+
+  & input {
+    height: 30px !important;
+  }
+}
+
+.networkSpan {
+  display: flex;
+  flex-direction: column;
+
+  & input {
+    @mixin contentNormal;
+
+    margin-top: 10px;
+    padding: 0 10px;
+  }
+}
+
+.feedbackMessage {
+  margin: 5px 0;
+  border-radius: var(--border-radius-standard);
+
+  & .error {
+    color: var(--color-white);
+    background: var(--color-burnt-sienna);
+  }
+}
+
+.feedbackError {
+  max-height: 140px !important;
+  margin: 10px 0;
+  padding: 0 10px;
+}
+
+.errorInput {
+  border-color: #ec6868 !important;
+  color: #ec6868 !important;
+}
+
+.activeDropdown {
+  background-color: blue;
+}
+
+.spinner {
+  color: var(--color-ultramarine-blue);
+  position: absolute;
+  right: 30px;
+  margin-top: -22px;
+  z-index: 50;
+}
+
+.show {
+  opacity: 1;
+  transition: opacity var(--animation-speed-fast) linear var(--animation-delay-standard);
+}
+
+.hide {
+  opacity: 0;
+  transition: opacity var(--animation-speed-fast) linear;
+}
+
+.icons img {
+  position: absolute;
+  right: 30px;
+  margin-top: -25px;
+  z-index: 50;
+}

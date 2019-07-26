@@ -30,7 +30,7 @@ const checkForUpdates = updateChecker({
   electron,
 });
 
-const { app, ipcMain } = electron;
+const { app } = electron;
 let appIsReady = false;
 
 const createWindow = () => {
@@ -86,16 +86,6 @@ app.on('will-finish-launching', () => {
     event.preventDefault();
     win.send({ event: 'openUrl', value: url });
   });
-});
-
-app.on('login', (event, webContents, request, authInfo, callback) => {
-  global.myTempFunction = callback;
-  event.preventDefault();
-  webContents.send('proxyLogin', authInfo);
-});
-
-ipcMain.on('proxyCredentialsEntered', (event, username, password) => {
-  global.myTempFunction(username, password);
 });
 
 // ToDo - enable this feature when it is implemented in the new design

@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { InputV2, AutoresizeTextarea } from '../toolbox/inputsV2';
+import { Input, AutoresizeTextarea } from '../toolbox/inputs';
 import CircularProgress from '../toolbox/circularProgress/circularProgress';
-import ConverterV2 from '../converterV2';
+import Converter from '../converter';
 import Feedback from '../toolbox/feedback/feedback';
 import RequestWrapper from './requestWrapper';
-import SpinnerV2 from '../spinnerV2/spinnerV2';
+import Spinner from '../spinner/spinner';
 import styles from './request.css';
 import svg from '../../utils/svgIcons';
 
@@ -133,7 +133,7 @@ class RequestLsk extends React.Component {
         <label className={`${styles.fieldGroup}`}>
           <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
           <span className={`${styles.amountField} amount`}>
-            <InputV2
+            <Input
               autoComplete="off"
               onChange={this.handleFieldChange}
               name="amount"
@@ -141,12 +141,12 @@ class RequestLsk extends React.Component {
               placeholder={t('Requested amount')}
               className={`${styles.input} ${fields.amount.error ? 'error' : ''}`}
             />
-            <ConverterV2
+            <Converter
               className={styles.converter}
               value={fields.amount.value}
               error={fields.amount.error}
             />
-            <SpinnerV2 className={`${styles.status} ${fields.amount.loading && fields.amount.value ? styles.show : ''}`} />
+            <Spinner className={`${styles.status} ${fields.amount.loading && fields.amount.value ? styles.show : ''}`} />
             <img
               className={`${styles.status} ${!fields.amount.loading && fields.amount.value ? styles.show : ''}`}
               src={fields.amount.error ? svg.alert_icon : svg.ok_icon}

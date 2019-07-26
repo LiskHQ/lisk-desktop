@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { SecondaryButtonV2, PrimaryButtonV2 } from '../toolbox/buttons/button';
+import { loginType } from '../../constants/hwConstants';
+import { SecondaryButton, PrimaryButton } from '../toolbox/buttons/button';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import SignInTooltipWrapper from '../signInTooltipWrapper';
 import routes from '../../constants/routes';
@@ -13,6 +14,10 @@ import {
 } from '../../utils/voting';
 
 import styles from './votingHeader.css';
+
+function shouldShowRegisterDelagteButton(account) {
+  return account.address && !account.delegate && account.loginType === loginType.normal;
+}
 
 class VotingHeader extends React.Component {
   render() {
@@ -98,32 +103,32 @@ LSK
         { votingModeEnabled
           ? (
             <span>
-              <SecondaryButtonV2 onClick={toggleVotingMode} className={`cancel-voting-button ${styles.btn}`}>
+              <SecondaryButton onClick={toggleVotingMode} className={`cancel-voting-button ${styles.btn}`}>
                 {t('Cancel voting')}
-              </SecondaryButtonV2>
+              </SecondaryButton>
               <Link to={totalActions !== 0 ? routes.voting.path : routes.delegates.path}>
-                <PrimaryButtonV2 className={`${styles.btn} go-to-confirmation-button`} disabled={totalActions === 0}>
+                <PrimaryButton className={`${styles.btn} go-to-confirmation-button`} disabled={totalActions === 0}>
                   {t('Go to Confirmation')}
-                </PrimaryButtonV2>
+                </PrimaryButton>
               </Link>
             </span>
           )
           : (
             <span>
-              { account.address && !account.delegate
+              { shouldShowRegisterDelagteButton(account)
                 ? (
                   <Link to={routes.delegateRegistration.path}>
-                    <SecondaryButtonV2 className={`register-delegate ${styles.btn}`}>
+                    <SecondaryButton className={`register-delegate ${styles.btn}`}>
                       {t('Register as a Delegate')}
-                    </SecondaryButtonV2>
+                    </SecondaryButton>
                   </Link>
                 )
                 : null
               }
               <SignInTooltipWrapper>
-                <PrimaryButtonV2 onClick={toggleVotingMode} className={`start-voting-button ${styles.btn}`}>
+                <PrimaryButton onClick={toggleVotingMode} className={`start-voting-button ${styles.btn}`}>
                   {t('Start voting')}
-                </PrimaryButtonV2>
+                </PrimaryButton>
               </SignInTooltipWrapper>
             </span>
           )

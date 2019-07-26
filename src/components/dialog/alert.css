@@ -1,18 +1,27 @@
-.okButton {
-  display: flex;
-  justify-content: center;
-  padding: 40px 0;
-}
-
-.description {
-  padding: 0 50px;
-  font-size: 16px !important;
-  color: #3c5068 !important;
-  font-family: "Open Sans", sans-serif;
-  line-height: 26px !important;
-  text-align: center;
-}
+@import '../app/mixins.css';
+@import '../app/variables.css';
 
 .alertBox {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   padding-top: 10px;
+
+  & p.description {
+    @mixin contentLargest;
+
+    color: var(--color-slate-gray);
+    max-width: 460px;
+    text-align: center;
+  }
+
+  & .okButton {
+    display: flex;
+    justify-content: center;
+    margin: 32px 0;
+
+    & button {
+      width: var(--footer-button-width);
+    }
+  }
 }

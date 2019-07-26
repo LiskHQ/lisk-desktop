@@ -4,15 +4,16 @@ import { Link } from 'react-router-dom';
 import throttle from 'lodash.throttle';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '../../constants/routes';
-import BookmarksList from '../bookmarksList';
+import BookmarksList from '../bookmarks/bookmarksList';
 import NewsFeed from '../newsFeed';
 import WalletDetails from '../walletDetails';
+import PageHeader from '../toolbox/pageHeader';
 import Piwik from '../../utils/piwik';
 import links from '../../constants/externalLinks';
 import { fromRawLsk } from '../../utils/lsk';
 import breakpoints from '../../constants/breakpoints';
 import fees from '../../constants/fees';
-import { SecondaryButtonV2 } from '../toolbox/buttons/button';
+import { SecondaryButton } from '../toolbox/buttons/button';
 import Banner from '../toolbox/banner/banner';
 import ExtensionPoint from '../extensionPoint';
 import LiskHubExtensions from '../../utils/liskHubExtensions';
@@ -122,7 +123,7 @@ class Dashboard extends React.Component {
               footer={(
                 <Fragment>
                   <Link to={`${routes.send.path}?recipient=${account.address}&amount=0.1&reference=Account initialization`}>
-                    <SecondaryButtonV2 className="light">{t('Create First Transaction')}</SecondaryButtonV2>
+                    <SecondaryButton className="light">{t('Create First Transaction')}</SecondaryButton>
                   </Link>
                   <a
                     className={styles.initLink}
@@ -145,11 +146,10 @@ class Dashboard extends React.Component {
           )
         }
         <div className={`${styles.wrapper} dashboard-container`}>
-          <header>
-            <h1>{t('Dashboard')}</h1>
-            <h2>{t('All important information at a glance')}</h2>
-          </header>
-
+          <PageHeader
+            title={t('Dashboard')}
+            subtitle={t('All important information at a glance')}
+          />
           <div className={`${styles.main}`}>
             <div className={styles.subContainer}>
               {

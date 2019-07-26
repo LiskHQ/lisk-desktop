@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontIcon } from '../fontIcon';
-import { PrimaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButton } from '../toolbox/buttons/button';
 import styles from './confirmPassphrase.css';
 
 const ConfirmPassphraseOptions = ({
@@ -25,13 +25,13 @@ const ConfirmPassphraseOptions = ({
           className={`${styles.option} ${answers[optionIndex] === option ? styles.selected : ''}`}
           key={optionKey}
         >
-          <PrimaryButtonV2
+          <PrimaryButton
             className="small word-option"
             onClick={() => handleSelect(option, optionIndex)}
             disabled={!enabled}
           >
             { option }
-          </PrimaryButtonV2>
+          </PrimaryButton>
         </span>
       ))}
     </span>

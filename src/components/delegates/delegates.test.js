@@ -75,6 +75,13 @@ describe('Delegates', () => {
     expect(wrapper.find('Onboarding')).to.have.lengthOf(1);
   });
 
+  it('should not show "Register delegate" button if guest mode', () => {
+    wrapper = mount(<Router>
+      <Delegates {...props} account={{}} />
+    </Router>, options);
+    expect(wrapper.find('.register-delegate')).to.have.lengthOf(0);
+  });
+
   it('should not show "Register delegate" button if already delegate', () => {
     wrapper = mount(<Router>
       <Delegates {...{

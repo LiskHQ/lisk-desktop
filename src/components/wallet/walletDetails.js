@@ -1,7 +1,7 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import AccountVisual from '../accountVisual';
-import BoxV2 from '../boxV2';
+import Box from '../box';
 import Icon from '../toolbox/icon';
 import LiskAmount from '../liskAmount';
 import CopyToClipboard from '../toolbox/copyToClipboard';
@@ -14,9 +14,9 @@ class WalletDetails extends React.Component {
     } = this.props;
 
     return (
-      <BoxV2 className={styles.wrapper}>
+      <Box className={styles.wrapper}>
         <header>
-          <h1>{t('Wallet Details')}</h1>
+          <h1>{t('Wallet details')}</h1>
         </header>
         <section className={styles.row}>
           <AccountVisual
@@ -44,7 +44,7 @@ class WalletDetails extends React.Component {
             </div>
           </div>
         </section>
-      </BoxV2>
+      </Box>
     );
   }
 }

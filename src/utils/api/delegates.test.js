@@ -1,14 +1,17 @@
+import Lisk from '@liskhq/lisk-client';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import Lisk from '@liskhq/lisk-client';
 import {
-  getDelegates,
   castVotes,
+  getDelegateByName,
+  getDelegates,
   getVotes,
   registerDelegate,
 } from './delegates';
-import accounts from '../../../test/constants/accounts';
 import { loginType } from '../../constants/hwConstants';
+import accounts from '../../../test/constants/accounts';
+import delegates from '../../../test/constants/delegates';
+import * as hwWallet from './hwWallet';
 
 describe('Utils: Delegate', () => {
   let liskAPIClientMockDelegates;
@@ -16,6 +19,7 @@ describe('Utils: Delegate', () => {
   let liskAPIClientMockTransations;
   let liskTransactionsCastVotesStub;
   let liskTransactionsRegisterDelegateStub;
+  let voteWithHWStub;
   const timeOffset = 0;
 
   const liskAPIClient = {
@@ -36,6 +40,7 @@ describe('Utils: Delegate', () => {
     liskAPIClientMockDelegates = sinon.mock(liskAPIClient.delegates);
     liskAPIClientMockVotes = sinon.mock(liskAPIClient.votes);
     liskAPIClientMockTransations = sinon.stub(liskAPIClient.transactions, 'broadcast').returnsPromise().resolves({ id: '1234' });
+    voteWithHWStub = sinon.stub(hwWallet, 'voteWithHW');
   });
 
   afterEach(() => {
@@ -49,6 +54,7 @@ describe('Utils: Delegate', () => {
 
     liskTransactionsCastVotesStub.restore();
     liskTransactionsRegisterDelegateStub.restore();
+    voteWithHWStub.restore();
   });
 
   describe('getDelegates', () => {
@@ -71,6 +77,28 @@ describe('Utils: Delegate', () => {
     });
   });
 
+  describe('getDelegateByName', () => {
+    it('should resolve delegate genesis_3 if name = genesis_3', () => {
+      const name = delegates[0].username;
+      liskAPIClientMockDelegates.expects('get').withArgs({
+        search: name, limit: 101,
+      }).returnsPromise().resolves({ data: delegates });
+
+      const returnedPromise = getDelegateByName(liskAPIClient, name);
+      expect(returnedPromise).to.eventually.equal(delegates[0]);
+    });
+
+    it('should reject if given name does not exist', () => {
+      const name = `${delegates[0].username}_not_exist`;
+      liskAPIClientMockDelegates.expects('get').withArgs({
+        search: name, limit: 101,
+      }).returnsPromise().resolves({ data: [] });
+
+      const returnedPromise = getDelegateByName(liskAPIClient, name);
+      expect(returnedPromise).to.be.rejectedWith();
+    });
+  });
+
   describe('castVotes', () => {
     it('should call castVotes and broadcast transaction', () => {
       const votes = [
@@ -78,8 +106,8 @@ describe('Utils: Delegate', () => {
         accounts.delegate.publicKey,
       ];
       const unvotes = [
-        accounts['empty account'].publicKey,
-        accounts['delegate candidate'].publicKey,
+        accounts.empty_account.publicKey,
+        accounts.delegate_candidate.publicKey,
       ];
       const transaction = { id: '1234' };
       const secondPassphrase = null;
@@ -103,6 +131,19 @@ describe('Utils: Delegate', () => {
         timeOffset,
       });
       expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
+
+      castVotes({
+        liskAPIClient,
+        account: {
+          ...accounts.genesis,
+          loginType: loginType.ledger,
+        },
+        votedList: votes,
+        unvotedList: unvotes,
+        secondPassphrase,
+        timeOffset,
+      });
+      expect(voteWithHWStub).to.have.been.calledWith();
     });
 
     it('should call return error if account.loginType is not recognized', () => (

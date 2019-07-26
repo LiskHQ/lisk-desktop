@@ -1,6 +1,6 @@
 import React from 'react';
 import { tokenMap } from '../../constants/tokens';
-import BoxV2 from '../boxV2';
+import Box from '../box';
 import CheckBox from '../toolbox/checkBox';
 import Piwik from '../../utils/piwik';
 import Select from '../toolbox/select';
@@ -80,7 +80,7 @@ class Setting extends React.Component {
 
     return (
       <div className={styles.settingsHolder}>
-        <BoxV2 className={styles.wrapper}>
+        <Box className={styles.wrapper}>
           <header>
             <h1>{t('Settings')}</h1>
           </header>
@@ -145,7 +145,7 @@ class Setting extends React.Component {
                   onChange={this.handleTokenToggle}
                 />
                 <div>
-                  <span className={styles.labelName}>{t('BTC token')}</span>
+                  <span className={styles.labelName}>{t('Enable BTC')}</span>
                   <p>{t('By enabling it, you will be able to manage your BTC tokens inside the application.')}</p>
                 </div>
               </label>
@@ -171,7 +171,7 @@ class Setting extends React.Component {
               </label>
             </section>
           </div>
-        </BoxV2>
+        </Box>
       </div>
     );
   }

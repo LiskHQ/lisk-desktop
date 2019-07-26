@@ -1,10 +1,10 @@
 import React from 'react';
 import debounce from 'lodash.debounce';
-import Box from '../../boxV2';
-import { InputV2 } from '../../toolbox/inputsV2';
-import { PrimaryButtonV2 } from '../../toolbox/buttons/button';
+import Box from '../../box';
+import { Input } from '../../toolbox/inputs';
+import { PrimaryButton } from '../../toolbox/buttons/button';
 import Feedback from '../../toolbox/feedback/feedback';
-import SpinnerV2 from '../../spinnerV2/spinnerV2';
+import Spinner from '../../spinner/spinner';
 import Icon from '../../toolbox/icon';
 import { fromRawLsk } from '../../../utils/lsk';
 import { getAPIClient } from '../../../utils/api/lsk/network';
@@ -149,7 +149,7 @@ class SelectName extends React.Component {
           <label className={styles.nicknameLabel}>{t('Your nickname')}</label>
 
           <div className={styles.inputContainer}>
-            <InputV2
+            <Input
               data-name="delegate-nickname"
               autoComplete="off"
               onChange={this.onChangeNickname}
@@ -160,8 +160,8 @@ class SelectName extends React.Component {
               disabled={inputDisabled}
               error={error}
             />
-            { /* TODO <Spiner/> and <Icon/> will be incorporated into <InputV2/> in https://github.com/LiskHQ/lisk-hub/issues/2091 */ }
-            <SpinnerV2 className={`${styles.spinner} ${loading && nickname.length ? styles.show : styles.hide} spiner`} />
+            { /* TODO <Spiner/> and <Icon/> will be incorporated into <Input/> in https://github.com/LiskHQ/lisk-hub/issues/2091 */ }
+            <Spinner className={`${styles.spinner} ${loading && nickname.length ? styles.show : styles.hide} spiner`} />
             <Icon
               className={`${styles.status} ${!loading && nickname.length ? styles.show : styles.hide} input-status-icon`}
               name={error ? 'alert_icon' : 'ok_icon'}
@@ -179,13 +179,13 @@ class SelectName extends React.Component {
 
 
           <footer>
-            <PrimaryButtonV2
+            <PrimaryButton
               onClick={() => nextStep({ nickname })}
               disabled={isBtnDisabled}
               className={`${styles.confirmBtn} confirm-btn`}
             >
               {t('Go to Confirmation')}
-            </PrimaryButtonV2>
+            </PrimaryButton>
           </footer>
         </div>
       </Box>

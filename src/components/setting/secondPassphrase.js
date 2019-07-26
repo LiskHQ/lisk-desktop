@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import Fees from '../../constants/fees';
-import SpinnerV2 from '../spinnerV2/spinnerV2';
+import Spinner from '../spinner/spinner';
 import routes from '../../constants/routes';
 import svgIcons from '../../utils/svgIcons';
 import styles from './setting.css';
@@ -37,7 +37,7 @@ const SecondPassphraseSetting = ({
                 <React.Fragment>
                   <p className={styles.highlight}>{t('Once activated can’t be turned off.')}</p>
                   {hasPendingSecondPassphrase ? (
-                    <SpinnerV2
+                    <Spinner
                       className={styles.loading}
                       label={t('Second Passphrase is being activated. Almost there!')}
                     />

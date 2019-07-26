@@ -2,8 +2,8 @@ import QRCode from 'qrcode.react';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import moment from 'moment';
-import { InputV2 } from '../toolbox/inputsV2';
-import { SecondaryButtonV2 } from '../toolbox/buttons/button';
+import { Input } from '../toolbox/inputs';
+import { SecondaryButton } from '../toolbox/buttons/button';
 import CopyToClipboard from '../toolbox/copyToClipboard';
 import Icon from '../toolbox/icon';
 import Tooltip from '../toolbox/tooltip/tooltip';
@@ -69,7 +69,7 @@ class PassphraseBackup extends React.Component {
               <div className={`${styles.inputs} ${grid.row} passphrase`}>
                 {account.passphrase.split(' ').map((value, i) => (
                   <span key={i} className={`${grid['col-xs-2']}`}>
-                    <InputV2
+                    <Input
                       readOnly
                       value={value}
                     />
@@ -80,7 +80,7 @@ class PassphraseBackup extends React.Component {
                 value={account.passphrase}
                 text={t('Copy to clipboard')}
                 copyClassName={styles.copyIcon}
-                Container={SecondaryButtonV2}
+                Container={SecondaryButton}
                 containerClassName="extra-small"
               />
             </div>
@@ -108,9 +108,9 @@ class PassphraseBackup extends React.Component {
                 <Icon name="fileOutline" />
                 <p className="option-value">{this.walletName}</p>
               </div>
-              <SecondaryButtonV2 className={`${styles.downloadBtn} extra-small`} onClick={this.generatePaperwallet}>
+              <SecondaryButton className={`${styles.downloadBtn} extra-small`} onClick={this.generatePaperwallet}>
                 {t('Download')}
-              </SecondaryButtonV2>
+              </SecondaryButton>
             </div>
           </div>
         </div>

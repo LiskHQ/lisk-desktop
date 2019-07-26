@@ -5,10 +5,10 @@ import { translate } from 'react-i18next';
 import routes from '../../constants/routes';
 import { getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import { parseSearchParams } from '../../utils/searchParams';
-import { PrimaryButtonV2, SecondaryButtonV2 } from '../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton } from '../toolbox/buttons/button';
 import { getNetworksList } from '../../utils/getNetwork';
 import networks from '../../constants/networks';
-import HeaderV2 from '../headerV2/index';
+import Header from '../header/index';
 import styles from './splashscreen.css';
 import Tooltip from '../toolbox/tooltip/tooltip';
 
@@ -79,29 +79,29 @@ class Splashscreen extends React.Component {
 
     return (
       <React.Fragment>
-        <HeaderV2 dark showSettings />
+        <Header dark showSettings />
         <div className={`${styles.splashscreen}`}>
           <div className={`${styles.wrapper}`}>
             <div className={`${styles.titleHolder}`}>
               <h1>{t('Welcome to the Lisk Hub!')}</h1>
               <p>
                 {
-                t('Create an Account or Sign in to manage your LSK Tokens, become a Delegate or vote for another Delegates.')
+                t('Create an account or sign in to manage your LSK, vote for who secures the network or become a delegate.')
               }
               </p>
             </div>
-            <Link className={`${styles.button} login-button`} to={routes.loginV2.path}>
-              <SecondaryButtonV2 className="light">{t('Sign In')}</SecondaryButtonV2>
+            <Link className={`${styles.button} login-button`} to={routes.login.path}>
+              <SecondaryButton className="light">{t('Sign in')}</SecondaryButton>
             </Link>
             <Link className={`${styles.button} new-account-button`} to={routes.register.path}>
-              <PrimaryButtonV2>{t('Create an Account')}</PrimaryButtonV2>
+              <PrimaryButton>{t('Create an account')}</PrimaryButton>
             </Link>
             <span className={styles.separator}>
               <span>{t('or')}</span>
             </span>
             <span className={styles.linkWrapper}>
               <Link className={`${styles.link} explore-as-guest-button`} to={routes.dashboard.path}>
-                {t('Explore as a Guest')}
+                {t('Explore as a guest')}
               </Link>
               <Tooltip
                 className={`${styles.tooltip}`}
@@ -121,7 +121,7 @@ class Splashscreen extends React.Component {
 
             <span className={styles.linkWrapper}>
               <Link className={`${styles.link} signin-hwWallet-button`} to={routes.hwWallet.path}>
-                {t('Sign in with a Hardware Wallet')}
+                {t('Sign in with a hardware wallet')}
               </Link>
             </span>
           </div>

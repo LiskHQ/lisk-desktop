@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import Request from '.';
 import accounts from '../../../test/constants/accounts';
 
-jest.mock('../converterV2', () => (
+jest.mock('../converter', () => (
   function ConverterMock() {
     return <span className="converted-price" />;
   }
@@ -44,15 +44,15 @@ describe('Request', () => {
 
     it('Should add leading 0 if . is inserted as first character', () => {
       const evt = { target: { name: 'amount', value: '.1' } };
-      wrapper.find('.fieldGroup InputV2').simulate('change', evt);
+      wrapper.find('.fieldGroup Input').simulate('change', evt);
       wrapper.update();
-      expect(wrapper.find('.fieldGroup InputV2').props().value).toEqual('0.1');
+      expect(wrapper.find('.fieldGroup Input').props().value).toEqual('0.1');
     });
 
     it('Should show error feedback if letters inserted', () => {
       const evt = { target: { name: 'amount', value: 'abc' } };
       expect(wrapper.find('.fieldGroup .feedback.error')).not.toExist();
-      wrapper.find('.fieldGroup InputV2').simulate('change', evt);
+      wrapper.find('.fieldGroup Input').simulate('change', evt);
       wrapper.update();
       expect(wrapper.find('.fieldGroup .feedback.error')).toExist();
     });
@@ -62,13 +62,13 @@ describe('Request', () => {
       const multipleDotsEvt = { target: { name: 'amount', value: '1.2.3' } };
       const endingDotEvt = { target: { name: 'amount', value: '12.' } };
       const amountField = wrapper.find('.fieldGroup').at(0);
-      amountField.find('InputV2').simulate('change', endingDotEvt);
+      amountField.find('Input').simulate('change', endingDotEvt);
       wrapper.update();
       expect(wrapper.find('.fieldGroup .feedback.error')).toExist();
-      amountField.find('InputV2').simulate('change', evt);
+      amountField.find('Input').simulate('change', evt);
       wrapper.update();
       expect(wrapper.find('.fieldGroup .feedback.error')).not.toExist();
-      amountField.find('InputV2').simulate('change', multipleDotsEvt);
+      amountField.find('Input').simulate('change', multipleDotsEvt);
       wrapper.update();
       expect(wrapper.find('.fieldGroup .feedback.error')).toExist();
     });
@@ -116,7 +116,7 @@ describe('Request', () => {
       expect(wrapper.find('.request-link').first().html()).toContain(`${evt.target.name}=${evt.target.value}`);
 
       evt = { target: { name: 'amount', value: 1 } };
-      wrapper.find('.fieldGroup').at(0).find('InputV2').simulate('change', evt);
+      wrapper.find('.fieldGroup').at(0).find('Input').simulate('change', evt);
       expect(wrapper.find('.request-link').first().html()).toContain(`${evt.target.name}=${evt.target.value}`);
     });
 

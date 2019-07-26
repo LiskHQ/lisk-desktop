@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { translate } from 'react-i18next';
-import BoxV2 from '../boxV2';
+import Box from '../box';
 import AccountVisual from '../accountVisual';
 import VotesTableHeader from './votesTableHeader';
 import TableRow from '../toolbox/table/tableRow';
 import ProgressBar from '../toolbox/progressBar/progressBar';
-import { InputV2 } from '../toolbox/inputsV2';
+import { Input } from '../toolbox/inputs';
 import LiskAmount from '../liskAmount';
 import routes from '../../constants/routes';
 import actionTypes from '../../constants/actions';
@@ -92,11 +92,11 @@ class VotesTab extends React.Component {
       || this.state.isLoading;
 
     return (
-      <BoxV2 className={`${styles.wrapper}`}>
+      <Box className={`${styles.wrapper}`}>
         <header>
           <h1>{t('Voted delegates')}</h1>
           <div className={`${styles.filterHolder}`}>
-            <InputV2
+            <Input
               className="search"
               disabled={votes && !votes.length}
               name="filter"
@@ -178,7 +178,7 @@ class VotesTab extends React.Component {
           )
           }
         </main>
-      </BoxV2>
+      </Box>
     );
   }
 }

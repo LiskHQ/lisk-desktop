@@ -8,7 +8,7 @@ import { generatePassphraseFromSeed } from '../../utils/passphrase';
 import { extractAddress } from '../../utils/account';
 import AccountCreated from './accountCreated';
 
-describe('V2 Register Process - Account created', () => {
+describe('Register Process - Account created', () => {
   let wrapper;
 
   const crypotObj = window.crypto || window.msCrypto;

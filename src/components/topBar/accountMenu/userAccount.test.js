@@ -66,7 +66,7 @@ describe('UserAccount', () => {
   it('called properly dropdown component', () => {
     myProps.isDropdownEnable = true;
     wrapper = mountWithRouter(<UserAccount {...myProps} />, myOptions);
-    expect(wrapper).toContainExactlyOneMatchingElement('DropdownV2');
+    expect(wrapper).toContainExactlyOneMatchingElement('Dropdown');
     expect(wrapper).toContainExactlyOneMatchingElement('span.dropdownOption');
     expect(wrapper).toContainMatchingElements(3, 'a.dropdownOption');
   });
@@ -88,7 +88,7 @@ describe('UserAccount', () => {
     };
     localStorage.setItem('btc', true);
     wrapper = mountWithRouter(<UserAccount {...myProps} />, myOptions);
-    expect(wrapper.find('DropdownV2')).toContainMatchingElements(1, '.accountInfo');
+    expect(wrapper.find('Dropdown')).toContainMatchingElements(1, '.accountInfo');
     wrapper.setProps({
       children: React.cloneElement(wrapper.props().children, {
         account: {
@@ -97,7 +97,7 @@ describe('UserAccount', () => {
         },
       }),
     });
-    expect(wrapper.find('DropdownV2')).toContainMatchingElements(2, '.accountInfo');
+    expect(wrapper.find('Dropdown')).toContainMatchingElements(2, '.accountInfo');
     localStorage.clear();
   });
 });

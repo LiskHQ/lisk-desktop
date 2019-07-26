@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import TransactionTypeFigure from '../../transactions/typeFigure/TransactionTypeFigure';
 import TransactionAddress from '../../transactions/address/TransactionAddress';
 import TransactionAmount from '../../transactions/amount/TransactionAmount';
-import { SecondaryButtonV2 } from '../../toolbox/buttons/button';
+import { SecondaryButton } from '../../toolbox/buttons/button';
 import { tokenMap } from '../../../constants/tokens';
 import routes from '../../../constants/routes';
 import styles from './recentTransactions.css';
@@ -55,7 +55,7 @@ const TransactionList = ({
     }
     </div>
     <Link to={routes.wallet.path} className={`${styles.viewAllLink} view-all`}>
-      <SecondaryButtonV2 className={styles.viewAllBtn}>{t('View All')}</SecondaryButtonV2>
+      <SecondaryButton className={styles.viewAllBtn}>{t('View All')}</SecondaryButton>
     </Link>
   </div>
 );
