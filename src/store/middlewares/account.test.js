@@ -5,7 +5,7 @@ import {
 import * as accountActions from '../../actions/account';
 import * as transactionsActions from '../../actions/transactions';
 import * as votingActions from '../../actions/voting';
-import * as peersActions from '../../actions/peers';
+import * as networkActions from '../../actions/network';
 import * as accountApi from '../../utils/api/account';
 import * as transactionsApi from '../../utils/api/lsk/transactions';
 import * as accountUtils from '../../utils/login';
@@ -25,7 +25,7 @@ describe('Account middleware', () => {
   let stubTransactions;
   let transactionsActionsStub;
   let getAutoLogInDataMock;
-  let liskAPIClientSetMock;
+  let networkSetMock;
   let accountDataUpdatedSpy;
   const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
   const storeCreatedAction = {
@@ -92,7 +92,7 @@ describe('Account middleware', () => {
     stubTransactions = stub(transactionsApi, 'getTransactions').returnsPromise().resolves(true);
     getAutoLogInDataMock = stub(accountUtils, 'getAutoLogInData');
     getAutoLogInDataMock.withArgs().returns({ });
-    liskAPIClientSetMock = stub(peersActions, 'liskAPIClientSet').returns(liskAPIClientMock);
+    networkSetMock = stub(networkActions, 'networkSet').returns(liskAPIClientMock);
     accountDataUpdatedSpy = spy(accountActions, 'accountDataUpdated');
   });
 
@@ -104,7 +104,7 @@ describe('Account middleware', () => {
     stubTransactions.restore();
     clock.restore();
     getAutoLogInDataMock.restore();
-    liskAPIClientSetMock.restore();
+    networkSetMock.restore();
     accountDataUpdatedSpy.restore();
   });
 
@@ -194,7 +194,7 @@ describe('Account middleware', () => {
     });
   });
 
-  it(`should dispatch ${actionTypes.liskAPIClientSet} action on ${actionTypes.storeCreated} if autologin data found in localStorage`, () => {
+  it(`should dispatch ${actionTypes.networkSet} action on ${actionTypes.storeCreated} if autologin data found in localStorage`, () => {
     getAutoLogInDataMock.withArgs().returns({
       [settings.keys.loginKey]: passphrase,
       [settings.keys.liskCoreUrl]: networks.testnet.nodes[0],
