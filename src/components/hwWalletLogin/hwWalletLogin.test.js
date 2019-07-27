@@ -33,6 +33,16 @@ describe('HwWalletLogin', () => {
         },
       },
     },
+    network: {
+      name: 'Custom Node',
+      status: { online: true },
+      networks: {
+        LSK: {
+          nodeUrl: 'http://localhost:4000',
+          nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+        },
+      },
+    },
   });
   const props = {
     devices: [],
@@ -48,6 +58,14 @@ describe('HwWalletLogin', () => {
           address: 'jhagsd676587',
           balance: 100,
         },
+      },
+    },
+    network: {
+      name: 'Custom Node',
+      status: { online: true },
+      networks: {
+        nodeUrl: 'http://localhost:4000',
+        nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d'
       },
     },
     t: key => key,

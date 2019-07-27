@@ -28,7 +28,12 @@ describe('Delegates Utils', () => {
   it('sets and gets the delegate item with customNode', () => {
     const liskAPIClient = {
       options: networks.customNode,
-      currentNode: 'http://localhost:4000',
+      networks: {
+        LSK: {
+          nodeUrl: 'http://localhost:4000',
+        },
+      },
+      name: networks.customNode.name,
     };
     updateDelegateCache(delegateItem, liskAPIClient);
     expect(loadDelegateCache(liskAPIClient)).to.eql(itemExpected);

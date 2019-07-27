@@ -32,8 +32,22 @@ describe('Socket middleware', () => {
 
     store = {
       getState: () => ({
-        peers: { liskAPIClient: { options: { address: 'localhost:4000' } } },
+        network: {
+          status: { online: true },
+          name: 'Custom Node',
+          networks: {
+            LSK: {
+              nodeUrl: 'hhtp://localhost:4000',
+              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+            },
+          },
+        },
         account: { address: '1234' },
+        settings: {
+          token: {
+            active: 'LSK',
+          },
+        },
       }),
       dispatch: spy(),
     };
@@ -78,7 +92,16 @@ describe('Socket middleware', () => {
   it(`should dispatch ${actionTypes.accountLoggedIn} with https protocol`, () => {
     store.getState = () => ({
       ...store,
-      peers: { liskAPIClient: { options: { ssl: true, address: 'localhost:4000' } } },
+      network: {
+        status: { online: true },
+        name: 'Custom Node',
+        networks: {
+          LSK: {
+            nodeUrl: 'hhtp://localhost:4000',
+            nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+          },
+        },
+      },
     });
     middleware(store)(next)({ type: actionTypes.accountLoggedIn });
     expect(store.dispatch).to.not.have.been.calledWith(networkStatusUpdated({ online: true }));

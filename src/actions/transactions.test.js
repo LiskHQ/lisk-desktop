@@ -18,10 +18,24 @@ jest.mock('../utils/api/delegates');
 describe('actions: transactions', () => {
   const dispatch = jest.fn();
   let getState = () => ({
-    peers: { liskAPIClient: {} },
+    network: {
+      status: { online: true },
+      name: 'Mainnet',
+      networks: {
+        LSK: {
+          nodeUrl: 'hhtp://localhost:4000',
+          nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+        },
+      },
+    },
     transactions: {
       filters: {
         direction: txFilters.all,
+      },
+    },
+    settings: {
+      token: {
+        active: 'LSK',
       },
     },
   });
@@ -92,19 +106,24 @@ describe('actions: transactions', () => {
 
     beforeEach(() => {
       getState = () => ({
-        peers: {
-          options: {
-            code: 0,
-          },
-          liskAPIClient: {
-            options: {
-              name: 'Mainnet',
+        network: {
+          status: { online: true },
+          name: 'Mainnet',
+          networks: {
+            LSK: {
+              nodeUrl: 'hhtp://localhost:4000',
+              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
             },
           },
         },
         transactions: {
           filters: {
             direction: txFilters.all,
+          },
+        },
+        settings: {
+          token: {
+            active: 'LSK',
           },
         },
       });
@@ -191,9 +210,17 @@ describe('actions: transactions', () => {
 
     beforeEach(() => {
       getState = () => ({
-        peers: { liskAPIClient: {} },
+        network: {
+          status: { online: true },
+          name: 'Mainnet',
+          networks: {
+            LSK: {
+              nodeUrl: 'hhtp://localhost:4000',
+              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+            },
+          },
+        },
         transactions: { filter: txFilters.all },
-        network: { liskAPIClient: {} },
         settings: {
           token: {
             active: 'LSK',

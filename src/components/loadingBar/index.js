@@ -5,7 +5,7 @@ import LoadingBar from './loadingBar';
 
 const mapStateToProps = state => ({
   loading: state.loading,
-  liskAPIClient: getAPIClient(state.settings.token.active, state),
+  liskAPIClient: getAPIClient(state.settings.token.active, state) || '',
 });
 
 export default connect(mapStateToProps)(LoadingBar);

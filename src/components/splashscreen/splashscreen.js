@@ -66,12 +66,12 @@ class Splashscreen extends React.Component {
   }
 
   alreadyLoggedWithThisAddress(address, prevNetwork) {
-    const { account, settings, network } = this.props;
+    const { account, settings: { token }, network } = this.props;
     return account
       && network
       && account.address === address
       && network.name === prevNetwork.name
-      && network.networks[settings.token].nodeUrl === prevNetwork.networks[settings.token].nodeUrl;
+      && network.networks[token.active].nodeUrl === prevNetwork.networks[token.active].nodeUrl;
   }
 
   render() {

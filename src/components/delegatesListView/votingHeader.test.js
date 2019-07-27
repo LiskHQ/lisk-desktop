@@ -19,13 +19,25 @@ describe('VotingHeader', () => {
   const votes = { ...voteDict, unvoteDict };
 
   const store = configureMockStore([])({
-    peers: {
-      liskAPIClient: {},
+    network: {
+      name: 'Custom Node',
+      networks: {
+        LSK: {
+          nodeUrl: 'http://localhost:4000',
+          nethash: '324h23',
+        },
+      },
+      status: { active: true },
     },
     voting: {
       votes,
     },
     account: {},
+    settings: {
+      token: {
+        active: 'LSK',
+      },
+    },
   });
 
   const props = {

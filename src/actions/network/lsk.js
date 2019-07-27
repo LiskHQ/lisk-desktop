@@ -47,7 +47,7 @@ export const networkSet = data =>
       }).catch((error) => {
         dispatch(errorToastDisplayed({ label: error }));
       });
-    } else if (data.network.name === networks.testnet.name || data.name === networks.mainnet.name) {
+    } else if (data.network.name === networks.testnet.name || data.network.name === networks.mainnet.name) {
       dispatch(generateAction(data, data.network));
     }
   };
