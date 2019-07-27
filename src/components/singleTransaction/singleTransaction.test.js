@@ -11,8 +11,22 @@ import fees from '../../constants/fees';
 
 describe('Single Transaction Component', () => {
   let wrapper;
-  const peers = { liskAPIClient: {} };
-  const settings = {};
+  const network = {
+    status: { online: true },
+    name: 'Custom Node',
+    networks: {
+      LSK: {
+        nodeUrl: 'hhtp://localhost:4000',
+        nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+      },
+    },
+  };
+
+  const settings = {
+    token: {
+      active: 'LSK',
+    },
+  };
 
   const props = {
     t: v => v,
@@ -40,7 +54,7 @@ describe('Single Transaction Component', () => {
     const store = configureMockStore([thunk])({
       account: accounts.genesis,
       transaction,
-      peers,
+      network,
       loadSingleTransaction: jest.fn(),
       settings,
     });
@@ -92,7 +106,7 @@ describe('Single Transaction Component', () => {
     const store = configureMockStore([thunk])({
       account: accounts.genesis,
       transaction,
-      peers,
+      network,
       loadSingleTransaction: jest.fn(),
       settings,
     });

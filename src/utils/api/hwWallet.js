@@ -254,7 +254,7 @@ export const signTransactionWithHW = async (tx, account, pin) => {
 };
 
 
-export const getHWAccountInfo = async (activePeer, deviceId, loginType, accountIndex) => {
+export const getHWAccountInfo = async (liskAPIClient, deviceId, loginType, accountIndex) => {
   let error;
   let publicKey;
 
@@ -270,7 +270,7 @@ export const getHWAccountInfo = async (activePeer, deviceId, loginType, accountI
   }
 
   const address = extractAddress(publicKey);
-  let resAccount = await getAccount({ liskAPIClient: activePeer, address });
+  let resAccount = await getAccount({ liskAPIClient, address });
 
   const isInitialized = resAccount.serverPublicKey;
   Object.assign(resAccount, { isInitialized });
@@ -311,7 +311,7 @@ export const sendWithHW = (networkConfig, account, recipientId, amount,
  * @returns Promise - Action Vote with Ledger
  */
 export const voteWithHW = async (
-  activePeer,
+  liskAPIClient,
   account,
   votedList,
   unvotedList,
@@ -342,7 +342,7 @@ export const voteWithHW = async (
   if (transactions.length && !error) {
     return Promise.all(transactions.map(transaction => (
       new Promise((resolve, reject) => {
-        activePeer.transactions.broadcast(transaction)
+        liskAPIClient.transactions.broadcast(transaction)
           .then(() => resolve(transaction)).catch(reject);
       })
     )))

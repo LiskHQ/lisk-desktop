@@ -16,8 +16,20 @@ describe('Voting', () => {
       votes,
       delegates: [],
     },
-    peers: {
-      liskAPIClient: {},
+    settings: {
+      token: {
+        active: 'LSK',
+      },
+    },
+    network: {
+      status: { online: true },
+      name: 'Custom Node',
+      networks: {
+        LSK: {
+          nodeUrl: 'hhtp://localhost:4000',
+          nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+        },
+      },
     },
   });
   const options = {
@@ -35,6 +47,11 @@ describe('Voting', () => {
       pending: [],
       notFound: [],
       alreadyVoted: [],
+    },
+    settings: {
+      token: {
+        active: 'LSK',
+      },
     },
     votePlaced: ({ callback }) => callback(voteResult),
     t: key => key,

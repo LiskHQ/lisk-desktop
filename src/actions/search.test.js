@@ -24,12 +24,20 @@ jest.mock('../utils/api/transactions');
 describe('actions: search', () => {
   let dispatch;
   const getState = () => ({
-    peers: {
-      liskAPIClient: {},
-      options: networks.mainnet,
-    },
     network: {
+      status: { online: true },
       name: networks.mainnet.name,
+      networks: {
+        LSK: {
+          nodeUrl: 'hhtp://localhost:4000',
+          nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+        },
+      },
+    },
+    settings: {
+      token: {
+        active: 'LSK',
+      },
     },
   });
 

@@ -48,14 +48,14 @@ describe('TopBar', () => {
         BTC: true,
       },
     },
-    peers: {
-      liskAPIClient: {},
-      options: {
-        code: 2,
-        nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-      },
-      status: {
-        online: true,
+    network: {
+      status: { online: true },
+      name: 'Custom Node',
+      networks: {
+        LSK: {
+          nodeUrl: 'hhtp://localhost:4000',
+          nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+        },
       },
     },
     settingsUpdated: jest.fn(),
@@ -88,14 +88,14 @@ describe('TopBar', () => {
         delegates: [],
       },
     },
-    peers: {
-      liskAPIClient: {},
-      options: {
-        code: 2,
-        nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-      },
-      status: {
-        online: true,
+    network: {
+      status: { online: true },
+      name: 'Custom Node',
+      networks: {
+        LSK: {
+          nodeUrl: 'hhtp://localhost:4000',
+          nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+        },
       },
     },
   });

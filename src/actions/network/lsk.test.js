@@ -34,28 +34,45 @@ describe('actions: network.lsk', () => {
 
   describe('networkSet', () => {
     it('should dispatch networkSet action with mainnet name', () => {
-      const { name } = networks.mainnet;
-      networkSet({ name })(dispatch);
+      const data = {
+        name: networks.mainnet.name,
+        network: {
+          name: networks.mainnet.name,
+          address: 'http://123.lisk.io',
+        },
+      };
+      networkSet(data)(dispatch);
       expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         data: {
-          name,
+          name: networks.mainnet.name,
           token: tokenMap.LSK.key,
-          network: {},
+          network: {
+            name: networks.mainnet.name,
+            address: 'http://123.lisk.io',
+          },
         },
         type: actionTypes.networkSet,
       }));
     });
 
     it('should dispatch networkSet action with customNode name, token, and network', async () => {
-      const { name, nodeUrl } = networks.customNode;
+      const { name, address } = networks.customNode;
       getConstantsMock.mockResolvedValue({ data: { nethash } });
-      await networkSet({ name, nodeUrl })(dispatch);
+      const data = {
+        name,
+        network: {
+          name,
+          address,
+          nethash,
+        },
+      };
+      await networkSet(data)(dispatch);
       expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         data: {
           name,
           token: tokenMap.LSK.key,
           network: {
-            nodeUrl,
+            nodeUrl: address,
             nethash,
           },
         },
@@ -68,7 +85,7 @@ describe('actions: network.lsk', () => {
       const { name, nodeUrl } = networks.customNode;
       const error = { };
       getConstantsMock.mockRejectedValue(error);
-      await networkSet({ name, nodeUrl })(dispatch);
+      await networkSet({ name, network: { name, nodeUrl } })(dispatch);
       expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         data: {
           label: 'Unable to connect to the node, no response from the server.',
@@ -82,7 +99,7 @@ describe('actions: network.lsk', () => {
       const { name, nodeUrl } = networks.customNode;
       const error = { message: 'Custom error message' };
       getConstantsMock.mockRejectedValue(error);
-      await networkSet({ name, nodeUrl })(dispatch);
+      await networkSet({ name, network: { name, nodeUrl } })(dispatch);
       expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         data: {
           label: 'Unable to connect to the node, Error: Custom error message',

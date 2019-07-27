@@ -38,7 +38,16 @@ describe('App', () => {
     const store = fakeStore({
       account: {},
       dialog: {},
-      peers: { liskAPIClient: { options: {} }, options: {} },
+      network: {
+        name: 'Custom Node',
+        networks: {
+          LSK: {
+            nodeUrl: 'http://localhost:4000',
+            nethash: '23jh4g',
+          },
+        },
+        status: { online: true },
+      },
       settings: {
         autoLog: true,
         advancedMode: true,
@@ -60,12 +69,6 @@ describe('App', () => {
       },
       transactions: {
         pending: [],
-      },
-      network: {
-        name: 'Mainnet',
-        networks: {
-          LSK: {},
-        },
       },
     });
     publicComponent.forEach(({ route, component }) => {
@@ -97,14 +100,19 @@ describe('App', () => {
         publicKey: '000',
       },
       dialog: {},
-      peers: {
-        status: {
-          online: true,
-        },
-        liskAPIClient: {
-          options: {
-            name: 'Test',
+      network: {
+        name: 'Mainnet',
+        neteworks: {
+          LSK: {
+            nodeUrl: 'http://localhost:4000',
+            nethash: '23jh4g',
           },
+        },
+        status: { online: true },
+      },
+      settings: {
+        token: {
+          active: 'LSK',
         },
       },
     });
