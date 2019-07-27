@@ -10,13 +10,13 @@ const Network = ({ network, t, token }) => {
     'Custom Node': 'Devnet',
   };
 
-  let activeNetwork = '';
+  let activeNetwork = network.name;
   if (network.name === networks.customNode.name && token !== 'BTC') {
     activeNetwork = network.networks[token].nethash === Lisk.constants.MAINNET_NETHASH
-      ? networks.mainnet.code
+      ? networks.mainnet.name
       : network.name;
     activeNetwork = network.networks[token].nethash === Lisk.constants.TESTNET_NETHASH
-      ? networks.testnet.code
+      ? networks.testnet.name
       : network.name;
   }
 
@@ -24,7 +24,7 @@ const Network = ({ network, t, token }) => {
     activeNetwork = token === 'BTC' ? networks.testnet.name : network.name;
   }
 
-  const statusColor = network.name ? styles.online : styles.offline;
+  const statusColor = network.status.online ? styles.online : styles.offline;
 
   return (
     <section className={`${styles.wrapper} network-status`}>

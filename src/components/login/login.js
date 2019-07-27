@@ -37,7 +37,7 @@ class Login extends React.Component {
     this.state = {
       isValid: false,
       passphrase: '',
-      network: loginNetwork.code,
+      network: loginNetwork.name,
       address,
       validationError: false,
       devices: [],
@@ -197,7 +197,7 @@ class Login extends React.Component {
                 <PrimaryButton
                   className={`${styles.button} login-button`}
                   type="submit"
-                  disabled={(this.state.network === networks.customNode.code
+                  disabled={(this.state.network === networks.customNode.name
                     && !!this.state.addressValidity)
                     || !this.state.isValid
                     || this.state.passphrase === ''}

@@ -77,10 +77,14 @@ describe('voting middleware', () => {
           },
         },
       },
-      peers: {
-        liskAPIClient: {},
-        options: {
-          code: networks.mainnet.code,
+      network: {
+        status: { online: true },
+        name: networks.mainnet.name,
+        networks: {
+          LSK: {
+            nodeUrl: 'hhtp://localhost:4000',
+            nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+          },
         },
       },
     };

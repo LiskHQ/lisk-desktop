@@ -18,9 +18,15 @@ describe('Login', () => {
     address: '16313739661670634666L',
     username: 'lisk-hub',
   };
-  const peers = {
-    data: {},
-    options: {},
+  const network = {
+    status: { online: true },
+    name: 'Custom Node',
+    networks: {
+      LSK: {
+        nodeUrl: 'hhtp://localhost:4000',
+        nethash: '2349jih34',
+      },
+    },
   };
 
   const settings = {
@@ -35,7 +41,7 @@ describe('Login', () => {
   };
 
   const store = configureMockStore([])({
-    peers,
+    network,
     account,
     settings,
   });
@@ -53,7 +59,7 @@ describe('Login', () => {
   };
 
   const props = {
-    peers,
+    network,
     match,
     account,
     history,

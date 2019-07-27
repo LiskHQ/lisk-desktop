@@ -68,7 +68,21 @@ describe('actions: account', () => {
       accountApiMock = stub(accountApi, 'setSecondPassphrase');
       dispatch = jest.fn();
       getState = () => ({
-        peers: { liskAPIClient: {} },
+        network: {
+          status: { online: true },
+          name: 'Mainnet',
+          networks: {
+            LSK: {
+              nodeUrl: 'hhtp://localhost:4000',
+              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+            },
+          },
+        },
+        settings: {
+          token: {
+            active: 'LSK',
+          },
+        },
       });
       i18nextMock = stub(i18next, 't');
       i18next.t = key => key;
@@ -144,7 +158,21 @@ describe('actions: account', () => {
       getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
       transactionsActionsStub = spy(transactionsActions, 'updateTransactions');
       getState = () => ({
-        peers: { liskAPIClient: {}, options: { code: 0 } },
+        network: {
+          status: { online: true },
+          name: 'Mainnet',
+          networks: {
+            LSK: {
+              nodeUrl: 'hhtp://localhost:4000',
+              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+            },
+          },
+        },
+        settings: {
+          token: {
+            active: 'LSK',
+          },
+        },
       });
     });
 
@@ -201,7 +229,21 @@ describe('actions: account', () => {
     beforeEach(() => {
       transactionsActionsStub = spy(transactionsActions, 'updateTransactions');
       getState = () => ({
-        peers: { liskAPIClient: {} },
+        network: {
+          status: { online: true },
+          name: 'Mainnet',
+          networks: {
+            LSK: {
+              nodeUrl: 'hhtp://localhost:4000',
+              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+            },
+          },
+        },
+        settings: {
+          token: {
+            active: 'LSK',
+          },
+        },
       });
     });
 
@@ -237,10 +279,24 @@ describe('actions: account', () => {
     beforeEach(() => {
       stub(delegateApi, 'getDelegates').returnsPromise();
       getState = () => ({
-        peers: { liskAPIClient: {} },
+        network: {
+          status: { online: true },
+          name: 'Mainnet',
+          networks: {
+            LSK: {
+              nodeUrl: 'hhtp://localhost:4000',
+              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+            },
+          },
+        },
         account: {
           info: {
             LSK: {},
+          },
+        },
+        settings: {
+          token: {
+            active: 'LSK',
           },
         },
       });
@@ -274,10 +330,24 @@ describe('actions: account', () => {
       stub(blocksApi, 'getBlocks').returnsPromise();
       stub(transactionsApi, 'getTransactions').returnsPromise();
       getState = () => ({
-        peers: { liskAPIClient: {} },
+        network: {
+          status: { online: true },
+          name: 'Mainnet',
+          networks: {
+            LSK: {
+              nodeUrl: 'hhtp://localhost:4000',
+              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+            },
+          },
+        },
         account: {
           info: {
             LSK: {},
+          },
+        },
+        settings: {
+          token: {
+            active: 'LSK',
           },
         },
       });

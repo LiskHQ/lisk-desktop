@@ -192,18 +192,16 @@ describe('actions: voting', () => {
       const delegateApiMock = sinon.stub(delegateApi, 'getDelegates');
       const dispatch = sinon.spy();
       getState = () => ({
-        peers: {
-          liskAPIClient: {
-            options: {
-              name: networks.mainnet.name,
+        network: {
+          status: { online: true },
+          name: networks.mainnet.name,
+          networks: {
+            LSK: {
+              nodeUrl: 'hhtp://localhost:4000',
+              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
             },
           },
-          options: {
-            name: networks.mainnet.name,
-            code: networks.mainnet.code,
-          },
         },
-        network: { name: networks.mainnet.name },
       });
 
       delegateApiMock.returnsPromise().resolves({ data: delegates });

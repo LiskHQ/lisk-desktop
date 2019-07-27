@@ -61,8 +61,15 @@ describe('Account middleware', () => {
     store = stub();
     store.dispatch = spy();
     state = {
-      peers: {
-        liskAPIClient: {},
+      network: {
+        status: { online: true },
+        name: 'Custom Node',
+        networks: {
+          LSK: {
+            nodeUrl: 'hhtp://localhost:4000',
+            nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+          },
+        },
       },
       account: {
         address: 'sample_address',
@@ -163,7 +170,16 @@ describe('Account middleware', () => {
         }],
         confirmed: [{ confirmations: 10, address: 'sample_address' }],
       },
-      peers: { liskAPIClient: {} },
+      network: {
+        status: { online: true },
+        name: 'Custom Node',
+        networks: {
+          LSK: {
+            nodeUrl: 'hhtp://localhost:4000',
+            nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+          },
+        },
+      },
     });
 
     middleware(store)(next)(newBlockCreated);
