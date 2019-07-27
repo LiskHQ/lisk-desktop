@@ -73,7 +73,7 @@ class Login extends React.Component {
 
     if (this.props.account
       && this.props.account.address && (showNetworkParam !== 'true' || this.secondIteration)
-      && !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.peers.options)) {
+      && !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.network)) {
       this.redirectToReferrer();
     }
   }
@@ -90,12 +90,13 @@ class Login extends React.Component {
     this.props.history.replace(tem);
   }
 
-  alreadyLoggedWithThisAddress(address, network) {
-    return this.props.account
-      && this.props.peers.options
-      && this.props.account.address === address
-      && this.props.peers.options.code === network.code
-      && this.props.peers.options.address === network.address;
+  alreadyLoggedWithThisAddress(address, prevNetwork) {
+    const { account, network, settings: { token: { active } } } = this.props;
+    return account
+      && network
+      && account.address === address
+      && network.name === prevNetwork.name
+      && network.networks[active].nodeUrl === prevNetwork.networks[active].nodeUrl;
   }
 
   checkPassphrase(passphrase, validationError) {
@@ -112,14 +113,12 @@ class Login extends React.Component {
 
   onLoginSubmission(passphrase) {
     Piwik.trackingEvent('Login', 'button', 'Login submission');
-    const network = this.props.peers.options;
+    const { network, login } = this.props;
     this.secondIteration = true;
     if (this.alreadyLoggedWithThisAddress(extractAddress(passphrase), network)) {
       this.redirectToReferrer();
     } else {
-      this.props.login({
-        passphrase,
-      });
+      login({ passphrase });
     }
   }
 

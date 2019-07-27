@@ -2,6 +2,7 @@
 import { connect } from 'react-redux';
 import { setDefaults, translate } from 'react-i18next';
 
+import { getAPIClient } from '../../utils/api/network';
 import { errorToastDisplayed } from '../../actions/toaster';
 import { getActiveTokenAccount } from '../../utils/account';
 import { login } from '../../actions/account';
@@ -19,9 +20,9 @@ setDefaults({
 
 const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
-  peers: state.peers,
+  network: state.network,
   settings: state.settings,
-  liskAPIClient: state.peers && state.peers.liskAPIClient,
+  liskAPIClient: getAPIClient(state.settings.token.active, state),
 });
 
 const mapDispatchToProps = {

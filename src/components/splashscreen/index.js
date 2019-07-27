@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { getActiveTokenAccount } from '../../utils/account';
-import { liskAPIClientSet } from '../../actions/peers';
 import { settingsUpdated } from '../../actions/settings';
 import { getAPIClient } from '../../utils/api/network';
 import Splashscreen from './splashscreen';
@@ -14,7 +13,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  liskAPIClientSet,
   settingsUpdated,
 };
 

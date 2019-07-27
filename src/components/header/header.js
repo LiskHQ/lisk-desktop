@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React from 'react';
 import Lisk from '@liskhq/lisk-client';
 import { translate } from 'react-i18next';
@@ -26,21 +27,18 @@ class Header extends React.Component {
     let loginNetwork = findMatchingLoginNetwork();
     let address = '';
 
-    if (loginNetwork) {
-      loginNetwork = loginNetwork.slice(-1).shift();
-    } else if (!loginNetwork) {
+    if (loginNetwork) loginNetwork = loginNetwork.slice(-1).shift();
+    if (!loginNetwork) {
       loginNetwork = liskCoreUrl ? networks.customNode : networks.default;
       address = liskCoreUrl || '';
     }
-
     this.state = {
       address,
       showDropdown: false,
       showSettingDrowdown: false,
-      network: loginNetwork.code,
+      network: loginNetwork.name,
       isFirstTime: true,
     };
-
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.handleSettingsToggle = this.handleSettingsToggle.bind(this);
   }
@@ -66,7 +64,7 @@ class Header extends React.Component {
   changeNetwork(network) {
     this.setState({
       network,
-      address: network === networks.mainnet.code || network === networks.testnet.code
+      address: network === networks.mainnet.name || network === networks.testnet.name
         ? '' : this.state.address,
     });
     this.props.settingsUpdated({ network });
@@ -74,7 +72,7 @@ class Header extends React.Component {
 
   getNetwork(chosenNetwork) {
     const network = { ...getNetwork(chosenNetwork) };
-    if (chosenNetwork === networks.customNode.code) {
+    if (chosenNetwork === networks.customNode.name) {
       network.address = addHttp(this.state.address);
     }
     return network;
@@ -82,17 +80,16 @@ class Header extends React.Component {
 
   /* istanbul ignore next */
   validateCorrectNode(network, address, nextPath) {
-    const nodeURL = address !== '' ? addHttp(address) : address;
-
-    if (network === networks.customNode.code) {
+    const nodeURL = address !== '' ? addHttp(address) : '';
+    if (network === networks.customNode.name) {
       const liskAPIClient = new Lisk.APIClient([nodeURL], {});
       liskAPIClient.node.getConstants()
         .then((res) => {
           if (res.data) {
-            this.props.liskAPIClientSet({
+            this.props.networkSet({
+              name: network,
               network: {
                 ...this.getNetwork(network),
-                address: nodeURL,
               },
             });
 
@@ -107,7 +104,12 @@ class Header extends React.Component {
         });
       this.setState({ isValidationLoading: false, isFirstTime: false });
     } else {
-      this.props.liskAPIClientSet({ network: this.getNetwork(network) });
+      this.props.networkSet({
+        name: network,
+        network: {
+          ...this.getNetwork(network),
+        },
+      });
       this.props.history.push(nextPath);
       this.setState({ validationError: false });
     }
@@ -160,9 +162,11 @@ class Header extends React.Component {
                   className={`${this.state.validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
                   onClick={() => this.toggleDropdown(!this.state.showDropdown)}
                 >
-                  { selectedNetwork !== networks.customNode.code
-                    ? networkList[selectedNetwork].label
-                    : address || this.state.address }
+                  {
+                    selectedNetwork !== networks.customNode.name
+                      ? networkList.find(network => network.label === selectedNetwork).label
+                      : address || this.state.address
+                  }
                 </span>
                 <Dropdown
                   className={`${styles.dropdown} ${dark ? 'dark' : ''} network-dropdown`}
@@ -170,91 +174,100 @@ class Header extends React.Component {
                   showDropdown={this.state.showDropdown}
                   active={selectedNetwork}
                 >
-                  {networkList && networkList.map((network, key) => {
-                    const activeTab = this.state.network === networks.customNode.code;
-                    if (network.value === networks.customNode.code) {
+                  {
+                    networkList && networkList.map((network, key) => {
+                      const activeTab = this.state.network === networks.customNode.name;
+                      if (network.label === networks.customNode.name) {
+                        return (
+                          <span
+                            className={`${styles.networkSpan} address`}
+                            key={key}
+                            onClick={() => {
+                              this.changeNetwork(network.label);
+                            }}
+                          >
+                            {network.label}
+
+                            <Input
+                              autoComplete="off"
+                              onChange={(value) => {
+                                this.changeAddress(value);
+                              }}
+                              name="customNetwork"
+                              value={this.state.address}
+                              placeholder={this.props.t('ie. 192.168.0.1')}
+                              size="s"
+                              className={`custom-network ${formStyles.input} ${this.state.validationError ? styles.errorInput : ''}`}
+                            />
+                            <div className={styles.icons}>
+                              <Spinner className={`${styles.spinner} ${this.state.isValidationLoading && this.state.address ? styles.show : styles.hide}`} />
+                              <img
+                                className={`${styles.status} ${!this.state.isValidationLoading && this.state.address && !this.state.isFirstTime
+                                  ? styles.show : styles.hide}`}
+                                src={!this.state.connected ? svg.iconWarning : svg.ok_icon}
+                              />
+                            </div>
+                            {
+                              activeTab
+                                ? (
+                                  <Feedback
+                                    show={this.state.validationError}
+                                    status="error"
+                                    className={`${this.state.validationError ? styles.feedbackError : ''} ${styles.feedbackMessage} amount-feedback`}
+                                    showIcon={false}
+                                    dark={dark}
+                                  >
+                                    {t('Unable to connect to the node, please check the address and try again')}
+                                  </Feedback>
+                                )
+                                : ''
+                            }
+                            {
+                              activeTab
+                                ? (
+                                  <div>
+                                    <PrimaryButton
+                                      disabled={this.state.connected}
+                                    /* istanbul ignore next */
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+
+                                        this.setState({ isValidationLoading: true });
+                                        this.loaderTimeout = setTimeout(() => {
+                                          this.validateCorrectNode(
+                                            networks.customNode.name,
+                                            this.state.address,
+                                          );
+                                          this.changeNetwork(networks.customNode.name);
+                                        }, 300);
+                                      }}
+                                      className={`${styles.button} ${styles.backButton} connect-button`}
+                                    >
+                                      {this.state.connected ? t('Connected') : t('Connect')}
+                                    </PrimaryButton>
+                                  </div>
+                                )
+                                : ''
+                            }
+                          </span>
+                        );
+                      }
+
                       return (
                         <span
-                          className={`${styles.networkSpan} address`}
-                          key={key}
                           onClick={() => {
-                            this.changeNetwork(network.value);
+                            this.changeNetwork(network.label);
+                            this.validateCorrectNode(network.label);
+                            this.toggleDropdown(false);
+                            this.setState({ connected: false, isFirstTime: true });
                           }}
+                          key={key}
                         >
                           {network.label}
-                          <Input
-                            autoComplete="off"
-                            onChange={(value) => {
-                              this.changeAddress(value);
-                            }}
-                            name="customNetwork"
-                            value={this.state.address}
-                            placeholder={this.props.t('ie. 192.168.0.1')}
-                            size="s"
-                            className={`custom-network ${formStyles.input} ${this.state.validationError ? styles.errorInput : ''}`}
-                          />
-                          <div className={styles.icons}>
-                            <Spinner className={`${styles.spinner} ${this.state.isValidationLoading && this.state.address ? styles.show : styles.hide}`} />
-                            <img
-                              className={`${styles.status} ${!this.state.isValidationLoading && this.state.address && !this.state.isFirstTime
-                                ? styles.show : styles.hide}`}
-                              src={!this.state.connected ? svg.iconWarning : svg.ok_icon}
-                            />
-                          </div>
-                          {activeTab
-                            ? (
-                              <Feedback
-                                show={this.state.validationError}
-                                status="error"
-                                className={`${this.state.validationError ? styles.feedbackError : ''} ${styles.feedbackMessage} amount-feedback`}
-                                showIcon={false}
-                                dark={dark}
-                              >
-                                {t('Unable to connect to the node, please check the address and try again')}
-                              </Feedback>
-                            ) : ''}
-                          {activeTab
-                            ? (
-                              <div>
-                                <PrimaryButton
-                                  disabled={this.state.connected}
-                                /* istanbul ignore next */
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-
-                                    this.setState({ isValidationLoading: true });
-                                    this.loaderTimeout = setTimeout(() => {
-                                      this.validateCorrectNode(
-                                        networks.customNode.code,
-                                        this.state.address,
-                                      );
-                                      this.changeNetwork(networks.customNode.code);
-                                    }, 300);
-                                  }}
-                                  className={`${styles.button} ${styles.backButton} connect-button`}
-                                >
-                                  {this.state.connected ? t('Connected') : t('Connect')}
-                                </PrimaryButton>
-                              </div>
-                            ) : ''}
                         </span>
                       );
-                    }
-
-                    return (
-                      <span
-                        onClick={() => {
-                          this.changeNetwork(network.value);
-                          this.validateCorrectNode(network.value);
-                          this.toggleDropdown(false);
-                          this.setState({ connected: false, isFirstTime: true });
-                        }}
-                        key={key}
-                      >
-                        {network.label}
-                      </span>
-                    );
-                  })}
+                    })
+                  }
                 </Dropdown>
               </div>
               )
