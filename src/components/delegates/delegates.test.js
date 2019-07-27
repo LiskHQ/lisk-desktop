@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import thunk from 'redux-thunk';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { prepareStore } from '../../../test/unit-test-utils/applicationInit';
-import peersReducer from '../../store/reducers/peers';
 import accountReducer from '../../store/reducers/account';
 import votingReducer from '../../store/reducers/voting';
 import Delegates from './delegates';
@@ -19,7 +18,6 @@ describe('Delegates', () => {
     username1: { confirmed: true, unconfirmed: true, publicKey: 'sample_key' },
   };
   const store = prepareStore({
-    peers: peersReducer,
     account: accountReducer,
     voting: votingReducer,
   }, [thunk]);
