@@ -6,7 +6,8 @@ import { getDelegates } from '../utils/api/delegates';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import { updateTransactions } from './transactions';
-import { liskAPIClientUpdate } from './peers';
+import { networkStatusUpdated } from './network';
+import { getAPIClient } from '../utils/api/network';
 import { getTimeOffset } from '../utils/hacks';
 import transactionTypes from '../constants/transactionTypes';
 import accountConfig from '../constants/account';
@@ -76,7 +77,8 @@ export const secondPassphraseRegistered = ({
   secondPassphrase, account, passphrase, callback,
 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const { settings: { token: { active } } } = getState();
+    const liskAPIClient = getAPIClient(active, getState());
     const timeOffset = getTimeOffset(getState());
     setSecondPassphrase(liskAPIClient, secondPassphrase, account.publicKey, passphrase, timeOffset)
       .then((transaction) => {
@@ -103,7 +105,8 @@ export const secondPassphraseRegistered = ({
 
 export const updateDelegateAccount = ({ publicKey }) =>
   (dispatch, getState) => {
-    const { peers: { liskAPIClient }, account } = getState();
+    const { account, settings: { token: { active } } } = getState();
+    const liskAPIClient = getAPIClient(active, getState());
     return getDelegates(liskAPIClient, { publicKey })
       .then((response) => {
         dispatch(accountUpdated({
@@ -160,15 +163,16 @@ export const accountDataUpdated = ({
           ));
         }
         dispatch(accountUpdated(result));
-        dispatch(liskAPIClientUpdate({ online: true }));
+        dispatch(networkStatusUpdated({ online: true }));
       }).catch((res) => {
-        dispatch(liskAPIClientUpdate({ online: false, code: res.error.code }));
+        dispatch(networkStatusUpdated({ online: false, code: res.error.code }));
       });
   };
 
 export const updateAccountDelegateStats = account =>
   async (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const { settings: { token: { active } } } = getState();
+    const liskAPIClient = getAPIClient(active, getState());
     const { address, publicKey } = account;
     const networkConfig = getState().network;
     const token = tokenMap.LSK.key;

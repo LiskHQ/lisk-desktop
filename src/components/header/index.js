@@ -1,23 +1,26 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import Header from './header';
-import { liskAPIClientSet } from '../../actions/peers';
+import { networkSet } from '../../actions/network';
 import { errorToastDisplayed } from '../../actions/toaster';
 import { settingsUpdated } from '../../actions/settings';
+import networks from '../../constants/networks';
+import { tokenMap } from '../../constants/tokens';
+import { getAPIClient } from '../../utils/api/network';
 
 const mapStateToProps = state => ({
   account: state.account,
-  peers: state.peers,
+  network: state.network,
   settings: state.settings,
-  selectedNetwork: (state.peers && state.peers.options.code) || 0,
-  address: state.peers && state.peers.options.address,
-  liskAPIClient: state.peers && state.peers.liskAPIClient,
+  selectedNetwork: state.network.name || networks.mainnet.name,
+  address: state.network.networks[state.settings.token.active || tokenMap.LSK.key].nodeUrl || '',
+  liskAPIClient: getAPIClient(state.settings.token.active || tokenMap.LSK.key, state),
 });
 
 const mapDispatchToProps = {
-  liskAPIClientSet,
-  settingsUpdated,
   errorToastDisplayed,
+  networkSet,
+  settingsUpdated,
 };
 
 export default connect(

@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import actionTypes from '../../constants/actions';
-import { liskAPIClientUpdate } from '../../actions/peers';
+import { networkStatusUpdated } from '../../actions/network';
 
 let connection;
 let forcedClosing = false;
@@ -46,11 +46,11 @@ const socketSetup = (store) => {
   });
   connection.on('disconnect', () => {
     if (!forcedClosing) {
-      store.dispatch(liskAPIClientUpdate({ online: false }));
+      store.dispatch(networkStatusUpdated({ online: false }));
     }
   });
   connection.on('reconnect', () => {
-    store.dispatch(liskAPIClientUpdate({ online: true }));
+    store.dispatch(networkStatusUpdated({ online: true }));
   });
 };
 

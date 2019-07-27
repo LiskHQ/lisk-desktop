@@ -2,10 +2,10 @@ import Lisk from '@liskhq/lisk-client';
 import i18next from 'i18next';
 import networks from '../constants/networks';
 
-const getNetwork = (code) => {
+const getNetwork = (networkName) => {
   let network;
   Object.keys(networks).forEach((key) => {
-    if (networks[key].code === code) {
+    if (networks[key].name === networkName) {
       network = networks[key];
     }
   }, this);

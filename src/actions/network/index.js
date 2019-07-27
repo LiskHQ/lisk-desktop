@@ -10,6 +10,7 @@ export const networkSet = data =>
     ].map(action => dispatch(action(data)));
   };
 
+
 /**
  * Returns required action object to update offline/online status of network
  *
