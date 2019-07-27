@@ -13,7 +13,7 @@ import transactionTypes from '../../constants/transactionTypes';
 
 import { getActiveTokenAccount } from '../../utils/account';
 import { getAutoLogInData, shouldAutoLogIn } from '../../utils/login';
-import { liskAPIClientSet, liskAPIClientUpdate } from '../../actions/peers';
+import { networkSet, networkStatusUpdated } from '../../actions/network';
 import networks from '../../constants/networks';
 import settings from '../../constants/settings';
 import txFilters from '../../constants/transactionFilters';
@@ -123,7 +123,8 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
 const autoLogInIfNecessary = async (store) => {
   const autologinData = getAutoLogInData();
   if (shouldAutoLogIn(autologinData)) {
-    store.dispatch(liskAPIClientSet({
+    store.dispatch(networkSet({
+      name: networks.customNode.name,
       passphrase: autologinData[settings.keys.loginKey],
       network: { ...networks.customNode, address: autologinData[settings.keys.liskCoreUrl] },
       options: {
@@ -131,7 +132,7 @@ const autoLogInIfNecessary = async (store) => {
         address: autologinData[settings.keys.liskCoreUrl],
       },
     }));
-    store.dispatch(liskAPIClientUpdate({
+    store.dispatch(networkStatusUpdated({
       online: true,
     }));
 
@@ -142,7 +143,8 @@ const autoLogInIfNecessary = async (store) => {
     if (device) {
       const hwWalletType = /trezor/ig.test(device.deviceModel) ? loginType.trezor : loginType.ledger;
       const publicKey = await getHWPublicKeyFromIndex(device.deviceId, hwWalletType, 0);
-      store.dispatch(liskAPIClientSet({
+      store.dispatch(networkSet({
+        name: networks.customNode.name,
         hwInfo: {
           derivationIndex: 0,
           deviceId: device.deviceId,
@@ -155,7 +157,7 @@ const autoLogInIfNecessary = async (store) => {
           address: autologinData[settings.keys.liskCoreUrl],
         },
       }));
-      store.dispatch(liskAPIClientUpdate({
+      store.dispatch(networkStatusUpdated({
         online: true,
       }));
     }

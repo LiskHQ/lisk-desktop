@@ -5,13 +5,15 @@ import { getDelegates, getVotes } from '../utils/api/delegates';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import searchAll from '../utils/api/search';
+import { getAPIClient } from '../utils/api/network';
 import transactionTypes from '../constants/transactionTypes';
 import { tokenMap } from '../constants/tokens';
 
 const searchDelegate = ({ publicKey, address }) =>
   async (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    const networkConfig = getState().network;
+    const { settings: { token: { active } }, network } = getState();
+    const liskAPIClient = getAPIClient(active, getState());
+    const networkConfig = network;
     const token = tokenMap.LSK.key;
     const delegates = await getDelegates(liskAPIClient, { publicKey });
     const transactions = await getTransactions({
@@ -38,7 +40,8 @@ export const fetchVotedDelegateInfo = (votes, {
 }) =>
   // eslint-disable-next-line max-statements
   async (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const { settings: { token: { active } } } = getState();
+    const liskAPIClient = getAPIClient(active, getState());
     /* istanbul ignore if */
     if (!liskAPIClient) return;
     dispatch(loadingStarted(actionTypes.searchVotes));
@@ -73,7 +76,8 @@ export const fetchVotedDelegateInfo = (votes, {
 
 const searchVotes = ({ address }) =>
   async (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const { settings: { token: { active } } } = getState();
+    const liskAPIClient = getAPIClient(active, getState());
     /* istanbul ignore if */
     if (!liskAPIClient) return;
     dispatch(loadingStarted(actionTypes.searchVotes));
@@ -169,7 +173,8 @@ export const clearSearchSuggestions = () => ({
 // TODO remove this action and use src/utils/withData.js instead
 export const searchSuggestions = ({ searchTerm, callback = () => {} }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const { settings: { token: { active } } } = getState();
+    const liskAPIClient = getAPIClient(active, getState());
     searchAll({ liskAPIClient, searchTerm }).then((response) => {
       dispatch({
         data: response,
