@@ -31,22 +31,20 @@ const getNethash = async nodeUrl => (
   })
 );
 
-export const networkSet = data =>
-  async (dispatch) => {
-    if (data.name === networks.customNode.name) {
+export const networkSet = data => async (dispatch) => {
+  if (data.name === networks.customNode.name) {
+    await getNethash(data.network.address).then((nethash) => {
       dispatch(generateAction(data, {
-        nodeUrl: data.nodeUrl,
-        nethash: '',
+        nodeUrl: data.network.address,
+        custom: data.network.custom,
+        code: data.network.code,
+        nethash,
       }));
-      await getNethash(data.nodeUrl).then((nethash) => {
-        dispatch(generateAction(data, {
-          nodeUrl: data.nodeUrl,
-          nethash,
-        }));
-      }).catch((error) => {
-        dispatch(errorToastDisplayed({ label: error }));
-      });
-    } else if (data.name === networks.testnet.name || data.name === networks.mainnet.name) {
-      dispatch(generateAction(data, { }));
-    }
-  };
+    }).catch((error) => {
+      dispatch(errorToastDisplayed({ label: error }));
+    });
+  } else if (data.name === networks.testnet.name
+    || data.name === networks.mainnet.name) {
+    dispatch(generateAction(data, data.network));
+  }
+};
