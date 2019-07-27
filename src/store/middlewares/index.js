@@ -1,5 +1,4 @@
 import thunk from 'redux-thunk';
-import peersMiddleware from './peers';
 import accountMiddleware from './account';
 import loadingBarMiddleware from './loadingBar';
 import offlineMiddleware from './offline';
@@ -14,13 +13,12 @@ import bookmarksMiddleware from './bookmarks';
 export default [
   // notificationMiddleware,
   accountMiddleware,
+  bookmarksMiddleware,
   hwWalletMiddleware,
   loadingBarMiddleware,
   offlineMiddleware,
-  peersMiddleware,
+  settingsMiddleware,
   socketMiddleware,
   thunk,
   votingMiddleware,
-  settingsMiddleware,
-  bookmarksMiddleware,
 ];
