@@ -65,7 +65,7 @@ describe('HwWalletLogin', () => {
       status: { online: true },
       networks: {
         nodeUrl: 'http://localhost:4000',
-        nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d'
+        nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
       },
     },
     t: key => key,
