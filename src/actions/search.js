@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+// TODO delete this file
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from './loading';
 import { getAccount } from '../utils/api/account';

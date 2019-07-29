@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 // TODO remove this reducer and use src/utils/withData.js instead
 import actionTypes from '../../constants/actions';
 
