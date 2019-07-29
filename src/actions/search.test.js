@@ -1,9 +1,7 @@
 import actionTypes from '../constants/actions';
 import networks from '../constants/networks';
-import txFilters from '../constants/transactionFilters';
 import * as accountAPI from '../utils/api/account';
 import * as delegateAPI from '../utils/api/delegates';
-import * as transactionsAPI from '../utils/api/transactions';
 import accounts from '../../test/constants/accounts';
 import * as actions from './search';
 
