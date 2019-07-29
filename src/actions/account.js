@@ -190,31 +190,35 @@ export const updateAccountDelegateStats = account =>
     }));
   };
 
+// eslint-disable-next-line max-statements
 export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, getState) => {
   const { network: networkConfig, settings } = getState();
   dispatch(accountLoading());
+  try {
+    const lskAccount = await getAccount({
+      token: tokenMap.LSK.key, networkConfig, publicKey, passphrase,
+    });
 
-  await getAccount({
-    token: tokenMap.LSK.key, networkConfig, publicKey, passphrase,
-  }).then(async (accountData) => {
     const expireTime = (passphrase && settings.autoLog)
-      ? Date.now() + accountConfig.lockDuration : 0;
-    const btcAccountData = settings.token.list.BTC
-      && await getAccount({ token: tokenMap.BTC.key, networkConfig, passphrase });
-    dispatch(accountLoggedIn({
-      passphrase,
-      loginType: hwInfo ? loginType[hwInfo.deviceModel.replace(/\s.+$/, '').toLowerCase()] : loginType.normal,
-      hwInfo: hwInfo || {},
-      expireTime,
-      info: {
-        LSK: accountData,
-        ...(btcAccountData ? { BTC: btcAccountData } : {}),
-      },
-    }));
-  }).catch((error) => {
-    dispatch(errorToastDisplayed({
-      label: getConnectionErrorMessage(error),
-    }));
+      ? Date.now() + accountConfig.lockDuration
+      : 0;
+
+    if (lskAccount) {
+      const btcAccount = settings.token.list.BTC
+        && await getAccount({ token: tokenMap.BTC.key, networkConfig, passphrase });
+      dispatch(accountLoggedIn({
+        passphrase,
+        loginType: hwInfo ? loginType[hwInfo.deviceModel.replace(/\s.+$/, '').toLowerCase()] : loginType.normal,
+        hwInfo: hwInfo || {},
+        expireTime,
+        info: {
+          LSK: lskAccount,
+          ...(btcAccount ? { BTC: btcAccount } : {}),
+        },
+      }));
+    }
+  } catch (error) {
+    dispatch(errorToastDisplayed({ label: getConnectionErrorMessage(error) }));
     dispatch(accountLoggedOut());
-  });
+  }
 };

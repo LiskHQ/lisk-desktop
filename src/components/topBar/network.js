@@ -31,7 +31,7 @@ const Network = ({ network, t, token }) => {
       <span className={`${styles.status} ${statusColor}`} />
       <p>
         <span>{t('Connected to:')}</span>
-        <span>{networksList[activeNetwork]}</span>
+        <span>{(networksList[activeNetwork] || '').toLowerCase()}</span>
       </p>
     </section>
   );
