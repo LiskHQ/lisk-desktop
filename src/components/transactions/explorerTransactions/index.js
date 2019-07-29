@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { getTransactions } from '../../../utils/api/transactions';
 import { loadLastTransaction } from '../../../actions/transactions';
 import {
-  searchTransactions, searchAccount, fetchVotedDelegateInfo,
+  searchAccount, fetchVotedDelegateInfo,
 } from '../../../actions/search';
 import ExplorerTransactions from './explorerTransactions';
 import actionTypes from '../../../constants/actions';
@@ -35,7 +35,6 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = {
   fetchVotedDelegateInfo,
   searchAccount,
-  searchTransactions,
   addFilter: data => ({ type: actionTypes.addFilter, data }),
   searchUpdateLast: data => ({ data, type: actionTypes.searchUpdateLast }),
   loadLastTransaction,

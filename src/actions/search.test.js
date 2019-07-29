@@ -9,7 +9,6 @@ import * as actions from './search';
 
 const {
   fetchVotedDelegateInfo,
-  searchTransactions,
   searchAccount,
 } = actions;
 
@@ -84,73 +83,6 @@ describe('actions: search', () => {
       expect(dispatch).toHaveBeenNthCalledWith(2, {
         data: { votes, address },
         type: actionTypes.searchVotes,
-      });
-    });
-  });
-
-  describe('searchTransactions', () => {
-    const count = 0;
-    const transactions = {
-      meta: {
-        count,
-      },
-      data: [
-      ],
-    };
-
-    it('should fetch transactions and then dispatch them', async () => {
-      const params = {
-        address: accounts.delegate.address,
-        filter: txFilters.all,
-        customFilters: {},
-      };
-      transactionsAPI.getTransactions.mockResolvedValue(transactions);
-      await searchTransactions(params)(dispatch, getState);
-
-      expect(dispatch).toHaveBeenNthCalledWith(1, {
-        data: actionTypes.searchTransactions,
-        type: actionTypes.loadingStarted,
-      });
-      expect(dispatch).toHaveBeenNthCalledWith(2, {
-        data: {
-          address: accounts.delegate.address,
-          filters: {
-            direction: txFilters.all,
-          },
-          count,
-          transactions: transactions.data,
-        },
-        type: actionTypes.searchTransactions,
-      });
-      expect(dispatch).toHaveBeenNthCalledWith(3, {
-        data: {
-          filterName: 'transactions',
-          value: params.filter,
-        },
-        type: actionTypes.addFilter,
-      });
-      expect(dispatch).toHaveBeenNthCalledWith(4, {
-        data: actionTypes.searchTransactions,
-        type: actionTypes.loadingFinished,
-      });
-    });
-
-    it('should allow to disable dispatching the loading actions', () => {
-      transactionsAPI.getTransactions.mockResolvedValue(transactions);
-      const action = searchTransactions({
-        address: accounts.delegate.address,
-        showLoading: false,
-      });
-      action(dispatch, getState);
-
-      expect(dispatch).not.toHaveBeenNthCalledWith(1, {
-        data: actionTypes.searchTransactions,
-        type: actionTypes.loadingStarted,
-      });
-
-      expect(dispatch).not.toHaveBeenNthCalledWith(1, {
-        data: actionTypes.searchTransactions,
-        type: actionTypes.loadingFinished,
       });
     });
   });

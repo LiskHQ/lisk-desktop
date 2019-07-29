@@ -37,7 +37,6 @@ const actionTypes = {
   searchAccount: 'SEARCH_ACCOUNT',
   searchClearSuggestions: 'SEARCH_CLEAR_SUGGESTIONS',
   searchDelegate: 'SEARCH_DELEGATE',
-  searchTransactions: 'SEARCH_TRANSACTIONS',
   searchUpdateLast: 'SEARCH_UPDATE_LAST',
   searchVotes: 'SEARCH_VOTES',
   sendFeedback: 'SEND_FEEDBACK',
