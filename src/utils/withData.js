@@ -5,7 +5,7 @@ import { getAPIClient } from './api/network';
 function withData(apis = {}) {
   return function (WrappedComponent) {
     function getHOC(ChildComponent, {
-      key, autoload, apiUtil, defaultData = {},
+      key, autoload, apiUtil, defaultData = {}, transformResponse = data => data,
     }) {
       class DataProvider extends React.Component {
         constructor() {
@@ -37,7 +37,10 @@ function withData(apis = {}) {
           const { apiClient, apiParams } = this.props;
           this.setState({ isLoading: true });
           apiUtil(apiClient, { ...apiParams[key], ...params }, ...args).then((data) => {
-            this.setState({ ...this.defaultState, data });
+            this.setState({
+              ...this.defaultState,
+              data: transformResponse(data, this.state.data, params),
+            });
           }).catch((error) => {
             this.setState({ ...this.defaultState, error });
           });
@@ -47,12 +50,12 @@ function withData(apis = {}) {
           const { apiClient, apiParams, ...restOfProps } = this.props;
           return (
             <ChildComponent {...{
+              ...restOfProps,
               [key]: {
                 ...this.state,
                 loadData: this.loadData,
                 clearData: this.clearData,
               },
-              ...restOfProps,
             }}
             />
           );
