@@ -15,12 +15,11 @@ import withData from '../../../utils/withData';
 const mapStateToProps = (state, ownProps) => ({
   delegate: state.search.delegates[state.search.lastSearch],
   transaction: state.transaction,
-  transactions: state.search.searchResults,
+  // transactions: state.search.searchResults,
   votes: state.search.votes[state.search.lastSearch],
   count: state.search.transactions[state.search.lastSearch]
     && (state.search.transactions[state.search.lastSearch].count || 0),
   offset: state.search.searchResults.length,
-  activeFilter: state.filters.transactions || txFilters.all,
   isSearchInStore: state.search.transactions[ownProps.address] !== undefined,
   loading: state.loading,
   account: state.account,
@@ -54,7 +53,21 @@ const apis = {
     defaultData: {
       data: [],
       meta: {},
+      filters: {
+        direction: txFilters.all,
+      },
     },
+    transformResponse: (response, oldData, params) => (
+      response.meta.offset > 0 ? {
+        ...oldData,
+        data: [
+          ...oldData.data, ...response.data,
+        ],
+      } : {
+        filters: params.filters,
+        ...response,
+      }
+    ),
   },
 };
 
