@@ -42,6 +42,11 @@ const mapDispatchToProps = {
   loadLastTransaction,
 };
 
+// TODO the sort should be removed when BTC api returns transactions sorted by timestamp
+const sortByTimestamp = (a, b) => (
+  (!a.timestamp || a.timestamp > b.timestamp) && b.timestamp ? -1 : 1
+);
+
 const apis = {
   transactions: {
     apiUtil: (apiClient, params) => getTransactions(params),
@@ -62,10 +67,11 @@ const apis = {
         ...oldData,
         data: [
           ...oldData.data, ...response.data,
-        ],
+        ].sort(sortByTimestamp),
       } : {
         filters: params.filters,
         ...response,
+        data: response.data.sort(sortByTimestamp),
       }
     ),
   },
