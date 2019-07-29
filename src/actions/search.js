@@ -150,11 +150,3 @@ export const searchTransactions = ({
         });
     }
   };
-
-// TODO remove this action and use src/utils/withData.js instead
-export const searchMoreTransactions = params => (
-  searchTransactions({
-    ...params,
-    actionType: actionTypes.searchMoreTransactions,
-  })
-);

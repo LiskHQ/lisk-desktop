@@ -121,68 +121,6 @@ describe('Reducer: search', () => {
     });
   });
 
-  it('should ammend transactions of an account to contain the transactions loaded by the searchMoreTransactions action', () => {
-    const state = {
-      transactions: {
-        '0L': {
-          transactions: [
-            {
-              id: '1',
-              timestamp: 10,
-            },
-          ],
-        },
-      },
-    };
-
-    const action = {
-      type: actionTypes.searchMoreTransactions,
-      data: {
-        address: '0L',
-        transactions: [
-          {
-            id: '2',
-            timestamp: 2,
-          },
-        ],
-        count: 2,
-        filter: 0,
-      },
-    };
-
-    const changedState = search(state, action);
-    expect(changedState).toEqual({
-      transactions: {
-        '0L': {
-          address: '0L',
-          transactions: [
-            {
-              id: '1',
-              timestamp: 10,
-            },
-            {
-              id: '2',
-              timestamp: 2,
-            },
-          ],
-          count: 2,
-          filter: 0,
-        },
-      },
-      lastSearch: '0L',
-      searchResults: [
-        {
-          id: '1',
-          timestamp: 10,
-        },
-        {
-          id: '2',
-          timestamp: 2,
-        },
-      ],
-    });
-  });
-
   it('should return state if action.type is none of the above', () => {
     const state = {
       suggestions: {

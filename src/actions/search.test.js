@@ -9,7 +9,6 @@ import * as actions from './search';
 
 const {
   fetchVotedDelegateInfo,
-  searchMoreTransactions,
   searchTransactions,
   searchAccount,
 } = actions;
@@ -151,46 +150,6 @@ describe('actions: search', () => {
 
       expect(dispatch).not.toHaveBeenNthCalledWith(1, {
         data: actionTypes.searchTransactions,
-        type: actionTypes.loadingFinished,
-      });
-    });
-  });
-
-  describe('searchMoreTransactions', () => {
-    it('should fetch transactions and then dispatch them', async () => {
-      const count = 1000;
-      const transactions = {
-        meta: {
-          count,
-        },
-        data: [
-        ],
-      };
-      const params = {
-        address: accounts.delegate.address,
-        filter: txFilters.all,
-        customFilters: {},
-      };
-      transactionsAPI.getTransactions.mockResolvedValue(transactions);
-      await searchMoreTransactions(params)(dispatch, getState);
-
-      expect(dispatch).toHaveBeenNthCalledWith(1, {
-        data: actionTypes.searchMoreTransactions,
-        type: actionTypes.loadingStarted,
-      });
-      expect(dispatch).toHaveBeenNthCalledWith(2, {
-        data: {
-          address: accounts.delegate.address,
-          filters: {
-            direction: txFilters.all,
-          },
-          count,
-          transactions: transactions.data,
-        },
-        type: actionTypes.searchMoreTransactions,
-      });
-      expect(dispatch).toHaveBeenNthCalledWith(3, {
-        data: actionTypes.searchMoreTransactions,
         type: actionTypes.loadingFinished,
       });
     });

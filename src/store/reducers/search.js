@@ -24,27 +24,6 @@ const search = (state = { // eslint-disable-line complexity
   searchResults: [],
 }, action) => {
   switch (action.type) {
-    case actionTypes.searchMoreTransactions: {
-      const addressTransactions = [
-        ...state.transactions[action.data.address].transactions,
-        ...action.data.transactions,
-      // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
-      ].sort(sortByTimestamp);
-      return {
-        ...state,
-        transactions: {
-          ...state.transactions,
-          [action.data.address]: {
-            transactions: addressTransactions,
-            count: action.data.count,
-            filter: action.data.filter,
-            address: action.data.address,
-          },
-        },
-        lastSearch: action.data.address,
-        searchResults: addressTransactions,
-      };
-    }
     case actionTypes.searchTransactions:
       return {
         ...state,
