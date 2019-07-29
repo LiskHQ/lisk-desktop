@@ -13,12 +13,12 @@ import txFilters from '../../../constants/transactionFilters';
 import withData from '../../../utils/withData';
 
 const mapStateToProps = (state, ownProps) => ({
-  delegate: state.search.delegates[state.search.lastSearch],
+  delegate: state.search.delegates[ownProps.address],
   transaction: state.transaction,
   // transactions: state.search.searchResults,
-  votes: state.search.votes[state.search.lastSearch],
-  count: state.search.transactions[state.search.lastSearch]
-    && (state.search.transactions[state.search.lastSearch].count || 0),
+  votes: state.search.votes[ownProps.address],
+  count: state.search.transactions[ownProps.address]
+    && (state.search.transactions[ownProps.address].count || 0),
   offset: state.search.searchResults.length,
   isSearchInStore: state.search.transactions[ownProps.address] !== undefined,
   loading: state.loading,
@@ -26,9 +26,9 @@ const mapStateToProps = (state, ownProps) => ({
   bookmarks: state.bookmarks,
   wallets: state.wallets,
   peers: state.peers,
-  detailAccount: state.search.accounts[state.search.lastSearch],
-  balance: state.search.accounts[state.search.lastSearch]
-    && state.search.accounts[state.search.lastSearch].balance,
+  detailAccount: state.search.accounts[ownProps.address],
+  balance: state.search.accounts[ownProps.address]
+    && state.search.accounts[ownProps.address].balance,
   activeToken: state.settings.token ? state.settings.token.active : 'LSK',
 });
 
