@@ -25,6 +25,7 @@ describe('Account middleware', () => {
   let stubTransactions;
   let transactionsActionsStub;
   let getAutoLogInDataMock;
+  let findMatchingLoginNetworkMock;
   let networkSetMock;
   let accountDataUpdatedSpy;
   const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
@@ -99,6 +100,8 @@ describe('Account middleware', () => {
     stubTransactions = stub(transactionsApi, 'getTransactions').returnsPromise().resolves(true);
     getAutoLogInDataMock = stub(accountUtils, 'getAutoLogInData');
     getAutoLogInDataMock.withArgs().returns({ });
+    findMatchingLoginNetworkMock = stub(accountUtils, 'findMatchingLoginNetwork');
+    findMatchingLoginNetworkMock.withArgs().returns({ });
     networkSetMock = stub(networkActions, 'networkSet').returns(liskAPIClientMock);
     accountDataUpdatedSpy = spy(accountActions, 'accountDataUpdated');
   });
@@ -111,6 +114,7 @@ describe('Account middleware', () => {
     stubTransactions.restore();
     clock.restore();
     getAutoLogInDataMock.restore();
+    findMatchingLoginNetworkMock.restore();
     networkSetMock.restore();
     accountDataUpdatedSpy.restore();
   });
@@ -215,8 +219,14 @@ describe('Account middleware', () => {
       [settings.keys.loginKey]: passphrase,
       [settings.keys.liskCoreUrl]: networks.testnet.nodes[0],
     });
+    findMatchingLoginNetworkMock.withArgs().returns({
+      name: 'Testnet',
+      testnet: true,
+      code: 1,
+      nodes: ['https://testnet.lisk.io'],
+    });
     middleware(store)(next)(storeCreatedAction);
-    expect(store.dispatch).to.have.been.calledWith(liskAPIClientMock);
+    expect(store.dispatch).to.have.been.called();
   });
 
   it(`should do nothing on ${actionTypes.storeCreated} if autologin data NOT found in localStorage`, () => {
