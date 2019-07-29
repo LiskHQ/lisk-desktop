@@ -2,13 +2,15 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
+import { getTransactions } from '../../../utils/api/transactions';
 import { loadLastTransaction } from '../../../actions/transactions';
 import {
   searchTransactions, searchMoreTransactions, searchAccount, fetchVotedDelegateInfo,
 } from '../../../actions/search';
-import actionTypes from '../../../constants/actions';
 import ExplorerTransactions from './explorerTransactions';
+import actionTypes from '../../../constants/actions';
 import txFilters from '../../../constants/transactionFilters';
+import withData from '../../../utils/withData';
 
 const mapStateToProps = (state, ownProps) => ({
   delegate: state.search.delegates[state.search.lastSearch],
@@ -41,7 +43,22 @@ const mapDispatchToProps = {
   loadLastTransaction,
 };
 
+const apis = {
+  transactions: {
+    apiUtil: (apiClient, params) => getTransactions(params),
+    getApiParams: (state, ownProps) => ({
+      token: state.settings.token.active,
+      address: ownProps.match.params.address,
+      networkConfig: state.network,
+    }),
+    defaultData: {
+      data: [],
+      meta: {},
+    },
+  },
+};
+
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(translate()(ExplorerTransactions)));
+)(withData(apis)(translate()(ExplorerTransactions))));
