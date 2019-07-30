@@ -8,6 +8,7 @@ import WalletTransactions from './walletTransactions';
 import i18n from '../../../i18n';
 import accounts from '../../../../test/constants/accounts';
 import routes from '../../../constants/routes';
+import networks from '../../../constants/networks';
 
 describe('WalletTransactions Component', () => {
   let wrapper;
@@ -38,7 +39,17 @@ describe('WalletTransactions Component', () => {
       LSK: [],
       BTC: [],
     },
-    settings: {},
+    network: {
+      name: networks.mainnet.name,
+      networks: {
+        LSK: {},
+      },
+    },
+    settings: {
+      token: {
+        active: 'LSK',
+      },
+    },
   });
 
   const options = {
