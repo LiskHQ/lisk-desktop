@@ -6,17 +6,16 @@ import WalletDetails from './walletDetails';
 
 const WalletTab = ({ ...props }) => (
   <React.Fragment>
-    {props.detailAccount ? (
-      <div className={`${grid.row}`}>
-        <div className={`${grid['col-xs-7']} ${grid['col-md-6']} ${grid['col-lg-5']}`}>
-          <WalletDetails
-            balance={props.balance}
-            address={props.address}
-            activeToken={props.activeToken}
-          />
-        </div>
-        <div className={`${grid['col-xs-5']} ${grid['col-md-6']} ${grid['col-lg-7']}`}>
-          { // istanbul ignore next
+    <div className={`${grid.row}`}>
+      <div className={`${grid['col-xs-7']} ${grid['col-md-6']} ${grid['col-lg-5']}`}>
+        <WalletDetails
+          balance={props.balance}
+          address={props.address}
+          activeToken={props.activeToken}
+        />
+      </div>
+      <div className={`${grid['col-xs-5']} ${grid['col-md-6']} ${grid['col-lg-7']}`}>
+        { // istanbul ignore next
           !props.hideChart || props.transactions.length
             ? (
               <BalanceChart
@@ -27,9 +26,8 @@ const WalletTab = ({ ...props }) => (
               />
             )
             : null }
-        </div>
       </div>
-    ) : null}
+    </div>
     <TransactionsOverview
       {...props}
     />

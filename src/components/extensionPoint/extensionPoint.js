@@ -15,8 +15,6 @@ export default class ExtensionPoint extends React.Component {
       loadTransactions,
       searchDelegate,
       searchVotes,
-      searchAccount,
-      searchTransactions,
     } = this.props;
 
     // TODO implement a way to highlight all extension points on a page
@@ -44,8 +42,6 @@ export default class ExtensionPoint extends React.Component {
                   loadTransactions,
                   searchDelegate,
                   searchVotes,
-                  searchAccount,
-                  searchTransactions,
                 }}
                 t={this.props.t}
                 identifier={this.props.identifier}

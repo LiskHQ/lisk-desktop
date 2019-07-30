@@ -63,13 +63,22 @@ describe('ExplorerTransactions Component', () => {
       LSK: [],
       BTC: [],
     },
-    count: 1000,
-    transactions,
+    transactions: {
+      data: {
+        data: transactions,
+        meta: {
+          offset: 0,
+          count: 1000,
+        },
+      },
+      urlSearchParams: {
+        filters: {},
+      },
+      loadData: jest.fn(),
+    },
     transaction: transactions[0],
     searchAccount: jest.fn(),
-    searchTransactions: jest.fn(),
     loadTransactions: jest.fn(),
-    searchMoreTransactions: jest.fn(),
     addFilter: jest.fn(),
     loading: [],
     t: key => key,
@@ -105,13 +114,13 @@ describe('ExplorerTransactions Component', () => {
     it('click on load more', () => {
       expect(wrapper).toContainMatchingElement('.show-more-button');
       wrapper.find('.show-more-button').simulate('click');
-      expect(props.searchMoreTransactions).toBeCalled();
+      expect(props.transactions.loadData).toBeCalled();
     });
 
     it('Should change filters on click', () => {
       expect(wrapper).toContainMatchingElement('.transaction-filter-item');
       wrapper.find('.transaction-filter-item').at(1).simulate('click');
-      expect(props.addFilter).toBeCalled();
+      expect(props.transactions.loadData).toBeCalled();
     });
   });
 

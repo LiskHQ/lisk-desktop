@@ -35,9 +35,7 @@ actions={
   loadSingleTransaction,
   loadTransactions,
   searchDelegate,
-  searchVotes,
   searchAccount,
-  searchTransactions,
 }
 ```
 

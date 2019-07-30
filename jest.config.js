@@ -77,6 +77,7 @@ module.exports = {
     'src/main.js',
     'src/store/middlewares/login.js',
     'src/store/reducers/liskService.js',
+    'src/store/reducers/filters.js', // To be removed in #2175
     'src/tests.js',
     'src/utils/api/ledger.js',
     'src/utils/api/lsk/liskService.js',

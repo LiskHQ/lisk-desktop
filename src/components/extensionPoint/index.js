@@ -9,8 +9,6 @@ import {
 import {
   searchDelegate,
   searchVotes,
-  searchAccount,
-  searchTransactions,
 } from '../../actions/search';
 import ExtensionPoint from './extensionPoint';
 
@@ -29,8 +27,6 @@ const mapDispatchToProps = {
   loadSingleTransaction,
   searchDelegate,
   searchVotes,
-  searchAccount,
-  searchTransactions,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(ExtensionPoint));

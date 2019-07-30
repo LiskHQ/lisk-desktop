@@ -1,11 +1,11 @@
 import React from 'react';
-import txFilters from '../../../constants/transactionFilters';
-import TransactionsOverviewHeader from '../transactionsOverviewHeader/transactionsOverviewHeader';
-import routes from '../../../constants/routes';
-import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
-import WalletTab from '../../wallet/walletTab';
 import DelegateTab from '../../delegate/delegateTab';
+import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
+import TransactionsOverviewHeader from '../transactionsOverviewHeader/transactionsOverviewHeader';
 import VotesTab from '../../votes/votesTab';
+import WalletTab from '../../wallet/walletTab';
+import actionTypes from '../../../constants/actions';
+import routes from '../../../constants/routes';
 
 class ExplorerTransactions extends React.Component {
   // eslint-disable-next-line max-statements
@@ -13,7 +13,6 @@ class ExplorerTransactions extends React.Component {
     super();
 
     this.state = {
-      filter: {},
       customFilters: {
         dateFrom: '',
         dateTo: '',
@@ -41,15 +40,11 @@ class ExplorerTransactions extends React.Component {
       address: this.props.address,
     });
 
-    this.props.searchTransactions({
-      address: this.props.address,
-      limit: 30,
-      filter: txFilters.all,
-    });
-
-    this.props.addFilter({
-      filterName: 'transactions',
-      value: txFilters.all,
+    this.props.transactions.loadData({
+      filters: {
+        ...this.state.activeCustomFilters,
+        direction: this.props.transactions.urlSearchParams.filters.direction,
+      },
     });
   }
 
@@ -60,12 +55,12 @@ class ExplorerTransactions extends React.Component {
   }
 
   onLoadMore() {
-    this.props.searchMoreTransactions({
-      address: this.props.address,
-      limit: 30,
-      offset: this.props.offset,
-      filter: this.props.activeFilter,
-      customFilters: this.state.activeCustomFilters,
+    this.props.transactions.loadData({
+      offset: this.props.transactions.data.data.length,
+      filters: {
+        ...this.state.activeCustomFilters,
+        direction: this.props.transactions.urlSearchParams.filters.direction,
+      },
     });
   }
 
@@ -75,11 +70,11 @@ class ExplorerTransactions extends React.Component {
     for other tabs that are not using transactions there is no need to call API
   */
   onFilterSet(filter) {
-    this.props.searchTransactions({
-      address: this.props.address,
-      limit: 30,
-      filter,
-      customFilters: this.state.activeCustomFilters,
+    this.props.transactions.loadData({
+      filters: {
+        ...this.state.activeCustomFilters,
+        direction: filter,
+      },
     });
   }
 
@@ -90,11 +85,11 @@ class ExplorerTransactions extends React.Component {
 
   /* istanbul ignore next */
   saveFilters(customFilters) {
-    this.props.searchTransactions({
-      address: this.props.address,
-      limit: 30,
-      filter: this.props.activeFilter,
-      customFilters,
+    this.props.transactions.loadData({
+      filters: {
+        ...customFilters,
+        direction: this.props.transactions.urlSearchParams.filters.direction,
+      },
     });
     this.setState({ activeCustomFilters: customFilters, customFilters });
   }
@@ -121,7 +116,8 @@ class ExplorerTransactions extends React.Component {
   render() {
     const overviewProps = {
       ...this.props,
-      canLoadMore: this.props.transactions.length < this.props.count,
+      canLoadMore: this.props.transactions.data.data.length
+        < this.props.transactions.data.meta.count,
       onInit: this.onInit,
       onLoadMore: this.onLoadMore,
       onFilterSet: this.onFilterSet,
@@ -133,6 +129,9 @@ class ExplorerTransactions extends React.Component {
       customFilters: this.state.customFilters,
       updateCustomFilters: this.updateCustomFilters,
       activeToken: this.props.activeToken,
+      transactions: this.props.transactions.data.data,
+      activeFilter: this.props.transactions.urlSearchParams.filters.direction,
+      loading: this.props.transactions.isLoading ? [actionTypes.transactionsLoaded] : [],
     };
     const { detailAccount } = this.props;
 

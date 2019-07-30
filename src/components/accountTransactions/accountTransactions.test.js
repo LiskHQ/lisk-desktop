@@ -30,7 +30,6 @@ import ExplorerTransactions from '../transactions/explorerTransactions';
 describe('AccountTransaction Component', () => {
   let wrapper;
   let props;
-  let searchTransactionsSpy;
   let searchAccountSpy;
 
   const store = prepareStore({
@@ -45,7 +44,6 @@ describe('AccountTransaction Component', () => {
   }, [thunk]);
 
   beforeEach(() => {
-    searchTransactionsSpy = spy(search, 'searchTransactions');
     searchAccountSpy = spy(search, 'searchAccount');
 
     props = {
@@ -67,7 +65,6 @@ describe('AccountTransaction Component', () => {
   });
 
   afterEach(() => {
-    searchTransactionsSpy.restore();
     searchAccountSpy.restore();
   });
 

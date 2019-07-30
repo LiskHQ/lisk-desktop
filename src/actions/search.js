@@ -1,10 +1,11 @@
+/* istanbul ignore file */
+// TODO delete this file
 import actionTypes from '../constants/actions';
 import { loadingStarted, loadingFinished } from './loading';
 import { getAccount } from '../utils/api/account';
 import { getDelegates, getVotes } from '../utils/api/delegates';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
-import searchAll from '../utils/api/search';
 import transactionTypes from '../constants/transactionTypes';
 import { tokenMap } from '../constants/tokens';
 
@@ -107,74 +108,4 @@ export const searchAccount = ({ address }) =>
         }
       });
     }
-  };
-
-// TODO remove this action and use src/utils/withData.js instead
-export const searchTransactions = ({
-  address, limit, filter, showLoading = true, customFilters = {},
-  actionType = actionTypes.searchTransactions,
-}) =>
-  (dispatch, getState) => {
-    // TODO move assembling filters outside of this action in
-    // https://github.com/LiskHQ/lisk-hub/issues/2025
-    const filters = {
-      ...customFilters,
-      direction: filter,
-    };
-    const networkConfig = getState().network;
-    if (showLoading) dispatch(loadingStarted(actionType));
-    /* istanbul ignore else */
-    if (networkConfig) {
-      getTransactions({
-        networkConfig, address, limit, filters,
-      })
-        .then((transactionsResponse) => {
-          dispatch({
-            data: {
-              address,
-              transactions: transactionsResponse.data,
-              count: parseInt(transactionsResponse.meta.count, 10) || 0,
-              filters,
-            },
-            type: actionType,
-          });
-          if (filter !== undefined && actionType === actionTypes.searchTransactions) {
-            dispatch({
-              data: {
-                filterName: 'transactions',
-                value: filter,
-              },
-              type: actionTypes.addFilter,
-            });
-          }
-          if (showLoading) dispatch(loadingFinished(actionType));
-        });
-    }
-  };
-
-// TODO remove this action and use src/utils/withData.js instead
-export const searchMoreTransactions = params => (
-  searchTransactions({
-    ...params,
-    actionType: actionTypes.searchMoreTransactions,
-  })
-);
-
-// TODO remove this action and use src/utils/withData.js instead
-export const clearSearchSuggestions = () => ({
-  data: {},
-  type: actionTypes.searchClearSuggestions,
-});
-
-// TODO remove this action and use src/utils/withData.js instead
-export const searchSuggestions = ({ searchTerm, callback = () => {} }) =>
-  (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    searchAll({ liskAPIClient, searchTerm }).then((response) => {
-      dispatch({
-        data: response,
-        type: actionTypes.searchSuggestions,
-      });
-      callback(response);
-    }).catch(callback);
   };
