@@ -36,7 +36,7 @@ class Header extends React.Component {
       address,
       showDropdown: false,
       showSettingDrowdown: false,
-      network: loginNetwork.name,
+      network: loginNetwork.code,
       isFirstTime: true,
     };
     this.toggleDropdown = this.toggleDropdown.bind(this);
@@ -64,32 +64,35 @@ class Header extends React.Component {
   changeNetwork(network) {
     this.setState({
       network,
-      address: network === networks.mainnet.name || network === networks.testnet.name
+      address: network === networks.mainnet.code || network === networks.testnet.code
         ? '' : this.state.address,
     });
     this.props.settingsUpdated({ network });
   }
 
   getNetwork(chosenNetwork) {
-    const network = { ...getNetwork(chosenNetwork) };
-    if (chosenNetwork === networks.customNode.name) {
+    const network = { ...getNetwork(getNetworksList()[chosenNetwork].label) };
+    if (chosenNetwork === networks.customNode.code) {
       network.address = addHttp(this.state.address);
     }
     return network;
   }
 
   /* istanbul ignore next */
+  // eslint-disable-next-line max-statements
   validateCorrectNode(network, address, nextPath) {
     const nodeURL = address !== '' ? addHttp(address) : '';
-    if (network === networks.customNode.name) {
+    const newNetwork = this.getNetwork(network);
+
+    if (network === networks.customNode.code) {
       const liskAPIClient = new Lisk.APIClient([nodeURL], {});
       liskAPIClient.node.getConstants()
         .then((res) => {
           if (res.data) {
             this.props.networkSet({
-              name: network,
+              name: newNetwork.name,
               network: {
-                ...this.getNetwork(network),
+                ...newNetwork,
               },
             });
 
@@ -105,9 +108,9 @@ class Header extends React.Component {
       this.setState({ isValidationLoading: false, isFirstTime: false });
     } else {
       this.props.networkSet({
-        name: network,
+        name: newNetwork.name,
         network: {
-          ...this.getNetwork(network),
+          ...newNetwork,
         },
       });
       this.props.history.push(nextPath);
@@ -163,8 +166,8 @@ class Header extends React.Component {
                   onClick={() => this.toggleDropdown(!this.state.showDropdown)}
                 >
                   {
-                    selectedNetwork !== networks.customNode.name
-                      ? networkList.find(network => network.label === selectedNetwork).label
+                    selectedNetwork !== networks.customNode.code
+                      ? networkList[selectedNetwork].label
                       : address || this.state.address
                   }
                 </span>
@@ -176,14 +179,14 @@ class Header extends React.Component {
                 >
                   {
                     networkList && networkList.map((network, key) => {
-                      const activeTab = this.state.network === networks.customNode.name;
-                      if (network.label === networks.customNode.name) {
+                      const activeTab = this.state.network === networks.customNode.code;
+                      if (network.value === networks.customNode.code) {
                         return (
                           <span
                             className={`${styles.networkSpan} address`}
                             key={key}
                             onClick={() => {
-                              this.changeNetwork(network.label);
+                              this.changeNetwork(network.value);
                             }}
                           >
                             {network.label}
@@ -235,10 +238,10 @@ class Header extends React.Component {
                                         this.setState({ isValidationLoading: true });
                                         this.loaderTimeout = setTimeout(() => {
                                           this.validateCorrectNode(
-                                            networks.customNode.name,
+                                            networks.customNode.code,
                                             this.state.address,
                                           );
-                                          this.changeNetwork(networks.customNode.name);
+                                          this.changeNetwork(networks.customNode.code);
                                         }, 300);
                                       }}
                                       className={`${styles.button} ${styles.backButton} connect-button`}
@@ -256,8 +259,8 @@ class Header extends React.Component {
                       return (
                         <span
                           onClick={() => {
-                            this.changeNetwork(network.label);
-                            this.validateCorrectNode(network.label);
+                            this.changeNetwork(network.value);
+                            this.validateCorrectNode(network.value);
                             this.toggleDropdown(false);
                             this.setState({ connected: false, isFirstTime: true });
                           }}

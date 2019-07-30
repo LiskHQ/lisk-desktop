@@ -12,7 +12,8 @@ const mapStateToProps = state => ({
   account: state.account,
   network: state.network,
   settings: state.settings,
-  selectedNetwork: state.network.name || networks.mainnet.name,
+  selectedNetwork: (state.network.networks.LSK && state.network.networks.LSK.code)
+    || networks.mainnet.code,
   address: (state.network.networks[state.settings.token.active || tokenMap.LSK.key]
     && state.network.networks[state.settings.token.active || tokenMap.LSK.key].nodeUrl) || '',
   liskAPIClient: getAPIClient(state.settings.token.active || tokenMap.LSK.key, state),

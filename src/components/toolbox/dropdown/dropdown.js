@@ -45,14 +45,14 @@ Dropdown.propTypes = {
   showDropdown: PropTypes.bool,
   className: PropTypes.string,
   showArrow: PropTypes.bool,
-  active: PropTypes.string,
+  active: PropTypes.number,
 };
 
 Dropdown.defaultProps = {
   showDropdown: false,
   className: '',
   showArrow: true,
-  active: 'Mainnet',
+  active: 0,
 };
 
 Dropdown.Separator = Separator;
