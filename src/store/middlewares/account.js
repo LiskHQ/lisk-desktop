@@ -165,6 +165,7 @@ const autoLogInIfNecessary = async (store) => {
   const autologinData = getAutoLogInData();
   let loginNetwork;
 
+  // istanbul ignore next
   if (localStorage.getItem('hwWalletAutoLogin')) {
     const device = (await getDeviceList())[0];
     if (device) {
