@@ -99,7 +99,6 @@ describe('ExplorerTransactions Component', () => {
     balance: accounts.genesis.balance,
     detailAccount: accounts.genesis,
     hideChart: true, // Props to hide chart on tests, due to no canvas support
-    fetchVotedDelegateInfo: jest.fn(),
     activeToken: 'LSK',
   };
 
