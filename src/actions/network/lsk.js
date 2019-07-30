@@ -37,6 +37,8 @@ export const networkSet = data => async (dispatch) => {
     await getNethash(data.network.address).then((nethash) => {
       dispatch(generateAction(data, {
         nodeUrl: data.network.address,
+        custom: data.network.custom,
+        code: data.network.code,
         nethash,
       }));
     }).catch((error) => {
