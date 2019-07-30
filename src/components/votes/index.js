@@ -1,3 +1,4 @@
+// istanbul ignore file
 import { translate } from 'react-i18next';
 import { getVotes, getDelegates } from '../../utils/api/delegates';
 import withData from '../../utils/withData';
