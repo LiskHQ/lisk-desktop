@@ -17,6 +17,7 @@ Then(/^I click load more button$/, function (number) {
 });
 
 Then(/^I start voting$/, function () {
+  cy.wait(100);
   cy.get(ss.startVotingButton).click();
 });
 
