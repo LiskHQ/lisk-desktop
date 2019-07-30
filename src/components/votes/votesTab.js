@@ -34,6 +34,11 @@ class VotesTab extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (prevProps.address !== this.props.address) {
+      this.props.votes.loadData({ address: this.props.address });
+      this.fetchDelegateWhileNeeded();
+    }
+
     const prevDelegates = Object.keys(prevProps.delegates.data);
     const delegates = Object.keys(this.props.delegates.data);
     if (
@@ -58,7 +63,7 @@ class VotesTab extends React.Component {
       if (!a.rank || +a.rank > +b.rank) return 1;
       return -1;
     });
-    if (!(votes.slice(0, this.state.showing).slice(-1)[0] || {}).rank) {
+    if (votes.length && !(votes.slice(0, this.state.showing).slice(-1)[0] || {}).rank) {
       const offset = Object.keys(delegates).length;
       this.props.delegates.loadData({ offset, limit: 101 });
     }
