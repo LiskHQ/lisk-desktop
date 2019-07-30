@@ -29,19 +29,19 @@ class Delegates extends React.Component {
     const { t } = this.props;
     return [{
       title: t('Welcome to Lisk Delegates!'),
-      content: t('Lisk blockchain network is based on a Delegated Proof of Stake consensus algorithm, in which 101 delegates are elected by the community to secure the network.'),
+      content: t('Lisk\'s blockchain is based on the Delegated Proof of Stake (DPoS) consensus algorithm, in which 101 delegates are voted in by token holders to secure the network.'),
       illustration: 'welcomeLiskDelegates',
     }, {
       title: t('Your voice matters'),
-      content: t('In this section of Lisk Hub you can vote for up to 101 delegates to secure Lisk’s blockchain network. By doing so you have a real impact on the Lisk ecosystem.'),
+      content: t('Voting for delegates gives Lisk users the opportunity to choose who they trust to secure the network and validate the transactions that are sent on it.'),
       illustration: 'yourVoiceMatters',
     }, {
-      title: t('Get rewarded by the community'),
-      content: t('Some delegates offer to share a percentage of their earnings from running the network with the users who vote for them.'),
+      title: t('Casting a vote'),
+      content: t('We encourage community members to research individual delegate contributions to the Lisk ecosystem before voting. There are several community created sites which can assist with the process.'),
       illustration: 'getRewarded',
     }, {
       title: t('Expand your knowledge'),
-      content: t('You can find out more about Lisk’s delgates, voting mechanism and benefits in a dedicated section of Lisk’s help centre.'),
+      content: t('Want to know more? We’ve got you covered. Read more about Lisk’s consensus algorithm and its benefits in the Help Center.'),
       illustration: 'expandYourKnowledge',
     }];
   }
