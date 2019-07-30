@@ -2,7 +2,7 @@ import React from 'react';
 import DelegateTab from '../../delegate/delegateTab';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import TransactionsOverviewHeader from '../transactionsOverviewHeader/transactionsOverviewHeader';
-import VotesTab from '../../votes/votesTab';
+import VotesTab from '../../votes';
 import WalletTab from '../../wallet/walletTab';
 import actionTypes from '../../../constants/actions';
 import routes from '../../../constants/routes';
@@ -175,9 +175,6 @@ class ExplorerTransactions extends React.Component {
                 <VotesTab
                   history={this.props.history}
                   address={this.props.address}
-                  fetchVotedDelegateInfo={this.props.fetchVotedDelegateInfo}
-                  loading={this.props.loading}
-                  votes={this.props.votes}
                   tabClassName="account-info"
                   tabName={this.props.t('Votes')}
                 />
