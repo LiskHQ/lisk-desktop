@@ -11,7 +11,7 @@ import styles from './walletTransactions.css';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import WalletTab from '../../wallet/walletTab';
 import DelegateTab from '../../delegate/delegateTab';
-import VotesTab from '../../votes/votesTab';
+import VotesTab from '../../votes';
 
 class WalletTransactions extends React.Component {
   // eslint-disable-next-line max-statements
@@ -234,9 +234,6 @@ class WalletTransactions extends React.Component {
             <VotesTab
               history={this.props.history}
               address={this.props.account.address}
-              fetchVotedDelegateInfo={this.props.fetchVotedDelegateInfo}
-              loading={this.props.loading}
-              votes={this.props.votes}
               tabName={this.props.t('Votes')}
             />
           ) : null}

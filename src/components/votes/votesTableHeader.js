@@ -1,6 +1,5 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { translate } from 'react-i18next';
 import TableRow from '../toolbox/table/tableRow';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import styles from './votesTab.css';
@@ -30,4 +29,4 @@ const VotesTableHeader = ({ t }) => (
   </TableRow>
 );
 
-export default translate()(VotesTableHeader);
+export default VotesTableHeader;
