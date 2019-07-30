@@ -56,18 +56,19 @@ const apis = {
     defaultData: {
       data: [],
       meta: {},
+    },
+    defaultUrlSearchParams: {
       filters: {
         direction: txFilters.all,
       },
     },
-    transformResponse: (response, oldData, params) => (
+    transformResponse: (response, oldData) => (
       response.meta.offset > 0 ? {
         ...oldData,
         data: [
           ...oldData.data, ...response.data,
         ].sort(sortByTimestamp),
       } : {
-        filters: params.filters,
         ...response,
         data: response.data.sort(sortByTimestamp),
       }

@@ -43,7 +43,7 @@ class ExplorerTransactions extends React.Component {
     this.props.transactions.loadData({
       filters: {
         ...this.state.activeCustomFilters,
-        direction: this.props.transactions.data.filters.direction,
+        direction: this.props.transactions.urlSearchParams.filters.direction,
       },
     });
   }
@@ -59,7 +59,7 @@ class ExplorerTransactions extends React.Component {
       offset: this.props.transactions.data.data.length,
       filters: {
         ...this.state.activeCustomFilters,
-        direction: this.props.transactions.data.filters.direction,
+        direction: this.props.transactions.urlSearchParams.filters.direction,
       },
     });
   }
@@ -88,7 +88,7 @@ class ExplorerTransactions extends React.Component {
     this.props.transactions.loadData({
       filters: {
         ...customFilters,
-        direction: this.props.transactions.data.filters.direction,
+        direction: this.props.transactions.urlSearchParams.filters.direction,
       },
     });
     this.setState({ activeCustomFilters: customFilters, customFilters });
@@ -130,7 +130,7 @@ class ExplorerTransactions extends React.Component {
       updateCustomFilters: this.updateCustomFilters,
       activeToken: this.props.activeToken,
       transactions: this.props.transactions.data.data,
-      activeFilter: this.props.transactions.data.filters.direction,
+      activeFilter: this.props.transactions.urlSearchParams.filters.direction,
       loading: this.props.transactions.isLoading ? [actionTypes.transactionsLoaded] : [],
     };
     const { detailAccount } = this.props;

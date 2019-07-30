@@ -70,6 +70,8 @@ describe('ExplorerTransactions Component', () => {
           offset: 0,
           count: 1000,
         },
+      },
+      urlSearchParams: {
         filters: {},
       },
       loadData: jest.fn(),
