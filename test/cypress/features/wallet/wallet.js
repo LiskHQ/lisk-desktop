@@ -49,5 +49,6 @@ Then(/^I don't see incoming transaction in table$/, function () {
 });
 
 Then(/^I send LSK$/, function () {
+  cy.wait('@requestAccountData');
   cy.get(ss.sendToThisAccountBtn).click();
 });
