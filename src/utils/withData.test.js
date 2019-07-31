@@ -80,6 +80,24 @@ describe('withData', () => {
     */
   });
 
+  it('should work with two or more apis', () => {
+    const data = [];
+    const apis = {
+      dataKey: {
+        apiUtil: jest.fn().mockResolvedValue(data),
+        autoload: true,
+      },
+      dataKey2: {
+        apiUtil: jest.fn().mockRejectedValue(data),
+        autoload: true,
+      },
+    };
+    const DummyComponentHOC = withData(apis)(DummyComponent);
+    const wrapper = mount(<DummyComponentHOC />, options);
+    expect(wrapper.find('DummyComponent')).toHaveProp(Object.keys(apis)[0]);
+    expect(wrapper.find('DummyComponent')).toHaveProp(Object.keys(apis)[1]);
+  });
+
   it('should allow to loadData from passed component', () => {
     const data = [];
     const apis = {

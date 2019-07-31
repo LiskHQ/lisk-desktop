@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { translate } from 'react-i18next';
 import Box from '../box';
 import AccountVisual from '../accountVisual';
 import VotesTableHeader from './votesTableHeader';
@@ -10,14 +9,14 @@ import ProgressBar from '../toolbox/progressBar/progressBar';
 import { Input } from '../toolbox/inputs';
 import LiskAmount from '../liskAmount';
 import routes from '../../constants/routes';
-import actionTypes from '../../constants/actions';
 import styles from './votesTab.css';
 
 class VotesTab extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
+      votes: [],
       showing: 30,
       filterValue: '',
       isLoading: false,
@@ -29,29 +28,52 @@ class VotesTab extends React.Component {
     this.onRowClick = this.onRowClick.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
-    const nextVotes = nextProps.votes.slice(0, this.state.showing).slice(-1);
-    if (nextVotes[0] && !nextVotes[0].rank && !this.state.isLoading) {
-      this.props.fetchVotedDelegateInfo(nextProps.votes, {
-        address: this.props.address,
-        showingVotes: this.state.showing,
-      });
-      this.setState({ isLoading: true });
-      this.timeout = setTimeout(() => this.setState({ isLoading: false }), 300);
-      return false;
+  componentDidMount() {
+    this.props.votes.loadData({ address: this.props.address });
+    this.props.delegates.loadData({ offset: 0, limit: 101 });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.address !== this.props.address) {
+      this.props.votes.loadData({ address: this.props.address });
+      this.fetchDelegateWhileNeeded();
     }
-    return true;
+
+    const prevDelegates = Object.keys(prevProps.delegates.data);
+    const delegates = Object.keys(this.props.delegates.data);
+    if (
+      prevProps.votes.data.length !== this.props.votes.data.length
+      || prevDelegates.length !== delegates.length
+      || prevState.showing !== this.state.showing
+      || prevState.filterValue !== this.state.filterValue
+    ) {
+      this.fetchDelegateWhileNeeded();
+    }
+  }
+
+  fetchDelegateWhileNeeded() {
+    const { filterValue } = this.state;
+    const delegates = this.props.delegates.data;
+    const filteredVotes = this.props.votes.data.filter(vote => RegExp(filterValue, 'i').test(vote.username));
+    const votes = filteredVotes.map((vote) => {
+      const delegate = delegates[vote.username] || {};
+      return { ...vote, ...delegate };
+    }).sort((a, b) => {
+      if (!a.rank && !b.rank) return 0;
+      if (!a.rank || +a.rank > +b.rank) return 1;
+      return -1;
+    });
+    if (votes.length && !(votes.slice(0, this.state.showing).slice(-1)[0] || {}).rank) {
+      const offset = Object.keys(delegates).length;
+      this.props.delegates.loadData({ offset, limit: 101 });
+    }
+    this.setState({ votes });
   }
 
   onShowMore() {
-    const showing = this.state.showing + 30;
-    this.setState({
-      showing,
-    });
-    this.props.fetchVotedDelegateInfo(this.props.votes, {
-      address: this.props.address,
-      showingVotes: showing,
-    });
+    this.setState(state => ({
+      showing: state.showing + 30,
+    }));
   }
 
   handleFilter({ target }) {
@@ -62,11 +84,6 @@ class VotesTab extends React.Component {
     });
 
     this.timeout = setTimeout(() => {
-      this.props.fetchVotedDelegateInfo(this.props.votes, {
-        address: this.props.address,
-        filter: target.value,
-        showingVotes: this.state.showing,
-      });
       this.setState({
         isLoading: false,
       });
@@ -84,12 +101,11 @@ class VotesTab extends React.Component {
   }
 
   render() {
-    const { t, votes, loading } = this.props;
-    const { filterValue } = this.state;
-    const filteredVotes = votes.filter(vote => RegExp(filterValue, 'i').test(vote.username));
+    const { t, delegates, votes } = this.props;
+    const { filterValue, votes: mergedVotes } = this.state;
+    const filteredVotes = mergedVotes.filter(vote => RegExp(filterValue, 'i').test(vote.username));
     const canLoadMore = filteredVotes.length > this.state.showing;
-    const isLoading = loading.filter(type => actionTypes.searchVotes === type).length > 0
-      || this.state.isLoading;
+    const isLoading = this.state.isLoading || delegates.isLoading || votes.isLoading;
 
     return (
       <Box className={`${styles.wrapper}`}>
@@ -98,7 +114,7 @@ class VotesTab extends React.Component {
           <div className={`${styles.filterHolder}`}>
             <Input
               className="search"
-              disabled={votes && !votes.length}
+              disabled={mergedVotes && !mergedVotes.length}
               name="filter"
               value={filterValue}
               placeholder={t('Filter by name')}
@@ -114,7 +130,7 @@ class VotesTab extends React.Component {
               </div>
             ) : null
           }
-          <VotesTableHeader />
+          <VotesTableHeader t={t} />
           {filteredVotes.length
             ? filteredVotes.slice(0, this.state.showing).map((vote, key) => (
               <TableRow className={`${styles.row} vote-row`} onClick={() => this.onRowClick(vote.address)} key={`row-${key}`}>
@@ -185,26 +201,15 @@ class VotesTab extends React.Component {
 
 VotesTab.propTypes = {
   address: PropTypes.string,
-  votes: PropTypes.arrayOf(PropTypes.shape({
-    username: PropTypes.string,
-    address: PropTypes.string,
-    rank: PropTypes.number,
-    productivity: PropTypes.number,
-    rewards: PropTypes.string,
-    vote: PropTypes.string,
-  })),
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
   loading: PropTypes.array,
   t: PropTypes.func.isRequired,
-  fetchVotedDelegateInfo: PropTypes.func,
 };
 
-/* istanbul ignore next */
 VotesTab.defaultProps = {
-  votes: [],
   loading: [],
 };
 
-export default translate()(VotesTab);
+export default VotesTab;

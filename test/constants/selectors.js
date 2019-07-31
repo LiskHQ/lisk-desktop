@@ -232,6 +232,7 @@ const ss = {
   walletHeader: '.wallet-header',
   toast: '.toast',
   confirmDelegateButton: '.confirm-button',
+  coinRow: '.coin-row',
 };
 
 export default ss;
