@@ -4,50 +4,59 @@ import { getAPIClient } from './api/network';
 
 function withData(apis = {}) {
   return function (WrappedComponent) {
-    function getHOC(ChildComponent, {
-      key, autoload, apiUtil,
-      defaultData = {},
-      defaultUrlSearchParams = {},
-      transformResponse = data => data,
-    }) {
+    function getHOC(ChildComponent) {
       class DataProvider extends React.Component {
         constructor() {
           super();
-          this.defaultState = {
-            data: defaultData,
-            error: '',
-            isLoading: false,
-            urlSearchParams: defaultUrlSearchParams,
-          };
-
+          this.defaultState = Object.keys(apis).reduce((acc, key) => ({
+            ...acc,
+            [key]: {
+              data: apis[key].defaultData || {},
+              error: '',
+              isLoading: false,
+              urlSearchParams: apis[key].defaultUrlSearchParams || {},
+              loadData: this.loadData.bind(this, key),
+              clearData: this.clearData.bind(this, key),
+            },
+          }), {});
+          this.defaultTransformResponse = response => response;
 
           this.state = this.defaultState;
-
-          this.loadData = this.loadData.bind(this);
-          this.clearData = this.clearData.bind(this);
         }
 
         componentDidMount() {
-          if (autoload) {
-            this.loadData();
-          }
+          Object.keys(apis).forEach(key => apis[key].autoload && this.state[key].loadData());
         }
 
-        clearData() {
-          this.setState(this.defaultState);
+        clearData(key) {
+          this.setState({ [key]: this.defaultState[key] });
         }
 
-        loadData(urlSearchParams = defaultUrlSearchParams, ...args) {
+        loadData(key, urlSearchParams = this.state[key].defaultUrlSearchParams, ...args) {
           const { apiClient, apiParams } = this.props;
-          this.setState({ isLoading: true, urlSearchParams });
-          apiUtil(apiClient, { ...apiParams[key], ...urlSearchParams }, ...args).then((data) => {
-            this.setState({
-              ...this.defaultState,
-              data: transformResponse(data, this.state.data, urlSearchParams),
+          this.setState(state => ({
+            [key]: {
+              ...state[key],
+              isLoading: true,
               urlSearchParams,
+            },
+          }));
+          apis[key].apiUtil(apiClient, {
+            ...apiParams[key],
+            ...urlSearchParams,
+          }, ...args).then((data) => {
+            const transformResponse = apis[key].transformResponse || this.defaultTransformResponse;
+            this.setState({
+              [key]: {
+                ...this.defaultState[key],
+                data: transformResponse(data, this.state[key].data, urlSearchParams),
+                urlSearchParams,
+              },
             });
           }).catch((error) => {
-            this.setState({ ...this.defaultState, urlSearchParams, error });
+            this.setState({
+              [key]: { ...this.defaultState[key], urlSearchParams, error },
+            });
           });
         }
 
@@ -56,11 +65,7 @@ function withData(apis = {}) {
           return (
             <ChildComponent {...{
               ...restOfProps,
-              [key]: {
-                ...this.state,
-                loadData: this.loadData,
-                clearData: this.clearData,
-              },
+              ...this.state,
             }}
             />
           );
@@ -71,7 +76,7 @@ function withData(apis = {}) {
         return (child && (child.displayName || child.name)) || 'Component';
       }
 
-      DataProvider.displayName = `DataProvider-${key}(${getDisplayName(ChildComponent)})`;
+      DataProvider.displayName = `DataProvider(${getDisplayName(ChildComponent)})`;
 
       return DataProvider;
     }
@@ -86,8 +91,7 @@ function withData(apis = {}) {
       }, {}),
     });
 
-    const HOCWithData = keys.reduce((acc, key) => (
-      getHOC(acc, { ...apis[key], key })), WrappedComponent);
+    const HOCWithData = getHOC(WrappedComponent);
 
     return connect(
       mapStateToProps,

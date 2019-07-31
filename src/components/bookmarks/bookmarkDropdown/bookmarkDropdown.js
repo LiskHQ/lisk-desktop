@@ -63,8 +63,7 @@ class Bookmark extends React.Component {
     const index = getIndexOfBookmark(bookmarks, { address, token });
     const accounts = bookmarks[token];
     const bookmarkTitle = accounts[index] && accounts[index].title;
-    const delegateTitle = delegate.account && delegate.account.address === address
-      ? delegate.username : undefined;
+    const delegateTitle = delegate && delegate.username;
     const value = delegateTitle || bookmarkTitle || '';
     if (value !== fields.accountName.value) {
       this.setState({

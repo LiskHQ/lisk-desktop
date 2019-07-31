@@ -33,45 +33,6 @@ const searchDelegate = ({ publicKey, address }) =>
   };
 
 
-// TODO remove this action and use src/utils/withData.js instead
-export const fetchVotedDelegateInfo = (votes, {
-  showingVotes = 30, address, offset = 0, limit = 101, filter = '',
-}) =>
-  // eslint-disable-next-line max-statements
-  async (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    /* istanbul ignore if */
-    if (!liskAPIClient) return;
-    dispatch(loadingStarted(actionTypes.searchVotes));
-    const delegates = await getDelegates(liskAPIClient, { limit, offset });
-    const votesWithDelegateInfo = votes.map((vote) => {
-      const delegate = delegates.data.find(d => d.username === vote.username) || {};
-      return { ...vote, ...delegate };
-    }).sort((a, b) => {
-      if (!a.rank && !b.rank) return 0;
-      if (!a.rank || +a.rank > +b.rank) return 1;
-      return -1;
-    });
-
-    const filteredVotes = votesWithDelegateInfo.filter(vote => RegExp(filter, 'i').test(vote.username));
-    const lastIndex = showingVotes > filteredVotes.length
-      ? filteredVotes.length : showingVotes;
-    if (filteredVotes.length && !filteredVotes[lastIndex - 1].rank) {
-      dispatch(fetchVotedDelegateInfo(votesWithDelegateInfo, {
-        offset: offset + limit,
-        address,
-        showingVotes,
-        filter,
-      }));
-    } else {
-      dispatch({
-        type: actionTypes.searchVotes,
-        data: { votes: votesWithDelegateInfo, address },
-      });
-      dispatch(loadingFinished(actionTypes.searchVotes));
-    }
-  };
-
 const searchVotes = ({ address }) =>
   async (dispatch, getState) => {
     const liskAPIClient = getState().peers.liskAPIClient;
@@ -109,3 +70,5 @@ export const searchAccount = ({ address }) =>
       });
     }
   };
+
+export default searchAccount;
