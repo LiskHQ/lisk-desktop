@@ -11,7 +11,6 @@ import peersReducer from '../../store/reducers/peers';
 import accountReducer from '../../store/reducers/account';
 import searchReducer from '../../store/reducers/search';
 import loadingReducer from '../../store/reducers/loading';
-import filtersReducer from '../../store/reducers/filters';
 import bookmarksReducer from '../../store/reducers/bookmarks';
 import settingsReducer from '../../store/reducers/settings';
 import networkReducer from '../../store/reducers/network';
@@ -38,7 +37,6 @@ describe('AccountTransaction Component', () => {
     account: accountReducer,
     search: searchReducer,
     loading: loadingReducer,
-    filters: filtersReducer,
     settings: settingsReducer,
     network: networkReducer,
   }, [thunk]);
