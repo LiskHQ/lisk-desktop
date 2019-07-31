@@ -36,10 +36,6 @@ class ExplorerTransactions extends React.Component {
   onInit() {
     this.props.loadLastTransaction(this.props.address);
 
-    this.props.searchAccount({
-      address: this.props.address,
-    });
-
     this.props.transactions.loadData({
       filters: {
         ...this.state.activeCustomFilters,
@@ -132,11 +128,12 @@ class ExplorerTransactions extends React.Component {
       transactions: this.props.transactions.data.data,
       activeFilter: this.props.transactions.urlSearchParams.filters.direction,
       loading: this.props.transactions.isLoading ? [actionTypes.transactionsLoaded] : [],
+      balance: this.props.detailAccount.data.balance,
     };
     const { detailAccount } = this.props;
 
-    const delegate = detailAccount && detailAccount.delegate ? {
-      ...detailAccount.delegate,
+    const delegate = detailAccount.data && detailAccount.data.delegate ? {
+      ...detailAccount.data.delegate,
       ...(this.props.delegate || {}),
     } : { ...(this.props.delegate || {}) };
 
@@ -145,13 +142,12 @@ class ExplorerTransactions extends React.Component {
         <TransactionsOverviewHeader
           delegate={delegate}
           bookmarks={this.props.bookmarks}
-          balance={this.props.balance}
           address={this.props.address}
           match={this.props.match}
           t={this.props.t}
           account={this.props.account}
           activeToken={this.props.activeToken}
-          detailAccount={detailAccount}
+          detailAccount={detailAccount.data}
         />
         <TabsContainer>
           <WalletTab

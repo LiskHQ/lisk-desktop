@@ -2,11 +2,9 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
+import { getAccount } from '../../../utils/api/account';
 import { getTransactions } from '../../../utils/api/transactions';
 import { loadLastTransaction } from '../../../actions/transactions';
-import {
-  searchAccount, fetchVotedDelegateInfo,
-} from '../../../actions/search';
 import ExplorerTransactions from './explorerTransactions';
 import actionTypes from '../../../constants/actions';
 import txFilters from '../../../constants/transactionFilters';
@@ -25,15 +23,10 @@ const mapStateToProps = (state, ownProps) => ({
   account: state.account,
   bookmarks: state.bookmarks,
   wallets: state.wallets,
-  detailAccount: state.search.accounts[ownProps.address],
-  balance: state.search.accounts[ownProps.address]
-    && state.search.accounts[ownProps.address].balance,
   activeToken: state.settings.token ? state.settings.token.active : 'LSK',
 });
 
 const mapDispatchToProps = {
-  fetchVotedDelegateInfo,
-  searchAccount,
   searchUpdateLast: data => ({ data, type: actionTypes.searchUpdateLast }),
   loadLastTransaction,
 };
@@ -44,6 +37,15 @@ const sortByTimestamp = (a, b) => (
 );
 
 const apis = {
+  detailAccount: {
+    apiUtil: (liskAPIClient, params) => getAccount({ liskAPIClient, ...params }),
+    autoload: true,
+    getApiParams: (state, ownProps) => ({
+      token: state.settings.token.active,
+      address: ownProps.match.params.address,
+      networkConfig: state.network,
+    }),
+  },
   transactions: {
     apiUtil: (apiClient, params) => getTransactions(params),
     getApiParams: (state, ownProps) => ({

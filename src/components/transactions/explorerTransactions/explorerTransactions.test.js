@@ -82,14 +82,16 @@ describe('ExplorerTransactions Component', () => {
       loadData: jest.fn(),
     },
     transaction: transactions[0],
-    searchAccount: jest.fn(),
     loadTransactions: jest.fn(),
     loading: [],
     t: key => key,
     loadLastTransaction: jest.fn(),
     wallets: {},
     balance: accounts.genesis.balance,
-    detailAccount: accounts.genesis,
+    detailAccount: {
+      data: accounts.genesis,
+      loadData: jest.fn(),
+    },
     hideChart: true, // Props to hide chart on tests, due to no canvas support
     activeToken: 'LSK',
   };
@@ -137,9 +139,12 @@ describe('ExplorerTransactions Component', () => {
       match: { params: { address: accounts.delegate.address } },
       balance: accounts.delegate.balance,
       detailAccount: {
-        ...accounts.delegate,
-        delegate: {
-          username: accounts.genesis.username,
+        ...props.detailAccount,
+        data: {
+          ...accounts.delegate,
+          delegate: {
+            username: accounts.genesis.username,
+          },
         },
       },
       delegate: {
