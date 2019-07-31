@@ -1,26 +1,27 @@
 import { tokenMap } from './tokens';
-import Help from '../components/help';
-import Setting from '../components/setting';
-import SecondPassphrase from '../components/secondPassphrase';
-import SignMessage from '../components/signMessage';
-import TransactionDashboard from '../components/transactionDashboard';
-import AccountTransactions from '../components/accountTransactions';
-import Delegates from '../components/delegates';
-import Voting from '../components/voting';
-import SingleTransaction from '../components/singleTransaction';
-import HwWalletLogin from '../components/hwWalletLogin';
 import AccountVisualDemo from '../components/accountVisual/demo';
-import Send from '../components/send/send';
-import Splashscreen from '../components/splashscreen';
-import Register from '../components/register';
-import Login from '../components/login';
+import AddBookmark from '../components/bookmarks/addBookmark';
+import Bookmarks from '../components/bookmarks';
+import Dashboard from '../components/dashboard';
+import DelegateRegistration from '../components/delegateRegistration';
+import Delegates from '../components/delegates';
+import ExplorerTransactions from
+  '../components/transactions/explorerTransactions';
 import Extensions from '../components/extensions';
+import Help from '../components/help';
+import HwWalletLogin from '../components/hwWalletLogin';
+import Login from '../components/login';
+import Register from '../components/register';
+import SecondPassphrase from '../components/secondPassphrase';
+import Send from '../components/send/send';
+import Setting from '../components/setting';
+import SignMessage from '../components/signMessage';
+import SingleTransaction from '../components/singleTransaction';
+import Splashscreen from '../components/splashscreen';
 import TermsOfUse from '../components/termsOfUse';
 import ToolboxDemo from '../components/toolbox/demo';
-import Dashboard from '../components/dashboard';
-import Bookmarks from '../components/bookmarks';
-import AddBookmark from '../components/bookmarks/addBookmark';
-import DelegateRegistration from '../components/delegateRegistration';
+import TransactionDashboard from '../components/transactionDashboard';
+import Voting from '../components/voting';
 
 export default {
   accountVisualDemo: {
@@ -114,7 +115,7 @@ export default {
     pathPrefix: '',
     path: '/explorer/accounts',
     pathSuffix: '/:address?',
-    component: AccountTransactions,
+    component: ExplorerTransactions,
     isPrivate: false,
   },
   transactions: {
