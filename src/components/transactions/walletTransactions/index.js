@@ -9,7 +9,7 @@ import txFilters from '../../../constants/transactionFilters';
 import removeDuplicateTransactions from '../../../utils/transactions';
 import { getActiveTokenAccount } from '../../../utils/account';
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
   transaction: state.transaction,
   transactions:
@@ -24,7 +24,6 @@ const mapStateToProps = (state, ownProps) => ({
   bookmarks: state.bookmarks,
   wallets: state.wallets,
   balance: getActiveTokenAccount(state).balance,
-  votes: state.search.votes[ownProps.account.info.LSK.address],
 });
 
 const mapDispatchToProps = {

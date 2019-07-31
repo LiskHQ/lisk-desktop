@@ -3,31 +3,18 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { getAccount } from '../../../utils/api/account';
+import { getDelegateInfo } from '../../../utils/api/delegates';
 import { getTransactions } from '../../../utils/api/transactions';
-import { loadLastTransaction } from '../../../actions/transactions';
 import ExplorerTransactions from './explorerTransactions';
 import txFilters from '../../../constants/transactionFilters';
 import withData from '../../../utils/withData';
 
 const mapStateToProps = (state, ownProps) => ({
-  delegate: state.search.delegates[ownProps.address],
-  transaction: state.transaction,
-  // transactions: state.search.searchResults,
-  votes: state.search.votes[ownProps.address],
-  count: state.search.transactions[ownProps.address]
-    && (state.search.transactions[ownProps.address].count || 0),
-  offset: state.search.searchResults.length,
-  isSearchInStore: state.search.transactions[ownProps.address] !== undefined,
-  loading: state.loading,
   account: state.account,
+  address: ownProps.match.params.address,
   bookmarks: state.bookmarks,
-  wallets: state.wallets,
   activeToken: state.settings.token ? state.settings.token.active : 'LSK',
 });
-
-const mapDispatchToProps = {
-  loadLastTransaction,
-};
 
 // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
 const sortByTimestamp = (a, b) => (
@@ -40,15 +27,23 @@ const apis = {
     autoload: true,
     getApiParams: (state, ownProps) => ({
       token: state.settings.token.active,
-      address: ownProps.match.params.address,
+      address: ownProps.address,
       networkConfig: state.network,
     }),
+  },
+  delegate: {
+    apiUtil: getDelegateInfo,
+    defaultData: {},
+    getApiParams: (state, ownProps) => ({
+      address: ownProps.address,
+    }),
+    autoload: true,
   },
   transactions: {
     apiUtil: (apiClient, params) => getTransactions(params),
     getApiParams: (state, ownProps) => ({
       token: state.settings.token.active,
-      address: ownProps.match.params.address,
+      address: ownProps.address,
       networkConfig: state.network,
     }),
     defaultData: {
@@ -76,5 +71,4 @@ const apis = {
 
 export default withRouter(connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(withData(apis)(translate()(ExplorerTransactions))));

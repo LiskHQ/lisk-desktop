@@ -34,8 +34,6 @@ class ExplorerTransactions extends React.Component {
   }
 
   onInit() {
-    this.props.loadLastTransaction(this.props.address);
-
     this.props.transactions.loadData({
       filters: {
         ...this.state.activeCustomFilters,
@@ -130,17 +128,12 @@ class ExplorerTransactions extends React.Component {
       loading: this.props.transactions.isLoading ? [actionTypes.transactionsLoaded] : [],
       balance: this.props.detailAccount.data.balance,
     };
-    const { detailAccount } = this.props;
-
-    const delegate = detailAccount.data && detailAccount.data.delegate ? {
-      ...detailAccount.data.delegate,
-      ...(this.props.delegate || {}),
-    } : { ...(this.props.delegate || {}) };
+    const { detailAccount, delegate } = this.props;
 
     return (
       <React.Fragment>
         <TransactionsOverviewHeader
-          delegate={delegate}
+          delegate={delegate.data}
           bookmarks={this.props.bookmarks}
           address={this.props.address}
           match={this.props.match}
@@ -155,12 +148,12 @@ class ExplorerTransactions extends React.Component {
             {...overviewProps}
           />
           {
-            delegate.username
+            delegate.data.username
               ? (
                 <DelegateTab
                   tabClassName="delegate-statistics"
                   tabName={this.props.t('Delegate')}
-                  delegate={this.props.delegate}
+                  delegate={delegate.data}
                 />
               )
               : null

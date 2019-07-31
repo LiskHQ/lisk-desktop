@@ -1,10 +1,36 @@
-import i18next from 'i18next';
 import Lisk from '@liskhq/lisk-client';
+import i18next from 'i18next';
+import { getBlocks } from './blocks';
+import { getTransactions } from './transactions';
 import { loginType } from '../../constants/hwConstants';
-import { voteWithHW } from './hwWallet';
 import { splitVotesIntoRounds } from '../voting';
+import { voteWithHW } from './hwWallet';
+import transactionTypes from '../../constants/transactionTypes';
 
 export const getDelegates = (liskAPIClient, options) => liskAPIClient.delegates.get(options);
+
+export const getDelegateInfo = (liskAPIClient, { address }) => (
+  new Promise(async (resolve, reject) => {
+    try {
+      const delegate = (await getDelegates(liskAPIClient, { address })).data[0];
+      if (delegate) {
+        const txDelegateRegister = (await getTransactions({
+          liskAPIClient, address, limit: 1, type: transactionTypes.registerDelegate,
+        })).data[0];
+        const blocks = await getBlocks(liskAPIClient, {
+          generatorAddress: address, limit: 1,
+        });
+        resolve({
+          ...delegate,
+          lastBlock: (blocks.data[0] && blocks.data[0].timestamp) || '-',
+          txDelegateRegister,
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  })
+);
 
 export const getDelegateByName = (liskAPIClient, name) => new Promise((resolve, reject) => {
   liskAPIClient.delegates.get({ search: name, limit: 101 })
