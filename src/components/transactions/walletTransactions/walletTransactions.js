@@ -69,20 +69,16 @@ class WalletTransactions extends React.Component {
         direction: txFilters.all,
       },
     });
-
-    this.props.addFilter({
-      filterName: 'wallet',
-      value: txFilters.all,
-    });
   }
 
   /* istanbul ignore next */
   onLoadMore() {
+    const { filters } = this.props;
     this.props.loadTransactions({
       address: this.props.account.address,
       offset: this.props.transactions.length,
       filters: {
-        direction: this.props.activeFilter,
+        direction: filters.direction,
         ...this.state.customFilters,
       },
     });
@@ -96,21 +92,13 @@ class WalletTransactions extends React.Component {
   /* istanbul ignore next */
   onFilterSet(filter) {
     this.setState({ filter });
-    if (filter <= 2) {
-      this.props.loadTransactions({
-        address: this.props.address,
-        filters: {
-          direction: filter,
-          ...this.state.customFilters,
-        },
-      });
-    } else {
-      this.props.addFilter({
-        filterName: 'wallet',
-        value: filter,
-        customFilters: this.state.activeCustomFilters,
-      });
-    }
+    this.props.loadTransactions({
+      address: this.props.address,
+      filters: {
+        direction: filter,
+        ...this.state.customFilters,
+      },
+    });
   }
 
   onTransactionRowClick(props) {
@@ -120,10 +108,11 @@ class WalletTransactions extends React.Component {
 
   /* istanbul ignore next */
   saveFilters(customFilters) {
+    const { filters } = this.props;
     this.props.loadTransactions({
       address: this.props.address,
       filters: {
-        direction: this.props.activeFilter,
+        direction: filters.direction,
         ...customFilters,
       },
     });
@@ -183,6 +172,7 @@ class WalletTransactions extends React.Component {
       detailAccount: this.props.account,
       updateCustomFilters: this.updateCustomFilters,
       activeToken: this.props.activeToken,
+      activeFilter: this.props.filters.direction,
     };
 
     const { t, account, activeToken } = this.props;
