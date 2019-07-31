@@ -34,7 +34,9 @@ Given(/^I am on (.*?) page$/, function (page) {
       cy.server();
       cy.route('/api/node/constants').as('constants');
       cy.visit(urls.dashboard).then(() => {
-        if (window.localStorage.getItem('liskCoreUrl')) cy.wait('@constants');
+        const liskCoreUrl = window.localStorage.getItem('liskCoreUrl');
+        const isDevNet = liskCoreUrl !== 'https://testnet.lisk.io' && liskCoreUrl !== null;
+        if (isDevNet) cy.wait('@constants');
       });
       break;
     case 'second passphrase registration':

@@ -25,9 +25,9 @@ const mapStateToProps = (state, ownProps) => ({
   account: state.account,
   bookmarks: state.bookmarks,
   wallets: state.wallets,
-  detailAccount: state.search.accounts[state.search.lastSearch],
-  balance: state.search.accounts[state.search.lastSearch]
-    && state.search.accounts[state.search.lastSearch].balance,
+  detailAccount: state.search.accounts[ownProps.address],
+  balance: state.search.accounts[ownProps.address]
+    && state.search.accounts[ownProps.address].balance,
   activeToken: state.settings.token ? state.settings.token.active : 'LSK',
 });
 

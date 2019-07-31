@@ -9,16 +9,20 @@ import urls from '../../../constants/urls';
 const txConfirmationTimeout = 20000;
 
 Then(/^I see (\d+) delegates on page$/, function (number) {
-  cy.wait(100);
   cy.get(ss.delegateRow).should('have.length', number);
 });
 
 Then(/^I click load more button$/, function (number) {
+  cy.server();
+  cy.route('/api/delegates**').as('requestDelegate');
+  cy.wait('@requestDelegate');
   cy.get(ss.loadMoreButton).click();
 });
 
 Then(/^I start voting$/, function () {
-  cy.wait(100);
+  cy.server();
+  cy.route('/api/delegates**').as('requestDelegate');
+  cy.wait('@requestDelegate');
   cy.get(ss.startVotingButton).click();
 });
 
