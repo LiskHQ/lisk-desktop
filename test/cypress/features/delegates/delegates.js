@@ -13,10 +13,16 @@ Then(/^I see (\d+) delegates on page$/, function (number) {
 });
 
 Then(/^I click load more button$/, function (number) {
+  cy.server();
+  cy.route('/api/delegates**').as('requestDelegate');
+  cy.wait('@requestDelegate');
   cy.get(ss.loadMoreButton).click();
 });
 
 Then(/^I start voting$/, function () {
+  cy.server();
+  cy.route('/api/delegates**').as('requestDelegate');
+  cy.wait('@requestDelegate');
   cy.get(ss.startVotingButton).click();
 });
 

@@ -2,6 +2,7 @@ import {
   accountDataUpdated,
   updateDelegateAccount,
   updateTransactionsIfNeeded,
+  login,
 } from '../../actions/account';
 import { loadVotes } from '../../actions/voting';
 import {
@@ -12,8 +13,8 @@ import actionTypes from '../../constants/actions';
 import transactionTypes from '../../constants/transactionTypes';
 
 import { getActiveTokenAccount } from '../../utils/account';
-import { getAutoLogInData, shouldAutoLogIn } from '../../utils/login';
-import { liskAPIClientSet, liskAPIClientUpdate } from '../../actions/peers';
+import { getAutoLogInData, shouldAutoLogIn, findMatchingLoginNetwork } from '../../utils/login';
+import { networkSet, networkStatusUpdated } from '../../actions/network';
 import networks from '../../constants/networks';
 import settings from '../../constants/settings';
 import txFilters from '../../constants/transactionFilters';
@@ -120,29 +121,58 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }
 };
 
-const autoLogInIfNecessary = async (store) => {
+// eslint-disable-next-line max-statements
+const checkNetworkToConnet = () => {
   const autologinData = getAutoLogInData();
-  if (shouldAutoLogIn(autologinData)) {
-    store.dispatch(liskAPIClientSet({
+  let loginNetwork = findMatchingLoginNetwork();
+
+  if (loginNetwork) {
+    const net = loginNetwork.slice(-1).shift();
+    loginNetwork = {
+      name: net.name,
+      network: {
+        ...net,
+      },
+    };
+  }
+
+  if (!loginNetwork && autologinData.liskCoreUrl) {
+    loginNetwork = {
+      name: networks.customNode.name,
       passphrase: autologinData[settings.keys.loginKey],
       network: { ...networks.customNode, address: autologinData[settings.keys.liskCoreUrl] },
       options: {
         code: networks.customNode.code,
         address: autologinData[settings.keys.liskCoreUrl],
       },
-    }));
-    store.dispatch(liskAPIClientUpdate({
-      online: true,
-    }));
+    };
+  }
 
-  //  Ignoring coverage because autologin is a development feature not accessible by end users
-  } else /* istanbul ignore next */ if (localStorage.getItem('hwWalletAutoLogin')) {
+  if (!loginNetwork && !autologinData.liskCoreUrl) {
+    loginNetwork = {
+      name: networks.default.name,
+      network: {
+        ...networks.default,
+      },
+    };
+  }
+
+  return loginNetwork;
+};
+
+// eslint-disable-next-line max-statements
+const autoLogInIfNecessary = async (store) => {
+  const autologinData = getAutoLogInData();
+  let loginNetwork;
+
+  // istanbul ignore next
+  if (localStorage.getItem('hwWalletAutoLogin')) {
     const device = (await getDeviceList())[0];
-
     if (device) {
       const hwWalletType = /trezor/ig.test(device.deviceModel) ? loginType.trezor : loginType.ledger;
       const publicKey = await getHWPublicKeyFromIndex(device.deviceId, hwWalletType, 0);
-      store.dispatch(liskAPIClientSet({
+      loginNetwork = {
+        name: networks.customNode.name,
         hwInfo: {
           derivationIndex: 0,
           deviceId: device.deviceId,
@@ -154,11 +184,19 @@ const autoLogInIfNecessary = async (store) => {
           code: networks.customNode.code,
           address: autologinData[settings.keys.liskCoreUrl],
         },
-      }));
-      store.dispatch(liskAPIClientUpdate({
-        online: true,
-      }));
+      };
     }
+  } else {
+    loginNetwork = checkNetworkToConnet();
+  }
+
+  store.dispatch(await networkSet(loginNetwork));
+  store.dispatch(networkStatusUpdated({ online: true }));
+
+  if (shouldAutoLogIn(autologinData)) {
+    setTimeout(() => {
+      store.dispatch(login({ passphrase: autologinData[settings.keys.loginKey] }));
+    }, 500);
   }
 };
 

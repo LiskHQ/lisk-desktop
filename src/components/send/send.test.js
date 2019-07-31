@@ -13,7 +13,16 @@ describe('Form', () => {
   const store = configureMockStore([thunk])({
     settings: { currency: 'USD', token: { active: 'LSK' } },
     settingsUpdated: () => {},
-    peers: { liskAPIClient: {} },
+    network: {
+      status: { online: true },
+      name: 'Custom Node',
+      networks: {
+        LSK: {
+          nodeUrl: 'hhtp://localhost:4000',
+          nethash: '2349jih34',
+        },
+      },
+    },
     liskService: {
       success: true,
       LSK: {

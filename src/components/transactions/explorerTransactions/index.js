@@ -25,7 +25,6 @@ const mapStateToProps = (state, ownProps) => ({
   account: state.account,
   bookmarks: state.bookmarks,
   wallets: state.wallets,
-  peers: state.peers,
   detailAccount: state.search.accounts[ownProps.address],
   balance: state.search.accounts[ownProps.address]
     && state.search.accounts[ownProps.address].balance,

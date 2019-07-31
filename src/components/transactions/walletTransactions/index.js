@@ -24,7 +24,6 @@ const mapStateToProps = (state, ownProps) => ({
   loading: state.loading,
   bookmarks: state.bookmarks,
   wallets: state.wallets,
-  peers: state.peers,
   balance: getActiveTokenAccount(state).balance,
   votes: state.search.votes[ownProps.account.info.LSK.address],
 });

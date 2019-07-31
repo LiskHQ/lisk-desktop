@@ -10,7 +10,8 @@ describe('LoadingBar Container', () => {
   const props = {
     loading: [],
     markAsLoaded: sinon.spy(),
-    peers: {},
+    network: {},
+    liskAPIClient: '',
   };
 
   beforeEach(() => {
@@ -52,10 +53,12 @@ describe('LoadingBar Container', () => {
     expect(wrapper.find('ProgressBar')).not.to.be.present();
   });
 
-  it('should call markAsLoaded after peer is set', () => {
+  it('should call markAsLoaded after network is set', () => {
     const wrapper = mount(<LoadingBar {...props} />);
     expect(props.markAsLoaded).to.not.have.been.calledWith();
-    wrapper.setProps({ peers: { liskAPIClient: {} } });
+    wrapper.setProps({
+      liskAPIClient: {},
+    });
     expect(props.markAsLoaded).to.have.been.calledWith();
   });
 });

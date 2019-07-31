@@ -11,9 +11,15 @@ import routes from '../../constants/routes';
 describe('SplashScreen', () => {
   let wrapper;
 
-  const peers = {
-    data: {},
-    options: {},
+  const network = {
+    status: { online: true },
+    name: 'Custom Node',
+    networks: {
+      LSK: {
+        nodeUrl: 'hhtp://localhost:4000',
+        nethash: '2349jih34',
+      },
+    },
   };
 
   const history = {
@@ -52,7 +58,7 @@ describe('SplashScreen', () => {
   };
 
   const store = configureMockStore([])({
-    peers,
+    network,
     account,
     settings,
   });
@@ -67,7 +73,7 @@ describe('SplashScreen', () => {
   };
 
   const props = {
-    peers,
+    network,
     account,
     history,
     settings,

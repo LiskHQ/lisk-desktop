@@ -48,7 +48,7 @@ class Splashscreen extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.account
       && this.props.account.address
-      && !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.peers.options)) {
+      && !this.alreadyLoggedWithThisAddress(prevProps.account.address, prevProps.network)) {
       this.redirectToReferrer();
     }
   }
@@ -65,12 +65,13 @@ class Splashscreen extends React.Component {
     this.props.history.replace(referrerRoute);
   }
 
-  alreadyLoggedWithThisAddress(address, network) {
-    return this.props.account
-      && this.props.peers.options
-      && this.props.account.address === address
-      && this.props.peers.options.code === network.code
-      && this.props.peers.options.address === network.address;
+  alreadyLoggedWithThisAddress(address, prevNetwork) {
+    const { account, settings: { token }, network } = this.props;
+    return account
+      && network
+      && account.address === address
+      && network.name === prevNetwork.name
+      && network.networks[token.active].nodeUrl === prevNetwork.networks[token.active].nodeUrl;
   }
 
   render() {

@@ -24,6 +24,7 @@ Then(/^I search for account ([^s]+)$/, function (string) {
 Then(/^I search for delegate ([^s]+)$/, function (string) {
   cy.server();
   cy.route('/api/delegates**').as('requestDelegate');
+  cy.wait(100);
   cy.get(ss.searchInput).type(string);
   cy.wait('@requestDelegate');
 });

@@ -5,7 +5,7 @@ import {
 import * as accountActions from '../../actions/account';
 import * as transactionsActions from '../../actions/transactions';
 import * as votingActions from '../../actions/voting';
-import * as peersActions from '../../actions/peers';
+import * as networkActions from '../../actions/network';
 import * as accountApi from '../../utils/api/account';
 import * as transactionsApi from '../../utils/api/lsk/transactions';
 import * as accountUtils from '../../utils/login';
@@ -25,7 +25,7 @@ describe('Account middleware', () => {
   let stubTransactions;
   let transactionsActionsStub;
   let getAutoLogInDataMock;
-  let liskAPIClientSetMock;
+  let networkSetMock;
   let accountDataUpdatedSpy;
   const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
   const storeCreatedAction = {
@@ -61,8 +61,15 @@ describe('Account middleware', () => {
     store = stub();
     store.dispatch = spy();
     state = {
-      peers: {
-        liskAPIClient: {},
+      network: {
+        status: { online: true },
+        name: 'Custom Node',
+        networks: {
+          LSK: {
+            nodeUrl: 'hhtp://localhost:4000',
+            nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+          },
+        },
       },
       account: {
         address: 'sample_address',
@@ -92,7 +99,7 @@ describe('Account middleware', () => {
     stubTransactions = stub(transactionsApi, 'getTransactions').returnsPromise().resolves(true);
     getAutoLogInDataMock = stub(accountUtils, 'getAutoLogInData');
     getAutoLogInDataMock.withArgs().returns({ });
-    liskAPIClientSetMock = stub(peersActions, 'liskAPIClientSet').returns(liskAPIClientMock);
+    networkSetMock = stub(networkActions, 'networkSet').returns(liskAPIClientMock);
     accountDataUpdatedSpy = spy(accountActions, 'accountDataUpdated');
   });
 
@@ -104,7 +111,7 @@ describe('Account middleware', () => {
     stubTransactions.restore();
     clock.restore();
     getAutoLogInDataMock.restore();
-    liskAPIClientSetMock.restore();
+    networkSetMock.restore();
     accountDataUpdatedSpy.restore();
   });
 
@@ -163,7 +170,16 @@ describe('Account middleware', () => {
         }],
         confirmed: [{ confirmations: 10, address: 'sample_address' }],
       },
-      peers: { liskAPIClient: {} },
+      network: {
+        status: { online: true },
+        name: 'Custom Node',
+        networks: {
+          LSK: {
+            nodeUrl: 'hhtp://localhost:4000',
+            nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+          },
+        },
+      },
     });
 
     middleware(store)(next)(newBlockCreated);
@@ -194,13 +210,13 @@ describe('Account middleware', () => {
     });
   });
 
-  it(`should dispatch ${actionTypes.liskAPIClientSet} action on ${actionTypes.storeCreated} if autologin data found in localStorage`, () => {
+  it(`should dispatch ${actionTypes.networkSet} action on ${actionTypes.storeCreated} if autologin data found in localStorage`, async () => {
     getAutoLogInDataMock.withArgs().returns({
       [settings.keys.loginKey]: passphrase,
       [settings.keys.liskCoreUrl]: networks.testnet.nodes[0],
     });
-    middleware(store)(next)(storeCreatedAction);
-    expect(store.dispatch).to.have.been.calledWith(liskAPIClientMock);
+    await middleware(store)(next)(storeCreatedAction);
+    expect(store.dispatch).to.have.been.calledWith();
   });
 
   it(`should do nothing on ${actionTypes.storeCreated} if autologin data NOT found in localStorage`, () => {

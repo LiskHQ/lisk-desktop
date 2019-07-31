@@ -8,11 +8,13 @@ import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import transactionTypes from '../constants/transactionTypes';
 import { tokenMap } from '../constants/tokens';
+import { getAPIClient } from '../utils/api/network';
 
 const searchDelegate = ({ publicKey, address }) =>
   async (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
-    const networkConfig = getState().network;
+    const { settings: { token: { active } }, network } = getState();
+    const liskAPIClient = getAPIClient(active, getState());
+    const networkConfig = network;
     const token = tokenMap.LSK.key;
     const delegates = await getDelegates(liskAPIClient, { publicKey });
     const transactions = await getTransactions({
@@ -32,10 +34,10 @@ const searchDelegate = ({ publicKey, address }) =>
     });
   };
 
-
 const searchVotes = ({ address }) =>
   async (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const { settings: { token: { active } } } = getState();
+    const liskAPIClient = getAPIClient(active, getState());
     /* istanbul ignore if */
     if (!liskAPIClient) return;
     dispatch(loadingStarted(actionTypes.searchVotes));

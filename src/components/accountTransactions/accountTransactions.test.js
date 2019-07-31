@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { prepareStore } from '../../../test/unit-test-utils/applicationInit';
 import * as search from '../../actions/search';
-import peersReducer from '../../store/reducers/peers';
 import accountReducer from '../../store/reducers/account';
 import searchReducer from '../../store/reducers/search';
 import loadingReducer from '../../store/reducers/loading';
@@ -15,7 +14,7 @@ import bookmarksReducer from '../../store/reducers/bookmarks';
 import settingsReducer from '../../store/reducers/settings';
 import networkReducer from '../../store/reducers/network';
 
-import { liskAPIClientSet } from '../../actions/peers';
+import { networkSet } from '../../actions/network';
 import networks from '../../constants/networks';
 import getNetwork from '../../utils/getNetwork';
 
@@ -33,7 +32,6 @@ describe('AccountTransaction Component', () => {
 
   const store = prepareStore({
     bookmarks: bookmarksReducer,
-    peers: peersReducer,
     account: accountReducer,
     search: searchReducer,
     loading: loadingReducer,
@@ -53,7 +51,8 @@ describe('AccountTransaction Component', () => {
       t: key => key,
     };
 
-    store.dispatch(liskAPIClientSet({ network: getNetwork(networks.testnet.code) }));
+    const network = getNetwork(networks.testnet.name);
+    store.dispatch(networkSet({ name: network.name, ...network }));
 
     wrapper = mount(<Provider store={store}>
       <Router>

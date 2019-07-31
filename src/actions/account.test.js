@@ -21,7 +21,7 @@ import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import networks from '../constants/networks';
 import accounts from '../../test/constants/accounts';
-import * as peersActions from './peers';
+import * as networkActions from './network';
 import * as transactionsActions from './transactions';
 
 jest.mock('../utils/api/account');
@@ -68,7 +68,21 @@ describe('actions: account', () => {
       accountApiMock = stub(accountApi, 'setSecondPassphrase');
       dispatch = jest.fn();
       getState = () => ({
-        peers: { liskAPIClient: {} },
+        network: {
+          status: { online: true },
+          name: 'Mainnet',
+          networks: {
+            LSK: {
+              nodeUrl: 'hhtp://localhost:4000',
+              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+            },
+          },
+        },
+        settings: {
+          token: {
+            active: 'LSK',
+          },
+        },
       });
       i18nextMock = stub(i18next, 't');
       i18next.t = key => key;
@@ -132,7 +146,7 @@ describe('actions: account', () => {
   });
 
   describe('accountDataUpdated', () => {
-    let peersActionsStub;
+    let networkActionsStub;
     let getAccountStub;
     let transactionsActionsStub;
     let getState;
@@ -140,17 +154,31 @@ describe('actions: account', () => {
     const dispatch = spy();
 
     beforeEach(() => {
-      peersActionsStub = spy(peersActions, 'liskAPIClientUpdate');
+      networkActionsStub = spy(networkActions, 'networkStatusUpdated');
       getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
       transactionsActionsStub = spy(transactionsActions, 'updateTransactions');
       getState = () => ({
-        peers: { liskAPIClient: {}, options: { code: 0 } },
+        network: {
+          status: { online: true },
+          name: 'Mainnet',
+          networks: {
+            LSK: {
+              nodeUrl: 'hhtp://localhost:4000',
+              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+            },
+          },
+        },
+        settings: {
+          token: {
+            active: 'LSK',
+          },
+        },
       });
     });
 
     afterEach(() => {
       getAccountStub.restore();
-      peersActionsStub.restore();
+      networkActionsStub.restore();
       transactionsActionsStub.restore();
     });
 
@@ -171,7 +199,7 @@ describe('actions: account', () => {
 
       accountDataUpdated(data)(dispatch, getState);
       chaiExpect(dispatch).to.have.callCount(3);
-      chaiExpect(peersActionsStub).to.have.not.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
+      chaiExpect(networkActionsStub).to.have.not.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
     });
 
     it(`should call account API methods on ${actionTypes.newBlockCreated} action when offline`, () => {
@@ -188,7 +216,7 @@ describe('actions: account', () => {
       };
 
       accountDataUpdated(data)(dispatch, getState);
-      chaiExpect(peersActionsStub).to.have.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
+      chaiExpect(networkActionsStub).to.have.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
     });
   });
 
@@ -201,7 +229,21 @@ describe('actions: account', () => {
     beforeEach(() => {
       transactionsActionsStub = spy(transactionsActions, 'updateTransactions');
       getState = () => ({
-        peers: { liskAPIClient: {} },
+        network: {
+          status: { online: true },
+          name: 'Mainnet',
+          networks: {
+            LSK: {
+              nodeUrl: 'hhtp://localhost:4000',
+              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+            },
+          },
+        },
+        settings: {
+          token: {
+            active: 'LSK',
+          },
+        },
       });
     });
 
@@ -237,10 +279,24 @@ describe('actions: account', () => {
     beforeEach(() => {
       stub(delegateApi, 'getDelegates').returnsPromise();
       getState = () => ({
-        peers: { liskAPIClient: {} },
+        network: {
+          status: { online: true },
+          name: 'Mainnet',
+          networks: {
+            LSK: {
+              nodeUrl: 'hhtp://localhost:4000',
+              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+            },
+          },
+        },
         account: {
           info: {
             LSK: {},
+          },
+        },
+        settings: {
+          token: {
+            active: 'LSK',
           },
         },
       });
@@ -274,10 +330,24 @@ describe('actions: account', () => {
       stub(blocksApi, 'getBlocks').returnsPromise();
       stub(transactionsApi, 'getTransactions').returnsPromise();
       getState = () => ({
-        peers: { liskAPIClient: {} },
+        network: {
+          status: { online: true },
+          name: 'Mainnet',
+          networks: {
+            LSK: {
+              nodeUrl: 'hhtp://localhost:4000',
+              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+            },
+          },
+        },
         account: {
           info: {
             LSK: {},
+          },
+        },
+        settings: {
+          token: {
+            active: 'LSK',
           },
         },
       });

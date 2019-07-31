@@ -12,7 +12,8 @@ describe('Offline middleware', () => {
   let store;
   let next;
   let action;
-  let peers;
+  let network;
+  let settings;
 
   beforeEach(() => {
     store = stub();
@@ -22,14 +23,22 @@ describe('Offline middleware', () => {
       type: actionType.liskAPIClientUpdate,
       data: {},
     };
-    peers = {
-      liskAPIClient: {
-        port: 4000,
-        currentPeer: 'localhost',
+    settings = {
+      token: {
+        active: 'LSK',
       },
-      status: {},
     };
-    store.getState = () => ({ peers });
+    network = {
+      status: { online: true },
+      name: 'Custom Node',
+      networks: {
+        LSK: {
+          nodeUrl: 'hhtp://localhost:4000',
+          nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+        },
+      },
+    };
+    store.getState = () => ({ network, settings });
   });
 
   it('should pass the action to next middleware on some random action', () => {
@@ -41,8 +50,8 @@ describe('Offline middleware', () => {
     expect(next).to.have.been.calledWith(randomAction);
   });
 
-  it(`should dispatch errorToastDisplayed on ${actionType.liskAPIClientUpdate} action if !action.data.online and state.peer.status.online and action.data.code`, () => {
-    peers.status.online = true;
+  it(`should dispatch errorToastDisplayed on ${actionType.liskAPIClientUpdate} action if !action.data.online and state.network.status.online and action.data.code`, () => {
+    network.status.online = true;
     action.data = {
       online: false,
       code: 'ANY OTHER CODE',
@@ -54,8 +63,8 @@ describe('Offline middleware', () => {
     }));
   });
 
-  it(`should dispatch errorToastDisplayed on ${actionType.liskAPIClientUpdate} action if !action.data.online and state.peer.status.online and action.data.code = "EUNAVAILABLE"`, () => {
-    peers.status.online = true;
+  it(`should dispatch errorToastDisplayed on ${actionType.liskAPIClientUpdate} action if !action.data.online and state.network.status.online and action.data.code = "EUNAVAILABLE"`, () => {
+    network.status.online = true;
     action.data = {
       online: false,
       code: 'EUNAVAILABLE',
@@ -63,12 +72,12 @@ describe('Offline middleware', () => {
 
     middleware(store)(next)(action);
     expect(store.dispatch).to.have.been.calledWith(errorToastDisplayed({
-      label: i18next.t('Failed to connect: Node {{address}} is not active', { address: `${peers.liskAPIClient.currentPeer}:${peers.liskAPIClient.port}` }),
+      label: i18next.t('Failed to connect: Node {{address}} is not active', { address: `${network.networks.LSK.nodeUrl}` }),
     }));
   });
 
-  it(`should dispatch errorToastDisplayed on ${actionType.liskAPIClientUpdate} action if !action.data.online and state.peer.status.online and action.data.code = "EPARSE"`, () => {
-    peers.status.online = true;
+  it(`should dispatch errorToastDisplayed on ${actionType.liskAPIClientUpdate} action if !action.data.online and state.network.status.online and action.data.code = "EPARSE"`, () => {
+    network.status.online = true;
     action.data = {
       online: false,
       code: 'EPARSE',
@@ -81,8 +90,8 @@ describe('Offline middleware', () => {
     }));
   });
 
-  it(`should dispatch successToastDisplayed on ${actionType.liskAPIClientUpdate} action if action.data.online and !state.peer.status.online`, () => {
-    peers.status.online = false;
+  it(`should dispatch successToastDisplayed on ${actionType.liskAPIClientUpdate} action if action.data.online and !state.network.status.online`, () => {
+    network.status.online = false;
     action.data.online = true;
 
     middleware(store)(next)(action);
@@ -91,16 +100,16 @@ describe('Offline middleware', () => {
     }));
   });
 
-  it(`should not call next() on ${actionType.liskAPIClientUpdate} action if action.data.online === state.peer.status.online`, () => {
-    peers.status.online = false;
+  it(`should not call next() on ${actionType.liskAPIClientUpdate} action if action.data.online === state.network.status.online`, () => {
+    network.status.online = false;
     action.data.online = false;
 
     middleware(store)(next)(action);
     expect(next).not.to.have.been.calledWith();
   });
 
-  it(`should call next() on ${actionType.liskAPIClientUpdate} action if action.data.online !== state.peer.status.online`, () => {
-    peers.status.online = true;
+  it(`should call next() on ${actionType.liskAPIClientUpdate} action if action.data.online !== state.network.status.online`, () => {
+    network.status.online = true;
     action.data.online = false;
 
     middleware(store)(next)(action);

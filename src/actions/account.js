@@ -6,7 +6,8 @@ import { getDelegates } from '../utils/api/delegates';
 import { getTransactions } from '../utils/api/transactions';
 import { getBlocks } from '../utils/api/blocks';
 import { updateTransactions } from './transactions';
-import { liskAPIClientUpdate } from './peers';
+import { networkStatusUpdated } from './network';
+import { getAPIClient } from '../utils/api/network';
 import { getTimeOffset } from '../utils/hacks';
 import transactionTypes from '../constants/transactionTypes';
 import accountConfig from '../constants/account';
@@ -76,7 +77,8 @@ export const secondPassphraseRegistered = ({
   secondPassphrase, account, passphrase, callback,
 }) =>
   (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const { settings: { token: { active } } } = getState();
+    const liskAPIClient = getAPIClient(active, getState());
     const timeOffset = getTimeOffset(getState());
     setSecondPassphrase(liskAPIClient, secondPassphrase, account.publicKey, passphrase, timeOffset)
       .then((transaction) => {
@@ -103,7 +105,8 @@ export const secondPassphraseRegistered = ({
 
 export const updateDelegateAccount = ({ publicKey }) =>
   (dispatch, getState) => {
-    const { peers: { liskAPIClient }, account } = getState();
+    const { account, settings: { token: { active } } } = getState();
+    const liskAPIClient = getAPIClient(active, getState());
     return getDelegates(liskAPIClient, { publicKey })
       .then((response) => {
         dispatch(accountUpdated({
@@ -160,15 +163,16 @@ export const accountDataUpdated = ({
           ));
         }
         dispatch(accountUpdated(result));
-        dispatch(liskAPIClientUpdate({ online: true }));
+        dispatch(networkStatusUpdated({ online: true }));
       }).catch((res) => {
-        dispatch(liskAPIClientUpdate({ online: false, code: res.error.code }));
+        dispatch(networkStatusUpdated({ online: false, code: res.error.code }));
       });
   };
 
 export const updateAccountDelegateStats = account =>
   async (dispatch, getState) => {
-    const liskAPIClient = getState().peers.liskAPIClient;
+    const { settings: { token: { active } } } = getState();
+    const liskAPIClient = getAPIClient(active, getState());
     const { address, publicKey } = account;
     const networkConfig = getState().network;
     const token = tokenMap.LSK.key;
@@ -186,31 +190,35 @@ export const updateAccountDelegateStats = account =>
     }));
   };
 
+// eslint-disable-next-line max-statements
 export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, getState) => {
   const { network: networkConfig, settings } = getState();
   dispatch(accountLoading());
+  try {
+    const lskAccount = await getAccount({
+      token: tokenMap.LSK.key, networkConfig, publicKey, passphrase,
+    });
 
-  await getAccount({
-    token: tokenMap.LSK.key, networkConfig, publicKey, passphrase,
-  }).then(async (accountData) => {
     const expireTime = (passphrase && settings.autoLog)
-      ? Date.now() + accountConfig.lockDuration : 0;
-    const btcAccountData = settings.token.list.BTC
-      && await getAccount({ token: tokenMap.BTC.key, networkConfig, passphrase });
-    dispatch(accountLoggedIn({
-      passphrase,
-      loginType: hwInfo ? loginType[hwInfo.deviceModel.replace(/\s.+$/, '').toLowerCase()] : loginType.normal,
-      hwInfo: hwInfo || {},
-      expireTime,
-      info: {
-        LSK: accountData,
-        ...(btcAccountData ? { BTC: btcAccountData } : {}),
-      },
-    }));
-  }).catch((error) => {
-    dispatch(errorToastDisplayed({
-      label: getConnectionErrorMessage(error),
-    }));
+      ? Date.now() + accountConfig.lockDuration
+      : 0;
+
+    if (lskAccount) {
+      const btcAccount = settings.token.list.BTC
+        && await getAccount({ token: tokenMap.BTC.key, networkConfig, passphrase });
+      dispatch(accountLoggedIn({
+        passphrase,
+        loginType: hwInfo ? loginType[hwInfo.deviceModel.replace(/\s.+$/, '').toLowerCase()] : loginType.normal,
+        hwInfo: hwInfo || {},
+        expireTime,
+        info: {
+          LSK: lskAccount,
+          ...(btcAccount ? { BTC: btcAccount } : {}),
+        },
+      }));
+    }
+  } catch (error) {
+    dispatch(errorToastDisplayed({ label: getConnectionErrorMessage(error) }));
     dispatch(accountLoggedOut());
-  });
+  }
 };

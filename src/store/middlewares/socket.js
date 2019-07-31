@@ -1,6 +1,7 @@
 import io from 'socket.io-client';
 import actionTypes from '../../constants/actions';
-import { liskAPIClientUpdate } from '../../actions/peers';
+import { networkStatusUpdated } from '../../actions/network';
+import { getAPIClient } from '../../utils/api/network';
 
 let connection;
 let forcedClosing = false;
@@ -27,6 +28,7 @@ const shouldUpdateBtc = (state) => {
   return false;
 };
 
+// eslint-disable-next-line max-statements
 const socketSetup = (store) => {
   let windowIsFocused = true;
   const { ipc } = window;
@@ -34,8 +36,9 @@ const socketSetup = (store) => {
     ipc.on('blur', () => { windowIsFocused = false; });
     ipc.on('focus', () => { windowIsFocused = true; });
   }
-
-  connection = io.connect(store.getState().peers.liskAPIClient.currentNode);
+  const state = store.getState();
+  const liskAPIClient = getAPIClient(state.settings.token.active, state);
+  connection = io.connect(liskAPIClient.currentNode);
   connection.on('blocks/change', (block) => {
     if (shouldUpdateBtc(store.getState())) {
       store.dispatch({
@@ -46,11 +49,11 @@ const socketSetup = (store) => {
   });
   connection.on('disconnect', () => {
     if (!forcedClosing) {
-      store.dispatch(liskAPIClientUpdate({ online: false }));
+      store.dispatch(networkStatusUpdated({ online: false }));
     }
   });
   connection.on('reconnect', () => {
-    store.dispatch(liskAPIClientUpdate({ online: true }));
+    store.dispatch(networkStatusUpdated({ online: true }));
   });
 };
 
