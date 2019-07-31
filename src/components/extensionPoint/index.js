@@ -6,10 +6,6 @@ import {
   sent,
   loadSingleTransaction,
 } from '../../actions/transactions';
-import {
-  searchDelegate,
-  searchVotes,
-} from '../../actions/search';
 import ExtensionPoint from './extensionPoint';
 
 const mapStateToProps = state => ({
@@ -18,15 +14,12 @@ const mapStateToProps = state => ({
   blocks: state.blocks,
   transactions: state.transactions,
   account: state.account,
-  search: state.search,
 });
 
 const mapDispatchToProps = {
   loadTransactions,
   sent,
   loadSingleTransaction,
-  searchDelegate,
-  searchVotes,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(ExtensionPoint));

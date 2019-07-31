@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { prepareStore } from '../../../test/unit-test-utils/applicationInit';
 import accountReducer from '../../store/reducers/account';
-import searchReducer from '../../store/reducers/search';
 import loadingReducer from '../../store/reducers/loading';
 import bookmarksReducer from '../../store/reducers/bookmarks';
 import settingsReducer from '../../store/reducers/settings';
@@ -31,7 +30,6 @@ describe('AccountTransaction Component', () => {
   const store = prepareStore({
     bookmarks: bookmarksReducer,
     account: accountReducer,
-    search: searchReducer,
     loading: loadingReducer,
     settings: settingsReducer,
     network: networkReducer,

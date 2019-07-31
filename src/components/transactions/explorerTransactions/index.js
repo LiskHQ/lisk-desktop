@@ -6,7 +6,6 @@ import { getAccount } from '../../../utils/api/account';
 import { getTransactions } from '../../../utils/api/transactions';
 import { loadLastTransaction } from '../../../actions/transactions';
 import ExplorerTransactions from './explorerTransactions';
-import actionTypes from '../../../constants/actions';
 import txFilters from '../../../constants/transactionFilters';
 import withData from '../../../utils/withData';
 
@@ -27,7 +26,6 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = {
-  searchUpdateLast: data => ({ data, type: actionTypes.searchUpdateLast }),
   loadLastTransaction,
 };
 
