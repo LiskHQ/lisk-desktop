@@ -71,13 +71,13 @@ describe('WalletTransactions Component', () => {
     loadTransactions: jest.fn(),
     loadLastTransaction: jest.fn(),
     updateAccountDelegateStats: jest.fn(),
-    addFilter: jest.fn(),
     loading: [],
     wallets: {},
     t: key => key,
     searchAccount: jest.fn(),
     hideChart: true, // Props to hide chart on tests, due to no canvas support
     activeToken: 'LSK',
+    filters: {},
   };
 
   beforeEach(() => {

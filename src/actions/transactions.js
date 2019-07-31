@@ -68,15 +68,6 @@ export const loadTransactions = ({
           },
           type: offset > 0 ? actionTypes.updateTransactions : actionTypes.transactionsLoaded,
         });
-        if (filters && filters.direction !== undefined) {
-          dispatch({
-            data: {
-              filterName: 'wallet',
-              value: filters.direction,
-            },
-            type: actionTypes.addFilter,
-          });
-        }
         dispatch(loadingFinished(actionTypes.loadTransactions));
       });
   };

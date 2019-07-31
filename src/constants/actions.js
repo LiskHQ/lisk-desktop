@@ -7,7 +7,6 @@ const actionTypes = {
   accountsRetrieved: 'ACCOUNTS_RETRIEVED',
   accountSwitched: 'ACCOUNT_SWITCHED',
   accountUpdated: 'ACCOUNT_UPDATED',
-  addFilter: 'ADD_FILTER',
   cleanTransactions: 'CLEAN_TRANSACTIONS',
   delegateRegisteredSuccess: 'DELEGATE_REGISTERED_SUCCESS',
   delegateRetrieved: 'DELEGATE_RETRIEVED',

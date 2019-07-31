@@ -6,7 +6,6 @@ import { loadLastTransaction, loadTransactions } from '../../../actions/transact
 import { searchAccount, fetchVotedDelegateInfo } from '../../../actions/search';
 import { updateAccountDelegateStats } from '../../../actions/account';
 import WalletTransactions from './walletTransactions';
-import actionTypes from '../../../constants/actions';
 import txFilters from '../../../constants/transactionFilters';
 import removeDuplicateTransactions from '../../../utils/transactions';
 import { getActiveTokenAccount } from '../../../utils/account';
@@ -20,7 +19,8 @@ const mapStateToProps = (state, ownProps) => ({
       state.transactions.confirmed,
     ),
   count: state.transactions.count,
-  activeFilter: state.filters.wallet || txFilters.all,
+  activeFilter: state.transactions.filters.direction || txFilters.all,
+  filters: state.transactions.filters,
   loading: state.loading,
   bookmarks: state.bookmarks,
   wallets: state.wallets,
@@ -34,7 +34,6 @@ const mapDispatchToProps = {
   updateAccountDelegateStats,
   searchAccount,
   fetchVotedDelegateInfo,
-  addFilter: data => ({ type: actionTypes.addFilter, data }),
 };
 
 export default withRouter(connect(

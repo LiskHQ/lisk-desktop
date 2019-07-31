@@ -34,14 +34,13 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = {
   fetchVotedDelegateInfo,
   searchAccount,
-  addFilter: data => ({ type: actionTypes.addFilter, data }),
   searchUpdateLast: data => ({ data, type: actionTypes.searchUpdateLast }),
   loadLastTransaction,
 };
 
 // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
 const sortByTimestamp = (a, b) => (
-  (!a.timestamp || a.timestamp > b.timestamp) && b.timestamp ? -1 : 1
+  ((!a.timestamp && a.timestamp !== 0) || a.timestamp > b.timestamp) && b.timestamp ? -1 : 1
 );
 
 const apis = {
