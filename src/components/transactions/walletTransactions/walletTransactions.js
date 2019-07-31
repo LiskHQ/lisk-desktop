@@ -55,9 +55,6 @@ class WalletTransactions extends React.Component {
     if (this.props.account.delegate) {
       this.props.updateAccountDelegateStats(this.props.account);
     }
-    this.props.searchAccount({
-      address: this.props.account.address,
-    });
   }
 
   onInit() {
