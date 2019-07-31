@@ -6,7 +6,6 @@ import { expect } from 'chai';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { prepareStore } from '../../../test/unit-test-utils/applicationInit';
-import * as search from '../../actions/search';
 import accountReducer from '../../store/reducers/account';
 import searchReducer from '../../store/reducers/search';
 import loadingReducer from '../../store/reducers/loading';
@@ -28,7 +27,6 @@ import ExplorerTransactions from '../transactions/explorerTransactions';
 describe('AccountTransaction Component', () => {
   let wrapper;
   let props;
-  let searchAccountSpy;
 
   const store = prepareStore({
     bookmarks: bookmarksReducer,
@@ -40,8 +38,6 @@ describe('AccountTransaction Component', () => {
   }, [thunk]);
 
   beforeEach(() => {
-    searchAccountSpy = spy(search, 'searchAccount');
-
     props = {
       match: {
         url: `${routes.accounts.pathPrefix}${routes.accounts.path}/${accounts.genesis.address}`,
@@ -59,10 +55,6 @@ describe('AccountTransaction Component', () => {
         <AccountTransactions {...props} i18n={i18n} />
       </Router>
     </Provider>);
-  });
-
-  afterEach(() => {
-    searchAccountSpy.restore();
   });
 
   it('renders ExplorerTransactions', () => {

@@ -2,7 +2,6 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { getAccount } from '../../../utils/api/lsk/account';
-import { searchAccount } from '../../../actions/search';
 import { transactionBroadcasted, resetTransactionResult } from '../../../actions/transactions';
 import TransactionStatus from './transactionStatus';
 import withData from '../../../utils/withData';
@@ -15,7 +14,6 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = {
   resetTransactionResult,
-  searchAccount,
   transactionBroadcasted,
 };
 
