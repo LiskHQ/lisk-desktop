@@ -52,3 +52,7 @@ Then(/^I send LSK$/, function () {
   cy.wait('@requestAccountData');
   cy.get(ss.sendToThisAccountBtn).click();
 });
+
+Then(/^I see ([^s]+) in recipient$/, function (accountName) {
+  cy.get(ss.recipientInput).should('have.value', accounts[accountName].address);
+});

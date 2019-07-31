@@ -6,4 +6,4 @@ Feature: Second Passphrase Registration
     And I go to confirmation
     And I confirm transaction
     When I am on Wallet page
-    Then I see the transaction in transaction list
+    Then The latest transaction is Second passphrase registration
