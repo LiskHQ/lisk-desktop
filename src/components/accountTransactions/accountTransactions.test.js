@@ -51,7 +51,8 @@ describe('AccountTransaction Component', () => {
       t: key => key,
     };
 
-    store.dispatch(networkSet({ network: getNetwork(networks.testnet.code) }));
+    const network = getNetwork(networks.testnet.name);
+    store.dispatch(networkSet({ name: network.name, ...network }));
 
     wrapper = mount(<Provider store={store}>
       <Router>
