@@ -32,26 +32,21 @@ const DelegateTab = ({ delegate, account, t }) => {
         <ul className={styles.delegateStats}>
           <li className="rank">
             <span className={styles.label}>{t('Rank')}</span>
-            {' '}
             {delegate.rank}
           </li>
           <li className="status">
             <span className={styles.label}>{t('Status')}</span>
-            {' '}
             {status}
           </li>
           <li className="delegate-since">
             <span className={styles.label}>{t('Delegate since')}</span>
-            {' '}
             {moment(delegateSince).format(t('DD MMM YYYY'))}
           </li>
           <li className="vote">
             <span className={styles.label}>{t('Vote weight')}</span>
-            {' '}
             <span>
               <LiskAmount val={delegate.vote} />
-              {' '}
-              {t('LSK')}
+              {` ${t('LSK')}`}
             </span>
           </li>
           <li className="approval">
@@ -60,31 +55,21 @@ const DelegateTab = ({ delegate, account, t }) => {
           </li>
           <li className="productivity">
             <span className={styles.label}>{t('Productivity')}</span>
-            {' '}
-            {delegate.productivity}
-%
+            {`${delegate.productivity}%` }
           </li>
           <li className="blocks">
             <span className={styles.label}>{t('Blocks forged')}</span>
-            {' '}
-            {delegate.producedBlocks}
-            {' '}
-(
-            {delegate.missedBlocks}
-)
+            {`${delegate.producedBlocks} (${delegate.missedBlocks})`}
           </li>
           <li className="forged">
             <span className={styles.label}>{t('LSK forged')}</span>
-            {' '}
             <span>
               <LiskAmount val={delegate.rewards} />
-              {' '}
-              {t('LSK')}
+              {` ${t('LSK')}`}
             </span>
           </li>
           <li className="last-forged">
             <span className={styles.label}>{t('Last Forged Block')}</span>
-            {' '}
             {timeFromLastBlock}
           </li>
         </ul>
@@ -115,6 +100,10 @@ DelegateTab.propTypes = {
         timestamp: PropTypes.number.isRequired,
       }),
     }).isRequired,
+  }).isRequired,
+  account: PropTypes.shape({
+    publicKey: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
   }).isRequired,
 };
 
