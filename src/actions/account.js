@@ -103,23 +103,6 @@ export const secondPassphraseRegistered = ({
     dispatch(passphraseUsed(passphrase));
   };
 
-// TODO delete this action and its use in middlewares/account.
-// It is no longer needed because since Lisk Core 1.0 basic delegate info is part of account object.
-export const updateDelegateAccount = ({ publicKey }) =>
-  (dispatch, getState) => {
-    const { account, settings: { token: { active } } } = getState();
-    const liskAPIClient = getAPIClient(active, getState());
-    return getDelegates(liskAPIClient, { publicKey })
-      .then((response) => {
-        dispatch(accountUpdated({
-          delegate: {
-            ...(account.delegate || {}),
-            ...response.data[0],
-          },
-        }));
-      });
-  };
-
 export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocus) =>
   (dispatch) => {
     const hasRecentTransactions = txs => (

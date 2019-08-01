@@ -9,12 +9,10 @@ import {
   removePassphrase,
   accountDataUpdated,
   updateTransactionsIfNeeded,
-  updateDelegateAccount,
   updateAccountDelegateStats,
   login,
 } from './account';
 import * as accountApi from '../utils/api/account';
-import * as delegateApi from '../utils/api/delegates';
 import * as transactionsApi from '../utils/api/transactions';
 import * as blocksApi from '../utils/api/blocks';
 import Fees from '../constants/fees';
@@ -269,55 +267,6 @@ describe('actions: account', () => {
 
       updateTransactionsIfNeeded(data, false)(dispatch, getState);
       chaiExpect(transactionsActionsStub).to.have.been.calledWith();
-    });
-  });
-
-  describe('updateDelegateAccount', () => {
-    const dispatch = spy();
-    let getState;
-
-    beforeEach(() => {
-      stub(delegateApi, 'getDelegates').returnsPromise();
-      getState = () => ({
-        network: {
-          status: { online: true },
-          name: 'Mainnet',
-          networks: {
-            LSK: {
-              nodeUrl: 'hhtp://localhost:4000',
-              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-            },
-          },
-        },
-        account: {
-          info: {
-            LSK: {},
-          },
-        },
-        settings: {
-          token: {
-            active: 'LSK',
-          },
-        },
-      });
-    });
-
-    afterEach(() => {
-      delegateApi.getDelegates.restore();
-    });
-
-    it('should fetch delegate and update account', () => {
-      delegateApi.getDelegates.resolves({ data: [{ account: 'delegate data' }] });
-      const data = {
-        publicKey: accounts.genesis.publicKey,
-      };
-
-      updateDelegateAccount(data)(dispatch, getState);
-
-      const accountUpdatedAction = accountUpdated({
-        delegate: { account: 'delegate data' },
-      });
-      chaiExpect(dispatch).to.have.been.calledWith(accountUpdatedAction);
     });
   });
 

@@ -92,7 +92,6 @@ describe('Account middleware', () => {
 
     next = spy();
     spy(accountActions, 'updateTransactionsIfNeeded');
-    spy(accountActions, 'updateDelegateAccount');
     stubGetAccount = stub(accountApi, 'getAccount').returnsPromise();
     transactionsActionsStub = spy(transactionsActions, 'updateTransactions');
     stubTransactions = stub(transactionsApi, 'getTransactions').returnsPromise().resolves(true);
@@ -103,7 +102,6 @@ describe('Account middleware', () => {
   });
 
   afterEach(() => {
-    accountActions.updateDelegateAccount.restore();
     accountActions.updateTransactionsIfNeeded.restore();
     transactionsActionsStub.restore();
     stubGetAccount.restore();
