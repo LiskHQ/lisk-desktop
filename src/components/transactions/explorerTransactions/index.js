@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { getAccount } from '../../../utils/api/account';
-import { getDelegateInfo } from '../../../utils/api/delegates';
 import { getTransactions } from '../../../utils/api/transactions';
 import ExplorerTransactions from './explorerTransactions';
 import txFilters from '../../../constants/transactionFilters';
@@ -30,14 +29,6 @@ const apis = {
       address: ownProps.address,
       networkConfig: state.network,
     }),
-  },
-  delegate: {
-    apiUtil: getDelegateInfo,
-    defaultData: {},
-    getApiParams: (state, ownProps) => ({
-      address: ownProps.address,
-    }),
-    autoload: true,
   },
   transactions: {
     apiUtil: (apiClient, params) => getTransactions(params),

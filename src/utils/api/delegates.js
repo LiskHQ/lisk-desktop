@@ -9,7 +9,7 @@ import transactionTypes from '../../constants/transactionTypes';
 
 export const getDelegates = (liskAPIClient, options) => liskAPIClient.delegates.get(options);
 
-export const getDelegateInfo = (liskAPIClient, { address }) => (
+export const getDelegateInfo = (liskAPIClient, { address, publicKey }) => (
   new Promise(async (resolve, reject) => {
     try {
       const delegate = (await getDelegates(liskAPIClient, { address })).data[0];
@@ -18,7 +18,7 @@ export const getDelegateInfo = (liskAPIClient, { address }) => (
           liskAPIClient, address, limit: 1, type: transactionTypes.registerDelegate,
         })).data[0];
         const blocks = await getBlocks(liskAPIClient, {
-          generatorAddress: address, limit: 1,
+          generatorPublicKey: publicKey, limit: 1,
         });
         resolve({
           ...delegate,

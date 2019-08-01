@@ -1,5 +1,5 @@
 import React from 'react';
-import DelegateTab from '../../delegate/delegateTab';
+import DelegateTab from '../../delegate';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import TransactionsOverviewHeader from '../transactionsOverviewHeader/transactionsOverviewHeader';
 import VotesTab from '../../votes';
@@ -128,7 +128,7 @@ class ExplorerTransactions extends React.Component {
       loading: this.props.transactions.isLoading ? [actionTypes.transactionsLoaded] : [],
       balance: this.props.detailAccount.data.balance,
     };
-    const { detailAccount, delegate } = this.props;
+    const { detailAccount } = this.props;
 
     return (
       <React.Fragment>
@@ -148,12 +148,12 @@ class ExplorerTransactions extends React.Component {
             {...overviewProps}
           />
           {
-            delegate.data.username
+            detailAccount.data.delegate
               ? (
                 <DelegateTab
                   tabClassName="delegate-statistics"
                   tabName={this.props.t('Delegate')}
-                  delegate={delegate.data}
+                  account={detailAccount.data}
                 />
               )
               : null
