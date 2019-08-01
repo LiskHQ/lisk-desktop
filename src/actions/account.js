@@ -69,10 +69,10 @@ export const passphraseUsed = data => ({
 
 // TODO delete this action and use setSecondPassphrase with withData HOC
 // directly in the Second passphrase registration component
-/* istanbul ignore next */
 export const secondPassphraseRegistered = ({
   secondPassphrase, account, passphrase, callback,
 }) =>
+/* istanbul ignore next */
   (dispatch, getState) => {
     const { settings: { token: { active } } } = getState();
     const liskAPIClient = getAPIClient(active, getState());
@@ -169,20 +169,18 @@ export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, get
       ? Date.now() + accountConfig.lockDuration
       : 0;
 
-    if (lskAccount) {
-      const btcAccount = settings.token.list.BTC
+    const btcAccount = settings.token.list.BTC
         && await getAccount({ token: tokenMap.BTC.key, networkConfig, passphrase });
-      dispatch(accountLoggedIn({
-        passphrase,
-        loginType: hwInfo ? loginType[hwInfo.deviceModel.replace(/\s.+$/, '').toLowerCase()] : loginType.normal,
-        hwInfo: hwInfo || {},
-        expireTime,
-        info: {
-          LSK: lskAccount,
-          ...(btcAccount ? { BTC: btcAccount } : {}),
-        },
-      }));
-    }
+    dispatch(accountLoggedIn({
+      passphrase,
+      loginType: hwInfo ? loginType[hwInfo.deviceModel.replace(/\s.+$/, '').toLowerCase()] : loginType.normal,
+      hwInfo: hwInfo || {},
+      expireTime,
+      info: {
+        LSK: lskAccount,
+        ...(btcAccount ? { BTC: btcAccount } : {}),
+      },
+    }));
   } catch (error) {
     dispatch(errorToastDisplayed({ label: getConnectionErrorMessage(error) }));
     dispatch(accountLoggedOut());
