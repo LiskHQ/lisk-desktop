@@ -70,9 +70,9 @@ export const passphraseUsed = data => ({
   data,
 });
 
-/**
- *
- */
+
+// TODO delete this action and use setSecondPassphrase with withData HOC
+// directly in the Second passphrase registration component
 export const secondPassphraseRegistered = ({
   secondPassphrase, account, passphrase, callback,
 }) =>
@@ -103,6 +103,8 @@ export const secondPassphraseRegistered = ({
     dispatch(passphraseUsed(passphrase));
   };
 
+// TODO delete this action and its use in middlewares/account.
+// It is no longer needed because since Lisk Core 1.0 basic delegate info is part of account object.
 export const updateDelegateAccount = ({ publicKey }) =>
   (dispatch, getState) => {
     const { account, settings: { token: { active } } } = getState();
@@ -118,10 +120,6 @@ export const updateDelegateAccount = ({ publicKey }) =>
         }));
       });
   };
-
-
-// TODO change all uses of loadDelegate to updateDelegateAccount
-export const loadDelegate = updateDelegateAccount;
 
 export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocus) =>
   (dispatch) => {
@@ -142,6 +140,8 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
     }
   };
 
+// TODO this is used in middlewares/account and based on the comment there,
+// I think it can be deleted
 export const accountDataUpdated = ({
   account, windowIsFocused, transactions,
 }) =>
@@ -169,6 +169,8 @@ export const accountDataUpdated = ({
       });
   };
 
+// TODO this can be removed as deleagte stats are fetched in delegateTab since
+// https://github.com/LiskHQ/lisk-hub/pull/2297
 export const updateAccountDelegateStats = account =>
   async (dispatch, getState) => {
     const { settings: { token: { active } } } = getState();
@@ -190,7 +192,15 @@ export const updateAccountDelegateStats = account =>
     }));
   };
 
-// eslint-disable-next-line max-statements
+/**
+ * This action is used on login to fetch account info for all enabled token
+ *
+ * @param {Object} data - for hardware wallets it contains publicKey and hwInfo,
+ *    otherwise contains passphrase
+ * @param {String} passphrase - BIP39 passphrase of the account
+ * @param {String} publicKey - Lisk publicKey used for hardware wallet login
+ * @param {Object} hwInfo - info about hardware wallet we're trying to login to
+ */
 export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, getState) => {
   const { network: networkConfig, settings } = getState();
   dispatch(accountLoading());
