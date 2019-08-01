@@ -25,6 +25,8 @@ export const getDelegateInfo = (liskAPIClient, { address }) => (
           lastBlock: (blocks.data[0] && blocks.data[0].timestamp) || '-',
           txDelegateRegister,
         });
+      } else {
+        reject(new Error(`"${address}" is not a delegate`));
       }
     } catch (e) {
       reject(e);
