@@ -2,14 +2,10 @@ import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import { extractAddress } from '../utils/account';
 import { getAccount, setSecondPassphrase } from '../utils/api/account';
-import { getDelegates } from '../utils/api/delegates';
-import { getTransactions } from '../utils/api/transactions';
-import { getBlocks } from '../utils/api/blocks';
 import { updateTransactions } from './transactions';
 import { networkStatusUpdated } from './network';
 import { getAPIClient } from '../utils/api/network';
 import { getTimeOffset } from '../utils/hacks';
-import transactionTypes from '../constants/transactionTypes';
 import accountConfig from '../constants/account';
 import { loginType } from '../constants/hwConstants';
 import { errorToastDisplayed } from './toaster';
@@ -149,29 +145,6 @@ export const accountDataUpdated = ({
       }).catch((res) => {
         dispatch(networkStatusUpdated({ online: false, code: res.error.code }));
       });
-  };
-
-// TODO this can be removed as deleagte stats are fetched in delegateTab since
-// https://github.com/LiskHQ/lisk-hub/pull/2297
-export const updateAccountDelegateStats = account =>
-  async (dispatch, getState) => {
-    const { settings: { token: { active } } } = getState();
-    const liskAPIClient = getAPIClient(active, getState());
-    const { address, publicKey } = account;
-    const networkConfig = getState().network;
-    const token = tokenMap.LSK.key;
-    const transaction = await getTransactions({
-      token, networkConfig, address, limit: 1, type: transactionTypes.registerDelegate,
-    });
-    const block = await getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 });
-    dispatch(accountUpdated({
-      token,
-      delegate: {
-        ...(getState().account.info.LSK.delegate || {}),
-        lastBlock: (block.data[0] && block.data[0].timestamp) || '-',
-        txDelegateRegister: transaction.data[0],
-      },
-    }));
   };
 
 /**

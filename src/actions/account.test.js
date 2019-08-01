@@ -9,12 +9,9 @@ import {
   removePassphrase,
   accountDataUpdated,
   updateTransactionsIfNeeded,
-  updateAccountDelegateStats,
   login,
 } from './account';
 import * as accountApi from '../utils/api/account';
-import * as transactionsApi from '../utils/api/transactions';
-import * as blocksApi from '../utils/api/blocks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import networks from '../constants/networks';
@@ -267,60 +264,6 @@ describe('actions: account', () => {
 
       updateTransactionsIfNeeded(data, false)(dispatch, getState);
       chaiExpect(transactionsActionsStub).to.have.been.calledWith();
-    });
-  });
-
-  describe('updateAccountDelegateStats', () => {
-    const dispatch = spy();
-    let getState;
-
-    beforeEach(() => {
-      stub(blocksApi, 'getBlocks').returnsPromise();
-      stub(transactionsApi, 'getTransactions').returnsPromise();
-      getState = () => ({
-        network: {
-          status: { online: true },
-          name: 'Mainnet',
-          networks: {
-            LSK: {
-              nodeUrl: 'hhtp://localhost:4000',
-              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-            },
-          },
-        },
-        account: {
-          info: {
-            LSK: {},
-          },
-        },
-        settings: {
-          token: {
-            active: 'LSK',
-          },
-        },
-      });
-    });
-
-    afterEach(() => {
-      blocksApi.getBlocks.restore();
-      transactionsApi.getTransactions.restore();
-    });
-
-    it('should fetch delegate stats and update account', async () => {
-      blocksApi.getBlocks.resolves({ data: [{ timestamp: 1 }] });
-      transactionsApi.getTransactions.resolves({ data: [{ timestamp: 2 }] });
-
-      await updateAccountDelegateStats(accounts.genesis)(dispatch, getState);
-
-      const delegateStatsLoadedAction = accountUpdated({
-        token: 'LSK',
-        delegate: {
-          lastBlock: 1,
-          txDelegateRegister: { timestamp: 2 },
-        },
-      });
-
-      chaiExpect(dispatch).to.have.been.calledWith(delegateStatsLoadedAction);
     });
   });
 

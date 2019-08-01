@@ -70,7 +70,6 @@ describe('WalletTransactions Component', () => {
     transactions,
     loadTransactions: jest.fn(),
     loadLastTransaction: jest.fn(),
-    updateAccountDelegateStats: jest.fn(),
     loading: [],
     wallets: {},
     t: key => key,
