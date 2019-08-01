@@ -6,8 +6,7 @@ import { transactionBroadcasted, resetTransactionResult } from '../../../actions
 import TransactionStatus from './transactionStatus';
 import withData from '../../../utils/withData';
 
-const mapStateToProps = (state, ownProps) => ({
-  detailAccount: state.search.accounts[ownProps.fields.recipient.address] || {},
+const mapStateToProps = state => ({
   bookmarks: state.bookmarks,
   transactions: state.transactions,
 });
