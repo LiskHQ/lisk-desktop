@@ -17,10 +17,6 @@ Given(/^I go to confirmation$/, function () {
   cy.get(ss.chooseDelegateName).click();
 });
 
-Given(/^I confirm transaction$/, function () {
-  cy.get(ss.confirmDelegateButton).click();
-});
-
 Given(/^I see successful message$/, function () {
   cy.wait(txConfirmationTimeout);
   cy.get(ss.app).contains('Delegate registration submitted');
