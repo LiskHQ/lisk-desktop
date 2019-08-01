@@ -119,8 +119,16 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
     }
   };
 
-// TODO this is used in middlewares/account and based on the comment there,
-// I think it can be deleted
+/**
+ * This action is used to update account balance when new block was forged and
+ * account middleware detected that it contains a transaction that affects balance
+ * of the active account
+ *
+ * @param {Object} data
+ * @param {Object} data.account - current account with address and publicKey
+ * @param {Boolean} data.windowIsFocused - flag if Hub window is focused
+ * @param {Array} data.transactions - list of transactions
+ */
 export const accountDataUpdated = ({
   account, windowIsFocused, transactions,
 }) =>
@@ -153,9 +161,9 @@ export const accountDataUpdated = ({
  *
  * @param {Object} data - for hardware wallets it contains publicKey and hwInfo,
  *    otherwise contains passphrase
- * @param {String} passphrase - BIP39 passphrase of the account
- * @param {String} publicKey - Lisk publicKey used for hardware wallet login
- * @param {Object} hwInfo - info about hardware wallet we're trying to login to
+ * @param {String} data.passphrase - BIP39 passphrase of the account
+ * @param {String} data.publicKey - Lisk publicKey used for hardware wallet login
+ * @param {Object} data.hwInfo - info about hardware wallet we're trying to login to
  */
 export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, getState) => {
   const { network: networkConfig, settings } = getState();
