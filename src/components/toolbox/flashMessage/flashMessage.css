@@ -13,29 +13,61 @@
   min-height: 0;
   max-height: 0;
   overflow: hidden;
-  transition: max-height var(--animation-speed-standard) ease-in-out;
+  transition:
+    max-height var(--animation-speed-standard) linear,
+    min-height var(--animation-speed-standard) linear;
 
   & img {
     margin-right: 7px;
   }
 
   & .text,
-  & .externalLink {
+  & .link {
     @mixin contentNormal;
 
     color: var(--color-mystic);
   }
 
-  & .externalLink {
+  & .link {
     @mixin contentNormal bold;
 
-    text-decoration: none;
+    cursor: pointer;
     margin-left: 10px;
+    text-decoration: none;
   }
 
   & .button {
     min-width: 143px;
     margin-left: auto;
+  }
+
+  & .closeBtn {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    height: 10px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: -10px;
+    padding: 10px;
+    width: 10px;
+
+    &::before,
+    &::after {
+      background-color: #fff;
+      content: "";
+      height: 14px;
+      position: absolute;
+      width: 1px;
+    }
+
+    &::before {
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      transform: rotate(-45deg);
+    }
   }
 
   &.show {

@@ -1,62 +1,30 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import externalLinks from '../../../constants/externalLinks';
+import { shallow } from 'enzyme';
 import FlashMessage from './flashMessage';
 
 describe('FlashMessage', () => {
   let wrapper;
-  const props = {
-    buttonText: 'Initialize account',
-    displayText: 'Account without init',
-    iconName: 'warningIcon',
-    linkCaption: 'Learn more',
-    linkUrl: externalLinks.accountInitialization,
-    onButtonClick: jest.fn(),
-    shouldShow: true,
+  const props = { shouldShow: true };
+  const content = <FlashMessage.Content>Test Content</FlashMessage.Content>;
+  const btnProps = {
+    onClick: jest.fn(),
+    children: 'Dummy button',
   };
+  const button = <FlashMessage.Button {...btnProps} />;
 
-  beforeEach(() => {
-    wrapper = mount(<FlashMessage {...props} />);
+  it('should render with close button and hide on button click', () => {
+    wrapper = shallow(<FlashMessage {...props}>{content}</FlashMessage>);
+    wrapper.find('.closeBtn').simulate('click');
+    expect(wrapper).not.toHaveClassName('show');
   });
 
-  it('should render properly all the components', () => {
-    expect(wrapper).toContainMatchingElement('.icon');
-    expect(wrapper).toContainMatchingElement('.display-text');
-    expect(wrapper).toContainMatchingElement('.url-link');
-    expect(wrapper).toContainMatchingElement('.button');
-  });
-
-  it('should render all component but no the icon if prop is empty', () => {
-    const newProps = { ...props, iconName: '' };
-    wrapper = mount(<FlashMessage {...newProps} />);
-    expect(wrapper).not.toContainMatchingElement('.icon');
-    expect(wrapper).toContainMatchingElement('.display-text');
-    expect(wrapper).toContainMatchingElement('.url-link');
-    expect(wrapper).toContainMatchingElement('.button');
-  });
-
-  it('should render all component but no the link if prop is empty', () => {
-    const newProps = { ...props, linkUrl: '', linkCaption: '' };
-    wrapper = mount(<FlashMessage {...newProps} />);
-    expect(wrapper).toContainMatchingElement('.icon');
-    expect(wrapper).toContainMatchingElement('.display-text');
-    expect(wrapper).not.toContainMatchingElement('.url-link');
-    expect(wrapper).toContainMatchingElement('.button');
-  });
-
-  it('should render all component but no the button if prop is empty', () => {
-    const newProps = { ...props, buttonText: '' };
-    wrapper = mount(<FlashMessage {...newProps} />);
-    expect(wrapper).toContainMatchingElement('.icon');
-    expect(wrapper).toContainMatchingElement('.display-text');
-    expect(wrapper).toContainMatchingElement('.url-link');
-    expect(wrapper).not.toContainMatchingElement('.button');
-  });
-
-  it('should call onClick prop function when button clicked', () => {
-    expect(wrapper).toContainMatchingElement('.button');
-    expect(wrapper.find('.button').at(0).text()).toEqual(`${props.buttonText}`);
-    wrapper.find('.button').at(0).simulate('click');
-    expect(props.onButtonClick).toBeCalled();
+  it('should not render close button if children has FlashMessage.Button', () => {
+    wrapper = shallow(<FlashMessage {...props}>
+      {content}
+      {button}
+    </FlashMessage>);
+    expect(wrapper).not.toContainMatchingElement('.closeBtn');
+    wrapper.find(FlashMessage.Button).simulate('click');
+    expect(btnProps.onClick).toBeCalled();
   });
 });

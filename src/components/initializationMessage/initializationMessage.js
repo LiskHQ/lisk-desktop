@@ -24,14 +24,26 @@ const InitializationMessage = ({
 
   return (
     <FlashMessage
-      iconName="warningIcon"
-      displayText={t('We advise all users to initialize their account as soon as possible. To do so, simply make one outgoing transaction.')}
-      buttonText={t('Initialize account')}
-      linkCaption={t('Learn more')}
-      linkUrl={externalLinks.accountInitialization}
-      onButtonClick={onButtonClick}
       shouldShow={shouldShowInitialization()}
-    />
+    >
+
+      <FlashMessage.Content
+        icon="warningIcon"
+        link={{
+          label: t('Learn more'),
+          action: externalLinks.accountInitialization,
+        }}
+      >
+        {t('We advise all users to initialize their account as soon as possible. To do so, simply make one outgoing transaction.')}
+      </FlashMessage.Content>
+
+      <FlashMessage.Button
+        onClick={onButtonClick}
+      >
+        {t('Initialize account')}
+      </FlashMessage.Button>
+
+    </FlashMessage>
   );
 };
 
