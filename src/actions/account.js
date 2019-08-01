@@ -116,7 +116,6 @@ export const updateDelegateAccount = ({ publicKey }) =>
             ...(account.delegate || {}),
             ...response.data[0],
           },
-          isDelegate: true,
         }));
       });
   };

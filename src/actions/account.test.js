@@ -316,7 +316,6 @@ describe('actions: account', () => {
 
       const accountUpdatedAction = accountUpdated({
         delegate: { account: 'delegate data' },
-        isDelegate: true,
       });
       chaiExpect(dispatch).to.have.been.calledWith(accountUpdatedAction);
     });

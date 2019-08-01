@@ -31,7 +31,6 @@ const account = (state = {}, action) => {
       return {
         ...action.data,
         votes: state.votes,
-        isDelegate: ('delegate' in action.data), // TODO remove as no longer used
       };
     case actionTypes.accountLoggedOut:
       return {
