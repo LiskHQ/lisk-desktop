@@ -133,7 +133,7 @@ class ExplorerTransactions extends React.Component {
     return (
       <React.Fragment>
         <TransactionsOverviewHeader
-          delegate={delegate.data}
+          delegate={detailAccount.data.delegate}
           bookmarks={this.props.bookmarks}
           address={this.props.address}
           match={this.props.match}
