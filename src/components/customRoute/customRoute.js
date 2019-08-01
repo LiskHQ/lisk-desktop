@@ -27,7 +27,7 @@ const CustomRoute = ({
     ? (
       <main className={`${isPrivate ? offlineStyle.disableWhenOffline : ''} offlineWrapper`}>
         <ErrorBoundary errorMessage={t('An error occoured while rendering this page')}>
-          <Route path={fullPath} component={component} exact={exact} />
+          <Route path={fullPath} component={component} exact={exact} key={pathname + search} />
         </ErrorBoundary>
       </main>
     )
