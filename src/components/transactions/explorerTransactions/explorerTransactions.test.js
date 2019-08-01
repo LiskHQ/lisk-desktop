@@ -82,14 +82,20 @@ describe('ExplorerTransactions Component', () => {
       loadData: jest.fn(),
     },
     transaction: transactions[0],
-    searchAccount: jest.fn(),
     loadTransactions: jest.fn(),
     loading: [],
     t: key => key,
     loadLastTransaction: jest.fn(),
     wallets: {},
     balance: accounts.genesis.balance,
-    detailAccount: accounts.genesis,
+    detailAccount: {
+      data: accounts.genesis,
+      loadData: jest.fn(),
+    },
+    delegate: {
+      data: {},
+      loadData: jest.fn(),
+    },
     hideChart: true, // Props to hide chart on tests, due to no canvas support
     activeToken: 'LSK',
   };
@@ -137,23 +143,28 @@ describe('ExplorerTransactions Component', () => {
       match: { params: { address: accounts.delegate.address } },
       balance: accounts.delegate.balance,
       detailAccount: {
-        ...accounts.delegate,
-        delegate: {
-          username: accounts.genesis.username,
+        ...props.detailAccount,
+        data: {
+          ...accounts.delegate,
+          delegate: {
+            username: accounts.genesis.username,
+          },
         },
       },
       delegate: {
-        account: accounts.delegate,
-        approval: 98.63,
-        missedBlocks: 10,
-        producedBlocks: 304,
-        productivity: 96.82,
-        rank: 1,
-        rewards: '140500000000',
-        username: accounts.delegate.username,
-        vote: '9876965713168313',
-        lastBlock: 0,
-        txDelegateRegister: { timestamp: 0 },
+        data: {
+          account: accounts.delegate,
+          approval: 98.63,
+          missedBlocks: 10,
+          producedBlocks: 304,
+          productivity: 96.82,
+          rank: 1,
+          rewards: '140500000000',
+          username: accounts.delegate.username,
+          vote: '9876965713168313',
+          lastBlock: 0,
+          txDelegateRegister: { timestamp: 0 },
+        },
       },
     };
 

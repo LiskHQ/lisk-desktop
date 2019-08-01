@@ -9,13 +9,19 @@ import LiskAmount from '../liskAmount';
 import i18n from '../../i18n';
 import styles from './delegateTab.css';
 
-const DelegateTab = ({ delegate, t }) => {
+const DelegateTab = ({ delegate, account, t }) => {
   moment.locale(i18n.language);
+  delegate = {
+    ...account.delegate,
+    ...delegate.data,
+  };
   const status = delegate && delegate.rank && delegate.rank <= voting.maxCountOfVotes ? t('Active') : t('Standby');
   const timeFromLastBlock = delegate.lastBlock !== '-'
     ? moment(getUnixTimestampFromValue(delegate.lastBlock)).format(t('DD MMM YY, HH:mm'))
     : '-';
-  const delegateSince = getUnixTimestampFromValue(delegate.txDelegateRegister.timestamp);
+  const delegateSince = delegate.txDelegateRegister
+    ? getUnixTimestampFromValue(delegate.txDelegateRegister.timestamp)
+    : '-';
 
   return (
     <Box>
@@ -26,61 +32,44 @@ const DelegateTab = ({ delegate, t }) => {
         <ul className={styles.delegateStats}>
           <li className="rank">
             <span className={styles.label}>{t('Rank')}</span>
-            {' '}
             {delegate.rank}
           </li>
           <li className="status">
             <span className={styles.label}>{t('Status')}</span>
-            {' '}
             {status}
           </li>
           <li className="delegate-since">
             <span className={styles.label}>{t('Delegate since')}</span>
-            {' '}
             {moment(delegateSince).format(t('DD MMM YYYY'))}
           </li>
           <li className="vote">
             <span className={styles.label}>{t('Vote weight')}</span>
-            {' '}
             <span>
               <LiskAmount val={delegate.vote} />
-              {' '}
-              {t('LSK')}
+              {` ${t('LSK')}`}
             </span>
           </li>
           <li className="approval">
             <span className={styles.label}>{t('Approval')}</span>
-            {' '}
-            {delegate.approval}
-%
+            {`${delegate.approval}%`}
           </li>
           <li className="productivity">
             <span className={styles.label}>{t('Productivity')}</span>
-            {' '}
-            {delegate.productivity}
-%
+            {`${delegate.productivity}%` }
           </li>
           <li className="blocks">
             <span className={styles.label}>{t('Blocks forged')}</span>
-            {' '}
-            {delegate.producedBlocks}
-            {' '}
-(
-            {delegate.missedBlocks}
-)
+            {`${delegate.producedBlocks} (${delegate.missedBlocks})`}
           </li>
           <li className="forged">
             <span className={styles.label}>{t('LSK forged')}</span>
-            {' '}
             <span>
               <LiskAmount val={delegate.rewards} />
-              {' '}
-              {t('LSK')}
+              {` ${t('LSK')}`}
             </span>
           </li>
           <li className="last-forged">
             <span className={styles.label}>{t('Last Forged Block')}</span>
-            {' '}
             {timeFromLastBlock}
           </li>
         </ul>
@@ -91,42 +80,50 @@ const DelegateTab = ({ delegate, t }) => {
 
 DelegateTab.propTypes = {
   delegate: PropTypes.shape({
-    account: PropTypes.shape({
-      publicKey: PropTypes.string.isRequired,
+    data: PropTypes.shape({
+      account: PropTypes.shape({
+        publicKey: PropTypes.string.isRequired,
+      }),
+      approval: PropTypes.number,
+      missedBlocks: PropTypes.number,
+      producedBlocks: PropTypes.number,
+      productivity: PropTypes.number,
+      rank: PropTypes.number,
+      rewards: PropTypes.string,
+      username: PropTypes.string,
+      vote: PropTypes.string,
+      lastBlock: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]),
+      txDelegateRegister: PropTypes.shape({
+        timestamp: PropTypes.number.isRequired,
+      }),
     }).isRequired,
-    approval: PropTypes.number.isRequired,
-    missedBlocks: PropTypes.number.isRequired,
-    producedBlocks: PropTypes.number.isRequired,
-    productivity: PropTypes.number.isRequired,
-    rank: PropTypes.number.isRequired,
-    rewards: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
-    vote: PropTypes.string.isRequired,
-    lastBlock: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]).isRequired,
-    txDelegateRegister: PropTypes.shape({
-      timestamp: PropTypes.number.isRequired,
-    }).isRequired,
+  }).isRequired,
+  account: PropTypes.shape({
+    publicKey: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
   }).isRequired,
 };
 
 DelegateTab.defaultProps = {
   delegate: {
-    account: {
-      publicKey: '',
+    data: {
+      account: {
+        publicKey: '',
+      },
+      approval: 0,
+      missedBlocks: 0,
+      producedBlocks: 0,
+      productivity: 0,
+      rank: 0,
+      rewards: '',
+      username: '',
+      vote: '',
+      lastBlock: '-',
+      txDelegateRegister: { timestamp: 0 },
     },
-    approval: 0,
-    missedBlocks: 0,
-    producedBlocks: 0,
-    productivity: 0,
-    rank: 0,
-    rewards: '',
-    username: '',
-    vote: '',
-    lastBlock: '-',
-    txDelegateRegister: { timestamp: 0 },
   },
 };
 

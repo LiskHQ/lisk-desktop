@@ -4,6 +4,7 @@ import sinon from 'sinon';
 import {
   castVotes,
   getDelegateByName,
+  getDelegateInfo,
   getDelegates,
   getVotes,
   registerDelegate,
@@ -31,6 +32,10 @@ describe('Utils: Delegate', () => {
     },
     transactions: {
       broadcast: () => {},
+      get: () => Promise.resolve({ data: [] }),
+    },
+    blocks: {
+      get: () => Promise.resolve({ data: [] }),
     },
   };
 
@@ -40,6 +45,7 @@ describe('Utils: Delegate', () => {
     liskAPIClientMockDelegates = sinon.mock(liskAPIClient.delegates);
     liskAPIClientMockVotes = sinon.mock(liskAPIClient.votes);
     liskAPIClientMockTransations = sinon.stub(liskAPIClient.transactions, 'broadcast').returnsPromise().resolves({ id: '1234' });
+    sinon.stub(liskAPIClient.transactions, 'get').returnsPromise();
     voteWithHWStub = sinon.stub(hwWallet, 'voteWithHW');
   });
 
@@ -54,6 +60,8 @@ describe('Utils: Delegate', () => {
 
     liskTransactionsCastVotesStub.restore();
     liskTransactionsRegisterDelegateStub.restore();
+
+    liskAPIClient.transactions.get.restore();
     voteWithHWStub.restore();
   });
 
@@ -74,6 +82,34 @@ describe('Utils: Delegate', () => {
 
       const returnedPromise = getDelegates(liskAPIClient, options);
       return expect(returnedPromise).to.eventually.equal(response);
+    });
+  });
+
+  describe('getDelegateByInfo', () => {
+    it('should resolve delegate object with lastBlock and txDelegateRegister', () => {
+      const delegate = delegates[0];
+      const { address } = delegate.account;
+      liskAPIClientMockDelegates.expects('get').withArgs({ address })
+        .returnsPromise().resolves({ data: [delegate] });
+
+      const txDelegateRegister = { id: '091241204970', timestamp: '14023472398' };
+      liskAPIClient.transactions.get.resolves({ data: [txDelegateRegister] });
+
+      return expect(getDelegateInfo(liskAPIClient, { address })).to.eventually.deep.equal({
+        ...delegate,
+        lastBlock: '-',
+        txDelegateRegister,
+      });
+    });
+
+    it('should reject if delegate not found', () => {
+      const { address } = accounts.genesis;
+      liskAPIClientMockDelegates.expects('get').withArgs({ address })
+        .returnsPromise().resolves({ data: [] });
+
+      return expect(getDelegateInfo(liskAPIClient, { address })).to.eventually.be.rejectedWith(
+        `"${address}" is not a delegate`,
+      );
     });
   });
 

@@ -6,7 +6,6 @@ export { default as extensions } from './extensions';
 export { default as hwWallets } from './hwWallets';
 export { default as loading } from './loading';
 export { default as network } from './network';
-export { default as search } from './search';
 export { default as service } from './service';
 export { default as settings } from './settings';
 export { default as toaster } from './toaster';

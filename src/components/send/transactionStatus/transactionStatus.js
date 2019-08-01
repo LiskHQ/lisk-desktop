@@ -180,7 +180,7 @@ class TransactionStatus extends React.Component {
                     <BookmarkDropdown
                       delegate={recipientAccount.data.delegate || {}}
                       address={fields.recipient.address}
-                      detailAccount={this.props.detailAccount}
+                      detailAccount={this.props.recipientAccount.data}
                       onSubmitClick={this.onBookmarkDropdownToggle}
                       isBookmark={isBookmarked}
                       token={token}

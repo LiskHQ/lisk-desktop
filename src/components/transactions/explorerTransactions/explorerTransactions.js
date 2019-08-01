@@ -1,5 +1,5 @@
 import React from 'react';
-import DelegateTab from '../../delegate/delegateTab';
+import DelegateTab from '../../delegate';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import TransactionsOverviewHeader from '../transactionsOverviewHeader/transactionsOverviewHeader';
 import VotesTab from '../../votes';
@@ -34,12 +34,6 @@ class ExplorerTransactions extends React.Component {
   }
 
   onInit() {
-    this.props.loadLastTransaction(this.props.address);
-
-    this.props.searchAccount({
-      address: this.props.address,
-    });
-
     this.props.transactions.loadData({
       filters: {
         ...this.state.activeCustomFilters,
@@ -132,26 +126,21 @@ class ExplorerTransactions extends React.Component {
       transactions: this.props.transactions.data.data,
       activeFilter: this.props.transactions.urlSearchParams.filters.direction,
       loading: this.props.transactions.isLoading ? [actionTypes.transactionsLoaded] : [],
+      balance: this.props.detailAccount.data.balance,
     };
     const { detailAccount } = this.props;
-
-    const delegate = detailAccount && detailAccount.delegate ? {
-      ...detailAccount.delegate,
-      ...(this.props.delegate || {}),
-    } : { ...(this.props.delegate || {}) };
 
     return (
       <React.Fragment>
         <TransactionsOverviewHeader
-          delegate={delegate}
+          delegate={detailAccount.data.delegate}
           bookmarks={this.props.bookmarks}
-          balance={this.props.balance}
           address={this.props.address}
           match={this.props.match}
           t={this.props.t}
           account={this.props.account}
           activeToken={this.props.activeToken}
-          detailAccount={detailAccount}
+          detailAccount={detailAccount.data}
         />
         <TabsContainer>
           <WalletTab
@@ -159,12 +148,12 @@ class ExplorerTransactions extends React.Component {
             {...overviewProps}
           />
           {
-            delegate.username
+            detailAccount.data.delegate
               ? (
                 <DelegateTab
                   tabClassName="delegate-statistics"
                   tabName={this.props.t('Delegate')}
-                  delegate={this.props.delegate}
+                  account={detailAccount.data}
                 />
               )
               : null

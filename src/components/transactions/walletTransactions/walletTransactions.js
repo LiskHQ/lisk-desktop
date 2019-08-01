@@ -10,7 +10,7 @@ import routes from '../../../constants/routes';
 import styles from './walletTransactions.css';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import WalletTab from '../../wallet/walletTab';
-import DelegateTab from '../../delegate/delegateTab';
+import DelegateTab from '../../delegate';
 import VotesTab from '../../votes';
 
 class WalletTransactions extends React.Component {
@@ -55,9 +55,6 @@ class WalletTransactions extends React.Component {
     if (this.props.account.delegate) {
       this.props.updateAccountDelegateStats(this.props.account);
     }
-    this.props.searchAccount({
-      address: this.props.account.address,
-    });
   }
 
   onInit() {
@@ -177,10 +174,6 @@ class WalletTransactions extends React.Component {
 
     const { t, account, activeToken } = this.props;
 
-    const delegate = account.delegate
-      ? { account, ...account.delegate }
-      : {};
-
     return (
       <React.Fragment>
         <TransactionsOverviewHeader
@@ -227,12 +220,12 @@ class WalletTransactions extends React.Component {
               tabName={this.props.t('Votes')}
             />
           ) : null}
-          {account.delegate && delegate.txDelegateRegister
+          {account.delegate
             ? (
               <DelegateTab
                 tabClassName="delegate-statistics"
                 tabName={t('Delegate')}
-                delegate={delegate}
+                account={account}
               />
             )
             : null}
