@@ -1,6 +1,5 @@
 import {
   accountDataUpdated,
-  updateDelegateAccount,
   updateTransactionsIfNeeded,
   login,
 } from '../../actions/account';
@@ -19,7 +18,6 @@ import networks from '../../constants/networks';
 import settings from '../../constants/settings';
 import txFilters from '../../constants/transactionFilters';
 
-import { setWalletsInLocalStorage } from '../../utils/wallets';
 
 import { getDeviceList, getHWPublicKeyFromIndex } from '../../utils/hwWallet';
 import { loginType } from '../../constants/hwConstants';
@@ -57,20 +55,6 @@ const getRecentTransactionOfType = (transactionsList, type) => (
     // theoretically even less then 5, but just to be on the safe side
     && transaction.confirmations < 5))[0]
 );
-
-const delegateRegistration = (store, action) => {
-  const delegateRegistrationTx = getRecentTransactionOfType(
-    action.data.confirmed,
-    transactionTypes.registerDelegate,
-  );
-  const state = store.getState();
-
-  if (delegateRegistrationTx) {
-    store.dispatch(updateDelegateAccount({
-      publicKey: state.account.info.LSK.publicKey,
-    }));
-  }
-};
 
 const votePlaced = (store, action) => {
   const voteTransaction = getRecentTransactionOfType(action.data.confirmed, transactionTypes.vote);
@@ -206,24 +190,14 @@ const accountMiddleware = store => next => (action) => {
     case actionTypes.storeCreated:
       autoLogInIfNecessary(store, next, action);
       break;
-    // update on login because the 'save account' button
-    // depends on a rerendering of the page
-    // TODO: fix the 'save account' path problem, so we can remove this
-    case actionTypes.accountLoggedIn:
-      updateAccountData(store, action);
-      break;
     case actionTypes.newBlockCreated:
       checkTransactionsAndUpdateAccount(store, action);
       break;
     case actionTypes.updateTransactions:
-      delegateRegistration(store, action); // TODO remove as no longer needed
       votePlaced(store, action);
       break;
     case actionTypes.accountLoggedOut:
-      setWalletsInLocalStorage(store.getState().wallets); // TODO remove as no longer used
       store.dispatch(cleanTransactions());
-      localStorage.removeItem('accounts'); // TODO remove as no longer used
-      localStorage.removeItem('isHarwareWalletConnected'); // TODO remove as no longer used
       break;
     /* istanbul ignore next */
     default: break;

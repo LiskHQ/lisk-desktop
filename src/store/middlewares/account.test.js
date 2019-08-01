@@ -16,7 +16,6 @@ import actionTypes from '../../constants/actions';
 import middleware from './account';
 import transactionTypes from '../../constants/transactionTypes';
 
-/* eslint-disable-next-line max-statements */
 describe('Account middleware', () => {
   let store;
   let next;
@@ -188,18 +187,6 @@ describe('Account middleware', () => {
     expect(accountDataUpdatedSpy).to.have.been.calledWith();
   });
 
-  it(`should fetch delegate info on ${actionTypes.updateTransactions} action if action.data.confirmed contains delegateRegistration transactions`, () => {
-    middleware(store)(next)(transactionsUpdatedAction);
-    expect(accountActions.updateDelegateAccount).to.have.been.calledWith();
-  });
-
-  it(`should not fetch delegate info on ${actionTypes.updateTransactions} action if action.data.confirmed does not contain delegateRegistration transactions`, () => {
-    transactionsUpdatedAction.data.confirmed[0].type = transactionTypes.send;
-
-    middleware(store)(next)(transactionsUpdatedAction);
-    expect(store.dispatch).to.not.have.been.calledWith();
-  });
-
   it(`should dispatch ${actionTypes.loadVotes} action on ${actionTypes.updateTransactions} action if action.data.confirmed contains delegateRegistration transactions`, () => {
     const actionSpy = spy(votingActions, 'loadVotes');
     transactionsUpdatedAction.data.confirmed[0].type = transactionTypes.vote;
@@ -222,16 +209,6 @@ describe('Account middleware', () => {
   it(`should do nothing on ${actionTypes.storeCreated} if autologin data NOT found in localStorage`, () => {
     middleware(store)(next)(storeCreatedAction);
     expect(store.dispatch).to.not.have.been.calledWith(liskAPIClientMock);
-  });
-
-  it(`should update account data on ${actionTypes.accountLoggedIn} `, () => {
-    const accountLoggedInAction = {
-      type: actionTypes.accountLoggedIn,
-      data: {
-      },
-    };
-    middleware(store)(next)(accountLoggedInAction);
-    expect(accountActions.accountDataUpdated).to.have.been.calledWith();
   });
 
   it(`should clean up on ${actionTypes.accountLoggedOut} `, () => {
