@@ -41,9 +41,6 @@ const account = (state = {}, action) => {
       return {
         loading: true,
       };
-    // TODO Remove. Not used anymore.
-    case actionTypes.accountAddVotes:
-      return { ...state, votes: action.votes };
     default:
       return state;
   }
