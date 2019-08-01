@@ -69,6 +69,7 @@ export const passphraseUsed = data => ({
 
 // TODO delete this action and use setSecondPassphrase with withData HOC
 // directly in the Second passphrase registration component
+/* istanbul ignore next */
 export const secondPassphraseRegistered = ({
   secondPassphrase, account, passphrase, callback,
 }) =>
