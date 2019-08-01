@@ -216,14 +216,14 @@ const accountMiddleware = store => next => (action) => {
       checkTransactionsAndUpdateAccount(store, action);
       break;
     case actionTypes.updateTransactions:
-      delegateRegistration(store, action);
+      delegateRegistration(store, action); // TODO remove as no longer needed
       votePlaced(store, action);
       break;
     case actionTypes.accountLoggedOut:
-      setWalletsInLocalStorage(store.getState().wallets);
+      setWalletsInLocalStorage(store.getState().wallets); // TODO remove as no longer used
       store.dispatch(cleanTransactions());
-      localStorage.removeItem('accounts');
-      localStorage.removeItem('isHarwareWalletConnected');
+      localStorage.removeItem('accounts'); // TODO remove as no longer used
+      localStorage.removeItem('isHarwareWalletConnected'); // TODO remove as no longer used
       break;
     /* istanbul ignore next */
     default: break;
