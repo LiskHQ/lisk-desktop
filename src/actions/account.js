@@ -100,14 +100,14 @@ export const secondPassphraseRegistered = ({
     dispatch(passphraseUsed(passphrase));
   };
 
-export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocus) =>
+export const updateTransactionsIfNeeded = ({ transactions, account }) =>
   (dispatch) => {
     const hasRecentTransactions = txs => (
       txs.confirmed.filter(tx => tx.confirmations < 1000).length !== 0
       || txs.pending.length !== 0
     );
 
-    if (windowFocus || hasRecentTransactions(transactions)) {
+    if (hasRecentTransactions(transactions)) {
       const { filters } = transactions;
       const address = transactions.account ? transactions.account.address : account.address;
 
@@ -126,11 +126,10 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
  *
  * @param {Object} data
  * @param {Object} data.account - current account with address and publicKey
- * @param {Boolean} data.windowIsFocused - flag if Hub window is focused
  * @param {Array} data.transactions - list of transactions
  */
 export const accountDataUpdated = ({
-  account, windowIsFocused, transactions,
+  account, transactions,
 }) =>
   (dispatch, getState) => {
     const networkConfig = getState().network;
@@ -141,13 +140,10 @@ export const accountDataUpdated = ({
     })
       .then((result) => {
         if (result.balance !== account.balance) {
-          dispatch(updateTransactionsIfNeeded(
-            {
-              transactions,
-              account,
-            },
-            !windowIsFocused,
-          ));
+          dispatch(updateTransactionsIfNeeded({
+            transactions,
+            account,
+          }));
         }
         dispatch(accountUpdated(result));
         dispatch(networkStatusUpdated({ online: true }));

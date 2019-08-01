@@ -121,7 +121,6 @@ describe('Account middleware', () => {
     middleware(store)(next)(newBlockCreated);
 
     const data = {
-      windowIsFocused: true,
       account: state.account,
       transactions: state.transactions,
     };

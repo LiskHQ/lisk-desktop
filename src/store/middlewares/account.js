@@ -22,12 +22,11 @@ import txFilters from '../../constants/transactionFilters';
 import { getDeviceList, getHWPublicKeyFromIndex } from '../../utils/hwWallet';
 import { loginType } from '../../constants/hwConstants';
 
-const updateAccountData = (store, action) => {
+const updateAccountData = (store) => {
   const { transactions } = store.getState();
   const account = getActiveTokenAccount(store.getState());
 
   store.dispatch(accountDataUpdated({
-    windowIsFocused: action.data.windowIsFocused,
     transactions,
     account,
   }));
@@ -77,13 +76,10 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   // Adding timeout explained in
   // https://github.com/LiskHQ/lisk-hub/pull/1609
   setTimeout(() => {
-    store.dispatch(updateTransactionsIfNeeded(
-      {
-        transactions,
-        account,
-      },
-      action.data.windowIsFocused,
-    ));
+    store.dispatch(updateTransactionsIfNeeded({
+      transactions,
+      account,
+    }));
   }, 500);
 
   const txs = action.data.block.transactions || [];
@@ -100,7 +96,7 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     // it was not getting the account with secondPublicKey right
     // after a new block with second passphrase registration transaction was received
     setTimeout(() => {
-      updateAccountData(store, action);
+      updateAccountData(store);
     }, 500);
   }
 };
