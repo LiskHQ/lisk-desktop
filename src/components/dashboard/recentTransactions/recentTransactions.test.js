@@ -11,7 +11,7 @@ describe('Recent Transactions', () => {
     account: {
       address: '123456L',
     },
-    loadTransactions: jest.fn(),
+    getTransactions: jest.fn(),
     bookmarks: {
       LSK: [
         {
@@ -157,9 +157,9 @@ describe('Recent Transactions', () => {
     expect(wrapper).toContainMatchingElement('EmptyState');
   });
 
-  it('Should loadTransactions if mounted with props.transactions empty', () => {
+  it('Should getTransactions if mounted with props.transactions empty', () => {
     wrapper = mount(<Router><RecentTransactions {...lskProps} transactions={[]} /></Router>);
-    expect(lskProps.loadTransactions).toHaveBeenCalledWith(expect.objectContaining({
+    expect(lskProps.getTransactions).toHaveBeenCalledWith(expect.objectContaining({
       address: lskProps.account.address,
     }));
   });

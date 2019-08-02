@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import { loadLastTransaction, loadTransactions } from '../../../actions/transactions';
+import { getLastTransaction, getTransactions } from '../../../actions/transactions';
 import WalletTransactions from './walletTransactions';
 import txFilters from '../../../constants/transactionFilters';
 import removeDuplicateTransactions from '../../../utils/transactions';
@@ -26,8 +26,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  loadTransactions,
-  loadLastTransaction,
+  getTransactions,
+  getLastTransaction,
 };
 
 export default withRouter(connect(

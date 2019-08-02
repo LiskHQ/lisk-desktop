@@ -1,10 +1,13 @@
+// TODO delete/remove this file once SingleTransaction component use
+// HOC for retrive the same data. All actions and reducer related TRANSACTION
+// will be remove
 import actionTypes from '../../constants/actions';
 
 const transaction = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.transactionCleared:
       return {};
-    case actionTypes.transactionLoaded:
+    case actionTypes.getTransactionSuccess:
       return {
         votesName: state.votesName || {},
         ...action.data,

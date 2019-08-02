@@ -18,7 +18,7 @@ class SingleTransaction extends React.Component {
   constructor(props) {
     super();
 
-    if (props.liskAPIClient) props.loadSingleTransaction({ id: props.match.params.id });
+    if (props.liskAPIClient) props.getSingleTransaction({ id: props.match.params.id });
   }
 
   componentDidUpdate(prevProps) {

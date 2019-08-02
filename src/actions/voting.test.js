@@ -88,7 +88,7 @@ describe('actions: voting', () => {
       expect(typeof actionFunction).to.be.deep.equal('function');
     });
 
-    it('should dispatch addPendingTransaction action if resolved', async () => {
+    it('should dispatch addNewPendingTransaction action if resolved', async () => {
       const transaction = {
         id: '15626650747375562521',
         senderPublicKey: account.publicKey,
@@ -102,7 +102,7 @@ describe('actions: voting', () => {
 
       await actionFunction(dispatch, getState);
       expect(dispatch).to.have.been
-        .calledWith({ data: transaction, type: actionTypes.addPendingTransaction });
+        .calledWith({ data: transaction, type: actionTypes.addNewPendingTransaction });
     });
 
     it('should call callback with "success: false" if caught an error', async () => {

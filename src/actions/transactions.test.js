@@ -2,8 +2,8 @@ import actionTypes from '../constants/actions';
 import txFilters from '../constants/transactionFilters';
 import {
   sent,
-  loadTransactions,
-  loadSingleTransaction,
+  getTransactions,
+  getSingleTransaction,
   updateTransactions,
 } from './transactions';
 import * as transactionsApi from '../utils/api/transactions';
@@ -64,20 +64,20 @@ describe('actions: transactions', () => {
     });
   });
 
-  describe('loadTransactions', () => {
+  describe('getTransactions', () => {
     const data = {
       address: '15626650747375562521L',
       limit: 20,
       offset: 0,
       filters: { direction: txFilters.all },
     };
-    const actionFunction = loadTransactions(data);
+    const actionFunction = getTransactions(data);
 
     it('should create an action function', () => {
       expect(typeof actionFunction).toBe('function');
     });
 
-    it('should dispatch transactionsLoaded action if resolved', async () => {
+    it('should dispatch getTransactionsSuccess action if resolved', async () => {
       transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { count: '0' } });
       const expectedAction = {
         count: 0,
@@ -88,12 +88,12 @@ describe('actions: transactions', () => {
 
       await actionFunction(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
-        data: expectedAction, type: actionTypes.transactionsLoaded,
+        data: expectedAction, type: actionTypes.getTransactionsSuccess,
       });
     });
   });
 
-  describe('loadSingleTransaction', () => {
+  describe('getSingleTransaction', () => {
     const data = {
       address: '15626650747375562521',
       limit: 20,
@@ -102,7 +102,7 @@ describe('actions: transactions', () => {
         direction: txFilters.all,
       },
     };
-    const actionFunction = loadSingleTransaction(data);
+    const actionFunction = getSingleTransaction(data);
 
     beforeEach(() => {
       getState = () => ({
@@ -152,7 +152,7 @@ describe('actions: transactions', () => {
       // is called before the next assertion
       await setTimeout(() => {});
       expect(dispatch).toHaveBeenCalledWith({
-        data: transactionResponse, type: actionTypes.transactionLoaded,
+        data: transactionResponse, type: actionTypes.getTransactionSuccess,
       });
       expect(dispatch).toHaveBeenCalledWith({
         data: expectedActionPayload, type: actionTypes.transactionAddDelegateName,
@@ -178,7 +178,7 @@ describe('actions: transactions', () => {
       // is called before the next assertion
       await setTimeout(() => {});
       expect(dispatch).toHaveBeenCalledWith({
-        data: transactionResponse, type: actionTypes.transactionLoaded,
+        data: transactionResponse, type: actionTypes.getTransactionSuccess,
       });
       expect(dispatch).toHaveBeenCalledWith({
         data: expectedActionPayload, type: actionTypes.transactionAddDelegateName,
@@ -234,7 +234,7 @@ describe('actions: transactions', () => {
       expect(typeof actionFunction).toBe('function');
     });
 
-    it('should dispatch addPendingTransaction action if resolved', async () => {
+    it('should dispatch addNewPendingTransaction action if resolved', async () => {
       transactionsApi.send.mockResolvedValue({ id: '15626650747375562521' });
       const expectedAction = {
         id: '15626650747375562521',
