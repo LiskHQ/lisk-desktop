@@ -12,6 +12,7 @@ import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import WalletTab from '../../wallet/walletTab';
 import DelegateTab from '../../delegate';
 import VotesTab from '../../votes';
+import WalletOnboarding from './walletOnboarding';
 
 class WalletTransactions extends React.Component {
   // eslint-disable-next-line max-statements
@@ -170,6 +171,7 @@ class WalletTransactions extends React.Component {
 
     return (
       <React.Fragment>
+        <WalletOnboarding t={t} />
         <TransactionsOverviewHeader
           bookmarks={this.props.bookmarks}
           address={this.props.address}

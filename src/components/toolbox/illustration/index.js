@@ -22,6 +22,8 @@ import emptyBookmarkFiler from '../../../assets/images/illustrations/empty-bookm
 import emptyBookmarksList from '../../../assets/images/illustrations/empty-bookmarks-list.svg';
 import helpCenter from '../../../assets/images/help/Illustration.svg';
 import emptyWallet from '../../../assets/images/illustrations/empty-wallet.svg';
+import diveIntoDetails from '../../../assets/images/illustrations/diveIntoDetails.svg';
+import manageYourLSK from '../../../assets/images/illustrations/manageYourLSK.svg';
 
 
 export const illustrations = {
@@ -47,6 +49,8 @@ export const illustrations = {
   emptyBookmarksList,
   emptyWallet,
   helpCenter,
+  diveIntoDetails,
+  manageYourLSK,
 };
 
 const Illustration = ({ name, className }) => (
