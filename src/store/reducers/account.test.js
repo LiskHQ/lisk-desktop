@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { useFakeTimers } from 'sinon';
 import account from './account';
 import accounts from '../../../test/constants/accounts';
@@ -33,7 +32,7 @@ describe('Reducer: account(state, action)', () => {
       },
     };
     const changedAccount = account(state, action);
-    expect(changedAccount).to.deep.equal({
+    expect(changedAccount).toEqual({
       ...state,
       info: {
         LSK: action.data,
@@ -46,7 +45,7 @@ describe('Reducer: account(state, action)', () => {
       type: actionTypes.accountLoggedOut,
     };
     const changedAccount = account(state, action);
-    expect(changedAccount).to.deep.equal({ afterLogout: true });
+    expect(changedAccount).toEqual({ afterLogout: true });
   });
 
   it('should return loading account object if action.type = actionTypes.accountLoading', () => {
@@ -54,7 +53,7 @@ describe('Reducer: account(state, action)', () => {
       type: actionTypes.accountLoading,
     };
     const changedAccount = account(state, action);
-    expect(changedAccount).to.deep.equal({ loading: true });
+    expect(changedAccount).toEqual({ loading: true });
   });
 
   it('should extend expireTime if action.type = actionTypes.passphraseUsed', () => {
@@ -63,7 +62,7 @@ describe('Reducer: account(state, action)', () => {
       type: actionTypes.passphraseUsed,
     };
     const changedAccount = account(state, action);
-    expect(changedAccount).to.deep.equal({
+    expect(changedAccount).toEqual({
       ...state,
       expireTime: clock.now + lockDuration,
     });
@@ -76,7 +75,7 @@ describe('Reducer: account(state, action)', () => {
       type: actionTypes.removePassphrase,
     };
     const changedAccount = account(state, action);
-    expect(changedAccount.passphrase).to.be.equal(null);
+    expect(changedAccount.passphrase).toEqual(null);
   });
 
   it('should reduce account when accountLoggedIn has been triggered', () => {
@@ -87,7 +86,7 @@ describe('Reducer: account(state, action)', () => {
       type: actionTypes.accountLoggedIn,
     };
     const accountWithDelegateUpdated = account(state, action);
-    expect(accountWithDelegateUpdated.delegate).to.be.equal(accounts.delegate_candidate);
+    expect(accountWithDelegateUpdated.delegate).toEqual(accounts.delegate_candidate);
   });
 
   it('should return state if action.type is none of the above', () => {
@@ -95,15 +94,6 @@ describe('Reducer: account(state, action)', () => {
       type: 'UNKNOWN',
     };
     const changedAccount = account(state, action);
-    expect(changedAccount).to.deep.equal(state);
-  });
-
-  it('should add votes to state', () => {
-    const action = {
-      type: actionTypes.accountAddVotes,
-      votes: [{ id: 123 }],
-    };
-    const changedAccount = account({}, action);
-    expect(changedAccount).to.deep.equal({ votes: action.votes });
+    expect(changedAccount).toEqual(state);
   });
 });

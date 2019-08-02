@@ -74,8 +74,6 @@ Given(/^I am on (.*?) page of (.*?)$/, function (page, identifier) {
       cy.wait('@transactions');
       cy.wait('@transactions');
       cy.wait('@transactions');
-      cy.wait('@transactions');
-      cy.wait('@transactions');
       break;
   }
 });
