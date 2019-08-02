@@ -4,6 +4,7 @@
 .wrapper {
   align-items: center;
   display: flex;
+  flex-grow: 1;
   margin: 0 auto;
   max-width: 1226px;
   min-height: 100%;
