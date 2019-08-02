@@ -1,16 +1,16 @@
+import { to } from 'await-to-js';
 import i18next from 'i18next';
-import actionTypes from '../constants/actions';
-import { extractAddress } from '../utils/account';
-import { getAccount, setSecondPassphrase } from '../utils/api/account';
-import { updateTransactions } from './transactions';
-import { networkStatusUpdated } from './network';
-import { getAPIClient } from '../utils/api/network';
-import { getTimeOffset } from '../utils/hacks';
-import accountConfig from '../constants/account';
-import { loginType } from '../constants/hwConstants';
 import { errorToastDisplayed } from './toaster';
-import { tokenMap } from '../constants/tokens';
+import { extractAddress } from '../utils/account';
+import { getAPIClient } from '../utils/api/network';
+import { getAccount, setSecondPassphrase } from '../utils/api/account';
 import { getConnectionErrorMessage } from './network/lsk';
+import { getTimeOffset } from '../utils/hacks';
+import { loginType } from '../constants/hwConstants';
+import { networkStatusUpdated } from './network';
+import { updateTransactions } from './transactions';
+import accountConfig from '../constants/account';
+import actionTypes from '../constants/actions';
 
 /**
  * Trigger this action to remove passphrase from account object
@@ -152,6 +152,18 @@ export const accountDataUpdated = ({
       });
   };
 
+
+async function getAccounts(tokens, options) {
+  return tokens.reduce(async (accountsPromise, token) => {
+    const accounts = await accountsPromise;
+    const account = await getAccount({ ...options, token });
+    return {
+      ...accounts,
+      [token]: account,
+    };
+  }, Promise.resolve({}));
+}
+
 /**
  * This action is used on login to fetch account info for all enabled token
  *
@@ -164,29 +176,26 @@ export const accountDataUpdated = ({
 export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, getState) => {
   const { network: networkConfig, settings } = getState();
   dispatch(accountLoading());
-  try {
-    const lskAccount = await getAccount({
-      token: tokenMap.LSK.key, networkConfig, publicKey, passphrase,
-    });
+  const expireTime = (passphrase && settings.autoLog)
+    ? Date.now() + accountConfig.lockDuration
+    : 0;
 
-    const expireTime = (passphrase && settings.autoLog)
-      ? Date.now() + accountConfig.lockDuration
-      : 0;
+  const activeTokens = Object.keys(settings.token.list)
+    .filter(key => settings.token.list[key]);
+  const [error, info] = await to(getAccounts(activeTokens, {
+    networkConfig, publicKey, passphrase,
+  }));
 
-    const btcAccount = settings.token.list.BTC
-        && await getAccount({ token: tokenMap.BTC.key, networkConfig, passphrase });
+  if (error) {
+    dispatch(errorToastDisplayed({ label: getConnectionErrorMessage(error) }));
+    dispatch(accountLoggedOut());
+  } else {
     dispatch(accountLoggedIn({
       passphrase,
       loginType: hwInfo ? loginType[hwInfo.deviceModel.replace(/\s.+$/, '').toLowerCase()] : loginType.normal,
       hwInfo: hwInfo || {},
       expireTime,
-      info: {
-        LSK: lskAccount,
-        ...(btcAccount ? { BTC: btcAccount } : {}),
-      },
+      info,
     }));
-  } catch (error) {
-    dispatch(errorToastDisplayed({ label: getConnectionErrorMessage(error) }));
-    dispatch(accountLoggedOut());
   }
 };
