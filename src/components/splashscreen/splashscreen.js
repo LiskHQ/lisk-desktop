@@ -8,7 +8,6 @@ import { parseSearchParams } from '../../utils/searchParams';
 import { PrimaryButton, SecondaryButton } from '../toolbox/buttons/button';
 import { getNetworksList } from '../../utils/getNetwork';
 import networks from '../../constants/networks';
-import Header from '../header/index';
 import styles from './splashscreen.css';
 import Tooltip from '../toolbox/tooltip/tooltip';
 
@@ -78,55 +77,53 @@ class Splashscreen extends React.Component {
     const { t } = this.props;
 
     return (
-      <React.Fragment>
-        <Header dark showSettings />
-        <div className={`${styles.splashscreen}`}>
-          <div className={`${styles.wrapper}`}>
-            <div className={`${styles.titleHolder}`}>
-              <h1>{t('Welcome to the Lisk Hub!')}</h1>
-              <p>
-                {
-                t('Create an account or sign in to manage your LSK, vote for who secures the network or become a delegate.')
-              }
-              </p>
-            </div>
-            <Link className={`${styles.button} login-button`} to={routes.login.path}>
-              <SecondaryButton className="light">{t('Sign in')}</SecondaryButton>
-            </Link>
-            <Link className={`${styles.button} new-account-button`} to={routes.register.path}>
-              <PrimaryButton>{t('Create an account')}</PrimaryButton>
-            </Link>
-            <span className={styles.separator}>
-              <span>{t('or')}</span>
-            </span>
-            <span className={styles.linkWrapper}>
-              <Link className={`${styles.link} explore-as-guest-button`} to={routes.dashboard.path}>
-                {t('Explore as a guest')}
-              </Link>
-              <Tooltip
-                className={`${styles.tooltip}`}
-                styles={{ infoIcon: styles.infoIcon }}
-                title={t('Guest mode')}
-              >
-                <React.Fragment>
-                  <p className={`${styles.tooltipText}`}>
-                    {t('You can explore Lisk network using Hub without signing in.')}
-                  </p>
-                  <p className={`${styles.tooltupText}`}>
-                    {t('You won\'t be able to make any transactions and all the content will be in read-only mode.')}
-                  </p>
-                </React.Fragment>
-              </Tooltip>
-            </span>
-
-            <span className={styles.linkWrapper}>
-              <Link className={`${styles.link} signin-hwWallet-button`} to={routes.hwWallet.path}>
-                {t('Sign in with a hardware wallet')}
-              </Link>
-            </span>
+      <div className={`${styles.splashscreen}`}>
+        <div className={`${styles.wrapper}`}>
+          <div className={`${styles.titleHolder}`}>
+            <h1>{t('Welcome to the Lisk Hub!')}</h1>
+            <p>
+              {
+              t('Create an account or sign in to manage your LSK, vote for who secures the network or become a delegate.')
+            }
+            </p>
           </div>
+          <Link className={`${styles.button} login-button`} to={routes.login.path}>
+            <SecondaryButton className="light">{t('Sign in')}</SecondaryButton>
+          </Link>
+          <Link className={`${styles.button} new-account-button`} to={routes.register.path}>
+            <PrimaryButton>{t('Create an account')}</PrimaryButton>
+
+          </Link>
+          <span className={styles.separator}>
+            <span>{t('or')}</span>
+          </span>
+          <span className={styles.linkWrapper}>
+            <Link className={`${styles.link} explore-as-guest-button`} to={routes.dashboard.path}>
+              {t('Explore as a guest')}
+            </Link>
+            <Tooltip
+              className={`${styles.tooltip}`}
+              styles={{ infoIcon: styles.infoIcon }}
+              title={t('Guest mode')}
+            >
+              <React.Fragment>
+                <p className={`${styles.tooltipText}`}>
+                  {t('You can explore Lisk network using Hub without signing in.')}
+                </p>
+                <p className={`${styles.tooltupText}`}>
+                  {t('You won\'t be able to make any transactions and all the content will be in read-only mode.')}
+                </p>
+              </React.Fragment>
+            </Tooltip>
+          </span>
+
+          <span className={styles.linkWrapper}>
+            <Link className={`${styles.link} signin-hwWallet-button`} to={routes.hwWallet.path}>
+              {t('Sign in with a hardware wallet')}
+            </Link>
+          </span>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }

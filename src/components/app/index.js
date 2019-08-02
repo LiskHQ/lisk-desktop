@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import styles from './app.css';
 import Toaster from '../toaster';
-import TopBar from '../topBar';
 import LoadingBar from '../loadingBar';
 import OfflineWrapper from '../offlineWrapper';
 import CustomRoute from '../customRoute';
@@ -10,6 +9,7 @@ import Dialog from '../dialog';
 import NotFound from '../notFound';
 import InitializationMessage from '../initializationMessage';
 import routes from '../../constants/routes';
+import Header from '../header/header';
 
 class App extends React.Component {
   constructor() {
@@ -26,72 +26,56 @@ class App extends React.Component {
   }
 
   render() {
-    const { history, location } = this.props;
+    const { location, history } = this.props;
     const allRoutes = Object.values(routes);
-    const defaultRoutes = allRoutes.filter(routeObj => routeObj.component);
-    const signinFlowRoutes = allRoutes.filter(routeObj => routeObj.isSigninFlow);
+    const mainClassNames = [
+      styles.bodyWrapper,
+      (this.state.loaded ? `${styles.loaded} appLoaded` : ''),
+    ].join(' ');
+    const routeObj = Object.values(routes).find(r => r.path === location.pathname) || {};
 
     return (
       <OfflineWrapper>
         <Dialog />
-        {
-          signinFlowRoutes.filter(route => route.path === location.pathname).length > 0
-            ? (
-              <main
-                className={this.state.loaded
-                  ? `${styles.wrapper} ${styles.loaded} appLoaded`
-                  : `${styles.wrapper}`
-                }
-                ref={(el) => { this.main = el; }}
-              >
-                <Switch>
-                  {this.state.loaded
-                  && signinFlowRoutes.map((route, key) => (
-                    <Route
-                      path={route.path}
-                      key={key}
-                      component={route.component}
-                      exact={route.exact}
-                    />
-                  ))
-                }
-                </Switch>
-                <Toaster />
-              </main>
-            )
-            : (
-              <main
-                className={this.state.loaded
-                  ? `${styles.bodyWrapper} ${styles.loaded} appLoaded`
-                  : `${styles.bodyWrapper}`}
-                ref={(el) => { this.main = el; }}
-              >
-                <TopBar />
-                <section>
-                  <InitializationMessage history={history} />
-                  <div className={styles.mainBox}>
-                    <Switch>
-                      {
-                        this.state.loaded && defaultRoutes.map(route => (
-                          <CustomRoute
-                            path={route.path}
-                            pathSuffix={route.pathSuffix}
-                            component={route.component}
-                            isPrivate={route.isPrivate}
-                            exact={route.exact}
-                            forbiddenTokens={route.forbiddenTokens}
-                            key={route.path}
-                          />
-                        ))
-                      }
-                      <Route path="*" component={NotFound} />
-                    </Switch>
-                  </div>
-                </section>
-                <Toaster />
-              </main>
-            )
-        }
+        <Header
+          isSigninFlow={routeObj.isSigninFlow}
+          location={location}
+        />
+        <main
+          className={mainClassNames}
+          ref={(el) => { this.main = el; }}
+        >
+          <section>
+            <InitializationMessage history={history} />
+            <div className={`${styles.mainContent} ${!routeObj.isSigninFlow ? styles.mainBox : ''}`}>
+              <Switch>
+                {this.state.loaded && allRoutes.map(route => (
+                  route.isSigninFlow
+                    ? (
+                      <Route
+                        path={route.path}
+                        key={route.path}
+                        component={route.component}
+                        exact={route.exact}
+                      />
+                    ) : (
+                      <CustomRoute
+                        path={route.path}
+                        pathSuffix={route.pathSuffix}
+                        component={route.component}
+                        isPrivate={route.isPrivate}
+                        exact={route.exact}
+                        forbiddenTokens={route.forbiddenTokens}
+                        key={route.path}
+                      />
+                    )
+                ))}
+                <Route path="*" component={NotFound} />
+              </Switch>
+            </div>
+          </section>
+          <Toaster />
+        </main>
         <LoadingBar markAsLoaded={this.markAsLoaded.bind(this)} />
       </OfflineWrapper>
     );

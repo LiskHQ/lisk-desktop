@@ -1,6 +1,5 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Header from '../header/index';
 import MultiStep from '../multiStep';
 import Loading from './loading';
 import SelectDevice from './selectDevice';
@@ -28,7 +27,6 @@ class HardwareWalletLogin extends React.Component {
     } = this.props;
     return (
       <React.Fragment>
-        <Header showSettings hideNetwork />
         <div className={`${styles.wrapper} ${grid.row}`}>
           <MultiStep
             className={`${grid['col-xs-10']}`}

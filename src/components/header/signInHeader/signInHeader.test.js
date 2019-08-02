@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { spy, useFakeTimers } from 'sinon';
 import { expect } from 'chai';
-import { mountWithContext } from '../../../test/unit-test-utils/mountHelpers';
-import i18n from '../../i18n';
+import { mountWithContext } from '../../../../test/unit-test-utils/mountHelpers';
+import i18n from '../../../i18n';
 import Header from './index';
 
-describe.skip('Header', () => {
+describe.skip('Signin Header', () => {
   let wrapper;
   let clock;
   const options = {

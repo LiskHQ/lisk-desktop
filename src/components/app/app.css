@@ -17,6 +17,8 @@ body {
   position: absolute;
   right: 0;
   top: 0;
+  display: flex;
+  flex-direction: column;
   z-index: var(--normal-index);
 }
 
@@ -57,11 +59,14 @@ body {
   text-align: center;
 }
 
-.mainBox {
+.mainContent {
+  flex-grow: 1;
   margin: 0 auto;
   width: 100%;
+}
+
+.mainBox {
   max-width: var(--main-box-width);
-  flex-grow: 1;
 }
 
 :global(.offlineWrapper) {

@@ -5,6 +5,7 @@
   align-items: center;
   background-color: var(--color-maastricht-blue);
   background-image: url('../../assets/images/illustrations/illustration-splash-dark.svg');
+  background-position: center;
   background-size: cover;
   box-sizing: border-box;
   display: flex;

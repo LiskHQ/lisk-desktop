@@ -2,7 +2,6 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { generatePassphrase } from '../../utils/passphrase';
 import { extractAddress } from '../../utils/account';
-import Header from '../header/index';
 import MultiStep from '../multiStep';
 import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
@@ -49,7 +48,6 @@ class Register extends React.Component {
     const { accounts, selectedAccount } = this.state;
     return (
       <React.Fragment>
-        <Header showSettings />
         <div className={`${styles.register} ${grid.row}`}>
           <MultiStep
             className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}
