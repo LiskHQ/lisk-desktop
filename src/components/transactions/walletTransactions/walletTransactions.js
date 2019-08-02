@@ -51,12 +51,6 @@ class WalletTransactions extends React.Component {
     clearTimeout(this.copyTimeout);
   }
 
-  componentDidMount() {
-    if (this.props.account.delegate) {
-      this.props.updateAccountDelegateStats(this.props.account);
-    }
-  }
-
   onInit() {
     this.props.getLastTransaction(this.props.account.address);
 

@@ -1,4 +1,4 @@
-Feature: Wallet
+Feature: Wallet Votes
 
   Background:
     Given I autologin as genesis to devnet

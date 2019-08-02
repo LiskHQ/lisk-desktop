@@ -1,6 +1,5 @@
 import {
   accountDataUpdated,
-  updateDelegateAccount,
   updateTransactionsIfNeeded,
   login,
 } from '../../actions/account';
@@ -19,17 +18,15 @@ import networks from '../../constants/networks';
 import settings from '../../constants/settings';
 import txFilters from '../../constants/transactionFilters';
 
-import { setWalletsInLocalStorage } from '../../utils/wallets';
 
 import { getDeviceList, getHWPublicKeyFromIndex } from '../../utils/hwWallet';
 import { loginType } from '../../constants/hwConstants';
 
-const updateAccountData = (store, action) => {
+const updateAccountData = (store) => {
   const { transactions } = store.getState();
   const account = getActiveTokenAccount(store.getState());
 
   store.dispatch(accountDataUpdated({
-    windowIsFocused: action.data.windowIsFocused,
     transactions,
     account,
   }));
@@ -58,20 +55,6 @@ const getRecentTransactionOfType = (transactionsList, type) => (
     && transaction.confirmations < 5))[0]
 );
 
-const delegateRegistration = (store, action) => {
-  const delegateRegistrationTx = getRecentTransactionOfType(
-    action.data.confirmed,
-    transactionTypes.registerDelegate,
-  );
-  const state = store.getState();
-
-  if (delegateRegistrationTx) {
-    store.dispatch(updateDelegateAccount({
-      publicKey: state.account.info.LSK.publicKey,
-    }));
-  }
-};
-
 const votePlaced = (store, action) => {
   const voteTransaction = getRecentTransactionOfType(action.data.confirmed, transactionTypes.vote);
 
@@ -93,13 +76,10 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   // Adding timeout explained in
   // https://github.com/LiskHQ/lisk-hub/pull/1609
   setTimeout(() => {
-    store.dispatch(updateTransactionsIfNeeded(
-      {
-        transactions,
-        account,
-      },
-      action.data.windowIsFocused,
-    ));
+    store.dispatch(updateTransactionsIfNeeded({
+      transactions,
+      account,
+    }));
   }, 500);
 
   const txs = action.data.block.transactions || [];
@@ -116,7 +96,7 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
     // it was not getting the account with secondPublicKey right
     // after a new block with second passphrase registration transaction was received
     setTimeout(() => {
-      updateAccountData(store, action);
+      updateAccountData(store);
     }, 500);
   }
 };
@@ -206,17 +186,10 @@ const accountMiddleware = store => next => (action) => {
     case actionTypes.storeCreated:
       autoLogInIfNecessary(store, next, action);
       break;
-    // update on login because the 'save account' button
-    // depends on a rerendering of the page
-    // TODO: fix the 'save account' path problem, so we can remove this
-    case actionTypes.accountLoggedIn:
-      updateAccountData(store, action);
-      break;
     case actionTypes.newBlockCreated:
       checkTransactionsAndUpdateAccount(store, action);
       break;
     case actionTypes.updateTransactions:
-      delegateRegistration(store, action);
       votePlaced(store, action);
       break;
     case actionTypes.accountLoggedOut:

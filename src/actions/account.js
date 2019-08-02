@@ -1,20 +1,16 @@
+import { to } from 'await-to-js';
 import i18next from 'i18next';
-import actionTypes from '../constants/actions';
-import { extractAddress } from '../utils/account';
-import { getAccount, setSecondPassphrase } from '../utils/api/account';
-import { getDelegates } from '../utils/api/delegates';
-import { getTransactions } from '../utils/api/transactions';
-import { getBlocks } from '../utils/api/blocks';
-import { updateTransactions } from './transactions';
-import { networkStatusUpdated } from './network';
-import { getAPIClient } from '../utils/api/network';
-import { getTimeOffset } from '../utils/hacks';
-import transactionTypes from '../constants/transactionTypes';
-import accountConfig from '../constants/account';
-import { loginType } from '../constants/hwConstants';
 import { errorToastDisplayed } from './toaster';
-import { tokenMap } from '../constants/tokens';
+import { extractAddress } from '../utils/account';
+import { getAPIClient } from '../utils/api/network';
+import { getAccount, setSecondPassphrase } from '../utils/api/account';
 import { getConnectionErrorMessage } from './network/lsk';
+import { getTimeOffset } from '../utils/hacks';
+import { loginType } from '../constants/hwConstants';
+import { networkStatusUpdated } from './network';
+import { updateTransactions } from './transactions';
+import accountConfig from '../constants/account';
+import actionTypes from '../constants/actions';
 
 /**
  * Trigger this action to remove passphrase from account object
@@ -70,12 +66,13 @@ export const passphraseUsed = data => ({
   data,
 });
 
-/**
- *
- */
+
+// TODO delete this action and use setSecondPassphrase with withData HOC
+// directly in the Second passphrase registration component
 export const secondPassphraseRegistered = ({
   secondPassphrase, account, passphrase, callback,
 }) =>
+/* istanbul ignore next */
   (dispatch, getState) => {
     const { settings: { token: { active } } } = getState();
     const liskAPIClient = getAPIClient(active, getState());
@@ -103,34 +100,14 @@ export const secondPassphraseRegistered = ({
     dispatch(passphraseUsed(passphrase));
   };
 
-export const updateDelegateAccount = ({ publicKey }) =>
-  (dispatch, getState) => {
-    const { account, settings: { token: { active } } } = getState();
-    const liskAPIClient = getAPIClient(active, getState());
-    return getDelegates(liskAPIClient, { publicKey })
-      .then((response) => {
-        dispatch(accountUpdated({
-          delegate: {
-            ...(account.delegate || {}),
-            ...response.data[0],
-          },
-          isDelegate: true,
-        }));
-      });
-  };
-
-
-// TODO change all uses of loadDelegate to updateDelegateAccount
-export const loadDelegate = updateDelegateAccount;
-
-export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocus) =>
+export const updateTransactionsIfNeeded = ({ transactions, account }) =>
   (dispatch) => {
     const hasRecentTransactions = txs => (
       txs.confirmed.filter(tx => tx.confirmations < 1000).length !== 0
       || txs.pending.length !== 0
     );
 
-    if (windowFocus || hasRecentTransactions(transactions)) {
+    if (hasRecentTransactions(transactions)) {
       const { filters } = transactions;
       const address = transactions.account ? transactions.account.address : account.address;
 
@@ -142,83 +119,83 @@ export const updateTransactionsIfNeeded = ({ transactions, account }, windowFocu
     }
   };
 
+/**
+ * This action is used to update account balance when new block was forged and
+ * account middleware detected that it contains a transaction that affects balance
+ * of the active account
+ *
+ * @param {Object} data
+ * @param {Object} data.account - current account with address and publicKey
+ * @param {Array} data.transactions - list of transactions
+ */
 export const accountDataUpdated = ({
-  account, windowIsFocused, transactions,
+  account, transactions,
 }) =>
-  (dispatch, getState) => {
+  async (dispatch, getState) => {
     const networkConfig = getState().network;
-    getAccount({
+    const [error, result] = await to(getAccount({
       networkConfig,
       address: account.address,
       publicKey: account.publicKey,
-    })
-      .then((result) => {
-        if (result.balance !== account.balance) {
-          dispatch(updateTransactionsIfNeeded(
-            {
-              transactions,
-              account,
-            },
-            !windowIsFocused,
-          ));
-        }
-        dispatch(accountUpdated(result));
-        dispatch(networkStatusUpdated({ online: true }));
-      }).catch((res) => {
-        dispatch(networkStatusUpdated({ online: false, code: res.error.code }));
-      });
-  };
-
-export const updateAccountDelegateStats = account =>
-  async (dispatch, getState) => {
-    const { settings: { token: { active } } } = getState();
-    const liskAPIClient = getAPIClient(active, getState());
-    const { address, publicKey } = account;
-    const networkConfig = getState().network;
-    const token = tokenMap.LSK.key;
-    const transaction = await getTransactions({
-      token, networkConfig, address, limit: 1, type: transactionTypes.registerDelegate,
-    });
-    const block = await getBlocks(liskAPIClient, { generatorPublicKey: publicKey, limit: 1 });
-    dispatch(accountUpdated({
-      token,
-      delegate: {
-        ...(getState().account.info.LSK.delegate || {}),
-        lastBlock: (block.data[0] && block.data[0].timestamp) || '-',
-        txDelegateRegister: transaction.data[0],
-      },
     }));
+    if (result) {
+      if (result.balance !== account.balance) {
+        dispatch(updateTransactionsIfNeeded({
+          transactions,
+          account,
+        }));
+      }
+      dispatch(accountUpdated(result));
+      dispatch(networkStatusUpdated({ online: true }));
+    } else {
+      dispatch(networkStatusUpdated({ online: false, code: error.error.code }));
+    }
   };
 
-// eslint-disable-next-line max-statements
+
+async function getAccounts(tokens, options) {
+  return tokens.reduce(async (accountsPromise, token) => {
+    const accounts = await accountsPromise;
+    const account = await getAccount({ ...options, token });
+    return {
+      ...accounts,
+      [token]: account,
+    };
+  }, Promise.resolve({}));
+}
+
+/**
+ * This action is used on login to fetch account info for all enabled token
+ *
+ * @param {Object} data - for hardware wallets it contains publicKey and hwInfo,
+ *    otherwise contains passphrase
+ * @param {String} data.passphrase - BIP39 passphrase of the account
+ * @param {String} data.publicKey - Lisk publicKey used for hardware wallet login
+ * @param {Object} data.hwInfo - info about hardware wallet we're trying to login to
+ */
 export const login = ({ passphrase, publicKey, hwInfo }) => async (dispatch, getState) => {
   const { network: networkConfig, settings } = getState();
   dispatch(accountLoading());
-  try {
-    const lskAccount = await getAccount({
-      token: tokenMap.LSK.key, networkConfig, publicKey, passphrase,
-    });
+  const expireTime = (passphrase && settings.autoLog)
+    ? Date.now() + accountConfig.lockDuration
+    : 0;
 
-    const expireTime = (passphrase && settings.autoLog)
-      ? Date.now() + accountConfig.lockDuration
-      : 0;
+  const activeTokens = Object.keys(settings.token.list)
+    .filter(key => settings.token.list[key]);
+  const [error, info] = await to(getAccounts(activeTokens, {
+    networkConfig, publicKey, passphrase,
+  }));
 
-    if (lskAccount) {
-      const btcAccount = settings.token.list.BTC
-        && await getAccount({ token: tokenMap.BTC.key, networkConfig, passphrase });
-      dispatch(accountLoggedIn({
-        passphrase,
-        loginType: hwInfo ? loginType[hwInfo.deviceModel.replace(/\s.+$/, '').toLowerCase()] : loginType.normal,
-        hwInfo: hwInfo || {},
-        expireTime,
-        info: {
-          LSK: lskAccount,
-          ...(btcAccount ? { BTC: btcAccount } : {}),
-        },
-      }));
-    }
-  } catch (error) {
+  if (error) {
     dispatch(errorToastDisplayed({ label: getConnectionErrorMessage(error) }));
     dispatch(accountLoggedOut());
+  } else {
+    dispatch(accountLoggedIn({
+      passphrase,
+      loginType: hwInfo ? loginType[hwInfo.deviceModel.replace(/\s.+$/, '').toLowerCase()] : loginType.normal,
+      hwInfo: hwInfo || {},
+      expireTime,
+      info,
+    }));
   }
 };

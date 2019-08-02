@@ -96,7 +96,6 @@ and every 10 seconds dispatches [`newBlockCreated`](https://github.com/LiskHQ/li
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`updateTransactions`](https://github.com/LiskHQ/lisk-hub/blob/77b6defdf98b6f67f005c25c28ea85378d375817/src/store/middlewares/account.js#L97)<br/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↪️ Account Middleware<br/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`loadVotes`](https://github.com/LiskHQ/lisk-hub/blob/77b6defdf98b6f67f005c25c28ea85378d375817/src/store/middlewares/account.js#L156) (sometimes)<br/>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⬇️ [`updateDelegateAccount`](https://github.com/LiskHQ/lisk-hub/blob/77b6defdf98b6f67f005c25c28ea85378d375817/src/store/middlewares/account.js#L155)  (sometimes)<br/>
 
 ## Local Storage
   All data saved in localStorage should be saved in Subscribers files

@@ -6,7 +6,6 @@ import urls from '../../../constants/urls';
 import accounts from '../../../constants/accounts';
 import compareBalances from '../../utils/compareBalances';
 
-const txConfirmationTimeout = 12000;
 const transactionFee = 0.1;
 
 const getRandomAddress = () => `23495548666${Math.floor((Math.random() * 8990000) + 1000000)}L`;
@@ -18,23 +17,22 @@ let randomAddress;
 let randomAmount;
 let randomReference;
 
-Then(/^I fill in recipient$/, function () {
-  randomAddress = getRandomAddress();
-  cy.get(ss.recipientInput).type(randomAddress);
+Then(/^I fill random recipient$/, function () {
+  this.randomAddress = getRandomAddress();
+  cy.get(ss.recipientInput).type(this.randomAddress);
 });
 
-Then(/^I fill in amount$/, function () {
+Then(/^I fill random amount$/, function () {
   randomAmount = getRandomAmount();
   cy.get(ss.amountInput).click().type(randomAmount);
 });
 
-Then(/^I fill in message$/, function () {
+Then(/^I fill random message$/, function () {
   randomReference = getRandomReference();
   cy.get(ss.sendReferenceText).click().type(randomReference);
 });
 
 Then(/^I go to confirmation$/, function () {
-
   cy.get(ss.nextTransferBtn).should('be.enabled');
   cy.get(ss.nextTransferBtn).click();
 });
@@ -46,13 +44,6 @@ Then(/^I confirm transfer$/, function () {
 
 Then(/^I click ok$/, function () {
   cy.get(ss.okayBtn).click();
-});
-
-Then(/^I see the transaction in transaction list$/, function () {
-  cy.wait(1000);
-  cy.get(`${ss.transactionRow} ${ss.spinner}`).should('be.visible');
-  cy.get(ss.transactionRow).eq(0).find(ss.transactionAddress).contains(randomAddress);
-  cy.get(`${ss.transactionRow} ${ss.spinner}`, { timeout: txConfirmationTimeout }).should('be.not.visible');
 });
 
 Then(/^I follow the launch protokol link$/, function () {

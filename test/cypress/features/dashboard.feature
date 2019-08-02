@@ -10,5 +10,5 @@ Feature: Dashboard
     Given I autologin as genesis to devnet
     Given I have a bookmark saved
     Given I am on Dashboard page
-    When I click on bookmark
+    When I click on recent bookmark
     Then I should be on Account page

@@ -4,24 +4,24 @@ Feature: Send
     Given I autologin as genesis to devnet
     Given I am on Send page
     And I remember my balance
-    When I fill in recipient
-    And I fill in amount
+    When I fill random recipient
+    And I fill random amount
     And I go to confirmation
     And I confirm transfer
     And I click ok
-    Then I see the transaction in transaction list
+    Then The latest transaction is transfer to random
     Then The balance is subtracted
 
   Scenario: Transfer tx with second passphrase
     Given I autologin as second_passphrase_account to devnet
     Given I am on Send page
-    When I fill in recipient
-    And I fill in amount
+    When I fill random recipient
+    And I fill random amount
     And I go to confirmation
     And I enter second passphrase of second_passphrase_account
     And I confirm transfer
     And I click ok
-    Then I see the transaction in transaction list
+    Then The latest transaction is transfer to random
 
   Scenario: Launch protocol prefills fields  - from logged in state
     Given I autologin as genesis to devnet
@@ -38,8 +38,8 @@ Feature: Send
     Given I mock api /transactions
     Given I autologin as genesis to devnet
     Given I am on Send page
-    When I fill in recipient
-    And I fill in amount
+    When I fill random recipient
+    And I fill random amount
     And I go to confirmation
     And I confirm transfer
     Then I see error message

@@ -8,7 +8,7 @@ Feature: Register delegate
     And I confirm transaction
     Then I see successful message
     When I am on Wallet page
-    Then I see the transaction in transaction list
+    Then The latest transaction is Delegate registration
 
   Scenario: Register delegate with second passphrase
     Given I autologin as second_passphrase_account to devnet
@@ -19,4 +19,4 @@ Feature: Register delegate
     And I confirm transaction
     Then I see successful message
     When I am on Wallet page
-    Then I see the transaction in transaction list
+    Then The latest transaction is Delegate registration

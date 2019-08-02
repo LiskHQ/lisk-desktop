@@ -1,6 +1,3 @@
-import { expect as chaiExpect } from 'chai';
-import { spy, stub } from 'sinon';
-import i18next from 'i18next';
 import actionTypes from '../constants/actions';
 import {
   accountUpdated,
@@ -9,14 +6,9 @@ import {
   removePassphrase,
   accountDataUpdated,
   updateTransactionsIfNeeded,
-  updateDelegateAccount,
-  updateAccountDelegateStats,
   login,
 } from './account';
 import * as accountApi from '../utils/api/account';
-import * as delegateApi from '../utils/api/delegates';
-import * as transactionsApi from '../utils/api/transactions';
-import * as blocksApi from '../utils/api/blocks';
 import Fees from '../constants/fees';
 import transactionTypes from '../constants/transactionTypes';
 import networks from '../constants/networks';
@@ -24,9 +16,33 @@ import accounts from '../../test/constants/accounts';
 import * as networkActions from './network';
 import * as transactionsActions from './transactions';
 
-jest.mock('../utils/api/account');
+jest.mock('i18next', () => ({
+  t: jest.fn(key => key),
+}));
+jest.mock('../utils/api/account', () => ({
+  getAccount: jest.fn(),
+  setSecondPassphrase: jest.fn(),
+}));
+jest.mock('./transactions', () => ({
+  updateTransactions: jest.fn(),
+}));
+jest.mock('./network', () => ({
+  networkStatusUpdated: jest.fn(),
+}));
 
 describe('actions: account', () => {
+  let dispatch;
+
+  beforeEach(() => {
+    dispatch = jest.fn();
+  });
+
+  afterEach(() => {
+    accountApi.getAccount.mockReset();
+    accountApi.setSecondPassphrase.mockReset();
+    networkActions.networkStatusUpdated.mockReset();
+  });
+
   describe('accountUpdated', () => {
     it('should create an action to set values to account', () => {
       const data = {
@@ -37,7 +53,7 @@ describe('actions: account', () => {
         data,
         type: actionTypes.accountUpdated,
       };
-      chaiExpect(accountUpdated(data)).to.be.deep.equal(expectedAction);
+      expect(accountUpdated(data)).toEqual(expectedAction);
     });
   });
 
@@ -47,13 +63,12 @@ describe('actions: account', () => {
         type: actionTypes.accountLoggedOut,
       };
 
-      chaiExpect(accountLoggedOut()).to.be.deep.equal(expectedAction);
+      expect(accountLoggedOut()).toEqual(expectedAction);
     });
   });
 
-  describe('secondPassphraseRegistered', () => {
-    let accountApiMock;
-    let i18nextMock;
+  // TODO remove this test when the action is removed
+  describe.skip('secondPassphraseRegistered', () => {
     const data = {
       passphrase: accounts.second_passphrase_account.passphrase,
       secondPassphrase: accounts.second_passphrase_account.secondPassphrase,
@@ -61,12 +76,9 @@ describe('actions: account', () => {
       callback: jest.fn(),
     };
     const actionFunction = secondPassphraseRegistered(data);
-    let dispatch;
     let getState;
 
     beforeEach(() => {
-      accountApiMock = stub(accountApi, 'setSecondPassphrase');
-      dispatch = jest.fn();
       getState = () => ({
         network: {
           status: { online: true },
@@ -84,13 +96,6 @@ describe('actions: account', () => {
           },
         },
       });
-      i18nextMock = stub(i18next, 't');
-      i18next.t = key => key;
-    });
-
-    afterEach(() => {
-      accountApiMock.restore();
-      i18nextMock.restore();
     });
 
     it('should dispatch addNewPendingTransaction action if resolved', () => {
@@ -103,7 +108,7 @@ describe('actions: account', () => {
         type: transactionTypes.setSecondPassphrase,
         token: 'LSK',
       };
-      accountApiMock.returnsPromise().resolves(transaction);
+      accountApi.setSecondPassphrase.mockResolvedValue(transaction);
 
       actionFunction(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
@@ -117,7 +122,7 @@ describe('actions: account', () => {
 
     it('should call callback if api call fails', () => {
       const error = { message: 'sample message' };
-      accountApiMock.returnsPromise().rejects(error);
+      accountApi.setSecondPassphrase.mockRejectedValue(error);
 
       actionFunction(dispatch, getState);
       expect(data.callback).toHaveBeenCalledWith({
@@ -141,22 +146,14 @@ describe('actions: account', () => {
         type: actionTypes.removePassphrase,
       };
 
-      chaiExpect(removePassphrase(data)).to.be.deep.equal(expectedAction);
+      expect(removePassphrase(data)).toEqual(expectedAction);
     });
   });
 
   describe('accountDataUpdated', () => {
-    let networkActionsStub;
-    let getAccountStub;
-    let transactionsActionsStub;
     let getState;
 
-    const dispatch = spy();
-
     beforeEach(() => {
-      networkActionsStub = spy(networkActions, 'networkStatusUpdated');
-      getAccountStub = stub(accountApi, 'getAccount').returnsPromise();
-      transactionsActionsStub = spy(transactionsActions, 'updateTransactions');
       getState = () => ({
         network: {
           status: { online: true },
@@ -176,14 +173,8 @@ describe('actions: account', () => {
       });
     });
 
-    afterEach(() => {
-      getAccountStub.restore();
-      networkActionsStub.restore();
-      transactionsActionsStub.restore();
-    });
-
-    it(`should call account API methods on ${actionTypes.newBlockCreated} action when online`, () => {
-      getAccountStub.resolves({ balance: 10e8 });
+    it(`should call account API methods on ${actionTypes.newBlockCreated} action when online`, async () => {
+      accountApi.getAccount.mockResolvedValue({ balance: 10e8 });
 
       const data = {
         windowIsFocused: false,
@@ -197,13 +188,14 @@ describe('actions: account', () => {
         account: { address: accounts.genesis.address, balance: 0 },
       };
 
-      accountDataUpdated(data)(dispatch, getState);
-      chaiExpect(dispatch).to.have.callCount(3);
-      chaiExpect(networkActionsStub).to.have.not.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
+      await accountDataUpdated(data)(dispatch, getState);
+      expect(dispatch).toHaveBeenCalledTimes(3);
+      expect(networkActions.networkStatusUpdated).toHaveBeenCalledWith({ online: true });
     });
 
-    it(`should call account API methods on ${actionTypes.newBlockCreated} action when offline`, () => {
-      getAccountStub.rejects({ error: { code: 'EUNAVAILABLE' } });
+    it(`should call account API methods on ${actionTypes.newBlockCreated} action when offline`, async () => {
+      const code = 'EUNAVAILABLE';
+      accountApi.getAccount.mockRejectedValue({ error: { code } });
 
       const data = {
         windowIsFocused: true,
@@ -215,19 +207,18 @@ describe('actions: account', () => {
         account: { address: accounts.genesis.address },
       };
 
-      accountDataUpdated(data)(dispatch, getState);
-      chaiExpect(networkActionsStub).to.have.been.calledWith({ online: false, code: 'EUNAVAILABLE' });
+      await accountDataUpdated(data)(dispatch, getState);
+      expect(networkActions.networkStatusUpdated).toHaveBeenCalledWith({
+        online: false, code,
+      });
     });
   });
 
   describe('updateTransactionsIfNeeded', () => {
-    let transactionsActionsStub;
     let getState;
-
-    const dispatch = spy();
+    const { address } = accounts.genesis;
 
     beforeEach(() => {
-      transactionsActionsStub = spy(transactionsActions, 'updateTransactions');
       getState = () => ({
         network: {
           status: { online: true },
@@ -245,146 +236,40 @@ describe('actions: account', () => {
           },
         },
       });
-    });
-
-    afterEach(() => {
-      transactionsActionsStub.restore();
     });
 
     it('should update transactions when window is in focus', () => {
       const data = {
         transactions: { confirmed: [{ confirmations: 10 }], pending: [] },
-        account: { address: accounts.genesis.address },
+        account: { address },
       };
 
       updateTransactionsIfNeeded(data, true)(dispatch, getState);
-      chaiExpect(transactionsActionsStub).to.have.been.calledWith();
+      expect(transactionsActions.updateTransactions).toHaveBeenCalledWith(expect.objectContaining({
+        address,
+      }));
     });
 
     it('should update transactions when there are no recent transactions', () => {
       const data = {
         transactions: { confirmed: [{ confirmations: 10000 }], pending: [{ id: '123' }] },
-        account: { address: accounts.genesis.address },
+        account: { address },
       };
 
       updateTransactionsIfNeeded(data, false)(dispatch, getState);
-      chaiExpect(transactionsActionsStub).to.have.been.calledWith();
-    });
-  });
-
-  describe('updateDelegateAccount', () => {
-    const dispatch = spy();
-    let getState;
-
-    beforeEach(() => {
-      stub(delegateApi, 'getDelegates').returnsPromise();
-      getState = () => ({
-        network: {
-          status: { online: true },
-          name: 'Mainnet',
-          networks: {
-            LSK: {
-              nodeUrl: 'hhtp://localhost:4000',
-              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-            },
-          },
-        },
-        account: {
-          info: {
-            LSK: {},
-          },
-        },
-        settings: {
-          token: {
-            active: 'LSK',
-          },
-        },
-      });
-    });
-
-    afterEach(() => {
-      delegateApi.getDelegates.restore();
-    });
-
-    it('should fetch delegate and update account', () => {
-      delegateApi.getDelegates.resolves({ data: [{ account: 'delegate data' }] });
-      const data = {
-        publicKey: accounts.genesis.publicKey,
-      };
-
-      updateDelegateAccount(data)(dispatch, getState);
-
-      const accountUpdatedAction = accountUpdated({
-        delegate: { account: 'delegate data' },
-        isDelegate: true,
-      });
-      chaiExpect(dispatch).to.have.been.calledWith(accountUpdatedAction);
-    });
-  });
-
-  describe('updateAccountDelegateStats', () => {
-    const dispatch = spy();
-    let getState;
-
-    beforeEach(() => {
-      stub(blocksApi, 'getBlocks').returnsPromise();
-      stub(transactionsApi, 'getTransactions').returnsPromise();
-      getState = () => ({
-        network: {
-          status: { online: true },
-          name: 'Mainnet',
-          networks: {
-            LSK: {
-              nodeUrl: 'hhtp://localhost:4000',
-              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-            },
-          },
-        },
-        account: {
-          info: {
-            LSK: {},
-          },
-        },
-        settings: {
-          token: {
-            active: 'LSK',
-          },
-        },
-      });
-    });
-
-    afterEach(() => {
-      blocksApi.getBlocks.restore();
-      transactionsApi.getTransactions.restore();
-    });
-
-    it('should fetch delegate stats and update account', async () => {
-      blocksApi.getBlocks.resolves({ data: [{ timestamp: 1 }] });
-      transactionsApi.getTransactions.resolves({ data: [{ timestamp: 2 }] });
-
-      await updateAccountDelegateStats(accounts.genesis)(dispatch, getState);
-
-      const delegateStatsLoadedAction = accountUpdated({
-        token: 'LSK',
-        delegate: {
-          lastBlock: 1,
-          txDelegateRegister: { timestamp: 2 },
-        },
-      });
-
-      chaiExpect(dispatch).to.have.been.calledWith(delegateStatsLoadedAction);
+      expect(transactionsActions.updateTransactions).toHaveBeenCalledWith(expect.objectContaining({
+        address,
+      }));
     });
   });
 
   describe('login', () => {
-    let dispatch;
     let state;
     const getState = () => (state);
     const balance = 10e8;
     const { passphrase, address, publicKey } = accounts.genesis;
 
     beforeEach(() => {
-      dispatch = jest.fn();
       state = {
         network: {
           name: 'Mainnet',
@@ -399,10 +284,6 @@ describe('actions: account', () => {
           },
         },
       };
-    });
-
-    afterEach(() => {
-      accountApi.getAccount.mockReset();
     });
 
     it('should call account api and dispatch accountLoggedIn ', async () => {

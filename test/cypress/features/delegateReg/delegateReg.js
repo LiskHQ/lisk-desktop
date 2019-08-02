@@ -17,16 +17,7 @@ Given(/^I go to confirmation$/, function () {
   cy.get(ss.chooseDelegateName).click();
 });
 
-Given(/^I confirm transaction$/, function () {
-  cy.get(ss.confirmDelegateButton).click();
-});
-
 Given(/^I see successful message$/, function () {
   cy.wait(txConfirmationTimeout);
   cy.get(ss.app).contains('Delegate registration submitted');
-});
-
-Given(/^I see the transaction in transaction list$/, function () {
-  cy.get(ss.transactionRow).eq(0).as('tx');
-  cy.get('@tx').find(ss.transactionAddress).should('have.text', 'Delegate registration');
 });

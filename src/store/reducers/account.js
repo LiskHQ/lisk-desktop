@@ -31,7 +31,6 @@ const account = (state = {}, action) => {
       return {
         ...action.data,
         votes: state.votes,
-        isDelegate: ('delegate' in action.data),
       };
     case actionTypes.accountLoggedOut:
       return {
@@ -41,8 +40,6 @@ const account = (state = {}, action) => {
       return {
         loading: true,
       };
-    case actionTypes.accountAddVotes:
-      return { ...state, votes: action.votes };
     default:
       return state;
   }
