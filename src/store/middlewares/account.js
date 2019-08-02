@@ -193,10 +193,7 @@ const accountMiddleware = store => next => (action) => {
       votePlaced(store, action);
       break;
     case actionTypes.accountLoggedOut:
-      setWalletsInLocalStorage(store.getState().wallets);
       store.dispatch(emptyTransactionsData());
-      localStorage.removeItem('accounts');
-      localStorage.removeItem('isHarwareWalletConnected');
       break;
     /* istanbul ignore next */
     default: break;
