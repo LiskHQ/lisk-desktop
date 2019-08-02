@@ -10,7 +10,6 @@ const delegatesPage = {
 const votingPage = {
   addedVotes: '.added-votes .vote',
   removedVotes: '.removed-votes .vote',
-  confirmVotingButton: '.confirm-button',
   voteResultHeader: '.result-box-header',
   backToDelegatesButton: '.back-to-delegates-button',
   alreadyVotedPreselection: '.alreadyVoted-message .vote',
@@ -22,7 +21,6 @@ const votingPage = {
 const secondPassphraseRegistrationPage = {
   goToConfirmation: '.go-to-confirmation',
   confirmationCheckbox: '.confirmation-checkbox',
-  confirmButton: '.confirm-button',
   goToWallet: '.go-to-wallet',
 };
 
@@ -231,7 +229,7 @@ const ss = {
   connectButton: '.connect-button',
   walletHeader: '.wallet-header',
   toast: '.toast',
-  confirmDelegateButton: '.confirm-button',
+  confirmButton: '.confirm-button',
   coinRow: '.coin-row',
 };
 

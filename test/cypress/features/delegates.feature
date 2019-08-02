@@ -18,9 +18,9 @@ Feature: Delegate
     Then Total voting number shows 100
     And I go to confirmation
     And I see 1 removed vote
-    And I confirm voting
+    And I confirm transaction
     And I go back to delegates
-    Then I see the pending vote transaction
+    Then I see pending votes
     When I start voting
     And Voted delegate become unchecked
     When I choose the 1 delegate
@@ -28,9 +28,9 @@ Feature: Delegate
     Then Total voting number shows 101
     And I go to confirmation
     Then I see 1 added vote
-    And I confirm voting
+    And I confirm transaction
     And I go back to delegates
-    Then I see the pending vote transaction
+    Then I see pending votes
     When I start voting
     And Voted delegate become checked
     Given I am on Wallet page
@@ -43,16 +43,16 @@ Feature: Delegate
     When I choose the 1 delegate
     And I go to confirmation
     And I enter second passphrase of second_passphrase_account
-    And I confirm voting
+    And I confirm transaction
     And I go back to delegates
-    Then I see the pending vote transaction
+    Then I see pending votes
 
   Scenario: Bulk vote/unvote delegates by URL
     Given I autologin as delegate_candidate to devnet
     When I use launch protokol link to vote
     Then I see 3 added vote
     Then I see 0 removed vote
-    And I confirm voting
+    And I confirm transaction
     And I go back to delegates
     And I wait for pending vote to be approved
     When I use launch protokol link to unvote

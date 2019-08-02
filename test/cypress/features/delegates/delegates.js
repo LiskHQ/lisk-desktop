@@ -13,16 +13,11 @@ Then(/^I see (\d+) delegates on page$/, function (number) {
 });
 
 Then(/^I click load more button$/, function (number) {
-  cy.server();
-  cy.route('/api/delegates**').as('requestDelegate');
-  cy.wait('@requestDelegate');
   cy.get(ss.loadMoreButton).click();
 });
 
 Then(/^I start voting$/, function () {
-  cy.server();
-  cy.route('/api/delegates**').as('requestDelegate');
-  cy.wait('@requestDelegate');
+  cy.get(ss.startVotingButton).should('not.have.class', 'disabled');
   cy.get(ss.startVotingButton).click();
 });
 
@@ -55,15 +50,11 @@ Then(/^I see (\d+) added vote$/, function (number) {
   cy.get(ss.addedVotes).should('have.length', number);
 });
 
-Then(/^I confirm voting$/, function () {
-  cy.get(ss.confirmVotingButton).click();
-});
-
 Then(/^I go back to delegates$/, function () {
   cy.get(ss.backToDelegatesButton).click();
 });
 
-Then(/^I see the pending vote transaction$/, function () {
+Then(/^I see pending votes$/, function () {
   cy.get(ss.delegateRow).eq(0).as('dg');
   cy.get('@dg').find(ss.spinner);
 });

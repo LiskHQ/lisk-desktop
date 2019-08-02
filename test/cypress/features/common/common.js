@@ -6,6 +6,8 @@ import networks from '../../../constants/networks';
 import compareBalances from '../../utils/compareBalances';
 import urls from '../../../constants/urls';
 
+const txConfirmationTimeout = 12000;
+
 Given(/^I autologin as ([^\s]+) to ([^\s]+)$/, function (account, network) {
   cy.autologin(accounts[account].passphrase, networks[network].node);
 });
@@ -29,9 +31,9 @@ Then(/^I enter ([^\s]+) passphrase of ([^\s]+)$/, function (passphraseType, acco
 
 Given(/^I am on (.*?) page$/, function (page) {
   page = page.toLowerCase();
+  cy.server();
   switch (page) {
     case 'dashboard':
-      cy.server();
       cy.route('/api/node/constants').as('constants');
       cy.visit(urls.dashboard).then(() => {
         const liskCoreUrl = window.localStorage.getItem('liskCoreUrl');
@@ -47,7 +49,15 @@ Given(/^I am on (.*?) page$/, function (page) {
       break;
     case 'delegates':
       cy.visit(urls.delegates);
-      cy.get(ss.delegateName);
+      cy.route('/api/delegates**').as('requestDelegate');
+      cy.wait('@requestDelegate');
+      break;
+    case 'wallet':
+      cy.route('/api/transactions?*').as('transactions');
+      cy.route('/api/votes?*').as('votes');
+      cy.visit(urls.wallet);
+      cy.wait('@transactions');
+      cy.wait('@votes');
       break;
     default:
       cy.visit(urls[page]);
@@ -55,42 +65,89 @@ Given(/^I am on (.*?) page$/, function (page) {
   }
 });
 
-Then(/^The latest transaction is (.*?)$/, function (transactionType) {
-  if (transactionType.indexOf('transfer') > 0) {
-    const transactionAddress = transactionType.split(' ').pop(); // For uses like: 'transfer to 123456L'
-    cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).should('have.text', transactionAddress);
-  } else {
-    cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains(/delegate vote/i);
+Given(/^I am on (.*?) page of (.*?)$/, function (page, identifier) {
+  cy.server();
+  switch (page.toLowerCase()) {
+    case 'wallet':
+      cy.route('/api/transactions?*').as('transactions');
+      cy.visit(`${urls.accounts}/${accounts[identifier].address}`);
+      cy.wait('@transactions');
+      cy.wait('@transactions');
+      cy.wait('@transactions');
+      cy.wait('@transactions');
+      cy.wait('@transactions');
+      break;
   }
 });
 
-Then(/^I should be on Tx Details page$/, function () {
-  cy.get(ss.app).contains('Confirmations');
+Then(/^The latest transaction is (.*?)$/, function (transactionType) {
+  cy.wait(1000);
+  if (transactionType.toLowerCase().indexOf('transfer') > -1) {
+    cy.get(`${ss.transactionRow} ${ss.spinner}`).should('be.visible');
+    const transactionRecipient = transactionType.split(' ').pop();
+    if (transactionRecipient === 'random') {
+      /* For use: 'transfer to random' */
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).should('have.text', this.randomAddress);
+    } else if (transactionRecipient === 'transfer') {
+      throw new Error('Usage: "transfer to {recipient}" where recipient could be "random" or account name');
+    } else {
+      /* For uses like: 'transfer to genesis' */
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).should('have.text', accounts[transactionRecipient]);
+    }
+    cy.get(`${ss.transactionRow} ${ss.spinner}`, { timeout: txConfirmationTimeout }).should('be.not.visible');
+  }
+  switch (transactionType.toLowerCase()) {
+    case 'delegate vote':
+    case 'voting':
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Delegate vote');
+      break;
+    case 'second passphrase registration':
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Second passphrase registration');
+      break;
+    case 'delegate registration':
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Delegate registration');
+      break;
+  }
 });
 
-Then(/^I should be on Account page$/, function () {
-  cy.get(ss.accountName).should('be.visible');
+Then(/^I should be on (.*?) page$/, function (pageName) {
+  switch (pageName.toLowerCase()) {
+    case 'tx details':
+      cy.get(ss.app).contains('Confirmations');
+      break;
+    case 'account':
+      cy.get(ss.accountName).should('be.visible');
+      break;
+  }
 });
 
-Then(/^I should be on Account page of ([^s]+)$/, function (accountAddress) {
-  cy.get(ss.accountAddress).contains(accountAddress);
+Then(/^I should be on (.*?) page of (.*?)$/, function (pageName, identifier) {
+  switch (pageName.toLowerCase()) {
+    case 'account':
+      cy.get(ss.accountAddress).contains(identifier);
+      break;
+    case 'delegates':
+      cy.get(ss.accountName).should('have.text', identifier);
+      break;
+    case 'tx details':
+      cy.get(ss.transactionId).should('have.text', identifier);
+      break;
+    case 'wallet':
+      cy.server();
+      cy.route('/api/accounts?address=**').as('requestAccountData');
+      cy.visit(`${urls.accounts}/${accounts[identifier].address}`);
+      cy.wait('@requestAccountData');
+  }
 });
 
-Then(/^I should be on Delegate page of ([^s]+)$/, function (delegateName) {
-  cy.get(ss.accountName).should('have.text', delegateName);
+Then(/^I click on recent transaction$/, function () {
+  cy.get(ss.transactionRow).eq(0).click();
 });
 
-Then(/^I should be on Tx Details page of ([^s]+)$/, function (transactionId) {
-  cy.get(ss.transactionId).should('have.text', transactionId);
+Then(/^I click on recent bookmark$/, function () {
+  cy.get(ss.bookmarkAccount).eq(0).click();
 });
 
-Then(/^I am on Wallet page of ([^s]+)$/, function (accountName) {
-  cy.server();
-  cy.route('/api/accounts?address=**').as('requestAccountData');
-  cy.visit(`${urls.accounts}/${accounts[accountName].address}`);
-  cy.wait('@requestAccountData');
-});
-
-Then(/^I see ([^s]+) in recipient$/, function (accountName) {
-  cy.get(ss.recipientInput).should('have.value', accounts[accountName].address);
+Given(/^I confirm transaction$/, function () {
+  cy.get(ss.confirmButton).click();
 });

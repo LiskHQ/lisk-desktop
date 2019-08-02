@@ -24,6 +24,7 @@ Feature: Transaction table filtering
 
   Scenario: Filter by Message
     When I type message without-initialization
+    And I apply filters
     Then I should see 1 transactions in table
 
   Scenario: Filter by all filters combined, clear all filters
@@ -37,7 +38,6 @@ Feature: Transaction table filtering
     When I clear all filters
     Then I should see 30 transactions in table
 
-  @focus
   Scenario: Incoming/Outgoing applies to filter results
     When I type amount from 4900
     And I apply filters

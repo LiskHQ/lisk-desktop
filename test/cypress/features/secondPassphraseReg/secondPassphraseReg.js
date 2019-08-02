@@ -18,9 +18,3 @@ Given(/^I confirm transaction$/, function () {
   cy.get(ss.confirmationCheckbox).click();
   cy.get(ss.confirmButton).click();
 });
-
-Given(/^I see the transaction in transaction list$/, function () {
-  cy.wait(1000);
-  cy.get(`${ss.transactionRow} ${ss.spinner}`).should('be.visible');
-  cy.get(ss.transactionRow).eq(0).find(ss.transactionAddress).contains('Second passphrase registration');
-});
