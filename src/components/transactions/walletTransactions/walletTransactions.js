@@ -1,13 +1,7 @@
 import React from 'react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { SecondaryButton } from '../../toolbox/buttons/button';
-import { tokenMap } from '../../../constants/tokens';
-import localJSONStorage from '../../../utils/localJSONStorage';
 import txFilters from '../../../constants/transactionFilters';
-import Banner from '../../toolbox/banner/banner';
 import TransactionsOverviewHeader from '../transactionsOverviewHeader/transactionsOverviewHeader';
 import routes from '../../../constants/routes';
-import styles from './walletTransactions.css';
 import TabsContainer from '../../toolbox/tabsContainer/tabsContainer';
 import WalletTab from '../../wallet/walletTab';
 import DelegateTab from '../../delegate';
@@ -15,7 +9,6 @@ import VotesTab from '../../votes';
 import WalletOnboarding from './walletOnboarding';
 
 class WalletTransactions extends React.Component {
-  // eslint-disable-next-line max-statements
   constructor() {
     super();
 
@@ -29,11 +22,7 @@ class WalletTransactions extends React.Component {
         message: '',
       },
       activeCustomFilters: {},
-      copied: false,
-      closedOnboarding: false,
     };
-
-    this.copyTimeout = null;
 
     this.saveFilters = this.saveFilters.bind(this);
     this.clearFilter = this.clearFilter.bind(this);
@@ -42,14 +31,7 @@ class WalletTransactions extends React.Component {
     this.onLoadMore = this.onLoadMore.bind(this);
     this.onFilterSet = this.onFilterSet.bind(this);
     this.onTransactionRowClick = this.onTransactionRowClick.bind(this);
-    this.onCopy = this.onCopy.bind(this);
-    this.closeOnboarding = this.closeOnboarding.bind(this);
     this.updateCustomFilters = this.updateCustomFilters.bind(this);
-  }
-
-  /* istanbul ignore next */
-  componentWillUnmount() {
-    clearTimeout(this.copyTimeout);
   }
 
   onInit() {
@@ -130,23 +112,6 @@ class WalletTransactions extends React.Component {
     this.setState({ customFilters });
   }
 
-  onCopy() {
-    clearTimeout(this.copyTimeout);
-    this.setState({
-      copied: true,
-    });
-
-    this.copyTimeout = setTimeout(() =>
-      this.setState({
-        copied: false,
-      }), 3000);
-  }
-
-  closeOnboarding() {
-    localJSONStorage.set('closedWalletOnboarding', 'true');
-    this.setState({ closedOnboarding: true });
-  }
-
   render() {
     const overviewProps = {
       ...this.props,
@@ -179,31 +144,6 @@ class WalletTransactions extends React.Component {
           account={account}
           activeToken={activeToken}
         />
-        { account.balance === 0 && localJSONStorage.get('closedWalletOnboarding') !== 'true'
-          ? (
-            <Banner
-              className={`${styles.onboarding} wallet-onboarding`}
-              onClose={this.closeOnboarding}
-              title={t('Add some {{activeToken}} to your Lisk Hub account now!', { activeToken })}
-              footer={(
-                <div className={styles.copyAddress}>
-                  <span className={styles.address}>{account.address}</span>
-                  <CopyToClipboard
-                    text={account.address}
-                    onCopy={this.onCopy}
-                  >
-                    <SecondaryButton className="light" disabled={this.state.copied}>
-                      <span>{this.state.copied ? t('Copied') : t('Copy')}</span>
-                    </SecondaryButton>
-                  </CopyToClipboard>
-                </div>
-            )}
-            >
-              <p>{t('You can find the {{activeToken}} token on all of the worlds top exchanges and send them to your unique {{currency}} address:', { activeToken, currency: tokenMap[activeToken].label })}</p>
-            </Banner>
-          ) : null
-        }
-
         <TabsContainer>
           <WalletTab
             tabName={t('Wallet')}
