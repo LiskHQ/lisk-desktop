@@ -1,5 +1,6 @@
 import React from 'react';
 import FlashMessage from '../toolbox/flashMessage/flashMessage';
+import FlashMessageHolder from '../toolbox/flashMessage/holder';
 import externalLinks from '../../constants/externalLinks';
 import routes from '../../constants/routes';
 
@@ -10,21 +11,22 @@ const InitializationMessage = ({
   t,
   pendingTransactions,
 }) => {
-  const shouldShowInitialization = () => {
-    const activeToken = settings.token.active;
-    return !!(account.info && !(account.info.LSK.serverPublicKey
-    || account.info.LSK.balance === 0
-    || pendingTransactions.length > 0
-    || activeToken === 'BTC'));
-  };
+  const shouldShowInitialization = (
+    !!(account.info
+      && !(account.info.LSK.serverPublicKey
+      || account.info.LSK.balance === 0
+      || pendingTransactions.length > 0
+      || settings.token.active === 'BTC')
+    )
+  );
 
   const onButtonClick = () => {
     history.push(`${routes.send.path}?recipient=${account.address}&amount=0.1&reference=Account initialization`);
   };
 
-  return (
+  FlashMessageHolder.addMessage((
     <FlashMessage
-      shouldShow={shouldShowInitialization()}
+      shouldShow={shouldShowInitialization}
     >
 
       <FlashMessage.Content
@@ -44,7 +46,9 @@ const InitializationMessage = ({
       </FlashMessage.Button>
 
     </FlashMessage>
-  );
+  ), 'InitializationMessage');
+
+  return null;
 };
 
 export default InitializationMessage;

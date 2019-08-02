@@ -13,6 +13,7 @@
   min-height: 0;
   max-height: 0;
   overflow: hidden;
+  position: relative;
   transition:
     max-height var(--animation-speed-standard) linear,
     min-height var(--animation-speed-standard) linear;

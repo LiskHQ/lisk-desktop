@@ -10,6 +10,7 @@ import NotFound from '../notFound';
 import InitializationMessage from '../initializationMessage';
 import routes from '../../constants/routes';
 import Header from '../header/header';
+import FlashMessageHolder from '../toolbox/flashMessage/holder';
 
 class App extends React.Component {
   constructor() {
@@ -46,6 +47,7 @@ class App extends React.Component {
           ref={(el) => { this.main = el; }}
         >
           <section>
+            <FlashMessageHolder />
             <InitializationMessage history={history} />
             <div className={`${styles.mainContent} ${!routeObj.isSigninFlow ? styles.mainBox : ''}`}>
               <Switch>
