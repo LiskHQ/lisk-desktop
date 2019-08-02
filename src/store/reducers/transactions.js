@@ -6,7 +6,7 @@ const sortByTimestamp = (a, b) => (
   (!a.timestamp || a.timestamp > b.timestamp) && b.timestamp ? -1 : 1
 );
 
-const merge = (array1, array2) => array1.filter(array1Value =>
+const addNewTransactions = (array1, array2) => array1.filter(array1Value =>
   array2.filter(array2Value => array2Value.id === array1Value.id).length === 0);
 
 
@@ -63,11 +63,11 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
     case actionTypes.updateTransactions:
       return {
         ...state, // Filter any newly confirmed transaction from pending
-        pending: merge(state.pending, action.data.confirmed),
+        pending: addNewTransactions(state.pending, action.data.confirmed),
         // Add any newly confirmed transaction to confirmed
         confirmed: [
           ...action.data.confirmed,
-          ...merge(state.confirmed, action.data.confirmed),
+          ...addNewTransactions(state.confirmed, action.data.confirmed),
         // TODO the sort should be removed when BTC api returns transactions sorted by timestamp
         ].sort(sortByTimestamp),
         count: action.data.count,
