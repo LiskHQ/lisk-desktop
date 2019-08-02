@@ -131,25 +131,25 @@ export const updateTransactionsIfNeeded = ({ transactions, account }) =>
 export const accountDataUpdated = ({
   account, transactions,
 }) =>
-  (dispatch, getState) => {
+  async (dispatch, getState) => {
     const networkConfig = getState().network;
-    getAccount({
+    const [error, result] = await to(getAccount({
       networkConfig,
       address: account.address,
       publicKey: account.publicKey,
-    })
-      .then((result) => {
-        if (result.balance !== account.balance) {
-          dispatch(updateTransactionsIfNeeded({
-            transactions,
-            account,
-          }));
-        }
-        dispatch(accountUpdated(result));
-        dispatch(networkStatusUpdated({ online: true }));
-      }).catch((res) => {
-        dispatch(networkStatusUpdated({ online: false, code: res.error.code }));
-      });
+    }));
+    if (result) {
+      if (result.balance !== account.balance) {
+        dispatch(updateTransactionsIfNeeded({
+          transactions,
+          account,
+        }));
+      }
+      dispatch(accountUpdated(result));
+      dispatch(networkStatusUpdated({ online: true }));
+    } else {
+      dispatch(networkStatusUpdated({ online: false, code: error.error.code }));
+    }
   };
 
 

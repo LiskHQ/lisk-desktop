@@ -194,7 +194,8 @@ describe('actions: account', () => {
     });
 
     it(`should call account API methods on ${actionTypes.newBlockCreated} action when offline`, async () => {
-      accountApi.getAccount.mockRejectedValue({ error: { code: 'EUNAVAILABLE' } });
+      const code = 'EUNAVAILABLE';
+      accountApi.getAccount.mockRejectedValue({ error: { code } });
 
       const data = {
         windowIsFocused: true,
@@ -207,10 +208,9 @@ describe('actions: account', () => {
       };
 
       await accountDataUpdated(data)(dispatch, getState);
-      // TODO figure out why the assertion below doesn't work despite coverage showing it was called
-      // expect(networkActions.networkStatusUpdated).toHaveBeenCalledWith({
-      //   online: false, code: 'EUNAVAILABLE',
-      // });
+      expect(networkActions.networkStatusUpdated).toHaveBeenCalledWith({
+        online: false, code,
+      });
     });
   });
 
