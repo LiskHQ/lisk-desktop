@@ -6,8 +6,8 @@ import {
 } from '../../actions/account';
 import { loadVotes } from '../../actions/voting';
 import {
-  loadTransactions,
-  cleanTransactions,
+  getTransactions,
+  emptyTransactionsData,
 } from '../../actions/transactions';
 import actionTypes from '../../constants/actions';
 import transactionTypes from '../../constants/transactionTypes';
@@ -43,7 +43,7 @@ const updateAccountData = (store, action) => {
    */
   /* istanbul ignore if */
   if (shouldAutoLogIn(getAutoLogInData())) {
-    store.dispatch(loadTransactions({
+    store.dispatch(getTransactions({
       address: account.address,
       filter: txFilters.all,
     }));
@@ -221,7 +221,7 @@ const accountMiddleware = store => next => (action) => {
       break;
     case actionTypes.accountLoggedOut:
       setWalletsInLocalStorage(store.getState().wallets);
-      store.dispatch(cleanTransactions());
+      store.dispatch(emptyTransactionsData());
       localStorage.removeItem('accounts');
       localStorage.removeItem('isHarwareWalletConnected');
       break;

@@ -2,46 +2,53 @@
 import i18next from 'i18next';
 import to from 'await-to-js';
 import actionTypes from '../constants/actions';
+import Fees from '../constants/fees';
+import { tokenMap } from '../constants/tokens';
+import transactionTypes, { createTransactionType } from '../constants/transactionTypes';
 import { loadingStarted, loadingFinished } from './loading';
 import { getDelegates } from '../utils/api/delegates';
 import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';
 import { getTimeOffset } from '../utils/hacks';
-import Fees from '../constants/fees';
-import transactionTypes, { createTransactionType } from '../constants/transactionTypes';
 import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
 import { transactions as transactionsAPI, hardwareWallet as hwAPI } from '../utils/api';
 import { getAPIClient } from '../utils/api/network';
-import { tokenMap } from '../constants/tokens';
+
+// ========================================= //
+//            ACTION CREATORS
+// ========================================= //
 
 /**
- * This action is used on logout
- *
+ * Action trigger when user logout from the application
+ * the transactions reducer is set to initial state
  */
-export const cleanTransactions = () => ({
-  type: actionTypes.cleanTransactions,
-});
+export const emptyTransactionsData = () => ({ type: actionTypes.emptyTransactionsData });
 
 /**
- * This action is used when a new pending transaction is sent to the network.
- * It is used in send, vote, second passphrase registration, and delegate registration.
- *
- * @param {Object} data - the transaction object
+ * Action trigger after a new transaction is broadcasted to the network
+ * then the transaction is add to the pending transaction array in transaction reducer
+ * Used in:  Send, Vote, Second passphrase registration, and delegate registration.
+ * @param {Objeect} params - all params
+ * @param {String} params.senderPublicKey - alphanumeric string
  */
-export const addPendingTransaction = data => ({
+export const addNewPendingTransaction = data => ({
+  type: actionTypes.addNewPendingTransaction,
   data: {
     ...data,
     senderId: extractAddress(data.senderPublicKey),
   },
-  type: actionTypes.addPendingTransaction,
 });
 
+// ========================================= //
+//                THUNKS
+// ========================================= //
+
 /**
- * This action is used to request transactions on dashboard and wallet page.
- *
- * @param {Object} params - all params
+ * Action trigger for retrive any amount of transactions
+ * for Dashboard and Wallet components
+ * @param {Object} params - Objeect with all params.
  * @param {String} params.address - address of the account to fetch the transactions for
  * @param {Number} params.limit - amount of transactions to fetch
  * @param {Number} params.offset - index of the first transaction
@@ -49,28 +56,42 @@ export const addPendingTransaction = data => ({
  *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
  * @param {Number} params.filters.direction - one of values from src/constants/transactionFilters.js
  */
-export const loadTransactions = ({
-  address, limit, offset, filters,
-}) =>
-  (dispatch, getState) => {
-    dispatch(loadingStarted(actionTypes.loadTransactions));
-    const networkConfig = getState().network;
-    transactionsAPI.getTransactions({
-      networkConfig, address, limit, offset, filters,
-    })
-      .then((response) => {
-        dispatch({
-          data: {
-            count: parseInt(response.meta.count, 10),
-            confirmed: response.data,
-            address,
-            filters,
-          },
-          type: offset > 0 ? actionTypes.updateTransactions : actionTypes.transactionsLoaded,
-        });
-        dispatch(loadingFinished(actionTypes.loadTransactions));
+export const getTransactions = ({
+  address,
+  limit = undefined,
+  offset = 0,
+  filters = undefined,
+}) => async (dispatch, getState) => {
+  dispatch(loadingStarted(actionTypes.getTransactions));
+  const networkConfig = getState().network;
+
+  if (networkConfig) {
+    const [error, response] = await to(transactionsAPI.getTransactions({
+      networkConfig, address, filters, limit, offset,
+    }));
+
+    if (error) {
+      dispatch({
+        type: actionTypes.transactionLoadFailed,
+        data: {
+          error,
+        },
       });
-  };
+    } else {
+      dispatch({
+        type: offset > 0 ? actionTypes.updateTransactions : actionTypes.getTransactionsSuccess,
+        data: {
+          address,
+          confirmed: response.data,
+          count: parseInt(response.meta.count, 10),
+          filters,
+        },
+      });
+    }
+  }
+
+  dispatch(loadingFinished(actionTypes.getTransactions));
+};
 
 /**
  * This action is used to get the data for "My Wallet Details" module on wallet page
@@ -79,97 +100,113 @@ export const loadTransactions = ({
  *
  * @param {String} address - address of the active account
  */
-export const loadLastTransaction = address => (dispatch, getState) => {
+export const getLastTransaction = address => async (dispatch, getState) => {
+  dispatch(loadingStarted(actionTypes.getLastTransaction));
   const networkConfig = getState().network;
   if (networkConfig) {
     dispatch({ type: actionTypes.transactionCleared });
-    transactionsAPI.getTransactions({
+
+    const [error, response] = await to(transactionsAPI.getTransactions({
       networkConfig, address, limit: 1, offset: 0,
-    }).then(response => dispatch({ data: response.data[0], type: actionTypes.transactionLoaded }));
+    }));
+
+    if (error) {
+      dispatch({
+        type: actionTypes.transactionLoadFailed,
+        data: {
+          error,
+        },
+      });
+    } else {
+      dispatch({ type: actionTypes.getTransactionSuccess, data: response.data[0] });
+    }
+  }
+
+  dispatch(loadingFinished(actionTypes.getLastTransaction));
+};
+
+/**
+ * This action is used to get transaction data for the details page.
+ * @param {String} id - id of the transaction
+ */
+// TODO remove function once SingleTransaction component use HOC for get this data
+// eslint-disable-next-line max-statements
+export const getSingleTransaction = ({ id }) => async (dispatch, getState) => {
+  const { settings, network } = getState();
+
+  if (network) {
+    dispatch({ type: actionTypes.transactionCleared });
+    const [error, response] = await to(transactionsAPI.getSingleTransaction({
+      networkConfig: network, id,
+    }));
+
+    if (error || !response.data.length) {
+      dispatch({
+        type: actionTypes.transactionLoadFailed,
+        data: { error: error || i18next.t('Transaction not found') },
+      });
+      return;
+    }
+
+    const liskAPIClient = getAPIClient(settings.token.active, getState());
+    let added = [];
+    let deleted = [];
+
+    // since core 1.0 added and deleted are not filtered in core,
+    // but provided as single array with [+,-] signs
+    if (response.data[0].asset && 'votes' in response.data[0].asset) {
+      added = response.data[0].asset.votes.filter(item => item.startsWith('+')).map(item => item.replace('+', ''));
+      deleted = response.data[0].asset.votes.filter(item => item.startsWith('-')).map(item => item.replace('-', ''));
+    }
+
+    const localStorageDelegates = loadDelegateCache(network);
+
+    deleted.forEach((publicKey) => {
+      const address = extractAddress(publicKey);
+      const storedDelegate = localStorageDelegates[address];
+
+      if (storedDelegate) {
+        dispatch({
+          type: actionTypes.transactionAddDelegateName,
+          data: { delegate: { username: storedDelegate.username, address }, voteArrayName: 'deleted' },
+        });
+      } else {
+        getDelegates(liskAPIClient, { publicKey })
+          .then((delegateData) => {
+            dispatch({
+              type: actionTypes.transactionAddDelegateName,
+              data: { delegate: delegateData.data[0], voteArrayName: 'deleted' },
+            });
+          });
+      }
+    });
+
+    added.forEach((publicKey) => {
+      const address = extractAddress(publicKey);
+
+      if (localStorageDelegates[address]) {
+        dispatch({
+          type: actionTypes.transactionAddDelegateName,
+          data: { delegate: { ...localStorageDelegates[address], address }, voteArrayName: 'added' },
+        });
+      } else {
+        getDelegates(liskAPIClient, { publicKey })
+          .then((delegateData) => {
+            dispatch({
+              type: actionTypes.transactionAddDelegateName,
+              data: { delegate: delegateData.data[0], voteArrayName: 'added' },
+            });
+          });
+      }
+    });
+
+    dispatch({ type: actionTypes.getTransactionSuccess, data: response.data[0] });
   }
 };
 
 /**
- * This action is used to get the data for transaction detail page.
- *
- * @param {String} id - id of the transaction
- */
-export const loadSingleTransaction = ({ id }) =>
-  (dispatch, getState) => {
-    const { settings } = getState();
-    const liskAPIClient = getAPIClient(settings.token.active, getState());
-    const networkConfig = getState().network;
-    dispatch({ type: actionTypes.transactionCleared });
-    // TODO remove the btc condition
-    transactionsAPI.getSingleTransaction({ networkConfig, id })
-      .then((response) => { // eslint-disable-line max-statements
-        let added = [];
-        let deleted = [];
-
-        if (!response.data.length) {
-          dispatch({ data: { error: i18next.t('Transaction not found') }, type: actionTypes.transactionLoadFailed });
-          return;
-        }
-
-        // since core 1.0 added and deleted are not filtered in core,
-        // but provided as single array with [+,-] signs
-        if (response.data[0].asset && 'votes' in response.data[0].asset) {
-          added = response.data[0].asset.votes.filter(item => item.startsWith('+')).map(item => item.replace('+', ''));
-          deleted = response.data[0].asset.votes.filter(item => item.startsWith('-')).map(item => item.replace('-', ''));
-        }
-
-        const localStorageDelegates = loadDelegateCache(getState().network);
-        deleted.forEach((publicKey) => {
-          const address = extractAddress(publicKey);
-          const storedDelegate = localStorageDelegates[address];
-          if (storedDelegate) {
-            dispatch({
-              data: {
-                delegate: {
-                  username: storedDelegate.username,
-                  address,
-                },
-                voteArrayName: 'deleted',
-              },
-              type: actionTypes.transactionAddDelegateName,
-            });
-          } else {
-            getDelegates(liskAPIClient, { publicKey })
-              .then((delegateData) => {
-                dispatch({
-                  data: { delegate: delegateData.data[0], voteArrayName: 'deleted' },
-                  type: actionTypes.transactionAddDelegateName,
-                });
-              });
-          }
-        });
-
-        added.forEach((publicKey) => {
-          const address = extractAddress(publicKey);
-          if (localStorageDelegates[address]) {
-            dispatch({
-              data: { delegate: { ...localStorageDelegates[address], address }, voteArrayName: 'added' },
-              type: actionTypes.transactionAddDelegateName,
-            });
-          } else {
-            getDelegates(liskAPIClient, { publicKey })
-              .then((delegateData) => {
-                dispatch({
-                  data: { delegate: delegateData.data[0], voteArrayName: 'added' },
-                  type: actionTypes.transactionAddDelegateName,
-                });
-              });
-          }
-        });
-        dispatch({ data: response.data[0], type: actionTypes.transactionLoaded });
-      }).catch((error) => {
-        dispatch({ data: { error }, type: actionTypes.transactionLoadFailed });
-      });
-  };
-
-/**
  * This action is used to update transactions from account middleware when balance
- * of the account changes. The difference from loadTransactions action is that
+ * of the account changes. The difference from getTransactions action is that
  * this one merges the transactions list with what is already in the store whereas
  * the other one replaces the list.
  *
@@ -181,27 +218,43 @@ export const loadSingleTransaction = ({ id }) =>
  * @param {Number} params.filters.direction - one of values from src/constants/transactionFilters.js
  */
 export const updateTransactions = ({
-  address, limit, filters,
-}) =>
-  (dispatch, getState) => {
-    const networkConfig = getState().network;
+  address,
+  filters,
+  limit,
+}) => async (dispatch, getState) => {
+  const { network, transactions } = getState();
 
-    transactionsAPI.getTransactions({
-      networkConfig, address, limit, filters,
-    })
-      .then((response) => {
-        if (filters && filters.direction === getState().transactions.filters.direction) {
-          dispatch({
-            data: {
-              confirmed: response.data,
-              count: parseInt(response.meta.count, 10),
-            },
-            type: actionTypes.updateTransactions,
-          });
-        }
+  if (network) {
+    const [error, response] = await to(transactionsAPI.getTransactions({
+      networkConfig: network, address, limit, filters,
+    }));
+
+    if (error) {
+      dispatch({
+        type: actionTypes.transactionLoadFailed,
+        data: {
+          error,
+        },
       });
-  };
+    } else if (response && filters.direction === transactions.filters.direction) {
+      dispatch({
+        type: actionTypes.updateTransactions,
+        data: {
+          confirmed: response.data,
+          count: parseInt(response.meta.count, 10),
+        },
+      });
+    }
+  }
+};
 
+// ================================================ //
+//  TODO
+// The following functions needs to be remove after
+// implement and use send and broadcast HOC
+// ================================================ //
+
+// TODO remove this function after remove sent function
 const handleSentError = ({
   account, dispatch, error, tx,
 }) => {
@@ -238,6 +291,7 @@ const handleSentError = ({
  * @param {Number} data.reference - Data field for LSK transactions
  * @param {String} data.secondPassphrase - Second passphrase for LSK transactions
  */
+// TODO remove this function once create and broadcast HOC be implemented
 // eslint-disable-next-line max-statements
 export const sent = data => async (dispatch, getState) => {
   let broadcastTx;
@@ -268,7 +322,7 @@ export const sent = data => async (dispatch, getState) => {
     }
 
     loadingFinished('sent');
-    dispatch(addPendingTransaction({
+    dispatch(addNewPendingTransaction({
       amount: txData.amount,
       asset: { reference: txData.data },
       fee: Fees.send,
@@ -288,31 +342,10 @@ export const sent = data => async (dispatch, getState) => {
   }
 };
 
-
-export const transactionCreatedSuccess = data => ({
-  type: actionTypes.transactionCreatedSuccess,
-  data,
-});
-
-export const transactionCreatedError = data => ({
-  type: actionTypes.transactionCreatedError,
-  data,
-});
-
+// TODO remove this function once create and broadcast HOC be implemented
 export const resetTransactionResult = () => ({
   type: actionTypes.resetTransactionResult,
 });
-
-export const broadcastedTransactionError = data => ({
-  type: actionTypes.broadcastedTransactionError,
-  data,
-});
-
-export const broadcastedTransactionSuccess = data => ({
-  type: actionTypes.broadcastedTransactionSuccess,
-  data,
-});
-
 
 /**
  * Calls transactionAPI.create for create the tx object that will broadcast
@@ -324,7 +357,7 @@ export const broadcastedTransactionSuccess = data => ({
  * @param {Number} data.reference - Data field for LSK transactions
  * @param {String} data.secondPassphrase - Second passphrase for LSK transactions
  */
-// eslint-disable-next-line max-statements
+// TODO remove this function once create and broadcast HOC be implemented
 export const transactionCreated = data => async (dispatch, getState) => {
   const {
     account, settings, network, ...state
@@ -340,8 +373,17 @@ export const transactionCreated = data => async (dispatch, getState) => {
     ))
     : await to(hwAPI.create(account, data));
 
-  if (error) return dispatch(transactionCreatedError(error));
-  return dispatch(transactionCreatedSuccess(tx));
+  if (error) {
+    return dispatch({
+      type: actionTypes.transactionCreatedError,
+      data: error,
+    });
+  }
+
+  return dispatch({
+    type: actionTypes.transactionCreatedSuccess,
+    data: tx,
+  });
 };
 
 /**
@@ -354,6 +396,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
  * @param {Number} transaction.reference - Data field for LSK transactions
  * @param {String} transaction.secondPassphrase - Second passphrase for LSK transactions
  */
+// TODO remove this function once create and broadcast HOC be implemented
 export const transactionBroadcasted = (transaction, callback = () => {}) =>
   async (dispatch, getState) => {
     const { network, settings } = getState();
@@ -363,13 +406,22 @@ export const transactionBroadcasted = (transaction, callback = () => {}) =>
 
     callback({ success: !error, error, transaction });
     if (error) {
-      return dispatch(broadcastedTransactionError(({ error, transaction })));
+      return dispatch({
+        type: actionTypes.broadcastedTransactionError,
+        data: {
+          error,
+          transaction,
+        },
+      });
     }
 
-    dispatch(broadcastedTransactionSuccess(transaction));
+    dispatch({
+      type: actionTypes.broadcastedTransactionSuccess,
+      data: transaction,
+    });
 
     if (activeToken !== tokenMap.BTC.key) {
-      dispatch(addPendingTransaction(transaction));
+      dispatch(addNewPendingTransaction(transaction));
     }
 
     return dispatch(passphraseUsed(transaction.passphrase));

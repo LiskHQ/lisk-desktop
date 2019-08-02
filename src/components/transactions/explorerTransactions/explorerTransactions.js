@@ -125,7 +125,7 @@ class ExplorerTransactions extends React.Component {
       activeToken: this.props.activeToken,
       transactions: this.props.transactions.data.data,
       activeFilter: this.props.transactions.urlSearchParams.filters.direction,
-      loading: this.props.transactions.isLoading ? [actionTypes.transactionsLoaded] : [],
+      loading: this.props.transactions.isLoading ? [actionTypes.getTransactionsSuccess] : [],
       balance: this.props.detailAccount.data.balance,
     };
     const { detailAccount } = this.props;

@@ -58,9 +58,9 @@ class WalletTransactions extends React.Component {
   }
 
   onInit() {
-    this.props.loadLastTransaction(this.props.account.address);
+    this.props.getLastTransaction(this.props.account.address);
 
-    this.props.loadTransactions({
+    this.props.getTransactions({
       address: this.props.account.address,
       filters: {
         direction: txFilters.all,
@@ -71,7 +71,7 @@ class WalletTransactions extends React.Component {
   /* istanbul ignore next */
   onLoadMore() {
     const { filters } = this.props;
-    this.props.loadTransactions({
+    this.props.getTransactions({
       address: this.props.account.address,
       offset: this.props.transactions.length,
       filters: {
@@ -89,7 +89,7 @@ class WalletTransactions extends React.Component {
   /* istanbul ignore next */
   onFilterSet(filter) {
     this.setState({ filter });
-    this.props.loadTransactions({
+    this.props.getTransactions({
       address: this.props.address,
       filters: {
         direction: filter,
@@ -106,7 +106,7 @@ class WalletTransactions extends React.Component {
   /* istanbul ignore next */
   saveFilters(customFilters) {
     const { filters } = this.props;
-    this.props.loadTransactions({
+    this.props.getTransactions({
       address: this.props.address,
       filters: {
         direction: filters.direction,

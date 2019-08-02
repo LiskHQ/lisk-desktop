@@ -28,14 +28,14 @@ class Dashboard extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { account, settings, loadTransactions } = this.props;
+    const { account, settings, getTransactions } = this.props;
     const oldToken = prevProps.settings.token.active;
     const activeToken = settings.token.active;
 
     if (account.info && account.info[activeToken] && account.info[activeToken].address
       && (oldToken !== activeToken
       || !prevProps.account.info[activeToken])) {
-      loadTransactions({
+      getTransactions({
         address: account.info[activeToken].address,
         publicKey: account.publicKey,
       });

@@ -239,6 +239,6 @@ describe('Account middleware', () => {
       type: actionTypes.accountLoggedOut,
     };
     middleware(store)(next)(accountLoggedOutAction);
-    expect(store.dispatch).to.have.been.calledWith({ type: actionTypes.cleanTransactions });
+    expect(store.dispatch).to.have.been.calledWith({ type: actionTypes.emptyTransactionsData });
   });
 });

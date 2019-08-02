@@ -20,10 +20,10 @@ describe('Reducer: transaction(state, action)', () => {
     expect(changedState).toEqual({});
   });
 
-  it('should return transaction if action.type = actionTypes.transactionLoaded', () => {
+  it('should return transaction if action.type = actionTypes.getTransactionSuccess', () => {
     const state = [];
     const action = {
-      type: actionTypes.transactionLoaded,
+      type: actionTypes.getTransactionSuccess,
       data: mockTransaction,
     };
     const changedState = transaction(state, action);

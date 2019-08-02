@@ -93,7 +93,7 @@ describe('actions: account', () => {
       i18nextMock.restore();
     });
 
-    it('should dispatch addPendingTransaction action if resolved', () => {
+    it('should dispatch addNewPendingTransaction action if resolved', () => {
       const transaction = {
         id: '15626650747375562521',
         senderPublicKey: accounts.second_passphrase_account.publicKey,
@@ -107,7 +107,7 @@ describe('actions: account', () => {
 
       actionFunction(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
-        data: transaction, type: actionTypes.addPendingTransaction,
+        data: transaction, type: actionTypes.addNewPendingTransaction,
       });
       expect(data.callback).toHaveBeenCalledWith({
         success: true,

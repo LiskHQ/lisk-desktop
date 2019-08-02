@@ -55,7 +55,7 @@ describe('Single Transaction Component', () => {
       account: accounts.genesis,
       transaction,
       network,
-      loadSingleTransaction: jest.fn(),
+      getSingleTransaction: jest.fn(),
       settings,
     });
 
@@ -107,7 +107,7 @@ describe('Single Transaction Component', () => {
       account: accounts.genesis,
       transaction,
       network,
-      loadSingleTransaction: jest.fn(),
+      getSingleTransaction: jest.fn(),
       settings,
     });
 
