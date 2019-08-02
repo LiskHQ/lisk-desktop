@@ -13,15 +13,16 @@ import localJSONStorage from './utils/localJSONStorage';
 import loadRemoteComponent from './utils/extensions';
 import env from './constants/env';
 import ipcLocale from './utils/ipcLocale';
+import newRelease from './utils/newRelease';
 import LiskHubExtensions from './utils/liskHubExtensions';
 
 if (env.production) {
   ipcLocale.init(i18n);
   externalLinks.init();
 }
+newRelease.init();
 
 const rootElement = document.getElementById('app');
-
 
 const renderWithRouter = Component => (
   <Provider store={store}>
