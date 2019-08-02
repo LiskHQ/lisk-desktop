@@ -24,7 +24,7 @@ const InitializationMessage = ({
     history.push(`${routes.send.path}?recipient=${account.address}&amount=0.1&reference=Account initialization`);
   };
 
-  FlashMessageHolder.addMessage((
+  return FlashMessageHolder.addMessage((
     <FlashMessage
       shouldShow={shouldShowInitialization}
     >
@@ -47,8 +47,6 @@ const InitializationMessage = ({
 
     </FlashMessage>
   ), 'InitializationMessage');
-
-  return null;
 };
 
 export default InitializationMessage;

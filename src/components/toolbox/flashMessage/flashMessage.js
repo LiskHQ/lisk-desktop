@@ -15,7 +15,9 @@ class FlashMessage extends React.Component {
   }
 
   dismiss() {
+    const { onDismiss } = this.props;
     this.setState({ dismissed: true });
+    if (typeof onDismiss === 'function') onDismiss();
   }
 
   render() {
@@ -40,11 +42,13 @@ class FlashMessage extends React.Component {
 FlashMessage.propTypes = {
   className: PropTypes.string,
   shouldShow: PropTypes.bool,
+  onDismiss: PropTypes.func,
 };
 
 FlashMessage.defaultProps = {
   className: '',
   shouldShow: false,
+  onDismiss: null,
 };
 
 FlashMessage.displayName = 'FlashMessage';

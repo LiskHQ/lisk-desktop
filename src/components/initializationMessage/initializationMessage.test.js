@@ -1,6 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import FlashMessageHolder from '../toolbox/flashMessage/holder';
 import InitializationMessage from './initializationMessage';
+
+jest.fn('../toolbox/flasheMessage/holder');
 
 describe('InitializationMessage', () => {
   let wrapper;
@@ -26,6 +29,7 @@ describe('InitializationMessage', () => {
   };
 
   beforeEach(() => {
+    FlashMessageHolder.addMessage = jest.fn(component => component);
     wrapper = mount(<InitializationMessage {...props} />);
   });
 
