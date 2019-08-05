@@ -6,7 +6,8 @@ describe('New release message banner', () => {
   const props = {
     t: v => v,
     version: '1.20.1',
-    releaseNotes: '<h2>Release Summary</h2><h3>Fixed bugs</h3>',
+    releaseSummary: 'Release Summary',
+    releaseNotes: '<h3>Fixed bugs</h3>',
     onClick: jest.fn(),
   };
   let wrapper;
