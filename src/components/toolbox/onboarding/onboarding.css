@@ -7,7 +7,7 @@
   box-sizing: border-box;
   color: var(--color-white);
   display: flex;
-  margin: 15px 0;
+  margin: 35px 0 20px 0;
   overflow: hidden;
   position: relative;
   height: 400px;
@@ -59,9 +59,9 @@
       border: 1px solid var(--color-slate-gray);
       border-radius: 50%;
       display: block;
-      height: 7px;
+      height: 6px;
       margin-right: 10px;
-      width: 7px;
+      width: 6px;
 
       &:last-child {
         margin-right: 0;

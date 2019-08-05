@@ -88,6 +88,7 @@ describe('WalletTransactions Component', () => {
     const renderedWalletTransactions = wrapper.find(WalletTransactions);
     expect(renderedWalletTransactions).toExist();
     expect(wrapper).toContainExactlyOneMatchingElement('div.transactions-row');
+    expect(wrapper).toContainExactlyOneMatchingElement('VotesTab');
   });
 
   it('click on row transaction', () => {
@@ -96,32 +97,17 @@ describe('WalletTransactions Component', () => {
     expect(props.history.push).toBeCalledWith(transactionPath);
   });
 
-  describe('Onboarding Banner', () => {
-    beforeEach(() => {
-      const newProps = {
+  it('does not show VotesTab if activeToken is BTC', () => {
+    wrapper = mount(<Router>
+      <WalletTransactions {...{
         ...props,
-        account: accounts.empty_account,
-      };
-
-      wrapper = mount(<Router>
-        <WalletTransactions {...newProps} />
-      </Router>, options);
-    });
-
-    it('should copy address on click on banner copy and setTimeout', () => {
-      const copyBtn = wrapper.find('.onboarding .copyAddress button');
-      expect(copyBtn).toHaveText('Copy');
-      copyBtn.simulate('click');
-      expect(copyBtn).toHaveText('Copied');
-      jest.advanceTimersByTime(3000);
-      expect(copyBtn).toHaveText('Copy');
-    });
-
-    it('should render onboarding banner and hide when close is clicked', () => {
-      expect(wrapper).toContainMatchingElement('.onboarding');
-      wrapper.find('.onboarding .closeBtn').simulate('click');
-      expect(wrapper).not.toContainMatchingElement('.onboarding');
-    });
+        activeToken: 'BTC',
+      }}
+      />
+    </Router>, options);
+    const renderedWalletTransactions = wrapper.find(WalletTransactions);
+    expect(renderedWalletTransactions).toExist();
+    expect(wrapper).toContainMatchingElements(0, 'VotesTab');
   });
 
   describe('Delegate Account', () => {
