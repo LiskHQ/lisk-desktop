@@ -21,7 +21,7 @@ class FlashMessageHolder extends React.Component {
 
   static addMessage(message, name) {
     const { children } = this.singletonRef.state;
-    if (React.isValidElement(message) && name && !children[name]) {
+    if (React.isValidElement(message) && name) {
       this.singletonRef.setState({
         children: {
           ...children,

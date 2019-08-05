@@ -22,16 +22,23 @@
     margin-right: 7px;
   }
 
-  & .text,
-  & .link {
+  & .text {
     @mixin contentNormal;
 
     color: var(--color-mystic);
+    display: flex;
+    align-items: center;
+    white-space: pre;
+    
+    & strong {
+      font-size: inherit;
+    }
   }
 
   & .link {
     @mixin contentNormal bold;
 
+    color: var(--color-mystic);
     cursor: pointer;
     margin-left: 10px;
     text-decoration: none;
