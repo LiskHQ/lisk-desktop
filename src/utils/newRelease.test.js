@@ -15,6 +15,10 @@ describe('new release util', () => {
     window.ipc = ipc;
   });
 
+  afterEach(() => {
+    delete window.ipc;
+  });
+
   it('Should return undefined if no ipc on window', () => {
     delete window.ipc;
     expect(newReleaseUtil.init()).toEqual(undefined);
