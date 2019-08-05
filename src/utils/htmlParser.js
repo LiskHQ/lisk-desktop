@@ -2,17 +2,20 @@ import React, { Fragment, createElement } from 'react';
 import regex from './regex';
 
 const htmlParser = (html = '') => {
-  const elements = html.match(new RegExp(regex.htmlElements, 'g'));
-  if (!elements) return html;
+  const trimmedHtml = html.trim();
+  const elements = trimmedHtml.match(new RegExp(regex.htmlElements, 'g'));
+  if (!elements) return trimmedHtml;
+  const before = trimmedHtml.slice(0, trimmedHtml.indexOf(elements[0]));
   return (
     <Fragment>
       {
       elements.map((element, index) => {
-        const [tag, content, rest] = element.match(regex.htmlElements).slice(1);
+        const [tag, content, after] = element.match(regex.htmlElements).slice(1);
         return (
           <Fragment key={`${tag}-${index}`}>
+            {!!before && before}
             {createElement(tag, { key: `${tag}-${index}` }, htmlParser(content))}
-            {!!rest && rest}
+            {!!after && after}
           </Fragment>
         );
       })

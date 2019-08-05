@@ -6,7 +6,7 @@ describe('html parser util', () => {
     const dummyHtml = `<div>
       <h1>Dummy title</h1>
       <span>
-        <p><strong>Nested</strong> tags</p>
+        <p>before <strong>Nested</strong> tags</p>
       </span>
     </div>`;
 
