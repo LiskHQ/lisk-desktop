@@ -23,8 +23,8 @@ class FlashMessage extends React.Component {
   render() {
     const { className, shouldShow, children } = this.props;
     const { dismissed } = this.state;
-    return (
-      <div className={`${styles.wrapper} ${shouldShow && !dismissed ? styles.show : ''} ${className}`}>
+    return shouldShow && !dismissed && (
+      <div className={`${styles.wrapper} ${className}`}>
         {children}
         {
           !(Array.isArray(children) && children.some(child => child.type === Button)) && (

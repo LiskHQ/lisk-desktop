@@ -4,18 +4,16 @@
 .wrapper {
   align-items: center;
   background-color: var(--color-maastricht-blue);
+  border-bottom: 1px solid var(--light-border-color);
   box-sizing: border-box;
   display: flex;
+  flex-grow: 0;
+  flex-shrink: 0;
   flex-direction: row;
   justify-content: flex-start;
-  max-height: 0;
-  min-height: 0;
   overflow: hidden;
   padding: 0 24px;
   position: relative;
-  transition:
-    max-height var(--animation-speed-standard) linear,
-    min-height var(--animation-speed-standard) linear;
   width: 100%;
 
   & img {
@@ -25,10 +23,10 @@
   & .text {
     @mixin contentNormal;
 
+    align-items: center;
     color: var(--color-mystic);
     display: flex;
-    align-items: center;
-    white-space: pre;
+    padding: 16px 0;
 
     & strong {
       font-size: inherit;
@@ -76,11 +74,5 @@
     &::after {
       transform: rotate(-45deg);
     }
-  }
-
-  &.show {
-    border-bottom: 1px solid var(--light-border-color);
-    min-height: 56px;
-    max-height: 56px;
   }
 }

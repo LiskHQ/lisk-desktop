@@ -15,17 +15,15 @@ const NewReleaseMessage = ({
 }) => (
   <FlashMessage shouldShow {...props}>
     <FlashMessage.Content>
-      <React.Fragment>
-        <strong>{t('Lisk Hub {{version}}', { version })}</strong>
-        {t(' is out. ')}
-        {htmlParser(releaseSummary)}
-        <TertiaryButton
-          className={`${styles.button} small`}
-          onClick={onClick}
-        >
-          {t('Read more')}
-        </TertiaryButton>
-      </React.Fragment>
+      <strong>{t('Lisk Hub {{version}}', { version })}</strong>
+      {t(' is out. ')}
+      {htmlParser(releaseSummary)}
+      <TertiaryButton
+        className={`${styles.button} small`}
+        onClick={onClick}
+      >
+        {t('Read more')}
+      </TertiaryButton>
     </FlashMessage.Content>
   </FlashMessage>
 );
