@@ -52,8 +52,6 @@ class WalletTransactions extends React.Component {
   }
 
   onInit() {
-    this.props.getLastTransaction(this.props.account.address);
-
     this.props.getTransactions({
       address: this.props.account.address,
       filters: {

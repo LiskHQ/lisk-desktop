@@ -94,38 +94,6 @@ export const getTransactions = ({
 };
 
 /**
- * This action is used to get the data for "My Wallet Details" module on wallet page
- * which shows Last transactions. It cannot get the latest transaction from the list,
- * because the list can be filtered.
- *
- * @param {String} address - address of the active account
- */
-export const getLastTransaction = address => async (dispatch, getState) => {
-  dispatch(loadingStarted(actionTypes.getLastTransaction));
-  const networkConfig = getState().network;
-  if (networkConfig) {
-    dispatch({ type: actionTypes.transactionCleared });
-
-    const [error, response] = await to(transactionsAPI.getTransactions({
-      networkConfig, address, limit: 1, offset: 0,
-    }));
-
-    if (error) {
-      dispatch({
-        type: actionTypes.transactionLoadFailed,
-        data: {
-          error,
-        },
-      });
-    } else {
-      dispatch({ type: actionTypes.getTransactionSuccess, data: response.data[0] });
-    }
-  }
-
-  dispatch(loadingFinished(actionTypes.getLastTransaction));
-};
-
-/**
  * This action is used to get transaction data for the details page.
  * @param {String} id - id of the transaction
  */

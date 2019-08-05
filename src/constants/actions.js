@@ -3,7 +3,6 @@ const actionTypes = {
   addNewPendingTransaction: 'ADD_NEW_PENDING_TRANSACTION',
   getTransactions: 'GET_TRANSACTIONS',
   getTransactionsSuccess: 'GET_TRANSACTIONS_SUCCESS',
-  getLastTransaction: 'GET_LAST_TRANSACTION',
   getTransactionSuccess: 'GET_TRANSACTION_SUCCESS',
 
   accountAddVotes: 'ACCOUNT_ADD_VOTES',
