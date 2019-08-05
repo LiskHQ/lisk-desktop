@@ -3,6 +3,7 @@ import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 import FlashMessage from '../toolbox/flashMessage/flashMessage';
 import { TertiaryButton } from '../toolbox/buttons/button';
+import styles from './newReleaseMessage.css';
 
 const NewReleaseMessage = ({
   t,
@@ -19,7 +20,7 @@ const NewReleaseMessage = ({
         {t(' is out. ')}
         {releaseSummary}
         <TertiaryButton
-          className="small"
+          className={`${styles.button} small`}
           onClick={onClick}
         >
           {t('Read more')}
