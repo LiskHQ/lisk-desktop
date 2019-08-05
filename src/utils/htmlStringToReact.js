@@ -1,7 +1,7 @@
 import React, { Fragment, createElement } from 'react';
 import regex from './regex';
 
-const htmlParser = (html = '') => {
+const htmlStringToReact = (html = '') => {
   const trimmedHtml = html.trim();
   const elements = trimmedHtml.match(new RegExp(regex.htmlElements, 'g'));
   if (!elements) return trimmedHtml;
@@ -14,7 +14,7 @@ const htmlParser = (html = '') => {
         return (
           <Fragment key={`${tag}-${index}`}>
             {!!before && before}
-            {createElement(tag, { key: `${tag}-${index}` }, htmlParser(content))}
+            {createElement(tag, { key: `${tag}-${index}` }, htmlStringToReact(content))}
             {!!after && after}
           </Fragment>
         );
@@ -24,4 +24,4 @@ const htmlParser = (html = '') => {
   );
 };
 
-export default htmlParser;
+export default htmlStringToReact;

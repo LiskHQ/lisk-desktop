@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
-import htmlParser from './htmlParser';
+import htmlStringToReact from './htmlStringToReact';
 
-describe('html parser util', () => {
+describe('htmlStringToReact util', () => {
   it('Should return a valid React element', () => {
     const dummyHtml = `<div>
       <h1>Dummy title</h1>
@@ -10,12 +10,12 @@ describe('html parser util', () => {
       </span>
     </div>`;
 
-    const wrapper = mount(htmlParser(dummyHtml));
+    const wrapper = mount(htmlStringToReact(dummyHtml));
 
     expect(wrapper).toHaveHTML(dummyHtml);
   });
 
   it('Should return empty string if no html provided', () => {
-    expect(htmlParser()).toEqual('');
+    expect(htmlStringToReact()).toEqual('');
   });
 });
