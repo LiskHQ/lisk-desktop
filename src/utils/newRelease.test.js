@@ -23,7 +23,7 @@ describe('new release util', () => {
   it('Should call FlashMessageHolder.addMessage when ipc receives update:available', () => {
     const wrapper = mount(<FlashMessageHolder />);
     const version = '1.20.1';
-    const releaseNotes = '<h2>dummy text</h2><h3>Fixed bugs</h3>';
+    const releaseNotes = '<h4>dummy text</h4><h3>Fixed bugs</h3>';
     expect(wrapper).toBeEmptyRender();
     newReleaseUtil.init();
     expect(ipc.on).toHaveBeenCalled();

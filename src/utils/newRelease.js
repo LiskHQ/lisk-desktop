@@ -9,7 +9,7 @@ export default {
     if (!ipc) return;
 
     ipc.on('update:available', (action, { version, releaseNotes }) => {
-      const releaseSummary = releaseNotes.match(regex.htmlElements)[2];
+      const [releaseSummary] = releaseNotes.match(regex.releaseSummary).slice(1);
       FlashMessageHolder.addMessage(
         <NewReleaseMessage
           version={version}
