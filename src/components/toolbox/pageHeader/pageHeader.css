@@ -3,7 +3,7 @@
 .wrapper {
   display: flex;
   justify-content: space-between;
-  margin-top: 16px;
+  padding-top: 16px;
 
   & h1 {
     @mixin headingNormalIntermediate;
