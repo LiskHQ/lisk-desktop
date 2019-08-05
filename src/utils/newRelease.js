@@ -1,6 +1,7 @@
 import React from 'react';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
 import NewReleaseMessage from '../components/newReleaseMessage/newReleaseMessage';
+import regex from './regex';
 
 export default {
   init: () => {
@@ -8,13 +9,13 @@ export default {
     if (!ipc) return;
 
     ipc.on('update:available', (action, { version, releaseNotes }) => {
-      /* istanbul ignore next */
-      const onClick = () => ipc.send('update:clicked');
+      const releaseSummary = releaseNotes.match(regex.releaseSummary)[2];
       FlashMessageHolder.addMessage(
         <NewReleaseMessage
           version={version}
           releaseNotes={releaseNotes}
-          onClick={onClick}
+          releaseSummary={releaseSummary}
+          onClick={() => ipc.send('update:clicked')}
         />,
         'NewRelease',
       );
