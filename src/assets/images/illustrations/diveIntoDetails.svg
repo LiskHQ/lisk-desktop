@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="516px" height="242px" viewBox="0 0 516 242" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="516px" height="322px" viewBox="0 0 516 322" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: sketchtool 55.2 (78181) - https://sketchapp.com -->
     <title>63C232EF-7EBE-4475-9C65-CEF771D33A85</title>
     <desc>Created with sketchtool.</desc>
     <defs>
         <linearGradient x1="42.9572433%" y1="39.2753329%" x2="65.9121816%" y2="59.0965959%" id="linearGradient-1">
-            <stop stop-color="#FFFFFF" stop-opacity="0" offset="0%"></stop>
-            <stop stop-color="#FFFFFF" stop-opacity="0.01" offset="37%"></stop>
-            <stop stop-color="#FFFFFF" stop-opacity="0.03" offset="51%"></stop>
-            <stop stop-color="#FFFFFF" stop-opacity="0.08" offset="60%"></stop>
-            <stop stop-color="#FFFFFF" stop-opacity="0.15" offset="68%"></stop>
-            <stop stop-color="#FFFFFF" stop-opacity="0.23" offset="75%"></stop>
-            <stop stop-color="#FFFFFF" stop-opacity="0.34" offset="80%"></stop>
-            <stop stop-color="#FFFFFF" stop-opacity="0.47" offset="86%"></stop>
-            <stop stop-color="#FFFFFF" stop-opacity="0.61" offset="91%"></stop>
-            <stop stop-color="#FFFFFF" stop-opacity="0.78" offset="95%"></stop>
-            <stop stop-color="#FFFFFF" stop-opacity="0.96" offset="99%"></stop>
-            <stop stop-color="#FFFFFF" offset="100%"></stop>
+            <stop stop-color="#254898" stop-opacity="0" offset="10%"></stop>
+            <stop stop-color="#254898" stop-opacity="0.16" offset="100%"></stop>
         </linearGradient>
     </defs>
     <g id="💰-2.0-My-Wallet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
