@@ -1,32 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import thunk from 'redux-thunk';
 import PropTypes from 'prop-types';
-import configureMockStore from 'redux-mock-store';
-import { MemoryRouter as Router } from 'react-router-dom';
-import i18n from '../../i18n';
 import SingleTransaction from './singleTransaction';
 import accounts from '../../../test/constants/accounts';
 import fees from '../../constants/fees';
 
 describe('Single Transaction Component', () => {
   let wrapper;
-  const network = {
-    status: { online: true },
-    name: 'Custom Node',
-    networks: {
-      LSK: {
-        nodeUrl: 'hhtp://localhost:4000',
-        nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-      },
-    },
-  };
-
-  const settings = {
-    token: {
-      active: 'LSK',
-    },
-  };
   const transaction = {
     senderId: accounts.genesis.address,
     recipientId: accounts.delegate.address,
@@ -45,6 +25,8 @@ describe('Single Transaction Component', () => {
     t: v => v,
     history: {
       push: jest.fn(),
+      replace: jest.fn(),
+      createHref: jest.fn(),
     },
     activeToken: 'LSK',
     transaction: {
@@ -57,31 +39,22 @@ describe('Single Transaction Component', () => {
       url: `/explorer/transactions/${transaction.id}`,
     },
   };
+  const router = {
+    route: {
+      location: {},
+      match: { params: { id: transaction.id } },
+    },
+    history: props.history,
+  };
+
+  const options = {
+    context: { router },
+    childContextTypes: {
+      router: PropTypes.object.isRequired,
+    },
+  };
 
   describe('Transfer transactions', () => {
-    const store = configureMockStore([thunk])({
-      account: accounts.genesis,
-      network,
-      settings,
-    });
-
-    const router = {
-      history: new Router().history,
-      route: {
-        location: {},
-        match: { params: { id: 123 } },
-      },
-    };
-
-    const options = {
-      context: { i18n, store, router },
-      childContextTypes: {
-        store: PropTypes.object.isRequired,
-        i18n: PropTypes.object.isRequired,
-        router: PropTypes.object.isRequired,
-      },
-    };
-
     beforeEach(() => {
       wrapper = mount(<SingleTransaction {...props} />, options);
     });
@@ -96,41 +69,20 @@ describe('Single Transaction Component', () => {
         ...props,
         activeToken: 'BTC',
       });
-      // TODO fix this test. The problem is that this test uses HOC of the component
-      // but using directly the component causes some errors
-      // expect(props.history.push).toHaveBeenCalledWith('/dashboard');
+      expect(props.history.push).toHaveBeenCalledWith('/dashboard');
     });
   });
 
   describe('No results', () => {
-    const store = configureMockStore([thunk])({
-      account: accounts.genesis,
-      network,
-      settings,
-    });
-
-    const options = {
-      context: { i18n, store },
-      childContextTypes: {
-        store: PropTypes.object.isRequired,
-        i18n: PropTypes.object.isRequired,
-      },
-    };
-
-    beforeEach(() => {
-      wrapper = mount(<Router>
-        <SingleTransaction {...{
-          ...props,
-          transaction: {
-            error: 'INVALID_REQUEST_PARAMETER',
-            data: {},
-          },
-        }}
-        />
-      </Router>, options);
-    });
-
     it('Should render no result screen', () => {
+      wrapper = mount(<SingleTransaction {...{
+        ...props,
+        transaction: {
+          error: 'INVALID_REQUEST_PARAMETER',
+          data: {},
+        },
+      }}
+      />, options);
       expect(wrapper).toContainMatchingElement('NotFound');
     });
   });
