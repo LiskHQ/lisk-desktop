@@ -86,9 +86,13 @@ export const getSingleTransaction = ({
       if (response.data.length !== 0) {
         resolve(response);
       } else {
-        apiClient.node.getTransactions('unconfirmed', { id }).then(unconfirmedRes => (
-          resolve(unconfirmedRes)
-        )).catch(reject);
+        apiClient.node.getTransactions('unconfirmed', { id }).then((unconfirmedRes) => {
+          if (unconfirmedRes.data.length !== 0) {
+            resolve(unconfirmedRes);
+          } else {
+            reject(new Error(`Transaction with id "${id}" not found`));
+          }
+        }).catch(reject);
       }
     }).catch(reject);
 });

@@ -1,3 +1,4 @@
+import { to } from 'await-to-js';
 import Lisk from '@liskhq/lisk-client';
 import {
   send,
@@ -127,8 +128,9 @@ describe('Utils: Transactions API', () => {
 
     it('should apiClient.node.getTransactions if empty response', async () => {
       apiClient.transactions.get.mockResolvedValue({ data: [] });
-      await getSingleTransaction({ apiClient, id });
+      const [error] = await to(getSingleTransaction({ apiClient, id }));
       expect(apiClient.node.getTransactions).toHaveBeenCalledWith('unconfirmed', { id });
+      expect(error).toEqual(new Error(`Transaction with id "${id}" not found`));
     });
   });
 
