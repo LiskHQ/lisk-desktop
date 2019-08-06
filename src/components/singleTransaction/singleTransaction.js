@@ -15,12 +15,6 @@ import styles from './singleTransaction.css';
 import transactionTypes from '../../constants/transactionTypes';
 
 class SingleTransaction extends React.Component {
-  constructor(props) {
-    super();
-
-    if (props.liskAPIClient) props.getSingleTransaction({ id: props.match.params.id });
-  }
-
   componentDidUpdate(prevProps) {
     if (this.props.activeToken !== prevProps.activeToken) {
       this.props.history.push(routes.dashboard.path);
@@ -30,13 +24,14 @@ class SingleTransaction extends React.Component {
   getLinkToCopy() {
     return {
       LSK: `lisk:/${this.props.match.url}`,
-      BTC: this.props.transaction.explorerLink,
+      BTC: this.props.transaction.data.explorerLink,
     }[this.props.activeToken];
   }
 
-  // eslint-disable-next-line complexity
   render() {
-    const { t, transaction, activeToken } = this.props;
+    const { t, activeToken, address } = this.props;
+    const transaction = this.props.transaction.data;
+
     return (
       <div className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
         { transaction.id && !transaction.error ? (
@@ -53,7 +48,7 @@ class SingleTransaction extends React.Component {
             </header>
             <main className={styles.mainContent}>
               <TransactionDetailView
-                address={this.props.address}
+                address={address}
                 activeToken={activeToken}
                 transaction={transaction}
               >

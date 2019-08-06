@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import { MemoryRouter as Router } from 'react-router-dom';
 import i18n from '../../i18n';
-import SingleTransaction from './index';
+import SingleTransaction from './singleTransaction';
 import accounts from '../../../test/constants/accounts';
 import fees from '../../constants/fees';
 
@@ -27,6 +27,19 @@ describe('Single Transaction Component', () => {
       active: 'LSK',
     },
   };
+  const transaction = {
+    senderId: accounts.genesis.address,
+    recipientId: accounts.delegate.address,
+    amount: 100000,
+    asset: {
+      data: 'Transaction message',
+    },
+    confirmation: 1,
+    type: 0,
+    id: 123,
+    fee: fees.send,
+    timestamp: Date.now(),
+  };
 
   const props = {
     t: v => v,
@@ -34,28 +47,18 @@ describe('Single Transaction Component', () => {
       push: jest.fn(),
     },
     activeToken: 'LSK',
+    transaction: {
+      data: transaction,
+    },
+    match: {
+      url: `/explorer/transactions/${transaction.id}`,
+    },
   };
 
   describe('Transfer transactions', () => {
-    const transaction = {
-      senderId: accounts.genesis.address,
-      recipientId: accounts.delegate.address,
-      amount: 100000,
-      asset: {
-        data: 'Transaction message',
-      },
-      confirmation: 1,
-      type: 0,
-      id: 123,
-      fee: fees.send,
-      timestamp: Date.now(),
-    };
-
     const store = configureMockStore([thunk])({
       account: accounts.genesis,
-      transaction,
       network,
-      getSingleTransaction: jest.fn(),
       settings,
     });
 
@@ -97,17 +100,9 @@ describe('Single Transaction Component', () => {
   });
 
   describe('No results', () => {
-    const transaction = {
-      errors: [{
-        code: 'INVALID_REQUEST_PARAMETER',
-      }],
-    };
-
     const store = configureMockStore([thunk])({
       account: accounts.genesis,
-      transaction,
       network,
-      getSingleTransaction: jest.fn(),
       settings,
     });
 
@@ -120,7 +115,16 @@ describe('Single Transaction Component', () => {
     };
 
     beforeEach(() => {
-      wrapper = mount(<Router><SingleTransaction {...props} /></Router>, options);
+      wrapper = mount(<Router>
+        <SingleTransaction {...{
+          ...props,
+          transaction: {
+            error: 'INVALID_REQUEST_PARAMETER',
+            data: {},
+          },
+        }}
+        />
+      </Router>, options);
     });
 
     it('Should render no result screen', () => {
