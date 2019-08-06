@@ -1,9 +1,11 @@
+import Lisk from '@liskhq/lisk-client';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { mount } from 'enzyme';
-import PropTypes from 'prop-types';
 import SingleTransaction from './singleTransaction';
 import accounts from '../../../test/constants/accounts';
 import fees from '../../constants/fees';
+import transactionTypes from '../../constants/transactionTypes';
 
 describe('Single Transaction Component', () => {
   let wrapper;
@@ -20,6 +22,18 @@ describe('Single Transaction Component', () => {
     fee: fees.send,
     timestamp: Date.now(),
   };
+  const voteTransaction = {
+    type: transactionTypes.vote,
+    amount: '0',
+    fee: Lisk.transaction.constants.VOTE_FEE.toString(),
+    senderId: accounts.genesis.address,
+    recipientId: accounts.delegate.address,
+    timestamp: Lisk.transaction.utils.getTimeFromBlockchainEpoch() - 100,
+    votes: {
+      added: [accounts.delegate.publicKey, accounts.delegate_candidate.publicKey],
+      deleted: [],
+    },
+  };
 
   const props = {
     t: v => v,
@@ -30,10 +44,12 @@ describe('Single Transaction Component', () => {
     },
     activeToken: 'LSK',
     transaction: {
-      data: transaction,
+      data: {},
+      isLoading: true,
     },
     delegates: {
       data: {},
+      loadData: jest.fn(),
     },
     match: {
       url: `/explorer/transactions/${transaction.id}`,
@@ -59,7 +75,14 @@ describe('Single Transaction Component', () => {
       wrapper = mount(<SingleTransaction {...props} />, options);
     });
 
-    it('Should render transaction details', () => {
+    it('Should render transaction details after transaciton loaded', () => {
+      wrapper.setProps({
+        ...props,
+        transaction: {
+          data: transaction,
+          isLoading: false,
+        },
+      });
       expect(wrapper.find('.detailsHeader h1')).toHaveText('Transaction details');
       expect(wrapper.find('.transaction-id .copy-title').first().text().trim()).toBe(`${transaction.id}`);
     });
@@ -70,6 +93,22 @@ describe('Single Transaction Component', () => {
         activeToken: 'BTC',
       });
       expect(props.history.push).toHaveBeenCalledWith('/dashboard');
+    });
+
+    it('Should load delegate names after vote transaction loading finished', () => {
+      wrapper.setProps({
+        ...props,
+        transaction: {
+          data: voteTransaction,
+          isLoading: false,
+        },
+      });
+      expect(props.delegates.loadData).toHaveBeenCalledWith({
+        publicKey: accounts.delegate.publicKey,
+      });
+      expect(props.delegates.loadData).toHaveBeenCalledWith({
+        publicKey: accounts.delegate_candidate.publicKey,
+      });
     });
   });
 
