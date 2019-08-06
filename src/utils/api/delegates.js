@@ -1,7 +1,9 @@
+import { to } from 'await-to-js';
 import Lisk from '@liskhq/lisk-client';
 import i18next from 'i18next';
 import { getBlocks } from './blocks';
 import { getTransactions } from './transactions';
+import { loadDelegateCache, updateDelegateCache } from '../delegates';
 import { loginType } from '../../constants/hwConstants';
 import { splitVotesIntoRounds } from '../voting';
 import { voteWithHW } from './hwWallet';
@@ -30,6 +32,25 @@ export const getDelegateInfo = (liskAPIClient, { address, publicKey }) => (
       }
     } catch (e) {
       reject(e);
+    }
+  })
+);
+
+export const getDelegateWithCache = (liskAPIClient, { publicKey, networkConfig }) => (
+  new Promise(async (resolve, reject) => {
+    const storedDelegate = loadDelegateCache(networkConfig)[publicKey];
+    if (storedDelegate) {
+      resolve(storedDelegate);
+    } else {
+      const [error, response] = await to(getDelegates(liskAPIClient, { publicKey }));
+      if (error) {
+        reject(error);
+      } else if (response.data[0]) {
+        updateDelegateCache(response.data, networkConfig);
+        resolve(response.data[0]);
+      } else {
+        reject(new Error(`No delegate with publicKey ${publicKey} found.`));
+      }
     }
   })
 );

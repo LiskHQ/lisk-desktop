@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getActiveTokenAccount } from '../../utils/account';
-import { getDelegates } from '../../utils/api/delegates';
+import { getDelegateWithCache } from '../../utils/api/delegates';
 import { getSingleTransaction } from '../../utils/api/transactions';
 import SingleTransaction from './singleTransaction';
 import withData from '../../utils/withData';
@@ -26,11 +26,14 @@ const apis = {
     autoload: true,
   },
   delegates: {
-    apiUtil: getDelegates,
+    apiUtil: getDelegateWithCache,
+    getApiParams: state => ({
+      networkConfig: state.network,
+    }),
     defaultData: {},
     transformResponse: (response, oldData) => ({
       ...oldData,
-      ...response.data.reduce((acc, item) => ({ ...acc, [item.account.publicKey]: item }), {}),
+      [response.account.publicKey]: response,
     }),
   },
 };
