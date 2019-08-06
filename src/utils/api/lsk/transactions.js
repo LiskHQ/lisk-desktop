@@ -1,8 +1,8 @@
 import Lisk from '@liskhq/lisk-client';
-import { toRawLsk } from '../../lsk';
-import { getTimestampFromFirstBlock } from '../../datetime';
-import txFilters from '../../../constants/transactionFilters';
 import { getAPIClient } from './network';
+import { getTimestampFromFirstBlock } from '../../datetime';
+import { toRawLsk } from '../../lsk';
+import txFilters from '../../../constants/transactionFilters';
 
 // TODO remove this function as is replaced right now by Create and Broadcast functions
 // Issue ticket #2046
@@ -76,6 +76,22 @@ export const getTransactions = ({
   });
 };
 
+const getVotesStartingWith = (sign, apiResponse) => (
+  apiResponse.data[0].asset.votes
+    .filter(item => item.startsWith(sign))
+    .map(item => item.replace(sign, ''))
+);
+
+const addParsedVotes = (apiResponse) => {
+  if (apiResponse.data[0].asset && 'votes' in apiResponse.data[0].asset) {
+    apiResponse.data[0].votes = {
+      added: getVotesStartingWith('+', apiResponse),
+      deleted: getVotesStartingWith('-', apiResponse),
+    };
+  }
+  return apiResponse;
+};
+
 export const getSingleTransaction = ({
   networkConfig, id, liskAPIClient,
 }) => new Promise((resolve, reject) => {
@@ -84,7 +100,7 @@ export const getSingleTransaction = ({
   apiClient.transactions.get({ id })
     .then((response) => {
       if (response.data.length !== 0) {
-        resolve(response);
+        resolve(addParsedVotes(response));
       } else {
         apiClient.node.getTransactions('unconfirmed', { id }).then((unconfirmedRes) => {
           if (unconfirmedRes.data.length !== 0) {
