@@ -1,6 +1,6 @@
 import actionsType from '../../constants/actions';
 import { pricesRetrieved } from '../../actions/service';
-import { cleanTransactions } from '../../actions/transactions';
+import { emptyTransactionsData } from '../../actions/transactions';
 import { setSettingsInLocalStorage } from '../../utils/settings';
 
 const settings = store => next => (action) => {
@@ -10,7 +10,7 @@ const settings = store => next => (action) => {
       next(action);
       if (action.data.token && action.data.token.active !== token.active) {
         store.dispatch(pricesRetrieved());
-        store.dispatch(cleanTransactions());
+        store.dispatch(emptyTransactionsData());
       }
       setSettingsInLocalStorage(store.getState().settings);
       break;

@@ -39,7 +39,7 @@ class TransactionsList extends React.Component {
     const filteredTransactions = transactions.filter(fixIncomingFilter);
 
     const isLoading = loading.filter(type =>
-      actionTypes.transactionsLoaded === type).length > 0;
+      actionTypes.getTransactions === type).length > 0;
 
     const showDetails = activeToken !== tokenMap.BTC.key;
 

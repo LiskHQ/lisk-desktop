@@ -80,11 +80,11 @@ export const secondPassphraseRegistered = ({
     setSecondPassphrase(liskAPIClient, secondPassphrase, account.publicKey, passphrase, timeOffset)
       .then((transaction) => {
         dispatch({
+          type: actionTypes.addNewPendingTransaction,
           data: {
             ...transaction,
             senderId: extractAddress(transaction.senderPublicKey),
           },
-          type: actionTypes.addPendingTransaction,
         });
         callback({
           success: true,

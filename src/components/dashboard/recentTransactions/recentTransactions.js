@@ -14,7 +14,7 @@ class RecentTransactions extends Component {
     super(props);
 
     if (!props.transactions.length && props.account.address) {
-      props.loadTransactions({
+      props.getTransactions({
         address: props.account.address,
         filters: {
           direction: txFilters.all,

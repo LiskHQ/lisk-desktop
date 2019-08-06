@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { getActiveTokenAccount } from '../../../utils/account';
-import { loadTransactions } from '../../../actions/transactions';
+import { getTransactions } from '../../../actions/transactions';
 import RecentTransactions from './recentTransactions';
 import removeDuplicateTransactions from '../../../utils/transactions';
 
@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  loadTransactions,
+  getTransactions,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(RecentTransactions));

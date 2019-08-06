@@ -8,7 +8,7 @@ import { getVotingLists, getVotingError } from '../utils/voting';
 import { getTimeOffset } from '../utils/hacks';
 import { updateDelegateCache } from '../utils/delegates';
 import { passphraseUsed } from './account';
-import { addPendingTransaction } from './transactions';
+import { addNewPendingTransaction } from './transactions';
 import { errorToastDisplayed } from './toaster';
 import actionTypes from '../constants/actions';
 import { getAPIClient } from '../utils/api/network';
@@ -73,7 +73,7 @@ export const votePlaced = ({
       });
     } else {
       dispatch({ type: actionTypes.pendingVotesAdded });
-      callResult.map(transaction => dispatch(addPendingTransaction(transaction)));
+      callResult.map(transaction => dispatch(addNewPendingTransaction(transaction)));
       dispatch(passphraseUsed(account.passphrase));
       callback({ success: true });
     }

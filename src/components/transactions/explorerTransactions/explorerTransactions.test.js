@@ -82,10 +82,9 @@ describe('ExplorerTransactions Component', () => {
       loadData: jest.fn(),
     },
     transaction: transactions[0],
-    loadTransactions: jest.fn(),
+    getTransactions: jest.fn(),
     loading: [],
     t: key => key,
-    loadLastTransaction: jest.fn(),
     wallets: {},
     balance: accounts.genesis.balance,
     detailAccount: {
