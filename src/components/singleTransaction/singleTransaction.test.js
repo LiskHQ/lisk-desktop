@@ -50,6 +50,9 @@ describe('Single Transaction Component', () => {
     transaction: {
       data: transaction,
     },
+    delegates: {
+      data: {},
+    },
     match: {
       url: `/explorer/transactions/${transaction.id}`,
     },
