@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { updateDelegateCache, loadDelegateCache } from './delegates';
 import accounts from '../../test/constants/accounts';
 import networks from '../constants/networks';
@@ -11,22 +10,23 @@ describe('Delegates Utils', () => {
     window.localStorage.setItem = (key, item) => { storage[key] = item; };
   });
 
-  const delegateItem = [{ account: { ...accounts.genesis }, username: 'test' }];
+  const delegate = {
+    account: { ...accounts.delegate },
+    username: accounts.delegate.username,
+  };
   const itemExpected = {
-    test: {
-      account: { ...accounts.genesis },
-      username: 'test',
-    },
+    [delegate.username]: delegate,
+    [delegate.account.publicKey]: delegate,
   };
 
   it('sets and gets the delegate item with mainnet', () => {
-    const liskAPIClient = { options: networks.mainnet };
-    updateDelegateCache(delegateItem, liskAPIClient);
-    expect(loadDelegateCache(liskAPIClient)).to.eql(itemExpected);
+    const networkConfig = { options: networks.mainnet };
+    updateDelegateCache([delegate], networkConfig);
+    expect(loadDelegateCache(networkConfig)).toEqual(itemExpected);
   });
 
   it('sets and gets the delegate item with customNode', () => {
-    const liskAPIClient = {
+    const networkConfig = {
       options: networks.customNode,
       networks: {
         LSK: {
@@ -35,7 +35,7 @@ describe('Delegates Utils', () => {
       },
       name: networks.customNode.name,
     };
-    updateDelegateCache(delegateItem, liskAPIClient);
-    expect(loadDelegateCache(liskAPIClient)).to.eql(itemExpected);
+    updateDelegateCache([delegate], networkConfig);
+    expect(loadDelegateCache(networkConfig)).toEqual(itemExpected);
   });
 });
