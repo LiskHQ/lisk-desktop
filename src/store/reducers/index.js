@@ -9,6 +9,5 @@ export { default as network } from './network';
 export { default as service } from './service';
 export { default as settings } from './settings';
 export { default as toaster } from './toaster';
-export { default as transaction } from './transaction';
 export { default as transactions } from './transactions';
 export { default as voting } from './voting';
