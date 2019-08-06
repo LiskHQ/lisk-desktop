@@ -1,8 +1,9 @@
 /* istanbul ignore file */
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { getSingleTransaction } from '../../actions/transactions';
 import { getAPIClient } from '../../utils/api/network';
+import { getSingleTransaction } from '../../actions/transactions';
 import SingleTransaction from './singleTransaction';
 
 const mapStateToProps = state => ({
@@ -16,4 +17,7 @@ const mapDispatchToProps = {
   getSingleTransaction,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleTransaction));
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps),
+)(SingleTransaction);
