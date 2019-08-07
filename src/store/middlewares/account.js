@@ -101,6 +101,17 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }
 };
 
+// istanbul ignore next
+const getNetworkFromLocalStorage = () => {
+  const mySettings = JSON.parse(localStorage.getItem('settings')) || {};
+  let currentNetwork;
+  if (!mySettings.network) return networks.mainnet;
+  if (mySettings.network.name === networks.mainnet.name) currentNetwork = networks.mainnet;
+  if (mySettings.network.name === networks.testnet.name) currentNetwork = networks.testnet;
+  if (mySettings.network.name === networks.customNode.name) currentNetwork = networks.customNode;
+  return { ...currentNetwork, address: mySettings.network.address };
+};
+
 // eslint-disable-next-line max-statements
 const checkNetworkToConnet = () => {
   const autologinData = getAutoLogInData();
@@ -129,10 +140,11 @@ const checkNetworkToConnet = () => {
   }
 
   if (!loginNetwork && !autologinData.liskCoreUrl) {
+    const currentNetwork = getNetworkFromLocalStorage();
     loginNetwork = {
-      name: networks.default.name,
+      name: currentNetwork.name,
       network: {
-        ...networks.default,
+        ...currentNetwork,
       },
     };
   }
