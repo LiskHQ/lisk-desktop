@@ -5,6 +5,8 @@ import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
 import NewReleaseMessage from '../components/newReleaseMessage/newReleaseMessage';
 import DialogHolder from '../components/toolbox/dialog/holder';
 import NewReleaseDialog from '../components/newReleaseDialog/newReleaseDialog';
+import store from '../store';
+import { toastDisplayed } from '../actions/toaster';
 
 export default {
   init: () => {
@@ -33,6 +35,10 @@ export default {
         />,
         'NewRelease',
       );
+    });
+
+    ipc.on('update:downloading', (action, { label }) => {
+      store.dispatch(toastDisplayed({ label }));
     });
   },
 };

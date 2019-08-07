@@ -49,10 +49,7 @@ export default ({ // eslint-disable-line max-statements
       autoUpdater.downloadUpdate();
       setTimeout(() => {
         if (!updater.error) {
-          dialog.showMessageBox({
-            title: i18n.t('Dowload started'),
-            message: i18n.t('The download has started. Depending on your internet speed, it can take several minutes. You will be informed when it is finished and be prompted to restart the app.'),
-          });
+          win.send({ event: 'update:downloading', value: { label: i18n.t('Download started!') } });
         }
       }, 500);
     });
