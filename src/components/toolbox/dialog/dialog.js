@@ -31,7 +31,6 @@ Dialog.defaultProps = {
   hasClose: false,
 };
 
-Dialog.displayName = 'Dialog';
 Dialog.Title = Title;
 Dialog.Description = Description;
 Dialog.Options = Options;
