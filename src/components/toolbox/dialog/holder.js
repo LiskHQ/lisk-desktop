@@ -15,10 +15,12 @@ class DialogHolder extends React.Component {
 
   static hideDialog() {
     this.singletonRef.setState({ dialog: null });
+    document.body.style.overflow = '';
   }
 
   static showDialog(dialog) {
     if (React.isValidElement(dialog)) {
+      document.body.style.overflow = 'hidden';
       this.singletonRef.setState({ dialog });
       return true;
     }
