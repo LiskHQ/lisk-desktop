@@ -18,6 +18,9 @@
   background-color: var(--color-white);
   border-radius: var(--border-radius-box);
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
   max-width: var(--dialog-box-width);
   padding: 40px;
   position: relative;
@@ -51,6 +54,7 @@
   display: flex;
   justify-content: flex-end;
   margin: 30px auto 0;
+  width: 100%;
 
   & > * {
     margin: 0 10px;
