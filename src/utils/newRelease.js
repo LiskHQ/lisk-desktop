@@ -1,7 +1,10 @@
 import React from 'react';
+import htmlStringToReact from './htmlStringToReact';
+import regex from './regex';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
 import NewReleaseMessage from '../components/newReleaseMessage/newReleaseMessage';
-import regex from './regex';
+import DialogHolder from '../components/toolbox/dialog/holder';
+import NewReleaseDialog from '../components/newReleaseDialog/newReleaseDialog';
 
 export default {
   init: () => {
@@ -10,12 +13,22 @@ export default {
 
     ipc.on('update:available', (action, { version, releaseNotes }) => {
       const [releaseSummary] = releaseNotes.match(regex.releaseSummary).slice(1);
+
+      const onClick = () => {
+        DialogHolder.showDialog(
+          <NewReleaseDialog
+            version={version}
+            releaseNotes={htmlStringToReact(releaseNotes)}
+          />,
+        );
+      };
+
       FlashMessageHolder.addMessage(
         <NewReleaseMessage
           version={version}
           releaseNotes={releaseNotes}
-          releaseSummary={releaseSummary}
-          onClick={() => ipc.send('update:clicked')}
+          releaseSummary={htmlStringToReact(releaseSummary)}
+          onClick={onClick}
         />,
         'NewRelease',
       );

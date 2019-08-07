@@ -1,7 +1,6 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
-import htmlStringToReact from '../../utils/htmlStringToReact';
 import FlashMessage from '../toolbox/flashMessage/flashMessage';
 import { TertiaryButton } from '../toolbox/buttons/button';
 import styles from './newReleaseMessage.css';
@@ -17,7 +16,7 @@ const NewReleaseMessage = ({
     <FlashMessage.Content>
       <strong>{t('Lisk Hub {{version}}', { version })}</strong>
       {t(' is out. ')}
-      {htmlStringToReact(releaseSummary)}
+      {releaseSummary}
       <TertiaryButton
         className={`${styles.button} small`}
         onClick={onClick}
@@ -30,7 +29,7 @@ const NewReleaseMessage = ({
 
 NewReleaseMessage.propTypes = {
   version: PropTypes.string.isRequired,
-  releaseSummary: PropTypes.string.isRequired,
+  releaseSummary: PropTypes.element.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
