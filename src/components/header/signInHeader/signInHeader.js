@@ -8,7 +8,6 @@ import { Input } from '../../toolbox/inputs';
 import { addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../../utils/login';
 import getNetwork, { getNetworksList } from '../../../utils/getNetwork';
 import { parseSearchParams } from '../../../utils/searchParams';
-
 import Icon from '../../toolbox/icon';
 import UserAccount from '../../topBar/accountMenu/userAccount';
 import networks from '../../../constants/networks';
@@ -16,6 +15,7 @@ import styles from './signInHeader.css';
 import formStyles from '../../send/form/form.css';
 import Dropdown from '../../toolbox/dropdown/dropdown';
 import Spinner from '../../spinner/spinner';
+import keyCodes from '../../../constants/keyCodes';
 import svg from '../../../utils/svgIcons';
 
 class Header extends React.Component {
@@ -40,6 +40,7 @@ class Header extends React.Component {
     };
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.handleSettingsToggle = this.handleSettingsToggle.bind(this);
+    this.onConnectToCustomNode = this.onConnectToCustomNode.bind(this);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -67,7 +68,9 @@ class Header extends React.Component {
         ? '' : this.state.address,
     });
     const { name, address } = this.getNetwork(network);
-    this.props.settingsUpdated({ network: { name, address } });
+    if (address !== 'http://') {
+      this.props.settingsUpdated({ network: { name, address } });
+    }
   }
 
   getNetwork(chosenNetwork) {
@@ -130,6 +133,13 @@ class Header extends React.Component {
 
   handleSettingsToggle() {
     this.setState({ showSettingDrowdown: !this.state.showSettingDrowdown });
+  }
+
+  onConnectToCustomNode(e) {
+    e.stopPropagation();
+    this.setState({ isValidationLoading: true });
+    this.validateCorrectNode(networks.customNode.code, this.state.address);
+    this.changeNetwork(networks.customNode.code);
   }
 
   /* istanbul ignore next */
@@ -200,6 +210,8 @@ class Header extends React.Component {
                               placeholder={this.props.t('ie. 192.168.0.1')}
                               size="s"
                               className={`custom-network ${formStyles.input} ${this.state.validationError ? styles.errorInput : ''}`}
+                              onKeyDown={e => e.keyCode === keyCodes.enter
+                                && this.onConnectToCustomNode(e)}
                             />
                             <div className={styles.icons}>
                               <Spinner className={`${styles.spinner} ${this.state.isValidationLoading && this.state.address ? styles.show : styles.hide}`} />
@@ -231,18 +243,7 @@ class Header extends React.Component {
                                     <PrimaryButton
                                       disabled={this.state.connected}
                                     /* istanbul ignore next */
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-
-                                        this.setState({ isValidationLoading: true });
-                                        this.loaderTimeout = setTimeout(() => {
-                                          this.validateCorrectNode(
-                                            networks.customNode.code,
-                                            this.state.address,
-                                          );
-                                          this.changeNetwork(networks.customNode.code);
-                                        }, 300);
-                                      }}
+                                      onClick={this.onConnectToCustomNode}
                                       className={`${styles.button} ${styles.backButton} connect-button`}
                                     >
                                       {this.state.connected ? t('Connected') : t('Connect')}
