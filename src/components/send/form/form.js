@@ -1,4 +1,10 @@
 // eslint-disable-line max-lines
+// TODO Split this Send form component into following 4:
+// - FormWrapper - decides to render FormLSK or FormBTC based on activeToken
+// - FormLSK - Contains all LSK-specific functionality (message, static fee) and renders FormBase
+// - FormBTC - Contains all BTC-specific functionality (dynamic fee selection) and renders FormBase
+// - FormBase - Contains all functionality common to LSK and BTC (Box, address input,
+//     amount input, confirm button)
 import React from 'react';
 import Converter from '../../converter';
 import { PrimaryButton } from '../../toolbox/buttons/button';
@@ -132,6 +138,7 @@ class Form extends React.Component {
     }
   }
 
+  // TODO move `state.fields` into parent send component and ifDataFromPrevState can be deleted
   ifDataFromPrevState() {
     const { prevState } = this.props;
     // istanbul ignore if
@@ -144,6 +151,7 @@ class Form extends React.Component {
     }
   }
 
+  // TODO move `state.fields` into parent send component and ifDataFromUrl can be deleted
   // istanbul ignore next
   ifDataFromUrl() {
     const { fields = {} } = this.props;
@@ -200,6 +208,7 @@ class Form extends React.Component {
     }));
   }
 
+  // TODO move bookmark validation into a separate util or component
   // eslint-disable-next-line max-statements
   validateBookmark() {
     const { token, networkConfig } = this.props;
@@ -310,6 +319,7 @@ class Form extends React.Component {
       : fromRawLsk(Math.max(0, account.balance - dynamicFee));
   }
 
+  // TODO move dynamic fee calculation and presentation to a separate component
   getCalculatedDynamicFee(dynamicFeePerByte, value) {
     const { fields: { amount }, unspentTransactionOutputs } = this.state;
     if (this.validateAmountField(value || amount.value)) {
