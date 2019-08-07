@@ -102,7 +102,6 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }
 };
 
-// istanbul ignore next
 const getNetworkFromLocalStorage = () => {
   const mySettings = localJSONStorage.get('settings', {});
   if (!mySettings.network) return networks.mainnet;
