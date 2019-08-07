@@ -19,6 +19,7 @@ export default {
           <NewReleaseDialog
             version={version}
             releaseNotes={htmlStringToReact(releaseNotes)}
+            ipc={ipc}
           />,
         );
       };

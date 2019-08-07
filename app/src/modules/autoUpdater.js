@@ -1,5 +1,4 @@
 import i18n from '../i18n';
-import updateModal from './updateModal';
 
 export default ({ // eslint-disable-line max-statements
   autoUpdater, dialog, win, process, electron,
@@ -44,11 +43,9 @@ export default ({ // eslint-disable-line max-statements
   autoUpdater.on('update-available', ({ releaseNotes, version }) => {
     updater.error = undefined;
     const { ipcMain } = electron;
-    const versions = {
-      oldVersion: electron.app.getVersion(),
-      newVersion: version,
-    };
-    const updateApp = () => {
+
+    ipcMain.removeAllListeners('update:started');
+    ipcMain.on('update:started', () => {
       autoUpdater.downloadUpdate();
       setTimeout(() => {
         if (!updater.error) {
@@ -58,11 +55,6 @@ export default ({ // eslint-disable-line max-statements
           });
         }
       }, 500);
-    };
-
-    ipcMain.removeAllListeners('update:clicked');
-    ipcMain.on('update:clicked', () => {
-      updateModal(electron, releaseNotes, updateApp, versions);
     });
 
     win.send({
@@ -97,7 +89,7 @@ export default ({ // eslint-disable-line max-statements
   function checkForUpdates(menuItem) {
     autoUpdater.checkForUpdates();
     updater.menuItem = menuItem;
-    updater.menuItem.enabled = false;
+    // updater.menuItem.enabled = false;
   }
 
   return checkForUpdates;

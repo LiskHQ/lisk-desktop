@@ -29,7 +29,10 @@ const NewReleaseMessage = ({
 
 NewReleaseMessage.propTypes = {
   version: PropTypes.string.isRequired,
-  releaseSummary: PropTypes.element.isRequired,
+  releaseSummary: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+  ]).isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

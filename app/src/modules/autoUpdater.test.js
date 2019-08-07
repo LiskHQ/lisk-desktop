@@ -166,11 +166,10 @@ describe('autoUpdater', () => {
     autoUpdater(newPrams);
     callbacks['update-available']({ version });
     expect(params.win.send).to.have.been.calledWith();
-    ipcRenderer.send('update:clicked');
+    ipcRenderer.send('update:started');
     clock.tick(1001);
     ipcRenderer.send('update', { text: 'update' });
     clock.tick(100);
-
     expect(params.autoUpdater.downloadUpdate).to.have.been.calledWithExactly();
   });
 
