@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import DialogHolder from './holder';
 import styles from './dialog.css';
 
-const Options = ({ children, isCentered }) => {
+const Options = ({ children, align }) => {
   const options = (Array.isArray(children)
     ? children
     : [children]
   ).filter(child => React.isValidElement(child));
 
   return !!options.length && (
-    <div className={`${styles.optionsHolder} ${isCentered ? styles.centered : ''}`}>
+    <div className={`${styles.optionsHolder} ${styles[align]}`}>
       {
       options.map((option, index) => {
         const { onClick, ...props } = option.props;
@@ -35,11 +35,11 @@ Options.propTypes = {
     PropTypes.element,
     PropTypes.arrayOf(PropTypes.element),
   ]).isRequired,
-  isCentered: PropTypes.bool,
+  align: PropTypes.oneOf(['left', 'center', 'right']),
 };
 
 Options.defaultProps = {
-  isCentered: false,
+  align: 'right',
 };
 
 Options.displayName = 'Dialog.Options';

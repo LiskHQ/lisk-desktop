@@ -21,12 +21,12 @@ describe('Dialog.Options component', () => {
   it('Should render multiple options calls DialogHolder.hideDialog even if onClick is set', () => {
     const onClick = jest.fn();
     const wrapper = mount(
-      <Options isCentered>
+      <Options align="center">
         <PrimaryButton>Option</PrimaryButton>
         <PrimaryButton onClick={onClick}>Option2</PrimaryButton>
       </Options>,
     );
-    expect(wrapper.find('div')).toHaveClassName('centered');
+    expect(wrapper.find('div')).toHaveClassName('center');
     expect(wrapper).toContainMatchingElements(2, 'button');
     wrapper.find('button').last().simulate('click');
     expect(onClick).toBeCalled();

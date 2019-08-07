@@ -52,7 +52,6 @@
 
 .optionsHolder {
   display: flex;
-  justify-content: flex-end;
   margin: 30px auto 0;
   width: 100%;
 
@@ -68,7 +67,15 @@
     }
   }
 
-  &.centered {
+  &.left {
+    justify-content: flex-start;
+  }
+
+  &.right {
+    justify-content: flex-end;
+  }
+
+  &.center {
     justify-content: space-between;
     max-width: 470px;
 
