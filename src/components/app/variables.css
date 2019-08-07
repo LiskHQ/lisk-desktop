@@ -75,6 +75,7 @@ or "warn/action" ineastd of "red/green"
   --footer-button-width: 400px;
   --main-box-width: 1318px;
   --medium-box-width: 720px;
+  --dialog-box-width: 650px;
 
   /*************************
         Padding
@@ -104,6 +105,7 @@ or "warn/action" ineastd of "red/green"
   --dark-border-color: rgba(0, 0, 0, 0.08);
   --primary-background-color: color(var(--color-ultramarine-blue) a(8%));
   --error-background-color: color(var(--color-burnt-sienna) a(8%));
+  --color-dialog-mask: color(var(--color-maastricht-blue) a(52%));
   --color-primary-standard: var(--color-ultramarine-blue);
   --color-primary-light: #9db8fa;
   --color-white: #fff;
@@ -161,6 +163,7 @@ or "warn/action" ineastd of "red/green"
   *************************/
   --normal-index: 1;
   --overlay-index: 20;
+  --dialog-index: 50;
 
   /*************************
         Media Queries

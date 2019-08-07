@@ -1,0 +1,109 @@
+@import '../../app/variables.css';
+@import '../../app/mixins.css';
+
+.mask {
+  align-items: center;
+  background-color: var(--color-dialog-mask);
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: var(--dialog-index);
+}
+
+.wrapper {
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-box);
+  box-sizing: border-box;
+  max-width: var(--dialog-box-width);
+  padding: 40px;
+  position: relative;
+  width: 100%;
+}
+
+.title {
+  @mixin headingLarge;
+
+  color: var(--color-maastricht-blue);
+  margin: 20px 0 0;
+  text-align: center;
+}
+
+.description {
+  @mixin contentLarge;
+
+  color: var(--color-slate-gray);
+  max-width: 420px;
+  margin: 10px auto;
+  text-align: center;
+
+  & * {
+    color: inherit;
+    font-size: inherit;
+    margin: 0;
+  }
+}
+
+.optionsHolder {
+  display: flex;
+  justify-content: flex-end;
+  margin: 30px auto 0;
+
+  & > * {
+    margin: 0 10px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &.centered {
+    justify-content: space-between;
+    max-width: 470px;
+
+    & > * {
+      flex-basis: 100%;
+    }
+  }
+}
+
+.closeBtn {
+  align-items: center;
+  border: 1px solid var(--color-ghost);
+  border-radius: var(--border-radius-box);
+  box-sizing: border-box;
+  color: var(--color-ghost);
+  cursor: pointer;
+  display: flex;
+  height: 32px;
+  justify-content: center;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  width: 32px;
+
+  &::before,
+  &::after {
+    background-color: currentColor;
+    color: inherit;
+    content: '';
+    height: 13px;
+    position: absolute;
+    width: 1px;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+}

@@ -11,6 +11,7 @@ import InitializationMessage from '../initializationMessage';
 import routes from '../../constants/routes';
 import Header from '../header/header';
 import FlashMessageHolder from '../toolbox/flashMessage/holder';
+import DialogHolder from '../toolbox/dialog/holder';
 
 class App extends React.Component {
   constructor() {
@@ -37,6 +38,7 @@ class App extends React.Component {
 
     return (
       <OfflineWrapper>
+        <DialogHolder />
         <Dialog />
         <Header
           isSigninFlow={routeObj.isSigninFlow}
