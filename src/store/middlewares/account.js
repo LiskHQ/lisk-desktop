@@ -21,6 +21,7 @@ import txFilters from '../../constants/transactionFilters';
 
 import { getDeviceList, getHWPublicKeyFromIndex } from '../../utils/hwWallet';
 import { loginType } from '../../constants/hwConstants';
+import localJSONStorage from '../../utils/localJSONStorage';
 
 const updateAccountData = (store) => {
   const { transactions } = store.getState();
@@ -101,6 +102,17 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }
 };
 
+const getNetworkFromLocalStorage = () => {
+  const mySettings = localJSONStorage.get('settings', {});
+  if (!mySettings.network) return networks.mainnet;
+  return {
+    ...Object.values(networks).find(
+      ({ name }) => name === mySettings.network.name,
+    ) || networks.mainnet,
+    address: mySettings.network.address,
+  };
+};
+
 // eslint-disable-next-line max-statements
 const checkNetworkToConnet = () => {
   const autologinData = getAutoLogInData();
@@ -129,10 +141,11 @@ const checkNetworkToConnet = () => {
   }
 
   if (!loginNetwork && !autologinData.liskCoreUrl) {
+    const currentNetwork = getNetworkFromLocalStorage();
     loginNetwork = {
-      name: networks.default.name,
+      name: currentNetwork.name,
       network: {
-        ...networks.default,
+        ...currentNetwork,
       },
     };
   }

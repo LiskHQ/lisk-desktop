@@ -66,7 +66,8 @@ class Header extends React.Component {
       address: network === networks.mainnet.code || network === networks.testnet.code
         ? '' : this.state.address,
     });
-    this.props.settingsUpdated({ network });
+    const { name, address } = this.getNetwork(network);
+    this.props.settingsUpdated({ network: { name, address } });
   }
 
   getNetwork(chosenNetwork) {
