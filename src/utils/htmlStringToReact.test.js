@@ -7,7 +7,12 @@ describe('htmlStringToReact util', () => {
       <h1>Dummy title</h1>
       <span>
         <p>before <strong>Nested</strong> tags</p>
+        <a href="http://foo.bar" target="_blank">With props</a>
       </span>
+      <ul>
+        <li>sibling</li>
+        <li>sibling</li>
+      </ul>
     </div>`;
 
     const wrapper = mount(htmlStringToReact(dummyHtml));
