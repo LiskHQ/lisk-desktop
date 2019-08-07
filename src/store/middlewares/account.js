@@ -21,6 +21,7 @@ import txFilters from '../../constants/transactionFilters';
 
 import { getDeviceList, getHWPublicKeyFromIndex } from '../../utils/hwWallet';
 import { loginType } from '../../constants/hwConstants';
+import localJSONStorage from '../../utils/localJSONStorage';
 
 const updateAccountData = (store) => {
   const { transactions } = store.getState();
@@ -103,13 +104,14 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
 
 // istanbul ignore next
 const getNetworkFromLocalStorage = () => {
-  const mySettings = JSON.parse(localStorage.getItem('settings')) || {};
-  let currentNetwork;
+  const mySettings = localJSONStorage.get('settings', {});
   if (!mySettings.network) return networks.mainnet;
-  if (mySettings.network.name === networks.mainnet.name) currentNetwork = networks.mainnet;
-  if (mySettings.network.name === networks.testnet.name) currentNetwork = networks.testnet;
-  if (mySettings.network.name === networks.customNode.name) currentNetwork = networks.customNode;
-  return { ...currentNetwork, address: mySettings.network.address };
+  return {
+    ...Object.values(networks).find(
+      ({ name }) => name === mySettings.network.name,
+    ) || networks.mainnet,
+    address: mySettings.network.address,
+  };
 };
 
 // eslint-disable-next-line max-statements
