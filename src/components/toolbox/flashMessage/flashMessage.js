@@ -1,79 +1,58 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Icon from '../icon';
-import { SecondaryButton } from '../buttons/button';
+import Content from './content';
+import Button from './button';
 import styles from './flashMessage.css';
 
-const FlashMessage = ({
-  buttonClassName,
-  buttonText,
-  className,
-  displayText,
-  iconName,
-  linkCaption,
-  linkClassName,
-  linkUrl,
-  onButtonClick,
-  shouldShow,
-}) => (
-  <div className={`${styles.wrapper} ${shouldShow ? styles.show : ''} ${className}`}>
-    {
-      iconName
-        ? <Icon name={iconName} className="icon" />
-        : null
-    }
-    <span className={`${styles.text} display-text`}>
-      {displayText}
-      {
-      linkUrl && linkCaption
-        ? (
-          <a
-            className={`${styles.externalLink} ${linkClassName} url-link`}
-            href={linkUrl}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            {linkCaption}
-          </a>
-        )
-        : null
-      }
-    </span>
-    {
-      buttonText && onButtonClick
-        ? (
-          <SecondaryButton
-            className={`${styles.button} ${buttonClassName} small light button`}
-            onClick={onButtonClick}
-          >
-            {buttonText}
-          </SecondaryButton>
-        )
-        : null
-    }
-  </div>
-);
+class FlashMessage extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      dismissed: false,
+    };
+
+    this.dismiss = this.dismiss.bind(this);
+  }
+
+  dismiss() {
+    const { onDismiss } = this.props;
+    this.setState({ dismissed: true });
+    if (typeof onDismiss === 'function') onDismiss();
+  }
+
+  render() {
+    const { className, shouldShow, children } = this.props;
+    const { dismissed } = this.state;
+    return shouldShow && !dismissed && (
+      <div className={`${styles.wrapper} ${className}`}>
+        {children}
+        {
+          !(Array.isArray(children) && children.some(child => child.type === Button)) && (
+            <span
+              className={styles.closeBtn}
+              onClick={this.dismiss}
+            />
+          )
+        }
+      </div>
+    );
+  }
+}
 
 FlashMessage.propTypes = {
-  buttonClassName: PropTypes.string,
-  buttonText: PropTypes.string,
   className: PropTypes.string,
-  displayText: PropTypes.string.isRequired,
-  iconName: PropTypes.string,
-  linkCaption: PropTypes.string,
-  linkClassName: PropTypes.string,
-  linkUrl: PropTypes.string,
-  shouldShow: PropTypes.bool.isRequired,
+  shouldShow: PropTypes.bool,
+  onDismiss: PropTypes.func,
 };
 
 FlashMessage.defaultProps = {
-  buttonClassName: '',
-  buttonText: '',
   className: '',
-  iconName: '',
-  linkCaption: '',
-  linkClassName: '',
-  linkUrl: '',
+  shouldShow: false,
+  onDismiss: null,
 };
+
+FlashMessage.displayName = 'FlashMessage';
+FlashMessage.Content = Content;
+FlashMessage.Button = Button;
 
 export default FlashMessage;

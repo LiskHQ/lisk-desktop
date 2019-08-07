@@ -1,5 +1,5 @@
-@import '../app/variables.css';
-@import '../app/mixins.css';
+@import '../../app/variables.css';
+@import '../../app/mixins.css';
 
 .wrapper {
   background: var(--color-white-smoke);
@@ -10,6 +10,7 @@
   position: absolute;
   top: 0;
   width: 100%;
+  z-index: var(--normal-index);
 
   &:global(.dark) {
     background: var(--color-maastricht-blue);

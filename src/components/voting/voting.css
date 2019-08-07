@@ -1,6 +1,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   justify-content: center;
   min-height: 100%;
   align-items: center;

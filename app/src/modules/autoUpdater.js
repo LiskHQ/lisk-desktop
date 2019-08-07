@@ -43,6 +43,7 @@ export default ({ // eslint-disable-line max-statements
 
   autoUpdater.on('update-available', ({ releaseNotes, version }) => {
     updater.error = undefined;
+    const { ipcMain } = electron;
     const versions = {
       oldVersion: electron.app.getVersion(),
       newVersion: version,
@@ -58,7 +59,16 @@ export default ({ // eslint-disable-line max-statements
         }
       }, 500);
     };
-    updateModal(electron, releaseNotes, updateApp, versions);
+
+    ipcMain.removeAllListeners('update:clicked');
+    ipcMain.on('update:clicked', () => {
+      updateModal(electron, releaseNotes, updateApp, versions);
+    });
+
+    win.send({
+      event: 'update:available',
+      value: { releaseNotes, version },
+    });
   });
 
   autoUpdater.on('update-not-available', () => {

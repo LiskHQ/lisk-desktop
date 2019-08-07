@@ -14,7 +14,6 @@ import networks from '../../constants/networks';
 import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
-import Header from '../header/index';
 import PassphraseInput from '../passphraseInput/passphraseInput';
 import styles from './login.css';
 import Piwik from '../../utils/piwik';
@@ -124,13 +123,10 @@ class Login extends React.Component {
 
   // eslint-disable-next-line complexity
   render() {
-    const { t, match } = this.props;
+    const { t } = this.props;
 
     return (
       <React.Fragment>
-        { match.url === routes.login.path ? (
-          <Header showSettings />
-        ) : null }
         <div className={`${styles.login} ${grid.row}`}>
           <div
             className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}

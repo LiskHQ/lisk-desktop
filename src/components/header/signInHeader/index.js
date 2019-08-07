@@ -1,12 +1,12 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import Header from './header';
-import { networkSet } from '../../actions/network';
-import { errorToastDisplayed } from '../../actions/toaster';
-import { settingsUpdated } from '../../actions/settings';
-import networks from '../../constants/networks';
-import { tokenMap } from '../../constants/tokens';
-import { getAPIClient } from '../../utils/api/network';
+import Header from './signInHeader';
+import { networkSet } from '../../../actions/network';
+import { errorToastDisplayed } from '../../../actions/toaster';
+import { settingsUpdated } from '../../../actions/settings';
+import networks from '../../../constants/networks';
+import { tokenMap } from '../../../constants/tokens';
+import { getAPIClient } from '../../../utils/api/network';
 
 const mapStateToProps = state => ({
   account: state.account,
