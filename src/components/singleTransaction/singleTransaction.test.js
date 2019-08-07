@@ -29,9 +29,11 @@ describe('Single Transaction Component', () => {
     senderId: accounts.genesis.address,
     recipientId: accounts.delegate.address,
     timestamp: Lisk.transaction.utils.getTimeFromBlockchainEpoch() - 100,
-    votes: {
-      added: [accounts.delegate.publicKey, accounts.delegate_candidate.publicKey],
-      deleted: [],
+    asset: {
+      votes: [
+        accounts.delegate.publicKey,
+        accounts.delegate_candidate.publicKey,
+      ].map(publicKey => `+${publicKey}`),
     },
   };
 

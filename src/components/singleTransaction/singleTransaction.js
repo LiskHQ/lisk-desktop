@@ -15,11 +15,20 @@ import styles from './singleTransaction.css';
 import transactionTypes from '../../constants/transactionTypes';
 
 function addVotesWithDelegateNames(transaction, delegates, t) {
-  const getDelegate = publicKey => delegates[publicKey] || { username: t('Loading name...'), account: {} };
-  if (transaction.votes) {
+  const getVotesStartingWith = sign => (
+    transaction.asset.votes
+      .filter(item => item.startsWith(sign))
+      .map(item => item.replace(sign, ''))
+  );
+
+  const getDelegate = publicKey => (
+    delegates[publicKey] || { username: t('Loading name...'), account: {} }
+  );
+
+  if (transaction.asset && transaction.asset.votes) {
     transaction.votesName = {
-      added: transaction.votes.added.map(getDelegate),
-      deleted: transaction.votes.deleted.map(getDelegate),
+      added: getVotesStartingWith('+').map(getDelegate),
+      deleted: getVotesStartingWith('-').map(getDelegate),
     };
   }
   return transaction;
@@ -37,11 +46,9 @@ class SingleTransaction extends React.Component {
 
   fetchDelegates() {
     const { transaction, delegates } = this.props;
-    if (transaction.data.votes) {
-      [
-        ...transaction.data.votes.added,
-        ...transaction.data.votes.deleted,
-      ].forEach(publicKey => delegates.loadData({ publicKey }));
+    if (transaction.data.asset && transaction.data.asset.votes) {
+      transaction.data.asset.votes
+        .forEach(publicKey => delegates.loadData({ publicKey: publicKey.substring(1) }));
     }
   }
 

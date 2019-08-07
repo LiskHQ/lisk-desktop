@@ -76,22 +76,6 @@ export const getTransactions = ({
   });
 };
 
-const getVotesStartingWith = (sign, apiResponse) => (
-  apiResponse.data[0].asset.votes
-    .filter(item => item.startsWith(sign))
-    .map(item => item.replace(sign, ''))
-);
-
-const addParsedVotes = (apiResponse) => {
-  if (apiResponse.data[0].asset && 'votes' in apiResponse.data[0].asset) {
-    apiResponse.data[0].votes = {
-      added: getVotesStartingWith('+', apiResponse),
-      deleted: getVotesStartingWith('-', apiResponse),
-    };
-  }
-  return apiResponse;
-};
-
 export const getSingleTransaction = ({
   networkConfig, id, liskAPIClient,
 }) => new Promise((resolve, reject) => {
@@ -100,7 +84,7 @@ export const getSingleTransaction = ({
   apiClient.transactions.get({ id })
     .then((response) => {
       if (response.data.length !== 0) {
-        resolve(addParsedVotes(response));
+        resolve(response);
       } else {
         apiClient.node.getTransactions('unconfirmed', { id }).then((unconfirmedRes) => {
           if (unconfirmedRes.data.length !== 0) {
