@@ -10,7 +10,6 @@ const mapStateToProps = state => ({
   bookmarks: state.bookmarks,
   token: state.settings.token,
   network: state.network,
-  accounts: state.search.accounts,
 });
 
 const mapDispatchToProps = {
