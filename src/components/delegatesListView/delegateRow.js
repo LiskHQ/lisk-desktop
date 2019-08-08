@@ -84,8 +84,7 @@ class DelegateRow extends React.Component {
           </div>
         ) : null}
         <div className={`${columnClassNames.rank} delegate-rank`}>
-#
-          {rank}
+          {`#${rank}`}
         </div>
         <div className={`${columnClassNames.delegate} delegate-info`}>
           <Link
@@ -108,9 +107,7 @@ class DelegateRow extends React.Component {
           {this.props.t('LSK')}
         </div>
         <div className={`${columnClassNames.productivity} delegate-productivity`}>
-          {productivity}
-          {' '}
-%
+          {`${productivity} %`}
         </div>
         <div className={`${columnClassNames.voteWeight} ${styles.weight} vote-weight`}>
           <LiskAmount val={data.vote} />

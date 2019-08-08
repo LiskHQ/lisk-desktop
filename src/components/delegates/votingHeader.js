@@ -43,8 +43,7 @@ class VotingHeader extends React.Component {
               <span className={styles.box}>
                 <h2>
                   <span className="total-voting-number">{getTotalVotesCount(votes)}</span>
-/
-                  {maxCountOfVotes}
+                  {`/${maxCountOfVotes}`}
                 </h2>
                 <div>{t('My votes after confirmation')}</div>
               </span>
@@ -88,11 +87,8 @@ class VotingHeader extends React.Component {
                 <span className={styles.hideInMedium}>{t('Total actions (')}</span>
                 <span>
                   {t('Total fee: ')}
-                  {' '}
                   <b>
-                    {fee * totalActions}
-                    {' '}
-LSK
+                    {`${fee * totalActions} LSK`}
                   </b>
                 </span>
                 <span className={styles.hideInMedium}>)</span>

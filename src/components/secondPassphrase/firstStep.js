@@ -15,18 +15,14 @@ const FirstStep = ({
     <Trans>
       <p className={styles.info}>
         After registration, your second passphrase will be
-        {' '}
-        <strong>required </strong>
+        <strong> required </strong>
         when
-        {' '}
-        <strong>confirming every transaction</strong>
-        {' '}
-and every vote.
+        <strong> confirming every transaction </strong>
+        and every vote.
         You are responsible for safekeeping your second passphrase.
         No one can restore it, not even Lisk.
         Once activated a second passphrase
-        {' '}
-        <strong>can’t be turned off.</strong>
+        <strong> can’t be turned off.</strong>
       </p>
     </Trans>
     <PassphraseBackup

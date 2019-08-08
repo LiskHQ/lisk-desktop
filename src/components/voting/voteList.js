@@ -9,11 +9,7 @@ const VoteList = ({
       ? (
         <section>
           <label>
-            {title}
-            {' '}
-(
-            {list.length}
-)
+            {`${title} (${list.length})`}
           </label>
           <label>
             <div className={`${styles.votesContainer} ${className}`}>
@@ -22,12 +18,11 @@ const VoteList = ({
                   { votes[vote] && votes[vote].rank
                     ? (
                       <span className={styles.rank}>
-#
-                        {votes[vote].rank}
+                        {`#${votes[vote].rank}`}
                       </span>
                     )
                     : null
-            }
+                  }
                   <span className={styles.username}>{vote}</span>
                 </span>
               ))}
