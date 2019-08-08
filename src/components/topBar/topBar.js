@@ -66,8 +66,13 @@ class TopBar extends React.Component {
 
   render() {
     const {
-      t, account, history, network, token, settingsUpdated,
-      closeDialog, resetTimer, setActiveDialog,
+      t,
+      account,
+      history,
+      network,
+      token,
+      settingsUpdated,
+      resetTimer,
     } = this.props;
     const { openDropdown } = this.state;
 
@@ -105,10 +110,8 @@ class TopBar extends React.Component {
               <Autologout
                 onCountdownComplete={this.onCountdownComplete}
                 account={account}
-                closeDialog={closeDialog}
                 history={history}
                 resetTimer={resetTimer}
-                setActiveDialog={setActiveDialog}
                 t={t}
               />
             </div>

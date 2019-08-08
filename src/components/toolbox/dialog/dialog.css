@@ -76,11 +76,12 @@
   }
 
   &.center {
-    justify-content: space-between;
+    justify-content: space-around;
     max-width: 470px;
 
     & > * {
       flex-basis: 100%;
+      max-width: var(--footer-button-width);
     }
   }
 }

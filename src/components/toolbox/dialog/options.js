@@ -15,7 +15,7 @@ const Options = ({ children, align }) => {
       options.map((option, index) => {
         const { onClick, ...props } = option.props;
         const optionClick = onClick
-          ? (...args) => { onClick(args); DialogHolder.hideDialog(); }
+          ? (...args) => { onClick(...args); DialogHolder.hideDialog(); }
           : DialogHolder.hideDialog;
         return (
           <option.type
