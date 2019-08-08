@@ -1,11 +1,14 @@
 // istanbul ignore file
+import React from 'react';
+import i18n from '../../i18n';
 import actionTypes from '../../constants/actions';
 import { accountLoggedOut } from '../../actions/account';
-import { dialogDisplayed, dialogHidden } from '../../actions/dialog';
 import { updateDeviceList } from '../../actions/hwWallets';
 import { successToastDisplayed, errorToastDisplayed, infoToastDisplayed } from '../../actions/toaster';
 import { HW_MSG } from '../../constants/hwConstants';
-import Alert from '../../components/dialog/alert';
+import Dialog from '../../components/toolbox/dialog/dialog';
+import DialogHolder from '../../components/toolbox/dialog/holder';
+import { PrimaryButton } from '../../components/toolbox/buttons/button';
 
 // eslint-disable-next-line max-statements
 const hwWalletMiddleware = store => next => (action) => {
@@ -42,17 +45,20 @@ const hwWalletMiddleware = store => next => (action) => {
         && account.hwInfo.deviceId
         && account.hwInfo.deviceModel === model
       ) {
-        store.dispatch(dialogDisplayed({
-          childComponent: Alert,
-          childComponentProps: {
-            title: 'You are disconnected',
-            text: `There is no connection to the ${model}. Please check the cables if it happened by accident.`,
-            closeDialog: () => {
-              store.dispatch(dialogHidden());
-              location.reload(); // eslint-disable-line
-            },
-          },
-        }));
+        DialogHolder.showDialog(
+          <Dialog>
+            <Dialog.Title>{i18n.t('You are disconnected')}</Dialog.Title>
+            <Dialog.Description>
+              <p>{i18n.t('There is no connection to the {{model}}. Please check the cables if it happened by accident.', { model })}</p>
+            </Dialog.Description>
+            <Dialog.Options align="center">
+              <PrimaryButton>
+                {i18n.t('Ok')}
+              </PrimaryButton>
+            </Dialog.Options>
+          </Dialog>,
+        );
+
         store.dispatch(accountLoggedOut());
       }
 
