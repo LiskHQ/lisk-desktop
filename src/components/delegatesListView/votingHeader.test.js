@@ -52,7 +52,6 @@ describe('VotingHeader', () => {
         address: 'address 2',
       },
     ],
-    setActiveDialog: sinon.spy(),
     voteToggled: sinon.spy(),
     addTransaction: sinon.spy(),
     search: sinon.spy(),

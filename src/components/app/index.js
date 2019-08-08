@@ -5,7 +5,6 @@ import Toaster from '../toaster';
 import LoadingBar from '../loadingBar';
 import OfflineWrapper from '../offlineWrapper';
 import CustomRoute from '../customRoute';
-import Dialog from '../dialog';
 import NotFound from '../notFound';
 import InitializationMessage from '../initializationMessage';
 import routes from '../../constants/routes';
@@ -39,7 +38,6 @@ class App extends React.Component {
     return (
       <OfflineWrapper>
         <DialogHolder />
-        <Dialog />
         <Header
           isSigninFlow={routeObj.isSigninFlow}
           location={location}

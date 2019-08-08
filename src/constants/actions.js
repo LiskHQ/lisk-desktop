@@ -4,7 +4,6 @@ const actionTypes = {
   getTransactions: 'GET_TRANSACTIONS',
   getTransactionsSuccess: 'GET_TRANSACTIONS_SUCCESS',
   getTransactionSuccess: 'GET_TRANSACTION_SUCCESS',
-
   accountAddVotes: 'ACCOUNT_ADD_VOTES',
   accountLoading: 'ACCOUNT_LOADING',
   accountLoggedIn: 'ACCOUNT_LOGGED_IN',
@@ -17,8 +16,6 @@ const actionTypes = {
   delegateRetrieved: 'DELEGATE_RETRIEVED',
   delegateRetrieving: 'DELEGATE_RETRIEVING',
   delegatesAdded: 'DELEGATES_ADDED',
-  dialogDisplayed: 'DIALOG_DISPLAYED',
-  dialogHidden: 'DIALOG_HIDDEN',
   dynamicFeesRetrieved: 'DYNAMIC_FEES_RETRIEVED',
   bookmarkAdded: 'BOOKMARK_ADDED',
   bookmarkRemoved: 'BOOKMARK_REMOVED',

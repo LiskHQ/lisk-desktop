@@ -9,10 +9,8 @@ describe('Autlologout component', () => {
       expireTime: Date.now() + account.lockDuration,
     },
     onCountdownComplete: jest.fn(),
-    closeDialog: jest.fn(),
     history: {},
     resetTimer: jest.fn(),
-    setActiveDialog: jest.fn(),
     t: v => v,
   };
   let wrapper;
