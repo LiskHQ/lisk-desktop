@@ -12,8 +12,6 @@ const PageHeaderDemo = () => (
         subtitle="Subtitle of the page"
       >
         <PrimaryButton>
-
-
           Some button
         </PrimaryButton>
       </PageHeader>

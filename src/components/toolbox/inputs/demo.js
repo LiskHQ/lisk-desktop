@@ -65,8 +65,6 @@ const InputsDemo = () => (
         status="error"
         showIcon
       >
-
-
         There was something wrong typed.
       </Feedback>
     </DemoRenderer>
@@ -101,8 +99,6 @@ const InputsDemo = () => (
           status="error"
           showIcon
         >
-
-
           There was something wrong typed.
         </Feedback>
       </DarkWrapper>

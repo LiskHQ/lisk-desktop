@@ -42,7 +42,6 @@ describe('FlashMessage', () => {
     const children = (
       <p>
         <strong>Dummy</strong>
-
         text
       </p>
     );
