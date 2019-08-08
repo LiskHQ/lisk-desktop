@@ -50,7 +50,7 @@ class Select extends React.Component {
           <Input
             readOnly
             value={options[selected].label}
-            onFocus={this.toggleIsOpen}
+            onClick={this.toggleIsOpen}
             size={size}
           />
         </label>
