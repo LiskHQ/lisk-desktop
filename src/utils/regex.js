@@ -5,7 +5,6 @@ export default {
   transactionId: /^[1-9]\d{0,19}$/,
   btcAddressTrunk: /^(.{10})(.+)?(.{10})$/,
   delegateSpecialChars: /[a-z0-9!@$&_.]+/g,
-  htmlElements: /<(\w+)(.*?)>([\s\S]*?)<\/\1>(.*)/,
-  htmlAttributes: /(\w+?)="(.+?)"/,
+  htmlElements: /<(\w+).*?>([\s\S]*?)<\/\1>(.*)/,
   releaseSummary: /<h4>([\s\S]*?)<\/h4>/i,
 };
