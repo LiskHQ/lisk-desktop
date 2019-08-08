@@ -8,7 +8,7 @@ const normalizeProp = prop => ({
 const attributesToProps = attributes =>
   (attributes.match(new RegExp(regex.htmlAttributes, 'g')) || []).reduce((props, attrib) => {
     const [prop, value] = attrib.match(regex.htmlAttributes).slice(1);
-    props[normalizeProp(prop)] = value;
+    props[normalizeProp(prop)] = encodeURIComponent(value);
     return props;
   }, {});
 
