@@ -47,7 +47,7 @@ class PassphraseBackup extends React.Component {
                 {t('Passphrase')}
 
                 <Tooltip
-                  title="Save the passphrase"
+                  title={t('Save the passphrase')}
                   footer={(
                     <a
                       href={links.howToStorePassphrase}
