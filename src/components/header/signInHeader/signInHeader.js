@@ -46,13 +46,9 @@ class Header extends React.Component {
     this.onConnectToCustomNode = this.onConnectToCustomNode.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
+  componentDidUpdate(prevProps) {
     const { address } = this.props;
-    if (address !== nextProps.address) {
-      this.setState({ address: nextProps.address });
-      return false;
-    }
-    return true;
+    if (address !== prevProps.address) this.setState({ address });
   }
 
   // eslint-disable-next-line class-methods-use-this
