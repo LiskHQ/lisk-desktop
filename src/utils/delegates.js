@@ -1,4 +1,3 @@
-
 import localJSONStorage from './localJSONStorage';
 import networks from '../constants/networks';
 import { tokenMap } from '../constants/tokens';
@@ -13,14 +12,15 @@ const getNetworkKey = network => (
 
 export const updateDelegateCache = (delegates, network) => {
   const savedDelegates = localJSONStorage.get(getNetworkKey(network), {});
-  const formatedDelegates = delegates
-    .reduce((newDelegates, delegate) => {
-      const delegateObj = { [delegate.username]: delegate };
-      return Object.assign(newDelegates, delegateObj);
-    }, {});
-  const updatedDelegates = { ...formatedDelegates, ...savedDelegates };
 
-  localJSONStorage.set(getNetworkKey(network), updatedDelegates);
+  localJSONStorage.set(getNetworkKey(network), {
+    ...savedDelegates,
+    ...delegates.reduce((newDelegates, delegate) => ({
+      ...newDelegates,
+      [delegate.username]: delegate,
+      ...(delegate.account ? { [delegate.account.publicKey]: delegate } : {}),
+    }), {}),
+  });
 };
 
 export const loadDelegateCache = network =>

@@ -1,3 +1,4 @@
+import { to } from 'await-to-js';
 import { getTransactions, getSingleTransaction } from './transactions';
 import networks from '../../constants/networks';
 import { getAPIClient } from './lsk/network';
@@ -53,7 +54,7 @@ describe('Utils: Transactions API', () => {
         networkConfig,
       };
       liskAPIClient.transactions.get.mockResolvedValue({ data: [] });
-      await getSingleTransaction(params);
+      await to(getSingleTransaction(params));
       expect(liskAPIClient.transactions.get).toHaveBeenCalledWith(expect.objectContaining({
         id,
       }));

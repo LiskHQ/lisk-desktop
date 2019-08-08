@@ -6,15 +6,12 @@ import Fees from '../constants/fees';
 import { tokenMap } from '../constants/tokens';
 import transactionTypes, { createTransactionType } from '../constants/transactionTypes';
 import { loadingStarted, loadingFinished } from './loading';
-import { getDelegates } from '../utils/api/delegates';
-import { loadDelegateCache } from '../utils/delegates';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';
 import { getTimeOffset } from '../utils/hacks';
 import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
 import { transactions as transactionsAPI, hardwareWallet as hwAPI } from '../utils/api';
-import { getAPIClient } from '../utils/api/network';
 
 // ========================================= //
 //            ACTION CREATORS
@@ -30,7 +27,7 @@ export const emptyTransactionsData = () => ({ type: actionTypes.emptyTransaction
  * Action trigger after a new transaction is broadcasted to the network
  * then the transaction is add to the pending transaction array in transaction reducer
  * Used in:  Send, Vote, Second passphrase registration, and delegate registration.
- * @param {Objeect} params - all params
+ * @param {Object} params - all params
  * @param {String} params.senderPublicKey - alphanumeric string
  */
 export const addNewPendingTransaction = data => ({
@@ -46,9 +43,9 @@ export const addNewPendingTransaction = data => ({
 // ========================================= //
 
 /**
- * Action trigger for retrive any amount of transactions
+ * Action trigger for retrieving any amount of transactions
  * for Dashboard and Wallet components
- * @param {Object} params - Objeect with all params.
+ * @param {Object} params - Object with all params.
  * @param {String} params.address - address of the account to fetch the transactions for
  * @param {Number} params.limit - amount of transactions to fetch
  * @param {Number} params.offset - index of the first transaction
@@ -91,85 +88,6 @@ export const getTransactions = ({
   }
 
   dispatch(loadingFinished(actionTypes.getTransactions));
-};
-
-/**
- * This action is used to get transaction data for the details page.
- * @param {String} id - id of the transaction
- */
-// TODO remove function once SingleTransaction component use HOC for get this data
-// eslint-disable-next-line max-statements
-export const getSingleTransaction = ({ id }) => async (dispatch, getState) => {
-  const { settings, network } = getState();
-
-  if (network) {
-    dispatch({ type: actionTypes.transactionCleared });
-    const [error, response] = await to(transactionsAPI.getSingleTransaction({
-      networkConfig: network, id,
-    }));
-
-    if (error || !response.data.length) {
-      dispatch({
-        type: actionTypes.transactionLoadFailed,
-        data: { error: error || i18next.t('Transaction not found') },
-      });
-      return;
-    }
-
-    const liskAPIClient = getAPIClient(settings.token.active, getState());
-    let added = [];
-    let deleted = [];
-
-    // since core 1.0 added and deleted are not filtered in core,
-    // but provided as single array with [+,-] signs
-    if (response.data[0].asset && 'votes' in response.data[0].asset) {
-      added = response.data[0].asset.votes.filter(item => item.startsWith('+')).map(item => item.replace('+', ''));
-      deleted = response.data[0].asset.votes.filter(item => item.startsWith('-')).map(item => item.replace('-', ''));
-    }
-
-    const localStorageDelegates = loadDelegateCache(network);
-
-    deleted.forEach((publicKey) => {
-      const address = extractAddress(publicKey);
-      const storedDelegate = localStorageDelegates[address];
-
-      if (storedDelegate) {
-        dispatch({
-          type: actionTypes.transactionAddDelegateName,
-          data: { delegate: { username: storedDelegate.username, address }, voteArrayName: 'deleted' },
-        });
-      } else {
-        getDelegates(liskAPIClient, { publicKey })
-          .then((delegateData) => {
-            dispatch({
-              type: actionTypes.transactionAddDelegateName,
-              data: { delegate: delegateData.data[0], voteArrayName: 'deleted' },
-            });
-          });
-      }
-    });
-
-    added.forEach((publicKey) => {
-      const address = extractAddress(publicKey);
-
-      if (localStorageDelegates[address]) {
-        dispatch({
-          type: actionTypes.transactionAddDelegateName,
-          data: { delegate: { ...localStorageDelegates[address], address }, voteArrayName: 'added' },
-        });
-      } else {
-        getDelegates(liskAPIClient, { publicKey })
-          .then((delegateData) => {
-            dispatch({
-              type: actionTypes.transactionAddDelegateName,
-              data: { delegate: delegateData.data[0], voteArrayName: 'added' },
-            });
-          });
-      }
-    });
-
-    dispatch({ type: actionTypes.getTransactionSuccess, data: response.data[0] });
-  }
 };
 
 /**

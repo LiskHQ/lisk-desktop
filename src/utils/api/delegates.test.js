@@ -1,9 +1,11 @@
+import { to } from 'await-to-js';
 import Lisk from '@liskhq/lisk-client';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import {
   castVotes,
   getDelegateByName,
+  getDelegateWithCache,
   getDelegateInfo,
   getDelegates,
   getVotes,
@@ -37,6 +39,9 @@ describe('Utils: Delegate', () => {
     blocks: {
       get: () => Promise.resolve({ data: [] }),
     },
+    networkConfig: {
+      name: 'Testnet',
+    },
   };
 
   beforeEach(() => {
@@ -63,6 +68,7 @@ describe('Utils: Delegate', () => {
 
     liskAPIClient.transactions.get.restore();
     voteWithHWStub.restore();
+    localStorage.clear();
   });
 
   describe('getDelegates', () => {
@@ -110,6 +116,52 @@ describe('Utils: Delegate', () => {
       return expect(getDelegateInfo(liskAPIClient, { address })).to.eventually.be.rejectedWith(
         `"${address}" is not a delegate`,
       );
+    });
+  });
+
+  describe('getDelegateWithCache', () => {
+    const networkConfig = { name: 'Mainnet' };
+    it('should resolve based on given publicKey', async () => {
+      const { publicKey } = delegates[0].account;
+      liskAPIClientMockDelegates.expects('get').withArgs({
+        publicKey,
+      }).returnsPromise().resolves({ data: [delegates[0]] });
+
+      const resolved = await getDelegateWithCache(liskAPIClient, { publicKey, networkConfig });
+      expect(resolved).to.equal(delegates[0]);
+    });
+
+    it('should resolve from cache if called twice', async () => {
+      const { publicKey } = delegates[0].account;
+      liskAPIClientMockDelegates.expects('get').withArgs({
+        publicKey,
+      }).returnsPromise().resolves({ data: [delegates[0]] });
+
+      await getDelegateWithCache(liskAPIClient, { publicKey, networkConfig });
+      const resolved = await getDelegateWithCache(liskAPIClient, { publicKey, networkConfig });
+      expect(resolved).to.deep.equal(delegates[0]);
+    });
+
+    it('should reject if delegate not found', async () => {
+      const { publicKey } = delegates[0].account;
+      liskAPIClientMockDelegates.expects('get').withArgs({
+        publicKey,
+      }).returnsPromise().resolves({ data: [] });
+
+      const [error] = await to(getDelegateWithCache(liskAPIClient, { publicKey, networkConfig }));
+      expect(error.message).to.equal(`No delegate with publicKey ${publicKey} found.`);
+    });
+
+    it('should reject if delegate request failed', async () => {
+      const error = 'Any network error';
+      const { publicKey } = delegates[0].account;
+      liskAPIClientMockDelegates.expects('get').withArgs({
+        publicKey,
+      }).returnsPromise().rejects(error);
+
+      expect(await to(
+        getDelegateWithCache(liskAPIClient, { publicKey, networkConfig }),
+      )).to.deep.equal([error, undefined]);
     });
   });
 

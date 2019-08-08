@@ -1,8 +1,8 @@
 import Lisk from '@liskhq/lisk-client';
-import { toRawLsk } from '../../lsk';
-import { getTimestampFromFirstBlock } from '../../datetime';
-import txFilters from '../../../constants/transactionFilters';
 import { getAPIClient } from './network';
+import { getTimestampFromFirstBlock } from '../../datetime';
+import { toRawLsk } from '../../lsk';
+import txFilters from '../../../constants/transactionFilters';
 
 // TODO remove this function as is replaced right now by Create and Broadcast functions
 // Issue ticket #2046
@@ -86,9 +86,13 @@ export const getSingleTransaction = ({
       if (response.data.length !== 0) {
         resolve(response);
       } else {
-        apiClient.node.getTransactions('unconfirmed', { id }).then(unconfirmedRes => (
-          resolve(unconfirmedRes)
-        )).catch(reject);
+        apiClient.node.getTransactions('unconfirmed', { id }).then((unconfirmedRes) => {
+          if (unconfirmedRes.data.length !== 0) {
+            resolve(unconfirmedRes);
+          } else {
+            reject(new Error(`Transaction with id "${id}" not found`));
+          }
+        }).catch(reject);
       }
     }).catch(reject);
 });

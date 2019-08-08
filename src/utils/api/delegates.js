@@ -1,7 +1,9 @@
+import { to } from 'await-to-js';
 import Lisk from '@liskhq/lisk-client';
 import i18next from 'i18next';
 import { getBlocks } from './blocks';
 import { getTransactions } from './transactions';
+import { loadDelegateCache, updateDelegateCache } from '../delegates';
 import { loginType } from '../../constants/hwConstants';
 import { splitVotesIntoRounds } from '../voting';
 import { voteWithHW } from './hwWallet';
@@ -12,7 +14,9 @@ export const getDelegates = (liskAPIClient, options) => liskAPIClient.delegates.
 export const getDelegateInfo = (liskAPIClient, { address, publicKey }) => (
   new Promise(async (resolve, reject) => {
     try {
-      const delegate = (await getDelegates(liskAPIClient, { address })).data[0];
+      const response = await getDelegates(liskAPIClient, { address });
+      const delegate = response.data[0];
+      updateDelegateCache(response.data, liskAPIClient.networkConfig);
       if (delegate) {
         const txDelegateRegister = (await getTransactions({
           liskAPIClient, address, limit: 1, type: transactionTypes.registerDelegate,
@@ -34,17 +38,44 @@ export const getDelegateInfo = (liskAPIClient, { address, publicKey }) => (
   })
 );
 
-export const getDelegateByName = (liskAPIClient, name) => new Promise((resolve, reject) => {
-  liskAPIClient.delegates.get({ search: name, limit: 101 })
-    .then((response) => {
+export const getDelegateWithCache = (liskAPIClient, { publicKey }) => (
+  new Promise(async (resolve, reject) => {
+    const storedDelegate = loadDelegateCache(liskAPIClient.networkConfig)[publicKey];
+    if (storedDelegate) {
+      resolve(storedDelegate);
+    } else {
+      const [error, response] = await to(getDelegates(liskAPIClient, { publicKey }));
+      if (error) {
+        reject(error);
+      } else if (response.data[0]) {
+        updateDelegateCache(response.data, liskAPIClient.networkConfig);
+        resolve(response.data[0]);
+      } else {
+        reject(new Error(`No delegate with publicKey ${publicKey} found.`));
+      }
+    }
+  })
+);
+
+// eslint-disable-next-line max-statements
+export const getDelegateByName = (liskAPIClient, name) => new Promise(async (resolve, reject) => {
+  const storedDelegate = loadDelegateCache(liskAPIClient.networkConfig)[name];
+  if (storedDelegate) {
+    resolve(storedDelegate);
+  } else {
+    const [error, response] = await to(liskAPIClient.delegates.get({ search: name, limit: 101 }));
+    if (error) {
+      reject(error);
+    } else {
       const delegate = response.data.find(({ username }) => username === name);
       if (delegate) {
         resolve(delegate);
       } else {
         reject(new Error(`No delegate with name ${name} found.`));
       }
-    })
-    .catch(reject);
+      updateDelegateCache(response.data, liskAPIClient.networkConfig);
+    }
+  }
 });
 
 const voteWithPassphrase = (

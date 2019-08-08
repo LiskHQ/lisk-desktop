@@ -4,7 +4,6 @@ import { translate } from 'react-i18next';
 import {
   getTransactions,
   sent,
-  getSingleTransaction,
 } from '../../actions/transactions';
 import ExtensionPoint from './extensionPoint';
 
@@ -19,7 +18,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   getTransactions,
   sent,
-  getSingleTransaction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate()(ExtensionPoint));

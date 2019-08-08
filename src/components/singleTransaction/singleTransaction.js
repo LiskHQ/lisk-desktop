@@ -14,32 +14,61 @@ import routes from '../../constants/routes';
 import styles from './singleTransaction.css';
 import transactionTypes from '../../constants/transactionTypes';
 
-class SingleTransaction extends React.Component {
-  constructor(props) {
-    super();
+function addVotesWithDelegateNames(transaction, delegates, t) {
+  const getVotesStartingWith = sign => (
+    transaction.asset.votes
+      .filter(item => item.startsWith(sign))
+      .map(item => item.replace(sign, ''))
+  );
 
-    if (props.liskAPIClient) props.getSingleTransaction({ id: props.match.params.id });
+  const getDelegate = publicKey => (
+    delegates[publicKey] || { username: t('Loading name...'), account: {} }
+  );
+
+  if (transaction.asset && transaction.asset.votes) {
+    transaction.votesName = {
+      added: getVotesStartingWith('+').map(getDelegate),
+      deleted: getVotesStartingWith('-').map(getDelegate),
+    };
   }
+  return transaction;
+}
 
+class SingleTransaction extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.activeToken !== prevProps.activeToken) {
       this.props.history.push(routes.dashboard.path);
+    }
+    if (prevProps.transaction.isLoading && !this.props.transaction.isLoading) {
+      this.fetchDelegates();
+    }
+  }
+
+  fetchDelegates() {
+    const { transaction, delegates } = this.props;
+    if (transaction.data.asset && transaction.data.asset.votes) {
+      transaction.data.asset.votes
+        .forEach(publicKey => delegates.loadData({ publicKey: publicKey.substring(1) }));
     }
   }
 
   getLinkToCopy() {
     return {
       LSK: `lisk:/${this.props.match.url}`,
-      BTC: this.props.transaction.explorerLink,
+      BTC: this.props.transaction.data.explorerLink,
     }[this.props.activeToken];
   }
 
-  // eslint-disable-next-line complexity
   render() {
-    const { t, transaction, activeToken } = this.props;
+    const {
+      t, activeToken, address, delegates,
+    } = this.props;
+    const transaction = addVotesWithDelegateNames(this.props.transaction.data, delegates.data, t);
+    const { error } = this.props.transaction;
+
     return (
       <div className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
-        { transaction.id && !transaction.error ? (
+        { transaction.id ? (
           <Box className={styles.wrapper}>
             <header className={`${styles.detailsHeader}`}>
               <h1>{t('Transaction details')}</h1>
@@ -53,7 +82,7 @@ class SingleTransaction extends React.Component {
             </header>
             <main className={styles.mainContent}>
               <TransactionDetailView
-                address={this.props.address}
+                address={address}
                 activeToken={activeToken}
                 transaction={transaction}
               >
@@ -129,9 +158,11 @@ class SingleTransaction extends React.Component {
               </TransactionDetailView>
             </main>
           </Box>
-        ) : transaction.errors && transaction.errors.length && (
-        <NotFound />
-        )}
+        ) : (
+          <React.Fragment>
+            { error ? <NotFound /> : null}
+          </React.Fragment>
+        ) }
       </div>
     );
   }

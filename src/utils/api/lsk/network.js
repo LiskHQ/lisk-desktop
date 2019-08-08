@@ -22,6 +22,7 @@ export const getAPIClient = (network) => {
       },
     }[network.name] || {};
     apiClients[network.name] = new Lisk.APIClient(nodes, { nethash });
+    apiClients[network.name].networkConfig = network;
   }
   return apiClients[network.name];
 };
