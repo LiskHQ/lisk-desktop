@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React from 'react';
 import Lisk from '@liskhq/lisk-client';
 import { translate } from 'react-i18next';
@@ -20,8 +21,8 @@ import svg from '../../../utils/svgIcons';
 
 class Header extends React.Component {
   // eslint-disable-next-line max-statements
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     const { liskCoreUrl } = getAutoLogInData();
     let loginNetwork = findMatchingLoginNetwork();
     let address = '';
@@ -29,8 +30,9 @@ class Header extends React.Component {
     if (loginNetwork) loginNetwork = loginNetwork.slice(-1).shift();
     if (!loginNetwork) {
       loginNetwork = liskCoreUrl ? networks.customNode : networks.default;
-      address = liskCoreUrl || '';
+      address = liskCoreUrl || props.address;
     }
+
     this.state = {
       address,
       showDropdown: false,
@@ -38,9 +40,19 @@ class Header extends React.Component {
       network: loginNetwork.code,
       isFirstTime: true,
     };
+
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.handleSettingsToggle = this.handleSettingsToggle.bind(this);
     this.onConnectToCustomNode = this.onConnectToCustomNode.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const { address } = this.props;
+    if (address !== nextProps.address) {
+      this.setState({ address: nextProps.address });
+      return false;
+    }
+    return true;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -199,12 +211,9 @@ class Header extends React.Component {
                             }}
                           >
                             {network.label}
-
                             <Input
                               autoComplete="off"
-                              onChange={(value) => {
-                                this.changeAddress(value);
-                              }}
+                              onChange={(value) => { this.changeAddress(value); }}
                               name="customNetwork"
                               value={this.state.address}
                               placeholder={this.props.t('ie. 192.168.0.1')}
