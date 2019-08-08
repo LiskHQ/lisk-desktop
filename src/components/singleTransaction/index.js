@@ -27,9 +27,6 @@ const apis = {
   },
   delegates: {
     apiUtil: getDelegateWithCache,
-    getApiParams: state => ({
-      networkConfig: state.network,
-    }),
     defaultData: {},
     transformResponse: (response, oldData) => ({
       ...oldData,

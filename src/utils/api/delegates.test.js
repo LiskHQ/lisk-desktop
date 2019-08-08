@@ -39,6 +39,9 @@ describe('Utils: Delegate', () => {
     blocks: {
       get: () => Promise.resolve({ data: [] }),
     },
+    networkConfig: {
+      name: 'Testnet',
+    },
   };
 
   beforeEach(() => {

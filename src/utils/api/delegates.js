@@ -36,9 +36,9 @@ export const getDelegateInfo = (liskAPIClient, { address, publicKey }) => (
   })
 );
 
-export const getDelegateWithCache = (liskAPIClient, { publicKey, networkConfig }) => (
+export const getDelegateWithCache = (liskAPIClient, { publicKey }) => (
   new Promise(async (resolve, reject) => {
-    const storedDelegate = loadDelegateCache(networkConfig)[publicKey];
+    const storedDelegate = loadDelegateCache(liskAPIClient.networkConfig)[publicKey];
     if (storedDelegate) {
       resolve(storedDelegate);
     } else {
@@ -46,7 +46,7 @@ export const getDelegateWithCache = (liskAPIClient, { publicKey, networkConfig }
       if (error) {
         reject(error);
       } else if (response.data[0]) {
-        updateDelegateCache(response.data, networkConfig);
+        updateDelegateCache(response.data, liskAPIClient.networkConfig);
         resolve(response.data[0]);
       } else {
         reject(new Error(`No delegate with publicKey ${publicKey} found.`));
