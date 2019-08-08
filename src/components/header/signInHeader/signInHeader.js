@@ -44,11 +44,36 @@ class Header extends React.Component {
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.handleSettingsToggle = this.handleSettingsToggle.bind(this);
     this.onConnectToCustomNode = this.onConnectToCustomNode.bind(this);
+    this.checkNetworkNodeConnection = this.checkNetworkNodeConnection.bind(this);
   }
 
   componentDidUpdate(prevProps) {
-    const { address } = this.props;
-    if (address !== prevProps.address) this.setState({ address });
+    const { address, network } = this.props;
+    if (address !== prevProps.address) this.setState(() => ({ address }));
+    if (network.name !== prevProps.network.name || address !== prevProps.address) {
+      this.checkNetworkNodeConnection();
+    }
+  }
+
+  checkNetworkNodeConnection() {
+    const {
+      liskAPIClient, errorToastDisplayed, successToastDisplayed, network,
+    } = this.props;
+
+    if (liskAPIClient) {
+      this.setState({ network: network.networks.LSK.code });
+
+      liskAPIClient.node.getConstants()
+        .then(() => { successToastDisplayed({ label: 'Connection to Node succesfully.' }); })
+        .catch((error) => {
+          if (network.name === networks.customNode.name) {
+            this.setState(({ validationError: true }));
+          } else {
+            this.setState(({ validationError: false }));
+          }
+          errorToastDisplayed({ label: `Unable to connect to the node, Error: ${error.message}` });
+        });
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -66,19 +91,14 @@ class Header extends React.Component {
       address,
       isFirstTime: true,
       connected: false,
+      validationError: false,
     });
   }
 
   changeNetwork(network) {
-    this.setState({
-      network,
-      address: network === networks.mainnet.code || network === networks.testnet.code
-        ? '' : this.state.address,
-    });
+    this.setState({ network });
     const { name, address } = this.getNetwork(network);
-    if (address !== 'http://') {
-      this.props.settingsUpdated({ network: { name, address } });
-    }
+    if (address !== 'http://') this.props.settingsUpdated({ network: { name, address } });
   }
 
   getNetwork(chosenNetwork) {
@@ -110,12 +130,13 @@ class Header extends React.Component {
             this.props.history.push(nextPath);
             this.setState({ validationError: false, connected: true });
             this.toggleDropdown(false);
+            this.changeNetwork(networks.customNode.code);
           } else {
             throw new Error();
           }
-        }).catch(() => {
-          this.setState({ validationError: true });
-        });
+        })
+        .catch(() => { this.setState({ validationError: true }); });
+
       this.setState({ isValidationLoading: false, isFirstTime: false });
     } else {
       this.props.networkSet({
@@ -132,10 +153,6 @@ class Header extends React.Component {
   }
 
   toggleDropdown(value) {
-    if ((!value && this.state.network !== networks.customNode.code)
-      || this.state.validationError) {
-      this.setState({ address: '', validationError: false, connected: false });
-    }
     this.setState({ showDropdown: value });
   }
 
@@ -147,7 +164,6 @@ class Header extends React.Component {
     e.stopPropagation();
     this.setState({ isValidationLoading: true });
     this.validateCorrectNode(networks.customNode.code, this.state.address);
-    this.changeNetwork(networks.customNode.code);
   }
 
   /* istanbul ignore next */
