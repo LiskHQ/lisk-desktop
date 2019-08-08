@@ -1,20 +1,89 @@
 @import '../../app/variables.css';
 @import '../../app/mixins.css';
 
+@keyframes show {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.9);
+    visibility: hidden;
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    visibility: visible;
+  }
+}
+
+@keyframes hide {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    visibility: visible;
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.9);
+    visibility: hidden;
+  }
+}
+
+@keyframes showMask {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes hideMask {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
 .mask {
+  animation-duration: var(--animation-speed-fast);
+  animation-timing-function: linear;
+  animation-direction: normal;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
   align-items: center;
   background-color: var(--color-dialog-mask);
   bottom: 0;
   display: flex;
   justify-content: center;
   left: 0;
+  opacity: 0;
   position: fixed;
   right: 0;
   top: 0;
   z-index: var(--dialog-index);
+
+  &.show {
+    animation-name: showMask;
+
+    & .wrapper {
+      animation-name: show;
+    }
+  }
+
+  &.hide {
+    animation-name: hideMask;
+
+    & .wrapper {
+      animation-name: hide;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      visibility: visible;
+    }
+  }
 }
 
 .wrapper {
+  animation-delay: var(--animation-delay-standard);
+  animation-direction: alternate;
+  animation-duration: var(--animation-speed-fastest);
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
   background-color: var(--color-white);
   border-radius: var(--border-radius-box);
   box-sizing: border-box;
@@ -22,8 +91,11 @@
   flex-direction: column;
   max-height: 100%;
   max-width: var(--dialog-box-width);
+  opacity: 0;
   padding: 40px;
   position: relative;
+  transform: translateY(-50%) scale(0.9);
+  visibility: hidden;
   width: 100%;
 }
 

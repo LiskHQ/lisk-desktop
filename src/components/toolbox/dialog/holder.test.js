@@ -30,12 +30,14 @@ describe('Dialog Holder Component', () => {
     wrapper.update();
     wrapper.find('.closeBtn').at(0).simulate('click');
     wrapper.update();
+    wrapper.find('.mask').simulate('animationend');
     expect(wrapper).toBeEmptyRender();
 
     DialogHolder.showDialog(DummyDialog);
     wrapper.update();
     wrapper.find('.dummy-option').simulate('click');
     wrapper.update();
+    wrapper.find('.mask').simulate('animationend');
     expect(wrapper).toBeEmptyRender();
   });
 
