@@ -22,7 +22,7 @@ describe('Select toolbox component', () => {
     const newProps = { ...props, selected: 1 };
     const wrapper = shallow(<Select {...newProps} />);
     expect(wrapper.find('Input')).toHaveValue(props.options[1].label);
-    wrapper.find('Input').simulate('focus');
+    wrapper.find('Input').simulate('click');
     wrapper.find('.option').first().simulate('click', { target: { dataset: { index: 0 } } });
     expect(wrapper.find('Input')).toHaveValue(props.options[0].label);
   });
