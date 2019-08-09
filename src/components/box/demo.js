@@ -1,6 +1,7 @@
 import React from 'react';
 import Box from '.';
 import DemoRenderer from '../toolbox/demoRenderer';
+import Icon from '../toolbox/icon';
 
 /* eslint-disable-next-line no-console */
 const onClick = console.log;
@@ -9,7 +10,7 @@ const BoxDemo = () => (
   <React.Fragment>
     <h2>Box</h2>
     <DemoRenderer>
-      <Box>
+      <Box main>
         <Box.Content> Content </Box.Content>
       </Box>
     </DemoRenderer>
@@ -44,12 +45,15 @@ const BoxDemo = () => (
       </Box>
     </DemoRenderer>
     <DemoRenderer>
-      <Box main>
+      <Box>
         <Box.Header>
           <h1>Custom header</h1>
         </Box.Header>
-        <Box.Content>
-        </Box.Content>
+        <Box.EmptyState>
+          <Icon name="noTweetsIcon" />
+          <h1>Title of empty state</h1>
+          <p>And some longer text explaining what to do about this situation</p>
+        </Box.EmptyState>
       </Box>
     </DemoRenderer>
   </React.Fragment>

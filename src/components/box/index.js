@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Content from './content';
+import EmptyState from '../emptyState';
 import FooterButton from './footerButton';
 import Header from './header';
 import Row from './row';
@@ -47,5 +48,6 @@ Box.Tabs.displayName = 'Box.Tabs';
 Box.Content = Content;
 Box.FooterButton = FooterButton;
 Box.Row = Row;
+Box.EmptyState = EmptyState;
 
 export default Box;
