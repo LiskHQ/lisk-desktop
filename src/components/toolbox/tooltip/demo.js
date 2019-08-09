@@ -2,7 +2,7 @@ import React from 'react';
 import Tooltip from './tooltip';
 import DemoRenderer from '../demoRenderer';
 
-const IllustrationDemo = () => (
+const TooltipDemo = () => (
   <React.Fragment>
     <h2>Tooltip</h2>
     <DemoRenderer>
@@ -40,4 +40,4 @@ const IllustrationDemo = () => (
   </React.Fragment>
 );
 
-export default IllustrationDemo;
+export default TooltipDemo;

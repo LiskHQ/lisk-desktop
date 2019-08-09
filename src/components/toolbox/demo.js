@@ -1,25 +1,46 @@
 import React from 'react';
+import AnimationDemo from './animation/demo';
 import BoxDemo from './box/demo';
 import ButtonDemo from './buttons/demo';
 import CalendarDemo from './calendar/demo';
 import CheckBoxDemo from './checkBox/demo';
-import DropdownDemo from './dropdown/demo';
 import DropdownButtonDemo from './dropdownButton/demo';
-import IconDemo from './icon/demo';
-import InputDemo from './inputs/demo';
-import IllustrationDemo from './illustration/demo';
+import DropdownDemo from './dropdown/demo';
 import HardwareWalletIllustrationDemo from './hardwareWalletIllustration/demo';
+import IconDemo from './icon/demo';
+import IllustrationDemo from './illustration/demo';
+import InputDemo from './inputs/demo';
 import OnboardingDemo from './onboarding/demo';
-import TooltipDemo from './tooltip/demo';
 import PageHeaderDemo from './pageHeader/demo';
-import AnimationDemo from './animation/demo';
+import TooltipDemo from './tooltip/demo';
+import styles from './demo.css';
+
+const getName = child => child.type.name.replace('Demo', '');
+const getId = child => `/toolbox/${getName(child)}`;
+
+const WithTableOfContents = ({
+  children,
+}) => (
+  <React.Fragment>
+    {children.map(child => (
+      <div id={getId(child)} key={getName(child)} className={styles.section}>
+        {child}
+      </div>
+    ))}
+    <div className={styles.tableOfContents}>
+      {children.map(child => (
+        <a href={`#${getId(child)}`} key={getName(child)}>
+          {getName(child)}
+        </a>
+      ))}
+    </div>
+  </React.Fragment>
+);
 
 const ToolboxDemo = () => (
-  <React.Fragment>
+  <WithTableOfContents>
     <AnimationDemo />
     <BoxDemo />
-    {' '}
-    { /* TODO move Box into toolbox folder */ }
     <ButtonDemo />
     <CalendarDemo />
     <CheckBoxDemo />
@@ -32,7 +53,7 @@ const ToolboxDemo = () => (
     <OnboardingDemo />
     <PageHeaderDemo />
     <TooltipDemo />
-  </React.Fragment>
+  </WithTableOfContents>
 );
 
 export default ToolboxDemo;
