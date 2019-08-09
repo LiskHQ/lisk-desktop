@@ -1,4 +1,5 @@
 import React from 'react';
+import Content from './content';
 import Header from './header';
 import Tabs from '../toolbox/tabs';
 import styles from './box.css';
@@ -19,4 +20,6 @@ const Box = (props) => {
 
 Box.Header = Header;
 Box.Tabs = Tabs;
+Box.Content = Content;
+
 export default Box;

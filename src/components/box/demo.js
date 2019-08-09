@@ -9,14 +9,16 @@ const BoxDemo = () => (
   <React.Fragment>
     <h2>Box</h2>
     <DemoRenderer>
-      <Box> Content </Box>
+      <Box>
+        <Box.Content> Content </Box.Content>
+      </Box>
     </DemoRenderer>
     <DemoRenderer>
       <Box>
         <Box.Header>
           <h1>Custom header</h1>
         </Box.Header>
-        <div>Content</div>
+        <Box.Content>Content</Box.Content>
       </Box>
     </DemoRenderer>
     <DemoRenderer>
@@ -32,7 +34,7 @@ const BoxDemo = () => (
           />
           <span>Some other stuff</span>
         </Box.Header>
-        <div>Content</div>
+        <Box.Content>Content</Box.Content>
       </Box>
     </DemoRenderer>
   </React.Fragment>
