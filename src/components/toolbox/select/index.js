@@ -46,7 +46,7 @@ class Select extends React.Component {
         onOutsideClick={this.toggleIsOpen}
         className={`${styles.wrapper} ${className}`}
       >
-        <label className={styles.inputHolder}>
+        <label className={`${styles.inputHolder} ${isOpen ? styles.isOpen : ''}`}>
           <Input
             readOnly
             value={options[selected].label}
