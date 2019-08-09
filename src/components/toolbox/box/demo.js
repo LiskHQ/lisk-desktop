@@ -1,4 +1,5 @@
 import React from 'react';
+import { PrimaryButton, TertiaryButton } from '../buttons/button';
 import Box from '.';
 import DemoRenderer from '../demoRenderer';
 import Icon from '../icon';
@@ -20,6 +21,10 @@ const BoxDemo = () => (
           <h1>Custom header</h1>
         </Box.Header>
         <Box.Content>Content</Box.Content>
+        <Box.Footer>
+          <PrimaryButton onClick={onClick}>Submit</PrimaryButton>
+          <TertiaryButton onClick={onClick}>Cancel</TertiaryButton>
+        </Box.Footer>
       </Box>
     </DemoRenderer>
     <DemoRenderer>
