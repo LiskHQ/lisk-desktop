@@ -6,27 +6,6 @@
   justify-content: center;
   width: 100%;
 
-  & .content {
-    width: var(--medium-box-width);
-  }
-}
-
-.formHolder {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-
-  & > .buttonHolder {
-    display: flex;
-    margin: 0 auto 30px;
-    width: var(--footer-button-width);
-
-    & button {
-      display: block;
-      width: 100%;
-    }
-  }
-
   & .fieldGroup {
     display: block;
     position: relative;
@@ -40,7 +19,10 @@
 
   & label {
     display: block;
-    margin-bottom: 12px;
+
+    &:not(:last-child) {
+      margin-bottom: 12px;
+    }
 
     & > .label {
       @mixin contentNormal bold;
