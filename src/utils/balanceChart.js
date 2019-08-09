@@ -138,8 +138,8 @@ export const getChartDateFormat = (transactions) => {
 };
 
 
-const isIncomming = (tx, address) => tx.senderId === address;
-const isOutgoing = (tx, address) => tx.recipientId === address;
+const isIncomming = (tx, address) => tx.recipientId === address;
+const isOutgoing = (tx, address) => tx.senderId === address;
 
 /**
  * Returns value in interger format of the amount that was added or subtracted from the balance
@@ -175,7 +175,7 @@ export const getBalanceData = ({
       : balances;
     return [
       ...tmpBalances,
-      { x: txDate, y: (parseInt(lastBalance.y, 10) + txValue) },
+      { x: txDate, y: (parseInt(lastBalance.y, 10) - txValue) },
     ];
   }, [{ x: moment(), y: +balance }]).reverse().map(d => ({ ...d, y: +fromRawLsk(d.y) }));
 
