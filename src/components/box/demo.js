@@ -10,7 +10,7 @@ const BoxDemo = () => (
   <React.Fragment>
     <h2>Box</h2>
     <DemoRenderer>
-      <Box main>
+      <Box main isLoading>
         <Box.Content> Content </Box.Content>
       </Box>
     </DemoRenderer>
@@ -23,7 +23,7 @@ const BoxDemo = () => (
       </Box>
     </DemoRenderer>
     <DemoRenderer>
-      <Box>
+      <Box isLoading>
         <Box.Header>
           <Box.Tabs
             tabs={[

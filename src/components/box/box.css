@@ -1,6 +1,10 @@
 @import '../app/variables.css';
 @import '../app/mixins.css';
 
+:root {
+  --header-height: 48px;
+}
+
 .wrapper {
   align-items: inherit;
   background: var(--color-white);
@@ -11,6 +15,7 @@
   flex-direction: column;
   height: auto;
   overflow: hidden;
+  position: relative;
 
   &.full {
     width: 100%;
@@ -18,6 +23,21 @@
 
   &.medium {
     width: var(--medium-box-width);
+  }
+
+  & .loadingOverlay {
+    background: rgba(255, 255, 255, 0.8);
+    bottom: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+  }
+
+  &.withHeader {
+    & .loadingOverlay {
+      top: var(--header-height);
+    }
   }
 
   & .content {
@@ -69,7 +89,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: row;
-    height: 48px;
+    height: var(--header-height);
     justify-content: space-between;
     margin: 0;
     padding: 16px 20px;
@@ -91,5 +111,20 @@
 
   & > p {
     color: var(--color-blue-gray);
+  }
+}
+
+.linear {
+  /*************************
+    Theme for ProgressBar
+  *************************/
+  background: transparent !important;
+  height: 3px;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  & .value {
+    height: 3px;
   }
 }

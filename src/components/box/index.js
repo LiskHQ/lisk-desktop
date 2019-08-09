@@ -4,12 +4,13 @@ import Content from './content';
 import EmptyState from '../emptyState';
 import FooterButton from './footerButton';
 import Header from './header';
+import ProgressBar from '../toolbox/progressBar/progressBar';
 import Row from './row';
 import Tabs from '../toolbox/tabs';
 import styles from './box.css';
 
 const Box = ({
-  main, width, className, children,
+  main, width, className, children, isLoading,
 }) => {
   const hasHeader = Array.isArray(children) && children.some(child => (
     child && (child.type === 'header' || child.type.displayName === 'Box.Header')
@@ -22,6 +23,13 @@ const Box = ({
       ${styles[width]}
       ${className}`}
     >
+      {isLoading
+        ? (
+          <div className={styles.loadingOverlay}>
+            <ProgressBar type="linear" mode="indeterminate" theme={styles} className="loading" />
+          </div>
+        )
+        : null}
       { children }
     </div>
   );
@@ -35,11 +43,13 @@ Box.propTypes = {
   ]).isRequired,
   className: PropTypes.string,
   width: PropTypes.oneOf(['full', 'medium']),
+  isLoading: PropTypes.bool,
 };
 
 Box.defaultPropTypes = {
   className: '',
   width: 'full',
+  isLoading: false,
 };
 
 Box.Header = Header;
