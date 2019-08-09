@@ -3,6 +3,7 @@ import React from 'react';
 import Lisk from '@liskhq/lisk-client';
 import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
+import { to } from 'await-to-js';
 import { PrimaryButton } from '../../toolbox/buttons/button';
 import Feedback from '../../toolbox/feedback/feedback';
 import { Input } from '../../toolbox/inputs';
@@ -44,18 +45,18 @@ class Header extends React.Component {
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.handleSettingsToggle = this.handleSettingsToggle.bind(this);
     this.onConnectToCustomNode = this.onConnectToCustomNode.bind(this);
-    this.checkNetworkNodeConnection = this.checkNetworkNodeConnection.bind(this);
+    this.checkNodeStatus = this.checkNodeStatus.bind(this);
   }
 
   componentDidUpdate(prevProps) {
     const { address, network } = this.props;
     if (address !== prevProps.address) this.setState(() => ({ address }));
     if (network.name !== prevProps.network.name || address !== prevProps.address) {
-      this.checkNetworkNodeConnection();
+      this.checkNodeStatus();
     }
   }
 
-  checkNetworkNodeConnection() {
+  async checkNodeStatus() {
     const {
       liskAPIClient, errorToastDisplayed, successToastDisplayed, network,
     } = this.props;
@@ -63,16 +64,17 @@ class Header extends React.Component {
     if (liskAPIClient) {
       this.setState({ network: network.networks.LSK.code });
 
-      liskAPIClient.node.getConstants()
-        .then(() => { successToastDisplayed({ label: 'Connection to Node succesfully.' }); })
-        .catch((error) => {
-          if (network.name === networks.customNode.name) {
-            this.setState(({ validationError: true }));
-          } else {
-            this.setState(({ validationError: false }));
-          }
-          errorToastDisplayed({ label: `Unable to connect to the node, Error: ${error.message}` });
-        });
+      const [error, response] = await to(liskAPIClient.node.getConstants());
+
+      if (response) successToastDisplayed({ label: 'Connection to Node succesfully.' });
+      if (error) {
+        if (network.name === networks.customNode.name) {
+          this.setState(({ validationError: true }));
+        } else {
+          this.setState(({ validationError: false }));
+        }
+        errorToastDisplayed({ label: `Unable to connect to the node, Error: ${error.message}` });
+      }
     }
   }
 
