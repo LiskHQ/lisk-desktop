@@ -12,6 +12,7 @@ Content.propTypes = {
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.element),
   ]).isRequired,
+  className: PropTypes.string,
 };
 
 Content.defaultProps = {

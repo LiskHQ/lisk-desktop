@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styles from './box.css';
 
-const Row = ({ children, ...rest }) => (
-  <div {...rest} className={styles.row}>{children}</div>
+const Row = ({ children, className, ...rest }) => (
+  <section {...rest} className={`${styles.row} ${className}`}>{children}</section>
 );
 
 Row.propTypes = {
@@ -12,6 +12,11 @@ Row.propTypes = {
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.element),
   ]).isRequired,
+  className: PropTypes.string,
+};
+
+Row.defaultProps = {
+  className: '',
 };
 
 Row.displayName = 'Box.Row';
