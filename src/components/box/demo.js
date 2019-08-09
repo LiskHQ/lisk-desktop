@@ -35,6 +35,7 @@ const BoxDemo = () => (
           <span>Some other stuff</span>
         </Box.Header>
         <Box.Content>Content</Box.Content>
+        <Box.FooterButton onClick={onClick}>Load more</Box.FooterButton>
       </Box>
     </DemoRenderer>
   </React.Fragment>

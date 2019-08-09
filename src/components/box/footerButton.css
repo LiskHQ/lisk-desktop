@@ -1,0 +1,24 @@
+@import '../app/variables.css';
+@import '../app/mixins.css';
+
+.footerButton {
+  @mixin contentNormal bold;
+
+  background-color: var(--color-white-smoke);
+  border-radius: 0 0 var(--border-radius-box) var(--border-radius-box);
+  border: unset;
+  border-top: solid 1px var(--color-platinum);
+  box-shadow: none;
+  color: var(--color-maastricht-blue);
+  cursor: pointer;
+  height: 36px;
+  margin-top: -1px;
+  min-height: 36px;
+  outline: none;
+  width: 100%;
+
+  &:focus,
+  &:hover {
+    color: var(--color-ultramarine-blue);
+  }
+}

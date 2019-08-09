@@ -17,7 +17,9 @@
   }
 
   &.main {
-    min-height: 600px;
+    & .content {
+      min-height: 500px;
+    }
   }
 
   &.full {

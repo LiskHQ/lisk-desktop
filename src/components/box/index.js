@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Content from './content';
+import FooterButton from './footerButton';
 import Header from './header';
 import Tabs from '../toolbox/tabs';
 import styles from './box.css';
@@ -41,6 +42,8 @@ Box.defaultPropTypes = {
 
 Box.Header = Header;
 Box.Tabs = Tabs;
+Box.Tabs.displayName = 'Box.Tabs';
 Box.Content = Content;
+Box.FooterButton = FooterButton;
 
 export default Box;
