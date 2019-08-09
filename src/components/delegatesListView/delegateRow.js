@@ -104,14 +104,13 @@ class DelegateRow extends React.Component {
         </div>
         <div className={`${columnClassNames.forged} delegate-forged`}>
           <LiskAmount val={rewards} />
-          {this.props.t('LSK')}
         </div>
         <div className={`${columnClassNames.productivity} delegate-productivity`}>
           {`${productivity} %`}
         </div>
         <div className={`${columnClassNames.voteWeight} ${styles.weight} vote-weight`}>
           <LiskAmount val={data.vote} />
-          {this.props.t('LSK')}
+          {` ${this.props.t('LSK')}`}
         </div>
       </TableRow>
     );
