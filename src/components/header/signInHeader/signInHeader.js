@@ -40,40 +40,62 @@ class Header extends React.Component {
       showSettingDrowdown: false,
       network: loginNetwork.code,
       isFirstTime: true,
+      activeNetwork: 0,
     };
 
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.handleSettingsToggle = this.handleSettingsToggle.bind(this);
     this.onConnectToCustomNode = this.onConnectToCustomNode.bind(this);
     this.checkNodeStatus = this.checkNodeStatus.bind(this);
+    this.onChangeActiveNetwork = this.onChangeActiveNetwork.bind(this);
+  }
+
+  componentDidMount() {
+    this.checkNodeStatus(false);
   }
 
   componentDidUpdate(prevProps) {
     const { address, network } = this.props;
     if (address !== prevProps.address) this.setState(() => ({ address }));
-    if (network.name !== prevProps.network.name || address !== prevProps.address) {
-      this.checkNodeStatus();
+    if (network.name !== prevProps.network.name) {
+      this.setState({ activeNetwork: network.networks.LSK.code });
+    }
+    if (network.name !== prevProps.network.name) {
+      this.checkNodeStatus(false);
+    }
+    if (network.name === networks.customNode.name && address !== prevProps.address) {
+      this.checkNodeStatus(false);
     }
   }
 
-  async checkNodeStatus() {
+  onChangeActiveNetwork(activeNetwork) {
+    if (activeNetwork !== networks.customNode.code) this.changeNetwork(activeNetwork);
+    this.setState({ activeNetwork });
+  }
+
+  // eslint-disable-next-line max-statements
+  async checkNodeStatus(showErrorToaster = true) {
     const {
       liskAPIClient, errorToastDisplayed, successToastDisplayed, network,
     } = this.props;
 
     if (liskAPIClient) {
-      this.setState({ network: network.networks.LSK.code });
-
+      this.setState({
+        network: network.networks.LSK.code,
+        activeNetwork: network.networks.LSK.code,
+      });
       const [error, response] = await to(liskAPIClient.node.getConstants());
 
-      if (response) successToastDisplayed({ label: 'Connection to Node succesfully.' });
+      if (response) successToastDisplayed({ label: 'Successfully connected to the node.' });
       if (error) {
         if (network.name === networks.customNode.name) {
           this.setState(({ validationError: true }));
         } else {
           this.setState(({ validationError: false }));
         }
-        errorToastDisplayed({ label: `Unable to connect to the node, Error: ${error.message}` });
+        if (showErrorToaster) {
+          errorToastDisplayed({ label: `Unable to connect to the node, Error: ${error.message}` });
+        }
       }
     }
   }
@@ -181,7 +203,7 @@ class Header extends React.Component {
       settingsUpdated,
       t,
     } = this.props;
-    const { showSettingDrowdown } = this.state;
+    const { showSettingDrowdown, activeNetwork } = this.state;
     const showNetworkOptions = !hideNetwork && this.showNetworkOptions();
     const networkList = getNetworksList();
     const isUserLogout = !!(Object.keys(account).length === 0 || account.afterLogout);
@@ -214,15 +236,13 @@ class Header extends React.Component {
                 >
                   {
                     networkList && networkList.map((network, key) => {
-                      const activeTab = this.state.network === networks.customNode.code;
+                      const activeTab = activeNetwork === networks.customNode.code;
                       if (network.value === networks.customNode.code) {
                         return (
                           <span
                             className={`${styles.networkSpan} address`}
                             key={key}
-                            onClick={() => {
-                              this.changeNetwork(network.value);
-                            }}
+                            onClick={() => this.onChangeActiveNetwork(network.value)}
                           >
                             {network.label}
                             <Input
@@ -282,7 +302,7 @@ class Header extends React.Component {
                       return (
                         <span
                           onClick={() => {
-                            this.changeNetwork(network.value);
+                            this.onChangeActiveNetwork(network.value);
                             this.validateCorrectNode(network.value);
                             this.toggleDropdown(false);
                             this.setState({ connected: false, isFirstTime: true });
