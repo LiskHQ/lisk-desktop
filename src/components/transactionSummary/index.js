@@ -84,14 +84,14 @@ class TransactionSummary extends React.Component {
     } = this.state;
 
     return (
-      <Box className={`${styles.wrapper} ${classNames}`}>
-        <header className="summary-header">
+      <Box width="medium" className={`${styles.wrapper} ${classNames}`}>
+        <Box.Header className="summary-header">
           <h2>
             {title}
             {isHardwareWalletConnected ? t(' - Confirm transaction on your {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel }) : ''}
           </h2>
-        </header>
-        <div className={styles.content}>
+        </Box.Header>
+        <Box.Content className={styles.content}>
           <HardwareWalletIllustration account={account} size="s" />
           {children}
           <section>
@@ -164,12 +164,12 @@ class TransactionSummary extends React.Component {
           )
           : null
       }
-        </div>
+        </Box.Content>
         {
       isHardwareWalletConnected
         ? null
         : (
-          <footer className="summary-footer">
+          <Box.Footer className="summary-footer">
             <PrimaryButton
               className={`${styles.confirmBtn} confirm-button`}
               disabled={
@@ -186,7 +186,7 @@ class TransactionSummary extends React.Component {
             >
               {cancelButton.label}
             </TertiaryButton>
-          </footer>
+          </Box.Footer>
         )
     }
       </Box>
