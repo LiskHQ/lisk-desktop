@@ -7,13 +7,7 @@ const FooterButton = ({ children, ...rest }) => (
 );
 
 FooterButton.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.element),
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
 };
-
-FooterButton.displayName = 'Box.FooterButton';
 
 export default FooterButton;

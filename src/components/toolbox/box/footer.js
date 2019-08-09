@@ -7,13 +7,7 @@ const Footer = ({ children, ...rest }) => (
 );
 
 Footer.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.element),
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
 };
-
-Footer.displayName = 'Box.Footer';
 
 export default Footer;

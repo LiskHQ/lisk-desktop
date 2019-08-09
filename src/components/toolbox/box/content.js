@@ -7,18 +7,12 @@ const Content = ({ children, className, ...rest }) => (
 );
 
 Content.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.element),
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };
 
 Content.defaultProps = {
   className: '',
 };
-
-Content.displayName = 'Box.Content';
 
 export default Content;

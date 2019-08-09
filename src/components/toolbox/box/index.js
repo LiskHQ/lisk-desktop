@@ -37,11 +37,7 @@ const Box = ({
 };
 
 Box.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.element),
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
   className: PropTypes.string,
   width: PropTypes.oneOf(['full', 'medium']),
   isLoading: PropTypes.bool,
@@ -53,14 +49,19 @@ Box.defaultProps = {
   isLoading: false,
 };
 
-Box.Content = Content;
-Box.EmptyState = EmptyState;
-Box.EmptyState.displayName = 'Box.EmptyState';
-Box.Footer = Footer;
-Box.FooterButton = FooterButton;
-Box.Header = Header;
-Box.Row = Row;
-Box.Tabs = Tabs;
-Box.Tabs.displayName = 'Box.Tabs';
+const subcomponents = [
+  Content,
+  EmptyState,
+  Footer,
+  FooterButton,
+  Header,
+  Row,
+  Tabs,
+];
+
+subcomponents.forEach((subcomponent) => {
+  Box[subcomponent.name] = subcomponent;
+  subcomponent.displayName = `${Box.name}.${subcomponent.name}`;
+});
 
 export default Box;

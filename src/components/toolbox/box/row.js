@@ -7,18 +7,12 @@ const Row = ({ children, className, ...rest }) => (
 );
 
 Row.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.element),
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };
 
 Row.defaultProps = {
   className: '',
 };
-
-Row.displayName = 'Box.Row';
 
 export default Row;

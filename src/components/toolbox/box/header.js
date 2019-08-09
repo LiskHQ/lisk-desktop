@@ -7,13 +7,7 @@ const Header = ({ children, ...rest }) => (
 );
 
 Header.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.element),
-  ]).isRequired,
+  children: PropTypes.node.isRequired,
 };
-
-Header.displayName = 'Box.Header';
 
 export default Header;
