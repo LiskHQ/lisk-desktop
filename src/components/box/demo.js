@@ -22,7 +22,7 @@ const BoxDemo = () => (
       </Box>
     </DemoRenderer>
     <DemoRenderer>
-      <Box>
+      <Box main>
         <Box.Header>
           <Box.Tabs
             tabs={[

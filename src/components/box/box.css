@@ -16,6 +16,10 @@
   & .content {
     padding: 20px;
   }
+
+  &.main {
+    min-height: 600px;
+  }
 }
 
 .withHeader {
