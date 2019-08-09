@@ -22,7 +22,7 @@ const ListLabels = ({
       <div className={columnClassNames.forged}>{t('Forged LSK')}</div>
       <div className={columnClassNames.productivity}>
         {t('Productivity')}
-        <Tooltip>
+        <Tooltip className="showOnLeft">
           <p>
             {' '}
             {
