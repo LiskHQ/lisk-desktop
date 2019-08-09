@@ -46,7 +46,7 @@ Box.propTypes = {
   isLoading: PropTypes.bool,
 };
 
-Box.defaultPropTypes = {
+Box.defaultProps = {
   className: '',
   width: 'full',
   isLoading: false,
