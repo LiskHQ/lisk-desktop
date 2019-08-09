@@ -16,7 +16,10 @@ import {
 import styles from './votingHeader.css';
 
 function shouldShowRegisterDelagteButton(account) {
-  return account.address && !account.delegate && account.loginType === loginType.normal;
+  return account.address
+    && !account.delegate
+    && account.loginType === loginType.normal
+    && !Object.keys(account.hwInfo).length;
 }
 
 class VotingHeader extends React.Component {
