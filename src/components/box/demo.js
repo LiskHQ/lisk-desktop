@@ -14,9 +14,9 @@ const BoxDemo = () => (
     </DemoRenderer>
     <DemoRenderer>
       <Box>
-        <header>
+        <Box.Header>
           <h1>Custom header</h1>
-        </header>
+        </Box.Header>
         <div>Content</div>
       </Box>
     </DemoRenderer>
