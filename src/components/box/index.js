@@ -3,6 +3,7 @@ import React from 'react';
 import Content from './content';
 import FooterButton from './footerButton';
 import Header from './header';
+import Row from './row';
 import Tabs from '../toolbox/tabs';
 import styles from './box.css';
 
@@ -45,5 +46,6 @@ Box.Tabs = Tabs;
 Box.Tabs.displayName = 'Box.Tabs';
 Box.Content = Content;
 Box.FooterButton = FooterButton;
+Box.Row = Row;
 
 export default Box;

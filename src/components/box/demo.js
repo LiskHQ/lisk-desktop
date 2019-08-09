@@ -22,7 +22,7 @@ const BoxDemo = () => (
       </Box>
     </DemoRenderer>
     <DemoRenderer>
-      <Box main>
+      <Box>
         <Box.Header>
           <Box.Tabs
             tabs={[
@@ -34,8 +34,22 @@ const BoxDemo = () => (
           />
           <span>Some other stuff</span>
         </Box.Header>
-        <Box.Content>Content</Box.Content>
+        <Box.Content>
+          <Box.Row>Row #1</Box.Row>
+          <Box.Row>Row #2</Box.Row>
+          <Box.Row>Row #3</Box.Row>
+          <Box.Row>Row #4</Box.Row>
+        </Box.Content>
         <Box.FooterButton onClick={onClick}>Load more</Box.FooterButton>
+      </Box>
+    </DemoRenderer>
+    <DemoRenderer>
+      <Box main>
+        <Box.Header>
+          <h1>Custom header</h1>
+        </Box.Header>
+        <Box.Content>
+        </Box.Content>
       </Box>
     </DemoRenderer>
   </React.Fragment>
