@@ -5,7 +5,9 @@ import Header from './header';
 import Tabs from '../toolbox/tabs';
 import styles from './box.css';
 
-const Box = ({ main, className, children }) => {
+const Box = ({
+  main, width, className, children,
+}) => {
   const hasHeader = Array.isArray(children) && children.some(child => (
     child && (child.type === 'header' || child.type.displayName === 'Box.Header')
   ));
@@ -14,6 +16,7 @@ const Box = ({ main, className, children }) => {
       ${styles.wrapper}
       ${hasHeader ? styles.withHeader : ''}
       ${main ? styles.main : ''}
+      ${styles[width]}
       ${className}`}
     >
       { children }
@@ -28,10 +31,12 @@ Box.propTypes = {
     PropTypes.arrayOf(PropTypes.element),
   ]).isRequired,
   className: PropTypes.string,
+  width: PropTypes.oneOf(['full', 'medium']),
 };
 
 Box.defaultPropTypes = {
   className: '',
+  width: 'full',
 };
 
 Box.Header = Header;

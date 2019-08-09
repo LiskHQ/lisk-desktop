@@ -11,7 +11,6 @@
   flex-direction: column;
   height: auto;
   overflow: hidden;
-  width: 100%;
 
   & .content {
     padding: 20px;
@@ -19,6 +18,14 @@
 
   &.main {
     min-height: 600px;
+  }
+
+  &.full {
+    width: 100%;
+  }
+
+  &.medium {
+    width: var(--medium-box-width);
   }
 }
 
