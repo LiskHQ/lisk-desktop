@@ -14,6 +14,10 @@
   width: 100%;
 }
 
+.search {
+  width: 177px;
+}
+
 .loadMore {
   @mixin contentSmall bold;
 
@@ -34,8 +38,8 @@
 }
 
 .weight {
-  font-weight: bold;
-  text-align: right;
+  font-weight: bold !important;
+  text-align: right !important;
 }
 
 .emptyMessage {
