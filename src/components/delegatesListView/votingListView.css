@@ -37,6 +37,15 @@
   }
 }
 
+.rank {
+  padding-left: 40px !important;
+}
+
+.forged,
+.productivity {
+  padding-left: 10px !important;
+}
+
 .weight {
   font-weight: bold !important;
   text-align: right !important;
