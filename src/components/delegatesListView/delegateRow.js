@@ -110,8 +110,7 @@ class DelegateRow extends React.Component {
         </div>
         <div className={`${columnClassNames.voteWeight} ${styles.weight} vote-weight`}>
           <LiskAmount val={data.vote} />
-          {' '}
-          {this.props.t('LSK')}
+          {` ${this.props.t('LSK')}`}
         </div>
       </TableRow>
     );

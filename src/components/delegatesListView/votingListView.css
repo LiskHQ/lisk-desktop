@@ -47,6 +47,7 @@
 }
 
 .weight {
+  display: inline-block !important;
   font-weight: bold !important;
   text-align: right !important;
 }
