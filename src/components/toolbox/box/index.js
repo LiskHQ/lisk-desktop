@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Content from './content';
 import EmptyState from '../../emptyState';
+import Footer from './footer';
 import FooterButton from './footerButton';
 import Header from './header';
 import ProgressBar from '../progressBar/progressBar';
@@ -52,12 +53,14 @@ Box.defaultProps = {
   isLoading: false,
 };
 
+Box.Content = Content;
+Box.EmptyState = EmptyState;
+Box.EmptyState.displayName = 'Box.EmptyState';
+Box.Footer = Footer;
+Box.FooterButton = FooterButton;
 Box.Header = Header;
+Box.Row = Row;
 Box.Tabs = Tabs;
 Box.Tabs.displayName = 'Box.Tabs';
-Box.Content = Content;
-Box.FooterButton = FooterButton;
-Box.Row = Row;
-Box.EmptyState = EmptyState;
 
 export default Box;

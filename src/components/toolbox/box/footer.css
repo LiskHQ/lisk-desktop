@@ -1,0 +1,12 @@
+@import '../../app/variables.css';
+
+.footer {
+  display: flex;
+  margin: 0 auto 30px;
+  width: var(--footer-button-width);
+
+  & button {
+    display: block;
+    width: 100%;
+  }
+}

@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styles from './box.css';
 
-const Content = ({ children, ...rest }) => (
-  <div {...rest} className={styles.content}>{children}</div>
+const Content = ({ children, className, ...rest }) => (
+  <div {...rest} className={`${styles.content} ${className}`}>{children}</div>
 );
 
 Content.propTypes = {
@@ -12,6 +12,10 @@ Content.propTypes = {
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.element),
   ]).isRequired,
+};
+
+Content.defaultProps = {
+  className: '',
 };
 
 Content.displayName = 'Box.Content';
