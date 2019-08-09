@@ -49,7 +49,7 @@ const hwWalletMiddleware = store => next => (action) => {
           <Dialog>
             <Dialog.Title>{i18n.t('You are disconnected')}</Dialog.Title>
             <Dialog.Description>
-              <p>{i18n.t('There is no connection to the {{model}}. Please check the cables if it happened by accident.', { model })}</p>
+              {i18n.t('There is no connection to the {{model}}. Please check the cables if it happened by accident.', { model })}
             </Dialog.Description>
             <Dialog.Options align="center">
               <PrimaryButton>

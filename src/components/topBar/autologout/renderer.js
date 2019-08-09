@@ -56,7 +56,7 @@ class CustomCountDown extends React.Component {
         <Dialog>
           <Dialog.Title>{timeoutProps.title}</Dialog.Title>
           <Dialog.Description>
-            <p>{timeoutProps.description}</p>
+            {timeoutProps.description}
           </Dialog.Description>
           <Dialog.Options
             align="center"
