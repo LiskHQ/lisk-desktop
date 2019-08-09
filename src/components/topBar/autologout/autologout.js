@@ -3,8 +3,11 @@ import Countdown from 'react-countdown-now';
 import Renderer from './renderer';
 
 const Autologout = ({
-  account, onCountdownComplete, closeDialog,
-  history, resetTimer, setActiveDialog, t,
+  account,
+  onCountdownComplete,
+  history,
+  resetTimer,
+  t,
 }) => (
   <Countdown
     date={account.expireTime}
@@ -13,10 +16,8 @@ const Autologout = ({
       <Renderer
         minutes={minutes}
         seconds={seconds}
-        closeDialog={closeDialog}
         history={history}
         resetTimer={resetTimer}
-        setActiveDialog={setActiveDialog}
         t={t}
       />
     )}

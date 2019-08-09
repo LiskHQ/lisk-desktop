@@ -19,7 +19,6 @@ describe('SecondPassphrase', () => {
     beforeEach(() => {
       props = {
         account,
-        closeDialog: () => {},
         t: key => key,
         history: {
           goBack: jest.fn(),

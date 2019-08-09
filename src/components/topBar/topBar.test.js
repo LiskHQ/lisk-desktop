@@ -31,7 +31,6 @@ describe('TopBar', () => {
   const props = {
     account,
     autologout: true,
-    setActiveDialog: jest.fn(),
     location: { pathname: routes.dashboard.path },
     showDelegate: false,
     t: val => val,

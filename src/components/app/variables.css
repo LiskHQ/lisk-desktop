@@ -75,6 +75,7 @@ or "warn/action" ineastd of "red/green"
   --footer-button-width: 400px;
   --main-box-width: 1318px;
   --medium-box-width: 720px;
+  --dialog-box-width: 650px;
 
   /*************************
         Padding
@@ -104,6 +105,7 @@ or "warn/action" ineastd of "red/green"
   --dark-border-color: rgba(0, 0, 0, 0.08);
   --primary-background-color: color(var(--color-ultramarine-blue) a(8%));
   --error-background-color: color(var(--color-burnt-sienna) a(8%));
+  --color-dialog-mask: color(var(--color-maastricht-blue) a(52%));
   --color-primary-standard: var(--color-ultramarine-blue);
   --color-primary-light: #9db8fa;
   --color-white: #fff;
@@ -136,6 +138,7 @@ or "warn/action" ineastd of "red/green"
   --box-shadow-search: 0 2px 4px 0 rgba(8, 24, 49, 0.06);
   --box-shadow-graph-selector: 0 1px 5px 0 rgba(30, 25, 77, 0.06);
   --box-shadow-top: 0 -2px 8px 0 rgba(72, 77, 97, 0.1);
+  --box-shadow-dialog: 0 2px 4px 0 rgba(12, 21, 46, 0.24);
 
   /*************************
         Animation
@@ -161,6 +164,7 @@ or "warn/action" ineastd of "red/green"
   *************************/
   --normal-index: 1;
   --overlay-index: 20;
+  --dialog-index: 50;
 
   /*************************
         Media Queries

@@ -32,7 +32,6 @@ describe('VotingListView', () => {
     votes,
     serverPublicKey: null,
     address: '16313739661670634666L',
-    setActiveDialog: sinon.spy(),
     voteToggled: sinon.spy(),
     addTransaction: sinon.spy(),
     loadVotes: sinon.spy(),

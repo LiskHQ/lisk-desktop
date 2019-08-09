@@ -37,7 +37,6 @@ describe('App', () => {
   describe('renders correct routes', () => {
     const store = fakeStore({
       account: {},
-      dialog: {},
       network: {
         name: 'Custom Node',
         networks: {
@@ -99,7 +98,6 @@ describe('App', () => {
       account: {
         publicKey: '000',
       },
-      dialog: {},
       network: {
         name: 'Mainnet',
         neteworks: {

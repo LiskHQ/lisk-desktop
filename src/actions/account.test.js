@@ -18,6 +18,7 @@ import * as transactionsActions from './transactions';
 
 jest.mock('i18next', () => ({
   t: jest.fn(key => key),
+  init: jest.fn(),
 }));
 jest.mock('../utils/api/account', () => ({
   getAccount: jest.fn(),

@@ -4,7 +4,10 @@ import SignInHeader from './signInHeader';
 import TopBar from '../topBar';
 import routes from '../../constants/routes';
 
-const Header = ({ isSigninFlow, location: { pathname } }) => (
+const Header = ({
+  isSigninFlow,
+  location: { pathname },
+}) => pathname !== routes.termsOfUse.path && (
   isSigninFlow ? (
     <SignInHeader
       dark={pathname === routes.splashscreen.path}

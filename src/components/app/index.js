@@ -5,12 +5,12 @@ import Toaster from '../toaster';
 import LoadingBar from '../loadingBar';
 import OfflineWrapper from '../offlineWrapper';
 import CustomRoute from '../customRoute';
-import Dialog from '../dialog';
 import NotFound from '../notFound';
 import InitializationMessage from '../initializationMessage';
 import routes from '../../constants/routes';
 import Header from '../header/header';
 import FlashMessageHolder from '../toolbox/flashMessage/holder';
+import DialogHolder from '../toolbox/dialog/holder';
 
 class App extends React.Component {
   constructor() {
@@ -37,7 +37,7 @@ class App extends React.Component {
 
     return (
       <OfflineWrapper>
-        <Dialog />
+        <DialogHolder />
         <Header
           isSigninFlow={routeObj.isSigninFlow}
           location={location}

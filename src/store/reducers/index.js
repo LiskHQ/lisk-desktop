@@ -1,7 +1,6 @@
 export { default as account } from './account';
 export { default as blocks } from './blocks';
 export { default as bookmarks } from './bookmarks';
-export { default as dialog } from './dialog';
 export { default as extensions } from './extensions';
 export { default as hwWallets } from './hwWallets';
 export { default as loading } from './loading';
