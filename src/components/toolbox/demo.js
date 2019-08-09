@@ -1,5 +1,5 @@
 import React from 'react';
-import BoxDemo from '../box/demo';
+import BoxDemo from './box/demo';
 import ButtonDemo from './buttons/demo';
 import CalendarDemo from './calendar/demo';
 import CheckBoxDemo from './checkBox/demo';

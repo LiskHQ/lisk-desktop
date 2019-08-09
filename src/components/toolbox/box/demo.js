@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '.';
-import DemoRenderer from '../toolbox/demoRenderer';
-import Icon from '../toolbox/icon';
+import DemoRenderer from '../demoRenderer';
+import Icon from '../icon';
 
 /* eslint-disable-next-line no-console */
 const onClick = console.log;
