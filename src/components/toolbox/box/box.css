@@ -41,8 +41,6 @@
   }
 
   & .content {
-    @mixin contentNormal;
-
     padding: 20px;
 
     & > section,
