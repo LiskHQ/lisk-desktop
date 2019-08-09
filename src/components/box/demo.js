@@ -1,6 +1,5 @@
 import React from 'react';
 import Box from '.';
-import Tabs from '../toolbox/tabs';
 import DemoRenderer from '../toolbox/demoRenderer';
 
 /* eslint-disable-next-line no-console */
@@ -22,8 +21,8 @@ const BoxDemo = () => (
     </DemoRenderer>
     <DemoRenderer>
       <Box>
-        <header>
-          <Tabs
+        <Box.Header>
+          <Box.Tabs
             tabs={[
               { name: 'Tab 1', value: 'tab1' },
               { name: 'Tab 2', value: 'tab2' },
@@ -32,7 +31,7 @@ const BoxDemo = () => (
             active="tab2"
           />
           <span>Some other stuff</span>
-        </header>
+        </Box.Header>
         <div>Content</div>
       </Box>
     </DemoRenderer>
