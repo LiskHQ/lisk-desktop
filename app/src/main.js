@@ -5,7 +5,6 @@ import path from 'path';
 import storage from 'electron-json-storage'; // eslint-disable-line import/no-extraneous-dependencies
 import getPort from 'get-port';
 import win from './modules/win';
-import './styles.dialog.css';
 // import localeHandler from './modules/localeHandler';
 import updateChecker from './modules/autoUpdater';
 import server from '../server';

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { getActiveTokenAccount } from '../../utils/account';
 import { settingsUpdated } from '../../actions/settings';
+import { errorToastDisplayed } from '../../actions/toaster';
 import { getAPIClient } from '../../utils/api/network';
 import Splashscreen from './splashscreen';
 
@@ -14,6 +15,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  errorToastDisplayed,
   settingsUpdated,
 };
 

@@ -7,16 +7,16 @@ class FlashMessageHolder extends React.Component {
       children: {},
     };
 
-    this.deleteMessage = this.deleteMessage.bind(this);
+    FlashMessageHolder.deleteMessage = FlashMessageHolder.deleteMessage.bind(FlashMessageHolder);
 
     FlashMessageHolder.singletonRef = this;
   }
 
-  deleteMessage(name) {
-    const prevChildren = this.state.children;
+  static deleteMessage(name) {
+    const prevChildren = this.singletonRef.state.children;
     const keys = Object.keys(prevChildren).filter(key => key !== name);
     const children = keys.reduce((acc, key) => ({ ...acc, [key]: prevChildren[key] }), {});
-    this.setState({ children });
+    this.singletonRef.setState({ children });
   }
 
   static addMessage(message, name) {
@@ -40,7 +40,7 @@ class FlashMessageHolder extends React.Component {
       return (
         <ChildComponent.type
           {...ChildComponent.props}
-          onDismiss={() => this.deleteMessage(key)}
+          onDismiss={() => FlashMessageHolder.deleteMessage(key)}
           key={key}
         />
       );

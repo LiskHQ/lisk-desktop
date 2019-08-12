@@ -7,7 +7,12 @@ describe('htmlStringToReact util', () => {
       <h1>Dummy title</h1>
       <span>
         <p>before <strong>Nested</strong> tags</p>
+        <a href="https://github.com/LiskHQ/lisk-hub/issues/1234">#1234</a>
       </span>
+      <ul>
+        <li>sibling</li>
+        <li>sibling</li>
+      </ul>
     </div>`;
 
     const wrapper = mount(htmlStringToReact(dummyHtml));
