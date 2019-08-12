@@ -33,6 +33,7 @@ export const initialState = deepMergeObj({
   isRequestHowItWorksDisable: false,
   statistics: false,
   areTermsOfUseAccepted: false,
+  discreetMode: false,
   token: {
     active: tokenKeys[0],
     list: tokenKeys.reduce((acc, key) => { acc[key] = true; return acc; }, {}),
