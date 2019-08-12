@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { translate } from 'react-i18next';
 import voting from '../../constants/voting';
-import Box from '../box';
+import Box from '../toolbox/box';
 import { getUnixTimestampFromValue } from '../../utils/datetime';
 import LiskAmount from '../liskAmount';
 import i18n from '../../i18n';
@@ -25,10 +25,10 @@ const DelegateTab = ({ delegate, account, t }) => {
 
   return (
     <Box>
-      <header>
+      <Box.Header>
         <h1>{t('Delegate stats')}</h1>
-      </header>
-      <main className={styles.wrapper}>
+      </Box.Header>
+      <Box.Content className={styles.wrapper}>
         <ul className={styles.delegateStats}>
           <li className="rank">
             <span className={styles.label}>{t('Rank')}</span>
@@ -73,7 +73,7 @@ const DelegateTab = ({ delegate, account, t }) => {
             {timeFromLastBlock}
           </li>
         </ul>
-      </main>
+      </Box.Content>
     </Box>
   );
 };
