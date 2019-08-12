@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './footer.css';
 
 const Footer = ({ children, ...rest }) => (
-  <div {...rest} className={styles.footer}>{children}</div>
+  <footer {...rest} className={styles.footer}>{children}</footer>
 );
 
 Footer.propTypes = {
