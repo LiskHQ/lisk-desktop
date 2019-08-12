@@ -37,7 +37,7 @@
   & h3 {
     @mixin headingNormal;
 
-    margin: 5px 0;
+    margin: 0;
     color: var(--color-maastricht-blue);
   }
 }
@@ -50,8 +50,10 @@
 
 .outlinedBox {
   background-color: var(--color-white);
-  border-radius: 3px;
   border: solid 1px var(--color-platinum);
+  border-radius: 3px;
+  box-sizing: border-box;
+  max-height: 62px;
 
   &.addedVotes {
     border-color: var(--color-ultramarine-blue);
