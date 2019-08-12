@@ -46,7 +46,7 @@ const UserAccount = ({
       >
         {isUserDataFetched && enabledTokens.map(tokenKey => (account.info[tokenKey] ? ([
           <span
-            className={styles.accountHolder}
+            className={`${styles.accountHolder} ${tokenKey}`}
             key={tokenKey}
             onClick={settingsUpdated.bind(this, { token: { active: tokenKey } })}
           >

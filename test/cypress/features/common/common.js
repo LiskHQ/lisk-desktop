@@ -6,7 +6,7 @@ import networks from '../../../constants/networks';
 import compareBalances from '../../utils/compareBalances';
 import urls from '../../../constants/urls';
 
-const txConfirmationTimeout = 12000;
+const txConfirmationTimeout = 15000;
 
 Given(/^I autologin as ([^\s]+) to ([^\s]+)$/, function (account, network) {
   cy.autologin(accounts[account].passphrase, networks[network].node);
@@ -59,6 +59,12 @@ Given(/^I am on (.*?) page$/, function (page) {
       cy.wait('@transactions');
       cy.wait('@votes');
       break;
+    case 'send':
+      cy.route('/api/accounts?address*').as('accountLSK');
+      cy.route('/account/*').as('accountBTC');
+      cy.visit(urls.send);
+      cy.wait('@accountLSK');
+      cy.wait('@accountBTC');
     default:
       cy.visit(urls[page]);
       break;
@@ -78,10 +84,17 @@ Given(/^I am on (.*?) page of (.*?)$/, function (page, identifier) {
   }
 });
 
+Then(/^I should see pending transaction$/, function () {
+  cy.get(`${ss.transactionRow} ${ss.spinner}`).should('be.visible');
+});
+
+Then(/^I should not see pending transaction$/, function () {
+  cy.get(`${ss.transactionRow} ${ss.spinner}`, { timeout: txConfirmationTimeout }).should('be.not.visible');
+});
+
 Then(/^The latest transaction is (.*?)$/, function (transactionType) {
   cy.wait(1000);
   if (transactionType.toLowerCase().indexOf('transfer') > -1) {
-    cy.get(`${ss.transactionRow} ${ss.spinner}`).should('be.visible');
     const transactionRecipient = transactionType.split(' ').pop();
     if (transactionRecipient === 'random') {
       /* For use: 'transfer to random' */
@@ -89,10 +102,9 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
     } else if (transactionRecipient === 'transfer') {
       throw new Error('Usage: "transfer to {recipient}" where recipient could be "random" or account name');
     } else {
-      /* For uses like: 'transfer to genesis' */
-      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).should('have.text', accounts[transactionRecipient]);
+      /* For uses like: 'transfer to mkakDp2f31btaXdATtAogoqwXcdx1PqqFo' */
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains(transactionRecipient.substring(0,10));
     }
-    cy.get(`${ss.transactionRow} ${ss.spinner}`, { timeout: txConfirmationTimeout }).should('be.not.visible');
   }
   switch (transactionType.toLowerCase()) {
     case 'delegate vote':
@@ -148,4 +160,26 @@ Then(/^I click on recent bookmark$/, function () {
 
 Given(/^I confirm transaction$/, function () {
   cy.get(ss.confirmButton).click();
+});
+
+Then(/^I fill ([^s]+) in recipient$/, function (address) {
+  cy.get(ss.recipientInput).type(address);
+});
+
+Then(/^I fill ([^s]+) in amount$/, function (amount) {
+  cy.get(ss.amountInput).click().type(amount);
+});
+
+Then(/^I go to transfer confirmation$/, function () {
+  cy.get(ss.nextTransferBtn).should('be.enabled');
+  cy.get(ss.nextTransferBtn).click();
+});
+
+Then(/^I confirm transfer$/, function () {
+  cy.get(ss.sendBtn).click();
+  cy.get(ss.submittedTransactionMessage).should('be.visible');
+});
+
+Then(/^I go back to wallet$/, function () {
+  cy.get(ss.okayBtn).click();
 });
