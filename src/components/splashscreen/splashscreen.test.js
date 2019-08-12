@@ -1,86 +1,76 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import configureMockStore from 'redux-mock-store';
 import { MemoryRouter } from 'react-router-dom';
-import i18n from '../../i18n';
 import SplashScreen from './splashscreen';
 import accounts from '../../../test/constants/accounts';
 import routes from '../../constants/routes';
 
 describe('SplashScreen', () => {
   let wrapper;
-
-  const network = {
-    status: { online: true },
-    name: 'Custom Node',
-    networks: {
-      LSK: {
-        nodeUrl: 'hhtp://localhost:4000',
-        nethash: '2349jih34',
-      },
-    },
-  };
-
-  const history = {
-    location: {
-      pathname: '',
-      search: '',
-    },
-    account: {
-      address: '123456L',
-      info: {
-        LSK: {
-          address: '123456L',
-          balance: 100,
-        },
-        BTC: {
-          address: 'jhagsd676587',
-          balance: 100,
-        },
-      },
-    },
-    push: jest.fn(),
-    replace: jest.fn(),
-  };
-
-  const account = accounts.genesis;
-
-  const settings = {
-    areTermsOfUseAccepted: false,
-    token: {
-      active: 'LSK',
-      list: {
-        LSK: true,
-        BTC: true,
-      },
-    },
-  };
-
-  const store = configureMockStore([])({
-    network,
-    account,
-    settings,
-  });
-
-  const options = {
-    context: { store, i18n, history },
-    childContextTypes: {
-      store: PropTypes.object.isRequired,
-      i18n: PropTypes.object.isRequired,
-      history: PropTypes.object.isRequired,
-    },
-  };
-
-  const props = {
-    network,
-    account,
-    history,
-    settings,
-  };
+  let props;
+  let history;
 
   beforeEach(() => {
-    wrapper = mount(<MemoryRouter><SplashScreen {...props} /></MemoryRouter>, options);
+    const network = {
+      status: { online: true },
+      name: 'Custom Node',
+      networks: {
+        LSK: {
+          nodeUrl: 'hhtp://localhost:4000',
+          nethash: '2349jih34',
+        },
+      },
+    };
+
+    history = {
+      location: {
+        pathname: '',
+        search: '',
+      },
+      account: {
+        address: '123456L',
+        info: {
+          LSK: {
+            address: '123456L',
+            balance: 100,
+          },
+          BTC: {
+            address: 'jhagsd676587',
+            balance: 100,
+          },
+        },
+      },
+      push: jest.fn(),
+      replace: jest.fn(),
+    };
+
+    const account = accounts.genesis;
+
+    const settings = {
+      areTermsOfUseAccepted: true,
+      token: {
+        active: 'LSK',
+        list: {
+          LSK: true,
+          BTC: true,
+        },
+      },
+    };
+
+    props = {
+      network,
+      account,
+      history,
+      settings,
+      liskAPIClient: {
+        node: {
+          getConstants: jest.fn(),
+        },
+      },
+      errorToastDisplayed: jest.fn(),
+    };
+
+    wrapper = mount(<MemoryRouter><SplashScreen {...props} /></MemoryRouter>);
   });
 
   it('Should render all links, Sign in, Create an Account and Explre as Guest', () => {
@@ -113,16 +103,40 @@ describe('SplashScreen', () => {
   });
 
   describe('Terms of Use', () => {
-    beforeEach(() => {
-      wrapper = mount(<MemoryRouter><SplashScreen {...props} /></MemoryRouter>, options);
+    it('redirect to terms of use page', () => {
+      wrapper = mount(<MemoryRouter>
+        <SplashScreen
+          {...props}
+          settings={{ ...props.settings, areTermsOfUseAccepted: false }}
+        />
+      </MemoryRouter>);
+      expect(props.history.push).toBeCalledWith(`${routes.termsOfUse.path}`);
+    });
+  });
+
+  describe('Explore as a Guest', () => {
+    it('procced to Dashboard when network Node is UP', async (done) => {
+      props.liskAPIClient.node.getConstants.mockResolvedValueOnce({});
+      expect(wrapper.find('.link').at(0).text()).toEqual('Explore as a guest');
+      wrapper.find('.link').at(0).simulate('click');
+      // TODO refactor this as should be a better way to test it https://stackoverflow.com/a/43855794
+      setImmediate(() => {
+        expect(props.history.push).toHaveBeenCalled();
+        expect(props.errorToastDisplayed).not.toHaveBeenCalled();
+        done();
+      });
     });
 
-    it('redirect to terms of use page', () => {
-      wrapper.setProps({
-        settings: { areTermsOfUseAccepted: false },
+    it('trigger toaster message when network Node is DOWN', async (done) => {
+      props.liskAPIClient.node.getConstants.mockRejectedValue(new Error('Network Error'));
+      expect(wrapper.find('.link').at(0).text()).toEqual('Explore as a guest');
+      wrapper.find('.link').at(0).simulate('click');
+      // TODO refactor this as should be a better way to test it https://stackoverflow.com/a/43855794
+      setImmediate(() => {
+        expect(props.history.push).not.toHaveBeenCalled();
+        expect(props.errorToastDisplayed).toBeCalled();
+        done();
       });
-      wrapper.update();
-      expect(props.history.push).toBeCalledWith(`${routes.termsOfUse.path}`);
     });
   });
 });

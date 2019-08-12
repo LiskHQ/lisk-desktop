@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-i18next';
-
+import { to } from 'await-to-js';
 import routes from '../../constants/routes';
 import { getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
 import { parseSearchParams } from '../../utils/searchParams';
@@ -35,6 +35,7 @@ class Splashscreen extends React.Component {
     this.secondIteration = false;
 
     this.networks = getNetworksList();
+    this.checkNodeStatus = this.checkNodeStatus.bind(this);
   }
 
   componentDidMount() {
@@ -73,6 +74,16 @@ class Splashscreen extends React.Component {
       && network.networks[token.active].nodeUrl === prevNetwork.networks[token.active].nodeUrl;
   }
 
+  async checkNodeStatus() {
+    const { errorToastDisplayed, history, liskAPIClient } = this.props;
+    // istanbul ignore else
+    if (liskAPIClient) {
+      const [error, response] = await to(liskAPIClient.node.getConstants());
+      if (response) history.push(routes.dashboard.path);
+      if (error) errorToastDisplayed({ label: `Unable to connect to the node, Error: ${error.message}` });
+    }
+  }
+
   render() {
     const { t } = this.props;
 
@@ -98,9 +109,12 @@ class Splashscreen extends React.Component {
             <span>{t('or')}</span>
           </span>
           <span className={styles.linkWrapper}>
-            <Link className={`${styles.link} explore-as-guest-button`} to={routes.dashboard.path}>
+            <span
+              className={`${styles.link} explore-as-guest-button`}
+              onClick={this.checkNodeStatus}
+            >
               {t('Explore as a guest')}
-            </Link>
+            </span>
             <Tooltip
               className={`${styles.tooltip}`}
               styles={{ infoIcon: styles.infoIcon }}

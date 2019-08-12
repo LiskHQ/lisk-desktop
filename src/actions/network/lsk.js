@@ -41,6 +41,11 @@ export const networkSet = data => async (dispatch) => {
         nethash,
       }));
     }).catch((error) => {
+      dispatch(generateAction(data, {
+        nodeUrl: data.network.address,
+        custom: data.network.custom,
+        code: data.network.code,
+      }));
       dispatch(errorToastDisplayed({ label: error }));
     });
   } else if (data.name === networks.testnet.name
