@@ -69,7 +69,7 @@ createCommand('hwCommand', (command) => {
   const device = getDeviceById(command.data.deviceId);
   if (device) {
     logDebug('Command Will be executed with device: ', device);
-    if (device.model === 'Ledger Nano S') {
+    if (device.model.indexOf('Ledger') !== -1) {
       return executeLedgerCommand(device, command);
     }
     return executeTrezorCommand(device, command);

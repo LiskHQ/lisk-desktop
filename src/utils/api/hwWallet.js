@@ -159,7 +159,7 @@ const platformHendler = async (command) => {
 };
 
 export const getLoginTypeFromDevice = (device) => {
-  if (device.model === models.ledgerNanoS) {
+  if (device.model === models.ledgerNanoS || device.model === ledgerNanoX) {
     return loginTypes.ledgerNano;
   } else if (device.model === models.trezorOne || device.model === models.trezorModelT) {
     return loginTypes.trezor;

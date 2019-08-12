@@ -24,6 +24,7 @@ export const HW_CMD = {
 
 export const models = {
   ledgerNanoS: 'Ledger Nano S',
+  ledgerNanoX: 'Ledger Nano X',
   trezorOne: 'Trezor One',
   trezorModelT: 'Trezor Model T',
 };

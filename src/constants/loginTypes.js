@@ -1,6 +1,6 @@
 const loginTypes = {
   passphrase: 'Passphrase',
-  ledgerNano: 'Ledger Nano S',
+  ledgerNano: 'Ledger',
   trezor: 'Trezor',
 };
 

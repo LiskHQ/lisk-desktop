@@ -42,11 +42,11 @@ const getLedgerAccount = (index = 0) => {
   return ledgerAccount;
 };
 
-const createLedgerHWDevice = path =>
+const createLedgerHWDevice = ({ path, model }) =>
   new HWDevice(
     Math.floor(Math.random() * 1e5) + 1,
     null,
-    'Ledger Nano S',
+    model,
     path,
   );
 
@@ -76,7 +76,10 @@ const ledgerObserver = {
   next: async ({ device, type }) => {
     if (device) {
       if (type === 'add') {
-        const ledgerDevice = createLedgerHWDevice(device.path);
+        const ledgerDevice = createLedgerHWDevice({
+          path: device.path,
+          model: `${device.manufacturer} ${device.product}`,
+        });
         ledgerDevice.openApp = await isInsideLedgerApp(device.path);
         addConnectedDevices(ledgerDevice);
         hwDevice = ledgerDevice;
