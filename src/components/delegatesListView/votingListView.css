@@ -46,6 +46,10 @@
   padding-left: 10px !important;
 }
 
+.forged {
+  display: inline-block !important;
+}
+
 .weight {
   display: inline-block !important;
   font-weight: bold !important;

@@ -19,7 +19,7 @@ const ListLabels = ({
       }
       <div className={columnClassNames.rank}>{t('Rank')}</div>
       <div className={columnClassNames.delegate}>{t('Delegate')}</div>
-      <div className={columnClassNames.forged}>{t('Forged LSK')}</div>
+      <div className={columnClassNames.forged}>{t('Forged')}</div>
       <div className={columnClassNames.productivity}>
         {t('Productivity')}
         <Tooltip className="showOnLeft">
