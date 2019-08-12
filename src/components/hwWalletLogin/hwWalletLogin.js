@@ -34,7 +34,12 @@ class HardwareWalletLogin extends React.Component {
             <Loading t={t} devices={devices} />
             <SelectDevice t={t} devices={devices} />
             <UnlockDevice t={t} devices={devices} history={history} />
-            <SelectAccount t={t} liskAPIClient={liskAPIClient} history={history} />
+            <SelectAccount
+              t={t}
+              devices={devices}
+              liskAPIClient={liskAPIClient}
+              history={history}
+            />
           </MultiStep>
         </div>
       </React.Fragment>
