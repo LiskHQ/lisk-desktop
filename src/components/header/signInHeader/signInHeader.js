@@ -76,7 +76,7 @@ class Header extends React.Component {
   // eslint-disable-next-line max-statements
   async checkNodeStatus(showErrorToaster = true) {
     const {
-      liskAPIClient, errorToastDisplayed, successToastDisplayed, network,
+      liskAPIClient, errorToastDisplayed, network,
     } = this.props;
 
     if (liskAPIClient) {
@@ -84,9 +84,8 @@ class Header extends React.Component {
         network: network.networks.LSK.code,
         activeNetwork: network.networks.LSK.code,
       });
-      const [error, response] = await to(liskAPIClient.node.getConstants());
+      const [error] = await to(liskAPIClient.node.getConstants());
 
-      if (response) successToastDisplayed({ label: 'Successfully connected to the node.' });
       if (error) {
         if (network.name === networks.customNode.name) {
           this.setState(({ validationError: true }));
