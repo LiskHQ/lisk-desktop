@@ -91,12 +91,6 @@ body {
   }
 }
 
-@media (--xLarge-viewport) {
-  body {
-    font-size: 16px;
-  }
-}
-
 @media (--large-viewport) {
   body {
     font-size: 15px;
@@ -114,11 +108,5 @@ body {
     -webkit-overflow-scrolling: touch !important;
     overflow: auto !important;
     height: 100% !important;
-  }
-}
-
-@media (--xSmall-viewport) {
-  body {
-    font-size: 14px;
   }
 }
