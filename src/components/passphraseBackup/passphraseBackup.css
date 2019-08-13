@@ -3,7 +3,7 @@
 
 .optionsHolder {
   justify-content: center;
-  margin: 0 24px;
+  margin: 0 4px 20px 4px;
 
   & .option {
     display: flex;
