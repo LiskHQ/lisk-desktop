@@ -5,7 +5,8 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
+  margin-top: 4px;
 
   & > * {
     display: flex;
@@ -53,6 +54,7 @@
   border: solid 1px var(--color-platinum);
   border-radius: 3px;
   box-sizing: border-box;
+  margin-top: 20px;
   max-height: 62px;
 
   &.addedVotes {
