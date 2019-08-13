@@ -35,6 +35,9 @@ class SelectAccount extends React.Component {
     if (this.props.account && this.props.account.address) {
       this.props.history.push(`${routes.dashboard.path}`);
     }
+    const { devices, device } = this.props;
+    const activeDevice = devices.find(d => d.deviceId === device.deviceId);
+    if (!activeDevice) this.props.prevStep({ reset: true });
   }
 
   getNameFromAccount(address) {

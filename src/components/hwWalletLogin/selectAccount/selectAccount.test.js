@@ -65,6 +65,11 @@ describe('Select Account', () => {
 
   beforeEach(() => {
     props = {
+      devices: [
+        { deviceId: 1, openApp: false, model: 'Ledger' },
+        { deviceId: 2, model: 'Trezor' },
+        { deviceId: '123abc', openApp: true, model: 'Ledger Nano S' },
+      ],
       device: {
         deviceId: '123abc',
         model: 'Ledger Nano S',

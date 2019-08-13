@@ -33,7 +33,7 @@ class UnlockDevice extends React.Component {
 
   navigateIfNeeded() {
     const selectedDevice = this.props.devices.find(d => d.deviceId === this.props.deviceId);
-    if (!selectedDevice) this.props.prevStep();
+    if (!selectedDevice) this.props.prevStep({ reset: true });
     clearTimeout(this.timeout);
     if (selectedDevice && (selectedDevice.openApp || /(trezor(\s?))/ig.test(selectedDevice.model))) {
       this.props.nextStep({ device: selectedDevice });
@@ -55,10 +55,16 @@ class UnlockDevice extends React.Component {
   }
 
   render() {
-    const { t, history, deviceModel = 'Ledger S' } = this.props;
-    return !this.state.isLoading && (
+    const {
+      t,
+      history,
+      devices,
+      deviceId,
+    } = this.props;
+    const selectedDevice = devices.find(d => deviceId && d.deviceId === deviceId) || {};
+    return !this.state.isLoading && !!selectedDevice.model && (
       <div>
-        <h1>{t('{{deviceModel}} connected! Open the Lisk app on the device', { deviceModel })}</h1>
+        <h1>{t('{{deviceModel}} connected! Open the Lisk app on the device', { deviceModel: selectedDevice.model })}</h1>
         <p>
           {
           t('If you’re not sure how to do this please follow the')

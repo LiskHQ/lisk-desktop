@@ -11,7 +11,7 @@ import {
   updateConnectedDevices,
 } from './hwManager';
 
-import { createCommand, isValidAddress } from './utils';
+import { isValidAddress } from './utils';
 import win from './modules/win';
 import { getTransactionBytes } from '../../src/utils/rawTransactionWrapper';
 
@@ -34,7 +34,7 @@ TransportNodeHid.setListenDevicesDebug((msg, ...args) => {
 */
 let busy = false;
 TransportNodeHid.setListenDevicesPollingSkip(() => busy);
-let hwDevice = null;
+TransportNodeHid.setListenDevicesDebounce(0);
 const getLedgerAccount = (index = 0) => {
   const ledgerAccount = new LedgerAccount();
   ledgerAccount.coinIndex(SupportedCoin.LISK);
@@ -42,11 +42,11 @@ const getLedgerAccount = (index = 0) => {
   return ledgerAccount;
 };
 
-const createLedgerHWDevice = path =>
+const createLedgerHWDevice = ({ path, model }) =>
   new HWDevice(
     Math.floor(Math.random() * 1e5) + 1,
     null,
-    'Ledger Nano S',
+    model,
     path,
   );
 
@@ -71,21 +71,34 @@ const isInsideLedgerApp = async (path) => {
   return false;
 };
 
+let devices = [];
+const clearDevices = async () => {
+  const connectedPaths = await TransportNodeHid.list();
+  devices
+    .filter(device => !connectedPaths.includes(device.path))
+    .forEach(device => removeConnectedDeviceByPath(device.path));
+
+  devices = devices.filter(device => connectedPaths.includes(device.path));
+};
+
 const ledgerObserver = {
   // eslint-disable-next-line max-statements
   next: async ({ device, type }) => {
+    clearDevices();
     if (device) {
       if (type === 'add') {
-        const ledgerDevice = createLedgerHWDevice(device.path);
+        const ledgerDevice = createLedgerHWDevice({
+          path: device.path,
+          model: `${device.manufacturer} ${device.product}`,
+        });
         ledgerDevice.openApp = await isInsideLedgerApp(device.path);
+        devices.push(device);
         addConnectedDevices(ledgerDevice);
-        hwDevice = ledgerDevice;
         win.send({ event: 'hwConnected', value: { model: ledgerDevice.model } });
       } else if (type === 'remove') {
-        if (hwDevice) {
-          removeConnectedDeviceByPath(hwDevice.path);
-          win.send({ event: 'hwDisconnected', value: { model: hwDevice.model } });
-          hwDevice = null;
+        if (device) {
+          removeConnectedDeviceByPath(device.path);
+          win.send({ event: 'hwDisconnected', value: { model: `${device.manufacturer} ${device.product}` } });
         }
       }
     }
@@ -96,7 +109,6 @@ ipcMain.on('checkLedger', async (event, { id }) => {
   const ledgerDevice = getDeviceById(id);
   ledgerDevice.openApp = await isInsideLedgerApp(ledgerDevice.path);
   updateConnectedDevices(ledgerDevice);
-  hwDevice = ledgerDevice;
   win.send({ event: 'checkLedger.done' });
 });
 
@@ -105,7 +117,6 @@ const syncDevices = () => {
   try {
     observableListen = TransportNodeHid.listen(ledgerObserver);
   } catch (e) {
-    hwDevice = null;
     syncDevices();
   }
 };
@@ -173,45 +184,3 @@ export const executeLedgerCommand = (device, command) =>
       }
       return Promise.reject('LEDGER_ERR_DURING_CONNECTION');
     });
-
-// // eslint-disable-next-line arrow-body-style
-createCommand('ledgerCommand', (command) => {
-  if (hwDevice) {
-    return TransportNodeHid.open(hwDevice.path)
-      .then(async (transport) => { // eslint-disable-line max-statements
-        busy = true;
-        try {
-          const liskLedger = new DposLedger(transport);
-          const ledgerAccount = getLedgerAccount(command.data.index);
-          let commandResult;
-          if (command.action === 'GET_ACCOUNT') {
-            commandResult = await liskLedger.getPubKey(ledgerAccount);
-          }
-          if (command.action === 'SIGN_MSG') {
-            const signature = await liskLedger.signMSG(ledgerAccount, command.data.message);
-            commandResult = getBufferToHex(signature.slice(0, 64));
-          }
-          if (command.action === 'SIGN_TX') {
-            commandResult = await liskLedger.signTX(ledgerAccount, command.data.tx, false);
-          }
-          transport.close();
-          busy = false;
-          return Promise.resolve(commandResult);
-        } catch (err) {
-          transport.close();
-          busy = false;
-          if (err.statusText && err.statusText === 'CONDITIONS_OF_USE_NOT_SATISFIED') {
-            return Promise.reject(new Error('LEDGER_ACTION_DENIED_BY_USER'));
-          }
-          return Promise.reject(new Error('LEDGER_ERR_DURING_CONNECTION'));
-        }
-      })
-      .catch((e) => {
-        if (typeof e === 'string') {
-          return Promise.reject(e);
-        }
-        return Promise.reject(new Error('LEDGER_ERR_DURING_CONNECTION'));
-      });
-  }
-  return Promise.reject(new Error('LEDGER_IS_NOT_CONNECTED'));
-});

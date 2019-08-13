@@ -24,7 +24,7 @@ export class HWDevice {
   }
 }
 
-const connectedDevices = [];
+let connectedDevices = [];
 
 createCommand('getConnectedDevicesList', () => Promise.resolve(connectedDevices));
 
@@ -43,17 +43,13 @@ export const updateConnectedDevices = (device) => {
 
 export const removeConnectedDeviceByID = (deviceId) => {
   logDebug('Removing device with id: ', deviceId);
-  connectedDevices.some((device, index) =>
-    ((connectedDevices[index].deviceId === deviceId) ?
-      !!(connectedDevices.splice(index, 1)) : false));
+  connectedDevices = connectedDevices.filter(d => d.deviceId !== deviceId);
   win.send({ event: 'hwDeviceListChanged', value: connectedDevices });
 };
 
 export const removeConnectedDeviceByPath = (path) => {
   logDebug('Removing device with path: ', path);
-  connectedDevices.some((device, index) =>
-    ((connectedDevices[index].path === path) ?
-      !!(connectedDevices.splice(index, 1)) : false));
+  connectedDevices = connectedDevices.filter(d => d.path !== path);
   win.send({ event: 'hwDeviceListChanged', value: connectedDevices });
 };
 
@@ -69,7 +65,7 @@ createCommand('hwCommand', (command) => {
   const device = getDeviceById(command.data.deviceId);
   if (device) {
     logDebug('Command Will be executed with device: ', device);
-    if (device.model === 'Ledger Nano S') {
+    if (device.model.indexOf('Ledger') !== -1) {
       return executeLedgerCommand(device, command);
     }
     return executeTrezorCommand(device, command);
