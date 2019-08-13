@@ -19,16 +19,17 @@ const ListLabels = ({
       }
       <div className={columnClassNames.rank}>{t('Rank')}</div>
       <div className={columnClassNames.delegate}>{t('Delegate')}</div>
-      <div className={columnClassNames.forged}>{t('Forged')}</div>
+      <div className={columnClassNames.forged}>
+        {t('Forged')}
+        <Tooltip className="showOnLeft">
+          <p>{t('Sum of all LSK awarded to a delegate for each block successfully generated on the blockchain.')}</p>
+        </Tooltip>
+      </div>
       <div className={columnClassNames.productivity}>
         {t('Productivity')}
         <Tooltip className="showOnLeft">
           <p>
-            {' '}
-            {
-            t('Percentage of successfully forged blocks of when the delegate should have forged a block of transactions.')
-          }
-            {' '}
+            {t('Percentage of successfully forged blocks of when the delegate should have forged a block of transactions.')}
           </p>
         </Tooltip>
       </div>
@@ -36,11 +37,7 @@ const ListLabels = ({
         {t('Vote weight')}
         <Tooltip className="showOnLeft">
           <p>
-            {' '}
-            {
-            t('Sum of LSK balance of all accounts who voted for this delegate')
-          }
-            {' '}
+            {t('Sum of LSK in all accounts who have voted for this delegate.')}
           </p>
         </Tooltip>
       </div>

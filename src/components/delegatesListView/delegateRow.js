@@ -102,7 +102,7 @@ class DelegateRow extends React.Component {
             </div>
           </Link>
         </div>
-        <div className={`${columnClassNames.forged} delegate-forged`}>
+        <div className={`${columnClassNames.forged} ${styles.forged} delegate-forged`}>
           <LiskAmount val={rewards} />
           {` ${this.props.t('LSK')}`}
         </div>

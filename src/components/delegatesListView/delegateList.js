@@ -31,7 +31,7 @@ class DelegateList extends React.Component {
       vote: `${grid['col-md-1']} ${grid['col-xs-1']}`,
       rank: `${grid['col-md-1']} ${grid['col-xs-1']} ${styles.rank}`,
       delegate: `${grid[shouldShowVoteColumn ? 'col-md-5' : 'col-md-6']} ${grid['col-xs-4']}`,
-      forged: `${grid['col-md-2']} ${grid['col-xs-2']} ${styles.forged}`,
+      forged: `${grid['col-md-2']} ${grid['col-xs-2']}`,
       productivity: `${grid['col-md-1']} ${grid['col-xs-2']} ${styles.productivity}`,
       voteWeight: `${grid['col-md-2']}`,
     };
