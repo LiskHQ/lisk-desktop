@@ -46,8 +46,8 @@
     "url": "https://github.com/LiskHQ/lisk-hub"
   },
   "dependencies": {
-    "@ledgerhq/hw-transport-node-hid": "4.33.3",
-    "@ledgerhq/hw-transport-u2f": "4.32.0",
+    "@ledgerhq/hw-transport-node-hid": "4.68.2",
+    "@ledgerhq/hw-transport-u2f": "4.68.2",
     "@liskhq/lisk-client": "2.0.0",
     "await-to-js": "2.1.1",
     "bignumber.js": "8.0.1",

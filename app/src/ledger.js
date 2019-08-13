@@ -34,6 +34,7 @@ TransportNodeHid.setListenDevicesDebug((msg, ...args) => {
 */
 let busy = false;
 TransportNodeHid.setListenDevicesPollingSkip(() => busy);
+TransportNodeHid.setListenDevicesDebounce(0);
 const getLedgerAccount = (index = 0) => {
   const ledgerAccount = new LedgerAccount();
   ledgerAccount.coinIndex(SupportedCoin.LISK);
@@ -70,9 +71,20 @@ const isInsideLedgerApp = async (path) => {
   return false;
 };
 
+let devices = [];
+const clearDevices = async () => {
+  const connectedPaths = await TransportNodeHid.list();
+  devices
+    .filter(device => !connectedPaths.includes(device.path))
+    .forEach(device => removeConnectedDeviceByPath(device.path));
+
+  devices = devices.filter(device => connectedPaths.includes(device.path));
+};
+
 const ledgerObserver = {
   // eslint-disable-next-line max-statements
   next: async ({ device, type }) => {
+    clearDevices();
     if (device) {
       if (type === 'add') {
         const ledgerDevice = createLedgerHWDevice({
@@ -80,6 +92,7 @@ const ledgerObserver = {
           model: `${device.manufacturer} ${device.product}`,
         });
         ledgerDevice.openApp = await isInsideLedgerApp(device.path);
+        devices.push(device);
         addConnectedDevices(ledgerDevice);
         win.send({ event: 'hwConnected', value: { model: ledgerDevice.model } });
       } else if (type === 'remove') {
