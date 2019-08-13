@@ -45,6 +45,8 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    width: 100%;
+    box-sizing: border-box;
     padding: 20px;
 
     & > section,
