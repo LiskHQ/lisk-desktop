@@ -2,7 +2,7 @@ import React from 'react';
 
 import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import { extractPublicKey } from '../../utils/account';
-import Box from '../box';
+import Box from '../toolbox/box';
 import CheckBox from '../toolbox/checkBox';
 import HardwareWalletIllustration from '../toolbox/hardwareWalletIllustration';
 import PassphraseInput from '../passphraseInput/passphraseInput';
