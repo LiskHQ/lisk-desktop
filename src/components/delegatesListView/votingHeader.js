@@ -3,6 +3,7 @@ import voteFilters from '../../constants/voteFilters';
 import Piwik from '../../utils/piwik';
 import Tabs from '../toolbox/tabs';
 import { Input } from '../toolbox/inputs';
+import styles from './votingListView.css';
 
 
 class VotingHeader extends React.Component {
@@ -68,7 +69,7 @@ class VotingHeader extends React.Component {
         <span>
           <Input
             size="xs"
-            className="search"
+            className={`${styles.search} search`}
             value={this.state.query}
             onChange={this.search.bind(this)}
             placeholder={t('Filter by name...')}

@@ -11,7 +11,7 @@ const VotesTableHeader = ({ t }) => (
     <div className={`${grid['col-sm-2']} ${grid['col-lg-2']}`}>
       {t('Forged')}
       <Tooltip className="showOnBottom">
-        <p>{t('Amount of LSK earned by a delegate from forging blocks.')}</p>
+        <p>{t('Sum of all LSK awarded to a delegate for each block successfully generated on the blockchain.')}</p>
       </Tooltip>
     </div>
     <div className={`${grid['col-sm-2']} ${grid['col-lg-1']}`}>
@@ -23,7 +23,7 @@ const VotesTableHeader = ({ t }) => (
     <div className={`${grid['col-sm-4']} ${grid['col-lg-2']} ${styles.lastHeading}`}>
       {t('Vote weight')}
       <Tooltip className="showOnBottom">
-        <p>{t('Sum of LSK of all accounts who voted for a delegate')}</p>
+        <p>{t('Sum of LSK in all accounts who have voted for this delegate.')}</p>
       </Tooltip>
     </div>
   </TableRow>

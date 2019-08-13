@@ -71,7 +71,7 @@ class DelegateRow extends React.Component {
         )}
       >
         {shouldShowVoteColumn ? (
-          <div className={`${columnClassNames.rank} ${styles.leftText}`}>
+          <div className={`${columnClassNames.vote} ${styles.leftText}`}>
             <VoteCheckbox
               className={styles.checkbox}
               accent={shouldHightlightCheckbox}
@@ -102,16 +102,16 @@ class DelegateRow extends React.Component {
             </div>
           </Link>
         </div>
-        <div className={`${columnClassNames.forged} delegate-forged`}>
+        <div className={`${columnClassNames.forged} ${styles.forged} delegate-forged`}>
           <LiskAmount val={rewards} />
-          {this.props.t('LSK')}
+          {` ${this.props.t('LSK')}`}
         </div>
         <div className={`${columnClassNames.productivity} delegate-productivity`}>
           {`${productivity} %`}
         </div>
         <div className={`${columnClassNames.voteWeight} ${styles.weight} vote-weight`}>
           <LiskAmount val={data.vote} />
-          {this.props.t('LSK')}
+          {` ${this.props.t('LSK')}`}
         </div>
       </TableRow>
     );

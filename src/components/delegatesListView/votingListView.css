@@ -14,6 +14,10 @@
   width: 100%;
 }
 
+.search {
+  width: 177px;
+}
+
 .loadMore {
   @mixin contentSmall bold;
 
@@ -33,9 +37,23 @@
   }
 }
 
+.rank {
+  padding-left: 40px !important;
+}
+
+.forged,
+.productivity {
+  padding-left: 10px !important;
+}
+
+.forged {
+  display: inline-block !important;
+}
+
 .weight {
-  font-weight: bold;
-  text-align: right;
+  display: inline-block !important;
+  font-weight: bold !important;
+  text-align: right !important;
 }
 
 .emptyMessage {
