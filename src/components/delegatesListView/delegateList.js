@@ -36,7 +36,7 @@ class DelegateList extends React.Component {
       voteWeight: `${grid['col-md-2']}`,
     };
     return (
-      <div>
+      <React.Fragment>
         { this.state.didMount ? (
           <div className={`${styles.results} delegate-list`}>
             <ListLabels
@@ -71,7 +71,7 @@ class DelegateList extends React.Component {
             ) : null}
           </div>
         ) : null}
-      </div>
+      </React.Fragment>
     );
   }
 }
