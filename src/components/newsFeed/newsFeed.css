@@ -1,12 +1,6 @@
 @import '../app/variables.css';
 @import '../app/mixins.css';
 
-.newsFeedBox {
-  padding: 0;
-  height: auto;
-  font-family: var(--content-font);
-}
-
 .emptyNews {
   height: 100%;
   display: flex;
@@ -30,11 +24,6 @@
 
   & > div {
     height: 100%;
-  }
-
-  & .newsWrapper {
-    box-sizing: border-box;
-    padding: 0 20px;
   }
 }
 
