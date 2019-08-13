@@ -44,7 +44,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: stretch;
     width: 100%;
     box-sizing: border-box;
     padding: 20px;
