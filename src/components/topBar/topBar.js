@@ -8,6 +8,7 @@ import menuLinks from './constants';
 import Dropdown from '../toolbox/dropdown/dropdown';
 import SearchBar from '../searchBar';
 import Network from './network';
+import networks from '../../constants/networks';
 import styles from './topBar.css';
 
 import OutsideClickHandler from '../toolbox/outsideClickHandler';
@@ -31,9 +32,18 @@ class TopBar extends React.Component {
   }
 
   onLogout() {
+    const {
+      logOut, history, settings, settingsUpdated, networkSet, network,
+    } = this.props;
+
     Piwik.trackingEvent('Header', 'button', 'Open logout dialog');
-    this.props.logOut();
-    this.props.history.replace(`${routes.dashboard.path}`);
+    logOut();
+    history.replace(`${routes.dashboard.path}`);
+
+    if (!settings.showNetwork && network.name !== networks.mainnet.name) {
+      settingsUpdated({ network: { name: networks.mainnet.name } });
+      networkSet(networks.mainnet);
+    }
   }
 
   onHandleClick(name) {

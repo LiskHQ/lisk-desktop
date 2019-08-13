@@ -57,7 +57,11 @@ describe('TopBar', () => {
         },
       },
     },
+    settings: {
+      network: { name: 'Custom Nodee', address: 'hhtp://localhost:4000' },
+    },
     settingsUpdated: jest.fn(),
+    networkSet: jest.fn(),
   };
 
   const history = {
