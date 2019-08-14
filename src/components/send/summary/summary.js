@@ -7,20 +7,14 @@ import Converter from '../../converter';
 import Piwik from '../../../utils/piwik';
 import TransactionSummary from '../../transactionSummary';
 import fees from '../../../constants/fees';
-import links from '../../../constants/externalLinks';
 import styles from './summary.css';
 
 class Summary extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isLoading: false,
-    };
-
     this.prevStep = this.prevStep.bind(this);
     this.submitTransaction = this.submitTransaction.bind(this);
-    this.getTooltip = this.getTooltip.bind(this);
   }
 
   componentDidUpdate() {
@@ -75,33 +69,10 @@ class Summary extends React.Component {
     this.props.prevStep({ ...this.props.fields });
   }
 
-  getTooltip() {
-    const { t, token } = this.props;
-    return {
-      LSK: {
-        title: t('Transaction fee'),
-        footer: <a
-          href={links.transactionFee}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          {t('Read More')}
-        </a>,
-        children: t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
-                    Such operations require hardware resources and because of that there is a small fee for processing those.`),
-      },
-      BTC: {
-        children: t('Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.'),
-      },
-    }[token];
-  }
-
   render() {
     const {
       fields, t, token, account,
     } = this.props;
-    // TODO pass BTC tooltip to TransactionSummary;
-    // const tooltip = this.getTooltip();
 
     const fee = token === tokenMap.LSK.key
       ? fromRawLsk(fees.send)
@@ -121,6 +92,7 @@ class Summary extends React.Component {
           onClick: this.prevStep,
         }}
         fee={fee}
+        token={token}
       >
         <section>
           <label>{t('Recipient')}</label>

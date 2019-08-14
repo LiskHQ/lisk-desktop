@@ -26,6 +26,7 @@ class TransactionSummary extends React.Component {
     this.checkSecondPassphrase = this.checkSecondPassphrase.bind(this);
     this.confirmOnClick = this.confirmOnClick.bind(this);
     this.onConfirmationChange = this.onConfirmationChange.bind(this);
+    this.getTooltip = this.getTooltip.bind(this);
   }
 
   componentDidMount() {
@@ -75,13 +76,37 @@ class TransactionSummary extends React.Component {
     });
   }
 
+  getTooltip() {
+    const { t, token } = this.props;
+    return {
+      LSK: {
+        title: t('Transaction fee'),
+        footer: <a
+          href={links.transactionFee}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {t('Read More')}
+        </a>,
+        children: t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
+                    Such operations require hardware resources and because of that there is a small fee for processing those.`),
+      },
+      BTC: {
+        children: t('Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.'),
+      },
+    }[token];
+  }
+
   render() {
     const {
-      title, children, confirmButton, cancelButton, account, t, fee, confirmation, classNames,
+      title, children, confirmButton, cancelButton, account,
+      t, fee, confirmation, classNames, token,
     } = this.props;
     const {
       secondPassphrase, isHardwareWalletConnected, isConfirmed,
     } = this.state;
+
+    const tooltip = this.getTooltip();
 
     return (
       <Box width="medium" className={`${styles.wrapper} ${classNames} summary`}>
@@ -97,28 +122,12 @@ class TransactionSummary extends React.Component {
           <section>
             <label>
               {t('Transaction fee')}
-              <Tooltip
-                title={t('Transaction fee')}
-                footer={(
-                  <a
-                    href={links.transactionFee}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    {t('Read More')}
-                  </a>
-)}
-              >
-                <p className={styles.tooltipText}>
-                  {
-              t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
-                  Such operations require hardware resources and because of that there is a small fee for processing those.`)
-            }
-                </p>
+              <Tooltip title={tooltip.title} footer={tooltip.footer}>
+                <p className={styles.tooltipText}>{tooltip.children}</p>
               </Tooltip>
             </label>
             <label className={styles.feeValue}>
-              {`${fee} LSK`}
+              {`${fee} ${token}`}
             </label>
           </section>
           {
@@ -193,5 +202,9 @@ class TransactionSummary extends React.Component {
     );
   }
 }
+
+TransactionSummary.defaultProps = {
+  token: 'LSK',
+};
 
 export default TransactionSummary;
