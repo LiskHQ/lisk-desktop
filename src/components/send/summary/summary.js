@@ -96,7 +96,7 @@ class Summary extends React.Component {
       >
         <section>
           <label>{t('Recipient')}</label>
-          <label>
+          <label className="recipient-value">
             <AccountVisual address={fields.recipient.address} size={25} />
             <label className={`${styles.information} recipient-confirm`}>
               {fields.recipient.title || fields.recipient.address}

@@ -147,6 +147,41 @@ describe('Summary', () => {
     wrapper.update();
     expect(props.nextStep).toBeCalled();
   });
+
+  it('should show props.fields.recipient.title if it is present', () => {
+    const title = 'Custom title';
+    wrapper = mount(<Summary {...{
+      ...props,
+      fields: {
+        ...props.fields,
+        recipient: {
+          ...props.fields.recipient,
+          title,
+        },
+      },
+    }}
+    />, options);
+    expect(wrapper.find('.recipient-value')).toIncludeText(props.fields.recipient.address);
+    expect(wrapper.find('.recipient-value')).toIncludeText(title);
+  });
+
+
+  it('should show props.fields.processingSpeed.txFee if props.token is not LSK', () => {
+    const txFee = '12451';
+    wrapper = mount(<Summary {...{
+      ...props,
+      token: 'BTC',
+      fields: {
+        ...props.fields,
+        processingSpeed: {
+          txFee,
+        },
+      },
+    }}
+    />, options);
+    expect(wrapper.find('.fee-value')).toIncludeText(txFee);
+  });
+
   it('should call transactionCreated as soon the component load if using HW', () => {
     const newProps = { ...props };
     newProps.account = {

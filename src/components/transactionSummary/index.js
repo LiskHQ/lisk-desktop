@@ -126,7 +126,7 @@ class TransactionSummary extends React.Component {
                 <p className={styles.tooltipText}>{tooltip.children}</p>
               </Tooltip>
             </label>
-            <label className={styles.feeValue}>
+            <label className={`${styles.feeValue} fee-value`}>
               {`${fee} ${token}`}
             </label>
           </section>
