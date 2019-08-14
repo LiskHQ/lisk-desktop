@@ -22,9 +22,12 @@
       justify-content: space-between;
       align-items: center;
       padding: 20px 0;
-      border-bottom: 1px solid var(--color-mystic);
       cursor: pointer;
       text-decoration: none;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid var(--color-mystic);
+      }
 
       & .editInput {
         width: 224px;
@@ -82,7 +85,6 @@
 
   & .footer {
     width: auto;
-    margin-top: 20px;
 
     & a {
       text-decoration: none;

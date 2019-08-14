@@ -20,7 +20,7 @@
   @mixin customScrollBar;
 
   min-height: 578px;
-  height: 724px;
+  height: 704px;
 
   & > div {
     height: 100%;
