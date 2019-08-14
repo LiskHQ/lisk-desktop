@@ -63,6 +63,7 @@ describe('Setting', () => {
   };
 
   beforeEach(() => {
+    localStorage.setItem('discreet', true); // TODO: Remove when discreet mode is concluded
     wrapper = mount(<Router>
       <Setting {...props} store={store} />
     </Router>, options);
