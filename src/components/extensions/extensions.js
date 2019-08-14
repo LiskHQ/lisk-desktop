@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Input } from '../toolbox/inputs';
-import Box from '../box';
+import Box from '../toolbox/box';
 import { PrimaryButton, SecondaryButton } from '../toolbox/buttons/button';
 import Feedback from '../toolbox/feedback/feedback';
 import localJSONStorage from '../../utils/localJSONStorage';
@@ -56,11 +56,11 @@ class Extensions extends React.Component {
   render() {
     return (
       <div className={styles.container}>
-        <Box className={styles.wrapper}>
-          <header className={styles.headerWrapper}>
+        <Box width="medium">
+          <Box.Header className={styles.headerWrapper}>
             <h2>{this.props.t('Add Extension')}</h2>
-          </header>
-          <div className={styles.content}>
+          </Box.Header>
+          <Box.Content className={styles.content}>
             <div className={styles.feedbackWrapper}>
               <div
                 className={styles.label}
@@ -109,7 +109,7 @@ class Extensions extends React.Component {
                 />
               </div>
             )}
-          </div>
+          </Box.Content>
         </Box>
       </div>
     );

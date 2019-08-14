@@ -3,14 +3,13 @@ import VotingHeader from './votingHeader';
 import styles from './votingListView.css';
 import voteFilters from '../../constants/voteFilters';
 import DelegateList from './delegateList';
-import ProgressBar from '../toolbox/progressBar/progressBar';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import {
   getTotalVotesCount,
   getPendingVotesList,
   getVotedList,
 } from '../../utils/voting';
-import Box from '../box';
+import Box from '../toolbox/box';
 
 // Create a new Table component injecting Head and Row
 class VotingListView extends React.Component {
@@ -132,11 +131,12 @@ class VotingListView extends React.Component {
       voteToggled, votes, t, votingModeEnabled,
       delegates,
     } = this.props;
+    const { isLoading } = this.state;
     const filteredList = this.filter(delegates);
     const firstTimeVotingActive = votingModeEnabled && getTotalVotesCount(votes) === 0;
     return (
-      <Box>
-        <header>
+      <Box isLoading={isLoading}>
+        <Box.Header>
           <VotingHeader
             t={t}
             account={this.props.account}
@@ -144,12 +144,7 @@ class VotingListView extends React.Component {
             voteToggled={voteToggled}
             search={value => this.search(value)}
           />
-        </header>
-        {this.state.isLoading ? (
-          <div className={styles.loadingOverlay}>
-            <ProgressBar type="linear" mode="indeterminate" theme={styles} className="loading" />
-          </div>
-        ) : null}
+        </Box.Header>
         {firstTimeVotingActive
           ? (
             <div className={styles.loadingOverlay}>
@@ -168,15 +163,14 @@ class VotingListView extends React.Component {
             </div>
           )
           : null}
-        <div className={styles.wrapper}>
-          <DelegateList
-            t={t}
-            list={filteredList}
-            votes={votes}
-            firstTimeVotingActive={firstTimeVotingActive}
-            votingModeEnabled={votingModeEnabled}
-            voteToggled={voteToggled}
-            shouldLoadMore={
+        <DelegateList
+          t={t}
+          list={filteredList}
+          votes={votes}
+          firstTimeVotingActive={firstTimeVotingActive}
+          votingModeEnabled={votingModeEnabled}
+          voteToggled={voteToggled}
+          shouldLoadMore={
                 filteredList.length > 0
                 && (
                   (this.state.activeFilter !== voteFilters.voted
@@ -185,16 +179,15 @@ class VotingListView extends React.Component {
                     && filteredList.length < getVotedList(votes).length)
                 )
               }
-            safari={this.state.safariClass}
-            loadMore={this.loadMore.bind(this)}
-          />
-        </div>
+          safari={this.state.safariClass}
+          loadMore={this.loadMore.bind(this)}
+        />
         {
             (filteredList.length === 0)
               ? (
-                <div className={`empty-message ${styles.emptyMessage}`}>
+                <Box.EmptyState className={`empty-message ${styles.emptyMessage}`}>
                   {t(this.getEmptyStateMessage(filteredList))}
-                </div>
+                </Box.EmptyState>
               ) : null
           }
       </Box>

@@ -1,6 +1,6 @@
 import React from 'react';
 import debounce from 'lodash.debounce';
-import Box from '../../box';
+import Box from '../../toolbox/box';
 import { Input } from '../../toolbox/inputs';
 import { PrimaryButton } from '../../toolbox/buttons/button';
 import Feedback from '../../toolbox/feedback/feedback';
@@ -117,12 +117,12 @@ class SelectName extends React.Component {
     };
 
     return (
-      <Box className={styles.box}>
-        <header>
+      <Box width="medium">
+        <Box.Header>
           <h1>{t('Become a delegate')}</h1>
-        </header>
+        </Box.Header>
 
-        <div className={`${styles.container} select-name-container`}>
+        <Box.Content className={`${styles.container} select-name-container`}>
           <p className={`${styles.description} select-name-text-description`}>
             {
               t(`Delegates are the most commited Lisk community members responsible for 
@@ -176,9 +176,7 @@ class SelectName extends React.Component {
               {error || t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.')}
             </Feedback>
           </div>
-
-
-          <footer>
+          <Box.Footer>
             <PrimaryButton
               onClick={() => nextStep({ nickname })}
               disabled={isBtnDisabled}
@@ -186,8 +184,8 @@ class SelectName extends React.Component {
             >
               {t('Go to Confirmation')}
             </PrimaryButton>
-          </footer>
-        </div>
+          </Box.Footer>
+        </Box.Content>
       </Box>
     );
   }

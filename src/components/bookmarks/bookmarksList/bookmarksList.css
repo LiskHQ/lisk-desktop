@@ -22,9 +22,12 @@
       justify-content: space-between;
       align-items: center;
       padding: 20px 0;
-      border-bottom: 1px solid var(--color-mystic);
       cursor: pointer;
       text-decoration: none;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid var(--color-mystic);
+      }
 
       & .editInput {
         width: 224px;
@@ -78,14 +81,13 @@
         opacity: 1;
       }
     }
+  }
 
-    & .footer {
-      width: 100%;
-      box-sizing: border-box;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 15px 0;
+  & .footer {
+    width: auto;
+
+    & a {
+      text-decoration: none;
     }
   }
 }

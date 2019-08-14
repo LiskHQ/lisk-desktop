@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Box from '../box';
+import Box from '../toolbox/box';
 import { PrimaryButton as Button } from '../toolbox/buttons/button';
 import styles from './help.css';
 import links from '../../constants/externalLinks';
@@ -24,9 +24,9 @@ class Help extends React.Component {
     const ArrowIcon = () => <Icon name="helpCenterArrow" className={styles.listArrow} />;
     return (
       <Box className={styles.wrapper}>
-        <header>
+        <Box.Header>
           <h2>{this.props.t('Help Center')}</h2>
-        </header>
+        </Box.Header>
         <section className={`${grid.row} ${styles.topRow}`}>
           <section className={`${grid['col-sm-12']} ${grid['col-md-12']} ${styles.topBox}`}>
             <article>

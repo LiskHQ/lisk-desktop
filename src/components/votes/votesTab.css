@@ -58,46 +58,6 @@
   & .votes {
     @mixin contentNormal bold;
   }
-
-  & .row {
-    cursor: pointer;
-  }
-
-  &.hasMore {
-    padding-bottom: 36px;
-  }
-
-  &.isLoading {
-    & .loadingOverlay {
-      background: rgba(255, 255, 255, 0.8);
-      bottom: 0;
-      color: var(--color-primary-standard);
-      position: absolute;
-      top: 40px;
-      width: 100%;
-      z-index: 1;
-    }
-
-    & :global(.empty-message) {
-      display: none;
-    }
-  }
-
-  & .showMore {
-    @mixin contentSmall bold;
-
-    align-items: center;
-    background: var(--color-white-smoke);
-    border-top: 1px solid var(--color-platinum);
-    bottom: 0;
-    color: var(--color-maastricht-blue);
-    cursor: pointer;
-    display: flex;
-    height: 36px;
-    justify-content: center;
-    position: absolute;
-    width: 100%;
-  }
 }
 
 .info {
@@ -118,18 +78,6 @@
 
     color: var(--color-maastricht-blue);
     display: block;
-  }
-}
-
-.linear {
-  background: transparent !important;
-  height: 3px;
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  & .value {
-    height: 3px;
   }
 }
 

@@ -11,7 +11,7 @@
 
   &:not(.header) {
     &::before,
-    &::after {
+    &:not(:last-child)::after {
       background-color: var(--color-platinum);
       content: '';
       height: 1px;

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { SecondaryButton } from '../../toolbox/buttons/button';
 import { tokenMap } from '../../../constants/tokens';
-import Box from '../../box';
-import EmptyState from '../../emptyState';
+import Box from '../../toolbox/box';
 import Icon from '../../toolbox/icon';
 import TransactionList from './transactionList';
 import links from '../../../constants/externalLinks';
@@ -37,9 +36,9 @@ class RecentTransactions extends Component {
 
     return (
       <Box className={`${styles.box} ${className}`}>
-        <header>
+        <Box.Header>
           <h2 className={styles.title}>{t('Recent {{value}} transactions', { value: activeToken.label })}</h2>
-        </header>
+        </Box.Header>
         {
           isLoggedIn && transactions.length
             ? (
@@ -56,7 +55,7 @@ class RecentTransactions extends Component {
         {
           isLoggedIn && !transactions.length
             ? (
-              <EmptyState>
+              <Box.EmptyState>
                 <Icon name="icon_empty_recent_transactions" />
                 <h1>{t('No Transactions Yet')}</h1>
                 <p>{t('A great way to start is to top up your account with some {{value}} tokens.', { value: activeToken.key })}</p>
@@ -76,18 +75,18 @@ class RecentTransactions extends Component {
                   : null
               }
                 </div>
-              </EmptyState>
+              </Box.EmptyState>
             )
             : null
         }
         {
           !isLoggedIn
             ? (
-              <EmptyState>
+              <Box.EmptyState>
                 <Icon name="icon_empty_recent_transactions" />
                 <h1>{t('Sign in to view recent transactions')}</h1>
                 <p>{t('In order to see your recent transactions you need to sign in.')}</p>
-              </EmptyState>
+              </Box.EmptyState>
             )
             : null
         }
