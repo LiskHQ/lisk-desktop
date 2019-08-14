@@ -1,16 +1,10 @@
-/* eslint-disable max-lines */
 import React from 'react';
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
 import { loginType } from '../../../constants/hwConstants';
 import { tokenMap } from '../../../constants/tokens';
 import AccountVisual from '../../accountVisual/index';
-import Box from '../../toolbox/box';
 import Converter from '../../converter';
-import HardwareWalletIllustration from
-  '../../toolbox/hardwareWalletIllustration';
 import Piwik from '../../../utils/piwik';
-import Tooltip from '../../toolbox/tooltip/tooltip';
 import TransactionSummary from '../../transactionSummary';
 import fees from '../../../constants/fees';
 import links from '../../../constants/externalLinks';
@@ -22,36 +16,14 @@ class Summary extends React.Component {
 
     this.state = {
       isLoading: false,
-      isHardwareWalletConnected: false,
     };
 
-    this.checkForHardwareWallet = this.checkForHardwareWallet.bind(this);
     this.prevStep = this.prevStep.bind(this);
     this.submitTransaction = this.submitTransaction.bind(this);
-    this.getConfirmButtonLabel = this.getConfirmButtonLabel.bind(this);
-    this.getTitle = this.getTitle.bind(this);
     this.getTooltip = this.getTooltip.bind(this);
   }
 
-  componentDidMount() {
-    const { account } = this.props;
-    let newState = {};
-
-    // istanbul ignore else
-    if (account.hwInfo && account.hwInfo.deviceId) {
-      newState = {
-        ...this.state,
-        isHardwareWalletConnected: true,
-        isLoading: true,
-      };
-      this.submitTransaction({});
-    }
-
-    this.setState(newState);
-  }
-
   componentDidUpdate() {
-    this.checkForHardwareWallet();
     this.checkForSuccessOrFailedTransactions();
   }
 
@@ -70,30 +42,6 @@ class Summary extends React.Component {
     });
   }
 
-  checkForHardwareWallet() {
-    const { transactions } = this.props;
-    const { isHardwareWalletConnected, isLoading } = this.state;
-
-    const hasPendingTransaction = isHardwareWalletConnected
-      ? transactions.pending.find(transaction => (
-        transaction.senderId === this.props.account.address
-        && transaction.recipientId === this.props.fields.recipient.address
-        && fromRawLsk(transaction.amount) === this.props.fields.amount.value
-      ))
-      : transactions.pending.length;
-
-    // istanbul ignore else
-    if (isLoading && (hasPendingTransaction || transactions.failed)) {
-      this.props.nextStep({
-        fields: {
-          ...this.props.fields,
-          hwTransactionStatus: hasPendingTransaction ? 'success' : 'error',
-          isHardwareWalletConnected: this.state.isHardwareWalletConnected,
-        },
-      });
-    }
-  }
-
   checkForSuccessOrFailedTransactions() {
     const {
       account,
@@ -107,7 +55,6 @@ class Summary extends React.Component {
         fields: {
           ...fields,
           hwTransactionStatus: 'error',
-          isHardwareWalletConnected: true,
         },
       });
     }
@@ -117,7 +64,6 @@ class Summary extends React.Component {
         fields: {
           ...fields,
           hwTransactionStatus: false,
-          isHardwareWalletConnected: false,
         },
       });
     }
@@ -127,24 +73,6 @@ class Summary extends React.Component {
     Piwik.trackingEvent('Send_Summary', 'button', 'Previous step');
     this.props.resetTransactionResult();
     this.props.prevStep({ ...this.props.fields });
-  }
-
-  getConfirmButtonLabel() {
-    const {
-      account, fields, t, token,
-    } = this.props;
-    return this.state.isHardwareWalletConnected
-      ? t('Confirm on {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })
-      : t('Send {{amount}} {{token}}', { amount: fields.amount.value, token });
-  }
-
-  getTitle() {
-    const {
-      account, t,
-    } = this.props;
-    return t('Transaction summary') + (account.hwInfo.deviceModel
-      ? t(' - Confirm transaction on your {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })
-      : '');
   }
 
   getTooltip() {
@@ -168,13 +96,12 @@ class Summary extends React.Component {
     }[token];
   }
 
-  /* eslint-disable complexity */
   render() {
     const {
       fields, t, token, account,
     } = this.props;
-    const { secondPassphrase } = this.state;
-    const tooltip = this.getTooltip();
+    // TODO pass BTC tooltip to TransactionSummary;
+    // const tooltip = this.getTooltip();
 
     const fee = token === tokenMap.LSK.key
       ? fromRawLsk(fees.send)
@@ -182,11 +109,11 @@ class Summary extends React.Component {
 
     return (
       <TransactionSummary
-        title={this.getTitle()}
+        title={t('Transaction summary')}
         t={t}
         account={account}
         confirmButton={{
-          label: this.getConfirmButtonLabel(),
+          label: t('Send {{amount}} {{token}}', { amount: fields.amount.value, token }),
           onClick: this.submitTransaction,
         }}
         cancelButton={{
@@ -217,84 +144,6 @@ class Summary extends React.Component {
           </label>
         </section>
       </TransactionSummary>
-    );
-    // eslint-disable-next-line
-    return (
-      <Box className={`${styles.wrapper} summary`} width="medium">
-        <Box.Header className="summary-header">
-          <h2>{this.getTitle()}</h2>
-        </Box.Header>
-        <HardwareWalletIllustration account={account} size="s" />
-
-        <div className={`${styles.content} summary-content`}>
-          <div className={styles.row}>
-            <label>{t('Recipient')}</label>
-            <div className={styles.account}>
-              <AccountVisual address={fields.recipient.address} size={25} />
-              <label className={`${styles.information} recipient-confirm`}>
-                {fields.recipient.title || fields.recipient.address}
-              </label>
-              { fields.recipient.title ? (
-                <span className={`${styles.secondText} ${styles.accountSecondText}`}>
-                  {fields.recipient.address}
-                </span>
-              ) : null }
-            </div>
-          </div>
-
-          <div className={styles.row}>
-            <label>{t('Amount')}</label>
-            <label className={`${styles.information} ${styles.amount} amount-summary`}>
-              {`${fields.amount.value} ${token}`}
-              <Converter className={`${styles.secondText} ${styles.amountSecondText}`} value={fields.amount.value} />
-            </label>
-          </div>
-
-          {token === 'LSK' && fields.reference.value !== '' ? (
-            <div className={styles.row}>
-              <label>{t('Message')}</label>
-              <p className={`${styles.information} reference`}>{fields.reference.value}</p>
-            </div>
-          ) : null}
-
-          <div className={styles.row}>
-            <label className={styles.transactionFee}>
-              {t('Transaction fee')}
-              <Tooltip
-                className="showOnTop"
-                title={tooltip.title}
-                footer={tooltip.footer}
-              >
-                <p className={styles.tooltipText}>
-                  {tooltip.children}
-                </p>
-              </Tooltip>
-            </label>
-            <span className={styles.information}>{t('{{fee}} {{token}}', { fee, token })}</span>
-          </div>
-        </div>
-
-        <Box.Footer className="summary-footer">
-          {this.props.account.hwInfo && this.props.account.hwInfo.deviceId ? null
-            : (
-              <React.Fragment>
-                <PrimaryButton
-                  className={`${styles.confirmBtn} on-nextStep send-button`}
-                  onClick={this.submitTransaction}
-                  disabled={
-                    (secondPassphrase.hasSecondPassphrase
-                      && !secondPassphrase.isValid)
-                  }
-                >
-                  {this.getConfirmButtonLabel()}
-                </PrimaryButton>
-                <TertiaryButton className={`${styles.editBtn} on-prevStep`} onClick={this.prevStep}>
-                  {t('Edit transaction')}
-                </TertiaryButton>
-              </React.Fragment>
-            )}
-        </Box.Footer>
-      </Box>
     );
   }
 }
