@@ -122,7 +122,7 @@ class Setting extends React.Component {
                 />
                 <div>
                   <span className={styles.labelName}>{t('Discreet Mode')}</span>
-                  <p>{t('Hide sensitive information')}</p>
+                  <p>{t('Hide balance and transactions amounts')}</p>
                 </div>
               </label>
               {isAuthenticated && settings.token.active !== tokenMap.BTC.key
