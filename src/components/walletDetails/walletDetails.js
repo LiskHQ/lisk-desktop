@@ -2,6 +2,7 @@ import React from 'react';
 import Box from '../toolbox/box';
 import LiskAmount from '../liskAmount';
 import { tokenMap } from '../../constants/tokens';
+import DiscreetMode from '../discreetMode';
 import styles from './walletDetails.css';
 import Icon from '../toolbox/icon';
 
@@ -27,11 +28,13 @@ const MyAccount = ({
             <Icon name={coin.token === tokenMap.LSK.key ? 'lskIcon' : 'btcIcon'} />
             <div className={styles.details}>
               <span>{t('{{token}} Balance', { token: tokenMap[coin.token].label })}</span>
-              <span>
-                <LiskAmount val={coin.balance} />
-                {' '}
-                {coin.token}
-              </span>
+              <DiscreetMode>
+                <span className={styles.amounts}>
+                  <LiskAmount val={coin.balance} />
+                  {' '}
+                  {coin.token}
+                </span>
+              </DiscreetMode>
             </div>
           </Box.Row>
         ))

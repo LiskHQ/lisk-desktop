@@ -23,6 +23,7 @@ const mapStateToProps = state => ({
   bookmarks: state.bookmarks,
   wallets: state.wallets,
   balance: getActiveTokenAccount(state).balance,
+  isDiscreetMode: state.settings.discreetMode || false,
 });
 
 const mapDispatchToProps = {

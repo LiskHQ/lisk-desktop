@@ -13,6 +13,7 @@ const mapStateToProps = (state, ownProps) => ({
   address: ownProps.match.params.address,
   bookmarks: state.bookmarks,
   activeToken: state.settings.token ? state.settings.token.active : 'LSK',
+  isDiscreetMode: state.settings.discreetMode || false,
 });
 
 // TODO the sort should be removed when BTC api returns transactions sorted by timestamp

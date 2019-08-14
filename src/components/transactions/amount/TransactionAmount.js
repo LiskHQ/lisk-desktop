@@ -1,6 +1,7 @@
 import React from 'react';
 import transactionTypes from '../../../constants/transactionTypes';
 import LiskAmount from '../../liskAmount';
+import DiscreetMode from '../../discreetMode';
 import styles from './transactionAmount.css';
 
 const TransactionAmount = ({ address, transaction, token }) => {
@@ -29,7 +30,7 @@ const TransactionAmount = ({ address, transaction, token }) => {
     <div className={`${styles.wrapper} transaction-amount`}>
       {
       transaction.type === transactionTypes.send
-        ? getTransactionType()
+        ? <DiscreetMode>{getTransactionType()}</DiscreetMode>
         : '-'
     }
     </div>

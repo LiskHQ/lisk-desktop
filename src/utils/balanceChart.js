@@ -34,7 +34,10 @@ const styles = {
   fontSize: 12,
 };
 
-export const graphOptions = format => ({
+export const graphOptions = ({
+  format,
+  isDiscreetMode = false,
+}) => ({
   plugins: {
     hideAxisX: false,
   },
@@ -67,6 +70,7 @@ export const graphOptions = format => ({
       position: 'right',
       type: 'linear',
       ticks: {
+        display: !isDiscreetMode,
         maxTicksLimit: 5,
         fontColor: styles.slateGray,
         fontSize: styles.fontSize,
@@ -92,6 +96,7 @@ export const graphOptions = format => ({
     },
   },
   tooltips: {
+    enabled: !isDiscreetMode,
     callbacks: {
       title(tooltipItem) {
         return moment(tooltipItem[0].xLabel, 'MMMM DD YYYY h:mm:ss A')

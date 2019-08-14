@@ -130,7 +130,9 @@ class WalletTransactions extends React.Component {
       activeFilter: this.props.filters.direction,
     };
 
-    const { t, account, activeToken } = this.props;
+    const {
+      t, account, activeToken, isDiscreetMode,
+    } = this.props;
 
     return (
       <React.Fragment>
@@ -146,6 +148,7 @@ class WalletTransactions extends React.Component {
           <WalletTab
             tabName={t('Wallet')}
             {...overviewProps}
+            isDiscreetMode={isDiscreetMode}
           />
           {this.props.activeToken !== 'BTC' ? (
             <VotesTab
