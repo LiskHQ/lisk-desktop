@@ -122,6 +122,20 @@ class Setting extends React.Component {
                   />
                 )
                 : null}
+              { localStorage.getItem('discreet') ? ( // TODO: Remove when discreet mode is concluded
+                <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+                  <CheckBox
+                    name="discreetMode"
+                    className={`${styles.checkbox} discreetMode`}
+                    checked={settings.discreetMode}
+                    onChange={this.handleCheckboxChange}
+                  />
+                  <div>
+                    <span className={styles.labelName}>{t('Discreet Mode')}</span>
+                    <p>{t('Hide balance and transactions amounts')}</p>
+                  </div>
+                </label>
+              ) : null }
             </section>
             <section>
               <h1>{t('Advanced')}</h1>
