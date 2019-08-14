@@ -11,7 +11,7 @@ describe('Feedback Component', () => {
     };
     const wrapper = shallow(<Feedback {...props}>Test Feedback</Feedback>);
     expect(wrapper).toHaveClassName('error show');
-    expect(wrapper).toContainExactlyOneMatchingElement('img');
+    expect(wrapper).toContainExactlyOneMatchingElement('Icon');
   });
 
   it('Should render with text but without showing', () => {
