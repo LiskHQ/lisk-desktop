@@ -7,7 +7,7 @@ import Feedback from '../toolbox/feedback/feedback';
 import RequestWrapper from './requestWrapper';
 import Spinner from '../spinner/spinner';
 import styles from './request.css';
-import svg from '../../utils/svgIcons';
+import Icon from '../toolbox/icon';
 
 const messageMaxLength = 64;
 
@@ -147,9 +147,9 @@ class RequestLsk extends React.Component {
               error={fields.amount.error}
             />
             <Spinner className={`${styles.status} ${fields.amount.loading && fields.amount.value ? styles.show : ''}`} />
-            <img
+            <Icon
               className={`${styles.status} ${!fields.amount.loading && fields.amount.value ? styles.show : ''}`}
-              src={fields.amount.error ? svg.alertIcon : svg.okIcon}
+              name={fields.amount.error ? 'alertIcon' : 'okIcon'}
             />
           </span>
           <Feedback
@@ -178,9 +178,9 @@ class RequestLsk extends React.Component {
               value={byteCount}
               className={styles.byteCounter}
             />
-            <img
+            <Icon
               className={`${styles.status} ${!fields.reference.loading && fields.reference.value ? styles.show : ''}`}
-              src={fields.reference.error ? svg.alertIcon : svg.okIcon}
+              name={fields.reference.error ? 'alertIcon' : 'okIcon'}
             />
           </span>
           <Feedback

@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './loadingIcon.css';
-import svgIcons from '../../utils/svgIcons';
+import Icon from '../toolbox/icon';
 
 const LoadingIcon = () => (
-  <img src={svgIcons.iconLoader} className={styles.loadingIcon} />
+  <Icon name="iconLoader" className={styles.loadingIcon} />
 );
 
 export default LoadingIcon;

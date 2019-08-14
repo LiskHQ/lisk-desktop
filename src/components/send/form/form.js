@@ -12,7 +12,6 @@ import { Input, AutoresizeTextarea } from '../../toolbox/inputs';
 import { getNetworkCode } from '../../../utils/api/btc/network';
 import AutoSuggest from '../autoSuggest';
 import Spinner from '../../spinner/spinner';
-import svg from '../../../utils/svgIcons';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
 import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
@@ -26,6 +25,7 @@ import Selector from '../../toolbox/selector/selector';
 import { tokenMap } from '../../../constants/tokens';
 import * as btcTransactionsAPI from '../../../utils/api/btc/transactions';
 import Box from '../../box';
+import Icon from '../../toolbox/icon';
 
 class Form extends React.Component {
   // eslint-disable-next-line max-statements
@@ -505,9 +505,9 @@ class Form extends React.Component {
                 error={fields.amount.error}
               />
               <Spinner className={`${styles.spinner} ${this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`} />
-              <img
+              <Icon
                 className={`${styles.status} ${!this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}
-                src={fields.amount.error ? svg.alertIcon : svg.okIcon}
+                name={fields.amount.error ? 'alertIcon' : 'okIcon'}
               />
             </span>
 
@@ -565,9 +565,9 @@ class Form extends React.Component {
                   value={byteCount}
                   className={`${styles.byteCounter} ${fields.reference.error ? styles.hide : ''}`}
                 />
-                <img
+                <Icon
                   className={`${styles.status} ${styles.referenceStatus} ${!fields.reference.value ? styles.hide : styles.show}`}
-                  src={fields.reference.error ? svg.alertIcon : svg.okIcon}
+                  name={fields.reference.error ? 'alertIcon' : 'okIcon'}
                 />
               </span>
               <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${styles.show}`}>

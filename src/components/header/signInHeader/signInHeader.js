@@ -18,7 +18,6 @@ import formStyles from '../../send/form/form.css';
 import Dropdown from '../../toolbox/dropdown/dropdown';
 import Spinner from '../../spinner/spinner';
 import keyCodes from '../../../constants/keyCodes';
-import svg from '../../../utils/svgIcons';
 
 class Header extends React.Component {
   // eslint-disable-next-line max-statements
@@ -260,7 +259,7 @@ class Header extends React.Component {
                               <img
                                 className={`${styles.status} ${!this.state.isValidationLoading && this.state.address && !this.state.isFirstTime
                                   ? styles.show : styles.hide}`}
-                                src={!this.state.connected ? svg.iconWarning : svg.okIcon}
+                                src={!this.state.connected ? 'iconWarning' : 'okIcon'}
                               />
                             </div>
                             {

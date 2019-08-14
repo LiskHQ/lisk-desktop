@@ -11,7 +11,7 @@ import Calendar from '../../toolbox/calendar/calendar';
 import Feedback from '../../toolbox/feedback/feedback';
 import keyCodes from '../../../constants/keyCodes';
 import Spinner from '../../spinner/spinner';
-import svg from '../../../utils/svgIcons';
+import Icon from '../../toolbox/icon';
 
 class DateFieldGroup extends React.Component {
   // eslint-disable-next-line max-statements
@@ -226,9 +226,9 @@ class DateFieldGroup extends React.Component {
         <Spinner
           className={`${styles.status} ${fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
         />
-        <img
+        <Icon
           className={`${styles.status} ${!fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
-          src={fields[data.name].error ? svg.alertIcon : svg.okIcon}
+          name={fields[data.name].error ? 'alertIcon' : 'okIcon'}
         />
       </label>
     );

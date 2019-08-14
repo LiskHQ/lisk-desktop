@@ -6,8 +6,7 @@ import generateUniqueId from '../../utils/generateUniqueId';
 import breakpoints from '../../constants/breakpoints';
 import styles from './accountVisual.css';
 import reg from '../../utils/regex';
-import svg from '../../utils/svgIcons';
-
+import Icon from '../toolbox/icon';
 
 /*
  * Account Visual
@@ -220,8 +219,8 @@ class AccountVisual extends React.Component {
 
     if (!reg.address.test(address)) {
       return (
-        <img
-          src={svg.btcIcon}
+        <Icon
+          name="btcIcon"
           className={`${styles.wrapper} ${className}`}
           style={{ height: newSize, width: newSize }}
         />

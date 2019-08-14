@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import Spinner from '../../spinner/spinner';
-import svg from '../../../utils/svgIcons';
 import { Input } from '../../toolbox/inputs';
 import { PrimaryButton } from '../../toolbox/buttons/button';
 import styles from './bookmarkDropdown.css';
+import Icon from '../../toolbox/icon';
 
 class Bookmark extends React.Component {
   constructor(props) {
@@ -199,9 +199,9 @@ class Bookmark extends React.Component {
               ? (
                 <React.Fragment>
                   <Spinner className={`${styles.status} ${fields.accountName.loading && fields.accountName.value ? styles.show : ''}`} />
-                  <img
+                  <Icon
                     className={`${styles.status} ${!fields.accountName.loading && fields.accountName.value ? styles.show : ''}`}
-                    src={fields.accountName.error ? svg.alertIcon : svg.okIcon}
+                    name={fields.accountName.error ? 'alertIcon' : 'okIcon'}
                   />
                 </React.Fragment>
               )
