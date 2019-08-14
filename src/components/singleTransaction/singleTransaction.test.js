@@ -85,7 +85,7 @@ describe('Single Transaction Component', () => {
           isLoading: false,
         },
       });
-      expect(wrapper.find('.detailsHeader h1')).toHaveText('Transaction details');
+      expect(wrapper.find('header h1')).toHaveText('Transaction details');
       expect(wrapper.find('.transaction-id .copy-title').first().text().trim()).toBe(`${transaction.id}`);
     });
 

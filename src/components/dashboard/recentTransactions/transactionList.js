@@ -22,9 +22,9 @@ const TransactionList = ({
     </header>
     <div className={styles.list}>
       {
-      transactions.map((tx, index) => (
+      transactions.map(tx => (
         <Link
-          key={index}
+          key={tx.id}
           to={`${routes.transactions.pathPrefix}${routes.transactions.path}/${tx.id}`}
           className={`${styles.listRow} transactions-row`}
         >
@@ -54,8 +54,8 @@ const TransactionList = ({
       ))
     }
     </div>
-    <Link to={routes.wallet.path} className={`${styles.viewAllLink} view-all`}>
-      <SecondaryButton className={styles.viewAllBtn}>{t('View All')}</SecondaryButton>
+    <Link to={routes.wallet.path} className="view-all">
+      <SecondaryButton className="small">{t('View All')}</SecondaryButton>
     </Link>
   </div>
 );

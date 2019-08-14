@@ -24,8 +24,8 @@ import { validateAddress } from '../../../utils/validators';
 import Selector from '../../toolbox/selector/selector';
 import { tokenMap } from '../../../constants/tokens';
 import * as btcTransactionsAPI from '../../../utils/api/btc/transactions';
-import Box from '../../box';
 import Icon from '../../toolbox/icon';
+import Box from '../../toolbox/box';
 
 class Form extends React.Component {
   // eslint-disable-next-line max-statements
@@ -469,11 +469,11 @@ class Form extends React.Component {
       && !fields.reference.error) && !this.state.isLoading;
 
     return (
-      <Box className={`${styles.wrapper}`}>
-        <header>
+      <Box className={styles.wrapper} width="medium">
+        <Box.Header>
           <h1>{ t('Send Tokens') }</h1>
-        </header>
-        <div className={styles.formSection}>
+        </Box.Header>
+        <Box.Content className={styles.formSection}>
           <span className={`${styles.fieldGroup} recipient`}>
             <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
             <AutoSuggest
@@ -624,9 +624,8 @@ class Form extends React.Component {
               </span>
             </div>
           )}
-        </div>
-
-        <footer className={`${styles.footer}`}>
+        </Box.Content>
+        <Box.Footer>
           <PrimaryButton
             className={`${styles.confirmButton} btn-submit send-next-button`}
             disabled={!isBtnEnabled}
@@ -634,7 +633,7 @@ class Form extends React.Component {
           >
             {t('Go to Confirmation')}
           </PrimaryButton>
-        </footer>
+        </Box.Footer>
       </Box>
     );
   }

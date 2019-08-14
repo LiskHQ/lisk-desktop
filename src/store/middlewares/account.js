@@ -102,6 +102,7 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   }
 };
 
+// istanbul ignore next
 const getNetworkFromLocalStorage = () => {
   const mySettings = localJSONStorage.get('settings', {});
   if (!mySettings.network) return networks.mainnet;
@@ -114,7 +115,7 @@ const getNetworkFromLocalStorage = () => {
 };
 
 // eslint-disable-next-line max-statements
-const checkNetworkToConnet = () => {
+const checkNetworkToConnet = (storeSettings) => {
   const autologinData = getAutoLogInData();
   let loginNetwork = findMatchingLoginNetwork();
 
@@ -140,14 +141,24 @@ const checkNetworkToConnet = () => {
     };
   }
 
+  // istanbul ignore next
   if (!loginNetwork && !autologinData.liskCoreUrl) {
-    const currentNetwork = getNetworkFromLocalStorage();
-    loginNetwork = {
-      name: currentNetwork.name,
-      network: {
-        ...currentNetwork,
-      },
-    };
+    if (storeSettings.showNetwork) {
+      const currentNetwork = getNetworkFromLocalStorage();
+      loginNetwork = {
+        name: currentNetwork.name,
+        network: {
+          ...currentNetwork,
+        },
+      };
+    } else {
+      loginNetwork = {
+        name: networks.mainnet.name,
+        network: {
+          ...networks.mainnet,
+        },
+      };
+    }
   }
 
   return loginNetwork;
@@ -155,6 +166,7 @@ const checkNetworkToConnet = () => {
 
 // eslint-disable-next-line max-statements
 const autoLogInIfNecessary = async (store) => {
+  const actualSettings = store && store.getState().settings;
   const autologinData = getAutoLogInData();
   let loginNetwork;
 
@@ -180,7 +192,7 @@ const autoLogInIfNecessary = async (store) => {
       };
     }
   } else {
-    loginNetwork = checkNetworkToConnet();
+    loginNetwork = checkNetworkToConnet(actualSettings);
   }
 
   store.dispatch(await networkSet(loginNetwork));

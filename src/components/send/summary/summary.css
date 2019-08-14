@@ -11,24 +11,6 @@
   box-sizing: border-box;
 }
 
-.header {
-  width: 100%;
-  height: 63px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  box-sizing: border-box;
-
-  & > h1 {
-    @mixin headingNormal bold;
-
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-}
-
 .content {
   width: 100%;
   box-sizing: border-box;
@@ -118,27 +100,6 @@
 
 .tooltipText {
   @mixin contentLarge;
-}
-
-.footer {
-  width: 100%;
-  min-width: 572px;
-  margin: 0;
-  padding: 0;
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  box-sizing: border-box;
-
-  & > .confirmBtn {
-    width: var(--footer-button-width);
-  }
-
-  & > .editBtn {
-    width: auto !important;
-  }
 }
 
 .tooltipContainer {

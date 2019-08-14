@@ -72,21 +72,18 @@ const InputsDemo = () => (
       <DarkWrapper>
         {/* TODO fix Input to change to dark mode when props.dark={true} */}
         <Input
-          dark
           onChange={onChange}
           name="demo"
           value="ok value"
         />
         <Icon name="okIcon" />
         <Input
-          dark
           onChange={onChange}
           name="demo"
           value="validating..."
         />
         <Spinner />
         <Input
-          dark
           onChange={onChange}
           name="demo"
           value="0alkawja;jk"

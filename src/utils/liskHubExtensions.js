@@ -1,6 +1,6 @@
 import store from '../store';
 import { moduleAdded } from '../actions/extensions';
-import Box from '../components/box';
+import Box from '../components/toolbox/box';
 import { Button } from '../components/toolbox/buttons/button';
 
 const LiskHubExtensions = {

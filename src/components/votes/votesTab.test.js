@@ -57,7 +57,7 @@ describe('Votes Tab Component', () => {
     wrapper.setProps({ votes: { ...props.votes, data: votes } });
     wrapper.update();
     expect(wrapper).toContainMatchingElements(31, 'TableRow');
-    wrapper.find('.show-votes').simulate('click');
+    wrapper.find('button.show-votes').simulate('click');
     expect(wrapper).toContainMatchingElements(61, 'TableRow');
   });
 

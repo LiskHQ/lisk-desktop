@@ -4,7 +4,7 @@
   width: 100%;
   padding: 0;
   margin-top: 18px;
-  margin-bottom: 0;
+  margin-bottom: 16px;
 
   & > section {
     padding: 20px 59px;
@@ -13,6 +13,7 @@
   & h3 {
     font-size: var(--font-size-h3);
     font-weight: 800;
+    line-height: initial;
     margin: 0;
     padding: 0;
     margin-bottom: 19px;
@@ -22,6 +23,7 @@
   & h4 {
     font-size: var(--font-size-h4);
     font-weight: 800;
+    line-height: initial;
     margin-top: 0;
     margin-bottom: 28px;
   }
@@ -69,10 +71,10 @@
 }
 
 .helpSection {
-  min-height: 100%;
   padding: 58px 48px 0;
 
   &:last-child {
+    align-items: flex-start;
     overflow: auto;
   }
 }

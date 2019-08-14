@@ -1,0 +1,17 @@
+@import '../../app/variables.css';
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto 20px;
+  width: var(--footer-button-width);
+
+  & button {
+    display: block;
+    width: 100%;
+
+    &:not(:first-child) {
+      margin-top: 5px;
+    }
+  }
+}

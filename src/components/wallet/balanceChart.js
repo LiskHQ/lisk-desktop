@@ -1,7 +1,7 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import { Line as LineChart } from 'react-chartjs-2';
-import Box from '../box';
+import Box from '../toolbox/box';
 import styles from './balanceChart.css';
 import * as ChartUtils from '../../utils/balanceChart';
 import EmptyState from '../emptyState';
@@ -24,10 +24,10 @@ class BalanceGraph extends React.Component {
 
     return (
       <Box className={`${styles.wrapper}`}>
-        <header>
+        <Box.Header>
           <h1>{t('{{token}} balance', { token: tokenMap[token].label })}</h1>
-        </header>
-        <main className={`${styles.content}`}>
+        </Box.Header>
+        <div className={styles.content}>
           <div className={`${styles.graphHolder}`}>
             { transactions.length
               ? (
@@ -45,7 +45,7 @@ class BalanceGraph extends React.Component {
               )
             }
           </div>
-        </main>
+        </div>
       </Box>
     );
   }

@@ -6,8 +6,8 @@ function withData(apis = {}) {
   return function (WrappedComponent) {
     function getHOC(ChildComponent) {
       class DataProvider extends React.Component {
-        constructor() {
-          super();
+        constructor(props) {
+          super(props);
           this.defaultState = Object.keys(apis).reduce((acc, key) => ({
             ...acc,
             [key]: {
