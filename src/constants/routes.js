@@ -32,6 +32,7 @@ export default {
   },
   toolboxDemo: {
     path: '/toolbox',
+    pathSuffix: '/:component?',
     component: ToolboxDemo,
     isPrivate: false,
   },

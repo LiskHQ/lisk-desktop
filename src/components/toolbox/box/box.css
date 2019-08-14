@@ -1,0 +1,139 @@
+@import '../../app/variables.css';
+@import '../../app/mixins.css';
+
+:root {
+  --header-height: 48px;
+}
+
+.wrapper {
+  align-items: inherit;
+  background: var(--color-white);
+  border: 1px solid var(--color-platinum);
+  border-radius: var(--border-radius-box);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+
+  &.full {
+    width: 100%;
+  }
+
+  &.medium {
+    width: var(--medium-box-width);
+  }
+
+  & .loadingOverlay {
+    background: rgba(255, 255, 255, 0.8);
+    bottom: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+  }
+
+  &.withHeader {
+    & .loadingOverlay {
+      top: var(--header-height);
+    }
+  }
+
+  & .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+
+    & > section,
+    & .row {
+      margin: 0;
+      width: 100%;
+
+      &:first-child {
+        margin-top: -20px;
+      }
+
+      &:last-child {
+        margin-bottom: -20px;
+      }
+    }
+  }
+
+  &.main {
+    & .content {
+      min-height: 500px;
+    }
+  }
+
+  & > section,
+  & .row {
+    margin: 0 20px;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--color-platinum);
+    }
+  }
+}
+
+.withHeader {
+  margin-bottom: 12px;
+
+  & > header,
+  & > .header {
+    align-items: center;
+    background-color: var(--color-white-smoke);
+    border-bottom: 1px solid var(--color-platinum);
+    border-top-left-radius: var(--border-radius-box);
+    border-top-right-radius: var(--border-radius-box);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    height: var(--header-height);
+    justify-content: space-between;
+    margin: 0;
+    padding: 16px 20px;
+    width: 100%;
+
+    & h1,
+    & h2 {
+      @mixin contentLargest bold;
+
+      color: var(--color-maastricht-blue);
+      margin: 0;
+      padding: 0;
+    }
+
+    & input {
+      min-width: 177px;
+    }
+  }
+
+  & > p {
+    color: var(--color-blue-gray);
+  }
+}
+
+.linear {
+  /*************************
+    Theme for ProgressBar
+  *************************/
+  background: transparent !important;
+  height: 3px;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  & .value {
+    height: 3px;
+  }
+}
