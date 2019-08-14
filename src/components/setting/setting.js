@@ -2,14 +2,15 @@ import React from 'react';
 import { tokenMap } from '../../constants/tokens';
 import Box from '../box';
 import CheckBox from '../toolbox/checkBox';
+import LanguageSelect from './languageSelect';
 import Piwik from '../../utils/piwik';
+import SecondPassphraseSetting from './secondPassphrase';
 import Select from '../toolbox/select';
 import accountConfig from '../../constants/account';
 import links from '../../constants/externalLinks';
 import settingsConst from '../../constants/settings';
 import styles from './setting.css';
 import txTypes from '../../constants/transactionTypes';
-import SecondPassphraseSetting from './secondPassphrase';
 
 class Setting extends React.Component {
   constructor() {
@@ -98,6 +99,7 @@ class Setting extends React.Component {
                   className="currency"
                 />
               </div>
+              <LanguageSelect t={t} />
             </section>
             <section>
               <h1>{t('Security')}</h1>

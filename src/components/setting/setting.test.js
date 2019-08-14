@@ -5,7 +5,12 @@ import configureMockStore from 'redux-mock-store';
 import { MemoryRouter as Router } from 'react-router-dom';
 import Setting from './setting';
 import accounts from '../../../test/constants/accounts';
+import i18n from '../../i18n';
 import settingsConst from '../../constants/settings';
+
+jest.mock('../../i18n', () => ({
+  changeLanguage: jest.fn(),
+}));
 
 describe('Setting', () => {
   const settings = {
@@ -122,6 +127,12 @@ describe('Setting', () => {
       currency: settingsConst.currencies[1],
     };
     expect(props.settingsUpdated).toBeCalledWith(expectedCallToSettingsUpdated);
+  });
+
+  it('should allow to change active language setting to German', () => {
+    wrapper.find('.language input').simulate('focus');
+    wrapper.find('.language .options span').at(1).simulate('click', { target: { dataset: { index: 1 } } });
+    expect(i18n.changeLanguage).toBeCalledWith('de');
   });
 
   it('should update expireTime when updating autolog', () => {
