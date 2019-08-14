@@ -17,9 +17,13 @@ import newRelease from './utils/newRelease';
 import LiskHubExtensions from './utils/liskHubExtensions';
 
 if (env.production) {
-  ipcLocale.init(i18n);
   externalLinks.init();
 }
+
+if (!env.test) {
+  ipcLocale.init(i18n);
+}
+
 newRelease.init();
 
 const rootElement = document.getElementById('app');
