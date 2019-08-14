@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 40">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 40" width="44" height="40">
     <g fill="none" fill-rule="evenodd">
         <path fill="#FFF" fill-opacity=".01" d="M-2-4h48v48H-2z" opacity=".01"/>
         <rect width="44" height="30" fill="#CAD3EB" rx="2"/>
