@@ -1,20 +1,7 @@
 @import '../../app/variables.css';
 @import '../../app/mixins.css';
 
-.wrapper {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  overflow: initial;
-  box-sizing: border-box;
-}
-
 .information {
-  @mixin contentLargest;
-
-  color: var(--color-maastricht-blue);
   margin: 0;
   margin-left: 15px;
 }
@@ -24,38 +11,4 @@
 
   color: var(--color-blue-gray);
   margin-left: 10px;
-}
-
-.transactionFee {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-
-  & > span:last-child {
-    @mixin contentLargest;
-
-    color: var(--color-maastricht-blue);
-  }
-}
-
-.tooltipText {
-  @mixin contentLarge;
-}
-
-.tooltipContainer {
-  position: relative;
-}
-
-.tooltip {
-  position: absolute;
-  top: 19px;
-  left: 123px;
-
-  & :global(.tooltip-window) {
-    max-width: 464px;
-  }
-
-  & .tooltipText {
-    margin-bottom: 8px;
-  }
 }
