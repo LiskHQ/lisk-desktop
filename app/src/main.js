@@ -5,7 +5,7 @@ import path from 'path';
 import storage from 'electron-json-storage'; // eslint-disable-line import/no-extraneous-dependencies
 import getPort from 'get-port';
 import win from './modules/win';
-// import localeHandler from './modules/localeHandler';
+import localeHandler from './modules/localeHandler';
 import updateChecker from './modules/autoUpdater';
 import server from '../server';
 
@@ -29,7 +29,7 @@ const checkForUpdates = updateChecker({
   electron,
 });
 
-const { app } = electron;
+const { app, ipcMain } = electron;
 let appIsReady = false;
 
 const createWindow = () => {
@@ -88,13 +88,15 @@ app.on('will-finish-launching', () => {
 });
 
 // ToDo - enable this feature when it is implemented in the new design
-// ipcMain.on('set-locale', (event, locale) => {
-//   const langCode = locale.substr(0, 2);
-//   if (langCode) {
-//     localeHandler.update({ langCode, electron, storage, event, checkForUpdates });
-//   }
-// });
+ipcMain.on('set-locale', (event, locale) => {
+  const langCode = locale.substr(0, 2);
+  if (langCode) {
+    localeHandler.update({
+      langCode, electron, storage, event, checkForUpdates,
+    });
+  }
+});
 
-// ipcMain.on('request-locale', () => {
-//   localeHandler.send({ storage });
-// });
+ipcMain.on('request-locale', () => {
+  localeHandler.send({ storage });
+});
