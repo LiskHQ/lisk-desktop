@@ -67,6 +67,8 @@ describe('Setting', () => {
   };
 
   beforeEach(() => {
+    localStorage.setItem('feature-flag-language', true); // TODO: Remove when i18n epic #2301 is finished
+
     wrapper = mount(<Router>
       <Setting {...props} store={store} />
     </Router>, options);
