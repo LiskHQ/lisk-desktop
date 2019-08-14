@@ -249,18 +249,18 @@ class BookmarksList extends React.Component {
               </React.Fragment>
             )
         }
-          {
+        </Box.Content>
+        {
           selectedBookmarks.length && limit
             ? (
-              <div className={styles.footer}>
+              <Box.Footer className={styles.footer}>
                 <Link to={routes.bookmarks.path}>
-                  <SecondaryButton>{t('View All')}</SecondaryButton>
+                  <SecondaryButton className="small">{t('View All')}</SecondaryButton>
                 </Link>
-              </div>
+              </Box.Footer>
             )
             : null
         }
-        </Box.Content>
       </Box>
     );
   }

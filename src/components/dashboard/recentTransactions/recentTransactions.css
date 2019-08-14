@@ -32,6 +32,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-bottom: 20px;
 
     & > .listRow {
       @mixin contentLargest bold;
@@ -51,17 +52,5 @@
         margin-left: auto;
       }
     }
-  }
-
-  & .viewAllLink {
-    margin-top: 22px;
-  }
-
-  & .viewAllBtn {
-    @mixin contentNormal bold;
-
-    width: 85px;
-    height: 36px;
-    padding: 0;
   }
 }
