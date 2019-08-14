@@ -9,7 +9,6 @@ import links from '../../constants/externalLinks';
 import settingsConst from '../../constants/settings';
 import styles from './setting.css';
 import txTypes from '../../constants/transactionTypes';
-import networks from '../../constants/networks';
 import SecondPassphraseSetting from './secondPassphrase';
 
 class Setting extends React.Component {
@@ -23,19 +22,6 @@ class Setting extends React.Component {
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.toggleAutoLog = this.toggleAutoLog.bind(this);
     this.handleTokenToggle = this.handleTokenToggle.bind(this);
-  }
-
-  // istanbul ignore next
-  componentDidUpdate(prevProps) {
-    const {
-      settings, account, settingsUpdated, networkSet,
-    } = this.props;
-    if (Object.entries(account).length === 1
-      && prevProps.settings.showNetwork !== settings.showNetwork
-      && !settings.showNetwork) {
-      settingsUpdated({ network: { name: networks.mainnet.name } });
-      networkSet(networks.mainnet);
-    }
   }
 
   handleTokenToggle({ target: { name } }) {

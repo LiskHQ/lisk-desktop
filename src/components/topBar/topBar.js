@@ -33,7 +33,7 @@ class TopBar extends React.Component {
 
   onLogout() {
     const {
-      logOut, history, settings, settingsUpdated, networkSet, network,
+      logOut, history, settings, networkSet, network,
     } = this.props;
 
     Piwik.trackingEvent('Header', 'button', 'Open logout dialog');
@@ -41,7 +41,6 @@ class TopBar extends React.Component {
     history.replace(`${routes.dashboard.path}`);
 
     if (!settings.showNetwork && network.name !== networks.mainnet.name) {
-      settingsUpdated({ network: { name: networks.mainnet.name } });
       networkSet(networks.mainnet);
     }
   }
