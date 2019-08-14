@@ -1,12 +1,13 @@
+import academy from '../assets/images/help/academy.svg';
 import alertIcon from '../assets/images/icons-v2/icon-alert.svg';
-import Avatar from '../assets/images/icons-v2/avatar.svg';
+import Avatar from '../assets/images/icons-v2/icon-avatar.svg';
 import backArrowActiveIcon from '../assets/images/icons-v2/arrow-left-active.svg';
 import backArrowInactiveIcon from '../assets/images/icons-v2/arrow-left-inactive.svg';
 import balance from '../assets/images/icons-v2/balance.svg';
-import bookmarksIconEmptyState from '../assets/images/icons-v2/bookmarks_empty_state.svg';
-import btcIcon from '../assets/images/icons-v2/icon-btc-48.svg';
+import bookmarksIconEmptyState from '../assets/images/icons-v2/bookmarks-empty-state.svg';
+import btcIcon from '../assets/images/icons-v2/icon-btc.svg';
 import Check from '../assets/images/icons-v2/check.svg';
-import checkboxFilled from '../assets/images/icons-v2/checkmark-16-filled.svg';
+import checkboxFilled from '../assets/images/icons-v2/checkmark-filled.svg';
 import checkmark from '../assets/images/icons-v2/checkmark.svg';
 import CircleLock from '../assets/images/icons-v2/circle-lock.svg';
 import copy from '../assets/images/icons-v2/copy.svg';
@@ -21,25 +22,28 @@ import fowardArrowActiveIcon from '../assets/images/icons-v2/arrow-right-active.
 import fowardArrowInactiveIcon from '../assets/images/icons-v2/arrow-right-inactive.svg';
 import help from '../assets/images/icons-v2/help.svg';
 import helpActive from '../assets/images/icons-v2/help-active.svg';
+import helpCenter from '../assets/images/help/help-center.svg';
+import helpCenterArrow from '../assets/images/help/arrow.svg';
 import hidePassphraseIcon from '../assets/images/icons-v2/icon-hide-passphrase.svg';
 import icoLink from '../assets/images/icons-v2/link.svg';
-import iconEdit from '../assets/images/icons-v2/icon_edit.svg';
-import iconEmptyRecentTransactions from '../assets/images/icons-v2/empty_recent_transactions.svg';
+import iconEdit from '../assets/images/icons-v2/icon-edit.svg';
+import iconEmptyRecentTransactions from '../assets/images/icons-v2/empty-recent-transactions.svg';
 import iconFilter from '../assets/images/icons-v2/icon-filter.svg';
-import iconLedgerNanoDevice from '../assets/images/icons-v2/icon_ledger_device.svg';
-import iconLoader from '../assets/images/icons-v2/icon-loader-16.svg';
-import iconTrezorModelTDevice from '../assets/images/icons-v2/icon_trezor_device.svg';
+import iconLedgerNanoDevice from '../assets/images/icons-v2/icon-ledger-device.svg';
+import iconLoader from '../assets/images/icons-v2/icon-loader.svg';
+import iconTrezorModelTDevice from '../assets/images/icons-v2/icon-trezor-device.svg';
 import iconWalletDetails from '../assets/images/icons-v2/icon-wallet-details.svg';
 import iconWarning from '../assets/images/icons-v2/icon-warning.svg';
 import incoming from '../assets/images/icons-v2/incoming.svg';
 import Key from '../assets/images/icons-v2/key.svg';
+import liskChat from '../assets/images/help/lisk-chat.svg';
 import liskLogo from '../assets/images/lisk-logo-v2.svg';
 import liskLogoWhite from '../assets/images/lisk-logo-white-v2.svg';
 import Lock from '../assets/images/icons-v2/lock.svg';
 import logout from '../assets/images/icons-v2/logout.svg';
 import logoutActive from '../assets/images/icons-v2/logout-active.svg';
 import lskIcon from '../assets/images/icons-v2/icon-lsk.svg';
-import newsFeedAvatar from '../assets/images/icons-v2/newsFeedsAvatar.svg';
+import newsFeedAvatar from '../assets/images/icons-v2/news-feed-avatar.svg';
 import noTweetsIcon from '../assets/images/icons-v2/no-tweets.svg';
 import okIcon from '../assets/images/icons-v2/icon-checkmark.svg';
 import outgoing from '../assets/images/icons-v2/outgoing.svg';
@@ -54,26 +58,23 @@ import settingsActive from '../assets/images/icons-v2/settings-active.svg';
 import showPassphraseIcon from '../assets/images/icons-v2/icon-show-passphrase.svg';
 import signin from '../assets/images/icons-v2/signin.svg';
 import signinActive from '../assets/images/icons-v2/signin-active.svg';
-import transactionError from '../assets/images/icons-v2/transactionError.svg';
-import transactionsDelegateIcon from '../assets/images/icons-v2/icon_delegate_vote.svg';
-import transactionsSendIcon from '../assets/images/icons-v2/icon_transaction.svg';
-import transactionSuccess from '../assets/images/icons-v2/transactionSuccess.svg';
+import transactionError from '../assets/images/icons-v2/transaction-error.svg';
+import transactionsDelegateIcon from '../assets/images/icons-v2/icon-delegate-vote.svg';
+import transactionsSendIcon from '../assets/images/icons-v2/icon-transaction.svg';
+import transactionSuccess from '../assets/images/icons-v2/transaction-success.svg';
 import tx2ndPassphrase from '../assets/images/icons-v2/tx-2nd-passphrase.svg';
 import txDefault from '../assets/images/icons-v2/tx-default.svg';
 import txDelegate from '../assets/images/icons-v2/tx-delegate.svg';
 import txSendArrow from '../assets/images/icons-v2/tx-send-arrow.svg';
 import txVote from '../assets/images/icons-v2/tx-vote.svg';
-import academy from '../assets/images/help/academy.svg';
-import helpCenter from '../assets/images/help/help-center.svg';
-import liskChat from '../assets/images/help/lisk-chat.svg';
-import helpCenterArrow from '../assets/images/help/arrow.svg';
 import user from '../assets/images/icons-v2/user.svg';
 import userActive from '../assets/images/icons-v2/user-active.svg';
 import walletIcon from '../assets/images/icons-v2/wallet.svg';
 import walletIconActive from '../assets/images/icons-v2/wallet-active.svg';
-import warningIcon from '../assets/images/icons-v2/warningIcon.svg';
+import warningIcon from '../assets/images/icons-v2/warning-icon.svg';
 
 export default {
+  academy,
   alert_icon: alertIcon,
   avatar_icon: Avatar,
   back_arrow_active_icon: backArrowActiveIcon,
@@ -99,6 +100,8 @@ export default {
   foward_arrow_inactive_icon: fowardArrowInactiveIcon,
   help,
   helpActive,
+  helpCenter,
+  helpCenterArrow,
   hidePassphraseIcon,
   icoLink,
   icon_edit: iconEdit,
@@ -111,6 +114,7 @@ export default {
   iconWarning,
   incoming,
   key_icon: Key,
+  liskChat,
   liskLogo,
   liskLogoWhite,
   lock_icon: Lock,
@@ -144,10 +148,6 @@ export default {
   user,
   userActive,
   walletIcon,
-  academy,
-  helpCenter,
-  liskChat,
-  helpCenterArrow,
   walletIconActive,
   warningIcon,
 };
