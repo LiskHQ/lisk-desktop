@@ -1,15 +1,15 @@
 import academy from '../assets/images/help/academy.svg';
 import alertIcon from '../assets/images/icons-v2/icon-alert.svg';
-import Avatar from '../assets/images/icons-v2/icon-avatar.svg';
+import avatarIcon from '../assets/images/icons-v2/icon-avatar.svg';
 import backArrowActiveIcon from '../assets/images/icons-v2/arrow-left-active.svg';
 import backArrowInactiveIcon from '../assets/images/icons-v2/arrow-left-inactive.svg';
 import balance from '../assets/images/icons-v2/balance.svg';
 import bookmarksIconEmptyState from '../assets/images/icons-v2/bookmarks-empty-state.svg';
 import btcIcon from '../assets/images/icons-v2/icon-btc.svg';
-import Check from '../assets/images/icons-v2/check.svg';
+import checkIcon from '../assets/images/icons-v2/check.svg';
 import checkboxFilled from '../assets/images/icons-v2/checkmark-filled.svg';
 import checkmark from '../assets/images/icons-v2/checkmark.svg';
-import CircleLock from '../assets/images/icons-v2/circle-lock.svg';
+import circleLockIcon from '../assets/images/icons-v2/circle-lock.svg';
 import copy from '../assets/images/icons-v2/copy.svg';
 import dashboardIcon from '../assets/images/icons-v2/dashboard.svg';
 import dashboardIconActive from '../assets/images/icons-v2/dashboard-active.svg';
@@ -35,7 +35,7 @@ import iconTrezorModelTDevice from '../assets/images/icons-v2/icon-trezor-device
 import iconWalletDetails from '../assets/images/icons-v2/icon-wallet-details.svg';
 import iconWarning from '../assets/images/icons-v2/icon-warning.svg';
 import incoming from '../assets/images/icons-v2/incoming.svg';
-import Key from '../assets/images/icons-v2/key.svg';
+import keyIcon from '../assets/images/icons-v2/key.svg';
 import liskChat from '../assets/images/help/lisk-chat.svg';
 import liskLogo from '../assets/images/lisk-logo-v2.svg';
 import liskLogoWhite from '../assets/images/lisk-logo-white-v2.svg';
@@ -47,7 +47,7 @@ import newsFeedAvatar from '../assets/images/icons-v2/news-feed-avatar.svg';
 import noTweetsIcon from '../assets/images/icons-v2/no-tweets.svg';
 import okIcon from '../assets/images/icons-v2/icon-checkmark.svg';
 import outgoing from '../assets/images/icons-v2/outgoing.svg';
-import Pdf from '../assets/images/icons-v2/pdf.svg';
+import pdfIcon from '../assets/images/icons-v2/pdf.svg';
 import questionIcon from '../assets/images/icons-v2/ico-question.svg';
 import questionMark from '../assets/images/icons-v2/question.svg';
 import searchIconActive from '../assets/images/icons-v2/search-active.svg';
@@ -75,18 +75,18 @@ import warningIcon from '../assets/images/icons-v2/warning-icon.svg';
 
 export default {
   academy,
-  alert_icon: alertIcon,
-  avatar_icon: Avatar,
+  alertIcon,
+  avatarIcon,
   back_arrow_active_icon: backArrowActiveIcon,
   back_arrow_inactive_icon: backArrowInactiveIcon,
   backArrow: backArrowActiveIcon,
   balance,
   bookmarksIconEmptyState,
   btcIcon,
-  check_icon: Check,
+  check_icon: checkIcon,
   checkboxFilled,
   checkmark,
-  circleLock_icon: CircleLock,
+  circleLock_icon: circleLockIcon,
   copy,
   dashboardIcon,
   dashboardIconActive,
@@ -113,7 +113,7 @@ export default {
   iconWalletDetails,
   iconWarning,
   incoming,
-  key_icon: Key,
+  key_icon: keyIcon,
   liskChat,
   liskLogo,
   liskLogoWhite,
@@ -125,7 +125,7 @@ export default {
   noTweetsIcon,
   ok_icon: okIcon,
   outgoing,
-  pdf_icon: Pdf,
+  pdf_icon: pdfIcon,
   question_icon: questionMark,
   questionIcon,
   search_icon_active: searchIconActive,
