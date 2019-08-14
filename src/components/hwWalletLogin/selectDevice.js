@@ -46,8 +46,8 @@ class SelectDevice extends React.Component {
               <img
                 className={styles.device_image}
                 src={device.model === models.trezorModelT
-                  ? svgIcons.icon_trezor_modelT_device
-                  : svgIcons.icon_ledger_nano_device}
+                  ? svgIcons.iconTrezorModelTDevice
+                  : svgIcons.iconLedgerNanoDevice}
               />
               <p>{device.model}</p>
 

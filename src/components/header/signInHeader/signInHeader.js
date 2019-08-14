@@ -260,7 +260,7 @@ class Header extends React.Component {
                               <img
                                 className={`${styles.status} ${!this.state.isValidationLoading && this.state.address && !this.state.isFirstTime
                                   ? styles.show : styles.hide}`}
-                                src={!this.state.connected ? svg.iconWarning : svg.ok_icon}
+                                src={!this.state.connected ? svg.iconWarning : svg.okIcon}
                               />
                             </div>
                             {

@@ -149,7 +149,7 @@ class RequestLsk extends React.Component {
             <Spinner className={`${styles.status} ${fields.amount.loading && fields.amount.value ? styles.show : ''}`} />
             <img
               className={`${styles.status} ${!fields.amount.loading && fields.amount.value ? styles.show : ''}`}
-              src={fields.amount.error ? svg.alert_icon : svg.ok_icon}
+              src={fields.amount.error ? svg.alertIcon : svg.okIcon}
             />
           </span>
           <Feedback
@@ -180,7 +180,7 @@ class RequestLsk extends React.Component {
             />
             <img
               className={`${styles.status} ${!fields.reference.loading && fields.reference.value ? styles.show : ''}`}
-              src={fields.reference.error ? svg.alert_icon : svg.ok_icon}
+              src={fields.reference.error ? svg.alertIcon : svg.okIcon}
             />
           </span>
           <Feedback

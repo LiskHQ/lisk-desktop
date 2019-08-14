@@ -201,7 +201,7 @@ class Bookmark extends React.Component {
                   <Spinner className={`${styles.status} ${fields.accountName.loading && fields.accountName.value ? styles.show : ''}`} />
                   <img
                     className={`${styles.status} ${!fields.accountName.loading && fields.accountName.value ? styles.show : ''}`}
-                    src={fields.accountName.error ? svg.alert_icon : svg.ok_icon}
+                    src={fields.accountName.error ? svg.alertIcon : svg.okIcon}
                   />
                 </React.Fragment>
               )

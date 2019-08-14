@@ -155,7 +155,7 @@ class AutoSuggest extends React.Component {
           <Spinner className={`${styles.spinner} ${this.state.isLoading && recipient.value ? styles.show : styles.hide}`} />
           <img
             className={`${styles.status} ${!this.state.isLoading && recipient.value ? styles.show : styles.hide}`}
-            src={recipient.error ? svg.alert_icon : svg.ok_icon}
+            src={recipient.error ? svg.alertIcon : svg.okIcon}
           />
           <div className={`${styles.bookmarkContainer}`}>
             <div ref={(node) => { this.listContainerRef = node; }}>

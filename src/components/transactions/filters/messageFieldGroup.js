@@ -93,7 +93,7 @@ class MessageFieldGroup extends React.Component {
           />
           <img
             className={`${styles.status} ${!fields.message.loading && filters.message ? styles.show : ''}`}
-            src={fields.message.error ? svg.alert_icon : svg.ok_icon}
+            src={fields.message.error ? svg.alertIcon : svg.okIcon}
           />
         </div>
         <Feedback

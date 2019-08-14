@@ -141,7 +141,7 @@ class TopBar extends React.Component {
                 <Icon
                   onClick={this.handleSearchDropdown}
                   className="search-icon"
-                  name={`search_icon_${openDropdown === 'search' ? 'active' : 'inactive'}`}
+                  name={`searchIcon${openDropdown === 'search' ? 'Active' : 'Inactive'}`}
                 />
                 <Dropdown
                   showDropdown={openDropdown === 'search'}

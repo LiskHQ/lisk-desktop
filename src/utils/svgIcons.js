@@ -1,13 +1,15 @@
 import academy from '../assets/images/help/academy.svg';
 import alertIcon from '../assets/images/icons-v2/icon-alert.svg';
+import arrowLeftActive from '../assets/images/icons-v2/arrow-left-active.svg';
+import arrowLeftInactive from '../assets/images/icons-v2/arrow-left-inactive.svg';
+import arrowRightActive from '../assets/images/icons-v2/arrow-right-active.svg';
+import arrowRightInactive from '../assets/images/icons-v2/arrow-right-inactive.svg';
 import avatarIcon from '../assets/images/icons-v2/icon-avatar.svg';
-import backArrowActiveIcon from '../assets/images/icons-v2/arrow-left-active.svg';
-import backArrowInactiveIcon from '../assets/images/icons-v2/arrow-left-inactive.svg';
 import balance from '../assets/images/icons-v2/balance.svg';
 import bookmarksIconEmptyState from '../assets/images/icons-v2/bookmarks-empty-state.svg';
 import btcIcon from '../assets/images/icons-v2/icon-btc.svg';
-import checkIcon from '../assets/images/icons-v2/check.svg';
 import checkboxFilled from '../assets/images/icons-v2/checkmark-filled.svg';
+import checkIcon from '../assets/images/icons-v2/check.svg';
 import checkmark from '../assets/images/icons-v2/checkmark.svg';
 import circleLockIcon from '../assets/images/icons-v2/circle-lock.svg';
 import copy from '../assets/images/icons-v2/copy.svg';
@@ -18,8 +20,6 @@ import delegatesIconActive from '../assets/images/icons-v2/delegates-active.svg'
 import feedback from '../assets/images/icons-v2/feedback.svg';
 import feedbackActive from '../assets/images/icons-v2/feedback-active.svg';
 import fileOutline from '../assets/images/icons-v2/icon-file-outline.svg';
-import fowardArrowActiveIcon from '../assets/images/icons-v2/arrow-right-active.svg';
-import fowardArrowInactiveIcon from '../assets/images/icons-v2/arrow-right-inactive.svg';
 import help from '../assets/images/icons-v2/help.svg';
 import helpActive from '../assets/images/icons-v2/help-active.svg';
 import helpCenter from '../assets/images/help/help-center.svg';
@@ -39,7 +39,7 @@ import keyIcon from '../assets/images/icons-v2/key.svg';
 import liskChat from '../assets/images/help/lisk-chat.svg';
 import liskLogo from '../assets/images/lisk-logo-v2.svg';
 import liskLogoWhite from '../assets/images/lisk-logo-white-v2.svg';
-import Lock from '../assets/images/icons-v2/lock.svg';
+import lockIcon from '../assets/images/icons-v2/lock.svg';
 import logout from '../assets/images/icons-v2/logout.svg';
 import logoutActive from '../assets/images/icons-v2/logout-active.svg';
 import lskIcon from '../assets/images/icons-v2/icon-lsk.svg';
@@ -59,7 +59,7 @@ import showPassphraseIcon from '../assets/images/icons-v2/icon-show-passphrase.s
 import signin from '../assets/images/icons-v2/signin.svg';
 import signinActive from '../assets/images/icons-v2/signin-active.svg';
 import transactionError from '../assets/images/icons-v2/transaction-error.svg';
-import transactionsDelegateIcon from '../assets/images/icons-v2/icon-delegate-vote.svg';
+import transactionsDelegateVoteIcon from '../assets/images/icons-v2/icon-delegate-vote.svg';
 import transactionsSendIcon from '../assets/images/icons-v2/icon-transaction.svg';
 import transactionSuccess from '../assets/images/icons-v2/transaction-success.svg';
 import tx2ndPassphrase from '../assets/images/icons-v2/tx-2nd-passphrase.svg';
@@ -76,17 +76,18 @@ import warningIcon from '../assets/images/icons-v2/warning-icon.svg';
 export default {
   academy,
   alertIcon,
+  arrowLeftActive,
+  arrowLeftInactive,
+  arrowRightActive,
+  arrowRightInactive,
   avatarIcon,
-  back_arrow_active_icon: backArrowActiveIcon,
-  back_arrow_inactive_icon: backArrowInactiveIcon,
-  backArrow: backArrowActiveIcon,
   balance,
   bookmarksIconEmptyState,
   btcIcon,
-  check_icon: checkIcon,
   checkboxFilled,
+  checkIcon,
   checkmark,
-  circleLock_icon: circleLockIcon,
+  circleLockIcon,
   copy,
   dashboardIcon,
   dashboardIconActive,
@@ -95,50 +96,45 @@ export default {
   feedback,
   feedbackActive,
   fileOutline,
-  forwardArrow: fowardArrowActiveIcon,
-  foward_arrow_active_icon: fowardArrowActiveIcon,
-  foward_arrow_inactive_icon: fowardArrowInactiveIcon,
   help,
   helpActive,
   helpCenter,
   helpCenterArrow,
   hidePassphraseIcon,
   icoLink,
-  icon_edit: iconEdit,
-  icon_empty_recent_transactions: iconEmptyRecentTransactions,
-  icon_ledger_nano_device: iconLedgerNanoDevice,
-  icon_trezor_modelT_device: iconTrezorModelTDevice,
+  iconEdit,
+  iconEmptyRecentTransactions,
   iconFilter,
+  iconLedgerNanoDevice,
   iconLoader,
+  iconTrezorModelTDevice,
   iconWalletDetails,
   iconWarning,
   incoming,
-  key_icon: keyIcon,
   liskChat,
   liskLogo,
   liskLogoWhite,
-  lock_icon: Lock,
   logout,
   logoutActive,
   lskIcon,
   newsFeedAvatar,
   noTweetsIcon,
-  ok_icon: okIcon,
+  okIcon,
   outgoing,
-  pdf_icon: pdfIcon,
-  question_icon: questionMark,
+  pdfIcon,
   questionIcon,
-  search_icon_active: searchIconActive,
-  search_icon_inactive: searchIconInactive,
+  questionMark,
+  searchIconActive,
+  searchIconInactive,
   searchInput,
   settings,
   settingsActive,
   showPassphraseIcon,
   signin,
   signinActive,
-  transaction_delegate_vote: transactionsDelegateIcon,
-  transaction_send_icon: transactionsSendIcon,
   transactionError,
+  transactionsDelegateVoteIcon,
+  transactionsSendIcon,
   transactionSuccess,
   tx2ndPassphrase,
   txDefault,

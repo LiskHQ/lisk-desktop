@@ -75,14 +75,14 @@ class NavigationButtons extends React.Component {
           disabled={!isBackActive}
           onClick={this.onGoBack}
         >
-          <Icon name="backArrow" />
+          <Icon name="arrowLeftActive" />
         </button>
         <button
           className="go-forward"
           disabled={!isForwardActive}
           onClick={this.onGoForward}
         >
-          <Icon name="forwardArrow" />
+          <Icon name="arrowRightActive" />
         </button>
       </div>
     );

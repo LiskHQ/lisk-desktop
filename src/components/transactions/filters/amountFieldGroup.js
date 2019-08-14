@@ -111,7 +111,7 @@ class AmountFieldGroup extends React.Component {
         />
         <img
           className={`${styles.status} ${!fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
-          src={fields[data.name].error ? svg.alert_icon : svg.ok_icon}
+          src={fields[data.name].error ? svg.alertIcon : svg.okIcon}
         />
       </label>
     );

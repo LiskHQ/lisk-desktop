@@ -75,9 +75,9 @@ class MonthView extends Component {
     const showingDate = moment(this.props.showingDate, dateFormat).startOf('month');
     const daysInMonth = [...Array(showingDate.daysInMonth())];
     const prevIcon = validations.canGoToPrevious(showingDate, minDate, this.options)
-      ? svg.back_arrow_active_icon : svg.back_arrow_inactive_icon;
+      ? svg.arrowLeftActive : svg.arrowLeftinactive;
     const nextIcon = validations.canGoToNext(showingDate, maxDate, this.options)
-      ? svg.foward_arrow_active_icon : svg.foward_arrow_inactive_icon;
+      ? svg.arrowRightActive : svg.arrowRightInactive;
 
     return (
       <div className={`${!isShown ? styles.hidden : ''} monthView`}>

@@ -507,7 +507,7 @@ class Form extends React.Component {
               <Spinner className={`${styles.spinner} ${this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`} />
               <img
                 className={`${styles.status} ${!this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}
-                src={fields.amount.error ? svg.alert_icon : svg.ok_icon}
+                src={fields.amount.error ? svg.alertIcon : svg.okIcon}
               />
             </span>
 
@@ -567,7 +567,7 @@ class Form extends React.Component {
                 />
                 <img
                   className={`${styles.status} ${styles.referenceStatus} ${!fields.reference.value ? styles.hide : styles.show}`}
-                  src={fields.reference.error ? svg.alert_icon : svg.ok_icon}
+                  src={fields.reference.error ? svg.alertIcon : svg.okIcon}
                 />
               </span>
               <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${styles.show}`}>
