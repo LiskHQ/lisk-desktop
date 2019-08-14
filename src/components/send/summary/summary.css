@@ -11,78 +11,18 @@
   box-sizing: border-box;
 }
 
-.content {
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 0 24px;
-
-  & .row {
-    width: 100%;
-    height: 88px;
-    padding: 16px 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    box-sizing: border-box;
-
-    &:not(:first-child) {
-      border-top: 1px solid rgba(111, 114, 118, 0.1);
-    }
-
-    & > label:first-child {
-      @mixin contentNormal bold;
-
-      color: var(--color-maastricht-blue);
-      margin-bottom: 10px;
-    }
-
-    & .account {
-      width: 100%;
-      height: 27px;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      box-sizing: border-box;
-
-      & > label {
-        margin-left: 15px;
-      }
-    }
-
-    & .amount {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
-      align-items: flex-end;
-    }
-  }
-
-  & .passphrase {
-    height: auto;
-  }
-}
-
 .information {
   @mixin contentLargest;
 
   color: var(--color-maastricht-blue);
   margin: 0;
+  margin-left: 15px;
 }
 
 .secondText {
   @mixin contentLargest;
 
   color: var(--color-blue-gray);
-  margin-left: 10px;
-}
-
-.amountSecondText {
   margin-left: 10px;
 }
 

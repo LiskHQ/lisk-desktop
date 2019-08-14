@@ -1,20 +1,21 @@
 /* eslint-disable max-lines */
 import React from 'react';
+import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
+import { extractPublicKey } from '../../../utils/account';
+import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
+import { loginType } from '../../../constants/hwConstants';
+import { tokenMap } from '../../../constants/tokens';
+import AccountVisual from '../../accountVisual/index';
+import Box from '../../toolbox/box';
 import Converter from '../../converter';
 import HardwareWalletIllustration from
   '../../toolbox/hardwareWalletIllustration';
-import AccountVisual from '../../accountVisual/index';
-import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
-import fees from '../../../constants/fees';
-import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
-import { loginType } from '../../../constants/hwConstants';
 import PassphraseInput from '../../passphraseInput/passphraseInput';
-import Tooltip from '../../toolbox/tooltip/tooltip';
-import links from '../../../constants/externalLinks';
 import Piwik from '../../../utils/piwik';
-import Box from '../../toolbox/box';
-import { extractPublicKey } from '../../../utils/account';
-import { tokenMap } from '../../../constants/tokens';
+import Tooltip from '../../toolbox/tooltip/tooltip';
+import TransactionSummary from '../../transactionSummary';
+import fees from '../../../constants/fees';
+import links from '../../../constants/externalLinks';
 import styles from './summary.css';
 
 class Summary extends React.Component {
@@ -216,6 +217,45 @@ class Summary extends React.Component {
       ? fromRawLsk(fees.send)
       : fromRawLsk(fields.processingSpeed.txFee);
 
+    return (
+      <TransactionSummary
+        title={this.getTitle()}
+        t={t}
+        account={account}
+        confirmButton={{
+          label: this.getConfirmButtonLabel(),
+          onClick: this.submitTransaction,
+        }}
+        cancelButton={{
+          label: t('Edit transaction'),
+          onClick: this.prevStep,
+        }}
+        fee={fee}
+      >
+        <section>
+          <label>{t('Recipient')}</label>
+          <label>
+            <AccountVisual address={fields.recipient.address} size={25} />
+            <label className={`${styles.information} recipient-confirm`}>
+              {fields.recipient.title || fields.recipient.address}
+            </label>
+            { fields.recipient.title ? (
+              <span className={styles.secondText}>
+                {fields.recipient.address}
+              </span>
+            ) : null }
+          </label>
+        </section>
+        <section>
+          <label>{t('Amount')}</label>
+          <label className="amount-summary">
+            {`${fields.amount.value} ${token}`}
+            <Converter className={styles.secondText} value={fields.amount.value} />
+          </label>
+        </section>
+      </TransactionSummary>
+    );
+    // eslint-disable-next-line
     return (
       <Box className={`${styles.wrapper} summary`} width="medium">
         <Box.Header className="summary-header">
