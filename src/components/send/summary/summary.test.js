@@ -111,18 +111,18 @@ describe('Summary', () => {
   });
 
   it('should goind to previous page', () => {
-    wrapper.find('.on-prevStep').at(0).simulate('click');
+    wrapper.find('.cancel-button').at(0).simulate('click');
     wrapper.update();
     expect(props.prevStep).toBeCalled();
   });
 
   it('should disable "Next" button if secondPassphrase invalid for active account', () => {
-    expect(wrapper.find('.send-button').at(0).prop('disabled')).toBeTruthy();
+    expect(wrapper.find('.confirm-button').at(0).prop('disabled')).toBeTruthy();
     const clipboardData = {
       getData: () => accounts.second_passphrase_account.passphrase,
     };
     wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
-    expect(wrapper.find('.send-button').at(0).prop('disabled')).toBeTruthy();
+    expect(wrapper.find('.confirm-button').at(0).prop('disabled')).toBeTruthy();
   });
 
   it('should call transactionCreated function after do a click in confirm button', () => {
@@ -131,7 +131,7 @@ describe('Summary', () => {
     };
     wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
     wrapper.update();
-    wrapper.find('.on-nextStep').at(0).simulate('click');
+    wrapper.find('.confirm-button').at(0).simulate('click');
     wrapper.update();
     expect(props.transactionCreated).toBeCalled();
     wrapper.setProps({

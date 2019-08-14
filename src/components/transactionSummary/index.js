@@ -84,14 +84,14 @@ class TransactionSummary extends React.Component {
     } = this.state;
 
     return (
-      <Box width="medium" className={`${styles.wrapper} ${classNames}`}>
+      <Box width="medium" className={`${styles.wrapper} ${classNames} summary`}>
         <Box.Header className="summary-header">
           <h2>
             {title}
             {isHardwareWalletConnected ? t(' - Confirm transaction on your {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel }) : ''}
           </h2>
         </Box.Header>
-        <Box.Content className={styles.content}>
+        <Box.Content className={`${styles.content} summary-content`}>
           <HardwareWalletIllustration account={account} size="s" />
           {children}
           <section>
