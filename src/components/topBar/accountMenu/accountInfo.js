@@ -4,6 +4,7 @@ import { tokenMap } from '../../../constants/tokens';
 import Icon from '../../toolbox/icon';
 import styles from './userAccount.css';
 import LiskAmount from '../../liskAmount';
+import DiscreetMode from '../../discreetMode';
 
 const AccountInfo = ({
   account, token, t, className, ...props
@@ -12,11 +13,13 @@ const AccountInfo = ({
     <Icon name={`${tokenMap[token].icon}Icon`} />
     <div>
       <p>{t('{{token}} Wallet', { token: tokenMap[token].label })}</p>
-      <span className="balance">
-        <LiskAmount val={account.balance} />
-        {' '}
-        {tokenMap[token].key}
-      </span>
+      <DiscreetMode>
+        <span className="balance">
+          <LiskAmount val={account.balance} />
+          {' '}
+          {tokenMap[token].key}
+        </span>
+      </DiscreetMode>
     </div>
   </div>
 );

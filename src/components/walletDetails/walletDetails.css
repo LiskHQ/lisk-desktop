@@ -38,12 +38,12 @@
 
         color: var(--color-slate-gray);
       }
+    }
 
-      & > span:last-child {
-        @mixin headingNormal;
+    & .amounts {
+      @mixin headingNormal;
 
-        color: var(--color-maastricht-blue);
-      }
+      color: var(--color-maastricht-blue);
     }
 
     &:last-child {

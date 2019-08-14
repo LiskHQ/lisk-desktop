@@ -13,6 +13,7 @@ import TransactionDetailView from './transactionDetailView/transactionDetailView
 import routes from '../../constants/routes';
 import styles from './singleTransaction.css';
 import transactionTypes from '../../constants/transactionTypes';
+import DiscreetMode from '../discreetMode';
 
 function addVotesWithDelegateNames(transaction, delegates, t) {
   const getVotesStartingWith = sign => (
@@ -65,6 +66,7 @@ class SingleTransaction extends React.Component {
     } = this.props;
     const transaction = addVotesWithDelegateNames(this.props.transaction.data, delegates.data, t);
     const { error } = this.props.transaction;
+    const addresses = transaction && [transaction.recipientId, transaction.senderId];
 
     return (
       <div className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
@@ -136,11 +138,13 @@ class SingleTransaction extends React.Component {
                           <span className={styles.label}>
                             {t('Amount')}
                           </span>
-                          <span className="tx-amount">
-                            <LiskAmount val={transaction.amount} />
-                            {' '}
-                            {activeToken}
-                          </span>
+                          <DiscreetMode addresses={addresses}>
+                            <span className="tx-amount">
+                              <LiskAmount val={transaction.amount} />
+                              {' '}
+                              {activeToken}
+                            </span>
+                          </DiscreetMode>
                         </div>
                       ) : null }
                     <div className={styles.value}>

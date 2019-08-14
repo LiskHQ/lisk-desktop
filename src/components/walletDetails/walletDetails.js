@@ -3,6 +3,7 @@ import Box from '../box';
 import LiskAmount from '../liskAmount';
 import { tokenMap } from '../../constants/tokens';
 import svg from '../../utils/svgIcons';
+import DiscreetMode from '../discreetMode';
 import styles from './walletDetails.css';
 
 const MyAccount = ({
@@ -27,11 +28,13 @@ const MyAccount = ({
             <img src={coin.token === tokenMap.LSK.key ? svg.lskIcon : svg.btcIcon} />
             <div className={styles.details}>
               <span>{t('{{token}} Balance', { token: tokenMap[coin.token].label })}</span>
-              <span>
-                <LiskAmount val={coin.balance} />
-                {' '}
-                {coin.token}
-              </span>
+              <DiscreetMode>
+                <span className={styles.amounts}>
+                  <LiskAmount val={coin.balance} />
+                  {' '}
+                  {coin.token}
+                </span>
+              </DiscreetMode>
             </div>
           </div>
         ))

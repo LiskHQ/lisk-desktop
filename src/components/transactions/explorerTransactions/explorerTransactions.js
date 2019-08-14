@@ -128,7 +128,7 @@ class ExplorerTransactions extends React.Component {
       loading: this.props.transactions.isLoading ? [actionTypes.getTransactions] : [],
       balance: this.props.detailAccount.data.balance,
     };
-    const { detailAccount } = this.props;
+    const { detailAccount, isDiscreetMode } = this.props;
 
     return (
       <React.Fragment>
@@ -146,6 +146,7 @@ class ExplorerTransactions extends React.Component {
           <WalletTab
             tabName={this.props.t('Wallet')}
             {...overviewProps}
+            isDiscreetMode={isDiscreetMode}
           />
           {
             detailAccount.data.delegate

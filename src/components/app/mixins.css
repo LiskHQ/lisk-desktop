@@ -102,3 +102,8 @@
     background: var(--color-ultramarine-blue);
   }
 }
+
+@define-mixin discreetMode {
+  filter: blur(7px);
+  user-select: none;
+}
