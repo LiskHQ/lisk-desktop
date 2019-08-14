@@ -1,7 +1,6 @@
 /* eslint-disable max-lines */
 import React from 'react';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
-import { extractPublicKey } from '../../../utils/account';
 import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
 import { loginType } from '../../../constants/hwConstants';
 import { tokenMap } from '../../../constants/tokens';
@@ -10,7 +9,6 @@ import Box from '../../toolbox/box';
 import Converter from '../../converter';
 import HardwareWalletIllustration from
   '../../toolbox/hardwareWalletIllustration';
-import PassphraseInput from '../../passphraseInput/passphraseInput';
 import Piwik from '../../../utils/piwik';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import TransactionSummary from '../../transactionSummary';
@@ -25,16 +23,9 @@ class Summary extends React.Component {
     this.state = {
       isLoading: false,
       isHardwareWalletConnected: false,
-      secondPassphrase: {
-        hasSecondPassphrase: false,
-        isValid: false,
-        feedback: '',
-        value: null,
-      },
     };
 
     this.checkForHardwareWallet = this.checkForHardwareWallet.bind(this);
-    this.checkSecondPassphrase = this.checkSecondPassphrase.bind(this);
     this.prevStep = this.prevStep.bind(this);
     this.submitTransaction = this.submitTransaction.bind(this);
     this.getConfirmButtonLabel = this.getConfirmButtonLabel.bind(this);
@@ -47,23 +38,13 @@ class Summary extends React.Component {
     let newState = {};
 
     // istanbul ignore else
-    if (account && account.secondPublicKey) {
-      newState = {
-        secondPassphrase: {
-          ...this.state.secondPassphrase,
-          hasSecondPassphrase: true,
-        },
-      };
-    }
-
-    // istanbul ignore else
     if (account.hwInfo && account.hwInfo.deviceId) {
       newState = {
         ...this.state,
         isHardwareWalletConnected: true,
         isLoading: true,
       };
-      this.submitTransaction();
+      this.submitTransaction({});
     }
 
     this.setState(newState);
@@ -74,7 +55,7 @@ class Summary extends React.Component {
     this.checkForSuccessOrFailedTransactions();
   }
 
-  submitTransaction() {
+  submitTransaction({ secondPassphrase }) {
     Piwik.trackingEvent('Send_SubmitTransaction', 'button', 'Next step');
     const { account, fields } = this.props;
 
@@ -83,7 +64,7 @@ class Summary extends React.Component {
       data: fields.reference.value,
       passphrase: account.passphrase,
       recipientId: fields.recipient.address,
-      secondPassphrase: this.state.secondPassphrase.value,
+      secondPassphrase,
       dynamicFeePerByte: this.props.fields.processingSpeed.value,
       fee: fees.send,
     });
@@ -140,24 +121,6 @@ class Summary extends React.Component {
         },
       });
     }
-  }
-
-  checkSecondPassphrase(passphrase, error) {
-    let feedback = error || '';
-    const expectedPublicKey = !error && extractPublicKey(passphrase);
-    const isPassphraseValid = this.props.account.secondPublicKey === expectedPublicKey;
-
-    if (feedback === '' && !isPassphraseValid) {
-      feedback = this.props.t('Oops! Wrong passphrase');
-    }
-    this.setState({
-      secondPassphrase: {
-        ...this.state.secondPassphrase,
-        isValid: feedback === '' && passphrase !== '',
-        feedback,
-        value: passphrase,
-      },
-    });
   }
 
   prevStep() {
@@ -309,36 +272,6 @@ class Summary extends React.Component {
             </label>
             <span className={styles.information}>{t('{{fee}} {{token}}', { fee, token })}</span>
           </div>
-
-          {
-            secondPassphrase.hasSecondPassphrase
-              ? (
-                <div className={`${styles.row} ${styles.passphrase} ${styles.tooltipContainer} summary-second-passphrase`}>
-                  <label>{t('Second passphrase')}</label>
-                  <Tooltip
-                    className={`${styles.tooltip}`}
-                    title={t('What is your second passphrase?')}
-                  >
-                    <React.Fragment>
-                      <p className={`${styles.tooltupText}`}>
-                        {t('Second passphrase is an optional extra layer of protection to your account. You can register at anytime, but you can not remove it.')}
-                      </p>
-                      <p className={`${styles.tooltipText}`}>
-                        {t('If you see this field, you have registered a second passphrase in past and it is required to confirm transactions.')}
-                      </p>
-                    </React.Fragment>
-                  </Tooltip>
-                  <PassphraseInput
-                    isSecondPassphrase={secondPassphrase.hasSecondPassphrase}
-                    secondPPFeedback={secondPassphrase.feedback}
-                    inputsLength={12}
-                    maxInputsLength={24}
-                    onFill={this.checkSecondPassphrase}
-                  />
-                </div>
-              )
-              : null
-          }
         </div>
 
         <Box.Footer className="summary-footer">
