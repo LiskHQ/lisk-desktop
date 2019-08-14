@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Box from '../box';
+import Box from '../toolbox/box';
 import AccountVisual from '../accountVisual';
 import VotesTableHeader from './votesTableHeader';
 import TableRow from '../toolbox/table/tableRow';
-import ProgressBar from '../toolbox/progressBar/progressBar';
 import { Input } from '../toolbox/inputs';
 import LiskAmount from '../liskAmount';
 import routes from '../../constants/routes';
@@ -108,8 +107,8 @@ class VotesTab extends React.Component {
     const isLoading = this.state.isLoading || delegates.isLoading || votes.isLoading;
 
     return (
-      <Box className={`${styles.wrapper}`}>
-        <header>
+      <Box main isLoading={isLoading} className={`${styles.wrapper}`}>
+        <Box.Header>
           <h1>{t('Voted delegates')}</h1>
           <div className={`${styles.filterHolder}`}>
             <Input
@@ -121,19 +120,12 @@ class VotesTab extends React.Component {
               onChange={this.handleFilter}
             />
           </div>
-        </header>
-        <main className={`${styles.results} ${canLoadMore ? styles.hasMore : ''} ${isLoading ? styles.isLoading : ''}`}>
-          {
-            isLoading ? (
-              <div className={styles.loadingOverlay}>
-                <ProgressBar type="linear" mode="indeterminate" theme={styles} className="loading" />
-              </div>
-            ) : null
-          }
+        </Box.Header>
+        <main className={`${styles.results} ${canLoadMore ? styles.hasMore : ''}`}>
           <VotesTableHeader t={t} />
           {filteredVotes.length
-            ? filteredVotes.slice(0, this.state.showing).map((vote, key) => (
-              <TableRow className={`${styles.row} vote-row`} onClick={() => this.onRowClick(vote.address)} key={`row-${key}`}>
+            ? filteredVotes.slice(0, this.state.showing).map(vote => (
+              <TableRow className={`${styles.row} vote-row`} onClick={() => this.onRowClick(vote.address)} key={vote.address}>
                 <div className={`${grid['col-sm-1']} ${grid['col-lg-1']}`}>
                   {(vote.rank && +vote.rank < 10 ? `0${vote.rank}` : vote.rank) || '-'}
                 </div>
@@ -184,16 +176,13 @@ class VotesTab extends React.Component {
                 }
               </p>
             )}
-          {canLoadMore && (
-          <span
-            onClick={this.onShowMore}
-            className={`${styles.showMore} show-votes`}
-          >
-            {t('Show More')}
-          </span>
-          )
-          }
         </main>
+        {canLoadMore && (
+          <Box.FooterButton onClick={this.onShowMore} className="show-votes">
+            {t('Show More')}
+          </Box.FooterButton>
+        )
+        }
       </Box>
     );
   }

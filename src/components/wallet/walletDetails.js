@@ -1,7 +1,7 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import AccountVisual from '../accountVisual';
-import Box from '../box';
+import Box from '../toolbox/box';
 import Icon from '../toolbox/icon';
 import LiskAmount from '../liskAmount';
 import CopyToClipboard from '../toolbox/copyToClipboard';
@@ -15,10 +15,10 @@ class WalletDetails extends React.Component {
 
     return (
       <Box className={styles.wrapper}>
-        <header>
+        <Box.Header>
           <h1>{t('Wallet details')}</h1>
-        </header>
-        <section className={styles.row}>
+        </Box.Header>
+        <Box.Row className={styles.row}>
           <AccountVisual
             address={address}
             size={40}
@@ -32,8 +32,8 @@ class WalletDetails extends React.Component {
               />
             </div>
           </div>
-        </section>
-        <section className={styles.row}>
+        </Box.Row>
+        <Box.Row className={styles.row}>
           <Icon name="balance" />
           <div>
             <label>{t('Balance')}</label>
@@ -43,7 +43,7 @@ class WalletDetails extends React.Component {
               {activeToken}
             </div>
           </div>
-        </section>
+        </Box.Row>
       </Box>
     );
   }

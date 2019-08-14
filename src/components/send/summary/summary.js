@@ -12,7 +12,7 @@ import PassphraseInput from '../../passphraseInput/passphraseInput';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
 import Piwik from '../../../utils/piwik';
-import Box from '../../box';
+import Box from '../../toolbox/box';
 import { extractPublicKey } from '../../../utils/account';
 import { tokenMap } from '../../../constants/tokens';
 import styles from './summary.css';
@@ -217,10 +217,10 @@ class Summary extends React.Component {
       : fromRawLsk(fields.processingSpeed.txFee);
 
     return (
-      <Box className={`${styles.wrapper} summary`}>
-        <header className={`${styles.header} summary-header`}>
+      <Box className={`${styles.wrapper} summary`} width="medium">
+        <Box.Header className="summary-header">
           <h2>{this.getTitle()}</h2>
-        </header>
+        </Box.Header>
         <HardwareWalletIllustration account={account} size="s" />
 
         <div className={`${styles.content} summary-content`}>
@@ -301,7 +301,7 @@ class Summary extends React.Component {
           }
         </div>
 
-        <footer className={`${styles.footer} summary-footer`}>
+        <Box.Footer className="summary-footer">
           {this.props.account.hwInfo && this.props.account.hwInfo.deviceId ? null
             : (
               <React.Fragment>
@@ -320,7 +320,7 @@ class Summary extends React.Component {
                 </TertiaryButton>
               </React.Fragment>
             )}
-        </footer>
+        </Box.Footer>
       </Box>
     );
   }

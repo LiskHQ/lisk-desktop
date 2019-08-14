@@ -1,5 +1,5 @@
 import React from 'react';
-import Box from '../box';
+import Box from '../toolbox/box';
 import LiskAmount from '../liskAmount';
 import { tokenMap } from '../../constants/tokens';
 import svg from '../../utils/svgIcons';
@@ -17,13 +17,13 @@ const MyAccount = ({
 
   return (
     <Box className={`${styles.box} ${className}`}>
-      <header>
+      <Box.Header>
         <h1>{t('Wallet details')}</h1>
-      </header>
-      <div className={`${styles.container} coin-container`}>
+      </Box.Header>
+      <Box.Content className={`${styles.container} coin-container`}>
         {
-        coins.map((coin, index) => (
-          <div key={index} className={`${styles.row} coin-row`}>
+        coins.map(coin => (
+          <Box.Row key={coin.token} className={`${styles.row} coin-row`}>
             <img src={coin.token === tokenMap.LSK.key ? svg.lskIcon : svg.btcIcon} />
             <div className={styles.details}>
               <span>{t('{{token}} Balance', { token: tokenMap[coin.token].label })}</span>
@@ -33,10 +33,10 @@ const MyAccount = ({
                 {coin.token}
               </span>
             </div>
-          </div>
+          </Box.Row>
         ))
       }
-      </div>
+      </Box.Content>
     </Box>
   );
 };

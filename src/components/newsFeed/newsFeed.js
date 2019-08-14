@@ -1,8 +1,7 @@
 import React from 'react';
 import styles from './newsFeed.css';
 import News from './news';
-import Box from '../box';
-import EmptyState from '../emptyState';
+import Box from '../toolbox/box';
 import Icon from '../toolbox/icon';
 
 class NewsFeed extends React.Component {
@@ -17,35 +16,32 @@ class NewsFeed extends React.Component {
 
     return (
       <Box className={`newsFeed-box ${styles.newsFeedBox}`}>
-        <header>
+        <Box.Header>
           <h1>{t('Community feed')}</h1>
-        </header>
-
-        <div className={`${styles.container}`}>
-          <div>
-            {
+        </Box.Header>
+        <Box.Content className={`${styles.container}`}>
+          {
               filteredNewsFeed.length
-                ? filteredNewsFeed.map((news, index) => (
-                  <div className={styles.newsWrapper} key={`newsWrapper-${index}`}>
+                ? filteredNewsFeed.map(news => (
+                  <Box.Row isClickable key={news.sourceId}>
                     <News
                       t={t}
                       {...news}
                     />
-                  </div>
+                  </Box.Row>
                 ))
                 : null
             }
-            {
+          {
               newsFeed.error && (
-                <EmptyState className="empty-news">
+                <Box.EmptyState className="empty-news">
                   <Icon name="noTweetsIcon" />
                   <h1>{t('No available tweets')}</h1>
                   <p>{t('At this moment there is a connection problem with the tweets feed')}</p>
-                </EmptyState>
+                </Box.EmptyState>
               )
             }
-          </div>
-        </div>
+        </Box.Content>
       </Box>
     );
   }

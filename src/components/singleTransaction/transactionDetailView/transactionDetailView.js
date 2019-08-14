@@ -1,6 +1,7 @@
 import { translate } from 'react-i18next';
 import React from 'react';
 import AccountInfo from './accountInfo';
+import Box from '../../toolbox/box';
 import TransactionTypeFigure from '../../transactions/typeFigure/TransactionTypeFigure';
 import TransactionVotes from './transactionVotes';
 import styles from './transactionDetailView.css';
@@ -42,35 +43,37 @@ class TransactionDetailView extends React.Component {
             <h2 className="tx-header">{title}</h2>
           </div>
         ) : null}
-        <div className={styles.detailsWrapper}>
+        <Box.Row className={styles.detailsWrapper}>
           <AccountInfo
             name={getDelegateName(transaction)}
             address={transaction.senderId}
             addressClass="sender-address"
             label={senderLabel}
           />
-        </div>
+        </Box.Row>
         {transaction.type === transactionTypes.send
           ? (
-            <div className={styles.detailsWrapper}>
+            <Box.Row className={styles.detailsWrapper}>
               <AccountInfo
                 address={transaction.recipientId}
                 addressClass="receiver-address"
                 label="Recipient"
               />
-            </div>
+            </Box.Row>
           )
           : null
         }
         {children}
         { transaction.type === transactionTypes.send
           && (transaction.asset && transaction.asset.data) ? (
-            <div className={styles.detailsWrapper}>
-              <span className={styles.label}>{t('Message')}</span>
-              <div className={`${styles.message} tx-reference`}>
-                {transaction.asset.data}
+            <Box.Row>
+              <div className={styles.detailsWrapper}>
+                <span className={styles.label}>{t('Message')}</span>
+                <div className={`${styles.message} tx-reference`}>
+                  {transaction.asset.data}
+                </div>
               </div>
-            </div>
+            </Box.Row>
           ) : null
         }
         { transaction.type === transactionTypes.vote && transaction.votesName ? (

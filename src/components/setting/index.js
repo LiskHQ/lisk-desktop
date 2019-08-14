@@ -5,6 +5,7 @@ import Setting from './setting';
 import { settingsUpdated } from '../../actions/settings';
 import { toastDisplayed } from '../../actions/toaster';
 import { accountUpdated } from '../../actions/account';
+import { networkSet } from '../../actions/network';
 import { getActiveTokenAccount } from '../../utils/account';
 
 const mapStateToProps = state => ({
@@ -17,6 +18,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   accountUpdated,
+  networkSet,
   settingsUpdated,
   toastDisplayed,
 };

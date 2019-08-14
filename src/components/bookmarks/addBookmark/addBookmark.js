@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { validateAddress } from '../../../utils/validators';
 import networks from '../../../constants/networks';
-import Box from '../../box';
+import Box from '../../toolbox/box';
 import { Input } from '../../toolbox/inputs';
 import { PrimaryButton } from '../../toolbox/buttons/button';
 import Feedback from '../../toolbox/feedback/feedback';
@@ -183,13 +183,13 @@ class AddBookmark extends React.Component {
             title={t('Bookmarks')}
             subtitle={t('Manage your most used accounts')}
           />
-          <Box>
-            <header>
+          <Box width="medium">
+            <Box.Header>
               <h2>
                 {t('New bookmark')}
               </h2>
-            </header>
-            <div className={styles.formHolder}>
+            </Box.Header>
+            <Box.Content>
               {this.fields.map(field => (
                 <label key={field.name}>
                   <span className={styles.label}>
@@ -226,15 +226,15 @@ class AddBookmark extends React.Component {
                   </span>
                 </label>
               ))}
-              <div className={styles.buttonHolder}>
+              <Box.Footer>
                 <PrimaryButton
                   disabled={isDisabled}
                   onClick={this.handleAddBookmark}
                 >
                   {t('Add bookmark')}
                 </PrimaryButton>
-              </div>
-            </div>
+              </Box.Footer>
+            </Box.Content>
           </Box>
         </div>
       </div>

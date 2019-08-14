@@ -18,6 +18,7 @@ describe('Setting', () => {
     showNetwork: false,
     currency: undefined,
     statistics: false,
+    discreetMode: false,
     token: {
       list: {
         BTC: true,
@@ -68,7 +69,7 @@ describe('Setting', () => {
 
   beforeEach(() => {
     localStorage.setItem('feature-flag-language', true); // TODO: Remove when i18n epic #2301 is finished
-
+    localStorage.setItem('discreet', true); // TODO: Remove when discreet mode is concluded
     wrapper = mount(<Router>
       <Setting {...props} store={store} />
     </Router>, options);
@@ -102,6 +103,14 @@ describe('Setting', () => {
     wrapper.find('.autoLog input').at(0).simulate('change', { target: { name: 'autoLog' } });
     const expectedCallToSettingsUpdated = {
       autoLog: !settings.autoLog,
+    };
+    expect(props.settingsUpdated).toBeCalledWith(expectedCallToSettingsUpdated);
+  });
+
+  it('should change discreet mode setting when clicking on checkbox', () => {
+    wrapper.find('.discreetMode input').at(0).simulate('change', { target: { name: 'discreetMode' } });
+    const expectedCallToSettingsUpdated = {
+      discreetMode: !settings.discreetMode,
     };
     expect(props.settingsUpdated).toBeCalledWith(expectedCallToSettingsUpdated);
   });

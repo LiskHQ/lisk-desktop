@@ -4,14 +4,6 @@
 .leftText {
   text-align: left;
   padding-left: 0px;
-
-  &:first-child {
-    padding-left: 20px;
-  }
-}
-
-.wrapper {
-  width: 100%;
 }
 
 .search {
@@ -100,6 +92,7 @@
   flex-grow: 1;
   margin: 0;
   position: relative;
+  width: 100%;
 }
 
 .loadingOverlay {

@@ -6,37 +6,16 @@
   display: flex;
   flex-grow: 1;
   height: 100%;
-}
 
-.wrapper {
-  margin: 20px 0 40px;
-  padding: 0;
-  padding-bottom: 20px;
-  width: var(--medium-box-width);
+  & .mainContent {
+    margin-bottom: 20px;
+    min-height: 400px;
+  }
 
   & .txLink {
     align-items: center;
     display: flex !important;
     justify-content: center;
-  }
-
-  & .detailsHeader {
-    display: flex;
-    justify-content: space-between;
-
-    & > h1,
-    & > .date {
-      flex-basis: 50%;
-      text-align: left;
-    }
-
-    & > .date {
-      color: var(--color-dark-gray);
-      font-family: var(--content-font);
-      font-size: var(--paragraph-font-size-s);
-      font-weight: var(--font-weight-bold);
-      text-align: right;
-    }
   }
 
   & .txIcon {
@@ -46,78 +25,49 @@
     width: 24px;
   }
 
-  & .mainContent {
-    padding: 0 20px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
   & .copyIcon {
     vertical-align: -3px;
   }
 
-  & .detailsFooter {
+  & .label {
+    @mixin contentNormal bold;
+
+    align-items: center;
+    color: var(--color-maastricht-blue);
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+  & .value {
+    @mixin contentLargest;
+
+    align-items: flex-start;
+    color: var(--color-maastricht-blue);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin: 0;
-    padding: 0;
+    padding-left: 64px;
+    width: 100%;
+    word-break: break-all;
+    text-align: left;
 
-    & > div {
-      align-items: flex-start;
-      display: flex;
-      padding: 16px 0;
-      width: 100%;
-
-      &:not(:last-child) {
-        border-bottom: 1px solid var(--color-platinum);
-      }
+    &:first-child {
+      padding-left: 0;
+      position: relative;
     }
 
     &:not(:last-child) {
-      border-bottom: 1px solid var(--color-platinum);
-    }
+      padding-right: 64px;
 
-    & .label {
-      @mixin contentNormal bold;
-
-      align-items: center;
-      color: var(--color-maastricht-blue);
-      display: flex;
-      margin-top: 0;
-      margin-bottom: 10px;
-    }
-
-    & .value {
-      @mixin contentLargest;
-
-      align-items: flex-start;
-      color: var(--color-maastricht-blue);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      margin: 0;
-      padding-left: 64px;
-      width: 100%;
-      word-break: break-all;
-      text-align: left;
-
-      &:first-child {
-        padding-left: 0;
-        position: relative;
-      }
-
-      &:not(:last-child) {
-        padding-right: 64px;
-
-        &::after {
-          background-color: var(--color-platinum);
-          content: '';
-          height: calc(100% - 13px);
-          position: absolute;
-          right: 0;
-          width: 1px;
-        }
+      &::after {
+        background-color: var(--color-platinum);
+        content: '';
+        height: calc(100% - 13px);
+        position: absolute;
+        right: 0;
+        width: 1px;
       }
     }
   }

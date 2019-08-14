@@ -1,6 +1,6 @@
 import React from 'react';
 import { tokenMap } from '../../constants/tokens';
-import Box from '../box';
+import Box from '../toolbox/box';
 import CheckBox from '../toolbox/checkBox';
 import LanguageSelect from './languageSelect';
 import Piwik from '../../utils/piwik';
@@ -81,13 +81,13 @@ class Setting extends React.Component {
 
     return (
       <div className={styles.settingsHolder}>
-        <Box className={styles.wrapper}>
-          <header>
+        <Box className={styles.wrapper} width="medium">
+          <Box.Header>
             <h1>{t('Settings')}</h1>
-          </header>
-          <div className={styles.content}>
+          </Box.Header>
+          <Box.Content className={styles.content}>
             <section>
-              <h1>{t('Locale')}</h1>
+              <h2>{t('Locale')}</h2>
               <div className={styles.fieldGroup}>
                 <span className={styles.labelName}>{t('Currency')}</span>
                 <Select
@@ -104,7 +104,7 @@ class Setting extends React.Component {
                 localStorage.getItem('feature-flag-language') ? <LanguageSelect t={t} /> : null}
             </section>
             <section>
-              <h1>{t('Security')}</h1>
+              <h2>{t('Security')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <CheckBox
                   name="autoLog"
@@ -126,9 +126,23 @@ class Setting extends React.Component {
                   />
                 )
                 : null}
+              { localStorage.getItem('discreet') ? ( // TODO: Remove when discreet mode is concluded
+                <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+                  <CheckBox
+                    name="discreetMode"
+                    className={`${styles.checkbox} discreetMode`}
+                    checked={settings.discreetMode}
+                    onChange={this.handleCheckboxChange}
+                  />
+                  <div>
+                    <span className={styles.labelName}>{t('Discreet Mode')}</span>
+                    <p>{t('Hide balance and transactions amounts')}</p>
+                  </div>
+                </label>
+              ) : null }
             </section>
             <section>
-              <h1>{t('Advanced')}</h1>
+              <h2>{t('Advanced')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <CheckBox
                   name="showNetwork"
@@ -155,7 +169,7 @@ class Setting extends React.Component {
               </label>
             </section>
             <section>
-              <h1>{t('Privacy')}</h1>
+              <h2>{t('Privacy')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <CheckBox
                   name="statistics"
@@ -174,7 +188,7 @@ class Setting extends React.Component {
                 </div>
               </label>
             </section>
-          </div>
+          </Box.Content>
         </Box>
       </div>
     );

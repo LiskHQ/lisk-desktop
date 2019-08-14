@@ -7,12 +7,16 @@
   flex-grow: 1;
   justify-content: center;
   min-height: 100%;
-}
+  margin: 20px auto;
 
-.wrapper {
-  max-width: 720px;
-  overflow: initial;
-  width: 100%;
+  & .content {
+    & h2 {
+      @mixin contentLargest bold;
+
+      color: var(--color-slate-gray);
+      margin: 0 0 24px;
+    }
+  }
 }
 
 .content {
@@ -21,14 +25,11 @@
   width: 100%;
 
   & > section {
-    margin: 24px;
-  }
+    padding: 24px 4px 0 4px;
 
-  & h1 {
-    @mixin contentLargest bold;
-
-    color: var(--color-slate-gray);
-    margin: 0 0 24px;
+    &:last-child {
+      padding-bottom: 24px;
+    }
   }
 
   & .link {

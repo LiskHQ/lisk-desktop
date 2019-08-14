@@ -5,7 +5,7 @@ import Illustration from '../../toolbox/illustration';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import { tokenMap } from '../../../constants/tokens';
 import AccountVisual from '../../accountVisual';
-import Box from '../../box';
+import Box from '../../toolbox/box';
 import EmptyState from '../../emptyState';
 import regex from '../../../utils/regex';
 import routes from '../../../constants/routes';
@@ -112,7 +112,7 @@ class BookmarksList extends React.Component {
 
     return (
       <Box className={` ${styles.box} ${className} bookmarks-list`}>
-        <header>
+        <Box.Header>
           <h2>{title || t('Bookmarks')}</h2>
           { enableFilter
             ? (
@@ -128,8 +128,8 @@ class BookmarksList extends React.Component {
             )
             : null
           }
-        </header>
-        <div className={`${styles.bookmarkList} bookmark-list-container`}>
+        </Box.Header>
+        <Box.Content className={`${styles.bookmarkList} bookmark-list-container`}>
           {
           selectedBookmarks.length
             ? selectedBookmarks.map(bookmark => (
@@ -249,18 +249,18 @@ class BookmarksList extends React.Component {
               </React.Fragment>
             )
         }
-          {
+        </Box.Content>
+        {
           selectedBookmarks.length && limit
             ? (
-              <div className={styles.footer}>
+              <Box.Footer className={styles.footer}>
                 <Link to={routes.bookmarks.path}>
-                  <SecondaryButton>{t('View All')}</SecondaryButton>
+                  <SecondaryButton className="small">{t('View All')}</SecondaryButton>
                 </Link>
-              </div>
+              </Box.Footer>
             )
             : null
         }
-        </div>
       </Box>
     );
   }

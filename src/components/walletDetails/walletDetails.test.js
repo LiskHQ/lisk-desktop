@@ -38,6 +38,6 @@ describe('WalletDetails', () => {
 
   it('Should render properly', () => {
     expect(wrapper).toContainMatchingElement('.coin-container');
-    expect(wrapper).toContainMatchingElements(2, '.coin-row');
+    expect(wrapper).toContainMatchingElements(2, 'section.coin-row');
   });
 });
