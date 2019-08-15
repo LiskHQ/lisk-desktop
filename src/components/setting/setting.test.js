@@ -10,6 +10,7 @@ import settingsConst from '../../constants/settings';
 
 jest.mock('../../i18n', () => ({
   changeLanguage: jest.fn(),
+  t: v => v,
 }));
 
 describe('Setting', () => {
