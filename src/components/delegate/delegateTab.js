@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import 'moment/min/locales';
 import { translate } from 'react-i18next';
 import voting from '../../constants/voting';
 import Box from '../toolbox/box';

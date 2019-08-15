@@ -2,14 +2,15 @@ import moment from 'moment';
 import { fromRawLsk } from './lsk';
 import { getUnixTimestampFromValue } from './datetime';
 import { getTokenFromAddress } from './api/transactions';
+import i18n from '../i18n';
 
 const formats = {
-  second: 'MMM DD YYYY hh:mm:ss',
-  minute: 'MMM DD YYYY hh:mm',
-  hour: 'MMM DD YYYY hh[h]',
-  day: 'MMM DD YYYY',
-  month: 'MMM YYYY',
-  year: 'YYYY',
+  second: i18n.t('MMM DD YYYY hh:mm:ss'),
+  minute: i18n.t('MMM DD YYYY hh:mm'),
+  hour: i18n.t('MMM DD YYYY hh[h]'),
+  day: i18n.t('MMM DD YYYY'),
+  month: i18n.t('MMM YYYY'),
+  year: i18n.t('YYYY'),
 };
 
 const getUnitFromFormat = format =>
@@ -99,11 +100,11 @@ export const graphOptions = ({
     enabled: !isDiscreetMode,
     callbacks: {
       title(tooltipItem) {
-        return moment(tooltipItem[0].xLabel, 'MMMM DD YYYY h:mm:ss A')
+        return moment(tooltipItem[0].xLabel, i18n.t('MMMM DD YYYY h:mm:ss A'))
           .format(format);
       },
       label(tooltipItem) {
-        return `Account Balance:          ${tooltipItem.yLabel} LSK`;
+        return i18n.t('Account Balance:          {{balance}} LSK', { balance: tooltipItem.yLabel });
       },
     },
     mode: 'index',
@@ -133,13 +134,12 @@ export const getChartDateFormat = (transactions) => {
     && moment(getNormalizedTimestamp(transactions.slice(-1)[0]));
 
   if (!first || !last) return '';
-  let format = formats.year;
-  if (last.diff(first, 'years') <= 1) format = formats.month;
-  if (last.diff(first, 'months') <= 1) format = formats.day;
-  if (last.diff(first, 'days') <= 3) format = formats.hour;
-  if (last.diff(first, 'hours') <= 12) format = formats.minute;
-  if (last.diff(first, 'minutes') <= 5) format = formats.second;
-  return format;
+  if (last.diff(first, 'years') <= 1) return formats.month;
+  if (last.diff(first, 'months') <= 1) return formats.day;
+  if (last.diff(first, 'days') <= 3) return formats.hour;
+  if (last.diff(first, 'hours') <= 12) return formats.minute;
+  if (last.diff(first, 'minutes') <= 5) return formats.second;
+  return formats.year;
 };
 
 

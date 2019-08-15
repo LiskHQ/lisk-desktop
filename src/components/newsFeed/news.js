@@ -13,14 +13,16 @@ class News extends React.Component {
 
   render() {
     const {
-      source, content, timestamp, url,
+      source, content, timestamp, url, t,
     } = this.props;
 
     const hours = Math.floor(Math.abs(new Date() - new Date(timestamp)) / 36e5);
     // istanbul ignore next
-    let timestampMessage = hours ? `${hours}h ago` : 'just now';
+    let timestampMessage = hours ? t('{{hours}}h ago', { hours }) : t('just now');
     // istanbul ignore next
-    timestampMessage = hours > 24 ? `${Math.floor(hours / 24)}d ago` : timestampMessage;
+    timestampMessage = hours > 24
+      ? t('{{days}}d ago', { days: Math.floor(hours / 24) })
+      : timestampMessage;
 
     // Makes first letter capital
     const sourceName = source.charAt(0).toUpperCase() + source.substr(1);
