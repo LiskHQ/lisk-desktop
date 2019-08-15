@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-import 'moment/min/locales';
+import moment from 'moment/min/moment-with-locales';
 import YearView from './yearView';
 import MonthView from './monthView';
 import styles from './calendar.css';

@@ -1,6 +1,5 @@
 import React from 'react';
-import moment from 'moment';
-import 'moment/min/locales';
+import moment from 'moment/min/moment-with-locales';
 import { SecondaryButton } from '../../toolbox/buttons/button';
 import styles from './filterBar.css';
 import i18n from '../../../i18n';

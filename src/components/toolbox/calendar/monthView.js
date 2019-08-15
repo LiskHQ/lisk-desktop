@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-import 'moment/min/locales';
+import moment from 'moment/min/moment-with-locales';
 import { validations, generateDayPlaceholder } from './calendarUtils';
 import styles from './calendar.css';
 import Icon from '../icon';
