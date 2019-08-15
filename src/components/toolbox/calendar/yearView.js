@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import 'moment/min/locales';
 import { validations } from './calendarUtils';
-import svg from '../../../utils/svgIcons';
 import styles from './calendar.css';
+import Icon from '../icon';
 
 class YearView extends Component {
   constructor(props) {
@@ -73,19 +73,19 @@ class YearView extends Component {
     moment.locale(locale);
     const showingDate = moment(this.props.showingDate, dateFormat);
     const prevIcon = validations.canGoToPrevious(showingDate, minDate, this.options)
-      ? svg.back_arrow_active_icon : svg.back_arrow_inactive_icon;
+      ? 'arrowLeftActive' : 'arrowLeftInactive';
     const nextIcon = validations.canGoToNext(showingDate, maxDate, this.options)
-      ? svg.foward_arrow_active_icon : svg.foward_arrow_inactive_icon;
+      ? 'arrowRightActive' : 'arrowRightInactive';
 
     return (
       <div className={`${!isShown ? styles.hidden : ''} yearView`}>
         <header className={styles.calendarHeader}>
           <span className={styles.navigationButton} onClick={this.previousYear}>
-            <img src={prevIcon} />
+            <Icon name={prevIcon} />
           </span>
           <span className={styles.viewName}>{showingDate.format('YYYY')}</span>
           <span className={styles.navigationButton} onClick={this.nextYear}>
-            <img src={nextIcon} />
+            <Icon name={nextIcon} />
           </span>
         </header>
         <div className={styles.contentWrapper}>

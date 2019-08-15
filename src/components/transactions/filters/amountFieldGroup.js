@@ -3,8 +3,8 @@ import { translate } from 'react-i18next';
 import { Input } from '../../toolbox/inputs';
 import Feedback from '../../toolbox/feedback/feedback';
 import Spinner from '../../spinner/spinner';
-import svg from '../../../utils/svgIcons';
 import styles from './filters.css';
+import Icon from '../../toolbox/icon';
 
 class AmountFieldGroup extends React.Component {
   constructor() {
@@ -109,9 +109,9 @@ class AmountFieldGroup extends React.Component {
         <Spinner
           className={`${styles.status} ${fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
         />
-        <img
+        <Icon
           className={`${styles.status} ${!fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
-          src={fields[data.name].error ? svg.alert_icon : svg.ok_icon}
+          name={fields[data.name].error ? 'alertIcon' : 'okIcon'}
         />
       </label>
     );

@@ -10,7 +10,7 @@ import EmptyState from '../../emptyState';
 import regex from '../../../utils/regex';
 import routes from '../../../constants/routes';
 import styles from './bookmarksList.css';
-import svg from '../../../utils/svgIcons';
+import Icon from '../../toolbox/icon';
 
 class BookmarksList extends React.Component {
   constructor(props) {
@@ -228,7 +228,7 @@ class BookmarksList extends React.Component {
                       { limit
                         ? (
                           <React.Fragment>
-                            <img src={svg.bookmarksIconEmptyState} />
+                            <Icon name="bookmarksIconEmptyState" />
                             <h1>{t('No Bookmarks added yet')}</h1>
                             <p>{t('Start adding some addresses to bookmarks, to keep track of them.')}</p>
                             <Link to={routes.addBookmark.path}>

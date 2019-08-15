@@ -1,8 +1,8 @@
 import React from 'react';
 import LiskAmount from '../liskAmount';
 import styles from './transactions.css';
-import svg from '../../utils/svgIcons';
 import transactionTypes from '../../constants/transactionTypes';
+import Icon from '../toolbox/icon';
 
 const Transactions = ({
   t, transactions, onSelectedRow, rowItemIndex, updateRowItemIndex,
@@ -14,22 +14,22 @@ const Transactions = ({
         value: transactions[0].amount,
       },
       [transactionTypes.setSecondPassphrase]: {
-        icon: svg.tx2ndPassphrase,
+        icon: 'tx2ndPassphrase',
         subTitle: t('Fee'),
         value: transactions[0].fee,
       },
       [transactionTypes.registerDelegate]: {
-        icon: svg.txDelegate,
+        icon: 'txDelegate',
         subTitle: t('Fee'),
         value: transactions[0].fee,
       },
       [transactionTypes.vote]: {
-        icon: svg.txVote,
+        icon: 'txVote',
         subTitle: t('Fee'),
         value: transactions[0].fee,
       },
     }[transactions[0].type] || {
-      icon: svg.txDefault,
+      icon: 'txDefault',
       subTitle: t('Amount'),
       value: transactions[0].amount,
     };
@@ -55,7 +55,7 @@ const Transactions = ({
               onClick={() => onSelectedRow(transaction.id)}
               onMouseEnter={updateRowItemIndex}
             >
-              {transactionType.icon ? <img src={transactionType.icon} /> : null }
+              {transactionType.icon ? <Icon name={transactionType.icon} /> : null }
               <span className={`${styles.transactionId} transaction-id`}>{transaction.id}</span>
               <span className={styles.transactionMessage}>
                 <LiskAmount val={transactionType.value} />

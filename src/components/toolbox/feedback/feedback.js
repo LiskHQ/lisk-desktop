@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import svg from '../../../utils/svgIcons';
+import Icon from '../icon';
 import styles from './feedback.css';
 
 const Feedback = ({
   showIcon, status, children, show, className, dark,
 }) => {
-  const icon = status === 'error' && svg.alert_icon;
+  const icon = status === 'error' && 'alertIcon';
   const classNames = [
     dark && styles.dark,
     className,
@@ -18,7 +18,7 @@ const Feedback = ({
     <span
       className={classNames}
     >
-      {showIcon && icon && <img src={icon} />}
+      {showIcon && icon && <Icon name={icon} />}
       {children}
     </span>
   );

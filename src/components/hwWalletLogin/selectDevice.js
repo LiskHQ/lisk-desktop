@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import { models } from '../../constants/hwConstants';
 import routes from '../../constants/routes';
-import svgIcons from '../../utils/svgIcons';
 import styles from './selectDevice.css';
+import Icon from '../toolbox/icon';
 
 class SelectDevice extends React.Component {
   constructor(props) {
@@ -43,11 +43,11 @@ class SelectDevice extends React.Component {
           {
           devices.map(device => (
             <div key={device.deviceId} className={`${styles.device_box} hw-device`}>
-              <img
+              <Icon
                 className={styles.device_image}
-                src={device.model === models.trezorModelT
-                  ? svgIcons.icon_trezor_modelT_device
-                  : svgIcons.icon_ledger_nano_device}
+                name={device.model === models.trezorModelT
+                  ? 'iconTrezorModelTDevice'
+                  : 'iconLedgerNanoDevice'}
               />
               <p>{device.model}</p>
 

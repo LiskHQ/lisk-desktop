@@ -2,9 +2,9 @@ import React from 'react';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import AccountVisual from '../../accountVisual';
 import LiskAmount from '../../liskAmount';
-import svg from '../../../utils/svgIcons';
 import { Input } from '../../toolbox/inputs';
 import styles from './selectAccount.css';
+import Icon from '../../toolbox/icon';
 
 const AccountCard = ({
   account,
@@ -36,7 +36,7 @@ const AccountCard = ({
             <span className={`${styles.accountTitle} account-name`}>{account.name === null ? t('Unnamed account') : account.name}</span>
             <SecondaryButton className={`${styles.editBtn} edit-account`} onClick={() => onEditAccount(index)}>
               {t('Edit')}
-              <img src={svg.icon_edit} />
+              <Icon name="iconEdit" />
             </SecondaryButton>
           </React.Fragment>
         )

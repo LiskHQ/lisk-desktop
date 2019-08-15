@@ -164,7 +164,7 @@ class SelectName extends React.Component {
             <Spinner className={`${styles.spinner} ${loading && nickname.length ? styles.show : styles.hide} spiner`} />
             <Icon
               className={`${styles.status} ${!loading && nickname.length ? styles.show : styles.hide} input-status-icon`}
-              name={error ? 'alert_icon' : 'ok_icon'}
+              name={error ? 'alertIcon' : 'okIcon'}
             />
 
             <Feedback

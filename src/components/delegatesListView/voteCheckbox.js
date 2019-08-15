@@ -1,8 +1,7 @@
 import React from 'react';
 import Spinner from '../spinner/spinner';
-import svgIcons from '../../utils/svgIcons';
-
 import CheckBox from '../toolbox/checkBox';
+import Icon from '../toolbox/icon';
 
 const VoteCheckbox = ({
   data, status = {}, toggle, votingModeEnabled, accent, className,
@@ -35,7 +34,7 @@ const VoteCheckbox = ({
               })}
             />
           )
-          : <img src={status.unconfirmed ? svgIcons.checkmark : undefined} />
+          : status.unconfirmed && <Icon name="checkmark" />
     }
         {' '}
       </React.Fragment>

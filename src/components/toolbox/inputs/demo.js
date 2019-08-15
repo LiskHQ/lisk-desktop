@@ -43,7 +43,7 @@ const InputsDemo = () => (
         value="ok value"
       />
       {/* TODO fix Input to accept props.status='ok' so that next line is not needed */}
-      <Icon name="ok_icon" />
+      <Icon name="okIcon" />
       <Input
         onChange={onChange}
         name="demo"
@@ -58,7 +58,7 @@ const InputsDemo = () => (
         className="error"
       />
       {/* TODO fix Input to accept props.status='error' so that next line is not needed */}
-      <Icon name="alert_icon" />
+      <Icon name="alertIcon" />
       {/* TODO fix Input to accept props.error='<message>' so that next line is not needed */}
       <Feedback
         show
@@ -76,7 +76,7 @@ const InputsDemo = () => (
           name="demo"
           value="ok value"
         />
-        <Icon name="ok_icon" />
+        <Icon name="okIcon" />
         <Input
           onChange={onChange}
           name="demo"
@@ -89,7 +89,7 @@ const InputsDemo = () => (
           value="0alkawja;jk"
           className="error"
         />
-        <Icon name="alert_icon" />
+        <Icon name="alertIcon" />
         <Feedback
           dark
           show

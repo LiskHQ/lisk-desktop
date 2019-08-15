@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import 'moment/min/locales';
 import { validations, generateDayPlaceholder } from './calendarUtils';
-import svg from '../../../utils/svgIcons';
 import styles from './calendar.css';
+import Icon from '../icon';
 
 class MonthView extends Component {
   constructor(props) {
@@ -75,15 +75,15 @@ class MonthView extends Component {
     const showingDate = moment(this.props.showingDate, dateFormat).startOf('month');
     const daysInMonth = [...Array(showingDate.daysInMonth())];
     const prevIcon = validations.canGoToPrevious(showingDate, minDate, this.options)
-      ? svg.back_arrow_active_icon : svg.back_arrow_inactive_icon;
+      ? 'arrowLeftActive' : 'arrowLeftInactive';
     const nextIcon = validations.canGoToNext(showingDate, maxDate, this.options)
-      ? svg.foward_arrow_active_icon : svg.foward_arrow_inactive_icon;
+      ? 'arrowRightActive' : 'arrowRightInactive';
 
     return (
       <div className={`${!isShown ? styles.hidden : ''} monthView`}>
         <header className={styles.calendarHeader}>
           <span className={styles.navigationButton} onClick={this.previousMonth}>
-            <img src={prevIcon} />
+            <Icon name={prevIcon} />
           </span>
           <span
             onClick={this.showYearView}
@@ -92,7 +92,7 @@ class MonthView extends Component {
             {showingDate.format('MMMM YYYY')}
           </span>
           <span className={styles.navigationButton} onClick={this.nextMonth}>
-            <img src={nextIcon} />
+            <Icon name={nextIcon} />
           </span>
         </header>
         <div className={styles.contentWrapper}>

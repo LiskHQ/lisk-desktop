@@ -56,7 +56,7 @@ class RecentTransactions extends Component {
           isLoggedIn && !transactions.length
             ? (
               <Box.EmptyState>
-                <Icon name="icon_empty_recent_transactions" />
+                <Icon name="iconEmptyRecentTransactions" />
                 <h1>{t('No Transactions Yet')}</h1>
                 <p>{t('A great way to start is to top up your account with some {{value}} tokens.', { value: activeToken.key })}</p>
                 <div>
@@ -83,7 +83,7 @@ class RecentTransactions extends Component {
           !isLoggedIn
             ? (
               <Box.EmptyState>
-                <Icon name="icon_empty_recent_transactions" />
+                <Icon name="iconEmptyRecentTransactions" />
                 <h1>{t('Sign in to view recent transactions')}</h1>
                 <p>{t('In order to see your recent transactions you need to sign in.')}</p>
               </Box.EmptyState>

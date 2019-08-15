@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './checkBox.css';
-import svgIcons from '../../../utils/svgIcons';
+import Icon from '../icon';
 
 const CheckBox = ({
   added, removed, onChange, accent, checked, className, name,
@@ -13,7 +13,7 @@ const CheckBox = ({
       onChange={onChange}
     />
     <span className={`${(accent || added) ? styles.accent : ''} ${removed ? styles.removed : ''}`}>
-      <img src={svgIcons.checkboxFilled} />
+      <Icon name="checkboxFilled" />
     </span>
   </label>
 );

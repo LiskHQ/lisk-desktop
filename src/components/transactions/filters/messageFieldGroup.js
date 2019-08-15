@@ -3,8 +3,8 @@ import { translate } from 'react-i18next';
 import { AutoresizeTextarea } from '../../toolbox/inputs';
 import Feedback from '../../toolbox/feedback/feedback';
 import CircularProgress from '../../toolbox/circularProgress/circularProgress';
-import svg from '../../../utils/svgIcons';
 import styles from './filters.css';
+import Icon from '../../toolbox/icon';
 
 class MessageFieldGroup extends React.Component {
   constructor() {
@@ -91,9 +91,9 @@ class MessageFieldGroup extends React.Component {
             value={byteCount}
             className={styles.byteCounter}
           />
-          <img
+          <Icon
             className={`${styles.status} ${!fields.message.loading && filters.message ? styles.show : ''}`}
-            src={fields.message.error ? svg.alert_icon : svg.ok_icon}
+            name={fields.message.error ? 'alertIcon' : 'okIcon'}
           />
         </div>
         <Feedback

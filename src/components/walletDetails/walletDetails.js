@@ -2,8 +2,8 @@ import React from 'react';
 import Box from '../toolbox/box';
 import LiskAmount from '../liskAmount';
 import { tokenMap } from '../../constants/tokens';
-import svg from '../../utils/svgIcons';
 import styles from './walletDetails.css';
+import Icon from '../toolbox/icon';
 
 const MyAccount = ({
   t, account, settings, className,
@@ -24,7 +24,7 @@ const MyAccount = ({
         {
         coins.map(coin => (
           <Box.Row key={coin.token} className={`${styles.row} coin-row`}>
-            <img src={coin.token === tokenMap.LSK.key ? svg.lskIcon : svg.btcIcon} />
+            <Icon name={coin.token === tokenMap.LSK.key ? 'lskIcon' : 'btcIcon'} />
             <div className={styles.details}>
               <span>{t('{{token}} Balance', { token: tokenMap[coin.token].label })}</span>
               <span>

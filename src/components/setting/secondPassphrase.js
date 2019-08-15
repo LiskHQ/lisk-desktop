@@ -3,8 +3,8 @@ import React from 'react';
 import Fees from '../../constants/fees';
 import Spinner from '../spinner/spinner';
 import routes from '../../constants/routes';
-import svgIcons from '../../utils/svgIcons';
 import styles from './setting.css';
+import Icon from '../toolbox/icon';
 
 const SecondPassphraseSetting = ({
   account, hasSecondPassphrase, isHwWalletClass, t, hasPendingSecondPassphrase,
@@ -12,9 +12,9 @@ const SecondPassphraseSetting = ({
   <div className={`${styles.fieldGroup} ${styles.checkboxField} second-passphrase`}>
     {hasSecondPassphrase
       ? (
-        <img
+        <Icon
           className={`${styles.checkmark} second-passphrase-registered`}
-          src={svgIcons.checkmark}
+          name="checkmark"
         />
       )
       : null

@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import AccountVisual from '../../accountVisual/index';
 import { Input } from '../../toolbox/inputs';
 import keyCodes from '../../../constants/keyCodes';
-import svg from '../../../utils/svgIcons';
 import Spinner from '../../spinner/spinner';
 import Feedback from '../../toolbox/feedback/feedback';
 import styles from './autoSuggest.css';
+import Icon from '../../toolbox/icon';
 
 // eslint-disable-next-line complexity
 class AutoSuggest extends React.Component {
@@ -153,9 +153,9 @@ class AutoSuggest extends React.Component {
             onChange={this.onChange}
           />
           <Spinner className={`${styles.spinner} ${this.state.isLoading && recipient.value ? styles.show : styles.hide}`} />
-          <img
+          <Icon
             className={`${styles.status} ${!this.state.isLoading && recipient.value ? styles.show : styles.hide}`}
-            src={recipient.error ? svg.alert_icon : svg.ok_icon}
+            name={recipient.error ? 'alertIcon' : 'okIcon'}
           />
           <div className={`${styles.bookmarkContainer}`}>
             <div ref={(node) => { this.listContainerRef = node; }}>

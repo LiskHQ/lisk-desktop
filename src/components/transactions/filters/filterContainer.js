@@ -6,9 +6,9 @@ import Dropdown from '../../toolbox/dropdown/dropdown';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import DateFieldGroup from './dateFieldGroup';
 import MessageFieldGroup from './messageFieldGroup';
-import svg from '../../../utils/svgIcons';
 import styles from './filterContainer.css';
 import AmountFieldGroup from './amountFieldGroup';
+import Icon from '../../toolbox/icon';
 
 class filterContainer extends React.Component {
   constructor(props) {
@@ -105,7 +105,7 @@ class filterContainer extends React.Component {
           onClick={this.toggleFilters}
         >
           {t('Filter Transactions')}
-          <img className="button-icon" src={svg.iconFilter} />
+          <Icon className="button-icon" name="iconFilter" />
         </SecondaryButton>
         <div className={styles.dropdownContainer}>
           <Dropdown className={styles.bigDropdown} showDropdown={this.state.showFilters}>
