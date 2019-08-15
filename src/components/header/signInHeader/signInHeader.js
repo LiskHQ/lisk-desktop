@@ -256,10 +256,10 @@ class Header extends React.Component {
                             />
                             <div className={styles.icons}>
                               <Spinner className={`${styles.spinner} ${this.state.isValidationLoading && this.state.address ? styles.show : styles.hide}`} />
-                              <img
+                              <Icon
                                 className={`${styles.status} ${!this.state.isValidationLoading && this.state.address && !this.state.isFirstTime
                                   ? styles.show : styles.hide}`}
-                                src={!this.state.connected ? 'iconWarning' : 'okIcon'}
+                                name={!this.state.connected ? 'iconWarning' : 'okIcon'}
                               />
                             </div>
                             {
