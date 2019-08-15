@@ -1,7 +1,7 @@
 import React from 'react';
 import Piwik from '../../utils/piwik';
 import { PrimaryButton } from '../toolbox/buttons/button';
-import logo from '../../assets/images/lisk-logo-v2.svg';
+import Icon from '../toolbox/icon';
 import routes from '../../constants/routes';
 import styles from './termsOfUse.css';
 
@@ -41,7 +41,7 @@ class TermsOfUse extends React.Component {
     return (
       <div className={styles.wrapper}>
         <header className={styles.header}>
-          <img src={logo} />
+          <Icon name="liskLogo" />
         </header>
         <div className={styles.content}>
           <h1>{this.props.t('Lisk Terms of Use')}</h1>
