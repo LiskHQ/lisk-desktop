@@ -10,7 +10,7 @@ export default function LanguageSelect({ t }) {
     label: t(languages[key].name),
   }));
   const activeLanguage = Math.max(0,
-    languageList.map(({ label }) => label).indexOf(i18n.language));
+    languageList.map(({ value }) => value).indexOf(i18n.language));
 
   return (
     <div className={styles.fieldGroup}>
