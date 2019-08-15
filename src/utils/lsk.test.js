@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { fromRawLsk, toRawLsk } from './lsk';
+import { fromRawLsk, toRawLsk, formatBasedOnLocale } from './lsk';
 
 describe('lsk', () => {
   describe('fromRawLsk', () => {
@@ -19,6 +19,21 @@ describe('lsk', () => {
 
     it('should convert 0 to 0', () => {
       expect(toRawLsk(0)).to.be.equal(0);
+    });
+  });
+
+  describe('formatBasedOnLocale', () => {
+    it('should format to EN by default', () => {
+      const data = { value: 1.23 };
+      expect(formatBasedOnLocale(data)).to.be.equal('1.23');
+    });
+
+    it('should format correctly to DE', () => {
+      const data = {
+        value: 1.23,
+        locale: 'de',
+      };
+      expect(formatBasedOnLocale(data)).to.be.equal('1,23');
     });
   });
 });

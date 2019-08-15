@@ -8,13 +8,14 @@ import AutoSuggest from '../autoSuggest';
 import Spinner from '../../spinner/spinner';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
-import { fromRawLsk } from '../../../utils/lsk';
+import { fromRawLsk, formatBasedOnLocale } from '../../../utils/lsk';
 import Feedback from '../../toolbox/feedback/feedback';
 import styles from './form.css';
 import Piwik from '../../../utils/piwik';
 import { validateAddress } from '../../../utils/validators';
 import Icon from '../../toolbox/icon';
 import Box from '../../toolbox/box';
+import i18n from '../../../i18n';
 
 function getInitialState() {
   return {
@@ -361,7 +362,12 @@ class FormBase extends React.Component {
 
             { !extraFields.processingSpeed ? (
               <span className={styles.amountHint}>
-                {t('+ Transaction fee {{fee}} LSK', { fee: fromRawLsk(fee) })}
+                {t('+ Transaction fee {{fee}} LSK', {
+                  fee: formatBasedOnLocale({
+                    value: fromRawLsk(fee),
+                    locale: i18n.language,
+                  }),
+                })}
                 <Tooltip
                   className="showOnTop"
                   title={t('Transaction fee')}
