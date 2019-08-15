@@ -1,5 +1,5 @@
 import React from 'react';
-import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
+import { fromRawLsk, toRawLsk, formatBasedOnLocale } from '../../../utils/lsk';
 import { loginType } from '../../../constants/hwConstants';
 import { tokenMap } from '../../../constants/tokens';
 import AccountVisual from '../../accountVisual/index';
@@ -8,6 +8,7 @@ import Piwik from '../../../utils/piwik';
 import TransactionSummary from '../../transactionSummary';
 import fees from '../../../constants/fees';
 import styles from './summary.css';
+import i18n from '../../../i18n';
 
 class Summary extends React.Component {
   constructor(props) {
@@ -74,6 +75,11 @@ class Summary extends React.Component {
       fields, t, token, account,
     } = this.props;
 
+    const amount = formatBasedOnLocale({
+      value: fields.amount.value,
+      locale: i18n.language,
+    });
+
     const fee = token === tokenMap.LSK.key
       ? fromRawLsk(fees.send)
       : fromRawLsk(fields.processingSpeed.txFee);
@@ -84,7 +90,7 @@ class Summary extends React.Component {
         t={t}
         account={account}
         confirmButton={{
-          label: t('Send {{amount}} {{token}}', { amount: fields.amount.value, token }),
+          label: t('Send {{amount}} {{token}}', { amount, token }),
           onClick: this.submitTransaction,
         }}
         cancelButton={{
@@ -111,7 +117,7 @@ class Summary extends React.Component {
         <section>
           <label>{t('Amount')}</label>
           <label className="amount-summary">
-            {`${fields.amount.value} ${token}`}
+            {`${amount} ${token}`}
             <Converter className={styles.secondText} value={fields.amount.value} />
           </label>
         </section>
