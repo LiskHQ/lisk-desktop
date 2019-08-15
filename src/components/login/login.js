@@ -18,6 +18,7 @@ import PassphraseInput from '../passphraseInput/passphraseInput';
 import styles from './login.css';
 import Piwik from '../../utils/piwik';
 import { getDeviceList } from '../../utils/hwWallet';
+import DiscreetModeToggle from '../toolbox/discreetModeToggle/discreetModeToggle';
 
 class Login extends React.Component {
   constructor() { // eslint-disable-line max-statements
@@ -123,7 +124,7 @@ class Login extends React.Component {
 
   // eslint-disable-next-line complexity
   render() {
-    const { t } = this.props;
+    const { t, settings, settingsUpdated } = this.props;
 
     return (
       <React.Fragment>
@@ -187,8 +188,15 @@ class Login extends React.Component {
                   maxInputsLength={24}
                   onFill={this.checkPassphrase}
                 />
-              </div>
 
+                <DiscreetModeToggle
+                  className={styles.discreetMode}
+                  isEnable={settings.discreetMode}
+                  onClick={() => settingsUpdated({ discreetMode: !settings.discreetMode })}
+                  disabledText={t('Discreet Mode Disabled')}
+                  enabledText={t('Discreet Mode Enabled')}
+                />
+              </div>
               <div className={`${styles.buttonsHolder}`}>
                 <PrimaryButton
                   className={`${styles.button} login-button`}
