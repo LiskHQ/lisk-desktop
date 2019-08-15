@@ -5,39 +5,37 @@ import styles from './discreetMode.css';
 import { getTokenFromAddress } from '../../utils/api/transactions';
 
 class DiscreetMode extends Component {
-  // eslint-disable-next-line max-statements
-  shouldBlurElement() {
-    const {
-      account,
-      addresses,
-      location,
-      isDiscreetMode,
-    } = this.props;
+  handleBlurOnTransactionDetailsPage() {
+    const { account, addresses } = this.props;
+    const token = getTokenFromAddress(addresses[0]);
+    return account.info && addresses.some(address => address === account.info[token].address);
+  }
 
+  handleBlurOnOtherWalletPage() {
+    const { account, location } = this.props;
+    const address = location.pathname.split('/').pop();
+    const token = getTokenFromAddress(address);
+    return account.info && address === account.info[token].address;
+  }
+
+  shouldEnableDiscreetMode() {
+    const { addresses, location, isDiscreetMode } = this.props;
     if (!isDiscreetMode) return false;
-
-    const { pathname } = location;
-    if (addresses.length && pathname.includes(routes.transactions.path)) {
-      const token = getTokenFromAddress(addresses[0]);
-      return account.info && addresses.some(address => address === account.info[token].address);
+    if (addresses.length && location.pathname.includes(routes.transactions.path)) {
+      return this.handleBlurOnTransactionDetailsPage();
     }
-
-    if (pathname.includes(routes.accounts.path)) {
-      const address = pathname.split('/').pop();
-      const token = getTokenFromAddress(address);
-      return account.info && address === account.info[token].address;
+    if (location.pathname.includes(routes.accounts.path)) {
+      return this.handleBlurOnOtherWalletPage();
     }
-
     return true;
   }
 
   render() {
-    const discreetModeClass = this.shouldBlurElement() ? styles.discreetMode : '';
+    const discreetModeClass = this.shouldEnableDiscreetMode() ? styles.discreetMode : '';
     return <div className={discreetModeClass}>{this.props.children}</div>;
   }
 }
 
-/* istanbul ignore next */
 DiscreetMode.defaultProps = {
   addresses: [],
 };
