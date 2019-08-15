@@ -2,9 +2,8 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { MemoryRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import i18n from '../../../i18n';
 import UserAccount from './userAccount';
-import routes from '../../../constants/routes';
+import store from '../../../store';
 
 describe('UserAccount', () => {
   let wrapper;
@@ -33,25 +32,15 @@ describe('UserAccount', () => {
     t: val => val,
   };
 
-  const history = {
-    location: { pathname: routes.dashboard.path },
+  const options = {
+    context: { store },
+    childContextTypes: { store: PropTypes.object.isRequired },
   };
 
-  const myOptions = {
-    context: {
-      history, i18n, router: { route: history, history },
-    },
-    childContextTypes: {
-      history: PropTypes.object.isRequired,
-      i18n: PropTypes.object.isRequired,
-      router: PropTypes.object.isRequired,
-    },
-  };
-
-  const mountWithRouter = (node, options) => mount(<Router>{node}</Router>, options);
+  const mountWithRouter = (node, storeOptions) => mount(<Router>{node}</Router>, storeOptions);
 
   beforeEach(() => {
-    wrapper = mountWithRouter(<UserAccount {...myProps} />, myOptions);
+    wrapper = mountWithRouter(<UserAccount {...myProps} />, options);
   });
 
   it('renders <UserAccount /> component', () => {
@@ -65,7 +54,7 @@ describe('UserAccount', () => {
 
   it('called properly dropdown component', () => {
     myProps.isDropdownEnable = true;
-    wrapper = mountWithRouter(<UserAccount {...myProps} />, myOptions);
+    wrapper = mountWithRouter(<UserAccount {...myProps} />, options);
     expect(wrapper).toContainExactlyOneMatchingElement('Dropdown');
     expect(wrapper).toContainExactlyOneMatchingElement('span.dropdownOption');
     expect(wrapper).toContainMatchingElements(3, 'a.dropdownOption');
@@ -73,7 +62,7 @@ describe('UserAccount', () => {
 
   it('called properly onLogout when user click it', () => {
     myProps.isDropdownEnable = true;
-    wrapper = mountWithRouter(<UserAccount {...myProps} />, myOptions);
+    wrapper = mountWithRouter(<UserAccount {...myProps} />, options);
     wrapper.find('span.dropdownOption').simulate('click');
     expect(myProps.onLogout).toHaveBeenCalled();
   });
@@ -87,7 +76,7 @@ describe('UserAccount', () => {
       },
     };
     localStorage.setItem('btc', true);
-    wrapper = mountWithRouter(<UserAccount {...myProps} />, myOptions);
+    wrapper = mountWithRouter(<UserAccount {...myProps} />, options);
     expect(wrapper.find('Dropdown')).toContainMatchingElements(1, '.accountInfo');
     wrapper.setProps({
       children: React.cloneElement(wrapper.props().children, {
