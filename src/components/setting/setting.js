@@ -2,14 +2,15 @@ import React from 'react';
 import { tokenMap } from '../../constants/tokens';
 import Box from '../toolbox/box';
 import CheckBox from '../toolbox/checkBox';
+import LanguageSelect from './languageSelect';
 import Piwik from '../../utils/piwik';
+import SecondPassphraseSetting from './secondPassphrase';
 import Select from '../toolbox/select';
 import accountConfig from '../../constants/account';
 import links from '../../constants/externalLinks';
 import settingsConst from '../../constants/settings';
 import styles from './setting.css';
 import txTypes from '../../constants/transactionTypes';
-import SecondPassphraseSetting from './secondPassphrase';
 
 class Setting extends React.Component {
   constructor() {
@@ -98,6 +99,9 @@ class Setting extends React.Component {
                   className="currency"
                 />
               </div>
+              {
+                // TODO: Remove the condition when i18n epic #2301 is finished
+                localStorage.getItem('feature-flag-language') ? <LanguageSelect t={t} /> : null}
             </section>
             <section>
               <h2>{t('Security')}</h2>

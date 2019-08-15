@@ -1,10 +1,17 @@
 @import '../../app/variables.css';
+@import '../../app/mixins.css';
 
 .wrapper {
   position: relative;
 
   & .dropdown {
     transform-origin: top center;
+
+    & .option {
+      @mixin contentLargest;
+
+      padding: 15px 20px;
+    }
   }
 }
 

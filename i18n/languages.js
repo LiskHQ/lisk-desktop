@@ -1,13 +1,15 @@
+
+const t = key => key; // This is hack to get the names in common.json
+// we have to call t(...) again in src/components/setting/setting.js
+
 const languages = {
   en: {
-    name: 'English',
+    name: t('English'),
     common: require('./locales/en/common.json'),
-    flag: require('./flags/en.png'),
   },
   de: {
-    name: 'Deutsch',
+    name: t('German'),
     common: require('./locales/de/common.json'),
-    flag: require('./flags/de.png'),
   },
 };
 export default languages;
