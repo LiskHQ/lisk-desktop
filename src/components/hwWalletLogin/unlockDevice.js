@@ -1,7 +1,7 @@
 // istanbul ignore file
 import React from 'react';
 import { TertiaryButton } from '../toolbox/buttons/button';
-import illustration from '../../assets/images/illustrations/illustration-ledger-nano-light.svg';
+import Illustration from '../toolbox/illustration';
 import routes from '../../constants/routes';
 
 const { ipc } = window;
@@ -78,7 +78,7 @@ class UnlockDevice extends React.Component {
             {t('Official guidelines')}
           </a>
         </p>
-        <img src={illustration} />
+        <Illustration name="ledgerNanoLight" />
         <TertiaryButton onClick={() => { history.push(routes.splashscreen.path); }}>
           {t('Go Back')}
         </TertiaryButton>
