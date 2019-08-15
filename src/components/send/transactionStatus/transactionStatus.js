@@ -1,10 +1,9 @@
 import React from 'react';
-
 import { SecondaryButton } from '../../toolbox/buttons/button';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import { getTokenFromAddress } from '../../../utils/api/transactions';
 import BookmarkDropdown from '../../bookmarks/bookmarkDropdown';
-import Dropdown from '../../toolbox/dropdown/dropdown';
+import DropdownButton from '../../toolbox/dropdownButton';
 import TransactionResult from '../../transactionResult';
 import statusMessage from './statusMessages';
 import styles from './transactionStatus.css';
@@ -17,21 +16,14 @@ class TransactionStatus extends React.Component {
       isBookmarkDropdown: false,
     };
 
-    this.bookmarkContainerRef = {};
+    this.transactionBroadcasted = this.transactionBroadcasted.bind(this);
     this.onRetry = this.onRetry.bind(this);
-    this.onBookmarkDropdownToggle = this.onBookmarkDropdownToggle.bind(this);
-    this.handleClickOutsideDropdown = this.handleClickOutsideDropdown.bind(this);
   }
 
   componentDidMount() {
     const { recipientAccount, fields } = this.props;
     recipientAccount.loadData({ address: fields.recipient.address });
     this.transactionBroadcasted();
-  }
-
-  /* istanbul ignore next */
-  componentWillUnmount() {
-    document.removeEventListener('click', this.handleClickOutsideDropdown);
   }
 
   transactionBroadcasted() {
@@ -44,21 +36,6 @@ class TransactionStatus extends React.Component {
     if (transactionsCreatedFailed.length) {
       transactionsCreatedFailed.forEach(tx => transactionBroadcasted(tx));
     }
-  }
-
-  onBookmarkDropdownToggle() {
-    if (this.state.isBookmarkDropdown) {
-      document.removeEventListener('click', this.handleClickOutsideDropdown);
-    } else {
-      document.addEventListener('click', this.handleClickOutsideDropdown);
-    }
-
-    this.setState(prevState => ({ isBookmarkDropdown: !prevState.isBookmarkDropdown }));
-  }
-
-  handleClickOutsideDropdown(e) {
-    if (this.bookmarkContainerRef.contains(e.target)) return;
-    this.onBookmarkDropdownToggle();
   }
 
   bookmarkInformation() {
@@ -162,30 +139,21 @@ class TransactionStatus extends React.Component {
           {
             shouldShowBookmark
               ? (
-                <div
-                  className={`${styles.bookmarkBtn} bookmark-container`}
-                  ref={(node) => { this.bookmarkContainerRef = node; }}
-                >
-                  <SecondaryButton
-                    className={`${styles.btn} ${isBookmarked ? styles.bookmarkButton : ''} bookmark-btn`}
-                    onClick={this.onBookmarkDropdownToggle}
-                  >
-                    {bookmarkButtonLabel}
-                  </SecondaryButton>
-                  <Dropdown
-                    showArrow={false}
-                    showDropdown={this.state.isBookmarkDropdown}
+                <div className={`${styles.bookmarkBtn} bookmark-container`}>
+                  <DropdownButton
+                    buttonClassName={`${styles.btn} ${isBookmarked ? styles.bookmarkButton : ''} bookmark-btn`}
                     className={`${styles.bookmarkDropdown}`}
+                    buttonLabel={bookmarkButtonLabel}
+                    ButtonComponent={SecondaryButton}
                   >
                     <BookmarkDropdown
                       delegate={recipientAccount.data.delegate || {}}
                       address={fields.recipient.address}
                       detailAccount={this.props.recipientAccount.data}
-                      onSubmitClick={this.onBookmarkDropdownToggle}
                       isBookmark={isBookmarked}
                       token={token}
                     />
-                  </Dropdown>
+                  </DropdownButton>
                 </div>
               )
               : null
