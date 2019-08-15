@@ -57,7 +57,7 @@ class TransactionDetailView extends React.Component {
               <AccountInfo
                 address={transaction.recipientId}
                 addressClass="receiver-address"
-                label="Recipient"
+                label={t('Recipient')}
               />
             </Box.Row>
           )
