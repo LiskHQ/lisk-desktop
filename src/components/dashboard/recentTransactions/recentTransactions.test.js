@@ -1,7 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import PropTypes from 'prop-types';
 import { MemoryRouter as Router } from 'react-router-dom';
 import RecentTransactions from './recentTransactions';
+import store from '../../../store';
 
 
 describe('Recent Transactions', () => {
@@ -110,8 +112,13 @@ describe('Recent Transactions', () => {
     ],
   };
 
+  const options = {
+    context: { store },
+    childContextTypes: { store: PropTypes.object.isRequired },
+  };
+
   beforeEach(() => {
-    wrapper = mount(<Router><RecentTransactions {...lskProps} /></Router>);
+    wrapper = mount(<Router><RecentTransactions {...lskProps} /></Router>, options);
   });
 
   it('Should render Recent Transactions properly with LSK active token', () => {

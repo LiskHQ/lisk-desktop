@@ -1,7 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import PropTypes from 'prop-types';
 import { MemoryRouter as Router } from 'react-router-dom';
 import WalletDetails from './walletDetails';
+import store from '../../store';
 
 
 describe('WalletDetails', () => {
@@ -32,8 +34,13 @@ describe('WalletDetails', () => {
     t: key => key,
   };
 
+  const options = {
+    context: { store },
+    childContextTypes: { store: PropTypes.object.isRequired },
+  };
+
   beforeEach(() => {
-    wrapper = mount(<Router><WalletDetails {...props} /></Router>);
+    wrapper = mount(<Router><WalletDetails {...props} /></Router>, options);
   });
 
   it('Should render properly', () => {

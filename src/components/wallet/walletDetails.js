@@ -5,6 +5,7 @@ import Box from '../toolbox/box';
 import Icon from '../toolbox/icon';
 import LiskAmount from '../liskAmount';
 import CopyToClipboard from '../toolbox/copyToClipboard';
+import DiscreetMode from '../discreetMode';
 import styles from './walletDetails.css';
 
 class WalletDetails extends React.Component {
@@ -37,11 +38,13 @@ class WalletDetails extends React.Component {
           <Icon name="balance" />
           <div>
             <label>{t('Balance')}</label>
-            <div className={styles.value}>
-              <LiskAmount val={balance} />
-              {' '}
-              {activeToken}
-            </div>
+            <DiscreetMode>
+              <div className={styles.value}>
+                <LiskAmount val={balance} />
+                {' '}
+                {activeToken}
+              </div>
+            </DiscreetMode>
           </div>
         </Box.Row>
       </Box>

@@ -1,0 +1,5 @@
+
+.discreetMode {
+  filter: blur(7px);
+  user-select: none;
+}

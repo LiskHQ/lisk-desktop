@@ -10,7 +10,7 @@ import { tokenMap } from '../../constants/tokens';
 class BalanceGraph extends React.Component {
   render() {
     const {
-      t, transactions, balance, address, token,
+      t, transactions, balance, address, token, isDiscreetMode,
     } = this.props;
 
     const format = ChartUtils.getChartDateFormat(transactions);
@@ -32,7 +32,7 @@ class BalanceGraph extends React.Component {
             { transactions.length
               ? (
                 <LineChart
-                  options={ChartUtils.graphOptions(format)}
+                  options={ChartUtils.graphOptions({ format, isDiscreetMode })}
                   data={data}
                 />
               )

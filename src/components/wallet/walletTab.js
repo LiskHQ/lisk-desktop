@@ -19,6 +19,7 @@ const WalletTab = ({ ...props }) => (
           !props.hideChart || props.transactions.length
             ? (
               <BalanceChart
+                isDiscreetMode={props.account.address === props.address && props.isDiscreetMode}
                 token={props.activeToken}
                 balance={props.balance}
                 address={props.address}
