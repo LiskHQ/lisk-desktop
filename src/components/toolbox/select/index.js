@@ -62,7 +62,7 @@ class Select extends React.Component {
         >
           {options.map((option, index) => (
             <span
-              className="option"
+              className={`${styles.option} option`}
               data-index={index}
               onClick={this.setSelected}
               key={`option-${index}`}
