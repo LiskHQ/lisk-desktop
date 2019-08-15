@@ -6,7 +6,7 @@ import DiscreetMode from './discreetMode';
 
 const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
-  isDiscreetMode: state.settings.discreetMode || true,
+  isDiscreetMode: state.settings.discreetMode || false,
 });
 
 export default withRouter(connect(mapStateToProps)(DiscreetMode));
