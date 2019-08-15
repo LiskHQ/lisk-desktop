@@ -4,6 +4,7 @@ import moment from 'moment/min/moment-with-locales';
 import { translate } from 'react-i18next';
 import voting from '../../constants/voting';
 import Box from '../toolbox/box';
+import { formatBasedOnLocale } from '../../utils/lsk';
 import { getUnixTimestampFromValue } from '../../utils/datetime';
 import LiskAmount from '../liskAmount';
 import i18n from '../../i18n';
@@ -55,7 +56,7 @@ const DelegateTab = ({ delegate, account, t }) => {
           </li>
           <li className="productivity">
             <span className={styles.label}>{t('Productivity')}</span>
-            {`${delegate.productivity}%` }
+            {`${formatBasedOnLocale({ value: delegate.productivity, locale: i18n.language })}%` }
           </li>
           <li className="blocks">
             <span className={styles.label}>{t('Blocks forged')}</span>
