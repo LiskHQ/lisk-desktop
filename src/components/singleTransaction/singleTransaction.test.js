@@ -6,6 +6,7 @@ import SingleTransaction from './singleTransaction';
 import accounts from '../../../test/constants/accounts';
 import fees from '../../constants/fees';
 import transactionTypes from '../../constants/transactionTypes';
+import store from '../../store';
 
 describe('Single Transaction Component', () => {
   let wrapper;
@@ -59,15 +60,18 @@ describe('Single Transaction Component', () => {
   };
   const router = {
     route: {
-      location: {},
+      location: {
+        pathname: `/explorer/transactions/${transaction.id}`,
+      },
       match: { params: { id: transaction.id } },
     },
     history: props.history,
   };
 
   const options = {
-    context: { router },
+    context: { store, router },
     childContextTypes: {
+      store: PropTypes.object.isRequired,
       router: PropTypes.object.isRequired,
     },
   };

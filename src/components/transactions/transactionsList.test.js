@@ -2,10 +2,12 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
+import { MemoryRouter as Router } from 'react-router-dom';
 import TransactionsList from './transactionsList';
 import actionTypes from '../../constants/actions';
 import txFilters from '../../constants/transactionFilters';
-import i18n from '../../i18n';
+import store from '../../store';
+
 
 describe('TransactionsList ', () => {
   let wrapper;
@@ -25,10 +27,8 @@ describe('TransactionsList ', () => {
   }];
 
   const options = {
-    context: { i18n },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-    },
+    context: { store },
+    childContextTypes: { store: PropTypes.object.isRequired },
   };
 
   const props = {
@@ -51,7 +51,7 @@ describe('TransactionsList ', () => {
   };
 
   it('should render list of transactions', () => {
-    wrapper = mount(<TransactionsList {...props} />, options);
+    wrapper = mount(<Router><TransactionsList {...props} /></Router>, options);
     expect(wrapper).to.have.descendants('.transactions-row');
   });
 
@@ -64,7 +64,7 @@ describe('TransactionsList ', () => {
         name: 'All',
       },
     };
-    wrapper = mount(<TransactionsList {...propsNoTx} />, options);
+    wrapper = mount(<Router><TransactionsList {...propsNoTx} /></Router>, options);
     expect(wrapper).to.have.descendants('.empty-state');
   });
 
@@ -73,7 +73,7 @@ describe('TransactionsList ', () => {
       ...props,
       loading: [actionTypes.getTransactions],
     };
-    wrapper = mount(<TransactionsList {...loadingProps} />, options);
+    wrapper = mount(<Router><TransactionsList {...loadingProps} /></Router>, options);
     expect(wrapper).to.have.descendants('Spinner');
   });
 });

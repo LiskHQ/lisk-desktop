@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import accounts from '../../../test/constants/accounts';
 import TransactionRow from './transactionRow';
-import history from '../../history';
+import store from '../../store';
 
 describe('TransactionRow', () => {
   let clock;
@@ -37,10 +37,8 @@ describe('TransactionRow', () => {
   };
 
   const options = {
-    context: { history },
-    childContextTypes: {
-      history: PropTypes.object.isRequired,
-    },
+    context: { store },
+    childContextTypes: { store: PropTypes.object.isRequired },
   };
 
   beforeEach(() => {

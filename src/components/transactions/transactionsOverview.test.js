@@ -3,10 +3,10 @@ import { expect } from 'chai';
 import { spy } from 'sinon';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
-import configureMockStore from 'redux-mock-store';
-import i18n from '../../i18n';
+import { MemoryRouter as Router } from 'react-router-dom';
 import TransactionsOverview from './transactionsOverview';
 import accounts from '../../../test/constants/accounts';
+import store from '../../store';
 
 describe('TransactionsOverview ', () => {
   let wrapper;
@@ -23,14 +23,6 @@ describe('TransactionsOverview ', () => {
     address: '12345678L',
     asset: {},
   }];
-
-  const store = configureMockStore([])({
-    account: accounts.genesis,
-    bookmarks: {
-      LSK: [],
-      BTC: [],
-    },
-  });
 
   const props = {
     t: data => data,
@@ -55,20 +47,16 @@ describe('TransactionsOverview ', () => {
       amountTo: '',
       message: '',
     },
+    activeToken: 'LSK',
   };
 
   const options = {
-    context: {
-      store, i18n,
-    },
-    childContextTypes: {
-      store: PropTypes.object.isRequired,
-      i18n: PropTypes.object.isRequired,
-    },
+    context: { store },
+    childContextTypes: { store: PropTypes.object.isRequired },
   };
 
   beforeEach(() => {
-    wrapper = mount(<TransactionsOverview {...props} />, options);
+    wrapper = mount(<Router><TransactionsOverview {...props} /></Router>, options);
   });
 
   it('should call onInit on constructor call', () => {
@@ -85,7 +73,11 @@ describe('TransactionsOverview ', () => {
     expect(wrapper).to.have.exactly(1).descendants('.filter-in');
     expect(wrapper).to.have.exactly(1).descendants('.filter-out');
 
-    wrapper.setProps({ activeToken: 'BTC' });
+    wrapper.setProps({
+      children: React.cloneElement(wrapper.props().children, {
+        activeToken: 'BTC',
+      }),
+    });
 
     expect(wrapper).to.have.exactly(1).descendants('.filter-all');
     expect(wrapper).to.have.exactly(0).descendants('.filter-in');
