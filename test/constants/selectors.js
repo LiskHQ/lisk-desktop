@@ -61,7 +61,7 @@ const ss = {
   bookmarkInput: '#bookmark-input',
   bookmarkList: '.bookmarkList',
   nextTransferBtn: '.send-next-button',
-  sendBtn: '.send-button',
+  sendBtn: '.confirm-button',
   transactionAddress: '.transaction-address span',
   chooseDelegateName: '.confirm-btn',
   delegateNameInput: '.select-name-input',
