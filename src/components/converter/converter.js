@@ -1,6 +1,9 @@
 import React from 'react';
+import numeral from 'numeral';
+import 'numeral/locales';
 import converter from '../../constants/converter';
 import styles from './converter.css';
+import i18n from '../../i18n';
 
 class Converter extends React.Component {
   constructor(props) {
@@ -17,10 +20,12 @@ class Converter extends React.Component {
 
     const currency = settings.currency || 'USD';
 
-    let price = error && Number.isNaN(value)
-      ? (0).toFixed(2) : (value * currencies[currency]).toFixed(2);
+    numeral.locale(i18n.language);
 
-    price = price > converter.maxLSKSupply || price === 'NaN' || price < 0 ? (0).toFixed(2) : price;
+    let price = error && Number.isNaN(value) ? 0 : (value * currencies[currency]);
+
+    price = price > converter.maxLSKSupply || price === 'NaN' || price < 0 ? 0 : price;
+    price = numeral(price).format('0,0.00');
 
     return (
       <div className={`${styles.wrapper} ${className}`}>
