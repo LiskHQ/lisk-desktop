@@ -229,5 +229,10 @@
   "{{count}} of the delegate names selected for voting was already voted for for:": "{{count}} der ausgewählten Delegierten-Namen zum Wählen sind bereits gewählt:",
   "{{count}} of the delegate names selected for voting was already voted for for:_plural": "{{count}} der ausgewählten Delegierten-Namen zum Wählen sind bereits gewählt:",
   "{{count}} of the provided delegate names could not be resolved:": "{{count}} der eingegebenen Delegierten-Namen konnten nicht gefunden werden:",
-  "{{count}} of the provided delegate names could not be resolved:_plural": "{{count}} der eingegebenen Delegierten-Namen konnten nicht gefunden werden:"
+  "{{count}} of the provided delegate names could not be resolved:_plural": "{{count}} der eingegebenen Delegierten-Namen konnten nicht gefunden werden:",
+  "[Today], hh:mm A": "[Heute], hh:mm A",
+  "[Tomorrow], hh:mm A": "[Morgen], hh:mm A",
+  "[Yesterday], hh:mm A": "[Gestern], hh:mm A",
+  "{{days}}d ago": "Vor {{days}}d",
+  "{{hours}}h ago": "Vor {{hours}}h"
 }

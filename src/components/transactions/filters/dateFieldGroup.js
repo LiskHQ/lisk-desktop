@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React from 'react';
 import moment from 'moment';
 import { translate } from 'react-i18next';
@@ -12,6 +13,7 @@ import Feedback from '../../toolbox/feedback/feedback';
 import keyCodes from '../../../constants/keyCodes';
 import Spinner from '../../spinner/spinner';
 import Icon from '../../toolbox/icon';
+import i18n from '../../../i18n';
 
 class DateFieldGroup extends React.Component {
   // eslint-disable-next-line max-statements
@@ -253,6 +255,7 @@ class DateFieldGroup extends React.Component {
               showDropdown={shownDropdown === 'dateFromDropdown'}
             >
               <Calendar
+                locale={i18n.language}
                 onDateSelected={date => this.dateSelected(date, 'dateFrom')}
                 dateFormat={this.dateFormat}
                 minDate={moment(firstBlockTime).format(this.dateFormat)}
@@ -273,6 +276,7 @@ class DateFieldGroup extends React.Component {
               showDropdown={shownDropdown === 'dateToDropdown'}
             >
               <Calendar
+                locale={i18n.language}
                 onDateSelected={date => this.dateSelected(date, 'dateTo')}
                 dateFormat={this.dateFormat}
                 minDate={filters.dateFrom

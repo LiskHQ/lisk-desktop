@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales';
 import keyCodes from '../../../constants/keyCodes';
 import Dropdown from '../../toolbox/dropdown/dropdown';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';

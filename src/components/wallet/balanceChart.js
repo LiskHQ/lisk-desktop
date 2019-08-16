@@ -6,8 +6,9 @@ import styles from './balanceChart.css';
 import * as ChartUtils from '../../utils/balanceChart';
 import EmptyState from '../emptyState';
 import { tokenMap } from '../../constants/tokens';
+import i18n from '../../i18n';
 
-class BalanceGraph extends React.Component {
+class BalanceGraph extends React.PureComponent {
   render() {
     const {
       t, transactions, balance, address, token, isDiscreetMode,
@@ -22,6 +23,13 @@ class BalanceGraph extends React.Component {
       format,
     });
 
+    const options = ChartUtils.graphOptions({
+      format,
+      token,
+      isDiscreetMode,
+      locale: i18n.language,
+    });
+
     return (
       <Box className={`${styles.wrapper}`}>
         <Box.Header>
@@ -32,7 +40,7 @@ class BalanceGraph extends React.Component {
             { transactions.length
               ? (
                 <LineChart
-                  options={ChartUtils.graphOptions({ format, isDiscreetMode })}
+                  options={options}
                   data={data}
                 />
               )

@@ -15,8 +15,8 @@
   & > div {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-start;
     box-sizing: border-box;
     margin-left: 15px;
 
