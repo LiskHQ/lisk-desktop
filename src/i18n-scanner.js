@@ -34,6 +34,7 @@ function i18nScanner(params) { // eslint-disable-line
     .forEach((file) => {
       const content = fs.readFileSync(file, 'utf-8');
       parser.parseFuncFromString(content, { list: params.translationFunctionNames }, customHandler);
+      parser.parseTransFromString(content, {}, customHandler);
     });
 
   const translations = parser.get({ sort: true }).en.translation;
