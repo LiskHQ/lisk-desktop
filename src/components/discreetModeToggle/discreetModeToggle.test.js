@@ -9,8 +9,8 @@ describe('DiscreetModeToggle Component', () => {
     disabledText: 'discreet disabled',
     enabledText: 'discreet enabled',
     iconPosition: 'left',
-    isEnable: false,
-    onClick: jest.fn(),
+    isDiscreetMode: false,
+    settingsUpdated: jest.fn(),
   };
 
   const setup = data => shallow(<DiscreetModeToggle {...data} />);
@@ -24,13 +24,13 @@ describe('DiscreetModeToggle Component', () => {
     expect(wrapper.find('div')).toHaveClassName('toggle');
     expect(wrapper.find('span')).toHaveText('discreet disabled');
     wrapper.find('label').simulate('click');
-    expect(props.onClick).toBeCalled();
-    wrapper.setProps({ isEnable: true });
+    expect(props.settingsUpdated).toBeCalled();
+    wrapper.setProps({ isDiscreetMode: true });
     expect(wrapper.find('span')).toHaveText('discreet enabled');
   });
 
   it('Should render properly with className and enabled discreet Mode', () => {
-    const newProps = { ...props, iconPosition: 'right', isEnable: true };
+    const newProps = { ...props, iconPosition: 'right', isDiscreetMode: true };
     wrapper = setup(newProps);
     expect(wrapper).toContainMatchingElements(1, 'div');
     expect(wrapper).toContainMatchingElements(1, 'label');
@@ -39,8 +39,8 @@ describe('DiscreetModeToggle Component', () => {
     expect(wrapper.find('div')).toHaveClassName('toggle');
     expect(wrapper.find('span')).toHaveText('discreet enabled');
     wrapper.find('label').simulate('click');
-    expect(props.onClick).toBeCalled();
-    wrapper.setProps({ isEnable: false });
+    expect(props.settingsUpdated).toBeCalled();
+    wrapper.setProps({ isDiscreetMode: false });
     expect(wrapper.find('span')).toHaveText('discreet disabled');
   });
 });
