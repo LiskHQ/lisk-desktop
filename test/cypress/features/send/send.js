@@ -32,20 +32,6 @@ Then(/^I fill random message$/, function () {
   cy.get(ss.sendReferenceText).click().type(randomReference);
 });
 
-Then(/^I go to confirmation$/, function () {
-  cy.get(ss.nextTransferBtn).should('be.enabled');
-  cy.get(ss.nextTransferBtn).click();
-});
-
-Then(/^I confirm transfer$/, function () {
-  cy.get(ss.sendBtn).click();
-  cy.get(ss.submittedTransactionMessage).should('be.visible');
-});
-
-Then(/^I click ok$/, function () {
-  cy.get(ss.okayBtn).click();
-});
-
 Then(/^I follow the launch protokol link$/, function () {
   cy.visit(`${urls.send}/?recipient=4995063339468361088L&amount=5&reference=test`);
 });

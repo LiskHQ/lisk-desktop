@@ -6,10 +6,12 @@ Feature: Send
     And I remember my balance
     When I fill random recipient
     And I fill random amount
-    And I go to confirmation
+    And I go to transfer confirmation
     And I confirm transfer
-    And I click ok
+    And I go back to wallet
+    Then I should see pending transaction
     Then The latest transaction is transfer to random
+    Then I should not see pending transaction
     Then The balance is subtracted
 
   Scenario: Transfer tx with second passphrase
@@ -17,10 +19,10 @@ Feature: Send
     Given I am on Send page
     When I fill random recipient
     And I fill random amount
-    And I go to confirmation
+    And I go to transfer confirmation
     And I enter second passphrase of second_passphrase_account
     And I confirm transfer
-    And I click ok
+    And I go back to wallet
     Then The latest transaction is transfer to random
 
   Scenario: Launch protocol prefills fields  - from logged in state
@@ -40,7 +42,7 @@ Feature: Send
     Given I am on Send page
     When I fill random recipient
     And I fill random amount
-    And I go to confirmation
+    And I go to transfer confirmation
     And I confirm transfer
     Then I see error message
 
