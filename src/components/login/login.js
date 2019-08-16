@@ -18,6 +18,7 @@ import PassphraseInput from '../passphraseInput/passphraseInput';
 import styles from './login.css';
 import Piwik from '../../utils/piwik';
 import { getDeviceList } from '../../utils/hwWallet';
+import DiscreetModeToggle from '../discreetModeToggle';
 
 class Login extends React.Component {
   constructor() { // eslint-disable-line max-statements
@@ -187,8 +188,13 @@ class Login extends React.Component {
                   maxInputsLength={24}
                   onFill={this.checkPassphrase}
                 />
-              </div>
 
+                <DiscreetModeToggle
+                  className={styles.discreetMode}
+                  disabledText={t('Discreet Mode Disabled')}
+                  enabledText={t('Discreet Mode Enabled')}
+                />
+              </div>
               <div className={`${styles.buttonsHolder}`}>
                 <PrimaryButton
                   className={`${styles.button} login-button`}
