@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales';
 import { fromRawLsk } from './lsk';
 import { getUnixTimestampFromValue } from './datetime';
 import { getTokenFromAddress } from './api/transactions';
@@ -37,6 +37,8 @@ const styles = {
 
 export const graphOptions = ({
   format,
+  token,
+  locale,
   isDiscreetMode = false,
 }) => ({
   plugins: {
@@ -55,9 +57,19 @@ export const graphOptions = ({
       type: 'time',
       time: {
         unit: getUnitFromFormat(format),
+        displayFormats: formats,
+        parser: (value) => {
+          moment.locale(locale);
+          return moment(value);
+        },
+        round: true,
       },
       distribution: 'linear',
       ticks: {
+        callback: (value) => {
+          moment.locale(locale);
+          return moment(value).format(format);
+        },
         fontColor: styles.slateGray,
         fontSize: styles.fontSize,
         fontFamily: styles.contentFontFamily,
@@ -100,11 +112,12 @@ export const graphOptions = ({
     enabled: !isDiscreetMode,
     callbacks: {
       title(tooltipItem) {
-        return moment(tooltipItem[0].xLabel, i18n.t('MMMM DD YYYY h:mm:ss A'))
+        moment.locale(locale);
+        return moment(tooltipItem[0].xLabel, 'MMMM DD YYYY h:mm:ss A')
           .format(format);
       },
       label(tooltipItem) {
-        return i18n.t('Account Balance:          {{balance}} LSK', { balance: tooltipItem.yLabel });
+        return i18n.t('Account Balance:          {{balance}} {{token}}', { balance: tooltipItem.yLabel, token });
       },
     },
     mode: 'index',
@@ -173,7 +186,7 @@ export const getBalanceData = ({
   const unit = getUnitFromFormat(format);
   const data = transactions.reduce((balances, tx) => {
     const txValue = getTxValue(tx, address);
-    const txDate = tx.timestamp ? new Date(getNormalizedTimestamp(tx)) : new Date();
+    const txDate = tx.timestamp ? moment(getNormalizedTimestamp(tx)) : moment();
     const lastBalance = balances.slice(-1)[0];
     const tmpBalances = balances.length > 1 && moment(lastBalance.x).isSame(txDate, unit)
       ? balances.slice(0, -1)
@@ -182,7 +195,11 @@ export const getBalanceData = ({
       ...tmpBalances,
       { x: txDate, y: (parseInt(lastBalance.y, 10) - txValue) },
     ];
-  }, [{ x: moment(), y: +balance }]).reverse().map(d => ({ ...d, y: +fromRawLsk(d.y) }));
+  }, [{ x: moment(), y: +balance }])
+    .reverse().map(d => ({
+      x: d.x,
+      y: fromRawLsk(d.y),
+    }));
 
   return {
     datasets: [{
