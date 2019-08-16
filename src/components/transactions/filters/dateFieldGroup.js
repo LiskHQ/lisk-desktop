@@ -128,7 +128,7 @@ class DateFieldGroup extends React.Component {
         (field === 'dateFrom' && date > moment(fieldsObj.dateTo.value, this.dateFormat))
         || (field === 'dateTo' && date < moment(fieldsObj.dateFrom.value, this.dateFormat))
       ) {
-        feedback = t('Invalid Dates');
+        feedback = t('Invalid dates');
         error = true;
       }
 

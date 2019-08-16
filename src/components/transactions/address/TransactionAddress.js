@@ -18,7 +18,7 @@ const TransactionAddress = ({
       case transactionTypes.registerDelegate:
         return t('Delegate registration');
       case transactionTypes.vote:
-        return t('Delegate vote', { context: 'noun' });
+        return t('Delegate vote');
       // istanbul ignore next
       case 4:
         return t('Multisignature Creation');

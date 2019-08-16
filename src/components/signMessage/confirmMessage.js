@@ -49,7 +49,7 @@ class ConfirmMessage extends React.Component {
     return (
       <section>
         <div className={styles.header}>
-          <span className={styles.step}>{t('Step 2 / 2')}</span>
+          <span className={styles.step}>{t('Step {{current}} / {{total}', { current: 2, total: 2 })}</span>
           <h1>{t('Your signed message')}</h1>
         </div>
         <div className={styles.result}>
@@ -65,7 +65,7 @@ class ConfirmMessage extends React.Component {
             text={result}
           >
             <SecondaryButton disabled={copied}>
-              {copied ? t('Copied!') : t('Copy to Clipboard')}
+              {copied ? t('Copied!') : t('Copy to clipboard')}
             </SecondaryButton>
           </CopyToClipboard>
           <Link to={routes.dashboard.path}>

@@ -86,7 +86,7 @@ class TransactionSummary extends React.Component {
           rel="noopener noreferrer"
           target="_blank"
         >
-          {t('Read More')}
+          {t('Read more')}
         </a>,
         children: t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
                     Such operations require hardware resources and because of that there is a small fee for processing those.`),

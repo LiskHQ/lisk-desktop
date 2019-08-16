@@ -49,6 +49,7 @@
     "@ledgerhq/hw-transport-node-hid": "4.68.2",
     "@ledgerhq/hw-transport-u2f": "4.68.2",
     "@liskhq/lisk-client": "2.0.0",
+    "@liskhq/lisk-transactions": "2.0.0",
     "await-to-js": "2.1.1",
     "bignumber.js": "8.0.1",
     "bip32": "1.0.4",

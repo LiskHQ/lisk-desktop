@@ -9,7 +9,9 @@ const BackupPassphrase = ({
   t, account, prevStep, nextStep,
 }) => (
   <React.Fragment>
-    <span className={`${registerStyles.stepsLabel}`}>{t('Step 2 / 4')}</span>
+    <span className={`${registerStyles.stepsLabel}`}>
+      {t('Step {{current}} / {{total}', { current: 2, total: 4 })}
+    </span>
     <div className={`${registerStyles.titleHolder}`}>
       <h1>
         {t('Save your passphrase')}

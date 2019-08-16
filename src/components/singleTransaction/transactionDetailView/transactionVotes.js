@@ -14,7 +14,7 @@ const transactionVotes = ({ votes, t }) => {
           <Box.Row>
             <div className={styles.detailsWrapper}>
               <span className={styles.label}>
-                {`${t('Added Votes')} (${votes.added.length})`}
+                {`${t('Added votes')} (${votes.added.length})`}
               </span>
               <div className={`${styles.votesContainer} ${styles.added} tx-added-votes`}>
                 {votes.added.slice(0).sort((a, b) => a.rank - b.rank).map((vote, voteKey) => (
@@ -38,7 +38,7 @@ const transactionVotes = ({ votes, t }) => {
           <Box.Row>
             <div className={styles.detailsWrapper}>
               <span className={styles.label}>
-                {`${t('Removed Votes')} (${votes.deleted.length})`}
+                {`${t('Removed votes')} (${votes.deleted.length})`}
               </span>
               <div className={`${styles.votesContainer} ${styles.deleted} tx-removed-votes`}>
                 {votes.deleted.slice(0).sort((a, b) => a.rank - b.rank).map((vote, voteKey) => (

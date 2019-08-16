@@ -14,7 +14,7 @@ const TransactionsHeader = ({
       {t('Date')}
     </div>
     <div className={`${columnClassNames.fee} transactions-header`}>
-      { isSmallScreen ? t('Fee') : t('Transaction Fee') }
+      { isSmallScreen ? t('Fee') : t('Transaction fee') }
     </div>
     <div className={`${columnClassNames.details} transactions-header`}>
       {t('Details')}
