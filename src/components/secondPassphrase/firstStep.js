@@ -13,19 +13,19 @@ const FirstStep = ({
       <h2>{t('Register 2nd passphrase')}</h2>
     </Box.Header>
     <Box.Content>
-      <Trans>
-        <p className={styles.info}>
-        After registration, your second passphrase will be
+      <p className={styles.info}>
+        <Trans i18nKey="registerSecondPassphraseInfoText" parent="span">
+          After registration, your second passphrase will be
           <strong> required </strong>
-        when
+          when
           <strong> confirming every transaction </strong>
-        and every vote.
-        You are responsible for safekeeping your second passphrase.
-        No one can restore it, not even Lisk.
-        Once activated a second passphrase
+          and every vote.
+          You are responsible for safekeeping your second passphrase.
+          No one can restore it, not even Lisk.
+          Once activated a second passphrase
           <strong> can’t be turned off.</strong>
-        </p>
-      </Trans>
+        </Trans>
+      </p>
       <PassphraseBackup
         account={account}
         t={t}

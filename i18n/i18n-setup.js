@@ -21,6 +21,9 @@ const setup = () => {
       debug: false,
       keySeparator: '>',
       nsSeparator: '|',
+      react: {
+        defaultTransParent: 'span',
+      },
     });
 };
 
