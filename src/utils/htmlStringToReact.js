@@ -18,7 +18,8 @@ const htmlStringToReact = (html = '') => {
           <Fragment key={`${tag}-${index}`}>
             {!!before && before}
             {createElement(tag, { ...props, key: `${tag}-${index}` }, htmlStringToReact(content))}
-            {!!after && after}
+            {!!after && ' '}
+            {!!after && htmlStringToReact(after)}
           </Fragment>
         );
       })
