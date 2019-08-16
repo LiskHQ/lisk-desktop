@@ -1,8 +1,8 @@
-import { Trans } from 'react-i18next';
 import React from 'react';
 import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import Box from '../toolbox/box';
 import PassphraseBackup from '../passphraseBackup';
+import htmlStringToReact from '../../utils/htmlStringToReact';
 import styles from './secondPassphrase.css';
 
 const FirstStep = ({
@@ -14,17 +14,7 @@ const FirstStep = ({
     </Box.Header>
     <Box.Content>
       <p className={styles.info}>
-        <Trans i18nKey="registerSecondPassphraseInfoText" parent="span">
-          After registration, your second passphrase will be
-          <strong> required </strong>
-          when
-          <strong> confirming every transaction </strong>
-          and every vote.
-          You are responsible for safekeeping your second passphrase.
-          No one can restore it, not even Lisk.
-          Once activated a second passphrase
-          <strong> can’t be turned off.</strong>
-        </Trans>
+        {htmlStringToReact(t('secondPassphraseInfoParagraph', 'After registration, your second passphrase will be <strong>required</strong> when <strong>confirming every transaction</strong> and every vote. You are responsible for safekeeping your second passphrase. No one can restore it, not even Lisk. Once activated a second passphrase <strong>can’t be turned off.</strong>', { interpolation: { escapeValue: false } }))}
       </p>
       <PassphraseBackup
         account={account}
