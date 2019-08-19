@@ -52,7 +52,7 @@ const DelegateTab = ({ delegate, account, t }) => {
           </li>
           <li className="approval">
             <span className={styles.label}>{t('Approval')}</span>
-            {`${delegate.approval}%`}
+            {`${formatAmountBasedOnLocale({ value: delegate.approval, locale: i18n.language })}%`}
           </li>
           <li className="productivity">
             <span className={styles.label}>{t('Productivity')}</span>
