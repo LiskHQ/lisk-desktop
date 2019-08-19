@@ -1,4 +1,19 @@
 /* eslint-disable */
+/**
+ * TODO - remove the logic of this file and use it in a external library/module
+ * This file will be on charge of communicate the electron app with the HW module/library
+ * this file should only containe a few functions.
+ * 
+ * Init - Function - For observ/subscribe or listen to changes.
+ * getDevices - function - that retturn all connected devices.
+ * signInTX - function - sign in any kind of tx 
+ * getPublicKey - function - get public key for other users like getAccounts (if the public key is used for retrive other information then dont need this func)
+ * getAccounts - function - retrive all accounts from device
+ * ping - function - function that check device status
+ * 
+ * All of the above should be use for any HW device that will be implement in the future, right now
+ * only Ledger Nano S, Ledger Nano X, Trezor Model T and Trezor One.
+ **/
 
 import win from './modules/win';
 import { createCommand } from './utils';

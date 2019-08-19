@@ -1,4 +1,15 @@
 /* eslint-disable */
+
+/**
+ * TODO - This file contains a lot of unnecessary logic and duplicated functions, this file should
+ * work as a communication center file for send and receive messages (data) from electron using the 
+ * IPC command.
+ * If the data will be store in REDUX then this needs to be a middleware and once that receive the 
+ * data submit the properly action.
+ * How the information is retrive from electron part should be unknown for this side of the app.
+ * Have this kind of file with this logic is necessary ONLY if we  will support HW devices in web platform
+ */
+
 import TransportU2F from '@ledgerhq/hw-transport-u2f';
 import TrezorConnect from 'trezor-connect';
 import i18next from 'i18next';

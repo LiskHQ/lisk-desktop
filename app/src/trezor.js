@@ -1,6 +1,12 @@
 /* eslint-disable no-bitwise */
 /* eslint-disable */
 
+/**
+ * TODO - This file doesnt need to be here, this logic needs to be impleement in the module/library
+ * and how this works should be unknown for the electron part.
+ * Needs to remove duplicated code and improve logic for be more generic
+ */
+
 import { ipcMain } from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
 import win from './modules/win';
 import {
