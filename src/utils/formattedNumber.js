@@ -7,7 +7,8 @@ export const formatAmountBasedOnLocale = ({
   format = '0,0.[0000000000000000]',
 }) => {
   numeral.locale(locale);
-  return numeral(value).format(format);
+  const amount = parseFloat(value);
+  return numeral(amount).format(format);
 };
 
 export default {
