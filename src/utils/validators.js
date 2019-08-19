@@ -1,7 +1,9 @@
 import * as bitcoin from 'bitcoinjs-lib';
+import numeral from 'numeral';
 import getBtcConfig from './api/btc/config';
 import reg from './regex';
 import { tokenMap } from '../constants/tokens';
+import i18n from '../i18n';
 
 /**
  * Validates the given address with respect to the tokenType
@@ -32,4 +34,39 @@ export const validateAddress = (tokenType, address, netCode = 1) => {
     default:
       return reg.address.test(address) ? 0 : 1;
   }
+};
+
+/**
+ * Validate the format of the value param
+ * - Check that only have numbers and commas and points
+ * - Validate structure of the value, just one . or ,
+ * - Not ending with . or ,
+ * - Check that has no more than 8 floating points digits
+ * @param {Object.<string, srting>} data
+ * @param {string} data.value
+ * @param {string} [data.token="LSK"]
+ * @param {string} [data.locale="en"]
+ * @returns {Object.<string, string|boolean>}
+ * data - Object containing the message and if has an error
+ *  data.message - Message of the error or empty string
+ *  data.error - true or false
+ */
+export const validateAmountFormat = ({
+  value,
+  token = 'LSK',
+  locale = 'en',
+}) => {
+  const errors = {
+    INVALID: i18n.t('Provide a correct amount of {{token}}', { token }),
+    FLOATING_POINT: i18n.t('Maximum floating point is 8.'),
+  };
+  const { format, maxFloating } = reg.amount[locale];
+  const message = (
+    (format.test(value) || numeral(value).value() === 0) && errors.INVALID)
+    || (maxFloating.test(value) && errors.FLOATING_POINT)
+    || '';
+  return {
+    error: !!message,
+    message,
+  };
 };

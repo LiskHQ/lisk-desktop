@@ -22,7 +22,9 @@ class Converter extends React.Component {
 
     numeral.locale(i18n.language);
 
-    let price = error && Number.isNaN(value) ? 0 : (value * currencies[currency]);
+    let price = error || Number.isNaN(numeral(value).value())
+      ? 0
+      : (numeral(value).value() * currencies[currency]);
 
     price = price > converter.maxLSKSupply || price === 'NaN' || price < 0 ? 0 : price;
     price = numeral(price).format('0,0.00');

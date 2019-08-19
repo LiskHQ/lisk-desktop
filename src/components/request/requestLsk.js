@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Input, AutoresizeTextarea } from '../toolbox/inputs';
 import CircularProgress from '../toolbox/circularProgress/circularProgress';
 import Converter from '../converter';
@@ -8,6 +7,9 @@ import RequestWrapper from './requestWrapper';
 import Spinner from '../spinner/spinner';
 import styles from './request.css';
 import Icon from '../toolbox/icon';
+import { validateAmountFormat } from '../../utils/validators';
+import i18n from '../../i18n';
+import regex from '../../utils/regex';
 
 const messageMaxLength = 64;
 
@@ -48,26 +50,18 @@ class RequestLsk extends React.Component {
     clearTimeout(this.timeout.reference);
   }
 
-  validateAmountField(value) {
-    if (/([^\d.])/g.test(value)) {
-      return this.props.t('Please use only digits and dots');
-    } if (/(\.)(.*\1){1}/g.test(value) || /\.$/.test(value)) {
-      return this.props.t('Invalid amount');
-    }
-    return false;
-  }
-
   // eslint-disable-next-line max-statements
   handleFieldChange({ target }) {
     const { t } = this.props;
     const byteCount = encodeURI(target.value).split(/%..|./).length - 1;
     const error = target.name === 'amount'
-      ? this.validateAmountField(target.value)
+      ? validateAmountFormat({ value: target.value, locale: i18n.language }).message
       : byteCount > messageMaxLength;
     let feedback = '';
 
     if (target.name === 'amount') {
-      target.value = /^\./.test(target.value) ? `0${target.value}` : target.value;
+      const { leadingPoint } = regex.amount[i18n.language];
+      target.value = leadingPoint.test(target.value) ? `0${target.value}` : target.value;
       feedback = error || feedback;
     } else if (target.name === 'reference' && byteCount > 0) {
       feedback = t('{{length}} bytes left', { length: messageMaxLength - byteCount });
