@@ -9,7 +9,6 @@ import Piwik from '../../../utils/piwik';
 import TransactionSummary from '../../transactionSummary';
 import fees from '../../../constants/fees';
 import styles from './summary.css';
-import i18n from '../../../i18n';
 
 class Summary extends React.Component {
   constructor(props) {
@@ -76,10 +75,7 @@ class Summary extends React.Component {
       fields, t, token, account,
     } = this.props;
 
-    const amount = formatAmountBasedOnLocale({
-      value: fields.amount.value,
-      locale: i18n.language,
-    });
+    const amount = formatAmountBasedOnLocale({ value: fields.amount.value });
 
     const fee = token === tokenMap.LSK.key
       ? fromRawLsk(fees.send)

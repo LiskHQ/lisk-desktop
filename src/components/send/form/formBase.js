@@ -370,10 +370,7 @@ class FormBase extends React.Component {
             { !extraFields.processingSpeed ? (
               <span className={styles.amountHint}>
                 {t('+ Transaction fee {{fee}} LSK', {
-                  fee: formatAmountBasedOnLocale({
-                    value: fromRawLsk(fee),
-                    locale: i18n.language,
-                  }),
+                  fee: formatAmountBasedOnLocale({ value: fromRawLsk(fee) }),
                 })}
                 <Tooltip
                   className="showOnTop"

@@ -7,7 +7,6 @@ import TableRow from '../toolbox/table/tableRow';
 import AccountVisual from '../accountVisual';
 import LiskAmount from '../liskAmount';
 import routes from '../../constants/routes';
-import i18n from '../../i18n';
 import { formatAmountBasedOnLocale } from '../../utils/formattedNumber';
 
 const setRowClass = (voteStatus) => {
@@ -109,7 +108,7 @@ class DelegateRow extends React.Component {
           {` ${this.props.t('LSK')}`}
         </div>
         <div className={`${columnClassNames.productivity} delegate-productivity`}>
-          {`${formatAmountBasedOnLocale({ value: productivity, locale: i18n.language })} %`}
+          {`${formatAmountBasedOnLocale({ value: productivity })} %`}
         </div>
         <div className={`${columnClassNames.voteWeight} ${styles.weight} vote-weight`}>
           <LiskAmount val={data.vote} />

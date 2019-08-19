@@ -7,7 +7,6 @@ import Selector from '../../toolbox/selector/selector';
 import Spinner from '../../spinner/spinner';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import styles from './form.css';
-import i18n from '../../../i18n';
 
 function getInitialState() {
   return {
@@ -111,10 +110,7 @@ export default class FormBtc extends React.Component {
         </React.Fragment>
       );
     }
-    const fee = formatAmountBasedOnLocale({
-      value: fromRawLsk(fields.processingSpeed.txFee),
-      locale: i18n.language,
-    });
+    const fee = formatAmountBasedOnLocale({ value: fromRawLsk(fields.processingSpeed.txFee) });
 
     return !amount.error
       ? `${fee} ${token}`

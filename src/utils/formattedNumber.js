@@ -1,12 +1,12 @@
 import numeral from 'numeral';
 import 'numeral/locales';
+import i18n from '../i18n';
 
 export const formatAmountBasedOnLocale = ({
   value,
-  locale = 'en',
   format = '0,0.[0000000000000000]',
 }) => {
-  numeral.locale(locale);
+  numeral.locale(i18n.language);
   const amount = parseFloat(value);
   return numeral(amount).format(format);
 };
