@@ -3,11 +3,6 @@ import { mount } from 'enzyme';
 import Request from '.';
 import accounts from '../../../test/constants/accounts';
 
-jest.mock('../../i18n', () => ({
-  t: v => v,
-  language: 'en',
-}));
-
 jest.mock('../converter', () => (
   function ConverterMock() {
     return <span className="converted-price" />;

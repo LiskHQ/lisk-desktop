@@ -22,10 +22,6 @@ jest.mock('../../../utils/api/btc/transactions', () => ({
   }])),
   getTransactionFeeFromUnspentOutputs: jest.fn(() => 156000),
 }));
-jest.mock('../../../i18n', () => ({
-  t: v => v,
-  language: 'en',
-}));
 
 describe('Form', () => {
   let wrapper;

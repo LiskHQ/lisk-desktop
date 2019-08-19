@@ -3,10 +3,6 @@ import networks from '../constants/networks';
 import accounts from '../../test/constants/accounts';
 import i18n from '../i18n';
 
-jest.mock('../i18n', () => ({
-  t: v => v,
-}));
-
 describe('Validate Address', () => {
   it('Should return -1 if empty adress', () => {
     expect(validateAddress('LSK', '', networks.testnet.code)).toBe(-1);
@@ -25,7 +21,7 @@ describe('Validate Address', () => {
 
 describe('Validate Amount Format', () => {
   const errors = {
-    INVALID: i18n.t('Provide a correct amount of {{token}}'),
+    INVALID: i18n.t('Provide a correct amount of {{token}}', { token: 'LSK' }),
     FLOATING_POINT: i18n.t('Maximum floating point is 8.'),
   };
   it('Should return errors.INVALID if format is invalid', () => {
