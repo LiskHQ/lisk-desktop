@@ -471,7 +471,7 @@ class Form extends React.Component {
     return (
       <Box className={styles.wrapper} width="medium">
         <Box.Header>
-          <h1>{ t('Send Tokens') }</h1>
+          <h1>{ t('Send {{token}}', { token }) }</h1>
         </Box.Header>
         <Box.Content className={styles.formSection}>
           <span className={`${styles.fieldGroup} recipient`}>
@@ -532,7 +532,7 @@ class Form extends React.Component {
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      {t('Read More')}
+                      {t('Read more')}
                     </a>
 )}
                 >
@@ -581,7 +581,7 @@ class Form extends React.Component {
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      {t('Read More')}
+                      {t('Read more')}
                     </a>
 )}
                 >
@@ -631,7 +631,7 @@ class Form extends React.Component {
             disabled={!isBtnEnabled}
             onClick={this.onGoNext}
           >
-            {t('Go to Confirmation')}
+            {t('Go to confirmation')}
           </PrimaryButton>
         </Box.Footer>
       </Box>

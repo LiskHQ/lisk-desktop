@@ -66,7 +66,7 @@ class DelegateList extends React.Component {
                 type="button"
                 onClick={() => this.props.loadMore()}
               >
-                {t('Load More')}
+                {t('Load more')}
               </Button>
             ) : null}
           </div>

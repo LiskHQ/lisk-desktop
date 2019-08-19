@@ -37,8 +37,8 @@ export const HW_MSG = {
   ERROR_OR_DEVICE_IS_NOT_CONNECTED: i18next.t('Error or Device Not Connected.'),
   NO_TRANSPORT_AVAILABLE: i18next.t('Unable to detect the communication layer with your Hardware Wallet'),
 
-  LEDGER_CONNECTED: i18next.t('Ledger Nano S Connected.'),
-  LEDGER_DISCONNECTED: i18next.t('Ledger Nano S Disconnected.'),
+  LEDGER_CONNECTED: i18next.t('{{walletModel}} Connected', { walletModel: models.ledgerNanoS }),
+  LEDGER_DISCONNECTED: i18next.t('{{walletModel}} Disconnected', { walletModel: models.ledgerNanoS }),
   LEDGER_NO_TRANSPORT_AVAILABLE_U2F: i18next.t('Unable to detect the communication layer. Is ledger connected? Is Fido U2F Extension Installed?'),
   LEDGER_ERR_DURING_CONNECTION: i18next.t('Error on Ledger Connection. Be sure your device is connected properly'),
   LEDGER_ACTION_DENIED_BY_USER: i18next.t('Action Denied by User'),
@@ -50,6 +50,6 @@ export const HW_MSG = {
   TREZOR_ACTION_DENIED_BY_USER: i18next.t('Action Denied by User'),
   TREZOR_IS_IN_BOOTLOADER_MODE: i18next.t('Your Trezor Device is in bootloader mode, please re-connected it.'),
   TREZOR_IS_NOT_INITIALIZED: i18next.t('Your Trezor Device is not initialized. Please do it with trezor software.'),
-  TREZOR_ONE_OLD_FIRMWARE: i18next.t('Your Trezor One has an old Firmware. Please update it.'),
-  TREZOR_MODELT_OLD_FIRMWARE: i18next.t('Your Trezor Model T has an old Firmware. Please update it.'),
+  TREZOR_ONE_OLD_FIRMWARE: i18next.t('Your {{walletModel}} has an old Firmware. Please update it.', { walletModel: models.trezorOne }),
+  TREZOR_MODELT_OLD_FIRMWARE: i18next.t('Your {{walletModel}} has an old Firmware. Please update it.', { walletModel: models.trezorModelT }),
 };

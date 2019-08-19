@@ -179,7 +179,7 @@ class VotesTab extends React.Component {
         </main>
         {canLoadMore && (
           <Box.FooterButton onClick={this.onShowMore} className="show-votes">
-            {t('Show More')}
+            {t('Load more')}
           </Box.FooterButton>
         )
         }

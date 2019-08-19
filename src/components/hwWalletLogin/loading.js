@@ -29,7 +29,7 @@ class Loading extends React.Component {
         <p>{t('Looking for a device...')}</p>
         <Link to={routes.splashscreen.path}>
           <TertiaryButton>
-            {t('Go Back')}
+            {t('Go back')}
           </TertiaryButton>
         </Link>
       </div>

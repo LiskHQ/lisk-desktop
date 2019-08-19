@@ -107,7 +107,7 @@ class VotingHeader extends React.Component {
               </SecondaryButton>
               <Link to={totalActions !== 0 ? routes.voting.path : routes.delegates.path}>
                 <PrimaryButton className={`${styles.btn} go-to-confirmation-button`} disabled={totalActions === 0}>
-                  {t('Go to Confirmation')}
+                  {t('Go to confirmation')}
                 </PrimaryButton>
               </Link>
             </span>

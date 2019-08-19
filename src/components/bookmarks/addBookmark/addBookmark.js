@@ -116,7 +116,7 @@ class AddBookmark extends React.Component {
     const error = value.length > maxLength;
     const feedback = !error
       ? t('Max. 20 characters')
-      : t('Label is too long.');
+      : t('Label is too long');
     return { feedback, error };
   }
 
@@ -139,15 +139,15 @@ class AddBookmark extends React.Component {
   }
 
   validateAddress(token, value) {
-    const { network, bookmarks } = this.props;
+    const { network, bookmarks, t } = this.props;
     const netCode = network.name === networks.mainnet.name
       ? networks.mainnet.code
       : networks.testnet.code;
     const isInvalid = validateAddress(token, value, netCode) === 1;
     const alreadyBookmarked = !isInvalid
       && getIndexOfBookmark(bookmarks, { address: value, token }) !== -1;
-    const feedback = (isInvalid && 'Invalid address.')
-      || (alreadyBookmarked && 'Address already bookmarked.')
+    const feedback = (isInvalid && t('Invalid address'))
+      || (alreadyBookmarked && t('Address already bookmarked'))
       || '';
     return { error: isInvalid || alreadyBookmarked, isInvalid, feedback };
   }

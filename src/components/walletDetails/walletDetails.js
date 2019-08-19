@@ -27,7 +27,7 @@ const MyAccount = ({
           <Box.Row key={coin.token} className={`${styles.row} coin-row`}>
             <Icon name={coin.token === tokenMap.LSK.key ? 'lskIcon' : 'btcIcon'} />
             <div className={styles.details}>
-              <span>{t('{{token}} Balance', { token: tokenMap[coin.token].label })}</span>
+              <span>{t('{{token}} balance', { token: tokenMap[coin.token].label })}</span>
               <DiscreetMode>
                 <span className={styles.amounts}>
                   <LiskAmount val={coin.balance} />

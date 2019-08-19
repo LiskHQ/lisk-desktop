@@ -159,7 +159,7 @@ class SelectAccount extends React.Component {
             className={`${styles.createAccountBtn} create-account`}
             onClick={this.onAddNewAccount}
           >
-            {t('Create account')}
+            {t('Create an account')}
           </TertiaryButton>
         </p>
 
@@ -184,7 +184,7 @@ class SelectAccount extends React.Component {
         </div>
 
         <TertiaryButton className="go-back" onClick={() => history.push(routes.splashscreen.path)}>
-          {t('Go Back')}
+          {t('Go back')}
         </TertiaryButton>
       </div>
     );

@@ -182,7 +182,7 @@ class SelectName extends React.Component {
               disabled={isBtnDisabled}
               className={`${styles.confirmBtn} confirm-btn`}
             >
-              {t('Go to Confirmation')}
+              {t('Go to confirmation')}
             </PrimaryButton>
           </Box.Footer>
         </Box.Content>

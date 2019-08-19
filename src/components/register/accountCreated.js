@@ -10,7 +10,9 @@ import styles from './accountCreated.css';
 
 const AccountCreated = ({ t, account }) => (
   <React.Fragment>
-    <span className={`${registerStyles.stepsLabel}`}>{t('Step 4 / 4')}</span>
+    <span className={`${registerStyles.stepsLabel}`}>
+      {t('Step {{current}} / {{total}', { current: 4, total: 4 })}
+    </span>
     <div className={`${registerStyles.titleHolder}`}>
       <h1>
         {t('Your account was created!')}
@@ -35,7 +37,7 @@ const AccountCreated = ({ t, account }) => (
         to={routes.login.path}
       >
         <PrimaryButton className={registerStyles.continueBtn}>
-          {t('Sign In')}
+          {t('Sign in')}
         </PrimaryButton>
       </Link>
     </div>

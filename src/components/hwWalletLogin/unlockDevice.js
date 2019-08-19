@@ -80,7 +80,7 @@ class UnlockDevice extends React.Component {
         </p>
         <Illustration name="ledgerNanoLight" />
         <TertiaryButton onClick={() => { history.push(routes.splashscreen.path); }}>
-          {t('Go Back')}
+          {t('Go back')}
         </TertiaryButton>
       </div>
     );

@@ -64,7 +64,7 @@ class SelectDevice extends React.Component {
 
         <Link to={routes.splashscreen.path}>
           <TertiaryButton>
-            {t('Go Back')}
+            {t('Go back')}
           </TertiaryButton>
         </Link>
       </div>
