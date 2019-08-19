@@ -10,7 +10,7 @@ import Tooltip from '../toolbox/tooltip/tooltip';
 import links from '../../constants/externalLinks';
 import styles from './transactionSummary.css';
 import i18n from '../../i18n';
-import { formatBasedOnLocale } from '../../utils/lsk';
+import { formatAmountBasedOnLocale } from '../../utils/formattedNumber';
 
 class TransactionSummary extends React.Component {
   constructor(props) {
@@ -129,7 +129,7 @@ class TransactionSummary extends React.Component {
               </Tooltip>
             </label>
             <label className={`${styles.feeValue} fee-value`}>
-              {`${formatBasedOnLocale({ value: fee, locale: i18n.language })} ${token}`}
+              {`${formatAmountBasedOnLocale({ value: fee, locale: i18n.language })} ${token}`}
             </label>
           </section>
           {

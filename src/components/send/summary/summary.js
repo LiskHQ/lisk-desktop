@@ -1,5 +1,6 @@
 import React from 'react';
-import { fromRawLsk, toRawLsk, formatBasedOnLocale } from '../../../utils/lsk';
+import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
+import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { loginType } from '../../../constants/hwConstants';
 import { tokenMap } from '../../../constants/tokens';
 import AccountVisual from '../../accountVisual/index';
@@ -75,7 +76,7 @@ class Summary extends React.Component {
       fields, t, token, account,
     } = this.props;
 
-    const amount = formatBasedOnLocale({
+    const amount = formatAmountBasedOnLocale({
       value: fields.amount.value,
       locale: i18n.language,
     });

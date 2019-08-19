@@ -9,7 +9,7 @@ import { Input } from '../toolbox/inputs';
 import LiskAmount from '../liskAmount';
 import routes from '../../constants/routes';
 import styles from './votesTab.css';
-import { formatBasedOnLocale } from '../../utils/lsk';
+import { formatAmountBasedOnLocale } from '../../utils/formattedNumber';
 import i18n from '../../i18n';
 
 class VotesTab extends React.Component {
@@ -157,7 +157,7 @@ class VotesTab extends React.Component {
                 </div>
                 <div className={`${grid['col-sm-2']} ${grid['col-lg-1']}`}>
                   {vote.productivity !== undefined
-                    ? `${formatBasedOnLocale({ value: vote.productivity, locale: i18n.language })}%`
+                    ? `${formatAmountBasedOnLocale({ value: vote.productivity, locale: i18n.language })}%`
                     : '-'
                   }
                 </div>
