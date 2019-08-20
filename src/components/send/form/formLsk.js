@@ -1,6 +1,7 @@
 import React from 'react';
 import { AutoresizeTextarea } from '../../toolbox/inputs';
 import CircularProgress from '../../toolbox/circularProgress/circularProgress';
+import Fees from '../../../constants/fees';
 import FormBase from './formBase';
 import Icon from '../../toolbox/icon';
 import Tooltip from '../../toolbox/tooltip/tooltip';
@@ -68,7 +69,11 @@ export default class FormLsk extends React.Component {
     const { t } = this.props;
     const byteCount = encodeURI(fields.reference.value).split(/%..|./).length - 1;
     return (
-      <FormBase {...this.props} extraFields={fields}>
+      <FormBase
+        {...this.props}
+        extraFields={fields}
+        fee={Fees.send}
+      >
         <label className={`${styles.fieldGroup} reference`}>
           <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
           <span className={styles.referenceField}>

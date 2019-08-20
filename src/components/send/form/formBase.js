@@ -14,15 +14,11 @@ import AutoSuggest from '../autoSuggest';
 import Spinner from '../../spinner/spinner';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
-import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
-import fees from '../../../constants/fees';
+import { fromRawLsk } from '../../../utils/lsk';
 import Feedback from '../../toolbox/feedback/feedback';
 import styles from './form.css';
 import Piwik from '../../../utils/piwik';
 import { validateAddress } from '../../../utils/validators';
-import Selector from '../../toolbox/selector/selector';
-import { tokenMap } from '../../../constants/tokens';
-import * as btcTransactionsAPI from '../../../utils/api/btc/transactions';
 import Icon from '../../toolbox/icon';
 import Box from '../../toolbox/box';
 
@@ -46,12 +42,6 @@ function getInitialState() {
         error: false,
         value: '',
         feedback: '',
-      },
-      processingSpeed: {
-        value: 0,
-        loaded: false,
-        txFee: 0,
-        selectedIndex: 0,
       },
       fee: {
         value: 0,
@@ -80,49 +70,13 @@ class FormBase extends React.Component {
     this.validateAmountAndReference = this.validateAmountAndReference.bind(this);
     this.validateBookmark = this.validateBookmark.bind(this);
     this.checkIfBookmarkedAccount = this.checkIfBookmarkedAccount.bind(this);
-    this.selectProcessingSpeed = this.selectProcessingSpeed.bind(this);
-    this.getProcessingSpeedStatus = this.getProcessingSpeedStatus.bind(this);
   }
 
   componentDidMount() {
     // istanbul ignore if
     if (!Object.entries(this.props.prevState).length) this.ifDataFromUrl();
     else this.ifDataFromPrevState();
-    // istanbul ignore if
-    if (this.props.token === tokenMap.BTC.key) this.props.dynamicFeesRetrieved();
     this.checkIfBookmarkedAccount();
-  }
-
-  componentDidUpdate() {
-    const { fields, unspentTransactionOutputs } = this.state;
-    const {
-      token, account, dynamicFees, networkConfig,
-    } = this.props;
-    // istanbul ignore next
-    if (this.props.token === tokenMap.BTC.key) {
-      if (!Object.keys(dynamicFees).length) this.props.dynamicFeesRetrieved();
-      if (account && account.info[token]
-        && !unspentTransactionOutputs.length) {
-        btcTransactionsAPI
-          .getUnspentTransactionOutputs(account.info[token].address, networkConfig)
-          .then(data => this.setState(() => ({ unspentTransactionOutputs: data })))
-          .catch(() => this.setState(() => ({ unspentTransactionOutputs: [] })));
-      }
-    }
-
-    // istanbul ignore if
-    if (!fields.processingSpeed.loaded && dynamicFees.Low) {
-      this.setState(() => ({
-        fields: {
-          ...fields,
-          processingSpeed: {
-            value: dynamicFees.Low,
-            loaded: true,
-            txFee: this.getCalculatedDynamicFee(dynamicFees.Low),
-          },
-        },
-      }));
-    }
   }
 
   // TODO move `state.fields` into parent send component and ifDataFromPrevState can be deleted
@@ -177,20 +131,16 @@ class FormBase extends React.Component {
 
   onInputChange({ target }) {
     const { fields } = this.state;
-    const txFee = target.name === 'amount'
-      ? this.getCalculatedDynamicFee(fields.processingSpeed.value, target.value)
-      : fields.processingSpeed.txFee;
+    const { onInputChange } = this.props;
+    const newState = {
+      ...fields[target.name],
+      value: target.value,
+    };
+    onInputChange({ target }, newState);
     this.setState(() => ({
       fields: {
         ...fields,
-        [target.name]: {
-          ...fields[target.name],
-          value: target.value,
-        },
-        processingSpeed: {
-          ...fields.processingSpeed,
-          txFee,
-        },
+        [target.name]: newState,
       },
     }));
   }
@@ -298,27 +248,9 @@ class FormBase extends React.Component {
   }
 
   getMaxAmount() {
-    const { token } = this.props;
+    const { token, fee } = this.props;
     const account = this.props.account.info[token];
-    const dynamicFee = this.state.fields.processingSpeed.txFee || 0;
-    return token === 'LSK'
-      ? fromRawLsk(Math.max(0, account.balance - fees.send))
-      : fromRawLsk(Math.max(0, account.balance - dynamicFee));
-  }
-
-  // TODO move dynamic fee calculation and presentation to a separate component
-  getCalculatedDynamicFee(dynamicFeePerByte, value) {
-    const { fields: { amount }, unspentTransactionOutputs } = this.state;
-    if (this.validateAmountField(value || amount.value)) {
-      return 0;
-    }
-    const feeInSatoshis = btcTransactionsAPI.getTransactionFeeFromUnspentOutputs({
-      unspentTransactionOutputs,
-      satoshiValue: toRawLsk(value || amount.value),
-      dynamicFeePerByte,
-    });
-
-    return feeInSatoshis;
+    return fromRawLsk(Math.max(0, account.balance - fee));
   }
 
   validateAmountField(value) {
@@ -329,21 +261,6 @@ class FormBase extends React.Component {
     if (/\./.test(value) && /\.\d{9}/.test(value)) return this.props.t('Maximum floating point is 8.');
     if (parseFloat(this.getMaxAmount()) < value) return this.props.t('Provided amount is higher than your current balance.');
     return false;
-  }
-
-  // istanbul ignore next
-  selectProcessingSpeed({ item, index }) {
-    this.setState(({ fields }) => ({
-      fields: {
-        ...fields,
-        processingSpeed: {
-          ...fields.processingSpeed,
-          ...item,
-          selectedIndex: index,
-          txFee: this.getCalculatedDynamicFee(item.value),
-        },
-      },
-    }));
   }
 
   validateAmountAndReference(name, value) {
@@ -391,38 +308,11 @@ class FormBase extends React.Component {
     });
   }
 
-  /**
-   * Get status of processing soeed fetch based on state of component
-   * @returns {Node} - Text to display to the user or loader
-   */
-  getProcessingSpeedStatus() {
-    const { token, t } = this.props;
-    const { fields, isLoading } = this.state;
-    const { amount: { value } } = fields;
-    if (value === '') return <span>-</span>;
-    if (isLoading) {
-      return (
-        <span>
-          {t('Loading')}
-          {' '}
-          <Spinner className={styles.loading} />
-        </span>
-      );
-    }
-    return (
-      <span>
-        {!this.validateAmountField(value)
-          ? `${fromRawLsk(fields.processingSpeed.txFee)} ${token}`
-          : t('Invalid amount')}
-      </span>
-    );
-  }
-
   // eslint-disable-next-line complexity
   render() {
     const { fields } = this.state;
     const {
-      t, token, dynamicFees, children, extraFields,
+      t, token, children, extraFields, fee,
     } = this.props;
     const isBtnEnabled = ((fields.recipient.value !== '' && !fields.recipient.error)
       && (fields.amount.value !== '' && !fields.amount.error)
@@ -480,9 +370,9 @@ class FormBase extends React.Component {
               {fields.amount.feedback}
             </Feedback>
 
-            { token !== 'BTC' ? (
+            { !extraFields.processingSpeed ? (
               <span className={styles.amountHint}>
-                {t('+ Transaction fee {{fee}} LSK', { fee: fromRawLsk(fees.send) })}
+                {t('+ Transaction fee {{fee}} LSK', { fee: fromRawLsk(fee) })}
                 <Tooltip
                   className="showOnTop"
                   title={t('Transaction fee')}
@@ -506,38 +396,7 @@ class FormBase extends React.Component {
               </span>
             ) : null }
           </label>
-
-          { token !== 'BTC' ? (
-            children
-          ) : (
-            <div className={`${styles.fieldGroup}`}>
-              <span className={`${styles.fieldLabel}`}>
-                {t('Processing Speed')}
-                <Tooltip>
-                  <p className={styles.tooltipText}>
-                    {
-                    t('Bitcoin transactions are made with some delay that depends on two parameters: the fee and the bitcoin network’s congestion. The higher the fee, the higher the processing speed.')
-                  }
-                  </p>
-                </Tooltip>
-              </span>
-              <Selector
-                className={styles.selector}
-                onSelectorChange={this.selectProcessingSpeed}
-                name="speedSelector"
-                selectedIndex={fields.processingSpeed.selectedIndex}
-                options={[
-                  { title: t('Low'), value: dynamicFees.Low },
-                  { title: t('High'), value: dynamicFees.High },
-                ]}
-              />
-              <span className={styles.processingInfo}>
-                {t('Transaction fee: ')}
-                {' '}
-                {this.getProcessingSpeedStatus()}
-              </span>
-            </div>
-          )}
+          { children }
         </Box.Content>
         <Box.Footer>
           <PrimaryButton
@@ -555,6 +414,7 @@ class FormBase extends React.Component {
 
 FormBase.defaultProps = {
   extraFields: {},
+  onInputChange: () => {},
 };
 
 export default FormBase;

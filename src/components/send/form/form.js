@@ -10,5 +10,5 @@ const TagNameMap = {
 export default function Form(props) {
   const { token } = props;
   const TagName = TagNameMap[token];
-  return <TagName {...props} />;
+  return <TagName {...props} key={token} />;
 }
