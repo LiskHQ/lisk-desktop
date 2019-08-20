@@ -95,7 +95,7 @@ class FormBase extends React.Component {
   // TODO move `state.fields` into parent send component and ifDataFromUrl can be deleted
   // istanbul ignore next
   ifDataFromUrl() {
-    const { fields = {} } = this.props;
+    const { fields = {}, onInputChange } = this.props;
     if (fields.recipient.address !== '' || fields.amount.value !== '') {
       this.setState(prevState => ({
         fields: {
@@ -111,6 +111,15 @@ class FormBase extends React.Component {
           },
         },
       }));
+      onInputChange({
+        target: {
+          name: 'amount',
+          value: fields.amount.value,
+
+        },
+      }, {
+        value: fields.amount.value,
+      });
     }
   }
 

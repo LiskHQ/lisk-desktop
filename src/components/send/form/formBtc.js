@@ -97,23 +97,19 @@ export default class FormBtc extends React.Component {
     const { token, t } = this.props;
     const { fields, isLoading } = this.state;
     const { amount } = fields;
-    if (amount.value === '') return <span>-</span>;
+    if (amount.value === '') return '-';
     if (isLoading) {
       return (
-        <span>
+        <React.Fragment>
           {t('Loading')}
           {' '}
           <Spinner className={styles.loading} />
-        </span>
+        </React.Fragment>
       );
     }
-    return (
-      <span>
-        {amount.error
-          ? `${fromRawLsk(fields.processingSpeed.txFee)} ${token}`
-          : t('Invalid amount')}
-      </span>
-    );
+    return !amount.error
+      ? `${fromRawLsk(fields.processingSpeed.txFee)} ${token}`
+      : t('Invalid amount');
   }
 
   // TODO move dynamic fee calculation and presentation to a separate component
@@ -131,7 +127,6 @@ export default class FormBtc extends React.Component {
     return feeInSatoshis;
   }
 
-  // istanbul ignore next
   selectProcessingSpeed({ item, index }) {
     this.setState(({ fields }) => ({
       fields: {
@@ -158,7 +153,7 @@ export default class FormBtc extends React.Component {
         onInputChange={this.onInputChange}
         fee={fields.processingSpeed.value}
       >
-        <div className={`${styles.fieldGroup}`}>
+        <div className={`${styles.fieldGroup} processing-speed`}>
           <span className={`${styles.fieldLabel}`}>
             {t('Processing Speed')}
             <Tooltip>
@@ -181,7 +176,7 @@ export default class FormBtc extends React.Component {
           />
           <span className={styles.processingInfo}>
             {t('Transaction fee: ')}
-            {this.getProcessingSpeedStatus()}
+            <span>{this.getProcessingSpeedStatus()}</span>
           </span>
         </div>
       </FormBase>
