@@ -1,5 +1,6 @@
 import React from 'react';
 import { AutoresizeTextarea } from '../../toolbox/inputs';
+import { parseSearchParams } from '../../../utils/searchParams';
 import CircularProgress from '../../toolbox/circularProgress/circularProgress';
 import Fees from '../../../constants/fees';
 import FormBase from './formBase';
@@ -23,11 +24,12 @@ export default class FormLsk extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   getInitialState(props) {
+    const { reference } = parseSearchParams(props.history.location.search);
     return {
       fields: {
         reference: {
           error: false,
-          value: '',
+          value: reference || '',
           feedback: props.t('64 bytes left'),
           isActive: false,
         },

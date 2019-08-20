@@ -96,7 +96,7 @@ class FormBase extends React.Component {
   // istanbul ignore next
   ifDataFromUrl() {
     const { fields = {} } = this.props;
-    if (fields.recipient.address !== '' || fields.amount.value !== '' || fields.reference.value !== '') {
+    if (fields.recipient.address !== '' || fields.amount.value !== '') {
       this.setState(prevState => ({
         fields: {
           ...prevState.fields,
@@ -108,10 +108,6 @@ class FormBase extends React.Component {
           amount: {
             ...prevState.fields.amount,
             value: fields.amount.value,
-          },
-          reference: {
-            ...prevState.fields.reference,
-            value: fields.reference.value,
           },
         },
       }));
