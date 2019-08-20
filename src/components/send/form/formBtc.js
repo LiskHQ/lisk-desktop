@@ -72,6 +72,7 @@ export default class FormBtc extends React.Component {
     }
   }
 
+  // istanbul ignore next TODO add test for this
   onInputChange({ target }, newState) {
     const { fields } = this.state;
     if (target.name === 'amount') {
@@ -93,6 +94,7 @@ export default class FormBtc extends React.Component {
    * Get status of processing soeed fetch based on state of component
    * @returns {Node} - Text to display to the user or loader
    */
+  // istanbul ignore next TODO add test for this
   getProcessingSpeedStatus() {
     const { token, t } = this.props;
     const { fields, isLoading } = this.state;
@@ -127,6 +129,7 @@ export default class FormBtc extends React.Component {
     return feeInSatoshis;
   }
 
+  // istanbul ignore next TODO add test for this
   selectProcessingSpeed({ item, index }) {
     this.setState(({ fields }) => ({
       fields: {

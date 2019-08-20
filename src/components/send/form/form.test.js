@@ -8,6 +8,21 @@ import accounts from '../../../../test/constants/accounts';
 import Form from './form';
 import { tokenMap } from '../../../constants/tokens';
 
+jest.mock('../../../utils/api/btc/transactions', () => ({
+  getUnspentTransactionOutputs: jest.fn(() => Promise.resolve([{
+    height: 1575216,
+    tx_hash: '992545eeab2ac01adf78454f8b49d042efd53ab690d76121ebd3cddca3b600e5',
+    tx_pos: 0,
+    value: 1,
+  }, {
+    height: 1575216,
+    tx_hash: '992545eeab2ac01adf78454f8b49d042efd53ab690d76121ebd3cddca3b600e5',
+    tx_pos: 1,
+    value: 397040,
+  }])),
+  getTransactionFeeFromUnspentOutputs: jest.fn(() => 156000),
+}));
+
 describe('Form', () => {
   let wrapper;
 
@@ -66,6 +81,9 @@ describe('Form', () => {
       balance: accounts.genesis.balance,
       info: {
         LSK: accounts.genesis,
+        BTC: {
+          address: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
+        },
       },
     },
     bookmarks: {
@@ -107,6 +125,46 @@ describe('Form', () => {
     expect(wrapper).toContainMatchingElement('span.amount');
     expect(wrapper).toContainMatchingElement('label.reference');
     expect(wrapper).not.toContainMatchingElement('PrimaryButton.btn-submit');
+  });
+
+
+  describe('shold work with props.token BTC', () => {
+    const dynamicFees = {
+      Low: 0.00000156,
+      High: 0.0000051,
+    };
+    it('should re-render properly if props.token', () => {
+      wrapper.setProps({
+        token: tokenMap.BTC.key,
+      });
+      expect(wrapper).toContainMatchingElement('span.recipient');
+      expect(wrapper).toContainMatchingElement('span.amount');
+      expect(wrapper).toContainMatchingElement('div.processing-speed');
+      expect(wrapper).not.toContainMatchingElement('label.reference');
+    });
+
+    it('should render processingSpeed fee based on dynamicFees', () => {
+      wrapper.setProps({
+        token: tokenMap.BTC.key,
+      });
+      wrapper.setProps({ dynamicFees });
+      expect(wrapper).toContainMatchingElement('div.processing-speed');
+    });
+
+    it.skip('should update processingSpeed fee when "High" is selected', () => {
+      wrapper.setProps({
+        token: tokenMap.BTC.key,
+        fields: {
+          amount: {
+            value: '0.001',
+          },
+        },
+      });
+      wrapper.setProps({ dynamicFees });
+      expect(wrapper.find('div.processing-speed')).toIncludeText(dynamicFees.Low);
+      wrapper.find('label.option-High').simulate('click');
+      expect(wrapper.find('div.processing-speed')).toIncludeText(dynamicFees.High);
+    });
   });
 
   it('should render properly with data from prevState', () => {
