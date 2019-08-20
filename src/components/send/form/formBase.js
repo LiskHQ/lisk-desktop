@@ -8,7 +8,7 @@
 import React from 'react';
 import Converter from '../../converter';
 import { PrimaryButton } from '../../toolbox/buttons/button';
-import { Input, AutoresizeTextarea } from '../../toolbox/inputs';
+import { Input } from '../../toolbox/inputs';
 import { getNetworkCode } from '../../../utils/api/btc/network';
 import AutoSuggest from '../autoSuggest';
 import Spinner from '../../spinner/spinner';
@@ -17,7 +17,6 @@ import links from '../../../constants/externalLinks';
 import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
 import fees from '../../../constants/fees';
 import Feedback from '../../toolbox/feedback/feedback';
-import CircularProgress from '../../toolbox/circularProgress/circularProgress';
 import styles from './form.css';
 import Piwik from '../../../utils/piwik';
 import { validateAddress } from '../../../utils/validators';
@@ -27,70 +26,62 @@ import * as btcTransactionsAPI from '../../../utils/api/btc/transactions';
 import Icon from '../../toolbox/icon';
 import Box from '../../toolbox/box';
 
+function getInitialState() {
+  return {
+    isLoading: false,
+    fields: {
+      recipient: {
+        address: '',
+        balance: '',
+        error: false,
+        feedback: '',
+        name: 'recipient',
+        selected: false,
+        title: '',
+        value: '',
+        showSuggestions: false,
+        isBookmark: false,
+      },
+      amount: {
+        error: false,
+        value: '',
+        feedback: '',
+      },
+      processingSpeed: {
+        value: 0,
+        loaded: false,
+        txFee: 0,
+        selectedIndex: 0,
+      },
+      fee: {
+        value: 0,
+      },
+    },
+    unspentTransactionOutputs: [],
+  };
+}
+
 class FormBase extends React.Component {
   // eslint-disable-next-line max-statements
   constructor(props) {
     super(props);
 
-    this.state = this.getInitialState(props);
+    this.state = getInitialState();
 
     this.loaderTimeout = null;
 
     this.getMaxAmount = this.getMaxAmount.bind(this);
     this.ifDataFromPrevState = this.ifDataFromPrevState.bind(this);
     this.ifDataFromUrl = this.ifDataFromUrl.bind(this);
-    this.onAmountOrReferenceChange = this.onAmountOrReferenceChange.bind(this);
+    this.onAmountChange = this.onAmountChange.bind(this);
     this.onGoNext = this.onGoNext.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.onSelectedAccount = this.onSelectedAccount.bind(this);
     this.validateAmountAndReference = this.validateAmountAndReference.bind(this);
     this.validateBookmark = this.validateBookmark.bind(this);
     this.checkIfBookmarkedAccount = this.checkIfBookmarkedAccount.bind(this);
-    this.setReferenceActive = this.setReferenceActive.bind(this);
     this.selectProcessingSpeed = this.selectProcessingSpeed.bind(this);
     this.getProcessingSpeedStatus = this.getProcessingSpeedStatus.bind(this);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  getInitialState(props) {
-    return {
-      isLoading: false,
-      fields: {
-        recipient: {
-          address: '',
-          balance: '',
-          error: false,
-          feedback: '',
-          name: 'recipient',
-          selected: false,
-          title: '',
-          value: '',
-          showSuggestions: false,
-          isBookmark: false,
-        },
-        amount: {
-          error: false,
-          value: '',
-          feedback: '',
-        },
-        reference: {
-          error: false,
-          value: '',
-          feedback: props.t('64 bytes left'),
-          isActive: false,
-        },
-        processingSpeed: {
-          value: 0,
-          loaded: false,
-          txFee: 0,
-          selectedIndex: 0,
-        },
-        fee: {
-          value: 0,
-        },
-      },
-      unspentTransactionOutputs: [],
-    };
   }
 
   componentDidMount() {
@@ -102,7 +93,7 @@ class FormBase extends React.Component {
     this.checkIfBookmarkedAccount();
   }
 
-  componentDidUpdate(nextProps) {
+  componentDidUpdate() {
     const { fields, unspentTransactionOutputs } = this.state;
     const {
       token, account, dynamicFees, networkConfig,
@@ -131,10 +122,6 @@ class FormBase extends React.Component {
           },
         },
       }));
-    }
-
-    if (nextProps.token !== token) {
-      this.setState(this.getInitialState(this.props));
     }
   }
 
@@ -359,10 +346,7 @@ class FormBase extends React.Component {
     }));
   }
 
-  // eslint-disable-next-line max-statements
   validateAmountAndReference(name, value) {
-    const { t } = this.props;
-    const messageMaxLength = 64;
     let feedback = '';
     let error = '';
 
@@ -371,13 +355,6 @@ class FormBase extends React.Component {
       value = /^\./.test(value) ? `0${value}` : value;
       error = this.validateAmountField(value);
       feedback = error || feedback;
-    }
-
-    // istanbul ignore else
-    if (name === 'reference') {
-      const byteCount = encodeURI(value).split(/%..|./).length - 1;
-      error = byteCount > messageMaxLength;
-      feedback = t('{{length}} bytes left', { length: messageMaxLength - byteCount });
     }
 
     this.setState(({ fields }) => ({
@@ -393,42 +370,25 @@ class FormBase extends React.Component {
     }));
   }
 
-  onAmountOrReferenceChange({ target }) {
+  onAmountChange({ target }) {
     clearTimeout(this.loaderTimeout);
 
-    if (target.name === 'amount') {
-      this.setState(() => ({ isLoading: true }));
-      this.loaderTimeout = setTimeout(() => {
-        this.setState(() => ({ isLoading: false }));
-        this.validateAmountAndReference(target.name, target.value);
-      }, 300);
-    }
-
-    if (target.name === 'reference') {
+    this.setState(() => ({ isLoading: true }));
+    this.loaderTimeout = setTimeout(() => {
+      this.setState(() => ({ isLoading: false }));
       this.validateAmountAndReference(target.name, target.value);
-    } else {
-      this.onInputChange({ target });
-    }
+    }, 300);
+
+    this.onInputChange({ target });
   }
 
   // istanbul ignore next
   onGoNext() {
+    const { nextStep, extraFields } = this.props;
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
-    this.props.nextStep({
-      fields: { ...this.state.fields },
+    nextStep({
+      fields: { ...this.state.fields, ...extraFields },
     });
-  }
-
-  setReferenceActive(isActive) {
-    this.setState(({ fields }) => ({
-      fields: {
-        ...fields,
-        reference: {
-          ...fields.reference,
-          isActive,
-        },
-      },
-    }));
   }
 
   /**
@@ -461,12 +421,12 @@ class FormBase extends React.Component {
   // eslint-disable-next-line complexity
   render() {
     const { fields } = this.state;
-    const { t, token, dynamicFees } = this.props;
-    const messageMaxLength = 64;
-    const byteCount = encodeURI(fields.reference.value).split(/%..|./).length - 1;
+    const {
+      t, token, dynamicFees, children, extraFields,
+    } = this.props;
     const isBtnEnabled = ((fields.recipient.value !== '' && !fields.recipient.error)
       && (fields.amount.value !== '' && !fields.amount.error)
-      && !fields.reference.error) && !this.state.isLoading;
+      && !Object.values(extraFields).find(({ error }) => error)) && !this.state.isLoading;
 
     return (
       <Box className={styles.wrapper} width="medium">
@@ -493,7 +453,7 @@ class FormBase extends React.Component {
             <span className={`${styles.amountField} amount`}>
               <Input
                 autoComplete="off"
-                onChange={this.onAmountOrReferenceChange}
+                onChange={this.onAmountChange}
                 name="amount"
                 value={fields.amount.value}
                 placeholder={t('Insert the amount of transaction')}
@@ -548,53 +508,7 @@ class FormBase extends React.Component {
           </label>
 
           { token !== 'BTC' ? (
-            <label className={`${styles.fieldGroup} reference`}>
-              <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
-              <span className={styles.referenceField}>
-                <AutoresizeTextarea
-                  maxLength={100}
-                  spellCheck={false}
-                  onChange={this.onAmountOrReferenceChange}
-                  name="reference"
-                  value={fields.reference.value}
-                  placeholder={t('Write message')}
-                  className={`${styles.textarea} ${fields.reference.error ? 'error' : ''} message`}
-                />
-                <CircularProgress
-                  max={64}
-                  value={byteCount}
-                  className={`${styles.byteCounter} ${fields.reference.error ? styles.hide : ''}`}
-                />
-                <Icon
-                  className={`${styles.status} ${styles.referenceStatus} ${!fields.reference.value ? styles.hide : styles.show}`}
-                  name={fields.reference.error ? 'alertIcon' : 'okIcon'}
-                />
-              </span>
-              <span className={`${styles.feedback} ${fields.reference.error || messageMaxLength - byteCount < 10 ? 'error' : ''} ${styles.show}`}>
-                {fields.reference.feedback}
-                <Tooltip
-                  className="showOnTop"
-                  title={t('Bytes counter')}
-                  footer={(
-                    <a
-                      href={links.transactionFee}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      {t('Read more')}
-                    </a>
-)}
-                >
-                  <p className={styles.tooltipText}>
-                    {
-                    t(`LISK Hub counts your message by bytes so keep in mind 
-                    that the length on your message may vary in different languages. 
-                    Different characters may consume different amount of bytes space.`)
-                  }
-                  </p>
-                </Tooltip>
-              </span>
-            </label>
+            children
           ) : (
             <div className={`${styles.fieldGroup}`}>
               <span className={`${styles.fieldLabel}`}>
@@ -638,5 +552,9 @@ class FormBase extends React.Component {
     );
   }
 }
+
+FormBase.defaultProps = {
+  extraFields: {},
+};
 
 export default FormBase;
