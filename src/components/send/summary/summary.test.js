@@ -10,6 +10,7 @@ import { tokenMap } from '../../../constants/tokens';
 
 describe('Summary', () => {
   let wrapper;
+  let props;
 
   const store = configureMockStore([thunk])({
     settings: { currency: 'USD', token: { active: tokenMap.LSK.key } },
@@ -54,51 +55,47 @@ describe('Summary', () => {
     },
   };
 
-  const props = {
-    t: v => v,
-    account: {
-      address: accounts.second_passphrase_account.address,
-      secondPublicKey: accounts.second_passphrase_account.secondPublicKey,
-      hwInfo: {
-        deviceModel: 'Ledger Nano S',
+  beforeEach(() => {
+    props = {
+      t: v => v,
+      account: {
+        address: accounts.second_passphrase_account.address,
+        secondPublicKey: accounts.second_passphrase_account.secondPublicKey,
+        hwInfo: {
+          deviceModel: 'Ledger Nano S',
+        },
       },
-    },
-    fields: {
-      recipient: {
-        address: '123123L',
+      fields: {
+        recipient: {
+          address: '123123L',
+        },
+        amount: {
+          value: 1,
+        },
+        reference: {
+          value: 1,
+        },
+        isLoading: false,
+        isHardwareWalletConnected: false,
       },
-      amount: {
-        value: 1,
+      prevState: {
+        fields: {},
       },
-      reference: {
-        value: 1,
-      },
-      processingSpeed: {
-        value: 1,
-      },
+      prevStep: jest.fn(),
+      nextStep: jest.fn(),
+      transactionCreated: jest.fn(),
+      resetTransactionResult: jest.fn(),
       isLoading: false,
       isHardwareWalletConnected: false,
-    },
-    prevState: {
-      fields: {},
-    },
-    prevStep: jest.fn(),
-    nextStep: jest.fn(),
-    transactionCreated: jest.fn(),
-    resetTransactionResult: jest.fn(),
-    isLoading: false,
-    isHardwareWalletConnected: false,
-    transactions: {
-      pending: [],
-      failed: '',
-      transactionsCreated: [],
-      transactionsCreatedFailed: [],
-      broadcastedTransactionsError: [],
-    },
-    token: tokenMap.LSK.key,
-  };
-
-  beforeEach(() => {
+      transactions: {
+        pending: [],
+        failed: '',
+        transactionsCreated: [],
+        transactionsCreatedFailed: [],
+        broadcastedTransactionsError: [],
+      },
+      token: tokenMap.LSK.key,
+    };
     wrapper = mount(<Summary {...props} />, options);
   });
 
@@ -166,20 +163,25 @@ describe('Summary', () => {
   });
 
 
-  it('should show props.fields.processingSpeed.txFee if props.token is not LSK', () => {
+  it('should show props.fields.processingSpeed.txFee and use it in transactionCreated if props.token is not LSK', () => {
     const txFee = '12451';
-    wrapper = mount(<Summary {...{
-      ...props,
+    wrapper.setProps({
       token: 'BTC',
       fields: {
         ...props.fields,
         processingSpeed: {
           txFee,
+          value: txFee,
         },
+        reference: undefined,
       },
-    }}
-    />, options);
+      account: { },
+    });
     expect(wrapper.find('.fee-value')).toIncludeText(txFee);
+    wrapper.find('.confirm-button').at(0).simulate('click');
+    expect(props.transactionCreated).toBeCalledWith(expect.objectContaining({
+      dynamicFeePerByte: txFee,
+    }));
   });
 
   it('should call transactionCreated as soon the component load if using HW', () => {
