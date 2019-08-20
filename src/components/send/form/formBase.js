@@ -1,10 +1,4 @@
 // eslint-disable-line max-lines
-// TODO Split this Send form component into following 4:
-// - FormWrapper - decides to render FormLSK or FormBTC based on activeToken
-// - FormLSK - Contains all LSK-specific functionality (message, static fee) and renders FormBase
-// - FormBTC - Contains all BTC-specific functionality (dynamic fee selection) and renders FormBase
-// - FormBase - Contains all functionality common to LSK and BTC (Box, address input,
-//     amount input, confirm button)
 import React from 'react';
 import Converter from '../../converter';
 import { PrimaryButton } from '../../toolbox/buttons/button';
@@ -43,16 +37,12 @@ function getInitialState() {
         value: '',
         feedback: '',
       },
-      fee: {
-        value: 0,
-      },
     },
     unspentTransactionOutputs: [],
   };
 }
 
 class FormBase extends React.Component {
-  // eslint-disable-next-line max-statements
   constructor(props) {
     super(props);
 
@@ -60,16 +50,11 @@ class FormBase extends React.Component {
 
     this.loaderTimeout = null;
 
-    this.getMaxAmount = this.getMaxAmount.bind(this);
-    this.ifDataFromPrevState = this.ifDataFromPrevState.bind(this);
-    this.ifDataFromUrl = this.ifDataFromUrl.bind(this);
     this.onAmountChange = this.onAmountChange.bind(this);
     this.onGoNext = this.onGoNext.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.onSelectedAccount = this.onSelectedAccount.bind(this);
-    this.validateAmountAndReference = this.validateAmountAndReference.bind(this);
     this.validateBookmark = this.validateBookmark.bind(this);
-    this.checkIfBookmarkedAccount = this.checkIfBookmarkedAccount.bind(this);
   }
 
   componentDidMount() {
@@ -268,7 +253,7 @@ class FormBase extends React.Component {
     return false;
   }
 
-  validateAmountAndReference(name, value) {
+  validateAmount(name, value) {
     let feedback = '';
     let error = '';
 
@@ -298,7 +283,7 @@ class FormBase extends React.Component {
     this.setState(() => ({ isLoading: true }));
     this.loaderTimeout = setTimeout(() => {
       this.setState(() => ({ isLoading: false }));
-      this.validateAmountAndReference(target.name, target.value);
+      this.validateAmount(target.name, target.value);
     }, 300);
 
     this.onInputChange({ target });
@@ -313,15 +298,14 @@ class FormBase extends React.Component {
     });
   }
 
-  // eslint-disable-next-line complexity
   render() {
-    const { fields } = this.state;
+    const { fields, isLoading } = this.state;
     const {
       t, token, children, extraFields, fee,
     } = this.props;
-    const isBtnEnabled = ((fields.recipient.value !== '' && !fields.recipient.error)
-      && (fields.amount.value !== '' && !fields.amount.error)
-      && !Object.values(extraFields).find(({ error }) => error)) && !this.state.isLoading;
+    const isBtnEnabled = !isLoading
+      && !Object.values(fields).find(({ error, value }) => error || value === '')
+      && !Object.values(extraFields).find(({ error }) => error);
 
     return (
       <Box className={styles.wrapper} width="medium">
