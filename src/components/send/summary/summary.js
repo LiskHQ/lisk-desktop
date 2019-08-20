@@ -31,7 +31,7 @@ class Summary extends React.Component {
       passphrase: account.passphrase,
       recipientId: fields.recipient.address,
       secondPassphrase,
-      dynamicFeePerByte: this.props.fields.processingSpeed.value,
+      dynamicFeePerByte: fields.processingSpeed ? fields.processingSpeed.value : 0,
       fee: fees.send,
     });
   }
