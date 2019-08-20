@@ -3,7 +3,6 @@ import Lisk from '@liskhq/lisk-client';
 import {
   send,
   getTransactions,
-  unconfirmedTransactions,
   getSingleTransaction,
   create,
   broadcast,
@@ -129,15 +128,8 @@ describe('Utils: Transactions API', () => {
     it('should apiClient.node.getTransactions if empty response', async () => {
       apiClient.transactions.get.mockResolvedValue({ data: [] });
       const [error] = await to(getSingleTransaction({ apiClient, id }));
-      expect(apiClient.node.getTransactions).toHaveBeenCalledWith('unconfirmed', { id });
+      expect(apiClient.node.getTransactions).toHaveBeenCalledWith('ready', { id });
       expect(error).toEqual(new Error(`Transaction with id "${id}" not found`));
-    });
-  });
-
-  describe('unconfirmedTransactions', () => {
-    it('should return a promise', () => {
-      const promise = unconfirmedTransactions(apiClient);
-      expect(typeof promise.then).toEqual('function');
     });
   });
 
