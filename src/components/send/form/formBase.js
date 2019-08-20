@@ -300,7 +300,7 @@ class FormBase extends React.Component {
     const { nextStep, extraFields } = this.props;
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
     nextStep({
-      fields: { ...this.state.fields, ...extraFields },
+      fields: { ...extraFields, ...this.state.fields },
     });
   }
 

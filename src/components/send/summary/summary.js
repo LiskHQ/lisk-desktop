@@ -27,7 +27,7 @@ class Summary extends React.Component {
 
     this.props.transactionCreated({
       amount: `${toRawLsk(fields.amount.value)}`,
-      data: fields.reference.value,
+      data: fields.reference ? fields.reference.value : '',
       passphrase: account.passphrase,
       recipientId: fields.recipient.address,
       secondPassphrase,
