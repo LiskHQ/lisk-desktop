@@ -82,9 +82,10 @@ class passphraseInput extends React.Component {
   // eslint-disable-next-line max-statements
   validatePassphrase({ values, inputsLength = this.state.inputsLength, focus = null }) {
     let errorState = { validationError: '', partialPassphraseError: [], passphraseIsInvalid: false };
+
     const passphrase = values.join(' ').trim();
     if (!isValidPassphrase(passphrase)) {
-      errorState = getPassphraseValidationErrors(passphrase);
+      errorState = getPassphraseValidationErrors(values);
       errorState.passphraseIsInvalid = errorState.validationError === this.props.t('Passphrase is not valid');
     }
 

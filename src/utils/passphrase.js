@@ -118,19 +118,19 @@ export const isValidPassphrase = (passphrase) => {
 };
 
 export const getPassphraseValidationErrors = (passphrase) => {
-  const passphraseArray = passphrase.trim().split(' ');
-
   const partialPassphraseError = [];
-  const invalidWords = passphraseArray.filter((word) => {
-    const isNotInDictionary = !inDictionary(word);
-    partialPassphraseError[passphraseArray.indexOf(word)] = isNotInDictionary;
+  const invalidWords = passphrase.filter((word) => {
+    const isNotInDictionary = word !== '' && !inDictionary(word);
+    partialPassphraseError[passphrase.indexOf(word)] = isNotInDictionary;
     return isNotInDictionary;
   });
 
+  const filteredPassphrase = passphrase.filter(word => !!word);
+
   let validationError = i18next.t('Passphrase is not valid');
 
-  if (passphraseArray.length < 12) {
-    validationError = i18next.t('Passphrase should have 12 words, entered passphrase has {{length}}', { length: passphraseArray.length });
+  if (filteredPassphrase.length < 12) {
+    validationError = i18next.t('Passphrase should have 12 words, entered passphrase has {{length}}', { length: filteredPassphrase.length });
   }
 
   if (invalidWords.length > 0) {
