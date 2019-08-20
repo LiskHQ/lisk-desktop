@@ -13,19 +13,8 @@ export default class FormLsk extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = this.getInitialState(props);
-
-    this.loaderTimeout = null;
-    this.messageMaxLength = 64;
-
-    this.onReferenceChange = this.onReferenceChange.bind(this);
-    this.setReferenceActive = this.setReferenceActive.bind(this);
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  getInitialState(props) {
     const { reference } = parseSearchParams(props.history.location.search);
-    return {
+    this.state = {
       fields: {
         reference: {
           error: false,
@@ -35,6 +24,11 @@ export default class FormLsk extends React.Component {
         },
       },
     };
+
+    this.loaderTimeout = null;
+    this.messageMaxLength = 64;
+
+    this.onReferenceChange = this.onReferenceChange.bind(this);
   }
 
   onReferenceChange({ target: { name, value } }) {
@@ -49,18 +43,6 @@ export default class FormLsk extends React.Component {
           error: byteCount > this.messageMaxLength,
           value,
           feedback: t('{{length}} bytes left', { length: this.messageMaxLength - byteCount }),
-        },
-      },
-    }));
-  }
-
-  setReferenceActive(isActive) {
-    this.setState(({ fields }) => ({
-      fields: {
-        ...fields,
-        reference: {
-          ...fields.reference,
-          isActive,
         },
       },
     }));
