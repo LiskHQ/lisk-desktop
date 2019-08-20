@@ -27,7 +27,7 @@ class Selector extends React.Component {
     return options.length > 1 ? (
       <div className={`${styles.selector} ${className}`}>
         {options.map(({ title }, index) => (
-          <label key={title}>
+          <label key={title} className={`option-${title}`}>
             <input
               type="radio"
               name={name}

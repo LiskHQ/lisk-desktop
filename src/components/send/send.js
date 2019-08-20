@@ -11,13 +11,12 @@ class Send extends React.Component {
   constructor(props) {
     super(props);
 
-    const { recipient, amount, reference } = parseSearchParams(this.props.history.location.search);
+    const { recipient, amount } = parseSearchParams(this.props.history.location.search);
 
     this.state = {
       fields: {
         recipient: { address: recipient || '' },
         amount: { value: amount || '' },
-        reference: { value: reference || '' },
       },
     };
     this.backToWallet = this.backToWallet.bind(this);
@@ -40,7 +39,7 @@ class Send extends React.Component {
             finalCallback={this.backToWallet}
             className={styles.wrapper}
           >
-            <Form fields={fields} />
+            <Form fields={fields} history={history} />
             <Summary />
             <TransactionStatus history={history} />
           </MultiStep>
