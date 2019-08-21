@@ -27,21 +27,24 @@ const TransactionList = ({
           to={`${routes.transactions.pathPrefix}${routes.transactions.path}/${tx.id}`}
           className={`${styles.listRow} transactions-row`}
         >
-          <TransactionTypeFigure
-            address={account.address === tx.recipientId ? tx.senderId : tx.recipientId}
-            transactionType={tx.type}
-          />
-          <TransactionAddress
-            address={account.address === tx.recipientId ? tx.senderId : tx.recipientId}
-            bookmarks={bookmarks}
-            t={t}
-            token={activeToken}
-            transactionType={tx.type}
-          />
+          <div className={styles.avatarAndAddress}>
+            <TransactionTypeFigure
+              address={account.address === tx.recipientId ? tx.senderId : tx.recipientId}
+              transactionType={tx.type}
+            />
+            <TransactionAddress
+              address={account.address === tx.recipientId ? tx.senderId : tx.recipientId}
+              bookmarks={bookmarks}
+              t={t}
+              token={activeToken}
+              transactionType={tx.type}
+            />
+          </div>
           <TransactionAmount
             address={account.address}
             token={activeToken}
             transaction={tx}
+            roundTo={2}
           />
         </Link>
       ))
