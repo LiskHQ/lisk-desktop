@@ -4,7 +4,6 @@ import TransactionTypeFigure from '../../transactions/typeFigure/TransactionType
 import TransactionAddress from '../../transactions/address/TransactionAddress';
 import TransactionAmount from '../../transactions/amount/TransactionAmount';
 import { SecondaryButton } from '../../toolbox/buttons/button';
-import { tokenMap } from '../../../constants/tokens';
 import routes from '../../../constants/routes';
 import styles from './recentTransactions.css';
 
@@ -28,18 +27,12 @@ const TransactionList = ({
           to={`${routes.transactions.pathPrefix}${routes.transactions.path}/${tx.id}`}
           className={`${styles.listRow} transactions-row`}
         >
-          {
-            activeToken === tokenMap.LSK.key
-              ? (
-                <TransactionTypeFigure
-                  address={tx.recipientId}
-                  transactionType={tx.type}
-                />
-              )
-              : null
-          }
+          <TransactionTypeFigure
+            address={account.address === tx.recipientId ? tx.senderId : tx.recipientId}
+            transactionType={tx.type}
+          />
           <TransactionAddress
-            address={tx.recipientId}
+            address={account.address === tx.recipientId ? tx.senderId : tx.recipientId}
             bookmarks={bookmarks}
             t={t}
             token={activeToken}
