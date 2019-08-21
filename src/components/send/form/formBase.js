@@ -1,5 +1,6 @@
 // eslint-disable-line max-lines
 import React from 'react';
+import numeral from 'numeral';
 import Converter from '../../converter';
 import { PrimaryButton } from '../../toolbox/buttons/button';
 import { Input } from '../../toolbox/inputs';
@@ -8,13 +9,16 @@ import AutoSuggest from '../autoSuggest';
 import Spinner from '../../spinner/spinner';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import links from '../../../constants/externalLinks';
+import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { fromRawLsk } from '../../../utils/lsk';
 import Feedback from '../../toolbox/feedback/feedback';
 import styles from './form.css';
 import Piwik from '../../../utils/piwik';
-import { validateAddress } from '../../../utils/validators';
+import { validateAddress, validateAmountFormat } from '../../../utils/validators';
 import Icon from '../../toolbox/icon';
 import Box from '../../toolbox/box';
+import i18n from '../../../i18n';
+import regex from '../../../utils/regex';
 
 function getInitialState() {
   return {
@@ -244,12 +248,15 @@ class FormBase extends React.Component {
   }
 
   validateAmountField(value) {
-    // istanbul ignore if
-    if (/^0.(0|[a-zA-z])*$/g.test(value)) return this.props.t('Provide a correct amount of {{token}}', { token: this.props.token });
-    if (/([^\d.])/g.test(value)) return this.props.t('Provide a correct amount of {{token}}', { token: this.props.token });
-    if ((/(\.)(.*\1){1}/g.test(value) || /\.$/.test(value)) || value === '0') return this.props.t('Invalid amount');
-    if (/\./.test(value) && /\.\d{9}/.test(value)) return this.props.t('Maximum floating point is 8.');
-    if (parseFloat(this.getMaxAmount()) < value) return this.props.t('Provided amount is higher than your current balance.');
+    const { message, error } = validateAmountFormat({
+      value,
+      token: this.props.token,
+      locale: i18n.language,
+    });
+    if (error) return message;
+    if (parseFloat(this.getMaxAmount()) < numeral(value).value()) {
+      return this.props.t('Provided amount is higher than your current balance.');
+    }
     return false;
   }
 
@@ -259,7 +266,8 @@ class FormBase extends React.Component {
 
     // istanbul ignore else
     if (name === 'amount') {
-      value = /^\./.test(value) ? `0${value}` : value;
+      const { leadingPoint } = regex.amount[i18n.language];
+      value = leadingPoint.test(value) ? `0${value}` : value;
       error = this.validateAmountField(value);
       feedback = error || feedback;
     }
@@ -361,7 +369,9 @@ class FormBase extends React.Component {
 
             { !extraFields.processingSpeed ? (
               <span className={styles.amountHint}>
-                {t('+ Transaction fee {{fee}} LSK', { fee: fromRawLsk(fee) })}
+                {t('+ Transaction fee {{fee}} LSK', {
+                  fee: formatAmountBasedOnLocale({ value: fromRawLsk(fee) }),
+                })}
                 <Tooltip
                   className="showOnTop"
                   title={t('Transaction fee')}

@@ -9,6 +9,7 @@ import PassphraseInput from '../passphraseInput/passphraseInput';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import links from '../../constants/externalLinks';
 import styles from './transactionSummary.css';
+import { formatAmountBasedOnLocale } from '../../utils/formattedNumber';
 
 class TransactionSummary extends React.Component {
   constructor(props) {
@@ -127,7 +128,7 @@ class TransactionSummary extends React.Component {
               </Tooltip>
             </label>
             <label className={`${styles.feeValue} fee-value`}>
-              {`${fee} ${token}`}
+              {`${formatAmountBasedOnLocale({ value: fee })} ${token}`}
             </label>
           </section>
           {

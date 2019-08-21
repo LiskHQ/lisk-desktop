@@ -1,6 +1,7 @@
 import React from 'react';
 import * as btcTransactionsAPI from '../../../utils/api/btc/transactions';
 import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
+import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import FormBase from './formBase';
 import Selector from '../../toolbox/selector/selector';
 import Spinner from '../../spinner/spinner';
@@ -109,8 +110,10 @@ export default class FormBtc extends React.Component {
         </React.Fragment>
       );
     }
+    const fee = formatAmountBasedOnLocale({ value: fromRawLsk(fields.processingSpeed.txFee) });
+
     return !amount.error
-      ? `${fromRawLsk(fields.processingSpeed.txFee)} ${token}`
+      ? `${fee} ${token}`
       : t('Invalid amount');
   }
 

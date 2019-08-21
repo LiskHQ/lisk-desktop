@@ -1,5 +1,6 @@
 import React from 'react';
 import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
+import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { loginType } from '../../../constants/hwConstants';
 import { tokenMap } from '../../../constants/tokens';
 import AccountVisual from '../../accountVisual/index';
@@ -74,6 +75,8 @@ class Summary extends React.Component {
       fields, t, token, account,
     } = this.props;
 
+    const amount = formatAmountBasedOnLocale({ value: fields.amount.value });
+
     const fee = token === tokenMap.LSK.key
       ? fromRawLsk(fees.send)
       : fromRawLsk(fields.processingSpeed.txFee);
@@ -84,7 +87,7 @@ class Summary extends React.Component {
         t={t}
         account={account}
         confirmButton={{
-          label: t('Send {{amount}} {{token}}', { amount: fields.amount.value, token }),
+          label: t('Send {{amount}} {{token}}', { amount, token }),
           onClick: this.submitTransaction,
         }}
         cancelButton={{
@@ -111,7 +114,7 @@ class Summary extends React.Component {
         <section>
           <label>{t('Amount')}</label>
           <label className="amount-summary">
-            {`${fields.amount.value} ${token}`}
+            {`${amount} ${token}`}
             <Converter className={styles.secondText} value={fields.amount.value} />
           </label>
         </section>

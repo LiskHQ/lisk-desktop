@@ -29,6 +29,11 @@ i18next.t = function (key, o) {
     return typeof r === 'string' || typeof r === 'number' ? r : a;
   });
 };
+i18next.init = () => ({
+  t: i18next.t,
+  language: 'en',
+  changeLanguage: jest.fn(),
+});
 
 const localStorageMock = (() => {
   let store = {};

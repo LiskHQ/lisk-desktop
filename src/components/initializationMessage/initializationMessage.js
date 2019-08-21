@@ -1,8 +1,10 @@
 import React from 'react';
+import 'numeral/locales';
 import FlashMessage from '../toolbox/flashMessage/flashMessage';
 import FlashMessageHolder from '../toolbox/flashMessage/holder';
 import externalLinks from '../../constants/externalLinks';
 import routes from '../../constants/routes';
+import { formatAmountBasedOnLocale } from '../../utils/formattedNumber';
 
 const InitializationMessage = ({
   account,
@@ -21,7 +23,8 @@ const InitializationMessage = ({
   );
 
   const onButtonClick = () => {
-    history.push(`${routes.send.path}?recipient=${account.address}&amount=0.1&reference=Account initialization`);
+    const amount = formatAmountBasedOnLocale({ value: 0.1 });
+    history.push(`${routes.send.path}?recipient=${account.address}&amount=${amount}&reference=Account initialization`);
   };
 
   return FlashMessageHolder.addMessage((

@@ -8,11 +8,6 @@ import accounts from '../../../test/constants/accounts';
 import i18n from '../../i18n';
 import settingsConst from '../../constants/settings';
 
-jest.mock('../../i18n', () => ({
-  changeLanguage: jest.fn(),
-  t: v => v,
-}));
-
 describe('Setting', () => {
   const settings = {
     autoLog: true,
