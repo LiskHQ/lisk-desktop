@@ -21,6 +21,13 @@ class BookmarkAutoSuggest extends React.Component {
         recipient={recipient}
         onSelectItem={onSelectedAccount}
         token={token}
+        renderIcon={() => (
+          <AccountVisual
+            address={recipient.address}
+            placeholder={!(recipient.address.length && !recipient.error)}
+            size={25}
+          />
+        )}
         renderItem={bookmark => (
           <React.Fragment>
             <AccountVisual address={bookmark.address} size={25} />

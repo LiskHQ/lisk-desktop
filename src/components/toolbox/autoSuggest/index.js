@@ -1,14 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 import { Input } from '../inputs';
-import AccountVisual from '../../accountVisual/index';
 import Feedback from '../feedback/feedback';
 import Icon from '../icon';
 import Spinner from '../../spinner/spinner';
 import keyCodes from '../../../constants/keyCodes';
 import styles from './autoSuggest.css';
 
-// eslint-disable-next-line complexity
 class AutoSuggest extends React.Component {
   constructor(props) {
     super(props);
@@ -129,20 +127,17 @@ class AutoSuggest extends React.Component {
       recipient,
       placeholder,
       renderItem,
+      renderIcon,
     } = this.props;
     const { dropdownIndex } = this.state;
-    const haveAvatar = recipient.address.length && !recipient.error;
     const selectedAccount = recipient.selected ? recipient.title : recipient.value;
 
     return (
       <Fragment>
         <span className={`${styles.recipientField} recipient`}>
-          <AccountVisual
-            className={styles.accountVisual}
-            address={recipient.address}
-            placeholder={!haveAvatar}
-            size={25}
-          />
+          <span className={styles.icon}>
+            {renderIcon(recipient)}
+          </span>
           <Input
             autoComplete="off"
             className={`${styles.input} ${recipient.error ? 'error' : ''} recipient bookmark`}
@@ -194,10 +189,12 @@ class AutoSuggest extends React.Component {
 
 AutoSuggest.propTypes = {
   renderItem: PropTypes.func,
+  renderIcon: PropTypes.func,
 };
 
 AutoSuggest.defaultProps = {
   renderItem: item => item,
+  renderIcon: () => null,
 };
 
 export default AutoSuggest;
