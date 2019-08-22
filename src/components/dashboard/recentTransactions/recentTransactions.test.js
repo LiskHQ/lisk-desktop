@@ -33,6 +33,7 @@ describe('Recent Transactions', () => {
       {
         id: 0,
         recipientId: '123456L',
+        senderId: '123456L',
         amount: '0.001',
         token: 'LSK',
         type: 0,
@@ -47,6 +48,7 @@ describe('Recent Transactions', () => {
       {
         id: 2,
         recipientId: '123456L',
+        senderId: '123456L',
         amount: '0.008',
         token: 'LSK',
         type: 1,
@@ -54,6 +56,7 @@ describe('Recent Transactions', () => {
       {
         id: 3,
         recipientId: '234234234L',
+        senderId: '123456L',
         amount: '0.0009',
         token: 'LSK',
         type: 2,
@@ -61,6 +64,7 @@ describe('Recent Transactions', () => {
       {
         id: 4,
         recipientId: '4564346346L',
+        senderId: '123456L',
         amount: '25',
         token: 'LSK',
         type: 3,
@@ -96,6 +100,7 @@ describe('Recent Transactions', () => {
       {
         id: 0,
         recipientId: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
+        senderId: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
         amount: '0.001',
         token: 'BTC',
         type: 0,
@@ -103,6 +108,7 @@ describe('Recent Transactions', () => {
       {
         id: 1,
         recipientId: 'mkakDp2f31b3eXdATtAggoqwXcdx1PqqFo',
+        senderId: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
         amount: '0.0003',
         token: 'BTC',
         type: 0,
@@ -116,7 +122,7 @@ describe('Recent Transactions', () => {
 
   it('Should render Recent Transactions properly with LSK active token', () => {
     expect(wrapper).toContainMatchingElement('TransactionList');
-    expect(wrapper).toContainMatchingElement('TransactionTypeFigure');
+    expect(wrapper).toContainMatchingElement('.transaction-image');
     expect(wrapper).toContainMatchingElement('TransactionAddress');
     expect(wrapper).toContainMatchingElement('TransactionAmount');
     expect(wrapper).toContainMatchingElements(1, 'AccountVisual');
@@ -133,7 +139,6 @@ describe('Recent Transactions', () => {
 
     wrapper.update();
     expect(wrapper).toContainMatchingElement('TransactionList');
-    expect(wrapper).not.toContainMatchingElement('TransactionTypeFigure');
     expect(wrapper).toContainMatchingElement('TransactionAddress');
     expect(wrapper).toContainMatchingElement('TransactionAmount');
     expect(wrapper).not.toContainMatchingElement('AccountVisual');
