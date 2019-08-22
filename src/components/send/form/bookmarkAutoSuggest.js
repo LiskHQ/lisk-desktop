@@ -14,6 +14,7 @@ class BookmarkAutoSuggest extends React.Component {
     } = this.props;
     return (
       <AutoSuggest
+        className="recipient"
         onChangeDelayed={validateBookmark}
         items={bookmarks[token]}
         onChange={onInputChange}

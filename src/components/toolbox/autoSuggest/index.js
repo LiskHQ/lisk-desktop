@@ -128,20 +128,21 @@ class AutoSuggest extends React.Component {
       placeholder,
       renderItem,
       renderIcon,
+      className,
     } = this.props;
     const { dropdownIndex } = this.state;
     const selectedAccount = recipient.selected ? recipient.title : recipient.value;
 
     return (
       <Fragment>
-        <span className={`${styles.recipientField} recipient`}>
+        <span className={`${styles.recipientField} ${className}`}>
           <span className={styles.icon}>
             {renderIcon(recipient)}
           </span>
           <Input
             autoComplete="off"
-            className={`${styles.input} ${recipient.error ? 'error' : ''} recipient bookmark`}
-            name="recipient"
+            className={`${styles.input} ${recipient.error ? 'error' : ''} ${className} bookmark`}
+            name={className}
             value={selectedAccount}
             placeholder={placeholder}
             onKeyDown={this.onHandleKeyPress}
@@ -190,11 +191,13 @@ class AutoSuggest extends React.Component {
 AutoSuggest.propTypes = {
   renderItem: PropTypes.func,
   renderIcon: PropTypes.func,
+  className: PropTypes.string,
 };
 
 AutoSuggest.defaultProps = {
   renderItem: item => item,
   renderIcon: () => null,
+  className: '',
 };
 
 export default AutoSuggest;

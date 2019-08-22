@@ -45,6 +45,7 @@ describe('Recipient Input', () => {
       title: '',
       value: '',
     },
+    className: 'recipient',
     // eslint-disable-next-line react/display-name
     renderItem: item => (
       <React.Fragment>
