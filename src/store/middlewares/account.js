@@ -223,8 +223,9 @@ const accountMiddleware = store => next => (action) => {
       break;
     case actionTypes.settingsUpdated: {
       const tokensList = action.data.token && action.data.token.list;
-      const token = tokensList && Object.keys(tokensList)[0];
-      if (tokensList[token]) {
+      const token = tokensList && Object.keys(tokensList)
+        .find(t => tokensList[t]);
+      if (tokensList && tokensList[token]) {
         store.dispatch(updateEnabledTokensAccounts(token));
       }
       break;
