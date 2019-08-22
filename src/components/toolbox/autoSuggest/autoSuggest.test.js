@@ -18,9 +18,9 @@ describe('Recipient Input', () => {
   const props = {
     token: tokenMap.LSK.key,
     t: v => v,
-    validateBookmark: jest.fn(),
+    onChangeDelayed: jest.fn(),
     onChange: jest.fn(),
-    onSelectedAccount: jest.fn(),
+    onSelectItem: jest.fn(),
     items: [{
       title: 'ABC',
       address: '12345L',
@@ -62,7 +62,7 @@ describe('Recipient Input', () => {
     wrapper.find('input.recipient').simulate('change', evt);
     wrapper.update();
     jest.advanceTimersByTime(300);
-    expect(props.validateBookmark).toBeCalled();
+    expect(props.onChangeDelayed).toBeCalled();
   });
 
   it('render properly when bookmard is selected', () => {
@@ -82,6 +82,6 @@ describe('Recipient Input', () => {
     wrapper.find('Input.input').simulate('keyDown', { keyCode: keyCodes.arrowUp });
     wrapper.find('Input.input').simulate('keyDown', { keyCode: keyCodes.enter });
     wrapper.find('.bookmark-list li').at(0).simulate('click');
-    expect(props.onSelectedAccount).toBeCalled();
+    expect(props.onSelectItem).toBeCalled();
   });
 });

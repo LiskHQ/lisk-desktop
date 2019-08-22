@@ -30,7 +30,7 @@ class AutoSuggest extends React.Component {
     this.onKeyPressDownOrUp = this.onKeyPressDownOrUp.bind(this);
     this.onKeyPressEnter = this.onKeyPressEnter.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.onSelectedAccount = this.onSelectedAccount.bind(this);
+    this.onSelectItem = this.onSelectItem.bind(this);
     this.resetListIndex = this.resetListIndex.bind(this);
     this.handleUpdateIndex = this.handleUpdateIndex.bind(this);
   }
@@ -42,19 +42,19 @@ class AutoSuggest extends React.Component {
 
 
     return items
-      .filter(account =>
-        account.title.toLowerCase().includes(recipient.value.toLowerCase())
-        || account.address.toLowerCase().includes(recipient.value.toLowerCase()));
+      .filter(item =>
+        item.title.toLowerCase().includes(recipient.value.toLowerCase())
+        || item.address.toLowerCase().includes(recipient.value.toLowerCase()));
   }
 
   resetListIndex() {
     this.setState({ dropdownIndex: 0 });
   }
 
-  onSelectedAccount(account) {
+  onSelectItem(item) {
     this.setState({ isLoading: false });
     this.resetListIndex();
-    this.props.onSelectedAccount(account);
+    this.props.onSelectItem(item);
   }
 
   onKeyPressDownOrUp(action) {
@@ -86,8 +86,8 @@ class AutoSuggest extends React.Component {
 
   onKeyPressEnter() {
     const { dropdownIndex } = this.state;
-    const account = this.getFilterList()[dropdownIndex];
-    this.onSelectedAccount(account);
+    const item = this.getFilterList()[dropdownIndex];
+    this.onSelectItem(item);
   }
 
   onHandleKeyPress(e) {
@@ -116,7 +116,7 @@ class AutoSuggest extends React.Component {
     this.loaderTimeout = setTimeout(() => {
       // istanbul ignore else
       if (this.getFilterList().length >= 0) this.setState({ isLoading: false });
-      this.props.validateBookmark();
+      this.props.onChangeDelayed();
     }, 300);
 
     if (e && e.target && e.target.value === '') this.resetListIndex();
@@ -160,17 +160,17 @@ class AutoSuggest extends React.Component {
               <ul className={`${styles.bookmarkList} bookmark-list`}>
                 {
                 this.getFilterList()
-                  .map((account, index) => (
+                  .map((item, index) => (
                     <li
                       key={index}
                       onMouseEnter={() => this.handleUpdateIndex(index)}
-                      onClick={() => this.onSelectedAccount(account)}
+                      onClick={() => this.onSelectItem(item)}
                       onKeyPress={this.onHandleKeyPress}
                       className={`${dropdownIndex === index ? styles.active : ''}`}
                     >
-                      <AccountVisual address={account.address} size={25} />
-                      <span>{account.title}</span>
-                      <span>{account.address}</span>
+                      <AccountVisual address={item.address} size={25} />
+                      <span>{item.title}</span>
+                      <span>{item.address}</span>
                     </li>
                   ))
               }

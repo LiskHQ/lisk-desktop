@@ -2,6 +2,9 @@ import React from 'react';
 import AutoSuggest from '.';
 import DemoRenderer from '../demoRenderer';
 
+/* eslint-disable-next-line no-console */
+const onChange = console.log;
+
 export default class AutoSuggestDemo extends React.Component {
   constructor(props) {
     super(props);
@@ -12,10 +15,10 @@ export default class AutoSuggestDemo extends React.Component {
     };
 
     this.onChange = this.onChange.bind(this);
-    this.onSelectedAccount = this.onSelectedAccount.bind(this);
+    this.onSelectItem = this.onSelectItem.bind(this);
   }
 
-  onSelectedAccount(account) {
+  onSelectItem(account) {
     this.setState({
       value: account.title,
       address: account.address,
@@ -48,9 +51,9 @@ export default class AutoSuggestDemo extends React.Component {
               title: '#2',
               address: '7124124L',
             }]}
-            validateBookmark={() => true}
+            onChangeDelayed={onChange}
             onChange={this.onChange}
-            onSelectedAccount={this.onSelectedAccount}
+            onSelectItem={this.onSelectItem}
           />
         </DemoRenderer>
       </div>

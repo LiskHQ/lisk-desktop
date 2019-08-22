@@ -13,12 +13,12 @@ class BookmarkAutoSuggest extends React.Component {
     } = this.props;
     return (
       <AutoSuggest
-        validateBookmark={validateBookmark}
+        onChangeDelayed={validateBookmark}
         items={bookmarks[token]}
         onChange={onInputChange}
         placeholder={t('Insert public address or a name')}
         recipient={recipient}
-        onSelectedAccount={onSelectedAccount}
+        onSelectItem={onSelectedAccount}
         token={token}
       />
     );
