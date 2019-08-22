@@ -12,14 +12,15 @@ class BookmarkAutoSuggest extends React.Component {
     const {
       t, token, recipient, onSelectedAccount, validateBookmark, bookmarks, onInputChange,
     } = this.props;
+    const items = bookmarks[token];
     return (
       <AutoSuggest
         className="recipient"
         onChangeDelayed={validateBookmark}
-        items={bookmarks[token]}
+        items={items}
         onChange={onInputChange}
         placeholder={t('Insert public address or a name')}
-        recipient={recipient}
+        selectedItem={recipient}
         onSelectItem={onSelectedAccount}
         token={token}
         renderIcon={() => (
@@ -36,6 +37,7 @@ class BookmarkAutoSuggest extends React.Component {
             <span>{bookmark.address}</span>
           </React.Fragment>
         )}
+        matchProps={['address', 'title']}
       />
     );
   }

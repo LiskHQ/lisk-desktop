@@ -35,15 +35,15 @@ class AutoSuggest extends React.Component {
   }
 
   getFilterList() {
-    const { items, recipient } = this.props;
+    const { items, selectedItem, matchProps } = this.props;
 
-    if (recipient.value === '') return items;
+    if (selectedItem.value === '') return items;
 
-
-    return items
-      .filter(item =>
-        item.title.toLowerCase().includes(recipient.value.toLowerCase())
-        || item.address.toLowerCase().includes(recipient.value.toLowerCase()));
+    return items.filter(item => (
+      matchProps.find(prop => (
+        item[prop].toLowerCase().includes(selectedItem.value.toLowerCase())
+      ))
+    ));
   }
 
   resetListIndex() {
@@ -59,10 +59,10 @@ class AutoSuggest extends React.Component {
   onKeyPressDownOrUp(action) {
     const rowHeight = 44;
     const { dropdownIndex } = this.state;
-    const accountsLength = this.getFilterList().length;
+    const filteredItemsLength = this.getFilterList().length;
 
     // istanbul ignore else
-    if (action === 'down' && dropdownIndex < accountsLength - 1) {
+    if (action === 'down' && dropdownIndex < filteredItemsLength - 1) {
       if (dropdownIndex + 1 >= 4) {
         this.listContainerRef.scrollTop = this.listContainerRef.scrollTop + rowHeight;
       }
@@ -124,34 +124,33 @@ class AutoSuggest extends React.Component {
 
   render() {
     const {
-      recipient,
+      selectedItem,
       placeholder,
       renderItem,
       renderIcon,
       className,
     } = this.props;
     const { dropdownIndex } = this.state;
-    const selectedAccount = recipient.selected ? recipient.title : recipient.value;
 
     return (
       <Fragment>
         <span className={`${styles.recipientField} ${className}`}>
           <span className={styles.icon}>
-            {renderIcon(recipient)}
+            {renderIcon(selectedItem)}
           </span>
           <Input
             autoComplete="off"
-            className={`${styles.input} ${recipient.error ? 'error' : ''} ${className} bookmark`}
+            className={`${styles.input} ${selectedItem.error ? 'error' : ''} ${className} bookmark`}
             name={className}
-            value={selectedAccount}
+            value={selectedItem.selected ? selectedItem.title : selectedItem.value}
             placeholder={placeholder}
             onKeyDown={this.onHandleKeyPress}
             onChange={this.onChange}
           />
-          <Spinner className={`${styles.spinner} ${this.state.isLoading && recipient.value ? styles.show : styles.hide}`} />
+          <Spinner className={`${styles.spinner} ${this.state.isLoading && selectedItem.value ? styles.show : styles.hide}`} />
           <Icon
-            className={`${styles.status} ${!this.state.isLoading && recipient.value ? styles.show : styles.hide}`}
-            name={recipient.error ? 'alertIcon' : 'okIcon'}
+            className={`${styles.status} ${!this.state.isLoading && selectedItem.value ? styles.show : styles.hide}`}
+            name={selectedItem.error ? 'alertIcon' : 'okIcon'}
           />
           <div className={`${styles.bookmarkContainer}`}>
             <div ref={(node) => { this.listContainerRef = node; }}>
@@ -176,12 +175,12 @@ class AutoSuggest extends React.Component {
         </span>
 
         <Feedback
-          show={recipient.error || false}
+          show={selectedItem.error || false}
           status="error"
           className={styles.feedbackMessage}
           showIcon={false}
         >
-          {recipient.feedback}
+          {selectedItem.feedback}
         </Feedback>
       </Fragment>
     );
@@ -192,6 +191,7 @@ AutoSuggest.propTypes = {
   renderItem: PropTypes.func,
   renderIcon: PropTypes.func,
   className: PropTypes.string,
+  matchProps: PropTypes.array.isRequired,
 };
 
 AutoSuggest.defaultProps = {

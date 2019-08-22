@@ -39,7 +39,7 @@ export default class AutoSuggestDemo extends React.Component {
         <h2>AutoSuggest</h2>
         <DemoRenderer>
           <AutoSuggest
-            recipient={{
+            selectedItem={{
               address,
               value,
             }}
@@ -52,6 +52,7 @@ export default class AutoSuggestDemo extends React.Component {
               title: '#2',
               address: '7124124L',
             }]}
+            matchProps={['address', 'title']}
             onChangeDelayed={onChange}
             onChange={this.onChange}
             onSelectItem={this.onSelectItem}

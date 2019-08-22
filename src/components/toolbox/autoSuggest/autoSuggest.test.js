@@ -35,7 +35,7 @@ describe('Recipient Input', () => {
       address: '12395L',
     }],
     placeholder: 'e.g. 1234523423L or John Doe',
-    recipient: {
+    selectedItem: {
       address: '',
       balance: '',
       error: false,
@@ -46,6 +46,7 @@ describe('Recipient Input', () => {
       value: '',
     },
     className: 'recipient',
+    matchProps: ['address', 'title'],
     // eslint-disable-next-line react/display-name
     renderItem: item => (
       <React.Fragment>
@@ -76,15 +77,15 @@ describe('Recipient Input', () => {
   });
 
   it('render properly when bookmard is selected', () => {
-    props.recipient.address = '12345L';
-    props.recipient.title = 'John Cena';
-    props.recipient.balance = '10';
+    props.selectedItem.address = '12345L';
+    props.selectedItem.title = 'John Cena';
+    props.selectedItem.balance = '10';
     wrapper = mount(<AutoSuggest {...props} />, options);
     expect(wrapper).toContainMatchingElement('AccountVisual');
   });
 
   it('should select an account from the available list', () => {
-    props.recipient.value = 'L';
+    props.selectedItem.value = 'L';
     wrapper = mount(<AutoSuggest {...props} />, options);
     expect(wrapper).toContainMatchingElement('.bookmark-list');
     expect(wrapper).toContainMatchingElements(3, 'li');
