@@ -5,8 +5,7 @@ import { Input } from '../../toolbox/inputs';
 import { PrimaryButton } from '../../toolbox/buttons/button';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { fromRawLsk } from '../../../utils/lsk';
-import { getNetworkCode } from '../../../utils/api/btc/network';
-import { validateAddress, validateAmountFormat } from '../../../utils/validators';
+import { validateAmountFormat } from '../../../utils/validators';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import Box from '../../toolbox/box';
 import Converter from '../../converter';
@@ -57,7 +56,7 @@ class FormBase extends React.Component {
     this.onGoNext = this.onGoNext.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.onSelectedAccount = this.onSelectedAccount.bind(this);
-    this.validateBookmark = this.validateBookmark.bind(this);
+    this.updateField = this.updateField.bind(this);
   }
 
   componentDidMount() {
@@ -138,85 +137,6 @@ class FormBase extends React.Component {
     }));
   }
 
-  // TODO move bookmark validation into a separate util or component
-  // eslint-disable-next-line max-statements
-  validateBookmark() {
-    const { token, networkConfig } = this.props;
-    let recipient = this.state.fields.recipient;
-    let isAccountValid = '';
-    let isAddressValid = '';
-    const bookmarks = this.props.bookmarks[token];
-
-    if (bookmarks.length && recipient.value !== '') {
-      isAccountValid = bookmarks
-        .find(account => (account.title.toLowerCase() === recipient.value.toLowerCase())
-          || account.address.toLowerCase() === recipient.value.toLowerCase()) || false;
-    }
-    isAddressValid = validateAddress(token, recipient.value, getNetworkCode(networkConfig)) === 0;
-
-    // istanbul ignore if
-    if (!isAccountValid && !isAddressValid && recipient.value) {
-      recipient = {
-        ...this.state.recipient,
-        address: '',
-        balance: '',
-        error: true,
-        feedback: this.props.t('Provide a correct wallet address or a name of a bookmarked account'),
-        selected: false,
-        title: '',
-      };
-    }
-
-    // istanbul ignore if
-    if (isAddressValid) {
-      recipient = {
-        ...this.state.recipient,
-        address: recipient.value,
-        selected: false,
-        error: false,
-        feedback: '',
-        isBookmark: false,
-      };
-    }
-
-    // istanbul ignore if
-    if (isAccountValid) {
-      recipient = {
-        ...this.state.recipient,
-        address: isAccountValid.address,
-        title: isAccountValid.title,
-        balance: isAccountValid.balance,
-        selected: true,
-        error: false,
-        feedback: '',
-        isBookmark: true,
-      };
-    }
-
-    // istanbul ignore if
-    if (recipient.value === '') {
-      recipient = {
-        ...this.state.recipient,
-        address: '',
-        balance: '',
-        error: false,
-        feedback: '',
-        selected: false,
-        title: '',
-      };
-    }
-
-    this.setState(({ fields }) => ({
-      fields: {
-        ...fields,
-        recipient: {
-          ...fields.recipient,
-          ...recipient,
-        },
-      },
-    }));
-  }
-
   // istanbul ignore next
   onSelectedAccount(account) {
     this.setState(({ fields }) => ({
@@ -279,6 +199,18 @@ class FormBase extends React.Component {
     }));
   }
 
+  updateField(name, value) {
+    this.setState(({ fields }) => ({
+      fields: {
+        ...fields,
+        [name]: {
+          ...fields[name],
+          ...value,
+        },
+      },
+    }));
+  }
+
   onAmountChange({ target }) {
     clearTimeout(this.loaderTimeout);
 
@@ -303,7 +235,7 @@ class FormBase extends React.Component {
   render() {
     const { fields, isLoading } = this.state;
     const {
-      t, token, children, extraFields, fee,
+      t, token, children, extraFields, fee, networkConfig,
     } = this.props;
     const isBtnEnabled = !isLoading
       && !Object.values(fields).find(({ error, value }) => error || value === '')
@@ -318,11 +250,12 @@ class FormBase extends React.Component {
           <span className={`${styles.fieldGroup} recipient`}>
             <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
             <BookmarkAutoSuggest
-              validateBookmark={this.validateBookmark}
               recipient={fields.recipient}
               bookmarks={this.props.bookmarks}
               onInputChange={this.onInputChange}
               onSelectedAccount={this.onSelectedAccount}
+              updateField={this.updateField}
+              networkConfig={networkConfig}
               token={token}
               t={t}
             />
