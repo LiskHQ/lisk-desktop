@@ -37,7 +37,6 @@ describe('Recipient Input', () => {
     placeholder: 'e.g. 1234523423L or John Doe',
     selectedItem: {
       address: '',
-      balance: '',
       error: false,
       feedback: '',
       name: 'recipient',
@@ -79,7 +78,6 @@ describe('Recipient Input', () => {
   it('render properly when bookmard is selected', () => {
     props.selectedItem.address = '12345L';
     props.selectedItem.title = 'John Cena';
-    props.selectedItem.balance = '10';
     wrapper = mount(<AutoSuggest {...props} />, options);
     expect(wrapper).toContainMatchingElement('AccountVisual');
   });

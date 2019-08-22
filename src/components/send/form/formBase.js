@@ -25,14 +25,12 @@ function getInitialState() {
     fields: {
       recipient: {
         address: '',
-        balance: '',
         error: false,
         feedback: '',
         name: 'recipient',
         selected: false,
         title: '',
         value: '',
-        isBookmark: false,
       },
       amount: {
         error: false,
@@ -149,7 +147,6 @@ class FormBase extends React.Component {
           selected: true,
           error: '',
           feedback: '',
-          isBookmark: true,
         },
       },
     }));

@@ -30,7 +30,6 @@ class BookmarkAutoSuggest extends React.Component {
       newRecipient = {
         ...recipient,
         address: '',
-        balance: '',
         error: true,
         feedback: this.props.t('Provide a correct wallet address or a name of a bookmarked account'),
         selected: false,
@@ -46,7 +45,6 @@ class BookmarkAutoSuggest extends React.Component {
         selected: false,
         error: false,
         feedback: '',
-        isBookmark: false,
       };
     }
 
@@ -56,7 +54,6 @@ class BookmarkAutoSuggest extends React.Component {
         ...recipient,
         address: isAccountValid.address,
         title: isAccountValid.title,
-        balance: isAccountValid.balance,
         selected: true,
         error: false,
         feedback: '',
@@ -69,7 +66,6 @@ class BookmarkAutoSuggest extends React.Component {
       newRecipient = {
         ...recipient,
         address: '',
-        balance: '',
         error: false,
         feedback: '',
         selected: false,
