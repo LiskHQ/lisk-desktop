@@ -164,26 +164,17 @@ async function getAccounts(tokens, options) {
   }, Promise.resolve({}));
 }
 
-export const updatedLoggedinAddresses = tokens => async (dispatch, getState) => {
-  const { network: networkConfig, account, settings } = getState();
-  const newTokens = (Array.isArray(tokens)
-    ? tokens
-    : [tokens]
-  ).filter(key => settings.token.list[key]);
-  if (!newTokens.length) return;
-
-  const [error, info] = await to(getAccounts(newTokens, {
-    networkConfig, passphrase: account.passphrase,
+export const updateEnabledTokensAccounts = token => async (dispatch, getState) => {
+  const { network: networkConfig, account } = getState();
+  const [error, result] = await to(getAccount({
+    token,
+    networkConfig,
+    passphrase: account.passphrase,
   }));
   if (error) {
     dispatch(errorToastDisplayed({ label: getConnectionErrorMessage(error) }));
   } else {
-    dispatch(accountUpdated({
-      info: {
-        ...account.info,
-        ...info,
-      },
-    }));
+    dispatch(accountUpdated(result));
   }
 };
 

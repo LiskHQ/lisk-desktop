@@ -1,7 +1,7 @@
 import {
   accountDataUpdated,
   updateTransactionsIfNeeded,
-  updatedLoggedinAddresses,
+  updateEnabledTokensAccounts,
   login,
 } from '../../actions/account';
 import { loadVotes } from '../../actions/voting';
@@ -222,10 +222,10 @@ const accountMiddleware = store => next => (action) => {
       store.dispatch(emptyTransactionsData());
       break;
     case actionTypes.settingsUpdated: {
-      const { token = {} } = action.data;
-      const tokenKeys = token.list && Object.keys(token.list);
-      if (tokenKeys) {
-        store.dispatch(updatedLoggedinAddresses(tokenKeys));
+      const tokensList = action.data.token && action.data.token.list;
+      const token = tokensList && Object.keys(tokensList)[0];
+      if (tokensList[token]) {
+        store.dispatch(updateEnabledTokensAccounts(token));
       }
       break;
     }
