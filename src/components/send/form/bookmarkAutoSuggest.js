@@ -14,7 +14,7 @@ class BookmarkAutoSuggest extends React.Component {
     return (
       <AutoSuggest
         validateBookmark={validateBookmark}
-        bookmarks={bookmarks}
+        items={bookmarks[token]}
         onChange={onInputChange}
         placeholder={t('Insert public address or a name')}
         recipient={recipient}

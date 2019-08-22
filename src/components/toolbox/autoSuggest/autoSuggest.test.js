@@ -21,21 +21,18 @@ describe('Recipient Input', () => {
     validateBookmark: jest.fn(),
     onChange: jest.fn(),
     onSelectedAccount: jest.fn(),
-    bookmarks: {
-      LSK: [{
-        title: 'ABC',
-        address: '12345L',
-      },
-      {
-        title: 'FRG',
-        address: '12375L',
-      },
-      {
-        title: 'KTG',
-        address: '12395L',
-      }],
-      BTC: [],
+    items: [{
+      title: 'ABC',
+      address: '12345L',
     },
+    {
+      title: 'FRG',
+      address: '12375L',
+    },
+    {
+      title: 'KTG',
+      address: '12395L',
+    }],
     placeholder: 'e.g. 1234523423L or John Doe',
     recipient: {
       address: '',

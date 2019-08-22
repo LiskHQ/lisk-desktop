@@ -36,13 +36,12 @@ class AutoSuggest extends React.Component {
   }
 
   getFilterList() {
-    const { bookmarks, recipient, token } = this.props;
-    const accounts = bookmarks[token];
+    const { items, recipient } = this.props;
 
-    if (recipient.value === '') return accounts;
+    if (recipient.value === '') return items;
 
 
-    return accounts
+    return items
       .filter(account =>
         account.title.toLowerCase().includes(recipient.value.toLowerCase())
         || account.address.toLowerCase().includes(recipient.value.toLowerCase()));

@@ -41,15 +41,13 @@ export default class AutoSuggestDemo extends React.Component {
             }}
             placeholder="Start typing..."
             token="LSK"
-            bookmarks={{
-              LSK: [{
-                title: '#1',
-                address: '214986124L',
-              }, {
-                title: '#2',
-                address: '7124124L',
-              }],
-            }}
+            items={[{
+              title: '#1',
+              address: '214986124L',
+            }, {
+              title: '#2',
+              address: '7124124L',
+            }]}
             validateBookmark={() => true}
             onChange={this.onChange}
             onSelectedAccount={this.onSelectedAccount}
