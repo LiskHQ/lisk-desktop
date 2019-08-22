@@ -1,24 +1,24 @@
 // eslint-disable-line max-lines
 import React from 'react';
 import numeral from 'numeral';
-import Converter from '../../converter';
-import { PrimaryButton } from '../../toolbox/buttons/button';
 import { Input } from '../../toolbox/inputs';
-import { getNetworkCode } from '../../../utils/api/btc/network';
-import AutoSuggest from '../autoSuggest';
-import Spinner from '../../spinner/spinner';
-import Tooltip from '../../toolbox/tooltip/tooltip';
-import links from '../../../constants/externalLinks';
+import { PrimaryButton } from '../../toolbox/buttons/button';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { fromRawLsk } from '../../../utils/lsk';
-import Feedback from '../../toolbox/feedback/feedback';
-import styles from './form.css';
-import Piwik from '../../../utils/piwik';
+import { getNetworkCode } from '../../../utils/api/btc/network';
 import { validateAddress, validateAmountFormat } from '../../../utils/validators';
-import Icon from '../../toolbox/icon';
+import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import Box from '../../toolbox/box';
+import Converter from '../../converter';
+import Feedback from '../../toolbox/feedback/feedback';
+import Icon from '../../toolbox/icon';
+import Piwik from '../../../utils/piwik';
+import Spinner from '../../spinner/spinner';
+import Tooltip from '../../toolbox/tooltip/tooltip';
 import i18n from '../../../i18n';
+import links from '../../../constants/externalLinks';
 import regex from '../../../utils/regex';
+import styles from './form.css';
 
 function getInitialState() {
   return {
@@ -323,15 +323,14 @@ class FormBase extends React.Component {
         <Box.Content className={styles.formSection}>
           <span className={`${styles.fieldGroup} recipient`}>
             <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
-            <AutoSuggest
+            <BookmarkAutoSuggest
               validateBookmark={this.validateBookmark}
-              bookmarks={this.props.bookmarks}
-              onChange={this.onInputChange}
-              placeholder={t('Insert public address or a name')}
               recipient={fields.recipient}
-              showSuggestions={fields.recipient.showSuggestions}
+              bookmarks={this.props.bookmarks}
+              onInputChange={this.onInputChange}
               onSelectedAccount={this.onSelectedAccount}
               token={token}
+              t={t}
             />
           </span>
 
