@@ -223,4 +223,13 @@ describe('Account middleware', () => {
     middleware(store)(next)(accountLoggedOutAction);
     expect(store.dispatch).to.have.been.calledWith({ type: actionTypes.emptyTransactionsData });
   });
+
+  it(`should update logged accounts on ${actionTypes.settingsUpdated} with enabled tokens`, async () => {
+    const settingsUpdatedAction = {
+      type: actionTypes.settingsUpdated,
+      data: { token: { list: { BTC: true } } },
+    };
+    middleware(store)(next)(settingsUpdatedAction);
+    expect(store.dispatch).to.have.been.calledWith();
+  });
 });

@@ -1,6 +1,7 @@
 import {
   accountDataUpdated,
   updateTransactionsIfNeeded,
+  updatedLoggedinAddresses,
   login,
 } from '../../actions/account';
 import { loadVotes } from '../../actions/voting';
@@ -220,6 +221,14 @@ const accountMiddleware = store => next => (action) => {
     case actionTypes.accountLoggedOut:
       store.dispatch(emptyTransactionsData());
       break;
+    case actionTypes.settingsUpdated: {
+      const { token = {} } = action.data;
+      const tokenKeys = token.list && Object.keys(token.list);
+      if (tokenKeys) {
+        store.dispatch(updatedLoggedinAddresses(tokenKeys));
+      }
+      break;
+    }
     /* istanbul ignore next */
     default: break;
   }
