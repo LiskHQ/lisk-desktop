@@ -33,7 +33,6 @@ function getInitialState() {
         selected: false,
         title: '',
         value: '',
-        showSuggestions: false,
         isBookmark: false,
       },
       amount: {
@@ -165,7 +164,6 @@ class FormBase extends React.Component {
         feedback: this.props.t('Provide a correct wallet address or a name of a bookmarked account'),
         selected: false,
         title: '',
-        showSuggestions: true,
       };
     }
 
@@ -177,7 +175,6 @@ class FormBase extends React.Component {
         selected: false,
         error: false,
         feedback: '',
-        showSuggestions: false,
         isBookmark: false,
       };
     }
@@ -192,7 +189,6 @@ class FormBase extends React.Component {
         selected: true,
         error: false,
         feedback: '',
-        showSuggestions: false,
         isBookmark: true,
       };
     }
@@ -207,7 +203,6 @@ class FormBase extends React.Component {
         feedback: '',
         selected: false,
         title: '',
-        showSuggestions: true,
       };
     }
 
@@ -234,7 +229,6 @@ class FormBase extends React.Component {
           selected: true,
           error: '',
           feedback: '',
-          showSuggestions: false,
           isBookmark: true,
         },
       },

@@ -18,7 +18,6 @@ class BookmarkAutoSuggest extends React.Component {
         onChange={onInputChange}
         placeholder={t('Insert public address or a name')}
         recipient={recipient}
-        showSuggestions={recipient.showSuggestions}
         onSelectedAccount={onSelectedAccount}
         token={token}
       />

@@ -43,9 +43,7 @@ describe('Recipient Input', () => {
       selected: false,
       title: '',
       value: '',
-      showSuggestions: false,
     },
-    showSuggestions: false,
   };
 
   beforeEach(() => {
@@ -76,7 +74,6 @@ describe('Recipient Input', () => {
   });
 
   it('should select an account from the available list', () => {
-    props.showSuggestions = true;
     props.recipient.value = 'L';
     wrapper = mount(<AutoSuggest {...props} />, options);
     expect(wrapper).toContainMatchingElement('.bookmark-list');
