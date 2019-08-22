@@ -134,7 +134,7 @@ class AutoSuggest extends React.Component {
 
     return (
       <Fragment>
-        <span className={`${styles.recipientField} ${className}`}>
+        <span className={`${styles.inputWrapper} ${className}`}>
           <span className={styles.icon}>
             {renderIcon(selectedItem)}
           </span>
@@ -152,9 +152,9 @@ class AutoSuggest extends React.Component {
             className={`${styles.status} ${!this.state.isLoading && selectedItem.value ? styles.show : styles.hide}`}
             name={selectedItem.error ? 'alertIcon' : 'okIcon'}
           />
-          <div className={`${styles.bookmarkContainer}`}>
+          <div className={`${styles.listContainer}`}>
             <div ref={(node) => { this.listContainerRef = node; }}>
-              <ul className={`${styles.bookmarkList} bookmark-list`}>
+              <ul className={`${styles.itemList} bookmark-list`}>
                 {
                 this.getFilterList()
                   .map((item, index) => (

@@ -1,6 +1,6 @@
 @import '../../app/variables.css';
 
-.recipientField {
+.inputWrapper {
   align-items: center;
   display: flex;
   position: relative;
@@ -14,12 +14,12 @@
     padding-left: 50px;
     padding-right: 30px;
 
-    & ~ .bookmarkContainer {
+    & ~ .listContainer {
       opacity: 0 !important;
       visibility: hidden !important;
     }
 
-    &:focus ~ .bookmarkContainer {
+    &:focus ~ .listContainer {
       opacity: 1 !important;
       visibility: visible !important;
     }
@@ -31,13 +31,16 @@
   left: 16px;
 }
 
-.bookmarkContainer {
+.listContainer {
   @mixin contentLargest;
 
   position: absolute;
   top: 52px;
   width: 100%;
   display: flex;
+  box-sizing: border-box;
+  border: 1px solid var(--dark-border-color);
+  border-radius: var(--border-radius-standard);
   background-color: var(--color-white);
   flex-direction: column;
   justify-content: center;
@@ -59,7 +62,7 @@
   right: 10px;
 }
 
-.bookmarkList {
+.itemList {
   align-items: center;
   box-sizing: border-box;
   display: flex;
