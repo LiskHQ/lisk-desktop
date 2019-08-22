@@ -1,5 +1,6 @@
 import React from 'react';
 import AnimationDemo from './animation/demo';
+import AutoSuggestDemo from './autoSuggest/demo';
 import BoxDemo from './box/demo';
 import ButtonDemo from './buttons/demo';
 import CalendarDemo from './calendar/demo';
@@ -40,6 +41,7 @@ const WithTableOfContents = ({
 const ToolboxDemo = () => (
   <WithTableOfContents>
     <AnimationDemo />
+    <AutoSuggestDemo />
     <BoxDemo />
     <ButtonDemo />
     <CalendarDemo />
