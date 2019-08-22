@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React from 'react';
 import AutoSuggest from '.';
 import DemoRenderer from '../demoRenderer';
