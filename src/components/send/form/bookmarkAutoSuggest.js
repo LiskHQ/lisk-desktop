@@ -1,4 +1,5 @@
 import React from 'react';
+import AccountVisual from '../../accountVisual';
 import AutoSuggest from '../../toolbox/autoSuggest';
 
 class BookmarkAutoSuggest extends React.Component {
@@ -20,6 +21,13 @@ class BookmarkAutoSuggest extends React.Component {
         recipient={recipient}
         onSelectItem={onSelectedAccount}
         token={token}
+        renderItem={bookmark => (
+          <React.Fragment>
+            <AccountVisual address={bookmark.address} size={25} />
+            <span>{bookmark.title}</span>
+            <span>{bookmark.address}</span>
+          </React.Fragment>
+        )}
       />
     );
   }

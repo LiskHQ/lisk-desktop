@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { mount } from 'enzyme';
-import PropTypes from 'prop-types';
-import keyCodes from '../../../constants/keyCodes';
-import i18n from '../../../i18n';
-import AutoSuggest from './index';
 import { tokenMap } from '../../../constants/tokens';
+import AccountVisual from '../../accountVisual';
+import AutoSuggest from './index';
+import i18n from '../../../i18n';
+import keyCodes from '../../../constants/keyCodes';
 
 describe('Recipient Input', () => {
   let wrapper;
@@ -44,6 +45,14 @@ describe('Recipient Input', () => {
       title: '',
       value: '',
     },
+    // eslint-disable-next-line react/display-name
+    renderItem: item => (
+      <React.Fragment>
+        <AccountVisual address={item.address} size={25} />
+        <span>{item.title}</span>
+        <span>{item.address}</span>
+      </React.Fragment>
+    ),
   };
 
   beforeEach(() => {

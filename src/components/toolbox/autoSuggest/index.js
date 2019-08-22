@@ -1,11 +1,12 @@
+import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
-import AccountVisual from '../../accountVisual/index';
 import { Input } from '../inputs';
-import keyCodes from '../../../constants/keyCodes';
-import Spinner from '../../spinner/spinner';
+import AccountVisual from '../../accountVisual/index';
 import Feedback from '../feedback/feedback';
-import styles from './autoSuggest.css';
 import Icon from '../icon';
+import Spinner from '../../spinner/spinner';
+import keyCodes from '../../../constants/keyCodes';
+import styles from './autoSuggest.css';
 
 // eslint-disable-next-line complexity
 class AutoSuggest extends React.Component {
@@ -127,6 +128,7 @@ class AutoSuggest extends React.Component {
     const {
       recipient,
       placeholder,
+      renderItem,
     } = this.props;
     const { dropdownIndex } = this.state;
     const haveAvatar = recipient.address.length && !recipient.error;
@@ -168,9 +170,7 @@ class AutoSuggest extends React.Component {
                       onKeyPress={this.onHandleKeyPress}
                       className={`${dropdownIndex === index ? styles.active : ''}`}
                     >
-                      <AccountVisual address={item.address} size={25} />
-                      <span>{item.title}</span>
-                      <span>{item.address}</span>
+                      {renderItem(item)}
                     </li>
                   ))
               }
@@ -191,5 +191,13 @@ class AutoSuggest extends React.Component {
     );
   }
 }
+
+AutoSuggest.propTypes = {
+  renderItem: PropTypes.func,
+};
+
+AutoSuggest.defaultProps = {
+  renderItem: item => item,
+};
 
 export default AutoSuggest;
