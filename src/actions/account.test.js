@@ -6,6 +6,7 @@ import {
   removePassphrase,
   accountDataUpdated,
   updateTransactionsIfNeeded,
+  updatedLoggedinAddresses,
   login,
 } from './account';
 import * as accountApi from '../utils/api/account';
@@ -326,6 +327,63 @@ describe('actions: account', () => {
       expect(dispatch).toHaveBeenNthCalledWith(2, expect.objectContaining({
         type: actionTypes.toastDisplayed,
       }));
+    });
+  });
+
+  describe('updatedLoggedinAddresses', () => {
+    let state;
+    const getState = () => (state);
+    const {
+      address,
+      balance,
+      passphrase,
+    } = accounts.genesis;
+
+    beforeEach(() => {
+      state = {
+        account: {
+          passphrase,
+        },
+        network: {
+          name: 'Mainnet',
+        },
+        settings: {
+          autoLog: true,
+          token: {
+            list: {
+              LSK: true,
+              BTC: true,
+            },
+          },
+        },
+      };
+    });
+
+    it('should call account api and dispatch accountUpdated ', async () => {
+      accountApi.getAccount.mockResolvedValue({ balance, address });
+      await updatedLoggedinAddresses(['BTC'])(dispatch, getState);
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.accountUpdated,
+        data: {
+          info: {
+            BTC: { address, balance },
+          },
+        },
+      });
+    });
+
+    it('should dispatch errorToastDisplayed if getAccount fails ', async () => {
+      accountApi.getAccount.mockRejectedValue({ error: 'custom error' });
+      await updatedLoggedinAddresses(['BTC'])(dispatch, getState);
+      expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+        type: actionTypes.toastDisplayed,
+      }));
+    });
+
+    it('should not call dispatch if token is not enabled', async () => {
+      state.settings.token.list.BTC = false;
+      await updatedLoggedinAddresses(['BTC'])(dispatch, getState);
+      expect(dispatch).not.toBeCalled();
     });
   });
 });
