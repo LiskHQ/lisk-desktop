@@ -1,7 +1,7 @@
 import {
   accountDataUpdated,
   updateTransactionsIfNeeded,
-  updateEnabledTokensAccounts,
+  updateEnabledTokenAccount,
   login,
 } from '../../actions/account';
 import { loadVotes } from '../../actions/voting';
@@ -226,7 +226,7 @@ const accountMiddleware = store => next => (action) => {
       const token = tokensList && Object.keys(tokensList)
         .find(t => tokensList[t]);
       if (tokensList && tokensList[token]) {
-        store.dispatch(updateEnabledTokensAccounts(token));
+        store.dispatch(updateEnabledTokenAccount(token));
       }
       break;
     }

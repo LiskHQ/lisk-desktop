@@ -92,7 +92,7 @@ describe('Account middleware', () => {
 
     next = spy();
     spy(accountActions, 'updateTransactionsIfNeeded');
-    spy(accountActions, 'updateEnabledTokensAccounts');
+    spy(accountActions, 'updateEnabledTokenAccount');
     stubGetAccount = stub(accountApi, 'getAccount').returnsPromise();
     transactionsActionsStub = spy(transactionsActions, 'updateTransactions');
     stubTransactions = stub(transactionsApi, 'getTransactions').returnsPromise().resolves(true);
@@ -104,7 +104,7 @@ describe('Account middleware', () => {
 
   afterEach(() => {
     accountActions.updateTransactionsIfNeeded.restore();
-    accountActions.updateEnabledTokensAccounts.restore();
+    accountActions.updateEnabledTokenAccount.restore();
     transactionsActionsStub.restore();
     stubGetAccount.restore();
     stubTransactions.restore();
@@ -232,7 +232,7 @@ describe('Account middleware', () => {
       data: { token: { list: { BTC: true } } },
     };
     middleware(store)(next)(settingsUpdatedAction);
-    expect(accountActions.updateEnabledTokensAccounts).to.have.been.calledWith('BTC');
+    expect(accountActions.updateEnabledTokenAccount).to.have.been.calledWith('BTC');
     expect(store.dispatch).to.have.been.calledWith();
   });
 });

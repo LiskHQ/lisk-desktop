@@ -6,7 +6,7 @@ import {
   removePassphrase,
   accountDataUpdated,
   updateTransactionsIfNeeded,
-  updateEnabledTokensAccounts,
+  updateEnabledTokenAccount,
   login,
 } from './account';
 import * as accountApi from '../utils/api/account';
@@ -330,7 +330,7 @@ describe('actions: account', () => {
     });
   });
 
-  describe('updateEnabledTokensAccounts', () => {
+  describe('updateEnabledTokenAccount', () => {
     let state;
     const getState = () => (state);
     const {
@@ -361,7 +361,7 @@ describe('actions: account', () => {
 
     it('should call account api and dispatch accountUpdated ', async () => {
       accountApi.getAccount.mockResolvedValue({ balance, address });
-      await updateEnabledTokensAccounts('BTC')(dispatch, getState);
+      await updateEnabledTokenAccount('BTC')(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.accountUpdated,
         data: expect.objectContaining({ address, balance }),
@@ -370,7 +370,7 @@ describe('actions: account', () => {
 
     it('should dispatch errorToastDisplayed if getAccount fails ', async () => {
       accountApi.getAccount.mockRejectedValue({ error: 'custom error' });
-      await updateEnabledTokensAccounts('BTC')(dispatch, getState);
+      await updateEnabledTokenAccount('BTC')(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         type: actionTypes.toastDisplayed,
       }));

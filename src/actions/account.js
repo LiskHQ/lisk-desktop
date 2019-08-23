@@ -164,7 +164,7 @@ async function getAccounts(tokens, options) {
   }, Promise.resolve({}));
 }
 
-export const updateEnabledTokensAccounts = token => async (dispatch, getState) => {
+export const updateEnabledTokenAccount = token => async (dispatch, getState) => {
   const { network: networkConfig, account } = getState();
   const [error, result] = await to(getAccount({
     token,
