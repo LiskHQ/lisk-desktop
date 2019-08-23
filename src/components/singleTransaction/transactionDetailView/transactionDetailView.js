@@ -14,7 +14,13 @@ function getDelegateName(transaction) {
 
 class TransactionDetailView extends React.Component {
   render() {
-    const { transaction, t, children } = this.props;
+    const {
+      transaction,
+      children,
+      activeToken,
+      netCode,
+      t,
+    } = this.props;
     const { senderLabel, title } = {
       [transactionTypes.setSecondPassphrase]: {
         title: t('2nd passphrase registration'),
@@ -46,6 +52,8 @@ class TransactionDetailView extends React.Component {
         <Box.Row className={styles.detailsWrapper}>
           <AccountInfo
             name={getDelegateName(transaction)}
+            token={activeToken}
+            netCode={netCode}
             address={transaction.senderId}
             addressClass="sender-address"
             label={senderLabel}
@@ -55,6 +63,8 @@ class TransactionDetailView extends React.Component {
           ? (
             <Box.Row className={styles.detailsWrapper}>
               <AccountInfo
+                token={activeToken}
+                netCode={netCode}
                 address={transaction.recipientId}
                 addressClass="receiver-address"
                 label={t('Recipient')}

@@ -5,13 +5,14 @@ import { getActiveTokenAccount } from '../../utils/account';
 import { settingsUpdated } from '../../actions/settings';
 import { errorToastDisplayed } from '../../actions/toaster';
 import { getAPIClient } from '../../utils/api/network';
+import { tokenMap } from '../../constants/tokens';
 import Splashscreen from './splashscreen';
 
 const mapStateToProps = state => ({
   network: state.network,
   account: getActiveTokenAccount(state),
   settings: state.settings,
-  liskAPIClient: getAPIClient(state.settings.token ? state.settings.token.active : 'LSK', state),
+  liskAPIClient: getAPIClient(tokenMap.LSK.key, state),
 });
 
 const mapDispatchToProps = {

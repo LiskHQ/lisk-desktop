@@ -62,7 +62,7 @@ class SingleTransaction extends React.Component {
 
   render() {
     const {
-      t, activeToken, address, delegates,
+      t, activeToken, address, delegates, netCode,
     } = this.props;
     const transaction = addVotesWithDelegateNames(this.props.transaction.data, delegates.data, t);
     const { error, isLoading } = this.props.transaction;
@@ -84,6 +84,7 @@ class SingleTransaction extends React.Component {
             </Box.Header>
             <Box.Content className={styles.mainContent}>
               <TransactionDetailView
+                netCode={netCode}
                 address={address}
                 activeToken={activeToken}
                 transaction={transaction}

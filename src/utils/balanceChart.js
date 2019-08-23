@@ -3,6 +3,7 @@ import { fromRawLsk } from './lsk';
 import { getUnixTimestampFromValue } from './datetime';
 import { getTokenFromAddress } from './api/transactions';
 import i18n from '../i18n';
+import { tokenMap } from '../constants/tokens';
 
 const formats = {
   second: i18n.t('MMM DD YYYY hh:mm:ss'),
@@ -16,12 +17,13 @@ const formats = {
 const getUnitFromFormat = format =>
   Object.keys(formats).find(key => formats[key] === format);
 
-const getNormalizedTimestamp = tx => (
-  {
+const getNormalizedTimestamp = (tx) => {
+  const token = getTokenFromAddress(tx.senderId) || tokenMap.BTC.key;
+  return ({
     BTC: t => t,
     LSK: getUnixTimestampFromValue,
-  }[getTokenFromAddress(tx.senderId)](tx.timestamp)
-);
+  }[token](tx.timestamp));
+};
 
 const styles = {
   borderColor: 'rgba(15, 126, 255, 0.5)',

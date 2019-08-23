@@ -4,9 +4,15 @@ import React from 'react';
 import AccountVisual from '../../accountVisual';
 import routes from '../../../constants/routes';
 import styles from './transactionDetailView.css';
+import { validateAddress } from '../../../utils/validators';
 
 const AccountInfo = ({
-  address, label, addressClass, name,
+  address,
+  label,
+  addressClass,
+  name,
+  token,
+  netCode,
 }) => {
   const addressLink = `${routes.accounts.pathPrefix}${routes.accounts.path}`;
   return (
@@ -14,13 +20,23 @@ const AccountInfo = ({
       <p className={styles.label}>{label}</p>
       <div className={styles.addressRow}>
         <AccountVisual className={styles.avatar} address={address} size={24} />
-        <Link
-          to={`${addressLink}/${address}`}
-          className={`${styles.link} ${name ? styles.hasName : ''}`}
-        >
-          {name}
-          <span className={`${styles.address} ${addressClass}`}>{address}</span>
-        </Link>
+        { validateAddress(token, address, netCode) === 0
+          ? (
+            <Link
+              to={`${addressLink}/${address}`}
+              className={`${styles.link} ${name ? styles.hasName : ''}`}
+            >
+              {name}
+              <span className={`${styles.address} ${addressClass}`}>{address}</span>
+            </Link>
+          ) : (
+            <span
+              className={`${styles.link} ${name ? styles.hasName : ''}`}
+            >
+              {name}
+              <span className={`${styles.address} ${addressClass}`}>{address}</span>
+            </span>
+          )}
       </div>
     </div>
   );
