@@ -157,20 +157,22 @@ describe('Form', () => {
   });
 
   it('should render properly with data from prevState', () => {
-    wrapper.setProps({
-      prevState: {
-        fields: {
-          recipient: { address: '' },
-          amount: { value: '' },
-          reference: { value: '' },
-        },
+    const { address } = accounts.genesis;
+    const fields = {
+      recipient: {
+        address, value: address, error: false, feedback: '', title: '',
       },
-    });
-    wrapper.update();
-    expect(wrapper).toContainMatchingElement('span.recipient');
-    expect(wrapper).toContainMatchingElement('span.amount');
-    expect(wrapper).toContainMatchingElement('label.reference');
-    expect(wrapper).not.toContainMatchingElement('PrimaryButton.btn-submit');
+      amount: { value: '1.0' },
+      reference: { value: 'message' },
+    };
+    wrapper = mount(<Form {...{
+      ...props,
+      prevState: { fields },
+    }}
+    />, options);
+    expect(wrapper.find('input.recipient')).toHaveValue(address);
+    expect(wrapper.find('.amount input')).toHaveValue(fields.amount.value);
+    expect(wrapper.find('textarea.message')).toHaveValue(fields.reference.value);
   });
 
   describe('Recipient field', () => {
