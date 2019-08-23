@@ -53,7 +53,6 @@ class FormBase extends React.Component {
     this.onAmountChange = this.onAmountChange.bind(this);
     this.onGoNext = this.onGoNext.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
-    this.onSelectedAccount = this.onSelectedAccount.bind(this);
     this.updateField = this.updateField.bind(this);
   }
 
@@ -61,7 +60,6 @@ class FormBase extends React.Component {
     // istanbul ignore if
     if (!Object.entries(this.props.prevState).length) this.ifDataFromUrl();
     else this.ifDataFromPrevState();
-    this.checkIfBookmarkedAccount();
   }
 
   // TODO move `state.fields` into parent send component and ifDataFromPrevState can be deleted
@@ -108,17 +106,6 @@ class FormBase extends React.Component {
     }
   }
 
-  checkIfBookmarkedAccount() {
-    const { fields, token } = this.props;
-    const bookmarks = this.props.bookmarks[token];
-    const account = bookmarks.length
-      ? bookmarks.find(acc => acc.address === fields.recipient.address)
-      : false;
-
-    // istanbul ignore if
-    if (account) this.onSelectedAccount(account);
-  }
-
   onInputChange({ target }) {
     const { fields } = this.state;
     const { onInputChange } = this.props;
@@ -131,23 +118,6 @@ class FormBase extends React.Component {
       fields: {
         ...fields,
         [target.name]: newState,
-      },
-    }));
-  }
-
-  // istanbul ignore next
-  onSelectedAccount(account) {
-    this.setState(({ fields }) => ({
-      fields: {
-        ...fields,
-        recipient: {
-          ...fields.recipient,
-          ...account,
-          value: account.address,
-          selected: true,
-          error: '',
-          feedback: '',
-        },
       },
     }));
   }
@@ -248,9 +218,8 @@ class FormBase extends React.Component {
             <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
             <BookmarkAutoSuggest
               recipient={fields.recipient}
-              bookmarks={this.props.bookmarks}
+              bookmarks={this.props.bookmarks[token]}
               onInputChange={this.onInputChange}
-              onSelectedAccount={this.onSelectedAccount}
               updateField={this.updateField}
               networkConfig={networkConfig}
               token={token}

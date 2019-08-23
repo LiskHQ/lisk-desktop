@@ -8,15 +8,31 @@ class BookmarkAutoSuggest extends React.Component {
   constructor(props) {
     super(props);
     this.validateBookmark = this.validateBookmark.bind(this);
+    this.onSelectedAccount = this.onSelectedAccount.bind(this);
+  }
+
+  componentDidMount() {
+    this.checkIfBookmarkedAccount();
+  }
+
+  checkIfBookmarkedAccount() {
+    const { recipient, bookmarks } = this.props;
+    const account = bookmarks.length
+      ? bookmarks.find(acc => acc.address === recipient.address)
+      : false;
+
+    // istanbul ignore if
+    if (account) this.props.onSelectedAccount(account);
   }
 
   // eslint-disable-next-line max-statements
   validateBookmark() {
-    const { token, networkConfig, recipient } = this.props;
+    const {
+      token, networkConfig, recipient, bookmarks,
+    } = this.props;
     let newRecipient = recipient;
     let isAccountValid = '';
     let isAddressValid = '';
-    const bookmarks = this.props.bookmarks[token];
 
     if (bookmarks.length && recipient.value !== '') {
       isAccountValid = bookmarks
@@ -76,12 +92,24 @@ class BookmarkAutoSuggest extends React.Component {
     this.props.updateField('recipient', newRecipient);
   }
 
+  // istanbul ignore next
+  onSelectedAccount(account) {
+    const { recipient } = this.props;
+    this.props.updateField('recipient', {
+      ...recipient,
+      ...account,
+      value: account.address,
+      selected: true,
+      error: '',
+      feedback: '',
+    });
+  }
 
   render() {
     const {
-      t, token, recipient, onSelectedAccount, bookmarks, onInputChange,
+      t, recipient, bookmarks, onInputChange,
     } = this.props;
-    const items = bookmarks[token];
+    const items = bookmarks;
     return (
       <AutoSuggest
         className="recipient"
@@ -90,7 +118,7 @@ class BookmarkAutoSuggest extends React.Component {
         onChange={onInputChange}
         placeholder={t('Insert public address or a name')}
         selectedItem={recipient}
-        onSelectItem={onSelectedAccount}
+        onSelectItem={this.onSelectedAccount}
         renderIcon={() => (
           <AccountVisual
             address={recipient.address}
