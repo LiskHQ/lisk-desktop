@@ -102,7 +102,7 @@ class BookmarkAutoSuggest extends React.Component {
   }
 }
 
-BookmarkAutoSuggest.defaultProps = {
+BookmarkAutoSuggest.propTypes = {
   bookmarks: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
