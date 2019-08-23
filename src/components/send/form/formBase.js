@@ -18,21 +18,21 @@ import links from '../../../constants/externalLinks';
 import regex from '../../../utils/regex';
 import styles from './form.css';
 
-function getInitialState() {
+function getInitialState({ recipient, amount }) {
   return {
     isLoading: false,
     fields: {
       recipient: {
-        address: '',
+        address: recipient.address || '',
+        value: recipient.address || '',
         error: false,
         feedback: '',
         selected: false,
         title: '',
-        value: '',
       },
       amount: {
         error: false,
-        value: '',
+        value: amount.value || '',
         feedback: '',
       },
     },
@@ -44,7 +44,7 @@ class FormBase extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = getInitialState();
+    this.state = getInitialState(props.fields);
 
     this.loaderTimeout = null;
 
@@ -77,21 +77,7 @@ class FormBase extends React.Component {
   // istanbul ignore next
   ifDataFromUrl() {
     const { fields = {}, onInputChange } = this.props;
-    if (fields.recipient.address !== '' || fields.amount.value !== '') {
-      this.setState(prevState => ({
-        fields: {
-          ...prevState.fields,
-          recipient: {
-            ...prevState.fields.recipient,
-            address: fields.recipient.address,
-            value: fields.recipient.address,
-          },
-          amount: {
-            ...prevState.fields.amount,
-            value: fields.amount.value,
-          },
-        },
-      }));
+    if (fields.amount.value !== '') {
       onInputChange({
         target: {
           name: 'amount',

@@ -198,8 +198,7 @@ describe('Form', () => {
       expect(wrapper.find('.fieldGroup').at(0)).not.toHaveClassName('error');
     });
 
-    // TODO fix the feature and enable the next test
-    it.skip('Should show bookmark title if address is a bookmark', () => {
+    it('Should show bookmark title if address is a bookmark', () => {
       wrapper = mount(<Form {...{
         ...props,
         fields: {
