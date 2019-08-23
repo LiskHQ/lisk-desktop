@@ -104,6 +104,7 @@ describe('Form', () => {
         },
         push: jest.fn(),
       },
+      nextStep: jest.fn(),
     };
 
     wrapper = mount(<Form {...props} />, options);
@@ -116,6 +117,35 @@ describe('Form', () => {
     expect(wrapper).not.toContainMatchingElement('PrimaryButton.btn-submit');
   });
 
+  it('should render properly with data from prevState', () => {
+    const { address } = accounts.genesis;
+    const fields = {
+      recipient: {
+        address, value: address, error: false, feedback: '', title: '',
+      },
+      amount: { value: '1.0' },
+      reference: { value: 'message' },
+    };
+    wrapper = mount(<Form {...{
+      ...props,
+      prevState: { fields },
+    }}
+    />, options);
+    expect(wrapper.find('input.recipient')).toHaveValue(address);
+    expect(wrapper.find('.amount input')).toHaveValue(fields.amount.value);
+    expect(wrapper.find('textarea.message')).toHaveValue(fields.reference.value);
+  });
+
+  it('should go to next step when submit button is clicked', () => {
+    const { address } = accounts.genesis;
+    wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
+    wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '12' } });
+    jest.advanceTimersByTime(310);
+    wrapper.update();
+    expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
+    wrapper.find('button.btn-submit').simulate('click');
+    expect(props.nextStep).toHaveBeenCalled();
+  });
 
   describe('shold work with props.token BTC', () => {
     const dynamicFees = {
@@ -156,25 +186,6 @@ describe('Form', () => {
     });
   });
 
-  it('should render properly with data from prevState', () => {
-    const { address } = accounts.genesis;
-    const fields = {
-      recipient: {
-        address, value: address, error: false, feedback: '', title: '',
-      },
-      amount: { value: '1.0' },
-      reference: { value: 'message' },
-    };
-    wrapper = mount(<Form {...{
-      ...props,
-      prevState: { fields },
-    }}
-    />, options);
-    expect(wrapper.find('input.recipient')).toHaveValue(address);
-    expect(wrapper.find('.amount input')).toHaveValue(fields.amount.value);
-    expect(wrapper.find('textarea.message')).toHaveValue(fields.reference.value);
-  });
-
   describe('Recipient field', () => {
     it('should validate bookmark', () => {
       const evt = { target: { name: 'recipient', value: '123456L' } };
@@ -190,7 +201,7 @@ describe('Form', () => {
         bookmarks: { LSK: [] },
       }}
       />, options);
-      const evt = { target: { name: 'recipient', value: '123456L' } };
+      const evt = { target: { name: 'recipient', value: '123456l' } };
       wrapper.find('input.recipient').simulate('change', evt);
       jest.advanceTimersByTime(300);
       wrapper.update();

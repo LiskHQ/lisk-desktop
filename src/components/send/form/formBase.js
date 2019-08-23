@@ -118,7 +118,6 @@ class FormBase extends React.Component {
     this.onInputChange({ target });
   }
 
-  // istanbul ignore next
   onGoNext() {
     const { nextStep, extraFields } = this.props;
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
