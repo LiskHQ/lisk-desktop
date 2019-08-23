@@ -4,6 +4,7 @@ import { Input } from '../../toolbox/inputs';
 import { PrimaryButton } from '../../toolbox/buttons/button';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { fromRawLsk } from '../../../utils/lsk';
+import { parseSearchParams } from '../../../utils/searchParams';
 import { validateAmountFormat } from '../../../utils/validators';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import Box from '../../toolbox/box';
@@ -38,22 +39,23 @@ function getAmountFeedbackAndError(value, {
 class FormBase extends React.Component {
   constructor(props) {
     super(props);
-    const { fields: { recipient, amount }, prevState } = props;
+    const { prevState } = props;
+    const { recipient = '', amount } = parseSearchParams(props.history.location.search);
 
     this.state = {
       isLoading: false,
       fields: {
         recipient: {
-          address: recipient.address || '',
-          value: recipient.address || '',
+          address: recipient,
+          value: recipient,
           error: false,
           feedback: '',
           selected: false,
           title: '',
         },
-        amount: amount.value ? {
-          ...getAmountFeedbackAndError(amount.value, props),
-          value: amount.value,
+        amount: amount ? {
+          ...getAmountFeedbackAndError(amount, props),
+          value: amount,
         } : {
           error: false,
           value: '',

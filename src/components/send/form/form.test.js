@@ -77,11 +77,6 @@ describe('Form', () => {
     props = {
       token: tokenMap.LSK.key,
       t: v => v,
-      fields: {
-        recipient: { address: '' },
-        amount: { value: '' },
-        reference: { value: '' },
-      },
       account: {
         balance: accounts.genesis.balance,
         info: {
@@ -99,8 +94,8 @@ describe('Form', () => {
       },
       history: {
         location: {
-          path: '/wallet/send/send',
-          search: '?recipient=16313739661670634666L&amount=10&reference=test',
+          path: '/wallet/send',
+          search: '',
         },
         push: jest.fn(),
       },
@@ -211,13 +206,15 @@ describe('Form', () => {
     it('Should show bookmark title if address is a bookmark', () => {
       wrapper = mount(<Form {...{
         ...props,
-        fields: {
-          ...props.fields,
-          recipient: { address: bookmarks.LSK[0].address },
+        history: {
+          ...props.history,
+          location: {
+            ...props.history.location,
+            search: `?recipient=${bookmarks.LSK[0].address}`,
+          },
         },
       }}
       />, options);
-      wrapper.update();
       expect(wrapper.find('input.recipient')).toHaveValue(bookmarks.LSK[0].title);
     });
   });

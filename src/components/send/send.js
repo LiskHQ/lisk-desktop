@@ -3,7 +3,6 @@ import MultiStep from '../multiStep';
 import Form from './form';
 import Summary from './summary';
 import TransactionStatus from './transactionStatus';
-import { parseSearchParams } from '../../utils/searchParams';
 import routes from '../../constants/routes';
 import styles from './send.css';
 
@@ -11,14 +10,6 @@ class Send extends React.Component {
   constructor(props) {
     super(props);
 
-    const { recipient, amount } = parseSearchParams(this.props.history.location.search);
-
-    this.state = {
-      fields: {
-        recipient: { address: recipient || '' },
-        amount: { value: amount || '' },
-      },
-    };
     this.backToWallet = this.backToWallet.bind(this);
   }
 
@@ -28,7 +19,6 @@ class Send extends React.Component {
   }
 
   render() {
-    const { fields } = this.state;
     const { history } = this.props;
 
     return (
@@ -39,7 +29,7 @@ class Send extends React.Component {
             finalCallback={this.backToWallet}
             className={styles.wrapper}
           >
-            <Form fields={fields} history={history} />
+            <Form history={history} />
             <Summary />
             <TransactionStatus history={history} />
           </MultiStep>
