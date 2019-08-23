@@ -25,68 +25,13 @@ jest.mock('../../../utils/api/btc/transactions', () => ({
 
 describe('Form', () => {
   let wrapper;
+  let props;
+  let bookmarks;
+  let store;
+  let options;
 
-  const store = configureMockStore([thunk])({
-    settings: { currency: 'USD', token: { active: 'LSK' } },
-    settingsUpdated: () => {},
-    liskService: {
-      success: true,
-      LSK: {
-        USD: 1,
-      },
-    },
-    bookmarks: {
-      LSK: [{
-        title: 'ABC',
-        address: '12345L',
-        balance: 10,
-      }, {
-        title: 'FRG',
-        address: '12375L',
-        balance: 15,
-      }, {
-        title: 'KTG',
-        address: '12395L',
-        balance: 7,
-      }],
-    },
-    service: {
-      dynamicFees: {},
-    },
-    network: {
-      name: 'Mainnet',
-    },
-  });
-
-  const options = {
-    context: { i18n, store },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-      store: PropTypes.object.isRequired,
-    },
-  };
-
-  const props = {
-    token: tokenMap.LSK.key,
-    t: v => v,
-    fields: {
-      recipient: { address: '' },
-      amount: { value: '' },
-      reference: { value: '' },
-    },
-    prevState: {
-      fields: {},
-    },
-    account: {
-      balance: accounts.genesis.balance,
-      info: {
-        LSK: accounts.genesis,
-        BTC: {
-          address: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
-        },
-      },
-    },
-    bookmarks: {
+  beforeEach(() => {
+    bookmarks = {
       LSK: [{
         title: 'ABC',
         address: '12345L',
@@ -101,22 +46,69 @@ describe('Form', () => {
         balance: 7,
       }],
       BTC: [],
-    },
-    dynamicFees: {},
-    dynamicFeesRetrieved: jest.fn(),
-    networkConfig: {
-      name: 'Mainnet',
-    },
-    history: {
-      location: {
-        path: '/wallet/send/send',
-        search: '?recipient=16313739661670634666L&amount=10&reference=test',
-      },
-      push: jest.fn(),
-    },
-  };
+    };
 
-  beforeEach(() => {
+    store = configureMockStore([thunk])({
+      settings: { currency: 'USD', token: { active: 'LSK' } },
+      settingsUpdated: () => {},
+      liskService: {
+        success: true,
+        LSK: {
+          USD: 1,
+        },
+      },
+      bookmarks,
+      service: {
+        dynamicFees: {},
+      },
+      network: {
+        name: 'Mainnet',
+      },
+    });
+
+    options = {
+      context: { i18n, store },
+      childContextTypes: {
+        i18n: PropTypes.object.isRequired,
+        store: PropTypes.object.isRequired,
+      },
+    };
+
+    props = {
+      token: tokenMap.LSK.key,
+      t: v => v,
+      fields: {
+        recipient: { address: '' },
+        amount: { value: '' },
+        reference: { value: '' },
+      },
+      prevState: {
+        fields: {},
+      },
+      account: {
+        balance: accounts.genesis.balance,
+        info: {
+          LSK: accounts.genesis,
+          BTC: {
+            address: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
+          },
+        },
+      },
+      bookmarks,
+      dynamicFees: {},
+      dynamicFeesRetrieved: jest.fn(),
+      networkConfig: {
+        name: 'Mainnet',
+      },
+      history: {
+        location: {
+          path: '/wallet/send/send',
+          search: '?recipient=16313739661670634666L&amount=10&reference=test',
+        },
+        push: jest.fn(),
+      },
+    };
+
     wrapper = mount(<Form {...props} />, options);
   });
 
@@ -184,22 +176,41 @@ describe('Form', () => {
     expect(wrapper).not.toContainMatchingElement('PrimaryButton.btn-submit');
   });
 
-  it('should validate bookmark', () => {
-    const evt = { target: { name: 'recipient', value: '123456L' } };
-    wrapper.find('input.recipient').simulate('change', evt);
-    jest.advanceTimersByTime(300);
-    wrapper.update();
-    expect(wrapper.find('.fieldGroup').at(0)).not.toHaveClassName('error');
-  });
+  describe('Recipient field', () => {
+    it('should validate bookmark', () => {
+      const evt = { target: { name: 'recipient', value: '123456L' } };
+      wrapper.find('input.recipient').simulate('change', evt);
+      jest.advanceTimersByTime(300);
+      wrapper.update();
+      expect(wrapper.find('.fieldGroup').at(0)).not.toHaveClassName('error');
+    });
 
-  it('should validate address', () => {
-    props.bookmarks = { LSK: [] };
-    wrapper = mount(<Form {...props} />, options);
-    const evt = { target: { name: 'recipient', value: '123456L' } };
-    wrapper.find('input.recipient').simulate('change', evt);
-    jest.advanceTimersByTime(300);
-    wrapper.update();
-    expect(wrapper.find('.fieldGroup').at(0)).not.toHaveClassName('error');
+    it('should validate address', () => {
+      wrapper = mount(<Form {...{
+        ...props,
+        bookmarks: { LSK: [] },
+      }}
+      />, options);
+      const evt = { target: { name: 'recipient', value: '123456L' } };
+      wrapper.find('input.recipient').simulate('change', evt);
+      jest.advanceTimersByTime(300);
+      wrapper.update();
+      expect(wrapper.find('.fieldGroup').at(0)).not.toHaveClassName('error');
+    });
+
+    // TODO fix the feature and enable the next test
+    it.skip('Should show bookmark title if address is a bookmark', () => {
+      wrapper = mount(<Form {...{
+        ...props,
+        fields: {
+          ...props.fields,
+          recipient: { address: bookmarks.LSK[0].address },
+        },
+      }}
+      />, options);
+      wrapper.update();
+      expect(wrapper.find('input.recipient')).toHaveValue(bookmarks.LSK[0].title);
+    });
   });
 
   describe('Amount field', () => {
