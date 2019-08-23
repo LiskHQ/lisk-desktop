@@ -1,24 +1,22 @@
-// eslint-disable-line max-lines
 import React from 'react';
 import numeral from 'numeral';
-import Converter from '../../converter';
-import { PrimaryButton } from '../../toolbox/buttons/button';
 import { Input } from '../../toolbox/inputs';
-import { getNetworkCode } from '../../../utils/api/btc/network';
-import AutoSuggest from '../autoSuggest';
-import Spinner from '../../spinner/spinner';
-import Tooltip from '../../toolbox/tooltip/tooltip';
-import links from '../../../constants/externalLinks';
+import { PrimaryButton } from '../../toolbox/buttons/button';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { fromRawLsk } from '../../../utils/lsk';
-import Feedback from '../../toolbox/feedback/feedback';
-import styles from './form.css';
-import Piwik from '../../../utils/piwik';
-import { validateAddress, validateAmountFormat } from '../../../utils/validators';
-import Icon from '../../toolbox/icon';
+import { validateAmountFormat } from '../../../utils/validators';
+import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import Box from '../../toolbox/box';
+import Converter from '../../converter';
+import Feedback from '../../toolbox/feedback/feedback';
+import Icon from '../../toolbox/icon';
+import Piwik from '../../../utils/piwik';
+import Spinner from '../../spinner/spinner';
+import Tooltip from '../../toolbox/tooltip/tooltip';
 import i18n from '../../../i18n';
+import links from '../../../constants/externalLinks';
 import regex from '../../../utils/regex';
+import styles from './form.css';
 
 function getInitialState() {
   return {
@@ -26,15 +24,11 @@ function getInitialState() {
     fields: {
       recipient: {
         address: '',
-        balance: '',
         error: false,
         feedback: '',
-        name: 'recipient',
         selected: false,
         title: '',
         value: '',
-        showSuggestions: false,
-        isBookmark: false,
       },
       amount: {
         error: false,
@@ -57,15 +51,13 @@ class FormBase extends React.Component {
     this.onAmountChange = this.onAmountChange.bind(this);
     this.onGoNext = this.onGoNext.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
-    this.onSelectedAccount = this.onSelectedAccount.bind(this);
-    this.validateBookmark = this.validateBookmark.bind(this);
+    this.updateField = this.updateField.bind(this);
   }
 
   componentDidMount() {
     // istanbul ignore if
     if (!Object.entries(this.props.prevState).length) this.ifDataFromUrl();
     else this.ifDataFromPrevState();
-    this.checkIfBookmarkedAccount();
   }
 
   // TODO move `state.fields` into parent send component and ifDataFromPrevState can be deleted
@@ -112,174 +104,51 @@ class FormBase extends React.Component {
     }
   }
 
-  checkIfBookmarkedAccount() {
-    const { fields, token } = this.props;
-    const bookmarks = this.props.bookmarks[token];
-    const account = bookmarks.length
-      ? bookmarks.find(acc => acc.address === fields.recipient.address)
-      : false;
-
-    // istanbul ignore if
-    if (account) this.onSelectedAccount(account);
-  }
-
   onInputChange({ target }) {
     const { fields } = this.state;
-    const { onInputChange } = this.props;
     const newState = {
       ...fields[target.name],
       value: target.value,
     };
-    onInputChange({ target }, newState);
-    this.setState(() => ({
-      fields: {
-        ...fields,
-        [target.name]: newState,
-      },
-    }));
-  }
-
-  // TODO move bookmark validation into a separate util or component
-  // eslint-disable-next-line max-statements
-  validateBookmark() {
-    const { token, networkConfig } = this.props;
-    let recipient = this.state.fields.recipient;
-    let isAccountValid = '';
-    let isAddressValid = '';
-    const bookmarks = this.props.bookmarks[token];
-
-    if (bookmarks.length && recipient.value !== '') {
-      isAccountValid = bookmarks
-        .find(account => (account.title.toLowerCase() === recipient.value.toLowerCase())
-          || account.address.toLowerCase() === recipient.value.toLowerCase()) || false;
-    }
-    isAddressValid = validateAddress(token, recipient.value, getNetworkCode(networkConfig)) === 0;
-
-    // istanbul ignore if
-    if (!isAccountValid && !isAddressValid && recipient.value) {
-      recipient = {
-        ...this.state.recipient,
-        address: '',
-        balance: '',
-        error: true,
-        feedback: this.props.t('Provide a correct wallet address or a name of a bookmarked account'),
-        selected: false,
-        title: '',
-        showSuggestions: true,
-      };
-    }
-
-    // istanbul ignore if
-    if (isAddressValid) {
-      recipient = {
-        ...this.state.recipient,
-        address: recipient.value,
-        selected: false,
-        error: false,
-        feedback: '',
-        showSuggestions: false,
-        isBookmark: false,
-      };
-    }
-
-    // istanbul ignore if
-    if (isAccountValid) {
-      recipient = {
-        ...this.state.recipient,
-        address: isAccountValid.address,
-        title: isAccountValid.title,
-        balance: isAccountValid.balance,
-        selected: true,
-        error: false,
-        feedback: '',
-        showSuggestions: false,
-        isBookmark: true,
-      };
-    }
-
-    // istanbul ignore if
-    if (recipient.value === '') {
-      recipient = {
-        ...this.state.recipient,
-        address: '',
-        balance: '',
-        error: false,
-        feedback: '',
-        selected: false,
-        title: '',
-        showSuggestions: true,
-      };
-    }
-
-    this.setState(({ fields }) => ({
-      fields: {
-        ...fields,
-        recipient: {
-          ...fields.recipient,
-          ...recipient,
-        },
-      },
-    }));
-  }
-
-  // istanbul ignore next
-  onSelectedAccount(account) {
-    this.setState(({ fields }) => ({
-      fields: {
-        ...fields,
-        recipient: {
-          ...fields.recipient,
-          ...account,
-          value: account.address,
-          selected: true,
-          error: '',
-          feedback: '',
-          showSuggestions: false,
-          isBookmark: true,
-        },
-      },
-    }));
-  }
-
-  getMaxAmount() {
-    const { token, fee } = this.props;
-    const account = this.props.account.info[token];
-    return fromRawLsk(Math.max(0, account.balance - fee));
+    this.props.onInputChange({ target }, newState);
+    this.updateField(target.name, newState);
   }
 
   validateAmountField(value) {
+    const { fee, account, token } = this.props;
     const { message, error } = validateAmountFormat({
       value,
-      token: this.props.token,
+      token,
       locale: i18n.language,
     });
     if (error) return message;
-    if (parseFloat(this.getMaxAmount()) < numeral(value).value()) {
+
+    const getMaxAmount = () => fromRawLsk(Math.max(0, account.balance - fee));
+    if (parseFloat(getMaxAmount()) < numeral(value).value()) {
       return this.props.t('Provided amount is higher than your current balance.');
     }
-    return false;
+    return '';
   }
 
-  validateAmount(name, value) {
-    let feedback = '';
-    let error = '';
+  updateAmountField(name, value) {
+    const { leadingPoint } = regex.amount[i18n.language];
+    value = leadingPoint.test(value) ? `0${value}` : value;
+    const feedback = this.validateAmountField(value);
 
-    // istanbul ignore else
-    if (name === 'amount') {
-      const { leadingPoint } = regex.amount[i18n.language];
-      value = leadingPoint.test(value) ? `0${value}` : value;
-      error = this.validateAmountField(value);
-      feedback = error || feedback;
-    }
+    this.updateField(name, {
+      error: !!feedback,
+      value,
+      feedback,
+    });
+  }
 
+  updateField(name, value) {
     this.setState(({ fields }) => ({
       fields: {
         ...fields,
         [name]: {
           ...fields[name],
-          error: !!error,
-          value,
-          feedback,
+          ...value,
         },
       },
     }));
@@ -291,7 +160,7 @@ class FormBase extends React.Component {
     this.setState(() => ({ isLoading: true }));
     this.loaderTimeout = setTimeout(() => {
       this.setState(() => ({ isLoading: false }));
-      this.validateAmount(target.name, target.value);
+      this.updateAmountField(target.name, target.value);
     }, 300);
 
     this.onInputChange({ target });
@@ -309,7 +178,7 @@ class FormBase extends React.Component {
   render() {
     const { fields, isLoading } = this.state;
     const {
-      t, token, children, extraFields, fee,
+      t, token, children, extraFields, fee, networkConfig,
     } = this.props;
     const isBtnEnabled = !isLoading
       && !Object.values(fields).find(({ error, value }) => error || value === '')
@@ -323,15 +192,13 @@ class FormBase extends React.Component {
         <Box.Content className={styles.formSection}>
           <span className={`${styles.fieldGroup} recipient`}>
             <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
-            <AutoSuggest
-              validateBookmark={this.validateBookmark}
-              bookmarks={this.props.bookmarks}
-              onChange={this.onInputChange}
-              placeholder={t('Insert public address or a name')}
+            <BookmarkAutoSuggest
+              bookmarks={this.props.bookmarks[token]}
+              networkConfig={networkConfig}
               recipient={fields.recipient}
-              showSuggestions={fields.recipient.showSuggestions}
-              onSelectedAccount={this.onSelectedAccount}
+              t={t}
               token={token}
+              updateField={this.updateField}
             />
           </span>
 

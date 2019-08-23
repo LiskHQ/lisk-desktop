@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { mount } from 'enzyme';
-import PropTypes from 'prop-types';
-import keyCodes from '../../../constants/keyCodes';
-import i18n from '../../../i18n';
-import AutoSuggest from './index';
 import { tokenMap } from '../../../constants/tokens';
+import AccountVisual from '../../accountVisual';
+import AutoSuggest from './index';
+import i18n from '../../../i18n';
+import keyCodes from '../../../constants/keyCodes';
 
 describe('Recipient Input', () => {
   let wrapper;
@@ -18,37 +19,41 @@ describe('Recipient Input', () => {
   const props = {
     token: tokenMap.LSK.key,
     t: v => v,
-    validateBookmark: jest.fn(),
+    onChangeDelayed: jest.fn(),
     onChange: jest.fn(),
-    onSelectedAccount: jest.fn(),
-    bookmarks: {
-      LSK: [{
-        title: 'ABC',
-        address: '12345L',
-      },
-      {
-        title: 'FRG',
-        address: '12375L',
-      },
-      {
-        title: 'KTG',
-        address: '12395L',
-      }],
-      BTC: [],
+    onSelectItem: jest.fn(),
+    items: [{
+      title: 'ABC',
+      address: '12345L',
     },
+    {
+      title: 'FRG',
+      address: '12375L',
+    },
+    {
+      title: 'KTG',
+      address: '12395L',
+    }],
     placeholder: 'e.g. 1234523423L or John Doe',
-    recipient: {
+    selectedItem: {
       address: '',
-      balance: '',
       error: false,
       feedback: '',
       name: 'recipient',
       selected: false,
       title: '',
       value: '',
-      showSuggestions: false,
     },
-    showSuggestions: false,
+    className: 'recipient',
+    matchProps: ['address', 'title'],
+    // eslint-disable-next-line react/display-name
+    renderItem: item => (
+      <React.Fragment>
+        <AccountVisual address={item.address} size={25} />
+        <span>{item.title}</span>
+        <span>{item.address}</span>
+      </React.Fragment>
+    ),
   };
 
   beforeEach(() => {
@@ -67,20 +72,18 @@ describe('Recipient Input', () => {
     wrapper.find('input.recipient').simulate('change', evt);
     wrapper.update();
     jest.advanceTimersByTime(300);
-    expect(props.validateBookmark).toBeCalled();
+    expect(props.onChangeDelayed).toBeCalled();
   });
 
   it('render properly when bookmard is selected', () => {
-    props.recipient.address = '12345L';
-    props.recipient.title = 'John Cena';
-    props.recipient.balance = '10';
+    props.selectedItem.address = '12345L';
+    props.selectedItem.title = 'John Cena';
     wrapper = mount(<AutoSuggest {...props} />, options);
     expect(wrapper).toContainMatchingElement('AccountVisual');
   });
 
   it('should select an account from the available list', () => {
-    props.showSuggestions = true;
-    props.recipient.value = 'L';
+    props.selectedItem.value = 'L';
     wrapper = mount(<AutoSuggest {...props} />, options);
     expect(wrapper).toContainMatchingElement('.bookmark-list');
     expect(wrapper).toContainMatchingElements(3, 'li');
@@ -88,6 +91,6 @@ describe('Recipient Input', () => {
     wrapper.find('Input.input').simulate('keyDown', { keyCode: keyCodes.arrowUp });
     wrapper.find('Input.input').simulate('keyDown', { keyCode: keyCodes.enter });
     wrapper.find('.bookmark-list li').at(0).simulate('click');
-    expect(props.onSelectedAccount).toBeCalled();
+    expect(props.onSelectItem).toBeCalled();
   });
 });

@@ -1,6 +1,6 @@
 @import '../../app/variables.css';
 
-.recipientField {
+.inputWrapper {
   align-items: center;
   display: flex;
   position: relative;
@@ -14,44 +14,21 @@
     padding-left: 50px;
     padding-right: 30px;
 
-    & ~ .bookmarkContainer {
+    & ~ .suggestionList {
       opacity: 0 !important;
       visibility: hidden !important;
     }
 
-    &:focus ~ .bookmarkContainer {
+    &:focus ~ .suggestionList {
       opacity: 1 !important;
       visibility: visible !important;
     }
   }
 }
 
-.accountVisual {
+.icon {
   position: absolute;
   left: 16px;
-}
-
-.bookmarkContainer {
-  @mixin contentLargest;
-
-  position: absolute;
-  top: 52px;
-  width: 100%;
-  display: flex;
-  background-color: var(--color-white);
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  z-index: 3;
-  max-height: 176px;
-  overflow: hidden;
-  transition: visibility var(--animation-speed-fast) linear, opacity var(--animation-speed-fast) linear;
-
-  & > div:first-child {
-    overflow: auto;
-    max-height: 176px;
-    width: calc(100% + 20px);
-  }
 }
 
 .status {
@@ -59,15 +36,30 @@
   right: 10px;
 }
 
-.bookmarkList {
-  align-items: center;
-  box-sizing: border-box;
+.suggestionList {
+  @mixin contentLargest;
+
+  position: absolute;
+  top: 52px;
+  width: 100%;
   display: flex;
+  box-sizing: border-box;
+  border: 1px solid var(--dark-border-color);
+  border-radius: var(--border-radius-standard);
+  background-color: var(--color-white);
   flex-direction: column;
+  align-items: flex-start;
+  z-index: 3;
+  max-height: 176px;
+  overflow: hidden;
+  transition: visibility var(--animation-speed-fast) linear, opacity var(--animation-speed-fast) linear;
   justify-content: flex-start;
   margin: 0;
   padding: 0;
-  width: 100%;
+
+  &:empty {
+    border: unset;
+  }
 
   & li {
     box-sizing: border-box;
