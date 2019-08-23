@@ -164,6 +164,20 @@ async function getAccounts(tokens, options) {
   }, Promise.resolve({}));
 }
 
+export const updateEnabledTokenAccount = token => async (dispatch, getState) => {
+  const { network: networkConfig, account } = getState();
+  const [error, result] = await to(getAccount({
+    token,
+    networkConfig,
+    passphrase: account.passphrase,
+  }));
+  if (error) {
+    dispatch(errorToastDisplayed({ label: getConnectionErrorMessage(error) }));
+  } else {
+    dispatch(accountUpdated(result));
+  }
+};
+
 /**
  * This action is used on login to fetch account info for all enabled token
  *
