@@ -67,7 +67,7 @@ class Summary extends React.Component {
   prevStep() {
     Piwik.trackingEvent('Send_Summary', 'button', 'Previous step');
     this.props.resetTransactionResult();
-    this.props.prevStep({ ...this.props.fields });
+    this.props.prevStep({ fields: this.props.fields });
   }
 
   render() {
@@ -118,6 +118,16 @@ class Summary extends React.Component {
             <Converter className={styles.secondText} value={fields.amount.value} />
           </label>
         </section>
+        { fields.reference && fields.reference.value
+          ? (
+            <section>
+              <label>{t('Message')}</label>
+              <label className="message-summary">
+                {`${fields.reference.value}`}
+              </label>
+            </section>
+          )
+          : null }
       </TransactionSummary>
     );
   }
