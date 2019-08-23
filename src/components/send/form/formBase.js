@@ -1,4 +1,3 @@
-// eslint-disable-line max-lines
 import React from 'react';
 import numeral from 'numeral';
 import { Input } from '../../toolbox/inputs';
@@ -108,62 +107,40 @@ class FormBase extends React.Component {
 
   onInputChange({ target }) {
     const { fields } = this.state;
-    const { onInputChange } = this.props;
     const newState = {
       ...fields[target.name],
       value: target.value,
     };
-    onInputChange({ target }, newState);
-    this.setState(() => ({
-      fields: {
-        ...fields,
-        [target.name]: newState,
-      },
-    }));
-  }
-
-  getMaxAmount() {
-    const { token, fee } = this.props;
-    const account = this.props.account.info[token];
-    return fromRawLsk(Math.max(0, account.balance - fee));
+    this.props.onInputChange({ target }, newState);
+    this.updateField(target.name, newState);
   }
 
   validateAmountField(value) {
+    const { fee, account, token } = this.props;
     const { message, error } = validateAmountFormat({
       value,
-      token: this.props.token,
+      token,
       locale: i18n.language,
     });
     if (error) return message;
-    if (parseFloat(this.getMaxAmount()) < numeral(value).value()) {
+
+    const getMaxAmount = () => fromRawLsk(Math.max(0, account.balance - fee));
+    if (parseFloat(getMaxAmount()) < numeral(value).value()) {
       return this.props.t('Provided amount is higher than your current balance.');
     }
-    return false;
+    return '';
   }
 
-  validateAmount(name, value) {
-    let feedback = '';
-    let error = '';
+  updateAmountField(name, value) {
+    const { leadingPoint } = regex.amount[i18n.language];
+    value = leadingPoint.test(value) ? `0${value}` : value;
+    const feedback = this.validateAmountField(value);
 
-    // istanbul ignore else
-    if (name === 'amount') {
-      const { leadingPoint } = regex.amount[i18n.language];
-      value = leadingPoint.test(value) ? `0${value}` : value;
-      error = this.validateAmountField(value);
-      feedback = error || feedback;
-    }
-
-    this.setState(({ fields }) => ({
-      fields: {
-        ...fields,
-        [name]: {
-          ...fields[name],
-          error: !!error,
-          value,
-          feedback,
-        },
-      },
-    }));
+    this.updateField(name, {
+      error: !!feedback,
+      value,
+      feedback,
+    });
   }
 
   updateField(name, value) {
@@ -184,7 +161,7 @@ class FormBase extends React.Component {
     this.setState(() => ({ isLoading: true }));
     this.loaderTimeout = setTimeout(() => {
       this.setState(() => ({ isLoading: false }));
-      this.validateAmount(target.name, target.value);
+      this.updateAmountField(target.name, target.value);
     }, 300);
 
     this.onInputChange({ target });

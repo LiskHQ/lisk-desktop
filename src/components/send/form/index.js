@@ -2,10 +2,11 @@
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { dynamicFeesRetrieved } from '../../../actions/service';
+import { getActiveTokenAccount } from '../../../utils/account';
 import Form from './form';
 
 const mapStateToProps = state => ({
-  account: state.account,
+  account: getActiveTokenAccount(state),
   bookmarks: state.bookmarks,
   token: state.settings.token && state.settings.token.active,
   dynamicFees: state.service.dynamicFees,
