@@ -193,13 +193,12 @@ class FormBase extends React.Component {
           <span className={`${styles.fieldGroup} recipient`}>
             <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
             <BookmarkAutoSuggest
-              recipient={fields.recipient}
               bookmarks={this.props.bookmarks[token]}
-              onInputChange={this.onInputChange}
-              updateField={this.updateField}
               networkConfig={networkConfig}
-              token={token}
+              recipient={fields.recipient}
               t={t}
+              token={token}
+              updateField={this.updateField}
             />
           </span>
 

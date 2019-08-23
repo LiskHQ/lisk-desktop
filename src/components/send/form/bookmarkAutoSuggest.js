@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { getNetworkCode } from '../../../utils/api/btc/network';
 import { validateAddress } from '../../../utils/validators';
@@ -7,8 +8,11 @@ import AutoSuggest from '../../toolbox/autoSuggest';
 class BookmarkAutoSuggest extends React.Component {
   constructor(props) {
     super(props);
+    this.fieldName = 'recipient';
+
     this.validateBookmark = this.validateBookmark.bind(this);
     this.onSelectedAccount = this.onSelectedAccount.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
   }
 
   componentDidMount() {
@@ -38,7 +42,7 @@ class BookmarkAutoSuggest extends React.Component {
     ) === 0;
     const isInvalid = !isValidBookmark && !isValidAddress && recipient.value;
 
-    this.props.updateField('recipient', {
+    this.props.updateField(this.fieldName, {
       ...(isInvalid ? {
         feedback: t('Provide a correct wallet address or a name of a bookmarked account'),
         address: '',
@@ -54,9 +58,7 @@ class BookmarkAutoSuggest extends React.Component {
 
   // istanbul ignore next
   onSelectedAccount(account) {
-    const { recipient } = this.props;
-    this.props.updateField('recipient', {
-      ...recipient,
+    this.props.updateField(this.fieldName, {
       ...account,
       value: account.address,
       selected: true,
@@ -65,17 +67,18 @@ class BookmarkAutoSuggest extends React.Component {
     });
   }
 
+  onInputChange({ target: { value } }) {
+    this.props.updateField(this.fieldName, { value });
+  }
+
   render() {
-    const {
-      t, recipient, bookmarks, onInputChange,
-    } = this.props;
-    const items = bookmarks;
+    const { t, recipient, bookmarks } = this.props;
     return (
       <AutoSuggest
-        className="recipient"
+        className={this.fieldName}
         onChangeDelayed={this.validateBookmark}
-        items={items}
-        onChange={onInputChange}
+        items={bookmarks}
+        onChange={this.onInputChange}
         placeholder={t('Insert public address or a name')}
         selectedItem={recipient}
         onSelectItem={this.onSelectedAccount}
@@ -98,5 +101,25 @@ class BookmarkAutoSuggest extends React.Component {
     );
   }
 }
+
+BookmarkAutoSuggest.defaultProps = {
+  bookmarks: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    address: PropTypes.string.isRequired,
+  })).isRequired,
+  networkConfig: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+  }).isRequired,
+  recipient: PropTypes.shape({
+    address: PropTypes.string.isRequired,
+    error: PropTypes.bool.isRequired,
+    feedback: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  }).isRequired,
+  t: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  updateField: PropTypes.func.isRequired,
+};
 
 export default BookmarkAutoSuggest;

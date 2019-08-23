@@ -190,14 +190,22 @@ class AutoSuggest extends React.Component {
 AutoSuggest.propTypes = {
   renderItem: PropTypes.func,
   renderIcon: PropTypes.func,
+  onChangeDelayed: PropTypes.func,
+  onChange: PropTypes.func.isRequired,
+  onSelectItem: PropTypes.func.isRequired,
   className: PropTypes.string,
-  matchProps: PropTypes.array.isRequired,
+  placeholder: PropTypes.string,
+  matchProps: PropTypes.arrayOf(PropTypes.string).isRequired,
+  items: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  selectedItem: PropTypes.shape().isRequired,
 };
 
 AutoSuggest.defaultProps = {
   renderItem: item => item,
   renderIcon: () => null,
+  onChangeDelayed: () => null,
   className: '',
+  placeholder: '',
 };
 
 export default AutoSuggest;
