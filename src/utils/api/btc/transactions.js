@@ -35,6 +35,7 @@ const normalizeTransactionsResponse = ({
 
   const ownedInput = tx.inputs.find(i => i.txDetail.scriptPubKey.addresses.includes(address));
   const networkCode = getNetworkCode(networkConfig);
+  address = address || tx.outputs.slice(-1).reduce((addr, o) => o.scriptPubKey.addresses[0], '');
 
   if (ownedInput) {
     data.senderId = address;
@@ -43,10 +44,9 @@ const normalizeTransactionsResponse = ({
       ? extractedAddress : 'Unparsed Address';
     data.amount = tx.outputs[0].satoshi;
   } else {
-    address = address || tx.inputs[0].txDetail.scriptPubKey.addresses[0];
     const output = tx.outputs.find(o => o.scriptPubKey.addresses.includes(address));
     const extractedAddress = tx.inputs[0].txDetail.scriptPubKey.addresses[0];
-    const recipientAddress = tx.outputs[0].scriptPubKey.addresses[0];
+    const recipientAddress = address;
     data.senderId = validateAddress(tokenMap.BTC.key, extractedAddress) === 0 ? extractedAddress : 'Unparsed Address';
     data.senderId = validateAddress(tokenMap.BTC.key, extractedAddress, networkCode) === 0
       ? extractedAddress : 'Unparsed Address';
@@ -64,6 +64,10 @@ export const getTransactions = ({
   limit,
   offset,
 }) => new Promise(async (resolve, reject) => {
+  const meta = {
+    limit: limit || 0,
+    offset,
+  };
   await getAPIClient(networkConfig).get(`transactions/${address}?limit=${limit}&offset=${offset}&sort=height:desc`)
     .then((response) => {
       resolve({
@@ -72,7 +76,7 @@ export const getTransactions = ({
           address,
           list: response.body.data,
         }),
-        meta: response.body.meta ? { count: response.body.meta.total } : {},
+        meta: response.body.meta ? { ...meta, count: response.body.meta.total } : meta,
       });
     }).catch(reject);
 });
