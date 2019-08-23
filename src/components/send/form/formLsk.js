@@ -12,13 +12,14 @@ import styles from './form.css';
 export default class FormLsk extends React.Component {
   constructor(props) {
     super(props);
+    const { prevState } = props;
 
     const { reference } = parseSearchParams(props.history.location.search);
     this.state = {
       fields: {
         reference: {
           error: false,
-          value: reference || '',
+          value: prevState && prevState.fields ? prevState.fields.reference.value : reference || '',
           feedback: props.t('64 bytes left'),
           isActive: false,
         },

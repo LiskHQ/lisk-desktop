@@ -82,9 +82,6 @@ describe('Form', () => {
         amount: { value: '' },
         reference: { value: '' },
       },
-      prevState: {
-        fields: {},
-      },
       account: {
         balance: accounts.genesis.balance,
         info: {
