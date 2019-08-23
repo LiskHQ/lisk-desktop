@@ -25,71 +25,31 @@ class BookmarkAutoSuggest extends React.Component {
     if (account) this.props.onSelectedAccount(account);
   }
 
-  // eslint-disable-next-line max-statements
+  // istanbul ignore next
   validateBookmark() {
     const {
-      token, networkConfig, recipient, bookmarks,
+      token, networkConfig, recipient, bookmarks, t,
     } = this.props;
-    let newRecipient = recipient;
-    let isAccountValid = '';
-    let isAddressValid = '';
-
-    if (bookmarks.length && recipient.value !== '') {
-      isAccountValid = bookmarks
-        .find(account => (account.title.toLowerCase() === recipient.value.toLowerCase())
+    const isValidBookmark = bookmarks
+      .find(account => (account.title.toLowerCase() === recipient.value.toLowerCase())
           || account.address.toLowerCase() === recipient.value.toLowerCase()) || false;
-    }
-    isAddressValid = validateAddress(token, recipient.value, getNetworkCode(networkConfig)) === 0;
+    const isValidAddress = validateAddress(
+      token, recipient.value, getNetworkCode(networkConfig),
+    ) === 0;
+    const isInvalid = !isValidBookmark && !isValidAddress && recipient.value;
 
-    // istanbul ignore if
-    if (!isAccountValid && !isAddressValid && recipient.value) {
-      newRecipient = {
-        ...recipient,
+    this.props.updateField('recipient', {
+      ...(isInvalid ? {
+        feedback: t('Provide a correct wallet address or a name of a bookmarked account'),
         address: '',
-        error: true,
-        feedback: this.props.t('Provide a correct wallet address or a name of a bookmarked account'),
-        selected: false,
-        title: '',
-      };
-    }
-
-    // istanbul ignore if
-    if (isAddressValid) {
-      newRecipient = {
-        ...recipient,
-        address: recipient.value,
-        selected: false,
-        error: false,
+      } : {
         feedback: '',
-      };
-    }
-
-    // istanbul ignore if
-    if (isAccountValid) {
-      newRecipient = {
-        ...recipient,
-        address: isAccountValid.address,
-        title: isAccountValid.title,
-        selected: true,
-        error: false,
-        feedback: '',
-        isBookmark: true,
-      };
-    }
-
-    // istanbul ignore if
-    if (recipient.value === '') {
-      newRecipient = {
-        ...recipient,
-        address: '',
-        error: false,
-        feedback: '',
-        selected: false,
-        title: '',
-      };
-    }
-
-    this.props.updateField('recipient', newRecipient);
+        address: isValidBookmark ? isValidBookmark.address : recipient.value,
+      }),
+      error: !!isInvalid,
+      selected: !!isValidBookmark,
+      title: isValidBookmark ? isValidBookmark.title : '',
+    });
   }
 
   // istanbul ignore next
@@ -100,7 +60,7 @@ class BookmarkAutoSuggest extends React.Component {
       ...account,
       value: account.address,
       selected: true,
-      error: '',
+      error: false,
       feedback: '',
     });
   }

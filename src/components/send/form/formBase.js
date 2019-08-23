@@ -26,7 +26,6 @@ function getInitialState() {
         address: '',
         error: false,
         feedback: '',
-        name: 'recipient',
         selected: false,
         title: '',
         value: '',
