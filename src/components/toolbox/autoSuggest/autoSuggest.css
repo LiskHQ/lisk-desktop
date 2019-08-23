@@ -14,12 +14,12 @@
     padding-left: 50px;
     padding-right: 30px;
 
-    & ~ .listContainer {
+    & ~ .suggestionList {
       opacity: 0 !important;
       visibility: hidden !important;
     }
 
-    &:focus ~ .listContainer {
+    &:focus ~ .suggestionList {
       opacity: 1 !important;
       visibility: visible !important;
     }
@@ -31,7 +31,12 @@
   left: 16px;
 }
 
-.listContainer {
+.status {
+  position: absolute;
+  right: 10px;
+}
+
+.suggestionList {
   @mixin contentLargest;
 
   position: absolute;
@@ -43,34 +48,18 @@
   border-radius: var(--border-radius-standard);
   background-color: var(--color-white);
   flex-direction: column;
-  justify-content: center;
   align-items: flex-start;
   z-index: 3;
   max-height: 176px;
   overflow: hidden;
   transition: visibility var(--animation-speed-fast) linear, opacity var(--animation-speed-fast) linear;
-
-  & > div:first-child {
-    overflow: auto;
-    max-height: 176px;
-    width: calc(100% + 20px);
-  }
-}
-
-.status {
-  position: absolute;
-  right: 10px;
-}
-
-.itemList {
-  align-items: center;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
   justify-content: flex-start;
   margin: 0;
   padding: 0;
-  width: 100%;
+
+  &:empty {
+    border: unset;
+  }
 
   & li {
     box-sizing: border-box;

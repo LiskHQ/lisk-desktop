@@ -130,7 +130,7 @@ class AutoSuggest extends React.Component {
       renderIcon,
       className,
     } = this.props;
-    const { dropdownIndex } = this.state;
+    const { dropdownIndex, isLoading } = this.state;
 
     return (
       <Fragment>
@@ -147,31 +147,25 @@ class AutoSuggest extends React.Component {
             onKeyDown={this.onHandleKeyPress}
             onChange={this.onChange}
           />
-          <Spinner className={`${styles.spinner} ${this.state.isLoading && selectedItem.value ? styles.show : styles.hide}`} />
+          <Spinner className={`${styles.spinner} ${isLoading && selectedItem.value ? styles.show : styles.hide}`} />
           <Icon
-            className={`${styles.status} ${!this.state.isLoading && selectedItem.value ? styles.show : styles.hide}`}
+            className={`${styles.status} ${!isLoading && selectedItem.value ? styles.show : styles.hide}`}
             name={selectedItem.error ? 'alertIcon' : 'okIcon'}
           />
-          <div className={`${styles.listContainer}`}>
-            <div ref={(node) => { this.listContainerRef = node; }}>
-              <ul className={`${styles.itemList} bookmark-list`}>
-                {
-                this.getFilterList()
-                  .map((item, index) => (
-                    <li
-                      key={index}
-                      onMouseEnter={() => this.handleUpdateIndex(index)}
-                      onClick={() => this.onSelectItem(item)}
-                      onKeyPress={this.onHandleKeyPress}
-                      className={`${dropdownIndex === index ? styles.active : ''}`}
-                    >
-                      {renderItem(item)}
-                    </li>
-                  ))
-              }
-              </ul>
-            </div>
-          </div>
+          <ul className={`${styles.suggestionList} bookmark-list`} ref={(node) => { this.listContainerRef = node; }}>
+            { this.getFilterList()
+              .map((item, index) => (
+                <li
+                  key={index}
+                  onMouseEnter={() => this.handleUpdateIndex(index)}
+                  onClick={() => this.onSelectItem(item)}
+                  onKeyPress={this.onHandleKeyPress}
+                  className={`${dropdownIndex === index ? styles.active : ''}`}
+                >
+                  {renderItem(item)}
+                </li>
+              )) }
+          </ul>
         </span>
 
         <Feedback
