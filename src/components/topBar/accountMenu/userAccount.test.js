@@ -68,7 +68,7 @@ describe('UserAccount', () => {
     wrapper = mountWithRouter(<UserAccount {...myProps} />, myOptions);
     expect(wrapper).toContainExactlyOneMatchingElement('Dropdown');
     expect(wrapper).toContainExactlyOneMatchingElement('span.dropdownOption');
-    expect(wrapper).toContainMatchingElements(3, 'a.dropdownOption');
+    expect(wrapper).toContainMatchingElements(4, 'a.dropdownOption');
   });
 
   it('called properly onLogout when user click it', () => {
