@@ -1,15 +1,15 @@
 import TransportNodeHid from '@ledgerhq/hw-transport-node-hid';
-import { hwManager } from './hwManager';
+import * as trezor from 'trezor.js';
+import hwManager from './hwManager';
 
-const test = () => {
-  const hwM = hwManager();
-  hwM.setTransport({ type: 'ledger', transport: TransportNodeHid });
-  hwM.listener();
-  hwM.getDevices();
+const test = async () => {
+  hwManager.setTransport({ name: 'ledger', transport: TransportNodeHid });
+  const list = new trezor.DeviceList({});
+  console.log({ trezor });
+  hwManager.listener();
+  console.log({ devices: hwManager.devices });
+  // console.log(await hwManager.getDevices());
 };
 
-console.log('exeecute');
 test();
-console.log('end');
-window.test = test;
 export default test;
