@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import academy from '../../../assets/images/icons/academy.svg';
+import academyActive from '../../../assets/images/icons/academy-active.svg';
 import alertIcon from '../../../assets/images/icons/icon-alert.svg';
 import arrowLeftActive from '../../../assets/images/icons/arrow-left-active.svg';
 import arrowLeftInactive from '../../../assets/images/icons/arrow-left-inactive.svg';
@@ -17,6 +18,8 @@ import dashboardIcon from '../../../assets/images/icons/dashboard.svg';
 import dashboardIconActive from '../../../assets/images/icons/dashboard-active.svg';
 import delegatesIcon from '../../../assets/images/icons/delegates.svg';
 import delegatesIconActive from '../../../assets/images/icons/delegates-active.svg';
+import discordIcon from '../../../assets/images/icons/discord.svg';
+import discordIconActive from '../../../assets/images/icons/discord-active.svg';
 import discreetModeOff from '../../../assets/images/icons/discreet-mode-off.svg';
 import discreetModeOn from '../../../assets/images/icons/discreet-mode-on.svg';
 import feedback from '../../../assets/images/icons/feedback.svg';
@@ -67,6 +70,7 @@ import warningIcon from '../../../assets/images/icons/warning-icon.svg';
 
 export const icons = {
   academy,
+  academyActive,
   alertIcon,
   arrowLeftActive,
   arrowLeftInactive,
@@ -82,6 +86,8 @@ export const icons = {
   dashboardIconActive,
   delegatesIcon,
   delegatesIconActive,
+  discordIcon,
+  discordIconActive,
   discreetModeOff,
   discreetModeOn,
   feedback,
