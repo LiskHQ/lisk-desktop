@@ -1,5 +1,34 @@
 import manufactures from './manufactures';
 
+export const hwManager = () => ({
+  transports: {
+    ledger: null,
+    trezor: null,
+  },
+
+  devices: [],
+
+  setTransport: ({ type = 'ledger', transport }) => { 
+    console.log('set', { type, transport });
+    console.log('set', this.transports);
+    this.transports[type] = transport;
+  },
+  getDevices: async (type = 'ledger') => { await this.transports[type].list(); },
+  listener: () => {
+    try {
+      this.transports.ledger.setListenDevicesPollingSkip(() => false);
+      this.transports.ledger.setListenDevicesDebounce(0);
+      this.transports.ledger.listen({
+        next: ({ device, type }) => {
+          console.log({ device, type });
+        },
+      });
+    } catch (e) {
+      console.log({ e });
+    }
+  },
+});
+
 const isDataValid = (data) => {
   console.log('validating data => ', data);
   return true;

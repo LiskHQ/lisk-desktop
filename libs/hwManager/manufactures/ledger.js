@@ -25,8 +25,8 @@ const getPublicKey = ({ name, id, data }) => {
   console.log('get public key LEDGER', name, id, data);
 };
 
-const getAddress = ({ name, id, data }) => {
-  console.log('get address LEDGER', name, id, data);
+const getAddress = ({ id, data }) => {
+  console.log('get address LEDGER', id, data);
 };
 
 const getAccounts = ({ name, id, data }) => {

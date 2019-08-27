@@ -11,6 +11,7 @@ import routes from '../../constants/routes';
 import Header from '../header/header';
 import FlashMessageHolder from '../toolbox/flashMessage/holder';
 import DialogHolder from '../toolbox/dialog/holder';
+// import '../../../libs/test';
 
 class App extends React.Component {
   constructor() {

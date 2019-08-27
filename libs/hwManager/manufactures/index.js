@@ -15,7 +15,7 @@ const getDeviceById = (name, id) => vendor[name].getDeviceById(id);
 
 const getPublicKey = ({ name, id, data }) => vendor[name].getPublicKey(id, data);
 
-const getAddress = ({ name, id, data }) => vendor[name].getAddress(id, data);
+const getAddress = ({ name, id, data }) => vendor[name].getAddress({ id, data });
 
 const getAccounts = ({ name, id, data }) => vendor[name].getAccounts(id, data);
 
