@@ -70,8 +70,8 @@ const UserAccount = ({
           rel="noopener noreferrer"
           target="_blank"
         >
-          <Icon name="feedback" className={styles.defaultIcon} />
-          <Icon name="feedbackActive" className={styles.activeIcon} />
+          <Icon name="academy" className={styles.defaultIcon} />
+          <Icon name="academyActive" className={styles.activeIcon} />
           <span>{t('Lisk Academy')}</span>
         </a>
 
