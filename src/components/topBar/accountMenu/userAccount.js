@@ -47,7 +47,7 @@ const UserAccount = ({
       >
         {isUserDataFetched && enabledTokens.map(tokenKey => (account.info[tokenKey] ? ([
           <span
-            className={`${styles.accountHolder} ${tokenKey}`}
+            className={styles.accountHolder}
             key={tokenKey}
             onClick={settingsUpdated.bind(this, { token: { active: tokenKey } })}
           >
@@ -70,8 +70,8 @@ const UserAccount = ({
           rel="noopener noreferrer"
           target="_blank"
         >
-          <Icon name="academy" className={styles.defaultIcon} />
-          <Icon name="academyActive" className={styles.activeIcon} />
+          <Icon name="academyIcon" className={styles.defaultIcon} />
+          <Icon name="academyIconActive" className={styles.activeIcon} />
           <span>{t('Lisk Academy')}</span>
         </a>
 

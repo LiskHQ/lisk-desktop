@@ -1,3 +1,6 @@
+import academy from '../assets/images/help/academy.svg';
+import academyIcon from '../assets/images/icons-v2/academy.svg';
+import academyIconActive from '../assets/images/icons-v2/academy-active.svg';
 import alertIcon from '../assets/images/icons-v2/icon-alert.svg';
 import Avatar from '../assets/images/icons-v2/avatar.svg';
 import backArrowActiveIcon from '../assets/images/icons-v2/arrow-left-active.svg';
@@ -14,6 +17,8 @@ import dashboardIcon from '../assets/images/icons-v2/dashboard.svg';
 import dashboardIconActive from '../assets/images/icons-v2/dashboard-active.svg';
 import delegatesIcon from '../assets/images/icons-v2/delegates.svg';
 import delegatesIconActive from '../assets/images/icons-v2/delegates-active.svg';
+import discordIcon from '../assets/images/icons-v2/discord.svg';
+import discordIconActive from '../assets/images/icons-v2/discord-active.svg';
 import feedback from '../assets/images/icons-v2/feedback.svg';
 import feedbackActive from '../assets/images/icons-v2/feedback-active.svg';
 import fileOutline from '../assets/images/icons-v2/icon-file-outline.svg';
@@ -21,6 +26,8 @@ import fowardArrowActiveIcon from '../assets/images/icons-v2/arrow-right-active.
 import fowardArrowInactiveIcon from '../assets/images/icons-v2/arrow-right-inactive.svg';
 import help from '../assets/images/icons-v2/help.svg';
 import helpActive from '../assets/images/icons-v2/help-active.svg';
+import helpCenter from '../assets/images/help/help-center.svg';
+import helpCenterArrow from '../assets/images/help/arrow.svg';
 import hidePassphraseIcon from '../assets/images/icons-v2/icon-hide-passphrase.svg';
 import icoLink from '../assets/images/icons-v2/link.svg';
 import iconEdit from '../assets/images/icons-v2/icon_edit.svg';
@@ -33,6 +40,7 @@ import iconWalletDetails from '../assets/images/icons-v2/icon-wallet-details.svg
 import iconWarning from '../assets/images/icons-v2/icon-warning.svg';
 import incoming from '../assets/images/icons-v2/incoming.svg';
 import Key from '../assets/images/icons-v2/key.svg';
+import liskChat from '../assets/images/help/lisk-chat.svg';
 import liskLogo from '../assets/images/lisk-logo-v2.svg';
 import liskLogoWhite from '../assets/images/lisk-logo-white-v2.svg';
 import Lock from '../assets/images/icons-v2/lock.svg';
@@ -63,10 +71,6 @@ import txDefault from '../assets/images/icons-v2/tx-default.svg';
 import txDelegate from '../assets/images/icons-v2/tx-delegate.svg';
 import txSendArrow from '../assets/images/icons-v2/tx-send-arrow.svg';
 import txVote from '../assets/images/icons-v2/tx-vote.svg';
-import academy from '../assets/images/help/academy.svg';
-import helpCenter from '../assets/images/help/help-center.svg';
-import liskChat from '../assets/images/help/lisk-chat.svg';
-import helpCenterArrow from '../assets/images/help/arrow.svg';
 import user from '../assets/images/icons-v2/user.svg';
 import userActive from '../assets/images/icons-v2/user-active.svg';
 import walletIcon from '../assets/images/icons-v2/wallet.svg';
@@ -74,6 +78,9 @@ import walletIconActive from '../assets/images/icons-v2/wallet-active.svg';
 import warningIcon from '../assets/images/icons-v2/warningIcon.svg';
 
 export default {
+  academy,
+  academyIcon,
+  academyIconActive,
   alert_icon: alertIcon,
   avatar_icon: Avatar,
   back_arrow_active_icon: backArrowActiveIcon,
@@ -91,6 +98,8 @@ export default {
   dashboardIconActive,
   delegatesIcon,
   delegatesIconActive,
+  discordIcon,
+  discordIconActive,
   feedback,
   feedbackActive,
   fileOutline,
@@ -99,6 +108,8 @@ export default {
   foward_arrow_inactive_icon: fowardArrowInactiveIcon,
   help,
   helpActive,
+  helpCenter,
+  helpCenterArrow,
   hidePassphraseIcon,
   icoLink,
   icon_edit: iconEdit,
@@ -111,6 +122,7 @@ export default {
   iconWarning,
   incoming,
   key_icon: Key,
+  liskChat,
   liskLogo,
   liskLogoWhite,
   lock_icon: Lock,
@@ -144,10 +156,6 @@ export default {
   user,
   userActive,
   walletIcon,
-  academy,
-  helpCenter,
-  liskChat,
-  helpCenterArrow,
   walletIconActive,
   warningIcon,
 };
