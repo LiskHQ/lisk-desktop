@@ -17,6 +17,7 @@ import dashboardIcon from '../../../assets/images/icons/dashboard.svg';
 import dashboardIconActive from '../../../assets/images/icons/dashboard-active.svg';
 import delegatesIcon from '../../../assets/images/icons/delegates.svg';
 import delegatesIconActive from '../../../assets/images/icons/delegates-active.svg';
+import discordIcon from '../../../assets/images/icons/discord.svg';
 import discreetModeOff from '../../../assets/images/icons/discreet-mode-off.svg';
 import discreetModeOn from '../../../assets/images/icons/discreet-mode-on.svg';
 import feedback from '../../../assets/images/icons/feedback.svg';
@@ -82,6 +83,7 @@ export const icons = {
   dashboardIconActive,
   delegatesIcon,
   delegatesIconActive,
+  discordIcon,
   discreetModeOff,
   discreetModeOn,
   feedback,
