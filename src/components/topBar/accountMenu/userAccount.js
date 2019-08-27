@@ -7,6 +7,7 @@ import Icon from '../../toolbox/icon';
 import { tokenKeys } from '../../../constants/tokens';
 import routes from '../../../constants/routes';
 import feedbackLinks from '../../../constants/feedbackLinks';
+import externalLinks from '../../../constants/externalLinks';
 import AccountInfo from './accountInfo';
 
 const UserAccount = ({
@@ -63,15 +64,27 @@ const UserAccount = ({
           <Dropdown.Separator key={`separator-${tokenKey}`} className={styles.separator} />,
         ]) : null))}
 
-        <Link
-          id="help"
+        <a
           className={styles.dropdownOption}
-          to={routes.help.path}
+          href={externalLinks.liskAcademy}
+          rel="noopener noreferrer"
+          target="_blank"
         >
-          <Icon name="help" className={styles.defaultIcon} />
-          <Icon name="helpActive" className={styles.activeIcon} />
-          <span>{t('Help Center')}</span>
-        </Link>
+          <Icon name="academyIcon" className={styles.defaultIcon} />
+          <Icon name="academyIconActive" className={styles.activeIcon} />
+          <span>{t('Lisk Academy')}</span>
+        </a>
+
+        <a
+          className={styles.dropdownOption}
+          href={externalLinks.discord}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <Icon name="discordIcon" className={styles.defaultIcon} />
+          <Icon name="discordIconActive" className={styles.activeIcon} />
+          <span>{t('Discord')}</span>
+        </a>
 
         <a
           className={styles.dropdownOption}
