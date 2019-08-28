@@ -11,6 +11,7 @@ import { networkStatusUpdated } from './network';
 import { updateTransactions } from './transactions';
 import accountConfig from '../constants/account';
 import actionTypes from '../constants/actions';
+import { tokenMap } from '../constants/tokens';
 
 /**
  * Trigger this action to remove passphrase from account object
@@ -166,15 +167,17 @@ async function getAccounts(tokens, options) {
 
 export const updateEnabledTokenAccount = token => async (dispatch, getState) => {
   const { network: networkConfig, account } = getState();
-  const [error, result] = await to(getAccount({
-    token,
-    networkConfig,
-    passphrase: account.passphrase,
-  }));
-  if (error) {
-    dispatch(errorToastDisplayed({ label: getConnectionErrorMessage(error) }));
-  } else {
-    dispatch(accountUpdated(result));
+  if (token !== tokenMap.LSK.key) {
+    const [error, result] = await to(getAccount({
+      token,
+      networkConfig,
+      passphrase: account.passphrase,
+    }));
+    if (error) {
+      dispatch(errorToastDisplayed({ label: getConnectionErrorMessage(error) }));
+    } else {
+      dispatch(accountUpdated(result));
+    }
   }
 };
 
