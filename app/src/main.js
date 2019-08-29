@@ -10,8 +10,8 @@ import updateChecker from './modules/autoUpdater';
 import server from '../server';
 
 require('babel-polyfill'); // eslint-disable-line import/no-extraneous-dependencies
-// require('./ledger');
-require('./modules/hwManager');
+require('./ledger');
+// require('./modules/hwManager');
 
 const defaultServerPort = 3000;
 let serverUrl;
