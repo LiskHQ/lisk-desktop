@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import manufacturers from './manufacturers';
 import { publish, subscribe } from './utils';
 

@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { models } from '../../../src/constants/hwConstants';
 
 const listener = (transport, actions) => {
