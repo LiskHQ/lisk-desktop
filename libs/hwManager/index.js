@@ -1,10 +1,22 @@
-import manufactures from './manufactures';
+import manufacturers from './manufacturers';
+import { publish, subscribe } from './utils';
 
-export class HwManager {
-  constructor() {
-    this.transports = {};
-
+class HwManager {
+  constructor({
+    transports = {},
+    pubSub = {},
+  }) {
+    this.transports = transports;
+    this.pubSub = pubSub;
     this.devices = [];
+  }
+
+  init() {
+    this.startListeners();
+    subscribe(this.pubSub.receiver, {
+      event: 'getConnectedDevicesList',
+      action: async () => this.getDevices(),
+    });
   }
 
   /**
@@ -14,43 +26,65 @@ export class HwManager {
    * @param {any} data.transport -> Transport used to communicate with the wallets
    */
   setTransport({ name, transport }) {
-    // console.log('set', { type, transport });
     this.transports[name] = transport;
-    // console.log('set', this.transports);
+  }
+
+  /**
+   * Returns list  of connected devices
+   * @returns {promise} Promise object with list of devices
+   */
+  async getDevices() {
+    return Promise.resolve(this.devices);
   }
 
   /**
    * Remove a specific hwWallet from the manager
-   * @param {string} descriptor - Path of hWWallet that shoud be removed
+   * @param {string} path - Path of hWWallet that shoud be removed
    */
-  removeDeviceWithPath(descriptor) {
-    const index = this.devices.findIndex(d => d.path === descriptor);
-    this.devices = [...this.devices.slice(0, index), ...this.devices.slice(index + 1)];
+  removeDeviceWithPath(path) {
+    this.devices = this.devices.filter(d => d.path !== path);
+    this.syncDevices();
   }
 
-  listener() {
-    try {
-      this.transports.ledger.listen({
-        next: ({ type, ...args }) => {
-          // console.log({ args, type });
-          if (type === 'add') {
-            const device = {
-              id: Math.random() * 1e4 + 1,
-              path: args.descriptor,
-              ...args.deviceModel,
-            };
-            this.devices.push(device);
-          } else if (type === 'remove') {
-            const device = this.devices.findIndex(d => d.path === args.descriptor);
-            this.devices = [...this.devices.slice(0, device), ...this.devices.slice(device + 1)];
-          }
-          console.log(this.devices);
-        },
-      });
-    } catch (e) {
-      console.log({ e });
-    }
+  /**
+   * Add device to devices list
+   * @param {Object} device - Device object containing (deviceId, model, label, path)
+   * @param {string} device.deviceId
+   * @param {string} device.label
+   * @param {string} device.model
+   * @param {string} device.path
+   */
+  addDevice(device) {
+    this.devices.push(device);
+    this.syncDevices();
+  }
+
+  /**
+   * Publish event throught sender with deviceList
+   */
+  async syncDevices() {
+    const { sender } = this.pubSub;
+    publish(sender, {
+      event: 'hwDeviceListChanged',
+      payload: await this.getDevices(),
+    });
+  }
+
+  /**
+   * Start listeners set by setTransport
+   */
+  startListeners() {
+    Object.keys(this.transports).forEach((key) => {
+      try {
+        manufacturers[key].listener(this.transports[key], {
+          add: data => this.addDevice(data),
+          remove: data => this.removeDeviceWithPath(data),
+        });
+      } catch (e) {
+        throw e;
+      }
+    });
   }
 }
 
-export default new HwManager();
+export default HwManager;
