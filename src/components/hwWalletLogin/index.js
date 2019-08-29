@@ -4,6 +4,7 @@ import { translate } from 'react-i18next';
 import { updateDeviceList } from '../../actions/hwWallets';
 import { getAPIClient } from '../../utils/api/network';
 import { tokenMap } from '../../constants/tokens';
+import { settingsUpdated } from '../../actions/settings';
 import HardwareWalletLogin from './hwWalletLogin';
 
 const mapStateToProps = state => ({
@@ -14,6 +15,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   updateDeviceList,
+  settingsUpdated,
 };
 
 export default connect(
