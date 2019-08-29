@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 let devices = [];
 const clearDevices = async (transport, { remove }) => {
   const connectedPaths = await transport.list();

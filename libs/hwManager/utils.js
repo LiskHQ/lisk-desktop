@@ -1,3 +1,12 @@
+/* istanbul ignore file */
+
+/**
+ * Create a listener to a function that send a response back to the sender
+ * @param {any} subscriber - Subscriber that will listen to the event
+ * @param {Object} data - Object containing  the command and fn
+ * @param {string} data.command - Event name to be listened to
+ * @param {func} data.fn - Function to be executed when event is triggered
+ */
 export const createCommand = (subscriber, { command, fn }) => {
   subscriber.on(`${command}.request`, async (event, ...args) => {
     Promise.resolve(fn(...args))
