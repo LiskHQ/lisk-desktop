@@ -75,6 +75,7 @@ const executeCommand = async (transporter, {
       return res;
     }
     default: {
+      // eslint-disable-next-line no-console
       console.log(`No action created for: ${device.manufactor}.${action}`);
       return null;
     }

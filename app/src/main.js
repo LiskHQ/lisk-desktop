@@ -1,10 +1,11 @@
-import electron from 'electron'; // eslint-disable-line import/no-extraneous-dependencies
-import electronLocalshortcut from 'electron-localshortcut'; // eslint-disable-line import/no-extraneous-dependencies
-import { autoUpdater } from 'electron-updater'; // eslint-disable-line import/no-extraneous-dependencies
-import path from 'path';
-import storage from 'electron-json-storage'; // eslint-disable-line import/no-extraneous-dependencies
+/* eslint-disable import/no-extraneous-dependencies */
+import { autoUpdater } from 'electron-updater';
+import electron from 'electron';
+import electronLocalshortcut from 'electron-localshortcut';
 import getPort from 'get-port';
 import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
+import path from 'path';
+import storage from 'electron-json-storage';
 import win from './modules/win';
 import localeHandler from './modules/localeHandler';
 import updateChecker from './modules/autoUpdater';
@@ -42,8 +43,10 @@ const createWindow = () => {
   const debug = false;
   if (debug) {
     installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS])
-      .then(name => console.log(`Added Extension:  ${name}`))
-      .catch(err => console.log('An error occurred: ', err));
+      // eslint-disable-next-line no-console
+      .then(name => console.info(`Added Extension:  ${name}`))
+      // eslint-disable-next-line no-console
+      .catch(err => console.info('An error occurred: ', err));
   }
 };
 

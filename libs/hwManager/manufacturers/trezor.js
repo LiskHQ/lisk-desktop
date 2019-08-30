@@ -14,6 +14,7 @@ const listener = (transport, actions) => {
   });
 
   transport.on('error', (error) => {
+    // eslint-disable-next-line no-console
     console.error('Trezor Error: ', error);
   });
 
@@ -59,6 +60,7 @@ const executeCommand = (transporter, {
           return resolve(message.public_key);
         }
         default: {
+          // eslint-disable-next-line no-console
           console.log(`No action created for: ${device.manufactor}.${action}`);
           return reject(new Error(`No action created for: ${device.manufactor}.${action}`));
         }
