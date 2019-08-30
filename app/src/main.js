@@ -4,6 +4,7 @@ import { autoUpdater } from 'electron-updater'; // eslint-disable-line import/no
 import path from 'path';
 import storage from 'electron-json-storage'; // eslint-disable-line import/no-extraneous-dependencies
 import getPort from 'get-port';
+import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
 import win from './modules/win';
 import localeHandler from './modules/localeHandler';
 import updateChecker from './modules/autoUpdater';
@@ -37,6 +38,13 @@ const createWindow = () => {
   win.create({
     electron, path, electronLocalshortcut, storage, checkForUpdates, serverUrl,
   });
+
+  const debug = false;
+  if (debug) {
+    installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS])
+      .then(name => console.log(`Added Extension:  ${name}`))
+      .catch(err => console.log('An error occurred: ', err));
+  }
 };
 
 app.on('ready', () => {
