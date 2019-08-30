@@ -22,6 +22,7 @@ const listener = (transport, actions) => {
               label: deviceModel.productName,
               model: deviceModel.productName,
               path: descriptor,
+              manufactor: 'ledger',
             });
           }
           clearDevices(transport, actions);
@@ -33,10 +34,10 @@ const listener = (transport, actions) => {
   }
 };
 
-const getLedgerAccount = () => {
+const getLedgerAccount = (index = 0) => {
   const ledgerAccount = new LedgerAccount();
   ledgerAccount.coinIndex(SupportedCoin.LISK);
-  ledgerAccount.account(0);
+  ledgerAccount.account(index);
   return ledgerAccount;
 };
 
@@ -58,7 +59,30 @@ const checkIfInsideLiskApp = async ({
   return device;
 };
 
+const executeCommand = async (transporter, {
+  device,
+  action,
+  data,
+}) => {
+  const transport = await transporter.open(device.path);
+  const liskLedger = new DposLedger(transport);
+  const ledgerAccount = getLedgerAccount(data.index);
+
+  switch (action) {
+    case 'GET_PUBLICKEY': {
+      const { publicKey: res } = await liskLedger.getPubKey(ledgerAccount, data.showOnDevice);
+      transport.close();
+      return res;
+    }
+    default: {
+      console.log(`No action created for: ${device.manufactor}.${action}`);
+      return null;
+    }
+  }
+};
+
 export default {
   listener,
   checkIfInsideLiskApp,
+  executeCommand,
 };

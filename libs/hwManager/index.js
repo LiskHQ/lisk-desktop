@@ -24,11 +24,24 @@ class HwManager {
     subscribe(receiver, {
       event: 'checkLedger',
       action: async ({ id }) => {
-        const device = await manufacturers.ledger.checkIfInsideLiskApp({
-          transporter: this.transports.ledger,
-          device: this.getDeviceById(id),
-        });
-        this.updateDevice(device);
+        const device = this.getDeviceById(id);
+        this.updateDevice(await manufacturers[device.manufactor].checkIfInsideLiskApp({
+          transporter: this.transports[device.manufactor],
+          device,
+        }));
+      },
+    });
+
+    subscribe(receiver, {
+      event: 'hwCommand',
+      action: async ({ action, data }) => {
+        const device = this.getDeviceById(data.deviceId);
+        return manufacturers[device.manufactor]
+          .executeCommand(this.transports[device.manufactor], {
+            device,
+            action,
+            data,
+          });
       },
     });
   }
