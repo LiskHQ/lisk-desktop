@@ -11,6 +11,7 @@
     "postinstall": "electron-rebuild --force"
   },
   "dependencies": {
+    "electron-devtools-installer": "^2.2.4",
     "get-port": "^4.1.0",
     "node-abi": "^2.7.1",
     "node-hid": "0.7.2",
