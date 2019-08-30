@@ -105,11 +105,11 @@ const ledgerObserver = {
   },
 };
 
-ipcMain.on('checkLedger', async (event, { id }) => {
+ipcMain.on('checkLedger.request', async (event, { id }) => {
   const ledgerDevice = getDeviceById(id);
   ledgerDevice.openApp = await isInsideLedgerApp(ledgerDevice.path);
   updateConnectedDevices(ledgerDevice);
-  win.send({ event: 'checkLedger.done' });
+  win.send({ event: 'checkLedger.result' });
 });
 
 let observableListen = null;

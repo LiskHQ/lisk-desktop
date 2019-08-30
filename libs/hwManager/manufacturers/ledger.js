@@ -1,4 +1,6 @@
 /* istanbul ignore file */
+import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api';
+
 let devices = [];
 const clearDevices = async (transport, { remove }) => {
   const connectedPaths = await transport.list();
@@ -14,7 +16,6 @@ const listener = (transport, actions) => {
       next: ({ type, deviceModel, descriptor }) => {
         if (deviceModel && descriptor) {
           if (type === 'add') {
-            clearDevices(transport, actions);
             devices.push(descriptor);
             actions.add({
               deviceId: `${Math.floor(Math.random() * 1e5) + 1}`,
@@ -22,9 +23,8 @@ const listener = (transport, actions) => {
               model: deviceModel.productName,
               path: descriptor,
             });
-          } else if (type === 'remove') {
-            clearDevices(transport, actions);
           }
+          clearDevices(transport, actions);
         }
       },
     });
@@ -33,6 +33,32 @@ const listener = (transport, actions) => {
   }
 };
 
+const getLedgerAccount = () => {
+  const ledgerAccount = new LedgerAccount();
+  ledgerAccount.coinIndex(SupportedCoin.LISK);
+  ledgerAccount.account(0);
+  return ledgerAccount;
+};
+
+const checkIfInsideLiskApp = async ({
+  transporter,
+  device,
+}) => {
+  let transport;
+  try {
+    transport = await transporter.open(device.path);
+    const liskLedger = new DposLedger(transport);
+    const ledgerAccount = getLedgerAccount();
+    const account = await liskLedger.getPubKey(ledgerAccount);
+    device.openApp = !!account;
+  } catch (e) {
+    device.openApp = false;
+  }
+  if (transport) transport.close();
+  return device;
+};
+
 export default {
   listener,
+  checkIfInsideLiskApp,
 };
