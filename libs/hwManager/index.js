@@ -13,10 +13,23 @@ class HwManager {
   }
 
   init() {
+    const { receiver } = this.pubSub;
     this.startListeners();
-    subscribe(this.pubSub.receiver, {
+
+    subscribe(receiver, {
       event: 'getConnectedDevicesList',
       action: async () => this.getDevices(),
+    });
+
+    subscribe(receiver, {
+      event: 'checkLedger',
+      action: async ({ id }) => {
+        const device = await manufacturers.ledger.checkIfInsideLiskApp({
+          transporter: this.transports.ledger,
+          device: this.getDeviceById(id),
+        });
+        this.updateDevice(device);
+      },
     });
   }
 
@@ -39,6 +52,15 @@ class HwManager {
   }
 
   /**
+   * Return the device with matching ID
+   * @param {string} id - Id of device
+   * @returns {promise} device found or undefined
+   */
+  getDeviceById(id) {
+    return this.devices.find(d => d.deviceId === id);
+  }
+
+  /**
    * Remove a specific hwWallet from the manager
    * @param {string} path - Path of hWWallet that shoud be removed
    */
@@ -57,6 +79,19 @@ class HwManager {
    */
   addDevice(device) {
     this.devices.push(device);
+    this.syncDevices();
+  }
+
+  /**
+   * Update device on devices list based on the path
+   * @param {Object} device - Device object containing (deviceId, model, label, path)
+   * @param {string} device.deviceId
+   * @param {string} device.label
+   * @param {string} device.model
+   * @param {string} device.path
+   */
+  updateDevice(device) {
+    this.devices = this.devices.map(d => (d.path === device.path ? device : d));
     this.syncDevices();
   }
 

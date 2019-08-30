@@ -5,7 +5,7 @@
  * @param {any} subscriber - Subscriber that will listen to the event
  * @param {Object} data - Object containing  the command and fn
  * @param {string} data.command - Event name to be listened to
- * @param {func} data.fn - Function to be executed when event is triggered
+ * @param {function} data.fn - Function to be executed when event is triggered
  */
 export const createCommand = (subscriber, { command, fn }) => {
   subscriber.on(`${command}.request`, async (event, ...args) => {
@@ -34,7 +34,7 @@ export const publish = (sender, { event, payload }) => {
  * @param {any} receiver - Subscriber that should be subscribed to the the event
  * @param {object} data - Object containing the event and the action
  * @param {string} data.event - Event name to be subscribed to thoguht the receiver
- * @param {func} data.action - Function that should be executed when event is triggered
+ * @param {function} data.action - Function that should be executed when event is triggered
  */
 export const subscribe = (receiver, { event, action }) => {
   if (!receiver) return false;
