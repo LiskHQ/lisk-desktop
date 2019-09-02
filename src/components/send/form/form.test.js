@@ -169,6 +169,13 @@ describe('Form', () => {
       wrapper.find('label.option-High input[type="radio"]').simulate('click').simulate('change');
       expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicFees.High));
     });
+
+    it('should call props.dynamicFeesRetrieved if props.dynamicFees is empty object', () => {
+      wrapper.setProps({
+        dynamicFees: {},
+      });
+      expect(props.dynamicFeesRetrieved).toHaveBeenCalled();
+    });
   });
 
   describe('Recipient field', () => {
