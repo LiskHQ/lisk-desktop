@@ -1,5 +1,6 @@
 /* istanbul ignore file */
 import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api';
+import Lisk from '@liskhq/lisk-client';
 
 let devices = [];
 const clearDevices = async (transport, { remove }) => {
@@ -59,26 +60,49 @@ const checkIfInsideLiskApp = async ({
   return device;
 };
 
+const getTransactionBytes = transaction => Lisk.transaction.utils.getTransactionBytes(transaction);
+const getBufferToHex = buffer => Lisk.cryptography.bufferToHex(buffer);
+
+// eslint-disable-next-line max-statements
 const executeCommand = async (transporter, {
   device,
   action,
   data,
 }) => {
-  const transport = await transporter.open(device.path);
-  const liskLedger = new DposLedger(transport);
-  const ledgerAccount = getLedgerAccount(data.index);
+  let transport;
 
-  switch (action) {
-    case 'GET_PUBLICKEY': {
-      const { publicKey: res } = await liskLedger.getPubKey(ledgerAccount, data.showOnDevice);
-      transport.close();
-      return res;
+  try {
+    transport = await transporter.open(device.path);
+    const liskLedger = new DposLedger(transport);
+    const ledgerAccount = getLedgerAccount(data.index);
+
+    switch (action) {
+      case 'GET_PUBLICKEY': {
+        const { publicKey: res } = await liskLedger.getPubKey(ledgerAccount, data.showOnDevice);
+        transport.close();
+        return res;
+      }
+
+      case 'SIGN_TX': {
+        const signature = await liskLedger.signTX(
+          ledgerAccount,
+          getTransactionBytes(data.tx),
+          false,
+        );
+        transport.close();
+        const res = getBufferToHex(signature);
+        return res;
+      }
+
+      default: {
+        // eslint-disable-next-line no-console
+        console.log(`No action created for: ${device.manufactor}.${action}`);
+        return null;
+      }
     }
-    default: {
-      // eslint-disable-next-line no-console
-      console.log(`No action created for: ${device.manufactor}.${action}`);
-      return null;
-    }
+  } catch (err) {
+    transport.close();
+    throw new Error(err);
   }
 };
 
