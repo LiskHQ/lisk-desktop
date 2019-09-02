@@ -19,6 +19,7 @@ class UnlockDevice extends React.Component {
   }
 
   componentDidMount() {
+    this.navigateIfNeeded();
     this.checkLedger();
   }
 
@@ -48,9 +49,9 @@ class UnlockDevice extends React.Component {
       this.setState({ isLoading: false });
     } else {
       if (this.state.isLoading) {
-        ipc.once('checkLedger.done', () => this.setState({ isLoading: false }));
+        ipc.once('checkLedger.result', () => this.setState({ isLoading: false }));
       }
-      ipc.send('checkLedger', { id: this.props.deviceId });
+      ipc.send('checkLedger.request', { id: this.props.deviceId });
     }
   }
 
