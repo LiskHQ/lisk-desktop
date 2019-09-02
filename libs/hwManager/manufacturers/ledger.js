@@ -3,6 +3,7 @@ import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api';
 import Lisk from '@liskhq/lisk-client';
 
 let devices = [];
+
 const clearDevices = async (transport, { remove }) => {
   const connectedPaths = await transport.list();
   devices
@@ -16,6 +17,7 @@ const listener = (transport, actions) => {
     transport.listen({
       next: ({ type, deviceModel, descriptor }) => {
         if (deviceModel && descriptor) {
+          // TODO use contants instead of hardcoded text
           if (type === 'add') {
             devices.push(descriptor);
             actions.add({
@@ -23,7 +25,7 @@ const listener = (transport, actions) => {
               label: deviceModel.productName,
               model: deviceModel.productName,
               path: descriptor,
-              manufactor: 'ledger',
+              manufactor: 'ledger', // TODO use contants instead of hardcoded text for events
             });
           }
           clearDevices(transport, actions);
@@ -60,9 +62,12 @@ const checkIfInsideLiskApp = async ({
   return device;
 };
 
+// TODO export this to an utils file
 const getTransactionBytes = transaction => Lisk.transaction.utils.getTransactionBytes(transaction);
 const getBufferToHex = buffer => Lisk.cryptography.bufferToHex(buffer);
 
+// TODO after move the logic of each event to separate functions we can remove
+// the eslint for max statements
 // eslint-disable-next-line max-statements
 const executeCommand = async (transporter, {
   device,
@@ -77,12 +82,14 @@ const executeCommand = async (transporter, {
     const ledgerAccount = getLedgerAccount(data.index);
 
     switch (action) {
+      // TODO use contants instead of hardcoded text for events and move the logic to functions
       case 'GET_PUBLICKEY': {
         const { publicKey: res } = await liskLedger.getPubKey(ledgerAccount, data.showOnDevice);
         transport.close();
         return res;
       }
 
+      // TODO use contants instead of hardcoded text for events and move the logic to functions
       case 'SIGN_TX': {
         const signature = await liskLedger.signTX(
           ledgerAccount,

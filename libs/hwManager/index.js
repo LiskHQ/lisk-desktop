@@ -16,11 +16,13 @@ class HwManager {
     const { receiver } = this.pubSub;
     this.startListeners();
 
+    // TODO use contants instead of hardcoded text for events
     subscribe(receiver, {
       event: 'getConnectedDevicesList',
       action: async () => this.getDevices(),
     });
 
+    // TODO use contants instead of hardcoded text for events
     subscribe(receiver, {
       event: 'checkLedger',
       action: async ({ id }) => {
@@ -32,6 +34,7 @@ class HwManager {
       },
     });
 
+    // TODO use contants instead of hardcoded text for events
     subscribe(receiver, {
       event: 'hwCommand',
       action: async ({ action, data }) => {
@@ -113,6 +116,7 @@ class HwManager {
    */
   async syncDevices() {
     const { sender } = this.pubSub;
+    // TODO use contants instead of hardcoded text for events
     publish(sender, {
       event: 'hwDeviceListChanged',
       payload: await this.getDevices(),

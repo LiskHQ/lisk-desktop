@@ -1,32 +1,38 @@
 /* istanbul ignore file */
 /* eslint-disable no-bitwise */
+// TODO remove this line once we add constants file for this module
 import { models } from '../../../src/constants/hwConstants';
 
 const listener = (transport, actions) => {
+  // TODO use contants instead of hardcoded text
   transport.on('connect', (device) => {
     actions.add({
       deviceId: device.features.device_id,
       label: device.features.label,
       model: device.features.model === '1' ? models.trezorOne : models.trezorModelT,
       path: device.originalDescriptor.path,
-      manufactor: 'trezor',
+      manufactor: 'trezor', // TODO use contants instead of hardcoded text
     });
   });
 
+  // TODO use contants instead of hardcoded text
   transport.on('error', (error) => {
     // eslint-disable-next-line no-console
     console.error('Trezor Error: ', error);
   });
 
+  // TODO use contants instead of hardcoded text
   transport.on('disconnect', (device) => {
     actions.remove(device.originalDescriptor.path);
   });
 
+  // TODO use contants instead of hardcoded text
   process.on('exit', () => {
     transport.onbeforeunload();
   });
 };
 
+// TODO move this to utils file
 const hardeningConstant = 0x80000000;
 const getHardenedPath = index => [
   (44 | hardeningConstant) >>> 0,
@@ -60,6 +66,8 @@ const toTrezorGrammar = (tx) => {
   return tx;
 };
 
+// TODO after move the logic of each event to separate functions we can remove
+// the eslint for max statements
 const executeCommand = (transporter, {
   device,
   action,
@@ -76,6 +84,7 @@ const executeCommand = (transporter, {
     trezorDevice.waitForSessionAndRun(async (session) => {
       try {
         switch (action) {
+          // TODO use contants instead of hardcoded text for events and move the logic to functions
           case 'GET_PUBLICKEY': {
             const { message } = await session.typedCall(
               'LiskGetPublicKey',
@@ -88,6 +97,7 @@ const executeCommand = (transporter, {
             return resolve(message.public_key);
           }
 
+          // TODO use contants instead of hardcoded text for events and move the logic to functions
           case 'SIGN_TX': {
             const { message } = await session.typedCall(
               'LiskSignTx',
