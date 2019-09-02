@@ -148,29 +148,22 @@ describe('Form', () => {
       Low: 156,
       High: 51,
     };
-    it('should re-render properly if props.token', () => {
+
+    beforeEach(() => {
       wrapper.setProps({
         token: tokenMap.BTC.key,
+        dynamicFees,
       });
+    });
+
+    it('should re-render properly if props.token', () => {
       expect(wrapper).toContainMatchingElement('span.recipient');
       expect(wrapper).toContainMatchingElement('span.amount');
       expect(wrapper).toContainMatchingElement('div.processing-speed');
       expect(wrapper).not.toContainMatchingElement('label.reference');
     });
 
-    it('should render processingSpeed fee based on dynamicFees', () => {
-      wrapper.setProps({
-        token: tokenMap.BTC.key,
-      });
-      wrapper.setProps({ dynamicFees });
-      expect(wrapper).toContainMatchingElement('div.processing-speed');
-    });
-
     it('should update processingSpeed fee when "High" is selected', () => {
-      wrapper.setProps({
-        token: tokenMap.BTC.key,
-        dynamicFees,
-      });
       wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '0.0012' } });
       expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicFees.Low));
       wrapper.find('label.option-High input[type="radio"]').simulate('click').simulate('change');
