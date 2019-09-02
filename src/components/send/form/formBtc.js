@@ -181,7 +181,7 @@ export default class FormBtc extends React.Component {
             ]}
           />
           <span className={styles.processingInfo}>
-            {t('Transaction fee: ')}
+            {`${t('Transaction fee')}: `}
             <span>{this.getProcessingSpeedStatus()}</span>
           </span>
         </div>

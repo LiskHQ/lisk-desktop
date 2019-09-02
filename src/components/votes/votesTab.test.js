@@ -36,7 +36,7 @@ describe('Votes Tab Component', () => {
 
   it('Should render with empty state', () => {
     wrapper = setup(props);
-    expect(wrapper.find('.empty-message')).toIncludeText('This account doesn’t have any votes');
+    expect(wrapper.find('.empty-message')).toIncludeText('This account doesn’t have any votes.');
   });
 
   it('Should show loading state', () => {

@@ -175,8 +175,8 @@ class VotesTab extends React.Component {
             )) : (
               <p className={`${styles.empty} empty-message`}>
                 {filterValue === ''
-                  ? t('This account doesn’t have any votes')
-                  : t('There are no results matching this filter')
+                  ? t('This account doesn’t have any votes.')
+                  : t('There are no results matching this filter.')
                 }
               </p>
             )}
