@@ -1,12 +1,13 @@
-import React from 'react';
-import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
-import configureMockStore from 'redux-mock-store';
+import React from 'react';
 import thunk from 'redux-thunk';
-import i18n from '../../../i18n';
-import accounts from '../../../../test/constants/accounts';
-import Form from './form';
+import { mount } from 'enzyme';
+import configureMockStore from 'redux-mock-store';
+import { fromRawLsk } from '../../../utils/lsk';
 import { tokenMap } from '../../../constants/tokens';
+import Form from './form';
+import accounts from '../../../../test/constants/accounts';
+import i18n from '../../../i18n';
 
 jest.mock('../../../utils/api/btc/transactions', () => ({
   getUnspentTransactionOutputs: jest.fn(() => Promise.resolve([{
@@ -20,7 +21,7 @@ jest.mock('../../../utils/api/btc/transactions', () => ({
     tx_pos: 1,
     value: 397040,
   }])),
-  getTransactionFeeFromUnspentOutputs: jest.fn(() => 156000),
+  getTransactionFeeFromUnspentOutputs: jest.fn(({ dynamicFeePerByte }) => dynamicFeePerByte),
 }));
 
 describe('Form', () => {
@@ -144,8 +145,8 @@ describe('Form', () => {
 
   describe('shold work with props.token BTC', () => {
     const dynamicFees = {
-      Low: 0.00000156,
-      High: 0.0000051,
+      Low: 156,
+      High: 51,
     };
     it('should re-render properly if props.token', () => {
       wrapper.setProps({
@@ -165,19 +166,15 @@ describe('Form', () => {
       expect(wrapper).toContainMatchingElement('div.processing-speed');
     });
 
-    it.skip('should update processingSpeed fee when "High" is selected', () => {
+    it('should update processingSpeed fee when "High" is selected', () => {
       wrapper.setProps({
         token: tokenMap.BTC.key,
-        fields: {
-          amount: {
-            value: '0.001',
-          },
-        },
+        dynamicFees,
       });
-      wrapper.setProps({ dynamicFees });
-      expect(wrapper.find('div.processing-speed')).toIncludeText(dynamicFees.Low);
-      wrapper.find('label.option-High').simulate('click');
-      expect(wrapper.find('div.processing-speed')).toIncludeText(dynamicFees.High);
+      wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '0.0012' } });
+      expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicFees.Low));
+      wrapper.find('label.option-High input[type="radio"]').simulate('click').simulate('change');
+      expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicFees.High));
     });
   });
 
