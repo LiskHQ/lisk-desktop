@@ -28,7 +28,6 @@ class BookmarkAutoSuggest extends React.Component {
     if (account) this.onSelectedAccount(account);
   }
 
-  // istanbul ignore next
   validateBookmark() {
     const {
       token, networkConfig, recipient, bookmarks, t,
