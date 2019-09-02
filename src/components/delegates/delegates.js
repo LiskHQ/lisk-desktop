@@ -41,7 +41,7 @@ class Delegates extends React.Component {
       illustration: 'getRewarded',
     }, {
       title: t('Expand your knowledge'),
-      content: t('Want to know more? We’ve got you covered. Read more about Lisk’s consensus algorithm and its benefits in the Help Center.'),
+      content: t('Want to know more? We’ve got you covered. Read more about Lisk’s consensus algorithm and its benefits in the Lisk Academy.'),
       illustration: 'expandYourKnowledge',
     }];
   }
