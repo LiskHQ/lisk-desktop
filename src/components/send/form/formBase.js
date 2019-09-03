@@ -1,11 +1,10 @@
 import React from 'react';
-import numeral from 'numeral';
 import { Input } from '../../toolbox/inputs';
 import { PrimaryButton } from '../../toolbox/buttons/button';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { fromRawLsk } from '../../../utils/lsk';
 import { parseSearchParams } from '../../../utils/searchParams';
-import { validateAmountFormat } from '../../../utils/validators';
+import { getAmountFeedbackAndError } from '../../../utils/validators';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import Box from '../../toolbox/box';
 import Converter from '../../converter';
@@ -18,23 +17,6 @@ import i18n from '../../../i18n';
 import links from '../../../constants/externalLinks';
 import regex from '../../../utils/regex';
 import styles from './form.css';
-
-function getAmountFeedbackAndError(value, {
-  fee, account, token, t,
-}) {
-  const { message, error } = validateAmountFormat({
-    value,
-    token,
-    locale: i18n.language,
-  });
-  let feedback = message;
-
-  const getMaxAmount = () => fromRawLsk(Math.max(0, account.balance - fee));
-  if (!error && parseFloat(getMaxAmount()) < numeral(value).value()) {
-    feedback = t('Provided amount is higher than your current balance.');
-  }
-  return { error, feedback };
-}
 
 class FormBase extends React.Component {
   constructor(props) {
@@ -54,7 +36,7 @@ class FormBase extends React.Component {
           title: '',
         },
         amount: amount ? {
-          ...getAmountFeedbackAndError(amount, props),
+          ...getAmountFeedbackAndError({ value: amount, ...props }),
           value: amount,
         } : {
           error: false,
@@ -91,7 +73,7 @@ class FormBase extends React.Component {
     value = leadingPoint.test(value) ? `0${value}` : value;
 
     this.updateField(name, {
-      ...getAmountFeedbackAndError(value, this.props),
+      ...getAmountFeedbackAndError({ value, ...this.props }),
       value,
     });
   }
