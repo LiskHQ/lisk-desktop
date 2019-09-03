@@ -193,19 +193,19 @@ describe('Form', () => {
       jest.advanceTimersByTime(300);
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
-      expect(amountField.find('.feedback')).toHaveClassName('error');
+      expect(amountField.find('.feedback.error')).toHaveClassName('error');
 
       amountField.find('input').simulate('change', { target: { name: 'amount', value: '1.1.' } });
       jest.advanceTimersByTime(300);
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
-      expect(amountField.find('.feedback')).toHaveClassName('error');
+      expect(amountField.find('.feedback.error')).toHaveClassName('error');
 
       amountField.find('input').simulate('change', { target: { name: 'amount', value: props.account.balance + 2 } });
       jest.advanceTimersByTime(300);
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
-      expect(amountField.find('.feedback')).toHaveClassName('error');
+      expect(amountField.find('.feedback.error')).toHaveClassName('error');
     });
   });
 
@@ -223,7 +223,7 @@ describe('Form', () => {
       jest.advanceTimersByTime(300);
       wrapper.update();
       referenceField = wrapper.find('.fieldGroup').at(2);
-      expect(referenceField.find('.feedback')).toHaveClassName('show error');
+      expect(referenceField.find('.feedback.error')).toHaveClassName('show error');
     });
   });
 });
