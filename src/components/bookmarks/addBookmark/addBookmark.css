@@ -35,24 +35,5 @@
     & .input[name="address"] {
       padding-left: 48px;
     }
-
-    & .input:focus ~ .feedback {
-      opacity: 1 !important;
-    }
-  }
-
-  & .feedback {
-    margin-top: 5px;
-    min-height: 40px;
-    opacity: 0;
-
-    &.error {
-      opacity: 1;
-    }
-
-    &:not(.error) {
-      padding-left: 0;
-      padding-right: 0;
-    }
   }
 }
