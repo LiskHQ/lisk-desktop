@@ -1,6 +1,31 @@
 @import '../../app/variables.css';
 @import '../../app/mixins.css';
 
+:root {
+  --height-l: 48px;
+  --height-m: 40px;
+  --height-s: 36px;
+  --height-xs: 32px;
+  --vertical-padding-l: 15px;
+  --horizontal-padding-l: 20px;
+}
+
+.wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  & .status {
+    position: absolute;
+    top: var(--vertical-padding-l);
+    right: var(--horizontal-padding-l);
+  }
+
+  & .loading {
+    color: var(--color-ultramarine-blue);
+  }
+}
+
 .input {
   @mixin contentLargest;
 
@@ -9,7 +34,7 @@
   border-radius: var(--border-radius-standard);
   box-sizing: border-box;
   color: var(--color-maastricht-blue);
-  height: 46px;
+  height: var(--height-l);
   outline: none;
   padding: 8px 10px;
   text-align: left;
@@ -21,28 +46,28 @@
   &.l {
     @mixin contentLargest;
 
-    height: 48px;
-    padding: 15px 20px;
+    height: var(--height-l);
+    padding: var(--vertical-padding-l) var(--horizontal-padding-l);
   }
 
   &.m {
     @mixin contentLargest;
 
-    height: 40px;
+    height: var(--height-m);
     padding: 11px 16px;
   }
 
   &.s {
     @mixin contentNormal;
 
-    height: 36px;
+    height: var(--height-s);
     padding: 8px 10px;
   }
 
   &.xs {
     @mixin contentNormal;
 
-    height: 32px;
+    height: var(--height-xs);
     padding: 6px 10px;
   }
 
@@ -76,13 +101,6 @@
   position: absolute;
   top: 32px;
   left: 31px;
-}
-
-.loading {
-  color: var(--color-ultramarine-blue);
-  position: absolute;
-  top: 32px;
-  right: 31px;
 }
 
 .autoresize {
