@@ -20,15 +20,15 @@
     padding-top var(--animation-speed-fast) linear;
   width: 100%;
 
-  &.error {
-    background: var(--error-background-color);
-    color: var(--color-burnt-sienna);
-    padding: 8px 20px;
-  }
-
   &.show {
     max-height: 40px;
     opacity: 1;
+    padding: 8px 0;
+  }
+
+  &.error {
+    background: var(--error-background-color);
+    color: var(--color-burnt-sienna);
     padding: 8px 20px;
   }
 
