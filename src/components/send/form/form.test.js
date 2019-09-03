@@ -3,26 +3,10 @@ import React from 'react';
 import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
-import { fromRawLsk } from '../../../utils/lsk';
 import { tokenMap } from '../../../constants/tokens';
 import Form from './form';
 import accounts from '../../../../test/constants/accounts';
 import i18n from '../../../i18n';
-
-jest.mock('../../../utils/api/btc/transactions', () => ({
-  getUnspentTransactionOutputs: jest.fn(() => Promise.resolve([{
-    height: 1575216,
-    tx_hash: '992545eeab2ac01adf78454f8b49d042efd53ab690d76121ebd3cddca3b600e5',
-    tx_pos: 0,
-    value: 1,
-  }, {
-    height: 1575216,
-    tx_hash: '992545eeab2ac01adf78454f8b49d042efd53ab690d76121ebd3cddca3b600e5',
-    tx_pos: 1,
-    value: 397040,
-  }])),
-  getTransactionFeeFromUnspentOutputs: jest.fn(({ dynamicFeePerByte }) => dynamicFeePerByte),
-}));
 
 describe('Form', () => {
   let wrapper;
@@ -141,41 +125,6 @@ describe('Form', () => {
     expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
     wrapper.find('button.btn-submit').simulate('click');
     expect(props.nextStep).toHaveBeenCalled();
-  });
-
-  describe('shold work with props.token BTC', () => {
-    const dynamicFees = {
-      Low: 156,
-      High: 51,
-    };
-
-    beforeEach(() => {
-      wrapper.setProps({
-        token: tokenMap.BTC.key,
-        dynamicFees,
-      });
-    });
-
-    it('should re-render properly if props.token', () => {
-      expect(wrapper).toContainMatchingElement('span.recipient');
-      expect(wrapper).toContainMatchingElement('span.amount');
-      expect(wrapper).toContainMatchingElement('div.processing-speed');
-      expect(wrapper).not.toContainMatchingElement('label.reference');
-    });
-
-    it('should update processingSpeed fee when "High" is selected', () => {
-      wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '0.0012' } });
-      expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicFees.Low));
-      wrapper.find('label.option-High input[type="radio"]').simulate('click').simulate('change');
-      expect(wrapper.find('div.processing-speed')).toIncludeText(fromRawLsk(dynamicFees.High));
-    });
-
-    it('should call props.dynamicFeesRetrieved if props.dynamicFees is empty object', () => {
-      wrapper.setProps({
-        dynamicFees: {},
-      });
-      expect(props.dynamicFeesRetrieved).toHaveBeenCalled();
-    });
   });
 
   describe('Recipient field', () => {
