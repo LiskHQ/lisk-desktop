@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import manufacturers from './manufacturers';
-import { publish, subscribe } from './utils';
+import { publish, subscribe } from './utils/utils';
 
 class HwManager {
   constructor({

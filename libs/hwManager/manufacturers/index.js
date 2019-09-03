@@ -1,7 +1,7 @@
-import ledger from './ledger';
-import trezor from './trezor';
+import Ledger from './ledger';
+import Trezor from './trezor';
 
 export default {
-  ledger,
-  trezor,
+  Ledger,
+  Trezor,
 };
