@@ -133,7 +133,7 @@ describe('Select Account', () => {
     wrapper.setState({ accountOnEditMode: 0 });
     wrapper.update();
     expect(wrapper).toContainMatchingElement('.save-account');
-    wrapper.find('.account-name').at(0).simulate('change', { target: { value: 'Lisk Account' } });
+    wrapper.find('input.account-name').at(0).simulate('change', { target: { value: 'Lisk Account' } });
     wrapper.find('.save-account').at(0).simulate('click');
     expect(wrapper.find('.account-name').at(0).text()).toEqual('Lisk Account');
   });

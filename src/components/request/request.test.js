@@ -44,15 +44,15 @@ describe('Request', () => {
 
     it('Should add leading 0 if . is inserted as first character', () => {
       const evt = { target: { name: 'amount', value: '.1' } };
-      wrapper.find('.fieldGroup Input').simulate('change', evt);
+      wrapper.find('.fieldGroup input').simulate('change', evt);
       wrapper.update();
-      expect(wrapper.find('.fieldGroup Input').props().value).toEqual('0.1');
+      expect(wrapper.find('.fieldGroup input').props().value).toEqual('0.1');
     });
 
     it('Should show error feedback if letters inserted', () => {
       const evt = { target: { name: 'amount', value: 'abc' } };
       expect(wrapper.find('.fieldGroup .feedback.error')).not.toExist();
-      wrapper.find('.fieldGroup Input').simulate('change', evt);
+      wrapper.find('.fieldGroup input').simulate('change', evt);
       wrapper.update();
       expect(wrapper.find('.fieldGroup .feedback.error')).toExist();
     });
@@ -62,13 +62,13 @@ describe('Request', () => {
       const multipleDotsEvt = { target: { name: 'amount', value: '1.2.3' } };
       const endingDotEvt = { target: { name: 'amount', value: '12.' } };
       const amountField = wrapper.find('.fieldGroup').at(0);
-      amountField.find('Input').simulate('change', endingDotEvt);
+      amountField.find('input').simulate('change', endingDotEvt);
       wrapper.update();
       expect(wrapper.find('.fieldGroup .feedback.error')).toExist();
-      amountField.find('Input').simulate('change', evt);
+      amountField.find('input').simulate('change', evt);
       wrapper.update();
       expect(wrapper.find('.fieldGroup .feedback.error')).not.toExist();
-      amountField.find('Input').simulate('change', multipleDotsEvt);
+      amountField.find('input').simulate('change', multipleDotsEvt);
       wrapper.update();
       expect(wrapper.find('.fieldGroup .feedback.error')).toExist();
     });
@@ -116,7 +116,7 @@ describe('Request', () => {
       expect(wrapper.find('.request-link').first().html()).toContain(`${evt.target.name}=${evt.target.value}`);
 
       evt = { target: { name: 'amount', value: 1 } };
-      wrapper.find('.fieldGroup').at(0).find('Input').simulate('change', evt);
+      wrapper.find('.fieldGroup').at(0).find('input').simulate('change', evt);
       expect(wrapper.find('.request-link').first().html()).toContain(`${evt.target.name}=${evt.target.value}`);
     });
 

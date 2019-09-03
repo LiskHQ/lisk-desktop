@@ -170,7 +170,7 @@ describe('Form', () => {
       const evt = { target: { name: 'amount', value: 1 } };
       let amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField).not.toContainMatchingElement('.converted-price');
-      amountField.find('Input').simulate('change', evt);
+      amountField.find('input').simulate('change', evt);
       jest.advanceTimersByTime(300);
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
@@ -180,28 +180,28 @@ describe('Form', () => {
     it('Should add leading 0 if . is inserted as first character', () => {
       const evt = { target: { name: 'amount', value: '.1' } };
       let amountField = wrapper.find('.fieldGroup').at(1);
-      amountField.find('Input').simulate('change', evt);
+      amountField.find('input').simulate('change', evt);
       jest.advanceTimersByTime(300);
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
-      expect(amountField.find('Input').prop('value')).toEqual('0.1');
+      expect(amountField.find('input').prop('value')).toEqual('0.1');
     });
 
     it('Should show error feedback if wrong data is inserted', () => {
       let amountField = wrapper.find('.fieldGroup').at(1);
-      amountField.find('Input').simulate('change', { target: { name: 'amount', value: 'abc' } });
+      amountField.find('input').simulate('change', { target: { name: 'amount', value: 'abc' } });
       jest.advanceTimersByTime(300);
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField.find('.feedback')).toHaveClassName('error');
 
-      amountField.find('Input').simulate('change', { target: { name: 'amount', value: '1.1.' } });
+      amountField.find('input').simulate('change', { target: { name: 'amount', value: '1.1.' } });
       jest.advanceTimersByTime(300);
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField.find('.feedback')).toHaveClassName('error');
 
-      amountField.find('Input').simulate('change', { target: { name: 'amount', value: props.account.balance + 2 } });
+      amountField.find('input').simulate('change', { target: { name: 'amount', value: props.account.balance + 2 } });
       jest.advanceTimersByTime(300);
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
