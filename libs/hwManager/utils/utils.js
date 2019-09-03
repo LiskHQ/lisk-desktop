@@ -1,4 +1,6 @@
+/* eslint-disable no-bitwise */
 /* istanbul ignore file */
+import Lisk from '@liskhq/lisk-client';
 
 /**
  * Create a listener to a function that send a response back to the sender
@@ -45,8 +47,57 @@ export const subscribe = (receiver, { event, action }) => {
   return true;
 };
 
+// ===================================================== //
+//                   LEDGER UTILS
+// ===================================================== //
+export const getTransactionBytes = transaction =>
+  Lisk.transaction.utils.getTransactionBytes(transaction);
+
+export const getBufferToHex = buffer => Lisk.cryptography.bufferToHex(buffer);
+
+
+// ===================================================== //
+//                   TREZOR UTILS
+// ===================================================== //
+export const getHardenedPath = (index) => {
+  const hardeningConstant = 0x80000000;
+  return [
+    (44 | hardeningConstant) >>> 0,
+    (134 | hardeningConstant) >>> 0,
+    (index | hardeningConstant) >>> 0,
+  ];
+};
+
+// eslint-disable-next-line max-statements
+export const toTrezorGrammar = (tx) => {
+  if (tx.amount) tx.amount = parseInt(tx.amount, 10);
+  if (tx.fee) tx.fee = parseInt(tx.fee, 10);
+  if (tx.recipientId === '') delete tx.recipientId;
+  if (tx.recipientId) {
+    tx.recipient_id = tx.recipientId;
+    delete tx.recipientId;
+  }
+  if (tx.senderPublicKey) {
+    tx.sender_public_key = tx.senderPublicKey;
+    delete tx.senderPublicKey;
+  }
+  if (tx.requesterPublicKey) {
+    tx.requester_public_key = tx.requesterPublicKey;
+    delete tx.requesterPublicKey;
+  }
+  if (tx.asset) {
+    if (tx.asset.signature && tx.asset.signature.publicKey) {
+      tx.asset.signature.public_key = tx.asset.signature.publicKey;
+      delete tx.asset.signature.publicKey;
+    }
+  }
+  return tx;
+};
+
 export default {
   createCommand,
   publish,
   subscribe,
+  getTransactionBytes,
+  getBufferToHex,
 };
