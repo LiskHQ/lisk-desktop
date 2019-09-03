@@ -42,6 +42,7 @@ const Input = ({
 );
 
 Input.propTypes = {
+  size: PropTypes.oneOf(['l', 'm', 's', 'xs']),
   status: PropTypes.oneOf(['ok', 'error', 'pending', undefined]),
   feedback: PropTypes.string,
 };
@@ -51,6 +52,7 @@ Input.defaultProps = {
   setRef: null,
   error: false,
   isLoading: false,
+  size: 'l',
   status: undefined,
   feedback: '',
 };

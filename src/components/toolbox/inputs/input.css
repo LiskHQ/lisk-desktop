@@ -24,7 +24,8 @@
   & .status,
   & .icon {
     position: absolute;
-    top: var(--vertical-padding-l);
+    top: calc(var(--height-l) / 2);
+    transform: translateY(-50%);
   }
 
   & .status {
@@ -57,8 +58,13 @@
     }
 
     & .icon {
-      top: var(--vertical-padding-m);
+      top: calc(var(--height-m) / 2);
       left: var(--horizontal-padding-m);
+    }
+
+    & .status {
+      top: calc(var(--height-m) / 2);
+      right: var(--horizontal-padding-m);
     }
   }
 
@@ -71,8 +77,13 @@
     }
 
     & .icon {
-      top: var(--vertical-padding-s);
+      top: calc(var(--height-s) / 2);
       left: var(--horizontal-padding-s);
+    }
+
+    & .status {
+      top: calc(var(--height-s) / 2);
+      right: var(--horizontal-padding-s);
     }
   }
 
@@ -85,8 +96,13 @@
     }
 
     & .icon {
-      top: var(--vertical-padding-xs);
+      top: calc(var(--height-xs) / 2);
       left: var(--horizontal-padding-xs);
+    }
+
+    & .status {
+      top: calc(var(--height-xs) / 2);
+      right: var(--horizontal-padding-xs);
     }
   }
 
