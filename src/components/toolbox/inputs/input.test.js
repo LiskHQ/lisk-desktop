@@ -24,7 +24,7 @@ describe('Input', () => {
       size: 'l',
     };
     wrapper = mount(<Input {...propWithoutClassName} />);
-    expect(wrapper.find('input')).toHaveClassName('l');
+    expect(wrapper.find('.wrapper')).toHaveClassName('l');
   });
 
   it('Should render with error class', () => {

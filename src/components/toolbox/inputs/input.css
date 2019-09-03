@@ -8,6 +8,12 @@
   --height-xs: 32px;
   --vertical-padding-l: 15px;
   --horizontal-padding-l: 20px;
+  --vertical-padding-m: 11px;
+  --horizontal-padding-m: 16px;
+  --vertical-padding-s: 8px;
+  --horizontal-padding-s: 10px;
+  --vertical-padding-xs: 6px;
+  --horizontal-padding-xs: 10px;
 }
 
 .wrapper {
@@ -15,14 +21,77 @@
   display: inline-block;
   width: 100%;
 
-  & .status {
+  & .status,
+  & .icon {
     position: absolute;
     top: var(--vertical-padding-l);
+  }
+
+  & .status {
     right: var(--horizontal-padding-l);
+  }
+
+  & .icon {
+    left: var(--horizontal-padding-l);
   }
 
   & .loading {
     color: var(--color-ultramarine-blue);
+  }
+
+  &.l {
+    & .input {
+      @mixin contentLargest;
+
+      height: var(--height-l);
+      padding: var(--vertical-padding-l) var(--horizontal-padding-l);
+    }
+  }
+
+  &.m {
+    & .input {
+      @mixin contentLargest;
+
+      height: var(--height-m);
+      padding: var(--vertical-padding-m) var(--horizontal-padding-m);
+    }
+
+    & .icon {
+      top: var(--vertical-padding-m);
+      left: var(--horizontal-padding-m);
+    }
+  }
+
+  &.s {
+    & .input {
+      @mixin contentNormal;
+
+      height: var(--height-s);
+      padding: var(--vertical-padding-s) var(--horizontal-padding-s);
+    }
+
+    & .icon {
+      top: var(--vertical-padding-s);
+      left: var(--horizontal-padding-s);
+    }
+  }
+
+  &.xs {
+    & .input {
+      @mixin contentNormal;
+
+      height: var(--height-xs);
+      padding: var(--vertical-padding-xs) var(--horizontal-padding-xs);
+    }
+
+    & .icon {
+      top: var(--vertical-padding-xs);
+      left: var(--horizontal-padding-xs);
+    }
+  }
+
+  & .input.withIcon {
+    padding-left: 36px;
   }
 }
 
@@ -42,34 +111,6 @@
     border var(--animation-speed-fast) linear,
     color var(--animation-speed-fast) linear;
   width: 100%;
-
-  &.l {
-    @mixin contentLargest;
-
-    height: var(--height-l);
-    padding: var(--vertical-padding-l) var(--horizontal-padding-l);
-  }
-
-  &.m {
-    @mixin contentLargest;
-
-    height: var(--height-m);
-    padding: 11px 16px;
-  }
-
-  &.s {
-    @mixin contentNormal;
-
-    height: var(--height-s);
-    padding: 8px 10px;
-  }
-
-  &.xs {
-    @mixin contentNormal;
-
-    height: var(--height-xs);
-    padding: 6px 10px;
-  }
 
   &:focus {
     border-color: var(--color-primary-standard);
@@ -91,16 +132,6 @@
     color: var(--color-blue-gray);
     outline: none;
   }
-
-  &.withIcon {
-    padding-left: 36px;
-  }
-}
-
-.icon {
-  position: absolute;
-  top: 32px;
-  left: 31px;
 }
 
 .autoresize {

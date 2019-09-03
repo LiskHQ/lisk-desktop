@@ -19,7 +19,7 @@ const Input = ({
   status,
   ...props
 }) => (
-  <span className={styles.wrapper}>
+  <span className={`${styles.wrapper} ${styles[size]}`}>
     { icon ? <Icon name={icon} className={styles.icon} /> : null }
     { isLoading || status === 'pending'
       ? <Spinner className={`${styles.loading} ${styles.status}`} />
@@ -31,7 +31,7 @@ const Input = ({
     <input
       {...props}
       ref={setRef}
-      className={`${styles.input} ${error || status === 'error' ? styles.error : ''} ${className} ${styles[size]} ${icon ? styles.withIcon : ''}`}
+      className={`${styles.input} ${error || status === 'error' ? styles.error : ''} ${className} ${icon ? styles.withIcon : ''}`}
     />
   </span>
 );
