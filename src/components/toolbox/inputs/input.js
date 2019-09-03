@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Feedback from '../feedback/feedback';
 import Icon from '../icon';
 import Spinner from '../../spinner/spinner';
 import styles from './input.css';
@@ -17,6 +18,7 @@ const Input = ({
   isLoading,
   icon,
   status,
+  feedback,
   ...props
 }) => (
   <span className={`${styles.wrapper} ${styles[size]}`}>
@@ -33,11 +35,15 @@ const Input = ({
       ref={setRef}
       className={`${styles.input} ${error || status === 'error' ? styles.error : ''} ${className} ${icon ? styles.withIcon : ''}`}
     />
+    <Feedback className={styles.feedback} status={status} show={!!feedback}>
+      {feedback}
+    </Feedback>
   </span>
 );
 
 Input.propTypes = {
   status: PropTypes.oneOf(['ok', 'error', 'pending', undefined]),
+  feedback: PropTypes.string,
 };
 
 Input.defaultProps = {
@@ -46,6 +52,7 @@ Input.defaultProps = {
   error: false,
   isLoading: false,
   status: undefined,
+  feedback: '',
 };
 
 export default Input;

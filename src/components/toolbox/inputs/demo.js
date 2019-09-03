@@ -1,7 +1,6 @@
 import React from 'react';
 import DemoRenderer, { DarkWrapper } from '../demoRenderer';
 import { Input, AutoresizeTextarea } from '.';
-import Feedback from '../feedback/feedback';
 
 /* eslint-disable-next-line no-console */
 const onChange = console.log;
@@ -52,15 +51,8 @@ const InputsDemo = () => (
         name="demo"
         value="0alkawja;jk"
         status="error"
+        feedback="There was something wrong typed."
       />
-      {/* TODO fix Input to accept props.error='<message>' so that next line is not needed */}
-      <Feedback
-        show
-        status="error"
-        showIcon
-      >
-        There was something wrong typed.
-      </Feedback>
     </DemoRenderer>
     <DemoRenderer>
       <DarkWrapper>
@@ -82,15 +74,8 @@ const InputsDemo = () => (
           name="demo"
           value="0alkawja;jk"
           status="error"
+          feedback="There was something wrong typed."
         />
-        <Feedback
-          dark
-          show
-          status="error"
-          showIcon
-        >
-          There was something wrong typed.
-        </Feedback>
       </DarkWrapper>
     </DemoRenderer>
     <DemoRenderer>

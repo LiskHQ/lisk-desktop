@@ -93,6 +93,10 @@
   & .input.withIcon {
     padding-left: 36px;
   }
+
+  & .feedback {
+    margin-top: 10px;
+  }
 }
 
 .input {
