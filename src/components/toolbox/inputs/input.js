@@ -7,7 +7,7 @@ import styles from './input.css';
 
 const statusIconNameMap = {
   ok: 'okIcon',
-  error: 'alertIcon',
+  error: 'iconWarning',
 };
 
 const Input = ({
@@ -19,6 +19,7 @@ const Input = ({
   icon,
   status,
   feedback,
+  dark,
   ...props
 }) => (
   <span className={`${styles.wrapper} ${styles[size]}`}>
@@ -33,9 +34,15 @@ const Input = ({
     <input
       {...props}
       ref={setRef}
-      className={`${styles.input} ${error || status === 'error' ? styles.error : ''} ${className} ${icon ? styles.withIcon : ''}`}
+      className={[
+        styles.input,
+        (error || status === 'error') && styles.error,
+        className,
+        icon && styles.withIcon,
+        dark && styles.dark,
+      ].filter(Boolean).join(' ')}
     />
-    <Feedback className={styles.feedback} status={status} show={!!feedback}>
+    <Feedback className={styles.feedback} status={status} show={!!feedback} dark={dark}>
       {feedback}
     </Feedback>
   </span>
@@ -45,6 +52,7 @@ Input.propTypes = {
   size: PropTypes.oneOf(['l', 'm', 's', 'xs']),
   status: PropTypes.oneOf(['ok', 'error', 'pending', undefined]),
   feedback: PropTypes.string,
+  dark: PropTypes.bool,
 };
 
 Input.defaultProps = {
@@ -55,6 +63,7 @@ Input.defaultProps = {
   size: 'l',
   status: undefined,
   feedback: '',
+  dark: false,
 };
 
 export default Input;

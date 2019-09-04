@@ -134,6 +134,12 @@
     color var(--animation-speed-fast) linear;
   width: 100%;
 
+  &.dark {
+    border-color: var(--light-border-color);
+    background-color: var(--color-maastricht-blue);
+    color: var(--color-white);
+  }
+
   &:focus {
     border-color: var(--color-primary-standard);
   }

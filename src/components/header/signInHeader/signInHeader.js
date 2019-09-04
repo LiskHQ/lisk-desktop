@@ -268,6 +268,7 @@ class Header extends React.Component {
                                   ? t('Unable to connect to the node, please check the address and try again')
                                   : ''
                               }
+                                dark={dark}
                               />
                             </div>
                             {

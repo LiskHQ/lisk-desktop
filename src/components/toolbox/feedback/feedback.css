@@ -6,6 +6,7 @@
 
   align-items: center;
   box-sizing: border-box;
+  border-radius: var(--border-radius-standard);
   color: var(--color-slate-gray);
   display: flex;
   height: auto;
