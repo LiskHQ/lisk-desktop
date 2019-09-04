@@ -30,7 +30,16 @@
   &.error {
     background: var(--error-background-color);
     color: var(--color-burnt-sienna);
-    padding: 8px 20px;
+    padding: 8px var(--horizontal-padding-l);
+
+    &.m {
+      padding: 8px var(--horizontal-padding-m);
+    }
+
+    &.s,
+    &.xs {
+      padding: 8px var(--horizontal-padding-s);
+    }
   }
 
   & > img {

@@ -4,13 +4,14 @@ import Icon from '../icon';
 import styles from './feedback.css';
 
 const Feedback = ({
-  showIcon, status, children, show, className, dark,
+  showIcon, status, children, show, className, dark, size,
 }) => {
   const icon = status === 'error' && 'alertIcon';
   const classNames = [
     dark && styles.dark,
     className,
     styles.feedback,
+    styles[size],
     show && styles.show,
     !!status && styles[status],
   ].filter(name => name).join(' ');
@@ -31,6 +32,7 @@ Feedback.propTypes = {
   showIcon: PropTypes.bool,
   className: PropTypes.string,
   dark: PropTypes.bool,
+  size: PropTypes.oneOf(['l', 'm', 's', 'xs']),
 };
 
 Feedback.defaultProps = {
@@ -40,6 +42,7 @@ Feedback.defaultProps = {
   showIcon: false,
   className: '',
   dark: false,
+  size: 'l',
 };
 
 export default Feedback;

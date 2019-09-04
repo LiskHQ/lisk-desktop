@@ -42,7 +42,13 @@ const Input = ({
         dark && styles.dark,
       ].filter(Boolean).join(' ')}
     />
-    <Feedback className={styles.feedback} status={status} show={!!feedback} dark={dark}>
+    <Feedback
+      size={size}
+      className={styles.feedback}
+      status={status}
+      show={!!feedback}
+      dark={dark}
+    >
       {feedback}
     </Feedback>
   </span>
