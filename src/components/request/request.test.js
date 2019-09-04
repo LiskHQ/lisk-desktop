@@ -51,10 +51,10 @@ describe('Request', () => {
 
     it('Should show error feedback if letters inserted', () => {
       const evt = { target: { name: 'amount', value: 'abc' } };
-      expect(wrapper.find('.fieldGroup .feedback.error')).not.toExist();
+      expect(wrapper.find('.amount Feedback')).toHaveText('');
       wrapper.find('.fieldGroup input').simulate('change', evt);
       wrapper.update();
-      expect(wrapper.find('.fieldGroup .feedback.error')).toExist();
+      expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
     });
 
     it('Should show error feedback if ending in . or multiples .', () => {
@@ -64,13 +64,13 @@ describe('Request', () => {
       const amountField = wrapper.find('.fieldGroup').at(0);
       amountField.find('input').simulate('change', endingDotEvt);
       wrapper.update();
-      expect(wrapper.find('.fieldGroup .feedback.error')).toExist();
+      expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
       amountField.find('input').simulate('change', evt);
       wrapper.update();
-      expect(wrapper.find('.fieldGroup .feedback.error')).not.toExist();
+      expect(wrapper.find('.amount Feedback')).toHaveText('');
       amountField.find('input').simulate('change', multipleDotsEvt);
       wrapper.update();
-      expect(wrapper.find('.fieldGroup .feedback.error')).toExist();
+      expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
     });
   });
 

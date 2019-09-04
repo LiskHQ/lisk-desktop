@@ -60,7 +60,7 @@
   }
 
   & .feedback {
-    margin-top: 8px;
+    margin-top: 10px;
     padding-left: 8px;
     padding-right: 8px;
 
@@ -93,6 +93,7 @@
     & .converter {
       position: absolute;
       right: 34px;
+      top: 10px;
     }
 
     & .input {
