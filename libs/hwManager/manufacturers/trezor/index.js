@@ -2,8 +2,8 @@
 /* eslint-disable no-bitwise */
 import {
   IPC_MESSAGES,
-  MANUFACTURERS,
 } from '../../constants';
+import { TREZOR } from './constants';
 import {
   getHardenedPath,
   toTrezorGrammar,
@@ -20,10 +20,10 @@ const addDevice = (device, { add }) => {
     deviceId: device.features.device_id,
     label: device.features.label,
     model: device.features.model === '1'
-      ? MANUFACTURERS.Trezor.models.Trezor_Model_One
-      : MANUFACTURERS.Trezor.models.Trezor_Model_T,
+      ? TREZOR.models.Trezor_Model_One
+      : TREZOR.models.Trezor_Model_T,
     path: device.originalDescriptor.path,
-    manufactor: MANUFACTURERS.Trezor.name,
+    manufactor: TREZOR.name,
   });
 };
 

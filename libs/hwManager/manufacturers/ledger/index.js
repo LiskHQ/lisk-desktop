@@ -7,8 +7,8 @@ import {
 import {
   ADD_DEVICE,
   IPC_MESSAGES,
-  MANUFACTURERS,
 } from '../../constants';
+import { LEDGER } from './constants';
 
 // ============================================ //
 //              DEVICES LIST
@@ -27,7 +27,7 @@ const addDevice = (device, path, { add }) => {
     label: device.productName,
     model: device.productName,
     path,
-    manufactor: MANUFACTURERS.Ledger.name,
+    manufactor: LEDGER.name,
   };
 
   devices.push(newDevice);
