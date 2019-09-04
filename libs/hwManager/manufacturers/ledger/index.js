@@ -3,11 +3,12 @@ import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api';
 import {
   getBufferToHex,
   getTransactionBytes,
-} from '../utils/utils';
+} from './utils';
 import {
   ADD_DEVICE,
+  IPC_MESSAGES,
   MANUFACTURERS,
-} from '../utils/constants';
+} from '../../constants';
 
 // ============================================ //
 //              DEVICES LIST
@@ -16,7 +17,7 @@ let devices = [];
 
 /**
  * addDevice - function - Add a new device to the devices list.
- * @param {object} device - Device object comming from the ledeger library
+ * @param {object} device - Device object coming from the ledger library
  * @param {string} path - Path of the device used for the library to recognize it (dscriptor)
  * @param {function} add - Function that use for main file to include the device in the main list.
  */
@@ -51,7 +52,7 @@ const removeDevice = async (transport, { remove }) => {
  * @param {object} transport - Library use for handle the ledger devices.
  * @param {object} actions - Contains 2 functions: add and remove.
  * @param {function} actions.add - Function for add a new device to the main list.
- * @param {function} actions.remove - Function for remove a device to the main list.
+ * @param {function} actions.remove - Function for remove a device from the main list.
  */
 const listener = (transport, actions) => {
   try {
@@ -69,8 +70,8 @@ const listener = (transport, actions) => {
 };
 
 /**
- * geteLedgerAccount - function - Check if account exist for selected coin
- * @param {number} index - indeex for the desire account, if not value is provide use default (0)
+ * getLedgerAccount - function - Check if account exist for selected coin
+ * @param {number} index - index for the desired account, if no value is provided use default (0)
  */
 const getLedgerAccount = (index = 0) => {
   const ledgerAccount = new LedgerAccount();
@@ -80,7 +81,7 @@ const getLedgerAccount = (index = 0) => {
 };
 
 /**
- * checkIfInsideLiskApp - function - Validate if after use the pin to unblock ldeger device
+ * checkIfInsideLiskApp - function - Validate if after useing the pin to unblock ledger device
  * the user is inside the LSK App, if not then will show the device as connected but not
  * able to get accounts from the device.
  * @param {object} param - Object with 2 elements, a transport and device.
@@ -120,15 +121,13 @@ const executeCommand = async (transporter, {
     const ledgerAccount = getLedgerAccount(data.index);
 
     switch (action) {
-      // TODO use contants instead of hardcoded text for events and move the logic to functions
-      case 'GET_PUBLICKEY': {
+      case IPC_MESSAGES.GET_PUBLICK_KEY: {
         const { publicKey: res } = await liskLedger.getPubKey(ledgerAccount, data.showOnDevice);
         transport.close();
         return res;
       }
 
-      // TODO use contants instead of hardcoded text for events and move the logic to functions
-      case 'SIGN_TX': {
+      case IPC_MESSAGES.SIGN_TRANSACTION: {
         const signature = await liskLedger.signTX(
           ledgerAccount,
           getTransactionBytes(data.tx),
@@ -140,8 +139,6 @@ const executeCommand = async (transporter, {
       }
 
       default: {
-        // eslint-disable-next-line no-console
-        console.log(`No action created for: ${device.manufactor}.${action}`);
         return null;
       }
     }
