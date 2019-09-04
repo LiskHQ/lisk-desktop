@@ -7,8 +7,8 @@ import win from './win';
 
 const hwM = new HwManager({
   transports: {
-    ledger: TransportNodeHid,
-    trezor: new DeviceList(),
+    Ledger: TransportNodeHid,
+    Trezor: new DeviceList(),
   },
   pubSub: {
     sender: win,

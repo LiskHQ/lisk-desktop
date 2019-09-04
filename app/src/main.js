@@ -10,10 +10,8 @@ import win from './modules/win';
 import localeHandler from './modules/localeHandler';
 import updateChecker from './modules/autoUpdater';
 import server from '../server';
-
-require('babel-polyfill'); // eslint-disable-line import/no-extraneous-dependencies
-require('./ledger');
-// require('./modules/hwManager');
+import './modules/hwManager';
+// import './ledger';
 
 const defaultServerPort = 3000;
 let serverUrl;
