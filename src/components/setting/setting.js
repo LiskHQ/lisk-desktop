@@ -78,6 +78,7 @@ class Setting extends React.Component {
     const activeCurrency = currencies.indexOf(settings.currency || settingsConst.currencies[0]);
     const hasPendingSecondPassphrase = pending.find(element =>
       element.type === txTypes.setSecondPassphrase) !== undefined;
+    const isHarwareWalletConnected = settings.isHarwareWalletConnected;
 
     return (
       <div className={styles.settingsHolder}>
@@ -155,18 +156,24 @@ class Setting extends React.Component {
                   <p>{t('Enable a network switcher that lets you select testnet or custom node when logging in.')}</p>
                 </div>
               </label>
-              <label className={`${styles.fieldGroup} ${styles.checkboxField} enableBTC`}>
-                <CheckBox
-                  name="BTC"
-                  className={`${styles.checkbox}`}
-                  checked={!!(settings.token && settings.token.list.BTC)}
-                  onChange={this.handleTokenToggle}
-                />
-                <div>
-                  <span className={styles.labelName}>{t('Enable BTC')}</span>
-                  <p>{t('By enabling it, you will be able to manage your BTC inside the application.')}</p>
-                </div>
-              </label>
+              {
+                !isHarwareWalletConnected
+                  ? (
+                    <label className={`${styles.fieldGroup} ${styles.checkboxField} enableBTC`}>
+                      <CheckBox
+                        name="BTC"
+                        className={`${styles.checkbox}`}
+                        checked={!!(settings.token && settings.token.list.BTC)}
+                        onChange={this.handleTokenToggle}
+                      />
+                      <div>
+                        <span className={styles.labelName}>{t('Enable BTC')}</span>
+                        <p>{t('By enabling it, you will be able to manage your BTC inside the application.')}</p>
+                      </div>
+                    </label>
+                  )
+                  : null
+              }
             </section>
             <section>
               <h2>{t('Privacy')}</h2>
