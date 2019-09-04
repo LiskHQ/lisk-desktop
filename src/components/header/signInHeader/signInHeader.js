@@ -84,9 +84,9 @@ class Header extends React.Component {
 
       if (error) {
         if (network.name === networks.customNode.name) {
-          this.setState(({ validationError: true }));
+          this.setValidationError();
         } else {
-          this.setState(({ validationError: false }));
+          this.setState(({ validationError: '' }));
         }
         if (showErrorToaster) {
           errorToastDisplayed({ label: `Unable to connect to the node, Error: ${error.message}` });
@@ -110,7 +110,7 @@ class Header extends React.Component {
       address,
       isFirstTime: true,
       connected: false,
-      validationError: false,
+      validationError: '',
     });
   }
 
@@ -126,6 +126,12 @@ class Header extends React.Component {
       network.address = addHttp(this.state.address);
     }
     return network;
+  }
+
+  setValidationError() {
+    this.setState({
+      validationError: this.props.t('Unable to connect to the node, please check the address and try again'),
+    });
   }
 
   /* istanbul ignore next */
@@ -147,14 +153,16 @@ class Header extends React.Component {
             });
 
             this.props.history.push(nextPath);
-            this.setState({ validationError: false, connected: true });
+            this.setState({ validationError: '', connected: true });
             this.toggleDropdown(false);
             this.changeNetwork(networks.customNode.code);
           } else {
             throw new Error();
           }
         })
-        .catch(() => { this.setState({ validationError: true }); });
+        .catch(() => {
+          this.setValidationError();
+        });
 
       this.setState({ isValidationLoading: false, isFirstTime: false });
     } else {
@@ -165,7 +173,7 @@ class Header extends React.Component {
         },
       });
       this.props.history.push(nextPath);
-      this.setState({ validationError: false });
+      this.setState({ validationError: '' });
     }
 
     this.setState({ network });
@@ -219,7 +227,7 @@ class Header extends React.Component {
               && (
               <div>
                 <span
-                  className={`${this.state.validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
+                  className={`${validationError ? styles.dropdownError : ''} ${styles.dropdownHandler} network`}
                   onClick={() => this.toggleDropdown(!this.state.showDropdown)}
                 >
                   {
@@ -253,15 +261,12 @@ class Header extends React.Component {
                                 value={this.state.address}
                                 placeholder={this.props.t('ie. 192.168.0.1')}
                                 size="s"
-                                className={`custom-network ${styles.input} ${this.state.validationError ? styles.errorInput : ''}`}
+                                className={`custom-network ${styles.input} ${validationError ? styles.errorInput : ''}`}
                                 onKeyDown={e => e.keyCode === keyCodes.enter
                                 && this.onConnectToCustomNode(e)}
                                 isLoading={isValidationLoading && this.state.address}
-                                feedback={isActiveItem && validationError
-                                  ? t('Unable to connect to the node, please check the address and try again')
-                                  : ''
-                              }
                                 status={connected ? 'ok' : 'error'}
+                                feedback={validationError}
                                 dark={dark}
                               />
                             </div>
