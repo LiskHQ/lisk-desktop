@@ -25,11 +25,9 @@ class BookmarkAutoSuggest extends React.Component {
       ? bookmarks.find(acc => acc.address === recipient.address)
       : false;
 
-    // istanbul ignore if
-    if (account) this.props.onSelectedAccount(account);
+    if (account) this.onSelectedAccount(account);
   }
 
-  // istanbul ignore next
   validateBookmark() {
     const {
       token, networkConfig, recipient, bookmarks, t,
@@ -56,7 +54,6 @@ class BookmarkAutoSuggest extends React.Component {
     });
   }
 
-  // istanbul ignore next
   onSelectedAccount(account) {
     this.props.updateField(this.fieldName, {
       ...account,
