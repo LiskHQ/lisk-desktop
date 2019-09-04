@@ -257,17 +257,11 @@ class Header extends React.Component {
                                 onKeyDown={e => e.keyCode === keyCodes.enter
                                 && this.onConnectToCustomNode(e)}
                                 isLoading={isValidationLoading && this.state.address}
-                                {...{}/* eslint-disable-next-line no-nested-ternary */}
-                                status={(!this.state.isValidationLoading
-                                    && this.state.address
-                                    && !this.state.isFirstTime)
-                                  ? (connected ? 'ok' : 'error')
-                                  : undefined
-                              }
                                 feedback={isActiveItem && validationError
                                   ? t('Unable to connect to the node, please check the address and try again')
                                   : ''
                               }
+                                status={connected ? 'ok' : 'error'}
                                 dark={dark}
                               />
                             </div>

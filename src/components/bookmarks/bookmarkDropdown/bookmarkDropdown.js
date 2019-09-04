@@ -196,9 +196,7 @@ class Bookmark extends React.Component {
               feedback={accountName.feedback}
               isLoading={accountName.loading}
               size="s"
-              {...{}/* eslint-disable-next-line no-nested-ternary */}
-              status={accountName.value && !accountName.isReadOnly && !accountName.loading
-                ? (accountName.error ? 'error' : 'ok') : undefined}
+              status={accountName.error ? 'error' : 'ok'}
             />
           </span>
         </label>

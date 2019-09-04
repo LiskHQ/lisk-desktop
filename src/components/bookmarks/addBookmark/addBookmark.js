@@ -206,9 +206,7 @@ class AddBookmark extends React.Component {
                       size="l"
                       autoComplete="off"
                       feedback={fields[field.name].feedback}
-                      {...{}/* eslint-disable-next-line no-nested-ternary */}
-                      status={fields[field.name].value && !fields[field.name].readonly
-                        ? (fields[field.name].error ? 'error' : 'ok') : undefined}
+                      status={fields[field.name].error ? 'error' : 'ok'}
                     />
                     {field.name === 'address'
                       ? (

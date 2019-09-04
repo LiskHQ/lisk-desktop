@@ -151,9 +151,7 @@ class SelectName extends React.Component {
               disabled={inputDisabled}
               error={error}
               isLoading={loading}
-              {...{}/* eslint-disable-next-line no-nested-ternary */}
-              status={nickname && !loading
-                ? (error ? 'error' : 'ok') : undefined}
+              status={error ? 'error' : 'ok'}
               feedback={error || t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.')}
             />
           </div>
