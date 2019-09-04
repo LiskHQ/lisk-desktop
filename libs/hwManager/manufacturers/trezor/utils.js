@@ -32,8 +32,7 @@ export const toTrezorGrammar = ({
   };
 
   Object.keys(transaction).forEach((key) => {
-    if (transaction[key] === 0) return key;
-    return (!transaction[key]) && delete transaction[key];
+    if (transaction[key] !== 0 && !transaction[key]) delete transaction[key];
   });
 
   return transaction;
