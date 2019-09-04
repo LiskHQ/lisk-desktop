@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 import manufacturers from './manufacturers';
-import { publish, subscribe } from './utils/utils';
+import { publish, subscribe } from './utils';
+import { IPC_MESSAGES } from './constants';
 
 class HwManager {
   constructor({
@@ -16,15 +17,13 @@ class HwManager {
     const { receiver } = this.pubSub;
     this.startListeners();
 
-    // TODO use contants instead of hardcoded text for events
     subscribe(receiver, {
-      event: 'getConnectedDevicesList',
+      event: IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST,
       action: async () => this.getDevices(),
     });
 
-    // TODO use contants instead of hardcoded text for events
     subscribe(receiver, {
-      event: 'checkLedger',
+      event: IPC_MESSAGES.CHECK_LEDGER,
       action: async ({ id }) => {
         const device = this.getDeviceById(id);
         this.updateDevice(await manufacturers[device.manufactor].checkIfInsideLiskApp({
@@ -34,9 +33,8 @@ class HwManager {
       },
     });
 
-    // TODO use contants instead of hardcoded text for events
     subscribe(receiver, {
-      event: 'hwCommand',
+      event: IPC_MESSAGES.HW_COMMAND,
       action: async ({ action, data }) => {
         const device = this.getDeviceById(data.deviceId);
         return manufacturers[device.manufactor]
@@ -116,9 +114,8 @@ class HwManager {
    */
   async syncDevices() {
     const { sender } = this.pubSub;
-    // TODO use contants instead of hardcoded text for events
     publish(sender, {
-      event: 'hwDeviceListChanged',
+      event: IPC_MESSAGES.DEVICE_LIST_CHANGED,
       payload: await this.getDevices(),
     });
   }

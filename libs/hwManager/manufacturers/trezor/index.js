@@ -3,11 +3,11 @@
 import {
   IPC_MESSAGES,
   MANUFACTURERS,
-} from '../utils/constants';
+} from '../../constants';
 import {
   getHardenedPath,
   toTrezorGrammar,
-} from '../utils/utils';
+} from './utils';
 
 
 /**
@@ -41,7 +41,7 @@ const removeDevice = (device, { remove }) => {
  * @param {object} transport - Library use for handle the trezor devices.
  * @param {object} actions - Contains 2 functions: add and remove.
  * @param {function} actions.add - Function for add a new device to the main list.
- * @param {function} actions.remove - Function for remove a device to the main list.
+ * @param {function} actions.remove - Function for remove a device from the main list.
  */
 const listener = (transport, actions) => {
   transport.on(IPC_MESSAGES.CONNECT, (device) => { addDevice(device, actions); });
@@ -52,7 +52,6 @@ const listener = (transport, actions) => {
 
 
 // TODO after move the logic of each event to separate functions we can remove
-// the eslint for max statements
 const executeCommand = (transporter, {
   device,
   action,
@@ -65,12 +64,10 @@ const executeCommand = (transporter, {
   }
 
   return new Promise((resolve, reject) => {
-    // eslint-disable-next-line max-statements
     trezorDevice.waitForSessionAndRun(async (session) => {
       try {
         switch (action) {
-          // TODO use contants instead of hardcoded text for events and move the logic to functions
-          case 'GET_PUBLICKEY': {
+          case IPC_MESSAGES.GET_PUBLICK_KEY: {
             const { message } = await session.typedCall(
               'LiskGetPublicKey',
               'LiskPublicKey',
@@ -82,8 +79,7 @@ const executeCommand = (transporter, {
             return resolve(message.public_key);
           }
 
-          // TODO use contants instead of hardcoded text for events and move the logic to functions
-          case 'SIGN_TX': {
+          case IPC_MESSAGES.SIGN_TRANSACTION: {
             const { message } = await session.typedCall(
               'LiskSignTx',
               'LiskSignedTx',
@@ -96,8 +92,6 @@ const executeCommand = (transporter, {
           }
 
           default: {
-            // eslint-disable-next-line no-console
-            console.log(`No action created for: ${device.manufactor}.${action}`);
             return reject(new Error(`No action created for: ${device.manufactor}.${action}`));
           }
         }

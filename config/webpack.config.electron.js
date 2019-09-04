@@ -6,7 +6,7 @@ const baseConfig = require('./webpack.config');
 
 module.exports = merge(baseConfig, {
   entry: {
-    main: `${resolve(__dirname, '../app/src')}/main.js`,
+    main: ['babel-polyfill', `${resolve(__dirname, '../app/src')}/main.js`],
   },
   output: {
     path: resolve(__dirname, '../app/build'),
