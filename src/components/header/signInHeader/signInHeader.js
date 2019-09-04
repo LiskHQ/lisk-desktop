@@ -5,7 +5,6 @@ import { translate } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { to } from 'await-to-js';
 import { PrimaryButton } from '../../toolbox/buttons/button';
-import Feedback from '../../toolbox/feedback/feedback';
 import { Input } from '../../toolbox/inputs';
 import { addHttp, getAutoLogInData, findMatchingLoginNetwork } from '../../../utils/login';
 import getNetwork, { getNetworksList } from '../../../utils/getNetwork';
@@ -14,9 +13,7 @@ import Icon from '../../toolbox/icon';
 import UserAccount from '../../topBar/accountMenu/userAccount';
 import networks from '../../../constants/networks';
 import styles from './signInHeader.css';
-import formStyles from '../../send/form/form.css';
 import Dropdown from '../../toolbox/dropdown/dropdown';
-import Spinner from '../../spinner/spinner';
 import keyCodes from '../../../constants/keyCodes';
 
 class Header extends React.Component {
@@ -201,6 +198,11 @@ class Header extends React.Component {
       settingsUpdated,
       t,
     } = this.props;
+    const {
+      isValidationLoading,
+      connected,
+      validationError,
+    } = this.state;
     const { showSettingDrowdown, activeNetwork } = this.state;
     const showNetworkOptions = !hideNetwork && this.showNetworkOptions();
     const networkList = getNetworksList();
@@ -234,7 +236,7 @@ class Header extends React.Component {
                 >
                   {
                     networkList && networkList.map((network, key) => {
-                      const activeTab = activeNetwork === networks.customNode.code;
+                      const isActiveItem = activeNetwork === networks.customNode.code;
                       if (network.value === networks.customNode.code) {
                         return (
                           <span
@@ -243,42 +245,33 @@ class Header extends React.Component {
                             onClick={() => this.onChangeActiveNetwork(network.value)}
                           >
                             {network.label}
-                            <Input
-                              autoComplete="off"
-                              onChange={(value) => { this.changeAddress(value); }}
-                              name="customNetwork"
-                              value={this.state.address}
-                              placeholder={this.props.t('ie. 192.168.0.1')}
-                              size="s"
-                              className={`custom-network ${formStyles.input} ${this.state.validationError ? styles.errorInput : ''}`}
-                              onKeyDown={e => e.keyCode === keyCodes.enter
+                            <div className={styles.inputWrapper}>
+                              <Input
+                                autoComplete="off"
+                                onChange={(value) => { this.changeAddress(value); }}
+                                name="customNetwork"
+                                value={this.state.address}
+                                placeholder={this.props.t('ie. 192.168.0.1')}
+                                size="s"
+                                className={`custom-network ${styles.input} ${this.state.validationError ? styles.errorInput : ''}`}
+                                onKeyDown={e => e.keyCode === keyCodes.enter
                                 && this.onConnectToCustomNode(e)}
-                            />
-                            <div className={styles.icons}>
-                              <Spinner className={`${styles.spinner} ${this.state.isValidationLoading && this.state.address ? styles.show : styles.hide}`} />
-                              <Icon
-                                className={`${styles.status} ${!this.state.isValidationLoading && this.state.address && !this.state.isFirstTime
-                                  ? styles.show : styles.hide}`}
-                                name={!this.state.connected ? 'iconWarning' : 'okIcon'}
+                                isLoading={isValidationLoading && this.state.address}
+                                {...{}/* eslint-disable-next-line no-nested-ternary */}
+                                status={(!this.state.isValidationLoading
+                                    && this.state.address
+                                    && !this.state.isFirstTime)
+                                  ? (connected ? 'ok' : 'error')
+                                  : undefined
+                              }
+                                feedback={isActiveItem && validationError
+                                  ? t('Unable to connect to the node, please check the address and try again')
+                                  : ''
+                              }
                               />
                             </div>
                             {
-                              activeTab
-                                ? (
-                                  <Feedback
-                                    show={this.state.validationError}
-                                    status="error"
-                                    className={`${this.state.validationError ? styles.feedbackError : ''} ${styles.feedbackMessage} amount-feedback`}
-                                    showIcon={false}
-                                    dark={dark}
-                                  >
-                                    {t('Unable to connect to the node, please check the address and try again')}
-                                  </Feedback>
-                                )
-                                : ''
-                            }
-                            {
-                              activeTab
+                              isActiveItem
                                 ? (
                                   <div>
                                     <PrimaryButton
