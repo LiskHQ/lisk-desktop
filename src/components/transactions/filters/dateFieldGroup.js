@@ -11,8 +11,6 @@ import Dropdown from '../../toolbox/dropdown/dropdown';
 import Calendar from '../../toolbox/calendar/calendar';
 import Feedback from '../../toolbox/feedback/feedback';
 import keyCodes from '../../../constants/keyCodes';
-import Spinner from '../../spinner/spinner';
-import Icon from '../../toolbox/icon';
 import i18n from '../../../i18n';
 
 class DateFieldGroup extends React.Component {
@@ -223,14 +221,10 @@ class DateFieldGroup extends React.Component {
           onFocus={this.handleFocus}
           onClick={this.handleFocus}
           onKeyDown={this.handleKey}
-          className={`${styles.input} ${fields[data.name].error ? 'error' : ''} ${data.name}Input`}
-        />
-        <Spinner
-          className={`${styles.status} ${fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
-        />
-        <Icon
-          className={`${styles.status} ${!fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
-          name={fields[data.name].error ? 'alertIcon' : 'okIcon'}
+          className={`${styles.input} ${data.name}Input`}
+          isLoading={fields[data.name].loading}
+          status={fields[data.name].error ? 'error' : 'ok'}
+          size="xs"
         />
       </label>
     );
@@ -290,7 +284,7 @@ class DateFieldGroup extends React.Component {
           className={styles.feedback}
           show={!!this.state.feedback}
           status={this.state.feedback ? 'error' : ''}
-          showIcon={false}
+          size="xs"
         >
           { this.state.feedback }
         </Feedback>
