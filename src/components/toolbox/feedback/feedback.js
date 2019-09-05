@@ -14,6 +14,7 @@ const Feedback = ({
     styles[size],
     show && styles.show,
     !!status && styles[status],
+    'feedback',
   ].filter(name => name).join(' ');
   return (
     <span
