@@ -11,25 +11,21 @@ const InputsDemo = () => (
     <DemoRenderer>
       <Input
         onChange={onChange}
-        value=""
         placeholder="Input demo placeholder (default: size L)"
       />
       <Input
         size="m"
         onChange={onChange}
-        value=""
         placeholder="Input demo placeholder (size M)"
       />
       <Input
         size="s"
         onChange={onChange}
-        value=""
         placeholder="Input demo placeholder (size S)"
       />
       <Input
         size="xs"
         onChange={onChange}
-        value=""
         placeholder="Input demo placeholder (size XS)"
       />
     </DemoRenderer>
