@@ -22,7 +22,7 @@
   width: 100%;
 
   &.show {
-    max-height: 40px;
+    max-height: 100px;
     opacity: 1;
     padding: 8px 0;
   }
