@@ -194,18 +194,19 @@ describe('Form', () => {
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField.find('.feedback.error')).toHaveClassName('error');
+      expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
 
       amountField.find('input').simulate('change', { target: { name: 'amount', value: '1.1.' } });
       jest.advanceTimersByTime(300);
       wrapper.update();
       amountField = wrapper.find('.fieldGroup').at(1);
       expect(amountField.find('.feedback.error')).toHaveClassName('error');
+      expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
 
       amountField.find('input').simulate('change', { target: { name: 'amount', value: props.account.balance + 2 } });
       jest.advanceTimersByTime(300);
       wrapper.update();
-      amountField = wrapper.find('.fieldGroup').at(1);
-      expect(amountField.find('.feedback.error')).toHaveClassName('error');
+      expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount is higher than your current balance.');
     });
   });
 
