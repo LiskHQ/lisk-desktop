@@ -15,7 +15,7 @@ export const pricesRetrieved = () => (dispatch, getState) => {
         activeToken,
       },
     }))
-    .catch(() => dispatch(errorToastDisplayed(i18next.t('Error retrieving convertion rates.'))));
+    .catch(() => dispatch(errorToastDisplayed(i18next.t('Error retrieving conversion rates.'))));
 };
 
 export const dynamicFeesRetrieved = () => (dispatch, getState) => {
