@@ -28,7 +28,7 @@ const Feedback = ({
 
 Feedback.propTypes = {
   status: PropTypes.oneOf(['error', '', 'success', 'ok', 'pending']),
-  children: PropTypes.string.isRequired,
+  children: PropTypes.string,
   show: PropTypes.bool,
   showIcon: PropTypes.bool,
   className: PropTypes.string,

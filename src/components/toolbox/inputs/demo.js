@@ -56,7 +56,7 @@ const InputsDemo = () => (
       />
     </DemoRenderer>
     <DemoRenderer>
-      <DarkWrapper>
+      <DarkWrapper display="block">
         <Input
           onChange={onChange}
           name="demo"
