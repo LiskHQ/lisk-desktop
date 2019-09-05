@@ -1,5 +1,4 @@
 /* istanbul ignore file */
-/* eslint-disable no-bitwise */
 import {
   IPC_MESSAGES,
 } from '../../constants';
@@ -50,51 +49,45 @@ const listener = (transport, actions) => {
   process.on(IPC_MESSAGES.EXIT, () => { transport.onbeforeunload(); });
 };
 
-
-// TODO after move the logic of each event to separate functions we can remove
-const executeCommand = (transporter, {
-  device,
-  action,
-  data,
-}) => {
-  const trezorDevice = transporter.asArray()
-    .find(d => d.features.device_id === device.deviceId);
-  if (!trezorDevice) {
-    Promise.reject(new Error('DEVICE_IS_NOT_CONNECTED'));
-  }
+const getPublicKey = async (transporter, { device, data }) => {
+  const trezorDevice = transporter.asArray().find(d => d.features.device_id === device.deviceId);
+  if (!trezorDevice) Promise.reject(new Error('DEVICE_IS_NOT_CONNECTED'));
 
   return new Promise((resolve, reject) => {
     trezorDevice.waitForSessionAndRun(async (session) => {
       try {
-        switch (action) {
-          case IPC_MESSAGES.GET_PUBLICK_KEY: {
-            const { message } = await session.typedCall(
-              'LiskGetPublicKey',
-              'LiskPublicKey',
-              {
-                address_n: getHardenedPath(data.index),
-                show_display: data.showOnDevice,
-              },
-            );
-            return resolve(message.public_key);
-          }
+        const { message } = await session.typedCall(
+          'LiskGetPublicKey',
+          'LiskPublicKey',
+          {
+            address_n: getHardenedPath(data.index),
+            show_display: data.showOnDevice,
+          },
+        );
+        return resolve(message.public_key);
+      } catch (err) {
+        return reject();
+      }
+    });
+  });
+};
 
-          case IPC_MESSAGES.SIGN_TRANSACTION: {
-            const { message } = await session.typedCall(
-              'LiskSignTx',
-              'LiskSignedTx',
-              {
-                address_n: getHardenedPath(data.index),
-                transaction: toTrezorGrammar(data.tx),
-              },
-            );
-            return resolve(message.signature);
-          }
+const signTransaction = async (transporter, { device, data }) => {
+  const trezorDevice = transporter.asArray().find(d => d.features.device_id === device.deviceId);
+  if (!trezorDevice) Promise.reject(new Error('DEVICE_IS_NOT_CONNECTED'));
 
-          default: {
-            return reject(new Error(`No action created for: ${device.manufactor}.${action}`));
-          }
-        }
+  return new Promise((resolve, reject) => {
+    trezorDevice.waitForSessionAndRun(async (session) => {
+      try {
+        const { message } = await session.typedCall(
+          'LiskSignTx',
+          'LiskSignedTx',
+          {
+            address_n: getHardenedPath(data.index),
+            transaction: toTrezorGrammar(data.tx),
+          },
+        );
+        return resolve(message.signature);
       } catch (err) {
         return reject();
       }
@@ -103,6 +96,7 @@ const executeCommand = (transporter, {
 };
 
 export default {
+  getPublicKey,
   listener,
-  executeCommand,
+  signTransaction,
 };

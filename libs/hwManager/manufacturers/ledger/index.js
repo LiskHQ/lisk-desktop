@@ -6,7 +6,6 @@ import {
 } from './utils';
 import {
   ADD_DEVICE,
-  IPC_MESSAGES,
 } from '../../constants';
 import { LEDGER } from './constants';
 
@@ -106,50 +105,39 @@ const checkIfInsideLiskApp = async ({
   return device;
 };
 
-// TODO after move the logic of each event to separate functions we can remove
-// the eslint for max statements
-// eslint-disable-next-line max-statements
-const executeCommand = async (transporter, {
-  device,
-  action,
-  data,
-}) => {
-  let transport;
+const getPublicKey = async (transporter, { device, data }) => {
+  let transport = null;
   try {
     transport = await transporter.open(device.path);
     const liskLedger = new DposLedger(transport);
     const ledgerAccount = getLedgerAccount(data.index);
-
-    switch (action) {
-      case IPC_MESSAGES.GET_PUBLICK_KEY: {
-        const { publicKey: res } = await liskLedger.getPubKey(ledgerAccount, data.showOnDevice);
-        transport.close();
-        return res;
-      }
-
-      case IPC_MESSAGES.SIGN_TRANSACTION: {
-        const signature = await liskLedger.signTX(
-          ledgerAccount,
-          getTransactionBytes(data.tx),
-          false,
-        );
-        transport.close();
-        const res = getBufferToHex(signature);
-        return res;
-      }
-
-      default: {
-        return null;
-      }
-    }
-  } catch (err) {
+    const { publicKey: res } = await liskLedger.getPubKey(ledgerAccount, data.showOnDevice);
     transport.close();
-    throw new Error(err);
+    return res;
+  } catch (error) {
+    if (transport) transport.close();
+    throw new Error(error);
+  }
+};
+
+const signTransaction = async (transporter, { device, data }) => {
+  let transport = null;
+  try {
+    transport = await transporter.open(device.path);
+    const liskLedger = new DposLedger(transport);
+    const ledgerAccount = getLedgerAccount(data.index);
+    const signature = await liskLedger.signTX(ledgerAccount, getTransactionBytes(data.tx), false);
+    transport.close();
+    return getBufferToHex(signature);
+  } catch (error) {
+    if (transport) transport.close();
+    throw new Error(error);
   }
 };
 
 export default {
-  listener,
   checkIfInsideLiskApp,
-  executeCommand,
+  getPublicKey,
+  listener,
+  signTransaction,
 };
