@@ -8,7 +8,7 @@ const TransactionsHeader = ({
 }) => (
   <TableRow isHeader className={`${grid.row}`} id="transactionsHeader">
     <div className={`${columnClassNames.transaction} transactions-header`}>
-      {t('Address')}
+      {t('Transaction')}
     </div>
     <div className={`${columnClassNames.date} transactions-header`}>
       {t('Date')}

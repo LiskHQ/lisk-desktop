@@ -80,7 +80,7 @@ class Paperwallet {
     this.doc.setFontStyle('normal').setFontSize(14);
     this.doc.text(t('How we recommend to store it.'), 32, 147, textOptions);
     this.doc.text(t('Print it on paper and store it in a safe place'), 76, 194, textOptions);
-    this.doc.text(t('Save it on a encrypted hard drive: USB key or a backup drive'), 76, 238, textOptions);
+    this.doc.text(t('Save it on an encrypted hard drive: USB key or a backup drive'), 76, 238, textOptions);
     return this;
   }
 
