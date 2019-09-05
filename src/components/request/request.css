@@ -60,13 +60,7 @@
   }
 
   & .feedback {
-    margin-top: 10px;
-    padding-left: 8px;
-    padding-right: 8px;
-
     &.referenceFeedback {
-      @mixin contentSmallest;
-
       justify-content: flex-end;
     }
   }

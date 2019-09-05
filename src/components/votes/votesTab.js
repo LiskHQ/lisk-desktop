@@ -119,6 +119,7 @@ class VotesTab extends React.Component {
               value={filterValue}
               placeholder={t('Filter by name')}
               onChange={this.handleFilter}
+              size="xs"
             />
           </div>
         </Box.Header>

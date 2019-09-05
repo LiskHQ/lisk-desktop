@@ -172,6 +172,7 @@ class RequestLsk extends React.Component {
             show={!!fields.reference.feedback}
             status={fields.reference.error ? 'error' : ''}
             showIcon={false}
+            size="s"
           >
             { fields.reference.feedback }
           </Feedback>

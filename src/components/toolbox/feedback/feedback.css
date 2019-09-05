@@ -31,6 +31,7 @@
     background: var(--error-background-color);
     color: var(--color-burnt-sienna);
     padding: 8px var(--horizontal-padding-l);
+    margin-top: 10px;
 
     &.m {
       padding: 8px var(--horizontal-padding-m);

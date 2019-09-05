@@ -5,7 +5,7 @@
   flex-wrap: wrap;
 
   & > span {
-    margin: 0 0 2px 0;
+    margin: 0 0 12px 0;
 
     & input {
       text-align: center;

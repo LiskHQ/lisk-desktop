@@ -102,7 +102,7 @@
     padding-left: 36px;
   }
 
-  & .feedback {
+  & .feedback:not(:empty) {
     margin-top: 10px;
   }
 }
