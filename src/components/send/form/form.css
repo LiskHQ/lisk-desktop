@@ -186,3 +186,8 @@
   opacity: 0 !important;
   transition: opacity var(--animation-speed-fast) linear;
 }
+
+.recipientAccountVisual {
+  margin-left: -4px;
+  margin-top: 4px;
+}

@@ -42,7 +42,11 @@ const Input = ({
   });
   return (
     <span className={`${styles.wrapper} ${styles[size]}`}>
-      { icon && <Icon name={icon} className={styles.icon} /> }
+      { icon && (
+        typeof icon === 'string'
+          ? <Icon name={icon} className={styles.icon} />
+          : <span className={styles.icon}>{icon}</span>
+      )}
       { status === 'pending'
         && <Spinner className={`${styles.loading} ${styles.status}`} />
       }

@@ -63,7 +63,6 @@ describe('Recipient Input', () => {
   it('should render properly', () => {
     expect(wrapper).toContainMatchingElement('.recipient');
     expect(wrapper).toContainMatchingElement('Input.input');
-    expect(wrapper).toContainMatchingElement('Spinner.spinner');
     expect(wrapper).toContainMatchingElement('.bookmark-list');
   });
 
