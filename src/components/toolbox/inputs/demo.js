@@ -39,6 +39,7 @@ const InputsDemo = () => (
         name="demo"
         value="ok value"
         status="ok"
+        feedback="Some hint for what the value should be"
       />
       <Input
         onChange={onChange}
@@ -51,32 +52,43 @@ const InputsDemo = () => (
         name="demo"
         value="0alkawja;jk"
         status="error"
-        feedback="There was something wrong typed."
+        feedback="Something wrong was typed."
       />
     </DemoRenderer>
     <DemoRenderer>
       <DarkWrapper>
-        {/* TODO fix Input to change to dark mode when props.dark={true} */}
         <Input
           onChange={onChange}
           name="demo"
           value="ok value"
           status="ok"
+          dark
         />
         <Input
           onChange={onChange}
           name="demo"
           value="validating..."
           status="pending"
+          dark
         />
         <Input
           onChange={onChange}
           name="demo"
           value="0alkawja;jk"
           status="error"
-          feedback="There was something wrong typed."
+          feedback="Something wrong was typed."
+          dark
         />
       </DarkWrapper>
+    </DemoRenderer>
+    <DemoRenderer>
+      <Input
+        onChange={onChange}
+        name="search-demo"
+        placeholder="Type something to search..."
+        icon="searchInput"
+        size="m"
+      />
     </DemoRenderer>
     <DemoRenderer>
       <AutoresizeTextarea
