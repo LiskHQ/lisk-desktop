@@ -8,16 +8,16 @@
 
   & .input {
     padding-left: 50px !important;
+  }
 
-    & ~ .suggestionList {
-      opacity: 0 !important;
-      visibility: hidden !important;
-    }
+  & .suggestionList {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
 
-    &:focus ~ .suggestionList {
-      opacity: 1 !important;
-      visibility: visible !important;
-    }
+  &:focus-within .suggestionList {
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 }
 
