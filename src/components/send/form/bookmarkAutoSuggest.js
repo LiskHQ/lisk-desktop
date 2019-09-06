@@ -4,6 +4,7 @@ import { getNetworkCode } from '../../../utils/api/btc/network';
 import { validateAddress } from '../../../utils/validators';
 import AccountVisual from '../../accountVisual';
 import AutoSuggest from '../../toolbox/autoSuggest';
+import styles from './form.css';
 
 class BookmarkAutoSuggest extends React.Component {
   constructor(props) {
@@ -84,6 +85,7 @@ class BookmarkAutoSuggest extends React.Component {
             address={recipient.address}
             placeholder={!(recipient.address.length && !recipient.error)}
             size={25}
+            className={styles.recipientAccountVisual}
           />
         )}
         renderItem={bookmark => (

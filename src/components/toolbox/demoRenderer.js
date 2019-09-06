@@ -1,14 +1,23 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import jsxToString from 'jsx-to-string';
 
-export const DarkWrapper = ({ children }) => (
+export const DarkWrapper = ({ children, display }) => (
   <span style={{
-    display: 'inline-block', background: '#0c152e', padding: 20,
+    display, background: '#0c152e', padding: 20,
   }}
   >
     {children}
   </span>
 );
+
+DarkWrapper.propTypes = {
+  display: PropTypes.oneOf(['block', 'inline-block']),
+};
+
+DarkWrapper.defaultProps = {
+  display: 'inline-block',
+};
 
 const DemoRenderer = ({ children }) => (
   <div>

@@ -17,6 +17,7 @@
     align-items: flex-start;
     display: flex;
     flex-direction: column;
+    margin-bottom: 16px;
   }
 
   & .fieldLabel {
@@ -36,9 +37,8 @@
     justify-content: flex-end;
     align-items: center;
     color: var(--color-slate-gray);
-    padding-right: 10px;
     position: relative;
-    top: -30px;
+    top: 8px;
     width: 100%;
 
     & > img {
@@ -55,7 +55,8 @@
 
     & .converter {
       position: absolute;
-      right: 35px;
+      right: 45px;
+      top: var(--vertical-padding-l);
     }
 
     & .input {
@@ -76,7 +77,8 @@
   & .textarea {
     resize: none;
     overflow: hidden;
-    padding-right: 30px;
+    padding-right: 40px;
+    padding-left: var(--horizontal-padding-l);
 
     &:focus ~ .byteCounter {
       opacity: 1;
@@ -91,15 +93,10 @@
     }
   }
 
-  & .status {
-    position: absolute;
-    right: 10px;
-  }
-
   & .referenceStatus {
-    bottom: 14px;
+    bottom: var(--vertical-padding-l);
     position: absolute;
-    right: 10px;
+    right: var(--horizontal-padding-l);
   }
 
   & .referenceField {
@@ -140,10 +137,10 @@
 }
 
 .byteCounter {
-  bottom: 6px;
+  bottom: 10px;
   opacity: 0;
   position: absolute;
-  right: 8px;
+  right: var(--horizontal-padding-l);
   transition: opacity var(--animation-speed-fast) linear;
 }
 
@@ -154,8 +151,7 @@
   color: var(--color-slate-gray);
   display: none;
   justify-content: flex-end;
-  margin-top: 10px;
-  padding: 6px 10px;
+  padding: 8px 0;
   width: 100%;
 
   &:global(.error) {
@@ -175,12 +171,6 @@
   @mixin contentLarge;
 }
 
-.spinner {
-  color: var(--color-ultramarine-blue);
-  position: absolute;
-  right: 11px;
-}
-
 .show {
   opacity: 1;
   transition: opacity var(--animation-speed-fast) linear var(--animation-delay-standard);
@@ -189,4 +179,9 @@
 .hide {
   opacity: 0 !important;
   transition: opacity var(--animation-speed-fast) linear;
+}
+
+.recipientAccountVisual {
+  margin-left: -4px;
+  margin-top: 4px;
 }

@@ -1,9 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 import { Input } from '../inputs';
-import Feedback from '../feedback/feedback';
-import Icon from '../icon';
-import Spinner from '../../spinner/spinner';
 import keyCodes from '../../../constants/keyCodes';
 import styles from './autoSuggest.css';
 
@@ -135,9 +132,6 @@ class AutoSuggest extends React.Component {
     return (
       <Fragment>
         <span className={`${styles.inputWrapper} ${className}`}>
-          <span className={styles.icon}>
-            {renderIcon(selectedItem)}
-          </span>
           <Input
             autoComplete="off"
             className={`${styles.input} ${selectedItem.error ? 'error' : ''} ${className} bookmark`}
@@ -146,11 +140,10 @@ class AutoSuggest extends React.Component {
             placeholder={placeholder}
             onKeyDown={this.onHandleKeyPress}
             onChange={this.onChange}
-          />
-          <Spinner className={`${styles.spinner} ${isLoading && selectedItem.value ? styles.show : styles.hide}`} />
-          <Icon
-            className={`${styles.status} ${!isLoading && selectedItem.value ? styles.show : styles.hide}`}
-            name={selectedItem.error ? 'alertIcon' : 'okIcon'}
+            feedback={selectedItem.feedback}
+            isLoading={isLoading && selectedItem.value}
+            status={selectedItem.error ? 'error' : 'ok'}
+            icon={renderIcon(selectedItem)}
           />
           <ul className={`${styles.suggestionList} bookmark-list`} ref={(node) => { this.listContainerRef = node; }}>
             { this.getFilterList()
@@ -167,15 +160,6 @@ class AutoSuggest extends React.Component {
               )) }
           </ul>
         </span>
-
-        <Feedback
-          show={selectedItem.error || false}
-          status="error"
-          className={styles.feedbackMessage}
-          showIcon={false}
-        >
-          {selectedItem.feedback}
-        </Feedback>
       </Fragment>
     );
   }
