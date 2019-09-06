@@ -13,7 +13,8 @@ class News extends React.Component {
     };
   }
 
-  formatDate = (t, timestamp) => {
+  // eslint-disable-next-line class-methods-use-this
+  formatDate(t, timestamp) {
     const hours = Math.floor(Math.abs(new Date() - new Date(timestamp)) / 36e5);
     if (hours <= 1) return t('just now');
     if (hours > 1 && hours <= 24) return t('{{hours}}h ago', { hours });
@@ -26,6 +27,7 @@ class News extends React.Component {
     const {
       source, content, timestamp, url, t,
     } = this.props;
+    const date = this.formatDate(t, timestamp);
 
     // Makes first letter capital
     const sourceName = source.charAt(0).toUpperCase() + source.substr(1);
@@ -35,7 +37,7 @@ class News extends React.Component {
           <Icon name="newsFeedAvatar" />
           <div>
             <span className={styles.title}>{sourceName}</span>
-            <span className={styles.subtitle}>{this.formatDate(t, timestamp)}</span>
+            <span className={styles.subtitle}>{date}</span>
           </div>
         </div>
         <div className={styles.description}>
