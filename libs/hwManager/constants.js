@@ -12,4 +12,10 @@ export const IPC_MESSAGES = {
   HW_COMMAND: 'hwCommand',
   GET_PUBLICK_KEY: 'GET_PUBLICKEY',
   SIGN_TRANSACTION: 'SIGN_TX',
+  HW_CONNECTED: 'hwConnected',
+  HW_DISCONNECTED: 'hwDisconnected',
+};
+export const FUNCTION_TYPES = {
+  GET_PUBLICKEY: 'getPublicKey',
+  SIGN_TX: 'signTransaction',
 };

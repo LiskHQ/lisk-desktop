@@ -1,6 +1,7 @@
 import {
   accountDataUpdated,
   updateTransactionsIfNeeded,
+  updateEnabledTokenAccount,
   login,
 } from '../../actions/account';
 import { loadVotes } from '../../actions/voting';
@@ -17,7 +18,6 @@ import { networkSet, networkStatusUpdated } from '../../actions/network';
 import networks from '../../constants/networks';
 import settings from '../../constants/settings';
 import txFilters from '../../constants/transactionFilters';
-
 
 import { getDeviceList, getHWPublicKeyFromIndex } from '../../utils/hwWallet';
 import { loginType } from '../../constants/hwConstants';
@@ -220,6 +220,15 @@ const accountMiddleware = store => next => (action) => {
     case actionTypes.accountLoggedOut:
       store.dispatch(emptyTransactionsData());
       break;
+    case actionTypes.settingsUpdated: {
+      const tokensList = action.data.token && action.data.token.list;
+      const token = tokensList && Object.keys(tokensList)
+        .find(t => tokensList[t]);
+      if (tokensList && tokensList[token]) {
+        store.dispatch(updateEnabledTokenAccount(token));
+      }
+      break;
+    }
     /* istanbul ignore next */
     default: break;
   }

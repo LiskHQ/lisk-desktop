@@ -2,7 +2,7 @@ import React from 'react';
 import { fromRawLsk } from '../../utils/lsk';
 import FormattedNumber from '../formattedNumber';
 
-const roundTo = (value, places) => {
+const roundToPlaces = (value, places) => {
   if (!places) {
     return value;
   }
@@ -10,9 +10,9 @@ const roundTo = (value, places) => {
   return Math.round(value * x) / x;
 };
 
-const LiskAmount = props => (
-  props.val !== undefined
-    ? <FormattedNumber val={roundTo(parseFloat(fromRawLsk(props.val)), props.roundTo)} />
+const LiskAmount = ({ val, roundTo }) => (
+  val !== undefined
+    ? <FormattedNumber val={roundToPlaces(parseFloat(fromRawLsk(val)), roundTo)} />
     : <span />
 );
 

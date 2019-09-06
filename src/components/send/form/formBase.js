@@ -1,10 +1,10 @@
 import React from 'react';
-import numeral from 'numeral';
 import { Input } from '../../toolbox/inputs';
 import { PrimaryButton } from '../../toolbox/buttons/button';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { fromRawLsk } from '../../../utils/lsk';
-import { validateAmountFormat } from '../../../utils/validators';
+import { parseSearchParams } from '../../../utils/searchParams';
+import { getAmountFeedbackAndError } from '../../../utils/validators';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import Box from '../../toolbox/box';
 import Converter from '../../converter';
@@ -18,33 +18,37 @@ import links from '../../../constants/externalLinks';
 import regex from '../../../utils/regex';
 import styles from './form.css';
 
-function getInitialState() {
-  return {
-    isLoading: false,
-    fields: {
-      recipient: {
-        address: '',
-        error: false,
-        feedback: '',
-        selected: false,
-        title: '',
-        value: '',
-      },
-      amount: {
-        error: false,
-        value: '',
-        feedback: '',
-      },
-    },
-    unspentTransactionOutputs: [],
-  };
-}
-
 class FormBase extends React.Component {
   constructor(props) {
     super(props);
+    const { prevState } = props;
+    const { recipient = '', amount } = parseSearchParams(props.history.location.search);
 
-    this.state = getInitialState();
+    this.state = {
+      isLoading: false,
+      fields: {
+        recipient: {
+          address: recipient,
+          value: recipient,
+          error: false,
+          feedback: '',
+          selected: false,
+          title: '',
+        },
+        amount: amount ? {
+          ...getAmountFeedbackAndError({ value: amount, ...props }),
+          value: amount,
+        } : {
+          error: false,
+          value: '',
+          feedback: '',
+        },
+        ...(prevState && prevState.fields ? {
+          amount: prevState.fields.amount,
+          recipient: prevState.fields.recipient,
+        } : {}),
+      },
+    };
 
     this.loaderTimeout = null;
 
@@ -52,56 +56,6 @@ class FormBase extends React.Component {
     this.onGoNext = this.onGoNext.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.updateField = this.updateField.bind(this);
-  }
-
-  componentDidMount() {
-    // istanbul ignore if
-    if (!Object.entries(this.props.prevState).length) this.ifDataFromUrl();
-    else this.ifDataFromPrevState();
-  }
-
-  // TODO move `state.fields` into parent send component and ifDataFromPrevState can be deleted
-  ifDataFromPrevState() {
-    const { prevState } = this.props;
-    // istanbul ignore if
-    if (prevState.fields && Object.entries(prevState.fields).length) {
-      this.setState(() => ({
-        fields: {
-          ...prevState.fields,
-        },
-      }));
-    }
-  }
-
-  // TODO move `state.fields` into parent send component and ifDataFromUrl can be deleted
-  // istanbul ignore next
-  ifDataFromUrl() {
-    const { fields = {}, onInputChange } = this.props;
-    if (fields.recipient.address !== '' || fields.amount.value !== '') {
-      this.setState(prevState => ({
-        fields: {
-          ...prevState.fields,
-          recipient: {
-            ...prevState.fields.recipient,
-            address: fields.recipient.address,
-            value: fields.recipient.address,
-          },
-          amount: {
-            ...prevState.fields.amount,
-            value: fields.amount.value,
-          },
-        },
-      }));
-      onInputChange({
-        target: {
-          name: 'amount',
-          value: fields.amount.value,
-
-        },
-      }, {
-        value: fields.amount.value,
-      });
-    }
   }
 
   onInputChange({ target }) {
@@ -114,31 +68,13 @@ class FormBase extends React.Component {
     this.updateField(target.name, newState);
   }
 
-  validateAmountField(value) {
-    const { fee, account, token } = this.props;
-    const { message, error } = validateAmountFormat({
-      value,
-      token,
-      locale: i18n.language,
-    });
-    if (error) return message;
-
-    const getMaxAmount = () => fromRawLsk(Math.max(0, account.balance - fee));
-    if (parseFloat(getMaxAmount()) < numeral(value).value()) {
-      return this.props.t('Provided amount is higher than your current balance.');
-    }
-    return '';
-  }
-
   updateAmountField(name, value) {
     const { leadingPoint } = regex.amount[i18n.language];
     value = leadingPoint.test(value) ? `0${value}` : value;
-    const feedback = this.validateAmountField(value);
 
     this.updateField(name, {
-      error: !!feedback,
+      ...getAmountFeedbackAndError({ value, ...this.props }),
       value,
-      feedback,
     });
   }
 
@@ -166,7 +102,6 @@ class FormBase extends React.Component {
     this.onInputChange({ target });
   }
 
-  // istanbul ignore next
   onGoNext() {
     const { nextStep, extraFields } = this.props;
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
@@ -178,12 +113,12 @@ class FormBase extends React.Component {
   render() {
     const { fields, isLoading } = this.state;
     const {
-      t, token, children, extraFields, fee, networkConfig,
+      t, token, children, extraFields, fee, networkConfig, bookmarks,
     } = this.props;
-    const isBtnEnabled = !isLoading
-      && !Object.values(fields).find(({ error, value }) => error || value === '')
-      && !Object.values(extraFields).find(({ error }) => error);
-
+    const isSubmitButtonDisabled = !!(isLoading
+      || Object.values(fields).find(({ error, value }) => error || value === '')
+      || Object.values(extraFields).find(({ error }) => error)
+    );
     return (
       <Box className={styles.wrapper} width="medium">
         <Box.Header>
@@ -193,7 +128,7 @@ class FormBase extends React.Component {
           <span className={`${styles.fieldGroup} recipient`}>
             <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
             <BookmarkAutoSuggest
-              bookmarks={this.props.bookmarks[token]}
+              bookmarks={bookmarks[token]}
               networkConfig={networkConfig}
               recipient={fields.recipient}
               t={t}
@@ -267,7 +202,7 @@ class FormBase extends React.Component {
         <Box.Footer>
           <PrimaryButton
             className={`${styles.confirmButton} btn-submit send-next-button`}
-            disabled={!isBtnEnabled}
+            disabled={isSubmitButtonDisabled}
             onClick={this.onGoNext}
           >
             {t('Go to confirmation')}

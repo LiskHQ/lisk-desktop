@@ -114,7 +114,7 @@ class VotesTab extends React.Component {
           <div className={`${styles.filterHolder}`}>
             <Input
               className="search"
-              disabled={mergedVotes && !mergedVotes.length}
+              disabled={mergedVotes && !votes.data.length}
               name="filter"
               value={filterValue}
               placeholder={t('Filter by name')}

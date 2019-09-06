@@ -48,7 +48,6 @@ export default class FormBtc extends React.Component {
     const {
       token, account, dynamicFees, networkConfig,
     } = this.props;
-    // istanbul ignore next
     if (!Object.keys(dynamicFees).length) this.props.dynamicFeesRetrieved();
     if (account && account.info[token]
         && !unspentTransactionOutputs.length) {
@@ -58,7 +57,6 @@ export default class FormBtc extends React.Component {
         .catch(() => this.setState(() => ({ unspentTransactionOutputs: [] })));
     }
 
-    // istanbul ignore if
     if (!fields.processingSpeed.loaded && dynamicFees.Low) {
       this.setState(() => ({
         fields: {
@@ -73,7 +71,6 @@ export default class FormBtc extends React.Component {
     }
   }
 
-  // istanbul ignore next TODO add test for this
   onInputChange({ target }, newState) {
     const { fields } = this.state;
     if (target.name === 'amount') {
@@ -95,7 +92,6 @@ export default class FormBtc extends React.Component {
    * Get status of processing soeed fetch based on state of component
    * @returns {Node} - Text to display to the user or loader
    */
-  // istanbul ignore next TODO add test for this
   getProcessingSpeedStatus() {
     const { token, t } = this.props;
     const { fields, isLoading } = this.state;
@@ -132,7 +128,6 @@ export default class FormBtc extends React.Component {
     return feeInSatoshis;
   }
 
-  // istanbul ignore next TODO add test for this
   selectProcessingSpeed({ item, index }) {
     this.setState(({ fields }) => ({
       fields: {

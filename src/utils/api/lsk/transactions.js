@@ -86,7 +86,7 @@ export const getSingleTransaction = ({
       if (response.data.length !== 0) {
         resolve(response);
       } else {
-        apiClient.node.getTransactions('unconfirmed', { id }).then((unconfirmedRes) => {
+        apiClient.node.getTransactions('ready', { id }).then((unconfirmedRes) => {
           if (unconfirmedRes.data.length !== 0) {
             resolve(unconfirmedRes);
           } else {
@@ -96,16 +96,6 @@ export const getSingleTransaction = ({
       }
     }).catch(reject);
 });
-
-
-export const unconfirmedTransactions = (liskAPIClient, address, limit = 20, offset = 0, sort = 'timestamp:desc') =>
-  liskAPIClient.node.getTransactions('unconfirmed', {
-    senderId: address,
-    limit,
-    offset,
-    sort,
-  });
-
 
 export const create = (transaction, transactionType) => new Promise((resolve, reject) => {
   try {

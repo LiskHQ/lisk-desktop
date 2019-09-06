@@ -11,6 +11,12 @@ import styles from './hwWalletLogin.css';
 class HardwareWalletLogin extends React.Component {
   async componentDidMount() {
     await this.updateDeviceList();
+    this.props.settingsUpdated({
+      token: {
+        active: 'LSK',
+        list: { BTC: false, LSK: true },
+      },
+    });
   }
 
   async updateDeviceList() {

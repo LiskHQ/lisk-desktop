@@ -15,4 +15,5 @@ const hwM = new HwManager({
     receiver: ipcMain,
   },
 });
-hwM.init();
+
+hwM.listening();

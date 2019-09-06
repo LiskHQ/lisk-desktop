@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import manufacturers from './manufacturers';
 import { publish, subscribe } from './utils';
-import { IPC_MESSAGES } from './constants';
+import { IPC_MESSAGES, FUNCTION_TYPES } from './constants';
 
 class HwManager {
   constructor({
@@ -13,9 +13,9 @@ class HwManager {
     this.devices = [];
   }
 
-  init() {
+  listening() {
     const { receiver } = this.pubSub;
-    this.startListeners();
+    this.configure();
 
     subscribe(receiver, {
       event: IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST,
@@ -37,12 +37,15 @@ class HwManager {
       event: IPC_MESSAGES.HW_COMMAND,
       action: async ({ action, data }) => {
         const device = this.getDeviceById(data.deviceId);
-        return manufacturers[device.manufactor]
-          .executeCommand(this.transports[device.manufactor], {
+        const functionName = FUNCTION_TYPES[action];
+        const manufactureName = device.manufactor;
+        return manufacturers[manufactureName][functionName](
+          this.transports[manufactureName],
+          {
             device,
-            action,
             data,
-          });
+          },
+        );
       },
     });
   }
@@ -78,9 +81,12 @@ class HwManager {
    * Remove a specific hwWallet from the manager
    * @param {string} path - Path of hWWallet that shoud be removed
    */
-  removeDeviceWithPath(path) {
+  removeDevice(path) {
+    const { sender } = this.pubSub;
+    const device = this.devices.find(d => d.path === path);
     this.devices = this.devices.filter(d => d.path !== path);
     this.syncDevices();
+    publish(sender, { event: IPC_MESSAGES.HW_DISCONNECTED, payload: { model: device.model } });
   }
 
   /**
@@ -92,8 +98,10 @@ class HwManager {
    * @param {string} device.path
    */
   addDevice(device) {
+    const { sender } = this.pubSub;
     this.devices.push(device);
     this.syncDevices();
+    publish(sender, { event: IPC_MESSAGES.HW_CONNECTED, payload: { model: device.model } });
   }
 
   /**
@@ -123,12 +131,12 @@ class HwManager {
   /**
    * Start listeners set by setTransport
    */
-  startListeners() {
+  configure() {
     Object.keys(this.transports).forEach((key) => {
       try {
         manufacturers[key].listener(this.transports[key], {
           add: data => this.addDevice(data),
-          remove: data => this.removeDeviceWithPath(data),
+          remove: data => this.removeDevice(data),
         });
       } catch (e) {
         throw e;
