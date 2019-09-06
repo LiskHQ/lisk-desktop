@@ -39,8 +39,7 @@
     color: var(--color-slate-gray);
     padding-right: var(--horizontal-padding-l);
     position: relative;
-    top: 0;
-    transition: top var(--animation-speed-fast) linear;
+    top: 10px;
     width: 100%;
 
     & > img {
