@@ -2,13 +2,13 @@ import React from 'react';
 import { translate } from 'react-i18next';
 import moment from 'moment/min/moment-with-locales';
 import keyCodes from '../../../constants/keyCodes';
-import Dropdown from '../../toolbox/dropdown/dropdown';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import DateFieldGroup from './dateFieldGroup';
 import MessageFieldGroup from './messageFieldGroup';
 import styles from './filterContainer.css';
 import AmountFieldGroup from './amountFieldGroup';
 import Icon from '../../toolbox/icon';
+import DropdownButton from '../../toolbox/dropdownButton';
 
 class filterContainer extends React.Component {
   constructor(props) {
@@ -19,16 +19,9 @@ class filterContainer extends React.Component {
       hasErrors: true,
     };
 
-    this.toggleFilters = this.toggleFilters.bind(this);
-    this.handleClickOutside = this.handleClickOutside.bind(this);
     this.handleKey = this.handleKey.bind(this);
     this.updateCustomFilters = this.updateCustomFilters.bind(this);
     this.saveFilters = this.saveFilters.bind(this);
-  }
-
-  componentWillUnmount() {
-    /* istanbul ignore next */
-    document.removeEventListener('click', this.handleClickOutside, false);
   }
 
   updateCustomFilters(fields) {
@@ -54,25 +47,7 @@ class filterContainer extends React.Component {
       customFilters[param] = (date.isValid() && date.format(dateFormat)) || customFilters[param];
     });
 
-    this.toggleFilters();
-
     this.props.saveFilters(customFilters);
-  }
-
-  toggleFilters() {
-    if (!this.state.showFilters) {
-      document.addEventListener('click', this.handleClickOutside, false);
-    } else {
-      document.removeEventListener('click', this.handleClickOutside, false);
-    }
-
-    this.setState(prevState => ({ showFilters: !prevState.showFilters }));
-  }
-
-  // istanbul ignore next
-  handleClickOutside(e) {
-    if (this.dropdownRef && this.dropdownRef.contains(e.target) && this.state.showFilters) return;
-    this.toggleFilters();
   }
 
   handleKey(event) {
@@ -99,46 +74,47 @@ class filterContainer extends React.Component {
     } = customFilters;
 
     return (
-      <React.Fragment>
-        <SecondaryButton
-          className={`${styles.filterTransactions} filterTransactions extra-small`}
-          onClick={this.toggleFilters}
-        >
-          {t('Filter Transactions')}
-          <Icon className="button-icon" name="iconFilter" />
-        </SecondaryButton>
+      <DropdownButton
+        buttonClassName={`${styles.filterTransactions} filterTransactions extra-small`}
+        className={`${styles.bookmarkDropdown}`}
+        buttonLabel={(
+          <span>
+            {t('Filter Transactions')}
+            <Icon className="button-icon" name="iconFilter" />
+          </span>
+        )}
+        ButtonComponent={SecondaryButton}
+      >
         <div className={styles.dropdownContainer}>
-          <Dropdown className={styles.bigDropdown} showDropdown={this.state.showFilters}>
-            <div
-              className={`${styles.container} filter-container`}
-              ref={(node) => { this.dropdownRef = node; }}
+          <div
+            className={`${styles.container} filter-container`}
+            ref={(node) => { this.dropdownRef = node; }}
+          >
+            <DateFieldGroup
+              filters={{ dateFrom, dateTo }}
+              updateCustomFilters={this.updateCustomFilters}
+              handleKeyPress={this.handleKey}
+            />
+            <AmountFieldGroup
+              filters={{ amountFrom, amountTo }}
+              updateCustomFilters={this.updateCustomFilters}
+              handleKeyPress={this.handleKey}
+            />
+            <MessageFieldGroup
+              filters={{ message }}
+              updateCustomFilters={this.updateCustomFilters}
+              handleKeyPress={this.handleKey}
+            />
+            <PrimaryButton
+              disabled={this.state.hasErrors}
+              className="saveButton small"
+              onClick={this.saveFilters}
             >
-              <DateFieldGroup
-                filters={{ dateFrom, dateTo }}
-                updateCustomFilters={this.updateCustomFilters}
-                handleKeyPress={this.handleKey}
-              />
-              <AmountFieldGroup
-                filters={{ amountFrom, amountTo }}
-                updateCustomFilters={this.updateCustomFilters}
-                handleKeyPress={this.handleKey}
-              />
-              <MessageFieldGroup
-                filters={{ message }}
-                updateCustomFilters={this.updateCustomFilters}
-                handleKeyPress={this.handleKey}
-              />
-              <PrimaryButton
-                disabled={this.state.hasErrors}
-                className="saveButton small"
-                onClick={this.saveFilters}
-              >
-                {this.props.t('Apply Filters')}
-              </PrimaryButton>
-            </div>
-          </Dropdown>
+              {this.props.t('Apply Filters')}
+            </PrimaryButton>
+          </div>
         </div>
-      </React.Fragment>
+      </DropdownButton>
     );
   }
 }

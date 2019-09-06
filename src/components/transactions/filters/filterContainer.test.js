@@ -33,15 +33,13 @@ describe('filterContainer', () => {
     expect(props.saveFilters).toBeCalled();
   });
 
-  it('should toggle Filters dropdown', () => {
-    expect(wrapper).not.toContainMatchingElement('.dropdown.show');
-    wrapper.find('.filterTransactions').first().simulate('click');
-    expect(wrapper).toContainMatchingElement('.dropdown.show');
-    wrapper.find('.filterTransactions').first().simulate('click');
-    expect(wrapper).not.toContainMatchingElement('.dropdown.show');
+  it('should call saveFilters on enter pressed', () => {
+    wrapper.find('.message-field textarea').simulate('change', { event: { target: { value: 'testing' } } });
+    wrapper.find('.message-field textarea').simulate('keyDown', { keyCode: keyCodes.enter });
+    expect(props.saveFilters).toBeCalled();
   });
 
-  it('should call saveFilters on enter pressed', () => {
+  it('should call saveFilters on enter pressed with empty values', () => {
     wrapper.find('.message-field textarea').simulate('keyDown', { keyCode: keyCodes.enter });
     expect(props.saveFilters).toBeCalled();
   });
