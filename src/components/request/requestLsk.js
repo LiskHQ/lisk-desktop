@@ -120,7 +120,7 @@ class RequestLsk extends React.Component {
     const byteCount = encodeURI(fields.reference.value).split(/%..|./).length - 1;
 
     return (
-      <RequestWrapper copyLabel={t('Copy Link')} copyValue={shareLink} t={t}>
+      <RequestWrapper copyLabel={t('Copy link')} copyValue={shareLink} t={t}>
         <span className={`${styles.label}`}>
           {t('Use the sharing link to easily request any amount of LSK from Lisk Hub or Lisk Mobile users.')}
         </span>

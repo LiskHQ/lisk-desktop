@@ -116,7 +116,7 @@ class AddBookmark extends React.Component {
     const error = value.length > maxLength;
     const feedback = !error
       ? t('Max. 20 characters')
-      : t('Label is too long');
+      : t('Label is too long.');
     return { feedback, error };
   }
 

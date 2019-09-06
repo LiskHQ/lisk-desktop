@@ -11,7 +11,7 @@ const SummaryStep = ({
   t, account, prevStep, nextStep, secondPassphrase, secondPassphraseRegistered, finalCallback,
 }) => (
   <TransactionSummary
-    title={t('Register 2nd passphrase summary')}
+    title={t('2nd passphrase registration summary')}
     account={account}
     t={t}
     confirmButton={{

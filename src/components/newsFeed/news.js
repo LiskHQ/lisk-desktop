@@ -1,4 +1,6 @@
 import React from 'react';
+import moment from 'moment';
+import i18n from '../../i18n';
 import Icon from '../toolbox/icon';
 import styles from './news.css';
 
@@ -11,18 +13,21 @@ class News extends React.Component {
     };
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  formatDate(t, timestamp) {
+    const hours = Math.floor(Math.abs(new Date() - new Date(timestamp)) / 36e5);
+    if (hours <= 1) return t('Just now');
+    if (hours > 1 && hours <= 24) return t('{{hours}}h ago', { hours });
+    if (hours > 24 && hours <= 48) return t('Yesterday');
+    moment.locale(i18n.language);
+    return moment(timestamp).format('DD MMM YYYY');
+  }
+
   render() {
     const {
       source, content, timestamp, url, t,
     } = this.props;
-
-    const hours = Math.floor(Math.abs(new Date() - new Date(timestamp)) / 36e5);
-    // istanbul ignore next
-    let timestampMessage = hours ? t('{{hours}}h ago', { hours }) : t('just now');
-    // istanbul ignore next
-    timestampMessage = hours > 24
-      ? t('{{days}}d ago', { days: Math.floor(hours / 24) })
-      : timestampMessage;
+    const date = this.formatDate(t, timestamp);
 
     // Makes first letter capital
     const sourceName = source.charAt(0).toUpperCase() + source.substr(1);
@@ -32,7 +37,7 @@ class News extends React.Component {
           <Icon name="newsFeedAvatar" />
           <div>
             <span className={styles.title}>{sourceName}</span>
-            <span className={styles.subtitle}>{timestampMessage}</span>
+            <span className={styles.subtitle}>{date}</span>
           </div>
         </div>
         <div className={styles.description}>
