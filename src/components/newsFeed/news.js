@@ -16,7 +16,7 @@ class News extends React.Component {
   // eslint-disable-next-line class-methods-use-this
   formatDate(t, timestamp) {
     const hours = Math.floor(Math.abs(new Date() - new Date(timestamp)) / 36e5);
-    if (hours <= 1) return t('just now');
+    if (hours <= 1) return t('Just now');
     if (hours > 1 && hours <= 24) return t('{{hours}}h ago', { hours });
     if (hours > 24 && hours <= 48) return t('Yesterday');
     moment.locale(i18n.language);
