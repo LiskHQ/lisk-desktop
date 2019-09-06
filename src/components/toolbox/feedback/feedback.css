@@ -18,7 +18,9 @@
     max-height var(--animation-speed-fast) linear,
     opacity var(--animation-speed-fast) linear,
     padding-bottom var(--animation-speed-fast) linear,
-    padding-top var(--animation-speed-fast) linear;
+    padding-top var(--animation-speed-fast) linear,
+    margin-top var(--animation-speed-fast) linear,
+    background var(--animation-speed-fast) linear;
   width: 100%;
 
   &.show {

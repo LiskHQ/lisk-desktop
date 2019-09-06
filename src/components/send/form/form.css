@@ -37,19 +37,14 @@
     justify-content: flex-end;
     align-items: center;
     color: var(--color-slate-gray);
-    padding-right: var(--horizontal-padding-l);
     position: relative;
-    top: 10px;
+    top: 8px;
     width: 100%;
 
     & > img {
       margin-left: 5px;
       cursor: pointer;
     }
-  }
-
-  & .fieldGroup.error .amountHint {
-    top: -26px;
   }
 
   & .amountField {
@@ -156,8 +151,7 @@
   color: var(--color-slate-gray);
   display: none;
   justify-content: flex-end;
-  margin-top: 10px;
-  padding: 6px var(--horizontal-padding-l);
+  padding: 8px 0;
   width: 100%;
 
   &:global(.error) {
