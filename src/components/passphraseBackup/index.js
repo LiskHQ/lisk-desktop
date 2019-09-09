@@ -81,7 +81,7 @@ class PassphraseBackup extends React.Component {
                 text={t('Copy to clipboard')}
                 copyClassName={styles.copyIcon}
                 Container={SecondaryButton}
-                containerClassName="extra-small"
+                containerProps={{ size: 'xs' }}
               />
             </div>
           </div>
