@@ -21,16 +21,14 @@
     padding: 0 20px;
   }
 
-  &.s,
-  &:global(.small) {
+  &.s {
     @mixin contentNormal bold;
 
     height: 36px;
     padding: 0 16px;
   }
 
-  &.xs,
-  &:global(.extra-small) {
+  &.xs {
     @mixin contentNormal bold;
 
     height: 32px;
