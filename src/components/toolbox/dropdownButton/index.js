@@ -17,10 +17,21 @@ class DropdownButton extends React.Component {
     this.toggleDropdown = this.toggleDropdown.bind(this);
   }
 
+  componentDidUpdate(prevProps) {
+    const { shouldCloseDropdown } = this.props;
+    if (shouldCloseDropdown
+        && prevProps.shouldCloseDropdown !== shouldCloseDropdown
+        && shouldCloseDropdown === true) {
+      this.toggleDropdown();
+    }
+  }
+
   toggleDropdown() {
+    const { getDropdownStatus } = this.props;
     this.setState(prevState => ({
       shownDropdown: !prevState.shownDropdown,
     }));
+    if (getDropdownStatus) getDropdownStatus(!this.state.shownDropdown);
   }
 
   render() {
@@ -41,7 +52,7 @@ class DropdownButton extends React.Component {
           <Dropdown
             showArrow={false}
             showDropdown={shownDropdown}
-            className={`${className} ${styles.dropdown}`}
+            className={`${styles.dropdown} ${className}`}
           >
             {children}
           </Dropdown>
@@ -56,6 +67,8 @@ DropdownButton.defaultProps = {
   buttonLabel: '',
   buttonClassName: '',
   ButtonComponent: SecondaryButton,
+  shouldCloseDropdown: null,
+  getDropdownStatus: null,
 };
 
 export default DropdownButton;

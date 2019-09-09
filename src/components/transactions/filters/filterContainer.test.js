@@ -20,6 +20,7 @@ describe('filterContainer', () => {
     t: v => v,
     customFilters: {},
     updateCustomFilters: jest.fn(),
+    shouldCloseDropdown: true,
   };
 
   beforeEach(() => {

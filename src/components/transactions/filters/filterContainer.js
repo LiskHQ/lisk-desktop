@@ -17,11 +17,13 @@ class filterContainer extends React.Component {
     this.state = {
       showFilters: false,
       hasErrors: true,
+      shouldCloseDropdown: false,
     };
 
     this.handleKey = this.handleKey.bind(this);
     this.updateCustomFilters = this.updateCustomFilters.bind(this);
     this.saveFilters = this.saveFilters.bind(this);
+    this.getDropdownStatus = this.getDropdownStatus.bind(this);
   }
 
   updateCustomFilters(fields) {
@@ -48,6 +50,7 @@ class filterContainer extends React.Component {
     });
 
     this.props.saveFilters(customFilters);
+    this.closeDropdown();
   }
 
   handleKey(event) {
@@ -63,6 +66,16 @@ class filterContainer extends React.Component {
     return false;
   }
 
+  closeDropdown() {
+    this.setState({ shouldCloseDropdown: true });
+  }
+
+  // istanbul ignore next
+  getDropdownStatus(status) {
+    const { shouldCloseDropdown } = this.state;
+    if (!status && shouldCloseDropdown) this.setState({ shouldCloseDropdown: false });
+  }
+
   render() {
     const { t, customFilters } = this.props;
     const {
@@ -76,7 +89,7 @@ class filterContainer extends React.Component {
     return (
       <DropdownButton
         buttonClassName={`${styles.filterTransactions} filterTransactions extra-small`}
-        className={`${styles.bookmarkDropdown}`}
+        className={styles.filtersContainer}
         buttonLabel={(
           <span>
             {t('Filter Transactions')}
@@ -84,6 +97,8 @@ class filterContainer extends React.Component {
           </span>
         )}
         ButtonComponent={SecondaryButton}
+        shouldCloseDropdown={this.state.shouldCloseDropdown}
+        getDropdownStatus={this.getDropdownStatus}
       >
         <div className={styles.dropdownContainer}>
           <div
