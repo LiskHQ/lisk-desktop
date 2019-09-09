@@ -1,9 +1,6 @@
 import React from 'react';
 import DemoRenderer, { DarkWrapper } from '../demoRenderer';
 import { Input, AutoresizeTextarea } from '.';
-import Feedback from '../feedback/feedback';
-import Icon from '../icon';
-import Spinner from '../../spinner/spinner';
 
 /* eslint-disable-next-line no-console */
 const onChange = console.log;
@@ -14,25 +11,21 @@ const InputsDemo = () => (
     <DemoRenderer>
       <Input
         onChange={onChange}
-        value=""
         placeholder="Input demo placeholder (default: size L)"
       />
       <Input
         size="m"
         onChange={onChange}
-        value=""
         placeholder="Input demo placeholder (size M)"
       />
       <Input
         size="s"
         onChange={onChange}
-        value=""
         placeholder="Input demo placeholder (size S)"
       />
       <Input
         size="xs"
         onChange={onChange}
-        value=""
         placeholder="Input demo placeholder (size XS)"
       />
     </DemoRenderer>
@@ -41,64 +34,57 @@ const InputsDemo = () => (
         onChange={onChange}
         name="demo"
         value="ok value"
+        status="ok"
+        feedback="Some hint for what the value should be"
       />
-      {/* TODO fix Input to accept props.status='ok' so that next line is not needed */}
-      <Icon name="okIcon" />
       <Input
         onChange={onChange}
         name="demo"
         value="validating..."
+        status="pending"
       />
-      {/* TODO fix Input to accept props.status='pending' so that next line is not needed */}
-      <Spinner />
       <Input
         onChange={onChange}
         name="demo"
         value="0alkawja;jk"
-        className="error"
-      />
-      {/* TODO fix Input to accept props.status='error' so that next line is not needed */}
-      <Icon name="alertIcon" />
-      {/* TODO fix Input to accept props.error='<message>' so that next line is not needed */}
-      <Feedback
-        show
         status="error"
-        showIcon
-      >
-        There was something wrong typed.
-      </Feedback>
+        feedback="Something wrong was typed."
+      />
     </DemoRenderer>
     <DemoRenderer>
-      <DarkWrapper>
-        {/* TODO fix Input to change to dark mode when props.dark={true} */}
+      <DarkWrapper display="block">
         <Input
           onChange={onChange}
           name="demo"
           value="ok value"
+          status="ok"
+          dark
         />
-        <Icon name="okIcon" />
         <Input
           onChange={onChange}
           name="demo"
           value="validating..."
+          status="pending"
+          dark
         />
-        <Spinner />
         <Input
           onChange={onChange}
           name="demo"
           value="0alkawja;jk"
-          className="error"
-        />
-        <Icon name="alertIcon" />
-        <Feedback
-          dark
-          show
           status="error"
-          showIcon
-        >
-          There was something wrong typed.
-        </Feedback>
+          feedback="Something wrong was typed."
+          dark
+        />
       </DarkWrapper>
+    </DemoRenderer>
+    <DemoRenderer>
+      <Input
+        onChange={onChange}
+        name="search-demo"
+        placeholder="Type something to search..."
+        icon="searchInput"
+        size="m"
+      />
     </DemoRenderer>
     <DemoRenderer>
       <AutoresizeTextarea

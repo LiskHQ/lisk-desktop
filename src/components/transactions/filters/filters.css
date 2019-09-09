@@ -68,11 +68,6 @@
   }
 
   & .input {
-    @mixin contentNormal;
-
-    height: 32px;
-    min-height: 32px;
-    padding-right: 30px;
     resize: none;
 
     &:focus {
@@ -84,12 +79,6 @@
         }
       }
     }
-  }
-
-  & .feedback {
-    margin-top: 8px;
-    padding-left: 8px;
-    padding-right: 8px;
   }
 }
 

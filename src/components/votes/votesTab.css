@@ -10,14 +10,7 @@
   }
 
   & .filterHolder {
-    height: 32px;
     width: 200px;
-
-    & input {
-      @mixin contentSmall;
-
-      height: 100%;
-    }
   }
 
   & .lastHeading {

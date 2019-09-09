@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
-import Spinner from '../../spinner/spinner';
 import { Input } from '../../toolbox/inputs';
 import { PrimaryButton } from '../../toolbox/buttons/button';
 import styles from './bookmarkDropdown.css';
-import Icon from '../../toolbox/icon';
 
 class Bookmark extends React.Component {
   constructor(props) {
@@ -179,6 +177,7 @@ class Bookmark extends React.Component {
   render() {
     const { t, isBookmark } = this.props;
     const { isValid, fields } = this.state;
+    const { accountName } = fields;
 
     return (
       <section className={`${styles.wrapper}`}>
@@ -194,21 +193,11 @@ class Bookmark extends React.Component {
               placeholder={t('ie. Lisker123')}
               readOnly={fields.accountName.isReadOnly}
               className={`${styles.input} ${fields.accountName.error ? 'error' : ''}`}
+              feedback={accountName.feedback}
+              isLoading={accountName.loading}
+              size="s"
+              status={accountName.error ? 'error' : 'ok'}
             />
-            {!fields.accountName.isReadOnly
-              ? (
-                <React.Fragment>
-                  <Spinner className={`${styles.status} ${fields.accountName.loading && fields.accountName.value ? styles.show : ''}`} />
-                  <Icon
-                    className={`${styles.status} ${!fields.accountName.loading && fields.accountName.value ? styles.show : ''}`}
-                    name={fields.accountName.error ? 'alertIcon' : 'okIcon'}
-                  />
-                </React.Fragment>
-              )
-              : null}
-          </span>
-          <span className={`${styles.feedback} ${fields.accountName.error || fields.accountName.value.length >= 15 ? 'error' : ''} ${fields.accountName.value && !isBookmark ? styles.show : ''}`}>
-            {fields.accountName.feedback}
           </span>
         </label>
         {/* <label className={`${styles.fieldGroup} ${styles.checkboxGroup}`}>
