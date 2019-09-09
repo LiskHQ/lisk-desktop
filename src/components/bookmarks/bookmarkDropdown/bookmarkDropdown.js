@@ -226,14 +226,16 @@ class Bookmark extends React.Component {
         {isBookmark
           ? (
             <PrimaryButton
-              className="bookmark-button extra-small"
+              className="bookmark-button"
+              size="xs"
               onClick={this.handleUnbookmark}
             >
               {t('Remove from bookmarks')}
             </PrimaryButton>
           ) : (
             <PrimaryButton
-              className="bookmark-button extra-small"
+              className="bookmark-button"
+              size="xs"
               onClick={this.handleBookmark}
               disabled={!isValid}
             >

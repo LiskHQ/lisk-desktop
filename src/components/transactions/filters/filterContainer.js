@@ -101,7 +101,8 @@ class filterContainer extends React.Component {
     return (
       <React.Fragment>
         <SecondaryButton
-          className={`${styles.filterTransactions} filterTransactions extra-small`}
+          className={`${styles.filterTransactions} filterTransactions`}
+          size="xs"
           onClick={this.toggleFilters}
         >
           {t('Filter Transactions')}
