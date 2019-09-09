@@ -10,7 +10,8 @@ const Button = ({
   ...props
 }) => children && (
   <SecondaryButton
-    className={`${styles.button} ${className} small light button`}
+    className={`${styles.button} ${className} light button`}
+    size="s"
     onClick={onClick}
     {...props}
   >

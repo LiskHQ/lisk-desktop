@@ -179,13 +179,15 @@ class BookmarksList extends React.Component {
                           <React.Fragment>
                             <SecondaryButton
                               onClick={e => this.updateBookmark(e, {})}
-                              className="medium bookmarks-cancel-button"
+                              className="bookmarks-cancel-button"
+                              size="m"
                             >
                               {t('Cancel')}
                             </SecondaryButton>
                             <PrimaryButton
                               onClick={e => this.saveChanges(e)}
-                              className="medium bookmarks-save-changes-button"
+                              className="bookmarks-save-changes-button"
+                              size="m"
                             >
                               {t('Save changes')}
                             </PrimaryButton>
@@ -195,13 +197,15 @@ class BookmarksList extends React.Component {
                           <React.Fragment>
                             <SecondaryButton
                               onClick={e => this.editBookmark(e, bookmark)}
-                              className="medium bookmarks-edit-button"
+                              className="bookmarks-edit-button"
+                              size="m"
                             >
                               {t('Edit')}
                             </SecondaryButton>
                             <PrimaryButton
                               onClick={e => this.deleteBookmark(e, bookmark)}
-                              className={`medium bookmarks-delete-button ${styles.deleteButton}`}
+                              className={`bookmarks-delete-button ${styles.deleteButton}`}
+                              size="m"
                             >
                               {t('Delete')}
                             </PrimaryButton>
@@ -255,7 +259,7 @@ class BookmarksList extends React.Component {
             ? (
               <Box.Footer className={styles.footer}>
                 <Link to={routes.bookmarks.path}>
-                  <SecondaryButton className="small">{t('View All')}</SecondaryButton>
+                  <SecondaryButton size="s">{t('View All')}</SecondaryButton>
                 </Link>
               </Box.Footer>
             )

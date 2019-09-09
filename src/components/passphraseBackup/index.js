@@ -81,7 +81,7 @@ class PassphraseBackup extends React.Component {
                 text={t('Copy to clipboard')}
                 copyClassName={styles.copyIcon}
                 Container={SecondaryButton}
-                containerClassName="extra-small"
+                containerProps={{ size: 'xs' }}
               />
             </div>
           </div>
@@ -108,7 +108,7 @@ class PassphraseBackup extends React.Component {
                 <Icon name="fileOutline" />
                 <p className="option-value">{this.walletName}</p>
               </div>
-              <SecondaryButton className={`${styles.downloadBtn} extra-small`} onClick={this.generatePaperwallet}>
+              <SecondaryButton className={styles.downloadBtn} size="xs" onClick={this.generatePaperwallet}>
                 {t('Download')}
               </SecondaryButton>
             </div>
