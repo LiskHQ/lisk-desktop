@@ -29,10 +29,10 @@ const ButtonDemo = () => (
 
     <h3>Button sizes</h3>
     <DemoRenderer>
-      <PrimaryButton> Large </PrimaryButton>
-      <PrimaryButton className="medium"> Medium </PrimaryButton>
-      <PrimaryButton className="small"> Small </PrimaryButton>
-      <PrimaryButton className="extra-small"> Extra Small </PrimaryButton>
+      <PrimaryButton> Size l (default) </PrimaryButton>
+      <PrimaryButton size="m"> Size m </PrimaryButton>
+      <PrimaryButton size="s"> Size s </PrimaryButton>
+      <PrimaryButton size="xs"> Size xs </PrimaryButton>
     </DemoRenderer>
 
   </div>
