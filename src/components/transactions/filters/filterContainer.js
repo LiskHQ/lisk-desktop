@@ -17,13 +17,12 @@ class filterContainer extends React.Component {
     this.state = {
       showFilters: false,
       hasErrors: true,
-      shouldCloseDropdown: false,
     };
 
     this.handleKey = this.handleKey.bind(this);
     this.updateCustomFilters = this.updateCustomFilters.bind(this);
     this.saveFilters = this.saveFilters.bind(this);
-    this.getDropdownStatus = this.getDropdownStatus.bind(this);
+    this.setChildRef = this.setChildRef.bind(this);
   }
 
   updateCustomFilters(fields) {
@@ -50,7 +49,7 @@ class filterContainer extends React.Component {
     });
 
     this.props.saveFilters(customFilters);
-    this.closeDropdown();
+    this.childRef.toggleDropdown();
   }
 
   handleKey(event) {
@@ -66,14 +65,8 @@ class filterContainer extends React.Component {
     return false;
   }
 
-  closeDropdown() {
-    this.setState({ shouldCloseDropdown: true });
-  }
-
-  // istanbul ignore next
-  getDropdownStatus(status) {
-    const { shouldCloseDropdown } = this.state;
-    if (!status && shouldCloseDropdown) this.setState({ shouldCloseDropdown: false });
+  setChildRef(node) {
+    this.childRef = node;
   }
 
   render() {
@@ -97,8 +90,8 @@ class filterContainer extends React.Component {
           </span>
         )}
         ButtonComponent={SecondaryButton}
-        shouldCloseDropdown={this.state.shouldCloseDropdown}
-        getDropdownStatus={this.getDropdownStatus}
+        align="right"
+        ref={this.setChildRef}
       >
         <div className={styles.dropdownContainer}>
           <div
