@@ -131,7 +131,8 @@ class filterContainer extends React.Component {
               />
               <PrimaryButton
                 disabled={this.state.hasErrors}
-                className="saveButton small"
+                className="saveButton"
+                size="s"
                 onClick={this.saveFilters}
               >
                 {this.props.t('Apply Filters')}

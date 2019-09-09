@@ -18,7 +18,8 @@ const NewReleaseMessage = ({
       {t(' is out. ')}
       {releaseSummary}
       <TertiaryButton
-        className={`${styles.button} small`}
+        className={styles.button}
+        size="s"
         onClick={onClick}
       >
         {t('Read more')}

@@ -255,7 +255,7 @@ class BookmarksList extends React.Component {
             ? (
               <Box.Footer className={styles.footer}>
                 <Link to={routes.bookmarks.path}>
-                  <SecondaryButton className="small">{t('View All')}</SecondaryButton>
+                  <SecondaryButton size="s">{t('View All')}</SecondaryButton>
                 </Link>
               </Box.Footer>
             )
