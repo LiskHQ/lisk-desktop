@@ -98,7 +98,8 @@ class Onboarding extends React.Component {
             {currentSlide !== 0
               ? (
                 <SecondaryButton
-                  className="light medium"
+                  className="light"
+                  size="m"
                   name="prev"
                   onClick={this.handleButtonClick}
                 >
@@ -109,7 +110,7 @@ class Onboarding extends React.Component {
             {(currentSlide !== slides.length - 1 && actionButtonLabel !== '')
               ? (
                 <PrimaryButton
-                  className="medium"
+                  size="m"
                   name="next"
                   onClick={this.handleButtonClick}
                 >
@@ -117,7 +118,7 @@ class Onboarding extends React.Component {
                 </PrimaryButton>
               ) : (
                 <PrimaryButton
-                  className="medium"
+                  size="m"
                   onClick={this.handleFinalCallback}
                 >
                   {actionButtonLabel}
