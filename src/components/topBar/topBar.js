@@ -50,9 +50,11 @@ class TopBar extends React.Component {
   onHandleClick(name) {
     const { openDropdown } = this.state;
     // istanbul ignore next
-    if (name === 'search' && openDropdown !== name) setTimeout(() => this.searchInput.focus(), 150);
+    if (name === 'search' && openDropdown !== name) {
+      setTimeout(() => this.searchInput.focus(), 150);
+      this.childRef.toggleDropdown();
+    }
     this.setState({ openDropdown: openDropdown === name ? '' : name });
-    this.childRef.toggleDropdown();
   }
 
   /* istanbul ignore next */
