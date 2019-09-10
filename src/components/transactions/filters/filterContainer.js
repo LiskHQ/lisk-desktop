@@ -81,19 +81,18 @@ class filterContainer extends React.Component {
 
     return (
       <DropdownButton
-        buttonClassName={`${styles.filterTransactions} filterTransactions extra-small`}
-        className={styles.filtersContainer}
+        buttonClassName={`${styles.filterTransactionsButton} filterTransactions extra-small`}
         buttonLabel={(
-          <span>
+          <React.Fragment>
             {t('Filter Transactions')}
             <Icon className="button-icon" name="iconFilter" />
-          </span>
+          </React.Fragment>
         )}
         ButtonComponent={SecondaryButton}
         align="right"
         ref={this.setChildRef}
       >
-        <div className={styles.dropdownContainer}>
+        <div>
           <div
             className={`${styles.container} filter-container`}
             ref={(node) => { this.dropdownRef = node; }}
