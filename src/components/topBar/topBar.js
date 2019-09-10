@@ -26,8 +26,7 @@ class TopBar extends React.Component {
     this.searchInput = null;
 
     this.onLogout = this.onLogout.bind(this);
-    this.handleSearchDropdown = this.onHandleClick.bind(this, 'search');
-    this.handleAccountDropdown = this.onHandleClick.bind(this, 'account');
+    this.handleSeachDropdownToggle = this.handleSeachDropdownToggle.bind(this);
     this.onCountdownComplete = this.onCountdownComplete.bind(this);
     this.setChildRef = this.setChildRef.bind(this);
   }
@@ -47,14 +46,9 @@ class TopBar extends React.Component {
     }
   }
 
-  onHandleClick(name) {
-    const { openDropdown } = this.state;
-    // istanbul ignore next
-    if (name === 'search' && openDropdown !== name) {
-      setTimeout(() => this.searchInput.focus(), 150);
-      this.childRef.toggleDropdown();
-    }
-    this.setState({ openDropdown: openDropdown === name ? '' : name });
+  handleSeachDropdownToggle() {
+    setTimeout(() => this.searchInput.focus(), 150);
+    this.childRef.toggleDropdown();
   }
 
   /* istanbul ignore next */
@@ -88,7 +82,6 @@ class TopBar extends React.Component {
       settingsUpdated,
       resetTimer,
     } = this.props;
-    const { openDropdown } = this.state;
     const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
 
     const items = menuLinks(t);
@@ -137,8 +130,6 @@ class TopBar extends React.Component {
             token={token}
             className={styles.userAccount}
             account={account}
-            isDropdownEnable={openDropdown === 'account'}
-            onDropdownToggle={this.handleAccountDropdown}
             onLogout={this.onLogout}
             settingsUpdated={settingsUpdated}
             isUserLogout={isUserLogout}
@@ -163,7 +154,7 @@ class TopBar extends React.Component {
                 <SearchBar
                   setSearchBarRef={(node) => { this.searchInput = node; }}
                   history={this.props.history}
-                  onSearchClick={this.handleSearchDropdown}
+                  onSearchClick={this.handleSeachDropdownToggle}
                 />
               </DropdownButton>
             )
