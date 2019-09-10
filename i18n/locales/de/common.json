@@ -520,7 +520,7 @@
   "ie. Lisker123": "ie. Lisker123",
   "ie. peter_pan": "ie. peter_pan",
   "Just now": "Gerade jetzt",
-  "secondPassphraseInfoParagraph": "After registration, your second passphrase will be <strong>required</strong> when <strong>confirming every transaction</strong> and every vote. You are responsible for safekeeping your second passphrase. No one can restore it, not even Lisk. Once activated a second passphrase <strong>can’t be turned off.</strong>",
+  "secondPassphraseInfoParagraph": "Nach dem du dich registriert hast, <strong>benötigst</strong> du deine zweite Passphrase für <strong>die Bestätigung jeder Transaktion</strong> und jedem Vote. Du bist verantwortlich dafür deine zweite Passphrase sicher zu verwahren. Niemand kann diese wiederherstellen, auch nicht Lisk. Sobald du einmal die zweite Passphrase aktiviert hast, <strong>kannst du diese nicht mehr deaktivieren.</strong>",
   "to": "bis",
   "{{hours}}h ago": "Vor {{hours}} Stunden",
   "{{walletModel}} connected": "{{walletModel}} verbunden",
