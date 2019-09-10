@@ -20,6 +20,10 @@ class TransactionStatus extends React.Component {
     this.onRetry = this.onRetry.bind(this);
   }
 
+  componentWillUnmount() {
+    this.props.resetTransactionResult();
+  }
+
   componentDidMount() {
     const { recipientAccount, fields } = this.props;
     recipientAccount.loadData({ address: fields.recipient.address });

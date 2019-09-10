@@ -142,4 +142,9 @@ describe('TransactionStatus', () => {
     wrapper.find('.retry').at(0).simulate('click');
     expect(props.transactionBroadcasted).toBeCalled();
   });
+
+  it('should call resetTransactionResult on unmount', () => {
+    wrapper.unmount();
+    expect(props.resetTransactionResult).toHaveBeenCalled();
+  });
 });
