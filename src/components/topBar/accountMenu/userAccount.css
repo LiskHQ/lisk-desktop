@@ -2,15 +2,17 @@
 @import '../../app/mixins.css';
 
 .wrapper {
+  width: 100% !important;
+  height: 100% !important;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
   margin-left: auto;
   position: relative;
-  height: 100%;
   border: none;
-  padding: 0;
+  padding: 0 !important;
+  box-sizing: border-box;
 
   & > .accountInfo::after {
     border-bottom: 2px solid var(--color-slate-gray);
