@@ -36,7 +36,7 @@ const BackupPassphrase = ({
       <span className={`${registerStyles.button}`}>
         <PrimaryButton
           className={`${registerStyles.continueBtn} yes-its-safe-button`}
-          onClick={nextStep}
+          onClick={() => nextStep()}
         >
           {t('Continue')}
         </PrimaryButton>

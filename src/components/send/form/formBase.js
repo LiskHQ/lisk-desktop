@@ -8,10 +8,7 @@ import { getAmountFeedbackAndError } from '../../../utils/validators';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import Box from '../../toolbox/box';
 import Converter from '../../converter';
-import Feedback from '../../toolbox/feedback/feedback';
-import Icon from '../../toolbox/icon';
 import Piwik from '../../../utils/piwik';
-import Spinner from '../../spinner/spinner';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import i18n from '../../../i18n';
 import links from '../../../constants/externalLinks';
@@ -137,7 +134,10 @@ class FormBase extends React.Component {
             />
           </span>
 
-          <label className={`${styles.fieldGroup}`}>
+          <label className={[
+            styles.fieldGroup, fields.amount.error && styles.error,
+          ].filter(Boolean).join(' ')}
+          >
             <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
             <span className={`${styles.amountField} amount`}>
               <Input
@@ -147,28 +147,16 @@ class FormBase extends React.Component {
                 value={fields.amount.value}
                 placeholder={t('Insert the amount of transaction')}
                 className={`${styles.input} ${fields.amount.error ? 'error' : ''}`}
+                isLoading={this.state.isLoading}
+                status={fields.amount.error ? 'error' : 'ok'}
+                feedback={fields.amount.feedback}
               />
               <Converter
                 className={styles.converter}
                 value={fields.amount.value}
                 error={fields.amount.error}
               />
-              <Spinner className={`${styles.spinner} ${this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`} />
-              <Icon
-                className={`${styles.status} ${!this.state.isLoading && fields.amount.value ? styles.show : styles.hide}`}
-                name={fields.amount.error ? 'alertIcon' : 'okIcon'}
-              />
             </span>
-
-            <Feedback
-              show={fields.amount.error}
-              status="error"
-              className={`${styles.feedbackMessage} amount-feedback`}
-              showIcon={false}
-            >
-              {fields.amount.feedback}
-            </Feedback>
-
             { !extraFields.processingSpeed ? (
               <span className={styles.amountHint}>
                 {t('+ Transaction fee {{fee}} LSK', {

@@ -81,13 +81,14 @@ class filterContainer extends React.Component {
 
     return (
       <DropdownButton
-        buttonClassName={`${styles.filterTransactionsButton} filterTransactions extra-small`}
+        buttonClassName={`${styles.filterTransactionsButton} filterTransactions`}
         buttonLabel={(
           <React.Fragment>
             {t('Filter Transactions')}
             <Icon className="button-icon" name="iconFilter" />
           </React.Fragment>
         )}
+        size="xs"
         ButtonComponent={SecondaryButton}
         align="right"
         ref={this.setChildRef}

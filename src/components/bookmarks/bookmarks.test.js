@@ -33,7 +33,7 @@ describe('Bookmarks', () => {
 
   it('should allow filtering bookmarks by title', () => {
     expect(wrapper).toContainMatchingElements(bookmarks.LSK.length, 'a.bookmark-list-row');
-    wrapper.find('.bookmarks-filter-input').first().simulate(
+    wrapper.find('input.bookmarks-filter-input').simulate(
       'change',
       { target: { value: bookmarks.LSK[0].title } },
     );
@@ -41,7 +41,7 @@ describe('Bookmarks', () => {
   });
 
   it('should show filtering empty state if no bookmark matches', () => {
-    wrapper.find('.bookmarks-filter-input').first().simulate(
+    wrapper.find('input.bookmarks-filter-input').simulate(
       'change',
       { target: { value: 'some random text' } },
     );
@@ -62,7 +62,7 @@ describe('Bookmarks', () => {
     expect(wrapper).toContainMatchingElements(bookmarks.LSK.length, 'a.bookmark-list-row');
     wrapper.find('.bookmarks-edit-button').first().simulate('click');
     jest.runAllTimers();
-    wrapper.find('.bookmarks-edit-input').first().simulate(
+    wrapper.find('input.bookmarks-edit-input').simulate(
       'change',
       { target: { value: newTitle } },
     );
@@ -82,7 +82,7 @@ describe('Bookmarks', () => {
     expect(wrapper).toContainMatchingElements(bookmarks.LSK.length, 'a.bookmark-list-row');
     wrapper.find('.bookmarks-edit-button').first().simulate('click');
     jest.runAllTimers();
-    wrapper.find('.bookmarks-edit-input').first().simulate(
+    wrapper.find('input.bookmarks-edit-input').simulate(
       'change',
       { target: { value: newTitle } },
     );

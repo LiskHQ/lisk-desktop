@@ -120,8 +120,8 @@ class SearchBar extends React.Component {
       && searchTextValue.length
       && !isSearchTextError;
 
-    let error = isSearchTextError ? t('A bit more. Make sure to type at least 3 characters.') : null;
-    error = isEmptyResults ? t('Nothing has been found. Make sure to double check the ID you typed.') : error;
+    let feedback = isSearchTextError ? t('A bit more. Make sure to type at least 3 characters.') : null;
+    feedback = isEmptyResults ? t('Nothing has been found. Make sure to double check the ID you typed.') : feedback;
 
     return (
       <div className={`${styles.wrapper} search-bar`}>
@@ -138,14 +138,8 @@ class SearchBar extends React.Component {
           className="search-input"
           onKeyDown={this.onHandleKeyPress}
           isLoading={suggestions.isLoading || this.timeout}
+          feedback={feedback}
         />
-        {error
-          ? (
-            <div className={`${styles.searchMessage} search-message`}>
-              <span className="search-message">{error}</span>
-            </div>
-          )
-          : null }
         {
           suggestions.data.addresses.length
             ? (

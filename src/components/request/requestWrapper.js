@@ -35,9 +35,9 @@ class RequestWrapper extends React.Component {
             <CopyToClipboard
               className="copy-button"
               Container={PrimaryButton}
+              containerProps={{ size: 's' }}
               value={copyValue}
               text={copyLabel}
-              btnClassName="extra-small"
               copyClassName={styles.copyIcon}
             />
             <span className={`${styles.footerContent} ${showQRCode ? styles.hide : ''}`}>

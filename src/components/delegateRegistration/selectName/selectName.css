@@ -33,63 +33,11 @@
     margin: 22px 0 10px;
   }
 
-  & .inputRequirements {
-    @mixin contentNormal;
-
-    color: var(--color-slate-gray);
-    margin-top: 8px;
-    user-select: none;
-    opacity: 0;
-    padding-left: 0;
-    padding-right: 0;
-    transition: opacity 0.5s, ease-in;
-  }
-
-  & > .inputContainer {
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-
-    & .spinner {
-      position: absolute;
-      right: 15px;
-      top: 15px;
-      color: var(--color-ultramarine-blue);
-    }
-
-    & .status {
-      position: absolute;
-      right: 15px;
-      top: 15px;
-    }
-  }
-
   & .inputNickname {
     padding: 8px 14px;
-  }
-
-  & .inputNickname:focus ~ .inputRequirements {
-    opacity: 1 !important;
-  }
-
-  & .errorMessage {
-    margin-top: 10px;
-    height: 35px;
   }
 
   & > footer {
     margin-top: 6px;
   }
-}
-
-.show {
-  opacity: 1;
-  transition: opacity var(--animation-speed-fast) linear var(--animation-delay-standard);
-}
-
-.hide {
-  opacity: 0;
-  transition: opacity var(--animation-speed-fast) linear;
 }
