@@ -5,13 +5,13 @@ import UserAccount from './accountMenu/userAccount';
 import NavigationButtons from './navigationButtons';
 import Piwik from '../../utils/piwik';
 import menuLinks from './constants';
-import Dropdown from '../toolbox/dropdown/dropdown';
 import SearchBar from '../searchBar';
 import Network from './network';
 import networks from '../../constants/networks';
+import DropdownButton from '../toolbox/dropdownButton';
+import { SecondaryButton } from '../toolbox/buttons/button';
 import styles from './topBar.css';
 
-import OutsideClickHandler from '../toolbox/outsideClickHandler';
 import Icon from '../toolbox/icon';
 import Autologout from './autologout/autologout';
 
@@ -29,6 +29,7 @@ class TopBar extends React.Component {
     this.handleSearchDropdown = this.onHandleClick.bind(this, 'search');
     this.handleAccountDropdown = this.onHandleClick.bind(this, 'account');
     this.onCountdownComplete = this.onCountdownComplete.bind(this);
+    this.setChildRef = this.setChildRef.bind(this);
   }
 
   onLogout() {
@@ -40,6 +41,7 @@ class TopBar extends React.Component {
     logOut();
     history.replace(`${routes.dashboard.path}`);
 
+    // istanbul ignore else
     if (!settings.showNetwork && network.name !== networks.mainnet.name) {
       networkSet(networks.mainnet);
     }
@@ -47,13 +49,10 @@ class TopBar extends React.Component {
 
   onHandleClick(name) {
     const { openDropdown } = this.state;
-
-    if (name === 'search' && openDropdown !== name) {
-      setTimeout(() => this.searchInput.focus(), 150);
-    }
-    this.setState({
-      openDropdown: openDropdown === name ? '' : name,
-    });
+    // istanbul ignore next
+    if (name === 'search' && openDropdown !== name) setTimeout(() => this.searchInput.focus(), 150);
+    this.setState({ openDropdown: openDropdown === name ? '' : name });
+    this.childRef.toggleDropdown();
   }
 
   /* istanbul ignore next */
@@ -73,6 +72,10 @@ class TopBar extends React.Component {
       && account.passphrase.length > 0;
   }
 
+  setChildRef(node) {
+    this.childRef = node;
+  }
+
   render() {
     const {
       t,
@@ -84,6 +87,7 @@ class TopBar extends React.Component {
       resetTimer,
     } = this.props;
     const { openDropdown } = this.state;
+    const isSearchActive = (this.childRef && this.childRef.state.shownDropdown) || false;
 
     const items = menuLinks(t);
     const isUserLogout = !!(Object.keys(account).length === 0 || account.afterLogout);
@@ -141,29 +145,25 @@ class TopBar extends React.Component {
 
           {token.active !== 'BTC'
             ? (
-              <OutsideClickHandler
-                className={`${styles.searchButton} search-section`}
-                onOutsideClick={this.handleSearchDropdown}
-                disabled={openDropdown !== 'search'}
-                wrapper={<label />}
-              >
-                <Icon
-                  onClick={this.handleSearchDropdown}
-                  className="search-icon"
-                  name={`searchIcon${openDropdown === 'search' ? 'Active' : 'Inactive'}`}
-                />
-                <Dropdown
-                  showDropdown={openDropdown === 'search'}
-                  className={`${styles.searchDropdown}`}
-                  showArrow={false}
-                >
-                  <SearchBar
-                    setSearchBarRef={(node) => { this.searchInput = node; }}
-                    history={this.props.history}
-                    onSearchClick={this.handleSearchDropdown}
+              <DropdownButton
+                buttonClassName={`${styles.searchButton} search-section`}
+                className={styles.searchDropdown}
+                buttonLabel={(
+                  <Icon
+                    className="search-icon"
+                    name={`searchIcon${isSearchActive === 'search' ? 'Active' : 'Inactive'}`}
                   />
-                </Dropdown>
-              </OutsideClickHandler>
+                )}
+                ButtonComponent={SecondaryButton}
+                align="right"
+                ref={this.setChildRef}
+              >
+                <SearchBar
+                  setSearchBarRef={(node) => { this.searchInput = node; }}
+                  history={this.props.history}
+                  onSearchClick={this.handleSearchDropdown}
+                />
+              </DropdownButton>
             )
             : null }
         </div>

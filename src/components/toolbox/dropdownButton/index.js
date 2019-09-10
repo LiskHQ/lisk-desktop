@@ -58,8 +58,6 @@ DropdownButton.defaultProps = {
   buttonLabel: '',
   buttonClassName: '',
   ButtonComponent: SecondaryButton,
-  shouldCloseDropdown: null,
-  getDropdownStatus: null,
   align: 'left',
 };
 
