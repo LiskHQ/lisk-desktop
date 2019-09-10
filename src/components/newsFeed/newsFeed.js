@@ -23,7 +23,7 @@ class NewsFeed extends React.Component {
           {
               filteredNewsFeed.length
                 ? filteredNewsFeed.map(news => (
-                  <Box.Row isClickable key={news.sourceId}>
+                  <Box.Row isClickable key={news.sourceId} className={styles.row}>
                     <News
                       t={t}
                       {...news}
