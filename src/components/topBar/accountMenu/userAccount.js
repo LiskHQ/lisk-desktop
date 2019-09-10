@@ -18,20 +18,25 @@ class UserAccount extends React.Component {
     this.setChildRef = this.setChildRef.bind(this);
     this.handleTokenSelect = this.handleTokenSelect.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.toggleDropdown = this.toggleDropdown.bind(this);
   }
 
   handleTokenSelect(token) {
     this.props.settingsUpdated({ token: { active: token } });
-    this.childRef.toggleDropdown();
+    this.toggleDropdown();
   }
 
   handleLogout() {
     this.props.onLogout();
-    this.childRef.toggleDropdown();
+    this.toggleDropdown();
   }
 
   setChildRef(node) {
     this.childRef = node;
+  }
+
+  toggleDropdown() {
+    this.childRef.toggleDropdown();
   }
 
   render() {
@@ -100,7 +105,7 @@ class UserAccount extends React.Component {
           href={externalLinks.liskAcademy}
           rel="noopener noreferrer"
           target="_blank"
-          onClick={() => { /* istanbul ignore next */ this.childRef.toggleDropdown(); }}
+          onClick={this.toggleDropdown}
         >
           <Icon name="academy" className={styles.defaultIcon} />
           <Icon name="academyActive" className={styles.activeIcon} />
@@ -112,7 +117,7 @@ class UserAccount extends React.Component {
           href={externalLinks.discord}
           rel="noopener noreferrer"
           target="_blank"
-          onClick={() => { /* istanbul ignore next */ this.childRef.toggleDropdown(); }}
+          onClick={this.toggleDropdown}
         >
           <Icon name="discordIcon" className={styles.defaultIcon} />
           <Icon name="discordIconActive" className={styles.activeIcon} />
@@ -124,7 +129,7 @@ class UserAccount extends React.Component {
           href={feedbackLinks.general}
           rel="noopener noreferrer"
           target="_blank"
-          onClick={() => { /* istanbul ignore next */ this.childRef.toggleDropdown(); }}
+          onClick={this.toggleDropdown}
         >
           <Icon name="feedback" className={styles.defaultIcon} />
           <Icon name="feedbackActive" className={styles.activeIcon} />
@@ -135,7 +140,7 @@ class UserAccount extends React.Component {
           id="settings"
           to={routes.setting.path}
           className={styles.dropdownOption}
-          onClick={() => { /* istanbul ignore next */ this.childRef.toggleDropdown(); }}
+          onClick={this.toggleDropdown}
         >
           <Icon name="settings" className={styles.defaultIcon} />
           <Icon name="settingsActive" className={styles.activeIcon} />
@@ -150,7 +155,7 @@ class UserAccount extends React.Component {
               <Link
                 className={`${styles.dropdownOption} signIn`}
                 to={routes.login.path}
-                onClick={() => { /* istanbul ignore next */ this.childRef.toggleDropdown(); }}
+                onClick={this.toggleDropdown}
               >
                 <Icon name="signin" className={styles.defaultIcon} />
                 <Icon name="signinActive" className={styles.activeIcon} />
