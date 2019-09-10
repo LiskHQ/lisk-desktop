@@ -5,9 +5,9 @@ import styles from './network.css';
 
 const Network = ({ network, t, token }) => {
   const networksList = {
-    Mainnet: 'Mainnet',
-    Testnet: 'Testnet',
-    'Custom Node': 'Devnet',
+    Mainnet: t('Mainnet'),
+    Testnet: t('Testnet'),
+    'Custom Node': t('Devnet'),
   };
 
   let activeNetwork = network.name;
