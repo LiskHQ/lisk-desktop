@@ -139,13 +139,10 @@ class TopBar extends React.Component {
           {token.active !== 'BTC'
             ? (
               <DropdownButton
-                buttonClassName={`${styles.searchButton} search-section`}
-                className={styles.searchDropdown}
+                buttonClassName={`${styles.searchButton} search-icon`}
+                className={`${styles.searchDropdown} search-section`}
                 buttonLabel={(
-                  <Icon
-                    className="search-icon"
-                    name={`searchIcon${isSearchActive === 'search' ? 'Active' : 'Inactive'}`}
-                  />
+                  <Icon name={`searchIcon${isSearchActive === 'search' ? 'Active' : 'Inactive'}`} />
                 )}
                 ButtonComponent={SecondaryButton}
                 align="right"
