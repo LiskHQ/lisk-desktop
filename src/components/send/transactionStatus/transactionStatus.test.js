@@ -41,6 +41,7 @@ describe('TransactionStatus', () => {
     bookmarks: {
       LSK: [],
     },
+    account: { hwInfo: { deviceId: 'MOCK' } },
     prevStep: jest.fn(),
     fields: {
       recipient: {

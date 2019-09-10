@@ -15,6 +15,7 @@ class TransactionStatus extends React.Component {
     this.state = {
       isBookmarkDropdown: false,
     };
+    this.isHardwareWalletConnected = !!(props.account.hwInfo && props.account.hwInfo.deviceId);
 
     this.transactionBroadcasted = this.transactionBroadcasted.bind(this);
     this.onRetry = this.onRetry.bind(this);
@@ -63,7 +64,7 @@ class TransactionStatus extends React.Component {
   getMessagesDetails() {
     const { transactions, fields } = this.props;
 
-    const isHardwareWalletError = fields.isHardwareWalletConnected && fields.hwTransactionStatus === 'error';
+    const isHardwareWalletError = this.isHardwareWalletConnected && fields.hwTransactionStatus === 'error';
     const messages = statusMessage(this.props.t);
     let messageDetails = !transactions.broadcastedTransactionsError.length
       ? messages.success
@@ -76,7 +77,7 @@ class TransactionStatus extends React.Component {
       messageDetails.paragraph = transactions.broadcastedTransactionsError[0].error.message;
     }
 
-    if (fields.isHardwareWalletConnected) {
+    if (this.isHardwareWalletConnected) {
       messageDetails = isHardwareWalletError ? messages.hw : messages.success;
     }
 
@@ -95,7 +96,7 @@ class TransactionStatus extends React.Component {
       resetTransactionResult,
     } = this.props;
 
-    if (fields.isHardwareWalletConnected) {
+    if (this.isHardwareWalletConnected) {
       resetTransactionResult();
       prevStep({ ...fields, hwTransactionStatus: false });
     } else {
