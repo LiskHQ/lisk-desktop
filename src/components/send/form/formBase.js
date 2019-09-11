@@ -145,14 +145,15 @@ class FormBase extends React.Component {
             styles.fieldGroup, fields.amount.error && styles.error,
           ].filter(Boolean).join(' ')}
           >
-            <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
-            <TertiaryButton
-              className={`${styles.sendEntireBalanceButton}`}
-              onClick={this.sendEntireBalance}
-              size="xs"
-            >
-              {t('Send entire balance')}
-            </TertiaryButton>
+            <div className={`${styles.amountFieldHeader}`}>
+              <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
+              <TertiaryButton
+                onClick={this.sendEntireBalance}
+                size="xs"
+              >
+                {t('Send entire balance')}
+              </TertiaryButton>
+            </div>
             <span className={`${styles.amountField} amount`}>
               <Input
                 autoComplete="off"
