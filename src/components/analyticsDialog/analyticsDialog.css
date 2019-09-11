@@ -1,0 +1,19 @@
+@import '../app/variables.css';
+@import '../app/mixins.css';
+
+.learnMore {
+  margin-top: 20px;
+}
+
+.link {
+  @mixin contentLargest bold;
+
+  color: var(--color-ultramarine-blue);
+  display: inline-block;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.buttons {
+  max-width: 164px;
+}

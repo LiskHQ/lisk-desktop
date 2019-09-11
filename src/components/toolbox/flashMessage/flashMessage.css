@@ -36,7 +36,7 @@
   & .link {
     @mixin contentNormal bold;
 
-    color: var(--color-mystic);
+    color: var(--color-ultramarine-blue);
     cursor: pointer;
     margin-left: 10px;
     text-decoration: none;

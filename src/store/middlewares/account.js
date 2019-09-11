@@ -22,6 +22,12 @@ import txFilters from '../../constants/transactionFilters';
 import { getDeviceList, getHWPublicKeyFromIndex } from '../../utils/hwWallet';
 import { loginType } from '../../constants/hwConstants';
 import localJSONStorage from '../../utils/localJSONStorage';
+import analytics from '../../utils/analytics';
+
+const checkIfAnalyticsShouldBeDisplay = (store) => {
+  const actualSettings = store && store.getState().settings;
+  if (!actualSettings.statistics) analytics.init();
+};
 
 const updateAccountData = (store) => {
   const { transactions } = store.getState();
@@ -203,6 +209,8 @@ const autoLogInIfNecessary = async (store) => {
       store.dispatch(login({ passphrase: autologinData[settings.keys.loginKey] }));
     }, 500);
   }
+
+  checkIfAnalyticsShouldBeDisplay(store);
 };
 
 const accountMiddleware = store => next => (action) => {

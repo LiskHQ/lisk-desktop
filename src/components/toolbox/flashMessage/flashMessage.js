@@ -21,13 +21,16 @@ class FlashMessage extends React.Component {
   }
 
   render() {
-    const { className, shouldShow, children } = this.props;
+    const {
+      className, shouldShow, children, hasCloseAction,
+    } = this.props;
     const { dismissed } = this.state;
     return shouldShow && !dismissed && (
       <div className={`${styles.wrapper} ${className}`}>
         {children}
         {
-          !(Array.isArray(children) && children.some(child => child.type === Button)) && (
+          hasCloseAction
+          && !(Array.isArray(children) && children.some(child => child.type === Button)) && (
             <span
               className={styles.closeBtn}
               onClick={this.dismiss}
@@ -43,12 +46,14 @@ FlashMessage.propTypes = {
   className: PropTypes.string,
   shouldShow: PropTypes.bool,
   onDismiss: PropTypes.func,
+  hasCloseAction: PropTypes.bool,
 };
 
 FlashMessage.defaultProps = {
   className: '',
   shouldShow: false,
   onDismiss: null,
+  hasCloseAction: true,
 };
 
 FlashMessage.displayName = 'FlashMessage';
