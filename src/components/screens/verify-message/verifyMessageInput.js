@@ -83,7 +83,7 @@ export default class VerifyMessageInput extends React.Component {
     const { t, history } = this.props;
 
     return (
-      <Box width="medium" main>
+      <Box main>
         <Box.Header>
           <h1>{t('Verify message')}</h1>
         </Box.Header>
