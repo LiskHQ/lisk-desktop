@@ -78,7 +78,10 @@ class FormBase extends React.Component {
 
   sendEntireBalance() {
     const { account, fee } = this.props;
-    const getMaxAmount = () => fromRawLsk(Math.max(0, account.balance - fee));
+    const getMaxAmount = () => formatAmountBasedOnLocale({
+      value: fromRawLsk(Math.max(0, account.balance - fee)),
+      format: '0.[00000000]',
+    });
     this.onInputChange({ target: { value: getMaxAmount(), name: 'amount' } });
     setTimeout(() => {
       if (fee !== this.props.fee) { // Because fee can change based on amount
