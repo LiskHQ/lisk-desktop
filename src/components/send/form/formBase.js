@@ -79,7 +79,12 @@ class FormBase extends React.Component {
   sendEntireBalance() {
     const { account, fee } = this.props;
     const getMaxAmount = () => fromRawLsk(Math.max(0, account.balance - fee));
-    this.updateAmountField(getMaxAmount());
+    this.onInputChange({ target: { value: getMaxAmount(), name: 'amount' } });
+    setTimeout(() => {
+      if (fee !== this.props.fee) { // Because fee can change based on amount
+        this.sendEntireBalance();
+      }
+    }, 1);
   }
 
   updateField(name, value) {
@@ -149,6 +154,7 @@ class FormBase extends React.Component {
               <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
               <TertiaryButton
                 onClick={this.sendEntireBalance}
+                className="send-entire-balance-button"
                 size="xs"
               >
                 {t('Send entire balance')}
