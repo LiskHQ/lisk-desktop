@@ -20,6 +20,9 @@ describe('VerifyMessage Component', () => {
 
   it('should render properly', () => {
     expect(wrapper).toContainExactlyOneMatchingElement('MultiStep');
+    expect(wrapper).toContainExactlyOneMatchingElement('.message input');
+    expect(wrapper).toContainExactlyOneMatchingElement('.public-key input');
+    expect(wrapper).toContainExactlyOneMatchingElement('.signature input');
   });
 
   it('should allow to go forward and back', () => {
