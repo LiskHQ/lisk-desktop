@@ -1,6 +1,5 @@
 import * as bitcoin from 'bitcoinjs-lib';
 import numeral from 'numeral';
-import { fromRawLsk } from './lsk';
 import { tokenMap } from '../constants/tokens';
 import getBtcConfig from './api/btc/config';
 import i18n from '../i18n';
@@ -55,7 +54,7 @@ export const validateAddress = (tokenType, address, netCode = 1) => {
 export const validateAmountFormat = ({
   value,
   token = 'LSK',
-  locale = 'en',
+  locale = i18n.language,
 }) => {
   const errors = {
     INVALID: i18n.t('Provide a correct amount of {{token}}', { token }),
@@ -71,19 +70,3 @@ export const validateAmountFormat = ({
     message,
   };
 };
-
-export function getAmountFeedbackAndError({
-  value, fee, account, token,
-}) {
-  let { message: feedback } = validateAmountFormat({
-    value,
-    token,
-    locale: i18n.language,
-  });
-
-  const getMaxAmount = () => fromRawLsk(Math.max(0, account.balance - fee));
-  if (!feedback && parseFloat(getMaxAmount()) < numeral(value).value()) {
-    feedback = i18n.t('Provided amount is higher than your current balance.');
-  }
-  return { error: !!feedback, feedback };
-}

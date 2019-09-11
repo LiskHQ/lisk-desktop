@@ -1,10 +1,11 @@
 import React from 'react';
+import numeral from 'numeral';
 import { Input } from '../../toolbox/inputs';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { fromRawLsk } from '../../../utils/lsk';
-import { getAmountFeedbackAndError } from '../../../utils/validators';
 import { parseSearchParams } from '../../../utils/searchParams';
+import { validateAmountFormat } from '../../../utils/validators';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import Box from '../../toolbox/box';
 import Converter from '../../converter';
@@ -33,7 +34,7 @@ class FormBase extends React.Component {
           title: '',
         },
         amount: amount ? {
-          ...getAmountFeedbackAndError({ value: amount, ...props }),
+          ...this.getAmountFeedbackAndError(amount, props),
           value: amount,
         } : {
           error: false,
@@ -53,7 +54,7 @@ class FormBase extends React.Component {
     this.onGoNext = this.onGoNext.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.updateField = this.updateField.bind(this);
-    this.sendEntireBalance = this.sendEntireBalance.bind(this);
+    this.setEntireBalance = this.setEntireBalance.bind(this);
   }
 
   onInputChange({ target }) {
@@ -71,21 +72,36 @@ class FormBase extends React.Component {
     value = leadingPoint.test(value) ? `0${value}` : value;
 
     this.updateField('amount', {
-      ...getAmountFeedbackAndError({ value, ...this.props }),
+      ...this.getAmountFeedbackAndError(value),
       value,
     });
   }
 
-  sendEntireBalance() {
+  getMaxAmount() {
     const { account, fee } = this.props;
-    const getMaxAmount = () => formatAmountBasedOnLocale({
-      value: fromRawLsk(Math.max(0, account.balance - fee)),
+    return fromRawLsk(Math.max(0, account.balance - fee));
+  }
+
+  getAmountFeedbackAndError(value, props) {
+    const { token, t } = (props || this.props);
+    let { message: feedback } = validateAmountFormat({ value, token });
+
+    if (!feedback && parseFloat(this.getMaxAmount()) < numeral(value).value()) {
+      feedback = t('Provided amount is higher than your current balance.');
+    }
+    return { error: !!feedback, feedback };
+  }
+
+  setEntireBalance() {
+    const { fee } = this.props;
+    const value = formatAmountBasedOnLocale({
+      value: this.getMaxAmount(),
       format: '0.[00000000]',
     });
-    this.onInputChange({ target: { value: getMaxAmount(), name: 'amount' } });
+    this.onInputChange({ target: { value, name: 'amount' } });
     setTimeout(() => {
       if (fee !== this.props.fee) { // Because fee can change based on amount
-        this.sendEntireBalance();
+        this.setEntireBalance();
       }
     }, 1);
   }
@@ -156,7 +172,7 @@ class FormBase extends React.Component {
             <div className={`${styles.amountFieldHeader}`}>
               <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
               <TertiaryButton
-                onClick={this.sendEntireBalance}
+                onClick={this.setEntireBalance}
                 className="send-entire-balance-button"
                 size="xs"
               >
