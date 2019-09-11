@@ -53,4 +53,10 @@ describe('VerifyMessage Component', () => {
     wrapper.find('.continue button').simulate('click');
     expect(wrapper.find('h1')).toIncludeText('The signature is incorrect');
   });
+
+  it('should recognize invalid publicKey', () => {
+    const wrapper = mount(<VerifyMessage {...props} />);
+    wrapper.find('.publicKey input').simulate('change', { target: { value: publicKey.substr(1), name: 'publicKey' } });
+    expect(wrapper.find('.publicKey .feedback').first()).toIncludeText('not a valid public key');
+  });
 });

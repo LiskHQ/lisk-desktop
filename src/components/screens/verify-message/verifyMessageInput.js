@@ -29,17 +29,33 @@ export default class VerifyMessageInput extends React.Component {
 
     this.state = this.inputs.reduce((inputs, { name }) => ({
       ...inputs,
-      [name]: { value: '' },
+      [name]: { value: '', feedback: '' },
     }), {});
 
     this.goNext = this.goNext.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
+  getInputError({ target: { name, value } }) {
+    const { t } = this.props;
+    const validators = {
+      publicKey: () => {
+        try {
+          cryptography.getAddressFromPublicKey(value);
+          return '';
+        } catch (e) {
+          return t('This is not a valid public key. Please enter the correct public key.');
+        }
+      },
+    };
+    return validators[name] ? validators[name]() : '';
+  }
+
   handleChange({ target }) {
     this.setState({
       [target.name]: {
         value: target.value,
+        feedback: this.getInputError({ target }),
       },
     });
   }
@@ -78,6 +94,8 @@ export default class VerifyMessageInput extends React.Component {
               placeholder={placeholder}
               label={label}
               value={this.state[name].value}
+              error={!!this.state[name].feedback}
+              feedback={this.state[name].feedback}
               onChange={this.handleChange}
             />
           ))}
