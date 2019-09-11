@@ -15,9 +15,9 @@ export default function VerifyMessageInput({ t, nextStep, history }) {
         <h1>{t('Verify message')}</h1>
       </Box.Header>
       <Box.Content>
-        <p>
+        <Box.InfoText>
           {t('Use this tool to verify the validity of a signed message. This allows you to ensure that the person who signed the message was in fact the account owner')}
-        </p>
+        </Box.InfoText>
         <Input
           className="message"
           placeholder={t('Write a message')}
