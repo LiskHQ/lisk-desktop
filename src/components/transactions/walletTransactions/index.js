@@ -6,6 +6,7 @@ import { getTransactions } from '../../../actions/transactions';
 import WalletTransactions from './walletTransactions';
 import txFilters from '../../../constants/transactionFilters';
 import removeDuplicateTransactions from '../../../utils/transactions';
+import { settingsUpdated } from '../../../actions/settings';
 import { getActiveTokenAccount } from '../../../utils/account';
 
 const mapStateToProps = state => ({
@@ -24,10 +25,12 @@ const mapStateToProps = state => ({
   wallets: state.wallets,
   balance: getActiveTokenAccount(state).balance,
   isDiscreetMode: state.settings.discreetMode || false,
+  settings: state.settings,
 });
 
 const mapDispatchToProps = {
   getTransactions,
+  settingsUpdated,
 };
 
 export default withRouter(connect(

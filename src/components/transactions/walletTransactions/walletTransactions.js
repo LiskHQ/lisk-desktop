@@ -7,6 +7,7 @@ import WalletTab from '../../wallet/walletTab';
 import DelegateTab from '../../delegate';
 import VotesTab from '../../votes';
 import WalletOnboarding from './walletOnboarding';
+import analytics from '../../../utils/analytics';
 
 class WalletTransactions extends React.Component {
   constructor() {
@@ -32,6 +33,15 @@ class WalletTransactions extends React.Component {
     this.onFilterSet = this.onFilterSet.bind(this);
     this.onTransactionRowClick = this.onTransactionRowClick.bind(this);
     this.updateCustomFilters = this.updateCustomFilters.bind(this);
+  }
+
+  componentDidMount() {
+    const { settings, settingsUpdated } = this.props;
+    if (settings.statisticsRequest === undefined) {
+      settingsUpdated({ statisticsRequest: true });
+      const showAnalytics = true;
+      analytics.checkIfAnalyticsShouldBeDisplay({ settings, showAnalytics });
+    }
   }
 
   onInit() {

@@ -24,11 +24,6 @@ import { loginType } from '../../constants/hwConstants';
 import localJSONStorage from '../../utils/localJSONStorage';
 import analytics from '../../utils/analytics';
 
-const checkIfAnalyticsShouldBeDisplay = (store) => {
-  const actualSettings = store && store.getState().settings;
-  if (!actualSettings.statistics) analytics.init();
-};
-
 const updateAccountData = (store) => {
   const { transactions } = store.getState();
   const account = getActiveTokenAccount(store.getState());
@@ -210,7 +205,7 @@ const autoLogInIfNecessary = async (store) => {
     }, 500);
   }
 
-  checkIfAnalyticsShouldBeDisplay(store);
+  analytics.checkIfAnalyticsShouldBeDisplay({ settings: actualSettings });
 };
 
 const accountMiddleware = store => next => (action) => {

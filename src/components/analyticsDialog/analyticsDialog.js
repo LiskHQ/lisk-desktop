@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import Dialog from '../toolbox/dialog/dialog';
 import FlashMessageHolder from '../toolbox/flashMessage/holder';
@@ -23,12 +24,13 @@ class AnalyticsDialog extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   handleClickCancel() {
-    // time logic
+    this.props.settingsUpdated({ statisticsFollowingDay: moment().dayOfYear() });
     FlashMessageHolder.deleteMessage('Analytics');
   }
 
   render() {
     const { t } = this.props;
+
     return (
       <Dialog hasClose>
         <Dialog.Title>

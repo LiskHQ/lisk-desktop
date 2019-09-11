@@ -2,7 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import AnalyticsDialog from './analyticsDialog';
 import FlashMessageHolder from '../toolbox/flashMessage/holder';
-import DialogHolder from '../toolbox/dialog/holder';
 
 jest.mock('../toolbox/flashMessage/holder');
 jest.mock('../toolbox/dialog/holder');
