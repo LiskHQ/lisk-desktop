@@ -100,9 +100,7 @@ class Setting extends React.Component {
                   className="currency"
                 />
               </div>
-              {
-                // TODO: Remove the condition when i18n epic #2301 is finished
-                localStorage.getItem('feature-flag-language') ? <LanguageSelect t={t} /> : null}
+              <LanguageSelect t={t} />
             </section>
             <section>
               <h2>{t('Security')}</h2>

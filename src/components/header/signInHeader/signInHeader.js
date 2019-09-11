@@ -121,7 +121,7 @@ class Header extends React.Component {
   }
 
   getNetwork(chosenNetwork) {
-    const network = { ...getNetwork(getNetworksList()[chosenNetwork].label) };
+    const network = { ...getNetwork(getNetworksList()[chosenNetwork].name) };
     if (chosenNetwork === networks.customNode.code) {
       network.address = addHttp(this.state.address);
     }

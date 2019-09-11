@@ -1,6 +1,5 @@
 import React from 'react';
 import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
-import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { loginType } from '../../../constants/hwConstants';
 import { tokenMap } from '../../../constants/tokens';
 import AccountVisual from '../../accountVisual/index';
@@ -74,9 +73,7 @@ class Summary extends React.Component {
     const {
       fields, t, token, account,
     } = this.props;
-
-    const amount = formatAmountBasedOnLocale({ value: fields.amount.value });
-
+    const amount = fields.amount.value;
     const fee = token === tokenMap.LSK.key
       ? fromRawLsk(fees.send)
       : fromRawLsk(fields.processingSpeed.txFee);
@@ -115,7 +112,7 @@ class Summary extends React.Component {
           <label>{t('Amount')}</label>
           <label className="amount-summary">
             {`${amount} ${token}`}
-            <Converter className={styles.secondText} value={fields.amount.value} />
+            <Converter className={styles.secondText} value={amount} />
           </label>
         </section>
         { fields.reference && fields.reference.value

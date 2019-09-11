@@ -49,7 +49,7 @@ class ConfirmMessage extends React.Component {
     return (
       <section>
         <div className={styles.header}>
-          <span className={styles.step}>{t('Step {{current}} / {{total}', { current: 2, total: 2 })}</span>
+          <span className={styles.step}>{t('Step {{current}} / {{total}}', { current: 2, total: 2 })}</span>
           <h1>{t('Your signed message')}</h1>
         </div>
         <div className={styles.result}>
