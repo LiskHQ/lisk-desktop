@@ -5,12 +5,12 @@ import styles from './infoText.css';
 const InfoText = ({
   children, className, ...rest
 }) => (
-  <p
+  <div
     {...rest}
     className={`${styles.infoText} ${className}`}
   >
     {children}
-  </p>
+  </div>
 );
 
 InfoText.propTypes = {

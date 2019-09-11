@@ -5,6 +5,7 @@ import { Input } from '../../toolbox/inputs';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 import { parseSearchParams } from '../../../utils/searchParams';
 import Box from '../../toolbox/box';
+import Tooltip from '../../toolbox/tooltip/tooltip';
 
 export default class VerifyMessageInput extends React.Component {
   constructor(props) {
@@ -89,6 +90,9 @@ export default class VerifyMessageInput extends React.Component {
         <Box.Content>
           <Box.InfoText>
             {t('Use this tool to verify the validity of a signed message. This allows you to ensure that the person who signed the message was in fact the account owner')}
+            <Tooltip className="showOnBottom">
+              <p>{t('If you would like to ensure the ownership of another account, you can send a message via Lisk Hub and request the recipient to sign it.')}</p>
+            </Tooltip>
           </Box.InfoText>
           {this.inputs.map(({ name, placeholder, label }) => (
             <Input
