@@ -35,6 +35,7 @@ const Input = ({
   status,
   feedback,
   dark,
+  label,
   ...props
 }) => {
   status = updateStatus({
@@ -42,6 +43,7 @@ const Input = ({
   });
   return (
     <span className={`${styles.wrapper} ${styles[size]}`}>
+      { label && <label className={styles.label}>{label}</label> }
       { icon && (
         typeof icon === 'string'
           ? <Icon name={icon} className={styles.icon} />
@@ -82,6 +84,7 @@ Input.propTypes = {
   status: PropTypes.oneOf(['ok', 'error', 'pending', undefined]),
   feedback: PropTypes.string,
   dark: PropTypes.bool,
+  label: PropTypes.string,
 };
 
 Input.defaultProps = {
@@ -93,6 +96,7 @@ Input.defaultProps = {
   status: undefined,
   feedback: '',
   dark: false,
+  label: '',
 };
 
 export default Input;
