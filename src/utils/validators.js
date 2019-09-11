@@ -75,16 +75,15 @@ export const validateAmountFormat = ({
 export function getAmountFeedbackAndError({
   value, fee, account, token,
 }) {
-  const { message, error } = validateAmountFormat({
+  let { message: feedback } = validateAmountFormat({
     value,
     token,
     locale: i18n.language,
   });
-  let feedback = message;
 
   const getMaxAmount = () => fromRawLsk(Math.max(0, account.balance - fee));
-  if (!error && parseFloat(getMaxAmount()) < numeral(value).value()) {
+  if (!feedback && parseFloat(getMaxAmount()) < numeral(value).value()) {
     feedback = i18n.t('Provided amount is higher than your current balance.');
   }
-  return { error, feedback };
+  return { error: !!feedback, feedback };
 }
