@@ -37,6 +37,7 @@ class Header extends React.Component {
       network: loginNetwork.code,
       isFirstTime: true,
       activeNetwork: 0,
+      connected: true,
     };
 
     this.handleSettingsToggle = this.handleSettingsToggle.bind(this);
