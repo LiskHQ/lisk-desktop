@@ -26,7 +26,7 @@ class DropdownButton extends React.Component {
   render() {
     const { shownDropdown } = this.state;
     const {
-      ButtonComponent, buttonLabel, buttonClassName, className, children,
+      ButtonComponent, buttonLabel, buttonClassName, className, children, align, ref, size,
     } = this.props;
     return (
       <React.Fragment>
@@ -34,14 +34,16 @@ class DropdownButton extends React.Component {
           className={styles.wrapper}
           disabled={!shownDropdown}
           onOutsideClick={this.toggleDropdown}
+          ref={ref}
         >
-          <ButtonComponent onClick={this.toggleDropdown} className={buttonClassName}>
+          <ButtonComponent onClick={this.toggleDropdown} className={buttonClassName} size={size}>
             { buttonLabel }
           </ButtonComponent>
           <Dropdown
             showArrow={false}
             showDropdown={shownDropdown}
-            className={`${className} ${styles.dropdown}`}
+            className={`${styles.dropdown} ${className}`}
+            align={align}
           >
             {children}
           </Dropdown>
@@ -56,6 +58,8 @@ DropdownButton.defaultProps = {
   buttonLabel: '',
   buttonClassName: '',
   ButtonComponent: SecondaryButton,
+  align: 'left',
+  size: 'l',
 };
 
 export default DropdownButton;

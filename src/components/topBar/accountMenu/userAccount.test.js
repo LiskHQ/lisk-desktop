@@ -47,11 +47,6 @@ describe('UserAccount', () => {
     expect(wrapper).toContainMatchingElement('.user-account');
   });
 
-  it('called properly onDropdownToggle when user click it', () => {
-    wrapper.find('div.user-account').simulate('click');
-    expect(myProps.onDropdownToggle).toHaveBeenCalled();
-  });
-
   it('called properly dropdown component', () => {
     myProps.isDropdownEnable = true;
     wrapper = mountWithRouter(<UserAccount {...myProps} />, options);
@@ -88,5 +83,12 @@ describe('UserAccount', () => {
     });
     expect(wrapper.find('Dropdown')).toContainMatchingElements(2, '.accountInfo');
     localStorage.clear();
+  });
+
+  it('should called settingsUpdate when a token is selected', () => {
+    wrapper = mountWithRouter(<UserAccount {...myProps} />, options);
+    wrapper.find('button.user-account').simulate('click');
+    wrapper.find('span.token').at(0).simulate('click');
+    expect(myProps.settingsUpdated).toHaveBeenCalled();
   });
 });
