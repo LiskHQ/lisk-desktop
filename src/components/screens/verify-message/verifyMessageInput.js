@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Input } from '../../toolbox/inputs';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
+import { parseSearchParams } from '../../../utils/searchParams';
 import Box from '../../toolbox/box';
 
 export default class VerifyMessageInput extends React.Component {
@@ -29,7 +30,10 @@ export default class VerifyMessageInput extends React.Component {
 
     this.state = this.inputs.reduce((inputs, { name }) => ({
       ...inputs,
-      [name]: { value: '', feedback: '' },
+      [name]: {
+        value: parseSearchParams(props.history.location.search)[name] || '',
+        feedback: '',
+      },
     }), {});
 
     this.goNext = this.goNext.bind(this);
