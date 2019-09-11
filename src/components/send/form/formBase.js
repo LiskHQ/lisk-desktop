@@ -1,10 +1,10 @@
 import React from 'react';
 import { Input } from '../../toolbox/inputs';
-import { PrimaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { fromRawLsk } from '../../../utils/lsk';
-import { parseSearchParams } from '../../../utils/searchParams';
 import { getAmountFeedbackAndError } from '../../../utils/validators';
+import { parseSearchParams } from '../../../utils/searchParams';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import Box from '../../toolbox/box';
 import Converter from '../../converter';
@@ -53,6 +53,7 @@ class FormBase extends React.Component {
     this.onGoNext = this.onGoNext.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.updateField = this.updateField.bind(this);
+    this.sendEntireBalance = this.sendEntireBalance.bind(this);
   }
 
   onInputChange({ target }) {
@@ -65,14 +66,20 @@ class FormBase extends React.Component {
     this.updateField(target.name, newState);
   }
 
-  updateAmountField(name, value) {
+  updateAmountField(value) {
     const { leadingPoint } = regex.amount[i18n.language];
     value = leadingPoint.test(value) ? `0${value}` : value;
 
-    this.updateField(name, {
+    this.updateField('amount', {
       ...getAmountFeedbackAndError({ value, ...this.props }),
       value,
     });
+  }
+
+  sendEntireBalance() {
+    const { account, fee } = this.props;
+    const getMaxAmount = () => fromRawLsk(Math.max(0, account.balance - fee));
+    this.updateAmountField(getMaxAmount());
   }
 
   updateField(name, value) {
@@ -93,7 +100,7 @@ class FormBase extends React.Component {
     this.setState(() => ({ isLoading: true }));
     this.loaderTimeout = setTimeout(() => {
       this.setState(() => ({ isLoading: false }));
-      this.updateAmountField(target.name, target.value);
+      this.updateAmountField(target.value);
     }, 300);
 
     this.onInputChange({ target });
@@ -139,6 +146,13 @@ class FormBase extends React.Component {
           ].filter(Boolean).join(' ')}
           >
             <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
+            <TertiaryButton
+              className={`${styles.sendEntireBalanceButton}`}
+              onClick={this.sendEntireBalance}
+              size="xs"
+            >
+              {t('Send entire balance')}
+            </TertiaryButton>
             <span className={`${styles.amountField} amount`}>
               <Input
                 autoComplete="off"

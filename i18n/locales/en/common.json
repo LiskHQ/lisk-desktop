@@ -363,6 +363,7 @@
   "Send LSK and BTC": "Send LSK and BTC",
   "Send Lisk from Blockchain Application": "Send Lisk from Blockchain Application",
   "Send Lisk to Blockchain Application": "Send Lisk to Blockchain Application",
+  "Send entire balance": "Send entire balance",
   "Send {{amount}} {{token}}": "Send {{amount}} {{token}}",
   "Send {{token}}": "Send {{token}}",
   "Send {{token}} to this Account ": "Send {{token}} to this Account ",

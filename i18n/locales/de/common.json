@@ -340,6 +340,7 @@
   "Send Lisk from Blockchain Application": "Sende-Lisk von Blockchain-Anwendung",
   "Send Lisk to Blockchain Application": "Lisk an Blockchain-Anwendung senden",
   "Send Tokens": "Token senden",
+  "Send entire balance": "Gesamten Saldo senden",
   "Send {{amount}} {{token}}": "Senden {{amount}} {{token}}",
   "Send {{token}}": "Senden {{token}}",
   "Send {{token}} to this Account ": "{{token}} an dieses Konto senden",
