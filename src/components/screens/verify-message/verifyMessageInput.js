@@ -17,8 +17,8 @@ export default function VerifyMessageInput({ t, nextStep, history }) {
         VerifyMessageInput TODO
       </Box.Content>
       <Box.Footer>
-        <PrimaryButton onClick={goNext}>{t('Continue')}</PrimaryButton>
-        <TertiaryButton onClick={history.goBack}>{t('Go back')}</TertiaryButton>
+        <PrimaryButton onClick={goNext} className="continue">{t('Continue')}</PrimaryButton>
+        <TertiaryButton onClick={history.goBack} className="go-back">{t('Go back')}</TertiaryButton>
       </Box.Footer>
     </Box>
   );
@@ -26,6 +26,6 @@ export default function VerifyMessageInput({ t, nextStep, history }) {
 
 VerifyMessageInput.propTypes = {
   history: PropTypes.object.isRequired,
-  nextStep: PropTypes.func.isRequired,
+  nextStep: PropTypes.func,
   t: PropTypes.func.isRequired,
 };
