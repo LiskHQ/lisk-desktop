@@ -251,7 +251,7 @@ class Header extends React.Component {
                                   name="customNetwork"
                                   value={this.state.address}
                                   placeholder={this.props.t('ie. 192.168.0.1')}
-                                  size="s"
+                                  size="xs"
                                   className={`custom-network ${styles.input} ${validationError ? styles.errorInput : ''}`}
                                   onKeyDown={e => e.keyCode === keyCodes.enter
                                   && this.onConnectToCustomNode(e)}
@@ -270,6 +270,7 @@ class Header extends React.Component {
                                       /* istanbul ignore next */
                                         onClick={this.onConnectToCustomNode}
                                         className={`${styles.button} ${styles.backButton} connect-button`}
+                                        size="xs"
                                       >
                                         {this.state.connected ? t('Connected') : t('Connect')}
                                       </PrimaryButton>
