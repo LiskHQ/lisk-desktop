@@ -98,7 +98,7 @@ class FormBase extends React.Component {
       value: this.getMaxAmount(),
       format: '0.[00000000]',
     });
-    this.onInputChange({ target: { value, name: 'amount' } });
+    this.onAmountChange({ target: { value, name: 'amount' } });
     setTimeout(() => {
       if (fee !== this.props.fee) { // Because fee can change based on amount
         this.setEntireBalance();
