@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import MultiStep from '../../multiStep';
-import VerifyMessageInput from './verifyMessageInput';
 import Result from './result';
+import VerifyMessageInput from './verifyMessageInput';
 
 export default function VerifyMessage({
   t, history,
@@ -16,3 +17,8 @@ export default function VerifyMessage({
     </section>
   );
 }
+
+VerifyMessage.propTypes = {
+  history: PropTypes.object.isRequired,
+  t: PropTypes.func.isRequired,
+};
