@@ -56,7 +56,9 @@ describe('Analytics Util', () => {
     const dialogWrapper = mount(<DialogHolder {...props} />, options);
     expect(wrapper).toBeEmptyRender();
     expect(dialogWrapper).toBeEmptyRender();
-    analyticsUtil.checkIfAnalyticsShouldBeDisplay({ settings: props.settings, showAnalytics: true });
+    analyticsUtil.checkIfAnalyticsShouldBeDisplay({
+      settings: props.settings, showAnalytics: true,
+    });
     wrapper.update();
     expect(wrapper).toIncludeText('Opt-in to sharing anonymous data in order to improve Lisk Hub.');
     wrapper.find('a.url-link').simulate('click');
