@@ -59,4 +59,13 @@ describe('VerifyMessage Component', () => {
     wrapper.find('.publicKey input').simulate('change', { target: { value: publicKey.substr(1), name: 'publicKey' } });
     expect(wrapper.find('.publicKey .feedback').first()).toIncludeText('not a valid public key');
   });
+
+  it('should allow to switch to textarea view and back', () => {
+    const wrapper = mount(<VerifyMessage {...props} />);
+    expect(wrapper).not.toContainMatchingElement('.signedMessage');
+    wrapper.find('img.textarea-view-icon').simulate('click');
+    expect(wrapper).toContainMatchingElement('.signedMessage');
+    wrapper.find('img.inputs-view-icon').simulate('click');
+    expect(wrapper).not.toContainMatchingElement('.signedMessage');
+  });
 });
