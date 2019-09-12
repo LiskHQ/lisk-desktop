@@ -79,6 +79,7 @@ describe('WalletTransactions Component', () => {
     settings: {
       statisticsRequest: false,
       statisticsFollowingDay: 100,
+      statistics: false,
     },
   };
 

@@ -56,7 +56,7 @@ describe('Analytics Util', () => {
     const dialogWrapper = mount(<DialogHolder {...props} />, options);
     expect(wrapper).toBeEmptyRender();
     expect(dialogWrapper).toBeEmptyRender();
-    analyticsUtil.checkIfAnalyticsShouldBeDisplay({
+    analyticsUtil.checkIfAnalyticsShouldBeDisplayed({
       settings: props.settings, showAnalytics: true,
     });
     wrapper.update();
@@ -75,7 +75,9 @@ describe('Analytics Util', () => {
     const dialogWrapper = mount(<DialogHolder {...props} />, options);
     expect(wrapper).toBeEmptyRender();
     expect(dialogWrapper).toBeEmptyRender();
-    analyticsUtil.checkIfAnalyticsShouldBeDisplay({ settings: newSettings, showAnalytics: false });
+    analyticsUtil.checkIfAnalyticsShouldBeDisplayed({
+      settings: newSettings, showAnalytics: false,
+    });
     wrapper.update();
     expect(wrapper).toIncludeText('Opt-in to sharing anonymous data in order to improve Lisk Hub.');
     wrapper.find('a.url-link').simulate('click');
@@ -93,7 +95,9 @@ describe('Analytics Util', () => {
     const dialogWrapper = mount(<DialogHolder {...props} />, options);
     expect(wrapper).toBeEmptyRender();
     expect(dialogWrapper).toBeEmptyRender();
-    analyticsUtil.checkIfAnalyticsShouldBeDisplay({ settings: newSettings, showAnalytics: false });
+    analyticsUtil.checkIfAnalyticsShouldBeDisplayed({
+      settings: newSettings, showAnalytics: false,
+    });
     wrapper.update();
     expect(wrapper).toIncludeText('Opt-in to sharing anonymous data in order to improve Lisk Hub.');
     wrapper.find('a.url-link').simulate('click');

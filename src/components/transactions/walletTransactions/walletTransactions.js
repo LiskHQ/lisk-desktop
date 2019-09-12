@@ -37,10 +37,10 @@ class WalletTransactions extends React.Component {
 
   componentDidMount() {
     const { settings, settingsUpdated } = this.props;
-    if (settings.statisticsRequest === undefined) {
+    if (!settings.statistics && settings.statisticsRequest === undefined) {
       settingsUpdated({ statisticsRequest: true });
       const showAnalytics = true;
-      analytics.checkIfAnalyticsShouldBeDisplay({ settings, showAnalytics });
+      analytics.checkIfAnalyticsShouldBeDisplayed({ settings, showAnalytics });
     }
   }
 

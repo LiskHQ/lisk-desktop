@@ -205,7 +205,9 @@ const autoLogInIfNecessary = async (store) => {
     }, 500);
   }
 
-  analytics.checkIfAnalyticsShouldBeDisplay({ settings: actualSettings });
+  if (!actualSettings.statistics) {
+    analytics.checkIfAnalyticsShouldBeDisplayed({ settings: actualSettings });
+  }
 };
 
 const accountMiddleware = store => next => (action) => {

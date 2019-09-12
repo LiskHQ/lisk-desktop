@@ -22,9 +22,8 @@ class AnalyticsDialog extends React.Component {
     FlashMessageHolder.deleteMessage('Analytics');
   }
 
-  // eslint-disable-next-line class-methods-use-this
   handleClickCancel() {
-    this.props.settingsUpdated({ statisticsFollowingDay: moment().dayOfYear() });
+    this.props.settingsUpdated({ statisticsFollowingDay: moment().format('YYYY-MM-DD') });
     FlashMessageHolder.deleteMessage('Analytics');
   }
 
@@ -47,7 +46,6 @@ class AnalyticsDialog extends React.Component {
           <p className={styles.learnMore}>
             { t('You can learn more in our') }
             <a
-              className={styles.link}
               target="_blank"
               href={externalLinks.privacyPolicy}
             >
@@ -57,10 +55,10 @@ class AnalyticsDialog extends React.Component {
         </Dialog.Description>
 
         <Dialog.Options align="center">
-          <SecondaryButton onClick={this.handleClickCancel} className={styles.buttons}>
+          <SecondaryButton onClick={this.handleClickCancel}>
             {t('Cancel')}
           </SecondaryButton>
-          <PrimaryButton onClick={this.handleClickAccept} className={styles.buttons}>
+          <PrimaryButton onClick={this.handleClickAccept}>
             {t('Accept')}
           </PrimaryButton>
         </Dialog.Options>

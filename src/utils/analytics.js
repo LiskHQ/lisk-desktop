@@ -11,24 +11,15 @@ export default {
     FlashMessageHolder.addMessage(<AnalyticsMessage onClick={onClick} />, 'Analytics');
   },
 
-  checkIfAnalyticsShouldBeDisplay({ settings, showAnalytics = false }) {
-    // Trigger first time when is SignIn and Wallet page
-    if (showAnalytics) this.init();
-
-    // Show all the time if user didn't accept/cancel
-    if (!showAnalytics
-        && settings.statisticsRequest
-        && settings.statisticsFollowingDay === undefined
+  checkIfAnalyticsShouldBeDisplayed({ settings, showAnalytics = false }) {
+    if (showAnalytics
+      || (!showAnalytics
+          && settings.statisticsRequest
+          && settings.statisticsFollowingDay === undefined)
     ) {
       this.init();
-    }
-
-    // Show up again after 7 days
-    if (!showAnalytics
-      && settings.statisticsRequest
-      && settings.statisticsFollowingDay
-    ) {
-      const showRemain = (moment().dayOfYear() - settings.statisticsFollowingDay) >= 7;
+    } else {
+      const showRemain = moment().diff(settings.statisticsFollowingDay, 'days') >= 7;
       if (!settings.statistics && showRemain) this.init();
     }
   },
