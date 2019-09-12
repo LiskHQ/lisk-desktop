@@ -68,4 +68,21 @@ describe('VerifyMessage Component', () => {
     wrapper.find('img.inputs-view-icon').simulate('click');
     expect(wrapper).not.toContainMatchingElement('.signedMessage');
   });
+
+  it('should allow to verify message with the textarea view', () => {
+    const signedMessage = `-----MESSAGE-----
+${message}
+-----PUBLIC KEY-----
+${publicKey}
+-----SIGNATURE-----
+${signature}
+-----END LISK SIGNED MESSAGE-----
+`;
+    const wrapper = mount(<VerifyMessage {...props} />);
+    wrapper.find('img.textarea-view-icon').simulate('click');
+    wrapper.find('.signedMessage textarea').simulate('change', { target: { value: signedMessage, name: 'signedMessage' } });
+
+    wrapper.find('.continue button').simulate('click');
+    expect(wrapper.find('h1')).toIncludeText('The signature is correct');
+  });
 });

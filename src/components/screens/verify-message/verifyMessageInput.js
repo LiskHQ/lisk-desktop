@@ -7,6 +7,7 @@ import { parseSearchParams } from '../../../utils/searchParams';
 import Box from '../../toolbox/box';
 import Icon from '../../toolbox/icon';
 import Tooltip from '../../toolbox/tooltip/tooltip';
+import styles from './verifyMessage.css';
 
 export default class VerifyMessageInput extends React.Component {
   constructor(props) {
@@ -27,7 +28,6 @@ export default class VerifyMessageInput extends React.Component {
         name: 'signature',
         placeholder: t('Signature'),
         label: t('Signature'),
-        type: 'textarea',
       },
     ];
 
@@ -80,15 +80,28 @@ export default class VerifyMessageInput extends React.Component {
     });
   }
 
+  getInputs() {
+    const { inputs, isInputsView } = this.state;
+    if (isInputsView) {
+      return {
+        message: inputs.message.value,
+        publicKey: inputs.publicKey.value,
+        signature: inputs.signature.value,
+      };
+    }
+    const separators = ['MESSAGE', 'PUBLIC KEY', 'SIGNATURE', 'END LISK SIGNED MESSAGE'].join('|');
+    const parsedMessage = inputs.signedMessage.value.split(new RegExp(`\n?-----(${separators})-----\n?`));
+    return {
+      message: parsedMessage[2],
+      publicKey: parsedMessage[4],
+      signature: parsedMessage[6],
+    };
+  }
+
   goNext() {
-    const { inputs } = this.state;
     let isCorrect = false;
     try {
-      isCorrect = cryptography.verifyMessageWithPublicKey({
-        message: inputs.message.value,
-        signature: inputs.signature.value,
-        publicKey: inputs.publicKey.value,
-      });
+      isCorrect = cryptography.verifyMessageWithPublicKey(this.getInputs());
     } catch (e) {
       isCorrect = false;
     }
@@ -128,17 +141,20 @@ export default class VerifyMessageInput extends React.Component {
               onClick={this.changeView.bind(this, false)}
             />
           </div>
-          {(isInputsView ? this.inputs : [this.textarea]).map(({ name, placeholder, label }) => (
+          {(isInputsView ? this.inputs : [this.textarea]).map(({
+            name, placeholder, label, type,
+          }) => (
             <Input
               key={name}
               name={name}
-              className={name}
+              className={[name, styles[name]].filter(Boolean).join(' ')}
               placeholder={placeholder}
               label={label}
               value={inputs[name].value}
               error={!!inputs[name].feedback}
               feedback={inputs[name].feedback}
               onChange={this.handleChange}
+              type={type}
             />
           ))}
         </Box.Content>
