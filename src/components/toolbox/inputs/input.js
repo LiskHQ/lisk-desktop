@@ -42,40 +42,42 @@ const Input = ({
     status, isLoading, error, ...props,
   });
   return (
-    <span className={`${styles.wrapper} ${styles[size]}`}>
+    <React.Fragment>
       { label && <label className={styles.label}>{label}</label> }
-      { icon && (
-        typeof icon === 'string'
-          ? <Icon name={icon} className={styles.icon} />
-          : <span className={styles.icon}>{icon}</span>
-      )}
-      { status === 'pending'
-        && <Spinner className={`${styles.loading} ${styles.status}`} />
-      }
-      { statusIconNameMap[status]
-        && <Icon name={statusIconNameMap[status]} className={styles.status} />
-      }
-      <input
-        {...props}
-        ref={setRef}
-        className={[
-          styles.input,
-          status === 'error' && styles.error,
-          className,
-          icon && styles.withIcon,
-          dark && styles.dark,
-        ].filter(Boolean).join(' ')}
-      />
-      <Feedback
-        size={size}
-        className={styles.feedback}
-        status={status}
-        show={!!feedback}
-        dark={dark}
-      >
-        {feedback}
-      </Feedback>
-    </span>
+      <span className={`${styles.wrapper} ${styles[size]}`}>
+        { icon && (
+          typeof icon === 'string'
+            ? <Icon name={icon} className={styles.icon} />
+            : <span className={styles.icon}>{icon}</span>
+        )}
+        { status === 'pending'
+          && <Spinner className={`${styles.loading} ${styles.status}`} />
+        }
+        { statusIconNameMap[status]
+          && <Icon name={statusIconNameMap[status]} className={styles.status} />
+        }
+        <input
+          {...props}
+          ref={setRef}
+          className={[
+            styles.input,
+            status === 'error' && styles.error,
+            className,
+            icon && styles.withIcon,
+            dark && styles.dark,
+          ].filter(Boolean).join(' ')}
+        />
+        <Feedback
+          size={size}
+          className={styles.feedback}
+          status={status}
+          show={!!feedback}
+          dark={dark}
+        >
+          {feedback}
+        </Feedback>
+      </span>
+    </React.Fragment>
   );
 };
 

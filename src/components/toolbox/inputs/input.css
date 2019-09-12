@@ -105,15 +105,15 @@
   & .feedback:not(:empty) {
     margin-top: 10px;
   }
+}
 
-  & label {
-    @mixin contentNormal bold;
+.label {
+  @mixin contentNormal bold;
 
-    align-items: center;
-    color: var(--color-maastricht-blue);
-    display: flex;
-    margin: 40px 0 12px;
-  }
+  align-items: center;
+  color: var(--color-maastricht-blue);
+  display: flex;
+  margin: 40px 0 12px;
 }
 
 .input {
