@@ -125,6 +125,10 @@ strong {
   font-size: var(--paragraph-font-size-l);
 }
 
+a {
+  color: var(--color-ultramarine-blue);
+}
+
 strong {
   font-weight: bolder;
 }
