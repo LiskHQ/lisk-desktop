@@ -10,7 +10,7 @@ import DialogHolder from '../components/toolbox/dialog/holder';
 
 describe('Analytics Util', () => {
   const props = {
-    settings: jest.fn(),
+    settings: { statistics: false },
     t: k => k,
     settingsUpdated: jest.fn(),
     toastDisplayed: jest.fn(),
@@ -44,6 +44,54 @@ describe('Analytics Util', () => {
     expect(wrapper).toBeEmptyRender();
     expect(dialogWrapper).toBeEmptyRender();
     analyticsUtil.init();
+    wrapper.update();
+    expect(wrapper).toIncludeText('Opt-in to sharing anonymous data in order to improve Lisk Hub.');
+    wrapper.find('a.url-link').simulate('click');
+    dialogWrapper.update();
+    expect(dialogWrapper).toIncludeText('Anonymous Data Collection');
+  });
+
+  it('Should call FlashMessageHolder.addMessage when showAnalytics is set', () => {
+    const wrapper = mount(<FlashMessageHolder />, options);
+    const dialogWrapper = mount(<DialogHolder {...props} />, options);
+    expect(wrapper).toBeEmptyRender();
+    expect(dialogWrapper).toBeEmptyRender();
+    analyticsUtil.checkIfAnalyticsShouldBeDisplay({ settings: props.settings, showAnalytics: true });
+    wrapper.update();
+    expect(wrapper).toIncludeText('Opt-in to sharing anonymous data in order to improve Lisk Hub.');
+    wrapper.find('a.url-link').simulate('click');
+    dialogWrapper.update();
+    expect(dialogWrapper).toIncludeText('Anonymous Data Collection');
+  });
+
+  it('Should call FlashMessageHolder.addMessage after use saw the banner for first time', () => {
+    const newSettings = {
+      ...props.settings,
+      statisticsRequest: true,
+    };
+    const wrapper = mount(<FlashMessageHolder />, options);
+    const dialogWrapper = mount(<DialogHolder {...props} />, options);
+    expect(wrapper).toBeEmptyRender();
+    expect(dialogWrapper).toBeEmptyRender();
+    analyticsUtil.checkIfAnalyticsShouldBeDisplay({ settings: newSettings, showAnalytics: false });
+    wrapper.update();
+    expect(wrapper).toIncludeText('Opt-in to sharing anonymous data in order to improve Lisk Hub.');
+    wrapper.find('a.url-link').simulate('click');
+    dialogWrapper.update();
+    expect(dialogWrapper).toIncludeText('Anonymous Data Collection');
+  });
+
+  it('Should call FlashMessageHolder.addMessage after app runs', () => {
+    const newSettings = {
+      ...props.settings,
+      statisticsRequest: true,
+      statisticsFollowingDay: 240,
+    };
+    const wrapper = mount(<FlashMessageHolder />, options);
+    const dialogWrapper = mount(<DialogHolder {...props} />, options);
+    expect(wrapper).toBeEmptyRender();
+    expect(dialogWrapper).toBeEmptyRender();
+    analyticsUtil.checkIfAnalyticsShouldBeDisplay({ settings: newSettings, showAnalytics: false });
     wrapper.update();
     expect(wrapper).toIncludeText('Opt-in to sharing anonymous data in order to improve Lisk Hub.');
     wrapper.find('a.url-link').simulate('click');
