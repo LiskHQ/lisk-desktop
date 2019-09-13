@@ -5,7 +5,6 @@ import Dialog from '../toolbox/dialog/dialog';
 import FlashMessageHolder from '../toolbox/flashMessage/holder';
 import { PrimaryButton, SecondaryButton } from '../toolbox/buttons/button';
 import externalLinks from '../../constants/externalLinks';
-import styles from './analyticsDialog.css';
 
 class AnalyticsDialog extends React.Component {
   constructor() {
@@ -43,8 +42,10 @@ class AnalyticsDialog extends React.Component {
               not include sensitive information related to your Lisk Account.`)
             }
           </p>
-          <p className={styles.learnMore}>
-            { t('You can learn more in our') }
+        </Dialog.Description>
+        <Dialog.Description>
+          <p>
+            { `${t('You can learn more in our')} ` }
             <a
               target="_blank"
               href={externalLinks.privacyPolicy}

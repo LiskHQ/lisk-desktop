@@ -109,14 +109,14 @@
 }
 
 .description {
-  @mixin contentLarge;
+  @mixin contentLargest;
 
   color: var(--color-slate-gray);
-  max-width: 420px;
+  max-width: 460px;
   margin: 10px auto;
   text-align: center;
 
-  & * {
+  & *:not(a) {
     color: inherit;
     font-size: inherit;
     margin: 0;

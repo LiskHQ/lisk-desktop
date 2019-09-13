@@ -127,6 +127,13 @@ strong {
 
 a {
   color: var(--color-ultramarine-blue);
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: var(--font-weight-bold);
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 strong {
