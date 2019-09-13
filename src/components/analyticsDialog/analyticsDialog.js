@@ -58,7 +58,7 @@ class AnalyticsDialog extends React.Component {
           <SecondaryButton onClick={this.handleClickCancel} className={styles.buttons}>
             {t('Cancel')}
           </SecondaryButton>
-          <PrimaryButton onClick={this.handleClickCancel} className={styles.buttons}>
+          <PrimaryButton onClick={this.handleClickAccept} className={styles.buttons}>
             {t('Accept')}
           </PrimaryButton>
         </Dialog.Options>
