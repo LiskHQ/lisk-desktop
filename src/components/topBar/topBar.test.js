@@ -8,9 +8,17 @@ import TopBar from './topBar';
 import routes from '../../constants/routes';
 import accounts from '../../../test/constants/accounts';
 
-jest.mock('../searchBar', () => function SearchBarMock() {
+
+const mockInputNode = {
+  focus: jest.fn(),
+};
+
+jest.mock('../searchBar', () => function SearchBarMock({ onSearchClick, setSearchBarRef }) {
+  setSearchBarRef(mockInputNode);
   return (
-    <div className="searchBarMock" />
+    <div className="searchBarMock">
+      <div className="mockSearchResult" onClick={onSearchClick} />
+    </div>
   );
 });
 
@@ -151,12 +159,32 @@ describe('TopBar', () => {
   });
 
   it('renders the search component when user do click in the search icon', () => {
-    expect(wrapper).toContainMatchingElement('img.search-icon');
+    expect(wrapper).toContainMatchingElement('button.search-icon');
     expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
-    wrapper.find('img.search-icon').simulate('click');
+    wrapper.find('button.search-icon').simulate('click');
     expect(wrapper.find('div.searchDropdown')).toHaveClassName('show');
-    wrapper.find('img.search-icon').simulate('click');
+    wrapper.find('button.search-icon').simulate('click');
     expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
     wrapper.find('img.topbar-logo').simulate('click');
+  });
+
+  it('hides search dropdown on clicking a search result', () => {
+    expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
+    wrapper.find('button.search-icon').simulate('click');
+    expect(wrapper.find('div.searchDropdown')).toHaveClassName('show');
+    wrapper.find('.mockSearchResult').simulate('click');
+    jest.runAllTimers();
+    expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
+  });
+
+  it('hides search icon if token is BTC', () => {
+    expect(wrapper).toContainMatchingElement('.search-icon');
+    wrapper.setProps({
+      token: {
+        active: 'BTC',
+        list: [],
+      },
+    });
+    expect(wrapper).not.toContainMatchingElement('.search-icon');
   });
 });

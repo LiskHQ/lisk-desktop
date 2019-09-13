@@ -81,6 +81,14 @@ or "warn/action" ineastd of "red/green"
         Padding
   *************************/
   --header-padding: 0 32px;
+  --vertical-padding-l: 15px;
+  --horizontal-padding-l: 20px;
+  --vertical-padding-m: 11px;
+  --horizontal-padding-m: 16px;
+  --vertical-padding-s: 8px;
+  --horizontal-padding-s: 10px;
+  --vertical-padding-xs: 6px;
+  --horizontal-padding-xs: 10px;
 
   /*************************
       Base Colors

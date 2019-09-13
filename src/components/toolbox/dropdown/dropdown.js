@@ -5,12 +5,18 @@ import Separator from './separator';
 import { flattenArray } from '../../../utils/helpers';
 
 const Dropdown = ({
-  showDropdown, className, showArrow, active, children,
+  showDropdown, className, showArrow, active, children, align,
 }) => {
   const isSelectionList = children && Array.isArray(children);
 
   return (
-    <div className={`${styles.dropdown} ${showDropdown ? styles.show : ''} ${className}`}>
+    <div className={[
+      styles.dropdown,
+      showDropdown ? styles.show : '',
+      className,
+      styles[align],
+    ].join(' ')}
+    >
       {
         showArrow && (
           <span className={`${styles.dropdownArrow} dropdown-arrow`}>
@@ -46,6 +52,7 @@ Dropdown.propTypes = {
   className: PropTypes.string,
   showArrow: PropTypes.bool,
   active: PropTypes.number,
+  align: PropTypes.oneOf('left', 'center', 'right'),
 };
 
 Dropdown.defaultProps = {
@@ -53,6 +60,7 @@ Dropdown.defaultProps = {
   className: '',
   showArrow: true,
   active: 0,
+  align: 'right',
 };
 
 Dropdown.Separator = Separator;

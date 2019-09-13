@@ -51,7 +51,7 @@ const TransactionList = ({
     }
     </div>
     <Link to={routes.wallet.path} className="view-all">
-      <SecondaryButton className="small">{t('View All')}</SecondaryButton>
+      <SecondaryButton size="s">{t('View All')}</SecondaryButton>
     </Link>
   </div>
 );

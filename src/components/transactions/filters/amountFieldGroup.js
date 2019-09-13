@@ -2,9 +2,7 @@ import React from 'react';
 import { translate } from 'react-i18next';
 import { Input } from '../../toolbox/inputs';
 import Feedback from '../../toolbox/feedback/feedback';
-import Spinner from '../../spinner/spinner';
 import styles from './filters.css';
-import Icon from '../../toolbox/icon';
 
 class AmountFieldGroup extends React.Component {
   constructor() {
@@ -91,27 +89,23 @@ class AmountFieldGroup extends React.Component {
     clearTimeout(this.timeout);
   }
 
-  generateField(data) {
+  generateField({ name, placeholder }) {
     const { filters, handleKeyPress } = this.props;
-    const { fields } = this.state;
+    const field = this.state.fields[name];
 
     return (
       <label className={styles.fieldHolder}>
         <Input
           autoComplete="off"
           onChange={this.handleFieldChange}
-          name={data.name}
-          value={filters[data.name]}
-          placeholder={data.placeholder}
+          name={name}
+          value={filters[name]}
+          placeholder={placeholder}
           onKeyDown={handleKeyPress}
-          className={`${styles.input} ${fields[data.name].error ? 'error' : ''} ${data.name}Input`}
-        />
-        <Spinner
-          className={`${styles.status} ${fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
-        />
-        <Icon
-          className={`${styles.status} ${!fields[data.name].loading && filters[data.name] ? styles.show : ''}`}
-          name={fields[data.name].error ? 'alertIcon' : 'okIcon'}
+          className={`${styles.input} ${field.error ? 'error' : ''} ${name}Input`}
+          isLoading={field.loading}
+          status={field.error ? 'error' : 'ok'}
+          size="xs"
         />
       </label>
     );
@@ -132,7 +126,7 @@ class AmountFieldGroup extends React.Component {
           className={styles.feedback}
           show={!!this.state.feedback}
           status={this.state.feedback ? 'error' : ''}
-          showIcon={false}
+          size="xs"
         >
           { this.state.feedback }
         </Feedback>

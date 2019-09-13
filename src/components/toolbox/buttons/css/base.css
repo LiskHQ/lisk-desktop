@@ -6,26 +6,29 @@
 
   letter-spacing: 0.7px;
   border-radius: var(--border-radius-standard);
-  height: 48px;
   max-width: 100%;
   outline: none;
-  padding: 0 28px;
   text-transform: none;
   transition: var(--transition-button) !important;
 
-  &:global(.medium) {
+  &.l {
+    height: 48px;
+    padding: 0 28px;
+  }
+
+  &.m {
     height: 40px;
     padding: 0 20px;
   }
 
-  &:global(.small) {
+  &.s {
     @mixin contentNormal bold;
 
     height: 36px;
     padding: 0 16px;
   }
 
-  &:global(.extra-small) {
+  &.xs {
     @mixin contentNormal bold;
 
     height: 32px;

@@ -3,10 +3,10 @@ import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import i18n from '../../../i18n';
-import accounts from '../../../../test/constants/accounts';
-import Summary from './summary';
 import { tokenMap } from '../../../constants/tokens';
+import Summary from './summary';
+import accounts from '../../../../test/constants/accounts';
+import i18n from '../../../i18n';
 
 describe('Summary', () => {
   let wrapper;
@@ -57,7 +57,7 @@ describe('Summary', () => {
 
   beforeEach(() => {
     props = {
-      t: v => v,
+      t: i18n.t,
       account: {
         address: accounts.second_passphrase_account.address,
         secondPublicKey: accounts.second_passphrase_account.secondPublicKey,
@@ -70,7 +70,7 @@ describe('Summary', () => {
           address: '123123L',
         },
         amount: {
-          value: 1,
+          value: '1.123',
         },
         reference: {
           value: 1,
@@ -105,6 +105,21 @@ describe('Summary', () => {
     expect(wrapper).toContainMatchingElement('.summary-content');
     expect(wrapper).toContainMatchingElement('.summary-footer');
     expect(wrapper).toContainMatchingElement('.summary-second-passphrase');
+    expect(wrapper.find('button.confirm-button')).toHaveText('Send 1.123 LSK');
+    expect(wrapper.find('.amount-summary')).toIncludeText('1.123 LSK');
+  });
+
+  it('should render German decimal point  properly', () => {
+    wrapper.setProps({
+      fields: {
+        ...props.fields,
+        amount: {
+          value: '1,123',
+        },
+      },
+    });
+    expect(wrapper.find('button.confirm-button')).toHaveText('Send 1,123 LSK');
+    expect(wrapper.find('.amount-summary')).toIncludeText('1,123 LSK');
   });
 
   it('should goind to previous page', () => {

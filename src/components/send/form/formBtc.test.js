@@ -67,7 +67,7 @@ describe('FormBtc', () => {
       token: tokenMap.LSK.key,
       t: v => v,
       account: {
-        balance: accounts.genesis.balance,
+        balance: 12300000,
         info: {
           LSK: accounts.genesis,
           BTC: {
@@ -126,6 +126,13 @@ describe('FormBtc', () => {
         dynamicFees: {},
       });
       expect(props.dynamicFeesRetrieved).toHaveBeenCalled();
+    });
+
+    it('should allow to set entire balance', () => {
+      wrapper.find('button.send-entire-balance-button').simulate('click');
+      jest.runAllTimers();
+      wrapper.update();
+      expect(wrapper.find('.amount input').prop('value')).toEqual(fromRawLsk(props.account.balance - dynamicFees.Low));
     });
   });
 });

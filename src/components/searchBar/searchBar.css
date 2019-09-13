@@ -9,15 +9,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-
-  & > .searchMessage {
-    @mixin contentNormal;
-
-    width: 100%;
-    display: flex;
-    margin: 18px 0 11px;
-    color: var(--color-slate-gray);
-  }
 }
 
 .linear {

@@ -62,6 +62,7 @@
   justify-content: center;
   padding: 0 24px;
   position: relative;
+  border: none;
 
   & > img {
     cursor: pointer;
@@ -69,9 +70,9 @@
 }
 
 .searchDropdown {
-  right: 20px;
+  right: 20px !important;
   top: calc(100% + 13px);
-  width: 502px;
+  width: 502px !important;
   padding: 20px;
   box-sizing: border-box;
 

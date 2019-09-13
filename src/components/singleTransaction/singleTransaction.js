@@ -78,7 +78,7 @@ class SingleTransaction extends React.Component {
                 value={this.getLinkToCopy()}
                 text={t('Copy link')}
                 Container={SecondaryButton}
-                containerClassName="extra-small"
+                containerProps={{ size: 'xs' }}
                 copyClassName={styles.copyIcon}
               />
             </Box.Header>
@@ -125,7 +125,10 @@ class SingleTransaction extends React.Component {
                       <CopyToClipboard
                         value={transaction.id}
                         className="tx-id"
-                        containerClassName="extra-small copy-title"
+                        containerProps={{
+                          size: 'xs',
+                          className: 'copy-title',
+                        }}
                         copyClassName={styles.copyIcon}
                       />
                     </span>

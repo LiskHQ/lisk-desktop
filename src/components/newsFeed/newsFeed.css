@@ -25,6 +25,10 @@
   & > div {
     height: 100%;
   }
+
+  & .row {
+    display: block;
+  }
 }
 
 .newsFeed {

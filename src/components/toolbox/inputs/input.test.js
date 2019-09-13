@@ -14,7 +14,7 @@ describe('Input', () => {
     wrapper = mount(<Input {...props} />);
     expect(wrapper.find('input')).toHaveValue(props.defaultValue);
     expect(wrapper.find('input')).toHaveClassName(props.className);
-    wrapper.simulate('change', { target: { value: 'test' } });
+    wrapper.find('.input').simulate('change', { target: { value: 'test' } });
     expect(props.onChange).toBeCalled();
   });
 
@@ -24,7 +24,7 @@ describe('Input', () => {
       size: 'l',
     };
     wrapper = mount(<Input {...propWithoutClassName} />);
-    expect(wrapper.find('input')).toHaveClassName('l');
+    expect(wrapper.find('.wrapper')).toHaveClassName('l');
   });
 
   it('Should render with error class', () => {

@@ -15,15 +15,15 @@ class NewsFeed extends React.Component {
     const filteredNewsFeed = newsFeed.data.filter(feed => channels[feed.source]) || [];
 
     return (
-      <Box className={`newsFeed-box ${styles.newsFeedBox}`}>
+      <Box className="newsFeed-box">
         <Box.Header>
           <h1>{t('Community feed')}</h1>
         </Box.Header>
-        <Box.Content className={`${styles.container}`}>
+        <Box.Content className={styles.container}>
           {
               filteredNewsFeed.length
                 ? filteredNewsFeed.map(news => (
-                  <Box.Row isClickable key={news.sourceId}>
+                  <Box.Row isClickable key={news.sourceId} className={styles.row}>
                     <News
                       t={t}
                       {...news}

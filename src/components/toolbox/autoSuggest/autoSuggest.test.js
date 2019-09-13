@@ -63,7 +63,6 @@ describe('Recipient Input', () => {
   it('should render properly', () => {
     expect(wrapper).toContainMatchingElement('.recipient');
     expect(wrapper).toContainMatchingElement('Input.input');
-    expect(wrapper).toContainMatchingElement('Spinner.spinner');
     expect(wrapper).toContainMatchingElement('.bookmark-list');
   });
 
@@ -87,9 +86,9 @@ describe('Recipient Input', () => {
     wrapper = mount(<AutoSuggest {...props} />, options);
     expect(wrapper).toContainMatchingElement('.bookmark-list');
     expect(wrapper).toContainMatchingElements(3, 'li');
-    wrapper.find('Input.input').simulate('keyDown', { keyCode: keyCodes.arrowDown });
-    wrapper.find('Input.input').simulate('keyDown', { keyCode: keyCodes.arrowUp });
-    wrapper.find('Input.input').simulate('keyDown', { keyCode: keyCodes.enter });
+    wrapper.find('Input.input input').simulate('keyDown', { keyCode: keyCodes.arrowDown });
+    wrapper.find('Input.input input').simulate('keyDown', { keyCode: keyCodes.arrowUp });
+    wrapper.find('Input.input input').simulate('keyDown', { keyCode: keyCodes.enter });
     wrapper.find('.bookmark-list li').at(0).simulate('click');
     expect(props.onSelectItem).toBeCalled();
   });

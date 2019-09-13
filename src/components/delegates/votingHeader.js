@@ -87,7 +87,7 @@ class VotingHeader extends React.Component {
                     <p>{t('Each time you add or remove a vote it is counted as an action. There\'s {{fee}} LSK fee per every 33 actions.', { fee })}</p>
                   </Tooltip>
                 </h3>
-                <span className={styles.hideInMedium}>{t('Total actions (')}</span>
+                <span className={styles.hideInMedium}>{t('Total transactions (')}</span>
                 <span>
                   {t('Total fee: ')}
                   <b>
