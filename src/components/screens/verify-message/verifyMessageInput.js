@@ -132,12 +132,12 @@ export default class VerifyMessageInput extends React.Component {
             {t('Input view')}
             <Icon
               className="inputs-view-icon"
-              name={!isInputsView ? 'dashboardIcon' : 'dashboardIconActive'}
+              name={`verifyMessageInputsView${!isInputsView ? '' : 'Active'}`}
               onClick={this.changeView.bind(this, true)}
             />
             <Icon
               className="textarea-view-icon"
-              name={isInputsView ? 'academy' : 'academyActive'}
+              name={`verifyMessageTextareaView${isInputsView ? '' : 'Active'}`}
               onClick={this.changeView.bind(this, false)}
             />
           </div>
