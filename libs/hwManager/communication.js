@@ -7,10 +7,10 @@ import { IPC_MESSAGES } from './constants';
 const IPC = window.ipc;
 
 /**
- * sendCommand - Function.
+ * executeCommand - Function.
  * Use for send and request data to the HWManager.
  */
-const sendCommand = (action, payload) => {
+const executeCommand = (action, payload) => {
   // eslint-disable-next-line no-new
   new Promise((resolve, reject) => {
     // Listening for response
@@ -33,7 +33,7 @@ const sendCommand = (action, payload) => {
  * not information in screen
  */
 const getPublicKey = async (data) => {
-  const response = await sendCommand(IPC_MESSAGES.GET_PUBLICK_KEY, data);
+  const response = await executeCommand(IPC_MESSAGES.GET_PUBLICK_KEY, data);
   return response;
 };
 
@@ -48,7 +48,7 @@ const getPublicKey = async (data) => {
  * not information in screen
  */
 const signTransaction = async (data) => {
-  const response = await sendCommand(IPC_MESSAGES.SIGN_TRANSACTION, data);
+  const response = await executeCommand(IPC_MESSAGES.SIGN_TRANSACTION, data);
   return response;
 };
 
@@ -80,6 +80,7 @@ const subscribeToDevicesList = (fn) => {
 };
 
 export {
+  executeCommand,
   getPublicKey,
   signTransaction,
   subscribeToDeviceConnceted,
