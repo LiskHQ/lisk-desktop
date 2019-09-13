@@ -6,6 +6,7 @@
 
   align-items: center;
   box-sizing: border-box;
+  border-radius: var(--border-radius-standard);
   color: var(--color-slate-gray);
   display: flex;
   height: auto;
@@ -17,19 +18,31 @@
     max-height var(--animation-speed-fast) linear,
     opacity var(--animation-speed-fast) linear,
     padding-bottom var(--animation-speed-fast) linear,
-    padding-top var(--animation-speed-fast) linear;
+    padding-top var(--animation-speed-fast) linear,
+    margin-top var(--animation-speed-fast) linear,
+    background var(--animation-speed-fast) linear;
   width: 100%;
 
-  &.error {
-    background: var(--error-background-color);
-    color: var(--color-burnt-sienna);
-    padding: 8px 20px;
+  &.show {
+    max-height: 100px;
+    opacity: 1;
+    padding: 8px 0;
   }
 
-  &.show {
-    max-height: 40px;
-    opacity: 1;
-    padding: 8px 20px;
+  &.error:not(:empty) {
+    background: var(--error-background-color);
+    color: var(--color-burnt-sienna);
+    padding: 8px var(--horizontal-padding-l);
+    margin-top: 10px;
+
+    &.m {
+      padding: 8px var(--horizontal-padding-m);
+    }
+
+    &.s,
+    &.xs {
+      padding: 8px var(--horizontal-padding-s);
+    }
   }
 
   & > img {

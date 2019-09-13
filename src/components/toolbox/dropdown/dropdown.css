@@ -21,6 +21,27 @@
   visibility: hidden;
   width: 100%;
 
+  &.right {
+    transform-origin: calc(100% - 25px) -5px;
+    right: 0;
+  }
+
+  &.center {
+    transform-origin: 0 -5px;
+    left: 50%;
+    transform: scale(0.9) translateX(-50%);
+
+    &.show {
+      opacity: 1;
+      transform: scale(1) translateX(-50%);
+    }
+  }
+
+  &.left {
+    transform-origin: 25px -5px;
+    left: 0;
+  }
+
   &.show {
     opacity: 1;
     transform: scale(1);
@@ -72,15 +93,6 @@
         &:hover {
           background-color: rgba(64, 112, 244, 0.24);
           color: #4070f4;
-        }
-
-        & input {
-          @mixin contentNormal;
-
-          border: 1px solid var(--light-border-color);
-          background-color: var(--color-maastricht-blue);
-          color: var(--color-white);
-          padding: 0 20px 0 10px;
         }
       }
     }

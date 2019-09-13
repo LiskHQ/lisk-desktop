@@ -3,7 +3,7 @@
 .wrapper {
   display: flex;
   justify-content: space-between;
-  padding-top: 16px;
+  padding-top: 32px;
 
   & h1 {
     @mixin headingNormalIntermediate;
@@ -17,7 +17,7 @@
 
     letter-spacing: 0.3px;
     color: var(--color-slate-gray);
-    margin-bottom: 27px;
+    margin-bottom: 32px;
     display: inline-block;
   }
 }

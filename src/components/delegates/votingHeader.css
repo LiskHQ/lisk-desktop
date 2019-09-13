@@ -5,8 +5,8 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 20px;
-  margin-top: 4px;
+  margin-bottom: 32px;
+  margin-top: 15px;
 
   & > * {
     display: flex;
@@ -29,9 +29,9 @@
   }
 
   & h2 {
-    @mixin headingLarge;
+    @mixin headingNormalIntermediate;
 
-    margin: -2px 0;
+    margin: 0 0 -4px;
     color: var(--color-maastricht-blue);
   }
 
@@ -54,7 +54,7 @@
   border: solid 1px var(--color-platinum);
   border-radius: 3px;
   box-sizing: border-box;
-  margin-top: 20px;
+  margin-top: 12px;
   max-height: 62px;
 
   &.addedVotes {

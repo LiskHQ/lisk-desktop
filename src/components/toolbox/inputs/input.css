@@ -1,6 +1,112 @@
 @import '../../app/variables.css';
 @import '../../app/mixins.css';
 
+:root {
+  --height-l: 48px;
+  --height-m: 40px;
+  --height-s: 36px;
+  --height-xs: 32px;
+}
+
+.wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  & .status,
+  & .icon {
+    position: absolute;
+    top: calc(var(--height-l) / 2);
+    transform: translateY(-50%);
+  }
+
+  & .status {
+    right: var(--horizontal-padding-l);
+  }
+
+  & .icon {
+    left: var(--horizontal-padding-l);
+  }
+
+  & .loading {
+    color: var(--color-ultramarine-blue);
+  }
+
+  &.l {
+    & .input {
+      @mixin contentLargest;
+
+      height: var(--height-l);
+      padding: var(--vertical-padding-l) var(--horizontal-padding-l);
+    }
+  }
+
+  &.m {
+    & .input {
+      @mixin contentLargest;
+
+      height: var(--height-m);
+      padding: var(--vertical-padding-m) var(--horizontal-padding-m);
+    }
+
+    & .icon {
+      top: calc(var(--height-m) / 2);
+      left: var(--horizontal-padding-m);
+    }
+
+    & .status {
+      top: calc(var(--height-m) / 2);
+      right: var(--horizontal-padding-m);
+    }
+  }
+
+  &.s {
+    & .input {
+      @mixin contentNormal;
+
+      height: var(--height-s);
+      padding: var(--vertical-padding-s) var(--horizontal-padding-s);
+    }
+
+    & .icon {
+      top: calc(var(--height-s) / 2);
+      left: var(--horizontal-padding-s);
+    }
+
+    & .status {
+      top: calc(var(--height-s) / 2);
+      right: var(--horizontal-padding-s);
+    }
+  }
+
+  &.xs {
+    & .input {
+      @mixin contentNormal;
+
+      height: var(--height-xs);
+      padding: var(--vertical-padding-xs) var(--horizontal-padding-xs);
+    }
+
+    & .icon {
+      top: calc(var(--height-xs) / 2);
+      left: var(--horizontal-padding-xs);
+    }
+
+    & .status {
+      top: calc(var(--height-xs) / 2);
+      right: var(--horizontal-padding-xs);
+    }
+  }
+
+  & .input.withIcon {
+    padding-left: 36px;
+  }
+
+  & .feedback:not(:empty) {
+    margin-top: 10px;
+  }
+}
+
 .input {
   @mixin contentLargest;
 
@@ -9,7 +115,7 @@
   border-radius: var(--border-radius-standard);
   box-sizing: border-box;
   color: var(--color-maastricht-blue);
-  height: 46px;
+  height: var(--height-l);
   outline: none;
   padding: 8px 10px;
   text-align: left;
@@ -18,32 +124,10 @@
     color var(--animation-speed-fast) linear;
   width: 100%;
 
-  &.l {
-    @mixin contentLargest;
-
-    height: 48px;
-    padding: 15px 20px;
-  }
-
-  &.m {
-    @mixin contentLargest;
-
-    height: 40px;
-    padding: 11px 16px;
-  }
-
-  &.s {
-    @mixin contentNormal;
-
-    height: 36px;
-    padding: 8px 10px;
-  }
-
-  &.xs {
-    @mixin contentNormal;
-
-    height: 32px;
-    padding: 6px 10px;
+  &.dark {
+    border-color: var(--light-border-color);
+    background-color: var(--color-maastricht-blue);
+    color: var(--color-white);
   }
 
   &:focus {
@@ -66,23 +150,6 @@
     color: var(--color-blue-gray);
     outline: none;
   }
-
-  &.withIcon {
-    padding-left: 36px;
-  }
-}
-
-.icon {
-  position: absolute;
-  top: 32px;
-  left: 31px;
-}
-
-.loading {
-  color: var(--color-ultramarine-blue);
-  position: absolute;
-  top: 32px;
-  right: 31px;
 }
 
 .autoresize {

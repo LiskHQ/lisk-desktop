@@ -60,13 +60,7 @@
   }
 
   & .feedback {
-    margin-top: 8px;
-    padding-left: 8px;
-    padding-right: 8px;
-
     &.referenceFeedback {
-      @mixin contentSmallest;
-
       justify-content: flex-end;
     }
   }
@@ -93,6 +87,7 @@
     & .converter {
       position: absolute;
       right: 34px;
+      top: 10px;
     }
 
     & .input {
@@ -153,7 +148,6 @@
     margin-top: 20px;
 
     & button {
-      height: 36px;
       width: 100%;
     }
   }

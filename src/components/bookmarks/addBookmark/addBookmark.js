@@ -5,7 +5,6 @@ import networks from '../../../constants/networks';
 import Box from '../../toolbox/box';
 import { Input } from '../../toolbox/inputs';
 import { PrimaryButton } from '../../toolbox/buttons/button';
-import Feedback from '../../toolbox/feedback/feedback';
 import styles from './addBookmark.css';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import { tokenMap } from '../../../constants/tokens';
@@ -116,7 +115,7 @@ class AddBookmark extends React.Component {
     const error = value.length > maxLength;
     const feedback = !error
       ? t('Max. 20 characters')
-      : t('Label is too long');
+      : t('Label is too long.');
     return { feedback, error };
   }
 
@@ -196,16 +195,6 @@ class AddBookmark extends React.Component {
                     {field.label}
                   </span>
                   <span className={styles.fieldGroup}>
-                    {field.name === 'address'
-                      ? (
-                        <AccountVisual
-                          className={styles.avatar}
-                          placeholder={fields[field.name].isInvalid || !fields[field.name].value}
-                          address={fields[field.name].value}
-                          size={25}
-                        />
-                      ) : null
-                    }
                     <Input
                       error={fields[field.name].error}
                       className={styles.input}
@@ -216,13 +205,19 @@ class AddBookmark extends React.Component {
                       readOnly={fields[field.name].readonly}
                       size="l"
                       autoComplete="off"
+                      feedback={fields[field.name].feedback}
+                      status={fields[field.name].error ? 'error' : 'ok'}
                     />
-                    <Feedback
-                      className={`${styles.feedback} ${fields[field.name].error ? styles.error : ''}`}
-                      status={fields[field.name].error ? 'error' : ''}
-                    >
-                      {fields[field.name].feedback}
-                    </Feedback>
+                    {field.name === 'address'
+                      ? (
+                        <AccountVisual
+                          className={styles.avatar}
+                          placeholder={fields[field.name].isInvalid || !fields[field.name].value}
+                          address={fields[field.name].value}
+                          size={25}
+                        />
+                      ) : null
+                    }
                   </span>
                 </label>
               ))}

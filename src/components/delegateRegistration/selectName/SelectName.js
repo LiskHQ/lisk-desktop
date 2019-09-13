@@ -3,9 +3,6 @@ import debounce from 'lodash.debounce';
 import Box from '../../toolbox/box';
 import { Input } from '../../toolbox/inputs';
 import { PrimaryButton } from '../../toolbox/buttons/button';
-import Feedback from '../../toolbox/feedback/feedback';
-import Spinner from '../../spinner/spinner';
-import Icon from '../../toolbox/icon';
 import { fromRawLsk } from '../../../utils/lsk';
 import { getAPIClient } from '../../../utils/api/lsk/network';
 import regex from '../../../utils/regex';
@@ -90,11 +87,13 @@ class SelectName extends React.Component {
   }
 
   onChangeNickname({ target: { value } }) {
-    this.setState({ loading: true });
     const error = this.isNameInvalid(value);
-    this.setState({ loading: error === false && true });
     this.debounceFetchUser(value, error);
-    this.setState({ nickname: value, error: error || '' });
+    this.setState({
+      loading: !!value && !error,
+      nickname: value,
+      error: error || '',
+    });
   }
 
   render() {
@@ -107,14 +106,6 @@ class SelectName extends React.Component {
     const { t, nextStep } = this.props;
 
     const isBtnDisabled = !!error || nickname.length === 0 || loading;
-
-    const feedbackInfo = error ? {
-      status: 'error',
-      className: styles.errorMessage,
-    } : {
-      status: '',
-      className: styles.inputRequirements,
-    };
 
     return (
       <Box width="medium">
@@ -148,7 +139,7 @@ class SelectName extends React.Component {
 
           <label className={styles.nicknameLabel}>{t('Your nickname')}</label>
 
-          <div className={styles.inputContainer}>
+          <div>
             <Input
               data-name="delegate-nickname"
               autoComplete="off"
@@ -159,22 +150,10 @@ class SelectName extends React.Component {
               className={`${styles.inputNickname} select-name-input`}
               disabled={inputDisabled}
               error={error}
+              isLoading={loading}
+              status={error ? 'error' : 'ok'}
+              feedback={error || t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.')}
             />
-            { /* TODO <Spiner/> and <Icon/> will be incorporated into <Input/> in https://github.com/LiskHQ/lisk-hub/issues/2091 */ }
-            <Spinner className={`${styles.spinner} ${loading && nickname.length ? styles.show : styles.hide} spiner`} />
-            <Icon
-              className={`${styles.status} ${!loading && nickname.length ? styles.show : styles.hide} input-status-icon`}
-              name={error ? 'alertIcon' : 'okIcon'}
-            />
-
-            <Feedback
-              show
-              status={feedbackInfo.status}
-              className={`${feedbackInfo.className} input-feedback`}
-              showIcon={false}
-            >
-              {error || t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.')}
-            </Feedback>
           </div>
           <Box.Footer>
             <PrimaryButton

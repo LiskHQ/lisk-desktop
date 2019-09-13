@@ -67,11 +67,11 @@ describe('Bookmark Component', () => {
         token: props.token,
       };
       wrapper.find('input[name="accountName"]').simulate('change', evt);
-      expect(wrapper.find('.fieldInput')).toContainMatchingElement('Spinner.show');
+      expect(wrapper.find('.account-title')).toContainMatchingElement('Spinner');
       jest.advanceTimersByTime(300);
       wrapper.update();
-      expect(wrapper.find('.fieldInput')).not.toContainMatchingElement('Spinner.show');
-      expect(wrapper.find('.fieldInput')).toContainMatchingElement('img.show');
+      expect(wrapper.find('.account-title')).not.toContainMatchingElement('Spinner');
+      expect(wrapper.find('.account-title')).toContainMatchingElement('img.status');
       expect(wrapper.find('button').last()).not.toBeDisabled();
       wrapper.find('button').last().simulate('click');
       expect(props.bookmarkAdded).toBeCalledWith(expected);
@@ -84,7 +84,7 @@ describe('Bookmark Component', () => {
       jest.advanceTimersByTime(300);
       wrapper.update();
       expect(wrapper.find('button').last()).toBeDisabled();
-      expect(wrapper.find('.feedback')).toHaveClassName('error');
+      expect(wrapper.find('.account-title .feedback.error').first()).toHaveClassName('error');
     });
   });
 });

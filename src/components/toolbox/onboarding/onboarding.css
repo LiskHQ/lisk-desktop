@@ -7,7 +7,7 @@
   box-sizing: border-box;
   color: var(--color-white);
   display: flex;
-  margin: 35px 0 20px 0;
+  margin-top: 32px;
   overflow: hidden;
   position: relative;
   height: 400px;

@@ -4,7 +4,6 @@ import CircularProgress from '../toolbox/circularProgress/circularProgress';
 import Converter from '../converter';
 import Feedback from '../toolbox/feedback/feedback';
 import RequestWrapper from './requestWrapper';
-import Spinner from '../spinner/spinner';
 import styles from './request.css';
 import Icon from '../toolbox/icon';
 import { validateAmountFormat } from '../../utils/validators';
@@ -120,7 +119,7 @@ class RequestLsk extends React.Component {
     const byteCount = encodeURI(fields.reference.value).split(/%..|./).length - 1;
 
     return (
-      <RequestWrapper copyLabel={t('Copy Link')} copyValue={shareLink} t={t}>
+      <RequestWrapper copyLabel={t('Copy link')} copyValue={shareLink} t={t}>
         <span className={`${styles.label}`}>
           {t('Use the sharing link to easily request any amount of LSK from Lisk Hub or Lisk Mobile users.')}
         </span>
@@ -133,27 +132,18 @@ class RequestLsk extends React.Component {
               name="amount"
               value={fields.amount.value}
               placeholder={t('Requested amount')}
-              className={`${styles.input} ${fields.amount.error ? 'error' : ''}`}
+              className={styles.input}
+              status={fields.amount.error ? 'error' : 'ok'}
+              feedback={fields.amount.feedback}
+              isLoading={fields.amount.loading}
+              size="s"
             />
             <Converter
               className={styles.converter}
               value={fields.amount.value}
               error={fields.amount.error}
             />
-            <Spinner className={`${styles.status} ${fields.amount.loading && fields.amount.value ? styles.show : ''}`} />
-            <Icon
-              className={`${styles.status} ${!fields.amount.loading && fields.amount.value ? styles.show : ''}`}
-              name={fields.amount.error ? 'alertIcon' : 'okIcon'}
-            />
           </span>
-          <Feedback
-            className={styles.feedback}
-            show={fields.amount.error}
-            status={fields.amount.error ? 'error' : ''}
-            showIcon={false}
-          >
-            { fields.amount.feedback }
-          </Feedback>
         </label>
         <label className={`${styles.fieldGroup} reference`}>
           <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
@@ -182,6 +172,7 @@ class RequestLsk extends React.Component {
             show={!!fields.reference.feedback}
             status={fields.reference.error ? 'error' : ''}
             showIcon={false}
+            size="s"
           >
             { fields.reference.feedback }
           </Feedback>

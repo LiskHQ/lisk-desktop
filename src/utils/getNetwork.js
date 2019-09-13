@@ -34,5 +34,6 @@ export const getNetworksList = () =>
     .filter(network => network !== 'default')
     .map((network, index) => ({
       label: i18next.t(networks[network].name),
+      name: networks[network].name,
       value: index,
     }));
