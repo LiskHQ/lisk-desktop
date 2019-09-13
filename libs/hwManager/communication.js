@@ -43,9 +43,7 @@ const getPublicKey = async (data) => {
  * @param {object} data -> Object that contain the information about the device and data
  * @param {string} data.deviceId -> Id of the hw device
  * @param {number} data.index -> index of the account of wich will extact information
- * @param {string} data.message -> Data to display in the device screen
- * @param {boolean} data.showOnDevice -> Boolean value to inform device if show or
- * not information in screen
+ * @param {object} data.tx -> Object with all transaction information
  */
 const signTransaction = async (data) => {
   const response = await executeCommand(IPC_MESSAGES.SIGN_TRANSACTION, data);
