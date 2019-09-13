@@ -52,6 +52,8 @@ export default class VerifyMessageInput extends React.Component {
 
     this.goNext = this.goNext.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.changeViewToInputs = this.changeView.bind(this, true);
+    this.changeViewToTextarea = this.changeView.bind(this, false);
   }
 
   getInputError({ target: { name, value } }) {
@@ -128,12 +130,12 @@ export default class VerifyMessageInput extends React.Component {
             <Icon
               className="inputs-view-icon"
               name={`verifyMessageInputsView${!isInputsView ? '' : 'Active'}`}
-              onClick={this.changeView.bind(this, true)}
+              onClick={this.changeViewToInputs}
             />
             <Icon
               className="textarea-view-icon"
               name={`verifyMessageTextareaView${isInputsView ? '' : 'Active'}`}
-              onClick={this.changeView.bind(this, false)}
+              onClick={this.changeViewToTextarea}
             />
           </div>
           {(isInputsView ? this.inputs : [this.textarea]).map(({
