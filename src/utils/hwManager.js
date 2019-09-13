@@ -1,3 +1,5 @@
+// istanbul ignore file
+// TODO include unit test
 import {
   getPublicKey,
   signTransaction,
