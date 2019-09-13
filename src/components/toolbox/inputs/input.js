@@ -42,7 +42,7 @@ const Input = ({
   status = updateStatus({
     status, isLoading, error, ...props,
   });
-  const Component = type;
+  const Component = type === 'textarea' ? type : 'input';
   return (
     <React.Fragment>
       { label && <label className={styles.label}>{label}</label> }
@@ -60,6 +60,7 @@ const Input = ({
         }
         <Component
           {...props}
+          type={type}
           ref={setRef}
           className={[
             styles.input,
@@ -86,7 +87,7 @@ const Input = ({
 Input.propTypes = {
   size: PropTypes.oneOf(['l', 'm', 's', 'xs']),
   status: PropTypes.oneOf(['ok', 'error', 'pending', undefined]),
-  type: PropTypes.oneOf(['input', 'textarea']),
+  type: PropTypes.oneOf(['text', 'textarea', 'password']),
   feedback: PropTypes.string,
   dark: PropTypes.bool,
   label: PropTypes.string,
@@ -102,7 +103,7 @@ Input.defaultProps = {
   feedback: '',
   dark: false,
   label: '',
-  type: 'input',
+  type: 'text',
 };
 
 export default Input;
