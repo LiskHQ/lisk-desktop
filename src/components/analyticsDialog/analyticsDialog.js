@@ -37,9 +37,7 @@ class AnalyticsDialog extends React.Component {
         <Dialog.Description>
           <p>
             {
-              t(`We would like to request permission for collecting anonymous data in order 
-              to improve our UI products. The data will be stored in our servers however, it will 
-              not include sensitive information related to your Lisk Account.`)
+              t('We would like to request permission for collecting anonymous data in order to improve our UI products. The data will be stored in our servers however, it will not include sensitive information related to your Lisk Account.')
             }
           </p>
         </Dialog.Description>

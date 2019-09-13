@@ -1,4 +1,5 @@
 /* istanbul ignore file */
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import { settingsUpdated } from '../../actions/settings';
@@ -14,4 +15,7 @@ const mapDispatchToProps = {
   toastDisplayed,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(AnalyticsDialog));
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  translate(),
+)(AnalyticsDialog);

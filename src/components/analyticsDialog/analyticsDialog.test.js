@@ -18,21 +18,20 @@ describe('Analytics dialog component', () => {
   let wrapper;
 
   beforeEach(() => {
+    jest.clearAllMocks();
     wrapper = mount(<AnalyticsDialog {...props} />);
   });
 
-  it('Should render with release notes and call FlashMessageHolder.deleteMessage on cancel click', () => {
+  it('Should render with Opt-in (Analytics) message and call FlashMessageHolder.deleteMessage on cancel click', () => {
     expect(wrapper).toIncludeText('Anonymous Data Collection');
     expect(wrapper).toIncludeText('Privacy Policy');
     wrapper.find('button').first().simulate('click');
     expect(FlashMessageHolder.deleteMessage).toBeCalledTimes(1);
   });
 
-  it('Should render with release notes and call FlashMessageHolder.deleteMessage on accept click', () => {
-    expect(wrapper).toIncludeText('Anonymous Data Collection');
-    expect(wrapper).toIncludeText('Privacy Policy');
+  it('Should render with Opt-in (Analytics) message and call FlashMessageHolder.deleteMessage on accept click', () => {
     wrapper.find('button').last().simulate('click');
-    expect(FlashMessageHolder.deleteMessage).toBeCalledTimes(2);
+    expect(FlashMessageHolder.deleteMessage).toBeCalledTimes(1);
     expect(props.settingsUpdated).toBeCalled();
     expect(props.toastDisplayed).toBeCalled();
   });

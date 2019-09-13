@@ -6,7 +6,6 @@ import i18n from '../i18n';
 import analyticsUtil from './analytics';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
 import DialogHolder from '../components/toolbox/dialog/holder';
-// import store from '../store';
 
 describe('Analytics Util', () => {
   const props = {
