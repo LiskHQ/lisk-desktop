@@ -5,6 +5,7 @@ import Dialog from '../toolbox/dialog/dialog';
 import FlashMessageHolder from '../toolbox/flashMessage/holder';
 import { PrimaryButton, SecondaryButton } from '../toolbox/buttons/button';
 import externalLinks from '../../constants/externalLinks';
+import styles from './analyticsDialog.css';
 
 class AnalyticsDialog extends React.Component {
   constructor() {
@@ -54,10 +55,10 @@ class AnalyticsDialog extends React.Component {
         </Dialog.Description>
 
         <Dialog.Options align="center">
-          <SecondaryButton onClick={this.handleClickCancel}>
+          <SecondaryButton onClick={this.handleClickCancel} className={styles.buttons}>
             {t('Cancel')}
           </SecondaryButton>
-          <PrimaryButton onClick={this.handleClickAccept}>
+          <PrimaryButton onClick={this.handleClickCancel} className={styles.buttons}>
             {t('Accept')}
           </PrimaryButton>
         </Dialog.Options>

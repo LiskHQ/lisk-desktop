@@ -149,7 +149,7 @@
   }
 
   &.center {
-    justify-content: space-around;
+    justify-content: center;
     max-width: 470px;
 
     & > * {
