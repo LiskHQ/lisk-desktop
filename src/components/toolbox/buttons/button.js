@@ -28,7 +28,7 @@ class TBButton extends React.Component {
 
 TBButton.propTypes = {
   className: PropTypes.string,
-  size: PropTypes.oneOf('l', 'm', 's', 'xs'),
+  size: PropTypes.oneOf(['l', 'm', 's', 'xs']),
 };
 
 TBButton.defaultProps = {

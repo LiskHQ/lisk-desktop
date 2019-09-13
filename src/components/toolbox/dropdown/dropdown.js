@@ -52,7 +52,7 @@ Dropdown.propTypes = {
   className: PropTypes.string,
   showArrow: PropTypes.bool,
   active: PropTypes.number,
-  align: PropTypes.oneOf('left', 'center', 'right'),
+  align: PropTypes.oneOf(['left', 'center', 'right']),
 };
 
 Dropdown.defaultProps = {
