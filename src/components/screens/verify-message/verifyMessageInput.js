@@ -128,7 +128,7 @@ export default class VerifyMessageInput extends React.Component {
               <p>{t('If you would like to ensure the ownership of another account, you can send a message via Lisk Hub and request the recipient to sign it.')}</p>
             </Tooltip>
           </Box.InfoText>
-          <div>
+          <div className={styles.inputViewSwitcher}>
             {t('Input view')}
             <Icon
               className="inputs-view-icon"
