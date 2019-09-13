@@ -14,6 +14,7 @@ export default class VerifyMessageInput extends React.Component {
     super(props);
 
     const { t } = props;
+    const valuesFromNextStep = props.prevState.inputs || {};
 
     this.inputs = [
       {
@@ -42,7 +43,7 @@ export default class VerifyMessageInput extends React.Component {
       inputs: [...this.inputs, this.textarea].reduce((inputs, { name }) => ({
         ...inputs,
         [name]: {
-          value: parseSearchParams(props.history.location.search)[name] || '',
+          value: valuesFromNextStep[name] || parseSearchParams(props.history.location.search)[name] || '',
           feedback: '',
         },
       }), {}),
@@ -99,13 +100,7 @@ export default class VerifyMessageInput extends React.Component {
   }
 
   goNext() {
-    let isCorrect = false;
-    try {
-      isCorrect = cryptography.verifyMessageWithPublicKey(this.getInputs());
-    } catch (e) {
-      isCorrect = false;
-    }
-    this.props.nextStep({ isCorrect });
+    this.props.nextStep({ inputs: this.getInputs() });
   }
 
   changeView(isInputsView) {
@@ -171,4 +166,9 @@ VerifyMessageInput.propTypes = {
   history: PropTypes.object.isRequired,
   nextStep: PropTypes.func,
   t: PropTypes.func.isRequired,
+  prevState: PropTypes.object,
+};
+
+VerifyMessageInput.defaultProps = {
+  prevState: {},
 };

@@ -53,6 +53,20 @@ ${signature}
     expect(wrapper.find('h1')).toIncludeText('The signature is correct');
   });
 
+  it('should allow to go back and keep value of all inputs', () => {
+    const wrapper = mount(<VerifyMessage {...props} />);
+    wrapper.find('.message input').simulate('change', { target: { value: message, name: 'message' } });
+    wrapper.find('.publicKey input').simulate('change', { target: { value: publicKey, name: 'publicKey' } });
+    wrapper.find('.signature input').simulate('change', { target: { value: signature, name: 'signature' } });
+    wrapper.find('.continue button').simulate('click');
+    expect(wrapper.find('h1')).toIncludeText('The signature is correct');
+    wrapper.find('.go-back button').simulate('click');
+    expect(wrapper.find('.message input')).toHaveProp('value', message);
+    expect(wrapper.find('.publicKey input')).toHaveProp('value', publicKey);
+    expect(wrapper.find('.signature input')).toHaveProp('value', signature);
+  });
+
+
   it('should allow to verify invalid inputs', () => {
     const wrapper = mount(<VerifyMessage {...props} />);
     wrapper.find('.message input').simulate('change', { target: { value: message, name: 'message' } });

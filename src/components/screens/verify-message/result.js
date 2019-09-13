@@ -1,3 +1,4 @@
+import { cryptography } from '@liskhq/lisk-client';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
@@ -5,8 +6,15 @@ import Box from '../../toolbox/box';
 import Illustration from '../../toolbox/illustration';
 
 export default function Result({
-  finalCallback, isCorrect, prevStep, t,
+  finalCallback, inputs, prevStep, t,
 }) {
+  let isCorrect = false;
+  try {
+    isCorrect = cryptography.verifyMessageWithPublicKey(inputs);
+  } catch (e) {
+    isCorrect = false;
+  }
+
   return (
     <div>
       <h1>{isCorrect ? t('The signature is correct') : t('The signature is incorrect')}</h1>
@@ -21,11 +29,7 @@ export default function Result({
 
 Result.propTypes = {
   finalCallback: PropTypes.func,
-  isCorrect: PropTypes.bool,
+  inputs: PropTypes.object,
   prevStep: PropTypes.func,
   t: PropTypes.func.isRequired,
-};
-
-Result.defaultProps = {
-  isCorrect: false,
 };
