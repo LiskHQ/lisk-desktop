@@ -10,7 +10,6 @@ const IPC = window.ipc;
  * executeCommand - Function.
  * Use for send and request data to the HWManager.
  */
-<<<<<<< HEAD
 const executeCommand = (action, payload) => (
   new Promise((resolve, reject) => {
     // Listening for response
@@ -22,17 +21,6 @@ const executeCommand = (action, payload) => (
     IPC.send(`${action}.${REQUEST}`, payload);
   })
 );
-=======
-const executeCommand = (action, payload) => new Promise((resolve, reject) => {
-  // Listening for response
-  IPC.once(`${action}.result`, (event, response) => {
-    if (response.success) return resolve(response.data);
-    return reject(new Error(`${action} failed`));
-  });
-  // Requesting data
-  IPC.send(`${action}.request`, payload);
-});
->>>>>>> :recycle: add hwMananger signSendTransaction
 
 /**
  * getPublicKey - Function.
