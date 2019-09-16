@@ -1,4 +1,5 @@
 /* istanbul ignore file */
+import { to } from 'await-to-js';
 import { REQUEST, RESPONSE } from './constants';
 
 /**
@@ -10,10 +11,12 @@ import { REQUEST, RESPONSE } from './constants';
  */
 export const createCommand = (subscriber, { command, fn }) => {
   subscriber.on(`${command}.${REQUEST}`, async (event, ...args) => {
-    Promise.resolve(fn(...args))
-      .then(result => ({ success: true, data: result }))
-      .catch(error => ({ success: false, data: error }))
-      .then(result => event.sender.send(`${command}.${RESPONSE}`, result));
+    const [error, data] = await to(fn(...args));
+    event.sender.send(`${command}.${RESPONSE}`, {
+      success: !error,
+      data,
+      error,
+    });
   });
 };
 
