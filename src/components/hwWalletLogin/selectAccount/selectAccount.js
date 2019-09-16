@@ -1,3 +1,4 @@
+import { to } from 'await-to-js';
 import React from 'react';
 import { TertiaryButton } from '../../toolbox/buttons/button';
 import { getAccountsFromDevice } from '../../../utils/hwManager';
@@ -11,7 +12,6 @@ class SelectAccount extends React.Component {
     super(props);
 
     this.state = {
-      activeDevice: null,
       accountOnEditMode: -1,
       hwAccounts: [],
     };
@@ -51,14 +51,18 @@ class SelectAccount extends React.Component {
   }
 
   async getAccountsFromDevice() {
-    const { device, liskAPIClient } = this.props;
-    let hwAccounts = await getAccountsFromDevice({ device, liskAPIClient });
-    hwAccounts = hwAccounts.map((account, index) => ({
-      ...account,
-      name: this.getNameFromAccount(account.address),
-      shouldShow: !!account.balance || index === 0,
-    }));
-    this.setState({ hwAccounts });
+    const { device, networkConfig, errorToastDisplayed } = this.props;
+    const [error, accounts] = await to(getAccountsFromDevice({ device, networkConfig }));
+    if (error) {
+      errorToastDisplayed({ label: `Error retrieving accounts from device: ${error}` });
+    } else {
+      const hwAccounts = accounts.map((account, index) => ({
+        ...account,
+        name: this.getNameFromAccount(account.address),
+        shouldShow: !!account.balance || index === 0,
+      }));
+      this.setState({ hwAccounts });
+    }
   }
 
   onEditAccount(index) {

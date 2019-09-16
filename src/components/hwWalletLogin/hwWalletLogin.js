@@ -37,7 +37,7 @@ class HardwareWalletLogin extends React.Component {
   render() {
     const {
       history,
-      liskAPIClient,
+      network,
       t,
     } = this.props;
     const { devices } = this.state;
@@ -53,7 +53,7 @@ class HardwareWalletLogin extends React.Component {
             <SelectAccount
               t={t}
               devices={devices}
-              liskAPIClient={liskAPIClient}
+              networkConfig={network}
               history={history}
             />
           </MultiStep>

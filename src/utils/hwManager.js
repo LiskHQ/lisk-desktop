@@ -13,21 +13,14 @@ import {
  * getAccountsFromDevice - Function.
  * This function is used for retrieve the accounts from an hw device, using public keys.
  */
-// eslint-disable-next-line max-statements
-const getAccountsFromDevice = async ({ device: { deviceId }, liskAPIClient }) => {
+const getAccountsFromDevice = async ({ device: { deviceId }, networkConfig }) => {
   const accounts = [];
   let account = {};
   for (let index = 0; index === accounts.length; index++) {
-    try {
-      // eslint-disable-next-line no-await-in-loop
-      const publicKey = await getPublicKey({ index, deviceId });
-      // eslint-disable-next-line no-await-in-loop
-      account = await getAccount({ liskAPIClient, publicKey });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-      break;
-    }
+    // eslint-disable-next-line no-await-in-loop
+    const publicKey = await getPublicKey({ index, deviceId });
+    // eslint-disable-next-line no-await-in-loop
+    account = await getAccount({ networkConfig, publicKey });
     if (index === 0 || accounts[index - 1].balance) {
       accounts.push(account);
     }

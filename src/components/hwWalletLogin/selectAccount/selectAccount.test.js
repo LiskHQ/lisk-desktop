@@ -54,7 +54,7 @@ describe('Select Account', () => {
         name: 'Lisk',
         publicKey: '123bkgj45',
       },
-      network: 0,
+      network: {},
       settings: {
         hardwareAccounts: {
           'Ledger Nano S': [
