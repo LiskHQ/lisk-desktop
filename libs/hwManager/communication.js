@@ -73,7 +73,15 @@ const subscribeToDeviceDisonnceted = (fn) => {
  * @param {function} fn -> callback function
  */
 const subscribeToDevicesList = (fn) => {
-  IPC.on(IPC_MESSAGES.DEVICE_LIST_CHANGED, (event, response) => fn(response));
+  const updateDevices = async () => {
+    const response = await executeCommand(IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST, null);
+    fn(response);
+  };
+  IPC.on(IPC_MESSAGES.DEVICE_LIST_CHANGED, updateDevices);
+  setImmediate(updateDevices);
+  return {
+    unsubscribe: IPC.removeListener.bind(IPC, IPC_MESSAGES.DEVICE_LIST_CHANGED, fn),
+  };
 };
 
 export {
