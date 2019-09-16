@@ -22,13 +22,26 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           presets: [
-            ['@babel/preset-env', {
-              targets: {
-                browsers: ['last 2 versions', 'safari >= 7'],
+            [
+              '@babel/preset-env', {
+                modules: false,
+                targets: {
+                  browsers: ['last 2 versions', 'safari >= 7'],
+                },
+              }],
+            '@babel/preset-react',
+          ],
+          plugins: [
+            'syntax-trailing-function-commas',
+            'import-glob',
+            [
+              '@babel/plugin-transform-runtime',
+              {
+                helpers: false,
+                regenerator: true,
               },
-            }],
-            '@babel/preset-react'],
-          plugins: ['syntax-trailing-function-commas', 'import-glob'],
+            ],
+          ],
           env: {
             test: {
               plugins: ['istanbul'],
