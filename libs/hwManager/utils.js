@@ -1,4 +1,5 @@
 /* istanbul ignore file */
+import { REQUEST, RESPONSE } from './constants';
 
 /**
  * Create a listener to a function that send a response back to the sender
@@ -8,11 +9,11 @@
  * @param {function} data.fn - Function to be executed when event is triggered
  */
 export const createCommand = (subscriber, { command, fn }) => {
-  subscriber.on(`${command}.request`, async (event, ...args) => {
+  subscriber.on(`${command}.${REQUEST}`, async (event, ...args) => {
     Promise.resolve(fn(...args))
       .then(result => ({ success: true, data: result }))
       .catch(error => ({ success: false, data: error }))
-      .then(result => event.sender.send(`${command}.result`, result));
+      .then(result => event.sender.send(`${command}.${RESPONSE}`, result));
   });
 };
 

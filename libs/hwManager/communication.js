@@ -2,7 +2,7 @@
  * This file is use for the exchange messages with the HWManager.
  * The communication message is through IPC (window.ipc)
  */
-import { IPC_MESSAGES } from './constants';
+import { IPC_MESSAGES, RESPONSE, REQUEST } from './constants';
 
 const IPC = window.ipc;
 
@@ -13,12 +13,12 @@ const IPC = window.ipc;
 const executeCommand = (action, payload) => (
   new Promise((resolve, reject) => {
     // Listening for response
-    IPC.once(`${action}.result`, (event, response) => {
+    IPC.once(`${action}.${RESPONSE}`, (event, response) => {
       if (response.success) return resolve(response.data);
       return reject(new Error(`${action} failed`));
     });
     // Requesting data
-    IPC.send(`${action}.request`, payload);
+    IPC.send(`${action}.${REQUEST}`, payload);
   })
 );
 
