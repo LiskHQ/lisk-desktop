@@ -6,5 +6,12 @@
       }
     ],
     "@babel/preset-react"
+  ],
+  "plugins": [
+    "syntax-trailing-function-commas",
+    "import-glob",
+    ["@babel/plugin-transform-runtime", {
+      "regenerator": true
+    }]
   ]
 }
