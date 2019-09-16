@@ -4,19 +4,37 @@ import i18n from '../../i18n';
 import actionTypes from '../../constants/actions';
 import { accountLoggedOut } from '../../actions/account';
 import { updateDeviceList } from '../../actions/hwWallets';
-import { successToastDisplayed, errorToastDisplayed, infoToastDisplayed } from '../../actions/toaster';
-import { HW_MSG } from '../../constants/hwConstants';
+import { successToastDisplayed } from '../../actions/toaster';
 import Dialog from '../../components/toolbox/dialog/dialog';
 import DialogHolder from '../../components/toolbox/dialog/holder';
 import { PrimaryButton } from '../../components/toolbox/buttons/button';
+import { subscribeToDeviceConnceted, subscribeToDeviceDisonnceted } from '../../utils/hwManager';
 
-// eslint-disable-next-line max-statements
+/**
+ * TODO this can move later to a different file in case we need.
+ * deviceDisconnectDialog - Function - Renders the dialog when user is SignedIn and remove
+ * hw device connection, the dialog will logout the session.
+ * @param {string} model - HW Device model
+ */
+const deviceDisconnectDialog = model => DialogHolder.showDialog(
+  <Dialog>
+    <Dialog.Title>{i18n.t('You are disconnected')}</Dialog.Title>
+    <Dialog.Description>
+      {i18n.t('There is no connection to the {{model}}. Please check the cables if it happened by accident.', { model })}
+    </Dialog.Description>
+    <Dialog.Options align="center">
+      <PrimaryButton>
+        {i18n.t('Ok')}
+      </PrimaryButton>
+    </Dialog.Options>
+  </Dialog>,
+);
+
 const hwWalletMiddleware = store => next => (action) => {
   const { ipc } = window;
 
   if (action.type === actionTypes.storeCreated && ipc) {
-    const util = require('util');
-
+    // Set at first the isHarwareWalletConnected property to false.
     store.dispatch({
       type: actionTypes.settingsUpdated,
       data: { isHarwareWalletConnected: false },
@@ -26,62 +44,44 @@ const hwWalletMiddleware = store => next => (action) => {
       store.dispatch(updateDeviceList(devicesList));
     });
 
-    ipc.on('hwConnected', (event, { model }) => {
+    /**
+     * subscribeToDeviceConnceted - Function -> To detect any new hw wallet device connection
+     * @param {fn} function - callback function to execute toast dispatch after receive the data
+     */
+    subscribeToDeviceConnceted((response) => {
+      store.dispatch(successToastDisplayed({ label: `${response.model} connected` }));
       store.dispatch({
         type: actionTypes.settingsUpdated,
         data: { isHarwareWalletConnected: true },
       });
-
-      store.dispatch(successToastDisplayed({ label: `${model} connected` }));
     });
 
-    ipc.on('hwDisconnected', (event, { model }) => {
-      const state = store.getState();
-      const { account, settings } = state;
+    /**
+     * subscribeToDeviceDisonnceted - Function -> To detect any hw wallet disconnection
+     * @param {fn} function - callback function to execute toast dispatch after receive the data
+     * and in case user is SignIn trigger the logout Dialog and toast message.
+     */
+    subscribeToDeviceDisonnceted((response) => {
+      const { account, settings, hwWallets } = store.getState();
       const activeToken = settings.token.active || 'LSK';
 
-      if (account.info[activeToken].address
-        && account.hwInfo
+      // Check if user is SignedIns
+      if (account.info
+        && account.info[activeToken]
+        && account.info[activeToken].address
         && account.hwInfo.deviceId
-        && account.hwInfo.deviceModel === model
+        && account.hwInfo.deviceModel === response.model
       ) {
-        DialogHolder.showDialog(
-          <Dialog>
-            <Dialog.Title>{i18n.t('You are disconnected')}</Dialog.Title>
-            <Dialog.Description>
-              {i18n.t('There is no connection to the {{model}}. Please check the cables if it happened by accident.', { model })}
-            </Dialog.Description>
-            <Dialog.Options align="center">
-              <PrimaryButton>
-                {i18n.t('Ok')}
-              </PrimaryButton>
-            </Dialog.Options>
-          </Dialog>,
-        );
-
+        deviceDisconnectDialog(response.model);
         store.dispatch(accountLoggedOut());
       }
 
       store.dispatch({
         type: actionTypes.settingsUpdated,
-        data: { isHarwareWalletConnected: !!state.hwWallets.devices.length },
+        data: { isHarwareWalletConnected: !!hwWallets.devices.length },
       });
 
-      store.dispatch(successToastDisplayed({ label: `${model} disconnected` }));
-    });
-
-    ipc.on('trezorButtonCallback', (event, data) => {
-      store.dispatch(infoToastDisplayed({
-        label: util.format(HW_MSG.TREZOR_ASK_FOR_CONFIRMATION, data),
-      }));
-    });
-
-    ipc.on('trezorParamMessage', (event, data) => {
-      store.dispatch(infoToastDisplayed({ label: HW_MSG[data] }));
-    });
-
-    ipc.on('trezorError', () => {
-      store.dispatch(errorToastDisplayed({ label: HW_MSG.ERROR_OR_DEVICE_IS_NOT_CONNECTED }));
+      store.dispatch(successToastDisplayed({ label: `${response.model} disconnected` }));
     });
   }
 
