@@ -1,10 +1,11 @@
 import React from 'react';
 import { TertiaryButton } from '../../toolbox/buttons/button';
 import { displayAccounts } from '../../../utils/ledger';
+import { getAccountsFromDevice } from '../../../utils/hwManager';
 import { loginType } from '../../../constants/hwConstants';
-import routes from '../../../constants/routes';
 import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';
+import routes from '../../../constants/routes';
 import styles from './selectAccount.css';
 
 class SelectAccount extends React.Component {
@@ -19,7 +20,6 @@ class SelectAccount extends React.Component {
 
     this.onEditAccount = this.onEditAccount.bind(this);
     this.onChangeAccountTitle = this.onChangeAccountTitle.bind(this);
-    this.getAccountsFromDevice = this.getAccountsFromDevice.bind(this);
     this.onSaveNameAccounts = this.onSaveNameAccounts.bind(this);
     this.onAddNewAccount = this.onAddNewAccount.bind(this);
     this.onSelectAccount = this.onSelectAccount.bind(this);
@@ -56,24 +56,15 @@ class SelectAccount extends React.Component {
     const {
       device,
       liskAPIClient,
-      t,
     } = this.props;
-    let activeDevice = '';
-
-    setTimeout(async () => {
-      activeDevice = await displayAccounts({
-        liskAPIClient,
-        loginType: /trezor/ig.test(device.deviceModel) ? loginType.trezor : loginType.ledger,
-        hwAccounts: [],
-        t,
-        device,
-      });
-
-      const hwAccounts = activeDevice.hwAccounts.map(account =>
-        ({ ...account, name: this.getNameFromAccount(account.address) }));
-
-      this.setState({ activeDevice: { ...activeDevice }, hwAccounts });
-    }, 1000);
+    let hwAccounts = await getAccountsFromDevice({
+      device,
+      liskAPIClient,
+    });
+    hwAccounts = hwAccounts.map(account => ({
+      ...account, name: this.getNameFromAccount(account.address),
+    }));
+    this.setState({ hwAccounts });
   }
 
   onEditAccount(index) {
