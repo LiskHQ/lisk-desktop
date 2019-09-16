@@ -11,7 +11,7 @@ const reactConfig = require('./webpack.config.react');
 module.exports = merge(baseConfig, reactConfig, {
   output: {
     path: resolve(__dirname, '../app', '../dist'),
-    filename: 'bundle.[name]-[hash].js',
+    filename: 'bundle.[name].[hash].js',
   },
   devServer: {
     contentBase: 'src',

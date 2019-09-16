@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const { resolve } = require('path');
 const merge = require('webpack-merge');
 const { NamedModulesPlugin } = require('webpack');
-const TerserPlugin = require('terser-webpack-plugin');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
 /* eslint-enable import/no-extraneous-dependencies */
@@ -14,12 +13,13 @@ module.exports = merge(baseConfig, reactConfig, {
     filename: 'bundle.[name].[hash].js',
   },
   optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        test: /\.js(\?.*)?$/i,
-      }),
-    ],
+    minimize: false,
+    // minimize: true, TODO enable this lines when you remove all component.displayName
+    // minimizer: [
+    //   new TerserPlugin({
+    //     test: /\.js(\?.*)?$/i,
+    //   }),
+    // ],
     runtimeChunk: 'single', // enable "runtime" chunk
     splitChunks: {
       cacheGroups: {
@@ -40,16 +40,6 @@ module.exports = merge(baseConfig, reactConfig, {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
-    /*
-     * TODO re-enable when #1439 is fixed
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
-      mangle: false,
-    }),
-    */
     new NamedModulesPlugin(),
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: 'vendor',
-    // }),
   ],
 });
