@@ -10,18 +10,15 @@ const IPC = window.ipc;
  * executeCommand - Function.
  * Use for send and request data to the HWManager.
  */
-const executeCommand = (action, payload) => {
-  // eslint-disable-next-line no-new
-  new Promise((resolve, reject) => {
-    // Listening for response
-    IPC.once(`${action}.result`, (event, response) => {
-      if (response.success) return resolve(response.data);
-      return reject(new Error(`${action} failed`));
-    });
-    // Requesting data
-    IPC.send(`${action}.request`, payload);
+const executeCommand = (action, payload) => new Promise((resolve, reject) => {
+  // Listening for response
+  IPC.once(`${action}.result`, (event, response) => {
+    if (response.success) return resolve(response.data);
+    return reject(new Error(`${action} failed`));
   });
-};
+  // Requesting data
+  IPC.send(`${action}.request`, payload);
+});
 
 /**
  * getPublicKey - Function.
@@ -46,7 +43,13 @@ const getPublicKey = async (data) => {
  * @param {object} data.tx -> Object with all transaction information
  */
 const signTransaction = async (data) => {
-  const response = await executeCommand(IPC_MESSAGES.SIGN_TRANSACTION, data);
+  const response = await executeCommand(
+    IPC_MESSAGES.HW_COMMAND,
+    {
+      action: IPC_MESSAGES.SIGN_TRANSACTION,
+      data,
+    },
+  );
   return response;
 };
 

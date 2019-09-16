@@ -11,7 +11,8 @@ import { passphraseUsed } from './account';
 import { getTimeOffset } from '../utils/hacks';
 import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
-import { transactions as transactionsAPI, hardwareWallet as hwAPI } from '../utils/api';
+import { transactions as transactionsAPI } from '../utils/api';
+import { signSendTransaction } from '../utils/hwManager';
 
 // ========================================= //
 //            ACTION CREATORS
@@ -257,7 +258,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
       { ...data, timeOffset, network },
       createTransactionType.transaction,
     ))
-    : await to(hwAPI.create(account, data));
+    : await to(signSendTransaction(account, data));
 
   if (error) {
     return dispatch({
