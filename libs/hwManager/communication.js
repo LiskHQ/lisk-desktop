@@ -55,7 +55,7 @@ const signTransaction = async (data) => {
  * @param {function} fn -> callback function
  */
 const subscribeToDeviceConnceted = (fn) => {
-  IPC.on(IPC_MESSAGES.CONNECT, (event, response) => fn(response));
+  IPC.on(IPC_MESSAGES.HW_CONNECTED, (event, response) => fn(response));
 };
 
 /**
@@ -64,7 +64,7 @@ const subscribeToDeviceConnceted = (fn) => {
  * @param {function} fn -> callback function
  */
 const subscribeToDeviceDisonnceted = (fn) => {
-  IPC.on(IPC_MESSAGES.DISCONNECT, (event, response) => fn(response));
+  IPC.on(IPC_MESSAGES.HW_DISCONNECTED, (event, response) => fn(response));
 };
 
 /**
