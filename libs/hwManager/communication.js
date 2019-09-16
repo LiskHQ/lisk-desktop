@@ -14,7 +14,7 @@ const executeCommand = (action, payload) => {
   // eslint-disable-next-line no-new
   new Promise((resolve, reject) => {
     // Listening for response
-    IPC.once(`${action}.response`, (event, response) => {
+    IPC.once(`${action}.result`, (event, response) => {
       if (response.success) return resolve(response.data);
       return reject(new Error(`${action} failed`));
     });
@@ -56,7 +56,7 @@ const signTransaction = async (data) => {
  * @param {function} fn -> callback function
  */
 const subscribeToDeviceConnceted = (fn) => {
-  IPC.on(IPC_MESSAGES.CONNECT, (event, response) => fn(response));
+  IPC.on(IPC_MESSAGES.HW_CONNECTED, (event, response) => fn(response));
 };
 
 /**
@@ -65,7 +65,7 @@ const subscribeToDeviceConnceted = (fn) => {
  * @param {function} fn -> callback function
  */
 const subscribeToDeviceDisonnceted = (fn) => {
-  IPC.on(IPC_MESSAGES.DISCONNECT, (event, response) => fn(response));
+  IPC.on(IPC_MESSAGES.HW_DISCONNECTED, (event, response) => fn(response));
 };
 
 /**
