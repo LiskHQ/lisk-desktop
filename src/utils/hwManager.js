@@ -1,5 +1,6 @@
 // istanbul ignore file
 // TODO include unit test
+import { getAccount } from './api/lsk/account';
 import {
   getPublicKey,
   signTransaction,
@@ -12,10 +13,26 @@ import {
  * getAccountsFromDevice - Function.
  * This function is used for retrieve the accounts from an hw device, using publick keys.
  */
-const getAccountsFromDevice = async () => {
-  // TODO implement logic for this function
-  getPublicKey();
-  throw new Error('not umplemented');
+// eslint-disable-next-line max-statements
+const getAccountsFromDevice = async ({ device: { deviceId }, liskAPIClient }) => {
+  const accounts = [];
+  let account = {};
+  for (let index = 0; index === accounts.length; index++) {
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      const publicKey = await getPublicKey({ index, deviceId });
+      // eslint-disable-next-line no-await-in-loop
+      account = await getAccount({ liskAPIClient, publicKey });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+      break;
+    }
+    if (account.balance) {
+      accounts.push(account);
+    }
+  }
+  return accounts;
 };
 
 /**
