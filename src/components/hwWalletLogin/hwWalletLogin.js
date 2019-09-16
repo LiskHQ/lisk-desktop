@@ -1,16 +1,23 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import MultiStep from '../multiStep';
+import { subscribeToDevicesList } from '../../utils/hwManager';
 import Loading from './loading';
+import MultiStep from '../multiStep';
+import SelectAccount from './selectAccount';
 import SelectDevice from './selectDevice';
 import UnlockDevice from './unlockDevice';
-import SelectAccount from './selectAccount';
-import { getDeviceList } from '../../utils/hwWallet';
 import styles from './hwWalletLogin.css';
 
 class HardwareWalletLogin extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { devices: [] };
+
+    this.deviceListener = subscribeToDevicesList(this.updateDeviceList.bind(this));
+  }
+
   async componentDidMount() {
-    await this.updateDeviceList();
     this.props.settingsUpdated({
       token: {
         active: 'LSK',
@@ -19,18 +26,21 @@ class HardwareWalletLogin extends React.Component {
     });
   }
 
-  async updateDeviceList() {
-    const deviceList = await getDeviceList();
-    this.props.updateDeviceList(deviceList);
+  componentWillUnmount() {
+    this.deviceListener.unsubscribe();
+  }
+
+  updateDeviceList(devices) {
+    this.setState({ devices });
   }
 
   render() {
     const {
-      devices,
       history,
       liskAPIClient,
       t,
     } = this.props;
+    const { devices } = this.state;
     return (
       <React.Fragment>
         <div className={`${styles.wrapper} ${grid.row}`}>

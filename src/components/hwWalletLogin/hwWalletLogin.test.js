@@ -3,10 +3,19 @@ import { MemoryRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import configureMockStore from 'redux-mock-store';
 import { mount } from 'enzyme';
-import * as hwWalletUtils from '../../utils/hwWallet';
+import * as hwManager from '../../utils/hwManager';
 import HwWalletLogin from './hwWalletLogin';
 
-jest.mock('../../utils/hwWallet');
+jest.mock('../../utils/hwManager', () => ({
+  subscribeToDevicesList: jest.fn((fn) => {
+    const devices = [
+      { deviceId: 1, openApp: false, model: 'Ledger' },
+      { deviceId: 2, model: 'Trezor' },
+      { deviceId: 3, openApp: true, model: 'Ledger' },
+    ];
+    setTimeout(() => fn(devices), 100);
+  }),
+}));
 
 describe('HwWalletLogin', () => {
   let wrapper;
@@ -46,7 +55,7 @@ describe('HwWalletLogin', () => {
   });
   const props = {
     devices: [],
-    updateDeviceList: jest.fn(),
+    settingsUpdated: jest.fn(),
     account: {
       address: '123456L',
       info: {
@@ -78,16 +87,20 @@ describe('HwWalletLogin', () => {
     },
   };
 
-  it('Should render Loading component and call getDeviceList ', async () => {
-    hwWalletUtils.getDeviceList.mockResolvedValue([
-      { deviceId: 1, openApp: false, model: 'Ledger' },
-      { deviceId: 2, model: 'Trezor' },
-      { deviceId: 3, openApp: true, model: 'Ledger' },
-    ]);
-
+  it('should render Loading component and call hwManager.subscribeToDevicesList ', async () => {
     wrapper = mount(<Router><HwWalletLogin {...props} /></Router>, options);
-    const devices = await hwWalletUtils.getDeviceList();
     expect(wrapper).toContainMatchingElement('Loading');
-    expect(props.updateDeviceList).toBeCalledWith(devices);
+    expect(hwManager.subscribeToDevicesList).toBeCalled();
+    jest.runAllTimers();
+    wrapper.update();
+    expect(wrapper).not.toContainMatchingElement('Loading');
+  });
+
+  it('should unsubscribe from devices on unmount ', async () => {
+    const unsubscribe = jest.fn();
+    hwManager.subscribeToDevicesList.mockReturnValue({ unsubscribe });
+    wrapper = mount(<Router><HwWalletLogin {...props} /></Router>, options);
+    wrapper.unmount();
+    expect(unsubscribe).toBeCalled();
   });
 });

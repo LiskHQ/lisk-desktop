@@ -2,7 +2,7 @@
  * This file is use for the exchange messages with the HWManager.
  * The communication message is through IPC (window.ipc)
  */
-import { IPC_MESSAGES } from './constants';
+import { IPC_MESSAGES, RESPONSE, REQUEST } from './constants';
 
 const IPC = window.ipc;
 
@@ -10,18 +10,17 @@ const IPC = window.ipc;
  * executeCommand - Function.
  * Use for send and request data to the HWManager.
  */
-const executeCommand = (action, payload) => {
-  // eslint-disable-next-line no-new
+const executeCommand = (action, payload) => (
   new Promise((resolve, reject) => {
     // Listening for response
-    IPC.once(`${action}.result`, (event, response) => {
+    IPC.once(`${action}.${RESPONSE}`, (event, response) => {
       if (response.success) return resolve(response.data);
       return reject(new Error(`${action} failed`));
     });
     // Requesting data
-    IPC.send(`${action}.request`, payload);
-  });
-};
+    IPC.send(`${action}.${REQUEST}`, payload);
+  })
+);
 
 /**
  * getPublicKey - Function.
@@ -74,7 +73,15 @@ const subscribeToDeviceDisonnceted = (fn) => {
  * @param {function} fn -> callback function
  */
 const subscribeToDevicesList = (fn) => {
-  IPC.on(IPC_MESSAGES.DEVICE_LIST_CHANGED, (event, response) => fn(response));
+  const updateDevices = async () => {
+    const response = await executeCommand(IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST, null);
+    fn(response);
+  };
+  IPC.on(IPC_MESSAGES.DEVICE_LIST_CHANGED, updateDevices);
+  setImmediate(updateDevices);
+  return {
+    unsubscribe: IPC.removeListener.bind(IPC, IPC_MESSAGES.DEVICE_LIST_CHANGED, fn),
+  };
 };
 
 export {
