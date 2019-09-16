@@ -32,7 +32,9 @@ const executeCommand = (action, payload) => (
  * not information in screen
  */
 const getPublicKey = async (data) => {
-  const response = await executeCommand(IPC_MESSAGES.GET_PUBLICK_KEY, data);
+  const response = await executeCommand(IPC_MESSAGES.HW_COMMAND, {
+    action: IPC_MESSAGES.GET_PUBLICK_KEY, data,
+  });
   return response;
 };
 
