@@ -16,35 +16,27 @@ describe('Select Account', () => {
       name: 'Unnamed account',
       address: '123456L',
       balance: 100,
-      isInitialized: true,
     },
     {
       name: 'Unnamed account',
       address: '098765L',
       balance: 50,
-      isInitialized: true,
     },
     {
       name: 'Unnamed account',
       address: '112233L',
       balance: 150,
-      isInitialized: true,
     },
-  ];
-
-  const newMockValue = [
-    ...mockValue,
     {
       name: 'Unnamed account',
       address: '555555L',
       balance: 0,
-      isInitialized: false,
     },
   ];
 
-  hwManager.getAccountsFromDevice.mockResolvedValue(mockValue);
-
   beforeEach(() => {
+    hwManager.getAccountsFromDevice.mockResolvedValue(mockValue);
+
     props = {
       devices: [
         { deviceId: 1, openApp: false, model: 'Ledger' },
@@ -88,9 +80,6 @@ describe('Select Account', () => {
   });
 
   it('Should render SelectAccount properly', async () => {
-    jest.advanceTimersByTime(2000);
-    const activeDevice = await hwManager.getAccountsFromDevice();
-    expect(activeDevice).toEqual(mockValue);
     expect(wrapper).toContainMatchingElement('.create-account');
     expect(wrapper).toContainMatchingElement('.hw-container');
     expect(wrapper).toContainMatchingElement('.go-back');
@@ -105,7 +94,6 @@ describe('Select Account', () => {
   });
 
   it('Should change name "label" of one account', async () => {
-    jest.advanceTimersByTime(2000);
     await hwManager.getAccountsFromDevice();
     wrapper.update();
     expect(wrapper.find('.hw-container')).toContainMatchingElement('.hw-account');
@@ -119,35 +107,25 @@ describe('Select Account', () => {
     expect(wrapper.find('.account-name').at(0).text()).toEqual('Lisk Account');
   });
 
-  it.skip('Should add another account to the list after do click on create account button', async () => {
-    jest.advanceTimersByTime(2000);
-    await hwManager.getAccountsFromDevice();
+  it('Should add another account to the list after do click on create account button', () => {
     wrapper.update();
     expect(wrapper).toContainMatchingElement('.create-account');
     expect(wrapper).toContainMatchingElements(3, '.hw-account');
-    hwManager.getAccountsFromDevice.mockResolvedValue(newMockValue);
     wrapper.find('.create-account').at(0).simulate('click');
-    await hwManager.getAccountsFromDevice();
     wrapper.update();
     expect(wrapper).toContainMatchingElements(4, '.hw-account');
   });
 
-  it.skip('Should NOT add another account to the list after do click on create account button', async () => {
-    jest.advanceTimersByTime(2000);
-    hwManager.getAccountsFromDevice.mockResolvedValue(newMockValue);
-    await hwManager.getAccountsFromDevice();
-    wrapper.update();
+  it('Should NOT add another account to the list after do click on create account button', () => {
     expect(wrapper).toContainMatchingElement('.create-account');
+    wrapper.find('.create-account').at(0).simulate('click');
     expect(wrapper).toContainMatchingElements(4, '.hw-account');
     wrapper.find('.create-account').at(0).simulate('click');
-    await hwManager.getAccountsFromDevice();
     wrapper.update();
     expect(props.errorToastDisplayed).toBeCalled();
   });
 
-  it('Should call login function after click on a select account button', async () => {
-    jest.advanceTimersByTime(2000);
-    await hwManager.getAccountsFromDevice();
+  it('Should call login function after click on a select account button', () => {
     wrapper.update();
     expect(wrapper.find('.hw-container')).toContainMatchingElement('.hw-account');
     wrapper.find('.select-account').at(0).simulate('click');

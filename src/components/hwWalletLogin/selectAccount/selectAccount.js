@@ -1,8 +1,6 @@
 import React from 'react';
 import { TertiaryButton } from '../../toolbox/buttons/button';
-import { displayAccounts } from '../../../utils/ledger';
 import { getAccountsFromDevice } from '../../../utils/hwManager';
-import { loginType } from '../../../constants/hwConstants';
 import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';
 import routes from '../../../constants/routes';
@@ -53,16 +51,12 @@ class SelectAccount extends React.Component {
   }
 
   async getAccountsFromDevice() {
-    const {
-      device,
-      liskAPIClient,
-    } = this.props;
-    let hwAccounts = await getAccountsFromDevice({
-      device,
-      liskAPIClient,
-    });
-    hwAccounts = hwAccounts.map(account => ({
-      ...account, name: this.getNameFromAccount(account.address),
+    const { device, liskAPIClient } = this.props;
+    let hwAccounts = await getAccountsFromDevice({ device, liskAPIClient });
+    hwAccounts = hwAccounts.map((account, index) => ({
+      ...account,
+      name: this.getNameFromAccount(account.address),
+      shouldShow: !!account.balance || index === 0,
     }));
     this.setState({ hwAccounts });
   }
@@ -90,27 +84,20 @@ class SelectAccount extends React.Component {
     this.setState({ accountOnEditMode: -1 });
   }
 
-  async onAddNewAccount() {
+  onAddNewAccount() {
     const {
-      device,
       errorToastDisplayed,
-      liskAPIClient,
       t,
     } = this.props;
     const { hwAccounts } = this.state;
+    const lastAccount = hwAccounts[hwAccounts.length - 1];
 
-    if (hwAccounts[hwAccounts.length - 1].isInitialized) {
-      const output = await displayAccounts({
-        liskAPIClient,
-        loginType: /trezor/ig.test(device.deviceModel) ? loginType.trezor : loginType.ledger,
-        hwAccounts,
-        t,
-        unInitializedAdded: true,
-        device,
-      });
-
-      const newHWAccounts = hwAccounts.concat([output.hwAccounts[0]]);
-      this.setState({ hwAccounts: newHWAccounts });
+    if (!lastAccount.shouldShow) {
+      hwAccounts[hwAccounts.length - 1] = {
+        ...lastAccount,
+        shouldShow: true,
+      };
+      this.setState({ hwAccounts });
     } else {
       const label = t('Please use the last not-initialized account before creating a new one!');
       errorToastDisplayed({ label });
@@ -157,7 +144,7 @@ class SelectAccount extends React.Component {
         <div className={`${styles.deviceContainer} hw-container`}>
           {
           hwAccounts.length
-            ? hwAccounts.map((hwAccount, index) => (
+            ? hwAccounts.filter(({ shouldShow }) => shouldShow).map((hwAccount, index) => (
               <AccountCard
                 key={index}
                 account={hwAccount}

@@ -11,7 +11,7 @@ import {
 
 /**
  * getAccountsFromDevice - Function.
- * This function is used for retrieve the accounts from an hw device, using publick keys.
+ * This function is used for retrieve the accounts from an hw device, using public keys.
  */
 // eslint-disable-next-line max-statements
 const getAccountsFromDevice = async ({ device: { deviceId }, liskAPIClient }) => {
@@ -28,7 +28,7 @@ const getAccountsFromDevice = async ({ device: { deviceId }, liskAPIClient }) =>
       console.error(error);
       break;
     }
-    if (account.balance) {
+    if (index === 0 || accounts[index - 1].balance) {
       accounts.push(account);
     }
   }
