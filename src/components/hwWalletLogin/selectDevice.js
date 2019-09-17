@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
-import { models } from '../../constants/hwConstants';
 import routes from '../../constants/routes';
 import styles from './selectDevice.css';
 import Icon from '../toolbox/icon';
@@ -45,9 +44,7 @@ class SelectDevice extends React.Component {
             <div key={device.deviceId} className={`${styles.device_box} hw-device`}>
               <Icon
                 className={styles.device_image}
-                name={device.model === models.trezorModelT
-                  ? 'iconTrezorModelTDevice'
-                  : 'iconLedgerNanoDevice'}
+                name={`icon${device.manufactor}Device`}
               />
               <p>{device.model}</p>
 
