@@ -1,5 +1,3 @@
-// istanbul ignore file
-// TODO include unit test
 import { castVotes, utils } from '@liskhq/lisk-transactions';
 import i18next from 'i18next';
 import { getAccount } from './api/lsk/account';
@@ -36,6 +34,7 @@ const getAccountsFromDevice = async ({ device: { deviceId }, networkConfig }) =>
  * signSendTransaction - Function.
  * This function is used for sign a send transaction.
  */
+// eslint-disable-next-line max-statements
 const signSendTransaction = async (account, data) => {
   const transactionObject = createSendTX(
     account.info.LSK.publicKey,
@@ -56,7 +55,7 @@ const signSendTransaction = async (account, data) => {
     const result = { ...signedTransaction, id: utils.getTransactionId(signedTransaction) };
     return result;
   } catch (error) {
-    return new Error(error);
+    throw new Error(error);
   }
 };
 
@@ -79,6 +78,7 @@ const signVoteTransaction = async (
         senderPublicKey: account.publicKey,
         recipientId: account.address,
       };
+
       // eslint-disable-next-line no-await-in-loop
       const signature = await signTransaction({
         deviceId: account.hwInfo.deviceId,
@@ -95,7 +95,7 @@ const signVoteTransaction = async (
 
     return signedTransactions;
   } catch (error) {
-    return new Error(i18next.t(
+    throw new Error(i18next.t(
       'The transaction has been canceled on your {{model}}',
       { model: account.hwInfo.deviceModel },
     ));
