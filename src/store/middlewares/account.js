@@ -7,10 +7,6 @@ import {
 import { getActiveTokenAccount } from '../../utils/account';
 import { getAutoLogInData, shouldAutoLogIn, findMatchingLoginNetwork } from '../../utils/login';
 import {
-  getDeviceList,
-  getPublicKey,
-} from '../../../libs/hwManager/communication';
-import {
   getTransactions,
   emptyTransactionsData,
 } from '../../actions/transactions';
@@ -169,22 +165,6 @@ const autoLogInIfNecessary = async (store) => {
   const actualSettings = store && store.getState().settings;
   const autologinData = getAutoLogInData();
 
-  // istanbul ignore next
-  if (localStorage.getItem('hwWalletAutoLogin')) {
-    const device = (await getDeviceList())[0];
-    if (device) {
-      const index = 0;
-      const publicKey = await getPublicKey({ index, deviceId: device.deviceId });
-      const hwInfo = {
-        derivationIndex: index,
-        deviceId: device.deviceId,
-        deviceModel: device.model,
-      };
-      setTimeout(() => {
-        store.dispatch(login({ hwInfo, publicKey }));
-      }, 500);
-    }
-  }
   const loginNetwork = checkNetworkToConnet(actualSettings);
 
   store.dispatch(await networkSet(loginNetwork));

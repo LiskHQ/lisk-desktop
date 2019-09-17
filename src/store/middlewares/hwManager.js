@@ -1,13 +1,17 @@
 // istanbul ignore file
 import React from 'react';
-import i18n from '../../i18n';
-import actionTypes from '../../constants/actions';
-import { accountLoggedOut } from '../../actions/account';
+import { PrimaryButton } from '../../components/toolbox/buttons/button';
+import { accountLoggedOut, login } from '../../actions/account';
+import {
+  getDeviceList,
+  getPublicKey,
+} from '../../../libs/hwManager/communication';
+import { subscribeToDeviceConnceted, subscribeToDeviceDisonnceted } from '../../utils/hwManager';
 import { successToastDisplayed } from '../../actions/toaster';
 import Dialog from '../../components/toolbox/dialog/dialog';
 import DialogHolder from '../../components/toolbox/dialog/holder';
-import { PrimaryButton } from '../../components/toolbox/buttons/button';
-import { subscribeToDeviceConnceted, subscribeToDeviceDisonnceted } from '../../utils/hwManager';
+import actionTypes from '../../constants/actions';
+import i18n from '../../i18n';
 
 /**
  * TODO this can move later to a different file in case we need.
@@ -29,10 +33,33 @@ const deviceDisconnectDialog = model => DialogHolder.showDialog(
   </Dialog>,
 );
 
+async function autoLogInIfNecessary(store) {
+  // not tested as it is just a development helper
+  // istanbul ignore next
+  if (localStorage.getItem('hwWalletAutoLogin')) {
+    const device = (await getDeviceList())[0];
+    if (device) {
+      const index = 0;
+      const publicKey = await getPublicKey({ index, deviceId: device.deviceId });
+      const hwInfo = {
+        derivationIndex: index,
+        deviceId: device.deviceId,
+        deviceModel: device.model,
+      };
+      setTimeout(() => {
+        store.dispatch(login({ hwInfo, publicKey }));
+      }, 1000);
+    }
+  }
+}
+
 const hwWalletMiddleware = store => next => (action) => {
   const { ipc } = window;
 
+
   if (action.type === actionTypes.storeCreated && ipc) {
+    autoLogInIfNecessary(store);
+
     /**
      * subscribeToDeviceConnceted - Function -> To detect any new hw wallet device connection
      * @param {fn} function - callback function to execute toast dispatch after receive the data
