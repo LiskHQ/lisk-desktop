@@ -23,6 +23,7 @@ const addDevice = (device, { add }) => {
       : TREZOR.models.Trezor_Model_T,
     path: device.originalDescriptor.path,
     manufactor: TREZOR.name,
+    openApp: true,
   });
 };
 

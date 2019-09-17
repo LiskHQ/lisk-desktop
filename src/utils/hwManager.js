@@ -4,6 +4,7 @@ import { getAccount } from './api/lsk/account';
 import {
   getPublicKey,
   signTransaction,
+  checkIfInsideLiskApp,
   subscribeToDeviceConnceted,
   subscribeToDeviceDisonnceted,
   subscribeToDevicesList,
@@ -106,6 +107,7 @@ export {
   getAccountsFromDevice,
   signSendTransaction,
   signVoteTransaction,
+  checkIfInsideLiskApp,
   subscribeToDeviceConnceted,
   subscribeToDeviceDisonnceted,
   subscribeToDevicesList,

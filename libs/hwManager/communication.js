@@ -58,6 +58,16 @@ const signTransaction = async (data) => {
 };
 
 /**
+ * checkIfInsideLiskApp - Function.
+ * To check if Lisk App is open on the device
+ * @param {object} data -> Object that contain the information about the device and data
+ * @param {string} data.id -> Id of the hw device
+ */
+const checkIfInsideLiskApp = async data => (
+  executeCommand(IPC_MESSAGES.CHECK_LEDGER, data)
+);
+
+/**
  * subscribeToDeviceConnceted - Function.
  * Always listen for get the information of the new connected device
  * @param {function} fn -> callback function
@@ -96,6 +106,7 @@ export {
   executeCommand,
   getPublicKey,
   signTransaction,
+  checkIfInsideLiskApp,
   subscribeToDeviceConnceted,
   subscribeToDeviceDisonnceted,
   subscribeToDevicesList,
