@@ -1,6 +1,6 @@
 // istanbul ignore file
 // TODO include unit test
-import to from 'await-to-js';
+import { castVotes, utils } from '@liskhq/lisk-transactions';
 import i18next from 'i18next';
 import { getAccount } from './api/lsk/account';
 import {
@@ -10,7 +10,7 @@ import {
   subscribeToDeviceDisonnceted,
   subscribeToDevicesList,
 } from '../../libs/hwManager/communication';
-import { calculateTxId, createSendTX, createRawVoteTX } from './rawTransactionWrapper';
+import { createSendTX } from './rawTransactionWrapper';
 import { splitVotesIntoRounds } from './voting';
 
 /**
@@ -50,12 +50,14 @@ const signSendTransaction = async (account, data) => {
     tx: transactionObject,
   };
 
-  const [error, signature] = await to(signTransaction(transaction));
-
-  if (error) throw new Error(error);
-  const signedTransaction = { ...transactionObject, signature };
-  const result = { ...signedTransaction, id: calculateTxId(signedTransaction) };
-  return result;
+  try {
+    const signature = await signTransaction(transaction);
+    const signedTransaction = { ...transactionObject, signature };
+    const result = { ...signedTransaction, id: utils.getTransactionId(signedTransaction) };
+    return result;
+  } catch (error) {
+    return new Error(error);
+  }
 };
 
 /**
@@ -72,13 +74,11 @@ const signVoteTransaction = async (
 
   try {
     for (let i = 0; i < votesChunks.length; i++) {
-      const transactionObject = createRawVoteTX(
-        account.publicKey,
-        account.address,
-        votesChunks[i].votes,
-        votesChunks[i].unvotes,
-      );
-
+      const transactionObject = {
+        ...castVotes(votesChunks[i]),
+        senderPublicKey: account.publicKey,
+        recipientId: account.address,
+      };
       // eslint-disable-next-line no-await-in-loop
       const signature = await signTransaction({
         deviceId: account.hwInfo.deviceId,
@@ -89,9 +89,10 @@ const signVoteTransaction = async (
       signedTransactions.push({
         ...transactionObject,
         signature,
-        id: calculateTxId({ ...transactionObject, signature }),
+        id: utils.getTransactionId({ ...transactionObject, signature }),
       });
     }
+
     return signedTransactions;
   } catch (error) {
     return new Error(i18next.t(
