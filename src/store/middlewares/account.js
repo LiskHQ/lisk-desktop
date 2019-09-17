@@ -168,31 +168,24 @@ const checkNetworkToConnet = (storeSettings) => {
 const autoLogInIfNecessary = async (store) => {
   const actualSettings = store && store.getState().settings;
   const autologinData = getAutoLogInData();
-  let loginNetwork;
 
   // istanbul ignore next
   if (localStorage.getItem('hwWalletAutoLogin')) {
     const device = (await getDeviceList())[0];
     if (device) {
-      const publicKey = await getPublicKey({ index: 0, deviceId: device.deviceId });
-      loginNetwork = {
-        name: networks.customNode.name,
-        hwInfo: {
-          derivationIndex: 0,
-          deviceId: device.deviceId,
-          deviceModel: device.model,
-        },
-        publicKey,
-        network: { ...networks.customNode, address: autologinData[settings.keys.liskCoreUrl] },
-        options: {
-          code: networks.customNode.code,
-          address: autologinData[settings.keys.liskCoreUrl],
-        },
+      const index = 0;
+      const publicKey = await getPublicKey({ index, deviceId: device.deviceId });
+      const hwInfo = {
+        derivationIndex: index,
+        deviceId: device.deviceId,
+        deviceModel: device.model,
       };
+      setTimeout(() => {
+        store.dispatch(login({ hwInfo, publicKey }));
+      }, 500);
     }
-  } else {
-    loginNetwork = checkNetworkToConnet(actualSettings);
   }
+  const loginNetwork = checkNetworkToConnet(actualSettings);
 
   store.dispatch(await networkSet(loginNetwork));
   store.dispatch(networkStatusUpdated({ online: true }));
