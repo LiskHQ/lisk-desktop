@@ -3,7 +3,6 @@ import Lisk from '@liskhq/lisk-client';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import {
-  castVotes,
   getDelegateByName,
   getDelegateWithCache,
   getDelegateInfo,
@@ -11,7 +10,6 @@ import {
   getVotes,
   registerDelegate,
 } from './delegates';
-import { loginType } from '../../constants/hwConstants';
 import accounts from '../../../test/constants/accounts';
 import delegates from '../../../test/constants/delegates';
 import * as hwWallet from './hwWallet';
@@ -185,64 +183,6 @@ describe('Utils: Delegate', () => {
       const returnedPromise = getDelegateByName(liskAPIClient, name);
       expect(returnedPromise).to.be.rejectedWith();
     });
-  });
-
-  describe('castVotes', () => {
-    it('should call castVotes and broadcast transaction', () => {
-      const votes = [
-        accounts.genesis.publicKey,
-        accounts.delegate.publicKey,
-      ];
-      const unvotes = [
-        accounts.empty_account.publicKey,
-        accounts.delegate_candidate.publicKey,
-      ];
-      const transaction = { id: '1234' };
-      const secondPassphrase = null;
-      liskTransactionsCastVotesStub.withArgs({
-        votes,
-        unvotes,
-        passphrase: accounts.genesis.passphrase,
-        secondPassphrase,
-        timeOffset,
-      }).returns(transaction);
-
-      castVotes({
-        liskAPIClient,
-        account: {
-          ...accounts.genesis,
-          loginType: loginType.normal,
-        },
-        votedList: votes,
-        unvotedList: unvotes,
-        secondPassphrase,
-        timeOffset,
-      });
-      expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
-
-      castVotes({
-        liskAPIClient,
-        account: {
-          ...accounts.genesis,
-          loginType: loginType.ledger,
-        },
-        votedList: votes,
-        unvotedList: unvotes,
-        secondPassphrase,
-        timeOffset,
-      });
-      expect(voteWithHWStub).to.have.been.calledWith();
-    });
-
-    it('should call return error if account.loginType is not recognized', () => (
-      expect(castVotes({
-        liskAPIClient,
-        account: {
-          ...accounts.genesis,
-          loginType: 'something unknown',
-        },
-      })).to.be.rejectedWith('Login Type not recognized.')
-    ));
   });
 
   describe('getVotes', () => {
