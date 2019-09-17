@@ -2,6 +2,10 @@ import React from 'react';
 import { mount } from 'enzyme';
 import UnlockDevice from './unlockDevice';
 
+jest.mock('../../utils/hwManager', () => ({
+  checkIfInsideLiskApp: jest.fn(() => Promise.resolve()),
+}));
+
 describe('Unlock Device', () => {
   let wrapper;
   let props;
@@ -10,7 +14,7 @@ describe('Unlock Device', () => {
     props = {
       devices: [
         { deviceId: 1, openApp: false, model: 'Ledger' },
-        { deviceId: 2, model: 'Trezor' },
+        { deviceId: 2, openApp: true, model: 'Trezor' },
         { deviceId: 3, openApp: true, model: 'Ledger' },
       ],
       t: v => v,
@@ -22,12 +26,17 @@ describe('Unlock Device', () => {
     };
   });
 
-  it('Should render asking for opening app on Ledger', () => {
+  it('Should render asking for opening app on Ledger', async (done) => {
     props.deviceId = 1;
     wrapper = mount(<UnlockDevice {...props} />);
     expect(props.nextStep).not.toBeCalled();
-    wrapper.find('button').simulate('click');
-    expect(props.history.push).toBeCalled();
+    // TODO refactor this as should be a better way to test it https://stackoverflow.com/a/43855794
+    setImmediate(() => {
+      wrapper.update();
+      wrapper.find('button').simulate('click');
+      expect(props.history.push).toBeCalled();
+      done();
+    });
   });
 
   it('Should call nextStep if openApp = true, or not Ledger', () => {
