@@ -1,13 +1,12 @@
 import { to } from 'await-to-js';
 import Lisk from '@liskhq/lisk-client';
-import i18next from 'i18next';
 import { getBlocks } from './blocks';
 import { getTransactions } from './transactions';
 import { loadDelegateCache, updateDelegateCache } from '../delegates';
 import { loginType } from '../../constants/hwConstants';
 import { splitVotesIntoRounds } from '../voting';
-import { voteWithHW } from './hwWallet';
 import transactionTypes from '../../constants/transactionTypes';
+import { signVoteTransaction } from '../hwManager';
 
 export const getDelegates = (liskAPIClient, options) => liskAPIClient.delegates.get(options);
 
@@ -79,29 +78,22 @@ export const getDelegateByName = (liskAPIClient, name) => new Promise(async (res
 });
 
 const voteWithPassphrase = (
-  liskAPIClient,
   passphrase,
   votes,
   unvotes,
   secondPassphrase,
   timeOffset,
-) => (
-  Promise.all(splitVotesIntoRounds({
-    votes: [...votes],
-    unvotes: [...unvotes],
-  }).map(({ votes, unvotes }) => { // eslint-disable-line no-shadow
-    const transaction = Lisk.transaction.castVotes({
+) => (Promise.all(splitVotesIntoRounds({ votes: [...votes], unvotes: [...unvotes] })
+  // eslint-disable-next-line no-shadow
+  .map(({ votes, unvotes }) => (Lisk.transaction.castVotes(
+    {
       votes,
       unvotes,
       passphrase,
       secondPassphrase,
       timeOffset,
-    });
-    return new Promise((resolve, reject) => {
-      liskAPIClient.transactions.broadcast(transaction)
-        .then(() => resolve(transaction)).catch(reject);
-    });
-  }))
+    },
+  ))))
 );
 
 export const castVotes = async ({
@@ -112,20 +104,24 @@ export const castVotes = async ({
   secondPassphrase,
   timeOffset,
 }) => {
-  switch (account.loginType) {
-    case loginType.normal:
-      return voteWithPassphrase(
-        liskAPIClient, account.passphrase,
-        votedList, unvotedList, secondPassphrase, timeOffset,
-      );
-    case loginType.ledger:
-    case loginType.trezor:
-      return voteWithHW(liskAPIClient, account, votedList, unvotedList);
-    default:
-      return new Promise((resolve, reject) => {
-        reject(i18next.t('Login Type not recognized.'));
-      });
-  }
+  const [error, signedTransactions] = account.loginType === loginType.normal
+    ? await to(voteWithPassphrase(
+      account.passphrase,
+      votedList,
+      unvotedList,
+      secondPassphrase,
+      timeOffset,
+    ))
+    : await to(signVoteTransaction(account, votedList, unvotedList));
+
+  if (error) return error;
+  return Promise.all(signedTransactions.map(transaction => (
+    new Promise((resolve, reject) => {
+      liskAPIClient.transactions.broadcast(transaction)
+        .then(() => resolve(transaction))
+        .catch(reject);
+    })
+  )));
 };
 
 export const getVotes = (liskAPIClient, { address }) =>

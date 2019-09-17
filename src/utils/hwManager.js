@@ -1,6 +1,7 @@
 // istanbul ignore file
 // TODO include unit test
 import to from 'await-to-js';
+import i18next from 'i18next';
 import {
   getPublicKey,
   signTransaction,
@@ -8,8 +9,8 @@ import {
   subscribeToDeviceDisonnceted,
   subscribeToDevicesList,
 } from '../../libs/hwManager/communication';
-import { calculateTxId, createSendTX } from './rawTransactionWrapper';
-import { calculateSecondPassphraseIndex } from '../constants/hwConstants';
+import { calculateTxId, createSendTX, createRawVoteTX } from './rawTransactionWrapper';
+import { splitVotesIntoRounds } from './voting';
 
 /**
  * getAccountsFromDevice - Function.
@@ -25,7 +26,7 @@ const getAccountsFromDevice = async () => {
  * signSendTransaction - Function.
  * This function is used for sign a send transaction.
  */
-const signSendTransaction = async (account, data, pin = null) => {
+const signSendTransaction = async (account, data) => {
   const transactionObject = createSendTX(
     account.info.LSK.publicKey,
     data.recipientId,
@@ -33,11 +34,12 @@ const signSendTransaction = async (account, data, pin = null) => {
     data.data,
   );
 
-  const index = (typeof pin === 'string' && pin !== '')
-    ? calculateSecondPassphraseIndex(account.hwInfo.derivationIndex, pin)
-    : account.hwInfo.derivationIndex;
+  const transaction = {
+    deviceId: account.hwInfo.deviceId,
+    index: account.hwInfo.derivationIndex,
+    tx: transactionObject,
+  };
 
-  const transaction = { deviceId: account.hwInfo.deviceId, index, tx: transactionObject };
   const [error, signature] = await to(signTransaction(transaction));
 
   if (error) throw new Error(error);
@@ -50,10 +52,43 @@ const signSendTransaction = async (account, data, pin = null) => {
  * signVoteTransaction - Function.
  * This function is used for sign a vote transaction.
  */
-const signVoteTransaction = () => {
-  // TODO implement logic for this function
-  signTransaction();
-  throw new Error('not umplemented');
+const signVoteTransaction = async (
+  account,
+  votedList,
+  unvotedList,
+) => {
+  const signedTransactions = [];
+  const votesChunks = splitVotesIntoRounds({ votes: [...votedList], unvotes: [...unvotedList] });
+
+  try {
+    for (let i = 0; i < votesChunks.length; i++) {
+      const transactionObject = createRawVoteTX(
+        account.publicKey,
+        account.address,
+        votesChunks[i].votes,
+        votesChunks[i].unvotes,
+      );
+
+      // eslint-disable-next-line no-await-in-loop
+      const signature = await signTransaction({
+        deviceId: account.hwInfo.deviceId,
+        index: account.hwInfo.derivationIndex,
+        tx: transactionObject,
+      });
+
+      signedTransactions.push({
+        ...transactionObject,
+        signature,
+        id: calculateTxId({ ...transactionObject, signature }),
+      });
+    }
+    return signedTransactions;
+  } catch (error) {
+    return new Error(i18next.t(
+      'The transaction has been canceled on your {{model}}',
+      { model: account.hwInfo.deviceModel },
+    ));
+  }
 };
 
 export {
