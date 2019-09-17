@@ -95,7 +95,10 @@ const signTransaction = async (transporter, { device, data }) => {
   });
 };
 
+const checkIfInsideLiskApp = async ({ device }) => device;
+
 export default {
+  checkIfInsideLiskApp,
   getPublicKey,
   listener,
   signTransaction,

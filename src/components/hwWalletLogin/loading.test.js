@@ -9,6 +9,7 @@ describe('HW Wallet -> Loading', () => {
     devices: [],
     nextStep: jest.fn(),
     t: key => key,
+    network: { name: 'Mainnet' },
   };
 
 

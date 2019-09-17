@@ -18,6 +18,6 @@ export const IPC_MESSAGES = {
   HW_DISCONNECTED: 'hwDisconnected',
 };
 export const FUNCTION_TYPES = {
-  GET_PUBLICKEY: 'getPublicKey',
-  SIGN_TX: 'signTransaction',
+  [IPC_MESSAGES.GET_PUBLICK_KEY]: 'getPublicKey',
+  [IPC_MESSAGES.SIGN_TRANSACTION]: 'signTransaction',
 };

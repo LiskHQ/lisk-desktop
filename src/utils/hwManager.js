@@ -1,5 +1,6 @@
 // istanbul ignore file
 // TODO include unit test
+import { getAccount } from './api/lsk/account';
 import {
   getPublicKey,
   signTransaction,
@@ -10,12 +11,21 @@ import {
 
 /**
  * getAccountsFromDevice - Function.
- * This function is used for retrieve the accounts from an hw device, using publick keys.
+ * This function is used for retrieve the accounts from an hw device, using public keys.
  */
-const getAccountsFromDevice = async () => {
-  // TODO implement logic for this function
-  getPublicKey();
-  throw new Error('not umplemented');
+const getAccountsFromDevice = async ({ device: { deviceId }, networkConfig }) => {
+  const accounts = [];
+  let account = {};
+  for (let index = 0; index === accounts.length; index++) {
+    // eslint-disable-next-line no-await-in-loop
+    const publicKey = await getPublicKey({ index, deviceId });
+    // eslint-disable-next-line no-await-in-loop
+    account = await getAccount({ networkConfig, publicKey });
+    if (index === 0 || accounts[index - 1].balance) {
+      accounts.push(account);
+    }
+  }
+  return accounts;
 };
 
 /**
