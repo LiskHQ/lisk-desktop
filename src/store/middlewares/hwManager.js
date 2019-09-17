@@ -3,7 +3,6 @@ import React from 'react';
 import i18n from '../../i18n';
 import actionTypes from '../../constants/actions';
 import { accountLoggedOut } from '../../actions/account';
-import { updateDeviceList } from '../../actions/hwWallets';
 import { successToastDisplayed } from '../../actions/toaster';
 import Dialog from '../../components/toolbox/dialog/dialog';
 import DialogHolder from '../../components/toolbox/dialog/holder';
@@ -38,10 +37,6 @@ const hwWalletMiddleware = store => next => (action) => {
     store.dispatch({
       type: actionTypes.settingsUpdated,
       data: { isHarwareWalletConnected: false },
-    });
-
-    ipc.on('hwDeviceListChanged', (event, devicesList) => {
-      store.dispatch(updateDeviceList(devicesList));
     });
 
     /**
