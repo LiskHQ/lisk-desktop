@@ -33,22 +33,12 @@ const hwWalletMiddleware = store => next => (action) => {
   const { ipc } = window;
 
   if (action.type === actionTypes.storeCreated && ipc) {
-    // Set at first the isHarwareWalletConnected property to false.
-    store.dispatch({
-      type: actionTypes.settingsUpdated,
-      data: { isHarwareWalletConnected: false },
-    });
-
     /**
      * subscribeToDeviceConnceted - Function -> To detect any new hw wallet device connection
      * @param {fn} function - callback function to execute toast dispatch after receive the data
      */
     subscribeToDeviceConnceted((response) => {
       store.dispatch(successToastDisplayed({ label: `${response.model} connected` }));
-      store.dispatch({
-        type: actionTypes.settingsUpdated,
-        data: { isHarwareWalletConnected: true },
-      });
     });
 
     /**
@@ -57,7 +47,7 @@ const hwWalletMiddleware = store => next => (action) => {
      * and in case user is SignIn trigger the logout Dialog and toast message.
      */
     subscribeToDeviceDisonnceted((response) => {
-      const { account, settings, hwWallets } = store.getState();
+      const { account, settings } = store.getState();
       const activeToken = settings.token.active || 'LSK';
 
       // Check if user is SignedIns
@@ -70,11 +60,6 @@ const hwWalletMiddleware = store => next => (action) => {
         deviceDisconnectDialog(response.model);
         store.dispatch(accountLoggedOut());
       }
-
-      store.dispatch({
-        type: actionTypes.settingsUpdated,
-        data: { isHarwareWalletConnected: !!hwWallets.devices.length },
-      });
 
       store.dispatch(successToastDisplayed({ label: `${response.model} disconnected` }));
     });
