@@ -85,6 +85,11 @@ const subscribeToDeviceDisonnceted = (fn) => {
   IPC.on(IPC_MESSAGES.HW_DISCONNECTED, (event, response) => fn(response));
 };
 
+
+const getDeviceList = () => (
+  executeCommand(IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST, null)
+);
+
 /**
  * subscribeToDevicesList - Function.
  * Allways listen for any new change on the devices list
@@ -92,7 +97,7 @@ const subscribeToDeviceDisonnceted = (fn) => {
  */
 const subscribeToDevicesList = (fn) => {
   const updateDevices = async () => {
-    const response = await executeCommand(IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST, null);
+    const response = await getDeviceList();
     fn(response);
   };
   IPC.on(IPC_MESSAGES.DEVICE_LIST_CHANGED, updateDevices);
@@ -107,6 +112,7 @@ export {
   getPublicKey,
   signTransaction,
   checkIfInsideLiskApp,
+  getDeviceList,
   subscribeToDeviceConnceted,
   subscribeToDeviceDisonnceted,
   subscribeToDevicesList,

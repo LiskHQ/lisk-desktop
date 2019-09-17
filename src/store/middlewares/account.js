@@ -4,24 +4,24 @@ import {
   updateEnabledTokenAccount,
   login,
 } from '../../actions/account';
-import { loadVotes } from '../../actions/voting';
+import { getActiveTokenAccount } from '../../utils/account';
+import { getAutoLogInData, shouldAutoLogIn, findMatchingLoginNetwork } from '../../utils/login';
+import {
+  getDeviceList,
+  getPublicKey,
+} from '../../../libs/hwManager/communication';
 import {
   getTransactions,
   emptyTransactionsData,
 } from '../../actions/transactions';
-import actionTypes from '../../constants/actions';
-import transactionTypes from '../../constants/transactionTypes';
-
-import { getActiveTokenAccount } from '../../utils/account';
-import { getAutoLogInData, shouldAutoLogIn, findMatchingLoginNetwork } from '../../utils/login';
+import { loadVotes } from '../../actions/voting';
 import { networkSet, networkStatusUpdated } from '../../actions/network';
+import actionTypes from '../../constants/actions';
+import localJSONStorage from '../../utils/localJSONStorage';
 import networks from '../../constants/networks';
 import settings from '../../constants/settings';
+import transactionTypes from '../../constants/transactionTypes';
 import txFilters from '../../constants/transactionFilters';
-
-import { getDeviceList, getHWPublicKeyFromIndex } from '../../utils/hwWallet';
-import { loginType } from '../../constants/hwConstants';
-import localJSONStorage from '../../utils/localJSONStorage';
 
 const updateAccountData = (store) => {
   const { transactions } = store.getState();
@@ -174,8 +174,7 @@ const autoLogInIfNecessary = async (store) => {
   if (localStorage.getItem('hwWalletAutoLogin')) {
     const device = (await getDeviceList())[0];
     if (device) {
-      const hwWalletType = /trezor/ig.test(device.deviceModel) ? loginType.trezor : loginType.ledger;
-      const publicKey = await getHWPublicKeyFromIndex(device.deviceId, hwWalletType, 0);
+      const publicKey = await getPublicKey({ index: 0, deviceId: device.deviceId });
       loginNetwork = {
         name: networks.customNode.name,
         hwInfo: {
