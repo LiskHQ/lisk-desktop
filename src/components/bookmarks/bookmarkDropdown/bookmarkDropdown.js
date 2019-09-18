@@ -13,7 +13,7 @@ class Bookmark extends React.Component {
       account: {},
       fields: {
         accountName: {
-          value: undefined,
+          value: null,
           error: false,
           feedback: '',
           loading: false,
@@ -64,7 +64,7 @@ class Bookmark extends React.Component {
     const bookmarkTitle = accounts[index] && accounts[index].title;
     const delegateTitle = delegate && delegate.username;
     const value = delegateTitle || bookmarkTitle || '';
-    if (value && fields.accountName.value === undefined) {
+    if (value && fields.accountName.value === null) {
       this.setState({
         fields: {
           ...fields,
