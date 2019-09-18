@@ -14,6 +14,7 @@ import IllustrationDemo from './illustration/demo';
 import InputDemo from './inputs/demo';
 import OnboardingDemo from './onboarding/demo';
 import PageHeaderDemo from './pageHeader/demo';
+import PassphraseInputDemo from './passphraseInput/demo';
 import SpinnerDemo from './spinner/demo';
 import TooltipDemo from './tooltip/demo';
 import styles from './demo.css';
@@ -57,6 +58,7 @@ const ToolboxDemo = () => (
     <HardwareWalletIllustrationDemo />
     <OnboardingDemo />
     <PageHeaderDemo />
+    <PassphraseInputDemo />
     <SpinnerDemo />
     <TooltipDemo />
   </WithTableOfContents>
