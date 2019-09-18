@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import { Input } from '../../toolbox/inputs';
-import { PrimaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton, WarningButton } from '../../toolbox/buttons/button';
 import styles from './bookmarkDropdown.css';
 
 class Bookmark extends React.Component {
@@ -13,7 +13,7 @@ class Bookmark extends React.Component {
       account: {},
       fields: {
         accountName: {
-          value: '',
+          value: undefined,
           error: false,
           feedback: '',
           loading: false,
@@ -33,6 +33,7 @@ class Bookmark extends React.Component {
     this.handleUnbookmark = this.handleUnbookmark.bind(this);
     this.handleBookmark = this.handleBookmark.bind(this);
     this.setBookmark = this.setBookmark.bind(this);
+    this.handleInputClick = this.handleInputClick.bind(this);
   }
 
   /* istanbul ignore next */
@@ -63,7 +64,7 @@ class Bookmark extends React.Component {
     const bookmarkTitle = accounts[index] && accounts[index].title;
     const delegateTitle = delegate && delegate.username;
     const value = delegateTitle || bookmarkTitle || '';
-    if (value !== fields.accountName.value) {
+    if (value && fields.accountName.value === undefined) {
       this.setState({
         fields: {
           ...fields,
@@ -81,7 +82,7 @@ class Bookmark extends React.Component {
 
   handleBookmark() {
     const {
-      address, bookmarks, delegate, bookmarkAdded,
+      address, bookmarks, delegate, bookmarkAdded, bookmarkUpdated,
       token, detailAccount, onSubmitClick,
     } = this.props;
     const title = this.state.fields.accountName.value;
@@ -93,7 +94,13 @@ class Bookmark extends React.Component {
     };
     const accounts = bookmarks[token];
     const bookmarkIndex = accounts.length;
-    bookmarkAdded({ account, token });
+    const bookmarkAlreadyExists = this.props.bookmarks[token].some(
+      item => item.address === address,
+    );
+
+    if (bookmarkAlreadyExists) bookmarkUpdated({ account, token });
+    else bookmarkAdded({ account, token });
+
     this.setState({
       account,
       bookmarkIndex,
@@ -173,11 +180,32 @@ class Bookmark extends React.Component {
     });
   }
 
+  handleInputClick() {
+    const { fields } = this.state;
+
+    this.setState({
+      fields: {
+        ...fields,
+        accountName: {
+          ...fields.accountName,
+          isReadOnly: false,
+        },
+
+      },
+    });
+  }
+
   // eslint-disable-next-line complexity
   render() {
-    const { t, isBookmark } = this.props;
+    const {
+      t, isBookmark, bookmarks, address, token,
+    } = this.props;
     const { isValid, fields } = this.state;
     const { accountName } = fields;
+    const index = getIndexOfBookmark(bookmarks, { address, token });
+    const accounts = bookmarks[token];
+    const oldBookmarkName = accounts[index] && accounts[index].title;
+    const hasValueChanged = accountName.value !== oldBookmarkName;
 
     return (
       <section className={`${styles.wrapper}`}>
@@ -191,6 +219,7 @@ class Bookmark extends React.Component {
               name="accountName"
               value={fields.accountName.value}
               placeholder={t('ie. Lisker123')}
+              onClick={this.handleInputClick}
               readOnly={fields.accountName.isReadOnly}
               className={`${styles.input} ${fields.accountName.error ? 'error' : ''}`}
               feedback={accountName.feedback}
@@ -214,13 +243,25 @@ class Bookmark extends React.Component {
           </label> */}
         {isBookmark
           ? (
-            <PrimaryButton
-              className="bookmark-button"
-              size="xs"
-              onClick={this.handleUnbookmark}
-            >
-              {t('Remove from bookmarks')}
-            </PrimaryButton>
+            <React.Fragment>
+              <div className={`${styles.editButtonContainer} ${hasValueChanged ? styles.show : styles.hide}`}>
+                <PrimaryButton
+                  className="bookmark-button"
+                  disabled={!fields.accountName.value}
+                  size="xs"
+                  onClick={this.handleBookmark}
+                >
+                  {t('Save changes')}
+                </PrimaryButton>
+              </div>
+              <WarningButton
+                className="bookmark-button"
+                size="xs"
+                onClick={this.handleUnbookmark}
+              >
+                {t('Remove bookmark')}
+              </WarningButton>
+            </React.Fragment>
           ) : (
             <PrimaryButton
               className="bookmark-button"

@@ -32,6 +32,25 @@
     width: 100%;
   }
 
+  & .editButtonContainer {
+    transition:
+      opacity var(--animation-speed-fast) linear,
+      max-height var(--animation-speed-fast) linear,
+      margin-bottom var(--animation-speed-fast) linear;
+
+      &.show {
+        opacity: 1;
+        max-height: 200px;
+        margin-bottom: 12px;
+      }
+
+      &.hide {
+        opacity: 0;
+        max-height: 0;
+        margin-bottom: 0;
+      }
+  }
+
   & .checkboxGroup {
     display: flex;
     flex-direction: row;
