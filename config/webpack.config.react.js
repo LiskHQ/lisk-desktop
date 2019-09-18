@@ -128,7 +128,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       VERSION: bundleVersion,
-      inject: true,
+      inject: false,
       inlineSource: '.(css)$',
       excludeChunks: ['head'],
       parameters: {

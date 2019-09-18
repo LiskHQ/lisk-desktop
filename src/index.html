@@ -13,6 +13,10 @@
         <style>
           <%= compilation.assets['head.css'].source() %>
         </style>
+
+        <%= htmlWebpackPlugin.files.css.map(href =>
+          '<link href="' + href + '" rel="stylesheet">'
+        ).join('\n') %>
         <link rel="icon" type="image/png" href="./assets/images/LISK.png" />
         <script>
           /* Following comment is a placeholder used by `npm run build:testnet`, do not remove */
@@ -37,5 +41,7 @@
           </div>
         </figure>
         </div>
-    </body>
+        <%= htmlWebpackPlugin.files.js.map(href =>
+          '<script type="text/javascript" src="' + href + '"></script>'
+        ).join('\n') %>
 </html>
