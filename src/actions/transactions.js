@@ -9,7 +9,6 @@ import { loadingStarted, loadingFinished } from './loading';
 import { extractAddress } from '../utils/account';
 import { passphraseUsed } from './account';
 import { getTimeOffset } from '../utils/hacks';
-import { sendWithHW } from '../utils/api/hwWallet';
 import { loginType } from '../constants/hwConstants';
 import { transactions as transactionsAPI } from '../utils/api';
 import { signSendTransaction } from '../utils/hwManager';
@@ -181,7 +180,6 @@ const handleSentError = ({
 // TODO remove this function once create and broadcast HOC be implemented
 // eslint-disable-next-line max-statements
 export const sent = data => async (dispatch, getState) => {
-  let broadcastTx;
   let tx;
   let fail;
   const { account, network, settings } = getState();
@@ -194,19 +192,12 @@ export const sent = data => async (dispatch, getState) => {
   try {
     if (account.loginType === loginType.normal) {
       tx = await transactionsAPI.create(activeToken, txData, createTransactionType.transaction);
-      broadcastTx = await transactionsAPI.broadcast(activeToken, tx, network);
     } else {
-      [fail, broadcastTx] = await to(sendWithHW(
-        network,
-        account,
-        data.recipientId,
-        data.amount,
-        data.secondPassphrase,
-        data.data,
-      ));
+      [fail, tx] = await (signSendTransaction(account, data));
 
       if (fail) throw new Error(fail);
     }
+    const broadcastTx = await transactionsAPI.broadcast(activeToken, tx, network);
 
     loadingFinished('sent');
     dispatch(addNewPendingTransaction({
