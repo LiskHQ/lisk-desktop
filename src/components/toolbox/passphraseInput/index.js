@@ -1,11 +1,11 @@
 import React from 'react';
 import { translate } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Icon from '../toolbox/icon';
-import { isValidPassphrase, getPassphraseValidationErrors } from '../../utils/passphrase';
-import Input from '../toolbox/inputs/input';
-import Feedback from '../toolbox/feedback/feedback';
-import keyCodes from '../../constants/keyCodes';
+import Icon from '../icon';
+import { isValidPassphrase, getPassphraseValidationErrors } from '../../../utils/passphrase';
+import Input from '../inputs/input';
+import Feedback from '../feedback/feedback';
+import keyCodes from '../../../constants/keyCodes';
 import styles from './passphraseInput.css';
 
 class passphraseInput extends React.Component {

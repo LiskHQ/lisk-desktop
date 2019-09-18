@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import i18n from '../../i18n';
-import PassphraseInput from './passphraseInput';
-import keyCodes from '../../constants/keyCodes';
-import accounts from '../../../test/constants/accounts';
+import i18n from '../../../i18n';
+import PassphraseInput from '.';
+import keyCodes from '../../../constants/keyCodes';
+import accounts from '../../../../test/constants/accounts';
 
 describe('passphraseInput', () => {
   let wrapper;
