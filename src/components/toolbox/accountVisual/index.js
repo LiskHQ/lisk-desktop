@@ -188,7 +188,7 @@ class AccountVisual extends React.Component {
     this.setState({ isSBreakpoint: window.innerWidth <= breakpoints.s });
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() { // eslint-disable-line camelcase
     this.uniqueSvgUrlHash = generateUniqueId();
   }
 
