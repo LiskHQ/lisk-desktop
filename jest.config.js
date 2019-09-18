@@ -23,7 +23,6 @@ module.exports = {
     'src/components/header/signInHeader/signInHeader.test.js',
   ],
   verbose: false,
-  cache: false,
   moduleFileExtensions: ['js'],
   moduleDirectories: ['node_modules'],
   moduleNameMapper: {
@@ -38,6 +37,7 @@ module.exports = {
   ],
   coveragePathIgnorePatterns: [
     '/node_modules/',
+    '.test.js',
     'app/src/ipc.js',
     'app/src/ledger.js',
     'src/actions/liskService.js',
