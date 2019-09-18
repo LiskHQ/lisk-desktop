@@ -229,50 +229,36 @@ class Bookmark extends React.Component {
             />
           </span>
         </label>
-        {/* <label className={`${styles.fieldGroup} ${styles.checkboxGroup}`}>
-          <input checked={fields.dashboard.value} type='checkbox' readOnly />
-          <span className={`${styles.fakeCheckbox}`}>
-            <FontIcon className={`${styles.icon}`}>checkmark</FontIcon>
-          </span>
-          <div className={`${styles.checkboxInfo}`}>
-            <span className={`${styles.label}`}>{t('On your dashboard')}</span>
-            <span className={`${styles.note}`}>
-              {t('Show this account\'s transactions on the dashboard.')}
-            </span>
-          </div>
-          </label> */}
-        {isBookmark
-          ? (
-            <React.Fragment>
-              <div className={`${styles.editButtonContainer} ${hasValueChanged ? styles.show : styles.hide}`}>
-                <PrimaryButton
-                  className="bookmark-button"
-                  disabled={!fields.accountName.value}
-                  size="xs"
-                  onClick={this.handleBookmark}
-                >
-                  {t('Save changes')}
-                </PrimaryButton>
-              </div>
-              <WarningButton
+        {isBookmark ? (
+          <React.Fragment>
+            <div className={`${styles.editButtonContainer} ${hasValueChanged ? styles.show : styles.hide}`}>
+              <PrimaryButton
                 className="bookmark-button"
+                disabled={!fields.accountName.value}
                 size="xs"
-                onClick={this.handleUnbookmark}
+                onClick={this.handleBookmark}
               >
-                {t('Remove bookmark')}
-              </WarningButton>
-            </React.Fragment>
-          ) : (
-            <PrimaryButton
+                {t('Save changes')}
+              </PrimaryButton>
+            </div>
+            <WarningButton
               className="bookmark-button"
               size="xs"
-              onClick={this.handleBookmark}
-              disabled={!isValid}
+              onClick={this.handleUnbookmark}
             >
-              {t('Confirm')}
-            </PrimaryButton>
-          )
-        }
+              {t('Remove bookmark')}
+            </WarningButton>
+          </React.Fragment>
+        ) : (
+          <PrimaryButton
+            className="bookmark-button"
+            size="xs"
+            onClick={this.handleBookmark}
+            disabled={!isValid}
+          >
+            {t('Confirm')}
+          </PrimaryButton>
+        )}
       </section>
     );
   }
