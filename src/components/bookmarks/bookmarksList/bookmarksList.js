@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import { Input } from '../../toolbox/inputs';
 import Illustration from '../../toolbox/illustration';
-import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton, SecondaryButton, WarningButton } from '../../toolbox/buttons/button';
 import { tokenMap } from '../../../constants/tokens';
 import AccountVisual from '../../accountVisual';
 import Box from '../../toolbox/box';
@@ -202,13 +202,13 @@ class BookmarksList extends React.Component {
                             >
                               {t('Edit')}
                             </SecondaryButton>
-                            <PrimaryButton
+                            <WarningButton
                               onClick={e => this.deleteBookmark(e, bookmark)}
-                              className={`bookmarks-delete-button ${styles.deleteButton}`}
+                              className="bookmarks-delete-button"
                               size="m"
                             >
                               {t('Delete')}
-                            </PrimaryButton>
+                            </WarningButton>
                           </React.Fragment>
                         )
                   }

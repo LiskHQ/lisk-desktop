@@ -5,6 +5,7 @@ import React from 'react';
 import primaryButtonTheme from './css/primaryButton.css';
 import secondaryButtonTheme from './css/secondaryButton.css';
 import tertiaryButtonTheme from './css/tertiaryButton.css';
+import warningButtonTheme from './css/warningButton.css';
 import styles from './css/size.css';
 
 class TBButton extends React.Component {
@@ -39,6 +40,7 @@ TBButton.defaultProps = {
 const PrimaryButton = themr('primaryButton', primaryButtonTheme)(TBButton);
 const SecondaryButton = themr('secondarytButton', secondaryButtonTheme)(TBButton);
 const TertiaryButton = themr('tertiaryButton', tertiaryButtonTheme)(TBButton);
+const WarningButton = themr('tertiaryButton', warningButtonTheme)(TBButton);
 const Button = themr('button', primaryButtonTheme)(TBButton);
 
 export {
@@ -46,5 +48,6 @@ export {
   PrimaryButton,
   SecondaryButton,
   TertiaryButton,
+  WarningButton,
 };
 export default Button;
