@@ -6,7 +6,7 @@ import TransactionAddress from './address/TransactionAddress';
 import TransactionAmount from './amount/TransactionAmount';
 import TransactionDetail from './transactionDetail';
 import styles from './transactionRow.css';
-import Spinner from '../spinner/spinner';
+import Spinner from '../toolbox/spinner';
 import LiskAmount from '../liskAmount';
 import { DateTimeFromTimestamp } from '../timestamp/index';
 import TableRow from '../toolbox/table/tableRow';
