@@ -77,7 +77,7 @@ const hwWalletMiddleware = store => next => (action) => {
       const { account, settings } = store.getState();
       const activeToken = settings.token.active || 'LSK';
 
-      // Check if user is SignedIns
+      // Check if user is SignedIn
       if (account.info
         && account.info[activeToken]
         && account.info[activeToken].address

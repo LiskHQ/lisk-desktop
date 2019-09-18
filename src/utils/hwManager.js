@@ -34,7 +34,6 @@ const getAccountsFromDevice = async ({ device: { deviceId }, networkConfig }) =>
  * signSendTransaction - Function.
  * This function is used for sign a send transaction.
  */
-// eslint-disable-next-line max-statements
 const signSendTransaction = async (account, data) => {
   const transactionObject = {
     ...transfer(data),
