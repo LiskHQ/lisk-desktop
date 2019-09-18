@@ -73,7 +73,7 @@ const getPublicKey = async (transporter, { device, data }) => {
   });
 };
 
-const signTransaction = async (transporter, { device, data }) => {
+const signTransaction = (transporter, { device, data }) => {
   const trezorDevice = transporter.asArray().find(d => d.features.device_id === device.deviceId);
   if (!trezorDevice) Promise.reject(new Error('DEVICE_IS_NOT_CONNECTED'));
 
