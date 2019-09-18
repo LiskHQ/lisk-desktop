@@ -104,17 +104,16 @@ export const castVotes = async ({
   secondPassphrase,
   timeOffset,
 }) => {
-  const [error, signedTransactions] = account.loginType === loginType.normal
-    ? await to(voteWithPassphrase(
+  const signedTransactions = account.loginType === loginType.normal
+    ? await voteWithPassphrase(
       account.passphrase,
       votedList,
       unvotedList,
       secondPassphrase,
       timeOffset,
-    ))
-    : await to(signVoteTransaction(account, votedList, unvotedList));
+    )
+    : await signVoteTransaction(account, votedList, unvotedList);
 
-  if (error) return error;
   return Promise.all(signedTransactions.map(transaction => (
     new Promise((resolve, reject) => {
       liskAPIClient.transactions.broadcast(transaction)
