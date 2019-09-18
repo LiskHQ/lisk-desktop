@@ -13,8 +13,9 @@ jest.mock('./api/lsk/account', () => ({
 }));
 
 describe('hwManager util', () => {
+  const signature = 'abc123ABC789';
   beforeEach(() => {
-    communication.signTransaction.mockResolvedValueOnce('abc123ABC789');
+    communication.signTransaction.mockResolvedValueOnce(signature);
   });
 
   afterEach(() => {
@@ -51,26 +52,25 @@ describe('hwManager util', () => {
           derivationIndex: 0,
         },
       };
+      const fee = '10000000';
 
       const data = {
         amount: '100000000',
         data: 'testing',
-        fee: '10000000',
-        passphrase: undefined,
         recipientId: '7955155501030618852L',
-        secondPassphrase: null,
-        dynamicFeePerByte: 0,
       };
 
       const signedTransactions = await signSendTransaction(account, data);
 
       expect(signedTransactions).toHaveProperty('id');
-      expect(signedTransactions).toHaveProperty('signature');
-      expect(signedTransactions).toHaveProperty('amount', '100000000');
-      expect(signedTransactions).toHaveProperty('asset', { data: 'testing' });
-      expect(signedTransactions).toHaveProperty('fee', '10000000');
-      expect(signedTransactions).toHaveProperty('recipientId', '7955155501030618852L');
-      expect(signedTransactions).toHaveProperty('senderPublicKey', '9c854ea85fbcb32e2c5d2c7a820a354a6627213ebb74b42b1ee851d4e4fa035e');
+      expect(signedTransactions).toEqual(expect.objectContaining({
+        signature,
+        amount: data.amount,
+        fee,
+        recipientId: data.recipientId,
+        senderPublicKey: account.info.LSK.publicKey,
+        asset: { data: data.data },
+      }));
     });
   });
 
@@ -91,7 +91,7 @@ describe('hwManager util', () => {
       const signedTransactions = await signVoteTransaction(account, votedList, unvotedList);
       signedTransactions.forEach((tx) => {
         expect(tx).toHaveProperty('id');
-        expect(tx).toHaveProperty('signature');
+        expect(tx).toHaveProperty('signature', signature);
         expect(tx).toHaveProperty('amount', '0');
         expect(tx).toHaveProperty('asset');
         expect(tx).toHaveProperty('fee', '100000000');

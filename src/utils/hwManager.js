@@ -1,4 +1,4 @@
-import { castVotes, utils } from '@liskhq/lisk-transactions';
+import { castVotes, transfer, utils } from '@liskhq/lisk-transactions';
 import i18next from 'i18next';
 import { getAccount } from './api/lsk/account';
 import {
@@ -9,7 +9,6 @@ import {
   subscribeToDeviceDisonnceted,
   subscribeToDevicesList,
 } from '../../libs/hwManager/communication';
-import { createSendTX } from './rawTransactionWrapper';
 import { splitVotesIntoRounds } from './voting';
 
 /**
@@ -37,12 +36,10 @@ const getAccountsFromDevice = async ({ device: { deviceId }, networkConfig }) =>
  */
 // eslint-disable-next-line max-statements
 const signSendTransaction = async (account, data) => {
-  const transactionObject = createSendTX(
-    account.info.LSK.publicKey,
-    data.recipientId,
-    data.amount,
-    data.data,
-  );
+  const transactionObject = {
+    ...transfer(data),
+    senderPublicKey: account.info.LSK.publicKey,
+  };
 
   const transaction = {
     deviceId: account.hwInfo.deviceId,
