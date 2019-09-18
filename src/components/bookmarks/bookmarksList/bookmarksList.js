@@ -6,7 +6,6 @@ import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import { tokenMap } from '../../../constants/tokens';
 import AccountVisual from '../../toolbox/accountVisual';
 import Box from '../../toolbox/box';
-import EmptyState from '../../emptyState';
 import regex from '../../../utils/regex';
 import routes from '../../../constants/routes';
 import styles from './bookmarksList.css';
@@ -222,13 +221,13 @@ class BookmarksList extends React.Component {
               <React.Fragment>
                 { bookmarks[token.active].length
                   ? (
-                    <EmptyState className={emptyStateClassName}>
+                    <Box.EmptyState className={emptyStateClassName}>
                       <Illustration name="emptyBookmarkFiler" className="bookmark-empty-filter-illustration" />
                       <p>{t('There are no results matching this filter.')}</p>
-                    </EmptyState>
+                    </Box.EmptyState>
                   )
                   : (
-                    <EmptyState className={emptyStateClassName}>
+                    <Box.EmptyState className={emptyStateClassName}>
                       { limit
                         ? (
                           <React.Fragment>
@@ -247,7 +246,7 @@ class BookmarksList extends React.Component {
                           </React.Fragment>
                         )
                   }
-                    </EmptyState>
+                    </Box.EmptyState>
                   )
             }
               </React.Fragment>
