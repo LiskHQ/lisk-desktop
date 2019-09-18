@@ -47,7 +47,13 @@ const getPublicKey = async (data) => {
  * @param {object} data.tx -> Object with all transaction information
  */
 const signTransaction = async (data) => {
-  const response = await executeCommand(IPC_MESSAGES.SIGN_TRANSACTION, data);
+  const response = await executeCommand(
+    IPC_MESSAGES.HW_COMMAND,
+    {
+      action: IPC_MESSAGES.SIGN_TRANSACTION,
+      data,
+    },
+  );
   return response;
 };
 
