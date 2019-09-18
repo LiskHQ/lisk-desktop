@@ -8,7 +8,7 @@ import TransactionDetail from './transactionDetail';
 import styles from './transactionRow.css';
 import Spinner from '../toolbox/spinner';
 import LiskAmount from '../liskAmount';
-import { DateTimeFromTimestamp } from '../timestamp/index';
+import { DateTimeFromTimestamp } from '../toolbox/timestamp';
 import TableRow from '../toolbox/table/tableRow';
 import Icon from '../toolbox/icon';
 
