@@ -1,10 +1,9 @@
 import React from 'react';
 import Waypoint from 'react-waypoint';
-
-import { generatePassphraseFromSeed } from '../../utils/passphrase';
-import { extractAddress } from '../../utils/account';
+import { extractAddress } from '../../../utils/account';
+import { generatePassphraseFromSeed } from '../../../utils/passphrase';
 import AccountVisual from '.';
-import Box from '../toolbox/box';
+import DemoRenderer from '../demoRenderer';
 
 /**
  * Ignored the unit test coverage of this component
@@ -42,26 +41,24 @@ class AccountVisualDemo extends React.Component {
     const size = 88;
 
     return (
-      <Box>
+      <div>
+        <h2>AccountVisual</h2>
         <div style={{ whiteSpace: 'no-break' }}>
           {this.state.accounts.map(account => (
-            <div
+            <DemoRenderer
               key={account}
               style={{
                 display: 'inline-block',
                 overflow: 'hidden',
                 wordBreak: 'break-all',
-                width: size,
-                padding: 20,
+                textAlign: 'center',
+                width: size * 2,
+                padding: 10,
                 fontSize: 14,
               }}
             >
-              {account}
-              <br />
-              {' '}
-              <br />
-              <AccountVisual address={account} size={size} />
-            </div>
+              <AccountVisual size={size} address={account} />
+            </DemoRenderer>
           ))}
         </div>
         <Waypoint onEnter={() => {
@@ -70,7 +67,7 @@ class AccountVisualDemo extends React.Component {
           });
         }}
         />
-      </Box>
+      </div>
     );
   }
 }

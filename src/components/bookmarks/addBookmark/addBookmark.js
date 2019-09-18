@@ -9,7 +9,7 @@ import styles from './addBookmark.css';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import { tokenMap } from '../../../constants/tokens';
 import routes from '../../../constants/routes';
-import AccountVisual from '../../accountVisual';
+import AccountVisual from '../../toolbox/accountVisual';
 import PageHeader from '../../toolbox/pageHeader';
 
 class AddBookmark extends React.Component {

@@ -19,8 +19,8 @@ DarkWrapper.defaultProps = {
   display: 'inline-block',
 };
 
-const DemoRenderer = ({ children }) => (
-  <div>
+const DemoRenderer = ({ children, ...rest }) => (
+  <div {...rest}>
     <pre>
       {children.map ? children.map(jsxToString).join('\n') : jsxToString(children)}
       {' '}

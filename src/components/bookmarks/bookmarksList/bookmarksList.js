@@ -4,7 +4,7 @@ import { Input } from '../../toolbox/inputs';
 import Illustration from '../../toolbox/illustration';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import { tokenMap } from '../../../constants/tokens';
-import AccountVisual from '../../accountVisual';
+import AccountVisual from '../../toolbox/accountVisual';
 import Box from '../../toolbox/box';
 import EmptyState from '../../emptyState';
 import regex from '../../../utils/regex';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { fromRawLsk } from '../../utils/lsk';
-import AccountVisual from '../accountVisual';
+import AccountVisual from '../toolbox/accountVisual';
 import Fees from '../../constants/fees';
 import TransactionSummary from '../transactionSummary';
 

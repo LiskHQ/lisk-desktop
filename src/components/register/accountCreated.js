@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '../../constants/routes';
 import { PrimaryButton } from '../toolbox/buttons/button';
-import AccountVisual from '../accountVisual';
+import AccountVisual from '../toolbox/accountVisual';
 import registerStyles from './register.css';
 import styles from './accountCreated.css';
 

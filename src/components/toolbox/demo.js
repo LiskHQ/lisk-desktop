@@ -1,4 +1,5 @@
 import React from 'react';
+import AccountVisualDemo from './accountVisual/demo';
 import AnimationDemo from './animation/demo';
 import AutoSuggestDemo from './autoSuggest/demo';
 import BoxDemo from './box/demo';
@@ -40,6 +41,7 @@ const WithTableOfContents = ({
 
 const ToolboxDemo = () => (
   <WithTableOfContents>
+    <AccountVisualDemo />
     <AnimationDemo />
     <AutoSuggestDemo />
     <BoxDemo />

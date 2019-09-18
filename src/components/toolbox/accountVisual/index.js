@@ -2,11 +2,11 @@ import BigNumber from 'bignumber.js';
 import React from 'react';
 import sha256 from 'js-sha256';
 import { Gradients, gradientSchemes } from './gradients';
-import generateUniqueId from '../../utils/generateUniqueId';
-import breakpoints from '../../constants/breakpoints';
+import generateUniqueId from '../../../utils/generateUniqueId';
+import breakpoints from '../../../constants/breakpoints';
 import styles from './accountVisual.css';
-import reg from '../../utils/regex';
-import Icon from '../toolbox/icon';
+import reg from '../../../utils/regex';
+import Icon from '../icon';
 
 /*
  * Account Visual
