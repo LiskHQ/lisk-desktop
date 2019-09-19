@@ -102,7 +102,7 @@
     "react-i18next": "=6.0.6",
     "react-piwik": "1.6.0",
     "react-redux": "5.0.6",
-    "react-router": "4.2.0",
+    "react-router": "4.3.1",
     "react-router-dom": "4.3.1",
     "react-swipe": "6.0.3",
     "react-toolbox": "2.0.0-beta.12",
