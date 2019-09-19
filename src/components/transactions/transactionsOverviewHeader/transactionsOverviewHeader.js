@@ -70,6 +70,7 @@ class transactionsHeader extends React.Component {
               className={`${styles.bookmarkDropdown} bookmark-account`}
               buttonLabel={isBookmark ? t('Edit bookmark') : t('Bookmark')}
               ButtonComponent={PrimaryButton}
+              align="right"
             >
               <BookmarkDropdown
                 token={activeToken}
