@@ -7,13 +7,11 @@ import { tokenMap } from '../../../constants/tokens';
 import {
   loadDelegates,
   loadVotes,
-  voteLookupStatusCleared,
   voteToggled,
 } from '../../../actions/voting';
 import VoteUrlProcessor from './voteUrlProcessor';
 
 const mapDispatchToProps = {
-  voteLookupStatusCleared,
   voteToggled,
   loadVotes,
   loadDelegates,
