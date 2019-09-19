@@ -119,7 +119,9 @@ class Bookmark extends React.Component {
 
   handleUnbookmark() {
     const { fields, bookmarkIndex } = this.state;
-    const { token, bookmarks, bookmarkRemoved } = this.props;
+    const {
+      token, bookmarks, bookmarkRemoved, onSubmitClick,
+    } = this.props;
     const accounts = bookmarks[token];
     const data = {
       address: accounts[bookmarkIndex] && accounts[bookmarkIndex].address,
@@ -137,6 +139,8 @@ class Bookmark extends React.Component {
         },
       },
     });
+
+    onSubmitClick();
   }
 
   handleAccountNameChange({ target }) {

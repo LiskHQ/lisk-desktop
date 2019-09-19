@@ -13,6 +13,20 @@ import routes from '../../../constants/routes';
 import styles from './transactionsOverviewHeader.css';
 
 class transactionsHeader extends React.Component {
+  constructor(props) {
+    super(props);
+    this.setDropdownRef = this.setDropdownRef.bind(this);
+    this.toggleDropdown = this.toggleDropdown.bind(this);
+  }
+
+  setDropdownRef(node) {
+    this.dropdown = node;
+  }
+
+  toggleDropdown() {
+    this.dropdown.toggleDropdown();
+  }
+
   render() {
     const {
       bookmarks, address, t, delegate = {}, activeToken, detailAccount,
@@ -71,6 +85,7 @@ class transactionsHeader extends React.Component {
               buttonLabel={isBookmark ? t('Edit bookmark') : t('Bookmark')}
               ButtonComponent={PrimaryButton}
               align="right"
+              ref={this.setDropdownRef}
             >
               <BookmarkDropdown
                 token={activeToken}
@@ -78,6 +93,7 @@ class transactionsHeader extends React.Component {
                 address={address}
                 detailAccount={detailAccount}
                 isBookmark={isBookmark}
+                onSubmitClick={this.toggleDropdown}
               />
             </DropdownButton>
           </div>
