@@ -1,5 +1,5 @@
 import React from 'react';
-import AccountVisual from '../../accountVisual';
+import AccountVisual from '../../toolbox/accountVisual';
 import Icon from '../../toolbox/icon';
 import reg from '../../../utils/regex';
 import styles from './transactionTypeFigure.css';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from 'react-i18next';
-import AccountVisual from '../../accountVisual';
+import AccountVisual from '../../toolbox/accountVisual';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import styles from './transactionsOverviewHeader.css';
 

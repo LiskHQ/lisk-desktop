@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import { utils } from '@liskhq/lisk-transactions';
 import Fees from '../../constants/fees';
-import Spinner from '../spinner/spinner';
+import Spinner from '../toolbox/spinner';
 import routes from '../../constants/routes';
 import styles from './setting.css';
 import Icon from '../toolbox/icon';

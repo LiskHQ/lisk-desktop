@@ -2,7 +2,7 @@ import React from 'react';
 import to from 'await-to-js';
 
 import TransactionSummary from '../../transactionSummary';
-import AccountVisual from '../../accountVisual/index';
+import AccountVisual from '../../toolbox/accountVisual';
 import { fromRawLsk } from '../../../utils/lsk';
 import Fees from '../../../constants/fees';
 import { create } from '../../../utils/api/lsk/transactions';

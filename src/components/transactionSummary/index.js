@@ -5,7 +5,7 @@ import { extractPublicKey } from '../../utils/account';
 import Box from '../toolbox/box';
 import CheckBox from '../toolbox/checkBox';
 import HardwareWalletIllustration from '../toolbox/hardwareWalletIllustration';
-import PassphraseInput from '../passphraseInput/passphraseInput';
+import PassphraseInput from '../toolbox/passphraseInput';
 import Tooltip from '../toolbox/tooltip/tooltip';
 import links from '../../constants/externalLinks';
 import styles from './transactionSummary.css';

@@ -14,7 +14,7 @@ import networks from '../../constants/networks';
 import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
-import PassphraseInput from '../passphraseInput/passphraseInput';
+import PassphraseInput from '../toolbox/passphraseInput';
 import styles from './login.css';
 import Piwik from '../../utils/piwik';
 import { getDeviceList } from '../../utils/hwWallet';
