@@ -226,7 +226,7 @@ class Bookmark extends React.Component {
               className={`${styles.input} ${fields.accountName.error ? 'error' : ''}`}
               feedback={accountName.feedback}
               isLoading={accountName.loading}
-              size="s"
+              size="xs"
               status={accountName.error ? 'error' : 'ok'}
             />
           </span>
@@ -237,7 +237,7 @@ class Bookmark extends React.Component {
               <PrimaryButton
                 className="bookmark-button"
                 disabled={!value || value.length > bookmarkCharLength}
-                size="xs"
+                size="s"
                 onClick={this.handleBookmark}
               >
                 {t('Save changes')}
@@ -245,7 +245,7 @@ class Bookmark extends React.Component {
             </div>
             <WarningButton
               className="bookmark-button"
-              size="xs"
+              size="s"
               onClick={this.handleUnbookmark}
             >
               {t('Remove bookmark')}
