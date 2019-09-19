@@ -67,7 +67,7 @@
     "get-port": "4.1.0",
     "hard-source-webpack-plugin": "0.13.1",
     "history": "=4.7.2",
-    "i18next": "12.1.0",
+    "i18next": "13.0.0",
     "i18next-localstorage-cache": "=1.1.1",
     "i18next-xhr-backend": "1.5.1",
     "inflight": "1.0.6",
