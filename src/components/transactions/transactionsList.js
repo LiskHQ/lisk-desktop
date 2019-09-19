@@ -2,7 +2,7 @@ import { translate } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap } from '../../constants/tokens';
-import EmptyState from '../emptyState';
+import EmptyState from '../toolbox/box/emptyState';
 import Illustration from '../toolbox/illustration';
 import ProgressBar from '../toolbox/progressBar/progressBar';
 import TransactionRow from './transactionRow';

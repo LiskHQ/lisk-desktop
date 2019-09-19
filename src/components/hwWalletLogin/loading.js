@@ -14,7 +14,7 @@ class Loading extends React.Component {
   }
 
   goNextIfDeviceConnected() {
-    if (this.props.devices.length > 0) {
+    if (this.props.devices.length > 0 && this.props.network.name) {
       this.props.nextStep();
     }
   }

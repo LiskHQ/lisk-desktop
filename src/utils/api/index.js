@@ -5,7 +5,6 @@ import btcApiUtils from './btc';
 export { default as account } from './account';
 export { default as transactions } from './transactions';
 export { default as service } from './service';
-export { default as hardwareWallet } from './hwWallet';
 
 export default {
   [tokenMap.LSK.key]: lskApiUtils,

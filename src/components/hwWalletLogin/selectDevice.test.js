@@ -10,9 +10,9 @@ describe('Select Device', () => {
   beforeEach(() => {
     props = {
       devices: [
-        { deviceId: 1, model: 'Ledger Nano S' },
-        { deviceId: 2, model: 'Trezor Model T' },
-        { deviceId: 3, model: 'Ledger Nano S' },
+        { deviceId: 1, model: 'Ledger Nano S', manufactor: 'Ledger' },
+        { deviceId: 2, model: 'Trezor Model T', manufactor: 'Trezor' },
+        { deviceId: 3, model: 'Ledger Nano X', manufactor: 'Ledger' },
       ],
       t: v => v,
       nextStep: jest.fn(),
@@ -38,7 +38,7 @@ describe('Select Device', () => {
   });
 
   it('Should go to the next page if there is ONLY 1 connected device', () => {
-    const newProps = { ...props, devices: [{ deviceId: 2, model: 'Trezor Model T' }] };
+    const newProps = { ...props, devices: [{ deviceId: 2, model: 'Trezor Model T', manufactor: 'Trezor' }] };
     wrapper = mount(<Router><SelectDevice {...newProps} /></Router>);
     expect(props.nextStep).toBeCalledWith({ deviceId: 2 });
   });

@@ -29,6 +29,16 @@
     margin-bottom: 8px;
   }
 
+  & .amountFieldHeader {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    & button {
+      padding: 0 0 8px;
+    }
+  }
+
   & .amountHint {
     @mixin contentSmallest;
 

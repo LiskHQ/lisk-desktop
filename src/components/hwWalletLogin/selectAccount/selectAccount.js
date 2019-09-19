@@ -1,10 +1,10 @@
+import { to } from 'await-to-js';
 import React from 'react';
 import { TertiaryButton } from '../../toolbox/buttons/button';
-import { displayAccounts } from '../../../utils/ledger';
-import { loginType } from '../../../constants/hwConstants';
-import routes from '../../../constants/routes';
+import { getAccountsFromDevice } from '../../../utils/hwManager';
 import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';
+import routes from '../../../constants/routes';
 import styles from './selectAccount.css';
 
 class SelectAccount extends React.Component {
@@ -12,14 +12,12 @@ class SelectAccount extends React.Component {
     super(props);
 
     this.state = {
-      activeDevice: null,
       accountOnEditMode: -1,
       hwAccounts: [],
     };
 
     this.onEditAccount = this.onEditAccount.bind(this);
     this.onChangeAccountTitle = this.onChangeAccountTitle.bind(this);
-    this.getAccountsFromDevice = this.getAccountsFromDevice.bind(this);
     this.onSaveNameAccounts = this.onSaveNameAccounts.bind(this);
     this.onAddNewAccount = this.onAddNewAccount.bind(this);
     this.onSelectAccount = this.onSelectAccount.bind(this);
@@ -53,27 +51,18 @@ class SelectAccount extends React.Component {
   }
 
   async getAccountsFromDevice() {
-    const {
-      device,
-      liskAPIClient,
-      t,
-    } = this.props;
-    let activeDevice = '';
-
-    setTimeout(async () => {
-      activeDevice = await displayAccounts({
-        liskAPIClient,
-        loginType: /trezor/ig.test(device.deviceModel) ? loginType.trezor : loginType.ledger,
-        hwAccounts: [],
-        t,
-        device,
-      });
-
-      const hwAccounts = activeDevice.hwAccounts.map(account =>
-        ({ ...account, name: this.getNameFromAccount(account.address) }));
-
-      this.setState({ activeDevice: { ...activeDevice }, hwAccounts });
-    }, 1000);
+    const { device, networkConfig, errorToastDisplayed } = this.props;
+    const [error, accounts] = await to(getAccountsFromDevice({ device, networkConfig }));
+    if (error) {
+      errorToastDisplayed({ label: `Error retrieving accounts from device: ${error}` });
+    } else {
+      const hwAccounts = accounts.map((account, index) => ({
+        ...account,
+        name: this.getNameFromAccount(account.address),
+        shouldShow: !!account.balance || index === 0,
+      }));
+      this.setState({ hwAccounts });
+    }
   }
 
   onEditAccount(index) {
@@ -99,27 +88,20 @@ class SelectAccount extends React.Component {
     this.setState({ accountOnEditMode: -1 });
   }
 
-  async onAddNewAccount() {
+  onAddNewAccount() {
     const {
-      device,
       errorToastDisplayed,
-      liskAPIClient,
       t,
     } = this.props;
     const { hwAccounts } = this.state;
+    const lastAccount = hwAccounts[hwAccounts.length - 1];
 
-    if (hwAccounts[hwAccounts.length - 1].isInitialized) {
-      const output = await displayAccounts({
-        liskAPIClient,
-        loginType: /trezor/ig.test(device.deviceModel) ? loginType.trezor : loginType.ledger,
-        hwAccounts,
-        t,
-        unInitializedAdded: true,
-        device,
-      });
-
-      const newHWAccounts = hwAccounts.concat([output.hwAccounts[0]]);
-      this.setState({ hwAccounts: newHWAccounts });
+    if (!lastAccount.shouldShow) {
+      hwAccounts[hwAccounts.length - 1] = {
+        ...lastAccount,
+        shouldShow: true,
+      };
+      this.setState({ hwAccounts });
     } else {
       const label = t('Please use the last not-initialized account before creating a new one!');
       errorToastDisplayed({ label });
@@ -166,7 +148,7 @@ class SelectAccount extends React.Component {
         <div className={`${styles.deviceContainer} hw-container`}>
           {
           hwAccounts.length
-            ? hwAccounts.map((hwAccount, index) => (
+            ? hwAccounts.filter(({ shouldShow }) => shouldShow).map((hwAccount, index) => (
               <AccountCard
                 key={index}
                 account={hwAccount}

@@ -29,7 +29,6 @@ export const initialState = deepMergeObj({
   showNetwork: false,
   channels,
   hardwareAccounts: {},
-  isHarwareWalletConnected: false,
   isRequestHowItWorksDisable: false,
   statistics: false,
   areTermsOfUseAccepted: false,

@@ -33,9 +33,9 @@ import hidePassphraseIcon from '../../../assets/images/icons/icon-hide-passphras
 import iconEdit from '../../../assets/images/icons/icon-edit.svg';
 import iconEmptyRecentTransactions from '../../../assets/images/icons/empty-recent-transactions.svg';
 import iconFilter from '../../../assets/images/icons/icon-filter.svg';
-import iconLedgerNanoDevice from '../../../assets/images/icons/icon-ledger-device.svg';
+import iconLedgerDevice from '../../../assets/images/icons/icon-ledger-device.svg';
 import iconLoader from '../../../assets/images/icons/icon-loader.svg';
-import iconTrezorModelTDevice from '../../../assets/images/icons/icon-trezor-device.svg';
+import iconTrezorDevice from '../../../assets/images/icons/icon-trezor-device.svg';
 import iconWarning from '../../../assets/images/icons/icon-warning.svg';
 import incoming from '../../../assets/images/icons/incoming.svg';
 import liskChat from '../../../assets/images/icons/lisk-chat.svg';
@@ -105,9 +105,9 @@ export const icons = {
   iconEdit,
   iconEmptyRecentTransactions,
   iconFilter,
-  iconLedgerNanoDevice,
+  iconLedgerDevice,
   iconLoader,
-  iconTrezorModelTDevice,
+  iconTrezorDevice,
   iconWarning,
   incoming,
   liskChat,

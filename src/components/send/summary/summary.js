@@ -2,7 +2,7 @@ import React from 'react';
 import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
 import { loginType } from '../../../constants/hwConstants';
 import { tokenMap } from '../../../constants/tokens';
-import AccountVisual from '../../accountVisual/index';
+import AccountVisual from '../../toolbox/accountVisual';
 import Converter from '../../converter';
 import Piwik from '../../../utils/piwik';
 import TransactionSummary from '../../transactionSummary';

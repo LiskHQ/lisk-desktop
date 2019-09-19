@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '../toolbox/box';
-import AccountVisual from '../accountVisual';
+import AccountVisual from '../toolbox/accountVisual';
 import VotesTableHeader from './votesTableHeader';
 import TableRow from '../toolbox/table/tableRow';
 import { Input } from '../toolbox/inputs';

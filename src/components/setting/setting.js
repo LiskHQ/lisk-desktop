@@ -72,13 +72,11 @@ class Setting extends React.Component {
     } = this.props;
     const { currencies } = this.state;
 
-    const isHwWalletClass = (this.props.account.hwInfo && this.props.account.hwInfo.deviceId)
-      ? `${styles.disabled} disabled`
-      : '';
+    const isHardwareWalletAccount = account.hwInfo && account.hwInfo.deviceId;
+    const isHwWalletClass = isHardwareWalletAccount ? `${styles.disabled} disabled` : '';
     const activeCurrency = currencies.indexOf(settings.currency || settingsConst.currencies[0]);
     const hasPendingSecondPassphrase = pending.find(element =>
       element.type === txTypes.setSecondPassphrase) !== undefined;
-    const isHarwareWalletConnected = settings.isHarwareWalletConnected;
 
     return (
       <div className={styles.settingsHolder}>
@@ -155,7 +153,7 @@ class Setting extends React.Component {
                 </div>
               </label>
               {
-                !isHarwareWalletConnected
+                !isHardwareWalletAccount
                   ? (
                     <label className={`${styles.fieldGroup} ${styles.checkboxField} enableBTC`}>
                       <CheckBox

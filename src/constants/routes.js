@@ -1,5 +1,4 @@
 import { tokenMap } from './tokens';
-import AccountVisualDemo from '../components/accountVisual/demo';
 import AddBookmark from '../components/bookmarks/addBookmark';
 import Bookmarks from '../components/bookmarks';
 import Dashboard from '../components/dashboard';
@@ -25,12 +24,6 @@ import TransactionDashboard from '../components/transactionDashboard';
 import Voting from '../components/voting';
 
 export default {
-  accountVisualDemo: {
-    path: '/account-visual-demo',
-    component: AccountVisualDemo,
-    isPrivate: true,
-    isSigninFlow: true,
-  },
   toolboxDemo: {
     path: '/toolbox',
     pathSuffix: '/:component?',

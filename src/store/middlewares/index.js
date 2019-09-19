@@ -2,7 +2,7 @@ import thunk from 'redux-thunk';
 import accountMiddleware from './account';
 import loadingBarMiddleware from './loadingBar';
 import offlineMiddleware from './offline';
-import hwWalletMiddleware from './hwWallet';
+import hwManagerMiddleware from './hwManager';
 // ToDo : enable this one when you solve the problem with multi account management
 // import notificationMiddleware from './notification';
 import votingMiddleware from './voting';
@@ -14,7 +14,7 @@ export default [
   // notificationMiddleware,
   accountMiddleware,
   bookmarksMiddleware,
-  hwWalletMiddleware,
+  hwManagerMiddleware,
   loadingBarMiddleware,
   offlineMiddleware,
   settingsMiddleware,

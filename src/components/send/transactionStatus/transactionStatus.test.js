@@ -41,6 +41,7 @@ describe('TransactionStatus', () => {
     bookmarks: {
       LSK: [],
     },
+    account: { hwInfo: { deviceId: 'MOCK' } },
     prevStep: jest.fn(),
     fields: {
       recipient: {
@@ -141,5 +142,10 @@ describe('TransactionStatus', () => {
     expect(wrapper).toContainMatchingElement('.report-error-link');
     wrapper.find('.retry').at(0).simulate('click');
     expect(props.transactionBroadcasted).toBeCalled();
+  });
+
+  it('should call resetTransactionResult on unmount', () => {
+    wrapper.unmount();
+    expect(props.resetTransactionResult).toHaveBeenCalled();
   });
 });

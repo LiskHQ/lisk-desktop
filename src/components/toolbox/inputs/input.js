@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Feedback from '../feedback/feedback';
 import Icon from '../icon';
-import Spinner from '../../spinner/spinner';
+import Spinner from '../spinner';
 import styles from './input.css';
 
 const statusIconNameMap = {
