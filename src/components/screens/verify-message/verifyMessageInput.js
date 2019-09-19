@@ -67,6 +67,11 @@ export default class VerifyMessageInput extends React.Component {
           return t('This is not a valid public key. Please enter the correct public key.');
         }
       },
+      message: () => (
+        value !== value.trim()
+          ? t('The message can\'t contain whitespace at the beginning or end.')
+          : ''
+      ),
     };
     const input = [...this.inputs, this.textarea].find(({ name: n }) => name === n);
     const inputLabel = input && input.label.toLowerCase();
