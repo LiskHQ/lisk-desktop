@@ -1,0 +1,148 @@
+/* istanbul ignore file */
+import manufacturers from './manufacturers';
+import { publish, subscribe } from './utils';
+import { IPC_MESSAGES, FUNCTION_TYPES } from './constants';
+
+class HwManager {
+  constructor({
+    transports = {},
+    pubSub = {},
+  }) {
+    this.transports = transports;
+    this.pubSub = pubSub;
+    this.devices = [];
+  }
+
+  listening() {
+    const { receiver } = this.pubSub;
+    this.configure();
+
+    subscribe(receiver, {
+      event: IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST,
+      action: async () => this.getDevices(),
+    });
+
+    subscribe(receiver, {
+      event: IPC_MESSAGES.CHECK_LEDGER,
+      action: async ({ id }) => {
+        const device = this.getDeviceById(id);
+        this.updateDevice(await manufacturers[device.manufactor].checkIfInsideLiskApp({
+          transporter: this.transports[device.manufactor],
+          device,
+        }));
+      },
+    });
+
+    subscribe(receiver, {
+      event: IPC_MESSAGES.HW_COMMAND,
+      action: async ({ action, data }) => {
+        const device = this.getDeviceById(data.deviceId);
+        const functionName = FUNCTION_TYPES[action];
+        const manufactureName = device.manufactor;
+        return manufacturers[manufactureName][functionName](
+          this.transports[manufactureName],
+          {
+            device,
+            data,
+          },
+        );
+      },
+    });
+  }
+
+  /**
+   * Set transport for specific type of wallet.
+   * @param {object} data -> Object with type and transport
+   * @param {string} data.name -> name of wallet brand. eg. ledger, trezor
+   * @param {any} data.transport -> Transport used to communicate with the wallets
+   */
+  setTransport({ name, transport }) {
+    this.transports[name] = transport;
+  }
+
+  /**
+   * Returns list  of connected devices
+   * @returns {promise} Promise object with list of devices
+   */
+  async getDevices() {
+    return Promise.resolve(this.devices);
+  }
+
+  /**
+   * Return the device with matching ID
+   * @param {string} id - Id of device
+   * @returns {promise} device found or undefined
+   */
+  getDeviceById(id) {
+    return this.devices.find(d => d.deviceId === id);
+  }
+
+  /**
+   * Remove a specific hwWallet from the manager
+   * @param {string} path - Path of hWWallet that shoud be removed
+   */
+  removeDevice(path) {
+    const { sender } = this.pubSub;
+    const device = this.devices.find(d => d.path === path);
+    this.devices = this.devices.filter(d => d.path !== path);
+    this.syncDevices();
+    publish(sender, { event: IPC_MESSAGES.HW_DISCONNECTED, payload: { model: device.model } });
+  }
+
+  /**
+   * Add device to devices list
+   * @param {Object} device - Device object containing (deviceId, model, label, path)
+   * @param {string} device.deviceId
+   * @param {string} device.label
+   * @param {string} device.model
+   * @param {string} device.path
+   */
+  addDevice(device) {
+    const { sender } = this.pubSub;
+    this.devices.push(device);
+    this.syncDevices();
+    publish(sender, { event: IPC_MESSAGES.HW_CONNECTED, payload: { model: device.model } });
+  }
+
+  /**
+   * Update device on devices list based on the path
+   * @param {Object} device - Device object containing (deviceId, model, label, path)
+   * @param {string} device.deviceId
+   * @param {string} device.label
+   * @param {string} device.model
+   * @param {string} device.path
+   */
+  updateDevice(device) {
+    this.devices = this.devices.map(d => (d.path === device.path ? device : d));
+    this.syncDevices();
+  }
+
+  /**
+   * Publish event throught sender with deviceList
+   */
+  async syncDevices() {
+    const { sender } = this.pubSub;
+    publish(sender, {
+      event: IPC_MESSAGES.DEVICE_LIST_CHANGED,
+      payload: await this.getDevices(),
+    });
+  }
+
+  /**
+   * Start listeners set by setTransport
+   */
+  configure() {
+    Object.keys(this.transports).forEach((key) => {
+      try {
+        manufacturers[key].listener(this.transports[key], {
+          add: data => this.addDevice(data),
+          remove: data => this.removeDevice(data),
+        });
+      } catch (e) {
+        throw e;
+      }
+    });
+  }
+}
+
+export default HwManager;

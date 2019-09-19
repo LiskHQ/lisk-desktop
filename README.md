@@ -73,10 +73,10 @@ Then, in order to launch version with hardware wallet, you can run
 npm run dev-hardware-wallet
 ```
 
-In order to launch electron that gets live updates from already running webpack-dev-server on port 8080, you can run
+In order to launch electron that gets live updates from already running webpack-dev-server on port 8080 and with react/redux dev tools, you can run
 
 ```
-LISK_HUB_URL="http://localhost:8080" npm run start
+LISK_HUB_URL="http://localhost:8080" DEBUG=true npm run start
 ```
 
 #### Windows
