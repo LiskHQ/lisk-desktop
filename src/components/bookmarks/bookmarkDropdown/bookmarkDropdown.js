@@ -134,6 +134,7 @@ class Bookmark extends React.Component {
         ...fields,
         accountName: {
           ...fields.accountName,
+          feedback: '',
           value: '',
           isReadOnly: false,
         },
