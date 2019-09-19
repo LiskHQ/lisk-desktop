@@ -10,8 +10,7 @@ import {
   getDeviceById } from './hwManager';
 
 import { models } from '../../src/constants/hwConstants';
-
-const trezor = require('trezor.js'); // eslint-disable-line import/no-extraneous-dependencies
+import * as trezor from 'trezor.js/lib/index-node.js'; // eslint-disable-line import/no-extraneous-dependencies
 
 // set to true to see messages
 const debug = false;
