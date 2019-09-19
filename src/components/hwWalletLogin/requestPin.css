@@ -1,0 +1,66 @@
+@import '../app/variables.css';
+
+.content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  margin-top: 50px;
+
+  & > .gridContainer {
+    max-width: 210px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+
+    & > .gridSystem {
+      width: 100%;
+      margin: 20px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    & .gridSystemRow {
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin: 0 0 20px;
+    }
+  }
+
+  & .squareBtn {
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    background-color: var(--color-white);
+    outline: none;
+    transition: 500ms;
+
+    &::before {
+      content: '\25CF';
+      font-size: 7px;
+    }
+
+    &:hover {
+      box-shadow: 0 0 0 30px rgba(127, 140, 141, 0.4) inset;
+    }
+  }
+
+  & .footerBtns {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+}
