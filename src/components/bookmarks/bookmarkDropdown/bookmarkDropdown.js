@@ -5,6 +5,8 @@ import { Input } from '../../toolbox/inputs';
 import { PrimaryButton, WarningButton } from '../../toolbox/buttons/button';
 import styles from './bookmarkDropdown.css';
 
+const bookmarkCharLength = 20;
+
 class Bookmark extends React.Component {
   constructor(props) {
     super(props);
@@ -139,18 +141,17 @@ class Bookmark extends React.Component {
 
   handleAccountNameChange({ target }) {
     const { fields } = this.state;
-    const maxLength = 20;
-    const feedback = target.value.length <= maxLength
+    const feedback = target.value.length <= bookmarkCharLength
       ? this.props.t('{{length}} out of {{maxLength}} characters left', {
-        length: maxLength - target.value.length,
-        maxLength,
+        length: bookmarkCharLength - target.value.length,
+        maxLength: bookmarkCharLength,
       })
-      : this.props.t('{{length}} extra characters', { length: target.value.length - maxLength });
+      : this.props.t('{{length}} extra characters', { length: target.value.length - bookmarkCharLength });
 
     const field = {
       ...fields[target.name],
       value: target.value,
-      error: target.value.length > maxLength,
+      error: target.value.length > bookmarkCharLength,
       feedback,
     };
 
@@ -164,7 +165,7 @@ class Bookmark extends React.Component {
             loading: false,
           },
         },
-        isValid: target.value.length <= maxLength && target.value.length > 0,
+        isValid: target.value.length <= bookmarkCharLength && target.value.length > 0,
       });
     }, 300);
 
@@ -173,7 +174,7 @@ class Bookmark extends React.Component {
         ...fields,
         [target.name]: {
           ...field,
-          loading: target.value.length <= maxLength,
+          loading: target.value.length <= bookmarkCharLength,
         },
       },
       isValid: false,
@@ -206,6 +207,7 @@ class Bookmark extends React.Component {
     const accounts = bookmarks[token];
     const oldBookmarkName = accounts[index] && accounts[index].title;
     const hasValueChanged = accountName.value !== oldBookmarkName;
+    const { value } = fields.accountName;
 
     return (
       <section className={`${styles.wrapper}`}>
@@ -234,7 +236,7 @@ class Bookmark extends React.Component {
             <div className={`${styles.editButtonContainer} ${hasValueChanged ? styles.show : styles.hide}`}>
               <PrimaryButton
                 className="bookmark-button"
-                disabled={!fields.accountName.value}
+                disabled={!value || value.length > bookmarkCharLength}
                 size="xs"
                 onClick={this.handleBookmark}
               >
