@@ -11,7 +11,6 @@ import localeHandler from './modules/localeHandler';
 import updateChecker from './modules/autoUpdater';
 import server from '../server';
 import './modules/hwManager';
-// import './ledger';
 
 const defaultServerPort = 3000;
 let serverUrl;

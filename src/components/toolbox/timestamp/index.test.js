@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import PropTypes from 'prop-types';
-import i18n from '../../i18n';
+import i18n from '../../../i18n';
 import { Time, TooltipTime, TooltipWrapper } from './index';
 
 sinon.useFakeTimers({

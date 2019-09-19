@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import Spinner from './spinner';
+import Spinner from '.';
 
-describe('Spinne', () => {
+describe('Spinner', () => {
   it('should render the spinner and wrapper with given className', () => {
     const wrapper = mount(<Spinner className="test" />);
     expect(wrapper).to.have.className('test');

@@ -22,14 +22,26 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           presets: [
-            ['env', {
-              targets: {
-                browsers: ['last 2 versions', 'safari >= 7'],
+            [
+              '@babel/preset-env', {
+                modules: false,
+                targets: {
+                  browsers: ['last 2 versions', 'safari >= 7'],
+                },
+              }],
+            '@babel/preset-react',
+          ],
+          plugins: [
+            'syntax-trailing-function-commas',
+            'import-glob',
+            [
+              '@babel/plugin-transform-runtime',
+              {
+                helpers: false,
+                regenerator: true,
               },
-            }],
-            'react',
-            'stage-3'],
-          plugins: ['syntax-trailing-function-commas', 'import-glob', 'transform-decorators-legacy'],
+            ],
+          ],
           env: {
             test: {
               plugins: ['istanbul'],
@@ -50,10 +62,40 @@ module.exports = {
         exclude: [/fonts/],
         loader: 'url-loader',
       },
-      {
-        test: /\.json$/,
-        loaders: ['json-loader'],
-      },
     ],
+  },
+  optimization: {
+    namedChunks: true,
+    splitChunks: {
+      chunks: 'async',
+      minSize: 30000,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name: false,
+      cacheGroups: {
+        vendor: {
+          name: 'vendor',
+          test: /[\\/]node_modules[\\/]/,
+        },
+        head: {
+          name: 'head',
+          priority: 1,
+          test: /styles\.head\.css$/,
+        },
+        styles: {
+          name: 'styles',
+          priority: 2,
+          test: /^((?!styles\.head).)*\.css$/,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
+    },
   },
 };

@@ -25,7 +25,7 @@ class ConfirmPassphrase extends React.Component {
     this.verifyChoices = this.verifyChoices.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() { // eslint-disable-line camelcase
     const options = this.assembleWordOptions(this.props.passphrase, this.state.words);
     this.setState({ options });
   }

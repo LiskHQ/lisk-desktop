@@ -4,7 +4,7 @@ import { fromRawLsk, toRawLsk } from '../../../utils/lsk';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import FormBase from './formBase';
 import Selector from '../../toolbox/selector/selector';
-import Spinner from '../../spinner/spinner';
+import Spinner from '../../toolbox/spinner';
 import Tooltip from '../../toolbox/tooltip/tooltip';
 import styles from './form.css';
 

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
-import AccountVisual from '../../accountVisual';
+import AccountVisual from '../../toolbox/accountVisual';
 import routes from '../../../constants/routes';
 import styles from './transactionDetailView.css';
 import { validateAddress } from '../../../utils/validators';
