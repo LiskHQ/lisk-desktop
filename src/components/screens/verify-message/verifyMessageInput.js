@@ -68,7 +68,10 @@ export default class VerifyMessageInput extends React.Component {
         }
       },
     };
-    return validators[name] ? validators[name]() : '';
+    const input = [...this.inputs, this.textarea].find(({ name: n }) => name === n);
+    const inputLabel = input && input.label.toLowerCase();
+    const emptyError = value === '' ? t('The {{inputLabel}} can\'t be empty', { inputLabel }) : '';
+    return validators[name] ? validators[name]() : emptyError;
   }
 
   handleChange({ target }) {
@@ -109,6 +112,18 @@ export default class VerifyMessageInput extends React.Component {
     this.setState({ isInputsView });
   }
 
+  get activeViewInputs() {
+    const { isInputsView } = this.state;
+    return isInputsView ? this.inputs : [this.textarea];
+  }
+
+  get canSubmit() {
+    const { inputs } = this.state;
+    return this.activeViewInputs.every(({ name }) => (
+      inputs[name].value && !inputs[name].feedback
+    ));
+  }
+
   render() {
     const { t, history } = this.props;
     const { inputs, isInputsView } = this.state;
@@ -138,7 +153,7 @@ export default class VerifyMessageInput extends React.Component {
               onClick={this.changeViewToTextarea}
             />
           </div>
-          {(isInputsView ? this.inputs : [this.textarea]).map(({
+          {this.activeViewInputs.map(({
             name, placeholder, label, type,
           }) => (
             <Input
@@ -156,7 +171,13 @@ export default class VerifyMessageInput extends React.Component {
           ))}
         </Box.Content>
         <Box.Footer>
-          <PrimaryButton onClick={this.goNext} className="continue">{t('Continue')}</PrimaryButton>
+          <PrimaryButton
+            onClick={this.goNext}
+            disabled={!this.canSubmit}
+            className="continue"
+          >
+            {t('Continue')}
+          </PrimaryButton>
           <TertiaryButton onClick={history.goBack} className="go-back">{t('Go back')}</TertiaryButton>
         </Box.Footer>
       </Box>

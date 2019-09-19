@@ -409,6 +409,7 @@
   "The top 101 delegates are able to forge new blocks and recieve forging rewards.": "The top 101 delegates are able to forge new blocks and recieve forging rewards.",
   "The transaction has been canceled on your {{model}}": "The transaction has been canceled on your {{model}}",
   "The ultimate gateway to the ecosystem. Hub’s new design lets you easily manage your tokens (and much, much more).": "The ultimate gateway to the ecosystem. Hub’s new design lets you easily manage your tokens (and much, much more).",
+  "The {{inputLabel}} can't be empty": "The {{inputLabel}} can't be empty",
   "There are no results matching this filter.": "There are no results matching this filter.",
   "There are no transactions.": "There are no transactions.",
   "There is no connection to the {{model}}. Please check the cables if it happened by accident.": "There is no connection to the {{model}}. Please check the cables if it happened by accident.",

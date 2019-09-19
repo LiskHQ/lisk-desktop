@@ -6,7 +6,7 @@ import routes from '../../../constants/routes';
 describe('VerifyMessage Component', () => {
   const props = {
     history: {
-      location: { search: '' },
+      location: { search: '?message=Hello&publicKey=c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f&signature=c68adc131' },
       goBack: jest.fn(),
       push: jest.fn(),
     },
