@@ -37,8 +37,7 @@ const createWindow = () => {
     electron, path, electronLocalshortcut, storage, checkForUpdates, serverUrl,
   });
 
-  const debug = false;
-  if (debug) {
+  if (process.env.DEBUG) {
     installExtension([REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS])
       // eslint-disable-next-line no-console
       .then(name => console.info(`Added Extension:  ${name}`))
