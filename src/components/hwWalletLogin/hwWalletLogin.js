@@ -6,6 +6,7 @@ import MultiStep from '../multiStep';
 import SelectAccount from './selectAccount';
 import SelectDevice from './selectDevice';
 import UnlockDevice from './unlockDevice';
+import RequestPin from './requestPin';
 import styles from './hwWalletLogin.css';
 
 class HardwareWalletLogin extends React.Component {
@@ -49,6 +50,7 @@ class HardwareWalletLogin extends React.Component {
           >
             <Loading t={t} devices={devices} network={network} />
             <SelectDevice t={t} devices={devices} />
+            <RequestPin t={t} devices={devices} history={history} />
             <UnlockDevice t={t} devices={devices} history={history} />
             <SelectAccount
               t={t}
