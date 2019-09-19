@@ -95,10 +95,10 @@ class Bookmark extends React.Component {
       publicKey: (detailAccount && detailAccount.publicKey) || null,
     };
     const accounts = bookmarks[token];
-    const bookmarkIndex = accounts.length;
     const bookmarkAlreadyExists = this.props.bookmarks[token].some(
       item => item.address === address,
     );
+    const bookmarkIndex = bookmarkAlreadyExists ? this.state.bookmarkIndex : accounts.length;
 
     if (bookmarkAlreadyExists) bookmarkUpdated({ account, token });
     else bookmarkAdded({ account, token });
