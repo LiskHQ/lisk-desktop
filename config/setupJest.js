@@ -29,6 +29,8 @@ i18next.t = function (key, o) {
     return typeof r === 'string' || typeof r === 'number' ? r : a;
   });
 };
+i18next.changeLanguage = jest.fn();
+i18next.language = 'en';
 i18next.init = () => ({
   t: i18next.t,
   language: 'en',
