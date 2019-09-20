@@ -8,7 +8,7 @@ describe('Dialog.Title component', () => {
     const wrapper = shallow(<Title>{title}</Title>);
     expect(wrapper).not.toBeEmptyRender();
     expect(wrapper).toHaveText(title);
-    wrapper.setProps({ children: '' });
+    wrapper.setProps({ children: null });
     expect(wrapper).toBeEmptyRender();
   });
 });
