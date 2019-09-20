@@ -100,6 +100,17 @@ describe('SplashScreen', () => {
       });
       expect(props.history.replace).toBeCalledWith(`${routes.delegates.path}`);
     });
+
+    it('calls this.props.history.replace with referrer address on network change', () => {
+      props.history.replace.mockReset();
+      history.location.search = `?referrer=${routes.delegates.path}`;
+      wrapper.setProps({
+        children: React.cloneElement(wrapper.props().children, {
+          history, network: { name: 'Testnet' },
+        }),
+      });
+      expect(props.history.replace).toBeCalledWith(`${routes.delegates.path}`);
+    });
   });
 
   describe('Terms of Use', () => {
