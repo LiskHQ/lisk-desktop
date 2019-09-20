@@ -47,6 +47,7 @@ ReactRouterDom.withRouter = jest.fn(() => (Component => (
     />
   )
 )));
+ReactRouterDom.NavLink = ReactRouterDom.Link;
 
 ReactRedux.connect = jest.fn(() => (Component => Component));
 
