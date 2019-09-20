@@ -11,6 +11,14 @@ export default {
     FlashMessageHolder.addMessage(<AnalyticsMessage onClick={onClick} />, 'Analytics');
   },
 
+  onTriggerPageLoaded({ settings, settingsUpdated }) {
+    if (!settings.statistics && settings.statisticsRequest === undefined) {
+      settingsUpdated({ statisticsRequest: true });
+      const showAnalytics = true;
+      this.checkIfAnalyticsShouldBeDisplayed({ settings, showAnalytics });
+    }
+  },
+
   checkIfAnalyticsShouldBeDisplayed({ settings, showAnalytics = false }) {
     // showAnalytics - Trigger ONLY the first time when user is in Wallet page after SignIn
     // or show since the beginning after the user saw the banner for first time but

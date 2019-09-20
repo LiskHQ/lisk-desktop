@@ -37,11 +37,7 @@ class WalletTransactions extends React.Component {
 
   componentDidMount() {
     const { settings, settingsUpdated } = this.props;
-    if (!settings.statistics && settings.statisticsRequest === undefined) {
-      settingsUpdated({ statisticsRequest: true });
-      const showAnalytics = true;
-      analytics.checkIfAnalyticsShouldBeDisplayed({ settings, showAnalytics });
-    }
+    analytics.onTriggerPageLoaded({ settings, settingsUpdated });
   }
 
   onInit() {
