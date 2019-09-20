@@ -1,5 +1,3 @@
-// TODO add unit test
-// istanbul ignore file
 import React from 'react';
 import externalLinks from '../../constants/externalLinks';
 import { MaskedInput } from '../toolbox/inputs';
@@ -23,6 +21,7 @@ class RequestPin extends React.Component {
     this.checkIfIsCorrectDevice = this.checkIfIsCorrectDevice.bind(this);
     this.onButtonClicked = this.onButtonClicked.bind(this);
     this.onSubmitPin = this.onSubmitPin.bind(this);
+    this.retry = this.retry.bind(this);
   }
 
   componentDidMount() {
@@ -51,8 +50,14 @@ class RequestPin extends React.Component {
     this.requestPin();
   }
 
+  retry() {
+    this.setState({ error: false, feedback: '' });
+    this.requestPin();
+  }
+
   onButtonClicked(e) {
     e.stopPropagation();
+    if (this.state.error) this.retry();
     this.setState({ pin: `${this.state.pin}${e.target.value}` });
   }
 
@@ -64,15 +69,16 @@ class RequestPin extends React.Component {
   render() {
     const { error, feedback, pin } = this.state;
     const { t, history } = this.props;
+    const device = this.onSelectedDevice();
 
     return (
       <div>
-        <h1>{t('{{deviceModel}} connected! Please provide a PIN number', { deviceModel: 'Trezor Model One' })}</h1>
+        <h1>{t('{{deviceModel}} connected! Please provide a PIN number', { deviceModel: device.model })}</h1>
         <p>
           { t('If you’re not sure how to do this please follow the') }
           {' '}
           <a
-            href={externalLinks.ledgerNanoSHelp}
+            href={externalLinks.trezorOneHelp}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -83,9 +89,10 @@ class RequestPin extends React.Component {
         <div className={styles.content}>
           <div className={styles.gridContainer}>
             <MaskedInput
-              type="password"
               error={error}
               feedback={feedback}
+              maxLength="9"
+              type="password"
               value={pin}
             />
 
@@ -107,9 +114,18 @@ class RequestPin extends React.Component {
               </div>
             </div>
 
-            <div className={styles.footerBtns}>
-              <PrimaryButton onClick={this.onSubmitPin}>{t('Enter PIN')}</PrimaryButton>
-              <TertiaryButton onClick={() => { history.push(routes.splashscreen.path); }}>
+            <div className={styles.buttonsContainer}>
+              <PrimaryButton
+                className="primary-btn"
+                onClick={this.onSubmitPin}
+                disabled={error}
+              >
+                {t('Enter PIN')}
+              </PrimaryButton>
+              <TertiaryButton
+                className="tertiary-btn"
+                onClick={() => { history.push(routes.splashscreen.path); }}
+              >
                 {t('Go back')}
               </TertiaryButton>
             </div>

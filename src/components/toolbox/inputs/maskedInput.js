@@ -1,5 +1,3 @@
-// TODO add unit test
-// istanbul ignore file
 import PropTypes from 'prop-types';
 import React from 'react';
 import Feedback from '../feedback/feedback';
