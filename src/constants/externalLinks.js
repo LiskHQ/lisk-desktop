@@ -18,5 +18,6 @@ const links = {
   transactionFee: 'https://lisk.io/help-center/getting-started/does-lisk-have-transaction-fees',
   outgoingTransactions: 'https://lisk.io/help-center/transactions/how-to-make-an-outgoing-lsk-transaction',
   discord: 'https://discord.gg/CngsY6D',
+  ledgerNanoSHelp: 'https://support.ledger.com/hc/en-us/categories/115000820045-Ledger-Nano-S',
 };
 export default links;

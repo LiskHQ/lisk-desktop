@@ -24,6 +24,8 @@ import helpCenter from '../../../assets/images/illustrations/help-center.svg';
 import emptyWallet from '../../../assets/images/illustrations/empty-wallet.svg';
 import diveIntoDetails from '../../../assets/images/illustrations/diveIntoDetails.svg';
 import manageYourLSK from '../../../assets/images/illustrations/manageYourLSK.svg';
+import verifyMessageError from '../../../assets/images/illustrations/verify-message-error.svg';
+import verifyMessageSuccess from '../../../assets/images/illustrations/verify-message-success.svg';
 
 
 export const illustrations = {
@@ -51,6 +53,8 @@ export const illustrations = {
   helpCenter,
   diveIntoDetails,
   manageYourLSK,
+  verifyMessageError,
+  verifyMessageSuccess,
 };
 
 const Illustration = ({ name, className }) => (

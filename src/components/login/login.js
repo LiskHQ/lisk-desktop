@@ -14,10 +14,9 @@ import networks from '../../constants/networks';
 import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import links from '../../constants/externalLinks';
 import Tooltip from '../toolbox/tooltip/tooltip';
-import PassphraseInput from '../passphraseInput/passphraseInput';
+import PassphraseInput from '../toolbox/passphraseInput';
 import styles from './login.css';
 import Piwik from '../../utils/piwik';
-import { getDeviceList } from '../../utils/hwWallet';
 import DiscreetModeToggle from '../discreetModeToggle';
 
 class Login extends React.Component {
@@ -40,7 +39,6 @@ class Login extends React.Component {
       network: loginNetwork.name,
       address,
       validationError: false,
-      devices: [],
     };
 
     this.secondIteration = false;
@@ -57,10 +55,6 @@ class Login extends React.Component {
     if (!this.props.settings.areTermsOfUseAccepted) {
       this.props.history.push(routes.termsOfUse.path);
     }
-
-    this.setState({
-      devices: await getDeviceList(),
-    });
 
     i18next.on('languageChanged', getNetworksList);
   }

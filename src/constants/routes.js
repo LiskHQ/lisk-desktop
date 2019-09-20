@@ -1,5 +1,4 @@
 import { tokenMap } from './tokens';
-import AccountVisualDemo from '../components/accountVisual/demo';
 import AddBookmark from '../components/bookmarks/addBookmark';
 import Bookmarks from '../components/bookmarks';
 import Dashboard from '../components/dashboard';
@@ -16,6 +15,7 @@ import SecondPassphrase from '../components/secondPassphrase';
 import Send from '../components/send/send';
 import Setting from '../components/setting';
 import SignMessage from '../components/signMessage';
+import VerifyMessage from '../components/screens/verify-message';
 import SingleTransaction from '../components/singleTransaction';
 import Splashscreen from '../components/splashscreen';
 import TermsOfUse from '../components/termsOfUse';
@@ -24,12 +24,6 @@ import TransactionDashboard from '../components/transactionDashboard';
 import Voting from '../components/voting';
 
 export default {
-  accountVisualDemo: {
-    path: '/account-visual-demo',
-    component: AccountVisualDemo,
-    isPrivate: true,
-    isSigninFlow: true,
-  },
   toolboxDemo: {
     path: '/toolbox',
     pathSuffix: '/:component?',
@@ -94,6 +88,12 @@ export default {
     path: '/sign-message',
     component: SignMessage,
     isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
+  verifyMMessage: {
+    path: '/verify-message',
+    component: VerifyMessage,
+    isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
   delegateRegistration: {

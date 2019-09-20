@@ -1,11 +1,12 @@
 import { translate } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { DateTimeFromTimestamp } from '../timestamp';
+import { DateTimeFromTimestamp } from '../toolbox/timestamp';
 import { SecondaryButton } from '../toolbox/buttons/button';
 import { tokenMap } from '../../constants/tokens';
 import Box from '../toolbox/box';
 import CopyToClipboard from '../toolbox/copyToClipboard';
+import DiscreetMode from '../discreetMode';
 import LiskAmount from '../liskAmount';
 import NotFound from '../notFound';
 import Tooltip from '../toolbox/tooltip/tooltip';
@@ -13,7 +14,6 @@ import TransactionDetailView from './transactionDetailView/transactionDetailView
 import routes from '../../constants/routes';
 import styles from './singleTransaction.css';
 import transactionTypes from '../../constants/transactionTypes';
-import DiscreetMode from '../discreetMode';
 
 function addVotesWithDelegateNames(transaction, delegates, t) {
   const getVotesStartingWith = sign => (

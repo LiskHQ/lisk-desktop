@@ -1,4 +1,5 @@
 import React from 'react';
+import AccountVisualDemo from './accountVisual/demo';
 import AnimationDemo from './animation/demo';
 import AutoSuggestDemo from './autoSuggest/demo';
 import BoxDemo from './box/demo';
@@ -13,6 +14,8 @@ import IllustrationDemo from './illustration/demo';
 import InputDemo from './inputs/demo';
 import OnboardingDemo from './onboarding/demo';
 import PageHeaderDemo from './pageHeader/demo';
+import PassphraseInputDemo from './passphraseInput/demo';
+import SpinnerDemo from './spinner/demo';
 import TooltipDemo from './tooltip/demo';
 import styles from './demo.css';
 
@@ -40,6 +43,7 @@ const WithTableOfContents = ({
 
 const ToolboxDemo = () => (
   <WithTableOfContents>
+    <AccountVisualDemo />
     <AnimationDemo />
     <AutoSuggestDemo />
     <BoxDemo />
@@ -54,6 +58,8 @@ const ToolboxDemo = () => (
     <HardwareWalletIllustrationDemo />
     <OnboardingDemo />
     <PageHeaderDemo />
+    <PassphraseInputDemo />
+    <SpinnerDemo />
     <TooltipDemo />
   </WithTableOfContents>
 );

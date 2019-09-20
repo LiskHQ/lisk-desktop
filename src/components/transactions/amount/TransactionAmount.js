@@ -9,12 +9,16 @@ const TransactionAmount = ({
   address, transaction, token, roundTo,
 }) => {
   const isRecieve = address === transaction.recipientId;
+  // e.g. account initialization
+  const isSentToSelf = transaction.recipientId === transaction.senderId
+    && transaction.type === transactionTypes.send;
+
   return (
     <div className={`${styles.wrapper} transaction-amount`}>
       { transaction.type === transactionTypes.send
         ? (
           <DiscreetMode>
-            <span className={isRecieve ? styles.recieve : ''}>
+            <span className={isRecieve && !isSentToSelf ? styles.recieve : ''}>
               {isRecieve ? '' : '- '}
               <LiskAmount val={transaction.amount} roundTo={roundTo} />
               {' '}

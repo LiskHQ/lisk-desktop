@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '../../../constants/tokens';
-import AccountVisual from '../../accountVisual';
+import AccountVisual from '../accountVisual';
 import AutoSuggest from './index';
 import i18n from '../../../i18n';
 import keyCodes from '../../../constants/keyCodes';

@@ -1,10 +1,11 @@
 import React from 'react';
+import numeral from 'numeral';
 import { Input } from '../../toolbox/inputs';
-import { PrimaryButton } from '../../toolbox/buttons/button';
+import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { fromRawLsk } from '../../../utils/lsk';
 import { parseSearchParams } from '../../../utils/searchParams';
-import { getAmountFeedbackAndError } from '../../../utils/validators';
+import { validateAmountFormat } from '../../../utils/validators';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import Box from '../../toolbox/box';
 import Converter from '../../converter';
@@ -33,7 +34,7 @@ class FormBase extends React.Component {
           title: '',
         },
         amount: amount ? {
-          ...getAmountFeedbackAndError({ value: amount, ...props }),
+          ...this.getAmountFeedbackAndError(amount, props),
           value: amount,
         } : {
           error: false,
@@ -53,6 +54,7 @@ class FormBase extends React.Component {
     this.onGoNext = this.onGoNext.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.updateField = this.updateField.bind(this);
+    this.setEntireBalance = this.setEntireBalance.bind(this);
   }
 
   onInputChange({ target }) {
@@ -65,14 +67,43 @@ class FormBase extends React.Component {
     this.updateField(target.name, newState);
   }
 
-  updateAmountField(name, value) {
+  updateAmountField(value) {
     const { leadingPoint } = regex.amount[i18n.language];
     value = leadingPoint.test(value) ? `0${value}` : value;
 
-    this.updateField(name, {
-      ...getAmountFeedbackAndError({ value, ...this.props }),
+    this.updateField('amount', {
+      ...this.getAmountFeedbackAndError(value),
       value,
     });
+  }
+
+  getMaxAmount() {
+    const { account, fee } = this.props;
+    return fromRawLsk(Math.max(0, account.balance - fee));
+  }
+
+  getAmountFeedbackAndError(value, props) {
+    const { token, t } = (props || this.props);
+    let { message: feedback } = validateAmountFormat({ value, token });
+
+    if (!feedback && parseFloat(this.getMaxAmount()) < numeral(value).value()) {
+      feedback = t('Provided amount is higher than your current balance.');
+    }
+    return { error: !!feedback, feedback };
+  }
+
+  setEntireBalance() {
+    const { fee } = this.props;
+    const value = formatAmountBasedOnLocale({
+      value: this.getMaxAmount(),
+      format: '0.[00000000]',
+    });
+    this.onAmountChange({ target: { value, name: 'amount' } });
+    setTimeout(() => {
+      if (fee !== this.props.fee) { // Because fee can change based on amount
+        this.setEntireBalance();
+      }
+    }, 1);
   }
 
   updateField(name, value) {
@@ -93,7 +124,7 @@ class FormBase extends React.Component {
     this.setState(() => ({ isLoading: true }));
     this.loaderTimeout = setTimeout(() => {
       this.setState(() => ({ isLoading: false }));
-      this.updateAmountField(target.name, target.value);
+      this.updateAmountField(target.value);
     }, 300);
 
     this.onInputChange({ target });
@@ -138,7 +169,16 @@ class FormBase extends React.Component {
             styles.fieldGroup, fields.amount.error && styles.error,
           ].filter(Boolean).join(' ')}
           >
-            <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
+            <div className={`${styles.amountFieldHeader}`}>
+              <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
+              <TertiaryButton
+                onClick={this.setEntireBalance}
+                className="send-entire-balance-button"
+                size="xs"
+              >
+                {t('Send entire balance')}
+              </TertiaryButton>
+            </div>
             <span className={`${styles.amountField} amount`}>
               <Input
                 autoComplete="off"

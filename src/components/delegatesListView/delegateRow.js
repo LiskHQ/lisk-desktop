@@ -4,7 +4,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './votingListView.css';
 import VoteCheckbox from './voteCheckbox';
 import TableRow from '../toolbox/table/tableRow';
-import AccountVisual from '../accountVisual';
+import AccountVisual from '../toolbox/accountVisual';
 import LiskAmount from '../liskAmount';
 import routes from '../../constants/routes';
 import { formatAmountBasedOnLocale } from '../../utils/formattedNumber';

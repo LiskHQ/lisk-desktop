@@ -93,7 +93,7 @@ h4 {
 }
 
 h1 {
-  font-size: var(--font-size-h1);
+  @mixin headingLarge;
 }
 
 h2 {

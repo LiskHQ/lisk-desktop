@@ -4,7 +4,6 @@ import { Line as LineChart } from 'react-chartjs-2';
 import Box from '../toolbox/box';
 import styles from './balanceChart.css';
 import * as ChartUtils from '../../utils/balanceChart';
-import EmptyState from '../emptyState';
 import { tokenMap } from '../../constants/tokens';
 import i18n from '../../i18n';
 
@@ -45,11 +44,11 @@ class BalanceGraph extends React.PureComponent {
                 />
               )
               : (
-                <EmptyState>
+                <Box.EmptyState>
                   <p>
                     {t('There are no transactions.')}
                   </p>
-                </EmptyState>
+                </Box.EmptyState>
               )
             }
           </div>

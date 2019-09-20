@@ -14,7 +14,7 @@ class LoadingBar extends React.Component {
     this.markedAsLoaded = true;
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) { // eslint-disable-line camelcase
     if (!this.markedAsLoaded && nextProps.liskAPIClient) this.markLoaded();
 
     if (nextProps.loading && nextProps.loading.length > 0 && this.props.loading.length === 0) {

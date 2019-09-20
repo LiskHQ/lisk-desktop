@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Content from './content';
-import EmptyState from '../../emptyState';
+import EmptyState from './emptyState';
 import Footer from './footer';
 import FooterButton from './footerButton';
 import Header from './header';
+import InfoText from './infoText';
 import ProgressBar from '../progressBar/progressBar';
 import Row from './row';
 import Tabs from '../tabs';
@@ -55,6 +56,7 @@ const subcomponents = [
   Footer,
   FooterButton,
   Header,
+  InfoText,
   Row,
   Tabs,
 ];

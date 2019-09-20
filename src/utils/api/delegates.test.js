@@ -14,7 +14,7 @@ import {
 import { loginType } from '../../constants/hwConstants';
 import accounts from '../../../test/constants/accounts';
 import delegates from '../../../test/constants/delegates';
-import * as hwWallet from './hwWallet';
+import * as hwManager from '../hwManager';
 
 describe('Utils: Delegate', () => {
   let liskAPIClientMockDelegates;
@@ -22,7 +22,7 @@ describe('Utils: Delegate', () => {
   let liskAPIClientMockTransations;
   let liskTransactionsCastVotesStub;
   let liskTransactionsRegisterDelegateStub;
-  let voteWithHWStub;
+  let signVoteTransaction;
   const timeOffset = 0;
 
   const liskAPIClient = {
@@ -51,7 +51,7 @@ describe('Utils: Delegate', () => {
     liskAPIClientMockVotes = sinon.mock(liskAPIClient.votes);
     liskAPIClientMockTransations = sinon.stub(liskAPIClient.transactions, 'broadcast').returnsPromise().resolves({ id: '1234' });
     sinon.stub(liskAPIClient.transactions, 'get').returnsPromise();
-    voteWithHWStub = sinon.stub(hwWallet, 'voteWithHW');
+    signVoteTransaction = sinon.stub(hwManager, 'signVoteTransaction').returnsPromise().resolves([{ id: '1234' }]);
   });
 
   afterEach(() => {
@@ -67,7 +67,7 @@ describe('Utils: Delegate', () => {
     liskTransactionsRegisterDelegateStub.restore();
 
     liskAPIClient.transactions.get.restore();
-    voteWithHWStub.restore();
+    signVoteTransaction.restore();
     localStorage.clear();
   });
 
@@ -187,64 +187,6 @@ describe('Utils: Delegate', () => {
     });
   });
 
-  describe('castVotes', () => {
-    it('should call castVotes and broadcast transaction', () => {
-      const votes = [
-        accounts.genesis.publicKey,
-        accounts.delegate.publicKey,
-      ];
-      const unvotes = [
-        accounts.empty_account.publicKey,
-        accounts.delegate_candidate.publicKey,
-      ];
-      const transaction = { id: '1234' };
-      const secondPassphrase = null;
-      liskTransactionsCastVotesStub.withArgs({
-        votes,
-        unvotes,
-        passphrase: accounts.genesis.passphrase,
-        secondPassphrase,
-        timeOffset,
-      }).returns(transaction);
-
-      castVotes({
-        liskAPIClient,
-        account: {
-          ...accounts.genesis,
-          loginType: loginType.normal,
-        },
-        votedList: votes,
-        unvotedList: unvotes,
-        secondPassphrase,
-        timeOffset,
-      });
-      expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
-
-      castVotes({
-        liskAPIClient,
-        account: {
-          ...accounts.genesis,
-          loginType: loginType.ledger,
-        },
-        votedList: votes,
-        unvotedList: unvotes,
-        secondPassphrase,
-        timeOffset,
-      });
-      expect(voteWithHWStub).to.have.been.calledWith();
-    });
-
-    it('should call return error if account.loginType is not recognized', () => (
-      expect(castVotes({
-        liskAPIClient,
-        account: {
-          ...accounts.genesis,
-          loginType: 'something unknown',
-        },
-      })).to.be.rejectedWith('Login Type not recognized.')
-    ));
-  });
-
   describe('getVotes', () => {
     it('should get votes for an address with no parameters', () => {
       const address = '123L';
@@ -286,6 +228,74 @@ describe('Utils: Delegate', () => {
       }).returns(transaction);
 
       registerDelegate(liskAPIClient, username, passphrase, secondPassphrase, timeOffset);
+      expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
+    });
+  });
+
+  describe('castVotes', () => {
+    it('should call castVotes and broadcast transaction regular login', async () => {
+      const votes = [
+        accounts.genesis.publicKey,
+        accounts.delegate.publicKey,
+      ];
+      const unvotes = [
+        accounts.empty_account.publicKey,
+        accounts.delegate_candidate.publicKey,
+      ];
+      const transaction = { id: '1234' };
+      const secondPassphrase = null;
+      liskTransactionsCastVotesStub.withArgs({
+        votes,
+        unvotes,
+        passphrase: accounts.genesis.passphrase,
+        secondPassphrase,
+        timeOffset,
+      }).returns(transaction);
+
+      await castVotes({
+        liskAPIClient,
+        account: {
+          ...accounts.genesis,
+          loginType: loginType.normal,
+        },
+        votedList: votes,
+        unvotedList: unvotes,
+        secondPassphrase,
+        timeOffset,
+      });
+      expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
+    });
+
+    it('should call castVotes and broadcast transaction with hardware wallet', async () => {
+      const votes = [
+        accounts.genesis.publicKey,
+        accounts.delegate.publicKey,
+      ];
+      const unvotes = [
+        accounts.empty_account.publicKey,
+        accounts.delegate_candidate.publicKey,
+      ];
+      const transaction = { id: '1234' };
+      const secondPassphrase = null;
+      liskTransactionsCastVotesStub.withArgs({
+        votes,
+        unvotes,
+        passphrase: accounts.genesis.passphrase,
+        secondPassphrase,
+        timeOffset,
+      }).returns(transaction);
+
+      await castVotes({
+        liskAPIClient,
+        account: {
+          ...accounts.genesis,
+          loginType: loginType.ledger,
+        },
+        votedList: votes,
+        unvotedList: unvotes,
+        secondPassphrase,
+        timeOffset,
+      });
       expect(liskAPIClient.transactions.broadcast).to.have.been.calledWith(transaction);
     });
   });

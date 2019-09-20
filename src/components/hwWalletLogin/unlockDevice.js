@@ -1,10 +1,9 @@
-// istanbul ignore file
 import React from 'react';
 import { TertiaryButton } from '../toolbox/buttons/button';
+import { checkIfInsideLiskApp } from '../../utils/hwManager';
 import Illustration from '../toolbox/illustration';
+import externalLinks from '../../constants/externalLinks';
 import routes from '../../constants/routes';
-
-const { ipc } = window;
 
 class UnlockDevice extends React.Component {
   constructor() {
@@ -15,11 +14,12 @@ class UnlockDevice extends React.Component {
     };
 
     this.timeout = null;
-    this.checkLedger = this.checkLedger.bind(this);
+    this.checkIfInsideLiskApp = this.checkIfInsideLiskApp.bind(this);
   }
 
   componentDidMount() {
-    this.checkLedger();
+    this.navigateIfNeeded();
+    this.checkIfInsideLiskApp();
   }
 
   componentDidUpdate() {
@@ -27,51 +27,43 @@ class UnlockDevice extends React.Component {
   }
 
   componentWillUnmount() {
-    /* istanbul ignore next */
     clearTimeout(this.timeout);
+  }
+
+  get selectedDevice() {
+    return this.props.devices.find(d => d.deviceId === this.props.deviceId) || {};
   }
 
   navigateIfNeeded() {
-    const selectedDevice = this.props.devices.find(d => d.deviceId === this.props.deviceId);
-    if (!selectedDevice) this.props.prevStep({ reset: true });
     clearTimeout(this.timeout);
-    if (selectedDevice && (selectedDevice.openApp || /(trezor(\s?))/ig.test(selectedDevice.model))) {
+    const selectedDevice = this.selectedDevice;
+    if (!selectedDevice.model) {
+      this.props.prevStep({ reset: true });
+    } else if (selectedDevice.openApp) {
       this.props.nextStep({ device: selectedDevice });
     } else {
-      this.timeout = setTimeout(this.checkLedger, 1000);
+      this.timeout = setTimeout(this.checkIfInsideLiskApp, 1000);
     }
   }
 
-  checkLedger() {
-    /* istanbul ignore else */
-    if (!ipc) {
+  async checkIfInsideLiskApp() {
+    await checkIfInsideLiskApp({ id: this.props.deviceId });
+    if (this.state.isLoading) {
       this.setState({ isLoading: false });
-    } else {
-      if (this.state.isLoading) {
-        ipc.once('checkLedger.done', () => this.setState({ isLoading: false }));
-      }
-      ipc.send('checkLedger', { id: this.props.deviceId });
     }
   }
 
   render() {
-    const {
-      t,
-      history,
-      devices,
-      deviceId,
-    } = this.props;
-    const selectedDevice = devices.find(d => deviceId && d.deviceId === deviceId) || {};
-    return !this.state.isLoading && !!selectedDevice.model && (
+    const { t, history } = this.props;
+    const selectedDevice = this.selectedDevice;
+    return (!this.state.isLoading && !!selectedDevice.model) ? (
       <div>
         <h1>{t('{{deviceModel}} connected! Open the Lisk app on the device', { deviceModel: selectedDevice.model })}</h1>
         <p>
-          {
-          t('If you’re not sure how to do this please follow the')
-        }
+          { t('If you’re not sure how to do this please follow the') }
           {' '}
           <a
-            href="https://support.ledger.com/hc/en-us/categories/115000820045-Ledger-Nano-S"
+            href={externalLinks.ledgerNanoSHelp}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -83,7 +75,7 @@ class UnlockDevice extends React.Component {
           {t('Go back')}
         </TertiaryButton>
       </div>
-    );
+    ) : 'jo';
   }
 }
 
