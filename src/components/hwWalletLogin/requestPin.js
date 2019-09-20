@@ -1,6 +1,9 @@
+// TODO add unit test
+// istanbul ignore file
 import React from 'react';
 import externalLinks from '../../constants/externalLinks';
 import { MaskedInput } from '../toolbox/inputs';
+import { getPublicKey, validateTrezorOnePin } from '../../utils/hwManager';
 import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import routes from '../../constants/routes';
 import styles from './requestPin.css';
@@ -11,21 +14,30 @@ class RequestPin extends React.Component {
 
     this.state = {
       pin: '',
+      error: false,
+      feedback: '',
     };
 
     this.requestPin = this.requestPin.bind(this);
     this.onSelectedDevice = this.onSelectedDevice.bind(this);
     this.checkIfIsCorrectDevice = this.checkIfIsCorrectDevice.bind(this);
     this.onButtonClicked = this.onButtonClicked.bind(this);
+    this.onSubmitPin = this.onSubmitPin.bind(this);
   }
 
   componentDidMount() {
     this.checkIfIsCorrectDevice();
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  requestPin() {
-    console.log('request');
+  async requestPin() {
+    const { t } = this.props;
+    const deviceId = this.props.deviceId;
+    const res = await getPublicKey({ index: 0, deviceId });
+    if (res) {
+      this.props.nextStep({ deviceId });
+    } else {
+      this.setState({ error: true, feedback: t('Invalid PIN') });
+    }
   }
 
   onSelectedDevice() {
@@ -35,10 +47,8 @@ class RequestPin extends React.Component {
   checkIfIsCorrectDevice() {
     const { nextStep, deviceId } = this.props;
     const actualDevice = this.onSelectedDevice();
-
-    if (actualDevice.model !== 'Trezor Model One') {
-      nextStep({ deviceId });
-    }
+    if (actualDevice.model !== 'Trezor Model One') nextStep({ deviceId });
+    this.requestPin();
   }
 
   onButtonClicked(e) {
@@ -48,10 +58,11 @@ class RequestPin extends React.Component {
 
   onSubmitPin(e) {
     e.preventDefault();
-    console.log(this.state.pin);
+    validateTrezorOnePin(this.state.pin);
   }
 
   render() {
+    const { error, feedback, pin } = this.state;
     const { t, history } = this.props;
 
     return (
@@ -73,14 +84,16 @@ class RequestPin extends React.Component {
           <div className={styles.gridContainer}>
             <MaskedInput
               type="password"
-              value={this.state.pin}
+              error={error}
+              feedback={feedback}
+              value={pin}
             />
 
             <div className={styles.gridSystem}>
               <div className={styles.gridSystemRow}>
-                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="1" />
-                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="2" />
-                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="3" />
+                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="7" />
+                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="8" />
+                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="9" />
               </div>
               <div className={styles.gridSystemRow}>
                 <button className={styles.squareBtn} onClick={this.onButtonClicked} value="4" />
@@ -88,9 +101,9 @@ class RequestPin extends React.Component {
                 <button className={styles.squareBtn} onClick={this.onButtonClicked} value="6" />
               </div>
               <div className={styles.gridSystemRow}>
-                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="7" />
-                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="8" />
-                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="9" />
+                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="1" />
+                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="2" />
+                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="3" />
               </div>
             </div>
 

@@ -202,6 +202,7 @@
   "Insert the amount of transaction": "Insert the amount of transaction",
   "Install update": "Install update",
   "Insufficient funds (Fee: {{fee}} LSK)": "Insufficient funds (Fee: {{fee}} LSK)",
+  "Invalid PIN": "Invalid PIN",
   "Invalid address": "Invalid address",
   "Invalid amount": "Invalid amount",
   "Invalid dates": "Invalid dates",

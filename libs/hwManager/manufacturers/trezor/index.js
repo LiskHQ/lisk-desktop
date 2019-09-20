@@ -1,13 +1,13 @@
 /* istanbul ignore file */
 import {
   IPC_MESSAGES,
+  PIN,
 } from '../../constants';
 import { TREZOR } from './constants';
 import {
   getHardenedPath,
   toTrezorGrammar,
 } from './utils';
-
 
 /**
  * addDevice - function - Add a new device to the devices list.
@@ -36,6 +36,10 @@ const removeDevice = (device, { remove }) => {
   remove(device.originalDescriptor.path);
 };
 
+const onPinCallback = (device, { pinCallback }) => {
+  device.on(PIN, (type, callback) => pinCallback(type, callback));
+};
+
 /**
  * listener - function - Always listen for new messages for connect or disconnect devices.
  * @param {object} transport - Library use for handle the trezor devices.
@@ -44,7 +48,10 @@ const removeDevice = (device, { remove }) => {
  * @param {function} actions.remove - Function for remove a device from the main list.
  */
 const listener = (transport, actions) => {
-  transport.on(IPC_MESSAGES.CONNECT, (device) => { addDevice(device, actions); });
+  transport.on(IPC_MESSAGES.CONNECT, (device) => {
+    addDevice(device, actions);
+    onPinCallback(device, actions);
+  });
   transport.on(IPC_MESSAGES.DISCONNECT, (device) => { removeDevice(device, actions); });
   transport.on(IPC_MESSAGES.ERROR, (error) => { throw new Error(error); });
   process.on(IPC_MESSAGES.EXIT, () => { transport.onbeforeunload(); });

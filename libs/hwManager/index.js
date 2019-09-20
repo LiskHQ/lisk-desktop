@@ -128,6 +128,17 @@ class HwManager {
     });
   }
 
+  pinCallback(type, callback) {
+    const { receiver } = this.pubSub;
+    receiver.once(IPC_MESSAGES.VALIDATE_TREZOR_PIN, (event, { pin }) => {
+      if (pin) {
+        callback(null, pin);
+      } else {
+        callback('pin_not_provided_from_ui', null);
+      }
+    });
+  }
+
   /**
    * Start listeners set by setTransport
    */
@@ -137,6 +148,7 @@ class HwManager {
         manufacturers[key].listener(this.transports[key], {
           add: data => this.addDevice(data),
           remove: data => this.removeDevice(data),
+          pinCallback: (type, callback) => this.pinCallback(type, callback),
         });
       } catch (e) {
         throw e;
