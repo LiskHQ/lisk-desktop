@@ -13,6 +13,7 @@ import reactI18next from 'react-i18next';
 import ReactPiwik from 'react-piwik';
 import crypto from 'crypto';
 import ReactRouterDom from 'react-router-dom';
+import * as ReactRedux from 'react-redux';
 // TODO remove next line after upgrading node version to at least 7
 import 'es7-object-polyfill';
 
@@ -46,6 +47,8 @@ ReactRouterDom.withRouter = jest.fn(() => (Component => (
     />
   )
 )));
+
+ReactRedux.connect = jest.fn(() => (Component => Component));
 
 i18next.t = function (key, o) {
   return key.replace(/{{([^{}]*)}}/g, (a, b) => {
