@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import FlashMessageHolder from '../toolbox/flashMessage/holder';
-import initializationMessage, { InitializationMessageRenderer } from './initializationMessage';
+import InitializationMessage, { InitializationMessageRenderer } from './initializationMessage';
 
 jest.fn('../toolbox/flasheMessage/holder');
 
@@ -39,7 +39,7 @@ describe('InitializationMessage', () => {
   });
 
   it('should call FlashMessageHolder.addMessage', (done) => {
-    wrapper = mount(<initializationMessage {...props} />);
+    wrapper = mount(<InitializationMessage {...props} />);
     setImmediate(() => {
       expect(FlashMessageHolder.addMessage).toBeCalled();
       done();
