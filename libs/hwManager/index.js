@@ -134,7 +134,7 @@ class HwManager {
       if (pin) {
         callback(null, pin);
       } else {
-        callback('pin_not_provided_from_ui', null);
+        callback(IPC_MESSAGES.MISSING_PIN, null);
       }
     });
   }

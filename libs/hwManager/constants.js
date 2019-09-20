@@ -18,6 +18,7 @@ export const IPC_MESSAGES = {
   HW_CONNECTED: 'hwConnected',
   HW_DISCONNECTED: 'hwDisconnected',
   VALIDATE_TREZOR_PIN: 'validateTrezorPin',
+  MISSING_PIN: 'pin_not_provided_from_ui',
 };
 export const FUNCTION_TYPES = {
   [IPC_MESSAGES.GET_PUBLICK_KEY]: 'getPublicKey',
