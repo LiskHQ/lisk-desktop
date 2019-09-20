@@ -16,6 +16,7 @@ import ReactRouterDom from 'react-router-dom';
 import * as ReactRedux from 'react-redux';
 // TODO remove next line after upgrading node version to at least 7
 import 'es7-object-polyfill';
+import defaultState from '../test/constants/defaultState';
 
 require('jest-localstorage-mock');
 
@@ -49,6 +50,7 @@ ReactRouterDom.withRouter = jest.fn(() => (Component => (
 )));
 ReactRouterDom.NavLink = ReactRouterDom.Link;
 
+
 ReactRedux.connect = jest.fn((mapStateToProps, mapDispatchToProps = {}) => ((Component) => {
   function MockConnect(props) {
     return (
@@ -57,6 +59,10 @@ ReactRedux.connect = jest.fn((mapStateToProps, mapDispatchToProps = {}) => ((Com
           ...acc,
           [key]: jest.fn(),
         }), {})
+        ),
+        ...(typeof mapStateToProps === 'function'
+          ? mapStateToProps(defaultState, props)
+          : {}
         ),
         ...props,
       }}

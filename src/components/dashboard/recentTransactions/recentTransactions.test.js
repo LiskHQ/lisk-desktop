@@ -1,7 +1,8 @@
+import { MemoryRouter as Router } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { mount } from 'enzyme';
-import PropTypes from 'prop-types';
-import { MemoryRouter as Router } from 'react-router-dom';
+import EmptyState from '../../toolbox/box/emptyState';
 import RecentTransactions from './recentTransactions';
 import store from '../../../store';
 
@@ -134,7 +135,7 @@ describe('Recent Transactions', () => {
     expect(wrapper).toContainMatchingElement('TransactionAmount');
     expect(wrapper).toContainMatchingElements(1, 'AccountVisual');
     expect(wrapper).toContainMatchingElements(4, 'img');
-    expect(wrapper).not.toContainMatchingElement('EmptyState');
+    expect(wrapper).not.toContainMatchingElement(EmptyState);
   });
 
   it('Should render Recent Transactions properly with BTC active token', () => {
@@ -150,7 +151,7 @@ describe('Recent Transactions', () => {
     expect(wrapper).toContainMatchingElement('TransactionAmount');
     expect(wrapper).not.toContainMatchingElement('AccountVisual');
     expect(wrapper).not.toContainMatchingElement('img');
-    expect(wrapper).not.toContainMatchingElement('EmptyState');
+    expect(wrapper).not.toContainMatchingElement(EmptyState);
   });
 
   it('Should render Recent Transactions with empty state', () => {
@@ -166,7 +167,7 @@ describe('Recent Transactions', () => {
     });
     wrapper.update();
     expect(wrapper).not.toContainMatchingElement('TransactionList');
-    expect(wrapper).toContainMatchingElement('EmptyState');
+    expect(wrapper).toContainMatchingElement(EmptyState);
   });
 
   it('Should getTransactions if mounted with props.transactions empty', () => {
