@@ -2,7 +2,7 @@ import { useFakeTimers } from 'sinon';
 import account from './account';
 import accounts from '../../../test/constants/accounts';
 import actionTypes from '../../constants/actions';
-import { lockDuration } from '../../constants/account';
+import accountConst from '../../constants/account';
 
 
 describe('Reducer: account(state, action)', () => {
@@ -64,7 +64,7 @@ describe('Reducer: account(state, action)', () => {
     const changedAccount = account(state, action);
     expect(changedAccount).toEqual({
       ...state,
-      expireTime: clock.now + lockDuration,
+      expireTime: clock.now + accountConst.lockDuration,
     });
     clock.restore();
   });
