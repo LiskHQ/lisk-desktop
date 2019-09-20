@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import Box from '../../toolbox/box';
 import styles from './transactionDetailView.css';
 import routes from '../../../constants/routes';
@@ -61,4 +61,4 @@ const transactionVotes = ({ votes, t }) => {
   );
 };
 
-export default translate()(transactionVotes);
+export default withTranslation()(transactionVotes);

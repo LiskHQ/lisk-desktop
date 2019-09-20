@@ -1,5 +1,5 @@
 import React from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import FlashMessage from '../toolbox/flashMessage/flashMessage';
 import { TertiaryButton } from '../toolbox/buttons/button';
@@ -37,4 +37,4 @@ NewReleaseMessage.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default translate()(NewReleaseMessage);
+export default withTranslation()(NewReleaseMessage);

@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { dynamicFeesRetrieved } from '../../../actions/service';
 import { getActiveTokenAccount } from '../../../utils/account';
 import Form from './form';
@@ -17,4 +17,4 @@ const mapDispatchToProps = {
   dynamicFeesRetrieved,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Form));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Form));

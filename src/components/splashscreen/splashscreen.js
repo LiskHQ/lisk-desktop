@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { to } from 'await-to-js';
 import routes from '../../constants/routes';
 import { getAutoLogInData, findMatchingLoginNetwork } from '../../utils/login';
@@ -142,4 +142,4 @@ class Splashscreen extends React.Component {
   }
 }
 
-export default translate()(Splashscreen);
+export default withTranslation()(Splashscreen);

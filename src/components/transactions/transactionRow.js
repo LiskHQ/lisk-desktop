@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import TransactionTypeFigure from './typeFigure/TransactionTypeFigure';
 import TransactionAddress from './address/TransactionAddress';
 import TransactionAmount from './amount/TransactionAmount';
@@ -115,4 +115,4 @@ TransactionRow.defaultProps = {
   columnClassNames: {},
 };
 
-export default translate()(TransactionRow);
+export default withTranslation()(TransactionRow);

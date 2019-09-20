@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { getAccount } from '../../../utils/api/account';
 import { getTransactions } from '../../../utils/api/transactions';
@@ -63,4 +63,4 @@ const apis = {
 
 export default withRouter(connect(
   mapStateToProps,
-)(withData(apis)(translate()(ExplorerTransactions))));
+)(withData(apis)(withTranslation()(ExplorerTransactions))));

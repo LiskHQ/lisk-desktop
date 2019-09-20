@@ -1,6 +1,6 @@
 // istanbul ignore file
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { channels } from '../../store/reducers/settings';
 import liskServiceApi from '../../utils/api/lsk/liskService';
 import withData from '../../utils/withData';
@@ -16,4 +16,4 @@ export default connect(mapStateToProps)(withData({
     apiUtil: liskServiceApi.getNewsFeed,
     defaultData: [],
   },
-})(translate()(NewsFeed)));
+})(withTranslation()(NewsFeed)));

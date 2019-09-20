@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 
 import { getActiveTokenAccount } from '../../utils/account';
@@ -21,4 +21,4 @@ const mapDispatchToProps = {
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(translate()(SecondPassphrase)));
+)(withTranslation()(SecondPassphrase)));

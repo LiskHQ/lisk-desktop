@@ -3,7 +3,7 @@
 import React from 'react';
 import numeral from 'numeral';
 import 'numeral/locales';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import i18n from '../../i18n';
 
 const FormattedNumber = ({ val }) => {
@@ -13,4 +13,4 @@ const FormattedNumber = ({ val }) => {
   return <span>{formatedNumber}</span>;
 };
 
-export default translate()(FormattedNumber);
+export default withTranslation()(FormattedNumber);

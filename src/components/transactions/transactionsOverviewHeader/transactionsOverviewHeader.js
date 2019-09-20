@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import React from 'react';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
@@ -86,4 +86,4 @@ class transactionsHeader extends React.Component {
   }
 }
 
-export default translate()(transactionsHeader);
+export default withTranslation()(transactionsHeader);

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment/min/moment-with-locales';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import voting from '../../constants/voting';
 import Box from '../toolbox/box';
 import { formatAmountBasedOnLocale } from '../../utils/formattedNumber';
@@ -128,4 +128,4 @@ DelegateTab.defaultProps = {
   },
 };
 
-export default translate()(DelegateTab);
+export default withTranslation()(DelegateTab);

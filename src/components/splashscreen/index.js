@@ -1,6 +1,6 @@
 // istanbul ignore file
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { getActiveTokenAccount } from '../../utils/account';
 import { settingsUpdated } from '../../actions/settings';
 import { errorToastDisplayed } from '../../actions/toaster';
@@ -20,4 +20,4 @@ const mapDispatchToProps = {
   settingsUpdated,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Splashscreen));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Splashscreen));

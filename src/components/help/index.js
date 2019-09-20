@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { settingsUpdated } from '../../actions/settings';
 import Help from './help';
 
@@ -12,4 +12,4 @@ const mapDispatchToProps = {
   settingsUpdated,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Help));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Help));

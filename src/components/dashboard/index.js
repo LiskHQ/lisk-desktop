@@ -1,6 +1,6 @@
 // istanbul ignore file
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { getTransactions } from '../../actions/transactions';
 import removeDuplicateTransactions from '../../utils/transactions';
 import { getActiveTokenAccount } from '../../utils/account';
@@ -21,4 +21,4 @@ const mapDispatchToProps = {
   getTransactions,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(Dashboard));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Dashboard));
