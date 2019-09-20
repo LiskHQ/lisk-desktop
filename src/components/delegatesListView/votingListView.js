@@ -77,7 +77,9 @@ class VotingListView extends React.Component {
       q,
       refresh: offset === 0,
       callback: () => {
-        this.setState({ isLoading: false });
+        if (this.state.isLoading) {
+          this.setState({ isLoading: false });
+        }
       },
     });
   }
