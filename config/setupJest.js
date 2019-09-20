@@ -12,6 +12,7 @@ import i18next from 'i18next';
 import reactI18next from 'react-i18next';
 import ReactPiwik from 'react-piwik';
 import crypto from 'crypto';
+import ReactRouterDom from 'react-router-dom';
 // TODO remove next line after upgrading node version to at least 7
 import 'es7-object-polyfill';
 
@@ -25,6 +26,27 @@ chai.use(chaiAsPromised);
 sinonStubPromise(sinon);
 // eslint-disable-next-line no-undef
 jest.useFakeTimers();
+
+ReactRouterDom.Link = jest.fn(
+  // eslint-disable-next-line react/display-name
+  ({ children, to, ...props }) => (<a {...props} href={to}>{children}</a>),
+);
+
+ReactRouterDom.withRouter = jest.fn(() => (Component => (
+  // eslint-disable-next-line react/display-name
+  props => (
+    <Component {...{
+      history: {
+        push: jest.fn(),
+        replace: jest.fn(),
+        createHref: jest.fn(),
+      },
+      ...props,
+    }}
+    />
+  )
+)));
+
 i18next.t = function (key, o) {
   return key.replace(/{{([^{}]*)}}/g, (a, b) => {
     const r = o[b];
