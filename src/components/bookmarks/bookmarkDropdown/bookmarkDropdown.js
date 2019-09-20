@@ -188,13 +188,14 @@ class Bookmark extends React.Component {
 
   handleInputClick() {
     const { fields } = this.state;
+    const isDelegate = Object.keys(this.props.delegate).length;
 
     this.setState({
       fields: {
         ...fields,
         accountName: {
           ...fields.accountName,
-          isReadOnly: false,
+          isReadOnly: !!isDelegate,
         },
 
       },

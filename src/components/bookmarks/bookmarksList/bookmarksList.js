@@ -199,6 +199,7 @@ class BookmarksList extends React.Component {
                               onClick={e => this.editBookmark(e, bookmark)}
                               className="bookmarks-edit-button"
                               size="m"
+                              disabled={bookmark.isDelegate}
                             >
                               {t('Edit')}
                             </SecondaryButton>
