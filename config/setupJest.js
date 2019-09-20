@@ -8,6 +8,7 @@ import sinonStubPromise from 'sinon-stub-promise';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import i18next from 'i18next';
+import reactI18next from 'react-i18next';
 import ReactPiwik from 'react-piwik';
 import crypto from 'crypto';
 // TODO remove next line after upgrading node version to at least 7
@@ -36,6 +37,8 @@ i18next.init = () => ({
   language: 'en',
   changeLanguage: jest.fn(),
 });
+
+reactI18next.withTranslation = jest.fn(() => (Component => Component));
 
 const localStorageMock = (() => {
   let store = {};
