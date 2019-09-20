@@ -107,6 +107,15 @@
   }
 }
 
+.label {
+  @mixin contentNormal bold;
+
+  align-items: center;
+  color: var(--color-maastricht-blue);
+  display: flex;
+  margin: 40px 0 12px;
+}
+
 .input {
   @mixin contentLargest;
 

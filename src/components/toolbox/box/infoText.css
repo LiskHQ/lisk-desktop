@@ -1,0 +1,15 @@
+@import '../../app/variables.css';
+@import '../../app/mixins.css';
+
+.infoText {
+  @mixin contentLargest;
+
+  letter-spacing: 0.21px;
+  line-height: 25px;
+  margin: 0 0 20px;
+  text-align: left;
+
+  & strong {
+    color: var(--color-maastricht-blue);
+  }
+}
