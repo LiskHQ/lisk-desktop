@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+import React from 'react';
 import chai from 'chai';
 import sinonChai from 'sinon-chai';
 import chaiEnzyme from 'chai-enzyme';
@@ -38,7 +39,10 @@ i18next.init = () => ({
   changeLanguage: jest.fn(),
 });
 
-reactI18next.withTranslation = jest.fn(() => (Component => Component));
+reactI18next.withTranslation = jest.fn(() => (Component => (
+  // eslint-disable-next-line react/display-name
+  props => (<Component {...{ ...props, t: i18next.t }} />)
+)));
 
 const localStorageMock = (() => {
   let store = {};
