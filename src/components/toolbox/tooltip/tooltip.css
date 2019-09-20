@@ -9,6 +9,8 @@
 
 .tooltipWrapper {
   position: relative;
+  display: inline-block;
+  vertical-align: middle;
 
   &:global(.showOnBottom),
   &:global(.showOnTop) {

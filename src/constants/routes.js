@@ -15,6 +15,7 @@ import SecondPassphrase from '../components/secondPassphrase';
 import Send from '../components/send/send';
 import Setting from '../components/setting';
 import SignMessage from '../components/signMessage';
+import VerifyMessage from '../components/screens/verify-message';
 import SingleTransaction from '../components/singleTransaction';
 import Splashscreen from '../components/splashscreen';
 import TermsOfUse from '../components/termsOfUse';
@@ -87,6 +88,12 @@ export default {
     path: '/sign-message',
     component: SignMessage,
     isPrivate: true,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
+  verifyMMessage: {
+    path: '/verify-message',
+    component: VerifyMessage,
+    isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
   delegateRegistration: {
