@@ -49,7 +49,22 @@ ReactRouterDom.withRouter = jest.fn(() => (Component => (
 )));
 ReactRouterDom.NavLink = ReactRouterDom.Link;
 
-ReactRedux.connect = jest.fn(() => (Component => Component));
+ReactRedux.connect = jest.fn((mapStateToProps, mapDispatchToProps = {}) => ((Component) => {
+  function MockConnect(props) {
+    return (
+      <Component {...{
+        ...(Object.keys(mapDispatchToProps).reduce((acc, key) => ({
+          ...acc,
+          [key]: jest.fn(),
+        }), {})
+        ),
+        ...props,
+      }}
+      />
+    );
+  }
+  return MockConnect;
+}));
 
 i18next.t = function (key, o) {
   return key.replace(/{{([^{}]*)}}/g, (a, b) => {
