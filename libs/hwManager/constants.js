@@ -3,6 +3,7 @@ export const ADD_DEVICE = 'add';
 export const REMOVE_DEVICE = 'remove';
 export const RESPONSE = 'result';
 export const REQUEST = 'request';
+export const PIN = 'pin';
 export const IPC_MESSAGES = {
   CHECK_LEDGER: 'checkLedger',
   CONNECT: 'connect',
@@ -16,6 +17,7 @@ export const IPC_MESSAGES = {
   SIGN_TRANSACTION: 'SIGN_TX',
   HW_CONNECTED: 'hwConnected',
   HW_DISCONNECTED: 'hwDisconnected',
+  VALIDATE_TREZOR_PIN: 'validateTrezorPin',
 };
 export const FUNCTION_TYPES = {
   [IPC_MESSAGES.GET_PUBLICK_KEY]: 'getPublicKey',
