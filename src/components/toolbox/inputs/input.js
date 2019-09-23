@@ -26,11 +26,11 @@ const updateStatus = ({
 };
 
 const getInputClass = ({
-  className, dark, icon, isPin, status,
+  className, dark, icon, isMasked, status,
 }) => ([
   styles.input,
   status === 'error' && styles.error,
-  isPin && styles.mask,
+  isMasked && styles.mask,
   className,
   icon && styles.withIcon,
   dark && styles.dark,
@@ -48,7 +48,7 @@ const Input = ({
   dark,
   label,
   type,
-  isPin,
+  isMasked,
   ...props
 }) => {
   status = updateStatus({
@@ -75,7 +75,7 @@ const Input = ({
           type={type}
           ref={setRef}
           className={getInputClass({
-            className, dark, icon, isPin, status,
+            className, dark, icon, isMasked, status,
           })}
         />
         <Feedback
@@ -100,7 +100,7 @@ Input.propTypes = {
   dark: PropTypes.bool,
   label: PropTypes.string,
   onChange: PropTypes.func,
-  isPin: PropTypes.bool,
+  isMasked: PropTypes.bool,
 };
 
 Input.defaultProps = {
@@ -114,8 +114,8 @@ Input.defaultProps = {
   dark: false,
   label: '',
   type: 'text',
-  onChange: () => {},
-  isPin: false,
+  onChange: /* istanbul ignore next */ () => {},
+  isMasked: false,
 };
 
 export default Input;

@@ -89,7 +89,7 @@ class RequestPin extends React.Component {
         <div className={styles.content}>
           <div className={styles.gridContainer}>
             <Input
-              isPin
+              isMasked
               error={error}
               feedback={feedback}
               maxLength="9"
