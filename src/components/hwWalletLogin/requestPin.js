@@ -17,7 +17,7 @@ class RequestPin extends React.Component {
     };
 
     this.requestPin = this.requestPin.bind(this);
-    this.onSelectedDevice = this.onSelectedDevice.bind(this);
+    this.getSelectedDevice = this.getSelectedDevice.bind(this);
     this.checkIfIsCorrectDevice = this.checkIfIsCorrectDevice.bind(this);
     this.onButtonClicked = this.onButtonClicked.bind(this);
     this.onSubmitPin = this.onSubmitPin.bind(this);
@@ -39,15 +39,15 @@ class RequestPin extends React.Component {
     }
   }
 
-  onSelectedDevice() {
+  getSelectedDevice() {
     return this.props.devices.find(device => device.deviceId === this.props.deviceId);
   }
 
   checkIfIsCorrectDevice() {
     const { nextStep, deviceId } = this.props;
-    const actualDevice = this.onSelectedDevice();
-    if (actualDevice.model !== 'Trezor Model One') nextStep({ deviceId });
-    this.requestPin();
+    const selectedDevice = this.getSelectedDevice();
+    if (selectedDevice.model !== 'Trezor Model One') nextStep({ deviceId });
+    else this.requestPin();
   }
 
   retry() {
@@ -69,7 +69,7 @@ class RequestPin extends React.Component {
   render() {
     const { error, feedback, pin } = this.state;
     const { t, history } = this.props;
-    const device = this.onSelectedDevice();
+    const device = this.getSelectedDevice();
 
     return (
       <div>
