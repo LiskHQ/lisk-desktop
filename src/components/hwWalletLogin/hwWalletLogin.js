@@ -17,6 +17,7 @@ class HardwareWalletLogin extends React.Component {
     this.state = { devices: [] };
 
     this.deviceListener = subscribeToDevicesList(this.updateDeviceList.bind(this));
+    this.goBack = this.goBack.bind(this);
   }
 
   async componentDidMount() {
