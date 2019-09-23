@@ -3,7 +3,6 @@ import { TertiaryButton } from '../toolbox/buttons/button';
 import { checkIfInsideLiskApp } from '../../utils/hwManager';
 import Illustration from '../toolbox/illustration';
 import externalLinks from '../../constants/externalLinks';
-import routes from '../../constants/routes';
 
 class UnlockDevice extends React.Component {
   constructor() {
@@ -54,7 +53,7 @@ class UnlockDevice extends React.Component {
   }
 
   render() {
-    const { t, history } = this.props;
+    const { t, goBack } = this.props;
     const selectedDevice = this.selectedDevice;
     return (!this.state.isLoading && !!selectedDevice.model) ? (
       <div>
@@ -71,7 +70,7 @@ class UnlockDevice extends React.Component {
           </a>
         </p>
         <Illustration name="ledgerNanoLight" />
-        <TertiaryButton onClick={() => { history.push(routes.splashscreen.path); }}>
+        <TertiaryButton onClick={goBack}>
           {t('Go back')}
         </TertiaryButton>
       </div>

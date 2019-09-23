@@ -3,7 +3,6 @@ import externalLinks from '../../constants/externalLinks';
 import { Input } from '../toolbox/inputs';
 import { getPublicKey, validateTrezorOnePin } from '../../utils/hwManager';
 import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
-import routes from '../../constants/routes';
 import styles from './requestPin.css';
 
 class RequestPin extends React.Component {
@@ -68,7 +67,7 @@ class RequestPin extends React.Component {
 
   render() {
     const { error, feedback, pin } = this.state;
-    const { t, history } = this.props;
+    const { t, goBack } = this.props;
     const device = this.getSelectedDevice();
 
     return (
@@ -125,7 +124,7 @@ class RequestPin extends React.Component {
               </PrimaryButton>
               <TertiaryButton
                 className="tertiary-btn"
-                onClick={() => { history.push(routes.splashscreen.path); }}
+                onClick={goBack}
               >
                 {t('Go back')}
               </TertiaryButton>

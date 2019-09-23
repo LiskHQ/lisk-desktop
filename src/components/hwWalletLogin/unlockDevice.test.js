@@ -20,9 +20,7 @@ describe('Unlock Device', () => {
       t: v => v,
       nextStep: jest.fn(),
       prevStep: jest.fn(),
-      history: {
-        push: jest.fn(),
-      },
+      goBack: jest.fn(),
     };
   });
 
@@ -34,7 +32,7 @@ describe('Unlock Device', () => {
     setImmediate(() => {
       wrapper.update();
       wrapper.find('button').simulate('click');
-      expect(props.history.push).toBeCalled();
+      expect(props.goBack).toBeCalled();
       done();
     });
   });

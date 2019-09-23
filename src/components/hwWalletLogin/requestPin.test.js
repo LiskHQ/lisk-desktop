@@ -18,9 +18,7 @@ describe('Request PIN Component', () => {
     t: v => v,
     nextStep: jest.fn(),
     prevStep: jest.fn(),
-    history: {
-      push: jest.fn(),
-    },
+    goBack: jest.fn(),
     deviceId: 4,
   };
 
@@ -71,7 +69,7 @@ describe('Request PIN Component', () => {
 
   it('Should go to splashscreen if do click in Go Back', () => {
     wrapper.find('button.tertiary-btn').simulate('click');
-    expect(props.history.push).toBeCalled();
+    expect(props.goBack).toBeCalled();
   });
 
   it('Should skip the page and go to next page', () => {
