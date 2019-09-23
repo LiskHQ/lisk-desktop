@@ -15,21 +15,19 @@ class RequestPin extends React.Component {
       feedback: '',
     };
 
-    this.requestPin = this.requestPin.bind(this);
-    this.getSelectedDevice = this.getSelectedDevice.bind(this);
-    this.checkIfIsCorrectDevice = this.checkIfIsCorrectDevice.bind(this);
     this.onButtonClicked = this.onButtonClicked.bind(this);
     this.onSubmitPin = this.onSubmitPin.bind(this);
-    this.retry = this.retry.bind(this);
   }
 
   componentDidMount() {
-    this.checkIfIsCorrectDevice();
+    const { nextStep, deviceId } = this.props;
+    if (this.selectedDevice.model !== 'Trezor Model One') nextStep({ deviceId });
+    else this.checkDeviceUnlocked();
   }
 
-  async requestPin() {
-    const { t } = this.props;
-    const deviceId = this.props.deviceId;
+  async checkDeviceUnlocked() {
+    const { t, deviceId } = this.props;
+    this.setState({ error: false, feedback: '' });
     const res = await getPublicKey({ index: 0, deviceId });
     if (res) {
       this.props.nextStep({ deviceId });
@@ -38,25 +36,13 @@ class RequestPin extends React.Component {
     }
   }
 
-  getSelectedDevice() {
+  get selectedDevice() {
     return this.props.devices.find(device => device.deviceId === this.props.deviceId);
-  }
-
-  checkIfIsCorrectDevice() {
-    const { nextStep, deviceId } = this.props;
-    const selectedDevice = this.getSelectedDevice();
-    if (selectedDevice.model !== 'Trezor Model One') nextStep({ deviceId });
-    else this.requestPin();
-  }
-
-  retry() {
-    this.setState({ error: false, feedback: '' });
-    this.requestPin();
   }
 
   onButtonClicked(e) {
     e.stopPropagation();
-    if (this.state.error) this.retry();
+    if (this.state.error) this.checkDeviceUnlocked();
     this.setState({ pin: `${this.state.pin}${e.target.value}` });
   }
 
@@ -68,7 +54,7 @@ class RequestPin extends React.Component {
   render() {
     const { error, feedback, pin } = this.state;
     const { t, goBack } = this.props;
-    const device = this.getSelectedDevice();
+    const device = this.selectedDevice;
 
     return (
       <div>
