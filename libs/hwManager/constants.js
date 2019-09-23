@@ -17,7 +17,7 @@ export const IPC_MESSAGES = {
   SIGN_TRANSACTION: 'SIGN_TX',
   HW_CONNECTED: 'hwConnected',
   HW_DISCONNECTED: 'hwDisconnected',
-  VALIDATE_TREZOR_PIN: 'validateTrezorPin',
+  VALIDATE_PIN: 'validateTrezorPin',
   MISSING_PIN: 'pin_not_provided_from_ui',
 };
 export const FUNCTION_TYPES = {

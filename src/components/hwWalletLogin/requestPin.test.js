@@ -47,7 +47,7 @@ describe('Request PIN Component', () => {
     wrapper.find('button.squareBtn').at(4).simulate('click');
     wrapper.find('button.squareBtn').at(6).simulate('click');
     wrapper.find('button.primary-btn').simulate('click');
-    expect(hwManager.validateTrezorOnePin).toBeCalled();
+    expect(hwManager.validatePin).toBeCalled();
     wrapper.update();
     const PK = await hwManager.getPublicKey({ index: 0, deviceId: 4 });
     expect(PK).toEqual('abc123');
@@ -62,7 +62,7 @@ describe('Request PIN Component', () => {
     wrapper.find('button.squareBtn').at(4).simulate('click');
     wrapper.find('button.squareBtn').at(6).simulate('click');
     wrapper.find('button.primary-btn').simulate('click');
-    expect(hwManager.validateTrezorOnePin).toBeCalled();
+    expect(hwManager.validatePin).toBeCalled();
     const PK = await hwManager.getPublicKey({ index: 0, deviceId: 4 });
     expect(PK).toEqual('');
   });

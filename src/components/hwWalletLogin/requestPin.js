@@ -1,7 +1,7 @@
 import React from 'react';
 import externalLinks from '../../constants/externalLinks';
 import { Input } from '../toolbox/inputs';
-import { getPublicKey, validateTrezorOnePin } from '../../utils/hwManager';
+import { getPublicKey, validatePin } from '../../utils/hwManager';
 import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import styles from './requestPin.css';
 
@@ -48,7 +48,7 @@ class RequestPin extends React.Component {
 
   onSubmitPin(e) {
     e.preventDefault();
-    validateTrezorOnePin(this.state.pin);
+    validatePin(this.state.pin);
   }
 
   render() {

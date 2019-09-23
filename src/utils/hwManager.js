@@ -8,7 +8,7 @@ import {
   subscribeToDeviceConnceted,
   subscribeToDeviceDisonnceted,
   subscribeToDevicesList,
-  validateTrezorOnePin,
+  validatePin,
 } from '../../libs/hwManager/communication';
 import { splitVotesIntoRounds } from './voting';
 
@@ -109,5 +109,5 @@ export {
   subscribeToDeviceConnceted,
   subscribeToDeviceDisonnceted,
   subscribeToDevicesList,
-  validateTrezorOnePin,
+  validatePin,
 };

@@ -130,7 +130,7 @@ class HwManager {
 
   pinCallback(type, callback) {
     const { receiver } = this.pubSub;
-    receiver.once(IPC_MESSAGES.VALIDATE_TREZOR_PIN, (event, { pin }) => {
+    receiver.once(IPC_MESSAGES.VALIDATE_PIN, (event, { pin }) => {
       if (pin) {
         callback(null, pin);
       } else {

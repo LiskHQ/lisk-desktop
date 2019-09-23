@@ -107,8 +107,8 @@ const subscribeToDevicesList = (fn) => {
   };
 };
 
-const validateTrezorOnePin = (pin) => {
-  IPC.send(IPC_MESSAGES.VALIDATE_TREZOR_PIN, { pin });
+const validatePin = (pin) => {
+  IPC.send(IPC_MESSAGES.VALIDATE_PIN, { pin });
 };
 
 export {
@@ -120,5 +120,5 @@ export {
   subscribeToDeviceConnceted,
   subscribeToDeviceDisonnceted,
   subscribeToDevicesList,
-  validateTrezorOnePin,
+  validatePin,
 };
