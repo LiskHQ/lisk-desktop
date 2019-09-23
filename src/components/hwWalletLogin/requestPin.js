@@ -106,7 +106,7 @@ class RequestPin extends React.Component {
                 onClick={this.onSubmitPin}
                 disabled={error}
               >
-                {t('Enter PIN')}
+                {t('Unlock')}
               </PrimaryButton>
               <TertiaryButton
                 className="tertiary-btn"
