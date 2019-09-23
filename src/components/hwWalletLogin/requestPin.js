@@ -1,8 +1,9 @@
+import { to } from 'await-to-js';
 import React from 'react';
-import externalLinks from '../../constants/externalLinks';
 import { Input } from '../toolbox/inputs';
-import { getPublicKey, validatePin } from '../../utils/hwManager';
 import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
+import { getPublicKey, validatePin } from '../../utils/hwManager';
+import externalLinks from '../../constants/externalLinks';
 import styles from './requestPin.css';
 
 class RequestPin extends React.Component {
@@ -52,13 +53,25 @@ class RequestPin extends React.Component {
     this.setState({ pin: value });
   }
 
-  onSubmitPin(e) {
+  async onSubmitPin(e) {
     e.preventDefault();
-    validatePin(this.state.pin);
+    const { pin } = this.state;
+    const { deviceId, t, nextStep } = this.props;
+    this.setState({ isLoading: true });
+    const [error] = await to(validatePin({ deviceId, pin }));
+    if (error) {
+      this.setState({
+        isLoading: false, error: true, feedback: t('Invalid PIN'), pin: '',
+      });
+    } else {
+      nextStep({ deviceId });
+    }
   }
 
   render() {
-    const { error, feedback, pin } = this.state;
+    const {
+      error, feedback, pin, isLoading,
+    } = this.state;
     const { t, goBack } = this.props;
     const device = this.selectedDevice;
 
@@ -81,6 +94,7 @@ class RequestPin extends React.Component {
           <div className={styles.gridContainer}>
             <Input
               isMasked
+              isLoading={isLoading}
               error={error}
               feedback={feedback}
               maxLength="9"

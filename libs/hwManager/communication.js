@@ -107,8 +107,9 @@ const subscribeToDevicesList = (fn) => {
   };
 };
 
-const validatePin = (pin) => {
+const validatePin = ({ deviceId, pin }) => {
   IPC.send(IPC_MESSAGES.VALIDATE_PIN, { pin });
+  return getPublicKey({ index: 0, deviceId });
 };
 
 export {
