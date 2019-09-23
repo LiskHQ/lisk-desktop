@@ -2,7 +2,7 @@
 import React from 'react';
 import i18next from 'i18next';
 
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import routes from '../../constants/routes';
@@ -214,4 +214,4 @@ class Login extends React.Component {
   }
 }
 
-export default translate()(Login);
+export default withTranslation()(Login);

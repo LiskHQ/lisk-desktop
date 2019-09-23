@@ -1,8 +1,9 @@
+import { BrowserRouter as Router } from 'react-router-dom';
 import React from 'react';
 import { mount } from 'enzyme';
-import { BrowserRouter as Router } from 'react-router-dom';
-import BookmarksList from './bookmarksList';
 import { tokenMap } from '../../../constants/tokens';
+import BookmarksList from './bookmarksList';
+import EmptyState from '../../toolbox/box/emptyState';
 import bookmarks from '../../../../test/constants/bookmarks';
 
 describe('BookmarksList', () => {
@@ -27,7 +28,7 @@ describe('BookmarksList', () => {
   it('should render properly', () => {
     expect(wrapper).toContainMatchingElement('.bookmarks-list');
     expect(wrapper).toContainMatchingElement('.bookmark-list-container');
-    expect(wrapper).not.toContainMatchingElement('EmptyState');
+    expect(wrapper).not.toContainMatchingElement(EmptyState);
   });
 
   it('should render LSK bookmakrs ONLY', () => {
@@ -59,6 +60,6 @@ describe('BookmarksList', () => {
     });
     wrapper.update();
     expect(wrapper).not.toContainMatchingElement('.bookmark-list-row');
-    expect(wrapper).toContainMatchingElement('EmptyState');
+    expect(wrapper).toContainMatchingElement(EmptyState);
   });
 });

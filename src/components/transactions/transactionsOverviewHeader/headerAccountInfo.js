@@ -1,5 +1,5 @@
 import React from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import AccountVisual from '../../toolbox/accountVisual';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import styles from './transactionsOverviewHeader.css';
@@ -40,4 +40,4 @@ const headerAccountInfo = ({
   );
 };
 
-export default translate()(headerAccountInfo);
+export default withTranslation()(headerAccountInfo);

@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import Tooltip from 'react-toolbox/lib/tooltip';
 import theme from 'react-toolbox/lib/tooltip/theme.css';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import i18n from '../../../i18n';
 
 const _convertTimeFromFirstBlock = value =>
@@ -47,25 +47,25 @@ export const TooltipWrapper = (props) => {
   return <Div {...props} />;
 };
 
-export const Time = translate()((props) => {
+export const Time = withTranslation()((props) => {
   moment.locale(i18n.language);
   const time = moment(_convertTimeFromFirstBlock(props.label));
   return <span>{time.fromNow(true)}</span>;
 });
 
-export const DateFromTimestamp = translate()((props) => {
+export const DateFromTimestamp = withTranslation()((props) => {
   moment.locale(i18n.language);
   const day = moment(_convertTimeFromFirstBlock(props.time));
   return (<span className="date">{day.format('ll')}</span>);
 });
 
-export const TimeFromTimestamp = translate()((props) => {
+export const TimeFromTimestamp = withTranslation()((props) => {
   moment.locale(i18n.language);
   const day = moment(_convertTimeFromFirstBlock(props.time));
   return (<span className="time">{day.format('LTS')}</span>);
 });
 
-export const TooltipTime = translate()((props) => {
+export const TooltipTime = withTranslation()((props) => {
   moment.locale(i18n.language);
   const time = moment(_convertTimeFromFirstBlock(props.label));
   return (
@@ -80,7 +80,7 @@ const timestampConverters = {
   BTC: timestamp => timestamp,
 };
 
-export const DateTimeFromTimestamp = translate()((props) => {
+export const DateTimeFromTimestamp = withTranslation()((props) => {
   moment.locale(i18n.language);
   const datetime = moment(timestampConverters[props.token || 'LSK'](props.time));
   return (

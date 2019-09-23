@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import React from 'react';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
@@ -13,6 +13,20 @@ import routes from '../../../constants/routes';
 import styles from './transactionsOverviewHeader.css';
 
 class transactionsHeader extends React.Component {
+  constructor(props) {
+    super(props);
+    this.setDropdownRef = this.setDropdownRef.bind(this);
+    this.toggleDropdown = this.toggleDropdown.bind(this);
+  }
+
+  setDropdownRef(node) {
+    this.dropdown = node;
+  }
+
+  toggleDropdown() {
+    this.dropdown.toggleDropdown();
+  }
+
   render() {
     const {
       bookmarks, address, t, delegate = {}, activeToken, detailAccount,
@@ -68,8 +82,10 @@ class transactionsHeader extends React.Component {
             <DropdownButton
               buttonClassName="bookmark-account-button"
               className={`${styles.bookmarkDropdown} bookmark-account`}
-              buttonLabel={isBookmark ? t('Account bookmarked') : t('Bookmark account')}
-              ButtonComponent={isBookmark ? SecondaryButton : PrimaryButton}
+              buttonLabel={isBookmark ? t('Edit bookmark') : t('Bookmark')}
+              ButtonComponent={PrimaryButton}
+              align="right"
+              ref={this.setDropdownRef}
             >
               <BookmarkDropdown
                 token={activeToken}
@@ -77,6 +93,7 @@ class transactionsHeader extends React.Component {
                 address={address}
                 detailAccount={detailAccount}
                 isBookmark={isBookmark}
+                onSubmitClick={this.toggleDropdown}
               />
             </DropdownButton>
           </div>
@@ -86,4 +103,4 @@ class transactionsHeader extends React.Component {
   }
 }
 
-export default translate()(transactionsHeader);
+export default withTranslation()(transactionsHeader);

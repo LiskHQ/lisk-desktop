@@ -3,7 +3,6 @@ import { mount } from 'enzyme';
 import SelectAccount from './selectAccount';
 import * as hwManager from '../../../utils/hwManager';
 
-jest.mock('../../../constants/routes.js');
 jest.mock('../../../utils/hwManager');
 
 describe('Select Account', () => {

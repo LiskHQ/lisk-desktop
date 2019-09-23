@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import styles from './notFound.css';
 import { PrimaryButton } from '../toolbox/buttons/button';
 import Illustration from '../toolbox/illustration';
@@ -22,4 +22,4 @@ const NotFound = ({ t }) => (
   </section>
 );
 
-export default translate()(NotFound);
+export default withTranslation()(NotFound);

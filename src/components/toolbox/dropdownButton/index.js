@@ -26,7 +26,7 @@ class DropdownButton extends React.Component {
   render() {
     const { shownDropdown } = this.state;
     const {
-      ButtonComponent, buttonLabel, buttonClassName, className, children, align, ref, size,
+      ButtonComponent, buttonLabel, buttonClassName, className, children, align, size,
     } = this.props;
     return (
       <React.Fragment>
@@ -34,7 +34,6 @@ class DropdownButton extends React.Component {
           className={styles.wrapper}
           disabled={!shownDropdown}
           onOutsideClick={this.toggleDropdown}
-          ref={ref}
         >
           <ButtonComponent onClick={this.toggleDropdown} className={buttonClassName} size={size}>
             { buttonLabel }

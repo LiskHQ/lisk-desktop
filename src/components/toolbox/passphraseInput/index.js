@@ -1,5 +1,5 @@
 import React from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from '../icon';
 import { isValidPassphrase, getPassphraseValidationErrors } from '../../../utils/passphrase';
@@ -173,4 +173,4 @@ class passphraseInput extends React.Component {
   }
 }
 
-export default translate()(passphraseInput);
+export default withTranslation()(passphraseInput);

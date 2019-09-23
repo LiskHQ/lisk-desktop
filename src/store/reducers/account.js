@@ -1,5 +1,5 @@
 import actionTypes from '../../constants/actions';
-import { lockDuration } from '../../constants/account';
+import accountConfig from '../../constants/account';
 
 /**
  *
@@ -26,7 +26,7 @@ const account = (state = {}, action) => {
         ...action.data,
       };
     case actionTypes.passphraseUsed:
-      return { ...state, expireTime: Date.now() + lockDuration };
+      return { ...state, expireTime: Date.now() + accountConfig.lockDuration };
     case actionTypes.accountLoggedIn:
       return {
         ...action.data,

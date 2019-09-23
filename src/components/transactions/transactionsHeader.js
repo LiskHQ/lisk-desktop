@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import TableRow from '../toolbox/table/tableRow';
 
 const TransactionsHeader = ({
@@ -25,4 +25,4 @@ const TransactionsHeader = ({
   </TableRow>
 );
 
-export default translate()(TransactionsHeader);
+export default withTranslation()(TransactionsHeader);

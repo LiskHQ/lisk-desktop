@@ -102,7 +102,27 @@ describe('Transactions Overview Header', () => {
         }}
         />
       </MemoryRouter>, options);
-      expect(wrapper.find('.bookmark-account button').first().text()).to.equal('Account bookmarked');
+      expect(wrapper.find('.bookmark-account button').first().text()).to.equal('Edit bookmark');
+    });
+
+    it('Should close dropdown after clicking on a dropdown button', () => {
+      const bookmarks = {
+        LSK: [
+          accounts.delegate,
+        ],
+        BTC: [],
+      };
+      wrapper = mount(<MemoryRouter>
+        <TransactionHeader {...{
+          ...anotherUserProps,
+          bookmarks,
+        }}
+        />
+      </MemoryRouter>, options);
+      wrapper.find('.bookmark-account-button').first().simulate('click');
+      expect(wrapper.find('Dropdown')).to.have.prop('showDropdown', true);
+      wrapper.find('.bookmark-button').last().simulate('click');
+      expect(wrapper.find('Dropdown')).to.have.prop('showDropdown', false);
     });
   });
 });
