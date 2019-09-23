@@ -32,7 +32,7 @@ const privateComponent = [
   { route: `${routes.wallet.path}`, component: TransactionsDashboard },
 ];
 
-describe('App', () => {
+describe.skip('App', () => {
   const navigateTo = addRouter(App);
   describe('renders correct routes', () => {
     const store = fakeStore({

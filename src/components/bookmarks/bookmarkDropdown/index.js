@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { bookmarkAdded, bookmarkRemoved, bookmarkUpdated } from '../../../actions/bookmarks';
 import BookmarkDropdown from './bookmarkDropdown';
 
@@ -14,4 +14,4 @@ const mapDispatchToProps = {
   bookmarkUpdated,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(BookmarkDropdown));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(BookmarkDropdown));

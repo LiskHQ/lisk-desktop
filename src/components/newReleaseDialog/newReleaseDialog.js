@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import Dialog from '../toolbox/dialog/dialog';
 import FlashMessageHolder from '../toolbox/flashMessage/holder';
 import { PrimaryButton, SecondaryButton } from '../toolbox/buttons/button';
@@ -64,4 +64,4 @@ NewReleaseDialog.propTypes = {
   t: PropTypes.func.isRequired,
 };
 
-export default translate()(NewReleaseDialog);
+export default withTranslation()(NewReleaseDialog);

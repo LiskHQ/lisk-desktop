@@ -1,5 +1,5 @@
 import React from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import AccountVisual from '../toolbox/accountVisual';
 import Box from '../toolbox/box';
 import Icon from '../toolbox/icon';
@@ -52,4 +52,4 @@ class WalletDetails extends React.Component {
   }
 }
 
-export default translate()(WalletDetails);
+export default withTranslation()(WalletDetails);

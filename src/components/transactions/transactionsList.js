@@ -1,4 +1,4 @@
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap } from '../../constants/tokens';
@@ -110,4 +110,4 @@ class TransactionsList extends React.Component {
   }
 }
 
-export default translate()(TransactionsList);
+export default withTranslation()(TransactionsList);

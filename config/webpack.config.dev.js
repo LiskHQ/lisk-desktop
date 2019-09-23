@@ -29,5 +29,6 @@ module.exports = merge(baseConfig, reactConfig, {
         NODE_ENV: null,
       },
     }),
+    new webpack.IgnorePlugin(/\.\/locale$/),
   ],
 });

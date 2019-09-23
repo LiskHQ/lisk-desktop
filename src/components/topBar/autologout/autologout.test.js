@@ -20,7 +20,7 @@ describe('Autlologout component', () => {
   });
 
   it('Should render empty component', () => {
-    expect(wrapper.html()).toBeNull();
+    expect(wrapper).toBeEmptyRender();
     wrapper.setProps({
       account: {
         expireTime: Date.now(),

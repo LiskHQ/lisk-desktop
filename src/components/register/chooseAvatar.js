@@ -1,5 +1,5 @@
 import React from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '../../constants/routes';
@@ -117,4 +117,4 @@ class ChooseAvatar extends React.Component {
   }
 }
 
-export default translate()(ChooseAvatar);
+export default withTranslation()(ChooseAvatar);

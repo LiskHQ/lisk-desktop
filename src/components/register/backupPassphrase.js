@@ -1,4 +1,4 @@
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
@@ -45,4 +45,4 @@ const BackupPassphrase = ({
   </React.Fragment>
 );
 
-export default translate()(BackupPassphrase);
+export default withTranslation()(BackupPassphrase);

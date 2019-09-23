@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { bookmarkAdded } from '../../../actions/bookmarks';
 import { getAccount } from '../../../utils/api/lsk/account';
 import AddBookmark from './addBookmark';
@@ -20,4 +20,4 @@ export default connect(mapStateToProps, mapDispatchToProps)(withData({
   account: {
     apiUtil: (liskAPIClient, params) => getAccount({ liskAPIClient, ...params }),
   },
-})(translate()(AddBookmark)));
+})(withTranslation()(AddBookmark)));

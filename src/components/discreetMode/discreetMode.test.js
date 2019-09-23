@@ -2,8 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import DiscreetMode from './discreetMode';
 
-jest.mock('../../constants/routes');
-
 describe('DiscreetMode Component', () => {
   let wrapper;
 

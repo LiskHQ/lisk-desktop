@@ -1,5 +1,5 @@
 import React from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { AutoresizeTextarea } from '../../toolbox/inputs';
 import Feedback from '../../toolbox/feedback/feedback';
 import CircularProgress from '../../toolbox/circularProgress/circularProgress';
@@ -109,4 +109,4 @@ class MessageFieldGroup extends React.Component {
   }
 }
 
-export default translate()(MessageFieldGroup);
+export default withTranslation()(MessageFieldGroup);

@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import React from 'react';
 import moment from 'moment';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { firstBlockTime } from '../../../constants/datetime';
 import { getDateTimestampFromFirstBlock, formatInputToDate } from '../../../utils/datetime';
 import { Input } from '../../toolbox/inputs';
@@ -293,4 +293,4 @@ class DateFieldGroup extends React.Component {
   }
 }
 
-export default translate()(DateFieldGroup);
+export default withTranslation()(DateFieldGroup);
