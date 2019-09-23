@@ -40,7 +40,7 @@ describe('Bookmark Component', () => {
       };
       wrapper = mount(<BookmarkDropdown {...bookmarkProps} />, options);
       expect(wrapper.find('input[name="accountName"]')).toHaveValue(account.title);
-      expect(wrapper.find('button').last()).toHaveText('Remove from bookmarks');
+      expect(wrapper.find('button').last()).toHaveText('Remove bookmark');
       wrapper.find('button').last().simulate('click');
       expect(props.bookmarkRemoved).toBeCalledWith({
         address: account.address,
