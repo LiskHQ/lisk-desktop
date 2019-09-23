@@ -35,7 +35,7 @@ describe('Request PIN Component', () => {
   it('Should render RequestPin properly when selected device is Trezor One', () => {
     expect(wrapper).toContainMatchingElement('h1');
     expect(wrapper.find('a')).toHaveText('Official guidelines');
-    expect(wrapper).toContainMatchingElement('MaskedInput');
+    expect(wrapper).toContainMatchingElement('input');
     expect(wrapper).toContainMatchingElements(9, 'button.squareBtn');
     expect(wrapper).toContainMatchingElement('button.primary-btn');
     expect(wrapper).toContainMatchingElement('button.tertiary-btn');

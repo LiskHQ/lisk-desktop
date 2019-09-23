@@ -1,6 +1,6 @@
 import React from 'react';
 import externalLinks from '../../constants/externalLinks';
-import { MaskedInput } from '../toolbox/inputs';
+import { Input } from '../toolbox/inputs';
 import { getPublicKey, validateTrezorOnePin } from '../../utils/hwManager';
 import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import routes from '../../constants/routes';
@@ -88,7 +88,8 @@ class RequestPin extends React.Component {
 
         <div className={styles.content}>
           <div className={styles.gridContainer}>
-            <MaskedInput
+            <Input
+              isPin
               error={error}
               feedback={feedback}
               maxLength="9"
