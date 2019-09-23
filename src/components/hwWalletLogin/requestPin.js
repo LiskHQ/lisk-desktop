@@ -17,6 +17,7 @@ class RequestPin extends React.Component {
 
     this.onButtonClicked = this.onButtonClicked.bind(this);
     this.onSubmitPin = this.onSubmitPin.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
   }
 
   componentDidMount() {
@@ -44,6 +45,11 @@ class RequestPin extends React.Component {
     e.stopPropagation();
     if (this.state.error) this.checkDeviceUnlocked();
     this.setState({ pin: `${this.state.pin}${e.target.value}` });
+  }
+
+  onInputChange({ target: { value } }) {
+    value = value.replace(/[^\d]/g, '');
+    this.setState({ pin: value });
   }
 
   onSubmitPin(e) {
@@ -80,6 +86,7 @@ class RequestPin extends React.Component {
               maxLength="9"
               type="password"
               value={pin}
+              onChange={this.onInputChange}
             />
 
             <div className={styles.gridSystem}>

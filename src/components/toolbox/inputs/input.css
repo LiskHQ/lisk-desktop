@@ -167,8 +167,6 @@
 }
 
 .mask {
-  color: transparent;
-  text-shadow: 0 0 0 black;
   text-align: center;
   letter-spacing: 5px !important;
   font-size: 20px !important;
