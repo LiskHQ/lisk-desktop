@@ -135,7 +135,7 @@ class Bookmark extends React.Component {
         accountName: {
           ...fields.accountName,
           feedback: '',
-          value: '',
+          value: null,
           isReadOnly: false,
         },
       },
@@ -225,7 +225,7 @@ class Bookmark extends React.Component {
               autoComplete="off"
               onChange={this.handleAccountNameChange}
               name="accountName"
-              value={fields.accountName.value}
+              value={fields.accountName.value || ''}
               placeholder={t('ie. Lisker123')}
               onClick={this.handleInputClick}
               readOnly={fields.accountName.isReadOnly}
