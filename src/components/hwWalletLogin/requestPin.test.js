@@ -6,8 +6,15 @@ import RequestPin from './requestPin';
 
 jest.mock('../../utils/hwManager');
 
+function enterPinByButtons(wrapper, pinPositions) {
+  pinPositions.split('').forEach((digit) => {
+    wrapper.find('button.squareBtn').at(Number(digit)).simulate('click');
+  });
+}
+
 describe('Request PIN Component', () => {
   let wrapper;
+  const deviceId = 4;
   const props = {
     devices: [
       { deviceId: 1, model: 'Ledger Nano S', manufactor: 'Ledger' },
@@ -19,8 +26,10 @@ describe('Request PIN Component', () => {
     nextStep: jest.fn(),
     prevStep: jest.fn(),
     goBack: jest.fn(),
-    deviceId: 4,
+    deviceId,
   };
+  const pin = '7951';
+  const pinPositions = '0246';
 
   beforeEach(() => {
     wrapper = mount(<RequestPin {...props} />);
@@ -42,14 +51,11 @@ describe('Request PIN Component', () => {
 
   it('Should go to next page if PIN is correct (get the public key)', async () => {
     hwManager.getPublicKey.mockResolvedValue('abc123');
-    wrapper.find('button.squareBtn').at(0).simulate('click');
-    wrapper.find('button.squareBtn').at(2).simulate('click');
-    wrapper.find('button.squareBtn').at(4).simulate('click');
-    wrapper.find('button.squareBtn').at(6).simulate('click');
+    enterPinByButtons(wrapper, pinPositions);
     wrapper.find('button.primary-btn').simulate('click');
-    expect(hwManager.validatePin).toBeCalled();
+    expect(hwManager.validatePin).toBeCalledWith({ pin, deviceId });
     wrapper.update();
-    const PK = await hwManager.getPublicKey({ index: 0, deviceId: 4 });
+    const PK = await hwManager.getPublicKey({ index: 0, deviceId });
     expect(PK).toEqual('abc123');
     expect(props.nextStep).toBeCalled();
   });
@@ -57,13 +63,10 @@ describe('Request PIN Component', () => {
   it('Should show error message if PIN is invalid', async () => {
     hwManager.getPublicKey.mockResolvedValue('');
     expect(wrapper).not.toContainMatchingElement('Feedback.show');
-    wrapper.find('button.squareBtn').at(0).simulate('click');
-    wrapper.find('button.squareBtn').at(2).simulate('click');
-    wrapper.find('button.squareBtn').at(4).simulate('click');
-    wrapper.find('button.squareBtn').at(6).simulate('click');
+    enterPinByButtons(wrapper, pinPositions);
     wrapper.find('button.primary-btn').simulate('click');
-    expect(hwManager.validatePin).toBeCalled();
-    const PK = await hwManager.getPublicKey({ index: 0, deviceId: 4 });
+    expect(hwManager.validatePin).toBeCalledWith({ pin, deviceId });
+    const PK = await hwManager.getPublicKey({ index: 0, deviceId });
     expect(PK).toEqual('');
   });
 
