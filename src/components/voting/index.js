@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { getActiveTokenAccount } from '../../utils/account';
 import { votePlaced } from '../../actions/voting';
@@ -15,4 +15,4 @@ const mapDispatchToProps = {
   votePlaced,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translate()(Voting)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Voting)));

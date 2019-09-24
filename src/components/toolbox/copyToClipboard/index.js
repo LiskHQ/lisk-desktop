@@ -1,6 +1,6 @@
 import React from 'react';
 import { CopyToClipboard as ReactCopyToClipboard } from 'react-copy-to-clipboard';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import Icon from '../icon';
 import styles from './copyToClipboard.css';
 import Piwik from '../../../utils/piwik';
@@ -67,4 +67,4 @@ CopyToClipboard.defaultProps = {
   containerProps: {},
 };
 
-export default (translate()(CopyToClipboard));
+export default (withTranslation()(CopyToClipboard));

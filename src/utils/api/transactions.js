@@ -4,10 +4,9 @@ import api from '.';
 import networks from '../../constants/networks';
 
 // TODO these imports are temporary until api is implemented for them
-import { send as ss, unconfirmedTransactions as ut } from './lsk/transactions';
+import { send as ss } from './lsk/transactions';
 
 export const send = ss;
-export const unconfirmedTransactions = ut;
 
 export const getTokenFromAddress = address => (
   [networks.mainnet.code, networks.testnet.code]
@@ -59,5 +58,4 @@ export default {
   getTokenFromAddress,
   getTransactions,
   send,
-  unconfirmedTransactions,
 };

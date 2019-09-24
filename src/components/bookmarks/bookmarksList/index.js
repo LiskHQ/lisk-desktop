@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import BookmarksList from './bookmarksList';
 
 const mapStateToProps = state => ({
@@ -8,4 +8,4 @@ const mapStateToProps = state => ({
   token: state.settings.token,
 });
 
-export default connect(mapStateToProps)(translate()(BookmarksList));
+export default connect(mapStateToProps)(withTranslation()(BookmarksList));

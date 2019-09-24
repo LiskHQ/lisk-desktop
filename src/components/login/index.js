@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { setDefaults, translate } from 'react-i18next';
+import { setDefaults, withTranslation } from 'react-i18next';
 
 import { getAPIClient } from '../../utils/api/network';
 import { errorToastDisplayed } from '../../actions/toaster';
@@ -15,7 +15,7 @@ setDefaults({
   bindI18n: 'languageChanged loaded',
   bindStore: 'added removed',
   nsMode: 'default',
-  translateFuncName: 't',
+  withTranslationFuncName: 't',
 });
 
 const mapStateToProps = state => ({
@@ -34,4 +34,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(translate()(Login));
+)(withTranslation()(Login));

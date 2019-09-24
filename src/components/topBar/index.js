@@ -1,7 +1,7 @@
 // istanbul ignore file
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { accountLoggedOut, accountUpdated } from '../../actions/account';
 import { settingsUpdated } from '../../actions/settings';
 import { networkSet } from '../../actions/network';
@@ -23,4 +23,4 @@ const mapDispatchToProps = {
   settingsUpdated,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(translate()(TopBar)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withTranslation()(TopBar)));

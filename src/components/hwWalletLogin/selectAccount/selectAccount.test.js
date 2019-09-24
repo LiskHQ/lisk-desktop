@@ -4,7 +4,6 @@ import SelectAccount from './selectAccount';
 import * as hwManager from '../../../utils/hwManager';
 import routes from '../../../constants/routes';
 
-jest.mock('../../../constants/routes.js');
 jest.mock('../../../utils/hwManager');
 
 describe('Select Account', () => {

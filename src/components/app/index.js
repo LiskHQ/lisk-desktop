@@ -1,3 +1,7 @@
+/* istanbul ignore file */
+// Coverage of this file is ignored because it's a central integration point
+// of the whole app. If anything goes wrong here, e2e tests will fail,
+// so it's covered by e2e tests.
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import styles from './app.css';

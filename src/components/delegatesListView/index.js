@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { voteToggled, delegatesAdded } from '../../actions/voting';
 import VotingListView from './votingListView';
 
@@ -16,4 +16,4 @@ const mapDispatchToProps = {
   }),
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate()(VotingListView));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(VotingListView));

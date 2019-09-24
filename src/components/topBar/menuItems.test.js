@@ -57,18 +57,18 @@ describe('MenuItems', () => {
       'Wallet',
       'Delegates',
     ];
-    expect(wrapper).toContainMatchingElements(3, 'Link');
-    wrapper.find('Link').forEach((link, index) => expect(link).toHaveText(expectedLinks[index]));
+    expect(wrapper).toContainMatchingElements(3, 'a');
+    wrapper.find('a').forEach((link, index) => expect(link).toHaveText(expectedLinks[index]));
   });
 
   it('renders 3 menu items but only Dashboard is enabled as user is logout', () => {
     myProps.isUserLogout = true;
     wrapper = mountWithRouter(<MenuItems {...myProps} />, myOptions);
 
-    expect(wrapper).toContainMatchingElements(3, 'Link');
-    expect(wrapper).toContainExactlyOneMatchingElement('Link.notActive');
-    expect(wrapper.find('Link').at(0)).not.toHaveClassName('notActive');
-    expect(wrapper.find('Link').at(1)).toHaveClassName('notActive');
-    expect(wrapper.find('Link').at(2)).not.toHaveClassName('notActive');
+    expect(wrapper).toContainMatchingElements(3, 'a');
+    expect(wrapper).toContainExactlyOneMatchingElement('a.notActive');
+    expect(wrapper.find('a').at(0)).not.toHaveClassName('notActive');
+    expect(wrapper.find('a').at(1)).toHaveClassName('notActive');
+    expect(wrapper.find('a').at(2)).not.toHaveClassName('notActive');
   });
 });

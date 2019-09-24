@@ -1,5 +1,5 @@
 import React from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '../../constants/routes';
@@ -44,4 +44,4 @@ const AccountCreated = ({ t, account }) => (
   </React.Fragment>
 );
 
-export default translate()(AccountCreated);
+export default withTranslation()(AccountCreated);

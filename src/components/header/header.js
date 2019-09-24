@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import React from 'react';
 import SignInHeader from './signInHeader';
 import TopBar from '../topBar';

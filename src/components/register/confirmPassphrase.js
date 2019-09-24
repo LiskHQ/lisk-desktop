@@ -1,6 +1,6 @@
 import React from 'react';
 import fillWordsList from 'bitcore-mnemonic/lib/words/english';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import registerStyles from './register.css';
@@ -183,4 +183,4 @@ class ConfirmPassphrase extends React.Component {
   }
 }
 
-export default translate()(ConfirmPassphrase);
+export default withTranslation()(ConfirmPassphrase);

@@ -1,4 +1,4 @@
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../toolbox/timestamp';
@@ -172,4 +172,4 @@ class SingleTransaction extends React.Component {
   }
 }
 
-export default translate()(SingleTransaction);
+export default withTranslation()(SingleTransaction);

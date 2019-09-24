@@ -1,5 +1,5 @@
 import React from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import moment from 'moment/min/moment-with-locales';
 import keyCodes from '../../../constants/keyCodes';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
@@ -127,4 +127,4 @@ class filterContainer extends React.Component {
   }
 }
 
-export default translate()(filterContainer);
+export default withTranslation()(filterContainer);

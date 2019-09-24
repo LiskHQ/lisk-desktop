@@ -1,5 +1,5 @@
 import React from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { Line as LineChart } from 'react-chartjs-2';
 import Box from '../toolbox/box';
 import styles from './balanceChart.css';
@@ -58,4 +58,4 @@ class BalanceGraph extends React.PureComponent {
   }
 }
 
-export default translate()(BalanceGraph);
+export default withTranslation()(BalanceGraph);

@@ -1,4 +1,4 @@
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import React from 'react';
 import AccountInfo from './accountInfo';
 import Box from '../../toolbox/box';
@@ -99,4 +99,4 @@ TransactionDetailView.defaultProps = {
   children: null,
 };
 
-export default translate()(TransactionDetailView);
+export default withTranslation()(TransactionDetailView);

@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import React from 'react';
 import Lisk from '@liskhq/lisk-client';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import { to } from 'await-to-js';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
@@ -321,4 +321,4 @@ class Header extends React.Component {
 }
 
 Header.displayName = 'SigninHeader';
-export default translate()(withRouter(Header));
+export default withTranslation()(withRouter(Header));

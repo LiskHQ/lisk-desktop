@@ -1,5 +1,5 @@
 import React from 'react';
-import { translate } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { PrimaryButton, TertiaryButton } from '../toolbox/buttons/button';
 import styles from './errorBoundary.css';
 import Piwik from '../../utils/piwik';
@@ -55,4 +55,4 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-export default translate()(ErrorBoundary);
+export default withTranslation()(ErrorBoundary);

@@ -6,7 +6,7 @@ import externalLinks from '../../constants/externalLinks';
 import routes from '../../constants/routes';
 import { formatAmountBasedOnLocale } from '../../utils/formattedNumber';
 
-const InitializationMessage = ({
+export const InitializationMessageRenderer = ({
   account,
   history,
   settings,
@@ -27,11 +27,8 @@ const InitializationMessage = ({
     history.push(`${routes.send.path}?recipient=${account.address}&amount=${amount}&reference=Account initialization`);
   };
 
-  return FlashMessageHolder.addMessage((
-    <FlashMessage
-      shouldShow={shouldShowInitialization}
-    >
-
+  return (
+    <FlashMessage shouldShow={shouldShowInitialization}>
       <FlashMessage.Content
         icon="warningIcon"
         link={{
@@ -49,7 +46,14 @@ const InitializationMessage = ({
       </FlashMessage.Button>
 
     </FlashMessage>
-  ), 'InitializationMessage');
+  );
+};
+
+const InitializationMessage = (props) => {
+  setImmediate(() => {
+    FlashMessageHolder.addMessage(<InitializationMessageRenderer {...props} />, 'InitializationMessage');
+  });
+  return null;
 };
 
 export default InitializationMessage;
