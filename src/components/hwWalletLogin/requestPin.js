@@ -76,7 +76,7 @@ class RequestPin extends React.Component {
     const device = this.selectedDevice;
 
     return (
-      <div>
+      <div className={styles.wrapper}>
         <h1>{t('{{deviceModel}} connected! Please provide a PIN number', { deviceModel: device.model })}</h1>
         <p>
           { t('If you’re not sure how to do this please follow the') }

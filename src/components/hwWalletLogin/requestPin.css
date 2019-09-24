@@ -1,5 +1,18 @@
 @import '../app/variables.css';
 
+@keyframes delayedFadeIn {
+  0% { opacity: 0; }
+  80% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.wrapper {
+  animation-name: delayedFadeIn;
+  animation-duration: var(--animation-speed-fast);
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+}
+
 .content {
   width: 100%;
   display: flex;
