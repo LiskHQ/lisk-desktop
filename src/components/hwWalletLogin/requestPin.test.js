@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-// import { BrowserRouter as Router } from 'react-router-dom';
-import * as hwManager from '../../utils/hwManager';
 import RequestPin from './requestPin';
+import accounts from '../../../test/constants/accounts';
+import * as hwManager from '../../utils/hwManager';
 
 jest.mock('../../utils/hwManager');
 
@@ -30,6 +30,7 @@ describe('Request PIN Component', () => {
   };
   const pin = '7951';
   const pinPositions = '0246';
+  const publicKey = accounts.genesis.publicKey;
 
   beforeEach(() => {
     wrapper = mount(<RequestPin {...props} />);
@@ -50,18 +51,34 @@ describe('Request PIN Component', () => {
   });
 
   it('Should go to next page if PIN is correct (get the public key)', async () => {
-    hwManager.getPublicKey.mockResolvedValue('abc123');
+    hwManager.getPublicKey.mockResolvedValue(publicKey);
+    hwManager.validatePin.mockResolvedValue(publicKey);
     enterPinByButtons(wrapper, pinPositions);
     wrapper.find('button.primary-btn').simulate('click');
     expect(hwManager.validatePin).toBeCalledWith({ pin, deviceId });
     wrapper.update();
     const PK = await hwManager.getPublicKey({ index: 0, deviceId });
-    expect(PK).toEqual('abc123');
+    expect(PK).toEqual(publicKey);
     expect(props.nextStep).toBeCalled();
   });
 
+  it('Should go to next page if correct PIN is entered by keyboard', async () => {
+    hwManager.getPublicKey.mockResolvedValue(publicKey);
+    hwManager.validatePin.mockResolvedValue(publicKey);
+
+    wrapper.find('input.pin').simulate('change', { target: { value: pin } });
+    wrapper.find('button.primary-btn').simulate('click');
+    expect(hwManager.validatePin).toBeCalledWith({ pin, deviceId });
+    wrapper.update();
+    const PK = await hwManager.getPublicKey({ index: 0, deviceId });
+    expect(PK).toEqual(publicKey);
+    expect(props.nextStep).toBeCalled();
+  });
+
+
   it('Should show error message if PIN is invalid', async () => {
     hwManager.getPublicKey.mockResolvedValue('');
+    hwManager.validatePin.mockRejectedValue('Error');
     expect(wrapper).not.toContainMatchingElement('Feedback.show');
     enterPinByButtons(wrapper, pinPositions);
     wrapper.find('button.primary-btn').simulate('click');

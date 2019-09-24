@@ -93,6 +93,7 @@ class RequestPin extends React.Component {
         <div className={styles.content}>
           <div className={styles.gridContainer}>
             <Input
+              className="pin"
               isMasked
               isLoading={isLoading}
               error={error}
