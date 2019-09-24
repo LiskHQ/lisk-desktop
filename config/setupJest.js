@@ -8,8 +8,6 @@ import sinon from 'sinon';
 import sinonStubPromise from 'sinon-stub-promise';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import i18next from 'i18next';
-import reactI18next from 'react-i18next';
 import ReactPiwik from 'react-piwik';
 import crypto from 'crypto';
 import ReactRouterDom from 'react-router-dom';
@@ -72,24 +70,43 @@ ReactRedux.connect = jest.fn((mapStateToProps, mapDispatchToProps = {}) => ((Com
   return MockConnect;
 }));
 
-i18next.t = function (key, o) {
-  return key.replace(/{{([^{}]*)}}/g, (a, b) => {
-    const r = o[b];
-    return typeof r === 'string' || typeof r === 'number' ? r : a;
-  });
-};
-i18next.changeLanguage = jest.fn();
-i18next.language = 'en';
-i18next.init = () => ({
-  t: i18next.t,
-  language: 'en',
-  changeLanguage: jest.fn(),
+jest.mock('i18next', () => {
+  function t(key, o) {
+    return key.replace(/{{([^{}]*)}}/g, (a, b) => {
+      const r = o[b];
+      return typeof r === 'string' || typeof r === 'number' ? r : a;
+    });
+  }
+  return {
+    t,
+    changeLanguage: jest.fn(),
+    language: 'en',
+    init: () => ({
+      t,
+      language: 'en',
+      changeLanguage: jest.fn(),
+    }),
+  };
 });
 
-reactI18next.withTranslation = jest.fn(() => (Component => (
+jest.mock('react-i18next', () => ({
+  withTranslation: jest.fn(() => (Component => (
   // eslint-disable-next-line react/display-name
-  props => (<Component {...{ ...props, t: i18next.t }} />)
-)));
+    props => (
+      <Component {...{
+        ...props,
+        t(key, o) {
+          return key.replace(/{{([^{}]*)}}/g, (a, b) => {
+            const r = o[b];
+            return typeof r === 'string' || typeof r === 'number' ? r : a;
+          });
+        },
+      }}
+      />
+    )
+  ))),
+  setDefaults: jest.fn(),
+}));
 
 const localStorageMock = (() => {
   let store = {};
