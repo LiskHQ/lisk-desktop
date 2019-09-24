@@ -126,7 +126,7 @@ class RequestPin extends React.Component {
               <PrimaryButton
                 className="primary-btn"
                 onClick={this.onSubmitPin}
-                disabled={error}
+                disabled={!pin || isLoading}
               >
                 {t('Unlock')}
               </PrimaryButton>
