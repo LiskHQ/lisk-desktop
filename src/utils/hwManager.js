@@ -8,6 +8,7 @@ import {
   subscribeToDeviceConnceted,
   subscribeToDeviceDisonnceted,
   subscribeToDevicesList,
+  validatePin,
 } from '../../libs/hwManager/communication';
 import { splitVotesIntoRounds } from './voting';
 
@@ -100,6 +101,7 @@ const signVoteTransaction = async (
 };
 
 export {
+  getPublicKey,
   getAccountsFromDevice,
   signSendTransaction,
   signVoteTransaction,
@@ -107,4 +109,5 @@ export {
   subscribeToDeviceConnceted,
   subscribeToDeviceDisonnceted,
   subscribeToDevicesList,
+  validatePin,
 };

@@ -2,7 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import SelectAccount from './selectAccount';
 import * as hwManager from '../../../utils/hwManager';
-import routes from '../../../constants/routes';
 
 jest.mock('../../../utils/hwManager');
 
@@ -68,6 +67,7 @@ describe('Select Account', () => {
       history: {
         push: jest.fn(),
       },
+      goBack: jest.fn(),
       nextStep: jest.fn(),
       prevStep: jest.fn(),
       login: jest.fn(),
@@ -86,10 +86,10 @@ describe('Select Account', () => {
 
   it('Should call push function if do click in Go Back button', () => {
     wrapper = mount(<SelectAccount {...props} />);
-    expect(props.history.push).not.toBeCalledWith(routes.splashscreen.path);
+    expect(props.goBack).not.toBeCalled();
     wrapper.find('.go-back').at(0).simulate('click');
     wrapper.update();
-    expect(props.history.push).toBeCalledWith(routes.splashscreen.path);
+    expect(props.goBack).toBeCalled();
   });
 
   it('Should change name "label" of one account', async () => {

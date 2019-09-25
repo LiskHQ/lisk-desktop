@@ -129,7 +129,7 @@ class SelectAccount extends React.Component {
   }
 
   render() {
-    const { t, device, history } = this.props;
+    const { t, device, goBack } = this.props;
     const { accountOnEditMode, hwAccounts } = this.state;
 
     return (
@@ -165,7 +165,7 @@ class SelectAccount extends React.Component {
         }
         </div>
 
-        <TertiaryButton className="go-back" onClick={() => history.push(routes.splashscreen.path)}>
+        <TertiaryButton className="go-back" onClick={goBack}>
           {t('Go back')}
         </TertiaryButton>
       </div>

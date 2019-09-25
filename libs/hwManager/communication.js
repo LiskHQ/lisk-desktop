@@ -107,6 +107,15 @@ const subscribeToDevicesList = (fn) => {
   };
 };
 
+const validatePin = async ({ deviceId, pin }) => {
+  IPC.send(IPC_MESSAGES.VALIDATE_PIN, { pin });
+  const response = await getPublicKey({ index: 0, deviceId });
+  if (response) {
+    return true;
+  }
+  throw new Error('Invalid PIN');
+};
+
 export {
   executeCommand,
   getPublicKey,
@@ -116,4 +125,5 @@ export {
   subscribeToDeviceConnceted,
   subscribeToDeviceDisonnceted,
   subscribeToDevicesList,
+  validatePin,
 };
