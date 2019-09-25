@@ -86,7 +86,7 @@ describe('Account middleware', () => {
         account: { address: 'test_address', balance: 0 },
       },
       delegate: {},
-      settings: { token: {} },
+      settings: { token: {}, statistics: false },
     };
     store.getState = () => (state);
 

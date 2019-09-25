@@ -75,6 +75,12 @@ describe('WalletTransactions Component', () => {
     hideChart: true, // Props to hide chart on tests, due to no canvas support
     activeToken: 'LSK',
     filters: {},
+    settingsUpdated: jest.fn(),
+    settings: {
+      statisticsRequest: false,
+      statisticsFollowingDay: 100,
+      statistics: false,
+    },
   };
 
   beforeEach(() => {

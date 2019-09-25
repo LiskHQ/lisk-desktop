@@ -13,6 +13,7 @@ import {
 import { loadVotes } from '../../actions/voting';
 import { networkSet, networkStatusUpdated } from '../../actions/network';
 import actionTypes from '../../constants/actions';
+import analytics from '../../utils/analytics';
 import localJSONStorage from '../../utils/localJSONStorage';
 import networks from '../../constants/networks';
 import settings from '../../constants/settings';
@@ -174,6 +175,10 @@ const autoLogInIfNecessary = async (store) => {
     setTimeout(() => {
       store.dispatch(login({ passphrase: autologinData[settings.keys.loginKey] }));
     }, 500);
+  }
+
+  if (!actualSettings.statistics) {
+    analytics.checkIfAnalyticsShouldBeDisplayed({ settings: actualSettings });
   }
 };
 
