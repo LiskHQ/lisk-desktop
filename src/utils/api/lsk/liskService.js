@@ -5,11 +5,11 @@ const liskServiceUrl = 'https://service.lisk.io';
 
 const liskServiceApi = {
   getPriceTicker: () => new Promise((resolve, reject) => {
-    popsicle.get(`${liskServiceUrl}/api/getPriceTicker`)
+    popsicle.get(`${liskServiceUrl}/api/v1/market/prices`)
       .use(popsicle.plugins.parse('json'))
       .then((response) => {
-        if (response.body.success) {
-          resolve(response.body.tickers);
+        if (response.body.data.length) {
+          resolve(response.body.data);
         } else {
           reject(response.body);
         }
