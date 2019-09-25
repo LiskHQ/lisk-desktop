@@ -189,7 +189,7 @@ class FormBase extends React.Component {
                 >
                   <p className={styles.tooltipText}>
                     {
-                    t(`Every transaction needs to be confirmed and forged into Lisks blockchain network. 
+                    t(`Every transaction needs to be confirmed and forged into Lisk blockchain network. 
                     Such operations require hardware resources and because of that there is a small fee for processing those.`)
                   }
                   </p>
