@@ -18,3 +18,7 @@ reports
 test/cypress/screenshots/
 test/cypress/videos/
 .history
+
+## Commercial fonts
+src/assets/fonts/basier-circle/*
+src/assets/fonts/gilroy/*
