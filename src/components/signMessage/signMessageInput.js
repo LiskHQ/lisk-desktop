@@ -41,7 +41,7 @@ class SignMessageInput extends React.Component {
         <div className={styles.header}>
           <span className={styles.step}>{t('Step {{current}} / {{total}}', { current: 1, total: 2 })}</span>
           <h1>{t('Sign a message')}</h1>
-          <p>{t('You can use your passphrase to sign a message. This signed message can prove that you are the owner of the account, since only your passphrase can produce it. We reccomend including date & time or a specific keyword.')}</p>
+          <p>{t('You can use your passphrase to sign a message. This signed message can prove that you are the owner of the account, since only your passphrase can produce it. We recommend including date & time or a specific keyword.')}</p>
         </div>
         <div>
           <label className={styles.fieldGroup}>
