@@ -1,5 +1,7 @@
+/* eslint-disable import/no-extraneous-dependencies */
+import i18n from 'i18next';
 import setup from '../../i18n/i18n-setup';
 
-const i18n = setup();
+setup();
 
 export default i18n;
