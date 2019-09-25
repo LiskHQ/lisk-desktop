@@ -98,7 +98,7 @@ export default class FormLsk extends React.Component {
             >
               <p className={styles.tooltipText}>
                 {
-                    t(`LISK Hub counts your message by bytes so keep in mind 
+                    t(`Lisk Hub counts your message by bytes so keep in mind 
                     that the length on your message may vary in different languages. 
                     Different characters may consume different amount of bytes space.`)
                   }
