@@ -53,7 +53,7 @@ class Summary extends React.Component {
 
     return (
       <TransactionSummary
-        title={t('Become a delegate summary')}
+        title={t('Summary of delegate registration')}
         t={t}
         account={account}
         confirmButton={onConfirmAction}
