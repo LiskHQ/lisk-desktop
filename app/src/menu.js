@@ -125,8 +125,8 @@ const menu = {
             click: menu.onClickLink.bind(null, electron, 'https://lisk.io'),
           },
           {
-            label: i18n.t('Lisk Chat'),
-            click: menu.onClickLink.bind(null, electron, 'https://lisk.chat'),
+            label: i18n.t('Discord'),
+            click: menu.onClickLink.bind(null, electron, 'https://discord.gg/CngsY6D'),
           },
           {
             label: i18n.t('Lisk Explorer'),
