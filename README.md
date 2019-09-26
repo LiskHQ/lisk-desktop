@@ -44,6 +44,11 @@ localStorage.setItem('hwWalletAutoLogin', true);
 npm run build
 ```
 
+#### Using Commercial Fonts
+Since some of the fonts used in the production version are commercial, this repository only contains open source fonts and uses `Open Sans` as a replacement for the commercial ones.
+
+If you have licensed copies of `Basier Circle` and `Gilroy`, you can add them to [fonts folder](./src/assets/fonts) to replace the empty files that are there so that webpack build doesn't fail if the fonts are not present.
+
 ## Electron
 
 #### Start
