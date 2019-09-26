@@ -1,5 +1,4 @@
-// import popsicle from 'popsicle'; // doesn't work
-const popsicle = require('popsicle');
+import * as popsicle from 'popsicle';
 
 const liskServiceUrl = 'https://service.lisk.io';
 
