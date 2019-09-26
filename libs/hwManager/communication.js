@@ -15,7 +15,7 @@ const executeCommand = (action, payload) => (
     // Listening for response
     IPC.once(`${action}.${RESPONSE}`, (event, response) => {
       if (response.success) return resolve(response.data);
-      return reject(new Error(`${action} failed`));
+      return reject(new Error(`${action} failed: ${response.error}`));
     });
     // Requesting data
     IPC.send(`${action}.${REQUEST}`, payload);
