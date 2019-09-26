@@ -1,0 +1,26 @@
+@import '../../app/variables.css';
+
+.wrapper {
+  display: flex;
+  height: calc(100% - 12px);
+  overflow: initial;
+  padding: 0;
+}
+
+.content {
+  display: flex;
+  flex-grow: 1;
+  position: relative;
+}
+
+.graphHolder {
+  flex-grow: 1;
+  overflow: hidden;
+  position: relative;
+
+  & > * {
+    height: 100%;
+    position: absolute;
+    width: 100%;
+  }
+}

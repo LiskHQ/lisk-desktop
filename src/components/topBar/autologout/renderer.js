@@ -29,7 +29,7 @@ class CustomCountDown extends React.Component {
         title: t('Timeout soon'),
         description: t('You will be signed out in a minute due to no network activity. You can turn off Auto-Logout in the settings.'),
         options: [{
-          'data-path': routes.setting.path,
+          'data-path': routes.settings.path,
           onClick: this.goTo,
           children: t('Go to settings'),
         }, {

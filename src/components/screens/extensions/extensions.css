@@ -1,0 +1,63 @@
+@import '../../app/variables.css';
+@import '../../app/mixins.css';
+
+.container {
+  align-items: center;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.headerWrapper {
+  display: flex;
+}
+
+.content {
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 20px;
+  width: 100%;
+
+  & .extentionsWrapper {
+    display: block;
+
+    & > span {
+      @mixin contentNormal bold;
+
+      color: var(--color-maastricht-blue);
+      display: block;
+      margin-bottom: 8px;
+    }
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+
+  & button {
+    margin: 10px;
+  }
+}
+
+.error {
+  margin-top: 24px;
+}
+
+.link {
+  @mixin contentNormal bold;
+
+  color: var(--color-link);
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 20px;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.label {
+  @mixin contentLargest;
+
+  margin-bottom: 8px;
+}

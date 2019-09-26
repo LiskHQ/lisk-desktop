@@ -1,0 +1,143 @@
+@import '../../../app/variables.css';
+@import '../../../app/mixins.css';
+
+.leftText {
+  text-align: left;
+  padding-left: 0px;
+}
+
+.search {
+  width: 177px;
+}
+
+.loadMore {
+  @mixin contentSmall bold;
+
+  width: 100%;
+  height: 36px;
+  color: var(--color-maastricht-blue) !important;
+  border-top: solid 1px var(--color-platinum);
+  background-color: var(--color-white-smoke) !important;
+  box-shadow: none;
+  min-height: 36px;
+  margin-top: -1px;
+  border-radius: unset;
+
+  &:hover {
+    color: var(--color-maastricht-blue) !important;
+    background: var(--color-white-smoke) !important;
+  }
+}
+
+.rank {
+  padding-left: 40px !important;
+}
+
+.forged,
+.productivity {
+  padding-left: 10px !important;
+}
+
+.forged {
+  display: inline-block !important;
+}
+
+.weight {
+  display: inline-block !important;
+  font-weight: bold !important;
+  text-align: right !important;
+}
+
+.emptyMessage {
+  text-align: center;
+  color: var(--color-dark-blue);
+  padding: 23px 0;
+  font-weight: 500;
+}
+
+.accountInfo {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+  height: 36px;
+}
+
+.delegateLink {
+  text-decoration: none;
+  display: flex;
+
+  & .title {
+    @mixin headingSmall;
+
+    color: var(--color-maastricht-blue);
+  }
+
+  & .address {
+    @mixin contentNormal;
+
+    margin-top: 3px;
+    color: var(--color-slate-gray);
+  }
+}
+
+.checkbox {
+  z-index: calc(var(--overlay-index) + 2);
+  padding: 0px;
+}
+
+.results {
+  border-radius: 0 0 var(--border-radius-box) var(--border-radius-box);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  margin: 0;
+  position: relative;
+  width: 100%;
+}
+
+.loadingOverlay {
+  background: rgba(255, 255, 255, 0.8);
+  bottom: 0;
+  position: absolute;
+  top: 48px;
+  width: 100%;
+  z-index: var(--overlay-index);
+}
+
+.linear {
+  background: transparent !important;
+  height: 3px;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  & .value {
+    height: 3px;
+  }
+}
+
+.selectingDelegates {
+  position: absolute;
+  top: 80px;
+  bottom: 46px;
+  left: 11px;
+  width: 36px;
+  border-radius: 3px;
+  background-color: var(--color-highlight-checkboxes);
+  z-index: calc(var(--overlay-index) + 1);
+
+  & .tooltipClass {
+    top: 220px;
+  }
+
+  & .infoIcon {
+    display: none;
+  }
+}
+
+@media (--medium-viewport) {
+  .wrapper {
+    height: 100%;
+    min-height: 100%;
+  }
+}

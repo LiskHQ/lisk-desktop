@@ -4,7 +4,7 @@ import React from 'react';
 import { PrimaryButton, SecondaryButton } from '../../toolbox/buttons/button';
 import { getIndexOfBookmark } from '../../../utils/bookmarks';
 import { tokenMap } from '../../../constants/tokens';
-import BookmarkDropdown from '../../bookmarks/bookmarkDropdown';
+import BookmarkDropdown from '../../screens/bookmarks/bookmarkDropdown';
 import DropdownButton from '../../toolbox/dropdownButton';
 import HeaderAccountInfo from './headerAccountInfo';
 import PageHeader from '../../toolbox/pageHeader';

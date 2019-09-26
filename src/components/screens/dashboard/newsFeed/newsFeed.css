@@ -1,0 +1,49 @@
+@import '../../../app/variables.css';
+@import '../../../app/mixins.css';
+
+.emptyNews {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--content-font);
+  font-size: var(--paragraph-font-size-l);
+  padding-top: 16px;
+}
+
+.liskLogo {
+  opacity: 0.2;
+}
+
+.container {
+  @mixin customScrollBar;
+
+  min-height: 578px;
+  height: 704px;
+
+  & > div {
+    height: 100%;
+  }
+
+  & .row {
+    display: block;
+  }
+}
+
+.newsFeed {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  height: 866px;
+}
+
+.showMoreAlign {
+  margin-top: auto;
+  align-self: flex-end;
+}
+
+.showMore {
+  height: auto;
+}

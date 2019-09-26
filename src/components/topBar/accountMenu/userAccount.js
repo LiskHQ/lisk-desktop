@@ -138,7 +138,7 @@ class UserAccount extends React.Component {
 
         <Link
           id="settings"
-          to={routes.setting.path}
+          to={routes.settings.path}
           className={styles.dropdownOption}
           onClick={this.toggleDropdown}
         >

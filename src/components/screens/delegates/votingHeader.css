@@ -1,0 +1,83 @@
+@import '../../app/variables.css';
+@import './../../app/mixins.css';
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 32px;
+  margin-top: 15px;
+
+  & > * {
+    display: flex;
+  }
+}
+
+.box,
+.outlinedBox {
+  @mixin contentNormal;
+
+  display: inline-block;
+  padding: 7px 10px;
+  margin-right: 20px;
+  margin-top: 10px;
+  color: var(--color-slate-gray);
+
+  & b {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-maastricht-blue);
+  }
+
+  & h2 {
+    @mixin headingNormalIntermediate;
+
+    margin: 0 0 -4px;
+    color: var(--color-maastricht-blue);
+  }
+
+  & h3 {
+    @mixin headingNormal;
+
+    margin: 0;
+    color: var(--color-maastricht-blue);
+  }
+}
+
+.box:first-child {
+  @mixin contentNormal;
+
+  padding-left: 0;
+}
+
+.outlinedBox {
+  background-color: var(--color-white);
+  border: solid 1px var(--color-platinum);
+  border-radius: 3px;
+  box-sizing: border-box;
+  margin-top: 12px;
+  max-height: 62px;
+
+  &.addedVotes {
+    border-color: var(--color-ultramarine-blue);
+  }
+
+  &.removedVotes {
+    border-color: var(--color-burnt-sienna);
+  }
+}
+
+.tooltip {
+  display: inline-block;
+  vertical-align: text-top;
+}
+
+.btn {
+  margin-left: 25px;
+  margin-top: 25px;
+}
+
+@media (--medium-viewport) {
+  .hideInMedium {
+    display: none;
+  }
+}

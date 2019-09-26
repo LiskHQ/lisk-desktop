@@ -1,0 +1,56 @@
+@import '../../app/variables.css';
+@import '../../app/mixins.css';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+  align-items: center;
+  width: 100%;
+  max-width: 720px;
+  margin: auto;
+
+  & .info {
+    @mixin contentLargest;
+
+    letter-spacing: 0.21px;
+    line-height: 25px;
+    margin: 4px;
+    margin-bottom: 20px;
+
+    & strong {
+      color: var(--color-maastricht-blue);
+    }
+  }
+
+  & .footer {
+    width: 100%;
+    min-width: 572px;
+    margin: 40px 0 20px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+
+    & > .confirmBtn {
+      width: var(--footer-button-width);
+    }
+
+    & > .editBtn {
+      margin-top: 5px;
+      width: auto !important;
+    }
+  }
+
+  & .account {
+    display: flex;
+  }
+
+  & .avatar {
+    margin-right: 10px;
+    margin-top: -1px;
+  }
+}
