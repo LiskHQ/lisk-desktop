@@ -11,8 +11,8 @@ const mapStateToProps = state => ({
   priceTicker: (state.service && state.service.priceTicker)
     ? state.service.priceTicker
     : {
-      LSK: { USD: '0', EUR: '0' },
-      BTC: { USD: '0', EUR: '0' },
+      LSK: { USD: '0', EUR: '0', CHF: '0' },
+      BTC: { USD: '0', EUR: '0', CHF: '0' },
     },
 });
 
