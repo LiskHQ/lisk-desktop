@@ -8,10 +8,10 @@ export const getPriceTicker = () => new Promise(async (resolve, reject) => {
     const response = await popsicle.get(`${liskServiceUrl}/api/v1/market/prices`)
       .use(popsicle.plugins.parse('json'));
 
-    if (response) {
-      resolve(response.body.data.length);
+    if (response.body.data.length) {
+      resolve(response.body.data);
     } else {
-      reject(response.body.data);
+      reject(response.body);
     }
   } catch (error) {
     reject(error);
