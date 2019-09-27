@@ -5,7 +5,6 @@ import {
   secondPassphraseRegistered,
   removePassphrase,
   accountDataUpdated,
-  updateTransactionsIfNeeded,
   updateEnabledTokenAccount,
   login,
 } from './account';
@@ -15,7 +14,6 @@ import transactionTypes from '../constants/transactionTypes';
 import networks from '../constants/networks';
 import accounts from '../../test/constants/accounts';
 import * as networkActions from './network';
-import * as transactionsActions from './transactions';
 
 jest.mock('i18next', () => ({
   t: jest.fn(key => key),
@@ -191,7 +189,7 @@ describe('actions: account', () => {
       };
 
       await accountDataUpdated(data)(dispatch, getState);
-      expect(dispatch).toHaveBeenCalledTimes(3);
+      expect(dispatch).toHaveBeenCalledTimes(2);
       expect(networkActions.networkStatusUpdated).toHaveBeenCalledWith({ online: true });
     });
 
@@ -213,55 +211,6 @@ describe('actions: account', () => {
       expect(networkActions.networkStatusUpdated).toHaveBeenCalledWith({
         online: false, code,
       });
-    });
-  });
-
-  describe('updateTransactionsIfNeeded', () => {
-    let getState;
-    const { address } = accounts.genesis;
-
-    beforeEach(() => {
-      getState = () => ({
-        network: {
-          status: { online: true },
-          name: 'Mainnet',
-          networks: {
-            LSK: {
-              nodeUrl: 'hhtp://localhost:4000',
-              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-            },
-          },
-        },
-        settings: {
-          token: {
-            active: 'LSK',
-          },
-        },
-      });
-    });
-
-    it('should update transactions when window is in focus', () => {
-      const data = {
-        transactions: { confirmed: [{ confirmations: 10 }], pending: [] },
-        account: { address },
-      };
-
-      updateTransactionsIfNeeded(data, true)(dispatch, getState);
-      expect(transactionsActions.updateTransactions).toHaveBeenCalledWith(expect.objectContaining({
-        address,
-      }));
-    });
-
-    it('should update transactions when there are no recent transactions', () => {
-      const data = {
-        transactions: { confirmed: [{ confirmations: 10000 }], pending: [{ id: '123' }] },
-        account: { address },
-      };
-
-      updateTransactionsIfNeeded(data, false)(dispatch, getState);
-      expect(transactionsActions.updateTransactions).toHaveBeenCalledWith(expect.objectContaining({
-        address,
-      }));
     });
   });
 
