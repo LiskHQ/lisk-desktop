@@ -1,15 +1,15 @@
 import {
   accountDataUpdated,
-  updateTransactionsIfNeeded,
   updateEnabledTokenAccount,
   login,
 } from '../../actions/account';
+import {
+  emptyTransactionsData,
+  getTransactions,
+  updateTransactions,
+} from '../../actions/transactions';
 import { getActiveTokenAccount } from '../../utils/account';
 import { getAutoLogInData, shouldAutoLogIn, findMatchingLoginNetwork } from '../../utils/login';
-import {
-  getTransactions,
-  emptyTransactionsData,
-} from '../../actions/transactions';
 import { loadVotes } from '../../actions/voting';
 import { networkSet, networkStatusUpdated } from '../../actions/network';
 import actionTypes from '../../constants/actions';
@@ -71,14 +71,6 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   const state = store.getState();
   const { transactions, settings: { token } } = state;
   const account = getActiveTokenAccount(store.getState());
-  // Adding timeout explained in
-  // https://github.com/LiskHQ/lisk-hub/pull/1609
-  setTimeout(() => {
-    store.dispatch(updateTransactionsIfNeeded({
-      transactions,
-      account,
-    }));
-  }, 500);
 
   const txs = action.data.block.transactions || [];
   const blockContainsRelevantTransaction = txs.filter((transaction) => {
@@ -93,8 +85,16 @@ const checkTransactionsAndUpdateAccount = (store, action) => {
   if (blockContainsRelevantTransaction || recentBtcTransaction) {
     // it was not getting the account with secondPublicKey right
     // after a new block with second passphrase registration transaction was received
+    // Adding timeout explained in
+    // https://github.com/LiskHQ/lisk-hub/pull/1609
     setTimeout(() => {
       updateAccountData(store);
+
+      store.dispatch(updateTransactions({
+        pendingTransactions: transactions.pending,
+        address: account.address,
+        filters: transactions.filters,
+      }));
     }, 500);
   }
 };

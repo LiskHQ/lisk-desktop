@@ -8,7 +8,6 @@ import { getConnectionErrorMessage } from './network/lsk';
 import { getTimeOffset } from '../utils/hacks';
 import { loginType } from '../constants/hwConstants';
 import { networkStatusUpdated } from './network';
-import { updateTransactions } from './transactions';
 import accountConfig from '../constants/account';
 import actionTypes from '../constants/actions';
 import { tokenMap } from '../constants/tokens';
@@ -101,25 +100,6 @@ export const secondPassphraseRegistered = ({
     dispatch(passphraseUsed(passphrase));
   };
 
-export const updateTransactionsIfNeeded = ({ transactions, account }) =>
-  (dispatch) => {
-    const hasRecentTransactions = txs => (
-      txs.confirmed.filter(tx => tx.confirmations < 1000).length !== 0
-      || txs.pending.length !== 0
-    );
-
-    if (hasRecentTransactions(transactions)) {
-      const { filters } = transactions;
-      const address = transactions.account ? transactions.account.address : account.address;
-
-      dispatch(updateTransactions({
-        pendingTransactions: transactions.pending,
-        address,
-        filters,
-      }));
-    }
-  };
-
 /**
  * This action is used to update account balance when new block was forged and
  * account middleware detected that it contains a transaction that affects balance
@@ -129,9 +109,7 @@ export const updateTransactionsIfNeeded = ({ transactions, account }) =>
  * @param {Object} data.account - current account with address and publicKey
  * @param {Array} data.transactions - list of transactions
  */
-export const accountDataUpdated = ({
-  account, transactions,
-}) =>
+export const accountDataUpdated = ({ account }) =>
   async (dispatch, getState) => {
     const networkConfig = getState().network;
     const [error, result] = await to(getAccount({
@@ -140,12 +118,6 @@ export const accountDataUpdated = ({
       publicKey: account.publicKey,
     }));
     if (result) {
-      if (result.balance !== account.balance) {
-        dispatch(updateTransactionsIfNeeded({
-          transactions,
-          account,
-        }));
-      }
       dispatch(accountUpdated(result));
       dispatch(networkStatusUpdated({ online: true }));
     } else {
