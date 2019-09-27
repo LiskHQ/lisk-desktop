@@ -8,7 +8,7 @@ import { parseSearchParams } from '../../../../../utils/searchParams';
 import { validateAmountFormat } from '../../../../../utils/validators';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import Box from '../../../../toolbox/box';
-import Converter from '../../../../converter';
+import Converter from '../../../../shared/converter';
 import Piwik from '../../../../../utils/piwik';
 import Tooltip from '../../../../toolbox/tooltip/tooltip';
 import i18n from '../../../../../i18n';

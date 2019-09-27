@@ -3,9 +3,9 @@ import { fromRawLsk, toRawLsk } from '../../../../../utils/lsk';
 import { loginType } from '../../../../../constants/hwConstants';
 import { tokenMap } from '../../../../../constants/tokens';
 import AccountVisual from '../../../../toolbox/accountVisual';
-import Converter from '../../../../converter';
+import Converter from '../../../../shared/converter';
 import Piwik from '../../../../../utils/piwik';
-import TransactionSummary from '../../../../transactionSummary';
+import TransactionSummary from '../../../../shared/transactionSummary';
 import fees from '../../../../../constants/fees';
 import styles from './summary.css';
 

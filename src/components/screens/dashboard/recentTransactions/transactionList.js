@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import TransactionTypeFigure from '../../../transactions/typeFigure/TransactionTypeFigure';
-import TransactionAddress from '../../../transactions/address/TransactionAddress';
-import TransactionAmount from '../../../transactions/amount/TransactionAmount';
+import TransactionTypeFigure from '../../wallet/transactions/typeFigure/TransactionTypeFigure';
+import TransactionAddress from '../../wallet/transactions/address/TransactionAddress';
+import TransactionAmount from '../../wallet/transactions/amount/TransactionAmount';
 import { SecondaryButton } from '../../../toolbox/buttons/button';
 import routes from '../../../../constants/routes';
 import styles from './recentTransactions.css';

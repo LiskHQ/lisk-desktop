@@ -1,5 +1,5 @@
 import React from 'react';
-import TransactionSummary from '../../../transactionSummary';
+import TransactionSummary from '../../../shared/transactionSummary';
 import votingConst from '../../../../constants/voting';
 import {
   getTotalVotesCount,

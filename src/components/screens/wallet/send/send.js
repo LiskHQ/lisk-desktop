@@ -1,5 +1,5 @@
 import React from 'react';
-import MultiStep from '../../../multiStep';
+import MultiStep from '../../../shared/multiStep';
 import Form from './form';
 import Summary from './summary';
 import TransactionStatus from './transactionStatus';

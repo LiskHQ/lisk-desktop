@@ -1,7 +1,7 @@
 import React from 'react';
 import { PrimaryButton, TertiaryButton } from '../../toolbox/buttons/button';
 import Box from '../../toolbox/box';
-import PassphraseBackup from '../../passphraseBackup';
+import PassphraseBackup from '../../shared/passphraseBackup';
 import htmlStringToReact from '../../../utils/htmlStringToReact';
 import styles from './secondPassphrase.css';
 

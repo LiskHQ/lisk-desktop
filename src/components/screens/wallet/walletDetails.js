@@ -3,9 +3,9 @@ import { withTranslation } from 'react-i18next';
 import AccountVisual from '../../toolbox/accountVisual';
 import Box from '../../toolbox/box';
 import Icon from '../../toolbox/icon';
-import LiskAmount from '../../liskAmount';
+import LiskAmount from '../../shared/liskAmount';
 import CopyToClipboard from '../../toolbox/copyToClipboard';
-import DiscreetMode from '../../discreetMode';
+import DiscreetMode from '../../shared/discreetMode';
 import styles from './walletDetails.css';
 
 class WalletDetails extends React.Component {

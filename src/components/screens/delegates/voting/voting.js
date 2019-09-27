@@ -1,7 +1,7 @@
 import React from 'react';
 import VotingSummary from './votingSummary';
-import TransactionResult from '../../../transactionResult';
-import MultiStep from '../../../multiStep';
+import TransactionResult from '../../../shared/transactionResult';
+import MultiStep from '../../../shared/multiStep';
 
 import styles from './voting.css';
 

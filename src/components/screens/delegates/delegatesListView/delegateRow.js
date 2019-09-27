@@ -5,7 +5,7 @@ import styles from './votingListView.css';
 import VoteCheckbox from './voteCheckbox';
 import TableRow from '../../../toolbox/table/tableRow';
 import AccountVisual from '../../../toolbox/accountVisual';
-import LiskAmount from '../../../liskAmount';
+import LiskAmount from '../../../shared/liskAmount';
 import routes from '../../../../constants/routes';
 import { formatAmountBasedOnLocale } from '../../../../utils/formattedNumber';
 

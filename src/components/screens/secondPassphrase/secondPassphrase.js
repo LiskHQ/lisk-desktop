@@ -2,9 +2,9 @@ import React from 'react';
 import { generatePassphrase } from '../../../utils/passphrase';
 import Fees from '../../../constants/fees';
 import FirstStep from './firstStep';
-import MultiStep from '../../multiStep';
+import MultiStep from '../../shared/multiStep';
 import SummaryStep from './summaryStep';
-import TransactionResult from '../../transactionResult';
+import TransactionResult from '../../shared/transactionResult';
 import routes from '../../../constants/routes';
 import styles from './secondPassphrase.css';
 

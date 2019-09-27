@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MultiStep from '../../multiStep';
+import MultiStep from '../../shared/multiStep';
 import routes from '../../../constants/routes';
 import SelectName from './selectName/SelectName';
 import Summary from './summary/summary';

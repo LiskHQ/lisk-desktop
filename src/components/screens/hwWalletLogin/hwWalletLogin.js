@@ -2,7 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { subscribeToDevicesList } from '../../../utils/hwManager';
 import Loading from './loading';
-import MultiStep from '../../multiStep';
+import MultiStep from '../../shared/multiStep';
 import RequestPin from './requestPin';
 import SelectAccount from './selectAccount';
 import SelectDevice from './selectDevice';

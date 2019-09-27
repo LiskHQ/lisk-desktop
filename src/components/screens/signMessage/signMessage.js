@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import MultiStep from '../../multiStep';
+import MultiStep from '../../shared/multiStep';
 import styles from './signMessage.css';
 import SignMessageInput from './signMessageInput';
 import ConfirmMessage from './confirmMessage';

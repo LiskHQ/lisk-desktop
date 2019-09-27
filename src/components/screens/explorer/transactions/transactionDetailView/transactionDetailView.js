@@ -2,7 +2,7 @@ import { withTranslation } from 'react-i18next';
 import React from 'react';
 import AccountInfo from './accountInfo';
 import Box from '../../../../toolbox/box';
-import TransactionTypeFigure from '../../../../transactions/typeFigure/TransactionTypeFigure';
+import TransactionTypeFigure from '../../../wallet/transactions/typeFigure/TransactionTypeFigure';
 import TransactionVotes from './transactionVotes';
 import styles from './transactionDetailView.css';
 import transactionTypes from '../../../../../constants/transactionTypes';

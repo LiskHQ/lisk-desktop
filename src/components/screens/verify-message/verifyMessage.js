@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import MultiStep from '../../multiStep';
+import MultiStep from '../../shared/multiStep';
 import PageLayout from '../../toolbox/pageLayout';
 import Result from './result';
 import VerifyMessageInput from './verifyMessageInput';

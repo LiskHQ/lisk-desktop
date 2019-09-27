@@ -1,5 +1,5 @@
 import React from 'react';
-import { FontIcon } from '../../fontIcon';
+import { FontIcon } from '../../shared/fontIcon';
 import { PrimaryButton } from '../../toolbox/buttons/button';
 import styles from './confirmPassphrase.css';
 

@@ -4,7 +4,7 @@ import { getIndexOfBookmark } from '../../../../../utils/bookmarks';
 import { getTokenFromAddress } from '../../../../../utils/api/transactions';
 import BookmarkDropdown from '../../../bookmarks/bookmarkDropdown';
 import DropdownButton from '../../../../toolbox/dropdownButton';
-import TransactionResult from '../../../../transactionResult';
+import TransactionResult from '../../../../shared/transactionResult';
 import statusMessage from './statusMessages';
 import styles from './transactionStatus.css';
 

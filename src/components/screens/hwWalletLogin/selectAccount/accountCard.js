@@ -1,7 +1,7 @@
 import React from 'react';
 import { PrimaryButton, SecondaryButton } from '../../../toolbox/buttons/button';
 import AccountVisual from '../../../toolbox/accountVisual';
-import LiskAmount from '../../../liskAmount';
+import LiskAmount from '../../../shared/liskAmount';
 import { Input } from '../../../toolbox/inputs';
 import styles from './selectAccount.css';
 import Icon from '../../../toolbox/icon';

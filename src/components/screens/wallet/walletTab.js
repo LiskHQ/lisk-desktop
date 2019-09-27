@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import TransactionsOverview from '../../transactions/transactionsOverview';
+import TransactionsOverview from './transactions/transactionsOverview';
 import BalanceChart from './balanceChart';
 import WalletDetails from './walletDetails';
 

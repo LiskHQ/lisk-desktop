@@ -20,7 +20,7 @@ import Transactions from '../components/screens/explorer/transactions';
 import Splashscreen from '../components/screens/splashscreen';
 import TermsOfUse from '../components/screens/termsOfUse';
 import ToolboxDemo from '../components/toolbox/demo';
-import TransactionDashboard from '../components/transactionDashboard';
+import TransactionDashboard from '../components/shared/transactionDashboard';
 import Voting from '../components/screens/delegates/voting';
 
 export default {

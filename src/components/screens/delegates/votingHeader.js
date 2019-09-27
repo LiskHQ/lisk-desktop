@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { loginType } from '../../../constants/hwConstants';
 import { SecondaryButton, PrimaryButton } from '../../toolbox/buttons/button';
 import Tooltip from '../../toolbox/tooltip/tooltip';
-import SignInTooltipWrapper from '../../signInTooltipWrapper';
+import SignInTooltipWrapper from '../../shared/signInTooltipWrapper';
 import routes from '../../../constants/routes';
 import votingConst from '../../../constants/voting';
 import {

@@ -1,7 +1,7 @@
 import React from 'react';
 import to from 'await-to-js';
 
-import TransactionSummary from '../../../transactionSummary';
+import TransactionSummary from '../../../shared/transactionSummary';
 import AccountVisual from '../../../toolbox/accountVisual';
 import { fromRawLsk } from '../../../../utils/lsk';
 import Fees from '../../../../constants/fees';

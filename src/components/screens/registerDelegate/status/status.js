@@ -1,5 +1,5 @@
 import React from 'react';
-import TransactionResult from '../../../transactionResult';
+import TransactionResult from '../../../shared/transactionResult';
 import DelegateAnimation from '../animations/delegateAnimation';
 import styles from './status.css';
 

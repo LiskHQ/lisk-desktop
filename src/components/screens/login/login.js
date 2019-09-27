@@ -17,7 +17,7 @@ import Tooltip from '../../toolbox/tooltip/tooltip';
 import PassphraseInput from '../../toolbox/passphraseInput';
 import styles from './login.css';
 import Piwik from '../../../utils/piwik';
-import DiscreetModeToggle from '../../discreetModeToggle';
+import DiscreetModeToggle from '../../shared/discreetModeToggle';
 
 class Login extends React.Component {
   constructor() { // eslint-disable-line max-statements
