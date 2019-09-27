@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import i18n from '../../../i18n';
-import accounts from '../../../../test/constants/accounts';
+import i18n from '../../../../i18n';
+import accounts from '../../../../../test/constants/accounts';
 import BookmarkDropdown from './bookmarkDropdown';
 
 describe('Bookmark Component', () => {

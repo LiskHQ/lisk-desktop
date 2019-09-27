@@ -13,7 +13,7 @@ const mockInputNode = {
   focus: jest.fn(),
 };
 
-jest.mock('../searchBar', () => function SearchBarMock({ onSearchClick, setSearchBarRef }) {
+jest.mock('../../searchBar', () => function SearchBarMock({ onSearchClick, setSearchBarRef }) {
   setSearchBarRef(mockInputNode);
   return (
     <div className="searchBarMock">

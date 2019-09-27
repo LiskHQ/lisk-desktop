@@ -5,11 +5,11 @@ import configureMockStore from 'redux-mock-store';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { MemoryRouter } from 'react-router-dom';
-import i18n from '../../../../i18n';
+import i18n from '../../../../../i18n';
 import TransactionHeader from './transactionsOverviewHeader';
-import accounts from '../../../../../test/constants/accounts';
-import routes from '../../../../constants/routes';
-import { tokenMap } from '../../../../constants/tokens';
+import accounts from '../../../../../../test/constants/accounts';
+import routes from '../../../../../constants/routes';
+import { tokenMap } from '../../../../../constants/tokens';
 
 describe('Transactions Overview Header', () => {
   let wrapper;

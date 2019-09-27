@@ -7,7 +7,7 @@ import networks from '../../../../constants/networks';
 import accounts from '../../../../../test/constants/accounts';
 
 jest.mock('lodash.debounce');
-jest.mock('../../../utils/api/lsk/network');
+jest.mock('../../../../utils/api/lsk/network');
 
 describe('RegisterDelegate', () => {
   let wrapper;

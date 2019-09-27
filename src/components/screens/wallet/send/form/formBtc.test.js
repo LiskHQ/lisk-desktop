@@ -9,7 +9,7 @@ import Form from './form';
 import accounts from '../../../../../../test/constants/accounts';
 import i18n from '../../../../../i18n';
 
-jest.mock('../../../utils/api/btc/transactions', () => ({
+jest.mock('../../../../../utils/api/btc/transactions', () => ({
   getUnspentTransactionOutputs: jest.fn(() => Promise.resolve([{
     height: 1575216,
     tx_hash: '992545eeab2ac01adf78454f8b49d042efd53ab690d76121ebd3cddca3b600e5',

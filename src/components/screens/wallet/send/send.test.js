@@ -7,7 +7,7 @@ import accounts from '../../../../../test/constants/accounts';
 import i18n from '../../../../i18n';
 import Send from './send';
 
-jest.mock('../../i18n', () => ({
+jest.mock('../../../../i18n', () => ({
   t: v => v,
   language: 'en',
 }));

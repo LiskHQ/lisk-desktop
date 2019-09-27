@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import PropTypes from 'prop-types';
-import { PrimaryButton } from '../../../toolbox/buttons/button';
+import { PrimaryButton } from '../../../../toolbox/buttons/button';
 import FilterContainer from './filterContainer';
-import i18n from '../../../../i18n';
-import keyCodes from '../../../../constants/keyCodes';
+import i18n from '../../../../../i18n';
+import keyCodes from '../../../../../constants/keyCodes';
 
 describe('filterContainer', () => {
   let wrapper;

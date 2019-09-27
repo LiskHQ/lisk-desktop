@@ -1,10 +1,10 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 import React from 'react';
 import { mount } from 'enzyme';
-import { tokenMap } from '../../../constants/tokens';
+import { tokenMap } from '../../../../constants/tokens';
 import BookmarksList from './bookmarksList';
-import EmptyState from '../../toolbox/box/emptyState';
-import bookmarks from '../../../../test/constants/bookmarks';
+import EmptyState from '../../../toolbox/box/emptyState';
+import bookmarks from '../../../../../test/constants/bookmarks';
 
 describe('BookmarksList', () => {
   let wrapper;

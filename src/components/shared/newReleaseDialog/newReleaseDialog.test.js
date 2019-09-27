@@ -4,8 +4,8 @@ import NewReleaseDialog from './newReleaseDialog';
 import FlashMessageHolder from '../../toolbox/flashMessage/holder';
 import DialogHolder from '../../toolbox/dialog/holder';
 
-jest.mock('../toolbox/flashMessage/holder');
-jest.mock('../toolbox/dialog/holder');
+jest.mock('../../toolbox/flashMessage/holder');
+jest.mock('../../toolbox/dialog/holder');
 
 describe('New release dialog component', () => {
   const props = {

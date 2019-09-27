@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import accounts from '../../../../../test/constants/accounts';
+import accounts from '../../../../../../test/constants/accounts';
 import HeaderAccountInfo from './headerAccountInfo';
 
 describe('HeaderAccountInfo Component', () => {

@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import SelectAccount from './selectAccount';
 import * as hwManager from '../../../../utils/hwManager';
 
-jest.mock('../../../utils/hwManager');
+jest.mock('../../../../utils/hwManager');
 
 describe('Select Account', () => {
   let wrapper;

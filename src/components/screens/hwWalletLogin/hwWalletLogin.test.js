@@ -6,7 +6,7 @@ import { mount } from 'enzyme';
 import * as hwManager from '../../../utils/hwManager';
 import HwWalletLogin from './hwWalletLogin';
 
-jest.mock('../../utils/hwManager', () => ({
+jest.mock('../../../utils/hwManager', () => ({
   subscribeToDevicesList: jest.fn((fn) => {
     const devices = [
       { deviceId: 1, openApp: false, model: 'Ledger' },

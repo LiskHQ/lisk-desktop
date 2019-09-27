@@ -6,7 +6,7 @@ import * as delegateApi from '../../../../../utils/api/delegates';
 import routes from '../../../../../constants/routes';
 import votes from '../../../../../../test/constants/votes';
 
-jest.mock('../../../utils/api/delegates');
+jest.mock('../../../../../utils/api/delegates');
 
 describe('VoteUrlProcessor', () => {
   let wrapper;
