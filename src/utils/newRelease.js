@@ -2,9 +2,9 @@ import React from 'react';
 import htmlStringToReact from './htmlStringToReact';
 import regex from './regex';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
-import NewReleaseMessage from '../components/newReleaseMessage/newReleaseMessage';
+import NewReleaseMessage from '../components/shared/newReleaseMessage/newReleaseMessage';
 import DialogHolder from '../components/toolbox/dialog/holder';
-import NewReleaseDialog from '../components/newReleaseDialog/newReleaseDialog';
+import NewReleaseDialog from '../components/shared/newReleaseDialog/newReleaseDialog';
 import store from '../store';
 import { toastDisplayed } from '../actions/toaster';
 

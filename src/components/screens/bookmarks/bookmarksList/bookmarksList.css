@@ -1,0 +1,89 @@
+@import '../../../../app/variables.css';
+@import '../../../../app/mixins.css';
+
+.box {
+  width: 100%;
+
+  & .bookmarkList {
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 20px;
+
+    & > .row {
+      width: 100%;
+      height: auto;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      cursor: pointer;
+      text-decoration: none;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid var(--color-mystic);
+      }
+
+      & .editInput {
+        width: 224px;
+      }
+
+      & .avatarAndDescriptionWrapper {
+        display: flex;
+        align-items: flex-start;
+
+        & > .avatar {
+          margin-right: 15px;
+        }
+      }
+
+      & .description {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+
+        & > span:first-child {
+          @mixin headingSmall;
+
+          color: var(--color-maastricht-blue);
+        }
+
+        & > span:last-child {
+          @mixin contentNormal;
+
+          color: var(--color-slate-gray);
+        }
+      }
+
+      & .buttonContainer {
+        opacity: 0;
+        transition: opacity var(--animation-speed-fast) ease;
+
+        & > button {
+          margin-left: 20px;
+          min-width: initial;
+        }
+      }
+
+      &:hover .buttonContainer,
+      &.editting .buttonContainer {
+        opacity: 1;
+      }
+    }
+  }
+
+  & .footer {
+    width: auto;
+
+    & a {
+      text-decoration: none;
+    }
+  }
+}

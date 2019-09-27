@@ -1,0 +1,158 @@
+/*****************************************
+
+Please Read the guide line
+before adding any rules here
+
+# No component specific rule
+This file is inteded to solely include
+rules defines against tag names and global
+test styling, no component specific rule
+blongs to this file
+
+# Usecases
+Prefered is to use the HTML tag semantically
+but you can use @apply in any rules
+
+# class names
+Try not use nested rules and also prefer
+using classnames with :global to make them
+avaialble application-wide
+
+****************************************/
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+
+@font-face {
+  font-family: 'gilroy';
+  src:
+    url('../assets/fonts/gilroy/gilroy-bold.woff2') format('woff2'),
+    url('../assets/fonts/gilroy/gilroy-bold.woff') format('woff'),
+    url('../assets/fonts/gilroy/gilroy-bold.ttf')  format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'gilroy';
+  src:
+    url('../assets/fonts/gilroy/gilroy-extra-bold.woff2') format('woff2'),
+    url('../assets/fonts/gilroy/gilroy-extra-bold.woff') format('woff'),
+    url('../assets/fonts/gilroy/gilroy-extra-bold.ttf')  format('truetype');
+  font-weight: bolder;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'gilroy';
+  src: url('../assets/fonts/gilroy/gilroy-medium.otf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'basier-circle';
+  src:
+    url('../assets/fonts/basier-circle/basiercircle-semibold.woff2') format('woff2'),
+    url('../assets/fonts/basier-circle//basiercircle-semibold.woff') format('woff'),
+    url('../assets/fonts/basier-circle//basiercircle-semibold.otf');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'basier-circle';
+  src:
+    url('../assets/fonts/basier-circle/basiercircle-medium.woff2') format('woff2'),
+    url('../assets/fonts/basier-circle//basiercircle-medium.woff') format('woff'),
+    url('../assets/fonts/basier-circle//basiercircle-medium.otf');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'basier-circle';
+  src:
+    url('../assets/fonts/basier-circle/basiercircle-regular.woff2') format('woff2'),
+    url('../assets/fonts/basier-circle//basiercircle-regular.woff') format('woff'),
+    url('../assets/fonts/basier-circle//basiercircle-regular.otf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-family: var(--content-font);
+  font-weight: 300;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--heading-font);
+  font-weight: 500;
+}
+
+h1 {
+  @mixin headingLarge;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+}
+
+h4 {
+  font-size: var(--font-size-h4);
+}
+
+h5 {
+  font-size: var(--font-size-h5);
+  font-weight: normal;
+}
+
+h6 {
+  font-size: var(--font-size-h6);
+  font-weight: normal;
+}
+
+p,
+a,
+i,
+strong {
+  font-size: var(--paragraph-font-size-l);
+}
+
+a {
+  color: var(--color-ultramarine-blue);
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: var(--font-weight-bold);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+strong {
+  font-weight: bolder;
+}
+
+small {
+  font-size: var(--font-size-small);
+}
+
+/********************
+    Directions
+********************/
+:global .text-center {
+  text-align: center;
+}
+
+input,
+textarea,
+select {
+  font-family: var(--content-font);
+}

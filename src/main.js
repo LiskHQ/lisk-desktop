@@ -4,7 +4,7 @@ import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import { applyDeviceClass } from './utils/applyDeviceClass';
-import App from './components/app';
+import App from './app';
 // import history from './history';
 import store from './store';
 import i18n from './i18n'; // initialized i18next instance
@@ -41,8 +41,8 @@ const renderWithRouter = Component => (
 ReactDOM.render(renderWithRouter(App), rootElement);
 
 if (module.hot) {
-  module.hot.accept('./components/app', () => {
-    const NextRootContainer = require('./components/app').default;
+  module.hot.accept('./app', () => {
+    const NextRootContainer = require('./app').default;
     ReactDOM.render(renderWithRouter(NextRootContainer), rootElement);
   });
 }

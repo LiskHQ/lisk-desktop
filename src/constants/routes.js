@@ -1,27 +1,27 @@
 import { tokenMap } from './tokens';
-import AddBookmark from '../components/bookmarks/addBookmark';
-import Bookmarks from '../components/bookmarks';
-import Dashboard from '../components/dashboard';
-import DelegateRegistration from '../components/delegateRegistration';
-import Delegates from '../components/delegates';
-import ExplorerTransactions from
-  '../components/transactions/explorerTransactions';
-import Extensions from '../components/extensions';
-import Help from '../components/help';
-import HwWalletLogin from '../components/hwWalletLogin';
-import Login from '../components/login';
-import Register from '../components/register';
-import SecondPassphrase from '../components/secondPassphrase';
-import Send from '../components/send/send';
-import Setting from '../components/setting';
-import SignMessage from '../components/signMessage';
+import AddBookmark from '../components/screens/bookmarks/addBookmark';
+import Bookmarks from '../components/screens/bookmarks';
+import Dashboard from '../components/screens/dashboard';
+import RegisterDelegate from '../components/screens/registerDelegate';
+import Delegates from '../components/screens/delegates';
+import Accounts from
+  '../components/screens/explorer/accounts';
+import Extensions from '../components/screens/extensions';
+import Help from '../components/screens/help';
+import HwWalletLogin from '../components/screens/hwWalletLogin';
+import Login from '../components/screens/login';
+import Register from '../components/screens/register';
+import SecondPassphrase from '../components/screens/secondPassphrase';
+import Send from '../components/screens/wallet/send/send';
+import Settings from '../components/screens/settings';
+import SignMessage from '../components/screens/signMessage';
 import VerifyMessage from '../components/screens/verify-message';
-import SingleTransaction from '../components/singleTransaction';
-import Splashscreen from '../components/splashscreen';
-import TermsOfUse from '../components/termsOfUse';
+import Transactions from '../components/screens/explorer/transactions';
+import Splashscreen from '../components/screens/splashscreen';
+import TermsOfUse from '../components/screens/termsOfUse';
 import ToolboxDemo from '../components/toolbox/demo';
-import TransactionDashboard from '../components/transactionDashboard';
-import Voting from '../components/voting';
+import TransactionDashboard from '../components/shared/transactionDashboard';
+import Voting from '../components/screens/delegates/voting';
 
 export default {
   toolboxDemo: {
@@ -73,9 +73,9 @@ export default {
     component: Help,
     isPrivate: false,
   },
-  setting: {
+  settings: {
     path: '/settings',
-    component: Setting,
+    component: Settings,
     isPrivate: false,
   },
   secondPassphrase: {
@@ -96,9 +96,9 @@ export default {
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
-  delegateRegistration: {
+  registerDelegate: {
     path: '/register-delegate',
-    component: DelegateRegistration,
+    component: RegisterDelegate,
     isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },
@@ -116,14 +116,14 @@ export default {
     pathPrefix: '',
     path: '/explorer/accounts',
     pathSuffix: '/:address?',
-    component: ExplorerTransactions,
+    component: Accounts,
     isPrivate: false,
   },
   transactions: {
     pathPrefix: '',
     path: '/explorer/transactions',
     pathSuffix: '/:id?',
-    component: SingleTransaction,
+    component: Transactions,
     isPrivate: false,
   },
   hwWallet: {

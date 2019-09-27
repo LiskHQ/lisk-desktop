@@ -1,5 +1,5 @@
-@import '../../app/variables.css';
-@import '../../app/mixins.css';
+@import '../../../app/variables.css';
+@import '../../../app/mixins.css';
 
 .feedback {
   @mixin contentNormal;
