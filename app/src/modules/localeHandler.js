@@ -1,4 +1,4 @@
-import i18n from '../i18n';
+import i18n from 'i18next';
 import menu from '../menu';
 import win from './win';
 

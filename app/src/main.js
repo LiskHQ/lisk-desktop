@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { autoUpdater } from 'electron-updater';
 import electron from 'electron';
 import electronLocalshortcut from 'electron-localshortcut';
@@ -10,7 +9,10 @@ import win from './modules/win';
 import localeHandler from './modules/localeHandler';
 import updateChecker from './modules/autoUpdater';
 import server from '../server';
+import i18nSetup from '../../i18n/i18n-setup';
 import './modules/hwManager';
+
+i18nSetup();
 
 const defaultServerPort = 3000;
 let serverUrl;
