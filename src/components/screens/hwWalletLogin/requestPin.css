@@ -1,4 +1,4 @@
-@import '../../app/variables.css';
+@import '../../../app/variables.css';
 
 @keyframes delayedFadeIn {
   0% { opacity: 0; }

@@ -5,16 +5,16 @@
 import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import styles from './app.css';
-import Toaster from '../shared/toaster';
-import LoadingBar from '../shared/loadingBar';
-import OfflineWrapper from '../shared/offlineWrapper';
-import CustomRoute from '../shared/customRoute';
-import NotFound from '../shared/notFound';
-import InitializationMessage from '../shared/initializationMessage';
-import routes from '../../constants/routes';
-import Header from '../shared/header/header';
-import FlashMessageHolder from '../toolbox/flashMessage/holder';
-import DialogHolder from '../toolbox/dialog/holder';
+import Toaster from '../components/shared/toaster';
+import LoadingBar from '../components/shared/loadingBar';
+import OfflineWrapper from '../components/shared/offlineWrapper';
+import CustomRoute from '../components/shared/customRoute';
+import NotFound from '../components/shared/notFound';
+import InitializationMessage from '../components/shared/initializationMessage';
+import routes from '../constants/routes';
+import Header from '../components/shared/header/header';
+import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
+import DialogHolder from '../components/toolbox/dialog/holder';
 
 class App extends React.Component {
   constructor() {

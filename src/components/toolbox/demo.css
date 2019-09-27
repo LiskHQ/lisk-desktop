@@ -1,4 +1,4 @@
-@import '../app/variables.css';
+@import '../../app/variables.css';
 
 .tableOfContents {
   background: var(--color-white-smoke);

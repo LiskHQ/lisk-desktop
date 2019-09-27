@@ -5,12 +5,12 @@ import { Provider } from 'react-redux';
 import { expect } from 'chai';
 import configureStore from 'redux-mock-store';
 import { I18nextProvider } from 'react-i18next';
-import i18n from '../../i18n'; // initialized i18next instance
+import i18n from '../i18n'; // initialized i18next instance
 import App from '.';
-import Splashscreen from '../splashscreen/splashscreen';
-import Login from '../login/login';
-import TransactionsDashboard from '../transactionDashboard';
-import routes from '../../constants/routes';
+import Splashscreen from '../components/screens/splashscreen/splashscreen';
+import Login from '../components/screens/login/login';
+import TransactionsDashboard from '../components/shared/transactionDashboard';
+import routes from '../constants/routes';
 
 const fakeStore = configureStore();
 
