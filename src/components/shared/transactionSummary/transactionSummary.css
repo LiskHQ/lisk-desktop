@@ -5,11 +5,11 @@
   width: 720px;
 
   & > footer {
-    display: flex;
-    flex-direction: column;
     align-items: center;
     margin-top: 16px;
     margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
 
     & > .confirmBtn {
       width: var(--footer-button-width);

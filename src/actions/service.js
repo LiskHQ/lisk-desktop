@@ -6,15 +6,25 @@ import { errorToastDisplayed } from './toaster';
 export const pricesRetrieved = () => (dispatch, getState) => {
   const { settings: { token } } = getState();
   const activeToken = token.active;
+  const tickerReducer = (acc, key) => ({
+    ...acc,
+    [key.from]: {
+      ...acc[key.from],
+      [key.to]: key.rate,
+    },
+  });
 
   serviceAPI.getPriceTicker(activeToken)
-    .then(priceTicker => dispatch({
-      type: actionTypes.pricesRetrieved,
-      data: {
-        priceTicker,
-        activeToken,
-      },
-    }))
+    .then((priceTicker) => {
+      const priceTickerReduced = priceTicker.reduce(tickerReducer, {});
+      dispatch({
+        type: actionTypes.pricesRetrieved,
+        data: {
+          priceTicker: priceTickerReduced,
+          activeToken,
+        },
+      });
+    })
     .catch(() => dispatch(errorToastDisplayed(i18next.t('Error retrieving conversion rates.'))));
 };
 
