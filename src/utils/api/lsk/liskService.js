@@ -3,9 +3,9 @@ import * as popsicle from 'popsicle';
 const liskServiceUrl = 'https://service.lisk.io';
 
 const liskServiceGet = ({
-  path, transformResponse = x => x,
+  path, transformResponse = x => x, searchParams = {},
 }) => new Promise((resolve, reject) => {
-  popsicle.get(`${liskServiceUrl}${path}`)
+  popsicle.get(`${liskServiceUrl}${path}?${new URLSearchParams(searchParams)}`)
     .use(popsicle.plugins.parse('json'))
     .then((response) => {
       resolve(transformResponse(response.body));
@@ -20,9 +20,13 @@ const liskServiceApi = {
     transformResponse: response => response.data,
   }),
   getNewsFeed: () => liskServiceGet({ path: '/api/newsfeed' }),
-  getLastBlocks: () => liskServiceGet({
-    path: '/api/getLastBlocks',
-    transformResponse: response => response.blocks,
+  getLastBlocks: (network, searchParams) => liskServiceGet({
+    path: '/api/v1/blocks/last',
+    transformResponse: response => response.data,
+    searchParams: {
+      limit: 20,
+      ...searchParams,
+    },
   }),
 };
 
