@@ -2,29 +2,25 @@ import * as popsicle from 'popsicle';
 
 const liskServiceUrl = 'https://service.lisk.io';
 
+const liskServiceGet = ({ path }) => new Promise((resolve, reject) => {
+  popsicle.get(`${liskServiceUrl}${path}`)
+    .use(popsicle.plugins.parse('json'))
+    .then((response) => {
+      resolve(response.body);
+    }).catch((error) => {
+      reject(error);
+    });
+});
+
 const liskServiceApi = {
-  getPriceTicker: () => new Promise((resolve, reject) => {
-    popsicle.get(`${liskServiceUrl}/api/v1/market/prices`)
-      .use(popsicle.plugins.parse('json'))
-      .then((response) => {
-        if (response.body.data.length) {
-          resolve(response.body.data);
-        } else {
-          reject(response.body);
-        }
-      }).catch(reject);
-  }),
-  getNewsFeed: () => new Promise((resolve, reject) => {
-    popsicle.get(`${liskServiceUrl}/api/newsfeed`)
-      .use(popsicle.plugins.parse('json'))
-      .then((response) => {
-        if (response.body) {
-          resolve(response.body);
-        } else {
-          reject(response.body);
-        }
-      }).catch(reject);
-  }),
+  getPriceTicker: async () => {
+    const response = await liskServiceGet({ path: '/api/v1/market/prices' });
+    if (response && response.data && response.data.length) {
+      return response.data;
+    }
+    throw new Error(response);
+  },
+  getNewsFeed: () => liskServiceGet({ path: '/api/newsfeed' }),
 };
 
 export default liskServiceApi;
