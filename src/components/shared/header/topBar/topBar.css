@@ -12,6 +12,10 @@
   width: 100%;
   z-index: 1;
 
+  & a:hover {
+    text-decoration: none;
+  }
+
   & > div {
     box-sizing: border-box;
     display: flex;
