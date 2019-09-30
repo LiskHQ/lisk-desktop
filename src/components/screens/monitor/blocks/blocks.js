@@ -3,14 +3,18 @@ import React from 'react';
 import Box from '../../../toolbox/box';
 import PageLayout from '../../../toolbox/pageLayout';
 
-const Blocks = ({ t }) => (
+const Blocks = ({ t, blocks }) => (
   <PageLayout>
-    <Box>
+    <Box isLoading={blocks.isLoading}>
       <Box.Header>
         <h1>{t('All blocks')}</h1>
       </Box.Header>
       <Box.Content>
-       TODO
+        {blocks.data.map(block => (
+          <Box.Row key={block.id}>
+            <span className="blockId">{block.id}</span>
+          </Box.Row>
+        ))}
       </Box.Content>
     </Box>
   </PageLayout>
@@ -18,6 +22,10 @@ const Blocks = ({ t }) => (
 
 Blocks.propTypes = {
   t: PropTypes.func.isRequired,
+  blocks: PropTypes.shape({
+    data: PropTypes.array.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+  }).isRequired,
 };
 
 export default Blocks;

@@ -1,5 +1,17 @@
 /* istanbul ignore file */
+import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import Blocks from './blocks';
+import liskService from '../../../../utils/api/lsk/liskService';
+import withData from '../../../../utils/withData';
 
-export default withTranslation()(Blocks);
+export default compose(
+  withData({
+    blocks: {
+      apiUtil: liskService.getLastBlocks,
+      defaultData: [],
+      autoload: true,
+    },
+  }),
+  withTranslation(),
+)(Blocks);
