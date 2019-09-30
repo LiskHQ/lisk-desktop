@@ -37,4 +37,17 @@ describe('Blocks page', () => {
       { offset: props.blocks.data.length }, expect.any(Object),
     );
   });
+
+  it('shows error if ', () => {
+    const error = 'Loading failed';
+    const wrapper = mount(<Blocks {...props} />);
+    wrapper.setProps({
+      blocks: {
+        ...props.blocks,
+        isLoading: false,
+        error,
+      },
+    });
+    expect(wrapper).toIncludeText(error);
+  });
 });
