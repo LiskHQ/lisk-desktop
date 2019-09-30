@@ -45,6 +45,7 @@ export default {
     path: '/monitor/blocks',
     component: Blocks,
     isPrivate: false,
+    exact: true,
   },
   bookmarks: {
     path: '/bookmarks',

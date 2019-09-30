@@ -1,9 +1,13 @@
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import Box from '../../../toolbox/box';
+import LiskAmount from '../../../shared/liskAmount';
 import PageLayout from '../../../toolbox/pageLayout';
 import TableRow from '../../../toolbox/table/tableRow';
+import routes from '../../../../constants/routes';
 
 const columnClassNames = {
   id: `${grid['col-md-2']} ${grid['col-xs-2']}`,
@@ -32,13 +36,31 @@ const Blocks = ({ t, blocks }) => (
       </TableRow>
       {blocks.data.map(block => (
         <TableRow key={block.id} className={`${grid.row}`}>
-          <span className={[columnClassNames.id, 'blockId'].join(' ')}>{block.id}</span>
+          <span className={[columnClassNames.id, 'blockId'].join(' ')}>
+            <Link to={`${routes.blocks.path}/${block.id}`}>
+              {block.id}
+            </Link>
+          </span>
           <span className={columnClassNames.height}>{block.height}</span>
-          <span className={columnClassNames.date}>{block.timestamp}</span>
+          <span className={columnClassNames.date}>
+            <DateTimeFromTimestamp time={block.timestamp} token="LSK" />
+          </span>
           <span className={columnClassNames.transactions}>{block.transactionsCount}</span>
-          <span className={columnClassNames.generator}>{block.delegate.username}</span>
-          <span className={columnClassNames.amount}>{block.totalAmount}</span>
-          <span className={columnClassNames.forged}>{block.totalForged}</span>
+          <span className={columnClassNames.generator}>
+            <Link to={`${routes.accounts.pathPrefix}${routes.accounts.path}/${block.delegate.address}`}>
+              {block.delegate.username}
+            </Link>
+          </span>
+          <span className={columnClassNames.amount}>
+            <LiskAmount val={block.totalAmount} />
+            &nbsp;
+            {`${t('LSK')}`}
+          </span>
+          <span className={columnClassNames.forged}>
+            <LiskAmount val={block.totalForged} />
+            &nbsp;
+            {`${t('LSK')}`}
+          </span>
         </TableRow>
       ))}
     </Box>
