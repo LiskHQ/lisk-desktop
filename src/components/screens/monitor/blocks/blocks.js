@@ -35,6 +35,7 @@ const Blocks = ({ t, blocks }) => (
         : (
           <React.Fragment>
             <div>
+              {!!blocks.data.length && (
               <TableRow isHeader className={`${grid.row}`}>
                 <div className={columnClassNames.id}>{t('ID')}</div>
                 <div className={columnClassNames.height}>{t('Height')}</div>
@@ -44,6 +45,7 @@ const Blocks = ({ t, blocks }) => (
                 <div className={columnClassNames.amount}>{t('Amount')}</div>
                 <div className={columnClassNames.forged}>{t('Forged')}</div>
               </TableRow>
+              )}
               {blocks.data.map(block => (
                 <TableRow key={block.id} className={`${grid.row}`}>
                   <span className={[columnClassNames.id, 'block-id'].join(' ')}>
