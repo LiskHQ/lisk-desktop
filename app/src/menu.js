@@ -1,4 +1,4 @@
-import i18n from './i18n';
+import i18n from 'i18next';
 import process from './modules/process';
 
 const addAboutMenuForMac = ({ template, name }) => {
