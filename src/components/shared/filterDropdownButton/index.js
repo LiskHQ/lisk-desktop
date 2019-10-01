@@ -9,6 +9,10 @@ import Icon from '../../toolbox/icon';
 import MessageFieldGroup from './messageFieldGroup';
 import styles from './filterContainer.css';
 
+const filterComponents = {
+  'date-range': DateFieldGroup,
+};
+
 class FilterDropdownButton extends React.Component {
   constructor(props) {
     super(props);
@@ -55,10 +59,8 @@ class FilterDropdownButton extends React.Component {
   }
 
   render() {
-    const { t, customFilters } = this.props;
+    const { t, customFilters, filters } = this.props;
     const {
-      dateFrom,
-      dateTo,
       amountFrom,
       amountTo,
       message,
@@ -79,13 +81,18 @@ class FilterDropdownButton extends React.Component {
         ref={this.setChildRef}
       >
         <form onSubmit={this.applyFilters}>
-          <div
-            className={`${styles.container} filter-container`}
-          >
-            <DateFieldGroup
-              filters={{ dateFrom, dateTo }}
-              updateCustomFilters={this.updateCustomFilters}
-            />
+          <div className={`${styles.container} filter-container`}>
+            { filters.map((filter) => {
+              const Component = filterComponents[filter.type];
+              return (
+                <Component
+                  key={filter.name}
+                  label={filter.label}
+                  filters={filter.value}
+                  updateCustomFilters={this.updateCustomFilters}
+                />
+              );
+            })}
             <AmountFieldGroup
               filters={{ amountFrom, amountTo }}
               updateCustomFilters={this.updateCustomFilters}

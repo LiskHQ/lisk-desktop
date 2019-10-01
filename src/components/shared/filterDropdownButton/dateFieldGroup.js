@@ -230,12 +230,12 @@ class DateFieldGroup extends React.Component {
   }
 
   render() {
-    const { filters, t } = this.props;
+    const { filters, label } = this.props;
     const { shownDropdown } = this.state;
 
     return (
       <div className={styles.fieldGroup}>
-        <span className={styles.fieldLabel}>{t('Date')}</span>
+        <span className={styles.fieldLabel}>{label}</span>
         <div className={styles.fieldRow}>
           <label
             className={styles.dropdownWrapper}
