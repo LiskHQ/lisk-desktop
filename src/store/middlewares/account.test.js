@@ -22,7 +22,6 @@ describe('Account middleware', () => {
   let state;
   let stubGetAccount;
   let stubTransactions;
-  let transactionsActionsStub;
   let getAutoLogInDataMock;
   let networkSetMock;
   let accountDataUpdatedSpy;
@@ -91,10 +90,9 @@ describe('Account middleware', () => {
     store.getState = () => (state);
 
     next = spy();
-    spy(accountActions, 'updateTransactionsIfNeeded');
+    spy(transactionsActions, 'updateTransactions');
     spy(accountActions, 'updateEnabledTokenAccount');
     stubGetAccount = stub(accountApi, 'getAccount').returnsPromise();
-    transactionsActionsStub = spy(transactionsActions, 'updateTransactions');
     stubTransactions = stub(transactionsApi, 'getTransactions').returnsPromise().resolves(true);
     getAutoLogInDataMock = stub(accountUtils, 'getAutoLogInData');
     getAutoLogInDataMock.withArgs().returns({ });
@@ -103,9 +101,8 @@ describe('Account middleware', () => {
   });
 
   afterEach(() => {
-    accountActions.updateTransactionsIfNeeded.restore();
+    transactionsActions.updateTransactions.restore();
     accountActions.updateEnabledTokenAccount.restore();
-    transactionsActionsStub.restore();
     stubGetAccount.restore();
     stubTransactions.restore();
     clock.restore();
@@ -129,18 +126,19 @@ describe('Account middleware', () => {
 
     clock.tick(7000);
     expect(accountDataUpdatedSpy).to.have.been.calledWith(data);
-    expect(accountActions.updateTransactionsIfNeeded).to.have.been.calledWith();
+    expect(transactionsActions.updateTransactions).to.have.been.calledWith();
   });
 
   it(`should call account BTC API methods on ${actionTypes.newBlockCreated} action when BTC is the active token`, () => {
     state.settings = { token: { active: 'BTC' } };
-    const account = { address: 'n45uoyzDvep8cwgkfxq3H3te1ujWyu1kkB' };
-    state.account = account;
+    const address = 'n45uoyzDvep8cwgkfxq3H3te1ujWyu1kkB';
+    state.account = { address };
+    state.transactions.confirmed = [{ senderId: address, confirmations: 1 }];
     middleware(store)(next)(newBlockCreated);
 
     clock.tick(7000);
-    expect(accountActions.updateTransactionsIfNeeded)
-      .to.have.been.calledWith(match({ account }));
+    expect(transactionsActions.updateTransactions)
+      .to.have.been.calledWith(match({ address }));
   });
 
   it(`should call API methods on ${actionTypes.newBlockCreated} action if state.transaction.transactions.confirmed does not contain recent transaction. Case with transactions address`, () => {
