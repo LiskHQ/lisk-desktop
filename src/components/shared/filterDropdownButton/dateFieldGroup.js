@@ -2,16 +2,16 @@
 import React from 'react';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
-import { firstBlockTime } from '../../../../../constants/datetime';
-import { getDateTimestampFromFirstBlock, formatInputToDate } from '../../../../../utils/datetime';
-import { Input } from '../../../../toolbox/inputs';
-import { getInputSelection, setInputSelection } from '../../../../../utils/selection';
+import { firstBlockTime } from '../../../constants/datetime';
+import { getDateTimestampFromFirstBlock, formatInputToDate } from '../../../utils/datetime';
+import { Input } from '../../toolbox/inputs';
+import { getInputSelection, setInputSelection } from '../../../utils/selection';
 import styles from './filters.css';
-import Dropdown from '../../../../toolbox/dropdown/dropdown';
-import Calendar from '../../../../toolbox/calendar/calendar';
-import Feedback from '../../../../toolbox/feedback/feedback';
-import keyCodes from '../../../../../constants/keyCodes';
-import i18n from '../../../../../i18n';
+import Dropdown from '../../toolbox/dropdown/dropdown';
+import Calendar from '../../toolbox/calendar/calendar';
+import Feedback from '../../toolbox/feedback/feedback';
+import keyCodes from '../../../constants/keyCodes';
+import i18n from '../../../i18n';
 
 class DateFieldGroup extends React.Component {
   // eslint-disable-next-line max-statements

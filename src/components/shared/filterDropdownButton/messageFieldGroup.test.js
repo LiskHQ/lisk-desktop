@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import i18n from '../../../../../i18n';
+import i18n from '../../../i18n';
 import MessageFieldGroup from './messageFieldGroup';
 
 describe('MessageFieldGroup', () => {

@@ -1,10 +1,10 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { AutoresizeTextarea } from '../../../../toolbox/inputs';
-import Feedback from '../../../../toolbox/feedback/feedback';
-import CircularProgress from '../../../../toolbox/circularProgress/circularProgress';
+import { AutoresizeTextarea } from '../../toolbox/inputs';
+import Feedback from '../../toolbox/feedback/feedback';
+import CircularProgress from '../../toolbox/circularProgress/circularProgress';
 import styles from './filters.css';
-import Icon from '../../../../toolbox/icon';
+import Icon from '../../toolbox/icon';
 
 class MessageFieldGroup extends React.Component {
   constructor() {
