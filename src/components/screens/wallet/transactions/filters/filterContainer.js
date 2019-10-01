@@ -27,9 +27,10 @@ class FilterContainer extends React.Component {
       type: 'number-range',
     }, {
       label: t('Message'),
-      name: 'messge',
-      value: { message },
-      type: 'message',
+      placeholder: t('Write message'),
+      name: 'message',
+      value: message,
+      type: 'text',
     }];
 
     return (

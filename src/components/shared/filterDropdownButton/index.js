@@ -7,12 +7,14 @@ import DateFieldGroup from './dateFieldGroup';
 import DropdownButton from '../../toolbox/dropdownButton';
 import Icon from '../../toolbox/icon';
 import MessageFieldGroup from './messageFieldGroup';
+import TextFilter from './textFilter';
 import styles from './filterContainer.css';
 
 const filterComponents = {
   'date-range': DateFieldGroup,
   'number-range': AmountFieldGroup,
   message: MessageFieldGroup,
+  text: TextFilter,
 };
 
 class FilterDropdownButton extends React.Component {
@@ -32,7 +34,7 @@ class FilterDropdownButton extends React.Component {
     const { customFilters } = this.props;
     let hasErrors = false;
     const filters = Object.keys(fields).reduce((acc, field) => {
-      hasErrors = hasErrors || fields[field].error;
+      hasErrors = hasErrors || !!fields[field].error;
       return {
         ...acc,
         [field]: fields[field].value,
@@ -84,13 +86,20 @@ class FilterDropdownButton extends React.Component {
             return (
               <Component
                 key={filter.name}
+                name={filter.name}
                 label={filter.label}
+                placeholder={filter.placeholder}
                 filters={filter.value}
                 updateCustomFilters={this.updateCustomFilters}
               />
             );
           })}
-          <PrimaryButton disabled={hasErrors} className="saveButton" type="submit" size="s">
+          <PrimaryButton
+            disabled={hasErrors}
+            className={['saveButton', styles.submitButton].join(' ')}
+            type="submit"
+            size="s"
+          >
             {t('Apply Filters')}
           </PrimaryButton>
         </form>

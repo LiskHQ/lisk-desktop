@@ -7,3 +7,7 @@
 .filterTransactionsButton {
   display: flex;
 }
+
+.submitButton {
+  margin-top: 12px;
+}

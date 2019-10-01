@@ -16,14 +16,14 @@ describe('filterContainer', () => {
   });
 
   it('should call saveFilters', () => {
-    wrapper.find('.message-field textarea').simulate('change', { target: { name: 'message', value: 'test' } });
+    wrapper.find('input.message').simulate('change', { target: { name: 'message', value: 'test' } });
     expect(props.updateCustomFilters).toBeCalledWith({ message: 'test' });
     wrapper.find('form').simulate('submit');
     expect(props.saveFilters).toBeCalled();
   });
 
   it('should call saveFilters on enter pressed', () => {
-    wrapper.find('.message-field textarea').simulate('change', { event: { target: { value: 'testing' } } });
+    wrapper.find('input.message').simulate('change', { event: { target: { value: 'testing' } } });
     wrapper.find('form').simulate('submit');
     expect(props.saveFilters).toBeCalled();
   });
