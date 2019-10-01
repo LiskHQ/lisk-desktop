@@ -9,7 +9,7 @@ class FilterContainer extends React.Component {
     return (
       <FilterDropdownButton
         updateCustomFilters={updateCustomFilters}
-        saveFilters={saveFilters}
+        applyFilters={saveFilters}
         customFilters={customFilters}
       />
     );

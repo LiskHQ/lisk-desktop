@@ -90,7 +90,7 @@ class AmountFieldGroup extends React.Component {
   }
 
   generateField({ name, placeholder }) {
-    const { filters, handleKeyPress } = this.props;
+    const { filters } = this.props;
     const field = this.state.fields[name];
 
     return (
@@ -101,7 +101,6 @@ class AmountFieldGroup extends React.Component {
           name={name}
           value={filters[name]}
           placeholder={placeholder}
-          onKeyDown={handleKeyPress}
           className={`${styles.input} ${field.error ? 'error' : ''} ${name}Input`}
           isLoading={field.loading}
           status={field.error ? 'error' : 'ok'}

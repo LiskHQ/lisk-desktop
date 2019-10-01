@@ -68,7 +68,7 @@ class MessageFieldGroup extends React.Component {
   }
 
   render() {
-    const { handleKeyPress, t, filters } = this.props;
+    const { t, filters } = this.props;
     const { fields } = this.state;
     const byteCount = encodeURI(filters.message).split(/%..|./).length - 1;
 
@@ -83,7 +83,6 @@ class MessageFieldGroup extends React.Component {
             value={filters.message}
             placeholder={t('Write message')}
             maxLength={100}
-            onKeyDown={handleKeyPress}
             className={`${styles.input} ${fields.message.error ? 'error' : ''}`}
           />
           <CircularProgress

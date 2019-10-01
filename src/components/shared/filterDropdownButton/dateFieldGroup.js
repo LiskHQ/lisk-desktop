@@ -167,7 +167,6 @@ class DateFieldGroup extends React.Component {
       }
       default: break;
     }
-    this.props.handleKeyPress(evt);
   }
 
   // eslint-disable-next-line max-statements
