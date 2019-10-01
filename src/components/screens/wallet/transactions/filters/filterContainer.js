@@ -10,16 +10,27 @@ class FilterContainer extends React.Component {
     const {
       dateFrom,
       dateTo,
+      amountFrom,
+      amountTo,
+      message,
     } = customFilters;
 
-    const filters = [
-      {
-        label: t('Date'),
-        name: 'date',
-        value: { dateFrom, dateTo },
-        type: 'date-range',
-      },
-    ];
+    const filters = [{
+      label: t('Date'),
+      name: 'date',
+      value: { dateFrom, dateTo },
+      type: 'date-range',
+    }, {
+      label: t('Amount'),
+      name: 'amount',
+      value: { amountFrom, amountTo },
+      type: 'number-range',
+    }, {
+      label: t('Message'),
+      name: 'messge',
+      value: { message },
+      type: 'message',
+    }];
 
     return (
       <FilterDropdownButton

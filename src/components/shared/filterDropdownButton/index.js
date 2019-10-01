@@ -11,6 +11,8 @@ import styles from './filterContainer.css';
 
 const filterComponents = {
   'date-range': DateFieldGroup,
+  'number-range': AmountFieldGroup,
+  message: MessageFieldGroup,
 };
 
 class FilterDropdownButton extends React.Component {
@@ -59,12 +61,8 @@ class FilterDropdownButton extends React.Component {
   }
 
   render() {
-    const { t, customFilters, filters } = this.props;
-    const {
-      amountFrom,
-      amountTo,
-      message,
-    } = customFilters;
+    const { t, filters } = this.props;
+    const { hasErrors } = this.state;
 
     return (
       <DropdownButton
@@ -80,35 +78,21 @@ class FilterDropdownButton extends React.Component {
         align="right"
         ref={this.setChildRef}
       >
-        <form onSubmit={this.applyFilters}>
-          <div className={`${styles.container} filter-container`}>
-            { filters.map((filter) => {
-              const Component = filterComponents[filter.type];
-              return (
-                <Component
-                  key={filter.name}
-                  label={filter.label}
-                  filters={filter.value}
-                  updateCustomFilters={this.updateCustomFilters}
-                />
-              );
-            })}
-            <AmountFieldGroup
-              filters={{ amountFrom, amountTo }}
-              updateCustomFilters={this.updateCustomFilters}
-            />
-            <MessageFieldGroup
-              filters={{ message }}
-              updateCustomFilters={this.updateCustomFilters}
-            />
-            <PrimaryButton
-              disabled={this.state.hasErrors}
-              className="saveButton small"
-              type="submit"
-            >
-              {this.props.t('Apply Filters')}
-            </PrimaryButton>
-          </div>
+        <form onSubmit={this.applyFilters} className={`${styles.container} filter-container`}>
+          {filters.map((filter) => {
+            const Component = filterComponents[filter.type];
+            return (
+              <Component
+                key={filter.name}
+                label={filter.label}
+                filters={filter.value}
+                updateCustomFilters={this.updateCustomFilters}
+              />
+            );
+          })}
+          <PrimaryButton disabled={hasErrors} className="saveButton" type="submit" size="s">
+            {t('Apply Filters')}
+          </PrimaryButton>
         </form>
       </DropdownButton>
     );

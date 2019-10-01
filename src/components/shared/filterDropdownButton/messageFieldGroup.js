@@ -68,13 +68,13 @@ class MessageFieldGroup extends React.Component {
   }
 
   render() {
-    const { t, filters } = this.props;
+    const { t, filters, label } = this.props;
     const { fields } = this.state;
     const byteCount = encodeURI(filters.message).split(/%..|./).length - 1;
 
     return (
       <label className={`${styles.fieldGroup} message-field`}>
-        <span className={styles.fieldLabel}>{t('Message')}</span>
+        <span className={styles.fieldLabel}>{label}</span>
         <div className={`${styles.fieldRow} ${styles.fieldHolder} reference-field`}>
           <AutoresizeTextarea
             autoComplete="off"

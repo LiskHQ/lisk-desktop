@@ -111,11 +111,11 @@ class AmountFieldGroup extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, label } = this.props;
 
     return (
       <div className={styles.fieldGroup}>
-        <span className={styles.fieldLabel}>{t('Amount')}</span>
+        <span className={styles.fieldLabel}>{label}</span>
         <div className={styles.fieldRow}>
           { this.generateField({ name: 'amountFrom', placeholder: t('Min') }) }
           <span className={styles.separator} />
