@@ -1,8 +1,8 @@
 import React from 'react';
 import moment from 'moment/min/moment-with-locales';
-import { SecondaryButton } from '../../../../toolbox/buttons/button';
+import { SecondaryButton } from '../../toolbox/buttons/button';
+import i18n from '../../../i18n';
 import styles from './filterBar.css';
-import i18n from '../../../../../i18n';
 
 const FilterBar = ({
   t, clearFilter, clearAllFilters, customFilters, results,

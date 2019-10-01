@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import txFilters from '../../../../constants/transactionFilters';
 import Piwik from '../../../../utils/piwik';
 import FilterContainer from './filters/filterContainer';
-import FilterBar from './filters/filterBar';
+import FilterBar from '../../../shared/filterBar';
 import TransactionsList from './transactionsList';
 import Tabs from '../../../toolbox/tabs';
 import styles from './transactions.css';

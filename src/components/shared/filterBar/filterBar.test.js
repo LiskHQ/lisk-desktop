@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import FilterBar from './filterBar';
+import FilterBar from '.';
 
 describe('FilterBar', () => {
   let wrapper;
