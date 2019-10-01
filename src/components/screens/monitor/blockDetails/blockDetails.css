@@ -1,0 +1,32 @@
+@import '../../../../app/variables.css';
+@import '../../../../app/mixins.css';
+
+.tableRow {
+  &:hover {
+    background-color: transparent !important;
+  }
+}
+
+.dataContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex-grow: 1;
+  box-sizing: border-box;
+  width: calc(100% / 5);
+
+  & > label {
+    @mixin contentNormal bold;
+  }
+
+  & > span {
+    @mixin contentLargest;
+
+    margin-top: 13px;
+  }
+
+  & .clickable {
+    cursor: pointer;
+  }
+}
