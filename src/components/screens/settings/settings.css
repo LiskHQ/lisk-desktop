@@ -33,12 +33,8 @@
   }
 
   & .link {
-    @mixin contentLargest bold;
-
-    color: var(--color-ultramarine-blue);
     display: inline-block;
     margin-top: 10px;
-    text-decoration: none;
   }
 }
 

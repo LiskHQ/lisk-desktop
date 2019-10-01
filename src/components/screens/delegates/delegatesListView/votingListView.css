@@ -66,6 +66,10 @@
   text-decoration: none;
   display: flex;
 
+  &:hover {
+    text-decoration: none;
+  }
+
   & .title {
     @mixin headingSmall;
 
