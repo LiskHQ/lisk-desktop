@@ -23,7 +23,11 @@ const liskServiceGet = ({
   popsicle.get(`${serverUrl}${path}?${new URLSearchParams(searchParams)}`)
     .use(popsicle.plugins.parse('json'))
     .then((response) => {
-      resolve(transformResponse(response.body));
+      if (response.statusType() === 2) {
+        resolve(transformResponse(response.body));
+      } else {
+        reject(new Error(response.body.message || response.body.error));
+      }
     }).catch((error) => {
       reject(error);
     });
