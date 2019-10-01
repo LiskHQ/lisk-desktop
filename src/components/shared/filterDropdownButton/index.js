@@ -6,14 +6,12 @@ import AmountFieldGroup from './amountFieldGroup';
 import DateFieldGroup from './dateFieldGroup';
 import DropdownButton from '../../toolbox/dropdownButton';
 import Icon from '../../toolbox/icon';
-import MessageFieldGroup from './messageFieldGroup';
 import TextFilter from './textFilter';
 import styles from './filterContainer.css';
 
 const filterComponents = {
   'date-range': DateFieldGroup,
   'number-range': AmountFieldGroup,
-  message: MessageFieldGroup,
   text: TextFilter,
 };
 
