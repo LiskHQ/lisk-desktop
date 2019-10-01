@@ -115,6 +115,10 @@
   color: var(--color-maastricht-blue);
   display: flex;
   margin: 40px 0 12px;
+
+  &.xs {
+    margin: 0 0 8px;
+  }
 }
 
 .input {
