@@ -4,9 +4,9 @@ import styles from './network.css';
 
 const Network = ({ network, t, token }) => {
   const networksList = {
-    Mainnet: t('Mainnet'),
-    Testnet: t('Testnet'),
-    'Custom Node': t('Devnet'),
+    Mainnet: t('Mainnet').toLowerCase(),
+    Testnet: t('Testnet').toLowerCase(),
+    'Custom Node': t('Devnet').toLowerCase(),
   };
 
   const activeNetwork = getNetworkNameBasedOnNethash(network, token);
@@ -18,7 +18,7 @@ const Network = ({ network, t, token }) => {
       <span className={`${styles.status} ${statusColor}`} />
       <p>
         <span>{t('Connected to:')}</span>
-        <span>{(networksList[activeNetwork] || '').toLowerCase()}</span>
+        <span>{networksList[activeNetwork]}</span>
       </p>
     </section>
   );
