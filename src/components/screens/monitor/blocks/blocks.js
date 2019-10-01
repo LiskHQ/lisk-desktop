@@ -11,13 +11,13 @@ import TableRow from '../../../toolbox/table/tableRow';
 import routes from '../../../../constants/routes';
 
 const columnClassNames = {
-  id: `${grid['col-md-2']} ${grid['col-xs-2']}`,
-  height: `${grid['col-md-2']} ${grid['col-xs-2']}`,
-  date: `${grid['col-md-2']} ${grid['col-xs-2']}`,
-  transactions: `${grid['col-md-2']} ${grid['col-xs-2']}`,
-  generator: `${grid['col-md-2']} ${grid['col-xs-2']}`,
-  amount: `${grid['col-md-1']} ${grid['col-xs-1']}`,
-  forged: `${grid['col-md-1']} ${grid['col-xs-1']}`,
+  id: `${grid['col-md-2']} ${grid['col-xs-3']}`,
+  height: grid['col-xs-2'],
+  date: `${grid['col-md-2']} hidden-m`,
+  transactions: grid['col-xs-2'],
+  generator: grid['col-xs-2'],
+  amount: grid['col-xs-1'],
+  forged: `${grid['col-md-1']} ${grid['col-xs-2']}`,
 };
 
 const Blocks = ({ t, blocks }) => (

@@ -47,6 +47,11 @@ order to be available application wide
       display: none;
     }
   }
+
+  :global .hidden-m {
+    position: absolute;
+    visibility: hidden;
+  }
 }
 
 @media (--small-viewport) {
