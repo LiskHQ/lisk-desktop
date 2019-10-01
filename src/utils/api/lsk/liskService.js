@@ -1,5 +1,6 @@
 import * as popsicle from 'popsicle';
 import { getNetworkNameBasedOnNethash } from '../../getNetwork';
+import i18n from '../../../i18n';
 import networks from '../../../constants/networks';
 
 const liskServiceUrl = 'https://service.lisk.io';
@@ -13,7 +14,7 @@ const getServerUrl = (networkConfig) => {
   if (name === networks.testnet.name) {
     return liskServiceTestnetUrl;
   }
-  throw new Error('This feature is supported only for mainnet and testnet.');
+  throw new Error(i18n.t('This feature is supported only for mainnet and testnet.'));
 };
 
 const liskServiceGet = ({
