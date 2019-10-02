@@ -4,23 +4,40 @@ import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '../../toolbox/box';
 import TableRow from '../../toolbox/table/tableRow';
+import LiskAmount from '../liskAmount';
+import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
+import Icon from '../../toolbox/icon';
 
 const TransactionsTable = ({
   t, title, columns, transactions,
 }) => {
-  const renderCell = (column, transaction) => {
-    if (column.isLink) {
-      return (
-        <span key={column.key} className={column.className}>
+  const renderCellContent = (column, transaction) => {
+    switch (column.key) {
+      case 'id':
+        return (
           <Link to={`${column.pathPrefix}/${transaction[column.key]}`}>
             {transaction[column.key]}
           </Link>
-        </span>
-      );
+        );
+      case 'amount':
+      case 'fee':
+        return (
+          <React.Fragment>
+            <LiskAmount val={transaction[column.key]} />
+&nbsp;
+            {t('LSK')}
+          </React.Fragment>
+        );
+      case 'timestamp':
+        return (
+          <DateTimeFromTimestamp time={transaction[column.key]} token="LSK" />
+        );
+      case 'confirmations':
+        return transaction.confirmations.length
+          ? <Icon name="copy" /> : <Icon name="copy" />;
+      default:
+        return transaction[column.key];
     }
-    return (
-      <span key={column.key} className={column.className}>{transaction[column.key]}</span>
-    );
   };
 
 
@@ -39,7 +56,11 @@ const TransactionsTable = ({
           </TableRow>
           {transactions.data.data.map(transaction => (
             <TableRow key={transaction.id} className={`${grid.row}`}>
-              {columns.map(column => renderCell(column, transaction))}
+              {columns.map(column => (
+                <span key={column.key} className={column.className}>
+                  {renderCellContent(column, transaction)}
+                </span>
+              ))}
             </TableRow>
           ))}
         </React.Fragment>

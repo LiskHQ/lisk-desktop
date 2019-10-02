@@ -15,7 +15,7 @@ const Transactions = ({ t, transactions }) => {
     { header: 'Recipient', className: `${grid['col-md-2']} ${grid['col-xs-2']}`, key: 'recipientId' },
     { header: 'Amount', className: `${grid['col-md-2']} ${grid['col-xs-2']}`, key: 'amount' },
     { header: 'Fee', className: `${grid['col-md-1']} ${grid['col-xs-1']}`, key: 'fee' },
-    { header: 'Status', className: `${grid['col-md-1']} ${grid['col-xs-1']}`, key: 'type' },
+    { header: 'Status', className: `${grid['col-md-1']} ${grid['col-xs-1']}`, key: 'confirmations' },
   ];
 
   return (
