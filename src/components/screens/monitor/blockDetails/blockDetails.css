@@ -1,13 +1,8 @@
-@import '../../../../app/variables.css';
 @import '../../../../app/mixins.css';
 
-.tableRow {
-  &:hover {
-    background-color: transparent !important;
-  }
-}
-
 .dataContainer {
+  @mixin contentLargest;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -18,15 +13,7 @@
 
   & > label {
     @mixin contentNormal bold;
-  }
 
-  & > span {
-    @mixin contentLargest;
-
-    margin-top: 13px;
-  }
-
-  & .clickable {
-    cursor: pointer;
+    margin-bottom: 13px;
   }
 }

@@ -9,9 +9,7 @@ describe('BlockDetails page', () => {
     t: key => key,
     blockDetails: {
       isLoading: false,
-      data: {
-        data: blocks,
-      },
+      data: blocks[0],
       loadData: jest.fn(),
       error: false,
     },
@@ -23,7 +21,6 @@ describe('BlockDetails page', () => {
 
   it('renders a page properly without errors', () => {
     expect(wrapper.find('h1')).toHaveText('Block details');
-    expect(wrapper).toContainMatchingElements(2, 'TableRow');
     expect(wrapper.find('label').at(0)).toHaveText('Block ID');
     expect(wrapper.find('span.copy-title').at(0)).toHaveText(blocks[0].id);
     expect(wrapper.find('label').at(1)).toHaveText('Height');

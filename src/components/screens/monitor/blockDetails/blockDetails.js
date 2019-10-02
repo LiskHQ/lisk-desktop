@@ -5,115 +5,111 @@ import Box from '../../../toolbox/box';
 import Feedback from '../../../toolbox/feedback/feedback';
 import LiskAmount from '../../../shared/liskAmount';
 import PageLayout from '../../../toolbox/pageLayout';
-import TableRow from '../../../toolbox/table/tableRow';
 import CopyToClipboard from '../../../toolbox/copyToClipboard';
 import routes from '../../../../constants/routes';
 import styles from './blockDetails.css';
 
-const BlockDetails = ({ t, blockDetails }) => {
-  const blockDetailsData = (blockDetails && blockDetails.data.data && blockDetails.data.data[0]) || '';
-  return (
-    <PageLayout>
-      <Box isLoading={blockDetails.isLoading} width="full">
-        <Box.Header>
-          <h1>{t('Block details')}</h1>
-        </Box.Header>
-        {
-          blockDetails.error
-            ? (
-              <Box.Content>
-                <Feedback status="error" show>{t('Failed to load block details.')}</Feedback>
-              </Box.Content>
-            )
-            : (
-              <React.Fragment>
-                <div>
-                  <TableRow className={styles.tableRow}>
-                    <div className={styles.dataContainer}>
-                      <label>{t('Block ID')}</label>
-                      <span>
-                        <CopyToClipboard value={blockDetailsData.id} />
-                      </span>
-                    </div>
+const BlockDetails = ({ t, blockDetails }) => (
+  <PageLayout>
+    <Box isLoading={blockDetails.isLoading} width="full">
+      <Box.Header>
+        <h1>{t('Block details')}</h1>
+      </Box.Header>
+      {
+        blockDetails.error
+          ? (
+            <Box.Content>
+              <Feedback status="error" show>{t('Failed to load block details.')}</Feedback>
+            </Box.Content>
+          )
+          : (
+            <React.Fragment>
+              <div>
+                <Box.Row>
+                  <div className={styles.dataContainer}>
+                    <label>{t('Block ID')}</label>
+                    <span>
+                      <CopyToClipboard value={blockDetails.data.id} />
+                    </span>
+                  </div>
 
-                    <div className={styles.dataContainer}>
-                      <label>{t('Height')}</label>
-                      <span>
-                        <CopyToClipboard value={blockDetailsData.height} />
-                      </span>
-                    </div>
+                  <div className={styles.dataContainer}>
+                    <label>{t('Height')}</label>
+                    <span>
+                      <CopyToClipboard value={blockDetails.data.height} />
+                    </span>
+                  </div>
 
-                    <div className={styles.dataContainer}>
-                      <label>{t('Version')}</label>
-                      <span>{blockDetailsData.version}</span>
-                    </div>
+                  <div className={styles.dataContainer}>
+                    <label>{t('Version')}</label>
+                    <span>{blockDetails.data.version}</span>
+                  </div>
 
-                    <div className={styles.dataContainer}>
-                      <label>{t('Confirmations')}</label>
-                      <span>{blockDetailsData.confirmations}</span>
-                    </div>
+                  <div className={styles.dataContainer}>
+                    <label>{t('Confirmations')}</label>
+                    <span>{blockDetails.data.confirmations}</span>
+                  </div>
 
-                    <div className={styles.dataContainer}>
-                      <label>{t('Reward')}</label>
-                      <span>
-                        <LiskAmount val={blockDetailsData.reward} />
-                        &nbsp;
-                        {t('LSK')}
-                      </span>
-                    </div>
-                  </TableRow>
+                  <div className={styles.dataContainer}>
+                    <label>{t('Reward')}</label>
+                    <span>
+                      <LiskAmount val={blockDetails.data.reward} />
+                      &nbsp;
+                      {t('LSK')}
+                    </span>
+                  </div>
+                </Box.Row>
 
-                  <TableRow className={styles.tableRow}>
-                    <div className={styles.dataContainer}>
-                      <label>{t('Total fee')}</label>
-                      <span>
-                        <LiskAmount val={blockDetailsData.totalFee} />
-                        &nbsp;
-                        {t('LSK')}
-                      </span>
-                    </div>
+                <Box.Row>
+                  <div className={styles.dataContainer}>
+                    <label>{t('Total fee')}</label>
+                    <span>
+                      <LiskAmount val={blockDetails.data.totalFee} />
+                      &nbsp;
+                      {t('LSK')}
+                    </span>
+                  </div>
 
-                    <div className={styles.dataContainer}>
-                      <label>{t('Total forged')}</label>
-                      <span>
-                        <LiskAmount val={blockDetailsData.totalForged} />
-                        &nbsp;
-                        {t('LSK')}
-                      </span>
-                    </div>
+                  <div className={styles.dataContainer}>
+                    <label>{t('Total forged')}</label>
+                    <span>
+                      <LiskAmount val={blockDetails.data.totalForged} />
+                      &nbsp;
+                      {t('LSK')}
+                    </span>
+                  </div>
 
-                    <div className={styles.dataContainer}>
-                      <label>{t('Total amount')}</label>
-                      <span>
-                        <LiskAmount val={blockDetailsData.totalAmount} />
-                        &nbsp;
-                        {t('LSK')}
-                      </span>
-                    </div>
+                  <div className={styles.dataContainer}>
+                    <label>{t('Total amount')}</label>
+                    <span>
+                      <LiskAmount val={blockDetails.data.totalAmount} />
+                      &nbsp;
+                      {t('LSK')}
+                    </span>
+                  </div>
 
-                    <div className={styles.dataContainer}>
-                      <label>{t('Date')}</label>
-                      <span>
-                        <DateTimeFromTimestamp time={blockDetailsData.timestamp * 1000} token="BTC" />
-                      </span>
-                    </div>
+                  <div className={styles.dataContainer}>
+                    <label>{t('Date')}</label>
+                    <span>
+                      <DateTimeFromTimestamp time={blockDetails.data.timestamp * 1000} token="BTC" />
+                    </span>
+                  </div>
 
-                    <div className={styles.dataContainer}>
-                      <label>{t('Generated by')}</label>
-                      <span className={styles.clickable}>
-                        <Link to={`${routes.accounts.path}/${blockDetailsData.generatorAddress}`}>
-                          {blockDetailsData.generatorUsername}
-                        </Link>
-                      </span>
-                    </div>
-                  </TableRow>
-                </div>
-              </React.Fragment>
-            )
-        }
-      </Box>
-    </PageLayout>
-  );
-};
+                  <div className={styles.dataContainer}>
+                    <label>{t('Generated by')}</label>
+                    <span>
+                      <Link to={`${routes.accounts.path}/${blockDetails.data.generatorAddress}`}>
+                        {blockDetails.data.generatorUsername}
+                      </Link>
+                    </span>
+                  </div>
+                </Box.Row>
+              </div>
+            </React.Fragment>
+          )
+      }
+    </Box>
+  </PageLayout>
+);
 
 export default BlockDetails;

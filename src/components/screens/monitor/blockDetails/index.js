@@ -17,11 +17,9 @@ export default compose(
   withData({
     blockDetails: {
       apiUtil: liskService.getBlockDetails,
-      defaultData: [],
       autoload: true,
-      getApiParams: (state, ownProps) => ({
-        id: ownProps.id,
-      }),
+      getApiParams: (state, ownProps) => ({ id: ownProps.id }),
+      transformResponse: response => (response.data && response.data[0]),
     },
   }),
   withTranslation(),

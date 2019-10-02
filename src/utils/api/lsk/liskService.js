@@ -20,10 +20,7 @@ const getServerUrl = (networkConfig) => {
 const liskServiceGet = ({
   path, transformResponse = x => x, searchParams = {}, serverUrl = liskServiceUrl,
 }) => new Promise((resolve, reject) => {
-  const URL = searchParams.id
-    ? `${serverUrl}${path}${searchParams.id}`
-    : `${serverUrl}${path}?${new URLSearchParams(searchParams)}`;
-  popsicle.get(URL)
+  popsicle.get(`${serverUrl}${path}?${new URLSearchParams(searchParams)}`)
     .use(popsicle.plugins.parse('json'))
     .then((response) => {
       if (response.statusType() === 2) {
@@ -54,10 +51,9 @@ const liskServiceApi = {
     },
   }),
 
-  getBlockDetails: ({ networkConfig }, searchParams) => liskServiceGet({
+  getBlockDetails: ({ networkConfig }, { id }) => liskServiceGet({
     serverUrl: getServerUrl(networkConfig),
-    path: '/api/v1/block/',
-    searchParams: { ...searchParams },
+    path: `/api/v1/block/${id}`,
   }),
 };
 
