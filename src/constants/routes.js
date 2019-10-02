@@ -23,6 +23,7 @@ import TransactionDashboard from '../components/shared/transactionDashboard';
 import Transactions from '../components/screens/explorer/transactions';
 import VerifyMessage from '../components/screens/verify-message';
 import Voting from '../components/screens/delegates/voting';
+import BlockDetails from '../components/screens/monitor/blockDetails';
 
 export default {
   toolboxDemo: {
@@ -163,5 +164,11 @@ export default {
     component: TermsOfUse,
     isPrivate: false,
     isSigninFlow: true,
+  },
+  blockDetails: {
+    path: '/monitor/blocks',
+    pathSuffix: '/:id?',
+    component: BlockDetails,
+    isPrivate: false,
   },
 };

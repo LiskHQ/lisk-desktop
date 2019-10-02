@@ -38,7 +38,9 @@ const liskServiceApi = {
     path: '/api/v1/market/prices',
     transformResponse: response => response.data,
   }),
+
   getNewsFeed: () => liskServiceGet({ path: '/api/newsfeed' }),
+
   getLastBlocks: async ({ networkConfig }, searchParams) => liskServiceGet({
     serverUrl: getServerUrl(networkConfig),
     path: '/api/v1/blocks/last',
@@ -47,6 +49,11 @@ const liskServiceApi = {
       limit: 20,
       ...searchParams,
     },
+  }),
+
+  getBlockDetails: ({ networkConfig }, { id }) => liskServiceGet({
+    serverUrl: getServerUrl(networkConfig),
+    path: `/api/v1/block/${id}`,
   }),
 };
 

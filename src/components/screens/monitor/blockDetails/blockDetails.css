@@ -1,0 +1,19 @@
+@import '../../../../app/mixins.css';
+
+.dataContainer {
+  @mixin contentLargest;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  flex-grow: 1;
+  box-sizing: border-box;
+  width: calc(100% / 5);
+
+  & > label {
+    @mixin contentNormal bold;
+
+    margin-bottom: 13px;
+  }
+}
