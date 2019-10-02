@@ -30,4 +30,13 @@ describe('filterContainer', () => {
     wrapper.find('form').simulate('submit');
     expect(props.saveFilters).toBeCalled();
   });
+
+  it('should update filter values if props.filters was updated', () => {
+    const amountFrom = '1';
+    wrapper.setProps({
+      customFilters: { amountFrom },
+    });
+    wrapper.update();
+    expect(wrapper.find('.amountFromInput input')).toHaveProp('value', amountFrom);
+  });
 });
