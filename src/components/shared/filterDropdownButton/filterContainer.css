@@ -1,7 +1,8 @@
 .container {
   display: flex;
   flex-direction: column;
-  padding: 10px 20px;
+  padding: 0 20px;
+  margin: -10px 0;
 }
 
 .filterTransactionsButton {
@@ -9,5 +10,5 @@
 }
 
 .submitButton {
-  margin-top: 12px;
+  margin: 20px 0;
 }
