@@ -21,43 +21,60 @@ class FilterDropdownButton extends React.Component {
 
     this.state = {
       hasErrors: true,
+      filters: props.filters,
     };
 
-    this.updateCustomFilters = this.updateCustomFilters.bind(this);
+    this.handleFiltersChange = this.handleFiltersChange.bind(this);
     this.applyFilters = this.applyFilters.bind(this);
     this.setChildRef = this.setChildRef.bind(this);
   }
 
-  updateCustomFilters(fields) {
-    const { customFilters } = this.props;
+  componentDidUpdate(prevProps) {
+    const { filters } = this.props;
+    if (prevProps.filters !== filters) {
+      this.setState({ filters });
+    }
+  }
+
+  handleFiltersChange(fields) {
+    let { filters } = this.state;
     let hasErrors = false;
-    const filters = Object.keys(fields).reduce((acc, field) => {
+    filters = Object.keys(fields).reduce((acc, field) => {
       hasErrors = hasErrors || !!fields[field].error;
       return {
         ...acc,
         [field]: fields[field].value,
       };
-    }, customFilters);
+    }, filters);
 
-    this.props.updateCustomFilters(filters);
-    this.setState({ hasErrors });
+    this.setState({ filters, hasErrors });
   }
 
   applyFilters(event) {
     event.preventDefault();
-    const { customFilters } = this.props;
+    const { filters } = this.state;
     ['dateFrom', 'dateTo'].forEach((param) => {
       const dateFormat = this.props.t('DD.MM.YY');
-      const date = moment(customFilters[param], dateFormat);
-      customFilters[param] = (date.isValid() && date.format(dateFormat)) || customFilters[param];
+      const date = moment(filters[param], dateFormat);
+      filters[param] = (date.isValid() && date.format(dateFormat)) || filters[param];
     });
 
-    this.props.applyFilters(customFilters);
+    this.props.applyFilters(filters);
     this.childRef.toggleDropdown();
   }
 
   setChildRef(node) {
     this.childRef = node;
+  }
+
+  getFilters(filter) {
+    const { filters } = this.state;
+    return filter.type.indexOf('range') !== -1 ? {
+      [`${filter.name}From`]: filters[`${filter.name}From`],
+      [`${filter.name}To`]: filters[`${filter.name}To`],
+    } : {
+      ...filters[filter.name],
+    };
   }
 
   render() {
@@ -87,8 +104,8 @@ class FilterDropdownButton extends React.Component {
                 name={filter.name}
                 label={filter.label}
                 placeholder={filter.placeholder}
-                filters={filter.value}
-                updateCustomFilters={this.updateCustomFilters}
+                filters={this.getFilters(filter)}
+                updateCustomFilters={this.handleFiltersChange}
               />
             );
           })}

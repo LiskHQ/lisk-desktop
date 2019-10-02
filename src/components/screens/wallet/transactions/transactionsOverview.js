@@ -72,9 +72,8 @@ class TransactionsOverview extends React.Component {
             ? (
               <div className={styles.items}>
                 <FilterContainer
-                  updateCustomFilters={this.props.updateCustomFilters}
                   saveFilters={this.props.saveFilters}
-                  customFilters={this.props.customFilters}
+                  customFilters={this.props.activeCustomFilters}
                 />
               </div>
             )

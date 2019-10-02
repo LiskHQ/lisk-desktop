@@ -8,7 +8,6 @@ describe('filterContainer', () => {
   const props = {
     saveFilters: jest.fn(),
     customFilters: {},
-    updateCustomFilters: jest.fn(),
   };
 
   beforeEach(() => {
@@ -17,7 +16,6 @@ describe('filterContainer', () => {
 
   it('should call saveFilters', () => {
     wrapper.find('input.message').simulate('change', { target: { name: 'message', value: 'test' } });
-    expect(props.updateCustomFilters).toBeCalledWith({ message: 'test' });
     wrapper.find('form').simulate('submit');
     expect(props.saveFilters).toBeCalled();
   });
