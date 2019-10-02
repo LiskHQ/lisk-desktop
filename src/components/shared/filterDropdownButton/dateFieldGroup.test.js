@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import i18n from '../../../i18n';
 import DateFieldGroup from './dateFieldGroup';
 
 describe('DateFieldGroup', () => {
@@ -15,15 +13,9 @@ describe('DateFieldGroup', () => {
     handleKeyPress: jest.fn(),
     updateCustomFilters: jest.fn(),
   };
-  const options = {
-    context: { i18n },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-    },
-  };
 
   beforeEach(() => {
-    wrapper = mount(<DateFieldGroup {...props} />, options);
+    wrapper = mount(<DateFieldGroup {...props} />);
   });
 
   it('Should render two inputs', () => {
@@ -53,9 +45,10 @@ describe('DateFieldGroup', () => {
       expect(wrapper.find('.calendarDropdown').first()).not.toContainMatchingElement('.show');
       wrapper.find('.dropdownWrapper input').first().simulate('click');
       expect(wrapper.find('.calendarDropdown').first()).toContainMatchingElement('.show');
-      wrapper.find('.dropdownWrapper input').last().simulate('focus');
+      wrapper.find('.calendarDropdown button.dayItem').at(10).simulate('click');
       expect(wrapper.find('.calendarDropdown').first()).not.toContainMatchingElement('.show');
-      expect(wrapper.find('.calendarDropdown').last()).toContainMatchingElement('.show');
+      wrapper.find('.dropdownWrapper input').last().simulate('click');
+      expect(wrapper.find('Dropdown.calendarDropdown').last()).toContainMatchingElement('.show');
     });
 
     it('Should handle selectDate on datepicker', () => {
@@ -66,7 +59,7 @@ describe('DateFieldGroup', () => {
           dateFrom: '11.03.19',
         },
       };
-      wrapper = mount(<DateFieldGroup {...newProps} />, options);
+      wrapper = mount(<DateFieldGroup {...newProps} />);
       wrapper.find('.dropdownWrapper input').first().simulate('click');
       wrapper.find('Calendar .dayItem').filter('[value="12.03.19"]').first().simulate('click', { target: { value: '12.03.19' } });
       jest.advanceTimersByTime(300);
