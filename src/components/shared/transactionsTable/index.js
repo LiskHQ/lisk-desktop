@@ -33,8 +33,8 @@ const TransactionsTable = ({
           <DateTimeFromTimestamp time={transaction[column.key]} token="LSK" />
         );
       case 'confirmations':
-        return transaction.confirmations.length
-          ? <Icon name="copy" /> : <Icon name="copy" />;
+        return transaction.confirmations > 0
+          ? <Icon name="approved" /> : <Icon name="pending" />;
       default:
         return transaction[column.key];
     }
