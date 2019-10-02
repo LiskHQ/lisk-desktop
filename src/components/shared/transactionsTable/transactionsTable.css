@@ -1,0 +1,8 @@
+.address {
+  display: flex;
+  align-items: center;
+
+  & .addressValue {
+    margin-left: 10px;
+  }
+}

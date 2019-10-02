@@ -7,12 +7,26 @@ import TableRow from '../../toolbox/table/tableRow';
 import LiskAmount from '../liskAmount';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
 import Icon from '../../toolbox/icon';
+import AccountVisual from '../../toolbox/accountVisual';
+import styles from './transactionsTable.css';
+import IconlessTooltip from '../iconlessTooltip';
 
 const TransactionsTable = ({
-  t, title, columns, transactions,
+  t, title, columns, transactions, loadMore,
 }) => {
   const renderCellContent = (column, transaction) => {
     switch (column.key) {
+      case 'senderId':
+      case 'recipientId':
+        return (
+          <div className={`${styles.address}`}>
+            <AccountVisual
+              address={transaction[column.key]}
+              size={32}
+            />
+            <span className={`${styles.addressValue}`}>{transaction[column.key]}</span>
+          </div>
+        );
       case 'id':
         return (
           <Link to={`${column.pathPrefix}/${transaction[column.key]}`}>
@@ -20,13 +34,26 @@ const TransactionsTable = ({
           </Link>
         );
       case 'amount':
-      case 'fee':
         return (
           <React.Fragment>
             <LiskAmount val={transaction[column.key]} />
 &nbsp;
             {t('LSK')}
           </React.Fragment>
+        );
+      case 'fee':
+        return (
+          <IconlessTooltip
+            tooltipContent={<p>{`${t('Type')} ${transaction.type}`}</p>}
+            title={t('Transaction')}
+            className="showOnBottom"
+          >
+            <div>
+              <LiskAmount val={transaction[column.key]} />
+&nbsp;
+              {t('LSK')}
+            </div>
+          </IconlessTooltip>
         );
       case 'timestamp':
         return (
