@@ -61,7 +61,7 @@ class FilterDropdownButton extends React.Component {
   }
 
   render() {
-    const { t, filters } = this.props;
+    const { t, fields } = this.props;
     const { hasErrors } = this.state;
 
     return (
@@ -79,7 +79,7 @@ class FilterDropdownButton extends React.Component {
         ref={this.setChildRef}
       >
         <form onSubmit={this.applyFilters} className={`${styles.container} filter-container`}>
-          {filters.map((filter) => {
+          {fields.map((filter) => {
             const Component = filterComponents[filter.type];
             return (
               <Component

@@ -15,7 +15,7 @@ class FilterContainer extends React.Component {
       message,
     } = customFilters;
 
-    const filters = [{
+    const fields = [{
       label: t('Date'),
       name: 'date',
       value: { dateFrom, dateTo },
@@ -35,7 +35,7 @@ class FilterContainer extends React.Component {
 
     return (
       <FilterDropdownButton
-        filters={filters}
+        fields={fields}
         updateCustomFilters={updateCustomFilters}
         applyFilters={saveFilters}
         customFilters={customFilters}
