@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import React from 'react';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
@@ -204,80 +203,60 @@ class DateFieldGroup extends React.Component {
     this.props.updateCustomFilters(fields);
   }
 
-  generateField(data) {
+  generateField({ name }) {
     const { filters } = this.props;
-    const { fields } = this.state;
+    const { fields, shownDropdown } = this.state;
 
     return (
-      <label className={styles.fieldHolder}>
-        <Input
-          setRef={this.setInputRefs}
-          autoComplete="off"
-          onChange={this.handleFieldChange}
-          name={data.name}
-          value={filters[data.name]}
-          placeholder={this.dateFormat}
-          onFocus={this.handleFocus}
-          onClick={this.handleFocus}
-          onKeyDown={this.handleKey}
-          className={`${styles.input} ${data.name}Input`}
-          isLoading={fields[data.name].loading}
-          status={fields[data.name].error ? 'error' : 'ok'}
-          size="xs"
-        />
+      <label
+        className={styles.dropdownWrapper}
+        ref={this.setDropownRefs}
+        data-name={`${name}Dropdown`}
+      >
+        <label className={styles.fieldHolder}>
+          <Input
+            setRef={this.setInputRefs}
+            autoComplete="off"
+            onChange={this.handleFieldChange}
+            name={name}
+            value={filters[name]}
+            placeholder={this.dateFormat}
+            onFocus={this.handleFocus}
+            onClick={this.handleFocus}
+            onKeyDown={this.handleKey}
+            className={`${styles.input} ${name}Input`}
+            isLoading={fields[name].loading}
+            status={fields[name].error ? 'error' : 'ok'}
+            size="xs"
+          />
+        </label>
+        <Dropdown
+          className={`showLeft ${styles.calendarDropdown}`}
+          showDropdown={shownDropdown === `${name}Dropdown`}
+        >
+          <Calendar
+            locale={i18n.language}
+            onDateSelected={date => this.dateSelected(date, name)}
+            dateFormat={this.dateFormat}
+            minDate={filters.dateFrom
+                || moment(firstBlockTime).format(this.dateFormat)}
+            date={filters[name]}
+          />
+        </Dropdown>
       </label>
     );
   }
 
   render() {
-    const { filters, label } = this.props;
-    const { shownDropdown } = this.state;
+    const { label } = this.props;
 
     return (
       <div className={styles.fieldGroup}>
         <span className={styles.fieldLabel}>{label}</span>
         <div className={styles.fieldRow}>
-          <label
-            className={styles.dropdownWrapper}
-            ref={this.setDropownRefs}
-            data-name="dateFromDropdown"
-          >
-            { this.generateField({ name: 'dateFrom' }) }
-            <Dropdown
-              className={`showLeft ${styles.calendarDropdown}`}
-              showDropdown={shownDropdown === 'dateFromDropdown'}
-            >
-              <Calendar
-                locale={i18n.language}
-                onDateSelected={date => this.dateSelected(date, 'dateFrom')}
-                dateFormat={this.dateFormat}
-                minDate={moment(firstBlockTime).format(this.dateFormat)}
-                maxDate={filters.dateTo}
-                date={filters.dateFrom}
-              />
-            </Dropdown>
-          </label>
+          { this.generateField({ name: 'dateFrom' }) }
           <span className={styles.separator} />
-          <label
-            className={styles.dropdownWrapper}
-            ref={this.setDropownRefs}
-            data-name="dateToDropdown"
-          >
-            { this.generateField({ name: 'dateTo' }) }
-            <Dropdown
-              className={`showLeft ${styles.calendarDropdown}`}
-              showDropdown={shownDropdown === 'dateToDropdown'}
-            >
-              <Calendar
-                locale={i18n.language}
-                onDateSelected={date => this.dateSelected(date, 'dateTo')}
-                dateFormat={this.dateFormat}
-                minDate={filters.dateFrom
-                || moment(firstBlockTime).format(this.dateFormat)}
-                date={filters.dateTo}
-              />
-            </Dropdown>
-          </label>
+          { this.generateField({ name: 'dateTo' }) }
         </div>
         <Feedback
           className={styles.feedback}
