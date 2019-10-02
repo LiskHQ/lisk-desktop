@@ -43,7 +43,7 @@ const liskServiceApi = {
 
   getLastBlocks: async ({ networkConfig }, searchParams) => liskServiceGet({
     serverUrl: getServerUrl(networkConfig),
-    path: '/api/v1/blocks/last',
+    path: '/api/v1/blocks',
     transformResponse: response => response.data,
     searchParams: {
       limit: 20,
