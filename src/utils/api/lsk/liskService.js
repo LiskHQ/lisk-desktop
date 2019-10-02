@@ -1,29 +1,52 @@
 import * as popsicle from 'popsicle';
+import { getNetworkNameBasedOnNethash } from '../../getNetwork';
+import i18n from '../../../i18n';
+import networks from '../../../constants/networks';
 
 const liskServiceUrl = 'https://service.lisk.io';
+const liskServiceTestnetUrl = 'https://testnet-service.lisk.io';
+
+const getServerUrl = (networkConfig) => {
+  const name = getNetworkNameBasedOnNethash(networkConfig);
+  if (name === networks.mainnet.name) {
+    return liskServiceUrl;
+  }
+  if (name === networks.testnet.name) {
+    return liskServiceTestnetUrl;
+  }
+  throw new Error(i18n.t('This feature is supported only for mainnet and testnet.'));
+};
+
+const liskServiceGet = ({
+  path, transformResponse = x => x, searchParams = {}, serverUrl = liskServiceUrl,
+}) => new Promise((resolve, reject) => {
+  popsicle.get(`${serverUrl}${path}?${new URLSearchParams(searchParams)}`)
+    .use(popsicle.plugins.parse('json'))
+    .then((response) => {
+      if (response.statusType() === 2) {
+        resolve(transformResponse(response.body));
+      } else {
+        reject(new Error(response.body.message || response.body.error));
+      }
+    }).catch((error) => {
+      reject(error);
+    });
+});
 
 const liskServiceApi = {
-  getPriceTicker: () => new Promise((resolve, reject) => {
-    popsicle.get(`${liskServiceUrl}/api/v1/market/prices`)
-      .use(popsicle.plugins.parse('json'))
-      .then((response) => {
-        if (response.body.data.length) {
-          resolve(response.body.data);
-        } else {
-          reject(response.body);
-        }
-      }).catch(reject);
+  getPriceTicker: () => liskServiceGet({
+    path: '/api/v1/market/prices',
+    transformResponse: response => response.data,
   }),
-  getNewsFeed: () => new Promise((resolve, reject) => {
-    popsicle.get(`${liskServiceUrl}/api/newsfeed`)
-      .use(popsicle.plugins.parse('json'))
-      .then((response) => {
-        if (response.body) {
-          resolve(response.body);
-        } else {
-          reject(response.body);
-        }
-      }).catch(reject);
+  getNewsFeed: () => liskServiceGet({ path: '/api/newsfeed' }),
+  getLastBlocks: async ({ networkConfig }, searchParams) => liskServiceGet({
+    serverUrl: getServerUrl(networkConfig),
+    path: '/api/v1/blocks/last',
+    transformResponse: response => response.data,
+    searchParams: {
+      limit: 20,
+      ...searchParams,
+    },
   }),
 };
 
