@@ -66,6 +66,13 @@ const TransactionsTable = ({
         </React.Fragment>
         )}
       </div>
+      {loadMore && (
+      <Box.FooterButton
+        onClick={loadMore}
+      >
+        {t('Load more')}
+      </Box.FooterButton>
+      )}
     </Box>
   );
 };
