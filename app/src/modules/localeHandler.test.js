@@ -1,8 +1,8 @@
-import { expect } from 'chai'; // eslint-disable-line import/no-extraneous-dependencies
-import { spy, mock } from 'sinon'; // eslint-disable-line import/no-extraneous-dependencies
+import { expect } from 'chai';
+import { spy, mock } from 'sinon';
+import i18n from 'i18next';
 import win from './win';
 import localeHandler from './localeHandler';
-import i18n from '../i18n';
 
 describe('localeHandler', () => {
   const callbacks = {};

@@ -116,7 +116,7 @@ const getPublicKey = async (transporter, { device, data }) => {
     return res;
   } catch (error) {
     if (transport) transport.close();
-    throw new Error(error);
+    throw error;
   }
 };
 
