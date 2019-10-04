@@ -19,7 +19,7 @@ using classnames with :global to make them
 avaialble application-wide
 
 ****************************************/
-
+@import './mixins.css';
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
 
 @font-face {
