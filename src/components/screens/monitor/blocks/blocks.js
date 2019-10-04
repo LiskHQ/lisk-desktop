@@ -12,6 +12,7 @@ import PageLayout from '../../../toolbox/pageLayout';
 import TableRow from '../../../toolbox/table/tableRow';
 import routes from '../../../../constants/routes';
 import useFilters from '../../../../hooks/useFilters';
+import styles from './blocks.css';
 
 const columnClassNames = {
   id: `${grid['col-md-2']} ${grid['col-xs-3']}`,
@@ -32,7 +33,7 @@ const Blocks = ({ t, blocks }) => {
   });
   return (
     <PageLayout>
-      <Box isLoading={blocks.isLoading} width="full">
+      <Box isLoading={blocks.isLoading} width="full" main>
         <Box.Header>
           <h1>{t('All blocks')}</h1>
           <BlockFilterDropdown filters={filters} applyFilters={applyFilters} />
@@ -51,7 +52,7 @@ const Blocks = ({ t, blocks }) => {
           )
           : (
             <React.Fragment>
-              <div>
+              <Box.Content className={styles.content}>
                 {!!blocks.data.length && (
                 <TableRow isHeader className={`${grid.row}`}>
                   <div className={columnClassNames.id}>{t('ID')}</div>
@@ -94,7 +95,7 @@ const Blocks = ({ t, blocks }) => {
                     </span>
                   </TableRow>
                 ))}
-              </div>
+              </Box.Content>
               {!!blocks.data.length && blocks.data.length % 20 === 0 && (
               <Box.FooterButton
                 className="load-more"
