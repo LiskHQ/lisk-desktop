@@ -3,8 +3,8 @@ import React from 'react';
 import styles from './switcher.css';
 
 const Switcher = ({ options, onClick, active }) => (
-  <div>
-    <ul className={styles.wrapper}>
+  <div className={styles.wrapper}>
+    <ul className={styles.options}>
       {options.map(tab => (
         <li
           className={[
