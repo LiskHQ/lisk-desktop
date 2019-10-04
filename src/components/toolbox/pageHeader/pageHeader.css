@@ -4,6 +4,7 @@
   display: flex;
   justify-content: space-between;
   padding-top: 32px;
+  text-align: initial;
 
   & h1 {
     @mixin headingNormalIntermediate;
