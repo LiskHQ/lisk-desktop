@@ -1,5 +1,6 @@
 import * as popsicle from 'popsicle';
 import { getNetworkNameBasedOnNethash } from '../../getNetwork';
+import { getTimestampFromFirstBlock } from '../../datetime';
 import i18n from '../../../i18n';
 import networks from '../../../constants/networks';
 
@@ -16,6 +17,8 @@ const getServerUrl = (networkConfig) => {
   }
   throw new Error(i18n.t('This feature is supported only for mainnet and testnet.'));
 };
+
+const formatDate = (value, options) => getTimestampFromFirstBlock(value, 'DD.MM.YY', options);
 
 const liskServiceGet = ({
   path, transformResponse = x => x, searchParams = {}, serverUrl = liskServiceUrl,
@@ -40,18 +43,21 @@ const liskServiceApi = {
   }),
 
   getNewsFeed: () => liskServiceGet({ path: '/api/newsfeed' }),
-
-  getLastBlocks: async ({ networkConfig }, searchParams) => liskServiceGet({
+  getLastBlocks: async (
+    { networkConfig }, { dateFrom, dateTo, ...searchParams },
+  ) => liskServiceGet({
     serverUrl: getServerUrl(networkConfig),
     path: '/api/v1/blocks',
     transformResponse: response => response.data,
     searchParams: {
       limit: 20,
       ...searchParams,
+      ...(dateFrom && { from: formatDate(dateFrom) }),
+      ...(dateTo && { to: formatDate(dateTo, { inclusive: true }) }),
     },
   }),
 
-  getBlockDetails: ({ networkConfig }, { id }) => liskServiceGet({
+  getBlockDetails: async ({ networkConfig }, { id }) => liskServiceGet({
     serverUrl: getServerUrl(networkConfig),
     path: `/api/v1/block/${id}`,
   }),
