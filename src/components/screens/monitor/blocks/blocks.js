@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { DEFAULT_LIMIT } from '../../../../constants/monitor';
 import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import BlockFilterDropdown from './blockFilterDropdown';
 import Box from '../../../toolbox/box';
@@ -11,8 +12,8 @@ import LiskAmount from '../../../shared/liskAmount';
 import PageLayout from '../../../toolbox/pageLayout';
 import TableRow from '../../../toolbox/table/tableRow';
 import routes from '../../../../constants/routes';
-import useFilters from '../../../../hooks/useFilters';
 import styles from './blocks.css';
+import useFilters from '../../../../hooks/useFilters';
 
 const columnClassNames = {
   id: `${grid['col-md-2']} ${grid['col-xs-3']}`,
@@ -106,7 +107,7 @@ const Blocks = ({ t, blocks }) => {
                   </TableRow>
                 ))}
               </Box.Content>
-              {!!blocks.data.length && blocks.data.length % 20 === 0 && (
+              {!!blocks.data.length && blocks.data.length % DEFAULT_LIMIT === 0 && (
               <Box.FooterButton
                 className="load-more"
                 onClick={handleLoadMore}

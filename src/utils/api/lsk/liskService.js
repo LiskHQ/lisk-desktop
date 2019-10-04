@@ -1,4 +1,5 @@
 import * as popsicle from 'popsicle';
+import { DEFAULT_LIMIT } from '../../../constants/monitor';
 import { getNetworkNameBasedOnNethash } from '../../getNetwork';
 import { getTimestampFromFirstBlock } from '../../datetime';
 import i18n from '../../../i18n';
@@ -50,7 +51,7 @@ const liskServiceApi = {
     path: '/api/v1/blocks',
     transformResponse: response => response.data,
     searchParams: {
-      limit: 20,
+      limit: DEFAULT_LIMIT,
       ...searchParams,
       ...(dateFrom && { from: formatDate(dateFrom) }),
       ...(dateTo && { to: formatDate(dateTo, { inclusive: true }) }),
