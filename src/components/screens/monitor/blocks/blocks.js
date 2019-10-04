@@ -95,12 +95,14 @@ const Blocks = ({ t, blocks }) => {
                   </TableRow>
                 ))}
               </div>
+              {!!blocks.data.length && blocks.data.length % 20 === 0 && (
               <Box.FooterButton
                 className="load-more"
                 onClick={blocks.loadData.bind(null, { offset: blocks.data.length })}
               >
                 {t('Load more')}
               </Box.FooterButton>
+              )}
             </React.Fragment>
           )
       }
