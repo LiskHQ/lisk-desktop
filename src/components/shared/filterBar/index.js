@@ -13,6 +13,13 @@ const FilterBar = ({
     Object.values(filters).filter(Boolean)
   );
 
+  const formatters = {
+    dateFrom: value => `${t('from')} ${moment(value, t('DD.MM.YY')).format(t('DD MMM YYYY'))}`,
+    dateTo: value => `${t('to')} ${moment(value, t('DD.MM.YY')).format(t('DD MMM YYYY'))}`,
+    amountFrom: value => `> ${value} ${t('LSK')}`,
+    amountTo: value => `< ${value} ${t('LSK')}`,
+  };
+
   return !!getNonEmptyFilters(customFilters).length && (
     <div className={`${styles.container} filterBar`}>
       <span className={styles.label}>
@@ -22,24 +29,7 @@ const FilterBar = ({
         {Object.keys(customFilters).map((filter, index) => {
           let label = customFilters[filter];
           if (label === '') return null;
-
-          switch (filter) {
-            case 'dateFrom':
-            case 'dateTo': {
-              const prefix = filter === 'dateFrom' ? t('from') : t('to');
-              label = `${prefix} ${moment(label, t('DD.MM.YY')).format(t('DD MMM YYYY'))}`;
-              break;
-            }
-            case 'amountFrom':
-            case 'amountTo': {
-              const prefix = filter === 'amountFrom' ? '>' : '<';
-              label = `${prefix} ${label} ${t('LSK')}`;
-              break;
-            }
-            default:
-              break;
-          }
-
+          label = (formatters[filter] || (x => x))(label);
           return (
             <div
               className={`${styles.filter} filter`}
