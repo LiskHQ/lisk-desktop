@@ -5,6 +5,8 @@ import blocks from '../../../../../test/constants/blocks';
 
 describe('Blocks page', () => {
   let props;
+  let blocksWithData;
+  const height = '1234';
 
   beforeEach(() => {
     props = {
@@ -17,6 +19,12 @@ describe('Blocks page', () => {
         urlSearchParams: {},
       },
     };
+
+    blocksWithData = {
+      ...props.blocks,
+      isLoading: false,
+      data: blocks,
+    };
   });
 
   it('renders a page with header', () => {
@@ -27,29 +35,14 @@ describe('Blocks page', () => {
   it('renders table with blocks', () => {
     const wrapper = mount(<Blocks {...props} />);
     expect(wrapper.find('.block-id')).toHaveLength(0);
-    wrapper.setProps({
-      blocks: {
-        ...props.blocks,
-        isLoading: false,
-        data: blocks,
-      },
-    });
+    wrapper.setProps({ blocks: blocksWithData });
     expect(wrapper.find('.block-id')).toHaveLength(blocks.length);
   });
 
   it('allows to load more blocks', () => {
-    const wrapper = mount(<Blocks {...{
-      ...props,
-      blocks: {
-        ...props.blocks,
-        isLoading: false,
-        data: blocks,
-      },
-    }}
-    />);
+    const wrapper = mount(<Blocks {...{ ...props, blocks: blocksWithData }} />);
     wrapper.find('button.load-more').simulate('click');
-    expect(props.blocks.loadData).toHaveBeenNthCalledWith(1,
-      { offset: blocks.length }, expect.any(Object));
+    expect(props.blocks.loadData).toHaveBeenCalledWith({ offset: blocks.length });
   });
 
   it('shows error if API failed', () => {
@@ -66,7 +59,6 @@ describe('Blocks page', () => {
   });
 
   it('allows to filter blocks by height and clear the filter', () => {
-    const height = '1234';
     const wrapper = mount(<Blocks {...props} />);
     wrapper.find('button.filter').simulate('click');
     wrapper.find('input.height').simulate('change', { target: { value: height } });
@@ -74,5 +66,16 @@ describe('Blocks page', () => {
     expect(props.blocks.loadData).toHaveBeenCalledWith({ height });
     wrapper.find('span.clear-filter').simulate('click');
     expect(props.blocks.loadData).toHaveBeenCalledWith({ });
+  });
+
+  it('allows to load more blocks when filtered', () => {
+    const wrapper = mount(<Blocks {...{ ...props, blocks: blocksWithData }} />);
+
+    wrapper.find('button.filter').simulate('click');
+    wrapper.find('input.height').simulate('change', { target: { value: height } });
+    wrapper.find('form.filter-container').simulate('submit');
+    wrapper.find('button.load-more').simulate('click');
+
+    expect(props.blocks.loadData).toHaveBeenCalledWith({ offset: blocks.length, height });
   });
 });

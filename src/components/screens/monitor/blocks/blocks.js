@@ -31,6 +31,16 @@ const Blocks = ({ t, blocks }) => {
     height: '',
     address: '',
   });
+
+  const handleLoadMore = () => {
+    blocks.loadData(Object.keys(filters).reduce((acc, key) => ({
+      ...acc,
+      ...(filters[key] && { [key]: filters[key] }),
+    }), {
+      offset: blocks.data.length,
+    }));
+  };
+
   return (
     <PageLayout>
       <Box isLoading={blocks.isLoading} width="full" main>
@@ -99,7 +109,7 @@ const Blocks = ({ t, blocks }) => {
               {!!blocks.data.length && blocks.data.length % 20 === 0 && (
               <Box.FooterButton
                 className="load-more"
-                onClick={blocks.loadData.bind(null, { offset: blocks.data.length })}
+                onClick={handleLoadMore}
               >
                 {t('Load more')}
               </Box.FooterButton>
