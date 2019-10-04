@@ -37,7 +37,7 @@ describe('Blocks page', () => {
     expect(wrapper.find('.block-id')).toHaveLength(blocks.length);
   });
 
-  it.skip('allows to load more blocks', () => {
+  it('allows to load more blocks', () => {
     const wrapper = mount(<Blocks {...{
       ...props,
       blocks: {
@@ -47,12 +47,9 @@ describe('Blocks page', () => {
       },
     }}
     />);
-    props.blocks.loadData = jest.fn();
     wrapper.find('button.load-more').simulate('click');
-    wrapper.update();
-    expect(props.blocks.loadData).toHaveBeenCalledWith(
-      { offset: props.blocks.data.length }, expect.any(Object),
-    );
+    expect(props.blocks.loadData).toHaveBeenNthCalledWith(1,
+      { offset: blocks.length }, expect.any(Object));
   });
 
   it('shows error if API failed', () => {
