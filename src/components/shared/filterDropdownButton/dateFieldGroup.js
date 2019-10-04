@@ -3,7 +3,6 @@ import React from 'react';
 import moment from 'moment';
 import { firstBlockTime } from '../../../constants/datetime';
 import { getDateTimestampFromFirstBlock, formatInputToDate } from '../../../utils/datetime';
-import { getInputSelection, setInputSelection } from '../../../utils/selection';
 import DateField from './dateField';
 import Feedback from '../../toolbox/feedback/feedback';
 import styles from './filters.css';
@@ -73,7 +72,7 @@ class DateFieldGroup extends React.Component {
     return feedback;
   }
 
-  validateDates(fieldsObj, selectionObj) {
+  validateDates(fieldsObj) {
     const fields = Object.keys(fieldsObj).reduce((acc, field) => {
       const value = fieldsObj[field].value || '';
       const feedback = this.getFeedbackMessage(fieldsObj, value);
@@ -90,29 +89,16 @@ class DateFieldGroup extends React.Component {
     }, {});
 
     this.props.updateCustomFilters(fields);
-    this.setState({ fields }, () => {
-      setInputSelection(this.inputRefs[selectionObj.name], selectionObj.start, selectionObj.end);
-    });
+    this.setState({ fields });
   }
 
-  // eslint-disable-next-line max-statements
   handleFieldChange({ target }) {
     const { filters } = this.props;
-    const selection = getInputSelection(this.inputRefs[target.name]);
 
     const value = formatInputToDate(target.value, '.');
-    if (target.value.length < value.length) {
-      selection.start += 1;
-      selection.end += 1;
-    }
 
     const fieldsObj = Object.keys(filters).reduce((acc, filter) =>
       ({ ...acc, [filter]: { value: filters[filter] } }), {});
-
-    const selectionObj = {
-      name: target.name,
-      ...selection,
-    };
 
     const fields = {
       ...fieldsObj,
@@ -121,7 +107,7 @@ class DateFieldGroup extends React.Component {
 
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
-      this.validateDates(fields, selectionObj);
+      this.validateDates(fields);
     }, 300);
 
     this.setState({ fields });
