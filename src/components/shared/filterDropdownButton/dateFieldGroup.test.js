@@ -28,11 +28,13 @@ describe('DateFieldGroup', () => {
         error: false,
         loading: false,
         value: '',
+        feedback: '',
       },
       dateFrom: {
         error: false,
         loading: false,
         value: '12.12.16',
+        feedback: '',
       },
     };
     wrapper.find('.dateFromInput input').simulate('change', { target: { name: 'dateFrom', value: '121216' } });

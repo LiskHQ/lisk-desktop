@@ -18,14 +18,15 @@ class DateFieldGroup extends React.Component {
           error: false,
           value: '',
           loading: false,
+          feedback: '',
         },
         dateFrom: {
           error: false,
           value: '',
           loading: false,
+          feedback: '',
         },
       },
-      feedback: '',
     };
 
     this.inputRefs = {
@@ -52,45 +53,44 @@ class DateFieldGroup extends React.Component {
     }
   }
 
-  validateDates(fieldsObj, selectionObj) {
+  getFeedbackMessage(fieldsObj, value) {
     const { t } = this.props;
+    const date = moment(value, this.dateFormat);
     let feedback = '';
-    // eslint-disable-next-line max-statements
+
+    if (value && !date.isValid()) {
+      feedback = t(`Date must be in ${this.dateFormat} format`);
+    } else if (
+      moment(fieldsObj.dateFrom.value, this.dateFormat)
+      > moment(fieldsObj.dateTo.value, this.dateFormat)
+    ) {
+      feedback = t('Invalid dates');
+    } else if (date.isValid() && getDateTimestampFromFirstBlock(value, this.dateFormat) < 0) {
+      feedback = t('Date must be after {{firstBlock}}', {
+        firstBlock: moment(firstBlockTime).format(this.dateFormat),
+      });
+    }
+    return feedback;
+  }
+
+  validateDates(fieldsObj, selectionObj) {
     const fields = Object.keys(fieldsObj).reduce((acc, field) => {
       const value = fieldsObj[field].value || '';
-      const date = moment(value, this.dateFormat);
-      let error = false;
-
-      if (value && !date.isValid()) {
-        feedback = t(`Date must be in ${this.dateFormat} format`);
-        error = true;
-      } else if (
-        (field === 'dateFrom' && date > moment(fieldsObj.dateTo.value, this.dateFormat))
-        || (field === 'dateTo' && date < moment(fieldsObj.dateFrom.value, this.dateFormat))
-      ) {
-        feedback = t('Invalid dates');
-        error = true;
-      }
-
-      if (date.isValid() && getDateTimestampFromFirstBlock(value, this.dateFormat) < 0) {
-        feedback = t('Date must be after {{firstBlock}}', {
-          firstBlock: moment(firstBlockTime).format(this.dateFormat),
-        });
-        error = true;
-      }
+      const feedback = this.getFeedbackMessage(fieldsObj, value);
 
       return {
         ...acc,
         [field]: {
           value,
-          error,
+          error: !!feedback,
+          feedback,
           loading: false,
         },
       };
     }, {});
 
     this.props.updateCustomFilters(fields);
-    this.setState({ fields, feedback }, () => {
+    this.setState({ fields }, () => {
       setInputSelection(this.inputRefs[selectionObj.name], selectionObj.start, selectionObj.end);
     });
   }
@@ -139,6 +139,8 @@ class DateFieldGroup extends React.Component {
       setInputRefs: this.setInputRefs,
     };
 
+    const feedback = Object.values(fields).reduce((acc, f) => acc || f.feedback, '');
+
     return (
       <div className={styles.fieldGroup}>
         <span className={styles.fieldLabel}>{label}</span>
@@ -147,13 +149,8 @@ class DateFieldGroup extends React.Component {
           <span className={styles.separator} />
           <DateField name="dateTo" {...dateFieldProps} />
         </div>
-        <Feedback
-          className={styles.feedback}
-          show={!!this.state.feedback}
-          status={this.state.feedback ? 'error' : ''}
-          size="xs"
-        >
-          { this.state.feedback }
+        <Feedback show={!!feedback} status="error" size="xs">
+          { feedback }
         </Feedback>
       </div>
     );
