@@ -2,7 +2,7 @@ import { withTranslation } from 'react-i18next';
 import React from 'react';
 import FilterDropdownButton from '../../../shared/filterDropdownButton';
 
-const BlockFilterDropdown = ({ t, applyFilters }) => {
+const BlockFilterDropdown = ({ t, filters, applyFilters }) => {
   const fields = [{
     label: t('Date'),
     name: 'date',
@@ -18,12 +18,6 @@ const BlockFilterDropdown = ({ t, applyFilters }) => {
     name: 'address',
     type: 'text',
   }];
-  const filters = {
-    dateFrom: '',
-    dateTo: '',
-    height: '',
-    address: '',
-  };
 
   const props = { fields, filters, applyFilters };
 

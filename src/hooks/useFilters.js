@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
-const useFilters = ({ urlSearchParams, loadData, clearData }) => {
-  const [filters, setFilters] = useState(urlSearchParams);
+const useFilters = ({ loadData, clearData }, initialState) => {
+  const [filters, setFilters] = useState(initialState);
+
   const applyFilters = (f) => {
     setFilters(f);
     clearData();
@@ -10,13 +11,16 @@ const useFilters = ({ urlSearchParams, loadData, clearData }) => {
       ...(f[key] && { [key]: f[key] }),
     }), {}));
   };
+
   const clearFilter = (name) => {
-    delete filters[name];
-    applyFilters(filters);
+    applyFilters({
+      ...filters,
+      [name]: initialState[name],
+    });
   };
-  const clearAllFilters = () => {
-    applyFilters({});
-  };
+
+  const clearAllFilters = applyFilters.bind(null, initialState);
+
   return [filters, applyFilters, clearFilter, clearAllFilters];
 };
 

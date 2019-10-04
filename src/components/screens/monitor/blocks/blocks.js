@@ -24,7 +24,12 @@ const columnClassNames = {
 };
 
 const Blocks = ({ t, blocks }) => {
-  const [filters, applyFilters, clearFilter, clearAllFilters] = useFilters(blocks);
+  const [filters, applyFilters, clearFilter, clearAllFilters] = useFilters(blocks, {
+    dateFrom: '',
+    dateTo: '',
+    height: '',
+    address: '',
+  });
   return (
     <PageLayout>
       <Box isLoading={blocks.isLoading} width="full">
