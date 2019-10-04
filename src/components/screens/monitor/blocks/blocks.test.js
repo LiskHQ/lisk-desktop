@@ -10,6 +10,8 @@ describe('Blocks page', () => {
       isLoading: true,
       data: [],
       loadData: jest.fn(),
+      clearData: jest.fn(),
+      urlSearchParams: {},
     },
   };
   it('renders a page with header', () => {
