@@ -1,32 +1,34 @@
 import React from 'react';
 import moment from 'moment/min/moment-with-locales';
-import { SecondaryButton } from '../../../../toolbox/buttons/button';
+import { SecondaryButton } from '../../toolbox/buttons/button';
+import i18n from '../../../i18n';
 import styles from './filterBar.css';
-import i18n from '../../../../../i18n';
 
-const FilterBar = (props) => {
+const FilterBar = ({
+  t, clearFilter, clearAllFilters, customFilters, results,
+}) => {
   moment.locale(i18n.language);
   return (
     <div className={`${styles.container} filterBar`}>
       <span className={styles.label}>
-        {props.t('Filtered results: {{results}}', { results: props.results })}
+        {t('Filtered results: {{results}}', { results })}
       </span>
       <div className={`${styles.labelsHolder}`}>
-        {Object.keys(props.customFilters).map((filter, index) => {
-          let label = props.customFilters[filter];
+        {Object.keys(customFilters).map((filter, index) => {
+          let label = customFilters[filter];
           if (label === '') return null;
 
           switch (filter) {
             case 'dateFrom':
             case 'dateTo': {
-              const prefix = filter === 'dateFrom' ? props.t('from') : props.t('to');
-              label = `${prefix} ${moment(label, props.t('DD.MM.YY')).format(props.t('DD MMM YYYY'))}`;
+              const prefix = filter === 'dateFrom' ? t('from') : t('to');
+              label = `${prefix} ${moment(label, t('DD.MM.YY')).format(t('DD MMM YYYY'))}`;
               break;
             }
             case 'amountFrom':
             case 'amountTo': {
               const prefix = filter === 'amountFrom' ? '>' : '<';
-              label = `${prefix} ${label} ${props.t('LSK')}`;
+              label = `${prefix} ${label} ${t('LSK')}`;
               break;
             }
             default:
@@ -41,7 +43,7 @@ const FilterBar = (props) => {
               <p className={styles.label}>{label}</p>
               <span
                 className={`${styles.clearBtn} clear-filter`}
-                onClick={() => props.clearFilter(filter)}
+                onClick={() => clearFilter(filter)}
               />
             </div>
           );
@@ -50,9 +52,9 @@ const FilterBar = (props) => {
         <SecondaryButton
           className="clear-all-filters"
           size="xs"
-          onClick={props.clearAllFilters}
+          onClick={clearAllFilters}
         >
-          {props.t('Clear All filters')}
+          {t('Clear All filters')}
         </SecondaryButton>
       </div>
     </div>

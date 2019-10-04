@@ -218,7 +218,7 @@ const ss = {
   dateToInputFilter: '.dateToInput',
   amountFromInputFilter: '.amountFromInput',
   amountToInputFilter: '.amountToInput',
-  messageInputFilter: '.message-field textarea',
+  messageInputFilter: 'input.message',
   applyFilters: '.saveButton',
   filterBar: '.filterBar',
   filter: '.filter',
