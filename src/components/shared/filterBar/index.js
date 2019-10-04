@@ -8,7 +8,12 @@ const FilterBar = ({
   t, clearFilter, clearAllFilters, customFilters, results,
 }) => {
   moment.locale(i18n.language);
-  return (
+
+  const getNonEmptyFilters = filters => (
+    Object.values(filters).filter(Boolean)
+  );
+
+  return !!getNonEmptyFilters(customFilters).length && (
     <div className={`${styles.container} filterBar`}>
       <span className={styles.label}>
         {t('Filtered results: {{results}}', { results })}
