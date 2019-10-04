@@ -4,16 +4,21 @@ import Blocks from './blocks';
 import blocks from '../../../../../test/constants/blocks';
 
 describe('Blocks page', () => {
-  const props = {
-    t: key => key,
-    blocks: {
-      isLoading: true,
-      data: [],
-      loadData: jest.fn(),
-      clearData: jest.fn(),
-      urlSearchParams: {},
-    },
-  };
+  let props;
+
+  beforeEach(() => {
+    props = {
+      t: key => key,
+      blocks: {
+        isLoading: true,
+        data: [],
+        loadData: jest.fn(),
+        clearData: jest.fn(),
+        urlSearchParams: {},
+      },
+    };
+  });
+
   it('renders a page with header', () => {
     const wrapper = mount(<Blocks {...props} />);
     expect(wrapper.find('h1')).toHaveText('All blocks');
@@ -40,7 +45,7 @@ describe('Blocks page', () => {
     );
   });
 
-  it('shows error if ', () => {
+  it('shows error if API failed', () => {
     const error = 'Loading failed';
     const wrapper = mount(<Blocks {...props} />);
     wrapper.setProps({
@@ -51,5 +56,16 @@ describe('Blocks page', () => {
       },
     });
     expect(wrapper).toIncludeText(error);
+  });
+
+  it('allows to filter blocks by height and clear the filter', () => {
+    const height = '1234';
+    const wrapper = mount(<Blocks {...props} />);
+    wrapper.find('button.filter').simulate('click');
+    wrapper.find('input.height').simulate('change', { target: { value: height } });
+    wrapper.find('form.filter-container').simulate('submit');
+    expect(props.blocks.loadData).toHaveBeenCalledWith({ height });
+    wrapper.find('span.clear-filter').simulate('click');
+    expect(props.blocks.loadData).toHaveBeenCalledWith({ });
   });
 });

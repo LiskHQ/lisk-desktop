@@ -83,7 +83,7 @@ class FilterDropdownButton extends React.Component {
 
     return (
       <DropdownButton
-        buttonClassName={`${styles.filterTransactionsButton} filterTransactions`}
+        buttonClassName={`${styles.filterTransactionsButton} filterTransactions filter`}
         buttonLabel={(
           <React.Fragment>
             {t('Filter')}
