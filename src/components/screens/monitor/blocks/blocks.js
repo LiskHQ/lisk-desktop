@@ -55,7 +55,7 @@ const Blocks = ({ t, blocks }) => {
           <BlockFilterDropdown filters={filters} applyFilters={applyFilters} />
         </Box.Header>
         <FilterBar {...{
-          clearFilter, clearAllFilters, customFilters: filters, formatters, t,
+          clearFilter, clearAllFilters, filters, formatters, t,
         }}
         />
         { blocks.error

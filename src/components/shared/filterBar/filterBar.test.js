@@ -8,7 +8,7 @@ describe('FilterBar', () => {
     clearFilter: jest.fn(),
     clearAllFilters: jest.fn(),
     t: v => v,
-    customFilters: {
+    filters: {
       dateFrom: '11.12.16',
       dateTo: '12.12.16',
       amountFrom: '0.6',
