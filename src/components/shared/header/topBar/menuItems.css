@@ -38,7 +38,6 @@
 
 .item > img {
   margin-bottom: 4px;
-  margin-right: 10px;
 }
 
 .item > span {
@@ -49,6 +48,10 @@
   line-height: 19px;
 }
 
+.label {
+  display: none;
+}
+
 .selected {
   background: var(--color-white);
   border-bottom: 2px solid var(--color-ultramarine-blue);
@@ -56,6 +59,11 @@
 
   & > span {
     color: var(--color-ultramarine-blue);
+  }
+
+  & .label {
+    margin-left: 10px;
+    display: inline-block;
   }
 }
 
@@ -69,12 +77,9 @@
     padding: 0 26px;
   }
 
-  .item > img {
-    margin-bottom: 0;
-    margin-right: 0;
-  }
-
-  .item > span {
-    display: none;
+  .selected {
+    & .label {
+      display: none;
+    }
   }
 }
