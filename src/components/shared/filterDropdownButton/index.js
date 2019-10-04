@@ -73,7 +73,7 @@ class FilterDropdownButton extends React.Component {
       [`${filter.name}From`]: filters[`${filter.name}From`],
       [`${filter.name}To`]: filters[`${filter.name}To`],
     } : {
-      ...filters[filter.name],
+      [filter.name]: filters[filter.name],
     };
   }
 

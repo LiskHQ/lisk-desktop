@@ -2,7 +2,7 @@ import React from 'react';
 import { Input } from '../../toolbox/inputs';
 
 const TextFilter = ({
-  value, label, name, placeholder, updateCustomFilters,
+  filters, label, name, placeholder, updateCustomFilters,
 }) => {
   const onChange = ({ target }) => {
     updateCustomFilters({
@@ -14,11 +14,12 @@ const TextFilter = ({
     });
   };
   const inputProps = {
-    label, name, placeholder, value, onChange,
+    label, name, placeholder, onChange,
   };
   return (
     <Input
       {...inputProps}
+      value={filters[name]}
       className={name}
       size="xs"
     />
