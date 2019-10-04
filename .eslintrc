@@ -73,7 +73,7 @@
       "devDependencies": [
         "./src/**/*.test.js",
         "./test/**/*.js",
-        "./src/**/stories.js",
+        "./src/**/*.stories.js",
         "./src/tests.js",
         "./src/i18n-scanner.js"
         ]
