@@ -13,9 +13,11 @@ import PageLayout from '../../../toolbox/pageLayout';
 import TableRow from '../../../toolbox/table/tableRow';
 import routes from '../../../../constants/routes';
 import styles from './blocks.css';
-import useFilters from '../../../../hooks/useFilters';
+import withFilters from '../../../../utils/withFilters';
 
-const Blocks = ({ t, blocks }) => {
+const Blocks = ({
+  t, blocks, filters, applyFilters, clearFilter, clearAllFilters,
+}) => {
   /* eslint-disable react/display-name */
   const columns = [{
     header: t('ID'),
@@ -52,12 +54,6 @@ const Blocks = ({ t, blocks }) => {
   }];
   /* eslint-enable react/display-name */
 
-  const [filters, applyFilters, clearFilter, clearAllFilters] = useFilters(blocks, {
-    dateFrom: '',
-    dateTo: '',
-    height: '',
-    address: '',
-  });
 
   const formatters = {
     height: value => `${t('Height')}: ${value}`,
@@ -132,4 +128,11 @@ Blocks.propTypes = {
   }).isRequired,
 };
 
-export default Blocks;
+const defaultFilters = {
+  dateFrom: '',
+  dateTo: '',
+  height: '',
+  address: '',
+};
+
+export default withFilters('blocks', defaultFilters)(Blocks);
