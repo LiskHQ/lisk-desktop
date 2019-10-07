@@ -15,7 +15,7 @@ class TransactionsTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sortingColumn: undefined,
+      sortingColumn: props.columns.find(column => column.defaultSort).key,
       ascendingSorting: true,
     };
 
@@ -23,11 +23,6 @@ class TransactionsTable extends React.Component {
     this.renderCellContent = this.renderCellContent.bind(this);
     this.renderTransactions = this.renderTransactions.bind(this);
     this.loadMore = this.loadMore.bind(this);
-  }
-
-  componentDidMount() {
-    const sortingColumn = this.props.columns.find(column => column.defaultSort);
-    this.setState({ sortingColumn: sortingColumn.key });
   }
 
   renderCellContent(column, transaction) {
@@ -137,7 +132,7 @@ class TransactionsTable extends React.Component {
               ))}
             </TableRow>
             {this.renderTransactions().map(transaction => (
-              <TableRow key={transaction.id} className={`${grid.row}`}>
+              <TableRow key={transaction.id} className={[grid.row, 'row'].join(' ')}>
                 {columns.map(column => (
                   <span key={column.key} className={column.className}>
                     {this.renderCellContent(column, transaction)}
