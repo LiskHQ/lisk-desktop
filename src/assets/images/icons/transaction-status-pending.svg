@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="17px" height="17px" viewBox="0 0 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>Pending</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Discovery---Transactions" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Monitor---Transactions-Tab-" transform="translate(-1292.000000, -564.000000)" stroke="#4070F4" stroke-width="0.7">
+            <g id="Pending" transform="translate(1293.000000, 565.000000)">
+                <path d="M7.8,9 L11.6,9 L11.6,8.4 L7.8,8.4 L7.8,9 Z M7.2,9 L7.8,9 L7.8,3.6 L7.2,3.6 L7.2,9 Z M7.5,14.4 C11.3112,14.4 14.4,11.3106 14.4,7.5 C14.4,3.6894 11.3112,0.6 7.5,0.6 C3.6894,0.6 0.6,3.6894 0.6,7.5 C0.6,11.3106 3.6894,14.4 7.5,14.4 L7.5,14.4 Z M7.5,15 C11.6418,15 15,11.6424 15,7.5 C15,3.3576 11.6418,0 7.5,0 C3.3582,0 0,3.3576 0,7.5 C0,11.6424 3.3582,15 7.5,15 L7.5,15 Z" id="Fill-1"></path>
+            </g>
+        </g>
+    </g>
+</svg>

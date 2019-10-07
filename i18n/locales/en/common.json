@@ -415,6 +415,7 @@
   "The {{inputLabel}} can't be empty": "The {{inputLabel}} can't be empty",
   "There are no results matching this filter.": "There are no results matching this filter.",
   "There are no transactions.": "There are no transactions.",
+  "There are nor transactions for this block.": "There are nor transactions for this block.",
   "There is no connection to the {{model}}. Please check the cables if it happened by accident.": "There is no connection to the {{model}}. Please check the cables if it happened by accident.",
   "This account doesn’t have any votes.": "This account doesn’t have any votes.",
   "This feature is supported only for mainnet and testnet.": "This feature is supported only for mainnet and testnet.",

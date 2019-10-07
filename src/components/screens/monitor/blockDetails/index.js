@@ -21,6 +21,12 @@ export default compose(
       getApiParams: (state, ownProps) => ({ id: ownProps.id }),
       transformResponse: response => (response.data && response.data[0]),
     },
+    blockTransactions: {
+      apiUtil: liskService.getBlockTransactions,
+      autoload: true,
+      getApiParams: (state, ownProps) => ({ id: ownProps.id }),
+      transformResponse: response => (response.data),
+    },
   }),
   withTranslation(),
 )(BlockDetails);
