@@ -46,8 +46,7 @@ const DelegateTab = ({ delegate, account, t }) => {
           <li className="vote">
             <span className={styles.label}>{t('Vote weight')}</span>
             <span>
-              <LiskAmount val={delegate.vote} />
-              {` ${t('LSK')}`}
+              <LiskAmount val={delegate.vote} token={t('LSK')} />
             </span>
           </li>
           <li className="approval">

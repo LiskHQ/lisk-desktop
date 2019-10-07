@@ -20,7 +20,7 @@ describe('FormattedNumber', () => {
       formatted: '0',
     };
     const wrapper = mount(<FormattedNumber val={value.raw} />, options);
-    expect(wrapper.find('span').text()).to.equal(value.formatted);
+    expect(wrapper.text()).to.equal(value.formatted);
   });
 
   it('renders 1,000 if raw value is 1000', () => {
@@ -29,7 +29,7 @@ describe('FormattedNumber', () => {
       formatted: '1,234',
     };
     const wrapper = mount(<FormattedNumber val={value.raw} />, options);
-    expect(wrapper.find('span').text()).to.equal(value.formatted);
+    expect(wrapper.text()).to.equal(value.formatted);
   });
 
   it('renders 1,000.95 if raw value is 1000', () => {
@@ -38,7 +38,7 @@ describe('FormattedNumber', () => {
       formatted: '1,234.56',
     };
     const wrapper = mount(<FormattedNumber val={value.raw} />, options);
-    expect(wrapper.find('span').text()).to.equal(value.formatted);
+    expect(wrapper.text()).to.equal(value.formatted);
   });
 
   it('renders 10.01 if raw value is 10.01', () => {
@@ -47,6 +47,6 @@ describe('FormattedNumber', () => {
       formatted: '123.45',
     };
     const wrapper = mount(<FormattedNumber val={value.raw} />, options);
-    expect(wrapper.find('span').text()).to.equal(value.formatted);
+    expect(wrapper.text()).to.equal(value.formatted);
   });
 });

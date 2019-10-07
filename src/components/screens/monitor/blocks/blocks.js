@@ -98,14 +98,10 @@ const Blocks = ({ t, blocks }) => {
                       </Link>
                     </span>
                     <span className={columnClassNames.amount}>
-                      <LiskAmount val={block.totalAmount} />
-            &nbsp;
-                      {`${t('LSK')}`}
+                      <LiskAmount val={block.totalAmount} token={t('LSK')} />
                     </span>
                     <span className={columnClassNames.forged}>
-                      <LiskAmount val={block.totalForged} />
-            &nbsp;
-                      {`${t('LSK')}`}
+                      <LiskAmount val={block.totalForged} token={t('LSK')} />
                     </span>
                   </TableRow>
                 ))}
