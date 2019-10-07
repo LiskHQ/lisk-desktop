@@ -7,7 +7,7 @@ import { getTransactions } from '../../../../utils/api/lsk/transactions';
 export default compose(
   withData({
     transactions: {
-      apiUtil: getTransactions,
+      apiUtil: (liskAPIClient, params) => getTransactions({ liskAPIClient, ...params }),
       defaultData: [],
       autoload: true,
       transformResponse: (response, oldData) => [
