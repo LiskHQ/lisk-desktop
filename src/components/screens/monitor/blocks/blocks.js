@@ -46,11 +46,11 @@ const Blocks = ({
   }, {
     header: t('Amount'),
     className: grid['col-xs-1'],
-    getValue: block => <LiskAmount val={block.totalAmount} token={t('LSK')} />,
+    getValue: block => <LiskAmount val={block.totalAmount} token="LSK" />,
   }, {
     header: t('Forged'),
     className: `${grid['col-md-1']} ${grid['col-xs-2']}`,
-    getValue: block => <LiskAmount val={block.totalForged} token={t('LSK')} />,
+    getValue: block => <LiskAmount val={block.totalForged} token="LSK" />,
   }];
   /* eslint-enable react/display-name */
 
