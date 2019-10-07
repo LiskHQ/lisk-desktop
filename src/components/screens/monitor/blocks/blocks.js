@@ -26,7 +26,7 @@ const Blocks = ({ t, blocks }) => (
     <MonitorHeader />
     <Box isLoading={blocks.isLoading} width="full">
       <Box.Header>
-        <h1>{t('All blocks')}</h1>
+        <h2>{t('All blocks')}</h2>
       </Box.Header>
       { blocks.error
         ? (
