@@ -1,5 +1,3 @@
-// istanbul ignore file
-import { tokenMap } from '../../../../constants/tokens';
 import routes from '../../../../constants/routes';
 
 const menuLinks = t => ([
@@ -11,7 +9,7 @@ const menuLinks = t => ([
   },
   {
     icon: 'walletIcon',
-    id: 'transactions',
+    id: 'wallet',
     label: t('Wallet'),
     path: routes.wallet.path,
   },
@@ -20,14 +18,12 @@ const menuLinks = t => ([
     id: 'delegates',
     label: t('Delegates'),
     path: routes.delegates.path,
-    forbiddenTokens: [tokenMap.BTC.key],
   },
   {
     icon: 'monitorIcon',
     id: 'monitor',
     label: t('Monitor'),
     path: routes.monitor.path,
-    forbiddenTokens: [tokenMap.BTC.key],
   },
 ]);
 

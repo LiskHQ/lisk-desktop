@@ -48,12 +48,14 @@ export default {
     component: Monitor,
     isPrivate: false,
     exact: true,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   blocks: {
     path: '/monitor/blocks',
     component: Blocks,
     isPrivate: false,
     exact: true,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   bookmarks: {
     path: '/bookmarks',
@@ -177,5 +179,6 @@ export default {
     pathSuffix: '/:id?',
     component: BlockDetails,
     isPrivate: false,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
 };

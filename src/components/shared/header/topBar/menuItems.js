@@ -1,21 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import styles from './menuItems.css';
+import PropTypes from 'prop-types';
+import React from 'react';
 import Icon from '../../../toolbox/icon';
+import routes from '../../../../constants/routes';
+import styles from './menuItems.css';
 
 const MenuItems = ({
   location: { pathname }, className, items, isUserLogout, token,
 }) => (
   <div className={`${styles.wrapper} ${className} menu-items`}>
     {
-      items.filter(({ forbiddenTokens }) => (
-        !forbiddenTokens || forbiddenTokens.indexOf(token) === -1
+      items.filter(({ id }) => (
+        !routes[id].forbiddenTokens || !routes[id].forbiddenTokens.includes(token.active)
       )).map(item => (
         <NavLink
           key={item.id}
           to={item.path}
-          className={`${styles.item} ${(isUserLogout && item.id === 'transactions') ? styles.notActive : ''}`}
+          className={[
+            styles.item,
+            isUserLogout && routes[item.id].isPrivate && styles.notActive,
+          ].filter(Boolean).join(' ')}
           id={item.id}
           activeClassName={styles.selected}
         >

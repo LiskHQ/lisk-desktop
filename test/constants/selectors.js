@@ -119,7 +119,7 @@ const ss = {
   switchNetworksTrigger: '.showNetwork',
   messageInput: 'textarea',
   resulteBtn: '.result',
-  topBarMenuWalletBtn: '#transactions',
+  topBarMenuWalletBtn: '#wallet',
   referenceInput: '.reference input',
   referenceTextarea: '.reference textarea',
   referenceConfirmLabel: '.reference',
