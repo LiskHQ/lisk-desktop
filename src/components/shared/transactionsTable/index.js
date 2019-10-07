@@ -79,12 +79,12 @@ class TransactionsTable extends React.Component {
   }
 
   changeSorting(sortingColumn) {
-      this.setState({
-        sortingColumn,
+    this.setState({
+      sortingColumn,
       ascendingSorting:
         sortingColumn === this.state.sortingColumn ? !this.state.ascendingSorting : true,
-      });
-    }
+    });
+  }
 
   renderTransactions() {
     const { sortingColumn } = this.state;
@@ -101,49 +101,49 @@ class TransactionsTable extends React.Component {
     } = this.props;
     const { ascendingSorting } = this.state;
 
-  return (
-    <Box width="full">
-      <Box.Header>
-        <h1>{t(title)}</h1>
-      </Box.Header>
-      <div>
-        {!!transactions.data.data && transactions.data.data.length && (
-        <React.Fragment>
-          <TableRow isHeader>
-            {columns.map(column => (
-                  <div
-                    onClick={() => (column.isSortingColumn ? this.changeSorting(column.key) : null)}
-                    key={column.key}
-                    className={`${column.className} ${
-                      column.isSortingColumn ? styles.sortingColumn : ''
-                    }`}
-                  >
-                    {t(column.header)}
-                    {column.isSortingColumn && this.state.sortingColumn === column.key && (
-                      <div
-                        className={`${styles.arrow} ${
-                          ascendingSorting ? styles.arrowUp : styles.arrowDown
-                        }`}
-                      />
-                    )}
-                  </div>
-            ))}
-          </TableRow>
-              {this.renderTransactions().map(transaction => (
-            <TableRow key={transaction.id} className={`${grid.row}`}>
+    return (
+      <Box width="full">
+        <Box.Header>
+          <h1>{t(title)}</h1>
+        </Box.Header>
+        <div>
+          {!!transactions.data.data && transactions.data.data.length && (
+          <React.Fragment>
+            <TableRow isHeader>
               {columns.map(column => (
-                <span key={column.key} className={column.className}>
-                      {this.renderCellContent(column, transaction)}
-                </span>
+                <div
+                  onClick={() => (column.isSortingColumn ? this.changeSorting(column.key) : null)}
+                  key={column.key}
+                  className={`${column.className} ${
+                    column.isSortingColumn ? styles.sortingColumn : ''
+                  }`}
+                >
+                  {t(column.header)}
+                  {column.isSortingColumn && this.state.sortingColumn === column.key && (
+                  <div
+                    className={`${styles.arrow} ${
+                      ascendingSorting ? styles.arrowUp : styles.arrowDown
+                    }`}
+                  />
+                  )}
+                </div>
               ))}
             </TableRow>
-          ))}
-        </React.Fragment>
-        )}
-      </div>
+            {this.renderTransactions().map(transaction => (
+              <TableRow key={transaction.id} className={`${grid.row}`}>
+                {columns.map(column => (
+                  <span key={column.key} className={column.className}>
+                    {this.renderCellContent(column, transaction)}
+                  </span>
+                ))}
+              </TableRow>
+            ))}
+          </React.Fragment>
+          )}
+        </div>
         {loadMore && <Box.FooterButton onClick={loadMore}>{t('Load more')}</Box.FooterButton>}
-    </Box>
-  );
+      </Box>
+    );
   }
 }
 
