@@ -22,6 +22,7 @@ class TransactionsTable extends React.Component {
     this.changeSorting = this.changeSorting.bind(this);
     this.renderCellContent = this.renderCellContent.bind(this);
     this.renderTransactions = this.renderTransactions.bind(this);
+    this.loadMore = this.loadMore.bind(this);
   }
 
   componentDidMount() {
@@ -95,9 +96,15 @@ class TransactionsTable extends React.Component {
         : a[sortingColumn] - b[sortingColumn]));
   }
 
+  loadMore() {
+    const { transactions } = this.props;
+    transactions.loadData({ offset: transactions.data.length });
+  }
+
+
   render() {
     const {
-      title, transactions, columns, loadMore, t,
+      title, transactions, columns, isLoadMoreEnabled, t,
     } = this.props;
     const { ascendingSorting } = this.state;
 
@@ -141,10 +148,14 @@ class TransactionsTable extends React.Component {
           </React.Fragment>
           )}
         </div>
-        {loadMore && <Box.FooterButton onClick={loadMore}>{t('Load more')}</Box.FooterButton>}
+        {isLoadMoreEnabled && <Box.FooterButton onClick={this.loadMore}>{t('Load more')}</Box.FooterButton>}
       </Box>
     );
   }
 }
+
+TransactionsTable.defaultProps = {
+  isLoadMoreEnabled: false,
+};
 
 export default withTranslation()(TransactionsTable);

@@ -20,7 +20,7 @@ const Transactions = ({ t, transactions }) => {
 
   return (
     <PageLayout>
-      <TransactionsTable loadMore={() => transactions.loadData({ offset: transactions.data.length })} columns={columns} title={t('All transactions')} transactions={transactions} />
+      <TransactionsTable isLoadMoreEnabled columns={columns} title={t('All transactions')} transactions={transactions} />
     </PageLayout>
   );
 };
