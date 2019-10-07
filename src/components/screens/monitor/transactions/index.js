@@ -10,6 +10,10 @@ export default compose(
       apiUtil: getTransactions,
       defaultData: [],
       autoload: true,
+      transformResponse: (response, oldData) => [
+        ...oldData,
+        ...response.filter(transaction => !oldData.find(({ id }) => id === transaction.id)),
+      ],
     },
   }),
   withTranslation(),

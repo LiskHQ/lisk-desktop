@@ -58,7 +58,7 @@ const parseCustomFilters = filters => ({
 
 export const getTransactions = ({
   networkConfig, liskAPIClient, address, limit = 20, offset = 0, type = undefined,
-  sort = 'timestamp:desc', filters = {},
+  sort = 'timestamp:desc', filters = {}, transformResponse = x => x,
 }) => {
   let params = {
     limit,
@@ -77,7 +77,7 @@ export const getTransactions = ({
 
   return new Promise((resolve, reject) => {
     (liskAPIClient || getAPIClient(networkConfig)).transactions.get(params).then(response => (
-      resolve(response)
+      resolve(transformResponse(response))
     )).catch(reject);
   });
 };
