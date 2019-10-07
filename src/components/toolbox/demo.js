@@ -16,6 +16,7 @@ import OnboardingDemo from './onboarding/demo';
 import PageHeaderDemo from './pageHeader/demo';
 import PassphraseInputDemo from './passphraseInput/demo';
 import SpinnerDemo from './spinner/demo';
+import SwitcherDemo from './switcher/demo';
 import TooltipDemo from './tooltip/demo';
 import styles from './demo.css';
 
@@ -59,6 +60,7 @@ const ToolboxDemo = () => (
     <OnboardingDemo />
     <PageHeaderDemo />
     <PassphraseInputDemo />
+    <SwitcherDemo />
     <SpinnerDemo />
     <TooltipDemo />
   </WithTableOfContents>
