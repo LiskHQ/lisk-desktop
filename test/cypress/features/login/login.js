@@ -12,7 +12,9 @@ Given(/^showNetwork setting is true$/, function () {
 });
 
 Given(/^I should be connected to ([^\s]+)$/, function (networkName) {
-  const castNumberToBalanceString = number => numeral(fromRawLsk(number)).format('0,0.[0000000000000]');
+  const castNumberToBalanceString = number => (
+    numeral(fromRawLsk(number)).format('0,0.[0000000000000]') + ' LSK'
+  );
   switch (networkName) {
     case 'mainnet':
       cy.get(ss.headerBalance).should('have.text', castNumberToBalanceString(0));
