@@ -38,7 +38,7 @@ describe('Blocks page', () => {
     const wrapper = mount(<Blocks {...props} />);
     expect(wrapper.find('.block-id')).toHaveLength(0);
     wrapper.setProps({ blocks: blocksWithData });
-    expect(wrapper.find('.block-id')).toHaveLength(blocks.length);
+    expect(wrapper.find('.block-id')).toHaveLength(blocks.length + 1);
   });
 
   it('allows to load more blocks', () => {
