@@ -5,8 +5,8 @@ import PageHeader from '../../toolbox/pageHeader';
 import Switcher from '../../toolbox/switcher';
 import routes from '../../../constants/routes';
 
-const Header = ({ t, history }) => {
-  const setActiveTab = ({ value }) => history.push(value);
+export const Header = ({ t, history }) => {
+  const setActiveTab = ({ target }) => history.push(target.dataset.value);
 
   return (
     <React.Fragment>
@@ -18,9 +18,11 @@ const Header = ({ t, history }) => {
         options={[{
           value: routes.dashboard.path,
           name: t('Transactions'),
+          className: 'transactions',
         }, {
           value: routes.blocks.path,
           name: t('Blocks'),
+          className: 'blocks',
         }]}
         active={history.location.pathname}
         onClick={setActiveTab}
