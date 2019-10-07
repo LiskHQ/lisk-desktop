@@ -5,7 +5,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import Box from '../../../toolbox/box';
 import Feedback from '../../../toolbox/feedback/feedback';
-import Header from '../header';
+import MonitorHeader from '../header';
 import LiskAmount from '../../../shared/liskAmount';
 import PageLayout from '../../../toolbox/pageLayout';
 import TableRow from '../../../toolbox/table/tableRow';
@@ -23,7 +23,7 @@ const columnClassNames = {
 
 const Blocks = ({ t, blocks }) => (
   <PageLayout>
-    <Header />
+    <MonitorHeader />
     <Box isLoading={blocks.isLoading} width="full">
       <Box.Header>
         <h1>{t('All blocks')}</h1>
