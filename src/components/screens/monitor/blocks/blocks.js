@@ -7,7 +7,6 @@ import Box from '../../../toolbox/box';
 import Feedback from '../../../toolbox/feedback/feedback';
 import MonitorHeader from '../header';
 import LiskAmount from '../../../shared/liskAmount';
-import PageLayout from '../../../toolbox/pageLayout';
 import TableRow from '../../../toolbox/table/tableRow';
 import routes from '../../../../constants/routes';
 
@@ -22,7 +21,7 @@ const columnClassNames = {
 };
 
 const Blocks = ({ t, blocks }) => (
-  <PageLayout>
+  <div>
     <MonitorHeader />
     <Box isLoading={blocks.isLoading} width="full">
       <Box.Header>
@@ -90,7 +89,7 @@ const Blocks = ({ t, blocks }) => (
         )
       }
     </Box>
-  </PageLayout>
+  </div>
 );
 
 Blocks.propTypes = {

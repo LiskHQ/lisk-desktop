@@ -18,6 +18,7 @@
     @mixin contentNormal bold;
 
     align-items: center;
+    box-sizing: border-box;
     background: var(--color-white-smoke);
     border-left: 1px solid var(--color-platinum);
     color: var(--color-slate-gray);
