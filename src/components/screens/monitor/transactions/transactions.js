@@ -8,8 +8,12 @@ const Transactions = ({ t, transactions }) => {
   const columns = [
     { header: 'Sender', className: `${grid['col-md-3']} ${grid['col-xs-3']}`, key: 'senderId' },
     { header: 'Recipient', className: `${grid['col-md-3']} ${grid['col-xs-3']}`, key: 'recipientId' },
-    { header: 'Date', className: `${grid['col-md-2']} ${grid['col-xs-2']}`, key: 'timestamp' },
-    { header: 'Amount', className: `${grid['col-md-2']} ${grid['col-xs-2']}`, key: 'amount' },
+    {
+      header: 'Date', className: `${grid['col-md-2']} ${grid['col-xs-2']}`, key: 'timestamp', isSortingColumn: true, defaultSort: true,
+    },
+    {
+      header: 'Amount', className: `${grid['col-md-2']} ${grid['col-xs-2']}`, key: 'amount', isSortingColumn: true,
+    },
     { header: 'Fee', className: `${grid['col-md-1']} ${grid['col-xs-1']}`, key: 'fee' },
     { header: 'Status', className: `${grid['col-md-1']} ${grid['col-xs-1']}`, key: 'confirmations' },
   ];

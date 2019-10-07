@@ -19,8 +19,9 @@ class TransactionsTable extends React.Component {
       ascendingSorting: true,
     };
 
-    this.toggleSorting = this.toggleSorting.bind(this);
+    this.changeSorting = this.changeSorting.bind(this);
     this.renderCellContent = this.renderCellContent.bind(this);
+    this.renderTransactions = this.renderTransactions.bind(this);
   }
 
   componentDidMount() {
@@ -77,15 +78,21 @@ class TransactionsTable extends React.Component {
     }
   }
 
-  toggleSorting(sortingColumn) {
-    if (sortingColumn === this.state.sortingColumn) {
-      this.setState({ ascendingSorting: !this.state.ascendingSorting });
-    } else {
+  changeSorting(sortingColumn) {
       this.setState({
-        sortingDirection: 'ascending',
         sortingColumn,
+      ascendingSorting:
+        sortingColumn === this.state.sortingColumn ? !this.state.ascendingSorting : true,
       });
     }
+
+  renderTransactions() {
+    const { sortingColumn } = this.state;
+
+    return this.props.transactions.data.data.sort((a, b) =>
+      (this.state.ascendingSorting
+        ? b[sortingColumn] - a[sortingColumn]
+        : a[sortingColumn] - b[sortingColumn]));
   }
 
   render() {
@@ -105,16 +112,24 @@ class TransactionsTable extends React.Component {
           <TableRow isHeader>
             {columns.map(column => (
                   <div
-                    onClick={() => (column.isSortingColumn ? this.toggleSorting(column.key) : null)}
+                    onClick={() => (column.isSortingColumn ? this.changeSorting(column.key) : null)}
                     key={column.key}
-                    className={`${column.className} ${column.isSortingColumn ? styles.sortingColumn : ''}`}
+                    className={`${column.className} ${
+                      column.isSortingColumn ? styles.sortingColumn : ''
+                    }`}
                   >
                     {t(column.header)}
-                    {column.isSortingColumn && this.state.sortingColumn === column.key && <div className={`${styles.arrow} ${ascendingSorting ? styles.arrowUp : styles.arrowDown}`} />}
+                    {column.isSortingColumn && this.state.sortingColumn === column.key && (
+                      <div
+                        className={`${styles.arrow} ${
+                          ascendingSorting ? styles.arrowUp : styles.arrowDown
+                        }`}
+                      />
+                    )}
                   </div>
             ))}
           </TableRow>
-          {transactions.data.data.map(transaction => (
+              {this.renderTransactions().map(transaction => (
             <TableRow key={transaction.id} className={`${grid.row}`}>
               {columns.map(column => (
                 <span key={column.key} className={column.className}>
