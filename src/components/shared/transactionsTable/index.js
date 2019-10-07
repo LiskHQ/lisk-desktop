@@ -11,19 +11,32 @@ import AccountVisual from '../../toolbox/accountVisual';
 import styles from './transactionsTable.css';
 import IconlessTooltip from '../iconlessTooltip';
 
-const TransactionsTable = ({
-  t, title, columns, transactions, loadMore,
-}) => {
-  const renderCellContent = (column, transaction) => {
+class TransactionsTable extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sortingColumn: undefined,
+      ascendingSorting: true,
+    };
+
+    this.toggleSorting = this.toggleSorting.bind(this);
+    this.renderCellContent = this.renderCellContent.bind(this);
+  }
+
+  componentDidMount() {
+    const sortingColumn = this.props.columns.find(column => column.defaultSort);
+    this.setState({ sortingColumn: sortingColumn.key });
+  }
+
+  renderCellContent(column, transaction) {
+    const { t } = this.props;
+
     switch (column.key) {
       case 'senderId':
       case 'recipientId':
         return (
           <div className={`${styles.address}`}>
-            <AccountVisual
-              address={transaction[column.key]}
-              size={32}
-            />
+            <AccountVisual address={transaction[column.key]} size={32} />
             <span className={`${styles.addressValue}`}>{transaction[column.key]}</span>
           </div>
         );
@@ -56,17 +69,30 @@ const TransactionsTable = ({
           </IconlessTooltip>
         );
       case 'timestamp':
-        return (
-          <DateTimeFromTimestamp time={transaction[column.key]} token="LSK" />
-        );
+        return <DateTimeFromTimestamp time={transaction[column.key]} token="LSK" />;
       case 'confirmations':
-        return transaction.confirmations > 0
-          ? <Icon name="approved" /> : <Icon name="pending" />;
+        return transaction.confirmations > 0 ? <Icon name="approved" /> : <Icon name="pending" />;
       default:
         return transaction[column.key];
     }
-  };
+  }
 
+  toggleSorting(sortingColumn) {
+    if (sortingColumn === this.state.sortingColumn) {
+      this.setState({ ascendingSorting: !this.state.ascendingSorting });
+    } else {
+      this.setState({
+        sortingDirection: 'ascending',
+        sortingColumn,
+      });
+    }
+  }
+
+  render() {
+    const {
+      title, transactions, columns, loadMore, t,
+    } = this.props;
+    const { ascendingSorting } = this.state;
 
   return (
     <Box width="full">
@@ -78,14 +104,21 @@ const TransactionsTable = ({
         <React.Fragment>
           <TableRow isHeader>
             {columns.map(column => (
-              <div key={column.key} className={column.className}>{t(column.header)}</div>
+                  <div
+                    onClick={() => (column.isSortingColumn ? this.toggleSorting(column.key) : null)}
+                    key={column.key}
+                    className={`${column.className} ${column.isSortingColumn ? styles.sortingColumn : ''}`}
+                  >
+                    {t(column.header)}
+                    {column.isSortingColumn && this.state.sortingColumn === column.key && <div className={`${styles.arrow} ${ascendingSorting ? styles.arrowUp : styles.arrowDown}`} />}
+                  </div>
             ))}
           </TableRow>
           {transactions.data.data.map(transaction => (
             <TableRow key={transaction.id} className={`${grid.row}`}>
               {columns.map(column => (
                 <span key={column.key} className={column.className}>
-                  {renderCellContent(column, transaction)}
+                      {this.renderCellContent(column, transaction)}
                 </span>
               ))}
             </TableRow>
@@ -102,6 +135,7 @@ const TransactionsTable = ({
       )}
     </Box>
   );
-};
+  }
+}
 
 export default withTranslation()(TransactionsTable);

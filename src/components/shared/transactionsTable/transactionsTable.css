@@ -6,3 +6,24 @@
     margin-left: 10px;
   }
 }
+
+.sortingColumn {
+  cursor: pointer;
+}
+
+.arrow {
+  width: 0; 
+  height: 0; 
+  margin-bottom: 5px;
+  margin-left: 5px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+
+  &Up {
+    border-bottom: 4px solid black;
+  }
+
+  &Down {
+    border-top: 4px solid black;
+  }
+}
