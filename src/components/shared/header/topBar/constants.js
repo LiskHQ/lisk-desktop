@@ -26,7 +26,7 @@ const menuLinks = t => ([
     icon: 'dashboardIcon',
     id: 'monitor',
     label: t('Monitor'),
-    path: routes.blocks.path,
+    path: routes.monitor.path,
     forbiddenTokens: [tokenMap.BTC.key],
   },
 ]);
