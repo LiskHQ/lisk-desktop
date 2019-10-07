@@ -137,8 +137,8 @@ describe('TopBar', () => {
     expect(wrapper).not.toContainMatchingElement('.signIn');
   });
 
-  it('renders 3 menu items', () => {
-    expect(wrapper).toContainMatchingElements(3, 'a.item');
+  it('renders 4 menu items', () => {
+    expect(wrapper).toContainMatchingElements(4, 'a.item');
   });
 
   it('logout user when user do a click on logout function', () => {

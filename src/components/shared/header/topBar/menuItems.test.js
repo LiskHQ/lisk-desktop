@@ -51,24 +51,26 @@ describe('MenuItems', () => {
     expect(wrapper).toContainExactlyOneMatchingElement('.wrapper');
   });
 
-  it('renders 3 menu items elements', () => {
+  it('renders 4 menu items elements', () => {
     const expectedLinks = [
       'Dashboard',
       'Wallet',
       'Delegates',
+      'Monitor',
     ];
-    expect(wrapper).toContainMatchingElements(3, 'a');
+    expect(wrapper).toContainMatchingElements(4, 'a');
     wrapper.find('a').forEach((link, index) => expect(link).toHaveText(expectedLinks[index]));
   });
 
-  it('renders 3 menu items but only Dashboard is enabled as user is logout', () => {
+  it('renders 4 menu items but only Wallet is disabled when user is logout', () => {
     myProps.isUserLogout = true;
     wrapper = mountWithRouter(<MenuItems {...myProps} />, myOptions);
 
-    expect(wrapper).toContainMatchingElements(3, 'a');
+    expect(wrapper).toContainMatchingElements(4, 'a');
     expect(wrapper).toContainExactlyOneMatchingElement('a.notActive');
     expect(wrapper.find('a').at(0)).not.toHaveClassName('notActive');
     expect(wrapper.find('a').at(1)).toHaveClassName('notActive');
     expect(wrapper.find('a').at(2)).not.toHaveClassName('notActive');
+    expect(wrapper.find('a').at(3)).not.toHaveClassName('notActive');
   });
 });
