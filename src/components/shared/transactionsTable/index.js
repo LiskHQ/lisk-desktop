@@ -89,7 +89,7 @@ class TransactionsTable extends React.Component {
   renderTransactions() {
     const { sortingColumn } = this.state;
 
-    return this.props.transactions.data.data.sort((a, b) =>
+    return this.props.transactions.data.sort((a, b) =>
       (this.state.ascendingSorting
         ? b[sortingColumn] - a[sortingColumn]
         : a[sortingColumn] - b[sortingColumn]));
@@ -107,7 +107,7 @@ class TransactionsTable extends React.Component {
           <h1>{t(title)}</h1>
         </Box.Header>
         <div>
-          {!!transactions.data.data && transactions.data.data.length && (
+          {!!transactions.data.length && (
           <React.Fragment>
             <TableRow isHeader>
               {columns.map(column => (

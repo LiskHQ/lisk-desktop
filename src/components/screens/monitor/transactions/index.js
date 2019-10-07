@@ -12,7 +12,7 @@ export default compose(
       autoload: true,
       transformResponse: (response, oldData) => [
         ...oldData,
-        ...response.filter(transaction => !oldData.find(({ id }) => id === transaction.id)),
+        ...response.data.filter(transaction => !oldData.find(({ id }) => id === transaction.id)),
       ],
     },
   }),
