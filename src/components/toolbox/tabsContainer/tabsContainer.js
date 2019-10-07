@@ -17,7 +17,7 @@ class TabsContainer extends React.Component {
 
   /* istanbul ignore next */
   setTab({ target }) {
-    const activeTab = (target.dataset && target.dataset.tabname) || this.state.activeTab;
+    const activeTab = (target.dataset && target.dataset.value) || this.state.activeTab;
     this.setState({ activeTab });
   }
 
