@@ -32,7 +32,7 @@ ReactRouterDom.Link = jest.fn(
   ({ children, to, ...props }) => (<a {...props} href={to}>{children}</a>),
 );
 
-ReactRouterDom.withRouter = jest.fn(() => (Component => (
+ReactRouterDom.withRouter = jest.fn((Component => (
   // eslint-disable-next-line react/display-name
   props => (
     <Component {...{
@@ -40,6 +40,9 @@ ReactRouterDom.withRouter = jest.fn(() => (Component => (
         push: jest.fn(),
         replace: jest.fn(),
         createHref: jest.fn(),
+        location: {
+          pathname: '/',
+        },
       },
       ...props,
     }}
