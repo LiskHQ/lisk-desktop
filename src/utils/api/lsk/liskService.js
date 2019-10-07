@@ -55,6 +55,11 @@ const liskServiceApi = {
     serverUrl: getServerUrl(networkConfig),
     path: `/api/v1/block/${id}`,
   }),
+
+  getBlockTransactions: ({ networkConfig }, { id }) => liskServiceGet({
+    serverUrl: getServerUrl(networkConfig),
+    path: `/api/v1/block/${id}/transactions`,
+  }),
 };
 
 export default liskServiceApi;

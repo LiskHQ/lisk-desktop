@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import Box from '../../../toolbox/box';
 import Feedback from '../../../toolbox/feedback/feedback';
@@ -7,9 +8,21 @@ import LiskAmount from '../../../shared/liskAmount';
 import PageLayout from '../../../toolbox/pageLayout';
 import CopyToClipboard from '../../../toolbox/copyToClipboard';
 import routes from '../../../../constants/routes';
+import TableRow from '../../../toolbox/table/tableRow';
+import AccountVisual from '../../../toolbox/accountVisual';
+import Icon from '../../../toolbox/icon';
 import styles from './blockDetails.css';
 
-const BlockDetails = ({ t, blockDetails }) => (
+const columnClassNames = {
+  sender: `${grid['col-md-3']} ${grid['col-xs-3']}`,
+  recipient: `${grid['col-md-3']} ${grid['col-xs-3']}`,
+  date: `${grid['col-md-2']} hidden-m`,
+  amount: grid['col-xs-2'],
+  fee: grid['col-xs-1'],
+  status: grid['col-xs-1'],
+};
+
+const BlockDetails = ({ t, blockDetails, blockTransactions }) => (
   <PageLayout>
     <Box isLoading={blockDetails.isLoading} width="full">
       <Box.Header>
@@ -104,6 +117,74 @@ const BlockDetails = ({ t, blockDetails }) => (
                     </span>
                   </div>
                 </Box.Row>
+              </div>
+            </React.Fragment>
+          )
+      }
+    </Box>
+
+    <Box isLoading={blockTransactions.isLoading} width="full">
+      <Box.Header>
+        <h1>{t('Transactions')}</h1>
+      </Box.Header>
+      {
+        blockTransactions.error
+          ? (
+            <Box.Content>
+              <Feedback status="error" show>{t('There are nor transactions for this block.')}</Feedback>
+            </Box.Content>
+          )
+          : (
+            <React.Fragment>
+              <div>
+                {
+                  Array.isArray(blockTransactions.data)
+                    ? (
+                      <TableRow isHeader className={`${grid.row}`}>
+                        <div className={columnClassNames.sender}>{t('Sender')}</div>
+                        <div className={columnClassNames.recipient}>{t('Recipient')}</div>
+                        <div className={columnClassNames.date}>{t('Date')}</div>
+                        <div className={columnClassNames.amount}>{t('Amount')}</div>
+                        <div className={columnClassNames.fee}>{t('Fee')}</div>
+                        <div className={columnClassNames.status}>{t('Status')}</div>
+                      </TableRow>
+                    )
+                    : ''
+                }
+                {
+                  Array.isArray(blockTransactions.data)
+                    ? blockTransactions.data.map(blockTransaction => (
+                      <TableRow key={blockTransaction.id} className={`${grid.row}`}>
+                        <span className={[columnClassNames.sender, 'sender'].join(' ')}>
+                          <AccountVisual address={blockTransaction.senderId} size={30} />
+                          &nbsp;
+                          {blockTransaction.senderId}
+                        </span>
+                        <span className={[columnClassNames.recipient, 'recipient'].join(' ')}>
+                          <AccountVisual address={blockTransaction.recipientId} size={30} />
+                          &nbsp;
+                          {blockTransaction.recipientId}
+                        </span>
+                        <span className={[columnClassNames.date, 'date'].join(' ')}>
+                          <DateTimeFromTimestamp time={blockTransaction.timestamp * 1000} token="BTC" />
+                        </span>
+                        <span className={[columnClassNames.amount, 'amount'].join(' ')}>
+                          <LiskAmount val={blockTransaction.amount} />
+                          &nbsp;
+                          {t('LSK')}
+                        </span>
+                        <span className={[columnClassNames.fee, 'fee'].join(' ')}>
+                          <LiskAmount val={blockTransaction.fee} />
+                          &nbsp;
+                          {t('LSK')}
+                        </span>
+                        <span className={[columnClassNames.status, 'status'].join(' ')}>
+                          <Icon name={blockTransaction.confirmations >= 101 ? 'transactionApproved' : 'transactionPending'} />
+                        </span>
+                      </TableRow>
+                    ))
+                    : ''
+                }
               </div>
             </React.Fragment>
           )
