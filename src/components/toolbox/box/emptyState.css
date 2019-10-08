@@ -11,7 +11,9 @@
   box-sizing: border-box;
   padding: 20px;
 
-  & > h1 {
+  & > h1,
+  & > h2,
+  & > h3 {
     @mixin headingNormal;
 
     color: var(--color-maastricht-blue);
