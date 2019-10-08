@@ -3,15 +3,16 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import { tokenMap } from '../../../../constants/tokens';
+import AccountVisual from '../../../toolbox/accountVisual';
 import Box from '../../../toolbox/box';
+import CopyToClipboard from '../../../toolbox/copyToClipboard';
 import Feedback from '../../../toolbox/feedback/feedback';
+import Icon from '../../../toolbox/icon';
+import Illustration from '../../../toolbox/illustration';
 import LiskAmount from '../../../shared/liskAmount';
 import PageLayout from '../../../toolbox/pageLayout';
-import CopyToClipboard from '../../../toolbox/copyToClipboard';
-import routes from '../../../../constants/routes';
 import TableRow from '../../../toolbox/table/tableRow';
-import AccountVisual from '../../../toolbox/accountVisual';
-import Icon from '../../../toolbox/icon';
+import routes from '../../../../constants/routes';
 import styles from './blockDetails.css';
 
 const columnClassNames = {
@@ -213,7 +214,10 @@ const BlockDetails = ({
         blockTransactions.error
           ? (
             <Box.Content>
-              <Feedback status="error" show>{t('There are no transactions for this block.')}</Feedback>
+              <Box.EmptyState>
+                <Illustration name="emptyWallet" />
+                <h3>{t('There are no transactions for this block.')}</h3>
+              </Box.EmptyState>
             </Box.Content>
           )
           : (
