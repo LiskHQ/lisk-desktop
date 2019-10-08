@@ -89,9 +89,9 @@ class TransactionsTable extends React.Component {
       case 'confirmations':
         return (
           <IconlessTooltip
-            tooltipContent={<p>{t('Confirmations')}</p>}
-            title={t('Pending')}
-            className="showOnBottom"
+            tooltipContent={<p>{`${transaction.confirmations}/101 ${t('Confirmations')}`}</p>}
+            title={transaction.confirmations > 0 ? t('Confirmed') : t('Pending')}
+            className="showOnLeft"
             tooltipClassName={styles.tooltip}
           >
             {transaction.confirmations > 0 ? <Icon name="approved" /> : <Icon name="pending" />}
@@ -138,6 +138,8 @@ class TransactionsTable extends React.Component {
       title, transactions, columns, isLoadMoreEnabled, t,
     } = this.props;
     const { ascendingSorting } = this.state;
+
+    console.log(transactions);
 
     return (
       <Box width="full" isLoading={transactions.isLoading}>
