@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment/min/moment-with-locales';
 import { SecondaryButton } from '../../toolbox/buttons/button';
+import { tokenMap } from '../../../constants/tokens';
 import i18n from '../../../i18n';
 import styles from './filterBar.css';
 
@@ -14,8 +15,8 @@ const FilterBar = ({
   formatters = {
     dateFrom: value => `${t('from')} ${moment(value, t('DD.MM.YY')).format(t('DD MMM YYYY'))}`,
     dateTo: value => `${t('to')} ${moment(value, t('DD.MM.YY')).format(t('DD MMM YYYY'))}`,
-    amountFrom: value => `> ${value} ${t('LSK')}`,
-    amountTo: value => `< ${value} ${t('LSK')}`,
+    amountFrom: value => `> ${value} ${tokenMap.LSK.key}`,
+    amountTo: value => `< ${value} ${tokenMap.LSK.key}`,
     ...formatters,
   };
 
