@@ -3,7 +3,6 @@ import { mount } from 'enzyme';
 import withResizeValues from './withResizeValues';
 
 describe('withResizeValues', () => {
-
   const className = 'dummy';
   const DummyComponent = () => <span className={className} />;
 
