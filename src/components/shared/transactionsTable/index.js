@@ -158,7 +158,14 @@ class TransactionsTable extends React.Component {
           </React.Fragment>
           )}
         </div>
-        {isLoadMoreEnabled && <Box.FooterButton onClick={this.loadMore}>{t('Load more')}</Box.FooterButton>}
+        {isLoadMoreEnabled && (
+          <Box.FooterButton
+            className="load-more"
+            onClick={this.loadMore}
+          >
+            {t('Load more')}
+          </Box.FooterButton>
+        )}
       </Box>
     );
   }

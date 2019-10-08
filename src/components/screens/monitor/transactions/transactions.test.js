@@ -26,4 +26,12 @@ describe('Transactions monitor page', () => {
     wrapper.update();
     expect(wrapper.find('TableRow.row')).toHaveLength(transactions.length);
   });
+
+  it('allows to load more transactions', () => {
+    const wrapper = mount(<Transactions {...props} />);
+    wrapper.find('button.load-more').simulate('click');
+    expect(props.transactions.loadData).toHaveBeenCalledWith(
+      { offset: props.transactions.data.length },
+    );
+  });
 });
