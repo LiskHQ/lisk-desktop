@@ -1,8 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-
+import MonitorHeader from '../header';
 import TransactionsTable from '../../../shared/transactionsTable';
-import PageLayout from '../../../toolbox/pageLayout';
 
 const Transactions = ({ t, transactions }) => {
   const columns = [
@@ -19,9 +18,10 @@ const Transactions = ({ t, transactions }) => {
   ];
 
   return (
-    <PageLayout>
+    <div>
+      <MonitorHeader />
       <TransactionsTable isLoadMoreEnabled columns={columns} title={t('All transactions')} transactions={transactions} />
-    </PageLayout>
+    </div>
   );
 };
 

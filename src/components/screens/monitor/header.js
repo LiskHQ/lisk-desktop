@@ -16,7 +16,7 @@ export const Header = ({ t, history }) => {
       />
       <Switcher
         options={[{
-          value: routes.dashboard.path, // TODO change to monitorTransactions when available
+          value: routes.monitorTransactions.path,
           name: t('Transactions'),
           className: 'transactions',
         }, {
