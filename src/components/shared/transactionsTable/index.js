@@ -10,6 +10,9 @@ import Icon from '../../toolbox/icon';
 import AccountVisual from '../../toolbox/accountVisual';
 import styles from './transactionsTable.css';
 import IconlessTooltip from '../iconlessTooltip';
+import regex from '../../../utils/regex';
+
+const windowSizeBreakpoint = 1024;
 
 class TransactionsTable extends React.Component {
   constructor(props) {
@@ -17,16 +20,34 @@ class TransactionsTable extends React.Component {
     this.state = {
       sortingColumn: props.columns.find(column => column.defaultSort).key,
       ascendingSorting: true,
+      windowSize: 0,
     };
 
     this.changeSorting = this.changeSorting.bind(this);
     this.renderCellContent = this.renderCellContent.bind(this);
     this.renderTransactions = this.renderTransactions.bind(this);
     this.loadMore = this.loadMore.bind(this);
+    this.handleResize = this.handleResize.bind(this);
+  }
+
+  handleResize() {
+    const windowSize = window.innerWidth;
+    this.setState(() => ({
+      windowSize,
+    }));
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
   }
 
   renderCellContent(column, transaction) {
     const { t } = this.props;
+    const { windowSize } = this.state;
 
     switch (column.key) {
       case 'senderId':
@@ -34,7 +55,9 @@ class TransactionsTable extends React.Component {
         return (
           <div className={`${styles.address}`}>
             <AccountVisual address={transaction[column.key]} size={32} />
-            <span className={`${styles.addressValue}`}>{transaction[column.key]}</span>
+            <span className={`${styles.addressValue}`}>
+              {windowSize < windowSizeBreakpoint ? transaction[column.key].replace(regex.lskAddressTrunk, '$1...$3') : transaction[column.key]}
+            </span>
           </div>
         );
       case 'id':
