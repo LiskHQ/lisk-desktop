@@ -75,6 +75,8 @@ class TransactionsTable extends React.Component {
   }
 
   changeSorting(sortingColumn) {
+    // Only changes the caret.
+    // TODO: Implementation of sorting functionality to be done in a separate ticket.
     this.setState({
       sortingColumn,
       ascendingSorting:
@@ -131,7 +133,7 @@ class TransactionsTable extends React.Component {
                 </div>
               ))}
             </TableRow>
-            {this.renderTransactions().map(transaction => (
+            {transactions.data.map(transaction => (
               <TableRow key={transaction.id} className={[grid.row, 'row'].join(' ')}>
                 {columns.map(column => (
                   <span key={column.key} className={column.className}>
