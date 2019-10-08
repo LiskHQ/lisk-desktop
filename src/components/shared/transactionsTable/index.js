@@ -30,6 +30,8 @@ class TransactionsTable extends React.Component {
     this.handleResize = this.handleResize.bind(this);
   }
 
+  // TODO: Test coverage for resizing to be done in separate ticket
+  // istanbul ignore next
   handleResize() {
     const windowSize = window.innerWidth;
     this.setState(() => ({
