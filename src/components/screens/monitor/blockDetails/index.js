@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import BlockDetails from './blockDetails';
 import liskService from '../../../../utils/api/lsk/liskService';
 import withData from '../../../../utils/withData';
+import withResizeValues from '../../../../utils/withResizeValues';
 
 const mapStateToProps = (state, ownProps) => ({
   id: ownProps.match.params.id,
@@ -29,4 +30,5 @@ export default compose(
     },
   }),
   withTranslation(),
+  withResizeValues,
 )(BlockDetails);
