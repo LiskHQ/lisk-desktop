@@ -23,7 +23,9 @@ const columnClassNames = {
   status: grid['col-xs-1'],
 };
 
-const BlockDetails = ({ t, blockDetails, blockTransactions }) => (
+const BlockDetails = ({
+  t, blockDetails, blockTransactions, isMediumViewPort,
+}) => (
   <PageLayout>
     <Box isLoading={blockDetails.isLoading} width="full">
       <Box.Header>
@@ -38,79 +40,166 @@ const BlockDetails = ({ t, blockDetails, blockTransactions }) => (
           )
           : (
             <React.Fragment>
-              <div>
-                <Box.Row>
-                  <div className={styles.dataContainer}>
-                    <label>{t('Block ID')}</label>
-                    <span>
-                      <CopyToClipboard value={blockDetails.data.id} />
-                    </span>
-                  </div>
+              {
+                isMediumViewPort
+                  ? (
+                    <div className={styles.container}>
+                      <div className={styles.dataContainer}>
+                        <label>{t('Block ID')}</label>
+                        <span>
+                          <CopyToClipboard value={blockDetails.data.id} />
+                        </span>
+                      </div>
 
-                  <div className={styles.dataContainer}>
-                    <label>{t('Height')}</label>
-                    <span>
-                      <CopyToClipboard value={blockDetails.data.height} />
-                    </span>
-                  </div>
+                      <div className={styles.dataContainer}>
+                        <label>{t('Height')}</label>
+                        <span>
+                          <CopyToClipboard value={blockDetails.data.height} />
+                        </span>
+                      </div>
 
-                  <div className={styles.dataContainer}>
-                    <label>{t('Version')}</label>
-                    <span>{blockDetails.data.version}</span>
-                  </div>
+                      <div className={styles.dataContainer}>
+                        <label>{t('Confirmations')}</label>
+                        <span>{blockDetails.data.confirmations}</span>
+                      </div>
 
-                  <div className={styles.dataContainer}>
-                    <label>{t('Confirmations')}</label>
-                    <span>{blockDetails.data.confirmations}</span>
-                  </div>
+                      <div className={styles.dataContainer}>
+                        <label>{t('Reward')}</label>
+                        <span>
+                          <LiskAmount val={blockDetails.data.reward} />
+                          &nbsp;
+                          {t('LSK')}
+                        </span>
+                      </div>
 
-                  <div className={styles.dataContainer}>
-                    <label>{t('Reward')}</label>
-                    <span>
-                      <LiskAmount val={blockDetails.data.reward} token={tokenMap.LSK.key} />
-                    </span>
-                  </div>
-                </Box.Row>
+                      <div className={styles.dataContainer}>
+                        <label>{t('Total fee')}</label>
+                        <span>
+                          <LiskAmount val={blockDetails.data.totalFee} />
+                          &nbsp;
+                          {t('LSK')}
+                        </span>
+                      </div>
 
-                <Box.Row>
-                  <div className={styles.dataContainer}>
-                    <label>{t('Total fee')}</label>
-                    <span>
-                      <LiskAmount val={blockDetails.data.totalFee} token={tokenMap.LSK.key} />
-                    </span>
-                  </div>
+                      <div className={styles.dataContainer}>
+                        <label>{t('Total forged')}</label>
+                        <span>
+                          <LiskAmount val={blockDetails.data.totalForged} />
+                          &nbsp;
+                          {t('LSK')}
+                        </span>
+                      </div>
 
-                  <div className={styles.dataContainer}>
-                    <label>{t('Total forged')}</label>
-                    <span>
-                      <LiskAmount val={blockDetails.data.totalForged} token={tokenMap.LSK.key} />
-                    </span>
-                  </div>
+                      <div className={styles.dataContainer}>
+                        <label>{t('Total amount')}</label>
+                        <span>
+                          <LiskAmount val={blockDetails.data.totalAmount} />
+                          &nbsp;
+                          {t('LSK')}
+                        </span>
+                      </div>
 
-                  <div className={styles.dataContainer}>
-                    <label>{t('Total amount')}</label>
-                    <span>
-                      <LiskAmount val={blockDetails.data.totalAmount} token={tokenMap.LSK.key} />
-                    </span>
-                  </div>
+                      <div className={styles.dataContainer}>
+                        <label>{t('Date')}</label>
+                        <span>
+                          <DateTimeFromTimestamp time={blockDetails.data.timestamp * 1000} token="BTC" />
+                        </span>
+                      </div>
 
-                  <div className={styles.dataContainer}>
-                    <label>{t('Date')}</label>
-                    <span>
-                      <DateTimeFromTimestamp time={blockDetails.data.timestamp * 1000} token="BTC" />
-                    </span>
-                  </div>
+                      <div className={styles.dataContainer}>
+                        <label>{t('Generated by')}</label>
+                        <span>
+                          <Link to={`${routes.accounts.path}/${blockDetails.data.generatorAddress}`}>
+                            {blockDetails.data.generatorUsername}
+                          </Link>
+                        </span>
+                      </div>
+                    </div>
+                  )
+                  : (
+                    <div>
+                      <Box.Row>
+                        <div className={styles.dataContainer}>
+                          <label>{t('Block ID')}</label>
+                          <span>
+                            <CopyToClipboard value={blockDetails.data.id} />
+                          </span>
+                        </div>
 
-                  <div className={styles.dataContainer}>
-                    <label>{t('Generated by')}</label>
-                    <span>
-                      <Link to={`${routes.accounts.path}/${blockDetails.data.generatorAddress}`}>
-                        {blockDetails.data.generatorUsername}
-                      </Link>
-                    </span>
-                  </div>
-                </Box.Row>
-              </div>
+                        <div className={styles.dataContainer}>
+                          <label>{t('Height')}</label>
+                          <span>
+                            <CopyToClipboard value={blockDetails.data.height} />
+                          </span>
+                        </div>
+
+                        <div className={styles.dataContainer}>
+                          <label>{t('Version')}</label>
+                          <span>{blockDetails.data.version}</span>
+                        </div>
+
+                        <div className={styles.dataContainer}>
+                          <label>{t('Confirmations')}</label>
+                          <span>{blockDetails.data.confirmations}</span>
+                        </div>
+
+                        <div className={styles.dataContainer}>
+                          <label>{t('Reward')}</label>
+                          <span>
+                            <LiskAmount val={blockDetails.data.reward} />
+                            &nbsp;
+                            {t('LSK')}
+                          </span>
+                        </div>
+                      </Box.Row>
+
+                      <Box.Row>
+                        <div className={styles.dataContainer}>
+                          <label>{t('Total fee')}</label>
+                          <span>
+                            <LiskAmount val={blockDetails.data.totalFee} />
+                            &nbsp;
+                            {t('LSK')}
+                          </span>
+                        </div>
+
+                        <div className={styles.dataContainer}>
+                          <label>{t('Total forged')}</label>
+                          <span>
+                            <LiskAmount val={blockDetails.data.totalForged} />
+                            &nbsp;
+                            {t('LSK')}
+                          </span>
+                        </div>
+
+                        <div className={styles.dataContainer}>
+                          <label>{t('Total amount')}</label>
+                          <span>
+                            <LiskAmount val={blockDetails.data.totalAmount} />
+                            &nbsp;
+                            {t('LSK')}
+                          </span>
+                        </div>
+
+                        <div className={styles.dataContainer}>
+                          <label>{t('Date')}</label>
+                          <span>
+                            <DateTimeFromTimestamp time={blockDetails.data.timestamp * 1000} token="BTC" />
+                          </span>
+                        </div>
+
+                        <div className={styles.dataContainer}>
+                          <label>{t('Generated by')}</label>
+                          <span>
+                            <Link to={`${routes.accounts.path}/${blockDetails.data.generatorAddress}`}>
+                              {blockDetails.data.generatorUsername}
+                            </Link>
+                          </span>
+                        </div>
+                      </Box.Row>
+                    </div>
+                  )
+                }
             </React.Fragment>
           )
       }
