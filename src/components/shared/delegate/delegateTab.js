@@ -6,6 +6,7 @@ import voting from '../../../constants/voting';
 import Box from '../../toolbox/box';
 import { formatAmountBasedOnLocale } from '../../../utils/formattedNumber';
 import { getUnixTimestampFromValue } from '../../../utils/datetime';
+import { tokenMap } from '../../../constants/tokens';
 import LiskAmount from '../liskAmount';
 import i18n from '../../../i18n';
 import styles from './delegateTab.css';
@@ -46,8 +47,7 @@ const DelegateTab = ({ delegate, account, t }) => {
           <li className="vote">
             <span className={styles.label}>{t('Vote weight')}</span>
             <span>
-              <LiskAmount val={delegate.vote} />
-              {` ${t('LSK')}`}
+              <LiskAmount val={delegate.vote} token={tokenMap.LSK.key} />
             </span>
           </li>
           <li className="approval">
@@ -66,7 +66,7 @@ const DelegateTab = ({ delegate, account, t }) => {
             <span className={styles.label}>{t('LSK forged')}</span>
             <span>
               <LiskAmount val={delegate.rewards} />
-              {` ${t('LSK')}`}
+              {` ${tokenMap.LSK.key}`}
             </span>
           </li>
           <li className="last-forged">

@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React from 'react';
 import numeral from 'numeral';
 import 'numeral/locales';
@@ -10,7 +8,7 @@ const FormattedNumber = ({ val }) => {
   // set numeral language
   numeral.locale(i18n.language);
   const formatedNumber = numeral(val).format('0,0.[0000000000000]');
-  return <span>{formatedNumber}</span>;
+  return <React.Fragment>{formatedNumber}</React.Fragment>;
 };
 
 export default withTranslation()(FormattedNumber);

@@ -60,6 +60,7 @@ class MonthView extends Component {
         value={day.format(dateFormat)}
         disabled={isDisabled}
         className={`${styles.item} ${styles.dayItem} ${selected ? styles.selected : ''}`}
+        type="button"
       >
         {day.format('D')}
       </button>
