@@ -1,0 +1,42 @@
+.address {
+  display: flex;
+  align-items: center;
+
+  & .addressValue {
+    margin-left: 10px;
+  }
+}
+
+.sortingColumn {
+  cursor: pointer;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+
+  &.arrowUp {
+    border-bottom: 4px solid black;
+  }
+
+  &.arrowDown {
+    border-top: 4px solid black;
+  }
+}
+
+.tooltip {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  max-width: 150px;
+}
+
+.rowLink:hover {
+  text-decoration: none;
+}

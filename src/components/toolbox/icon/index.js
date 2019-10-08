@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import academy from '../../../assets/images/icons/academy.svg';
 import academyActive from '../../../assets/images/icons/academy-active.svg';
 import alertIcon from '../../../assets/images/icons/icon-alert.svg';
+import approved from '../../../assets/images/icons/approved.svg';
 import arrowLeftActive from '../../../assets/images/icons/arrow-left-active.svg';
 import arrowLeftInactive from '../../../assets/images/icons/arrow-left-inactive.svg';
 import arrowRightActive from '../../../assets/images/icons/arrow-right-active.svg';
@@ -50,6 +51,7 @@ import newsFeedAvatar from '../../../assets/images/icons/news-feed-avatar.svg';
 import noTweetsIcon from '../../../assets/images/icons/no-tweets.svg';
 import okIcon from '../../../assets/images/icons/icon-checkmark.svg';
 import outgoing from '../../../assets/images/icons/outgoing.svg';
+import pending from '../../../assets/images/icons/pending.svg';
 import searchIconActive from '../../../assets/images/icons/search-active.svg';
 import searchIconInactive from '../../../assets/images/icons/search.svg';
 import searchInput from '../../../assets/images/icons/search-input.svg';
@@ -78,6 +80,7 @@ export const icons = {
   academy,
   academyActive,
   alertIcon,
+  approved,
   arrowLeftActive,
   arrowLeftInactive,
   arrowRightActive,
@@ -124,6 +127,7 @@ export const icons = {
   noTweetsIcon,
   okIcon,
   outgoing,
+  pending,
   searchIconActive,
   searchIconInactive,
   searchInput,
