@@ -3,121 +3,50 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import { tokenMap } from '../../../../constants/tokens';
-import AccountVisual from '../../../toolbox/accountVisual';
 import Box from '../../../toolbox/box';
 import CopyToClipboard from '../../../toolbox/copyToClipboard';
 import Feedback from '../../../toolbox/feedback/feedback';
-import Icon from '../../../toolbox/icon';
-import Illustration from '../../../toolbox/illustration';
 import LiskAmount from '../../../shared/liskAmount';
 import PageLayout from '../../../toolbox/pageLayout';
-import TableRow from '../../../toolbox/table/tableRow';
 import routes from '../../../../constants/routes';
+import TransactionsTable from '../../../shared/transactionsTable';
 import styles from './blockDetails.css';
-
-const columnClassNames = {
-  sender: `${grid['col-md-3']} ${grid['col-xs-3']}`,
-  recipient: `${grid['col-md-3']} ${grid['col-xs-3']}`,
-  date: `${grid['col-md-2']} hidden-m`,
-  amount: grid['col-xs-2'],
-  fee: grid['col-xs-1'],
-  status: grid['col-xs-1'],
-};
 
 const BlockDetails = ({
   t, blockDetails, blockTransactions, isMediumViewPort,
-}) => (
-  <PageLayout>
-    <Box isLoading={blockDetails.isLoading} width="full">
-      <Box.Header>
-        <h1>{t('Block details')}</h1>
-      </Box.Header>
-      {
-        blockDetails.error
-          ? (
-            <Box.Content>
-              <Feedback status="error" show>{t('Failed to load block details.')}</Feedback>
-            </Box.Content>
-          )
-          : (
-            <React.Fragment>
-              {
-                isMediumViewPort
-                  ? (
-                    <div className={styles.container}>
-                      <div className={styles.dataContainer}>
-                        <label>{t('Block ID')}</label>
-                        <span>
-                          <CopyToClipboard value={blockDetails.data.id} />
-                        </span>
-                      </div>
+}) => {
+  const columns = [
+    { header: t('Sender'), className: `${grid['col-xs-3']}`, key: 'senderId' },
+    { header: t('Recipient'), className: `${grid['col-xs-3']}`, key: 'recipientId' },
+    {
+      header: t('Date'), className: `${grid['col-xs-2']}`, key: 'timestamp', isSortingColumn: true, defaultSort: true,
+    },
+    {
+      header: t('Amount'), className: `${grid['col-xs-2']}`, key: 'amount', isSortingColumn: true,
+    },
+    { header: t('Fee'), className: `${grid['col-xs-1']}  hidden-m`, key: 'fee' },
+    { header: t('Status'), className: `${grid['col-xs-1']}`, key: 'confirmations' },
+  ];
 
-                      <div className={styles.dataContainer}>
-                        <label>{t('Height')}</label>
-                        <span>
-                          <CopyToClipboard value={blockDetails.data.height} />
-                        </span>
-                      </div>
-
-                      <div className={styles.dataContainer}>
-                        <label>{t('Confirmations')}</label>
-                        <span>{blockDetails.data.confirmations}</span>
-                      </div>
-
-                      <div className={styles.dataContainer}>
-                        <label>{t('Reward')}</label>
-                        <span>
-                          <LiskAmount val={blockDetails.data.reward} token={tokenMap.LSK.key} />
-                        </span>
-                      </div>
-
-                      <div className={styles.dataContainer}>
-                        <label>{t('Total fee')}</label>
-                        <span>
-                          <LiskAmount val={blockDetails.data.totalFee} token={tokenMap.LSK.key} />
-                        </span>
-                      </div>
-
-                      <div className={styles.dataContainer}>
-                        <label>{t('Total forged')}</label>
-                        <span>
-                          <LiskAmount
-                            val={blockDetails.data.totalForged}
-                            token={tokenMap.LSK.key}
-                          />
-                        </span>
-                      </div>
-
-                      <div className={styles.dataContainer}>
-                        <label>{t('Total amount')}</label>
-                        <span>
-                          <LiskAmount
-                            val={blockDetails.data.totalAmount}
-                            token={tokenMap.LSK.key}
-                          />
-                        </span>
-                      </div>
-
-                      <div className={styles.dataContainer}>
-                        <label>{t('Date')}</label>
-                        <span>
-                          <DateTimeFromTimestamp time={blockDetails.data.timestamp * 1000} token="BTC" />
-                        </span>
-                      </div>
-
-                      <div className={styles.dataContainer}>
-                        <label>{t('Generated by')}</label>
-                        <span>
-                          <Link to={`${routes.accounts.path}/${blockDetails.data.generatorAddress}`}>
-                            {blockDetails.data.generatorUsername}
-                          </Link>
-                        </span>
-                      </div>
-                    </div>
-                  )
-                  : (
-                    <div>
-                      <Box.Row>
+  return (
+    <PageLayout>
+      <Box isLoading={blockDetails.isLoading} width="full">
+        <Box.Header>
+          <h1>{t('Block details')}</h1>
+        </Box.Header>
+        {
+          blockDetails.error
+            ? (
+              <Box.Content>
+                <Feedback status="error" show>{t('Failed to load block details.')}</Feedback>
+              </Box.Content>
+            )
+            : (
+              <React.Fragment>
+                {
+                  isMediumViewPort
+                    ? (
+                      <div className={styles.container}>
                         <div className={styles.dataContainer}>
                           <label>{t('Block ID')}</label>
                           <span>
@@ -133,11 +62,6 @@ const BlockDetails = ({
                         </div>
 
                         <div className={styles.dataContainer}>
-                          <label>{t('Version')}</label>
-                          <span>{blockDetails.data.version}</span>
-                        </div>
-
-                        <div className={styles.dataContainer}>
                           <label>{t('Confirmations')}</label>
                           <span>{blockDetails.data.confirmations}</span>
                         </div>
@@ -148,9 +72,7 @@ const BlockDetails = ({
                             <LiskAmount val={blockDetails.data.reward} token={tokenMap.LSK.key} />
                           </span>
                         </div>
-                      </Box.Row>
 
-                      <Box.Row>
                         <div className={styles.dataContainer}>
                           <label>{t('Total fee')}</label>
                           <span>
@@ -193,78 +115,106 @@ const BlockDetails = ({
                             </Link>
                           </span>
                         </div>
-                      </Box.Row>
-                    </div>
-                  )
-                }
-            </React.Fragment>
-          )
-      }
-    </Box>
+                      </div>
+                    )
+                    : (
+                      <div>
+                        <Box.Row>
+                          <div className={styles.dataContainer}>
+                            <label>{t('Block ID')}</label>
+                            <span>
+                              <CopyToClipboard value={blockDetails.data.id} />
+                            </span>
+                          </div>
 
-    <Box isLoading={blockTransactions.isLoading} className="transactions-box">
-      <Box.Header>
-        <h2>{t('Transactions')}</h2>
-      </Box.Header>
-      {
-        blockTransactions.error
-          ? (
-            <Box.Content>
-              <Box.EmptyState>
-                <Illustration name="emptyWallet" />
-                <h3>{t('There are no transactions for this block.')}</h3>
-              </Box.EmptyState>
-            </Box.Content>
-          )
-          : (
-            <React.Fragment>
-              <div>
-                {
-                  !!blockTransactions.data.length && (
-                  <TableRow isHeader className={`${grid.row}`}>
-                    <div className={`${columnClassNames.sender} ${styles.defaultHeader}`}>{t('Sender')}</div>
-                    <div className={columnClassNames.recipient}>{t('Recipient')}</div>
-                    <div className={columnClassNames.date}>{t('Date')}</div>
-                    <div className={columnClassNames.amount}>{t('Amount')}</div>
-                    <div className={columnClassNames.fee}>{t('Fee')}</div>
-                    <div className={columnClassNames.status}>{t('Status')}</div>
-                  </TableRow>
-                  )
-                }
-                {
-                    blockTransactions.data.map(blockTransaction => (
-                      <TableRow key={blockTransaction.id} className={grid.row}>
-                        <span className={[columnClassNames.sender, 'sender'].join(' ')}>
-                          <AccountVisual address={blockTransaction.senderId} size={30} />
-                          &nbsp;
-                          {blockTransaction.senderId}
-                        </span>
-                        <span className={[columnClassNames.recipient, 'recipient'].join(' ')}>
-                          <AccountVisual address={blockTransaction.recipientId} size={30} />
-                          &nbsp;
-                          {blockTransaction.recipientId}
-                        </span>
-                        <span className={[columnClassNames.date, 'date'].join(' ')}>
-                          <DateTimeFromTimestamp time={blockTransaction.timestamp * 1000} token="BTC" />
-                        </span>
-                        <span className={[columnClassNames.amount, 'amount'].join(' ')}>
-                          <LiskAmount val={columnClassNames.amount} token={tokenMap.LSK.key} />
-                        </span>
-                        <span className={[columnClassNames.fee, 'fee'].join(' ')}>
-                          <LiskAmount val={columnClassNames.fee} token={tokenMap.LSK.key} />
-                        </span>
-                        <span className={[columnClassNames.status, 'status'].join(' ')}>
-                          <Icon name={blockTransaction.confirmations >= 101 ? 'transactionApproved' : 'transactionPending'} />
-                        </span>
-                      </TableRow>
-                    ))
-                }
-              </div>
-            </React.Fragment>
-          )
-      }
-    </Box>
-  </PageLayout>
-);
+                          <div className={styles.dataContainer}>
+                            <label>{t('Height')}</label>
+                            <span>
+                              <CopyToClipboard value={blockDetails.data.height} />
+                            </span>
+                          </div>
+
+                          <div className={styles.dataContainer}>
+                            <label>{t('Version')}</label>
+                            <span>{blockDetails.data.version}</span>
+                          </div>
+
+                          <div className={styles.dataContainer}>
+                            <label>{t('Confirmations')}</label>
+                            <span>{blockDetails.data.confirmations}</span>
+                          </div>
+
+                          <div className={styles.dataContainer}>
+                            <label>{t('Reward')}</label>
+                            <span>
+                              <LiskAmount val={blockDetails.data.reward} token={tokenMap.LSK.key} />
+                            </span>
+                          </div>
+                        </Box.Row>
+
+                        <Box.Row>
+                          <div className={styles.dataContainer}>
+                            <label>{t('Total fee')}</label>
+                            <span>
+                              <LiskAmount
+                                val={blockDetails.data.totalFee}
+                                token={tokenMap.LSK.key}
+                              />
+                            </span>
+                          </div>
+
+                          <div className={styles.dataContainer}>
+                            <label>{t('Total forged')}</label>
+                            <span>
+                              <LiskAmount
+                                val={blockDetails.data.totalForged}
+                                token={tokenMap.LSK.key}
+                              />
+                            </span>
+                          </div>
+
+                          <div className={styles.dataContainer}>
+                            <label>{t('Total amount')}</label>
+                            <span>
+                              <LiskAmount
+                                val={blockDetails.data.totalAmount}
+                                token={tokenMap.LSK.key}
+                              />
+                            </span>
+                          </div>
+
+                          <div className={styles.dataContainer}>
+                            <label>{t('Date')}</label>
+                            <span>
+                              <DateTimeFromTimestamp time={blockDetails.data.timestamp * 1000} token="BTC" />
+                            </span>
+                          </div>
+
+                          <div className={styles.dataContainer}>
+                            <label>{t('Generated by')}</label>
+                            <span>
+                              <Link to={`${routes.accounts.path}/${blockDetails.data.generatorAddress}`}>
+                                {blockDetails.data.generatorUsername}
+                              </Link>
+                            </span>
+                          </div>
+                        </Box.Row>
+                      </div>
+                    )
+                  }
+              </React.Fragment>
+            )
+        }
+      </Box>
+
+      <TransactionsTable
+        columns={columns}
+        title={t('Transactions')}
+        transactions={blockTransactions}
+        emptyStateMessage={t('There are no transactions for this block.')}
+      />
+    </PageLayout>
+  );
+};
 
 export default BlockDetails;

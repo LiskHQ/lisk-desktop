@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import BlockDetails from './blockDetails';
 import blocks from '../../../../../test/constants/blocks';
 import transactions from '../../../../../test/constants/transactions';
+import BlockDetails from './blockDetails';
 
 describe('BlockDetails page', () => {
   let wrapper;
@@ -25,7 +25,7 @@ describe('BlockDetails page', () => {
   });
 
   it('renders a page properly without errors', () => {
-    expect(wrapper.find('h1')).toHaveText('Block details');
+    expect(wrapper.find('h1').at(0)).toHaveText('Block details');
     expect(wrapper.find('label').at(0)).toHaveText('Block ID');
     expect(wrapper.find('span.copy-title').at(0)).toHaveText(blocks[0].id);
     expect(wrapper.find('label').at(1)).toHaveText('Height');
@@ -48,7 +48,7 @@ describe('BlockDetails page', () => {
       },
     };
     wrapper = mount(<BlockDetails {...newProps} />);
-    expect(wrapper.find('h1')).toHaveText('Block details');
+    expect(wrapper.find('h1').at(0)).toHaveText('Block details');
     expect(wrapper).toContainMatchingElement('Feedback');
     expect(wrapper.find('span').at(0)).toHaveText('Failed to load block details.');
   });
@@ -63,17 +63,18 @@ describe('BlockDetails page', () => {
         data: transactions,
       },
     });
-    expect(wrapper.find('TableRow.row')).toHaveLength(transactions.length + 1);
+    expect(wrapper.find('TableRow.row')).toHaveLength(transactions.length);
   });
 
   it('shows a message when empty transactions response', () => {
-    wrapper = mount(<BlockDetails {...props} />);
-    wrapper.setProps({
+    const newProps = {
+      ...props,
       blockTransactions: {
         ...props.blockTransactions,
-        error: 'Not found',
+        error: 'failed',
       },
-    });
-    expect(wrapper.find('.transactions-box').first()).toIncludeText('There are no transactions for this block.');
+    };
+    wrapper = mount(<BlockDetails {...newProps} />);
+    expect(wrapper.find('.transactions-box h3')).toIncludeText('There are no transactions for this block.');
   });
 });

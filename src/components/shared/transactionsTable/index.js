@@ -149,7 +149,7 @@ class TransactionsTable extends React.Component {
     const { ascendingSorting } = this.state;
 
     return (
-      <Box width="full" isLoading={transactions.isLoading}>
+      <Box width="full" isLoading={transactions.isLoading} className="transactions-box">
         <Box.Header>
           <h1>{title}</h1>
         </Box.Header>
