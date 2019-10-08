@@ -2,17 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Box from '../../toolbox/box';
-import TableRow from '../../toolbox/table/tableRow';
-import LiskAmount from '../liskAmount';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
-import Icon from '../../toolbox/icon';
 import AccountVisual from '../../toolbox/accountVisual';
-import styles from './transactionsTable.css';
+import Box from '../../toolbox/box';
+import Icon from '../../toolbox/icon';
 import IconlessTooltip from '../iconlessTooltip';
+import LiskAmount from '../liskAmount';
 import regex from '../../../utils/regex';
+import routes from '../../../constants/routes';
+import styles from './transactionsTable.css';
+import TableRow from '../../toolbox/table/tableRow';
 
 const windowSizeBreakpoint = 1024;
+
 
 class TransactionsTable extends React.Component {
   constructor(props) {
@@ -59,12 +61,6 @@ class TransactionsTable extends React.Component {
               {windowSize < windowSizeBreakpoint ? transaction[column.key].replace(regex.lskAddressTrunk, '$1...$3') : transaction[column.key]}
             </span>
           </div>
-        );
-      case 'id':
-        return (
-          <Link to={`${column.pathPrefix}/${transaction[column.key]}`}>
-            {transaction[column.key]}
-          </Link>
         );
       case 'amount':
         return (
@@ -170,13 +166,19 @@ class TransactionsTable extends React.Component {
               ))}
             </TableRow>
             {transactions.data.map(transaction => (
-              <TableRow key={transaction.id} className={[grid.row, 'row'].join(' ')}>
-                {columns.map(column => (
-                  <span key={column.key} className={column.className}>
-                    {this.renderCellContent(column, transaction)}
-                  </span>
-                ))}
-              </TableRow>
+              <Link
+                key={transaction.id}
+                to={`${routes.transactions.path}/${transaction.id}`}
+                className={styles.rowLink}
+              >
+                <TableRow className={[grid.row, 'row'].join(' ')}>
+                  {columns.map(column => (
+                    <span key={column.key} className={column.className}>
+                      {this.renderCellContent(column, transaction)}
+                    </span>
+                  ))}
+                </TableRow>
+              </Link>
             ))}
           </React.Fragment>
           )}
