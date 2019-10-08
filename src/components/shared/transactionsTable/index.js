@@ -11,6 +11,7 @@ import IconlessTooltip from '../iconlessTooltip';
 import LiskAmount from '../liskAmount';
 import regex from '../../../utils/regex';
 import routes from '../../../constants/routes';
+import Illustration from '../../toolbox/illustration';
 import styles from './transactionsTable.css';
 import TableRow from '../../toolbox/table/tableRow';
 
@@ -143,7 +144,7 @@ class TransactionsTable extends React.Component {
 
   render() {
     const {
-      title, transactions, columns, isLoadMoreEnabled, t,
+      title, transactions, columns, isLoadMoreEnabled, t, emptyStateMessage,
     } = this.props;
     const { ascendingSorting } = this.state;
 
@@ -153,6 +154,18 @@ class TransactionsTable extends React.Component {
           <h1>{title}</h1>
         </Box.Header>
         <div>
+          {
+            transactions.error
+              ? (
+                <Box.Content>
+                  <Box.EmptyState>
+                    <Illustration name="emptyWallet" />
+                    <h3>{emptyStateMessage}</h3>
+                  </Box.EmptyState>
+                </Box.Content>
+              )
+              : null
+          }
           {!!transactions.data.length && (
           <React.Fragment>
             <TableRow isHeader>
