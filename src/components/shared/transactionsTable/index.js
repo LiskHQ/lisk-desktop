@@ -94,7 +94,7 @@ class TransactionsTable extends React.Component {
           </IconlessTooltip>
         );
       case 'timestamp':
-        return <DateTimeFromTimestamp time={transaction[column.key]} token="LSK" />;
+        return <DateTimeFromTimestamp time={transaction[column.key] * 1000} token="BTC" />;
       case 'confirmations':
         return (
           <IconlessTooltip
