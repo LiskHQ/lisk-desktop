@@ -27,3 +27,7 @@
     border-top: 4px solid black;
   }
 }
+
+.rowLink:hover {
+  text-decoration: none;
+}
