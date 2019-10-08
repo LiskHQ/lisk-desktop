@@ -201,7 +201,7 @@ const BlockDetails = ({
       }
     </Box>
 
-    <Box isLoading={blockTransactions.isLoading} width="full">
+    <Box isLoading={blockTransactions.isLoading} className="transactions-box">
       <Box.Header>
         <h2>{t('Transactions')}</h2>
       </Box.Header>
@@ -209,7 +209,7 @@ const BlockDetails = ({
         blockTransactions.error
           ? (
             <Box.Content>
-              <Feedback status="error" show>{t('There are nor transactions for this block.')}</Feedback>
+              <Feedback status="error" show>{t('There are no transactions for this block.')}</Feedback>
             </Box.Content>
           )
           : (

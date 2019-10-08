@@ -65,4 +65,15 @@ describe('BlockDetails page', () => {
     });
     expect(wrapper.find('TableRow.row')).toHaveLength(transactions.length + 1);
   });
+
+  it('shows a message when empty transactions response', () => {
+    wrapper = mount(<BlockDetails {...props} />);
+    wrapper.setProps({
+      blockTransactions: {
+        ...props.blockTransactions,
+        error: 'Not found',
+      },
+    });
+    expect(wrapper.find('.transactions-box').first()).toIncludeText('There are no transactions for this block.');
+  });
 });
