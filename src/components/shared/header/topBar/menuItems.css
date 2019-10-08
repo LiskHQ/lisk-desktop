@@ -1,6 +1,10 @@
 @import '../../../../app/variables.css';
 @import '../../../../app/mixins.css';
 
+:root {
+  --menu-item-width: 72px;
+}
+
 .wrapper {
   display: flex;
   justify-content: flex-start;
@@ -18,9 +22,12 @@
   display: flex;
   flex-direction: row;
   height: 100%;
-  justify-content: center;
   padding: 0 24px;
   text-decoration: none;
+  margin-bottom: -1px;
+  max-width: var(--menu-item-width);
+  overflow: hidden;
+  transition: all var(--animation-speed-fast) linear;
 
   &:last-child {
     border-right: 0 none;
@@ -49,21 +56,20 @@
 }
 
 .label {
-  display: none;
+  display: inline-block;
+  opacity: 0;
+  padding-left: 10px;
+  transition: all var(--animation-speed-fast) linear;
 }
 
 .selected {
   background: var(--color-white);
   border-bottom: 2px solid var(--color-ultramarine-blue);
-  margin-bottom: -1px;
-
-  & > span {
-    color: var(--color-ultramarine-blue);
-  }
+  max-width: 160px;
 
   & .label {
-    margin-left: 10px;
-    display: inline-block;
+    color: var(--color-ultramarine-blue);
+    opacity: 1;
   }
 }
 
@@ -72,14 +78,11 @@
     min-width: 120px;
   }
 
-  .item {
-    flex-direction: column;
-    padding: 0 26px;
-  }
-
   .selected {
+    max-width: var(--menu-item-width);
+
     & .label {
-      display: none;
+      opacity: 0;
     }
   }
 }
