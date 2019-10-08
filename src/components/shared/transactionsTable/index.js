@@ -171,6 +171,7 @@ class TransactionsTable extends React.Component {
                   {t(column.header)}
                   {column.isSortingColumn && this.state.sortingColumn === column.key && (
                   <div
+                    style={{ display: 'none' } /* TODO remove this line when enabling sorting */}
                     className={[
                       styles.arrow,
                       // TODO add test when sorting is enabled
