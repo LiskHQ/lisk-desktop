@@ -20,7 +20,7 @@ class TransactionsTable extends React.Component {
     this.state = {
       sortingColumn: props.columns.find(column => column.defaultSort).key,
       ascendingSorting: true,
-      windowSize: 0,
+      isWindowSmall: false,
     };
 
     this.changeSorting = this.changeSorting.bind(this);
@@ -33,10 +33,16 @@ class TransactionsTable extends React.Component {
   // TODO: Test coverage for resizing to be done in separate ticket
   // istanbul ignore next
   handleResize() {
+    const { isWindowSmall } = this.state;
     const windowSize = window.innerWidth;
+    if (
+      (windowSize < breakpoints.m && !isWindowSmall)
+      || (windowSize > breakpoints.m && isWindowSmall)
+    ) {
     this.setState(() => ({
-      windowSize,
+        isWindowSmall: !isWindowSmall,
     }));
+  }
   }
 
   componentDidMount() {
@@ -49,7 +55,7 @@ class TransactionsTable extends React.Component {
 
   renderCellContent(column, transaction) {
     const { t } = this.props;
-    const { windowSize } = this.state;
+    const { isWindowSmall } = this.state;
 
     switch (column.key) {
       case 'senderId':
@@ -58,7 +64,9 @@ class TransactionsTable extends React.Component {
           <div className={`${styles.address}`}>
             <AccountVisual address={transaction[column.key]} size={32} />
             <span className={`${styles.addressValue}`}>
-              {windowSize < breakpoints.m ? transaction[column.key].replace(regex.lskAddressTrunk, '$1...$3') : transaction[column.key]}
+              {isWindowSmall
+                ? transaction[column.key].replace(regex.lskAddressTrunk, '$1...$3')
+                : transaction[column.key]}
             </span>
           </div>
         );
@@ -132,7 +140,6 @@ class TransactionsTable extends React.Component {
     const { transactions } = this.props;
     transactions.loadData({ offset: transactions.data.length });
   }
-
 
   render() {
     const {
