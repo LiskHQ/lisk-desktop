@@ -216,23 +216,20 @@ const BlockDetails = ({
             <React.Fragment>
               <div>
                 {
-                  Array.isArray(blockTransactions.data)
-                    ? (
-                      <TableRow isHeader className={`${grid.row}`}>
-                        <div className={`${columnClassNames.sender} ${styles.defaultHeader}`}>{t('Sender')}</div>
-                        <div className={columnClassNames.recipient}>{t('Recipient')}</div>
-                        <div className={columnClassNames.date}>{t('Date')}</div>
-                        <div className={columnClassNames.amount}>{t('Amount')}</div>
-                        <div className={columnClassNames.fee}>{t('Fee')}</div>
-                        <div className={columnClassNames.status}>{t('Status')}</div>
-                      </TableRow>
-                    )
-                    : ''
+                  !!blockTransactions.data.length && (
+                  <TableRow isHeader className={`${grid.row}`}>
+                    <div className={`${columnClassNames.sender} ${styles.defaultHeader}`}>{t('Sender')}</div>
+                    <div className={columnClassNames.recipient}>{t('Recipient')}</div>
+                    <div className={columnClassNames.date}>{t('Date')}</div>
+                    <div className={columnClassNames.amount}>{t('Amount')}</div>
+                    <div className={columnClassNames.fee}>{t('Fee')}</div>
+                    <div className={columnClassNames.status}>{t('Status')}</div>
+                  </TableRow>
+                  )
                 }
                 {
-                  Array.isArray(blockTransactions.data)
-                    ? blockTransactions.data.map(blockTransaction => (
-                      <TableRow key={blockTransaction.id} className={`${grid.row}`}>
+                    blockTransactions.data.map(blockTransaction => (
+                      <TableRow key={blockTransaction.id} className={grid.row}>
                         <span className={[columnClassNames.sender, 'sender'].join(' ')}>
                           <AccountVisual address={blockTransaction.senderId} size={30} />
                           &nbsp;
@@ -257,7 +254,6 @@ const BlockDetails = ({
                         </span>
                       </TableRow>
                     ))
-                    : ''
                 }
               </div>
             </React.Fragment>
