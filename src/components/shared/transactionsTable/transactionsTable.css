@@ -28,6 +28,14 @@
   }
 }
 
+.tooltip {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 150px;
+}
+
 .rowLink:hover {
   text-decoration: none;
 }

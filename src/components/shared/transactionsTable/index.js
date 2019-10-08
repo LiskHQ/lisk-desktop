@@ -15,7 +15,6 @@ import TableRow from '../../toolbox/table/tableRow';
 
 const windowSizeBreakpoint = 1024;
 
-
 class TransactionsTable extends React.Component {
   constructor(props) {
     super(props);
@@ -76,6 +75,7 @@ class TransactionsTable extends React.Component {
             tooltipContent={<p>{`${t('Type')} ${transaction.type}`}</p>}
             title={t('Transaction')}
             className="showOnBottom"
+            tooltipClassName={styles.tooltip}
           >
             <div>
               <LiskAmount val={transaction[column.key]} />
@@ -87,7 +87,16 @@ class TransactionsTable extends React.Component {
       case 'timestamp':
         return <DateTimeFromTimestamp time={transaction[column.key]} token="LSK" />;
       case 'confirmations':
-        return transaction.confirmations > 0 ? <Icon name="approved" /> : <Icon name="pending" />;
+        return (
+          <IconlessTooltip
+            tooltipContent={<p>{t('Confirmations')}</p>}
+            title={t('Pending')}
+            className="showOnBottom"
+            tooltipClassName={styles.tooltip}
+          >
+            {transaction.confirmations > 0 ? <Icon name="approved" /> : <Icon name="pending" />}
+          </IconlessTooltip>
+        );
       default:
         return transaction[column.key];
     }
