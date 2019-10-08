@@ -2,6 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import BlockDetails from './blockDetails';
 import blocks from '../../../../../test/constants/blocks';
+import transactions from '../../../../../test/constants/transactions';
 
 describe('BlockDetails page', () => {
   let wrapper;
@@ -50,5 +51,18 @@ describe('BlockDetails page', () => {
     expect(wrapper.find('h1')).toHaveText('Block details');
     expect(wrapper).toContainMatchingElement('Feedback');
     expect(wrapper.find('span').at(0)).toHaveText('Failed to load block details.');
+  });
+
+  it('renders a page with transaction list', () => {
+    wrapper = mount(<BlockDetails {...props} />);
+    expect(wrapper.find('TableRow.row')).toHaveLength(0);
+    wrapper.setProps({
+      blockTransactions: {
+        ...props.blockTransactions,
+        isLoading: false,
+        data: transactions,
+      },
+    });
+    expect(wrapper.find('TableRow.row')).toHaveLength(transactions.length + 1);
   });
 });
