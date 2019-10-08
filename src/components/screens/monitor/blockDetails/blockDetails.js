@@ -134,7 +134,7 @@ const BlockDetails = ({ t, blockDetails, blockTransactions }) => (
                   Array.isArray(blockTransactions.data)
                     ? (
                       <TableRow isHeader className={`${grid.row}`}>
-                        <div className={columnClassNames.sender}>{t('Sender')}</div>
+                        <div className={`${columnClassNames.sender} ${styles.defaultHeader}`}>{t('Sender')}</div>
                         <div className={columnClassNames.recipient}>{t('Recipient')}</div>
                         <div className={columnClassNames.date}>{t('Date')}</div>
                         <div className={columnClassNames.amount}>{t('Amount')}</div>
