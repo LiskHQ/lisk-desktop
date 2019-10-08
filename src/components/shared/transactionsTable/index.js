@@ -5,6 +5,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
 import AccountVisual from '../../toolbox/accountVisual';
 import Box from '../../toolbox/box';
+import breakpoints from '../../../constants/breakpoints';
 import Icon from '../../toolbox/icon';
 import IconlessTooltip from '../iconlessTooltip';
 import LiskAmount from '../liskAmount';
@@ -12,8 +13,6 @@ import regex from '../../../utils/regex';
 import routes from '../../../constants/routes';
 import styles from './transactionsTable.css';
 import TableRow from '../../toolbox/table/tableRow';
-
-const windowSizeBreakpoint = 1024;
 
 class TransactionsTable extends React.Component {
   constructor(props) {
@@ -57,7 +56,7 @@ class TransactionsTable extends React.Component {
           <div className={`${styles.address}`}>
             <AccountVisual address={transaction[column.key]} size={32} />
             <span className={`${styles.addressValue}`}>
-              {windowSize < windowSizeBreakpoint ? transaction[column.key].replace(regex.lskAddressTrunk, '$1...$3') : transaction[column.key]}
+              {windowSize < breakpoints.m ? transaction[column.key].replace(regex.lskAddressTrunk, '$1...$3') : transaction[column.key]}
             </span>
           </div>
         );
