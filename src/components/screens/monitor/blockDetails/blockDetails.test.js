@@ -13,6 +13,10 @@ describe('BlockDetails page', () => {
       loadData: jest.fn(),
       error: false,
     },
+    blockTransactions: {
+      isLoading: false,
+      data: [],
+    },
   };
 
   beforeEach(() => {
