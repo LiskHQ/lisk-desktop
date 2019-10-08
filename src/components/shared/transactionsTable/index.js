@@ -74,16 +74,22 @@ class TransactionsTable extends React.Component {
     }
   }
 
-  changeSorting(sortingColumn) {
+  // TODO add test when sorting is enabled
+  // istanbul ignore next
+  changeSorting(column) {
+    if (column.isSortingColumn) {
     // Only changes the caret.
     // TODO: Implementation of sorting functionality to be done in a separate ticket.
-    this.setState({
-      sortingColumn,
-      ascendingSorting:
-        sortingColumn === this.state.sortingColumn ? !this.state.ascendingSorting : true,
-    });
+      this.setState({
+        sortingColumn: column.key,
+        ascendingSorting:
+        column.key === this.state.sortingColumn ? !this.state.ascendingSorting : true,
+      });
+    }
   }
 
+  // TODO add test when sorting is enabled
+  // istanbul ignore next
   renderTransactions() {
     const { sortingColumn } = this.state;
 
@@ -116,7 +122,11 @@ class TransactionsTable extends React.Component {
             <TableRow isHeader>
               {columns.map(column => (
                 <div
-                  onClick={() => (column.isSortingColumn ? this.changeSorting(column.key) : null)}
+                  onClick={
+                    /* TODO add test when sorting is enabled */
+                    /* istanbul ignore next */
+                    () => this.changeSorting(column)
+                  }
                   key={column.key}
                   className={`${column.className} ${
                     column.isSortingColumn ? styles.sortingColumn : ''
@@ -125,9 +135,12 @@ class TransactionsTable extends React.Component {
                   {t(column.header)}
                   {column.isSortingColumn && this.state.sortingColumn === column.key && (
                   <div
-                    className={`${styles.arrow} ${
-                      ascendingSorting ? styles.arrowUp : styles.arrowDown
-                    }`}
+                    className={[
+                      styles.arrow,
+                      // TODO add test when sorting is enabled
+                      // istanbul ignore next
+                      ascendingSorting ? styles.arrowUp : styles.arrowDown,
+                    ].join(' ')}
                   />
                   )}
                 </div>
