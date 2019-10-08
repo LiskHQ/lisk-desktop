@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
+import { tokenMap } from '../../../../constants/tokens';
 import Box from '../../../toolbox/box';
 import Feedback from '../../../toolbox/feedback/feedback';
 import LiskAmount from '../../../shared/liskAmount';
@@ -53,9 +54,7 @@ const BlockDetails = ({ t, blockDetails }) => (
                   <div className={styles.dataContainer}>
                     <label>{t('Reward')}</label>
                     <span>
-                      <LiskAmount val={blockDetails.data.reward} />
-                      &nbsp;
-                      {t('LSK')}
+                      <LiskAmount val={blockDetails.data.reward} token={tokenMap.LSK.key} />
                     </span>
                   </div>
                 </Box.Row>
@@ -64,27 +63,21 @@ const BlockDetails = ({ t, blockDetails }) => (
                   <div className={styles.dataContainer}>
                     <label>{t('Total fee')}</label>
                     <span>
-                      <LiskAmount val={blockDetails.data.totalFee} />
-                      &nbsp;
-                      {t('LSK')}
+                      <LiskAmount val={blockDetails.data.totalFee} token={tokenMap.LSK.key} />
                     </span>
                   </div>
 
                   <div className={styles.dataContainer}>
                     <label>{t('Total forged')}</label>
                     <span>
-                      <LiskAmount val={blockDetails.data.totalForged} />
-                      &nbsp;
-                      {t('LSK')}
+                      <LiskAmount val={blockDetails.data.totalForged} token={tokenMap.LSK.key} />
                     </span>
                   </div>
 
                   <div className={styles.dataContainer}>
                     <label>{t('Total amount')}</label>
                     <span>
-                      <LiskAmount val={blockDetails.data.totalAmount} />
-                      &nbsp;
-                      {t('LSK')}
+                      <LiskAmount val={blockDetails.data.totalAmount} token={tokenMap.LSK.key} />
                     </span>
                   </div>
 

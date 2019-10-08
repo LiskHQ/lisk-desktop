@@ -40,7 +40,7 @@ describe('TransactionsOverview ', () => {
     history: {
       push: spy(),
     },
-    customFilters: {
+    activeCustomFilters: {
       dateFrom: '',
       dateTo: '',
       amountFrom: '',

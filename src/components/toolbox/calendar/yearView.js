@@ -59,6 +59,7 @@ class YearView extends Component {
         value={month}
         onClick={this.selectMonth}
         className={`${styles.item} ${styles.monthItem} ${selected ? styles.selected : ''}`}
+        type="button"
       >
         {month}
       </button>

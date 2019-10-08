@@ -10,11 +10,19 @@ const roundToPlaces = (value, places) => {
   return Math.round(value * x) / x;
 };
 
-const LiskAmount = ({ val, roundTo }) => (
+const LiskAmount = ({ val, roundTo, token }) => (
   val !== undefined
-    ? <FormattedNumber val={roundToPlaces(parseFloat(fromRawLsk(val)), roundTo)} />
+    ? (
+      <React.Fragment>
+        <FormattedNumber val={roundToPlaces(parseFloat(fromRawLsk(val)), roundTo)} />
+        {token && ` ${token}`}
+      </React.Fragment>
+    )
     : <span />
 );
 
+LiskAmount.defaultProps = {
+  token: '',
+};
 
 export default LiskAmount;

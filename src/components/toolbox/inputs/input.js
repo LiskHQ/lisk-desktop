@@ -57,7 +57,7 @@ const Input = ({
   const Component = type === 'textarea' ? type : 'input';
   return (
     <React.Fragment>
-      { label && <label className={styles.label}>{label}</label> }
+      { label && <label className={[styles.label, styles[size]].join(' ')}>{label}</label> }
       <span className={`${styles.wrapper} ${styles[size]}`}>
         { icon && (
           typeof icon === 'string'

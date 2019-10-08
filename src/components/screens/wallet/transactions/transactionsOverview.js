@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import txFilters from '../../../../constants/transactionFilters';
 import Piwik from '../../../../utils/piwik';
 import FilterContainer from './filters/filterContainer';
-import FilterBar from './filters/filterBar';
+import FilterBar from '../../../shared/filterBar';
 import TransactionsList from './transactionsList';
 import Tabs from '../../../toolbox/tabs';
 import styles from './transactions.css';
@@ -72,9 +72,8 @@ class TransactionsOverview extends React.Component {
             ? (
               <div className={styles.items}>
                 <FilterContainer
-                  updateCustomFilters={this.props.updateCustomFilters}
                   saveFilters={this.props.saveFilters}
-                  customFilters={this.props.customFilters}
+                  customFilters={this.props.activeCustomFilters}
                 />
               </div>
             )
@@ -85,7 +84,7 @@ class TransactionsOverview extends React.Component {
             <FilterBar
               clearFilter={this.props.clearFilter}
               clearAllFilters={this.props.clearAllFilters}
-              customFilters={this.props.activeCustomFilters}
+              filters={this.props.activeCustomFilters}
               results={this.props.count}
               t={this.props.t}
             />
