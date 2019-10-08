@@ -39,10 +39,10 @@ class TransactionsTable extends React.Component {
       (windowSize < breakpoints.m && !isWindowSmall)
       || (windowSize > breakpoints.m && isWindowSmall)
     ) {
-    this.setState(() => ({
+      this.setState(() => ({
         isWindowSmall: !isWindowSmall,
-    }));
-  }
+      }));
+    }
   }
 
   componentDidMount() {
@@ -150,7 +150,7 @@ class TransactionsTable extends React.Component {
     return (
       <Box width="full" isLoading={transactions.isLoading}>
         <Box.Header>
-          <h1>{t(title)}</h1>
+          <h1>{title}</h1>
         </Box.Header>
         <div>
           {!!transactions.data.length && (
