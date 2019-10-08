@@ -84,7 +84,7 @@ class TransactionsOverview extends React.Component {
             <FilterBar
               clearFilter={this.props.clearFilter}
               clearAllFilters={this.props.clearAllFilters}
-              customFilters={this.props.activeCustomFilters}
+              filters={this.props.activeCustomFilters}
               results={this.props.count}
               t={this.props.t}
             />

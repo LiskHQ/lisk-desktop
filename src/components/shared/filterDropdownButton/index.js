@@ -83,7 +83,7 @@ class FilterDropdownButton extends React.Component {
 
     return (
       <DropdownButton
-        buttonClassName={`${styles.filterTransactionsButton} filterTransactions`}
+        buttonClassName={`${styles.filterTransactionsButton} filterTransactions filter`}
         buttonLabel={(
           <React.Fragment>
             {t('Filter')}
@@ -96,15 +96,18 @@ class FilterDropdownButton extends React.Component {
         ref={this.setChildRef}
       >
         <form onSubmit={this.applyFilters} className={`${styles.container} filter-container`}>
-          {fields.map((filter) => {
-            const Component = filterComponents[filter.type];
+          {fields.map(({
+            name, label, placeholder, valueFormatter, type,
+          }) => {
+            const Component = filterComponents[type];
+            const props = {
+              name, label, placeholder, valueFormatter,
+            };
             return (
               <Component
-                key={filter.name}
-                name={filter.name}
-                label={filter.label}
-                placeholder={filter.placeholder}
-                filters={this.getFilters(filter)}
+                key={name}
+                {...props}
+                filters={this.getFilters({ name, type })}
                 updateCustomFilters={this.handleFiltersChange}
               />
             );
