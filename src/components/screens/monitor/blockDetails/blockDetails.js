@@ -206,7 +206,7 @@ const BlockDetails = ({
 
     <Box isLoading={blockTransactions.isLoading} width="full">
       <Box.Header>
-        <h1>{t('Transactions')}</h1>
+        <h2>{t('Transactions')}</h2>
       </Box.Header>
       {
         blockTransactions.error
