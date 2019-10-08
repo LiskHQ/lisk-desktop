@@ -179,6 +179,7 @@ export default {
     path: '/monitor/transactions',
     component: MonitorTransactions,
     isPrivate: false,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   blockDetails: {
     path: '/monitor/blocks',
