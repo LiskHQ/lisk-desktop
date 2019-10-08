@@ -19,6 +19,7 @@ import SignMessage from '../components/screens/signMessage';
 import Splashscreen from '../components/screens/splashscreen';
 import TermsOfUse from '../components/screens/termsOfUse';
 import ToolboxDemo from '../components/toolbox/demo';
+import MonitorTransactions from '../components/screens/monitor/transactions';
 import TransactionDashboard from '../components/shared/transactionDashboard';
 import Transactions from '../components/screens/explorer/transactions';
 import VerifyMessage from '../components/screens/verify-message';
@@ -164,6 +165,11 @@ export default {
     component: TermsOfUse,
     isPrivate: false,
     isSigninFlow: true,
+  },
+  monitorTransactions: {
+    path: '/monitor/transactions',
+    component: MonitorTransactions,
+    isPrivate: false,
   },
   blockDetails: {
     path: '/monitor/blocks',
