@@ -4,6 +4,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DEFAULT_LIMIT } from '../../../../constants/monitor';
 import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
+import { tokenMap } from '../../../../constants/tokens';
 import BlockFilterDropdown from './blockFilterDropdown';
 import Box from '../../../toolbox/box';
 import Feedback from '../../../toolbox/feedback/feedback';
@@ -82,11 +83,15 @@ const Blocks = ({
                   }, {
                     header: t('Amount'),
                     className: grid['col-xs-1'],
-                    getValue: block => <LiskAmount val={block.totalAmount} token="LSK" />,
+                    getValue: block => (
+                      <LiskAmount val={block.totalAmount} token={tokenMap.LSK.key} />
+                    ),
                   }, {
                     header: t('Forged'),
                     className: `${grid['col-md-1']} ${grid['col-xs-2']}`,
-                    getValue: block => <LiskAmount val={block.totalForged} token="LSK" />,
+                    getValue: block => (
+                      <LiskAmount val={block.totalForged} token={tokenMap.LSK.key} />
+                    ),
                     /* eslint-enable react/display-name */
                   }]}
                 />
