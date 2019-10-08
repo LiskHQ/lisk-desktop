@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { Input } from '../../../../toolbox/inputs';
-import Feedback from '../../../../toolbox/feedback/feedback';
+import { Input } from '../../toolbox/inputs';
+import Feedback from '../../toolbox/feedback/feedback';
 import styles from './filters.css';
 
 class AmountFieldGroup extends React.Component {
@@ -90,7 +90,7 @@ class AmountFieldGroup extends React.Component {
   }
 
   generateField({ name, placeholder }) {
-    const { filters, handleKeyPress } = this.props;
+    const { filters } = this.props;
     const field = this.state.fields[name];
 
     return (
@@ -101,7 +101,6 @@ class AmountFieldGroup extends React.Component {
           name={name}
           value={filters[name]}
           placeholder={placeholder}
-          onKeyDown={handleKeyPress}
           className={`${styles.input} ${field.error ? 'error' : ''} ${name}Input`}
           isLoading={field.loading}
           status={field.error ? 'error' : 'ok'}
@@ -112,11 +111,11 @@ class AmountFieldGroup extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, label } = this.props;
 
     return (
       <div className={styles.fieldGroup}>
-        <span className={styles.fieldLabel}>{t('Amount')}</span>
+        <span className={styles.fieldLabel}>{label}</span>
         <div className={styles.fieldRow}>
           { this.generateField({ name: 'amountFrom', placeholder: t('Min') }) }
           <span className={styles.separator} />
