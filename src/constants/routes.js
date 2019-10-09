@@ -2,6 +2,7 @@ import { tokenMap } from './tokens';
 import Accounts from
   '../components/screens/explorer/accounts';
 import AddBookmark from '../components/screens/bookmarks/addBookmark';
+import BlockDetails from '../components/screens/monitor/blockDetails';
 import Blocks from '../components/screens/monitor/blocks';
 import Bookmarks from '../components/screens/bookmarks';
 import Dashboard from '../components/screens/dashboard';
@@ -10,6 +11,7 @@ import Extensions from '../components/screens/extensions';
 import Help from '../components/screens/help';
 import HwWalletLogin from '../components/screens/hwWalletLogin';
 import Login from '../components/screens/login';
+import Monitor from '../components/screens/monitor';
 import Register from '../components/screens/register';
 import RegisterDelegate from '../components/screens/registerDelegate';
 import SecondPassphrase from '../components/screens/secondPassphrase';
@@ -24,7 +26,6 @@ import TransactionDashboard from '../components/shared/transactionDashboard';
 import Transactions from '../components/screens/explorer/transactions';
 import VerifyMessage from '../components/screens/verify-message';
 import Voting from '../components/screens/delegates/voting';
-import BlockDetails from '../components/screens/monitor/blockDetails';
 
 export default {
   toolboxDemo: {
@@ -43,11 +44,19 @@ export default {
     component: AddBookmark,
     isPrivate: false,
   },
+  monitor: {
+    path: '/monitor',
+    component: Monitor,
+    isPrivate: false,
+    exact: true,
+    forbiddenTokens: [tokenMap.BTC.key],
+  },
   blocks: {
     path: '/monitor/blocks',
     component: Blocks,
     isPrivate: false,
     exact: true,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   bookmarks: {
     path: '/bookmarks',
@@ -170,11 +179,13 @@ export default {
     path: '/monitor/transactions',
     component: MonitorTransactions,
     isPrivate: false,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
   blockDetails: {
     path: '/monitor/blocks',
     pathSuffix: '/:id?',
     component: BlockDetails,
     isPrivate: false,
+    forbiddenTokens: [tokenMap.BTC.key],
   },
 };

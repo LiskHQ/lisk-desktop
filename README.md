@@ -120,11 +120,6 @@ npm run test
 npm run test-live
 ```
 
-#### Run each time a file changes without generating test coverage report (it's faster)
-```
-NO_COV=true npm run test-live
-```
-
 ## Run end-to-end tests
 In order to run e2e tests you need to install [lisk-core](https://github.com/LiskHQ/lisk)
 

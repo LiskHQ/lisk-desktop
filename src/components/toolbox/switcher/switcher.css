@@ -1,0 +1,45 @@
+@import '../../../app/variables.css';
+@import '../../../app/mixins.css';
+
+.wrapper {
+  display: flex;
+}
+
+.options {
+  align-self: flex-start;
+  border: 1px solid var(--color-platinum);
+  border-radius: var(--border-radius-standard);
+  display: flex;
+  margin: 0 0 32px;
+  overflow: hidden;
+  padding: 0;
+
+  & > li {
+    @mixin contentNormal bold;
+
+    align-items: center;
+    box-sizing: border-box;
+    background: var(--color-white-smoke);
+    border-left: 1px solid var(--color-platinum);
+    color: var(--color-slate-gray);
+    cursor: pointer;
+    display: block;
+    list-style: none;
+    padding: 8px 16px;
+    text-align: center;
+    min-width: 113px;
+    position: relative;
+    transition:
+      background-color var(--animation-speed-fast) linear,
+      color var(--animation-speed-fast) linear;
+
+    &:first-child {
+      border-left: 0 none;
+    }
+  }
+
+  & > .active {
+    background-color: var(--color-white);
+    color: var(--color-ultramarine-blue);
+  }
+}

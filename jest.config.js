@@ -25,9 +25,9 @@ module.exports = {
     '^.+\\.css$': 'identity-obj-proxy',
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/__mocks__/fileMock.js',
   },
-  collectCoverage: !process.env.NO_COV,
+  collectCoverage: true,
   coverageDirectory: '<rootDir>/coverage/jest',
-  collectCoverageFrom: process.env.NO_COV ? [] : [
+  collectCoverageFrom: [
     'src/**/*.js',
     'app/src/**/*.js',
   ],
@@ -91,7 +91,7 @@ module.exports = {
     'src/components/shared/header/signInHeader/signInHeader.js',
     'src/components/screens/register/register.js',
   ],
-  coverageThreshold: process.env.NO_COV ? {} : {
+  coverageThreshold: {
     global: {
       branches: 90,
       functions: 90,
@@ -141,4 +141,8 @@ module.exports = {
   ],
   setupFilesAfterEnv: ['./node_modules/jest-enzyme/lib/index.js'],
   testEnvironment: 'enzyme',
+  watchPlugins: [
+    ['jest-watch-toggle-config', { setting: 'verbose' }],
+    ['jest-watch-toggle-config', { setting: 'collectCoverage' }],
+  ],
 };

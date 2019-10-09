@@ -1,7 +1,7 @@
 @import '../../../../app/variables.css';
 
 .wrapper {
-  width: 120px;
+  width: 90px;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -20,11 +20,5 @@
       cursor: default;
       opacity: 0.4;
     }
-  }
-}
-
-@media (--medium-viewport) {
-  .wrapper {
-    width: 88px;
   }
 }

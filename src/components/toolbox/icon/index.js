@@ -45,6 +45,8 @@ import liskLogoWhite from '../../../assets/images/lisk-logo-white-v2.svg';
 import logout from '../../../assets/images/icons/logout.svg';
 import logoutActive from '../../../assets/images/icons/logout-active.svg';
 import lskIcon from '../../../assets/images/icons/icon-lsk.svg';
+import monitorIcon from '../../../assets/images/icons/monitor.svg';
+import monitorIconActive from '../../../assets/images/icons/monitorActive.svg';
 import newsFeedAvatar from '../../../assets/images/icons/news-feed-avatar.svg';
 import noTweetsIcon from '../../../assets/images/icons/no-tweets.svg';
 import okIcon from '../../../assets/images/icons/icon-checkmark.svg';
@@ -119,6 +121,8 @@ export const icons = {
   logout,
   logoutActive,
   lskIcon,
+  monitorIcon,
+  monitorIconActive,
   newsFeedAvatar,
   noTweetsIcon,
   okIcon,
