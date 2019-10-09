@@ -60,7 +60,9 @@ import settingsActive from '../../../assets/images/icons/settings-active.svg';
 import showPassphraseIcon from '../../../assets/images/icons/icon-show-passphrase.svg';
 import signin from '../../../assets/images/icons/signin.svg';
 import signinActive from '../../../assets/images/icons/signin-active.svg';
+import transactionApproved from '../../../assets/images/icons/transaction-status-approved.svg';
 import transactionError from '../../../assets/images/icons/transaction-error.svg';
+import transactionPending from '../../../assets/images/icons/transaction-status-pending.svg';
 import transactionSuccess from '../../../assets/images/icons/transaction-success.svg';
 import tx2ndPassphrase from '../../../assets/images/icons/tx-2nd-passphrase.svg';
 import txDefault from '../../../assets/images/icons/tx-default.svg';
@@ -136,7 +138,9 @@ export const icons = {
   showPassphraseIcon,
   signin,
   signinActive,
+  transactionApproved,
   transactionError,
+  transactionPending,
   transactionSuccess,
   tx2ndPassphrase,
   txDefault,
