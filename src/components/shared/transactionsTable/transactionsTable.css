@@ -40,3 +40,8 @@
 .rowLink:hover {
   text-decoration: none;
 }
+
+.boxHeader {
+  display: flex;
+  justify-content: space-between;
+}

@@ -13,6 +13,7 @@ import regex from '../../../utils/regex';
 import routes from '../../../constants/routes';
 import styles from './transactionsTable.css';
 import TableRow from '../../toolbox/table/tableRow';
+import FilterDropdownButton from '../filterDropdownButton';
 
 class TransactionsTable extends React.Component {
   constructor(props) {
@@ -143,14 +144,15 @@ class TransactionsTable extends React.Component {
 
   render() {
     const {
-      title, transactions, columns, isLoadMoreEnabled, t,
+      title, transactions, columns, isLoadMoreEnabled, t, filters, isFilterDropdownExpandable,
     } = this.props;
     const { ascendingSorting } = this.state;
 
     return (
       <Box width="full" isLoading={transactions.isLoading}>
-        <Box.Header>
+        <Box.Header className={styles.boxHeader}>
           <h1>{title}</h1>
+          <FilterDropdownButton />
         </Box.Header>
         <div>
           {!!transactions.data.length && (
