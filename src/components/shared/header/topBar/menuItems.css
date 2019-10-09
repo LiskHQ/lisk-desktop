@@ -27,7 +27,9 @@
   margin-bottom: -1px;
   max-width: var(--menu-item-width);
   overflow: hidden;
-  transition: all var(--animation-speed-fast) linear;
+
+  /* TODO uncomment next line after performance problems like https://github.com/LiskHQ/lisk-hub/issues/2482 are solved
+  transition: all var(--animation-speed-fast) linear; */
   backface-visibility: hidden;
   transform: translateZ(0);
 
@@ -61,7 +63,9 @@
   display: inline-block;
   opacity: 0;
   padding-left: 10px;
-  transition: all var(--animation-speed-fast) linear;
+
+  /* TODO uncomment next line after performance problems like https://github.com/LiskHQ/lisk-hub/issues/2482 are solved
+  transition: all var(--animation-speed-fast) linear; */
 }
 
 .selected {
