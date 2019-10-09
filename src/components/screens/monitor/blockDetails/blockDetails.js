@@ -6,7 +6,7 @@ import { tokenMap } from '../../../../constants/tokens';
 import Box from '../../../toolbox/box';
 import CopyToClipboard from '../../../toolbox/copyToClipboard';
 import Feedback from '../../../toolbox/feedback/feedback';
-import LabeledValue from './labeledValue';
+import LabeledValue from '../../../toolbox/labeledValue';
 import LiskAmount from '../../../shared/liskAmount';
 import PageLayout from '../../../toolbox/pageLayout';
 import TransactionsTable from '../../../shared/transactionsTable';
@@ -79,7 +79,7 @@ const BlockDetails = ({
     },
   }).reduce((accumulator, [id, { label, value }]) => ({
     ...accumulator,
-    [id]: <LabeledValue label={label}>{value}</LabeledValue>,
+    [id]: <LabeledValue label={label} className={styles.dataContainer}>{value}</LabeledValue>,
   }), {});
 
   return (
