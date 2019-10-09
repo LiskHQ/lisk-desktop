@@ -153,75 +153,74 @@ class TransactionsTable extends React.Component {
         <Box.Header>
           <h1>{title}</h1>
         </Box.Header>
-        <div>
-          {
-            transactions.error
-              ? (
-                <Box.Content>
-                  <Box.EmptyState>
-                    <Illustration name="emptyWallet" />
-                    <h3>{emptyStateMessage}</h3>
-                  </Box.EmptyState>
-                </Box.Content>
-              )
-              : null
-          }
-          {!!transactions.data.length && (
-          <React.Fragment>
-            <TableRow isHeader>
-              {columns.map(column => (
-                <div
-                  onClick={
+        {transactions.error
+          ? (
+            <Box.Content>
+              <Box.EmptyState>
+                <Illustration name="emptyWallet" />
+                <h3>{emptyStateMessage || `${transactions.error}`}</h3>
+              </Box.EmptyState>
+            </Box.Content>
+          )
+          : (
+            <React.Fragment>
+              {!!transactions.data.length && (
+              <React.Fragment>
+                <TableRow isHeader>
+                  {columns.map(column => (
+                    <div
+                      onClick={
                     /* TODO add test when sorting is enabled */
                     /* istanbul ignore next */
                     () => this.changeSorting(column)
                   }
-                  key={column.key}
-                  className={`${column.className} ${
-                    column.isSortingColumn ? styles.sortingColumn : ''
-                  }`}
-                >
-                  {t(column.header)}
-                  {column.isSortingColumn && this.state.sortingColumn === column.key && (
-                  <div
-                    style={{ display: 'none' } /* TODO remove this line when enabling sorting */}
-                    className={[
-                      styles.arrow,
-                      // TODO add test when sorting is enabled
-                      // istanbul ignore next
-                      ascendingSorting ? styles.arrowUp : styles.arrowDown,
-                    ].join(' ')}
-                  />
-                  )}
-                </div>
-              ))}
-            </TableRow>
-            {transactions.data.map(transaction => (
-              <Link
-                key={transaction.id}
-                to={`${routes.transactions.path}/${transaction.id}`}
-                className={styles.rowLink}
-              >
-                <TableRow className={[grid.row, 'row'].join(' ')}>
-                  {columns.map(column => (
-                    <span key={column.key} className={column.className}>
-                      {this.renderCellContent(column, transaction)}
-                    </span>
+                      key={column.key}
+                      className={`${column.className} ${
+                        column.isSortingColumn ? styles.sortingColumn : ''
+                      }`}
+                    >
+                      {t(column.header)}
+                      {column.isSortingColumn && this.state.sortingColumn === column.key && (
+                      <div
+                        style={{ display: 'none' } /* TODO remove this line when enabling sorting */}
+                        className={[
+                          styles.arrow,
+                          // TODO add test when sorting is enabled
+                          // istanbul ignore next
+                          ascendingSorting ? styles.arrowUp : styles.arrowDown,
+                        ].join(' ')}
+                      />
+                      )}
+                    </div>
                   ))}
                 </TableRow>
-              </Link>
-            ))}
-          </React.Fragment>
+                {transactions.data.map(transaction => (
+                  <Link
+                    key={transaction.id}
+                    to={`${routes.transactions.path}/${transaction.id}`}
+                    className={styles.rowLink}
+                  >
+                    <TableRow className={[grid.row, 'row'].join(' ')}>
+                      {columns.map(column => (
+                        <span key={column.key} className={column.className}>
+                          {this.renderCellContent(column, transaction)}
+                        </span>
+                      ))}
+                    </TableRow>
+                  </Link>
+                ))}
+              </React.Fragment>
+              )}
+              {isLoadMoreEnabled && (
+              <Box.FooterButton
+                className="load-more"
+                onClick={this.loadMore}
+              >
+                {t('Load more')}
+              </Box.FooterButton>
+              )}
+            </React.Fragment>
           )}
-        </div>
-        {isLoadMoreEnabled && (
-          <Box.FooterButton
-            className="load-more"
-            onClick={this.loadMore}
-          >
-            {t('Load more')}
-          </Box.FooterButton>
-        )}
       </Box>
     );
   }
