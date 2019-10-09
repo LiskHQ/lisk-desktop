@@ -84,18 +84,18 @@ class FilterDropdownButton extends React.Component {
   }
 
   renderFields(name, label, placeholder, valueFormatter, type) {
-            const Component = filterComponents[type];
-            const props = {
-              name, label, placeholder, valueFormatter,
-            };
-            return (
-              <Component
-                key={name}
-                {...props}
-                filters={this.getFilters({ name, type })}
-                updateCustomFilters={this.handleFiltersChange}
-              />
-            );
+    const Component = filterComponents[type];
+    const props = {
+      name, label, placeholder, valueFormatter,
+    };
+    return (
+      <Component
+        key={name}
+        {...props}
+        filters={this.getFilters({ name, type })}
+        updateCustomFilters={this.handleFiltersChange}
+      />
+    );
   }
 
   renderFooter() {
@@ -105,14 +105,14 @@ class FilterDropdownButton extends React.Component {
     return (
       <React.Fragment>
         <span onClick={this.extendFilters} className={styles.actionable}>{t(`${areFiltersExtended ? 'Less' : 'More'} filters`)}</span>
-          <PrimaryButton
-            disabled={hasErrors}
-            className={['saveButton', styles.submitButton].join(' ')}
-            type="submit"
-            size="s"
-          >
-            {t('Apply Filters')}
-          </PrimaryButton>
+        <PrimaryButton
+          disabled={hasErrors}
+          className={['saveButton', styles.submitButton].join(' ')}
+          type="submit"
+          size="s"
+        >
+          {t('Apply Filters')}
+        </PrimaryButton>
       </React.Fragment>
     );
   }
