@@ -28,6 +28,8 @@
   max-width: var(--menu-item-width);
   overflow: hidden;
   transition: all var(--animation-speed-fast) linear;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 
   &:last-child {
     border-right: 0 none;
