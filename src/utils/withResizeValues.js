@@ -8,7 +8,7 @@ const withResizeValues = WrapperComponent => (
       super(props);
 
       this.state = {
-        isMediumViewPort: false,
+        isMediumViewPort: window.innerWidth <= breakpoints.m,
       };
 
       this.handleWindowResize = this.handleWindowResize.bind(this);

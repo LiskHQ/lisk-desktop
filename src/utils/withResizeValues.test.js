@@ -19,6 +19,7 @@ describe('withResizeValues', () => {
   });
 
   it('should render component properly after resize window to M breackpoint ( <= 1024)', () => {
+    resizeWindow(1100, 500);
     const DummyComponentHOC = withResizeValues(DummyComponent);
     const wrapper = mount(<DummyComponentHOC />);
     expect(wrapper).toContainMatchingElement(`.${className}`);
