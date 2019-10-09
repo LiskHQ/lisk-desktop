@@ -1,3 +1,5 @@
+@import '../../../app/variables.css';
+
 .address {
   display: flex;
   align-items: center;
@@ -39,4 +41,12 @@
 
 .rowLink:hover {
   text-decoration: none;
+}
+
+.tableRow {
+  border-bottom: 1px solid var(--color-platinum);
+}
+
+.rowLink:last-child > div {
+  border-bottom: none;
 }

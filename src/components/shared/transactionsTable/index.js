@@ -202,7 +202,7 @@ class TransactionsTable extends React.Component {
                 to={`${routes.transactions.path}/${transaction.id}`}
                 className={styles.rowLink}
               >
-                <TableRow className={[grid.row, 'row'].join(' ')}>
+                <TableRow className={[grid.row, styles.tableRow, 'row'].join(' ')}>
                   {columns.map(column => (
                     <span key={column.key} className={column.className}>
                       {this.renderCellContent(column, transaction)}
