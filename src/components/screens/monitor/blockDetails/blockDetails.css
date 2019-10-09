@@ -20,14 +20,8 @@
 
 @media (--medium-viewport) {
   .container {
-    width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    box-sizing: border-box;
     flex-wrap: wrap;
-    padding: 20px;
 
     & > div {
       flex-grow: 1;
