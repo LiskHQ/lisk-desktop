@@ -14,6 +14,7 @@ import routes from '../../../constants/routes';
 import styles from './transactionsTable.css';
 import TableRow from '../../toolbox/table/tableRow';
 import FilterDropdownButton from '../filterDropdownButton';
+import liskServiceApi from '../../../utils/api/lsk/liskService';
 
 class TransactionsTable extends React.Component {
   constructor(props) {
@@ -29,6 +30,7 @@ class TransactionsTable extends React.Component {
     this.renderTransactions = this.renderTransactions.bind(this);
     this.loadMore = this.loadMore.bind(this);
     this.handleResize = this.handleResize.bind(this);
+    this.saveFilters = this.saveFilters.bind(this);
   }
 
   // TODO: Test coverage for resizing to be done in separate ticket
@@ -137,6 +139,12 @@ class TransactionsTable extends React.Component {
         : a[sortingColumn] - b[sortingColumn]));
   }
 
+  saveFilters = (customFilters) => {
+    liskServiceApi.getTransactions({
+      ...customFilters,
+    });
+  }
+
   loadMore() {
     const { transactions } = this.props;
     transactions.loadData({ offset: transactions.data.length });
@@ -144,7 +152,7 @@ class TransactionsTable extends React.Component {
 
   render() {
     const {
-      title, transactions, columns, isLoadMoreEnabled, t, filters,
+      title, transactions, columns, isLoadMoreEnabled, t, fields, filters,
     } = this.props;
     const { ascendingSorting } = this.state;
 
@@ -152,7 +160,11 @@ class TransactionsTable extends React.Component {
       <Box width="full" isLoading={transactions.isLoading}>
         <Box.Header className={styles.boxHeader}>
           <h1>{title}</h1>
-          <FilterDropdownButton />
+          <FilterDropdownButton
+            fields={fields}
+            filters={filters}
+            applyFilters={this.saveFilters}
+          />
         </Box.Header>
         <div>
           {!!transactions.data.length && (
