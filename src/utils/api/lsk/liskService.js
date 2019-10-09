@@ -63,6 +63,22 @@ const liskServiceApi = {
     path: `/api/v1/block/${id}`,
   }),
 
+  getTransactions: async ({ networkConfig }, {
+    dateFrom, dateTo, amountFrom, amountTo, ...searchParams
+  }) => liskServiceGet({
+    serverUrl: getServerUrl(networkConfig),
+    path: '/api/v1/transactions',
+    transformResponse: response => response.data,
+    searchParams: {
+      limit: 20,
+      ...(dateFrom && { from: formatDate(dateFrom) }),
+      ...(dateTo && { to: formatDate(dateTo, { inclusive: true }) }),
+      ...(amountFrom && { min: amountFrom }),
+      ...(amountTo && { max: amountTo }),
+      ...searchParams,
+    },
+  }),
+
   getLastTransactions: async ({ networkConfig }) => liskServiceGet({
     serverUrl: getServerUrl(networkConfig),
     path: '/api/v1/transactions/last',
