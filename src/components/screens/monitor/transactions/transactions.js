@@ -55,7 +55,7 @@ const Transactions = ({ t, transactions }) => {
 
   return (
     <PageLayout>
-      <TransactionsTable isLoadMoreEnabled filters={filters} isFilterDropdownExpandable columns={columns} title={t('All transactions')} transactions={transactions} />
+      <TransactionsTable isLoadMoreEnabled filters={filters} columns={columns} title={t('All transactions')} transactions={transactions} />
     </PageLayout>
   );
 };

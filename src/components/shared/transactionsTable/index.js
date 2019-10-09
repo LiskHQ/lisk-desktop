@@ -144,7 +144,7 @@ class TransactionsTable extends React.Component {
 
   render() {
     const {
-      title, transactions, columns, isLoadMoreEnabled, t, filters, isFilterDropdownExpandable,
+      title, transactions, columns, isLoadMoreEnabled, t, filters,
     } = this.props;
     const { ascendingSorting } = this.state;
 
