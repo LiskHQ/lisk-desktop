@@ -1,6 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { connect } from 'react-redux';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
 import AccountVisual from '../../toolbox/accountVisual';
 import Box from '../../toolbox/box';
@@ -39,8 +40,17 @@ class TransactionsTable extends React.Component {
     }));
   }
 
+  getTransformedAddress(address) {
+    const { isMediumViewPort, bookmarks } = this.props;
+    const bookmarkedAddress = bookmarks.LSK.find(element => element.address === address);
+
+    if (bookmarkedAddress) return bookmarkedAddress.title;
+    if (isMediumViewPort) return address.replace(regex.lskAddressTrunk, '$1...$3');
+    return address;
+  }
+
   renderAddressField(transaction, key) {
-    const { isMediumViewPort, t } = this.props;
+    const { t } = this.props;
 
     if (transaction.type !== 0 && key === 'recipientId') {
       return (
@@ -57,9 +67,7 @@ class TransactionsTable extends React.Component {
       <div className={`${styles.address}`}>
         <AccountVisual address={transaction[key]} size={32} />
         <span className={styles.addressValue}>
-          {isMediumViewPort
-            ? transaction[key].replace(regex.lskAddressTrunk, '$1...$3')
-            : transaction[key]}
+          {this.getTransformedAddress(transaction[key])}
         </span>
       </div>
     );
@@ -213,6 +221,10 @@ const defaultFilters = {
 
 const defaultSort = 'timestamp:asc';
 
-export default withFilters('transactions', defaultFilters, defaultSort)(
+const mapStateToProps = state => ({
+  bookmarks: state.bookmarks,
+});
+
+export default connect(mapStateToProps)(withFilters('transactions', defaultFilters, defaultSort)(
   withResizeValues(withTranslation()(TransactionsTable)),
-);
+));
