@@ -33,6 +33,7 @@
 
     &:hover {
       background-color: var(--primary-background-color);
+      text-decoration: none;
 
       &::before {
         display: block;
