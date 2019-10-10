@@ -14,15 +14,24 @@ const Table = ({
     }
   };
 
-  const getSortClass = ({ id, isSortable }) => (
-    isSortable && ([
-      sort.includes(id) ? (
-        styles[sort.includes('asc') ? 'sortAsc' : 'sortDesc']
-      ) : styles.sortable,
-      'sort-by',
-      id,
-    ].join(' '))
-  );
+  const getSortClass = ({ id, isSortable }) => {
+    if (isSortable) {
+      const className = ['sort-by', id];
+      if (sort.includes(id) && sort.includes('asc')) {
+        className.push(styles.sortAsc);
+      } else if (sort.includes(id) && sort.includes('desc')) {
+        className.push(styles.sortDesc);
+      } else {
+        // TODO: Find a way to render up-and-down caret with CSS
+        // as multiple ::after selectors are not permitted
+        className.push(styles.sortInactive);
+        className.push(styles.sortInactive2);
+      }
+      return className.join(' ');
+    }
+
+    return '';
+  };
 
   return (
     <React.Fragment>
