@@ -29,6 +29,7 @@ class TransactionsTable extends React.Component {
     this.renderCellContent = this.renderCellContent.bind(this);
     this.renderTransactions = this.renderTransactions.bind(this);
     this.loadMore = this.loadMore.bind(this);
+    this.saveFilters = this.saveFilters.bind(this);
   }
 
 
@@ -114,8 +115,8 @@ class TransactionsTable extends React.Component {
         : a[sortingColumn] - b[sortingColumn]));
   }
 
-  saveFilters = (customFilters) => {
-    liskServiceApi.getTransactions({
+  saveFilters(customFilters) {
+    this.props.transactions = liskServiceApi.getTransactions({
       ...customFilters,
     });
   }
