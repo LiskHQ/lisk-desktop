@@ -45,6 +45,8 @@ import liskLogoWhite from '../../../assets/images/lisk-logo-white-v2.svg';
 import logout from '../../../assets/images/icons/logout.svg';
 import logoutActive from '../../../assets/images/icons/logout-active.svg';
 import lskIcon from '../../../assets/images/icons/icon-lsk.svg';
+import monitorIcon from '../../../assets/images/icons/monitor.svg';
+import monitorIconActive from '../../../assets/images/icons/monitorActive.svg';
 import newsFeedAvatar from '../../../assets/images/icons/news-feed-avatar.svg';
 import noTweetsIcon from '../../../assets/images/icons/no-tweets.svg';
 import okIcon from '../../../assets/images/icons/icon-checkmark.svg';
@@ -58,7 +60,9 @@ import settingsActive from '../../../assets/images/icons/settings-active.svg';
 import showPassphraseIcon from '../../../assets/images/icons/icon-show-passphrase.svg';
 import signin from '../../../assets/images/icons/signin.svg';
 import signinActive from '../../../assets/images/icons/signin-active.svg';
+import transactionApproved from '../../../assets/images/icons/transaction-status-approved.svg';
 import transactionError from '../../../assets/images/icons/transaction-error.svg';
+import transactionPending from '../../../assets/images/icons/transaction-status-pending.svg';
 import transactionSuccess from '../../../assets/images/icons/transaction-success.svg';
 import tx2ndPassphrase from '../../../assets/images/icons/tx-2nd-passphrase.svg';
 import txDefault from '../../../assets/images/icons/tx-default.svg';
@@ -119,6 +123,8 @@ export const icons = {
   logout,
   logoutActive,
   lskIcon,
+  monitorIcon,
+  monitorIconActive,
   newsFeedAvatar,
   noTweetsIcon,
   okIcon,
@@ -132,7 +138,9 @@ export const icons = {
   showPassphraseIcon,
   signin,
   signinActive,
+  transactionApproved,
   transactionError,
+  transactionPending,
   transactionSuccess,
   tx2ndPassphrase,
   txDefault,

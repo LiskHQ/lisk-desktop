@@ -10,7 +10,7 @@ import Box from '../../../toolbox/box';
 import Feedback from '../../../toolbox/feedback/feedback';
 import FilterBar from '../../../shared/filterBar';
 import LiskAmount from '../../../shared/liskAmount';
-import PageLayout from '../../../toolbox/pageLayout';
+import MonitorHeader from '../header';
 import Table from '../../../toolbox/table';
 import routes from '../../../../constants/routes';
 import styles from './blocks.css';
@@ -34,10 +34,11 @@ const Blocks = ({
   };
 
   return (
-    <PageLayout>
+    <div>
+      <MonitorHeader />
       <Box isLoading={blocks.isLoading} width="full" main>
         <Box.Header>
-          <h1>{t('All blocks')}</h1>
+          <h2>{t('All blocks')}</h2>
           <BlockFilterDropdown filters={filters} applyFilters={applyFilters} />
         </Box.Header>
         <FilterBar {...{
@@ -95,8 +96,6 @@ const Blocks = ({
                     /* eslint-enable react/display-name */
                   }]}
                 />
-
-
               </Box.Content>
               {!!blocks.data.length && blocks.data.length % DEFAULT_LIMIT === 0 && (
               <Box.FooterButton
@@ -110,7 +109,7 @@ const Blocks = ({
           )
       }
       </Box>
-    </PageLayout>
+    </div>
   );
 };
 

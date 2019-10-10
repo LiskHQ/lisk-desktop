@@ -1,5 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+import Switcher from '../switcher';
 import styles from './tabsContainer.css';
 
 class TabsContainer extends React.Component {
@@ -16,7 +17,7 @@ class TabsContainer extends React.Component {
 
   /* istanbul ignore next */
   setTab({ target }) {
-    const activeTab = (target.dataset && target.dataset.tabname) || this.state.activeTab;
+    const activeTab = (target.dataset && target.dataset.value) || this.state.activeTab;
     this.setState({ activeTab });
   }
 
@@ -54,20 +55,14 @@ class TabsContainer extends React.Component {
 
     return (React.Children.count(children) > 1 ? (
       <div className={styles.wrapper}>
-        <ul className={styles.tabs}>
-          {React.Children.map(children, tab => (
-            React.isValidElement(tab)
-            && (
-            <li
-              className={`${tab.props.tabName === activeTab ? styles.active : ''} ${tab.props.tabClassName || ''}`}
-              data-tabname={tab.props.tabName}
-              onClick={this.setTab}
-            >
-              {tab.props.tabName}
-            </li>
-            )
-          ))}
-        </ul>
+        <Switcher
+          options={React.Children.map(children.filter(React.isValidElement), tab => ({
+            name: tab.props.tabName,
+            value: tab.props.tabName,
+          }))}
+          onClick={this.setTab}
+          active={activeTab}
+        />
         <div className={styles.contentHolder}>
           {React.Children.map(children, tab => (
             React.isValidElement(tab)

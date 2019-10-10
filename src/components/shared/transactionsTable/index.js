@@ -5,16 +5,17 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
 import AccountVisual from '../../toolbox/accountVisual';
 import Box from '../../toolbox/box';
-import breakpoints from '../../../constants/breakpoints';
 import Icon from '../../toolbox/icon';
 import IconlessTooltip from '../iconlessTooltip';
 import LiskAmount from '../liskAmount';
 import regex from '../../../utils/regex';
 import routes from '../../../constants/routes';
+import Illustration from '../../toolbox/illustration';
 import styles from './transactionsTable.css';
 import TableRow from '../../toolbox/table/tableRow';
 import FilterDropdownButton from '../filterDropdownButton';
 import liskServiceApi from '../../../utils/api/lsk/liskService';
+import withResizeValues from '../../../utils/withResizeValues';
 
 class TransactionsTable extends React.Component {
   constructor(props) {
@@ -22,7 +23,6 @@ class TransactionsTable extends React.Component {
     this.state = {
       sortingColumn: props.columns.find(column => column.defaultSort).key,
       ascendingSorting: true,
-      isWindowSmall: false,
     };
 
     this.changeSorting = this.changeSorting.bind(this);
@@ -33,32 +33,9 @@ class TransactionsTable extends React.Component {
     this.saveFilters = this.saveFilters.bind(this);
   }
 
-  // TODO: Test coverage for resizing to be done in separate ticket
-  // istanbul ignore next
-  handleResize() {
-    const { isWindowSmall } = this.state;
-    const windowSize = window.innerWidth;
-    if (
-      (windowSize < breakpoints.m && !isWindowSmall)
-      || (windowSize > breakpoints.m && isWindowSmall)
-    ) {
-      this.setState(() => ({
-        isWindowSmall: !isWindowSmall,
-      }));
-    }
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
-  }
 
   renderCellContent(column, transaction) {
-    const { t } = this.props;
-    const { isWindowSmall } = this.state;
+    const { t, isMediumViewPort } = this.props;
 
     switch (column.key) {
       case 'senderId':
@@ -67,7 +44,7 @@ class TransactionsTable extends React.Component {
           <div className={`${styles.address}`}>
             <AccountVisual address={transaction[column.key]} size={32} />
             <span className={`${styles.addressValue}`}>
-              {isWindowSmall
+              {isMediumViewPort
                 ? transaction[column.key].replace(regex.lskAddressTrunk, '$1...$3')
                 : transaction[column.key]}
             </span>
@@ -152,12 +129,12 @@ class TransactionsTable extends React.Component {
 
   render() {
     const {
-      title, transactions, columns, isLoadMoreEnabled, t, fields, filters,
+      title, transactions, columns, isLoadMoreEnabled, t, fields, filters, emptyStateMessage,
     } = this.props;
     const { ascendingSorting } = this.state;
 
     return (
-      <Box width="full" isLoading={transactions.isLoading}>
+      <Box width="full" isLoading={transactions.isLoading} className="transactions-box">
         <Box.Header className={styles.boxHeader}>
           <h1>{title}</h1>
           <FilterDropdownButton
@@ -166,63 +143,74 @@ class TransactionsTable extends React.Component {
             applyFilters={this.saveFilters}
           />
         </Box.Header>
-        <div>
-          {!!transactions.data.length && (
-          <React.Fragment>
-            <TableRow isHeader>
-              {columns.map(column => (
-                <div
-                  onClick={
+        {transactions.error
+          ? (
+            <Box.Content>
+              <Box.EmptyState>
+                <Illustration name="emptyWallet" />
+                <h3>{emptyStateMessage || `${transactions.error}`}</h3>
+              </Box.EmptyState>
+            </Box.Content>
+          )
+          : (
+            <React.Fragment>
+              {!!transactions.data.length && (
+              <React.Fragment>
+                <TableRow isHeader>
+                  {columns.map(column => (
+                    <div
+                      onClick={
                     /* TODO add test when sorting is enabled */
                     /* istanbul ignore next */
                     () => this.changeSorting(column)
                   }
-                  key={column.key}
-                  className={`${column.className} ${
-                    column.isSortingColumn ? styles.sortingColumn : ''
-                  }`}
-                >
-                  {t(column.header)}
-                  {column.isSortingColumn && this.state.sortingColumn === column.key && (
-                  <div
-                    style={{ display: 'none' } /* TODO remove this line when enabling sorting */}
-                    className={[
-                      styles.arrow,
-                      // TODO add test when sorting is enabled
-                      // istanbul ignore next
-                      ascendingSorting ? styles.arrowUp : styles.arrowDown,
-                    ].join(' ')}
-                  />
-                  )}
-                </div>
-              ))}
-            </TableRow>
-            {transactions.data.map(transaction => (
-              <Link
-                key={transaction.id}
-                to={`${routes.transactions.path}/${transaction.id}`}
-                className={styles.rowLink}
-              >
-                <TableRow className={[grid.row, 'row'].join(' ')}>
-                  {columns.map(column => (
-                    <span key={column.key} className={column.className}>
-                      {this.renderCellContent(column, transaction)}
-                    </span>
+                      key={column.key}
+                      className={`${column.className} ${
+                        column.isSortingColumn ? styles.sortingColumn : ''
+                      }`}
+                    >
+                      {t(column.header)}
+                      {column.isSortingColumn && this.state.sortingColumn === column.key && (
+                      <div
+                        style={{ display: 'none' } /* TODO remove this line when enabling sorting */}
+                        className={[
+                          styles.arrow,
+                          // TODO add test when sorting is enabled
+                          // istanbul ignore next
+                          ascendingSorting ? styles.arrowUp : styles.arrowDown,
+                        ].join(' ')}
+                      />
+                      )}
+                    </div>
                   ))}
                 </TableRow>
-              </Link>
-            ))}
-          </React.Fragment>
+                {transactions.data.map(transaction => (
+                  <Link
+                    key={transaction.id}
+                    to={`${routes.transactions.path}/${transaction.id}`}
+                    className={styles.rowLink}
+                  >
+                    <TableRow className={[grid.row, styles.tableRow, 'row'].join(' ')}>
+                      {columns.map(column => (
+                        <span key={column.key} className={column.className}>
+                          {this.renderCellContent(column, transaction)}
+                        </span>
+                      ))}
+                    </TableRow>
+                  </Link>
+                ))}
+              </React.Fragment>
+              )}
+              {isLoadMoreEnabled && (
+              <Box.FooterButton
+                className="load-more"
+                onClick={this.loadMore}
+              >
+                {t('Load more')}
+              </Box.FooterButton>
+              )}
+            </React.Fragment>
           )}
-        </div>
-        {isLoadMoreEnabled && (
-          <Box.FooterButton
-            className="load-more"
-            onClick={this.loadMore}
-          >
-            {t('Load more')}
-          </Box.FooterButton>
-        )}
       </Box>
     );
   }
@@ -232,4 +220,4 @@ TransactionsTable.defaultProps = {
   isLoadMoreEnabled: false,
 };
 
-export default withTranslation()(TransactionsTable);
+export default withResizeValues(withTranslation()(TransactionsTable));

@@ -1,19 +1,38 @@
 @import '../../../../app/mixins.css';
 
 .dataContainer {
-  @mixin contentLargest;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  flex-grow: 1;
   box-sizing: border-box;
   width: calc(100% / 5);
+}
 
-  & > label {
-    @mixin contentNormal bold;
+@media (--medium-viewport) {
+  .container {
+    display: flex;
+    flex-wrap: wrap;
 
-    margin-bottom: 13px;
+    & .dataContainer {
+      flex-grow: 1;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      margin-bottom: 32px;
+    }
+
+    & .dataContainer:nth-child(3n + 1) {
+      min-width: calc(100% / 3 + 10%);
+    }
+
+    & .dataContainer:nth-child(3n + 2) {
+      min-width: calc(100% / 3 - 10%);
+    }
+
+    & .dataContainer:nth-child(3n) {
+      align-items: flex-end;
+      min-width: calc(100% / 3);
+    }
+
+    & .dataContainer:nth-last-child(-n+3) {
+      margin-bottom: 0;
+    }
   }
 }
