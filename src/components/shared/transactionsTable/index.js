@@ -29,8 +29,6 @@ class TransactionsTable extends React.Component {
     this.renderCellContent = this.renderCellContent.bind(this);
     this.renderTransactions = this.renderTransactions.bind(this);
     this.loadMore = this.loadMore.bind(this);
-    this.handleResize = this.handleResize.bind(this);
-    this.saveFilters = this.saveFilters.bind(this);
   }
 
 
