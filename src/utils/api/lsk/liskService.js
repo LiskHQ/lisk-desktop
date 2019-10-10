@@ -79,16 +79,6 @@ const liskServiceApi = {
     },
   }),
 
-  getLastTransactions: async ({ networkConfig }, searchParams) => liskServiceGet({
-    serverUrl: getServerUrl(networkConfig),
-    path: '/api/v1/transactions/last',
-    transformResponse: response => response.data,
-    searchParams: {
-      limit: 20,
-      ...searchParams,
-    },
-  }),
-
   getBlockTransactions: ({ networkConfig }, { id }) => liskServiceGet({
     serverUrl: getServerUrl(networkConfig),
     path: `/api/v1/block/${id}/transactions`,

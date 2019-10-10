@@ -8,7 +8,7 @@ import liskServiceApi from '../../../../utils/api/lsk/liskService';
 export default compose(
   withData({
     transactions: {
-      apiUtil: liskServiceApi.getLastTransactions,
+      apiUtil: liskServiceApi.getTransactions,
       defaultData: [],
       autoload: true,
       transformResponse: (response, oldData) => [
