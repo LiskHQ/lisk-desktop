@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
@@ -5,7 +6,7 @@ import TableRow from './tableRow';
 import styles from './table.css';
 
 const Table = ({
-  data, columns, onSortChange, sort,
+  data, columns, onSortChange, sort, getRowLink,
 }) => {
   const onHeaderClick = ({ id, isSortable }) => {
     if (isSortable) {
@@ -39,7 +40,14 @@ const Table = ({
       </TableRow>
       )}
       {data.map(row => (
-        <TableRow key={row.id} className={`${grid.row}`}>
+        <TableRow
+          key={row.id}
+          {...(getRowLink(row) && {
+            Container: Link,
+            to: getRowLink(row),
+          })}
+          className={grid.row}
+        >
           {columns.map(({ className, id, getValue }) => (
             <span className={className} key={id}>
               {typeof getValue === 'function' ? getValue(row) : row[id]}
@@ -55,11 +63,13 @@ Table.propTypes = {
   data: PropTypes.array.isRequired,
   columns: PropTypes.array.isRequired,
   onSortChange: PropTypes.func,
+  getRowLink: PropTypes.func,
   sort: PropTypes.string,
 };
 
 Table.defaultProps = {
   onSortChange: () => null,
+  getRowLink: () => null,
   sort: '',
 };
 
