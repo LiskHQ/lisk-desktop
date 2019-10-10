@@ -15,6 +15,8 @@ import withResizeValues from '../../../utils/withResizeValues';
 import withFilters from '../../../utils/withFilters';
 import FilterBar from '../filterBar';
 import Table from '../../toolbox/table';
+import transactionTypeIcons from '../../../constants/transactionTypeIcons';
+import { transactionNames } from '../../../constants/transactionTypes';
 
 class TransactionsTable extends React.Component {
   constructor(props) {
@@ -37,10 +39,44 @@ class TransactionsTable extends React.Component {
     }));
   }
 
+  renderAddressField(transaction, key) {
+    const { isMediumViewPort, t } = this.props;
+
+    if (transaction.type !== 0 && key === 'recipientId') {
+      return (
+        <div className={`${styles.address}`}>
+          <Icon
+            className={styles.txIcon}
+            name={transactionTypeIcons[transaction.type] || transactionTypeIcons.default}
+          />
+          <span className={styles.addressValue}>{t(transactionNames[transaction.type])}</span>
+        </div>
+      );
+    }
+    return (
+      <div className={`${styles.address}`}>
+        <AccountVisual address={transaction[key]} size={32} />
+        <span className={styles.addressValue}>
+          {isMediumViewPort
+            ? transaction[key].replace(regex.lskAddressTrunk, '$1...$3')
+            : transaction[key]}
+        </span>
+      </div>
+    );
+  }
+
   render() {
     const {
-      title, transactions, isLoadMoreEnabled, t, fields, filters,
-      emptyStateMessage, applyFilters, clearFilter, clearAllFilters, isMediumViewPort,
+      title,
+      transactions,
+      isLoadMoreEnabled,
+      t,
+      fields,
+      filters,
+      emptyStateMessage,
+      applyFilters,
+      clearFilter,
+      clearAllFilters,
     } = this.props;
 
     return (
@@ -57,61 +93,48 @@ class TransactionsTable extends React.Component {
           clearFilter, clearAllFilters, filters, t,
         }}
         />
-        {transactions.error
-          ? (
-            <Box.Content>
-              <Box.EmptyState>
-                <Illustration name="emptyWallet" />
-                <h3>{emptyStateMessage || `${transactions.error}`}</h3>
-              </Box.EmptyState>
-            </Box.Content>
-          )
-          : (
-            <React.Fragment>
-              <Box.Content className={styles.content}>
-                <Table
-                  data={transactions.data}
-                  columns={[{
+        {transactions.error ? (
+          <Box.Content>
+            <Box.EmptyState>
+              <Illustration name="emptyWallet" />
+              <h3>{emptyStateMessage || `${transactions.error}`}</h3>
+            </Box.EmptyState>
+          </Box.Content>
+        ) : (
+          <React.Fragment>
+            <Box.Content className={styles.content}>
+              <Table
+                data={transactions.data}
+                columns={[
+                  {
                     header: t('Sender'),
                     className: grid['col-xs-3'],
-                    getValue: transaction => (
-                      <div className={`${styles.address}`}>
-                        <AccountVisual address={transaction.senderId} size={32} />
-                        <span className={`${styles.addressValue}`}>
-                          {isMediumViewPort
-                            ? transaction.senderId.replace(regex.lskAddressTrunk, '$1...$3')
-                            : transaction.senderId}
-                        </span>
-                      </div>
-                    ),
-                  }, {
+                    getValue: transaction => this.renderAddressField(transaction, 'senderId'),
+                  },
+                  {
                     header: t('Recipient'),
                     className: grid['col-xs-3'],
-                    getValue: transaction => (
-                      <div className={`${styles.address}`}>
-                        <AccountVisual address={transaction.recipientId} size={32} />
-                        <span className={`${styles.addressValue}`}>
-                          {isMediumViewPort
-                            ? transaction.recipientId.replace(regex.lskAddressTrunk, '$1...$3')
-                            : transaction.recipientId}
-                        </span>
-                      </div>
-                    ),
-                  }, {
+                    getValue: transaction => this.renderAddressField(transaction, 'recipientId'),
+                  },
+                  {
                     header: t('Date'),
                     className: grid['col-xs-2'],
-                    getValue: transaction => <DateTimeFromTimestamp time={transaction.timestamp * 1000} token="BTC" />,
-                  }, {
+                    getValue: transaction => (
+                      <DateTimeFromTimestamp time={transaction.timestamp * 1000} token="BTC" />
+                    ),
+                  },
+                  {
                     header: t('Amount'),
                     className: grid['col-xs-2'],
                     getValue: transaction => (
                       <React.Fragment>
                         <LiskAmount val={transaction.timestamp} />
-            &nbsp;
+                        &nbsp;
                         {t('LSK')}
                       </React.Fragment>
                     ),
-                  }, {
+                  },
+                  {
                     header: t('Fee'),
                     className: grid['col-xs-1'],
                     getValue: transaction => (
@@ -123,37 +146,42 @@ class TransactionsTable extends React.Component {
                       >
                         <div>
                           <LiskAmount val={transaction.fee} />
-            &nbsp;
+                          &nbsp;
                           {t('LSK')}
                         </div>
                       </IconlessTooltip>
                     ),
-                  }, {
+                  },
+                  {
                     header: t('Status'),
                     className: grid['col-xs-1'],
                     getValue: transaction => (
                       <IconlessTooltip
-                        tooltipContent={<p>{`${transaction.confirmations}/101 ${t('Confirmations')}`}</p>}
+                        tooltipContent={
+                          <p>{`${transaction.confirmations}/101 ${t('Confirmations')}`}</p>
+                        }
                         title={transaction.confirmations > 0 ? t('Confirmed') : t('Pending')}
                         className="showOnLeft"
                         tooltipClassName={styles.tooltip}
                       >
-                        {transaction.confirmations > 0 ? <Icon name="approved" /> : <Icon name="pending" />}
+                        {transaction.confirmations > 0 ? (
+                          <Icon name="approved" />
+                        ) : (
+                          <Icon name="pending" />
+                        )}
                       </IconlessTooltip>
                     ),
-                  }]}
-                />
-              </Box.Content>
-              {isLoadMoreEnabled && (
-              <Box.FooterButton
-                className="load-more"
-                onClick={this.handleLoadMore}
-              >
+                  },
+                ]}
+              />
+            </Box.Content>
+            {isLoadMoreEnabled && (
+              <Box.FooterButton className="load-more" onClick={this.handleLoadMore}>
                 {t('Load more')}
               </Box.FooterButton>
-              )}
-            </React.Fragment>
-          )}
+            )}
+          </React.Fragment>
+        )}
       </Box>
     );
   }
@@ -175,4 +203,6 @@ const defaultFilters = {
   sender: '',
 };
 
-export default withFilters('transactions', defaultFilters)(withResizeValues(withTranslation()(TransactionsTable)));
+export default withFilters('transactions', defaultFilters)(
+  withResizeValues(withTranslation()(TransactionsTable)),
+);

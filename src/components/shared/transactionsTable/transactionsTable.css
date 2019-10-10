@@ -55,3 +55,8 @@
 .rowLink:last-child > div {
   border-bottom: none;
 }
+
+.txIcon {
+  width: 32px;
+  height: 32px;
+}
