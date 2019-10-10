@@ -14,11 +14,13 @@ const Table = ({
   };
 
   const getSortClass = ({ id, isSortable }) => (
-    isSortable && (
+    isSortable && ([
       sort.includes(id) ? (
         styles[sort.includes('asc') ? 'sortAsc' : 'sortDesc']
-      ) : styles.sortable
-    )
+      ) : styles.sortable,
+      'sort-by',
+      id,
+    ].join(' '))
   );
 
   return (
