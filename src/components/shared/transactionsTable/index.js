@@ -14,8 +14,9 @@ import Illustration from '../../toolbox/illustration';
 import styles from './transactionsTable.css';
 import TableRow from '../../toolbox/table/tableRow';
 import FilterDropdownButton from '../filterDropdownButton';
-import liskServiceApi from '../../../utils/api/lsk/liskService';
 import withResizeValues from '../../../utils/withResizeValues';
+import withFilters from '../../../utils/withFilters';
+import FilterBar from '../filterBar';
 
 class TransactionsTable extends React.Component {
   constructor(props) {
@@ -28,8 +29,7 @@ class TransactionsTable extends React.Component {
     this.changeSorting = this.changeSorting.bind(this);
     this.renderCellContent = this.renderCellContent.bind(this);
     this.renderTransactions = this.renderTransactions.bind(this);
-    this.loadMore = this.loadMore.bind(this);
-    this.saveFilters = this.saveFilters.bind(this);
+    this.handleLoadMore = this.handleLoadMore.bind(this);
   }
 
 
@@ -115,20 +115,21 @@ class TransactionsTable extends React.Component {
         : a[sortingColumn] - b[sortingColumn]));
   }
 
-  saveFilters(customFilters) {
-    this.props.transactions = liskServiceApi.getTransactions({
-      ...customFilters,
-    });
-  }
+  handleLoadMore() {
+    const { transactions, filters } = this.props;
 
-  loadMore() {
-    const { transactions } = this.props;
-    transactions.loadData({ offset: transactions.data.length });
+    transactions.loadData(Object.keys(filters).reduce((acc, key) => ({
+      ...acc,
+      ...(filters[key] && { [key]: filters[key] }),
+    }), {
+      offset: transactions.data.length,
+    }));
   }
 
   render() {
     const {
-      title, transactions, columns, isLoadMoreEnabled, t, fields, filters, emptyStateMessage,
+      title, transactions, columns, isLoadMoreEnabled, t, fields, filters,
+      emptyStateMessage, applyFilters, clearFilter, clearAllFilters,
     } = this.props;
     const { ascendingSorting } = this.state;
 
@@ -139,9 +140,13 @@ class TransactionsTable extends React.Component {
           <FilterDropdownButton
             fields={fields}
             filters={filters}
-            applyFilters={this.saveFilters}
+            applyFilters={applyFilters}
           />
         </Box.Header>
+        <FilterBar {...{
+          clearFilter, clearAllFilters, filters, t,
+        }}
+        />
         {transactions.error
           ? (
             <Box.Content>
@@ -203,7 +208,7 @@ class TransactionsTable extends React.Component {
               {isLoadMoreEnabled && (
               <Box.FooterButton
                 className="load-more"
-                onClick={this.loadMore}
+                onClick={this.handleLoadMore}
               >
                 {t('Load more')}
               </Box.FooterButton>
@@ -219,4 +224,16 @@ TransactionsTable.defaultProps = {
   isLoadMoreEnabled: false,
 };
 
-export default withResizeValues(withTranslation()(TransactionsTable));
+const defaultFilters = {
+  dateFrom: '',
+  dateTo: '',
+  message: '',
+  amountFrom: '',
+  amountTo: '',
+  type: '',
+  height: '',
+  recipient: '',
+  sender: '',
+};
+
+export default withFilters('transactions', defaultFilters)(withResizeValues(withTranslation()(TransactionsTable)));
