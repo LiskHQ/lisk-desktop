@@ -37,9 +37,9 @@ describe('Blocks page', () => {
 
   it('renders table with blocks', () => {
     const wrapper = mount(<Blocks {...props} />);
-    expect(wrapper.find('.block-id')).toHaveLength(0);
+    expect(wrapper.find('a.row')).toHaveLength(0);
     wrapper.setProps({ blocks: blocksWithData });
-    expect(wrapper.find('.block-id')).toHaveLength(blocks.length + 1);
+    expect(wrapper.find('a.row')).toHaveLength(blocks.length);
   });
 
   it('allows to load more blocks', () => {
