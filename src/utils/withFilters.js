@@ -1,31 +1,46 @@
 import React from 'react';
 
-function withFilters(apiName, initialState) {
+function withFilters(apiName, initialFilters, initialSort) {
   return function (ChildComponent) {
     class FilterContainer extends React.Component {
       constructor(props) {
         super(props);
         this.state = {
-          filters: initialState,
+          filters: initialFilters,
+          sort: initialSort,
         };
-        this.applyFilters = this.applyFilters.bind(this);
-        this.clearFilter = this.clearFilter.bind(this);
-        this.clearAllFilters = this.applyFilters.bind(this, initialState);
+        this.actions = {
+          applyFilters: this.applyFilters.bind(this),
+          clearFilter: this.clearFilter.bind(this),
+          clearAllFilters: this.applyFilters.bind(this, initialFilters),
+          changeSort: this.changeSort.bind(this),
+        };
       }
 
       applyFilters(f) {
+        const { sort } = this.state;
+        const filters = { ...f, sort };
         this.setState({ filters: f });
         this.props[apiName].clearData();
-        this.props[apiName].loadData(Object.keys(f).reduce((acc, key) => ({
+        this.props[apiName].loadData(Object.keys(filters).reduce((acc, key) => ({
           ...acc,
-          ...(f[key] && { [key]: f[key] }),
+          ...(filters[key] && { [key]: filters[key] }),
         }), {}));
       }
 
       clearFilter(name) {
         this.applyFilters({
           ...this.state.filters,
-          [name]: initialState[name],
+          [name]: initialFilters[name],
+        });
+      }
+
+      changeSort(id) {
+        const { filters, sort } = this.state;
+        this.setState({
+          sort: `${id}:${sort.includes('asc') ? 'desc' : 'asc'}`,
+        }, () => {
+          this.applyFilters(filters);
         });
       }
 
@@ -33,12 +48,8 @@ function withFilters(apiName, initialState) {
         return (
           <ChildComponent {...{
             ...this.props,
-            ...{
-              filters: this.state.filters,
-              applyFilters: this.applyFilters,
-              clearFilter: this.clearFilter,
-              clearAllFilters: this.clearAllFilters,
-            },
+            ...this.state,
+            ...this.actions,
           }}
           />
         );
