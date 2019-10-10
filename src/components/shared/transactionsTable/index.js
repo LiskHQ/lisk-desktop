@@ -77,6 +77,8 @@ class TransactionsTable extends React.Component {
       applyFilters,
       clearFilter,
       clearAllFilters,
+      changeSort,
+      sort,
     } = this.props;
 
     return (
@@ -104,6 +106,8 @@ class TransactionsTable extends React.Component {
           <React.Fragment>
             <Box.Content className={styles.content}>
               <Table
+                onSortChange={changeSort}
+                sort={sort}
                 data={transactions.data}
                 columns={[
                   {
@@ -119,6 +123,8 @@ class TransactionsTable extends React.Component {
                   {
                     header: t('Date'),
                     className: grid['col-xs-2'],
+                    id: 'timestamp',
+                    isSortable: true,
                     getValue: transaction => (
                       <DateTimeFromTimestamp time={transaction.timestamp * 1000} token="BTC" />
                     ),
@@ -126,6 +132,8 @@ class TransactionsTable extends React.Component {
                   {
                     header: t('Amount'),
                     className: grid['col-xs-2'],
+                    id: 'amount',
+                    isSortable: true,
                     getValue: transaction => (
                       <React.Fragment>
                         <LiskAmount val={transaction.timestamp} />
@@ -203,6 +211,8 @@ const defaultFilters = {
   sender: '',
 };
 
-export default withFilters('transactions', defaultFilters)(
+const defaultSort = 'timestamp:asc';
+
+export default withFilters('transactions', defaultFilters, defaultSort)(
   withResizeValues(withTranslation()(TransactionsTable)),
 );
