@@ -25,7 +25,7 @@ const Transactions = ({ t, transactions }) => {
   }, {
     label: t('Recipient'),
     placeholder: t('Address or Public key'),
-    name: 'message',
+    name: 'recipient',
     type: 'text',
   }, {
     label: t('Type'),
