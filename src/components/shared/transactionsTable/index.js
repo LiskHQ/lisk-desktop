@@ -136,7 +136,7 @@ class TransactionsTable extends React.Component {
                     isSortable: true,
                     getValue: transaction => (
                       <React.Fragment>
-                        <LiskAmount val={transaction.timestamp} />
+                        <LiskAmount val={transaction.amount} />
                         &nbsp;
                         {t('LSK')}
                       </React.Fragment>
