@@ -4,7 +4,7 @@ import MonitorHeader from '../header';
 import TransactionsTable from '../../../shared/transactionsTable';
 
 const Transactions = ({ t, transactions }) => {
-  const filters = [{
+  const fields = [{
     label: t('Date'),
     name: 'date',
     type: 'date-range',
@@ -52,10 +52,22 @@ const Transactions = ({ t, transactions }) => {
     { header: t('Status'), className: `${grid['col-xs-1']}`, key: 'confirmations' },
   ];
 
+  const filters = {
+    dateFrom: '',
+    dateTo: '',
+    message: '',
+    amountFrom: '',
+    amountTo: '',
+    type: '',
+    height: '',
+    recipient: '',
+    sender: '',
+  };
+
   return (
     <div>
       <MonitorHeader />
-      <TransactionsTable isLoadMoreEnabled filters={filters} columns={columns} title={t('All transactions')} transactions={transactions} />
+      <TransactionsTable isLoadMoreEnabled filters={filters} fields={fields} columns={columns} title={t('All transactions')} transactions={transactions} />
     </div>
   );
 };
