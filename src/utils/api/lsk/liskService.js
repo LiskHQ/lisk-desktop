@@ -1,4 +1,5 @@
 import * as popsicle from 'popsicle';
+import { utils } from '@liskhq/lisk-transactions';
 import { DEFAULT_LIMIT } from '../../../constants/monitor';
 import { getNetworkNameBasedOnNethash } from '../../getNetwork';
 import { getTimestampFromFirstBlock } from '../../datetime';
@@ -73,8 +74,8 @@ const liskServiceApi = {
       limit: 20,
       ...(dateFrom && { from: formatDate(dateFrom) }),
       ...(dateTo && { to: formatDate(dateTo, { inclusive: true }) }),
-      ...(amountFrom && { min: amountFrom }),
-      ...(amountTo && { max: amountTo }),
+      ...(amountFrom && { min: utils.convertLSKToBeddows(amountFrom) }),
+      ...(amountTo && { max: utils.convertLSKToBeddows(amountTo) }),
       ...searchParams,
     },
   }),
