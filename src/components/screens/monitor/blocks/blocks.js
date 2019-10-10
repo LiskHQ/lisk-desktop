@@ -17,7 +17,9 @@ import styles from './blocks.css';
 import withFilters from '../../../../utils/withFilters';
 
 const Blocks = ({
-  t, blocks, filters, applyFilters, clearFilter, clearAllFilters,
+  t, blocks,
+  filters, applyFilters, clearFilter, clearAllFilters,
+  sort, changeSort,
 }) => {
   const formatters = {
     height: value => `${t('Height')}: ${value}`,
@@ -30,6 +32,7 @@ const Blocks = ({
       ...(filters[key] && { [key]: filters[key] }),
     }), {
       offset: blocks.data.length,
+      sort,
     }));
   };
 
@@ -56,6 +59,8 @@ const Blocks = ({
               <Box.Content className={styles.content}>
                 <Table
                   data={blocks.data}
+                  sort={sort}
+                  onSortChange={changeSort}
                   columns={[{
                     /* eslint-disable react/display-name */
                     id: 'id',
@@ -66,6 +71,7 @@ const Blocks = ({
                     id: 'height',
                     header: t('Height'),
                     className: grid['col-xs-2'],
+                    isSortable: true,
                   }, {
                     id: 'timestamp',
                     header: t('Date'),
@@ -132,5 +138,6 @@ const defaultFilters = {
   height: '',
   address: '',
 };
+const defaultSort = 'height:desc';
 
-export default withFilters('blocks', defaultFilters)(Blocks);
+export default withFilters('blocks', defaultFilters, defaultSort)(Blocks);
