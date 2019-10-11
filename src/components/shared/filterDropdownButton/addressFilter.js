@@ -23,19 +23,20 @@ class AddressFilter extends React.Component {
   }
 
   onChange({ target }) {
-    const { filters } = this.props;
-
+    const { filters, t } = this.props;
     const fields = {
       ...filters,
       value: target.value,
       error: false,
     };
+    let feedback = '';
 
     if (validateAddress(tokenMap.LSK.key, target.value) !== 0) {
       fields.error = true;
+      feedback = t('Invalid address');
     }
 
-    this.setState({ fields });
+    this.setState({ fields, feedback });
 
     this.props.updateCustomFilters(fields);
   }
