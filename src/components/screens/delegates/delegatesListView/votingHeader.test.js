@@ -2,12 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { mount } from 'enzyme';
-import configureMockStore from 'redux-mock-store';
 import { BrowserRouter as Router } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import VotingHeader from './votingHeader';
-import history from '../../../../history';
-import i18n from '../../../../i18n';
 
 describe('VotingHeader', () => {
   const voteDict = {
@@ -17,28 +13,6 @@ describe('VotingHeader', () => {
     username1: { confirmed: true, unconfirmed: false, publicKey: 'sample_key1' },
   };
   const votes = { ...voteDict, unvoteDict };
-
-  const store = configureMockStore([])({
-    network: {
-      name: 'Custom Node',
-      networks: {
-        LSK: {
-          nodeUrl: 'http://localhost:4000',
-          nethash: '324h23',
-        },
-      },
-      status: { active: true },
-    },
-    voting: {
-      votes,
-    },
-    account: {},
-    settings: {
-      token: {
-        active: 'LSK',
-      },
-    },
-  });
 
   const props = {
     account: {},
@@ -58,15 +32,6 @@ describe('VotingHeader', () => {
     t: key => key,
   };
 
-  const options = {
-    context: { store, history, i18n },
-    childContextTypes: {
-      store: PropTypes.object.isRequired,
-      history: PropTypes.object.isRequired,
-      i18n: PropTypes.object.isRequired,
-    },
-  };
-
   const searchButton = '#searchIcon';
   const clearButton = '#cleanIcon';
 
@@ -75,20 +40,20 @@ describe('VotingHeader', () => {
     });
 
     it('should render an input, a unordered list', () => {
-      const wrapper = mount(<Router><VotingHeader {...props} votes={votes} /></Router>, options);
+      const wrapper = mount(<Router><VotingHeader {...props} votes={votes} /></Router>);
       expect(wrapper.find('input')).to.have.lengthOf(2);
       expect(wrapper.find('ul')).to.have.lengthOf(1);
     });
 
     it('should render a clean icon and a search icon', () => {
-      const wrapper = mount(<Router><VotingHeader {...props} votes={votes} /></Router>, options);
+      const wrapper = mount(<Router><VotingHeader {...props} votes={votes} /></Router>);
       // expect(wrapper.find('i.material-icons')).to.have.lengthOf(1);
       expect(wrapper.find(searchButton).exists()).to.be.equal(true);
       expect(wrapper.find(clearButton).exists()).to.be.equal(true);
     });
 
     it('should this.props.search when this.search is called', () => {
-      const wrapper = mount(<Router><VotingHeader {...props} votes={votes} /></Router>, options);
+      const wrapper = mount(<Router><VotingHeader {...props} votes={votes} /></Router>);
       const clock = sinon.useFakeTimers({
         toFake: ['setTimeout', 'clearTimeout', 'Date'],
       });
@@ -99,7 +64,7 @@ describe('VotingHeader', () => {
     });
 
     it(`click on ${clearButton} should clear value of search input`, () => {
-      const wrapper = mount(<Router><VotingHeader {...props} votes={votes} /></Router>, options);
+      const wrapper = mount(<Router><VotingHeader {...props} votes={votes} /></Router>);
       wrapper.find('input').at(0).simulate('change', { nativeEvent: { target: { value: '555' } } });
       wrapper.update();
       expect(wrapper.find('input').at(0).props().value).to.be.equal('555');
