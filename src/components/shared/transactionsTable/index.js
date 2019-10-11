@@ -205,6 +205,8 @@ class TransactionsTable extends React.Component {
 
 TransactionsTable.defaultProps = {
   isLoadMoreEnabled: false,
+  filters: {},
+  fields: [],
 };
 
 const defaultFilters = {

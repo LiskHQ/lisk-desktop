@@ -77,7 +77,7 @@ describe('BlockDetails page', () => {
         data: transactions,
       },
     });
-    expect(wrapper.find('TableRow.row')).toHaveLength(transactions.length);
+    expect(wrapper.find('TableRow.row')).toHaveLength(transactions.length + 1);
   });
 
   it('shows a message when empty transactions response', () => {
