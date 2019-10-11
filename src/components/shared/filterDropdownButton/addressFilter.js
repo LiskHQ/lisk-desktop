@@ -30,7 +30,7 @@ class AddressFilter extends React.Component {
       const value = fieldsObj[field].value || '';
       let error = false;
 
-      if (validateAddress(tokenMap.LSK.key, value) !== 0 || validateLSKPublicKey(value) !== 0) {
+      if (validateAddress(tokenMap.LSK.key, value) !== 0 && validateLSKPublicKey(value) !== 0) {
         feedback = t('Invalid address');
         error = true;
       }
@@ -75,6 +75,7 @@ class AddressFilter extends React.Component {
       filters, name, label, placeholder,
     } = this.props;
     const { fields } = this.state;
+    console.log(this.state.feedback);
 
     return (
       <div>
