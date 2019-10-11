@@ -90,6 +90,13 @@ class TransactionsTable extends React.Component {
 
     const roundSize = 101;
 
+    const formatters = {
+      height: value => `${t('Height')}: ${value}`,
+      type: value => `${t('Type')}: ${value}`,
+      sender: value => `${t('Sender')}: ${value}`,
+      recipient: value => `${t('Recipient')}: ${value}`,
+    };
+
     return (
       <Box main isLoading={transactions.isLoading} className="transactions-box">
         <Box.Header>
@@ -101,7 +108,7 @@ class TransactionsTable extends React.Component {
           />
         </Box.Header>
         <FilterBar {...{
-          clearFilter, clearAllFilters, filters, t,
+          clearFilter, clearAllFilters, filters, formatters, t,
         }}
         />
         {transactions.error ? (
