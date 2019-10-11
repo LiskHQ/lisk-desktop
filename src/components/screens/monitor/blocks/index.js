@@ -13,8 +13,10 @@ export default compose(
       apiUtil: liskService.getLastBlocks,
       defaultData: [],
       autoload: true,
-      transformResponse: (response, oldData) => (
-        [...oldData, ...response.filter(block => !oldData.find(({ id }) => id === block.id))]
+      transformResponse: (response, oldData, urlSearchParams) => (
+        urlSearchParams.offset
+          ? [...oldData, ...response.filter(block => !oldData.find(({ id }) => id === block.id))]
+          : response
       ),
     },
   }),
