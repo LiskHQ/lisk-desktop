@@ -24,7 +24,7 @@ describe('Transactions monitor page', () => {
       },
     });
     wrapper.update();
-    expect(wrapper.find('TableRow.row')).toHaveLength(transactions.length);
+    expect(wrapper.find('TableRow.row')).toHaveLength(transactions.length + 1);
   });
 
   it('allows to load more transactions', () => {
