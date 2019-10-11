@@ -3,6 +3,7 @@ import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { connect } from 'react-redux';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
+import { tokenMap } from '../../../constants/tokens';
 import AccountVisual from '../../toolbox/accountVisual';
 import Box from '../../toolbox/box';
 import Icon from '../../toolbox/icon';
@@ -147,11 +148,7 @@ class TransactionsTable extends React.Component {
                     id: 'amount',
                     isSortable: true,
                     getValue: transaction => (
-                      <React.Fragment>
-                        <LiskAmount val={transaction.amount} />
-                        &nbsp;
-                        {t('LSK')}
-                      </React.Fragment>
+                      <LiskAmount val={transaction.amount} token={tokenMap.LSK.key} />
                     ),
                   },
                   {
@@ -164,11 +161,7 @@ class TransactionsTable extends React.Component {
                         className="showOnBottom"
                         tooltipClassName={styles.tooltip}
                       >
-                        <div>
-                          <LiskAmount val={transaction.fee} />
-                          &nbsp;
-                          {t('LSK')}
-                        </div>
+                        <LiskAmount val={transaction.fee} token={tokenMap.LSK.key} />
                       </IconlessTooltip>
                     ),
                   },
