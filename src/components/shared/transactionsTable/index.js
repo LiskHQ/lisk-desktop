@@ -90,6 +90,8 @@ class TransactionsTable extends React.Component {
       sort,
     } = this.props;
 
+    const roundSize = 101;
+
     return (
       <Box main isLoading={transactions.isLoading} className="transactions-box">
         <Box.Header className={styles.boxHeader}>
@@ -176,17 +178,13 @@ class TransactionsTable extends React.Component {
                     getValue: transaction => (
                       <IconlessTooltip
                         tooltipContent={
-                          <p>{`${transaction.confirmations}/101 ${t('Confirmations')}`}</p>
+                          <p>{`${transaction.confirmations}/${roundSize} ${t('Confirmations')}`}</p>
                         }
-                        title={transaction.confirmations > 0 ? t('Confirmed') : t('Pending')}
+                        title={transaction.confirmations > roundSize ? t('Confirmed') : t('Pending')}
                         className="showOnLeft"
                         tooltipClassName={styles.tooltip}
                       >
-                        {transaction.confirmations > 0 ? (
-                          <Icon name="approved" />
-                        ) : (
-                          <Icon name="pending" />
-                        )}
+                        <Icon name={transaction.confirmations > roundSize ? 'approved' : 'pending'} />
                       </IconlessTooltip>
                     ),
                   },
