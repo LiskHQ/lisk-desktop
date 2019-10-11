@@ -22,21 +22,50 @@ class AddressFilter extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  onChange({ target }) {
-    const { filters, t } = this.props;
-    const fields = {
-      ...filters,
-      value: target.value,
-      error: false,
-    };
+  validateAmountField(fieldsObj) {
+    const { t, name } = this.props;
     let feedback = '';
 
-    if (validateAddress(tokenMap.LSK.key, target.value) !== 0) {
-      fields.error = true;
-      feedback = t('Invalid address');
-    }
+    const fields = Object.keys(fieldsObj).reduce((acc, field) => {
+      const value = fieldsObj[field].value || '';
+      let error = false;
 
-    this.setState({ fields, feedback });
+      if (validateAddress(tokenMap.LSK.key, value) !== 0) {
+        feedback = t('Invalid address');
+        error = true;
+      }
+
+      return {
+        ...acc,
+        [field]: {
+          value,
+          error,
+          loading: false,
+        },
+      };
+    }, {});
+
+    this.props.updateCustomFilters(fields);
+    this.setState({ fields: fields[name], feedback });
+  }
+
+  onChange({ target }) {
+    const { filters } = this.props;
+
+    const fieldsObj = Object.keys(filters).reduce((acc, filter) =>
+      ({ ...acc, [filter]: { value: filters[filter] } }), {});
+
+    const fields = {
+      ...fieldsObj,
+      [target.name]: { value: target.value, loading: true },
+    };
+
+    this.setState({ fields });
+
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.validateAmountField(fields);
+    }, 300);
 
     this.props.updateCustomFilters(fields);
   }
