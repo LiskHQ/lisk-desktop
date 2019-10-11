@@ -1,5 +1,4 @@
 import React from 'react';
-import { MemoryRouter as Router } from 'react-router-dom';
 import { mount } from 'enzyme';
 import ConfirmMessage from './confirmMessage';
 import accounts from '../../../../test/constants/accounts';
@@ -13,7 +12,7 @@ describe('Confirm Message Component', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = mount(<Router><ConfirmMessage {...props} /></Router>);
+    wrapper = mount(<ConfirmMessage {...props} />);
   });
 
   it('Should render correct result', () => {

@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { MemoryRouter as Router } from 'react-router-dom';
 import Loading from './loading';
 
 describe('HW Wallet -> Loading', () => {
@@ -12,20 +11,14 @@ describe('HW Wallet -> Loading', () => {
     network: { name: 'Mainnet' },
   };
 
-
   it('should show "looking for device" and call "nextStep" after device connected', () => {
     const devices = [
       { deviceId: 0, model: 'Ledger Nano S' },
       { deviceId: 1, model: 'Trezro Model T' },
     ];
-    wrapper = mount(<Router><Loading {...props} /></Router>);
+    wrapper = mount(<Loading {...props} />);
     expect(wrapper).toIncludeText('Looking for a device...');
-    wrapper.setProps({
-      children: React.cloneElement(wrapper.props().children, {
-        ...props,
-        devices,
-      }),
-    });
+    wrapper.setProps({ devices });
     wrapper.update();
     expect(props.nextStep).toBeCalled();
   });
