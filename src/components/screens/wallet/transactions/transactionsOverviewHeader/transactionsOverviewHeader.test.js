@@ -1,40 +1,12 @@
 import React from 'react';
-import thunk from 'redux-thunk';
-import PropTypes from 'prop-types';
-import configureMockStore from 'redux-mock-store';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { MemoryRouter } from 'react-router-dom';
-import i18n from '../../../../../i18n';
 import TransactionHeader from './transactionsOverviewHeader';
 import accounts from '../../../../../../test/constants/accounts';
 import routes from '../../../../../constants/routes';
-import { tokenMap } from '../../../../../constants/tokens';
 
 describe('Transactions Overview Header', () => {
   let wrapper;
-  const store = configureMockStore([thunk])({
-    bookmarks: {
-      LSK: [],
-      BTC: [],
-    },
-    settings: { currency: 'USD', token: { active: tokenMap.LSK.key } },
-    settingsUpdated: () => {},
-    liskService: {
-      success: true,
-      LSK: {
-        USD: 1,
-      },
-    },
-  });
-
-  const options = {
-    context: { i18n, store },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-      store: PropTypes.object.isRequired,
-    },
-  };
 
   const props = {
     account: accounts.genesis,
@@ -50,9 +22,7 @@ describe('Transactions Overview Header', () => {
 
   describe('Current user wallet', () => {
     beforeEach(() => {
-      wrapper = mount(<MemoryRouter>
-        <TransactionHeader {...props} />
-      </MemoryRouter>, options);
+      wrapper = mount(<TransactionHeader {...props} />);
     });
 
     it('Should render header and Request and Send LSK buttons', () => {
@@ -78,9 +48,7 @@ describe('Transactions Overview Header', () => {
       match: { urls: `${routes.accounts.pathPrefix}${routes.accounts.path}/${accounts.delegate.address}` },
     };
     it('Should toggle bookmark dropdown', () => {
-      wrapper = mount(<MemoryRouter>
-        <TransactionHeader {...anotherUserProps} />
-      </MemoryRouter>, options);
+      wrapper = mount(<TransactionHeader {...anotherUserProps} />);
       expect(wrapper.find('.bookmark-account')).to.not.have.descendants('.show');
       wrapper.find('.bookmark-account button').first().simulate('click');
       expect(wrapper.find('.bookmark-account')).to.have.descendants('.show');
@@ -95,13 +63,13 @@ describe('Transactions Overview Header', () => {
         ],
         BTC: [],
       };
-      wrapper = mount(<MemoryRouter>
+      wrapper = mount(
         <TransactionHeader {...{
           ...anotherUserProps,
           bookmarks,
         }}
-        />
-      </MemoryRouter>, options);
+        />,
+      );
       expect(wrapper.find('.bookmark-account button').first().text()).to.equal('Edit bookmark');
     });
 
@@ -112,13 +80,13 @@ describe('Transactions Overview Header', () => {
         ],
         BTC: [],
       };
-      wrapper = mount(<MemoryRouter>
+      wrapper = mount(
         <TransactionHeader {...{
           ...anotherUserProps,
           bookmarks,
         }}
-        />
-      </MemoryRouter>, options);
+        />,
+      );
       wrapper.find('.bookmark-account-button').first().simulate('click');
       expect(wrapper.find('Dropdown')).to.have.prop('showDropdown', true);
       wrapper.find('.bookmark-button').last().simulate('click');

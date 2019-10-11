@@ -2,11 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import { mount } from 'enzyme';
-import PropTypes from 'prop-types';
-import { MemoryRouter as Router } from 'react-router-dom';
 import TransactionsOverview from './transactionsOverview';
 import accounts from '../../../../../test/constants/accounts';
-import store from '../../../../store';
 
 describe('TransactionsOverview ', () => {
   let wrapper;
@@ -17,7 +14,7 @@ describe('TransactionsOverview ', () => {
     timestamp: 15647029,
     senderId: '5201600508578320196L',
     recipientId: accounts.genesis.address,
-    amount: 69550000000,
+    amount: '69550000000',
     fee: 10000000,
     confirmations: 4314504,
     address: '12345678L',
@@ -50,13 +47,8 @@ describe('TransactionsOverview ', () => {
     activeToken: 'LSK',
   };
 
-  const options = {
-    context: { store },
-    childContextTypes: { store: PropTypes.object.isRequired },
-  };
-
   beforeEach(() => {
-    wrapper = mount(<Router><TransactionsOverview {...props} /></Router>, options);
+    wrapper = mount(<TransactionsOverview {...props} />);
   });
 
   it('should call onInit on constructor call', () => {
@@ -73,11 +65,7 @@ describe('TransactionsOverview ', () => {
     expect(wrapper).to.have.exactly(1).descendants('.filter-in');
     expect(wrapper).to.have.exactly(1).descendants('.filter-out');
 
-    wrapper.setProps({
-      children: React.cloneElement(wrapper.props().children, {
-        activeToken: 'BTC',
-      }),
-    });
+    wrapper.setProps({ activeToken: 'BTC' });
 
     expect(wrapper).to.have.exactly(1).descendants('.filter-all');
     expect(wrapper).to.have.exactly(0).descendants('.filter-in');

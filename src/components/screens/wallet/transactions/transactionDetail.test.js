@@ -1,8 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import PropTypes from 'prop-types';
-import i18n from '../../../../i18n';
 import TransactionDetail from './transactionDetail';
 
 describe('TransactionDetail ', () => {
@@ -16,15 +14,8 @@ describe('TransactionDetail ', () => {
     t: data => data,
   };
 
-  const options = {
-    context: { i18n },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-    },
-  };
-
   beforeEach(() => {
-    wrapper = mount(<TransactionDetail {...props} />, options);
+    wrapper = mount(<TransactionDetail {...props} />);
   });
 
   it('should render "-" if no data is provided', () => {

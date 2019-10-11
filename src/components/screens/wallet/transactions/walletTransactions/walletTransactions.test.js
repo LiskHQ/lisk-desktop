@@ -1,14 +1,8 @@
 import React from 'react';
-import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
-import PropTypes from 'prop-types';
-import configureMockStore from 'redux-mock-store';
-import { MemoryRouter as Router } from 'react-router-dom';
 import WalletTransactions from './walletTransactions';
-import i18n from '../../../../../i18n';
 import accounts from '../../../../../../test/constants/accounts';
 import routes from '../../../../../constants/routes';
-import networks from '../../../../../constants/networks';
 
 describe('WalletTransactions Component', () => {
   let wrapper;
@@ -26,35 +20,6 @@ describe('WalletTransactions Component', () => {
     asset: {},
     token: 'LSK',
   }];
-
-  const store = configureMockStore([thunk])({
-    account: accounts.genesis,
-    bookmarks: {
-      LSK: [],
-      BTC: [],
-    },
-    network: {
-      name: networks.mainnet.name,
-      networks: {
-        LSK: {},
-      },
-    },
-    settings: {
-      token: {
-        active: 'LSK',
-      },
-    },
-  });
-
-  const options = {
-    context: {
-      store, i18n,
-    },
-    childContextTypes: {
-      store: PropTypes.object.isRequired,
-      i18n: PropTypes.object.isRequired,
-    },
-  };
 
   const props = {
     address: accounts.genesis.address,
@@ -84,9 +49,7 @@ describe('WalletTransactions Component', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<Router>
-      <WalletTransactions {...props} />
-    </Router>, options);
+    wrapper = mount(<WalletTransactions {...props} />);
   });
 
   it('renders WalletTransaction Component and loads account transactions', () => {
@@ -103,13 +66,13 @@ describe('WalletTransactions Component', () => {
   });
 
   it('does not show VotesTab if activeToken is BTC', () => {
-    wrapper = mount(<Router>
+    wrapper = mount(
       <WalletTransactions {...{
         ...props,
         activeToken: 'BTC',
       }}
-      />
-    </Router>, options);
+      />,
+    );
     const renderedWalletTransactions = wrapper.find(WalletTransactions);
     expect(renderedWalletTransactions).toExist();
     expect(wrapper).toContainMatchingElements(0, 'VotesTab');
@@ -138,9 +101,7 @@ describe('WalletTransactions Component', () => {
     };
 
     beforeEach(() => {
-      wrapper = mount(<Router>
-        <WalletTransactions {...delegateProps} />
-      </Router>, options);
+      wrapper = mount(<WalletTransactions {...delegateProps} />);
     });
 
     it('Should render delegate Tab', () => {

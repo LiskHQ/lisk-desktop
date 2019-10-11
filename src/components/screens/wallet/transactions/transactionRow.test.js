@@ -2,12 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { useFakeTimers } from 'sinon';
-import { MemoryRouter as Router } from 'react-router-dom';
-import PropTypes from 'prop-types';
-
 import accounts from '../../../../../test/constants/accounts';
 import TransactionRow from './transactionRow';
-import store from '../../../../store';
 
 describe('TransactionRow', () => {
   let clock;
@@ -36,11 +32,6 @@ describe('TransactionRow', () => {
     bookmarks: { LSK: [], BTC: [] },
   };
 
-  const options = {
-    context: { store },
-    childContextTypes: { store: PropTypes.object.isRequired },
-  };
-
   beforeEach(() => {
     clock = useFakeTimers({
       now: new Date(2018, 1, 1),
@@ -53,52 +44,34 @@ describe('TransactionRow', () => {
   });
 
   it('should render 5 columns', () => {
-    const wrapper = mount(<Router>
-      <TransactionRow
-        {...props}
-      />
-    </Router>, options);
+    const wrapper = mount(<TransactionRow {...props} />);
 
     expect(wrapper.find('.transactions-cell')).to.have.lengthOf(5);
   });
 
   it('should not cause any error on click if props.onClick is not defined', () => {
-    const wrapper = mount(<Router>
-      <TransactionRow
-        {...props}
-      />
-    </Router>, options);
+    const wrapper = mount(<TransactionRow {...props} />);
 
     wrapper.find('.transactions-cell').at(0).simulate('click');
   });
 
   it('should render Spinner if no value.confirmations" ', () => {
     rowData.confirmations = undefined;
-    const wrapper = mount(<Router>
-      <TransactionRow
-        {...props}
-      />
-    </Router>, options);
+    const wrapper = mount(<TransactionRow {...props} />);
     expect(wrapper).to.have.className('pending');
     expect(wrapper.find('.status')).to.have.className('showSpinner');
   });
 
   it('should hide Spinner after first confirmation and timeout expires', () => {
     rowData.confirmations = undefined;
-    const wrapper = mount(<Router>
-      <TransactionRow
-        {...props}
-      />
-    </Router>, options);
+    const wrapper = mount(<TransactionRow {...props} />);
     expect(wrapper).to.have.className('pending');
     expect(wrapper.find('.status')).to.have.className('showSpinner');
     wrapper.setProps({
-      children: React.cloneElement(wrapper.props().children, {
-        value: {
-          ...rowData,
-          confirmations: 800,
-        },
-      }),
+      value: {
+        ...rowData,
+        confirmations: 800,
+      },
     });
     wrapper.update();
     clock.tick(2000);
