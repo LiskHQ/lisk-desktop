@@ -22,10 +22,7 @@ const Table = ({
       } else if (sort.includes(id) && sort.includes('desc')) {
         className.push(styles.sortDesc);
       } else {
-        // TODO: Find a way to render up-and-down caret with CSS
-        // as multiple ::after selectors are not permitted
         className.push(styles.sortInactive);
-        className.push(styles.sortInactive2);
       }
       return className.join(' ');
     }
@@ -41,8 +38,10 @@ const Table = ({
           className, header, id, isSortable,
         }) => (
           <div key={id} className={className} onClick={() => onHeaderClick({ id, isSortable })}>
-            <span className={getSortClass({ id, isSortable })}>
-              {header}
+            <span className={styles.titleWrapper}>
+              <span className={getSortClass({ id, isSortable })}>
+                {header}
+              </span>
             </span>
           </div>
         ))}
