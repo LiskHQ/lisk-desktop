@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import i18n from '../../../i18n';
 import { delegate } from '../../../../test/constants/accounts';
 import DelegateTab from './delegateTab';
 
@@ -27,17 +25,8 @@ describe('Delegate Tab', () => {
     t: v => v,
   };
 
-  const options = {
-    context: {
-      i18n,
-    },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-    },
-  };
-
   beforeEach(() => {
-    wrapper = mount(<DelegateTab {...props} />, options);
+    wrapper = mount(<DelegateTab {...props} />);
   });
 
   it('Should render active delegate with passed props', () => {
@@ -62,7 +51,7 @@ describe('Delegate Tab', () => {
         },
       },
     };
-    wrapper = mount(<DelegateTab {...newProps} />, options);
+    wrapper = mount(<DelegateTab {...newProps} />);
     expect(wrapper.find('.status')).toIncludeText('Standby');
   });
 });

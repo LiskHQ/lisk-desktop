@@ -1,20 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { spy, useFakeTimers } from 'sinon';
 import { expect } from 'chai';
 import { mountWithContext } from '../../../../../test/unit-test-utils/mountHelpers';
-import i18n from '../../../../i18n';
 import Header from './index';
 
 describe.skip('Signin Header', () => {
   let wrapper;
   let clock;
-  const options = {
-    context: { i18n },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-    },
-  };
 
   const props = {
     showSettings: true,
@@ -55,7 +47,7 @@ describe.skip('Signin Header', () => {
       toFake: ['setTimeout', 'clearTimeout'],
     });
 
-    wrapper = mountWithContext(<Header {...props} />, options);
+    wrapper = mountWithContext(<Header {...props} />);
   });
 
   afterEach(() => {
