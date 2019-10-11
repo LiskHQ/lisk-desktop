@@ -221,7 +221,7 @@ const defaultFilters = {
   sender: '',
 };
 
-const defaultSort = 'timestamp:asc';
+const defaultSort = 'timestamp:desc';
 
 const mapStateToProps = state => ({
   bookmarks: state.bookmarks,
