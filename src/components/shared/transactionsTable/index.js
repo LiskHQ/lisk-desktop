@@ -92,7 +92,7 @@ class TransactionsTable extends React.Component {
 
     return (
       <Box main isLoading={transactions.isLoading} className="transactions-box">
-        <Box.Header className={styles.boxHeader}>
+        <Box.Header>
           <h1>{title}</h1>
           <FilterDropdownButton
             fields={fields}
