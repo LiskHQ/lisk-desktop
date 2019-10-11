@@ -1,18 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import i18n from '../../../../i18n';
 import accounts from '../../../../../test/constants/accounts';
 import BookmarkDropdown from './bookmarkDropdown';
 
 describe('Bookmark Component', () => {
   let wrapper;
-  const options = {
-    context: { i18n },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-    },
-  };
 
   const props = {
     address: accounts.genesis.address,
@@ -27,7 +19,7 @@ describe('Bookmark Component', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<BookmarkDropdown {...props} />, options);
+    wrapper = mount(<BookmarkDropdown {...props} />);
   });
 
   describe('Should render in bookmark and bookmarking states', () => {
@@ -38,7 +30,7 @@ describe('Bookmark Component', () => {
         isBookmark: true,
         bookmarks: { LSK: [account], BTC: [] },
       };
-      wrapper = mount(<BookmarkDropdown {...bookmarkProps} />, options);
+      wrapper = mount(<BookmarkDropdown {...bookmarkProps} />);
       expect(wrapper.find('input[name="accountName"]')).toHaveValue(account.title);
       expect(wrapper.find('button').last()).toHaveText('Remove bookmark');
       wrapper.find('button').last().simulate('click');
