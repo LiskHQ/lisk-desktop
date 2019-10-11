@@ -50,7 +50,7 @@ class AddressFilter extends React.Component {
   }
 
   onChange({ target }) {
-    const { filters } = this.props;
+    const { filters, name } = this.props;
 
     const fieldsObj = Object.keys(filters).reduce((acc, filter) =>
       ({ ...acc, [filter]: { value: filters[filter] } }), {});
@@ -60,7 +60,7 @@ class AddressFilter extends React.Component {
       [target.name]: { value: target.value, loading: true },
     };
 
-    this.setState({ fields });
+    this.setState({ fields: fields[name] });
 
     clearTimeout(this.timeout);
     this.timeout = setTimeout(() => {
