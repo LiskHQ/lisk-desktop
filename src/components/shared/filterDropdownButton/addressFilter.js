@@ -22,49 +22,20 @@ class AddressFilter extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
-  validateAmountField(fieldsObj) {
-    const { t } = this.props;
-    let feedback = '';
-    const fields = Object.keys(fieldsObj).reduce((acc, field) => {
-      const value = fieldsObj[field].value || '';
-      let error = false;
-
-      if (validateAddress(tokenMap.LSK.key, value) !== 0) {
-        feedback = t('Invalid address');
-        error = true;
-      }
-
-      return {
-        ...acc,
-        [field]: {
-          value,
-          error,
-          loading: false,
-        },
-      };
-    }, {});
-
-    this.props.updateCustomFilters(fields);
-    this.setState({ fields, feedback });
-  }
-
   onChange({ target }) {
     const { filters } = this.props;
 
-    const fieldsObj = Object.keys(filters).reduce((acc, filter) =>
-      ({ ...acc, [filter]: { value: filters[filter] } }), {});
-
     const fields = {
-      ...fieldsObj,
-      [target.name]: { value: target.value, loading: true },
+      ...filters,
+      value: target.value,
+      error: false,
     };
 
-    this.setState({ fields });
+    if (validateAddress(tokenMap.LSK.key, target.value) !== 0) {
+      fields.error = true;
+    }
 
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-      this.validateAmountField(fields);
-    }, 300);
+    this.setState({ fields });
 
     this.props.updateCustomFilters(fields);
   }
