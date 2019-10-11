@@ -64,4 +64,12 @@ describe('Transactions monitor page', () => {
       offset: transactions.length, height,
     });
   });
+
+  it('allows to reverse sort by clicking "Date" header', () => {
+    const wrapper = mount(<Transactions {...{ ...props, transactions: transactionsWithData }} />);
+    wrapper.find('.sort-by.timestamp').simulate('click');
+    expect(props.transactions.loadData).toHaveBeenCalledWith({ sort: 'timestamp:asc' });
+    wrapper.find('.sort-by.timestamp').simulate('click');
+    expect(props.transactions.loadData).toHaveBeenCalledWith({ sort: 'timestamp:desc' });
+  });
 });
