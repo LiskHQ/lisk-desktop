@@ -32,7 +32,7 @@ function withData(apis = {}) {
           this.setState({ [key]: this.defaultState[key] });
         }
 
-        loadData(key, urlSearchParams = this.state[key].defaultUrlSearchParams, ...args) {
+        loadData(key, urlSearchParams = this.state[key].urlSearchParams, ...args) {
           const { apiClient, apiParams } = this.props;
           this.setState(state => ({
             [key]: {

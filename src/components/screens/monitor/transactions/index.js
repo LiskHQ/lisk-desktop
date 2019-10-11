@@ -11,10 +11,11 @@ export default compose(
       apiUtil: liskServiceApi.getTransactions,
       defaultData: [],
       autoload: true,
-      transformResponse: (response, oldData) => [
-        ...oldData,
-        ...response.filter(transaction => !oldData.find(({ id }) => id === transaction.id)),
-      ],
+      transformResponse: (response, oldData, urlSearchParams) => (
+        urlSearchParams.offset
+          ? [...oldData, ...response.filter(block => !oldData.find(({ id }) => id === block.id))]
+          : response
+      ),
     },
   }),
   withTranslation(),
