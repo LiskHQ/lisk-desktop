@@ -21,7 +21,6 @@ function withFilters(apiName, initialFilters, initialSort) {
         const { sort } = this.state;
         const filters = { ...f, sort };
         this.setState({ filters: f });
-        this.props[apiName].clearData();
         this.props[apiName].loadData(Object.keys(filters).reduce((acc, key) => ({
           ...acc,
           ...(filters[key] && { [key]: filters[key] }),
