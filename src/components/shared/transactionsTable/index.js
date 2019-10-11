@@ -15,6 +15,7 @@ import FilterDropdownButton from '../filterDropdownButton';
 import withResizeValues from '../../../utils/withResizeValues';
 import withFilters from '../../../utils/withFilters';
 import FilterBar from '../filterBar';
+import routes from '../../../constants/routes';
 import Table from '../../toolbox/table';
 import transactionTypeIcons from '../../../constants/transactionTypeIcons';
 import { transactionNames } from '../../../constants/transactionTypes';
@@ -114,6 +115,7 @@ class TransactionsTable extends React.Component {
           <React.Fragment>
             <Box.Content className={styles.content}>
               <Table
+                getRowLink={transaction => `${routes.monitorTransactions.path}/${transaction.id}`}
                 onSortChange={changeSort}
                 sort={sort}
                 data={transactions.data}
