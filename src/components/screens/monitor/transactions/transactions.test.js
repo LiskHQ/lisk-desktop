@@ -13,6 +13,7 @@ describe('Transactions monitor page', () => {
       clearData: jest.fn(),
     },
   };
+  const sort = 'timestamp:desc';
   const height = '1234';
   const transactionsWithData = {
     ...props.transactions,
@@ -34,7 +35,7 @@ describe('Transactions monitor page', () => {
     const wrapper = mount(<Transactions {...props} />);
     wrapper.find('button.load-more').simulate('click');
     expect(props.transactions.loadData).toHaveBeenCalledWith(
-      { offset: props.transactions.data.length },
+      { offset: props.transactions.data.length, sort },
     );
   });
 
@@ -61,7 +62,7 @@ describe('Transactions monitor page', () => {
     wrapper.find('button.load-more').simulate('click');
 
     expect(props.transactions.loadData).toHaveBeenCalledWith({
-      offset: transactions.length, height,
+      offset: transactions.length, height, sort,
     });
   });
 

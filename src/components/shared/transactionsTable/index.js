@@ -28,13 +28,14 @@ class TransactionsTable extends React.Component {
   }
 
   handleLoadMore() {
-    const { transactions, filters } = this.props;
+    const { transactions, filters, sort } = this.props;
 
     transactions.loadData(Object.keys(filters).reduce((acc, key) => ({
       ...acc,
       ...(filters[key] && { [key]: filters[key] }),
     }), {
       offset: transactions.data.length,
+      sort,
     }));
   }
 
