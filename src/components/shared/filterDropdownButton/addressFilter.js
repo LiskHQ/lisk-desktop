@@ -2,7 +2,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import styles from './filters.css';
 import { Input } from '../../toolbox/inputs';
-import { validateAddress } from '../../../utils/validators';
+import { validateAddress, validateLSKPublicKey } from '../../../utils/validators';
 import { tokenMap } from '../../../constants/tokens';
 import Feedback from '../../toolbox/feedback/feedback';
 
@@ -30,7 +30,7 @@ class AddressFilter extends React.Component {
       const value = fieldsObj[field].value || '';
       let error = false;
 
-      if (validateAddress(tokenMap.LSK.key, value) !== 0) {
+      if (validateAddress(tokenMap.LSK.key, value) !== 0 || validateLSKPublicKey(value) !== 0) {
         feedback = t('Invalid address');
         error = true;
       }
