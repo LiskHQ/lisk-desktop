@@ -43,3 +43,7 @@
   width: 32px;
   height: 32px;
 }
+
+.content {
+  padding: 0 !important;
+}
