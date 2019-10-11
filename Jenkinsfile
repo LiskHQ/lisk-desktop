@@ -119,14 +119,14 @@ pipeline {
 										sed -i -r -e '/ports:/,+2d' docker-compose.yml
 										# random port assignment
 										cat <<EOF >docker-compose.override.yml
-                                        version: "3"
-                                        services:
+version: "3"
+services:
 
-                                          lisk:
-                                              ports:
-                                                - \\${ENV_LISK_HTTP_PORT}
-                                                - \\${ENV_LISK_WS_PORT}
-                                        EOF
+  lisk:
+  ports:
+    - \\${ENV_LISK_HTTP_PORT}
+    - \\${ENV_LISK_WS_PORT}
+EOF
 
 										ENV_LISK_VERSION="$LISK_CORE_VERSION" make coldstart
 										export CYPRESS_baseUrl=http://127.0.0.1:300$N/#/
@@ -162,12 +162,14 @@ pipeline {
 						}
 					},
 					"percy": {
-                    	ansiColor('xterm') {
-                    	    nvm(getNodejsVersion()) {
-                    		    sh 'npm run percy'
-                    	    }
-                    	}
-                    },
+						ansiColor('xterm') {
+							nvm(getNodejsVersion()) {
+								withCredentials([string(credentialsId: 'PERCY_TOKEN', variable: 'PERCY_TOKEN')]) {
+									sh 'npm run percy'
+								}
+							}
+						}
+					},
 				)
 			}
 		}
