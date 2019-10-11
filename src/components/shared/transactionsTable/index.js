@@ -91,7 +91,7 @@ class TransactionsTable extends React.Component {
     } = this.props;
 
     return (
-      <Box width="full" isLoading={transactions.isLoading} className="transactions-box">
+      <Box main isLoading={transactions.isLoading} className="transactions-box">
         <Box.Header className={styles.boxHeader}>
           <h1>{title}</h1>
           <FilterDropdownButton

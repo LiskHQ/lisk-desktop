@@ -107,7 +107,9 @@ class FilterDropdownButton extends React.Component {
     return (
       <React.Fragment>
         {fields.length > 3 && (
-        <span onClick={this.extendFilters} className={styles.actionable}>{t(`${areFiltersExtended ? 'Less' : 'More'} filters`)}</span>
+        <span onClick={this.extendFilters} className={[styles.actionable, 'more-less-switch'].join(' ')}>
+          {areFiltersExtended ? t('Less filters') : t('More Filters')}
+        </span>
         )}
         <PrimaryButton
           disabled={hasErrors}
