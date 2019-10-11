@@ -9,12 +9,14 @@ import Icon from '../../toolbox/icon';
 import IntegerFilter from './integerFilter';
 import TextFilter from './textFilter';
 import styles from './filterContainer.css';
+import AddressFilter from './addressFilter';
 
 const filterComponents = {
   'date-range': DateFieldGroup,
   'number-range': AmountFieldGroup,
   text: TextFilter,
   integer: IntegerFilter,
+  address: AddressFilter,
 };
 
 class FilterDropdownButton extends React.Component {
