@@ -102,11 +102,13 @@ class FilterDropdownButton extends React.Component {
 
   renderFooter() {
     const { hasErrors, areFiltersExtended } = this.state;
-    const { t } = this.props;
+    const { t, fields } = this.props;
 
     return (
       <React.Fragment>
+        {fields.length > 3 && (
         <span onClick={this.extendFilters} className={styles.actionable}>{t(`${areFiltersExtended ? 'Less' : 'More'} filters`)}</span>
+        )}
         <PrimaryButton
           disabled={hasErrors}
           className={['saveButton', styles.submitButton].join(' ')}
