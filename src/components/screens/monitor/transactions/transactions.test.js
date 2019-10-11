@@ -10,18 +10,21 @@ describe('Transactions monitor page', () => {
       data: [],
       isLoading: true,
       loadData: jest.fn(),
+      clearData: jest.fn(),
     },
+  };
+  const height = '1234';
+  const transactionsWithData = {
+    ...props.transactions,
+    isLoading: false,
+    data: transactions,
   };
 
   it('should render transactions list', () => {
     const wrapper = mount(<Transactions {...props} />);
     expect(wrapper.find('TableRow.row')).toHaveLength(0);
     wrapper.setProps({
-      transactions: {
-        ...props.transactions,
-        isLoading: false,
-        data: transactions,
-      },
+      transactions: transactionsWithData,
     });
     wrapper.update();
     expect(wrapper.find('TableRow.row')).toHaveLength(transactions.length + 1);
@@ -33,5 +36,32 @@ describe('Transactions monitor page', () => {
     expect(props.transactions.loadData).toHaveBeenCalledWith(
       { offset: props.transactions.data.length },
     );
+  });
+
+  it('shows error if API failed', () => {
+    const error = 'Loading failed';
+    const wrapper = mount(<Transactions {...props} />);
+    wrapper.setProps({
+      transactions: {
+        ...props.transactions,
+        isLoading: false,
+        error,
+      },
+    });
+    expect(wrapper).toIncludeText(error);
+  });
+
+  it('allows to filter transactions by more filters', () => {
+    const wrapper = mount(<Transactions {...{ ...props, transactions: transactionsWithData }} />);
+
+    wrapper.find('button.filter').simulate('click');
+    wrapper.find('.more-less-switch').simulate('click');
+    wrapper.find('input.height').simulate('change', { target: { value: height } });
+    wrapper.find('form.filter-container').simulate('submit');
+    wrapper.find('button.load-more').simulate('click');
+
+    expect(props.transactions.loadData).toHaveBeenCalledWith({
+      offset: transactions.length, height,
+    });
   });
 });
