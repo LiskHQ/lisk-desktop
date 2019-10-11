@@ -13,6 +13,7 @@ describe('Transactions monitor page', () => {
       clearData: jest.fn(),
     },
   };
+  const amountFrom = '1.3';
   const sort = 'timestamp:desc';
   const height = '1234';
   const transactionsWithData = {
@@ -50,6 +51,19 @@ describe('Transactions monitor page', () => {
       },
     });
     expect(wrapper).toIncludeText(error);
+  });
+
+  it('allows to load more transactions when filtered', () => {
+    const wrapper = mount(<Transactions {...{ ...props, transactions: transactionsWithData }} />);
+
+    wrapper.find('button.filter').simulate('click');
+    wrapper.find('input.amountFromInput').simulate('change', { target: { value: amountFrom, name: 'amountFrom' } });
+    wrapper.find('form.filter-container').simulate('submit');
+    wrapper.find('button.load-more').simulate('click');
+
+    expect(props.transactions.loadData).toHaveBeenCalledWith({
+      offset: transactions.length, amountFrom, sort,
+    });
   });
 
   it('allows to filter transactions by more filters', () => {
