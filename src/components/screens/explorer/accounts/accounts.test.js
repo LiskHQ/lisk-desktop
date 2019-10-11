@@ -1,14 +1,8 @@
 import React from 'react';
-import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
-import PropTypes from 'prop-types';
-import configureMockStore from 'redux-mock-store';
-import { MemoryRouter as Router } from 'react-router-dom';
 import Accounts from './accounts';
-import i18n from '../../../../i18n';
 import accounts from '../../../../../test/constants/accounts';
 import routes from '../../../../constants/routes';
-import networks from '../../../../constants/networks';
 
 describe('Accounts Component', () => {
   let wrapper;
@@ -26,35 +20,6 @@ describe('Accounts Component', () => {
     asset: {},
     token: 'LSK',
   }];
-
-  const store = configureMockStore([thunk])({
-    account: accounts.genesis,
-    bookmarks: {
-      LSK: [],
-      BTC: [],
-    },
-    network: {
-      name: networks.mainnet.name,
-      networks: {
-        LSK: {},
-      },
-    },
-    settings: {
-      token: {
-        active: 'LSK',
-      },
-    },
-  });
-
-  const options = {
-    context: {
-      store, i18n,
-    },
-    childContextTypes: {
-      store: PropTypes.object.isRequired,
-      i18n: PropTypes.object.isRequired,
-    },
-  };
 
   const props = {
     accounts: {
@@ -101,9 +66,7 @@ describe('Accounts Component', () => {
 
   describe('Another account', () => {
     beforeEach(() => {
-      wrapper = mount(<Router>
-        <Accounts {...props} />
-      </Router>, options);
+      wrapper = mount(<Accounts {...props} />);
     });
 
     it('renders Accounts Component and loads account transactions', () => {
@@ -168,9 +131,7 @@ describe('Accounts Component', () => {
     };
 
     beforeEach(() => {
-      wrapper = mount(<Router>
-        <Accounts {...delegateProps} />
-      </Router>, options);
+      wrapper = mount(<Accounts {...delegateProps} />);
     });
 
     it('Should render delegate Tab', () => {
@@ -181,13 +142,7 @@ describe('Accounts Component', () => {
 
   describe('BTC account', () => {
     it('should not render VotesTab', () => {
-      wrapper = mount(<Router>
-        <Accounts {...{
-          ...props,
-          activeToken: 'BTC',
-        }}
-        />
-      </Router>, options);
+      wrapper = mount(<Accounts {...{ ...props, activeToken: 'BTC' }} />);
       expect(wrapper).toContainExactlyOneMatchingElement('TabsContainer');
       expect(wrapper.find('TabsContainer')).not.toContainMatchingElement('VotesTab');
     });

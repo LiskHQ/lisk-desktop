@@ -1,12 +1,10 @@
 import Lisk from '@liskhq/lisk-client';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { mount } from 'enzyme';
 import Transactions from './transactions';
 import accounts from '../../../../../test/constants/accounts';
 import fees from '../../../../constants/fees';
 import transactionTypes from '../../../../constants/transactionTypes';
-import store from '../../../../store';
 
 describe('Single Transaction Component', () => {
   let wrapper;
@@ -58,27 +56,10 @@ describe('Single Transaction Component', () => {
       url: `/explorer/transactions/${transaction.id}`,
     },
   };
-  const router = {
-    route: {
-      location: {
-        pathname: `/explorer/transactions/${transaction.id}`,
-      },
-      match: { params: { id: transaction.id } },
-    },
-    history: props.history,
-  };
-
-  const options = {
-    context: { store, router },
-    childContextTypes: {
-      store: PropTypes.object.isRequired,
-      router: PropTypes.object.isRequired,
-    },
-  };
 
   describe('Transfer transactions', () => {
     beforeEach(() => {
-      wrapper = mount(<Transactions {...props} />, options);
+      wrapper = mount(<Transactions {...props} />);
     });
 
     it('Should render transaction details after transaciton loaded', () => {
@@ -127,7 +108,7 @@ describe('Single Transaction Component', () => {
           data: {},
         },
       }}
-      />, options);
+      />);
       expect(wrapper).toContainMatchingElement('NotFound');
     });
   });
