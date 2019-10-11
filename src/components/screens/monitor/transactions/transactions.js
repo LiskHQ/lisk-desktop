@@ -36,7 +36,7 @@ const Transactions = ({ t, transactions }) => {
     label: t('Height'),
     placeholder: t('Eg. 10180477'),
     name: 'height',
-    type: 'text',
+    type: 'integer',
   }];
 
   const columns = [
