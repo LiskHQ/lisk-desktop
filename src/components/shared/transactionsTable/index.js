@@ -24,10 +24,6 @@ import { transactionNames } from '../../../constants/transactionTypes';
 class TransactionsTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      sortingColumn: props.columns.find(column => column.defaultSort).key,
-    };
-
     this.handleLoadMore = this.handleLoadMore.bind(this);
   }
 
