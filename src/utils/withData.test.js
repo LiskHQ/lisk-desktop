@@ -1,36 +1,14 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { mount } from 'enzyme';
-import configureMockStore from 'redux-mock-store';
 import withData from './withData';
 
 describe('withData', () => {
-  const store = configureMockStore([])({
-    settings: {
-      token: {
-        active: 'LSK',
-      },
-    },
-    network: {
-      name: 'Mainnet',
-      networks: {
-        LSK: {
-        },
-      },
-    },
-  });
-  const options = {
-    context: { store },
-    childContextTypes: {
-      store: PropTypes.object.isRequired,
-    },
-  };
   const className = 'dummy';
   const DummyComponent = () => <span className={className} />;
 
   it('should render passed component', () => {
     const DummyComponentHOC = withData()(DummyComponent);
-    const wrapper = mount(<DummyComponentHOC />, options);
+    const wrapper = mount(<DummyComponentHOC />);
     expect(wrapper).toContainMatchingElement(`.${className}`);
   });
 
@@ -45,7 +23,7 @@ describe('withData', () => {
       },
     };
     const DummyComponentHOC = withData(apis)(DummyComponent);
-    const wrapper = mount(<DummyComponentHOC />, options);
+    const wrapper = mount(<DummyComponentHOC />);
     expect(apis.dataKey.apiUtil).toHaveBeenCalledWith(expect.objectContaining({}), params);
     // TODO figure out how to make the commented-out assertion work
     expect(wrapper.find('DummyComponent')).toHaveProp(Object.keys(apis)[0]);
@@ -68,7 +46,7 @@ describe('withData', () => {
       },
     };
     const DummyComponentHOC = withData(apis)(DummyComponent);
-    const wrapper = mount(<DummyComponentHOC />, options);
+    const wrapper = mount(<DummyComponentHOC />);
     // TODO figure out how to make the commented-out assertion work
     expect(wrapper.find('DummyComponent')).toHaveProp(Object.keys(apis)[0]);
     /*
@@ -93,7 +71,7 @@ describe('withData', () => {
       },
     };
     const DummyComponentHOC = withData(apis)(DummyComponent);
-    const wrapper = mount(<DummyComponentHOC />, options);
+    const wrapper = mount(<DummyComponentHOC />);
     expect(wrapper.find('DummyComponent')).toHaveProp(Object.keys(apis)[0]);
     expect(wrapper.find('DummyComponent')).toHaveProp(Object.keys(apis)[1]);
   });
@@ -108,7 +86,7 @@ describe('withData', () => {
       },
     };
     const DummyComponentHOC = withData(apis)(DummyComponent);
-    const wrapper = mount(<DummyComponentHOC />, options);
+    const wrapper = mount(<DummyComponentHOC />);
     // TODO figure out how to make the commented-out assertion work
     expect(wrapper.find('DummyComponent')).toHaveProp(Object.keys(apis)[0]);
     /*
