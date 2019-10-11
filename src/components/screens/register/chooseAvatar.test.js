@@ -1,12 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { MemoryRouter } from 'react-router-dom';
 import sinon from 'sinon';
 import { generatePassphraseFromSeed } from '../../../utils/passphrase';
 import { extractAddress } from '../../../utils/account';
-import i18n from '../../../i18n';
 import ChooseAvatar from './chooseAvatar';
 
 describe('Register Process - Choose Avatar', () => {
@@ -22,13 +19,6 @@ describe('Register Process - Choose Avatar', () => {
     passphrase: pass,
   }));
 
-  const options = {
-    context: { i18n },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-    },
-  };
-
   const props = {
     handleSelectAvatar: sinon.spy(),
     selected: '',
@@ -36,9 +26,7 @@ describe('Register Process - Choose Avatar', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<MemoryRouter>
-      <ChooseAvatar {...props} />
-    </MemoryRouter>, options);
+    wrapper = mount(<ChooseAvatar {...props} />);
   });
 
   it('Should render with five avatars', () => {
@@ -59,9 +47,7 @@ describe('Register Process - Choose Avatar', () => {
     expect(props.handleSelectAvatar).to.have.been.calledWith(accounts[randomAvatar]);
 
     wrapper.setProps({
-      children: React.cloneElement(wrapper.props().children, {
-        selected: accounts[randomAvatar],
-      }),
+      selected: accounts[randomAvatar],
     });
 
     expect(wrapper.find('ChooseAvatar').prop('selected')).to.be.eql(accounts[randomAvatar]);

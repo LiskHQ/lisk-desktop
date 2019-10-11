@@ -2,10 +2,6 @@ import React from 'react';
 import { expect } from 'chai';
 import { spy, stub, useFakeTimers } from 'sinon';
 import { mount } from 'enzyme';
-import configureMockStore from 'redux-mock-store';
-import { MemoryRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import i18n from '../../../i18n';
 import Login from './login';
 import accounts from '../../../../test/constants/accounts';
 import routes from '../../../constants/routes';
@@ -40,11 +36,6 @@ describe('Login', () => {
     },
   };
 
-  const store = configureMockStore([])({
-    network,
-    account,
-    settings,
-  });
   const history = {
     location: {
       pathname: '',
@@ -71,19 +62,6 @@ describe('Login', () => {
     settings,
   };
 
-  const options = {
-    context: {
-      store, history, i18n, router: { route: history, history },
-    },
-    childContextTypes: {
-      store: PropTypes.object.isRequired,
-      history: PropTypes.object.isRequired,
-      i18n: PropTypes.object.isRequired,
-      router: PropTypes.object.isRequired,
-    },
-    lifecycleExperimental: true,
-  };
-
   const { passphrase } = accounts.genesis;
   let localStorageStub;
 
@@ -94,7 +72,7 @@ describe('Login', () => {
       toFake: ['setTimeout', 'clearTimeout'],
     });
 
-    wrapper = mount(<MemoryRouter><Login {...props} /></MemoryRouter>, options);
+    wrapper = mount(<Login {...props} />);
   });
 
   afterEach(() => {
@@ -128,9 +106,7 @@ describe('Login', () => {
 
     it('Should not render header if route is not /login', () => {
       wrapper.setProps({
-        children: React.cloneElement(wrapper.props().children, {
-          match: { url: routes.addAccount.path },
-        }),
+        match: { url: routes.addAccount.path },
       });
       expect(wrapper).to.not.have.descendants('Header');
     });
@@ -140,9 +116,7 @@ describe('Login', () => {
     it('calls this.props.history.replace(\'/dashboard\')', () => {
       wrapper.setProps({
         history,
-        children: React.cloneElement(wrapper.props().children, {
-          account: { address: 'dummy' },
-        }),
+        account: { address: 'dummy' },
       });
       expect(props.history.replace).to.have.been.calledWith(`${routes.dashboard.path}`);
     });
@@ -151,9 +125,7 @@ describe('Login', () => {
       props.history.replace.reset();
       history.location.search = `?referrer=${routes.delegates.path}`;
       wrapper.setProps({
-        children: React.cloneElement(wrapper.props().children, {
-          history, account: { address: 'dummy' },
-        }),
+        history, account: { address: 'dummy' },
       });
       expect(props.history.replace).to.have.been.calledWith(`${routes.delegates.path}`);
     });
