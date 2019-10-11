@@ -48,12 +48,12 @@ const Blocks = ({
           clearFilter, clearAllFilters, filters, formatters, t,
         }}
         />
-        { blocks.error
+        {!blocks.isLoading && blocks.data.length === 0
           ? (
             <Box.Content>
               <Box.EmptyState>
                 <Illustration name="emptyWallet" />
-                <h3>{`${blocks.error}`}</h3>
+                <h3>{`${blocks.error || t('No search results in given criteria.')}`}</h3>
               </Box.EmptyState>
             </Box.Content>
           )
