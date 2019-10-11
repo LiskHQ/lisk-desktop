@@ -6,9 +6,9 @@ import { DateTimeFromTimestamp } from '../../../toolbox/timestamp';
 import { tokenMap } from '../../../../constants/tokens';
 import BlockFilterDropdown from './blockFilterDropdown';
 import Box from '../../../toolbox/box';
-import Feedback from '../../../toolbox/feedback/feedback';
 import FilterBar from '../../../shared/filterBar';
 import IconlessTooltip from '../../../shared/iconlessTooltip';
+import Illustration from '../../../toolbox/illustration';
 import LiskAmount from '../../../shared/liskAmount';
 import MonitorHeader from '../header';
 import Table from '../../../toolbox/table';
@@ -51,7 +51,10 @@ const Blocks = ({
         { blocks.error
           ? (
             <Box.Content>
-              <Feedback status="error" show>{`${blocks.error}`}</Feedback>
+              <Box.EmptyState>
+                <Illustration name="emptyWallet" />
+                <h3>{`${blocks.error}`}</h3>
+              </Box.EmptyState>
             </Box.Content>
           )
           : (
