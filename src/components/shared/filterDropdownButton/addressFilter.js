@@ -11,7 +11,7 @@ class AddressFilter extends React.Component {
     super();
 
     this.state = {
-      field: {
+      fields: {
         error: false,
         value: '',
         loading: false,
@@ -73,7 +73,7 @@ class AddressFilter extends React.Component {
     const {
       filters, name, label, placeholder,
     } = this.props;
-    const { field } = this.state;
+    const { fields } = this.state;
 
     return (
       <div>
@@ -83,9 +83,9 @@ class AddressFilter extends React.Component {
           placeholder={placeholder}
           value={filters[name]}
           name={name}
-          className={`${styles.input} ${field.error ? 'error' : ''}`}
-          isLoading={field.loading}
-          status={field.error ? 'error' : 'ok'}
+          className={`${styles.input} ${fields.error ? 'error' : ''}`}
+          isLoading={fields.loading}
+          status={fields.error ? 'error' : 'ok'}
           size="xs"
         />
         <Feedback
