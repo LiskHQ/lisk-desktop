@@ -33,6 +33,7 @@
 
     &:hover {
       background-color: var(--primary-background-color);
+      text-decoration: none;
 
       &::before {
         display: block;
@@ -73,4 +74,26 @@
     color: var(--color-maastricht-blue);
     padding: 16px 20px;
   }
+}
+
+.sortable,
+.sortAsc,
+.sortDesc {
+  cursor: pointer;
+
+  &::after {
+    display: inline-block;
+    content: " ";
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    border: 4px solid transparent;
+    border-top-color: var(--color-content-light);
+    transition: all var(--animation-speed-fastest) linear;
+    transform-origin: 5px 2px;
+  }
+}
+
+.sortAsc::after {
+  transform: rotate(180deg);
 }

@@ -5,6 +5,7 @@
   --info-icon-size: 14px;
   --info-icon-font-size: 9px;
   --tooltip-spacing-inside: 10px;
+  --tooltip-spacing-inside-s: 5px;
 }
 
 .tooltipWrapper {
@@ -157,5 +158,18 @@
     margin: 0;
     margin-top: var(--tooltip-spacing-inside);
     padding: 0;
+  }
+
+  &.s {
+    padding: 8px 20px;
+    width: auto;
+
+    & > header {
+      margin-bottom: var(--tooltip-spacing-inside-s);
+    }
+
+    & > footer {
+      margin-top: var(--tooltip-spacing-inside-s);
+    }
   }
 }

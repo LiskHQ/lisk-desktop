@@ -58,7 +58,7 @@ class Tooltip extends React.Component {
 
   render() {
     const {
-      title, children, footer, className, alwaysShow, content, tooltipClassName,
+      title, children, footer, className, alwaysShow, content, tooltipClassName, size,
     } = this.props;
     const {
       showTooltip,
@@ -68,7 +68,7 @@ class Tooltip extends React.Component {
     } = this.props.styles || {};
     return React.isValidElement(children) && (
       <div
-        className={`${styles.tooltipWrapper} ${className}`}
+        className={[styles.tooltipWrapper, className].join(' ')}
         onMouseLeave={this.handleMouseLeave}
         onMouseMove={this.handleMouseMove}
         ref={this.setWrapperRef}
@@ -82,7 +82,15 @@ class Tooltip extends React.Component {
             />
           )
          }
-        <div className={`${styles.tooltip} ${(alwaysShow || showTooltip) ? 'shownTooltip' : ''} ${tooltip} tooltip-window ${tooltipClassName}`}>
+        <div className={[
+          styles.tooltip,
+          (alwaysShow || showTooltip) && 'shownTooltip',
+          tooltip,
+          'tooltip-window',
+          tooltipClassName,
+          styles[size],
+        ].join(' ')}
+        >
           <span className={`${styles.tooltipArrow} tooltip-arrow`}>
             <svg stroke="inherit" fill="currentColor" viewBox="0 0 14 28">
               <path d="M13.307.5S.5 10.488.5 13.896c0 3.409 12.785 12.893 12.785 12.893" />
@@ -108,12 +116,14 @@ Tooltip.propTypes = {
   footer: PropTypes.node,
   className: PropTypes.string,
   content: PropTypes.node,
+  size: PropTypes.oneOf(['s', 'l']),
 };
 
 Tooltip.defaultProps = {
   title: '',
   children: <React.Fragment />,
   className: '',
+  size: 'l',
 };
 
 export default Tooltip;

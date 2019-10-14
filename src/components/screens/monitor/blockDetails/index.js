@@ -27,7 +27,10 @@ export default compose(
       defaultData: [],
       autoload: true,
       getApiParams: (state, ownProps) => ({ id: ownProps.id }),
-      transformResponse: response => (response.data),
+      transformResponse: (response, oldData) => [
+        ...oldData,
+        ...response.data.filter(transaction => !oldData.find(({ id }) => id === transaction.id)),
+      ],
     },
   }),
   withTranslation(),
