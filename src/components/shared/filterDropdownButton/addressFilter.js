@@ -4,7 +4,6 @@ import styles from './filters.css';
 import { Input } from '../../toolbox/inputs';
 import { validateAddress, validateLSKPublicKey } from '../../../utils/validators';
 import { tokenMap } from '../../../constants/tokens';
-import Feedback from '../../toolbox/feedback/feedback';
 
 class AddressFilter extends React.Component {
   constructor() {
