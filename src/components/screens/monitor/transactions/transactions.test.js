@@ -16,6 +16,7 @@ describe('Transactions monitor page', () => {
   const amountFrom = '1.3';
   const sort = 'timestamp:desc';
   const height = '1234';
+  const type = '0';
   const transactionsWithData = {
     ...props.transactions,
     isLoading: false,
@@ -86,5 +87,29 @@ describe('Transactions monitor page', () => {
     expect(props.transactions.loadData).toHaveBeenCalledWith({ sort: 'timestamp:asc' });
     wrapper.find('.sort-by.timestamp').simulate('click');
     expect(props.transactions.loadData).toHaveBeenCalledWith({ sort: 'timestamp:desc' });
+  });
+
+  it('allows to clear the filter after filtering by type', () => {
+    const wrapper = mount(<Transactions {...props} />);
+    wrapper.find('button.filter').simulate('click');
+    wrapper.find('.more-less-switch').simulate('click');
+    wrapper.find('input.type').simulate('change', { target: { value: type } });
+    wrapper.find('form.filter-container').simulate('submit');
+    wrapper.find('span.clear-filter').simulate('click');
+    expect(props.transactions.loadData).toHaveBeenCalled();
+  });
+
+  it('should modify address value on window resize', () => {
+    const resizeWindow = (x, y) => {
+      window.innerWidth = x;
+      window.innerHeight = y;
+      window.dispatchEvent(new Event('resize'));
+    };
+
+    const wrapper = mount(<Transactions {...{ ...props, transactions: transactionsWithData }} />);
+    resizeWindow(600, 600);
+    expect(wrapper.find('.addressValue').at(0)).toHaveText('60766...51L');
+    resizeWindow(1500, 800);
+    expect(wrapper.find('.addressValue').at(0)).toHaveText('6076671634347365051L');
   });
 });
