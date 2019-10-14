@@ -18,7 +18,6 @@ class UnlockDevice extends React.Component {
 
   componentDidMount() {
     this.navigateIfNeeded();
-    this.checkIfInsideLiskApp();
   }
 
   componentDidUpdate() {
@@ -74,7 +73,7 @@ class UnlockDevice extends React.Component {
           {t('Go back')}
         </TertiaryButton>
       </div>
-    ) : 'jo';
+    ) : '';
   }
 }
 
