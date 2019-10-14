@@ -7,7 +7,6 @@ import Delegates from '../components/screens/delegates';
 import Accounts from
   '../components/screens/explorer/accounts';
 import Extensions from '../components/screens/extensions';
-import Help from '../components/screens/help';
 import HwWalletLogin from '../components/screens/hwWalletLogin';
 import Login from '../components/screens/login';
 import Register from '../components/screens/register';
@@ -67,11 +66,6 @@ export default {
     component: Delegates,
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
-  },
-  help: {
-    path: '/help',
-    component: Help,
-    isPrivate: false,
   },
   settings: {
     path: '/settings',
