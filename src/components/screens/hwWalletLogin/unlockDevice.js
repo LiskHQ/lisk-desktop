@@ -2,7 +2,6 @@ import React from 'react';
 import { TertiaryButton } from '../../toolbox/buttons/button';
 import { checkIfInsideLiskApp } from '../../../utils/hwManager';
 import Illustration from '../../toolbox/illustration';
-import externalLinks from '../../../constants/externalLinks';
 
 class UnlockDevice extends React.Component {
   constructor() {
@@ -61,13 +60,6 @@ class UnlockDevice extends React.Component {
         <p>
           { t('If you’re not sure how to do this please follow the') }
           {' '}
-          <a
-            href={externalLinks.ledgerNanoSHelp}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t('Official guidelines')}
-          </a>
         </p>
         <Illustration name="ledgerNanoLight" />
         <TertiaryButton onClick={goBack}>
