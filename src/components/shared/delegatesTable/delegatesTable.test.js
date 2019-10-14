@@ -1,9 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import DelegatesTable from '.';
+import delegates from '../../../../test/constants/delegates';
 
 describe('DelegatesTable page', () => {
   let props;
+  let delegatesWitData;
 
   beforeEach(() => {
     props = {
@@ -16,10 +18,17 @@ describe('DelegatesTable page', () => {
         urlSearchParams: {},
       },
       columns: [
-        { id: 'rank', header: 'Rank' },
-        { id: 'name', header: 'Name' },
+        { id: 'rank' },
+        { id: 'username', header: 'Name' },
+        { id: 'forged' },
+        { id: 'productivity' },
       ],
       tabs: [{ name: 'Active delegates' }, { name: 'Standby delegates' }],
+    };
+    delegatesWitData = {
+      ...props.blocks,
+      isLoading: false,
+      data: delegates,
     };
   });
 
@@ -27,5 +36,12 @@ describe('DelegatesTable page', () => {
     const wrapper = mount(<DelegatesTable {...props} />);
     expect(wrapper.find('header')).toIncludeText(props.tabs[0].name);
     expect(wrapper.find('header')).toIncludeText(props.tabs[1].name);
+  });
+
+  it('renders table with delegates', () => {
+    const wrapper = mount(<DelegatesTable {...props} />);
+    expect(wrapper.find('TableRow.row')).toHaveLength(0);
+    wrapper.setProps({ delegates: delegatesWitData });
+    expect(wrapper.find('TableRow.row')).toHaveLength(delegates.length + 1);
   });
 });
