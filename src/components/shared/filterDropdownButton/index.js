@@ -146,7 +146,7 @@ class FilterDropdownButton extends React.Component {
         ref={this.setChildRef}
       >
         <form onSubmit={this.applyFilters} className={`${styles.form} filter-container`}>
-          <div className={styles.container}>
+          <div className={`${styles.container} ${areFiltersExtended && styles.extendedContainer}`}>
             {primaryFilters.map(({
               name, label, placeholder, valueFormatter, type,
             }) => this.renderFields(name, label, placeholder, valueFormatter, type))}
