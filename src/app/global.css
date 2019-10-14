@@ -38,12 +38,6 @@ order to be available application wide
   padding: 0px 30px;
 }
 
-:global .show-m {
-  position: absolute;
-  visibility: hidden;
-  display: none;
-}
-
 @media (--medium-viewport) {
   :global body.contentFocused {
     margin-top: 0;
@@ -57,12 +51,6 @@ order to be available application wide
   :global .hidden-m {
     position: absolute;
     visibility: hidden;
-  }
-
-  :global .show-m {
-    position: initial;
-    visibility: initial;
-    display: initial;
   }
 }
 

@@ -1,3 +1,17 @@
+@import '../../../../app/variables.css';
+
 .content {
   padding: 0 !important;
+}
+
+.showM {
+  visibility: hidden;
+  display: none;
+}
+
+@media (--medium-viewport) {
+  .showM {
+    visibility: initial;
+    display: initial;
+  }
 }

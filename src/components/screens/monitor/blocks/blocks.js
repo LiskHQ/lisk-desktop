@@ -93,7 +93,7 @@ const Blocks = ({
                         tooltipContent={<p>{block.numberOfTransactions}</p>}
                         title={t('Transactions')}
                         className="showOnBottom"
-                        tooltipClassName="show-m"
+                        tooltipClassName={styles.showM}
                         size="s"
                       >
                         <LiskAmount val={block.totalAmount} token={tokenMap.LSK.key} />
