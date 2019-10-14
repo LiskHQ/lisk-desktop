@@ -1,7 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import PropTypes from 'prop-types';
-import i18n from '../../../i18n';
 import CopyToClipboard from './index';
 
 describe('CopyToClipboard', () => {
@@ -10,19 +8,11 @@ describe('CopyToClipboard', () => {
     text: 'test',
     className: 'className',
     value: 2,
-    t: key => key,
-    i18n,
-  };
-  const options = {
-    context: { i18n },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-    },
   };
   const copiedText = 'Copied!';
 
   beforeEach(() => {
-    wrapper = mount(<CopyToClipboard {...props} />, options);
+    wrapper = mount(<CopyToClipboard {...props} />);
   });
 
   it('should show "Copied!" on click', () => {

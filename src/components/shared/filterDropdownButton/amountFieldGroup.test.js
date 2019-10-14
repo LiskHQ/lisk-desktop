@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import i18n from '../../../i18n';
 import AmountFieldGroup from './amountFieldGroup';
 
 describe('AmountFieldGroup', () => {
@@ -15,15 +13,9 @@ describe('AmountFieldGroup', () => {
     handleKeyPress: jest.fn(),
     updateCustomFilters: jest.fn(),
   };
-  const options = {
-    context: { i18n },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-    },
-  };
 
   beforeEach(() => {
-    wrapper = mount(<AmountFieldGroup {...props} />, options);
+    wrapper = mount(<AmountFieldGroup {...props} />);
   });
 
   it('Should render two inputs', () => {

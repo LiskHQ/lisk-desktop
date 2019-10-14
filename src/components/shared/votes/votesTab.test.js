@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import i18n from '../../../i18n';
 import accounts from '../../../../test/constants/accounts';
 import routes from '../../../constants/routes';
 import VotesTab from './votesTab';
@@ -22,17 +20,12 @@ describe('Votes Tab Component', () => {
     t: v => v,
   };
 
-  const options = {
-    context: { i18n },
-    childContextTypes: { i18n: PropTypes.object.isRequired },
-  };
-
   afterEach(() => {
     props.votes.loadData.mockRestore();
     props.delegates.loadData.mockRestore();
   });
 
-  const setup = data => mount(<VotesTab {...data} />, options);
+  const setup = data => mount(<VotesTab {...data} />);
 
   it('Should render with empty state', () => {
     wrapper = setup(props);

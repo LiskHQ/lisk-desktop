@@ -2,13 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
-import PropTypes from 'prop-types';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 import store from '../../../../store';
 import VotingListView from './index';
-import i18n from '../../../../i18n';
-import history from '../../../../history';
 
 describe.skip('VotingListView', () => {
   let wrapper;
@@ -34,17 +30,8 @@ describe.skip('VotingListView', () => {
       loading: [],
     });
     wrapper = mount(<Provider store={store}>
-      <Router>
-        <VotingListView history={{ location: { search: '' } }} />
-      </Router>
-    </Provider>, {
-      context: { store, history, i18n },
-      childContextTypes: {
-        store: PropTypes.object.isRequired,
-        history: PropTypes.object.isRequired,
-        i18n: PropTypes.object.isRequired,
-      },
-    });
+      <VotingListView history={{ location: { search: '' } }} />
+    </Provider>);
   });
 
   it('should render delegate list', () => {

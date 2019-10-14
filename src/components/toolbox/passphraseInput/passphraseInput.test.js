@@ -1,20 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import i18n from '../../../i18n';
 import PassphraseInput from '.';
 import keyCodes from '../../../constants/keyCodes';
 import accounts from '../../../../test/constants/accounts';
 
 describe('passphraseInput', () => {
   let wrapper;
-
-  const options = {
-    context: { i18n },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-    },
-  };
 
   const props = {
     onFill: jest.fn(),
@@ -23,7 +14,7 @@ describe('passphraseInput', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<PassphraseInput {...props} />, options);
+    wrapper = mount(<PassphraseInput {...props} />);
   });
 
   describe('Show 24 inputs when needed', () => {

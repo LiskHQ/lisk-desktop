@@ -1,20 +1,12 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '../../../constants/tokens';
 import AccountVisual from '../accountVisual';
 import AutoSuggest from './index';
-import i18n from '../../../i18n';
 import keyCodes from '../../../constants/keyCodes';
 
 describe('Recipient Input', () => {
   let wrapper;
-  const options = {
-    context: { i18n },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-    },
-  };
 
   const props = {
     token: tokenMap.LSK.key,
@@ -57,7 +49,7 @@ describe('Recipient Input', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<AutoSuggest {...props} />, options);
+    wrapper = mount(<AutoSuggest {...props} />);
   });
 
   it('should render properly', () => {
@@ -77,13 +69,13 @@ describe('Recipient Input', () => {
   it('render properly when bookmard is selected', () => {
     props.selectedItem.address = '12345L';
     props.selectedItem.title = 'John Cena';
-    wrapper = mount(<AutoSuggest {...props} />, options);
+    wrapper = mount(<AutoSuggest {...props} />);
     expect(wrapper).toContainMatchingElement('AccountVisual');
   });
 
   it('should select an account from the available list', () => {
     props.selectedItem.value = 'L';
-    wrapper = mount(<AutoSuggest {...props} />, options);
+    wrapper = mount(<AutoSuggest {...props} />);
     expect(wrapper).toContainMatchingElement('.bookmark-list');
     expect(wrapper).toContainMatchingElements(3, 'li');
     wrapper.find('Input.input input').simulate('keyDown', { keyCode: keyCodes.arrowDown });

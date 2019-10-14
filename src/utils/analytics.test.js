@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
 import { advanceBy, clear } from 'jest-date-mock';
@@ -7,12 +6,10 @@ import configureMockStore from 'redux-mock-store';
 import DialogHolder from '../components/toolbox/dialog/holder';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
 import analyticsUtil from './analytics';
-import i18n from '../i18n';
 
 describe('Analytics Util', () => {
   let props;
   let store;
-  let options;
 
   beforeEach(() => {
     props = {
@@ -33,14 +30,6 @@ describe('Analytics Util', () => {
       toastDisplayed: jest.fn(),
     });
 
-    options = {
-      context: { i18n, store },
-      childContextTypes: {
-        i18n: PropTypes.object.isRequired,
-        store: PropTypes.object.isRequired,
-      },
-    };
-
     store.dispatch = jest.fn();
   });
 
@@ -50,8 +39,8 @@ describe('Analytics Util', () => {
   });
 
   it('Should call FlashMessageHolder.addMessage', () => {
-    const wrapper = mount(<FlashMessageHolder />, options);
-    const dialogWrapper = mount(<DialogHolder {...props} />, options);
+    const wrapper = mount(<FlashMessageHolder />);
+    const dialogWrapper = mount(<DialogHolder {...props} />);
     expect(wrapper).toBeEmptyRender();
     expect(dialogWrapper).toBeEmptyRender();
     analyticsUtil.init();
@@ -63,8 +52,8 @@ describe('Analytics Util', () => {
   });
 
   it('Should call FlashMessageHolder.addMessage when showAnalytics is set', () => {
-    const wrapper = mount(<FlashMessageHolder />, options);
-    const dialogWrapper = mount(<DialogHolder {...props} />, options);
+    const wrapper = mount(<FlashMessageHolder />);
+    const dialogWrapper = mount(<DialogHolder {...props} />);
     expect(wrapper).toBeEmptyRender();
     expect(dialogWrapper).toBeEmptyRender();
     analyticsUtil.checkIfAnalyticsShouldBeDisplayed({
@@ -82,8 +71,8 @@ describe('Analytics Util', () => {
       ...props.settings,
       statisticsRequest: true,
     };
-    const wrapper = mount(<FlashMessageHolder />, options);
-    const dialogWrapper = mount(<DialogHolder {...props} />, options);
+    const wrapper = mount(<FlashMessageHolder />);
+    const dialogWrapper = mount(<DialogHolder {...props} />);
     expect(wrapper).toBeEmptyRender();
     expect(dialogWrapper).toBeEmptyRender();
     analyticsUtil.checkIfAnalyticsShouldBeDisplayed({
@@ -102,8 +91,8 @@ describe('Analytics Util', () => {
       statisticsRequest: true,
       statisticsFollowingDay: 240,
     };
-    const wrapper = mount(<FlashMessageHolder />, options);
-    const dialogWrapper = mount(<DialogHolder {...props} />, options);
+    const wrapper = mount(<FlashMessageHolder />);
+    const dialogWrapper = mount(<DialogHolder {...props} />);
     expect(wrapper).toBeEmptyRender();
     expect(dialogWrapper).toBeEmptyRender();
     analyticsUtil.checkIfAnalyticsShouldBeDisplayed({
@@ -117,8 +106,8 @@ describe('Analytics Util', () => {
   });
 
   it('Should call FlashMessageHolder.addMessage 7 days after it was closed', () => {
-    const wrapper = mount(<FlashMessageHolder />, options);
-    const dialogWrapper = mount(<DialogHolder {...props} />, options);
+    const wrapper = mount(<FlashMessageHolder />);
+    const dialogWrapper = mount(<DialogHolder {...props} />);
     expect(wrapper).toBeEmptyRender();
     expect(dialogWrapper).toBeEmptyRender();
     analyticsUtil.onTriggerPageLoaded({

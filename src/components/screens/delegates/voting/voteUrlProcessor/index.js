@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { getAPIClient } from '../../../../../utils/api/network';
 import { tokenMap } from '../../../../../constants/tokens';
 import {

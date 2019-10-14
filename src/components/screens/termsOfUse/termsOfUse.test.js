@@ -1,10 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
-import configureMockStore from 'redux-mock-store';
-import i18n from '../../../i18n';
 import TermsOfUse from './termsOfUse';
 import routes from '../../../constants/routes';
 
@@ -19,19 +16,6 @@ describe('TermsOfUse', () => {
     areTermsOfUseAccepted: false,
   };
 
-  const store = configureMockStore([])({
-    settings,
-  });
-
-  const options = {
-    context: { store, i18n, history },
-    childContextTypes: {
-      store: PropTypes.object.isRequired,
-      i18n: PropTypes.object.isRequired,
-      history: PropTypes.object.isRequired,
-    },
-  };
-
   const props = {
     history,
     settings,
@@ -40,7 +24,7 @@ describe('TermsOfUse', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<TermsOfUse {...props} />, options);
+    wrapper = mount(<TermsOfUse {...props} />);
   });
 
   it('Should render properly terms of use component', () => {

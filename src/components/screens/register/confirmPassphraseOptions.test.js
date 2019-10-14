@@ -1,21 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import i18n from '../../../i18n';
 import Options from './confirmPassphraseOptions';
 
 describe('Register Process - Confirm Passphrase Options', () => {
   let wrapper;
   const handleSelect = sinon.spy();
-
-  const options = {
-    context: { i18n },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-    },
-  };
 
   const props = {
     optionIndex: 0,
@@ -28,7 +19,7 @@ describe('Register Process - Confirm Passphrase Options', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<Options {...props} />, options);
+    wrapper = mount(<Options {...props} />);
   });
 
   it('Should render with three options and enabled', () => {

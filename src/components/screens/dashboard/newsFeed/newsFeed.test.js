@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { MemoryRouter } from 'react-router-dom';
 import NewsFeed from './newsFeed';
 
 describe('NewsFeed', () => {
@@ -54,17 +53,13 @@ describe('NewsFeed', () => {
       },
     };
 
-    const wrapper = mount(<MemoryRouter>
-      <NewsFeed {...newProps} />
-    </MemoryRouter>);
+    const wrapper = mount(<NewsFeed {...newProps} />);
 
     expect(wrapper.find('.empty-news').exists()).toEqual(true);
   });
 
   it('should render News', () => {
-    const wrapper = mount(<MemoryRouter>
-      <NewsFeed {...props} />
-    </MemoryRouter>);
+    const wrapper = mount(<NewsFeed {...props} />);
 
     expect(wrapper).toContainMatchingElements(2, '.news-item');
   });

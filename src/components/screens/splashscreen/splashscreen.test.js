@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { MemoryRouter } from 'react-router-dom';
 import SplashScreen from './splashscreen';
 import accounts from '../../../../test/constants/accounts';
 import routes from '../../../constants/routes';
@@ -26,19 +25,6 @@ describe('SplashScreen', () => {
       location: {
         pathname: '',
         search: '',
-      },
-      account: {
-        address: '123456L',
-        info: {
-          LSK: {
-            address: '123456L',
-            balance: 100,
-          },
-          BTC: {
-            address: 'jhagsd676587',
-            balance: 100,
-          },
-        },
       },
       push: jest.fn(),
       replace: jest.fn(),
@@ -70,7 +56,7 @@ describe('SplashScreen', () => {
       errorToastDisplayed: jest.fn(),
     };
 
-    wrapper = mount(<MemoryRouter><SplashScreen {...props} /></MemoryRouter>);
+    wrapper = mount(<SplashScreen {...props} />);
   });
 
   it('Should render all links, Sign in, Create an Account and Explre as Guest', () => {
@@ -81,46 +67,33 @@ describe('SplashScreen', () => {
 
   describe('History management', () => {
     it('calls this.props.history.replace(\'/dashboard\')', () => {
-      wrapper.setProps({
-        history,
-        children: React.cloneElement(wrapper.props().children, {
-          account: { address: 'dummy' },
-        }),
-      });
+      wrapper.setProps({ account: { address: 'dummy' } });
       expect(props.history.replace).toBeCalledWith(`${routes.dashboard.path}`);
     });
 
     it('calls this.props.history.replace with referrer address', () => {
       props.history.replace.mockReset();
       history.location.search = `?referrer=${routes.delegates.path}`;
-      wrapper.setProps({
-        children: React.cloneElement(wrapper.props().children, {
-          history, account: { address: 'dummy' },
-        }),
-      });
+      wrapper.setProps({ account: { address: 'dummy' } });
       expect(props.history.replace).toBeCalledWith(`${routes.delegates.path}`);
     });
 
     it('calls this.props.history.replace with referrer address on network change', () => {
       props.history.replace.mockReset();
       history.location.search = `?referrer=${routes.delegates.path}`;
-      wrapper.setProps({
-        children: React.cloneElement(wrapper.props().children, {
-          history, network: { name: 'Testnet' },
-        }),
-      });
+      wrapper.setProps({ network: { name: 'Testnet' } });
       expect(props.history.replace).toBeCalledWith(`${routes.delegates.path}`);
     });
   });
 
   describe('Terms of Use', () => {
     it('redirect to terms of use page', () => {
-      wrapper = mount(<MemoryRouter>
+      wrapper = mount(
         <SplashScreen
           {...props}
           settings={{ ...props.settings, areTermsOfUseAccepted: false }}
-        />
-      </MemoryRouter>);
+        />,
+      );
       expect(props.history.push).toBeCalledWith(`${routes.termsOfUse.path}`);
     });
   });
