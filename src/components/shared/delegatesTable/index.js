@@ -7,6 +7,7 @@ import { tokenMap } from '../../../constants/tokens';
 import Box from '../../toolbox/box';
 import LiskAmount from '../liskAmount';
 import Table from '../../toolbox/table';
+import styles from './delegatesTable.css';
 
 const DelegatesTable = ({
   columns, delegates, tabs, t,
@@ -19,14 +20,14 @@ const DelegatesTable = ({
       getValue: ({ rank }) => `#${rank}`,
       className: grid['col-xs-1'],
     },
-    forged: {
+    rewards: {
       header: t('Forged'),
       /* eslint-disable-next-line react/display-name */
-      getValue: ({ forged }) => <LiskAmount val={forged} token={tokenMap.LSK.key} />,
+      getValue: ({ rewards }) => <LiskAmount val={rewards} token={tokenMap.LSK.key} />,
       className: grid['col-xs-2'],
     },
     productivity: {
-      header: t('Rank'),
+      header: t('Productivity'),
       getValue: ({ productivity }) => `${formatAmountBasedOnLocale({ value: productivity })} %`,
       className: grid['col-xs-2'],
     },
@@ -41,7 +42,7 @@ const DelegatesTable = ({
           <Input size="xs" placeholder={t('Filter by name...')} />
         </span>
       </Box.Header>
-      <Box.Content>
+      <Box.Content className={styles.content}>
         <Table {...{ columns, data }} />
       </Box.Content>
     </Box>
