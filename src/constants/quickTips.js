@@ -1,4 +1,3 @@
-import academy from '../assets/images/dashboard/academy.svg';
 import id from '../assets/images/dashboard/id.svg';
 import transparent from '../assets/images/dashboard/transparent.svg';
 import vote from '../assets/images/dashboard/vote.svg';
@@ -27,13 +26,6 @@ const quickTips = t => [
       t('This helps to keep the network fair, open and honest.'),
     ],
     picture: transparent,
-  },
-  {
-    title: t('What is Lisk Academy?'),
-    description: [
-      t('The Lisk Academy is an entirely free, unbiased and comprehensive educational platform about blockchain technology, containing something for everyone, regardless of what level of knowledge you are at.'),
-    ],
-    picture: academy,
   },
 ];
 
