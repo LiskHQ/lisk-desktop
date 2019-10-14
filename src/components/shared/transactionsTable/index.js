@@ -58,7 +58,7 @@ class TransactionsTable extends React.Component {
             className={styles.txIcon}
             name={transactionTypeIcons[transaction.type] || transactionTypeIcons.default}
           />
-          <span className={styles.addressValue}>{t(transactionNames[transaction.type])}</span>
+          <span className={styles.addressValue}>{transactionNames(t)[transaction.type]}</span>
         </div>
       );
     }
