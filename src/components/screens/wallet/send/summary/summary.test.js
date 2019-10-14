@@ -1,8 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import PropTypes from 'prop-types';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
 import { tokenMap } from '../../../../../constants/tokens';
 import Summary from './summary';
 import accounts from '../../../../../../test/constants/accounts';
@@ -11,49 +8,6 @@ import i18n from '../../../../../i18n';
 describe('Summary', () => {
   let wrapper;
   let props;
-
-  const store = configureMockStore([thunk])({
-    settings: { currency: 'USD', token: { active: tokenMap.LSK.key } },
-    settingsUpdated: () => {},
-    liskService: {
-      success: true,
-      LSK: {
-        USD: 1,
-      },
-    },
-    bookmarks: [
-      {
-        title: 'ABC',
-        address: '12345L',
-        balance: 10,
-      },
-      {
-        title: 'FRG',
-        address: '12375L',
-        balance: 15,
-      },
-      {
-        title: 'KTG',
-        address: '12395L',
-        balance: 7,
-      },
-    ],
-    transactions: {
-      pending: [],
-      fail: {},
-      transactionsCreated: [],
-      transactionsCreatedFailed: [],
-      broadcastedTransactionsError: [],
-    },
-  });
-
-  const options = {
-    context: { i18n, store },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-      store: PropTypes.object.isRequired,
-    },
-  };
 
   beforeEach(() => {
     props = {
@@ -96,7 +50,7 @@ describe('Summary', () => {
       },
       token: tokenMap.LSK.key,
     };
-    wrapper = mount(<Summary {...props} />, options);
+    wrapper = mount(<Summary {...props} />);
   });
 
   it('should render properly', () => {
@@ -172,7 +126,7 @@ describe('Summary', () => {
         },
       },
     }}
-    />, options);
+    />);
     expect(wrapper.find('.recipient-value')).toIncludeText(props.fields.recipient.address);
     expect(wrapper.find('.recipient-value')).toIncludeText(title);
   });
@@ -207,7 +161,7 @@ describe('Summary', () => {
         deviceId: '123123sdf',
       },
     };
-    wrapper = mount(<Summary {...newProps} />, options);
+    wrapper = mount(<Summary {...newProps} />);
     wrapper.update();
     expect(props.transactionCreated).toBeCalled();
   });

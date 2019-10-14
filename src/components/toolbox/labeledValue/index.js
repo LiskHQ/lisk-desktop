@@ -12,12 +12,14 @@ const LabeledValue = ({
 );
 
 LabeledValue.propTypes = {
-  label: PropTypes.node.isRequired,
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string.isRequired,
+  label: PropTypes.node,
+  children: PropTypes.node,
+  className: PropTypes.string,
 };
 
 LabeledValue.defaultProps = {
+  label: '',
+  children: null,
   className: '',
 };
 

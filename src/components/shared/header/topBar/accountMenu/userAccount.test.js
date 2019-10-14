@@ -1,9 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { MemoryRouter as Router } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import UserAccount from './userAccount';
-import store from '../../../../../store';
 
 describe('UserAccount', () => {
   let wrapper;
@@ -32,15 +29,8 @@ describe('UserAccount', () => {
     t: val => val,
   };
 
-  const options = {
-    context: { store },
-    childContextTypes: { store: PropTypes.object.isRequired },
-  };
-
-  const mountWithRouter = (node, storeOptions) => mount(<Router>{node}</Router>, storeOptions);
-
   beforeEach(() => {
-    wrapper = mountWithRouter(<UserAccount {...myProps} />, options);
+    wrapper = mount(<UserAccount {...myProps} />);
   });
 
   it('renders <UserAccount /> component', () => {
@@ -49,7 +39,7 @@ describe('UserAccount', () => {
 
   it('called properly dropdown component', () => {
     myProps.isDropdownEnable = true;
-    wrapper = mountWithRouter(<UserAccount {...myProps} />, options);
+    wrapper = mount(<UserAccount {...myProps} />);
     expect(wrapper).toContainExactlyOneMatchingElement('Dropdown');
     expect(wrapper).toContainExactlyOneMatchingElement('span.dropdownOption');
     expect(wrapper).toContainMatchingElements(4, 'a.dropdownOption');
@@ -57,7 +47,7 @@ describe('UserAccount', () => {
 
   it('called properly onLogout when user click it', () => {
     myProps.isDropdownEnable = true;
-    wrapper = mountWithRouter(<UserAccount {...myProps} />, options);
+    wrapper = mount(<UserAccount {...myProps} />);
     wrapper.find('span.dropdownOption').simulate('click');
     expect(myProps.onLogout).toHaveBeenCalled();
   });
@@ -71,22 +61,20 @@ describe('UserAccount', () => {
       },
     };
     localStorage.setItem('btc', true);
-    wrapper = mountWithRouter(<UserAccount {...myProps} />, options);
+    wrapper = mount(<UserAccount {...myProps} />);
     expect(wrapper.find('Dropdown')).toContainMatchingElements(1, '.accountInfo');
     wrapper.setProps({
-      children: React.cloneElement(wrapper.props().children, {
-        account: {
-          ...myProps.account,
-          info,
-        },
-      }),
+      account: {
+        ...myProps.account,
+        info,
+      },
     });
     expect(wrapper.find('Dropdown')).toContainMatchingElements(2, '.accountInfo');
     localStorage.clear();
   });
 
   it('should called settingsUpdate when a token is selected', () => {
-    wrapper = mountWithRouter(<UserAccount {...myProps} />, options);
+    wrapper = mount(<UserAccount {...myProps} />);
     wrapper.find('button.user-account').simulate('click');
     wrapper.find('span.token').at(0).simulate('click');
     expect(myProps.settingsUpdated).toHaveBeenCalled();

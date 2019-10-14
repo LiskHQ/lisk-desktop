@@ -1,8 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import configureMockStore from 'redux-mock-store';
-import { MemoryRouter as Router } from 'react-router-dom';
 import Settings from './settings';
 import accounts from '../../../../test/constants/accounts';
 import i18n from '../../../i18n';
@@ -33,18 +30,6 @@ describe('Setting', () => {
       },
     },
   };
-  const store = configureMockStore([])({
-    account,
-    liskAPIClientSet: jest.fn(),
-    settings,
-  });
-
-  const options = {
-    context: { store },
-    childContextTypes: {
-      store: PropTypes.object.isRequired,
-    },
-  };
 
   const t = key => key;
   let wrapper;
@@ -66,31 +51,31 @@ describe('Setting', () => {
   beforeEach(() => {
     localStorage.setItem('feature-flag-language', true); // TODO: Remove when i18n epic #2301 is finished
     localStorage.setItem('discreet', true); // TODO: Remove when discreet mode is concluded
-    wrapper = mount(<Router>
-      <Settings {...props} store={store} />
-    </Router>, options);
+    wrapper = mount(
+      <Settings {...props} />,
+    );
   });
 
   it('should disable 2nd passphrase when hardwareWallet', () => {
     const newProps = { ...props, account: { hwInfo: { deviceId: '123' } } };
-    wrapper = mount(<Router>
-      <Settings {...newProps} store={store} />
-    </Router>, options);
+    wrapper = mount(
+      <Settings {...newProps} />,
+    );
     expect(wrapper).toContainMatchingElements(1, '.disabled');
   });
 
   it('should show 2nd passphrase as processing', () => {
     const newProps = { ...props, transactions: { pending: [{ type: 1 }] } };
-    wrapper = mount(<Router><Settings {...newProps} /></Router>, options);
+    wrapper = mount(<Settings {...newProps} />);
     expect(wrapper.find('.second-passphrase')).toContainMatchingElement('.loading');
   });
 
   it('should render 2nd passphrase as active', () => {
     const account2ndPassphrase = { info: { LSK: accounts.second_passphrase_account } };
     const newProps = { ...props, account: account2ndPassphrase, hasSecondPassphrase: true };
-    wrapper = mount(<Router>
-      <Settings {...newProps} />
-    </Router>, options);
+    wrapper = mount(
+      <Settings {...newProps} />,
+    );
     expect(wrapper.find('.second-passphrase')).not.toContainMatchingElement('.link');
     expect(wrapper.find('.second-passphrase')).toContainMatchingElement('.second-passphrase-registered');
   });
@@ -147,14 +132,13 @@ describe('Setting', () => {
     const settingsToExpireTime = { ...settings };
     settingsToExpireTime.autoLog = false;
     accountToExpireTime.passphrase = accounts.genesis.passphrase;
-    wrapper = mount(<Router>
+    wrapper = mount(
       <Settings
         {...props}
-        store={store}
         account={accountToExpireTime}
         settings={settingsToExpireTime}
-      />
-    </Router>, options);
+      />,
+    );
 
     wrapper.find('.autoLog input').at(0).simulate('change', { target: { name: 'autoLog' } });
 

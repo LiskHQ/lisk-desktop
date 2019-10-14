@@ -1,21 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { expect } from 'chai';
 import { spy, useFakeTimers } from 'sinon';
 import { mount } from 'enzyme';
-import i18n from '../../../i18n';
 import ConfirmPassphrase from './confirmPassphrase';
 
 describe('Register Process - Confirm Passphrase', () => {
   let wrapper;
   let clock;
-
-  const options = {
-    context: { i18n },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-    },
-  };
 
   const props = {
     passphrase: 'barely feature filter inmate exotic sister dog boil crush build canvas latin',
@@ -42,7 +33,7 @@ describe('Register Process - Confirm Passphrase', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<ConfirmPassphrase {...props} />, options);
+    wrapper = mount(<ConfirmPassphrase {...props} />);
     clock = useFakeTimers({
       now: new Date(2018, 1, 1),
       toFake: ['setTimeout', 'clearTimeout', 'Date', 'setInterval'],

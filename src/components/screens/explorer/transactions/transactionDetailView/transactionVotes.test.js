@@ -1,14 +1,9 @@
 import React from 'react';
-import { MemoryRouter as Router } from 'react-router-dom';
 import { mount } from 'enzyme';
-import i18n from '../../../../../i18n';
 import TransactionVotes from './transactionVotes';
 
 describe('Transaction Votes', () => {
   let wrapper;
-  const options = {
-    context: { i18n },
-  };
   const props = {
     votes: {
       added: [{ username: 'delegate1', rank: '1', account: { address: '123L' } }],
@@ -18,7 +13,7 @@ describe('Transaction Votes', () => {
   };
 
   it('Should render with added and deleted Votes', () => {
-    wrapper = mount(<Router><TransactionVotes {...props} /></Router>, options);
+    wrapper = mount(<TransactionVotes {...props} />);
     expect(wrapper).toContainMatchingElements(2, '.votesContainer');
     expect(wrapper.find('.rank').first().text()).toEqual(`#${props.votes.added[0].rank}`);
     expect(wrapper.find('.username').first().text()).toEqual(props.votes.added[0].username);
@@ -34,7 +29,7 @@ describe('Transaction Votes', () => {
         ],
       },
     };
-    wrapper = mount(<Router><TransactionVotes {...addedProps} /></Router>, options);
+    wrapper = mount(<TransactionVotes {...addedProps} />);
     expect(wrapper).toContainMatchingElements(1, '.votesContainer.added');
     expect(wrapper.find('.rank').at(1).text()).toBe(`#${addedProps.votes.added[0].rank}`);
   });
@@ -49,7 +44,7 @@ describe('Transaction Votes', () => {
         ],
       },
     };
-    wrapper = mount(<Router><TransactionVotes {...deleteProps} /></Router>, options);
+    wrapper = mount(<TransactionVotes {...deleteProps} />);
     expect(wrapper).toContainMatchingElements(1, '.votesContainer.deleted');
   });
 });

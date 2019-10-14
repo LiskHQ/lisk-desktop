@@ -1,9 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import { MemoryRouter } from 'react-router-dom';
-import i18n from '../../../i18n';
 import { generatePassphraseFromSeed } from '../../../utils/passphrase';
 import { extractAddress } from '../../../utils/account';
 import AccountCreated from './accountCreated';
@@ -20,21 +17,12 @@ describe('Register Process - Account created', () => {
     passphrase,
   };
 
-  const options = {
-    context: { i18n },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-    },
-  };
-
   const props = {
     account,
   };
 
   beforeEach(() => {
-    wrapper = mount(<MemoryRouter>
-      <AccountCreated {...props} />
-    </MemoryRouter>, options);
+    wrapper = mount(<AccountCreated {...props} />);
   });
 
   it('Should render with correct avatar and address', () => {

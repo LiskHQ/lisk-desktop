@@ -80,9 +80,10 @@ const liskServiceApi = {
     },
   }),
 
-  getBlockTransactions: ({ networkConfig }, { id }) => liskServiceGet({
+  getBlockTransactions: async ({ networkConfig }, { id, ...searchParams }) => liskServiceGet({
     serverUrl: getServerUrl(networkConfig),
     path: `/api/v1/block/${id}/transactions`,
+    searchParams: { limit: DEFAULT_LIMIT, ...searchParams },
   }),
 };
 

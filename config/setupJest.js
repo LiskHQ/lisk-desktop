@@ -29,7 +29,11 @@ jest.useFakeTimers();
 
 ReactRouterDom.Link = jest.fn(
   // eslint-disable-next-line react/display-name
-  ({ children, to, ...props }) => (<a {...props} href={to}>{children}</a>),
+  ({
+    children, to, activeClassName, ...props
+  }) => (
+    <a {...props} href={to}>{children}</a>
+  ),
 );
 
 ReactRouterDom.withRouter = jest.fn((Component => (
@@ -40,6 +44,7 @@ ReactRouterDom.withRouter = jest.fn((Component => (
         push: jest.fn(),
         replace: jest.fn(),
         createHref: jest.fn(),
+        listen: jest.fn(() => jest.fn()),
         location: {
           pathname: '/',
         },

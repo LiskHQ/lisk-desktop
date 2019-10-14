@@ -1,18 +1,13 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
-import configureMockStore from 'redux-mock-store';
 import { tokenMap } from '../../../../../constants/tokens';
 import Form from './form';
 import accounts from '../../../../../../test/constants/accounts';
-import i18n from '../../../../../i18n';
 
 describe('Form', () => {
   let wrapper;
   let props;
   let bookmarks;
-  let store;
   let options;
 
   beforeEach(() => {
@@ -33,31 +28,6 @@ describe('Form', () => {
       BTC: [],
     };
 
-    store = configureMockStore([thunk])({
-      settings: { currency: 'USD', token: { active: 'LSK' } },
-      settingsUpdated: () => {},
-      liskService: {
-        success: true,
-        LSK: {
-          USD: 1,
-        },
-      },
-      bookmarks,
-      service: {
-        dynamicFees: {},
-      },
-      network: {
-        name: 'Mainnet',
-      },
-    });
-
-    options = {
-      context: { i18n, store },
-      childContextTypes: {
-        i18n: PropTypes.object.isRequired,
-        store: PropTypes.object.isRequired,
-      },
-    };
 
     props = {
       token: tokenMap.LSK.key,

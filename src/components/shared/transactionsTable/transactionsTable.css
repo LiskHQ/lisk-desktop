@@ -47,3 +47,7 @@
 .content {
   padding: 0 !important;
 }
+
+.tooltipOffset {
+  left: -8px;
+}

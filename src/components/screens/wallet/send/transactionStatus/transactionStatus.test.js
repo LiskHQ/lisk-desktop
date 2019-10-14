@@ -1,37 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import PropTypes from 'prop-types';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
-import i18n from '../../../../../i18n';
 import TransactionStatus from './transactionStatus';
 
 describe('TransactionStatus', () => {
   let wrapper;
-
-  const store = configureMockStore([thunk])({
-    history: {
-      location: {
-        path: '/wallet/send/send',
-        search: '?recipient=16313739661670634666L&amount=10&reference=test',
-      },
-      push: jest.fn(),
-    },
-    transactions: {
-      failed: undefined,
-    },
-    bookmarks: {
-      LSK: [],
-    },
-  });
-
-  const options = {
-    context: { i18n, store },
-    childContextTypes: {
-      i18n: PropTypes.object.isRequired,
-      store: PropTypes.object.isRequired,
-    },
-  };
 
   const props = {
     t: v => v,
@@ -70,7 +42,7 @@ describe('TransactionStatus', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<TransactionStatus {...props} />, options);
+    wrapper = mount(<TransactionStatus {...props} />);
   });
 
   it('should render properly transactionStatus', () => {
@@ -106,7 +78,7 @@ describe('TransactionStatus', () => {
   it('should render error message in case of transaction failed', () => {
     const newProps = { ...props };
     newProps.transactions.broadcastedTransactionsError = [{ recipient: '123L', amount: 1, reference: 'test' }];
-    wrapper = mount(<TransactionStatus {...newProps} />, options);
+    wrapper = mount(<TransactionStatus {...newProps} />);
     expect(wrapper).toContainMatchingElement('.report-error-link');
     wrapper.find('.on-goToWallet').at(0).simulate('click');
     wrapper.update();
@@ -121,7 +93,7 @@ describe('TransactionStatus', () => {
       error: { message: 'errorMessage' },
       transaction: { recipient: '123L', amount: 1, reference: 'test' },
     }];
-    wrapper = mount(<TransactionStatus {...newProps} />, options);
+    wrapper = mount(<TransactionStatus {...newProps} />);
     expect(wrapper).toContainMatchingElement('.report-error-link');
     wrapper.find('.retry').at(0).simulate('click');
     expect(props.prevStep).toBeCalled();
@@ -138,7 +110,7 @@ describe('TransactionStatus', () => {
       transactionsCreatedFailed: [{ id: 2 }],
     };
 
-    wrapper = mount(<TransactionStatus {...newProps} />, options);
+    wrapper = mount(<TransactionStatus {...newProps} />);
     expect(wrapper).toContainMatchingElement('.report-error-link');
     wrapper.find('.retry').at(0).simulate('click');
     expect(props.transactionBroadcasted).toBeCalled();

@@ -1,11 +1,7 @@
-import { MemoryRouter as Router } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { mount } from 'enzyme';
 import EmptyState from '../../../toolbox/box/emptyState';
 import RecentTransactions from './recentTransactions';
-import store from '../../../../store';
-
 
 describe('Recent Transactions', () => {
   let wrapper;
@@ -119,13 +115,8 @@ describe('Recent Transactions', () => {
     ],
   };
 
-  const options = {
-    context: { store },
-    childContextTypes: { store: PropTypes.object.isRequired },
-  };
-
   beforeEach(() => {
-    wrapper = mount(<Router><RecentTransactions {...lskProps} /></Router>, options);
+    wrapper = mount(<RecentTransactions {...lskProps} />);
   });
 
   it('Should render Recent Transactions properly with LSK active token', () => {
@@ -140,9 +131,7 @@ describe('Recent Transactions', () => {
 
   it('Should render Recent Transactions properly with BTC active token', () => {
     wrapper.setProps({
-      children: React.cloneElement(wrapper.props().children, {
-        ...btcProps,
-      }),
+      ...btcProps,
     });
 
     wrapper.update();
@@ -156,14 +145,12 @@ describe('Recent Transactions', () => {
 
   it('Should render Recent Transactions with empty state', () => {
     wrapper.setProps({
-      children: React.cloneElement(wrapper.props().children, {
-        settings: {
-          token: {
-            active: 'BTC',
-          },
+      settings: {
+        token: {
+          active: 'BTC',
         },
-        transactions: [],
-      }),
+      },
+      transactions: [],
     });
     wrapper.update();
     expect(wrapper).not.toContainMatchingElement('TransactionList');
@@ -171,7 +158,7 @@ describe('Recent Transactions', () => {
   });
 
   it('Should getTransactions if mounted with props.transactions empty', () => {
-    wrapper = mount(<Router><RecentTransactions {...lskProps} transactions={[]} /></Router>);
+    wrapper = mount(<RecentTransactions {...lskProps} transactions={[]} />);
     expect(lskProps.getTransactions).toHaveBeenCalledWith(expect.objectContaining({
       address: lskProps.account.address,
     }));

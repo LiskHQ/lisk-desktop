@@ -1,8 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import PropTypes from 'prop-types';
-import store from '../../../../store';
 import DelegateRow from './delegateRow';
 
 describe('DelegateRow', () => {
@@ -20,46 +18,30 @@ describe('DelegateRow', () => {
     },
     voteToggled: () => {},
   };
-  const options = {
-    context: { store },
-    childContextTypes: { store: PropTypes.object.isRequired },
-  };
 
   it('should have a list item with class name of "pendingRow" when props.data.pending is true', () => {
-    const wrapper = mount(
-      <DelegateRow {...props} voteStatus={pendingStatus} />,
-      options,
-    );
+    const wrapper = mount(<DelegateRow {...props} voteStatus={pendingStatus} />);
     const expectedClass = 'pendingRow';
     const className = wrapper.find('ul').prop('className');
     expect(className).to.contain(expectedClass);
   });
 
   it.skip('should have a list item with class name of "votedRow" when voteStatus.unconfirmed and confirmed are true', () => {
-    const wrapper = mount(
-      <DelegateRow {...props} voteStatus={votedStatus} />,
-      options,
-    );
+    const wrapper = mount(<DelegateRow {...props} voteStatus={votedStatus} />);
     const expectedClass = 'votedRow';
     const className = wrapper.find('ul').prop('className');
     expect(className).to.contain(expectedClass);
   });
 
   it('should have a list item with class name of "downVoteRow" when voteStatus.unconfirmed is false but confirmed is true', () => {
-    const wrapper = mount(
-      <DelegateRow {...props} voteStatus={unvoteStatus} />,
-      options,
-    );
+    const wrapper = mount(<DelegateRow {...props} voteStatus={unvoteStatus} />);
     const expectedClass = 'downVoteRow';
     const className = wrapper.find('ul').prop('className');
     expect(className).to.contain(expectedClass);
   });
 
   it('should have a list item with class name of "upVoteRow" when voteStatus.unconfirmed is false but confirmed is true', () => {
-    const wrapper = mount(
-      <DelegateRow {...props} voteStatus={voteStatus} />,
-      options,
-    );
+    const wrapper = mount(<DelegateRow {...props} voteStatus={voteStatus} />);
     const expectedClass = 'upVoteRow';
     const className = wrapper.find('ul').prop('className');
     expect(className).to.contain(expectedClass);

@@ -1,13 +1,8 @@
 import React from 'react';
-import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
-import configureStore from 'redux-mock-store';
-import PropTypes from 'prop-types';
-import i18n from '../../../../i18n';
 import TopBar from './topBar';
 import routes from '../../../../constants/routes';
 import accounts from '../../../../../test/constants/accounts';
-
 
 const mockInputNode = {
   focus: jest.fn(),
@@ -72,59 +67,8 @@ describe('TopBar', () => {
     networkSet: jest.fn(),
   };
 
-  const history = {
-    location: { pathname: routes.dashboard.path },
-    createHref: () => {},
-    push: () => {},
-    replace: () => {},
-  };
-
-  const store = configureStore([thunk])({
-    account,
-    history,
-    settings: {
-      autloLog: true,
-      token: {
-        active: 'LSK',
-        list: {
-          LSK: true,
-          BTC: false,
-        },
-      },
-    },
-    search: {
-      suggestions: {
-        addresses: [],
-        transactions: [],
-        delegates: [],
-      },
-    },
-    network: {
-      status: { online: true },
-      name: 'Custom Node',
-      networks: {
-        LSK: {
-          nodeUrl: 'hhtp://localhost:4000',
-          nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-        },
-      },
-    },
-  });
-
-  const myOptions = {
-    context: {
-      store, history, i18n, router: { route: history, history },
-    },
-    childContextTypes: {
-      store: PropTypes.object.isRequired,
-      history: PropTypes.object.isRequired,
-      i18n: PropTypes.object.isRequired,
-      router: PropTypes.object.isRequired,
-    },
-  };
-
   beforeEach(() => {
-    wrapper = mount(<TopBar {...props} />, myOptions);
+    wrapper = mount(<TopBar {...props} />);
   });
 
   it('renders <TopBar /> component', () => {
@@ -154,7 +98,7 @@ describe('TopBar', () => {
       ...props,
       account: {},
     };
-    wrapper = mount(<TopBar {...logoutProps} />, myOptions);
+    wrapper = mount(<TopBar {...logoutProps} />);
     expect(wrapper).toContainMatchingElement('.signIn');
   });
 

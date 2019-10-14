@@ -1,4 +1,3 @@
-import { BrowserRouter as Router } from 'react-router-dom';
 import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '../../../constants/tokens';
@@ -22,7 +21,7 @@ describe('Bookmarks', () => {
       },
       bookmarks,
     };
-    wrapper = mount(<Router><Bookmarks {...props} /></Router>);
+    wrapper = mount(<Bookmarks {...props} />);
   });
 
   it('should render bookmarks list', () => {

@@ -1,4 +1,3 @@
-import { BrowserRouter as Router } from 'react-router-dom';
 import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '../../../../constants/tokens';
@@ -22,7 +21,7 @@ describe('BookmarksList', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<Router><BookmarksList {...props} /></Router>);
+    wrapper = mount(<BookmarksList {...props} />);
   });
 
   it('should render properly', () => {
@@ -38,11 +37,9 @@ describe('BookmarksList', () => {
 
   it('should render BTC bookmakrs ONLY', () => {
     wrapper.setProps({
-      children: React.cloneElement(wrapper.props().children, {
-        token: {
-          active: 'BTC',
-        },
-      }),
+      token: {
+        active: 'BTC',
+      },
     });
     wrapper.update();
     expect(wrapper).toContainMatchingElement('.bookmark-list-container');
@@ -51,12 +48,10 @@ describe('BookmarksList', () => {
 
   it('should render EmptyState', () => {
     wrapper.setProps({
-      children: React.cloneElement(wrapper.props().children, {
-        bookmarks: {
-          LSK: [],
-          BTC: [],
-        },
-      }),
+      bookmarks: {
+        LSK: [],
+        BTC: [],
+      },
     });
     wrapper.update();
     expect(wrapper).not.toContainMatchingElement('.bookmark-list-row');
