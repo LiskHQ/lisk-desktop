@@ -90,6 +90,7 @@ module.exports = {
     'src/components/screens/delegates/delegatesListView/*',
     'src/components/shared/header/signInHeader/signInHeader.js',
     'src/components/screens/register/register.js',
+    'src/components/toolbox/demoRenderer.js',
   ],
   coverageThreshold: {
     global: {
