@@ -44,6 +44,7 @@ ReactRouterDom.withRouter = jest.fn((Component => (
         push: jest.fn(),
         replace: jest.fn(),
         createHref: jest.fn(),
+        listen: jest.fn(() => jest.fn()),
         location: {
           pathname: '/',
         },

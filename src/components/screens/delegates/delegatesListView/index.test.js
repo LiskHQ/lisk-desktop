@@ -2,7 +2,6 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 import store from '../../../../store';
 import VotingListView from './index';
@@ -31,9 +30,7 @@ describe.skip('VotingListView', () => {
       loading: [],
     });
     wrapper = mount(<Provider store={store}>
-      <Router>
-        <VotingListView history={{ location: { search: '' } }} />
-      </Router>
+      <VotingListView history={{ location: { search: '' } }} />
     </Provider>);
   });
 
