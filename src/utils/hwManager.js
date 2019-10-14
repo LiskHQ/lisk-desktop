@@ -65,6 +65,7 @@ const signVoteTransaction = async (
   account,
   votedList,
   unvotedList,
+  timeOffset,
 ) => {
   const signedTransactions = [];
   const votesChunks = splitVotesIntoRounds({ votes: [...votedList], unvotes: [...unvotedList] });
@@ -72,7 +73,7 @@ const signVoteTransaction = async (
   try {
     for (let i = 0; i < votesChunks.length; i++) {
       const transactionObject = {
-        ...castVotes(votesChunks[i]),
+        ...castVotes({ ...votesChunks[i], timeOffset }),
         senderPublicKey: account.publicKey,
         recipientId: account.address,
       };
