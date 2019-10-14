@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DateTimeFromTimestamp } from '../../toolbox/timestamp';
+import { tokenMap } from '../../../constants/tokens';
 import AccountVisual from '../../toolbox/accountVisual';
 import Box from '../../toolbox/box';
 import Icon from '../../toolbox/icon';
-import IconlessTooltip from '../iconlessTooltip';
+import Tooltip from '../../toolbox/tooltip/tooltip';
 import LiskAmount from '../liskAmount';
 import regex from '../../../utils/regex';
 import routes from '../../../constants/routes';
@@ -56,31 +57,29 @@ class TransactionsTable extends React.Component {
         );
       case 'fee':
         return (
-          <IconlessTooltip
-            tooltipContent={<p>{`${t('Type')} ${transaction.type}`}</p>}
+          <Tooltip
             title={t('Transaction')}
             className="showOnBottom"
             tooltipClassName={styles.tooltip}
+            content={<LiskAmount val={transaction[column.key]} token={tokenMap.LSK.key} />}
+            size="s"
           >
-            <div>
-              <LiskAmount val={transaction[column.key]} />
-&nbsp;
-              {t('LSK')}
-            </div>
-          </IconlessTooltip>
+            <p>{`${t('Type')} ${transaction.type}`}</p>
+          </Tooltip>
         );
       case 'timestamp':
         return <DateTimeFromTimestamp time={transaction[column.key] * 1000} token="BTC" />;
       case 'confirmations':
         return (
-          <IconlessTooltip
-            tooltipContent={<p>{`${transaction.confirmations}/101 ${t('Confirmations')}`}</p>}
+          <Tooltip
             title={transaction.confirmations > 0 ? t('Confirmed') : t('Pending')}
             className="showOnLeft"
             tooltipClassName={styles.tooltip}
+            content={transaction.confirmations > 0 ? <Icon name="approved" /> : <Icon name="pending" />}
+            size="s"
           >
-            {transaction.confirmations > 0 ? <Icon name="approved" /> : <Icon name="pending" />}
-          </IconlessTooltip>
+            <p>{`${transaction.confirmations}/101 ${t('Confirmations')}`}</p>
+          </Tooltip>
         );
       default:
         return transaction[column.key];

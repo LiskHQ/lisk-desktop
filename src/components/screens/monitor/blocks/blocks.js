@@ -7,11 +7,11 @@ import { tokenMap } from '../../../../constants/tokens';
 import BlockFilterDropdown from './blockFilterDropdown';
 import Box from '../../../toolbox/box';
 import FilterBar from '../../../shared/filterBar';
-import IconlessTooltip from '../../../shared/iconlessTooltip';
 import Illustration from '../../../toolbox/illustration';
 import LiskAmount from '../../../shared/liskAmount';
 import MonitorHeader from '../header';
 import Table from '../../../toolbox/table';
+import Tooltip from '../../../toolbox/tooltip/tooltip';
 import routes from '../../../../constants/routes';
 import styles from './blocks.css';
 import withFilters from '../../../../utils/withFilters';
@@ -89,15 +89,15 @@ const Blocks = ({
                     header: t('Amount'),
                     className: grid['col-xs-2'],
                     getValue: block => (
-                      <IconlessTooltip
-                        tooltipContent={<p>{block.numberOfTransactions}</p>}
+                      <Tooltip
                         title={t('Transactions')}
                         className="showOnBottom"
                         tooltipClassName={styles.showM}
                         size="s"
+                        content={<LiskAmount val={block.totalAmount} token={tokenMap.LSK.key} />}
                       >
-                        <LiskAmount val={block.totalAmount} token={tokenMap.LSK.key} />
-                      </IconlessTooltip>
+                        <p>{block.numberOfTransactions}</p>
+                      </Tooltip>
                     ),
                   }, {
                     id: 'totalForged',
