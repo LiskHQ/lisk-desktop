@@ -20,10 +20,12 @@ describe('DelegatesTable page', () => {
       columns: [
         { id: 'rank' },
         { id: 'username', header: 'Name' },
-        { id: 'forged' },
+        { id: 'rewards' },
         { id: 'productivity' },
       ],
-      tabs: [{ name: 'Active delegates' }, { name: 'Standby delegates' }],
+      tabs: {
+        tabs: [{ name: 'Active delegates' }, { name: 'Standby delegates' }],
+      },
     };
     delegatesWitData = {
       ...props.blocks,
@@ -34,8 +36,8 @@ describe('DelegatesTable page', () => {
 
   it('renders DelegatesTable with header tabs', () => {
     const wrapper = mount(<DelegatesTable {...props} />);
-    expect(wrapper.find('header')).toIncludeText(props.tabs[0].name);
-    expect(wrapper.find('header')).toIncludeText(props.tabs[1].name);
+    expect(wrapper.find('header')).toIncludeText(props.tabs.tabs[0].name);
+    expect(wrapper.find('header')).toIncludeText(props.tabs.tabs[1].name);
   });
 
   it('renders table with delegates', () => {

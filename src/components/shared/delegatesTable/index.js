@@ -36,7 +36,7 @@ const DelegatesTable = ({
   return (
     <Box>
       <Box.Header>
-        <Box.Tabs {...{ tabs }} />
+        <Box.Tabs {...tabs} />
         <span>
           <Input size="xs" placeholder={t('Filter by name...')} />
         </span>
