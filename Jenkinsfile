@@ -7,7 +7,7 @@ pipeline {
 		buildDiscarder(logRotator(numToKeepStr: '168', artifactNumToKeepStr: '5'))
 	}
 	environment {
-		LISK_CORE_VERSION = '1.5.0'
+		LISK_CORE_VERSION = '2.3.0'
 	}
 	stages {
 		stage('Install npm dependencies') {
