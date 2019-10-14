@@ -77,25 +77,18 @@ class AddressFilter extends React.Component {
     const { fields } = this.state;
 
     return (
-      <div>
-        <Input
-          onChange={this.onChange}
-          label={label}
-          placeholder={placeholder}
-          value={filters[name]}
-          name={name}
-          className={`${styles.input} ${fields.error ? 'error' : ''}`}
-          isLoading={fields.loading}
-          status={fields.error ? 'error' : 'ok'}
-          size="xs"
-        />
-        <Feedback
-          show={!!this.state.feedback}
-          status={this.state.feedback ? 'error' : ''}
-          size="xs"
-        />
-        {this.state.feedback}
-      </div>
+      <Input
+        onChange={this.onChange}
+        label={label}
+        placeholder={placeholder}
+        value={filters[name]}
+        name={name}
+        className={`${styles.input} ${fields.error ? 'error' : ''}`}
+        isLoading={fields.loading}
+        status={fields.error ? 'error' : 'ok'}
+        size="xs"
+        feedback={this.state.feedback}
+      />
     );
   }
 }
