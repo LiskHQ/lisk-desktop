@@ -86,7 +86,7 @@ class TransactionsTable extends React.Component {
           <React.Fragment>
             <Box.Content className={styles.content}>
               <Table
-                getRowLink={transaction => `${routes.monitorTransactions.path}/${transaction.id}`}
+                getRowLink={transaction => `${routes.transactions.path}/${transaction.id}`}
                 onSortChange={changeSort}
                 sort={sort}
                 data={transactions.data}
