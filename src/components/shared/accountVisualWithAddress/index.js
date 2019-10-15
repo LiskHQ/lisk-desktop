@@ -13,7 +13,9 @@ class AccountVisualWithAddress extends React.Component {
     const { isMediumViewPort, bookmarks, showBookmarkedAddress } = this.props;
 
     if (showBookmarkedAddress) {
-      const bookmarkedAddress = bookmarks[this.props.token.active].find(element => element.address === address);
+      const bookmarkedAddress = bookmarks[this.props.token.active].find(
+        element => element.address === address,
+      );
       if (bookmarkedAddress) return bookmarkedAddress.title;
     }
 
@@ -41,9 +43,7 @@ class AccountVisualWithAddress extends React.Component {
         ) : (
           <React.Fragment>
             <AccountVisual address={address} size={32} />
-            <span className={styles.addressValue}>
-              {this.getTransformedAddress(address)}
-            </span>
+            <span className={styles.addressValue}>{this.getTransformedAddress(address)}</span>
           </React.Fragment>
         )}
       </div>
@@ -53,6 +53,7 @@ class AccountVisualWithAddress extends React.Component {
 
 const mapStateToProps = state => ({
   bookmarks: state.bookmarks,
+  token: state.settings.token,
 });
 
 export default connect(mapStateToProps)(withTranslation()(AccountVisualWithAddress));
